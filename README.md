@@ -38,7 +38,6 @@ The vis.js library was initially developed by [Almende B.V](http://almende.com).
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/almende/vis.svg)](http://isitmaintained.com/project/almende/vis "Average time to resolve an issue")
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/almende/vis/pulls.svg)](https://github.com/almende/vis/pulls)
 
-[![Test Coverage](https://codeclimate.com/github/almende/vis/badges/coverage.svg)](https://codeclimate.com/github/almende/vis/coverage)
 [![Code Climate](https://codeclimate.com/github/almende/vis/badges/gpa.svg)](https://codeclimate.com/github/almende/vis) 
 
 ## Install
@@ -55,16 +54,6 @@ Link via cdnjs: http://cdnjs.com
 
 Or download the library from the github project:
 [https://github.com/almende/vis.git](https://github.com/almende/vis.git).
-
-
-### Installing module `canvas`
-
-Module `canvas` is only required if you need to run `vis.js` on `node.js` and require actual output. It is not required for regular usage in a browser.
-
-Currently, the unit tests use a mock object for canvas which has limited but adequate functionality. If `canvas` is installed, that will be used silently in place of the mock object.
-
-The issue with `canvas` is that it has an external dependency to `cairo`. This needs to be installed outside of the regular install as done by `npm`. Please consult [`node-canvas` github page](https://github.com/Automattic/node-canvas/wiki#desktop) for the correct installation procecure your platform
-
 
 ## Load
 
@@ -351,9 +340,6 @@ module: {
 ```
 
 There is also an [demo-project](https://github.com/mojoaxel/vis-webpack-demo) showing the integration of vis.js using webpack.
-
-
-
 
 ## Test
 
