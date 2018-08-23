@@ -1,0 +1,82 @@
+<?js
+  var self = this;
+?>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" HREF="favicon.ico">
+  <title>Data - vis.js - A dynamic, browser based visualization library.</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <!-- Tipue vendor css -->
+  <link href="../css/tipuesearch.css" rel="stylesheet">
+
+  <link href="../css/style.css" rel="stylesheet">
+
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="../css/prettify.css" type="text/css" rel="stylesheet"/>
+  <script type="text/javascript" src="../js/googleAnalytics.js"></script>
+  <script type="text/javascript" src="../js/prettify/prettify.js"></script>
+
+  <script src="../js/smooth-scroll.min.js"></script>
+  <script language="JavaScript">
+    smoothScroll.init();
+  </script>
+
+  <script type="text/javascript" src="../js/toggleTable.js"></script>
+</head>
+<body onload="prettyPrint();">
+<?js= self.partial('tmpl/navbar.tmpl') ?>
+<div class="container full">
+
+  <h1>Data</h1>
+
+  <p>
+    One of the starting points of the visualizations of vis.js is that they can deal with dynamic data, and allow manipulation of the data. To enable this, vis.js includes a flexible key/value based <code>DataSet</code> and <code>DataView</code> to handle unstructured JSON data.
+  </p>
+
+  <p>
+    By providing a <code>DataSet</code> with data to the visualizations, they can subscribe on changes in the <code>DataSet</code> and automatically reflect the changes in their view. Changes in the data can be caused by a server pushing updates to a client, or by other interactive components in the web application. Vice versa, data can be manipulated in one of the visualizations. For example a REST-client can listen for changes and automatically write changes to the server. Or changes can be propagated to other parts of the web application.
+  </p>
+
+  <h2>DataSet</h2>
+
+  <p>
+    A <code>DataSet</code> can be used to store JSON objects by id. Objects can be added, updated and removed from the DataSet, and one can subscribe to changes in the <code>DataSet</code>.
+    The data in the <code>DataSet</code> can be filtered and ordered, and fields (like
+    dates) can be converted to a specific type. Data can be normalized when
+    appending it to the <code>DataSet</code> as well.
+  </p>
+
+  <p>
+    <a href="dataset.html">Go to the documentation of DataSet</a>
+  </p>
+
+  <h2>DataView</h2>
+
+  <p>
+    A <code>DataView</code> offers a filtered and/or formatted view on a DataSet.
+    One can subscribe to changes in a <code>DataView</code>, and easily get filtered or
+    formatted data without having to specify filters and field types all
+    the time.
+  </p>
+
+  <p>
+    <a href="dataview.html">Go to the documentation of DataView</a>
+  </p>
+
+</div>
+
+<?js= self.partial('tmpl/html-foot.tmpl') ?>

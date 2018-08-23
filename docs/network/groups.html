@@ -1,0 +1,116 @@
+<?js
+  var self = this;
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" HREF="favicon.ico">
+    <title>vis.js - Groups documentation.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <!-- Tipue vendor css -->
+    <link href="../css/tipuesearch.css" rel="stylesheet">
+
+    <link href="../css/style.css" rel="stylesheet">
+
+    <link href="../css/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="../js/toggleTable.js"></script>
+    <script type="text/javascript" src="../js/googleAnalytics.js"></script>
+    <script type="text/javascript" src="../js/prettify/prettify.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script src="../js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+        smoothScroll.init();
+    </script>
+
+    <style>
+
+    </style>
+</head>
+
+<body onload="prettyPrint();">
+<?js= self.partial('tmpl/navbar.tmpl') ?>
+<div class="container full">
+    <h1>Network - groups</h1>
+
+    <p>Handles the group styling.</p>
+    <h3>Options</h3>
+
+    <p>The options for the canvas have to be contained in an object titled 'groups'.</p>
+    <p>Click on the options shown to show how these options are supposed to be used.</p>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">options hidden</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">options shown</a></li>
+    </ul>
+    <br>
+<pre class="prettyprint lang-js options hidden" id="fullOptions">
+var options = {
+  groups:{
+    useDefaultGroups: true,
+    myGroupId:{
+      /*node options*/
+    }
+  }
+}
+
+network.setOptions(options);
+</pre>
+    <p>All of the individual options are explained here:</p>
+    <table class="options">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>useDefaultGroups</td>
+            <td>Boolean</td>
+            <td><code>true</code></td>
+            <td>If your nodes have groups defined that are not in the Groups module, the module loops over the groups it
+                does have, allocating one for each unknown group. When all are used, it goes back to the first group. By
+                setting this to false, the default groups will not be used in this cycle.
+            </td>
+        </tr>
+        <tr>
+            <td>group*</td>
+            <td>Object</td>
+            <td><code></code></td>
+            <td>
+                You can add multiple groups containing styling information that applies to a certain subset of groups.
+                All options described in the <a href="./nodes.html">nodes module</a> that make sense can be used here
+                (you're not going to set the same id or x,y position for a group of nodes).
+                Example:
+<pre class="prettyprint lang-js options">
+var nodes = [
+    {id:1, group:'myGroup', label:"I'm in a custom group called 'myGroup'!"}
+]
+
+var options = {
+  groups: {
+    myGroup: {color:{background:'red'}, borderWidth:3}
+  }
+}
+</pre>
+                *) the option is not called group, as shown by the example but can by any custom id, except for
+                'useDefaultGroups'.
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<?js= self.partial('tmpl/html-foot.tmpl') ?>
