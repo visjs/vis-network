@@ -1,61 +1,39 @@
 # visjs-network
 
-This repo is an early effort to extract out the Network module of vis.js into a standalone Javascript package. Currently, this repo contains the entirety of the `vis`. Soon, with some careful refactoring, we hope to distill this repo down into only the Network module.
+A dynamic, browser-based network visualization library. A network-visualization focused fork of the visualization library [vis.js](https://github.com/visjs-community/vis)
 
-See this [github issue comment](https://github.com/almende/vis/issues/4015#issuecomment-410556365) for some history and motivation behind this effort.
-
----
+See this [github issue comment](https://github.com/visjs-community/visjs-network/issues/4015#issuecomment-410556365) for some project history.
 
 [![Join the chat at https://gitter.im/vis-js/Lobby](https://badges.gitter.im/vis-js/Lobby.svg)](https://gitter.im/vis-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Vis.js is a dynamic, browser based visualization library.
-The library is designed to be easy to use, handle large amounts
-of dynamic data, and enable manipulation of the data.
+visjs-network is a dynamic, browser based network visualization library.
+The library is designed to be easy to use, handle dynamic data, and enable data manipulation.
 The library consists of the following components:
 
+- Network. Display a network (force directed graph) with nodes and edges.
 - DataSet and DataView. A flexible key/value based data set. Add, update, and
   remove items. Subscribe on changes in the data set. A DataSet can filter and
   order items, and convert fields of items.
 - DataView. A filtered and/or formatted view on a DataSet.
-- Graph2d. Plot data on a timeline with lines or barcharts.
-- Graph3d. Display data in a three dimensional graph.
-- Network. Display a network (force directed graph) with nodes and edges.
-- Timeline. Display different types of data on a timeline.
 
-The vis.js library was initially developed by [Almende B.V](http://almende.com).
-
-## Badges
-
-[![NPM](https://nodei.co/npm/vis.png?downloads=true&downloadRank=true)](https://nodei.co/npm/vis/)
-
-[![Dependency Status](https://david-dm.org/almende/vis/status.svg)](https://david-dm.org/almende/vis)
-[![devDependency Status](https://david-dm.org/almende/vis/dev-status.svg)](https://david-dm.org/almende/vis?type=dev)
-
-[![last version on CDNJS](https://img.shields.io/cdnjs/v/vis.svg)](https://cdnjs.com/libraries/vis)
-[![GitHub contributors](https://img.shields.io/github/contributors/almende/vis.svg)](https://github.com/almende/vis/graphs/contributors)
-[![GitHub stars](https://img.shields.io/github/stars/almende/vis.svg)](https://github.com/almende/vis/stargazers)
-
-[![GitHub issues](https://img.shields.io/github/issues/almende/vis.svg)](https://github.com/almende/vis/issues)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/almende/vis.svg)](http://isitmaintained.com/project/almende/vis 'Percentage of issues still open')
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/almende/vis.svg)](http://isitmaintained.com/project/almende/vis 'Average time to resolve an issue')
-[![Pending Pull-Requests](http://githubbadges.herokuapp.com/almende/vis/pulls.svg)](https://github.com/almende/vis/pulls)
-
-[![Code Climate](https://codeclimate.com/github/almende/vis/badges/gpa.svg)](https://codeclimate.com/github/almende/vis)
+The vis.js library was originally developed by Dutch R&D Company [Almende B.V](http://almende.com).
 
 ## Install
 
+Install via yarn:
+
+    yarn add visjs-network
+
 Install via npm:
 
-    $ npm install vis
+    npm install visjs-network
 
 Install via bower:
 
-    $ bower install vis
-
-Link via cdnjs: http://cdnjs.com
+    bower install visjs-network
 
 Or download the library from the github project:
-[https://github.com/almende/vis.git](https://github.com/almende/vis.git).
+[https://github.com/visjs-community/visjs-network.git](https://github.com/visjs-community/visjs-network.git).
 
 ## Load
 
@@ -89,82 +67,38 @@ require(['vis'], function(math) {
 })
 ```
 
-A timeline can be instantiated as:
-
-```js
-var timeline = new vis.Timeline(container, data, options)
-```
-
-Where `container` is an HTML element, `data` is an Array with data or a DataSet,
-and `options` is an optional object with configuration options for the
-component.
-
 ## Example
 
-A basic example on loading a Timeline is shown below. More examples can be
+Examples can be
 found in the [examples directory](https://github.com/almende/vis/tree/master/examples)
 of the project.
-
-```html
-<!DOCTYPE HTML>
-<html>
-<head>
-  <title>Timeline basic demo</title>
-  <script src="vis/dist/vis.js"></script>
-  <link href="vis/dist/vis.css" rel="stylesheet" type="text/css" />
-
-  <style type="text/css">
-    body, html {
-      font-family: sans-serif;
-    }
-  </style>
-</head>
-<body>
-<div id="visualization"></div>
-
-<script type="text/javascript">
-  var container = document.getElementById('visualization');
-  var data = [
-    {id: 1, content: 'item 1', start: '2013-04-20'},
-    {id: 2, content: 'item 2', start: '2013-04-14'},
-    {id: 3, content: 'item 3', start: '2013-04-18'},
-    {id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19'},
-    {id: 5, content: 'item 5', start: '2013-04-25'},
-    {id: 6, content: 'item 6', start: '2013-04-27'}
-  ];
-  var options = {};
-  var timeline = new vis.Timeline(container, data, options);
-</script>
-</body>
-</html>
-```
 
 ## Build
 
 To build the library from source, clone the project from github
 
-    $ git clone git://github.com/almende/vis.git
+    git clone git://github.com/visjs-community/visjs-network.git
 
 The source code uses the module style of node (require and module.exports) to
 organize dependencies. To install all dependencies and build the library,
-run `npm install` in the root of the project.
+run `yarn` or `npm install` in the root of the project.
 
-    $ cd vis
-    $ npm install
+    cd vis
+    yarn
 
-Then, the project can be build running:
+Then, the project can be built by running:
 
-    $ npm run build
+    yarn build
 
 To automatically rebuild on changes in the source files, once can use
 
-    $ npm run watch
+    yarn watch
 
 This will both build and minify the library on changes. Minifying is relatively
 slow, so when only the non-minified library is needed, one can use the
 `watch-dev` script instead:
 
-    $ npm run watch-dev
+    yarn watch-dev
 
 ## Custom builds
 
@@ -182,20 +116,20 @@ Before you can do a build:
 - Install the following modules using npm: `browserify`, `babelify`, and `uglify-js`:
 
   ```
-  $ [sudo] npm install -g browserify babelify uglify-js
+  [sudo] npm install -g browserify babelify uglify-js
   ```
 
 - Download or clone the vis.js project:
 
   ```
-  $ git clone https://github.com/almende/vis.git
+  git clone https://github.com/visjs-community/visjs-network.git
   ```
 
 - Install the dependencies of vis.js by running `npm install` in the root of the project:
 
   ```
-  $ cd vis
-  $ npm install
+  cd vis
+  npm install
   ```
 
 ### Examples of custom builds
@@ -211,13 +145,13 @@ exports.Timeline = require('./lib/timeline/Timeline')
 
 Then create a custom bundle using browserify, like:
 
-    $ browserify custom.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis
+    browserify custom.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis
 
 This will generate a custom bundle _vis-custom.js_, which exposes the namespace `vis` containing only `DataSet` and `Timeline`. You can pass additional options to babelify and browserify as needed (e.g. to customise the browsers that are supported).
 
 The generated bundle can be minified using uglifyjs:
 
-    $ uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
+    uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
 
 The custom bundle can now be loaded like:
 
@@ -238,11 +172,11 @@ The custom bundle can now be loaded like:
 
 The default bundle `vis.js` is standalone and includes external dependencies such as _hammer.js_ and _moment.js_. When these libraries are already loaded by the application, vis.js does not need to include these dependencies itself too. To build a custom bundle of vis.js excluding _moment.js_ and _hammer.js_, run browserify in the root of the project:
 
-    $ browserify index.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis -x moment -x hammerjs
+    browserify index.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis -x moment -x hammerjs
 
 This will generate a custom bundle _vis-custom.js_, which exposes the namespace `vis`, and has _moment.js_ and _hammer.js_ excluded. The generated bundle can be minified with uglifyjs:
 
-    $ uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
+    uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
 
 The custom bundle can now be loaded as:
 
@@ -293,8 +227,8 @@ var timeline = new Timeline(container, data, options)
 
 The application can be bundled and minified:
 
-    $ browserify app.js -o dist/app-bundle.js -t babelify
-    $ uglifyjs dist/app-bundle.js -o dist/app-bundle.min.js
+    browserify app.js -o dist/app-bundle.js -t babelify
+    uglifyjs dist/app-bundle.js -o dist/app-bundle.min.js
 
 And loaded into a webpage:
 
@@ -315,6 +249,8 @@ And loaded into a webpage:
 
 You can integrate e.g. the timeline component directly in you webpack build.
 Therefor you can e.g. import the component-files from root direcory (starting with "index-").
+
+TODO: add analogous Network example
 
 ```js
 import { DataSet, Timeline } from 'vis/index-timeline-graph2d'
@@ -352,41 +288,20 @@ There is also an [demo-project](https://github.com/mojoaxel/vis-webpack-demo) sh
 
 To test the library, install the project dependencies once:
 
-    $ npm install
+    npm install
 
 Then run the tests:
 
-    $ npm run test
+    npm run test
 
 ## Contribute
 
-[Contributions](//github.com/almende/vis/blob/master/misc/how_to_help.md) to the vis.js library are very welcome! [We can't do this alone](//github.com/almende/vis/blob/master/misc/we_need_help.md).
+[Contributions](//github.com/almende/vis/blob/master/misc/how_to_help.md) to the vis.js library are very welcome!
 
 ### Contributors
 
 This project exists thanks to all the people who already contributed.
 <a href="graphs/contributors"><img src="https://opencollective.com/vis/contributors.svg?width=890" /></a>
-
-### Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/vis#backer)]
-
-<a href="https://opencollective.com/vis#backers" target="_blank"><img src="https://opencollective.com/vis/backers.svg?width=890"></a>
-
-### Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/vis#sponsor)]
-
-<a href="https://opencollective.com/vis/sponsor/0/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/1/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/2/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/3/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/4/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/5/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/6/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/7/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/8/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/9/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/9/avatar.svg"></a>
 
 ## License
 
