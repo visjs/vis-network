@@ -70,7 +70,7 @@ require(['vis'], function(math) {
 ## Example
 
 Examples can be
-found in the [examples directory](https://github.com/visjs-community/visjs-network/tree/master/examples)
+found in the [examples directory](https://github.com/almende/vis/tree/master/examples)
 of the project.
 
 ## Build
@@ -83,7 +83,7 @@ The source code uses the module style of node (require and module.exports) to
 organize dependencies. To install all dependencies and build the library,
 run `yarn` or `npm install` in the root of the project.
 
-    cd visjs-network
+    cd vis
     yarn
 
 Then, the project can be built by running:
@@ -104,7 +104,7 @@ slow, so when only the non-minified library is needed, one can use the
 
 The folder `dist` contains bundled versions of vis.js for direct use in the browser. These bundles contain all the visualizations and include external dependencies such as _hammer.js_ and _moment.js_.
 
-The source code of vis.js consists of commonjs modules, which makes it possible to create custom bundles using tools like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/). This can be bundling just one visualization, or bundling vis.js as part of your own browserified web application.
+The source code of vis.js consists of commonjs modules, which makes it possible to create custom bundles using tools like [Browserify](http://browserify.org/) or [Webpack](http://webpack.github.io/). This can be bundling just one visualization like the Timeline, or bundling vis.js as part of your own browserified web application.
 
 _Note that hammer.js version 2 is required as of v4._
 
@@ -113,24 +113,62 @@ _Note that hammer.js version 2 is required as of v4._
 Before you can do a build:
 
 - Install _node.js_ and _npm_ on your system: https://nodejs.org/
-- Optionally install _yarn_ on your system: https://yarnpkg.com/
+- Install the following modules using npm: `browserify`, `babelify`, and `uglify-js`:
 
-- Download or clone the visjs-network project:
+  ```
+  [sudo] npm install -g browserify babelify uglify-js
+  ```
+
+- Download or clone the vis.js project:
 
   ```
   git clone https://github.com/visjs-community/visjs-network.git
   ```
 
-- Install the dependencies of visjs-network by running `yarn` or `npm install` in the root of the project:
+- Install the dependencies of vis.js by running `npm install` in the root of the project:
 
   ```
-  cd visjs-network
-  yarn
+  cd vis
+  npm install
   ```
 
 ### Examples of custom builds
 
-#### Example 1: Exclude external libraries
+#### Example 1: Bundle only a single visualization type
+
+For example, to create a bundle with just the Timeline and DataSet, create an index file named **custom.js** in the root of the project, containing:
+
+```js
+exports.DataSet = require('./lib/DataSet')
+exports.Timeline = require('./lib/timeline/Timeline')
+```
+
+Then create a custom bundle using browserify, like:
+
+    browserify custom.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis
+
+This will generate a custom bundle _vis-custom.js_, which exposes the namespace `vis` containing only `DataSet` and `Timeline`. You can pass additional options to babelify and browserify as needed (e.g. to customise the browsers that are supported).
+
+The generated bundle can be minified using uglifyjs:
+
+    uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
+
+The custom bundle can now be loaded like:
+
+```html
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="dist/vis-custom.min.js"></script>
+  <link href="dist/vis.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  ...
+</body>
+</html>
+```
+
+#### Example 2: Exclude external libraries
 
 The default bundle `vis.js` is standalone and includes external dependencies such as _hammer.js_ and _moment.js_. When these libraries are already loaded by the application, vis.js does not need to include these dependencies itself too. To build a custom bundle of vis.js excluding _moment.js_ and _hammer.js_, run browserify in the root of the project:
 
@@ -160,7 +198,7 @@ The custom bundle can now be loaded as:
 </html>
 ```
 
-#### Example 2: Bundle vis.js as part of your (commonjs) application
+#### Example 3: Bundle vis.js as part of your (commonjs) application
 
 When writing a web application with commonjs modules, vis.js can be packaged automatically into the application. Create a file **app.js** containing:
 
@@ -207,7 +245,7 @@ And loaded into a webpage:
 </html>
 ```
 
-#### Example 3: Integrate vis.js components directly in your webpack build
+#### Example 4: Integrate vis.js components directly in your webpack build
 
 You can integrate e.g. the timeline component directly in you webpack build.
 Therefor you can e.g. import the component-files from root direcory (starting with "index-").
@@ -248,23 +286,15 @@ There is also an [demo-project](https://github.com/mojoaxel/vis-webpack-demo) sh
 
 To test the library, install the project dependencies once:
 
-    yarn
-
-or
-
     npm install
 
 Then run the tests:
-
-    yarn test
-
-or
 
     npm run test
 
 ## Contribute
 
-[Contributions](//github.com/visjs-community/visjs-network/blob/master/misc/how_to_help.md) to the vis.js library are very welcome!
+[Contributions](//github.com/almende/vis/blob/master/misc/how_to_help.md) to the vis.js library are very welcome!
 
 ### Contributors
 
