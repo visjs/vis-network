@@ -39,24 +39,7 @@
 
 - [ ] Commit the new version: `git commit -am "Release vX.Y.Z"`
 - [ ] Push the release branch: `git push`
-- [ ] Open a Pull-Request for the release-branch to the develop-branch.
-- [ ] Wait until somebody of the team looked over your changes and merges the Pull-Request.
-
-### Update Master
-
-We don't merge the development branch to the master because the master branch is different to the develop-Branch. The master branch has a dist and test folder and does not generate Source-Maps.
-
-If we would merge the development branch would overwrite this. To solve this we use rebase instead:
-
-- [ ] Update: `git fetch && git checkout develop && git pull`
-- [ ] Rebase the `master` branch on the `develop` branch: `git checkout master && git rebase develop`
-- [ ] Generate new dist files: `npm prune && rm -rf node_modules && npm install && npm run build && npm run test && git commit -am "generated dist files for vX.Y.Z"
-- [ ] Create a version tag: `git tag "vX.Y.Z"`
-- [ ] [Remove the protection](https://github.com/visjs-community/visjs-network/settings/branches/master) from `master`.
-- [ ] FORCE-Push the branches to github: `git push --force && git push --tag`
-- [ ] [Re-Enable branch protection](https://github.com/visjs-community/visjs-network/settings/branches/master) (enable ALL checkboxes) for `master`.
-- [ ] Publish with npm: `npm publish` (check [npmjs.com](https://www.npmjs.com/package/vis))
-- [ ] Create a [new Release](https://github.com/visjs-community/visjs-network/releases/new) with the tang and the name "vX.Y.Z" and copy the data vom [HISTORY.md](../HISTORY.md) into the body.
+- [ ] Wait until a project collaborator reviews your changes and merges the Pull-Request.
 
 ## Test
 
@@ -83,12 +66,8 @@ If we would merge the development branch would overwrite this. To solve this we 
 
 ## Prepare next version
 
-- [ ] Switch to the "develop" branch: `git checkout develop`.
 - [ ] Change version numbers in "package.json" to a snapshot version `X.X.Z-SNAPSHOT`.
 - [ ] Commit and push: `git commit -am "changed version to vX.X.Z-SNAPSHOT"`
 - [ ] Create new tag: `git tag vX.X.Z-SNAPSHOT`.
-- [ ] [Remove the protection](https://github.com/visjs-community/visjs-network/settings/branches/develop) from `develop`.
-- [ ] FORCE-Push the branches to github: `git push --force && git push --tag`
-- [ ] [Re-Enable branch protection](https://github.com/visjs-community/visjs-network/settings/branches/develop) (enable ALL checkboxes) for `develop`.
 
 DONE!

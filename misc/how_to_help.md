@@ -20,7 +20,7 @@ The visjs.org webpage is hosted on the [gh-pages branch](//github.com/visjs-comm
 
 ### Create new examples
 
-We have [a collection of examples](//github.com/visjs-community/visjs-network/tree/develop/examples). Please help by creating interesting new ones that show a specific problem or layout. Keep the examples easy to understand for beginners and remove unnecessary clutter.
+We have [a collection of examples](//github.com/visjs-community/visjs-network/tree/master/examples). Please help by creating interesting new ones that show a specific problem or layout. Keep the examples easy to understand for beginners and remove unnecessary clutter.
 
 ### Provide interesting showcases
 
@@ -45,9 +45,7 @@ We use [GitHub's two-step review](//help.github.com/articles/about-pull-request-
 
 ## Creating Pull Requests
 
-There are some rules for pull-request:
-
-- All pull-request must be to the [develop-branch](//github.com/visjs-community/visjs-network/tree/develop). Pull-request against the [master-branch](//github.com/visjs-community/visjs-network/tree/master) must be closed. (Changes to [gh-pages](//github.com/visjs-community/visjs-network/tree/gh-pages) are also ok.)
+There are some guidelines for submitting pull-requests:
 
 - Only commit changes done in the source files in the folder `lib`, not to the builds
   which are located in the folder `dist`.
