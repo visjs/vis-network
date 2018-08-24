@@ -143,7 +143,7 @@ of the project.
 
 To build the library from source, clone the project from github
 
-    $ git clone git://github.com/almende/vis.git
+    $ git clone git://github.com/visjs-community/visjs-network
 
 The source code uses the module style of node (require and module.exports) to
 organize dependencies. To install all dependencies and build the library,

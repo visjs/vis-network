@@ -6,7 +6,7 @@
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/almende/vis.git"
+    "url": "git://github.com/visjs-community/visjs-network"
   },
   "bugs": {
     "url": "https://github.com/almende/vis/issues"
