@@ -77,28 +77,28 @@ of the project.
 
 To build the library from source, clone the project from github
 
-    $ git clone git://github.com/visjs-community/visjs-network.git
+    git clone git://github.com/visjs-community/visjs-network.git
 
 The source code uses the module style of node (require and module.exports) to
 organize dependencies. To install all dependencies and build the library,
-run `npm install` in the root of the project.
+run `yarn` or `npm install` in the root of the project.
 
-    $ cd vis
-    $ npm install
+    cd vis
+    yarn
 
-Then, the project can be build running:
+Then, the project can be built by running:
 
-    $ npm run build
+    yarn build
 
 To automatically rebuild on changes in the source files, once can use
 
-    $ npm run watch
+    yarn watch
 
 This will both build and minify the library on changes. Minifying is relatively
 slow, so when only the non-minified library is needed, one can use the
 `watch-dev` script instead:
 
-    $ npm run watch-dev
+    yarn watch-dev
 
 ## Custom builds
 
@@ -116,20 +116,20 @@ Before you can do a build:
 - Install the following modules using npm: `browserify`, `babelify`, and `uglify-js`:
 
   ```
-  $ [sudo] npm install -g browserify babelify uglify-js
+  [sudo] npm install -g browserify babelify uglify-js
   ```
 
 - Download or clone the vis.js project:
 
   ```
-  $ git clone https://github.com/visjs-community/visjs-network.git
+  git clone https://github.com/visjs-community/visjs-network.git
   ```
 
 - Install the dependencies of vis.js by running `npm install` in the root of the project:
 
   ```
-  $ cd vis
-  $ npm install
+  cd vis
+  npm install
   ```
 
 ### Examples of custom builds
@@ -145,13 +145,13 @@ exports.Timeline = require('./lib/timeline/Timeline')
 
 Then create a custom bundle using browserify, like:
 
-    $ browserify custom.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis
+    browserify custom.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis
 
 This will generate a custom bundle _vis-custom.js_, which exposes the namespace `vis` containing only `DataSet` and `Timeline`. You can pass additional options to babelify and browserify as needed (e.g. to customise the browsers that are supported).
 
 The generated bundle can be minified using uglifyjs:
 
-    $ uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
+    uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
 
 The custom bundle can now be loaded like:
 
@@ -172,11 +172,11 @@ The custom bundle can now be loaded like:
 
 The default bundle `vis.js` is standalone and includes external dependencies such as _hammer.js_ and _moment.js_. When these libraries are already loaded by the application, vis.js does not need to include these dependencies itself too. To build a custom bundle of vis.js excluding _moment.js_ and _hammer.js_, run browserify in the root of the project:
 
-    $ browserify index.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis -x moment -x hammerjs
+    browserify index.js -t [ babelify --presets [env] ] -o dist/vis-custom.js -s vis -x moment -x hammerjs
 
 This will generate a custom bundle _vis-custom.js_, which exposes the namespace `vis`, and has _moment.js_ and _hammer.js_ excluded. The generated bundle can be minified with uglifyjs:
 
-    $ uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
+    uglifyjs dist/vis-custom.js -o dist/vis-custom.min.js
 
 The custom bundle can now be loaded as:
 
@@ -227,8 +227,8 @@ var timeline = new Timeline(container, data, options)
 
 The application can be bundled and minified:
 
-    $ browserify app.js -o dist/app-bundle.js -t babelify
-    $ uglifyjs dist/app-bundle.js -o dist/app-bundle.min.js
+    browserify app.js -o dist/app-bundle.js -t babelify
+    uglifyjs dist/app-bundle.js -o dist/app-bundle.min.js
 
 And loaded into a webpage:
 
@@ -286,11 +286,11 @@ There is also an [demo-project](https://github.com/mojoaxel/vis-webpack-demo) sh
 
 To test the library, install the project dependencies once:
 
-    $ npm install
+    npm install
 
 Then run the tests:
 
-    $ npm run test
+    npm run test
 
 ## Contribute
 
