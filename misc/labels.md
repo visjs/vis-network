@@ -41,14 +41,6 @@ All issues MUST have one of the following type labels. These labels are usually 
 
 Concerns the DataSet implementation.
 
-### `Graph2D`
-
-Concerns the 2D-Graph implementation.
-
-### `Graph3D`
-
-Concerns the 3D-Graph implementation.
-
 ### `Network`
 
 Concerns the Network-Graph implementation.
@@ -56,10 +48,6 @@ Concerns the Network-Graph implementation.
 ### `source/non-public API`
 
 This issues is just for discussion or is concerning the build-process, the code-style or something similar.
-
-### `Timeline`
-
-Concerns the Timeline-Graph implementation.
 
 ## Additional labels
 
