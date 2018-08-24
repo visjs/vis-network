@@ -1,7 +1,7 @@
 {
   "name": "vis",
   "version": "4.21.0-SNAPSHOT",
-  "description": "A dynamic, browser-based visualization library.",
+  "description": "A dynamic, browser-based network visualization library.",
   "homepage": "http://visjs.org/",
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
