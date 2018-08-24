@@ -52,11 +52,11 @@ If we would merge the development branch would overwrite this. To solve this we 
 - [ ] Rebase the `master` branch on the `develop` branch: `git checkout master && git rebase develop`
 - [ ] Generate new dist files: `npm prune && rm -rf node_modules && npm install && npm run build && npm run test && git commit -am "generated dist files for vX.Y.Z"
 - [ ] Create a version tag: `git tag "vX.Y.Z"`
-- [ ] [Remove the protection](https://github.com/almende/vis/settings/branches/master) from `master`.
+- [ ] [Remove the protection](https://github.com/visjs-community/visjs-network/settings/branches/master) from `master`.
 - [ ] FORCE-Push the branches to github: `git push --force && git push --tag`
-- [ ] [Re-Enable branch protection](https://github.com/almende/vis/settings/branches/master) (enable ALL checkboxes) for `master`.
+- [ ] [Re-Enable branch protection](https://github.com/visjs-community/visjs-network/settings/branches/master) (enable ALL checkboxes) for `master`.
 - [ ] Publish with npm: `npm publish` (check [npmjs.com](https://www.npmjs.com/package/vis))
-- [ ] Create a [new Release](https://github.com/almende/vis/releases/new) with the tang and the name "vX.Y.Z" and copy the data vom [HISTORY.md](../HISTORY.md) into the body.
+- [ ] Create a [new Release](https://github.com/visjs-community/visjs-network/releases/new) with the tang and the name "vX.Y.Z" and copy the data vom [HISTORY.md](../HISTORY.md) into the body.
 
 ## Test
 
@@ -87,8 +87,8 @@ If we would merge the development branch would overwrite this. To solve this we 
 - [ ] Change version numbers in "package.json" to a snapshot version `X.X.Z-SNAPSHOT`.
 - [ ] Commit and push: `git commit -am "changed version to vX.X.Z-SNAPSHOT"`
 - [ ] Create new tag: `git tag vX.X.Z-SNAPSHOT`.
-- [ ] [Remove the protection](https://github.com/almende/vis/settings/branches/develop) from `develop`.
+- [ ] [Remove the protection](https://github.com/visjs-community/visjs-network/settings/branches/develop) from `develop`.
 - [ ] FORCE-Push the branches to github: `git push --force && git push --tag`
-- [ ] [Re-Enable branch protection](https://github.com/almende/vis/settings/branches/develop) (enable ALL checkboxes) for `develop`.
+- [ ] [Re-Enable branch protection](https://github.com/visjs-community/visjs-network/settings/branches/develop) (enable ALL checkboxes) for `develop`.
 
 DONE!

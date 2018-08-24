@@ -16,15 +16,15 @@ A new issue is often opened fast and then forgotten. Please help go through [the
 
 ### Improve the webpage
 
-The visjs.org webpage is hosted on the [gh-pages branch](//github.com/almende/vis/tree/gh-pages). If you find a typo or anything else that should be improved feel free to create a pull-request to _gh-pages_. Please make changes in your own fork of gh-pages so the support team can view the changes in your hosted fork.
+The visjs.org webpage is hosted on the [gh-pages branch](//github.com/visjs-community/visjs-network/tree/gh-pages). If you find a typo or anything else that should be improved feel free to create a pull-request to _gh-pages_. Please make changes in your own fork of gh-pages so the support team can view the changes in your hosted fork.
 
 ### Create new examples
 
-We have [a collection of examples](//github.com/almende/vis/tree/develop/examples). Please help by creating interesting new ones that show a specific problem or layout. Keep the examples easy to understand for beginners and remove unnecessary clutter.
+We have [a collection of examples](//github.com/visjs-community/visjs-network/tree/develop/examples). Please help by creating interesting new ones that show a specific problem or layout. Keep the examples easy to understand for beginners and remove unnecessary clutter.
 
 ### Provide interesting showcases
 
-If you use vis.js to develop something beautiful feel free to create a pull-request to our show cases page in the gh-pages branch](//github.com/almende/vis/tree/gh-pages/showcase). [These showcases are displayed on our webpage](http://visjs.org/showcase/index.html) and we are always looking for new examples.
+If you use vis.js to develop something beautiful feel free to create a pull-request to our show cases page in the gh-pages branch](//github.com/visjs-community/visjs-network/tree/gh-pages/showcase). [These showcases are displayed on our webpage](http://visjs.org/showcase/index.html) and we are always looking for new examples.
 
 ### Confirming and fixing bugs
 
@@ -35,7 +35,7 @@ You can not only help by fixing bugs, but also by confirming the bug or even cre
 
 ### Implementing Feature-Requests
 
-A lot of people have a lot of ideas for improving vis.js. [We label these issues as **Feature-Request**](https://github.com/almende/vis/labels/Feature-Request). Feel free to implement a new feature by creating a new Pull-Request.
+A lot of people have a lot of ideas for improving vis.js. [We label these issues as **Feature-Request**](https://github.com/visjs-community/visjs-network/labels/Feature-Request). Feel free to implement a new feature by creating a new Pull-Request.
 
 [Some issues are labeled **For everybody!**](//github.com/visjs-community/visjs-network/issues?q=is%3Aissue+is%3Aopen+label%3A%22For+everyone%21%22+sort%3Areactions-%2B1-desc). These are a good starting point.
 
@@ -47,7 +47,7 @@ We use [GitHub's two-step review](//help.github.com/articles/about-pull-request-
 
 There are some rules for pull-request:
 
-- All pull-request must be to the [develop-branch](//github.com/almende/vis/tree/develop). Pull-request against the [master-branch](//github.com/almende/vis/tree/master) must be closed. (Changes to [gh-pages](//github.com/almende/vis/tree/gh-pages) are also ok.)
+- All pull-request must be to the [develop-branch](//github.com/visjs-community/visjs-network/tree/develop). Pull-request against the [master-branch](//github.com/visjs-community/visjs-network/tree/master) must be closed. (Changes to [gh-pages](//github.com/visjs-community/visjs-network/tree/gh-pages) are also ok.)
 
 - Only commit changes done in the source files in the folder `lib`, not to the builds
   which are located in the folder `dist`.

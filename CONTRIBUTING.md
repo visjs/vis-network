@@ -1,6 +1,6 @@
 ## Contributing
 
-[Contributions](//github.com/almende/vis/blob/master/misc/how_to_help.md) to the vis.js library are very welcome!
+[Contributions](//github.com/visjs-community/visjs-network/blob/master/misc/how_to_help.md) to the vis.js library are very welcome!
 
 ### Questions
 
