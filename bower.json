@@ -1,7 +1,7 @@
 {
   "name": "vis",
   "main": ["dist/vis.js", "dist/vis.css"],
-  "description": "A dynamic, browser-based visualization library.",
+  "description": "A dynamic, browser-based network visualization library.",
   "homepage": "http://visjs.org/",
   "license": ["Apache-2.0", "MIT"],
   "repository": {
@@ -14,9 +14,6 @@
     "web based",
     "browser based",
     "javascript",
-    "chart",
-    "linechart",
-    "timeline",
     "graph",
     "network",
     "browser"
