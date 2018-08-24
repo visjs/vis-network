@@ -1,58 +1,36 @@
 # visjs-network
 
-This repo is an early effort to extract out the Network module of vis.js into a standalone Javascript package. Currently, this repo contains the entirety of the `vis`. Soon, with some careful refactoring, we hope to distill this repo down into only the Network module.
+A dynamic, browser-based network visualization library. A network-visualization focused fork of the visualization library [vis.js](https://github.com/visjs-community/vis)
 
-See this [github issue comment](https://github.com/visjs-community/visjs-network/issues/4015#issuecomment-410556365) for some history and motivation behind this effort.
-
----
+See this [github issue comment](https://github.com/visjs-community/visjs-network/issues/4015#issuecomment-410556365) for some project history.
 
 [![Join the chat at https://gitter.im/vis-js/Lobby](https://badges.gitter.im/vis-js/Lobby.svg)](https://gitter.im/vis-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Vis.js is a dynamic, browser based visualization library.
-The library is designed to be easy to use, handle large amounts
-of dynamic data, and enable manipulation of the data.
+visjs-network is a dynamic, browser based network visualization library.
+The library is designed to be easy to use, handle dynamic data, and enable data manipulation.
 The library consists of the following components:
 
+- Network. Display a network (force directed graph) with nodes and edges.
 - DataSet and DataView. A flexible key/value based data set. Add, update, and
   remove items. Subscribe on changes in the data set. A DataSet can filter and
   order items, and convert fields of items.
 - DataView. A filtered and/or formatted view on a DataSet.
-- Graph2d. Plot data on a timeline with lines or barcharts.
-- Graph3d. Display data in a three dimensional graph.
-- Network. Display a network (force directed graph) with nodes and edges.
-- Timeline. Display different types of data on a timeline.
 
-The vis.js library was initially developed by [Almende B.V](http://almende.com).
-
-## Badges
-
-[![NPM](https://nodei.co/npm/vis.png?downloads=true&downloadRank=true)](https://nodei.co/npm/vis/)
-
-[![Dependency Status](https://david-dm.org/almende/vis/status.svg)](https://david-dm.org/almende/vis)
-[![devDependency Status](https://david-dm.org/almende/vis/dev-status.svg)](https://david-dm.org/almende/vis?type=dev)
-
-[![last version on CDNJS](https://img.shields.io/cdnjs/v/vis.svg)](https://cdnjs.com/libraries/vis)
-[![GitHub contributors](https://img.shields.io/github/contributors/almende/vis.svg)](https://github.com/almende/vis/graphs/contributors)
-[![GitHub stars](https://img.shields.io/github/stars/almende/vis.svg)](https://github.com/almende/vis/stargazers)
-
-[![GitHub issues](https://img.shields.io/github/issues/almende/vis.svg)](https://github.com/visjs-community/visjs-network/issues)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/almende/vis.svg)](http://isitmaintained.com/project/almende/vis 'Percentage of issues still open')
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/almende/vis.svg)](http://isitmaintained.com/project/almende/vis 'Average time to resolve an issue')
-[![Pending Pull-Requests](http://githubbadges.herokuapp.com/almende/vis/pulls.svg)](https://github.com/almende/vis/pulls)
-
-[![Code Climate](https://codeclimate.com/github/almende/vis/badges/gpa.svg)](https://codeclimate.com/github/almende/vis)
+The vis.js library was originally developed by Dutch R&D Company [Almende B.V](http://almende.com).
 
 ## Install
 
+Install via yarn:
+
+    yarn add visjs-network
+
 Install via npm:
 
-    $ npm install vis
+    npm install visjs-network
 
 Install via bower:
 
-    $ bower install vis
-
-Link via cdnjs: http://cdnjs.com
+    bower install visjs-network
 
 Or download the library from the github project:
 [https://github.com/visjs-community/visjs-network.git](https://github.com/visjs-community/visjs-network.git).
