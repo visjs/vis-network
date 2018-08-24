@@ -55,7 +55,7 @@ Install via bower:
 Link via cdnjs: http://cdnjs.com
 
 Or download the library from the github project:
-[https://github.com/visjs-community/visjs-network](https://github.com/visjs-community/visjs-network).
+[https://github.com/visjs-community/visjs-network.git](https://github.com/visjs-community/visjs-network.git).
 
 ## Load
 
@@ -143,7 +143,7 @@ of the project.
 
 To build the library from source, clone the project from github
 
-    $ git clone git://github.com/visjs-community/visjs-network
+    $ git clone git://github.com/visjs-community/visjs-network.git
 
 The source code uses the module style of node (require and module.exports) to
 organize dependencies. To install all dependencies and build the library,
@@ -188,7 +188,7 @@ Before you can do a build:
 - Download or clone the vis.js project:
 
   ```
-  $ git clone https://github.com/visjs-community/visjs-network
+  $ git clone https://github.com/visjs-community/visjs-network.git
   ```
 
 - Install the dependencies of vis.js by running `npm install` in the root of the project:

@@ -6,7 +6,7 @@
   "license": ["Apache-2.0", "MIT"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/visjs-community/visjs-network"
+    "url": "git://github.com/visjs-community/visjs-network.git"
   },
   "keywords": [
     "vis",

@@ -1,6 +1,7 @@
 # Release Checklist
 
 ## Communication
+
 - [ ] Create a new issue and copy&paste this checklist into it (Yeah! First Step done!)
 - [ ] Talk to the team: Who should make the release?
 - [ ] Announce a "Code-Freeze". No new Pull-Request until the release is done!
@@ -10,35 +11,39 @@
 - [ ] Identify MINOR issues and add them to the next MINOR milestone (optional).
 
 ## Update to the newest version
+
 - [ ] Update to the current version: `git checkout develop && git pull`.
 - [ ] Create a new release branch. (`git checkout -b vX.Y.Z develop`)
 
 ## Build & Test
+
 - [ ] Update the version number of the library in `package.json` (remove the "SNAPSHOT").
 - [ ] Build the library: `npm prune && rm -rf node_modules && npm install && npm run build && npm run test`
-- [ ] Open some of the examples in your browser and visually check if it works as expected! (*We need automated tests for this!*)
+- [ ] Open some of the examples in your browser and visually check if it works as expected! (_We need automated tests for this!_)
 
 ## History
-(*THIS IS A LOT OF WORK! WE SHOULD TRY TO automate this in the future!!*)
 
-- [ ] Get all commits since the last release: ```git log `git describe --tags --abbrev=0`..HEAD --oneline > .commits.tmp```
+(_THIS IS A LOT OF WORK! WE SHOULD TRY TO automate this in the future!!_)
+
+- [ ] Get all commits since the last release: `` git log `git describe --tags --abbrev=0`..HEAD --oneline > .commits.tmp ``
 - [ ] Open ".commity.tmp". and remove all commit before the last release.
 - [ ] Open every commit in GitHub and move every issue/pull-request to the current milestone.
 - [ ] Transfer all Commit-Messages/issues to "HISTORY.md" starting at the button.
- - Keep the order of the commits. Older commits are lower newers are higher.
- - Bug-Fixes start with `FIX #issue:`
- - New Features start with `FEAT #issue:`
- - Refactors start with `REFA #PR:`
- - Additional work start with `Added #PR:`
-
+- Keep the order of the commits. Older commits are lower newers are higher.
+- Bug-Fixes start with `FIX #issue:`
+- New Features start with `FEAT #issue:`
+- Refactors start with `REFA #PR:`
+- Additional work start with `Added #PR:`
 
 ## Commit
+
 - [ ] Commit the new version: `git commit -am "Release vX.Y.Z"`
 - [ ] Push the release branch: `git push`
 - [ ] Open a Pull-Request for the release-branch to the develop-branch.
 - [ ] Wait until somebody of the team looked over your changes and merges the Pull-Request.
 
 ### Update Master
+
 We don't merge the development branch to the master because the master branch is different to the develop-Branch. The master branch has a dist and test folder and does not generate Source-Maps.
 
 If we would merge the development branch would overwrite this. To solve this we use rebase instead:
@@ -53,17 +58,18 @@ If we would merge the development branch would overwrite this. To solve this we 
 - [ ] Publish with npm: `npm publish` (check [npmjs.com](https://www.npmjs.com/package/vis))
 - [ ] Create a [new Release](https://github.com/almende/vis/releases/new) with the tang and the name "vX.Y.Z" and copy the data vom [HISTORY.md](../HISTORY.md) into the body.
 
-
 ## Test
+
 - [ ] Go to a temp directory (e.g. "vis_vX.Y.Z"): `cd .. && mkdir vis_vX.Y.Z && cd vis_vX.Y.Z`
 - [ ] Install the library from npm: `npm init -f && npm install vis`
 - [ ] Verify if it installs the just released version, and verify if it works: `cd node_modules/vis/
 - [ ] Install the library via bower: `cd ../.. && bower install vis`
 - [ ] Verify if it installs the just released version, and verify if it works: `cd bower_components/vis/`
-- [ ] Clone the master from github: `cd ../.. && git clone git@github.com:almende/vis.git`.
+- [ ] Clone the master from github: `cd ../.. && git clone git@github.com:visjs-community/visjs-network.git`.
 - [ ] Verify if it installs the just released version, and verify if it works. `cd vis`
 
 ## Update website
+
 - [ ] update the gh-pages branch: `git checkout gh-pages && git pull && git checkout -b "gh-pages_vX.Y.Z"`
 - [ ] Copy the `dist` folder from the `master` branch to the `github-pages` branch in another directory, overwriting existing files: `cp -rf ../vis_vX.Y.Z/vis/dist .`
 - [ ] Generate the documentation: `gulp docs`
@@ -76,6 +82,7 @@ If we would merge the development branch would overwrite this. To solve this we 
 - [ ] Push the changes `git push --set-upstream origin gh-pages_vX.Y.Z`
 
 ## Prepare next version
+
 - [ ] Switch to the "develop" branch: `git checkout develop`.
 - [ ] Change version numbers in "package.json" to a snapshot version `X.X.Z-SNAPSHOT`.
 - [ ] Commit and push: `git commit -am "changed version to vX.X.Z-SNAPSHOT"`
