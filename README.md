@@ -2,7 +2,7 @@
 
 This repo is an early effort to extract out the Network module of vis.js into a standalone Javascript package. Currently, this repo contains the entirety of the `vis`. Soon, with some careful refactoring, we hope to distill this repo down into only the Network module.
 
-See this [github issue comment](https://github.com/almende/vis/issues/4015#issuecomment-410556365) for some history and motivation behind this effort.
+See this [github issue comment](https://github.com/visjs-community/visjs-network/issues/4015#issuecomment-410556365) for some history and motivation behind this effort.
 
 ---
 
@@ -35,7 +35,7 @@ The vis.js library was initially developed by [Almende B.V](http://almende.com).
 [![GitHub contributors](https://img.shields.io/github/contributors/almende/vis.svg)](https://github.com/almende/vis/graphs/contributors)
 [![GitHub stars](https://img.shields.io/github/stars/almende/vis.svg)](https://github.com/almende/vis/stargazers)
 
-[![GitHub issues](https://img.shields.io/github/issues/almende/vis.svg)](https://github.com/almende/vis/issues)
+[![GitHub issues](https://img.shields.io/github/issues/almende/vis.svg)](https://github.com/visjs-community/visjs-network/issues)
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/almende/vis.svg)](http://isitmaintained.com/project/almende/vis 'Percentage of issues still open')
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/almende/vis.svg)](http://isitmaintained.com/project/almende/vis 'Average time to resolve an issue')
 [![Pending Pull-Requests](http://githubbadges.herokuapp.com/almende/vis/pulls.svg)](https://github.com/almende/vis/pulls)
