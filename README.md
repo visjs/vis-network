@@ -55,7 +55,7 @@ Install via bower:
 Link via cdnjs: http://cdnjs.com
 
 Or download the library from the github project:
-[https://github.com/almende/vis.git](https://github.com/almende/vis.git).
+[https://github.com/visjs-community/visjs-network](https://github.com/visjs-community/visjs-network).
 
 ## Load
 
@@ -188,7 +188,7 @@ Before you can do a build:
 - Download or clone the vis.js project:
 
   ```
-  $ git clone https://github.com/almende/vis.git
+  $ git clone https://github.com/visjs-community/visjs-network
   ```
 
 - Install the dependencies of vis.js by running `npm install` in the root of the project:
