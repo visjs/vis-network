@@ -250,6 +250,8 @@ And loaded into a webpage:
 You can integrate e.g. the timeline component directly in you webpack build.
 Therefor you can e.g. import the component-files from root direcory (starting with "index-").
 
+TODO: add analogous Network example
+
 ```js
 import { DataSet, Timeline } from 'vis/index-timeline-graph2d'
 
