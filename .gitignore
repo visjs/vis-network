@@ -1,9 +1,13 @@
 # vis.js files
 dist/
 
+# yarn files
+yarn-error.log
+
 # npm files
 node_modules
 npm-debug.log
+package-lock.json
 
 # ide or system files
 .idea
