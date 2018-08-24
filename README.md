@@ -6,8 +6,7 @@ See this [github issue comment](https://github.com/visjs-community/visjs-network
 
 [![Join the chat at https://gitter.im/vis-js/Lobby](https://badges.gitter.im/vis-js/Lobby.svg)](https://gitter.im/vis-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-visjs-network is a dynamic, browser based network visualization library.
-The library is designed to be easy to use, handle dynamic data, and enable data manipulation.
+visjs-network is designed to be easy to use, handle dynamic data, and enable data manipulation.
 The library consists of the following components:
 
 - Network. Display a network (force directed graph) with nodes and edges.
@@ -110,13 +109,14 @@ _Note that hammer.js version 2 is required as of v4._
 
 ### Prerequisites
 
-Before you can do a build:
+Before you can do a custom build:
 
 - Install _node.js_ and _npm_ on your system: https://nodejs.org/
-- Install the following modules using npm: `browserify`, `babelify`, and `uglify-js`:
+- Install _yarn_ on your system: https://yarnpkg.com/en/
+- Install the following modules globally using yarn: `browserify`, `babelify`, and `uglify-js`:
 
   ```
-  [sudo] npm install -g browserify babelify uglify-js
+  yarn global add browserify babelify uglify-js
   ```
 
 - Download or clone the vis.js project:
@@ -125,7 +125,7 @@ Before you can do a build:
   git clone https://github.com/visjs-community/visjs-network.git
   ```
 
-- Install the dependencies of vis.js by running `npm install` in the root of the project:
+- Install the dependencies of vis.js by running `yarn` or `npm install` in the root of the project:
 
   ```
   cd vis
@@ -288,11 +288,11 @@ There is also an [demo-project](https://github.com/mojoaxel/vis-webpack-demo) sh
 
 To test the library, install the project dependencies once:
 
-    npm install
+    yarn
 
 Then run the tests:
 
-    npm run test
+    yarn test
 
 ## Contribute
 
