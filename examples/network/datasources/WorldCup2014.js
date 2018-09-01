@@ -1,3 +1,4 @@
+/* eslint-disable */
 var nodes = [
   {
     id: 1,
