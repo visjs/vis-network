@@ -29,6 +29,8 @@
     "test": "mocha --compilers js:babel-core/register",
     "test-cov": "nyc --reporter=lcov mocha --compilers js:babel-core/register",
     "build": "gulp",
+    "format": "prettier --config .prettierrc.json --write '{lib,test,examples}/**/*.js'",
+    "format:check": "prettier --config config/.prettierrc.json --debug-check --list-different '{lib,test,examples}/**/*.js'",
     "lint": "gulp lint",
     "watch": "gulp watch",
     "watch-dev": "gulp watch --bundle"
