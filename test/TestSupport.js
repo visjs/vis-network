@@ -1,4 +1,4 @@
-var DataSet = require('../lib/DataSet');
+var DataSet = require('../lib/DataSet')
 
 module.exports = {
   buildMockItemSet: function() {
@@ -10,11 +10,11 @@ module.exports = {
       itemSet: {
         itemsData: new DataSet()
       }
-    };
-    return itemset;
+    }
+    return itemset
   },
 
-  buildSimpleTimelineRangeBody: function () {
+  buildSimpleTimelineRangeBody: function() {
     var body = {
       dom: {
         center: {
@@ -28,14 +28,14 @@ module.exports = {
         }
       },
       emitter: {
-        on: function () {},
-        off: function () {},
-        emit: function () {}
+        on: function() {},
+        off: function() {},
+        emit: function() {}
       },
       hiddenDates: [],
       util: {}
-    };
-    body.dom.rollingModeBtn = document.createElement('div');
+    }
+    body.dom.rollingModeBtn = document.createElement('div')
     return body
   }
-};
+}
