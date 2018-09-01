@@ -31,7 +31,8 @@
     "build": "gulp",
     "format": "prettier --config .prettierrc.json --write '{lib,test,examples}/**/*.js'",
     "format:check": "prettier --config .prettierrc.json --debug-check --list-different '{lib,test,examples}/**/*.js'",
-    "lint": "gulp lint",
+    "lint": "eslint lib/** examples/** test/** *.js",
+    "lint:fix": "eslint lib/** examples/** test/** *.js --fix",
     "watch": "gulp watch",
     "watch-dev": "gulp watch --bundle"
   },
