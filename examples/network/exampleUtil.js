@@ -1,8 +1,11 @@
+/* eslint-disable */
+
+// prettier-ignore
+// eslint-disable-next-line valid-jsdoc
 /**
  * Created by Alex on 5/20/2015.
  */
-
-function loadJSON(path, success, error) {
+function loadJSON(path, success, error) { // eslint-disable-line no-unused-vars
   var xhr = new XMLHttpRequest()
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
