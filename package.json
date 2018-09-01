@@ -66,6 +66,7 @@
     "merge-stream": "^1.0.1",
     "mocha": "^3.4.2",
     "nyc": "^11.2.1",
+    "prettier": "1.14.2",
     "rimraf": "^2.6.1",
     "sinon": "^4.0.1",
     "test-console": "^1.0.0",
