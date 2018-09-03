@@ -17,6 +17,7 @@ cache:
     - node_modules
 before_script:
   - npm run lint
+  - npm run format:check
   - npm install gulp
 script:
   - gulp
