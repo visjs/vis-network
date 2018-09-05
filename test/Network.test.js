@@ -1328,7 +1328,7 @@ describe('Network', function() {
         this.timeout(15000)
 
         var network = loadExample(
-          './examples/network/datasources/WorldCup2014.js',
+          './examples/datasources/WorldCup2014.js',
           true
         )
 
@@ -1341,7 +1341,7 @@ describe('Network', function() {
       // This actually failed to load, added for this reason
       it('disassemblerExample', function() {
         var network = loadExample(
-          './examples/network/exampleApplications/disassemblerExample.js'
+          './examples/exampleApplications/disassemblerExample.js'
         )
         // console.log(Object.keys(network.body.nodes));
         // console.log(Object.keys(network.body.edges));
