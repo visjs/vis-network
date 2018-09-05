@@ -1,6 +1,6 @@
 {
   "name": "visjs-network",
-  "version": "4.24.0",
+  "version": "4.24.1",
   "description": "A dynamic, browser-based network visualization library.",
   "homepage": "http://visjs.org/",
   "license": "(Apache-2.0 OR MIT)",
