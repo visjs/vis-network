@@ -22,44 +22,11 @@
   </style>
 
 
-  <script type="text/javascript" src="../exampleUtil.js"></script>
+  <script type="text/javascript" src="../../exampleUtil.js"></script>
   <script type="text/javascript" src="../../../dist/vis.js"></script>
   <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
 
-  <script type="text/javascript">
-    var nodes = null;
-    var edges = null;
-    var network = null;
-
-    function draw() {
-      nodes = [];
-      edges = [];
-      // randomly create some nodes and edges
-      var data = getScaleFreeNetwork(60);
-
-      // create a network
-      var container = document.getElementById('mynetwork');
-
-      var options = {
-        physics: {
-          stabilization: false
-        },
-        configure: {
-          filter:function (option, path) {
-            if (path.indexOf('physics') !== -1) {
-              return true;
-            }
-            if (path.indexOf('smooth') !== -1 || option === 'smooth') {
-              return true;
-            }
-            return false;
-          },
-          container: document.getElementById('config')
-        }
-      };
-      network = new vis.Network(container, data, options);
-    }
-  </script>
+  <script type="text/javascript" src="./index.js"></script>
   
 </head>
 
