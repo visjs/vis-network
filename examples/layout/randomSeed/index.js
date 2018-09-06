@@ -1,4 +1,4 @@
-/* global vis getScaleFreeNetwork */
+/* global vis */
 // create an array with nodes
 var nodes = new vis.DataSet([
   { id: 1, label: 'Node 1' },

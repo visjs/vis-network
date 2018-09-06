@@ -1,4 +1,4 @@
-/* global vis getScaleFreeNetwork */
+/* global vis nodes edges */
 var data = {
   nodes: nodes,
   edges: edges
