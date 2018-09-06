@@ -86,7 +86,7 @@ function draw() {
       size: 40,
       label: 'circularImage',
       shape: 'circularImage',
-      image: '../img/indonesia/4.png',
+      image: '../../img/indonesia/4.png',
       shapeProperties: { borderDashes: [15, 5] }
     },
     {

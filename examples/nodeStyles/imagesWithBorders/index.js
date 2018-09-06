@@ -8,7 +8,7 @@ var network = null
 function draw() {
   // create people.
   // value corresponds with the age of the person
-  var DIR = '../img/indonesia/'
+  var DIR = '../../img/indonesia/'
   nodes = [
     { id: 1, shape: 'image', image: DIR + '1.png' },
     { id: 2, shape: 'image', image: DIR + '2.png' },

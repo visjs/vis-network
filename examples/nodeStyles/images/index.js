@@ -2,7 +2,7 @@ var nodes = null
 var edges = null
 var network = null
 
-var DIR = '../img/refresh-cl/'
+var DIR = '../../img/refresh-cl/'
 var EDGE_LENGTH_MAIN = 150
 var EDGE_LENGTH_SUB = 50
 
