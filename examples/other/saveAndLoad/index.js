@@ -1,31 +1,33 @@
+/* global vis getScaleFreeNetwork */
 var network
 var container
 var exportArea
-var importButton
-var exportButton
 
+// eslint-disable-next-line require-jsdoc
 function init() {
   container = document.getElementById('network')
   exportArea = document.getElementById('input_output')
-  importButton = document.getElementById('import_button')
-  exportButton = document.getElementById('export_button')
-
   draw()
 }
 
+// eslint-disable-next-line require-jsdoc
 function addConnections(elem, index) {
   // need to replace this with a tree of the network, then get child direct children of the element
   elem.connections = network.getConnectedNodes(index)
 }
 
+/* eslint-disable */
 function destroyNetwork() {
+  /* eslint-enable */
   network.destroy()
 }
 
+// eslint-disable-next-line require-jsdoc
 function clearOutputArea() {
   exportArea.value = ''
 }
 
+// eslint-disable-next-line require-jsdoc
 function draw() {
   // create a network of nodes
   var data = getScaleFreeNetwork(5)
@@ -37,7 +39,9 @@ function draw() {
   clearOutputArea()
 }
 
+/* eslint-disable */
 function exportNetwork() {
+  /* eslint-enable */
   clearOutputArea()
 
   var nodes = objectToArray(network.getPositions())
@@ -52,7 +56,9 @@ function exportNetwork() {
   resizeExportArea()
 }
 
+/* eslint-disable */
 function importNetwork() {
+  /* eslint-enable */
   var inputValue = exportArea.value
   var inputData = JSON.parse(inputValue)
 
@@ -66,16 +72,18 @@ function importNetwork() {
   resizeExportArea()
 }
 
+// eslint-disable-next-line require-jsdoc
 function getNodeData(data) {
   var networkNodes = []
 
-  data.forEach(function(elem, index, array) {
+  data.forEach(function(elem) {
     networkNodes.push({ id: elem.id, label: elem.id, x: elem.x, y: elem.y })
   })
 
   return new vis.DataSet(networkNodes)
 }
 
+// eslint-disable-next-line require-jsdoc
 function getNodeById(data, id) {
   for (var n = 0; n < data.length; n++) {
     if (data[n].id == id) {
@@ -87,12 +95,13 @@ function getNodeById(data, id) {
   throw "Can not find id '" + id + "' in data"
 }
 
+// eslint-disable-next-line require-jsdoc
 function getEdgeData(data) {
   var networkEdges = []
 
   data.forEach(function(node) {
     // add the connection
-    node.connections.forEach(function(connId, cIndex, conns) {
+    node.connections.forEach(function(connId) {
       networkEdges.push({ from: node.id, to: connId })
       let cNode = getNodeById(data, connId)
 
@@ -112,6 +121,7 @@ function getEdgeData(data) {
   return new vis.DataSet(networkEdges)
 }
 
+// eslint-disable-next-line require-jsdoc
 function objectToArray(obj) {
   return Object.keys(obj).map(function(key) {
     obj[key].id = key
@@ -119,6 +129,7 @@ function objectToArray(obj) {
   })
 }
 
+// eslint-disable-next-line require-jsdoc
 function resizeExportArea() {
   exportArea.style.height = 1 + exportArea.scrollHeight + 'px'
 }
