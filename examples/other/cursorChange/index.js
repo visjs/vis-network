@@ -1,3 +1,5 @@
+/* global vis */
+
 // create an array with nodes
 var nodes = new vis.DataSet([
   { id: 1, label: 'Node 1' },
@@ -28,10 +30,15 @@ var network = new vis.Network(container, data, options)
 var networkCanvas = document
   .getElementById('mynetwork')
   .getElementsByTagName('canvas')[0]
+
+// eslint-disable-next-line require-jsdoc
 function changeCursor(newCursorStyle) {
   networkCanvas.style.cursor = newCursorStyle
 }
+
+/* eslint-disable */
 function changeEventCursor(eventName, cursorType) {
+  /* eslint-enable */
   network.on(eventName, function() {
     changeCursor(cursorType)
   })
