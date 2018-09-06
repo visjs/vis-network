@@ -1,4 +1,4 @@
-var len = undefined
+/* global vis */
 
 var nodes = [
   { id: 0, label: '0', group: 0 },
@@ -85,4 +85,4 @@ var options = {
     shadow: true
   }
 }
-network = new vis.Network(container, data, options)
+new vis.Network(container, data, options)
