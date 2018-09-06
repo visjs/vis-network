@@ -1,3 +1,5 @@
+/* global vis */
+
 var clusterIndex = 0
 var clusters = []
 var lastClusterZoomLevel = 0
@@ -71,6 +73,7 @@ network.on('selectNode', function(params) {
 })
 
 // make the clusters
+// eslint-disable-next-line require-jsdoc
 function makeClusters(scale) {
   var clusterOptionsByData = {
     processProperties: function(clusterOptions, childNodes) {
@@ -101,6 +104,7 @@ function makeClusters(scale) {
 }
 
 // open them back up!
+// eslint-disable-next-line require-jsdoc
 function openClusters(scale) {
   var newClusters = []
   var declustered = false
