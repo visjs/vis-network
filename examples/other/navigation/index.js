@@ -1,7 +1,8 @@
-var nodes = null
-var edges = null
+/* global vis */
+
 var network = null
 
+// eslint-disable-next-line require-jsdoc
 function destroy() {
   if (network !== null) {
     network.destroy()
@@ -9,7 +10,9 @@ function destroy() {
   }
 }
 
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   destroy()
 
   // create an array with nodes
