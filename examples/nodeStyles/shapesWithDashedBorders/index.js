@@ -1,9 +1,9 @@
-var nodes = null
-var edges = null
-var network = null
+/* global vis */
 
+/* eslint-disable */
 function draw() {
-  nodes = [
+  /* eslint-enable */
+  let nodes = [
     {
       id: 1,
       font: { size: 30 },
@@ -99,7 +99,7 @@ function draw() {
     }
   ]
 
-  edges = []
+  let edges = []
 
   // create a network
   var container = document.getElementById('mynetwork')
@@ -108,5 +108,5 @@ function draw() {
     edges: edges
   }
   var options = { physics: { barnesHut: { gravitationalConstant: -4000 } } }
-  network = new vis.Network(container, data, options)
+  new vis.Network(container, data, options)
 }
