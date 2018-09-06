@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC /'/-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -39,47 +39,7 @@
   </div>
   <p>For more information on easing functions check out <a href="http://easings.net/">easings.net</a></p>
   <div id="mynetwork"></div>
-  <script type="text/javascript">
-  document.getElementById("easingFunction").selectedIndex = 0;
-  function createNetwork(easingType) {
-    var nodes = new vis.DataSet([
-      {id: 1, label: 'Node 1'},
-      {id: 2, label: 'Node 2'},
-      {id: 3, label: 'Node 3'},
-      {id: 4, label: 'Node 4'},
-      {id: 5, label: 'Node 5'}
-    ]);
-
-    var edges = new vis.DataSet([
-      {from: 1, to: 3},
-      {from: 1, to: 2},
-      {from: 2, to: 4},
-      {from: 2, to: 5}
-    ]);
-
-    var container = document.getElementById('mynetwork');
-    var data = {
-      nodes: nodes,
-      edges: edges
-    };
-    var options = {};
-    var network = new vis.Network(container, data, options); 
-    network.once("beforeDrawing", function() {
-      network.focus(2, {
-        scale: 12
-      });
-    });
-    network.once("afterDrawing", function() {
-      network.fit({
-        animation: {
-          duration: 3000,
-          easingFunction: easingType
-        }
-      });
-    });
-  }
-  createNetwork("linear");
-  </script>
+  <script src='./index.js' type='text/javascript'></script>
 </body>
 </html>
 
