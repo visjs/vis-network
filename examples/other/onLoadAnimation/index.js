@@ -1,4 +1,8 @@
+/* global vis */
+
 document.getElementById('easingFunction').selectedIndex = 0
+
+// eslint-disable-next-line require-jsdoc
 function createNetwork(easingType) {
   var nodes = new vis.DataSet([
     { id: 1, label: 'Node 1' },
