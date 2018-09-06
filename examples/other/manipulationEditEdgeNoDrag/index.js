@@ -1,10 +1,11 @@
-var nodes = null
-var edges = null
+/* global vis getScaleFreeNetwork */
+
 var network = null
 // randomly create some nodes and edges
 var data = getScaleFreeNetwork(25)
 var seed = 2
 
+// eslint-disable-next-line require-jsdoc
 function setDefaultLocale() {
   var defaultLocal = navigator.language
   var select = document.getElementById('locale')
@@ -17,6 +18,7 @@ function setDefaultLocale() {
   }
 }
 
+// eslint-disable-next-line require-jsdoc
 function destroy() {
   if (network !== null) {
     network.destroy()
@@ -24,10 +26,9 @@ function destroy() {
   }
 }
 
+// eslint-disable-next-line require-jsdoc
 function draw() {
   destroy()
-  nodes = []
-  edges = []
 
   // create a network
   var container = document.getElementById('mynetwork')
@@ -67,6 +68,7 @@ function draw() {
   network = new vis.Network(container, data, options)
 }
 
+// eslint-disable-next-line require-jsdoc
 function editNode(data, cancelAction, callback) {
   document.getElementById('node-label').value = data.label
   document.getElementById('node-saveButton').onclick = saveNodeData.bind(
@@ -82,23 +84,27 @@ function editNode(data, cancelAction, callback) {
 }
 
 // Callback passed as parameter is ignored
+// eslint-disable-next-line require-jsdoc
 function clearNodePopUp() {
   document.getElementById('node-saveButton').onclick = null
   document.getElementById('node-cancelButton').onclick = null
   document.getElementById('node-popUp').style.display = 'none'
 }
 
+// eslint-disable-next-line require-jsdoc
 function cancelNodeEdit(callback) {
   clearNodePopUp()
   callback(null)
 }
 
+// eslint-disable-next-line require-jsdoc
 function saveNodeData(data, callback) {
   data.label = document.getElementById('node-label').value
   clearNodePopUp()
   callback(data)
 }
 
+// eslint-disable-next-line require-jsdoc
 function editEdgeWithoutDrag(data, callback) {
   // filling in the popup DOM elements
   document.getElementById('edge-label').value = data.label
@@ -114,17 +120,20 @@ function editEdgeWithoutDrag(data, callback) {
   document.getElementById('edge-popUp').style.display = 'block'
 }
 
+// eslint-disable-next-line require-jsdoc
 function clearEdgePopUp() {
   document.getElementById('edge-saveButton').onclick = null
   document.getElementById('edge-cancelButton').onclick = null
   document.getElementById('edge-popUp').style.display = 'none'
 }
 
+// eslint-disable-next-line require-jsdoc
 function cancelEdgeEdit(callback) {
   clearEdgePopUp()
   callback(null)
 }
 
+// eslint-disable-next-line require-jsdoc
 function saveEdgeData(data, callback) {
   if (typeof data.to === 'object') data.to = data.to.id
   if (typeof data.from === 'object') data.from = data.from.id
@@ -133,7 +142,9 @@ function saveEdgeData(data, callback) {
   callback(data)
 }
 
+/* eslint-disable */
 function init() {
+  /* eslint-enable */
   setDefaultLocale()
   draw()
 }
