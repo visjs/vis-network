@@ -1,3 +1,5 @@
+/* global vis */
+
 // create an array with nodes
 var nodes = new vis.DataSet([
   { id: 1, label: 'html color', color: 'lime' },
@@ -50,4 +52,4 @@ var options = {
   nodes: { borderWidth: 2 },
   interaction: { hover: true }
 }
-var network = new vis.Network(container, data, options)
+new vis.Network(container, data, options)

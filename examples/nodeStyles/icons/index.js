@@ -1,7 +1,11 @@
+/* global vis */
+
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   /*
-       * Example for FontAwesome
-       */
+  * Example for FontAwesome
+  */
   var optionsFA = {
     groups: {
       usergroups: {
@@ -91,7 +95,7 @@ function draw() {
     edges: edges
   }
 
-  var networkFA = new vis.Network(containerFA, dataFA, optionsFA)
+  new vis.Network(containerFA, dataFA, optionsFA)
 
   /*
        * Example for Ionicons
@@ -161,5 +165,5 @@ function draw() {
     edges: edges
   }
 
-  var networkIO = new vis.Network(containerIO, dataIO, optionsIO)
+  new vis.Network(containerIO, dataIO, optionsIO)
 }

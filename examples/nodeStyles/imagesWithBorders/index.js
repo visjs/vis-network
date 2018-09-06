@@ -1,15 +1,13 @@
-var DIR = 'img/soft-scraps-icons/'
-
-var nodes = null
-var edges = null
-var network = null
+/* global vis  */
 
 // Called when the Visualization API is loaded.
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   // create people.
   // value corresponds with the age of the person
   var DIR = '../../img/indonesia/'
-  nodes = [
+  const nodes = [
     { id: 1, shape: 'image', image: DIR + '1.png' },
     { id: 2, shape: 'image', image: DIR + '2.png' },
     { id: 3, shape: 'image', image: DIR + '3.png' },
@@ -47,7 +45,7 @@ function draw() {
 
   // create connections between people
   // value corresponds with the amount of contact between two people
-  edges = [
+  const edges = [
     { from: 1, to: 2 },
     { from: 2, to: 3 },
     { from: 2, to: 4 },
@@ -88,5 +86,5 @@ function draw() {
       color: 'lightgray'
     }
   }
-  network = new vis.Network(container, data, options)
+  new vis.Network(container, data, options)
 }

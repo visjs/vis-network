@@ -1,3 +1,5 @@
+/* global vis */
+
 var nodes = [
   { id: 0, label: '0', group: 'source' },
   { id: 1, label: '1', group: 'icons' },
@@ -94,4 +96,4 @@ var options = {
     }
   }
 }
-var network = new vis.Network(container, data, options)
+new vis.Network(container, data, options)

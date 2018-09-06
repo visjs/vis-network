@@ -1,9 +1,12 @@
+/* global vis */
+
 var nodes = null
 var edges = null
-var network = null
 
 // Called when the Visualization API is loaded.
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   // create people.
   // value corresponds with the age of the person
   var DIR = '../../img/indonesia/'
@@ -83,5 +86,5 @@ function draw() {
       color: 'lightgray'
     }
   }
-  network = new vis.Network(container, data, options)
+  new vis.Network(container, data, options)
 }

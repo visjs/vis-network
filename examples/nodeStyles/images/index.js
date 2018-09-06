@@ -1,13 +1,16 @@
+/* global vis */
+
 var nodes = null
 var edges = null
-var network = null
 
 var DIR = '../../img/refresh-cl/'
 var EDGE_LENGTH_MAIN = 150
 var EDGE_LENGTH_SUB = 50
 
 // Called when the Visualization API is loaded.
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   // Create a data table with nodes.
   nodes = []
 
@@ -35,7 +38,7 @@ function draw() {
   edges.push({ from: 1, to: 2, length: EDGE_LENGTH_MAIN })
   edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN })
 
-  for (var i = 4; i <= 7; i++) {
+  for (let i = 4; i <= 7; i++) {
     nodes.push({
       id: i,
       label: 'Computer',
@@ -77,7 +80,7 @@ function draw() {
   })
   edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB })
 
-  for (var i = 200; i <= 201; i++) {
+  for (let i = 200; i <= 201; i++) {
     nodes.push({
       id: i,
       label: 'Smartphone',
@@ -94,5 +97,5 @@ function draw() {
     edges: edges
   }
   var options = {}
-  network = new vis.Network(container, data, options)
+  new vis.Network(container, data, options)
 }

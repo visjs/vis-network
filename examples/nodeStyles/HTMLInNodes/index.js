@@ -1,10 +1,7 @@
+/* global vis */
+
 var nodes = null
 var edges = null
-var network = null
-
-var DIR = 'img/refresh-cl/'
-var LENGTH_MAIN = 150
-var LENGTH_SUB = 50
 
 var svg =
   '<svg xmlns="http://www.w3.org/2000/svg" width="390" height="65">' +
@@ -21,7 +18,9 @@ var svg =
 var url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
 
 // Called when the Visualization API is loaded.
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   // Create a data table with nodes.
   nodes = []
 
@@ -42,5 +41,5 @@ function draw() {
     physics: { stabilization: false },
     edges: { smooth: false }
   }
-  network = new vis.Network(container, data, options)
+  new vis.Network(container, data, options)
 }
