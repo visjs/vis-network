@@ -1,10 +1,10 @@
-var nodes = null
-var edges = null
+/* global vis getScaleFreeNetwork */
+
 var network = null
 
+/* eslint-disable */
 function draw() {
-  nodes = []
-  edges = []
+  /* eslint-enable */
   // randomly create some nodes and edges
   var data = getScaleFreeNetwork(25)
 
