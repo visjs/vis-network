@@ -1,22 +1,12 @@
-var nodes = null
-var edges = null
+/* global vis getScaleFreeNetwork */
+
 var network = null
-var offsetx,
-  offsety,
-  positionx,
-  positiony,
-  duration,
-  easingFunction,
-  doButton,
-  focusButton,
-  showButton
+var offsetx, offsety, positionx, positiony, duration, easingFunction
 var statusUpdateSpan
 var finishMessage = ''
-var showInterval = false
-var showPhase = 1
 var amountOfNodes = 25
-const size = 20
 
+// eslint-disable-next-line require-jsdoc
 function destroy() {
   if (network !== null) {
     network.destroy()
@@ -24,12 +14,11 @@ function destroy() {
   }
 }
 
+/* eslint-disable */
 function draw() {
+  /* eslint-enable */
   destroy()
   statusUpdateSpan = document.getElementById('statusUpdate')
-  doButton = document.getElementById('btnDo')
-  focusButton = document.getElementById('btnFocus')
-  showButton = document.getElementById('btnShow')
 
   // randomly create some nodes and edges
   var data = getScaleFreeNetwork(amountOfNodes)
@@ -75,7 +64,9 @@ function draw() {
   form.addEventListener('submit', focusNode, false)
 }
 
+/* eslint-disable */
 function fitAnimated() {
+  /* eslint-enable */
   var options = {
     offset: { x: offsetx, y: offsety },
     duration: duration,
@@ -86,7 +77,9 @@ function fitAnimated() {
   network.fit({ animation: options })
 }
 
+/* eslint-disable */
 function doDefaultAnimation() {
+  /* eslint-enable */
   var options = {
     position: { x: positionx, y: positiony },
     offset: { x: offsetx, y: offsety },
@@ -97,6 +90,7 @@ function doDefaultAnimation() {
   network.moveTo(options)
 }
 
+// eslint-disable-next-line require-jsdoc
 function focusNode(event) {
   event.preventDefault()
   console.log('event', event)
