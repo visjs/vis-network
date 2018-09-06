@@ -1,3 +1,5 @@
+/* global vis */
+
 var nodes = [
   {
     id: 100,
@@ -126,4 +128,4 @@ var options = {
     enabled: false
   }
 }
-var network = new vis.Network(container, data, options)
+new vis.Network(container, data, options)
