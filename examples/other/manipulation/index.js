@@ -1,10 +1,11 @@
-var nodes = null
-var edges = null
+/* global vis getScaleFreeNetwork */
+
 var network = null
 // randomly create some nodes and edges
 var data = getScaleFreeNetwork(25)
 var seed = 2
 
+// eslint-disable-next-line require-jsdoc
 function setDefaultLocale() {
   var defaultLocal = navigator.language
   var select = document.getElementById('locale')
@@ -17,6 +18,7 @@ function setDefaultLocale() {
   }
 }
 
+// eslint-disable-next-line require-jsdoc
 function destroy() {
   if (network !== null) {
     network.destroy()
@@ -24,10 +26,9 @@ function destroy() {
   }
 }
 
+// eslint-disable-next-line require-jsdoc
 function draw() {
   destroy()
-  nodes = []
-  edges = []
 
   // create a network
   var container = document.getElementById('mynetwork')
@@ -79,17 +80,20 @@ function draw() {
   network = new vis.Network(container, data, options)
 }
 
+// eslint-disable-next-line require-jsdoc
 function clearPopUp() {
   document.getElementById('saveButton').onclick = null
   document.getElementById('cancelButton').onclick = null
   document.getElementById('network-popUp').style.display = 'none'
 }
 
+// eslint-disable-next-line require-jsdoc
 function cancelEdit(callback) {
   clearPopUp()
   callback(null)
 }
 
+// eslint-disable-next-line require-jsdoc
 function saveData(data, callback) {
   data.id = document.getElementById('node-id').value
   data.label = document.getElementById('node-label').value
@@ -97,7 +101,9 @@ function saveData(data, callback) {
   callback(data)
 }
 
+/* eslint-disable */
 function init() {
+  /* eslint-enable */
   setDefaultLocale()
   draw()
 }
