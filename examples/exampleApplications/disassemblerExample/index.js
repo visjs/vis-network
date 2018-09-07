@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* global vis */
 var options = {
   manipulation: false,
   height: '90%',
@@ -205,3 +205,8 @@ var edges = [
     smooth: { type: 'cubicBezier' }
   }
 ]
+
+var container = document.getElementById('mynetwork')
+var data = { nodes: nodes, edges: edges }
+new vis.Network(container, data, options)
+
