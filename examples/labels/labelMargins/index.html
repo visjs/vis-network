@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Label margins</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <style type='text/css'>
+    #mynetwork {
+      width: 600px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+    p {
+      max-width:600px;
+    }
+  </style>
+</head>
+<body>
+  <p>The labels of box, circle, database, icon and text nodes may have different margin values.
+    Top, right, bottom and left margins may be different for each node.</p>
+  <p>Setting the margin value in the network's nodes property sets it as the default.</p>
+  <p>Setting a the value to a number uses that number for the margins. If the value is an object, a different value for each margin will be set.</p>
+  <p>Note that negative values appropriately push labels outside the node.
+  <div id='mynetwork'></div>
+  <script src='./index.js' type='text/javascript'></script>
+</body>
+</html>
