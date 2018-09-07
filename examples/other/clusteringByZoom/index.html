@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Clustering</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css'/>
+  <style type='text/css'>
+    #mynetwork {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+    }
+    p {
+        max-width: 600px;
+    }
+    h4 {
+        margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    You can zoom in and out to cluster/decluster.
+  </p>
+  Stabilize when clustering:<input type='checkbox' id='stabilizeCheckbox'>
+  <div id='mynetwork'></div>
+  <script src='./index.js' type='text/javascript'></script>
+</body>
+</html>

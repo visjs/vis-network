@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Clustering</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <style type='text/css'>
+    #mynetwork {
+      width: 600px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+    p {
+      max-width:600px;
+    }
+    h4 {
+      margin-bottom:3px;
+    }
+  </style>
+</head>
+<body>
+  <p>
+  Demonstrating getBaseEdges, getClusteredEdges updateEdge and updateClusteredNode. <br/><ul><li>Clicking on the cluster will change it to a star (updateClusteredNode).</li>
+  <li>Clicking on an edge will make it red regardless of whether it is a clusteredEdge or not (updateEdge)</li>
+  <li>Clicking on an edge will also show the results of getBaseEdges and getClusteredEdge</li>
+  </ul>
+  </p>
+  <div id='mynetwork'></div>
+  <pre id='eventSpan'></pre>
+<script src='./index.js' type='text/javascript'></script>
+</body>
+</html>

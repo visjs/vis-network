@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Hierarchical Layout, userDefined</title>
+  <style type='text/css'>
+    body {
+        font: 10pt sans;
+    }
+    #mynetwork {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+    }
+  </style>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css'/>
+  <script src='./index.js' type='text/javascript'></script>
+</head>
+<body onload="draw();">
+  <h2>Hierarchical Layout - User-defined</h2>
+  <div style="width:700px; font-size:14px; text-align: justify;">
+    This example shows a user-defined hierarchical layout. If the user defines levels for nodes but does not do so for
+    all nodes, an alert will show up and hierarchical layout will be disabled. Either all or none can be defined.
+    If the smooth curves appear to be inverted, the direction of the edge is not in the same direction as the network.
+  </div>
+  <p>
+    <input type="button" id="btn-UD" value="Up-Down">
+    <input type="button" id="btn-DU" value="Down-Up">
+    <input type="button" id="btn-LR" value="Left-Right">
+    <input type="button" id="btn-RL" value="Right-Left">
+    <input type="hidden" id='direction' value="UD">
+  </p>
+  <div id="mynetwork"></div>
+  <p id="selection"></p>
+  <script src='./handleInput.js' type='text/javascript'></script>
+</body>
+</html>

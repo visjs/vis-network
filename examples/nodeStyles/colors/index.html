@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Basic usage</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <style type='text/css'>
+    #mynetwork {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+    p {
+      max-width:700px;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    Nodes can be all kinds of colors. This example shows all possible ways of defining colors. If you supply an object, the undefined fields will assume the default colors.
+    When supplying a hex or rgb format color, it will be parsed and variations will be created for highlight and hover. Edges with inheritColor take the border colors.
+  </p>
+  <div id='mynetwork'></div>
+  <script src='./index.js' type='text/javascript'></script>
+</body>
+</html>

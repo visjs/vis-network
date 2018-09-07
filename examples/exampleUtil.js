@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // prettier-ignore
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -20,7 +18,9 @@ function loadJSON(path, success, error) { // eslint-disable-line no-unused-vars
   xhr.send()
 }
 
+/* eslint-disable */
 function getScaleFreeNetwork(nodeCount) {
+  /* eslint-enable */
   var nodes = []
   var edges = []
   var connectionCount = []
@@ -36,8 +36,8 @@ function getScaleFreeNetwork(nodeCount) {
 
     // create edges in a scale-free-network way
     if (i == 1) {
-      var from = i
-      var to = 0
+      let from = i
+      let to = 0
       edges.push({
         from: from,
         to: to
@@ -69,12 +69,15 @@ function getScaleFreeNetwork(nodeCount) {
 }
 
 var randomSeed = 764 // Math.round(Math.random()*1000);
+// eslint-disable-next-line require-jsdoc
 function seededRandom() {
   var x = Math.sin(randomSeed++) * 10000
   return x - Math.floor(x)
 }
 
+/* eslint-disable */
 function getScaleFreeNetworkSeeded(nodeCount, seed) {
+  /* eslint-enable */
   if (seed) {
     randomSeed = Number(seed)
   }
@@ -113,8 +116,8 @@ function getScaleFreeNetworkSeeded(nodeCount, seed) {
         j++
       }
 
-      var from = i
-      var to = j
+      let from = i
+      let to = j
       edges.push({
         id: edgesId++,
         from: from,

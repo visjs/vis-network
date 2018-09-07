@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Label Width and Height Settings</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <style type='text/css'>
+    #mynetwork {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+    code {
+      font-size: 14px;
+      background: #dddddd;
+    }
+    p {
+      max-width: 600px;
+    }
+    .indented {
+      margin-left: 30px;
+    }
+    .sep {
+      height: 1px;
+      width: 35%;
+      margin-left: 40px;
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+<body>
+  <p>Nodes may be set to have fixed, minimum and maximum widths and minimum heights.
+  Nodes with minimum heights may also have a vertical alignment set.</p>
+  <p>Edges may be set to have maximum widths.</p>
+  <div id='mynetwork'></div>
+  <p>The <code>widthConstraint: value</code> option means a fixed width, the minimum and maximum width of the element are set to the value (respecting left and right margins). Lines exceeding the maximum width will be broken at space boundaries to fit.</p>
+  <p>The <code>widthConstraint: { minimum: value }</code> option sets the minimum width of the element to the value.</p>
+  <p>The <code>widthConstraint: { maximum: value }</code> option sets the maximum width of the element to the value (respecting left and right margins). Lines exceeding the maximum width will be broken at space boundaries to fit.</p>
+  <p>Minimum width line sizing is applied after maximum width line breaking, so counterintuitively, the minimum being greater than the maximum has a meaningful interpretation.</p>
+  <div class='sep'></div>
+  <p>The <code>heightConstraint: value</code> option sets the minimum height of the element to the value (respecting top and bottom margins).</p>
+  <p>The <code>heightConstraint: { minimum: value }</code> option also sets the minimum height of the element to the value (respecting top and bottom margins).</p>
+  <p>The <code>heightConstraint: { valign: value }</code> option (with value <code>'top'</code>, <code>'middle'</code>, or <code>'bottom'</code>, sets the alignment of the text in the element's label to the elements top, middle or bottom (respecting top and bottom margins) when it's height is less than the minimum. The middle value is the default.</p>
+  <div class='sep'></div>
+  <p>Node width and height constraints may both be applied together, of course.</p>
+  <p>The constraint options may be applied to elements individually, or at the whole-set level.
+  Whole-set node and edge constraints are exclusive.</p>
+  <script src='./index.js' type='text/javascript'></script>
+</body>
+</html>

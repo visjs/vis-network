@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Hierarchical layout</title>
+  <style type='text/css'>
+    body {
+        font: 10pt sans;
+    }
+    #mynetwork {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+    }
+  </style>
+  <script type='text/javascript' src='../../exampleUtil.js'></script>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css'/>
+  <script src='./index.js' type='text/javascript'></script>
+</head>
+<body onload="draw();">
+  <h2>Hierarchical Layout - Scale-Free-Network</h2>
+  <div style="width:700px; font-size:14px; text-align: justify;">
+    This example shows the randomly generated <b>scale-free-network</b> set of nodes and connected edges from example 2.
+    In this example, hierarchical layout has been enabled and the vertical levels are determined automatically.
+  </div>
+  <br/>
+  <form onsubmit="draw(); return false;">
+    <label for="nodeCount">Number of nodes:</label>
+    <input id="nodeCount" type="text" value="25" style="width: 50px;">
+    <input type="submit" value="Go">
+  </form>
+  <p>
+    <input type="button" id="btn-UD" value="Up-Down">
+    <input type="button" id="btn-DU" value="Down-Up">
+    <input type="button" id="btn-LR" value="Left-Right">
+    <input type="button" id="btn-RL" value="Right-Left">
+    <input type="hidden" id='direction' value="UD">
+  </p>
+  <script src='./handleInput.js' type='text/javascript'></script>
+  <br>
+  <div id='mynetwork'></div>
+  <p id='selection'></p>
+</body>
+</html>

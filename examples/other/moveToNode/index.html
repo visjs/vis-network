@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Move to Node</title>
+  <style type='text/css'>
+    body {
+      font: 10pt sans;
+      display: flex;
+      flex-direction: column;
+    }
+    .top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 600px;
+    }
+    form {
+      margin: 10px;
+      display: flex;
+    }
+    div.form-elements {
+      display: flex;
+      flex-direction: row;
+    }
+    label {
+      margin-right: 10px;
+    }
+    input {
+      max-width: 50px;
+    }
+    button {
+      margin-left: 10px;
+    }
+    .top-right {
+      margin: 10px;
+    }
+    div.bottom {
+    }
+    #mynetwork {
+      width: 600px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+  </style>
+  <script type='text/javascript' src='../../exampleUtil.js'></script>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <script src='./index.js' type='text/javascript'></script>
+</head>
+<body onload='draw();'>
+  <div class='top'>
+      <div class='top-left'>
+        <form id='nodeIdForm'>
+          <div class='form-elements'>
+            <label for='nodeId'>nodeId</label>
+            <input type='text' id='nodeId' name='nodeId'>
+            <div class='button'>
+              <button type='submit'>focus</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class='top-right'>
+        <span id='statusUpdate'></span>
+      </div>
+  </div>
+  <div class='bottom'>
+    <div id='mynetwork'></div>
+    <p id='selection'></p>
+    <p id='stabilization'></p>
+  </div>
+</body>
+
+</html>

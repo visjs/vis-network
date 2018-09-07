@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Hierarchical layout difference</title>
+  <style type='text/css'>
+    body {
+      font: 10pt sans;
+    }
+    #mynetwork {
+      width: 800px;
+      height: 500px;
+      border: 1px solid lightgray;
+    }
+  </style>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <script src='./index.js' type='text/javascript'></script>
+  </head>
+<body onload="draw();">
+  <h2>Hierarchical layout difference</h2>
+  <div style="width:700px; font-size:14px; text-align: justify;">
+    This example shows a the effect of the different hierarchical layout methods. Hubsize is based on the amount of edges connected to a node.
+    The node with the most connections (the largest hub) is drawn at the top of the tree. The direction method is based on the direction of the edges.
+    Try switching between the methods with the dropdown box below.
+  </div>
+  Layout method:
+  <select id="layout">
+    <option value="hubsize">hubsize</option>
+    <option value="directed">directed</option>
+  </select>
+  <br/>
+  <br/>
+  <div id="mynetwork"></div>
+  <p id="selection"></p>
+  <script src='./handleInput.js' type='text/javascript'></script>
+</body>
+</html>

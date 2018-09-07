@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | HTML in nodex</title>
+  <style type='text/css'>
+    body {
+        font: 10pt arial;
+    }
+    #mynetwork {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+        background-color:#eeeeee;
+    }
+  </style>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <script src='./index.js' type='text/javascript'></script> 
+</head>
+<body onload='draw()'>
+  <p>
+      This example demonstrates showing custom HTML in Nodes, by using an SVG image.
+  </p>
+  <p style='color: red;'>
+      WARNING: this is currently not supported by all browsers.
+  </p>
+  <div id='mynetwork'></div>
+</body>
+</html>

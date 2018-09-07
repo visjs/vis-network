@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Network | node as icon</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css' />
+  <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+  <style>
+    #mynetworkFA,
+    #mynetworkIO {
+      height: 300px;
+      width: 700px;
+      border:1px solid lightgrey;
+    }
+    p {
+      max-width:700px;
+    }
+  </style>
+  <script src='./index.js' type='text/javascript'></script>
+</head>
+<body onload='draw()'>
+  <p>
+  Icons can be used for nodes as well. This example shows Icons from fontAwesome and Ionicons but it should work with similar packages as well.
+    It uses unicode and css to define the icons.<br><br> <b>Remember! Unicode in javascript is done like this: \uf274 for the unicode f274.</b>
+    <br> If a node is shown as a rectangle, it means the css is not loaded (or not yet loaded). A redraw will fix that.
+  </p>
+  <h2>
+    <i class='fa fa-flag'></i> Use FontAwesome-icons for nodes</h2>
+  <div id='mynetworkFA'></div>
+  <h2>
+    <i class='ion ion-ionic'></i> Use Ionicons-icons for nodes</h2>
+  <div id='mynetworkIO'></div>
+</body>
+</html>

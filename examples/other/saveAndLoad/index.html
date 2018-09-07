@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content=/'/text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>Network | Saving and loading networks</title>
+    <style type="text/css">
+      body {
+        font: 10pt sans;
+      }
+      #network {
+        float:left;
+        width: 600px;
+        height: 600px;
+        margin:5px;
+        border: 1px solid lightgray;
+      }
+      #config {
+        float:left;
+        width: 400px;
+        height: 600px;
+      }
+      #input_output {
+        height: 10%;
+        width: 15%;
+      }
+      p {
+        font-size:16px;
+        max-width:700px;
+      }
+    </style>
+    <script type="text/javascript" src="../../exampleUtil.js"></script>
+    <script type="text/javascript" src="../../../dist/vis.js"></script>
+    <link href="../../../dist/vis.css" rel="stylesheet" type="text/css" /> 
+  </head>
+  <body>
+    <p>
+        In this example, the network data can be exported to JSON and imported back into the network.
+
+        Try this out by exporting the network to JSON, clearing the network and then importing it again. The nodes will all appear in the same position as they were before the network was destroyed.
+    </p>
+    <div id="network"></div>
+    <div>
+      <textarea id=input_output></textarea>
+      <input type="button" id="import_button" onclick="importNetwork()" value="import"></input>
+      <input type="button" id="export_button" onclick="exportNetwork()" value="export"></input>
+      <input type="button" id="destroy_button" onclick="destroyNetwork()" value="destroy"></input>
+    </div>
+    <script src='./index.js' type='text/javascript'></script>
+  </body>
+</html>

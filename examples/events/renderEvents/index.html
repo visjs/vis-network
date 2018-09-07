@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Basic usage</title>
+  <script type='text/javascript' src='../../../dist/vis.js'></script>
+  <link href='../../../dist/vis-network.min.css' rel='stylesheet' type='text/css'/>
+  <style type='text/css'>
+    #mynetwork {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+    p {
+      max-width:600px;
+    }
+  </style>
+</head>
+<body>
+  <p>
+    You can draw on the canvas using normal HTML5 canvas functions. The before drawing will be behind the network, the after drawing will be in front of the network.
+  </p>
+  <div id='mynetwork'></div>
+  <pre id='eventSpan'></pre>
+  <script src='./index.js' type='text/javascript'></script>
+</body>
+</html>

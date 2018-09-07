@@ -1341,7 +1341,7 @@ describe('Network', function() {
       // This actually failed to load, added for this reason
       it('disassemblerExample', function() {
         var network = loadExample(
-          './examples/exampleApplications/disassemblerExample.js'
+          './examples/exampleApplications/disassemblerExample/data.js'
         )
         // console.log(Object.keys(network.body.nodes));
         // console.log(Object.keys(network.body.edges));
