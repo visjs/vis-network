@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 var options = {
   manipulation: false,
   height: '90%',
@@ -14,6 +15,7 @@ var options = {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 var nodes = [
   {
     id: 'cfg_0x00405a2e',
@@ -104,6 +106,7 @@ var nodes = [
 //
 // The edges with these id's will not load into the Network instance.
 //
+// eslint-disable-next-line no-unused-vars
 var edges = [
   {
     from: 'cfg_0x00405a2e',
