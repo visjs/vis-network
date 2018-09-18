@@ -12,6 +12,7 @@ var dotDefault =
   '\n' +
   ' // Line styles\n' +
   ' lines -- solid[label="solid pink", color="pink"]; \n' +
+  ' lines -- penwidth[label="penwidth=5", penwidth=5]; \n' +
   ' lines -- dashed[label="dashed green", style="dashed", color="green"]; \n' +
   ' lines -- dotted[label="dotted purple", style="dotted", color="purple"]; \n' +
   '\n' +
