@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <title>Text Measurement Test</title>
+
+  <script src="../../dist/vis-network.min.js" type="text/javascript"></script>
+  <link href="../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    #mynetwork {
+      width: 1000px;
+      height: 500px;
+      border: 1px solid lightgray;
+    }
+  </style>
+  <!-- <script src="../../googleAnalytics.js"></script> -->
+</head>
+
+<body>
+
+<p>Hover over and move the nodes - moving from one to the next and back and forward.</p>
+<p>They should NOT change size and their line break should not change.</p>
+
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+  var nodes = new vis.DataSet([
+      { id: 1, x:100, y:10, label: 'Node 1 - CLICK AND DRAG THIS - to ensure the width and line breaks do <b>NOT</b> change' },
+      { id: 2, x:10, y:300, label: 'Node 2 - HOVER OVER THIS, AND THEN WHITESPACE - AND REPEAT - to ensure the width and line breaks do <b>NOT</b> change on this node or the connected edge' },
+      { id: 3, x:400, y:300, label: 'Node 3 - HOVER OVER THIS, AND THEN WHITESPACE - AND REPEAT - to ensure the width and line breaks do <b>NOT</b> change on this node or the connected edge' },
+      { id: 4, x:700, y:100, label: 'Node 4 - <b>CERTAIN PLACEMENT OF BOLD MOD CAUSES IT NOT TO HAPPEN</b> it would seem. This node doesn\'t react.' }
+  ]);
+
+  var edges = new vis.DataSet([ 
+    {from: 1, to: 2, arrows: 'to', label: 'Edge label from <b>node 1 to node 2</b> that is really really long '},
+    {from: 1, to: 3, arrows: 'to', label: 'Edge label from <b>node 1 to node 3</b> that is really really long '},
+    {from: 1, to: 4, arrows: 'to', label: 'Edge label from <b>node 1 to node 4</b> that is really really long '} 
+  ]);
+  
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+
+  var options = {
+    layout: {
+      randomSeed: 1,
+      improvedLayout: false,
+      hierarchical: {
+          enabled: false
+      }      
+    },
+
+    interaction: {
+      hover: true,                // important
+      hoverConnectedEdges: true,  // important
+
+      selectable: false,
+      selectConnectedEdges: false
+    },
+
+    edges: {
+      chosen: false,
+      hoverWidth: 0,
+      selectionWidth: 0,
+      labelHighlightBold: false,
+
+      arrowStrikethrough: true,
+
+      font: {
+        multi: 'html',
+        size: 16,
+        face: 'Arial',
+        align: 'horizontal'
+      },
+      widthConstraint: {
+        maximum: 150
+      },
+      color: {
+        color: '#6d6d6d'
+      },
+      smooth: {
+        enabled: true,
+        type: 'continuous',
+        roundness: 0.3
+      }
+    },
+
+    nodes: {
+      shape: 'box',
+      margin: 10,
+      chosen: false,
+      labelHighlightBold: false,
+      font: {
+        multi: 'html',
+        size: 20,
+        color: 'black',
+        face: 'Verdana',
+        ital: { face: 'Verdana' },
+        bold: { face: 'Verdana' }        
+      },
+      widthConstraint: {
+        maximum: 200
+      }
+    },
+
+    physics: {
+      enabled: false
+    }
+  };
+
+  var container = document.getElementById('mynetwork');
+  var network = new vis.Network(container, data, options);
+</script>
+
+</body>
+</html>
