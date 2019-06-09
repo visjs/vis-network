@@ -41,7 +41,8 @@
     "moment": "^2.20.1",
     "opencollective": "^1.0.3",
     "propagating-hammerjs": "^1.4.6",
-    "timsort": "^0.3.0"
+    "timsort": "^0.3.0",
+    "vis-uuid": "^1.0.1"
   },
   "devDependencies": {
     "async": "^2.5.0",
