@@ -42,11 +42,11 @@
     "opencollective": "^1.0.3",
     "propagating-hammerjs": "^1.4.6",
     "timsort": "^0.3.0",
-    "vis-uuid": "^1.0.1"
+    "vis-uuid": "^1.1.1"
   },
   "devDependencies": {
     "async": "^2.5.0",
-    "babel-core": "^6.25.0",
+    "@babel/core": "^7.5.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
     "babel-plugin-transform-es3-property-literals": "^6.22.0",
