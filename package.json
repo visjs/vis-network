@@ -61,6 +61,7 @@
     "moment": "^2.20.1",
     "propagating-hammerjs": "^1.4.6",
     "timsort": "^0.3.0",
+    "vis-util": "^1.0.2",
     "vis-uuid": "^1.1.1"
   },
   "devDependencies": {

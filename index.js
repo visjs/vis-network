@@ -1,4 +1,4 @@
-var util = require('./lib/util');
+var util = require('vis-util');
 
 // Graph3d
 util.extend(exports, require('./index-graph3d'));
