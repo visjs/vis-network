@@ -1,6 +1,6 @@
 {
   "name": "vis",
-  "version": "4.21.0-SNAPSHOT",
+  "version": "5.0.0",
   "description": "A dynamic, browser-based visualization library.",
   "homepage": "http://visjs.org/",
   "license": "(Apache-2.0 OR MIT)",
@@ -29,7 +29,7 @@
     "test": "mocha --exit --require @babel/register",
     "test-cov": "nyc --reporter=lcov mocha --exit --require @babel/register",
     "rollup": "rollup",
-    "build:dataview": "rollup --config rollup.config.dataview.js",
+    "build:data": "rollup --config rollup.config.data.js",
     "js:network": "rollup --config rollup.config.network.js",
     "css:network": "concat-glob-cli -f 'lib/{network,shared}/**/*.css' -o dist/vis-network.css",
     "uglify:css:network": "uglifycss dist/vis-network.css > dist/vis-network.min.css",
@@ -48,7 +48,7 @@
     "css:all": "concat-glob-cli -f 'lib/**/*.css' -o dist/vis.css",
     "uglify:css:all": "uglifycss dist/vis.css > dist/vis.min.css",
     "build:all": "npm run js:all && npm run uglify:js:all && npm run css:all && npm run uglify:css:all",
-    "build": "npm run build:all && npm run build:dataview && npm run build:network && npm run build:graph2d && npm run build:graph3d",
+    "build": "npm run build:all && npm run build:data && npm run build:network && npm run build:graph2d && npm run build:graph3d",
     "watch": "npm run css:all && npm run uglify:css:all && rollup --watch --config rollup.config.all.js",
     "watch-dev": "npm run watch-dev",
     "lint": "eslint '{src,test}/**/*.{m,}{j,t}s{x,}'",
@@ -62,6 +62,7 @@
     "moment": "^2.20.1",
     "propagating-hammerjs": "^1.4.6",
     "timsort": "^0.3.0",
+    "vis-data": "^5.0.0",
     "vis-util": "^1.0.2",
     "vis-uuid": "^1.1.1"
   },
