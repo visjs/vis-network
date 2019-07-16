@@ -1,5 +1,11 @@
 # vis.js
 
+:warning: **This module has not been released yet!**<br>
+:warning: **This repository is currently under hayily development.**<br>
+:warning: **The Git history might be overwritten at any time!**<br>
+:warning: **Please come back later in a few days for updates!**
+
+
 Vis.js is a dynamic, browser based visualization library.
 The library is designed to be easy to use, handle large amounts
 of dynamic data, and enable manipulation of the data.
@@ -28,15 +34,6 @@ The vis.js library was initially developed by [Almende B.V](http://almende.com) 
 Install via npm:
 
     $ npm install vis-charts
-
-Install via bower:
-
-    $ bower install vis-charts
-
-Link via cdnjs: http://cdnjs.com
-
-Or download the library from the github project:
-[https://github.com/visjs/vis-charts](https://github.com/visjs/vis-charts).
 
 ## Load
 
@@ -124,10 +121,6 @@ run `npm install` in the root of the project.
 Then, the project can be build running:
 
     $ npm run build
-
-To automatically rebuild on changes in the source files, once can use
-
-    $ npm run watch
 
 ## Test
 
