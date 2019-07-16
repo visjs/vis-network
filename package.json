@@ -39,10 +39,7 @@
     "css:graph2d": "concat-glob-cli -f 'lib/{timeline,shared}/**/*.css' -o dist/vis-timeline-graph2d.css",
     "uglify:css:graph2d": "uglifycss dist/vis-timeline-graph2d.css > dist/vis-timeline-graph2d.min.css",
     "build:graph2d": "npm run js:graph2d && npm run css:graph2d && npm run uglify:css:graph2d",
-    "js:graph3d": "rollup --config rollup.config.graph3d.js",
-    "css:graph3d": "concat-glob-cli -f 'lib/{graph3d,shared}/**/*.css' -o dist/vis-graph3d.css",
-    "uglify:css:graph3d": "uglifycss dist/vis-graph3d.css > dist/vis-graph3d.min.css",
-    "build:graph3d": "npm run js:graph3d && npm run css:graph3d && npm run uglify:css:graph3d",
+    "build:graph3d": "rollup --config rollup.config.graph3d.js",
     "js:all": "rollup --config rollup.config.all.js",
     "uglify:js:all": "uglifyjs --comments --compress --mangle --output dist/vis.min.js dist/vis.js",
     "css:all": "concat-glob-cli -f 'lib/**/*.css' -o dist/vis.css",
@@ -62,8 +59,9 @@
     "moment": "^2.20.1",
     "propagating-hammerjs": "^1.4.6",
     "timsort": "^0.3.0",
-    "vis-data": "^5.0.0",
-    "vis-util": "^1.0.2"
+    "vis-data": "^6.1.0",
+    "vis-graph3d": "^5.0.0",
+    "vis-util": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",

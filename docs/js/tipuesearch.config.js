@@ -17,8 +17,7 @@ var tipuesearch_pages = [
 "../network/nodes.html",
 "../network/physics.html",
 "../timeline/index.html",
-"../graph2d/index.html",
-"../graph3d/index.html"
+"../graph2d/index.html"
 ];
 
 /*
