@@ -53,7 +53,7 @@
     "watch-dev": "npm run watch-dev",
     "lint": "eslint '{src,test}/**/*.{m,}{j,t}s{x,}'",
     "clean": "rimraf 'dist/*'",
-    "postinstall": "opencollective postinstall"
+    "postinstall": "opencollective postinstall || exit 0"
   },
   "dependencies": {
     "emitter-component": "^1.1.1",
