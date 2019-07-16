@@ -1,8 +1,8 @@
 # vis.js
 
 :warning: **This module has not been released yet!**<br>
-:warning: **This repository is currently under hayily development.**<br>
-:warning: **The Git history might be overwritten at any time!**<br>
+:warning: **This repository is currently under havy development.**<br>
+:warning: **The git history might be overwritten at any time!**<br>
 :warning: **Please come back later in a few days for updates!**
 
 
@@ -135,11 +135,6 @@ Then run the tests:
 ## Contribute
 
 Contributions to the vis.js library are very welcome! We can't do this alone!
-
-### Contributors
-
-This project exists thanks to all the people who already contributed:
-<a href="graphs/contributors"><img src="https://opencollective.com/visjs/contributors.svg?width=890" /></a>
 
 ### Backers
 
