@@ -27,7 +27,7 @@ The vis.js library was initially developed by [Almende B.V](http://almende.com) 
 [![GitHub contributors](https://img.shields.io/github/contributors/visjs/vis-charts.svg)](https://github.com/visjs/vis-charts/graphs/contributors)
 [![GitHub stars](https://img.shields.io/github/stars/visjs/vis-charts.svg)](https://github.com/almende/vis/stargazers)
 
-[![Backers on Open Collective](https://opencollective.com/vis/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/vis/sponsors/badge.svg)](#sponsors) 
+[![Backers on Open Collective](https://opencollective.com/visjs/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors) 
 
 ## Install
 
@@ -139,28 +139,28 @@ Contributions to the vis.js library are very welcome! We can't do this alone!
 ### Contributors
 
 This project exists thanks to all the people who already contributed:
-<a href="graphs/contributors"><img src="https://opencollective.com/vis/contributors.svg?width=890" /></a>
+<a href="graphs/contributors"><img src="https://opencollective.com/visjs/contributors.svg?width=890" /></a>
 
 ### Backers
 
 Thank you to all our backers! 🙏
 
-<a href="https://opencollective.com/vis#backers" target="_blank"><img src="https://opencollective.com/vis/backers.svg?width=890"></a>
+<a href="https://opencollective.com/vis#backers" target="_blank"><img src="https://opencollective.com/visjs/backers.svg?width=890"></a>
 
 ### Sponsors
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
-<a href="https://opencollective.com/vis/sponsor/0/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/1/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/2/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/3/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/4/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/5/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/6/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/7/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/8/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/vis/sponsor/9/website" target="_blank"><img src="https://opencollective.com/vis/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/0/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/1/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/2/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/3/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/4/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/5/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/6/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/7/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/8/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/visjs/sponsor/9/website" target="_blank"><img src="https://opencollective.com/visjs/sponsor/9/avatar.svg"></a>
 
 ## License
 
