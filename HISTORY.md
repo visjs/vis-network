@@ -1,6 +1,62 @@
-# vis.js history
+# vis-network
+
 http://visjs.org
 
+## 2019-07-19, version 5.0.0
+
+In version 5.0.0 the original [vis library](https://github.com/almende/vis) was split up and the whole build process changed.
+
+- chore(docs): removed contributors from README
+- chore: remove vis-graph3d sources
+- chore(docs): update opencollective
+- fix: fix postinstall script; #3
+- chore: update ready to show pre-release warning; fixes #3
+- chore: remove vis-uuid dependenciy Its now part of vis-util.
+- chore: use vis-data module
+- feat: generate a unminified vis.js file also
+- chore: move utils to vis-util repository
+- chore: README update
+- chore: add code of conduct
+- use rollup instead of gulp/webpack (#1)
+- chore: updated vis-uuid
+- chore: seperate uuid into its own module
+- Fixed endless image loading errors when broken image could not be loaded ([#4245](https://github.com/almende/vis/pull/4245))
+- Fix link in 'how to help' ([#4131](https://github.com/almende/vis/pull/4131))
+- Fix spelling error in spanish locale ([#4221](https://github.com/almende/vis/pull/4221))
+- Link we_need_help to Open Collective ([#4218](https://github.com/almende/vis/pull/4218))
+- Fixed typo in CONTRIBUTING.md ([#4210](https://github.com/almende/vis/pull/4210))
+- Replace babel-preset-es2015 with babel-preset-env ([#3978](https://github.com/almende/vis/pull/3978))
+- Improvment on clustering performance ([#3862](https://github.com/almende/vis/pull/3862))
+- Fix #3713 - Node color overriden by Group Color ([#3870](https://github.com/almende/vis/pull/3870))
+- Add arrow types for EndPoints.js ([#3839](https://github.com/almende/vis/pull/3839))
+- Fix typo in navigation.html ([#3890](https://github.com/almende/vis/pull/3890))
+- update moment to last version ([#3819](https://github.com/almende/vis/pull/3819))
+- Add `icon` option to ShapeBase ([#3756](https://github.com/almende/vis/pull/3756))
+- Move showManipulationToolbar outside of if statement ([#3694](https://github.com/almende/vis/pull/3694))
+- add localization for Ukraine ([#3699](https://github.com/almende/vis/pull/3699))
+- Opencollective ([#3681](https://github.com/almende/vis/pull/3681))
+- configurable manual zoom speed ([#3657](https://github.com/almende/vis/pull/3657))
+- Fixes issue 3321 by ensuring labels are drawn as part of initial cons… ([#3646](https://github.com/almende/vis/pull/3646))
+- Adding unit tests for lib/shared ([#3600](https://github.com/almende/vis/pull/3600))
+- Adds code-cov to develop and updates readme. ([#3629](https://github.com/almende/vis/pull/3629))
+- Docs : fixes and enhancements for the documentation template. ([#3596](https://github.com/almende/vis/pull/3596))
+- Unit tests: upgrade jsdom to v11 to fix breaking unit tests for Network ([#3603](https://github.com/almende/vis/pull/3603))
+- Network feature: background style for edges ([#3606](https://github.com/almende/vis/pull/3606))
+- Moved navbar elements in all html documentation files to partial ([#3604](https://github.com/almende/vis/pull/3604))
+- Docs: Moved end block in all html documentation files to partial ([#3597](https://github.com/almende/vis/pull/3597))
+- Network: force array order when sorting hierarchical levels ([#3576](https://github.com/almende/vis/pull/3576))
+- Add template for document generation with 'jsdoc'. ([#3497](https://github.com/almende/vis/pull/3497))
+- Network: DRY code in Label for parsing markup ([#3565](https://github.com/almende/vis/pull/3565))
+- Network: Cleanup @typedef's in jsdoc comments ([#3569](https://github.com/almende/vis/pull/3569))
+- Adds code coverage report the output of `npm test` and adds detailed … ([#3575](https://github.com/almende/vis/pull/3575))
+- Network: Fix documentation for event `stabilized` ([#3582](https://github.com/almende/vis/pull/3582))
+- Network: Add new Hexagon shape to shape examples ([#3577](https://github.com/almende/vis/pull/3577))
+- Network: Handle null data gracefully ([#3571](https://github.com/almende/vis/pull/3571))
+- Network: preload images in options for all shape types ([#3570](https://github.com/almende/vis/pull/3570))
+- Network: Set version of FontAwesome to latest stable 4.7.0 ([#3572](https://github.com/almende/vis/pull/3572))
+- Use mock canvas object replacing `canvas` ([#3518](https://github.com/almende/vis/pull/3518))
+- Network: Prevent crash when dataChanged is triggered during initialization ([#3568](https://github.com/almende/vis/pull/3568))
+- Network: fit() should not change the passed options ([#3566](https://github.com/almende/vis/pull/3566))
 
 ## 2017-10-12, version 4.21.0
 
