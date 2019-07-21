@@ -6,20 +6,9 @@ http://visjs.org
 
 In version 5.0.0 the original [vis library](https://github.com/almende/vis) was split up and the whole build process changed.
 
-- chore(docs): removed contributors from README
-- chore: remove vis-graph3d sources
-- chore(docs): update opencollective
 - fix: fix postinstall script; #3
-- chore: update ready to show pre-release warning; fixes #3
-- chore: remove vis-uuid dependenciy Its now part of vis-util.
-- chore: use vis-data module
 - feat: generate a unminified vis.js file also
-- chore: move utils to vis-util repository
-- chore: README update
-- chore: add code of conduct
 - use rollup instead of gulp/webpack (#1)
-- chore: updated vis-uuid
-- chore: seperate uuid into its own module
 - Fixed endless image loading errors when broken image could not be loaded ([#4245](https://github.com/almende/vis/pull/4245))
 - Fix link in 'how to help' ([#4131](https://github.com/almende/vis/pull/4131))
 - Fix spelling error in spanish locale ([#4221](https://github.com/almende/vis/pull/4221))
