@@ -25,8 +25,8 @@
   ],
   "main": "./dist/vis-network.min.js",
   "scripts": {
-    "test": "BABEL_ENV=test mocha",
-    "test-cov": "BABEL_ENV=test-cov nyc mocha",
+    "test": "BABEL_ENV=test mocha --exit",
+    "test-cov": "BABEL_ENV=test-cov nyc mocha --exit",
     "js:network": "rollup --config rollup.config.js",
     "css:network": "concat-glob-cli -f 'lib/{network,shared}/**/*.css' -o dist/vis-network.css",
     "uglify:css:network": "uglifycss dist/vis-network.css > dist/vis-network.min.css",
