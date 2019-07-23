@@ -1,0 +1,172 @@
+{
+    "type": "digraph",
+    "nodes": [
+        {
+            "id": "A",
+            "attr": {
+                "shape": "circle",
+                "fontsize": 16,
+                "fontcolor": "white",
+                "color": "red"
+            }
+        },
+        {
+            "id": "B",
+            "attr": {
+                "shape": "circle",
+                "fontsize": 16
+            }
+        },
+        {
+            "id": "C",
+            "attr": {
+                "shape": "circle",
+                "fontsize": 16
+            }
+        },
+        {
+            "id": "D",
+            "attr": {
+                "shape": "circle",
+                "fontsize": 16
+            }
+        },
+        {
+            "id": "E",
+            "attr": {
+                "shape": "circle",
+                "fontsize": 16
+            }
+        },
+        {
+            "id": "F",
+            "attr": {
+                "shape": "circle",
+                "fontsize": 16
+            }
+        }
+    ],
+    "edges": [
+        {
+            "from": "A",
+            "to": "A",
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black",
+                "label": 0.5
+            }
+        },
+        {
+            "from": "B",
+            "to": "B",
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black",
+                "label": 1.2
+            }
+        },
+        {
+            "from": "B",
+            "to": "C",
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black",
+                "label": 0.7
+            }
+        },
+        {
+            "from": "C",
+            "to": "A",
+            "type": "--",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black"
+            }
+        },
+        {
+            "from": "B",
+            "to": "D",
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black"
+            }
+        },
+        {
+            "from": "D",
+            "to": {
+                "nodes": [
+                    {
+                        "id": "B",
+                        "attr": {
+                            "shape": "circle",
+                            "fontsize": 16
+                        }
+                    },
+                    {
+                        "id": "C",
+                        "attr": {
+                            "shape": "circle",
+                            "fontsize": 16
+                        }
+                    }
+                ]
+            },
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black"
+            }
+        },
+        {
+            "from": "D",
+            "to": "E",
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black",
+                "label": 0.2
+            }
+        },
+        {
+            "from": "F",
+            "to": "F",
+            "type": "->",
+            "attr": {
+                "length": 100,
+                "color": "gray",
+                "fontcolor": "black"
+            }
+        }
+    ],
+    "subgraphs": [
+        {
+            "nodes": [
+                {
+                    "id": "B",
+                    "attr": {
+                        "shape": "circle",
+                        "fontsize": 16
+                    }
+                },
+                {
+                    "id": "C",
+                    "attr": {
+                        "shape": "circle",
+                        "fontsize": 16
+                    }
+                }
+            ]
+        }
+    ]
+}

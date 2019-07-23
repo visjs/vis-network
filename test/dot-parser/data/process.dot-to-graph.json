@@ -1,0 +1,99 @@
+{
+    "nodes": [
+        {
+            "id": "run",
+            "label": "run"
+        },
+        {
+            "id": "intr",
+            "label": "intr"
+        },
+        {
+            "id": "runbl",
+            "label": "runbl"
+        },
+        {
+            "id": "kernel",
+            "label": "kernel"
+        },
+        {
+            "id": "zombie",
+            "label": "zombie"
+        },
+        {
+            "id": "sleep",
+            "label": "sleep"
+        },
+        {
+            "id": "runmem",
+            "label": "runmem"
+        },
+        {
+            "id": "swap",
+            "label": "swap"
+        },
+        {
+            "id": "runswap",
+            "label": "runswap"
+        },
+        {
+            "id": "new",
+            "label": "new"
+        }
+    ],
+    "edges": [
+        {
+            "from": "run",
+            "to": "intr"
+        },
+        {
+            "from": "intr",
+            "to": "runbl"
+        },
+        {
+            "from": "runbl",
+            "to": "run"
+        },
+        {
+            "from": "run",
+            "to": "kernel"
+        },
+        {
+            "from": "kernel",
+            "to": "zombie"
+        },
+        {
+            "from": "kernel",
+            "to": "sleep"
+        },
+        {
+            "from": "kernel",
+            "to": "runmem"
+        },
+        {
+            "from": "sleep",
+            "to": "swap"
+        },
+        {
+            "from": "swap",
+            "to": "runswap"
+        },
+        {
+            "from": "runswap",
+            "to": "new"
+        },
+        {
+            "from": "runswap",
+            "to": "runmem"
+        },
+        {
+            "from": "new",
+            "to": "runmem"
+        },
+        {
+            "from": "sleep",
+            "to": "runmem"
+        }
+    ],
+    "options": {}
+}
