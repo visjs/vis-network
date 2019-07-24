@@ -13,7 +13,7 @@ module.exports = {
     project: 'tsconfig.json',
   },
 
-  plugins: ['prettier'],
+  plugins: ['prettier', '@typescript-eslint'],
 
   extends: ['eslint:recommended', 'prettier'],
 
