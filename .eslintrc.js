@@ -6,14 +6,21 @@ module.exports = {
     mocha: true
   },
 
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: "module",
+    ecmaVersion: 2019,
+    project: 'tsconfig.json',
   },
 
-  extends: "eslint:recommended",
+  plugins: ['prettier'],
+
+  extends: ['eslint:recommended', 'prettier'],
 
   // For the full list of rules, see: http://eslint.org/docs/rules/
   rules: {
+    'prettier/prettier': ['off'],
+
     complexity: [2, 55],
     "max-statements": [2, 115],
     "no-unreachable": 1,
@@ -39,4 +46,59 @@ module.exports = {
     }],
     "guard-for-in": 1,
   },
+  overrides: [
+    {
+      files: ['**/*.ts'],
+      rules: {
+        'prettier/prettier': ['error'],
+
+        // @TODO: Seems to mostly work just fine but I'm not 100 % sure.
+        // @TODO: Deprecated, anything like this for tsdoc?
+        'valid-jsdoc': [
+          'error',
+          {
+            prefer: {
+              arg: 'param',
+              argument: 'param',
+              return: 'returns',
+            },
+            requireParamDescription: true,
+            requireParamType: false,
+            requireReturn: false, // Requires return for void functions.
+            requireReturnDescription: true,
+            requireReturnType: false,
+          },
+        ],
+
+        // Class related.
+        '@typescript-eslint/member-naming': [
+          'error',
+          { private: '^_', protected: '^_', public: '^[^_]' },
+        ],
+        '@typescript-eslint/member-ordering': 'error',
+        '@typescript-eslint/no-parameter-properties': 'off',
+        '@typescript-eslint/no-useless-constructor': 'error',
+        '@typescript-eslint/prefer-readonly': 'error',
+
+        // Other.
+        '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+        '@typescript-eslint/prefer-includes': 'error',
+        '@typescript-eslint/prefer-regexp-exec': 'error',
+        // @TODO: Seems like a good thing, not yet on npm though.
+        // '@typescript-eslint/require-await': 'error',
+
+        // These are hoisted, I have no idea why it reports them by default.
+        '@typescript-eslint/no-use-before-define': [
+          'error',
+          { functions: false, classes: false, typedefs: false },
+        ],
+        // False positives for overloading, also tsc compiles with errors anyway.
+        'no-dupe-class-members': 'off',
+        // Blocks typesafe exhaustive switch (switch (x) { … default: const never: never = x }).
+        'no-case-declarations': 'off',
+        // Reports typeof bigint as an error, tsc validates this anyway so no problem turning this off.
+        'valid-typeof': 'off',
+      },
+    },
+  ],
 }
