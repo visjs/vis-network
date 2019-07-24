@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "declaration": true,
+        "declarationDir": "dist/types",
+        "declarationMap": true,
+        "esModuleInterop": true,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "outDir": "dist/src",
+        "paths": {},
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "target": "esnext"
+    },
+    "exclude": ["node_modules", "**/__tests__/*"],
+    "include": ["lib", "test"]
+}
