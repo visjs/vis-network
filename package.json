@@ -38,8 +38,8 @@
     "postinstall": "opencollective postinstall || exit 0"
   },
   "dependencies": {
+    "@egjs/hammerjs": "^2.0.15",
     "emitter-component": "^1.1.1",
-    "hammerjs": "^2.0.8",
     "keycharm": "^0.2.0",
     "moment": "^2.20.1",
     "propagating-hammerjs": "^1.4.6",
