@@ -1,0 +1,20 @@
+{
+    "type": "digraph",
+    "id": "G",
+    "nodes": [
+        {
+            "id": "Hello"
+        },
+        {
+            "id": "World"
+        }
+    ],
+    "edges": [
+        {
+            "from": "Hello",
+            "to": "World",
+            "type": "->",
+            "attr": {}
+        }
+    ]
+}

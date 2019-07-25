@@ -1,0 +1,136 @@
+{
+    "nodes": [
+        {
+            "id": "LR_0",
+            "label": "LR_0",
+            "shape": "doublecircle"
+        },
+        {
+            "id": "LR_3",
+            "label": "LR_3",
+            "shape": "doublecircle"
+        },
+        {
+            "id": "LR_4",
+            "label": "LR_4",
+            "shape": "doublecircle"
+        },
+        {
+            "id": "LR_8",
+            "label": "LR_8",
+            "shape": "doublecircle"
+        },
+        {
+            "id": "LR_2",
+            "label": "LR_2",
+            "shape": "circle"
+        },
+        {
+            "id": "LR_1",
+            "label": "LR_1",
+            "shape": "circle"
+        },
+        {
+            "id": "LR_6",
+            "label": "LR_6",
+            "shape": "circle"
+        },
+        {
+            "id": "LR_5",
+            "label": "LR_5",
+            "shape": "circle"
+        },
+        {
+            "id": "LR_7",
+            "label": "LR_7",
+            "shape": "circle"
+        }
+    ],
+    "edges": [
+        {
+            "from": "LR_0",
+            "to": "LR_2",
+            "label": "SS(B)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_0",
+            "to": "LR_1",
+            "label": "SS(S)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_1",
+            "to": "LR_3",
+            "label": "S($end)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_2",
+            "to": "LR_6",
+            "label": "SS(b)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_2",
+            "to": "LR_5",
+            "label": "SS(a)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_2",
+            "to": "LR_4",
+            "label": "S(A)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_5",
+            "to": "LR_7",
+            "label": "S(b)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_5",
+            "to": "LR_5",
+            "label": "S(a)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_6",
+            "to": "LR_6",
+            "label": "S(b)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_6",
+            "to": "LR_5",
+            "label": "S(a)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_7",
+            "to": "LR_8",
+            "label": "S(b)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_7",
+            "to": "LR_5",
+            "label": "S(a)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_8",
+            "to": "LR_6",
+            "label": "S(b)",
+            "arrows": "to"
+        },
+        {
+            "from": "LR_8",
+            "to": "LR_5",
+            "label": "S(a)",
+            "arrows": "to"
+        }
+    ],
+    "options": {}
+}

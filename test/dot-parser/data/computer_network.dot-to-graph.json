@@ -1,0 +1,166 @@
+{
+    "nodes": [
+        {
+            "id": "10.0.255.1",
+            "label": "10.0.255.1",
+            "shape": "circle",
+            "font": {
+                "size": 12
+            }
+        },
+        {
+            "id": "10.0.255.3",
+            "label": "10.0.255.3",
+            "shape": "circle",
+            "font": {
+                "size": 12
+            }
+        },
+        {
+            "id": "10.0.255.2",
+            "label": "10.0.255.2",
+            "shape": "circle",
+            "font": {
+                "size": 12
+            }
+        },
+        {
+            "id": "10.0.3.0/24",
+            "label": "10.0.3.0/24",
+            "shape": "box",
+            "font": {
+                "size": 12
+            }
+        },
+        {
+            "id": "10.0.2.0/24",
+            "label": "10.0.2.0/24",
+            "shape": "box",
+            "font": {
+                "size": 12
+            }
+        },
+        {
+            "id": "10.0.1.0/24",
+            "label": "10.0.1.0/24",
+            "shape": "box",
+            "font": {
+                "size": 12
+            }
+        }
+    ],
+    "edges": [
+        {
+            "from": "10.0.255.1",
+            "to": "10.0.255.3",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.1",
+            "to": "10.0.255.2",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.1",
+            "to": "10.0.255.2",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.1",
+            "to": "10.0.255.3",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.2",
+            "to": "10.0.255.1",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.2",
+            "to": "10.0.255.3",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.3",
+            "to": "10.0.255.1",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.3",
+            "to": "10.0.255.2",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "1.000",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.3",
+            "to": "10.0.3.0/24",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "HNA",
+            "shape": "solid",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.2",
+            "to": "10.0.2.0/24",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "HNA",
+            "arrows": "to"
+        },
+        {
+            "from": "10.0.255.1",
+            "to": "10.0.1.0/24",
+            "length": 170,
+            "font": {
+                "size": 12
+            },
+            "label": "HNA",
+            "arrows": "to"
+        }
+    ],
+    "options": {}
+}
