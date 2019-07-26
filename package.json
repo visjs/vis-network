@@ -23,8 +23,8 @@
     "network",
     "browser"
   ],
-  "main": "dist/umd.js",
-  "module": "dist/esm.js",
+  "main": "dist/umd.min.js",
+  "module": "dist/esm.min.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
     "test": "BABEL_ENV=test mocha --exit",
@@ -85,6 +85,7 @@
     "rimraf": "^2.6.3",
     "rollup": "^1.17.0",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-babel-minify": "^9.0.0",
     "rollup-plugin-banner": "^0.2.0",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-builtins": "^2.1.2",

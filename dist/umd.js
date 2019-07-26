@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  * 
  * @version 5.0.0
- * @date    2019-07-26T20:57:04Z
+ * @date    2019-07-26T21:37:11Z
  * 
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -6844,65 +6844,6 @@
     randomUUID: uuid4
   }); // New API (tree shakeable).
 
-  var esm = /*#__PURE__*/Object.freeze({
-    'default': util,
-    HSVToHex: HSVToHex,
-    HSVToRGB: HSVToRGB,
-    RGBToHSV: RGBToHSV,
-    RGBToHex: RGBToHex,
-    addClassName: addClassName,
-    addCssText: addCssText,
-    addEventListener: addEventListener,
-    binarySearchCustom: binarySearchCustom,
-    binarySearchValue: binarySearchValue,
-    bridgeObject: bridgeObject,
-    convert: convert,
-    copyAndExtendArray: copyAndExtendArray,
-    copyArray: copyArray,
-    deepExtend: deepExtend,
-    easingFunctions: easingFunctions,
-    equalArray: equalArray,
-    extend: extend,
-    fillIfDefined: fillIfDefined,
-    forEach: forEach,
-    getAbsoluteLeft: getAbsoluteLeft,
-    getAbsoluteRight: getAbsoluteRight,
-    getAbsoluteTop: getAbsoluteTop,
-    getScrollBarWidth: getScrollBarWidth,
-    getTarget: getTarget,
-    getType: getType,
-    hasParent: hasParent,
-    hexToHSV: hexToHSV,
-    hexToRGB: hexToRGB,
-    insertSort: insertSort,
-    isDate: isDate,
-    isMoment: isMoment,
-    isNumber: isNumber,
-    isObject: isObject,
-    isString: isString,
-    isValidHex: isValidHex,
-    isValidRGB: isValidRGB,
-    isValidRGBA: isValidRGBA,
-    mergeOptions: mergeOptions,
-    option: option,
-    overrideOpacity: overrideOpacity,
-    parseColor: parseColor,
-    preventDefault: preventDefault,
-    randomUUID: uuid4,
-    recursiveDOMDelete: recursiveDOMDelete,
-    removeClassName: removeClassName,
-    removeCssText: removeCssText,
-    removeEventListener: removeEventListener,
-    selectiveBridgeObject: selectiveBridgeObject,
-    selectiveDeepExtend: selectiveDeepExtend,
-    selectiveExtend: selectiveExtend,
-    selectiveNotDeepExtend: selectiveNotDeepExtend,
-    throttle: throttle,
-    toArray: toArray,
-    topMost: topMost,
-    updateProperty: updateProperty
-  });
-
   var commonjsGlobal$1 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function commonjsRequire$1 () {
@@ -6915,10 +6856,6 @@
 
   function createCommonjsModule$1(fn, module) {
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
-  }
-
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
   }
 
   var DOMutil = createCommonjsModule$1(function (module, exports) {
@@ -18989,8 +18926,6 @@
     }
   });
 
-  var util$1 = getCjsExportFromNamespace(esm);
-
   /**
    * Turn an element into an clickToUse element.
    * When not active, the element has a transparent overlay. When the overlay is
@@ -19082,7 +19017,7 @@
     Activator.current = this;
     this.active = true;
     this.dom.overlay.style.display = 'none';
-    util$1.addClassName(this.dom.container, 'vis-active');
+    util.addClassName(this.dom.container, 'vis-active');
     this.emit('change');
     this.emit('activate'); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
     // keyboard events on a 'change' event
@@ -19098,7 +19033,7 @@
   Activator.prototype.deactivate = function () {
     this.active = false;
     this.dom.overlay.style.display = '';
-    util$1.removeClassName(this.dom.container, 'vis-active');
+    util.removeClassName(this.dom.container, 'vis-active');
     this.keycharm.unbind('esc', this.escListener);
     this.emit('change');
     this.emit('deactivate');

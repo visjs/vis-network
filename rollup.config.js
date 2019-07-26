@@ -3,22 +3,31 @@ import resolve from 'rollup-plugin-node-resolve'
 import babel from 'rollup-plugin-babel'
 import typescript from 'rollup-plugin-typescript2'
 import banner from 'rollup-plugin-banner'
+import minify from 'rollup-plugin-babel-minify'
 import genHeader from './lib/header'
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
 // CommonJS because Babel is not 100 % ESM.
 
-const babelConfingBase = {
-  extensions: ['.ts', '.js'],
-  runtimeHelpers: true,
-}
-const resolveConfig = {
-  extensions: [...babelConfingBase.extensions, '.json'],
-}
-const bannerConfig = genHeader('network')
-const typescriptConfig = {
-  tsconfig: 'tsconfig.code.json',
-}
+const plugins = [
+  resolve({
+    extensions: ['.ts', '.js', '.json'],
+  }),
+  typescript({
+    tsconfig: 'tsconfig.code.json',
+  }),
+  commonjs(),
+  babel({
+    extensions: ['.ts', '.js'],
+    runtimeHelpers: true,
+  }),
+  banner(genHeader('network')),
+]
+const minPlugins = [
+  ...plugins.slice(0, 4),
+  minify({ comments: false }),
+  ...plugins.slice(4)
+]
 
 export default [
   {
@@ -27,13 +36,7 @@ export default [
       file: 'dist/esm.js',
       format: 'esm',
     },
-    plugins: [
-      resolve(resolveConfig),
-      typescript(typescriptConfig),
-      commonjs(),
-      babel(babelConfingBase),
-      banner(bannerConfig),
-    ],
+    plugins,
   },
   {
     input: 'lib/index.ts',
@@ -43,12 +46,24 @@ export default [
       exports: 'named',
       name: 'vis',
     },
-    plugins: [
-      resolve(resolveConfig),
-      typescript(typescriptConfig),
-      commonjs(),
-      babel(babelConfingBase),
-      banner(bannerConfig),
-    ],
+    plugins,
+  },
+  {
+    input: 'lib/index.ts',
+    output: {
+      file: 'dist/esm.min.js',
+      format: 'esm',
+    },
+    plugins: minPlugins,
+  },
+  {
+    input: 'lib/index.ts',
+    output: {
+      file: 'dist/umd.min.js',
+      format: 'umd',
+      exports: 'named',
+      name: 'vis',
+    },
+    plugins: minPlugins,
   },
 ]
