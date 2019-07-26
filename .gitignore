@@ -16,3 +16,4 @@ npm-debug.log
 gen/
 .nyc_output/
 coverage/
+.rpt2_cache
