@@ -11,7 +11,7 @@ export { default as Network } from './network/Network'
 
 import Images from './network/Images'
 import dotparser from './network/dotparser'
-import gephiParser from './network/gephiParser'
+import * as gephiParser from './network/gephiParser'
 import * as allOptions from './network/options'
 export const network = {
   Images,
