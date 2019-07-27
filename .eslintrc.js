@@ -48,7 +48,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.ts'],
+      files: ['**/*.ts', '**/*.d.ts'],
       rules: {
         'prettier/prettier': ['error'],
 
