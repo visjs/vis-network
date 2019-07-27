@@ -1,13 +1,14 @@
-// utils
-export { default as util } from 'vis-util'
-export { default as Any } from './DOMutil'
+// vis-util
+import * as util from 'vis-util'
+export { util }
 
-// data
-import { DataSet, DataView, Queue } from 'vis-data'
-export { DataSet, DataView, Queue }
+// vis-data
+import * as data from 'vis-data'
+export { data }
+export { DataSet, DataView, Queue } from 'vis-data'
 
 // Network.
-export { default as Network } from './network/Network'
+export * from './network/Network'
 
 import Images from './network/Images'
 import dotparser from './network/dotparser'
@@ -19,11 +20,12 @@ export const network = {
   dotparser,
   gephiParser,
   allOptions,
-  convertDot(input: string): any {
-    return exports.network.dotparser.DOTToGraph(input)
-  },
+  convertDot: dotparser.DOTToGraph,
   convertGephi: parseGephi,
 }
+
+// utils
+export { default as DOMutil } from './DOMutil'
 
 // bundled external libraries
 export { default as moment } from './module/moment'
