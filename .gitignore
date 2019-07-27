@@ -18,4 +18,3 @@ gen/
 coverage/
 .rpt2_cache
 vis-network-*.tgz
-dist

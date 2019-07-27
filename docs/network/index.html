@@ -10,9 +10,9 @@
     <title>vis.js - Network documentation.</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Tipue vendor css -->
-    <link href="../css/tipuesearch.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet">
 
     <link href="../css/style.css" rel="stylesheet">
 
@@ -23,10 +23,10 @@
     <![endif]-->
 
 
-    <link href="../css/prettify.css" type="text/css" rel="stylesheet"/>
-    <script type="text/javascript" src="../js/prettify/prettify.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css" type="text/css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 
-    <script src="../js/smooth-scroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/5.3.7/js/smooth-scroll.min.js"></script>
     <script language="JavaScript">
         smoothScroll.init();
     </script>
@@ -72,7 +72,7 @@
 
 <div class="navbar-wrapper">
     <div class="container">
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -1414,6 +1414,27 @@ Thus, to get the topmost item, get the value at index 0.
                 <td>same as <code>click</code>.</td>
                 <td>Fired when the drag has finished.</td>
             </tr>
+            <tr><td id="event_controlNodeDragging">controlNodeDragging</td>
+                <td>Object</td>
+                <td>Fired when dragging control node. Control Edge is edge that is being dragged and contains ids of 'from' and 'to' nodes. If control node is not dragged over another node, 'to' field is undefined. Passes an object with properties structured as:
+
+<pre class="prettyprint lang-js">{
+    nodes: [Array of selected nodeIds],
+    edges: [Array of selected edgeIds],
+    event: [Object] original click event,
+    pointer: {
+        DOM: {x:pointer_x, y:pointer_y},
+        canvas: {x:canvas_x, y:canvas_y}
+    },    
+    controlEdge: {from:from_node_id, to:to_node_id}
+}
+</pre>
+                </td>
+            </tr>
+            <tr><td id="event_controlNodeDragEnd">controlNodeDragEnd</td>
+                <td>same as <code>controlNodeDragging</code>.</td>
+                <td>Fired when the control node drag has finished.</td>
+            </tr>
             <tr><td id="event_hoverNode">hoverNode</td>
                 <td><code>{node: nodeId}</code></td>
                 <td>Fired if the option <code>interaction:{hover:true}</code> is enabled and the mouse hovers over a node.</td>
@@ -1667,8 +1688,8 @@ var network = new vis.Network(container, data, options);
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../js/ie10-viewport-bug-workaround.js"></script>
 <!-- jquery extensions -->
@@ -1676,6 +1697,6 @@ var network = new vis.Network(container, data, options);
 <script src="../js/jquery.url.min.js"></script>
 <!-- Tipue vendor js -->
 <script src="../js/tipuesearch.config.js"></script>
-<script src="../js/tipuesearch.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
 <!-- controller -->
 <script src="../js/main.js"></script>

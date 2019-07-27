@@ -18,7 +18,7 @@ import canvasMockify from './canvas-mock';
 import Label from '../lib/network/modules/components/shared/Label';
 import NodesHandler from '../lib/network/modules/NodesHandler';
 import Network from '../lib/network/Network';
-
+import ComponentUtil from '../lib/network/modules/components/shared/ComponentUtil';
 
 /**************************************************************
  * Dummy class definitions for minimal required functionality.
@@ -1619,6 +1619,45 @@ describe('Shorthand Font Options', function() {
     var options = {};
     var network = new Network(container, data, options);
 
-    done();
-  });
-});
+    done()
+  })
+
+  describe('visible function', function() {
+    it('correctly determines label is not visible when label is invalid', function(done) {
+      var invalidLabel = ''
+      assert(
+        !ComponentUtil.isValidLabel(invalidLabel),
+        'An empty string should be identified as an invalid label'
+      )
+
+      var body = {
+        view: {
+          scale: 1
+        }
+      }
+
+      var options = {
+        label: invalidLabel,
+        font: {
+          size: 12
+        },
+        scaling: {
+          label: {
+            drawThreshold: 1
+          }
+        }
+      }
+
+      var label = new Label(body, options)
+      label.size.width = 1
+      label.size.height = 1
+
+      assert(
+        !label.visible(),
+        'Label should not be visible because the label text is invalid'
+      )
+
+      done()
+    })
+  })
+})

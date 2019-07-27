@@ -11,7 +11,7 @@ export { DataSet, DataView, Queue } from 'vis-data'
 export * from './network/Network'
 
 import Images from './network/Images'
-import dotparser from './network/dotparser'
+import * as dotparser from './network/dotparser'
 import * as gephiParser from './network/gephiParser'
 import { parseGephi } from './network/gephiParser'
 import * as allOptions from './network/options'
