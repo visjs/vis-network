@@ -33,7 +33,7 @@ export default [
 	{
 		input: 'lib/index.ts',
 		output: {
-			file: 'dist/esm.js',
+			file: 'dist/vis-network.esm.js',
 			format: 'esm'
 		},
 		plugins
@@ -41,7 +41,7 @@ export default [
 	{
 		input: 'lib/index.ts',
 		output: {
-			file: 'dist/umd.js',
+			file: 'dist/vis-network.js',
 			format: 'umd',
 			exports: 'named',
 			name: 'vis'
@@ -51,7 +51,7 @@ export default [
 	{
 		input: 'lib/index.ts',
 		output: {
-			file: 'dist/esm.min.js',
+			file: 'dist/vis-network.esm.min.js',
 			format: 'esm'
 		},
 		plugins: minPlugins
@@ -59,7 +59,7 @@ export default [
 	{
 		input: 'lib/index.ts',
 		output: {
-			file: 'dist/umd.min.js',
+			file: 'dist/vis-network.min.js',
 			format: 'umd',
 			exports: 'named',
 			name: 'vis'
