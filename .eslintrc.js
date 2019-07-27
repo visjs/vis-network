@@ -96,6 +96,8 @@ module.exports = {
         'no-dupe-class-members': 'off',
         // Blocks typesafe exhaustive switch (switch (x) { … default: const never: never = x }).
         'no-case-declarations': 'off',
+        // Reports used types.
+        'no-unused-vars': 'off',
         // Reports typeof bigint as an error, tsc validates this anyway so no problem turning this off.
         'valid-typeof': 'off',
       },
