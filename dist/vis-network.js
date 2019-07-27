@@ -1,26 +1,26 @@
-/** 
+/*
  * vis-network - network
  * http://visjs.org/
- * 
+ *
  * A dynamic, browser-based visualization library.
- * 
+ *
  * @version 5.0.0
- * @date    2019-07-27T19:52:31Z
- * 
+ * @date    2019-07-27T20:58:10Z
+ *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
- * 
+ *
  * @license 
  * vis.js is dual licensed under both
- * 
+ *
  *   1. The Apache 2.0 License
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *   and
- * 
+ *
  *   2. The MIT License
  *      http://opensource.org/licenses/MIT
- * 
+ *
  * vis.js may be distributed under either license.
  */
 (function (global, factory) {
@@ -50767,3 +50767,4 @@
   Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
+//# sourceMappingURL=vis-network.js.map
