@@ -12,6 +12,7 @@ export { default as Network } from './network/Network'
 import Images from './network/Images'
 import dotparser from './network/dotparser'
 import * as gephiParser from './network/gephiParser'
+import { parseGephi } from './network/gephiParser'
 import * as allOptions from './network/options'
 export const network = {
   Images,
@@ -21,9 +22,7 @@ export const network = {
   convertDot(input: string): any {
     return exports.network.dotparser.DOTToGraph(input)
   },
-  convertGephi(input: string, options: unknown): any {
-    return exports.network.gephiParser.parseGephi(input, options)
-  },
+  convertGephi: parseGephi,
 }
 
 // bundled external libraries
