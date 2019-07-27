@@ -1,0 +1,5 @@
+{
+  "extension": ["ts", "js"],
+  "require": ["./babel.mocha.js"],
+  "spec": ["./test/**/*.test.js", "./test/**/*.test.ts"]
+}

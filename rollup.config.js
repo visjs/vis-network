@@ -22,7 +22,7 @@ export default [{
 		commonjs(),
 		nodeBuiltins(),
 		nodeResolve(),
-		babel(),
+		babel({ runtimeHelpers: true }),
 		sourcemaps(),
 		uglify({
 			sourcemap: genSourceMap

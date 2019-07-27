@@ -1,0 +1,116 @@
+{
+    "type": "graph",
+    "id": "G",
+    "nodes": [
+        {
+            "id": "run"
+        },
+        {
+            "id": "intr"
+        },
+        {
+            "id": "runbl"
+        },
+        {
+            "id": "kernel"
+        },
+        {
+            "id": "zombie"
+        },
+        {
+            "id": "sleep"
+        },
+        {
+            "id": "runmem"
+        },
+        {
+            "id": "swap"
+        },
+        {
+            "id": "runswap"
+        },
+        {
+            "id": "new"
+        }
+    ],
+    "edges": [
+        {
+            "from": "run",
+            "to": "intr",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "intr",
+            "to": "runbl",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "runbl",
+            "to": "run",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "run",
+            "to": "kernel",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "kernel",
+            "to": "zombie",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "kernel",
+            "to": "sleep",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "kernel",
+            "to": "runmem",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "sleep",
+            "to": "swap",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "swap",
+            "to": "runswap",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "runswap",
+            "to": "new",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "runswap",
+            "to": "runmem",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "new",
+            "to": "runmem",
+            "type": "--",
+            "attr": {}
+        },
+        {
+            "from": "sleep",
+            "to": "runmem",
+            "type": "--",
+            "attr": {}
+        }
+    ]
+}
