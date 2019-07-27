@@ -3,7 +3,6 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import minify from 'rollup-plugin-babel-minify';
-import banner from 'rollup-plugin-banner';
 import genHeader from './lib/header';
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
@@ -20,13 +19,11 @@ const plugins = [
 	babel({
 		extensions: ['.ts', '.js'],
 		runtimeHelpers: true
-	}),
-	banner(genHeader('network'))
+	})
 ]
 const minPlugins = [
-	...plugins.slice(0, 4),
-	minify({ comments: false }),
-	...plugins.slice(4)
+	...plugins.slice(),
+	minify({ comments: false })
 ]
 
 export default [
@@ -34,7 +31,9 @@ export default [
 		input: 'lib/index.ts',
 		output: {
 			file: 'dist/vis-network.esm.js',
-			format: 'esm'
+			format: 'esm',
+			banner: genHeader('network'),
+			sourcemap: true
 		},
 		plugins
 	},
@@ -44,7 +43,9 @@ export default [
 			file: 'dist/vis-network.js',
 			format: 'umd',
 			exports: 'named',
-			name: 'vis'
+			name: 'vis',
+			banner: genHeader('network'),
+			sourcemap: true
 		},
 		plugins
 	},
@@ -52,7 +53,9 @@ export default [
 		input: 'lib/index.ts',
 		output: {
 			file: 'dist/vis-network.esm.min.js',
-			format: 'esm'
+			format: 'esm',
+			banner: genHeader('network'),
+			sourcemap: true
 		},
 		plugins: minPlugins
 	},
@@ -62,7 +65,9 @@ export default [
 			file: 'dist/vis-network.min.js',
 			format: 'umd',
 			exports: 'named',
-			name: 'vis'
+			name: 'vis',
+			banner: genHeader('network'),
+			sourcemap: true
 		},
 		plugins: minPlugins,
 	}
