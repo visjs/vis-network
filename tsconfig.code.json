@@ -1,7 +1,8 @@
 {
     "extends": "./tsconfig",
     "compilerOptions": {
-        "emitDeclarationOnly": true,
+        "declaration": false,
+        "declarationMap": false,
         "noImplicitAny": false
     },
     "exclude": ["test"]
