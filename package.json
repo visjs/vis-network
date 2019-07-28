@@ -48,7 +48,7 @@
     "moment": "^2.24.0",
     "timsort": "^0.3.0",
     "vis-data": "^6.1.1",
-    "vis-util": "^1.1.1"
+    "vis-util": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
