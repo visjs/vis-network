@@ -1,0 +1,17 @@
+language: node_js
+
+os: linux
+
+node_js: node
+
+before_deploy:
+  - npm version $(node -p 'require("./package.json").version')-next.$(git rev-list --count master).$(git rev-parse HEAD)
+deploy:
+  provider: npm
+  email: TODO: whoever is going to be responsible for this
+  skip_cleanup: true
+  tag: next
+  api_key:
+    secure: TODO: ecrypted npmjs access token
+  on:
+    branch: master
