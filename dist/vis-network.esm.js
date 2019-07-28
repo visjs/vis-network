@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 5.1.0
- * @date    2019-07-28T15:40:13Z
+ * @date    2019-07-28T18:52:54Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -50799,5 +50799,20 @@ var network = {
   convertGephi: parseGephi_1
 }; // utils
 
+var index$2 = /*#__PURE__*/Object.freeze({
+  util: esm,
+  data: esm$1,
+  network: network,
+  DataSet: DataSet,
+  DataView: DataView,
+  Queue: Queue,
+  DOMutil: DOMutil,
+  moment: moment$3,
+  Hammer: hammer,
+  keycharm: keycharm,
+  Network: Network
+});
+
+export default index$2;
 export { DOMutil, DataSet, DataView, hammer as Hammer, Network, Queue, esm$1 as data, keycharm, moment$3 as moment, network, esm as util };
 //# sourceMappingURL=vis-network.esm.js.map
