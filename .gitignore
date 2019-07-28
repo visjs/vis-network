@@ -18,4 +18,8 @@ gen/
 coverage/
 .rpt2_cache
 vis-network-*.tgz
+
+# cypress
 cypress/screenshots
+cypress/snapshots/All Specs
+**__diff_output__
