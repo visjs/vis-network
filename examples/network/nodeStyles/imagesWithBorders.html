@@ -90,6 +90,10 @@
         },
         edges: {
           color: 'lightgray'
+        },
+        layout: {
+            // Make sure the chart always looks the same. This is needed for visual testing.
+            randomSeed: 3
         }
       };
       network = new vis.Network(container, data, options);

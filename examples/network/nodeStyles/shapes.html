@@ -60,7 +60,17 @@
         nodes: nodes,
         edges: edges
       };
-      var options = {physics:{barnesHut:{gravitationalConstant:-4000}}};
+      var options = {
+        physics: {
+          barnesHut: {
+            gravitationalConstant: -4000
+          }
+        },
+        layout: {
+            // Make sure the chart always looks the same. This is needed for visual testing.
+            randomSeed: 1
+        }
+      };
       network = new vis.Network(container, data, options);
     }
   </script>

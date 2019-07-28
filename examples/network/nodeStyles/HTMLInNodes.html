@@ -62,8 +62,16 @@
                 edges: edges
             };
             var options = {
-                physics: {stabilization: false},
-                edges: {smooth: false}
+                physics: {
+                    stabilization: false
+                },
+                edges: {
+                    smooth: false
+                },
+                layout: {
+                    // Make sure the chart always looks the same. This is needed for visual testing.
+                    randomSeed: 2
+                }
             };
             network = new vis.Network(container, data, options);
         }

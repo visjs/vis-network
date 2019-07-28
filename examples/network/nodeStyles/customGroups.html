@@ -123,6 +123,10 @@
             source: {
                 color:{border:'white'}
             }
+        },
+        layout: {
+            // Make sure the chart always looks the same. This is needed for visual testing.
+            randomSeed: 1
         }
     };
     var network = new vis.Network(container, data, options);
