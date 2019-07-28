@@ -8,10 +8,10 @@ before_deploy:
   - npm version $(node -p 'require("./package.json").version')-next.$(git rev-list --count master).$(git rev-parse HEAD)
 deploy:
   provider: npm
-  email: TODO: whoever is going to be responsible for this
+  email: tom.vycital@gmail.com
   skip_cleanup: true
   tag: next
   api_key:
-    secure: TODO: ecrypted npmjs access token
+    secure: wOZWHx9Ylrm9CNGKAECNCtKRbk0cjODFZCDpL9AhOlbIO+Ktr8WokijTS+nuc25RoKAWaKR6XxBzYvHhnsuRjt2/GuejYMzqbk2oarjao86vYXzfSlLX2eoaGibzqi0sFQ7N4HPKJwpr4ITrRDm/ilEm02qrE36eFb32XFT0utkbhONAPNN2y4Ic13ibKKDy14RNCBWtqmgiOPbDTd6K+eQ5fBGg2xLp3SLA00AT492zcYD8sMeoakUCrYXzQ/tLTaoaeugCwyN3XMji97m2jOJfE2XixExM35xAcnaK06zsNg2d6IqkQ39Mv5EvQfv1/Yvr4nsDsNRImYMxM4OnPENyVmKNhPOTjT+5m1cZmL1wlTFHXi6+egtcgLt9uq+Ft3sVmnGRtpmSWvtEQOY4dFlUEIQy90DlIygeKM99HF1EZsQPqf3MM+hANqBTCw/TdSElLRIdT/jKi00NFAEF5cqdwO5LOL9btYVMvVq/1Sma2sXyLmi+kqk4AW7Fh8fn8WHARi+ZHjITG+D356uDD+rsea46nwqWuy3oZ8JYnOclOtXw6rTFKAw1w/qwXJv3gr67AZbYeNrAJvB7WhoBUKUFhM73NmPQfW2t4CxkWXukLbXKqP/hDP98lMPRGcDDKCjJ6in9aINuu10Z6+L9MBxbwgRvRwKzPOEDibXidZs=
   on:
     branch: master
