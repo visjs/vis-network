@@ -28,7 +28,7 @@ const minPlugins = [
 
 export default [
 	{
-		input: 'lib/index.ts',
+		input: 'lib/index-bundle.ts',
 		output: {
 			file: 'dist/vis-network.esm.js',
 			format: 'esm',
@@ -38,7 +38,7 @@ export default [
 		plugins
 	},
 	{
-		input: 'lib/index.ts',
+		input: 'lib/index-bundle.ts',
 		output: {
 			file: 'dist/vis-network.js',
 			format: 'umd',
@@ -50,7 +50,7 @@ export default [
 		plugins
 	},
 	{
-		input: 'lib/index.ts',
+		input: 'lib/index-bundle.ts',
 		output: {
 			file: 'dist/vis-network.esm.min.js',
 			format: 'esm',
@@ -60,7 +60,7 @@ export default [
 		plugins: minPlugins
 	},
 	{
-		input: 'lib/index.ts',
+		input: 'lib/index-bundle.ts',
 		output: {
 			file: 'dist/vis-network.min.js',
 			format: 'umd',
