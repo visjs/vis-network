@@ -4,8 +4,8 @@
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 5.0.0
- * @date    2019-07-27T20:58:10Z
+ * @version 5.1.0
+ * @date    2019-07-28T15:40:13Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -23,20 +23,6 @@
  *
  * vis.js may be distributed under either license.
  */
-function _typeof(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -52,59 +38,37 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
-  }
-
-  if (enumerableOnly) keys = keys.filter(function (sym) {
-    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-  });
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(source).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-}
+var defineProperty = _defineProperty;
 
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
 
     return arr2;
   }
 }
 
+var arrayWithoutHoles = _arrayWithoutHoles;
+
 function _iterableToArray(iter) {
   if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
+
+var iterableToArray = _iterableToArray;
 
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
+var nonIterableSpread = _nonIterableSpread;
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+var toConsumableArray = _toConsumableArray;
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function commonjsRequire() {
@@ -116,6 +80,38 @@ function createCommonjsModule(fn, module) {
     exports: {}
   }, fn(module, module.exports), module.exports;
 }
+
+var _typeof_1 = createCommonjsModule(function (module) {
+  function _typeof2(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof2 = function _typeof2(obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof2 = function _typeof2(obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof2(obj);
+  }
+
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+      module.exports = _typeof = function _typeof(obj) {
+        return _typeof2(obj);
+      };
+    } else {
+      module.exports = _typeof = function _typeof(obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  module.exports = _typeof;
+});
 
 var moment = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
@@ -4820,7 +4816,40 @@ function uuid4() {
 
   return buf || stringifyUUID(rnds);
 } // Rollup will complain about mixing default and named exports in UMD build,
-// for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
+
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
+  }
+
+  if (enumerableOnly) keys = keys.filter(function (sym) {
+    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+  });
+  return keys;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(source, true).forEach(function (key) {
+        defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+} // for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
 // code from http://momentjs.com/
 
 
@@ -4884,7 +4913,7 @@ function isString(value) {
 
 
 function isObject(value) {
-  return _typeof(value) === 'object' && value !== null;
+  return _typeof_1(value) === 'object' && value !== null;
 }
 /**
  * Test whether given object is a Date, or a String containing a Date
@@ -4968,7 +4997,7 @@ function fillIfDefined(a, b) {
 
   for (var prop in a) {
     if (b[prop] !== undefined) {
-      if (b[prop] === null || _typeof(b[prop]) !== 'object') {
+      if (b[prop] === null || _typeof_1(b[prop]) !== 'object') {
         // Note: typeof null === 'object'
         copyOrDelete(a, b, prop, allowDeletion);
       } else {
@@ -5321,7 +5350,7 @@ function convert(object, type) {
     case 'ASPDate':
       if (isNumber(object)) {
         return '/Date(' + object + ')/';
-      } else if (object instanceof Date) {
+      } else if (object instanceof Date || isMoment(object)) {
         return '/Date(' + object.valueOf() + ')/';
       } else if (isString(object)) {
         match = ASPDateRegex.exec(object);
@@ -5355,7 +5384,7 @@ function convert(object, type) {
 
 
 function getType(object) {
-  var type = _typeof(object);
+  var type = _typeof_1(object);
 
   if (type === 'object') {
     if (object === null) {
@@ -5414,7 +5443,7 @@ function getType(object) {
 
 
 function copyAndExtendArray(arr, newValue) {
-  return [].concat(_toConsumableArray(arr), [newValue]);
+  return [].concat(toConsumableArray(arr), [newValue]);
 }
 /**
  * Used to extend an array and copy it. This is used to propagate paths recursively.
@@ -6056,7 +6085,7 @@ function addCssText(element, cssText) {
   var currentStyles = cssUtil.split(element.style.cssText);
   var newStyles = cssUtil.split(cssText);
 
-  var styles = _objectSpread2({}, currentStyles, {}, newStyles);
+  var styles = _objectSpread({}, currentStyles, {}, newStyles);
 
   element.style.cssText = cssUtil.join(styles);
 }
@@ -6220,13 +6249,13 @@ function isValidRGBA(rgba) {
 
 
 function selectiveBridgeObject(fields, referenceObject) {
-  if (referenceObject !== null && _typeof(referenceObject) === 'object') {
+  if (referenceObject !== null && _typeof_1(referenceObject) === 'object') {
     // !!! typeof null === 'object'
     var objectTo = Object.create(referenceObject);
 
     for (var i = 0; i < fields.length; i++) {
       if (Object.prototype.hasOwnProperty.call(referenceObject, fields[i])) {
-        if (_typeof(referenceObject[fields[i]]) == 'object') {
+        if (_typeof_1(referenceObject[fields[i]]) == 'object') {
           objectTo[fields[i]] = bridgeObject(referenceObject[fields[i]]);
         }
       }
@@ -6248,7 +6277,7 @@ function selectiveBridgeObject(fields, referenceObject) {
 
 
 function bridgeObject(referenceObject) {
-  if (referenceObject === null || _typeof(referenceObject) !== 'object') {
+  if (referenceObject === null || _typeof_1(referenceObject) !== 'object') {
     return null;
   }
 
@@ -6261,7 +6290,7 @@ function bridgeObject(referenceObject) {
 
   for (var i in referenceObject) {
     if (Object.prototype.hasOwnProperty.call(referenceObject, i)) {
-      if (_typeof(referenceObject[i]) == 'object') {
+      if (_typeof_1(referenceObject[i]) == 'object') {
         objectTo[i] = bridgeObject(referenceObject[i]);
       }
     }
@@ -6316,7 +6345,7 @@ function mergeOptions(mergeTarget, options, option) {
   };
 
   var isObject = function isObject(obj) {
-    return obj !== null && _typeof(obj) === 'object';
+    return obj !== null && _typeof_1(obj) === 'object';
   }; // https://stackoverflow.com/a/34491287/1223531
 
 
@@ -6937,7 +6966,7 @@ function _defineProperty$1(obj, key, value) {
   return obj;
 }
 
-var defineProperty = _defineProperty$1;
+var defineProperty$1 = _defineProperty$1;
 
 function createCommonjsModule$1(fn, module) {
   return module = {
@@ -6945,7 +6974,7 @@ function createCommonjsModule$1(fn, module) {
   }, fn(module, module.exports), module.exports;
 }
 
-var _typeof_1 = createCommonjsModule$1(function (module) {
+var _typeof_1$1 = createCommonjsModule$1(function (module) {
   function _typeof2(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof2 = function _typeof2(obj) {
@@ -7014,7 +7043,7 @@ function _assertThisInitialized(self) {
 var assertThisInitialized = _assertThisInitialized;
 
 function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+  if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -7186,18 +7215,18 @@ function uuid4$1() {
 } // Rollup will complain about mixing default and named exports in UMD build,
 
 
-function _typeof$1(obj) {
+function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof$1 = function (obj) {
+    _typeof = function (obj) {
       return typeof obj;
     };
   } else {
-    _typeof$1 = function (obj) {
+    _typeof = function (obj) {
       return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
-  return _typeof$1(obj);
+  return _typeof(obj);
 }
 
 var commonjsGlobal$1 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -12060,7 +12089,7 @@ function convert$1(object, type) {
 
 
 function getType$1(object) {
-  var type = _typeof$1(object);
+  var type = _typeof(object);
 
   if (type === 'object') {
     if (object === null) {
@@ -12339,25 +12368,25 @@ function _arrayWithoutHoles$1(arr) {
   }
 }
 
-var arrayWithoutHoles = _arrayWithoutHoles$1;
+var arrayWithoutHoles$1 = _arrayWithoutHoles$1;
 
 function _iterableToArray$1(iter) {
   if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
 
-var iterableToArray = _iterableToArray$1;
+var iterableToArray$1 = _iterableToArray$1;
 
 function _nonIterableSpread$1() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-var nonIterableSpread = _nonIterableSpread$1;
+var nonIterableSpread$1 = _nonIterableSpread$1;
 
 function _toConsumableArray$1(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  return arrayWithoutHoles$1(arr) || iterableToArray$1(arr) || nonIterableSpread$1();
 }
 
-var toConsumableArray = _toConsumableArray$1;
+var toConsumableArray$1 = _toConsumableArray$1;
 /**
  * [[DataSet]] code that can be reused in [[DataView]] or other similar implementations of [[DataInterface]].
  *
@@ -12403,7 +12432,7 @@ function () {
         throw new Error('Cannot trigger event *');
       }
 
-      var subscribers = [].concat(toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers['*']));
+      var subscribers = [].concat(toConsumableArray$1(this._subscribers[event]), toConsumableArray$1(this._subscribers['*']));
 
       for (var i = 0, len = subscribers.length; i < len; i++) {
         var subscriber = subscribers[i];
@@ -12460,13 +12489,13 @@ function ownKeys$1(object, enumerableOnly) {
   return keys;
 }
 
-function _objectSpread(target) {
+function _objectSpread$1(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
 
     if (i % 2) {
       ownKeys$1(source, true).forEach(function (key) {
-        defineProperty(target, key, source[key]);
+        defineProperty$1(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
@@ -12627,7 +12656,7 @@ function (_DataSetPart) {
             });
           }
 
-          if (options.queue && _typeof_1(options.queue) === 'object') {
+          if (options.queue && _typeof_1$1(options.queue) === 'object') {
             this._queue.setOptions(options.queue);
           }
         }
@@ -12674,7 +12703,7 @@ function (_DataSetPart) {
           id = this._addItem(data[i]);
           addedIds.push(id);
         }
-      } else if (data && _typeof_1(data) === 'object') {
+      } else if (data && _typeof_1$1(data) === 'object') {
         // Single item
         id = this._addItem(data);
         addedIds.push(id);
@@ -12759,13 +12788,13 @@ function (_DataSetPart) {
       if (Array.isArray(data)) {
         // Array
         for (var i = 0, len = data.length; i < len; i++) {
-          if (data[i] && _typeof_1(data[i]) === 'object') {
+          if (data[i] && _typeof_1$1(data[i]) === 'object') {
             addOrUpdate(data[i]);
           } else {
             console.warn('Ignoring input item, which is not an object at index ' + i);
           }
         }
-      } else if (data && _typeof_1(data) === 'object') {
+      } else if (data && _typeof_1$1(data) === 'object') {
         // Single item
         addOrUpdate(data);
       } else {
@@ -13184,7 +13213,7 @@ function (_DataSetPart) {
 
       if (isId(id)) {
         ident = id;
-      } else if (id && _typeof_1(id) === 'object') {
+      } else if (id && _typeof_1$1(id) === 'object') {
         ident = id[this._idProp]; // look for the identifier field using ._idProp
       } // do the removing if the item is found
 
@@ -13403,7 +13432,7 @@ function (_DataSetPart) {
         }
       } else {
         // no field types specified, no converting needed
-        converted = _objectSpread({}, raw);
+        converted = _objectSpread$1({}, raw);
       }
 
       if (converted[this._idProp] == null) {
@@ -15149,7 +15178,7 @@ function parseAttributeList() {
     vee: 'vee'
   };
   /**
-   * 'attr_list' containes attributes for checking some of them are affected
+   * 'attr_list' contains attributes for checking if some of them are affected
    * later. For instance, both of 'arrowhead' and 'dir' (edge style defined
    * in DOT) make changes to 'arrows' attribute in vis.
    */
@@ -15192,9 +15221,9 @@ function parseAttributeList() {
         arrowType = arrowTypes[value];
         name = 'arrows';
         value = {
-          to: {
-            enabled: true,
-            type: arrowType
+          'to': {
+            'enabled': true,
+            'type': arrowType
           }
         };
       }
@@ -15203,9 +15232,9 @@ function parseAttributeList() {
         arrowType = arrowTypes[value];
         name = 'arrows';
         value = {
-          from: {
-            enabled: true,
-            type: arrowType
+          'from': {
+            'enabled': true,
+            'type': arrowType
           }
         };
       }
@@ -15528,9 +15557,30 @@ function parseAttributeList() {
 
 
     attr_list.splice(idx.dir, 1);
+  } // parse 'penwidth'
+
+
+  var nof_attr_list;
+
+  if (attr_names.includes('penwidth')) {
+    var tmp_attr_list = [];
+    nof_attr_list = attr_list.length;
+
+    for (i = 0; i < nof_attr_list; i++) {
+      // exclude 'width' from attr_list if 'penwidth' exists
+      if (attr_list[i].name !== 'width') {
+        if (attr_list[i].name === 'penwidth') {
+          attr_list[i].name = 'width';
+        }
+
+        tmp_attr_list.push(attr_list[i]);
+      }
+    }
+
+    attr_list = tmp_attr_list;
   }
 
-  var nof_attr_list = attr_list.length;
+  nof_attr_list = attr_list.length;
 
   for (i = 0; i < nof_attr_list; i++) {
     setValue(attr_list[i].attr, attr_list[i].name, attr_list[i].value);
@@ -20221,7 +20271,7 @@ function _slicedToArray(arr, i) {
 
 var slicedToArray = _slicedToArray;
 
-var _typeof_1$1 = createCommonjsModule$2(function (module) {
+var _typeof_1$2 = createCommonjsModule$2(function (module) {
   function _typeof2(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof2 = function _typeof2(obj) {
@@ -20298,7 +20348,7 @@ function () {
 
       if (typeof chosen === 'boolean') {
         value = chosen;
-      } else if (_typeof_1$1(chosen) === 'object') {
+      } else if (_typeof_1$2(chosen) === 'object') {
         if (allowed.indexOf(subOption) === -1) {
           throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
         }
@@ -21390,7 +21440,7 @@ function () {
         // font options can be deleted at various levels
         if (typeof options.font === 'string') {
           this.baseSize = this.fontOptions.size;
-        } else if (_typeof_1$1(options.font) === 'object') {
+        } else if (_typeof_1$2(options.font) === 'object') {
           var size = options.font.size;
 
           if (size !== undefined) {
@@ -21427,7 +21477,7 @@ function () {
 
 
       util.forEach(newFontOptions, function (prop, n) {
-        if (prop !== undefined && prop !== null && _typeof_1$1(prop) !== 'object') {
+        if (prop !== undefined && prop !== null && _typeof_1$2(prop) !== 'object') {
           _this.fontOptions[n] = prop;
         }
       });
@@ -21472,7 +21522,7 @@ function () {
       if (typeof widthConstraint === 'number') {
         fontOptions.maxWdt = Number(widthConstraint);
         fontOptions.minWdt = Number(widthConstraint);
-      } else if (_typeof_1$1(widthConstraint) === 'object') {
+      } else if (_typeof_1$2(widthConstraint) === 'object') {
         var widthConstraintMaximum = util.topMost(pile, ['widthConstraint', 'maximum']);
 
         if (typeof widthConstraintMaximum === 'number') {
@@ -21490,7 +21540,7 @@ function () {
 
       if (typeof heightConstraint === 'number') {
         fontOptions.minHgt = Number(heightConstraint);
-      } else if (_typeof_1$1(heightConstraint) === 'object') {
+      } else if (_typeof_1$2(heightConstraint) === 'object') {
         var heightConstraintMinimum = util.topMost(pile, ['heightConstraint', 'minimum']);
 
         if (typeof heightConstraintMinimum === 'number') {
@@ -22194,7 +22244,7 @@ function _assertThisInitialized$2(self) {
 var assertThisInitialized$1 = _assertThisInitialized$2;
 
 function _possibleConstructorReturn$1(self, call) {
-  if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
+  if (call && (_typeof_1$2(call) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -22298,7 +22348,7 @@ function () {
       this.margin = {};
 
       if (this.options.margin) {
-        if (_typeof_1$1(this.options.margin) == 'object') {
+        if (_typeof_1$2(this.options.margin) == 'object') {
           this.margin.top = this.options.margin.top;
           this.margin.right = this.options.margin.right;
           this.margin.bottom = this.options.margin.bottom;
@@ -24300,7 +24350,7 @@ function () {
   }, {
     key: "getType",
     value: function getType(object) {
-      var type = _typeof_1$1(object);
+      var type = _typeof_1$2(object);
 
       if (type === 'object') {
         if (object === null) {
@@ -28979,7 +29029,7 @@ function () {
           parentOptions.arrows.to.enabled = arrows.indexOf("to") != -1;
           parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
           parentOptions.arrows.from.enabled = arrows.indexOf("from") != -1;
-        } else if (_typeof_1$1(newOptions.arrows) === 'object') {
+        } else if (_typeof_1$2(newOptions.arrows) === 'object') {
           util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
           util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
           util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
@@ -31902,7 +31952,7 @@ function () {
     value: function clusterByHubsize(hubsize, options) {
       if (hubsize === undefined) {
         hubsize = this._getHubSize();
-      } else if (_typeof_1$1(hubsize) === "object") {
+      } else if (_typeof_1$2(hubsize) === "object") {
         options = this._checkOptions(hubsize);
         hubsize = this._getHubSize();
       }
@@ -33278,12 +33328,15 @@ function () {
           //       (This might be paranoia)
 
         } else {
-          // This should not be happening, the state should
+          delete _this4._clusterEdges[edgeId];
+
+          _this4._restoreEdge(edge); // This should not be happening, the state should
           // be properly updated at this point.
           // 
           // If it *is* reached during normal operation, then we have to implement
           // undo clustering for this edge here.
-          throw new Error('remove edge from clustering not implemented!');
+          // throw new Error('remove edge from clustering not implemented!')
+
         }
       }); // Clusters may be nested to any level. Keep on opening until nothing to open
 
@@ -38808,7 +38861,7 @@ function () {
           };
           backupPhysics.enabled = backupPhysics.enabled === undefined ? true : backupPhysics.enabled;
           backupPhysics.solver = backupPhysics.solver || 'barnesHut';
-        } else if (_typeof_1$1(allOptions.physics) === 'object') {
+        } else if (_typeof_1$2(allOptions.physics) === 'object') {
           backupPhysics.enabled = allOptions.physics.enabled === undefined ? true : allOptions.physics.enabled;
           backupPhysics.solver = allOptions.physics.solver || 'barnesHut';
           allOptions.physics.solver = 'hierarchicalRepulsion';
@@ -40683,7 +40736,7 @@ function () {
 
       this.inMode = 'editEdge';
 
-      if (_typeof_1$1(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
+      if (_typeof_1$2(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
         this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
 
         if (this.edgeBeingEditedId !== undefined) {
@@ -41711,7 +41764,7 @@ function () {
       };
       var eeFunct = this.options.editEdge;
 
-      if (_typeof_1$1(eeFunct) === 'object') {
+      if (_typeof_1$2(eeFunct) === 'object') {
         eeFunct = eeFunct.editWithoutDrag;
       }
 
@@ -42590,7 +42643,7 @@ function () {
           this.options.filter = options;
         } else if (options instanceof Array) {
           this.options.filter = options.join();
-        } else if (_typeof_1$1(options) === 'object') {
+        } else if (_typeof_1$2(options) === 'object') {
           if (options == null) {
             throw new TypeError('options cannot be null');
           }
@@ -43073,7 +43126,7 @@ function () {
         checkbox.checked = value;
 
         if (value !== defaultValue) {
-          if (_typeof_1$1(defaultValue) === 'object') {
+          if (_typeof_1$2(defaultValue) === 'object') {
             if (value !== defaultValue.enabled) {
               this.changedOptions.push({
                 path: path,
