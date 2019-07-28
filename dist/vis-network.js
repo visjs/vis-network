@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 5.0.0
- * @date    2019-07-27T20:58:10Z
+ * @date    2019-07-28T15:25:43Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -29,20 +29,6 @@
   (global = global || self, factory(global.vis = {}));
 }(this, function (exports) { 'use strict';
 
-  function _typeof(obj) {
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
-  }
-
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -58,59 +44,37 @@
     return obj;
   }
 
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      keys.push.apply(keys, Object.getOwnPropertySymbols(object));
-    }
-
-    if (enumerableOnly) keys = keys.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(source, true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(source).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
-  }
-
-  function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-  }
+  var defineProperty = _defineProperty;
 
   function _arrayWithoutHoles(arr) {
     if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
 
       return arr2;
     }
   }
 
+  var arrayWithoutHoles = _arrayWithoutHoles;
+
   function _iterableToArray(iter) {
     if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
   }
+
+  var iterableToArray = _iterableToArray;
 
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance");
   }
 
+  var nonIterableSpread = _nonIterableSpread;
+
+  function _toConsumableArray(arr) {
+    return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  }
+
+  var toConsumableArray = _toConsumableArray;
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function commonjsRequire() {
@@ -122,6 +86,38 @@
       exports: {}
     }, fn(module, module.exports), module.exports;
   }
+
+  var _typeof_1 = createCommonjsModule(function (module) {
+    function _typeof2(obj) {
+      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+        _typeof2 = function _typeof2(obj) {
+          return typeof obj;
+        };
+      } else {
+        _typeof2 = function _typeof2(obj) {
+          return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        };
+      }
+
+      return _typeof2(obj);
+    }
+
+    function _typeof(obj) {
+      if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+        module.exports = _typeof = function _typeof(obj) {
+          return _typeof2(obj);
+        };
+      } else {
+        module.exports = _typeof = function _typeof(obj) {
+          return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+        };
+      }
+
+      return _typeof(obj);
+    }
+
+    module.exports = _typeof;
+  });
 
   var moment = createCommonjsModule(function (module, exports) {
     (function (global, factory) {
@@ -4826,7 +4822,40 @@
 
     return buf || stringifyUUID(rnds);
   } // Rollup will complain about mixing default and named exports in UMD build,
-  // for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
+
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      keys.push.apply(keys, Object.getOwnPropertySymbols(object));
+    }
+
+    if (enumerableOnly) keys = keys.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    return keys;
+  }
+
+  function _objectSpread(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(source, true).forEach(function (key) {
+          defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(source).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  } // for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
   // code from http://momentjs.com/
 
 
@@ -4890,7 +4919,7 @@
 
 
   function isObject(value) {
-    return _typeof(value) === 'object' && value !== null;
+    return _typeof_1(value) === 'object' && value !== null;
   }
   /**
    * Test whether given object is a Date, or a String containing a Date
@@ -4974,7 +5003,7 @@
 
     for (var prop in a) {
       if (b[prop] !== undefined) {
-        if (b[prop] === null || _typeof(b[prop]) !== 'object') {
+        if (b[prop] === null || _typeof_1(b[prop]) !== 'object') {
           // Note: typeof null === 'object'
           copyOrDelete(a, b, prop, allowDeletion);
         } else {
@@ -5327,7 +5356,7 @@
       case 'ASPDate':
         if (isNumber(object)) {
           return '/Date(' + object + ')/';
-        } else if (object instanceof Date) {
+        } else if (object instanceof Date || isMoment(object)) {
           return '/Date(' + object.valueOf() + ')/';
         } else if (isString(object)) {
           match = ASPDateRegex.exec(object);
@@ -5361,7 +5390,7 @@
 
 
   function getType(object) {
-    var type = _typeof(object);
+    var type = _typeof_1(object);
 
     if (type === 'object') {
       if (object === null) {
@@ -5420,7 +5449,7 @@
 
 
   function copyAndExtendArray(arr, newValue) {
-    return [].concat(_toConsumableArray(arr), [newValue]);
+    return [].concat(toConsumableArray(arr), [newValue]);
   }
   /**
    * Used to extend an array and copy it. This is used to propagate paths recursively.
@@ -6062,7 +6091,7 @@
     var currentStyles = cssUtil.split(element.style.cssText);
     var newStyles = cssUtil.split(cssText);
 
-    var styles = _objectSpread2({}, currentStyles, {}, newStyles);
+    var styles = _objectSpread({}, currentStyles, {}, newStyles);
 
     element.style.cssText = cssUtil.join(styles);
   }
@@ -6226,13 +6255,13 @@
 
 
   function selectiveBridgeObject(fields, referenceObject) {
-    if (referenceObject !== null && _typeof(referenceObject) === 'object') {
+    if (referenceObject !== null && _typeof_1(referenceObject) === 'object') {
       // !!! typeof null === 'object'
       var objectTo = Object.create(referenceObject);
 
       for (var i = 0; i < fields.length; i++) {
         if (Object.prototype.hasOwnProperty.call(referenceObject, fields[i])) {
-          if (_typeof(referenceObject[fields[i]]) == 'object') {
+          if (_typeof_1(referenceObject[fields[i]]) == 'object') {
             objectTo[fields[i]] = bridgeObject(referenceObject[fields[i]]);
           }
         }
@@ -6254,7 +6283,7 @@
 
 
   function bridgeObject(referenceObject) {
-    if (referenceObject === null || _typeof(referenceObject) !== 'object') {
+    if (referenceObject === null || _typeof_1(referenceObject) !== 'object') {
       return null;
     }
 
@@ -6267,7 +6296,7 @@
 
     for (var i in referenceObject) {
       if (Object.prototype.hasOwnProperty.call(referenceObject, i)) {
-        if (_typeof(referenceObject[i]) == 'object') {
+        if (_typeof_1(referenceObject[i]) == 'object') {
           objectTo[i] = bridgeObject(referenceObject[i]);
         }
       }
@@ -6322,7 +6351,7 @@
     };
 
     var isObject = function isObject(obj) {
-      return obj !== null && _typeof(obj) === 'object';
+      return obj !== null && _typeof_1(obj) === 'object';
     }; // https://stackoverflow.com/a/34491287/1223531
 
 
@@ -6943,7 +6972,7 @@
     return obj;
   }
 
-  var defineProperty = _defineProperty$1;
+  var defineProperty$1 = _defineProperty$1;
 
   function createCommonjsModule$1(fn, module) {
     return module = {
@@ -6951,7 +6980,7 @@
     }, fn(module, module.exports), module.exports;
   }
 
-  var _typeof_1 = createCommonjsModule$1(function (module) {
+  var _typeof_1$1 = createCommonjsModule$1(function (module) {
     function _typeof2(obj) {
       if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
         _typeof2 = function _typeof2(obj) {
@@ -7020,7 +7049,7 @@
   var assertThisInitialized = _assertThisInitialized;
 
   function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+    if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
       return call;
     }
 
@@ -7192,18 +7221,18 @@
   } // Rollup will complain about mixing default and named exports in UMD build,
 
 
-  function _typeof$1(obj) {
+  function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof$1 = function (obj) {
+      _typeof = function (obj) {
         return typeof obj;
       };
     } else {
-      _typeof$1 = function (obj) {
+      _typeof = function (obj) {
         return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
       };
     }
 
-    return _typeof$1(obj);
+    return _typeof(obj);
   }
 
   var commonjsGlobal$1 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -12066,7 +12095,7 @@
 
 
   function getType$1(object) {
-    var type = _typeof$1(object);
+    var type = _typeof(object);
 
     if (type === 'object') {
       if (object === null) {
@@ -12345,25 +12374,25 @@
     }
   }
 
-  var arrayWithoutHoles = _arrayWithoutHoles$1;
+  var arrayWithoutHoles$1 = _arrayWithoutHoles$1;
 
   function _iterableToArray$1(iter) {
     if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
   }
 
-  var iterableToArray = _iterableToArray$1;
+  var iterableToArray$1 = _iterableToArray$1;
 
   function _nonIterableSpread$1() {
     throw new TypeError("Invalid attempt to spread non-iterable instance");
   }
 
-  var nonIterableSpread = _nonIterableSpread$1;
+  var nonIterableSpread$1 = _nonIterableSpread$1;
 
   function _toConsumableArray$1(arr) {
-    return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+    return arrayWithoutHoles$1(arr) || iterableToArray$1(arr) || nonIterableSpread$1();
   }
 
-  var toConsumableArray = _toConsumableArray$1;
+  var toConsumableArray$1 = _toConsumableArray$1;
   /**
    * [[DataSet]] code that can be reused in [[DataView]] or other similar implementations of [[DataInterface]].
    *
@@ -12409,7 +12438,7 @@
           throw new Error('Cannot trigger event *');
         }
 
-        var subscribers = [].concat(toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers['*']));
+        var subscribers = [].concat(toConsumableArray$1(this._subscribers[event]), toConsumableArray$1(this._subscribers['*']));
 
         for (var i = 0, len = subscribers.length; i < len; i++) {
           var subscriber = subscribers[i];
@@ -12466,13 +12495,13 @@
     return keys;
   }
 
-  function _objectSpread(target) {
+  function _objectSpread$1(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
         ownKeys$1(source, true).forEach(function (key) {
-          defineProperty(target, key, source[key]);
+          defineProperty$1(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
@@ -12633,7 +12662,7 @@
               });
             }
 
-            if (options.queue && _typeof_1(options.queue) === 'object') {
+            if (options.queue && _typeof_1$1(options.queue) === 'object') {
               this._queue.setOptions(options.queue);
             }
           }
@@ -12680,7 +12709,7 @@
             id = this._addItem(data[i]);
             addedIds.push(id);
           }
-        } else if (data && _typeof_1(data) === 'object') {
+        } else if (data && _typeof_1$1(data) === 'object') {
           // Single item
           id = this._addItem(data);
           addedIds.push(id);
@@ -12765,13 +12794,13 @@
         if (Array.isArray(data)) {
           // Array
           for (var i = 0, len = data.length; i < len; i++) {
-            if (data[i] && _typeof_1(data[i]) === 'object') {
+            if (data[i] && _typeof_1$1(data[i]) === 'object') {
               addOrUpdate(data[i]);
             } else {
               console.warn('Ignoring input item, which is not an object at index ' + i);
             }
           }
-        } else if (data && _typeof_1(data) === 'object') {
+        } else if (data && _typeof_1$1(data) === 'object') {
           // Single item
           addOrUpdate(data);
         } else {
@@ -13190,7 +13219,7 @@
 
         if (isId(id)) {
           ident = id;
-        } else if (id && _typeof_1(id) === 'object') {
+        } else if (id && _typeof_1$1(id) === 'object') {
           ident = id[this._idProp]; // look for the identifier field using ._idProp
         } // do the removing if the item is found
 
@@ -13409,7 +13438,7 @@
           }
         } else {
           // no field types specified, no converting needed
-          converted = _objectSpread({}, raw);
+          converted = _objectSpread$1({}, raw);
         }
 
         if (converted[this._idProp] == null) {
@@ -15775,14 +15804,14 @@
   });
 
   /**
+   * Convert Gephi to Vis.
    *
-   * @param {json} gephiJSON
-   * @param {obj} optionsObj
-   * @returns {{nodes: Array, edges: Array}}
+   * @param gephiJSON - The parsed JSON data in Gephi format.
+   * @param optionsObj - Additional options.
+   *
+   * @returns The converted data ready to be used in Vis.
    */
   function parseGephi(gephiJSON, optionsObj) {
-    var edges = [];
-    var nodes = [];
     var options = {
       edges: {
         inheritColor: false
@@ -15793,93 +15822,115 @@
       }
     };
 
-    if (optionsObj !== undefined) {
-      if (optionsObj.fixed !== undefined) {
+    if (optionsObj != null) {
+      if (optionsObj.fixed != null) {
         options.nodes.fixed = optionsObj.fixed;
       }
 
-      if (optionsObj.parseColor !== undefined) {
+      if (optionsObj.parseColor != null) {
         options.nodes.parseColor = optionsObj.parseColor;
       }
 
-      if (optionsObj.inheritColor !== undefined) {
+      if (optionsObj.inheritColor != null) {
         options.edges.inheritColor = optionsObj.inheritColor;
       }
     }
 
     var gEdges = gephiJSON.edges;
-    var gNodes = gephiJSON.nodes;
+    var vEdges = gEdges.map(function (gEdge) {
+      var vEdge = {
+        from: gEdge.source,
+        id: gEdge.id,
+        to: gEdge.target
+      };
 
-    for (var i = 0; i < gEdges.length; i++) {
-      var edge = {};
-      var gEdge = gEdges[i];
-      edge['id'] = gEdge.id;
-      edge['from'] = gEdge.source;
-      edge['to'] = gEdge.target;
-      edge['attributes'] = gEdge.attributes;
-      edge['label'] = gEdge.label;
-      edge['title'] = gEdge.attributes !== undefined ? gEdge.attributes.title : undefined;
-
-      if (gEdge['type'] === 'Directed') {
-        edge['arrows'] = 'to';
-      } //    edge['value'] = gEdge.attributes !== undefined ? gEdge.attributes.Weight : undefined;
-      //    edge['width'] = edge['value'] !== undefined ? undefined : edgegEdge.size;
-
-
-      if (gEdge.color && options.inheritColor === false) {
-        edge['color'] = gEdge.color;
+      if (gEdge.attributes != null) {
+        vEdge.attributes = gEdge.attributes;
       }
 
-      edges.push(edge);
-    }
-
-    for (var j = 0; j < gNodes.length; j++) {
-      var node = {};
-      var gNode = gNodes[j];
-      node['id'] = gNode.id;
-      node['attributes'] = gNode.attributes;
-      node['x'] = gNode.x;
-      node['y'] = gNode.y;
-      node['label'] = gNode.label;
-      node['title'] = gNode.attributes !== undefined ? gNode.attributes.title : gNode.title;
-
-      if (options.nodes.parseColor === true) {
-        node['color'] = gNode.color;
-      } else {
-        node['color'] = gNode.color !== undefined ? {
-          background: gNode.color,
-          border: gNode.color,
-          highlight: {
-            background: gNode.color,
-            border: gNode.color
-          },
-          hover: {
-            background: gNode.color,
-            border: gNode.color
-          }
-        } : undefined;
+      if (gEdge.label != null) {
+        vEdge.label = gEdge.label;
       }
 
-      node['size'] = gNode.size;
-      node['fixed'] = options.nodes.fixed && gNode.x !== undefined && gNode.y !== undefined;
-      nodes.push(node);
-    }
+      if (gEdge.attributes != null && gEdge.attributes.title != null) {
+        vEdge.title = gEdge.attributes.title;
+      }
 
+      if (gEdge.type === 'Directed') {
+        vEdge.arrows = 'to';
+      } // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
+      // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
+
+
+      if (gEdge.color && options.edges.inheritColor === false) {
+        vEdge.color = gEdge.color;
+      }
+
+      return vEdge;
+    });
+    var vNodes = gephiJSON.nodes.map(function (gNode) {
+      var vNode = {
+        id: gNode.id,
+        fixed: options.nodes.fixed && gNode.x != null && gNode.y != null
+      };
+
+      if (gNode.attributes != null) {
+        vNode.attributes = gNode.attributes;
+      }
+
+      if (gNode.label != null) {
+        vNode.label = gNode.label;
+      }
+
+      if (gNode.size != null) {
+        vNode.size = gNode.size;
+      }
+
+      if (gNode.attributes != null && gNode.attributes.title != null) {
+        vNode.title = gNode.attributes.title;
+      }
+
+      if (gNode.title != null) {
+        vNode.title = gNode.title;
+      }
+
+      if (gNode.x != null) {
+        vNode.x = gNode.x;
+      }
+
+      if (gNode.y != null) {
+        vNode.y = gNode.y;
+      }
+
+      if (gNode.color != null) {
+        if (options.nodes.parseColor === true) {
+          vNode.color = gNode.color;
+        } else {
+          vNode.color = {
+            background: gNode.color,
+            border: gNode.color,
+            highlight: {
+              background: gNode.color,
+              border: gNode.color
+            },
+            hover: {
+              background: gNode.color,
+              border: gNode.color
+            }
+          };
+        }
+      }
+
+      return vNode;
+    });
     return {
-      nodes: nodes,
-      edges: edges
+      nodes: vNodes,
+      edges: vEdges
     };
   }
 
-  var parseGephi_1 = parseGephi;
-  var gephiParser = {
-    parseGephi: parseGephi_1
-  };
-
-  var gephiParser$1 = /*#__PURE__*/Object.freeze({
-    'default': gephiParser,
-    __moduleExports: gephiParser,
-    parseGephi: parseGephi_1
+  var gephiParser = /*#__PURE__*/Object.freeze({
+    parseGephi: parseGephi
   });
 
   var keycharm = createCommonjsModule$2(function (module, exports) {
@@ -20227,7 +20278,7 @@
 
   var slicedToArray = _slicedToArray;
 
-  var _typeof_1$1 = createCommonjsModule$2(function (module) {
+  var _typeof_1$2 = createCommonjsModule$2(function (module) {
     function _typeof2(obj) {
       if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
         _typeof2 = function _typeof2(obj) {
@@ -20304,7 +20355,7 @@
 
         if (typeof chosen === 'boolean') {
           value = chosen;
-        } else if (_typeof_1$1(chosen) === 'object') {
+        } else if (_typeof_1$2(chosen) === 'object') {
           if (allowed.indexOf(subOption) === -1) {
             throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
           }
@@ -21396,7 +21447,7 @@
           // font options can be deleted at various levels
           if (typeof options.font === 'string') {
             this.baseSize = this.fontOptions.size;
-          } else if (_typeof_1$1(options.font) === 'object') {
+          } else if (_typeof_1$2(options.font) === 'object') {
             var size = options.font.size;
 
             if (size !== undefined) {
@@ -21433,7 +21484,7 @@
 
 
         util.forEach(newFontOptions, function (prop, n) {
-          if (prop !== undefined && prop !== null && _typeof_1$1(prop) !== 'object') {
+          if (prop !== undefined && prop !== null && _typeof_1$2(prop) !== 'object') {
             _this.fontOptions[n] = prop;
           }
         });
@@ -21478,7 +21529,7 @@
         if (typeof widthConstraint === 'number') {
           fontOptions.maxWdt = Number(widthConstraint);
           fontOptions.minWdt = Number(widthConstraint);
-        } else if (_typeof_1$1(widthConstraint) === 'object') {
+        } else if (_typeof_1$2(widthConstraint) === 'object') {
           var widthConstraintMaximum = util.topMost(pile, ['widthConstraint', 'maximum']);
 
           if (typeof widthConstraintMaximum === 'number') {
@@ -21496,7 +21547,7 @@
 
         if (typeof heightConstraint === 'number') {
           fontOptions.minHgt = Number(heightConstraint);
-        } else if (_typeof_1$1(heightConstraint) === 'object') {
+        } else if (_typeof_1$2(heightConstraint) === 'object') {
           var heightConstraintMinimum = util.topMost(pile, ['heightConstraint', 'minimum']);
 
           if (typeof heightConstraintMinimum === 'number') {
@@ -22200,7 +22251,7 @@
   var assertThisInitialized$1 = _assertThisInitialized$2;
 
   function _possibleConstructorReturn$1(self, call) {
-    if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
+    if (call && (_typeof_1$2(call) === "object" || typeof call === "function")) {
       return call;
     }
 
@@ -22304,7 +22355,7 @@
         this.margin = {};
 
         if (this.options.margin) {
-          if (_typeof_1$1(this.options.margin) == 'object') {
+          if (_typeof_1$2(this.options.margin) == 'object') {
             this.margin.top = this.options.margin.top;
             this.margin.right = this.options.margin.right;
             this.margin.bottom = this.options.margin.bottom;
@@ -24306,7 +24357,7 @@
     }, {
       key: "getType",
       value: function getType(object) {
-        var type = _typeof_1$1(object);
+        var type = _typeof_1$2(object);
 
         if (type === 'object') {
           if (object === null) {
@@ -28985,7 +29036,7 @@
             parentOptions.arrows.to.enabled = arrows.indexOf("to") != -1;
             parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
             parentOptions.arrows.from.enabled = arrows.indexOf("from") != -1;
-          } else if (_typeof_1$1(newOptions.arrows) === 'object') {
+          } else if (_typeof_1$2(newOptions.arrows) === 'object') {
             util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
             util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
             util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
@@ -31908,7 +31959,7 @@
       value: function clusterByHubsize(hubsize, options) {
         if (hubsize === undefined) {
           hubsize = this._getHubSize();
-        } else if (_typeof_1$1(hubsize) === "object") {
+        } else if (_typeof_1$2(hubsize) === "object") {
           options = this._checkOptions(hubsize);
           hubsize = this._getHubSize();
         }
@@ -38814,7 +38865,7 @@
             };
             backupPhysics.enabled = backupPhysics.enabled === undefined ? true : backupPhysics.enabled;
             backupPhysics.solver = backupPhysics.solver || 'barnesHut';
-          } else if (_typeof_1$1(allOptions.physics) === 'object') {
+          } else if (_typeof_1$2(allOptions.physics) === 'object') {
             backupPhysics.enabled = allOptions.physics.enabled === undefined ? true : allOptions.physics.enabled;
             backupPhysics.solver = allOptions.physics.solver || 'barnesHut';
             allOptions.physics.solver = 'hierarchicalRepulsion';
@@ -40689,7 +40740,7 @@
 
         this.inMode = 'editEdge';
 
-        if (_typeof_1$1(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
+        if (_typeof_1$2(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
           this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
 
           if (this.edgeBeingEditedId !== undefined) {
@@ -41717,7 +41768,7 @@
         };
         var eeFunct = this.options.editEdge;
 
-        if (_typeof_1$1(eeFunct) === 'object') {
+        if (_typeof_1$2(eeFunct) === 'object') {
           eeFunct = eeFunct.editWithoutDrag;
         }
 
@@ -42596,7 +42647,7 @@
             this.options.filter = options;
           } else if (options instanceof Array) {
             this.options.filter = options.join();
-          } else if (_typeof_1$1(options) === 'object') {
+          } else if (_typeof_1$2(options) === 'object') {
             if (options == null) {
               throw new TypeError('options cannot be null');
             }
@@ -43079,7 +43130,7 @@
           checkbox.checked = value;
 
           if (value !== defaultValue) {
-            if (_typeof_1$1(defaultValue) === 'object') {
+            if (_typeof_1$2(defaultValue) === 'object') {
               if (value !== defaultValue.enabled) {
                 this.changedOptions.push({
                   path: path,
@@ -45574,7 +45625,7 @@
     } else if (data && data.gephi) {
       // parse DOT file
       console.log('The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);');
-      var gephiData = gephiParser.parseGephi(data.gephi);
+      var gephiData = parseGephi(data.gephi);
       this.setData(gephiData);
       return;
     } else {
@@ -50746,10 +50797,10 @@
   var network = {
     Images: Images,
     dotparser: dotparser$1,
-    gephiParser: gephiParser$1,
+    gephiParser: gephiParser,
     allOptions: allOptions$2,
     convertDot: DOTToGraph_1,
-    convertGephi: parseGephi_1
+    convertGephi: parseGephi
   }; // utils
 
   exports.DOMutil = DOMutil;
