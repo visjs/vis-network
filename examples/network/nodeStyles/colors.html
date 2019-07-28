@@ -56,8 +56,16 @@
     edges: edges
   };
   var options = {
-    nodes: {borderWidth: 2},
-    interaction: {hover: true}
+    nodes: {
+      borderWidth: 2
+    },
+    interaction: {
+      hover: true
+    },
+    layout: {
+      // Make sure the chart always looks the same. This is needed for visual testing.
+      randomSeed: 2
+    }
   }
   var network = new vis.Network(container, data, options);
 </script>

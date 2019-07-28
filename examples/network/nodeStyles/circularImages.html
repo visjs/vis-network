@@ -77,16 +77,22 @@
       };
       var options = {
         nodes: {
-          borderWidth:4,
-          size:30,
+          borderWidth: 4,
+          size: 30,
 	      color: {
             border: '#222222',
             background: '#666666'
           },
-          font:{color:'#eeeeee'}
+          font: {
+            color: '#eeeeee'
+          }
         },
         edges: {
           color: 'lightgray'
+        },
+        layout: {
+          // Make sure the chart always looks the same. This is needed for visual testing.
+          randomSeed: 1
         }
       };
       network = new vis.Network(container, data, options);
