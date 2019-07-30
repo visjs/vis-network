@@ -25,9 +25,13 @@ export const network = {
 }
 
 // utils
-export { default as DOMutil } from './DOMutil'
+import * as DOMutil from './DOMutil'
+export { DOMutil }
 
 // bundled external libraries
-export { default as moment } from './module/moment'
-export { default as Hammer } from './module/hammer'
-export { default as keycharm } from 'keycharm'
+import * as moment from './module/moment'
+export { moment }
+import * as Hammer from './module/hammer'
+export { Hammer }
+import * as keycharm from 'keycharm'
+export { keycharm }
