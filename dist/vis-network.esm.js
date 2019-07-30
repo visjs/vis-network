@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 5.1.0
- * @date    2019-07-28T18:52:54Z
+ * @date    2019-07-30T13:59:20Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -16228,6 +16228,11 @@ var keycharm = createCommonjsModule$2(function (module, exports) {
   });
 });
 
+var keycharm$1 = /*#__PURE__*/Object.freeze({
+  'default': keycharm,
+  __moduleExports: keycharm
+});
+
 /*! Hammer.JS - v2.0.15 - 2019-04-04
  * http://naver.github.io/egjs
  *
@@ -19243,6 +19248,11 @@ var hammer = createCommonjsModule$2(function (module) {
       return hammerMock();
     };
   }
+});
+
+var hammer$1 = /*#__PURE__*/Object.freeze({
+  'default': hammer,
+  __moduleExports: hammer
 });
 
 /**
@@ -34646,6 +34656,13 @@ function () {
       if (options === undefined) {
         options = {};
         return;
+      } // Coerce and verify that the scale is valid.
+
+
+      options.scale = +options.scale;
+
+      if (!(options.scale > 0)) {
+        throw new TypeError('The option "scale" has to be a number greater than zero.');
       }
 
       if (options.offset === undefined) {
@@ -46202,6 +46219,18 @@ var DOMutil_5 = DOMutil.getDOMElement;
 var DOMutil_6 = DOMutil.drawPoint;
 var DOMutil_7 = DOMutil.drawBar;
 
+var DOMutil$1 = /*#__PURE__*/Object.freeze({
+  'default': DOMutil,
+  __moduleExports: DOMutil,
+  prepareElements: DOMutil_1,
+  cleanupElements: DOMutil_2,
+  resetElements: DOMutil_3,
+  getSVGElement: DOMutil_4,
+  getDOMElement: DOMutil_5,
+  drawPoint: DOMutil_6,
+  drawBar: DOMutil_7
+});
+
 var moment$2 = createCommonjsModule$2(function (module, exports) {
 
   (function (global, factory) {
@@ -50789,6 +50818,11 @@ var moment$2 = createCommonjsModule$2(function (module, exports) {
 
 var moment$3 = typeof window !== 'undefined' && window['moment'] || moment$2;
 
+var moment$4 = /*#__PURE__*/Object.freeze({
+  'default': moment$3,
+  __moduleExports: moment$3
+});
+
 // vis-util
 var network = {
   Images: Images,
@@ -50803,16 +50837,16 @@ var index$2 = /*#__PURE__*/Object.freeze({
   util: esm,
   data: esm$1,
   network: network,
+  DOMutil: DOMutil$1,
+  moment: moment$4,
+  Hammer: hammer$1,
+  keycharm: keycharm$1,
   DataSet: DataSet,
   DataView: DataView,
   Queue: Queue,
-  DOMutil: DOMutil,
-  moment: moment$3,
-  Hammer: hammer,
-  keycharm: keycharm,
   Network: Network
 });
 
 export default index$2;
-export { DOMutil, DataSet, DataView, hammer as Hammer, Network, Queue, esm$1 as data, keycharm, moment$3 as moment, network, esm as util };
+export { DOMutil$1 as DOMutil, DataSet, DataView, hammer$1 as Hammer, Network, Queue, esm$1 as data, keycharm$1 as keycharm, moment$4 as moment, network, esm as util };
 //# sourceMappingURL=vis-network.esm.js.map
