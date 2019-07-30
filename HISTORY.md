@@ -2,6 +2,40 @@
 
 http://visjs.org
 
+## 2019-07-28, version 5.1.0
+
+_For everybody who wants to move this repository: This version is feature compatible with [visjs-community/visjs-network@4.24.10](https://github.com/visjs-community/visjs-network/tree/3a5d25522cc2fbc2e10f9acef77df1aa0332b440)_
+
+- visjs-network#71: fix remove edge from clustering (#30) via @Tyler-Maclachlan ([visjs-network#71](https://github.com/visjs-community/visjs-network/pull/71))
+- visjs-network#39: add penwidth support for dot language (#24) via @geminoa ([visjs-network#39](https://github.com/visjs-community/visjs-network/pull/39))
+- visjs-network#40: fix type of zoomSpeed (#25) via @geminoa ([visjs-network#40](https://github.com/visjs-community/visjs-network/pull/40))
+- visjs-network#45: correctly set invalid labels to undefined (#26) via @channeladam ([visjs-network#45](https://github.com/visjs-community/visjs-network/pull/45))
+- visjs-network#68: hidden edge bug (#29) via @DarylMcCullough ([visjs-network#68](https://github.com/visjs-community/visjs-network/pull/68))
+- visjs-network#66: fix hover node (#28) via @Tyler-Maclachlan: ([visjs-network#66](https://github.com/visjs-community/visjs-network/pull/66))
+- visjs-network#47: fix label measurement (#27) via @channeladam ([visjs-network#47](https://github.com/visjs-community/visjs-network/pull/47))
+- visjs-network#43: Edge labels disappear when cluster is opened (#15) via @channeladam ([visjs-network#43](https://github.com/visjs-community/visjs-network/pull/43))
+- vis#3771: add new events to control drag and drop of nodes (#23) via @vasa93 ([almende/vis#3771](https://github.com/almende/vis/pull/3771))
+- vis#4027: fix hover detection over nodes after hovering over an edge (#22) via @Gelio ([almende/vis#4027](https://github.com/almende/vis/pull/4027))
+- vis#4026: remove edge tooltip when hovering a node (#21) via @Gelio ([almende/vis#40269](https://github.com/almende/vis/pull/4026))
+- vis#3888: add dir support for dot language (#19) via @geminoa ([almende/vis#3888](https://github.com/almende/vis/pull/3888))
+- vis#4042: Hide edges on zoom v2 (#16) via @micahstubbs ([almende/vis#4042](https://github.com/almende/vis/pull/4042))
+- vis#3963: add French (#17) via @scenaristeur ([almende/vis#3963](https://github.com/scenaristeur))
+- introduce TypeScript index file (#20)
+- use cdnjs links for external assets (#11)
+- add and improve test coverage (#8)
+- update vis-data and commit package-lock (#6)
+- change example script-urls to use https (#3)
+- tests: add tests for dotparser via @josdejong, @wimrijnders ([almende#3112](https://github.com/almende/vis/pull/3112))
+- tests: add tests for Label via @macleodbroad-wf, @wimrijnders ([almende/vis#3228](https://github.com/almende/vis/pull/3228), [almende/vis#3470](https://github.com/almende/vis/pull/3470), [almende/vis#3486](https://github.com/almende/vis/pull/3486), [almende/vis#3511](https://github.com/almende/vis/pull/3511), [almende#3520](https://github.com/almende/vis/pull/3520), [almende#3518](https://github.com/almende/vis/pull/3518), [almende#3575](https://github.com/almende/vis/pull/3575), [almende#3565](https://github.com/almende/vis/pull/3565), [almende#3603](https://github.com/almende/vis/pull/3603), [almende#3646](https://github.com/almende/vis/pull/3646))
+- tests: add tests for Configurator via @macleodbroad-wf ([almende#3600](https://github.com/almende/vis/pull/3600))
+- chore: remove opencollective postinstall logo
+- chore(package): update vis-util to 1.1.2 (#32)
+- chore(package): update propagating-hammerjs
+- chore(examples): add dot language examples to overview (#18)
+- chore: improve HISTORY.md
+- chore: add 5.0.0 release notes to HISTORY.md
+- Create FUNDING.yml
+
 ## 2019-07-19, version 5.0.0
 
 In version 5.0.0 the original [vis library](https://github.com/almende/vis) was split up and the whole build process changed.

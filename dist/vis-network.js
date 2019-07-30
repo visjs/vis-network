@@ -4,8 +4,8 @@
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 5.0.0
- * @date    2019-07-28T15:25:43Z
+ * @version 5.1.0
+ * @date    2019-07-30T16:54:03Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -15184,7 +15184,7 @@
       vee: 'vee'
     };
     /**
-     * 'attr_list' containes attributes for checking some of them are affected
+     * 'attr_list' contains attributes for checking if some of them are affected
      * later. For instance, both of 'arrowhead' and 'dir' (edge style defined
      * in DOT) make changes to 'arrows' attribute in vis.
      */
@@ -15227,9 +15227,9 @@
           arrowType = arrowTypes[value];
           name = 'arrows';
           value = {
-            to: {
-              enabled: true,
-              type: arrowType
+            'to': {
+              'enabled': true,
+              'type': arrowType
             }
           };
         }
@@ -15238,9 +15238,9 @@
           arrowType = arrowTypes[value];
           name = 'arrows';
           value = {
-            from: {
-              enabled: true,
-              type: arrowType
+            'from': {
+              'enabled': true,
+              'type': arrowType
             }
           };
         }
@@ -15563,9 +15563,30 @@
 
 
       attr_list.splice(idx.dir, 1);
+    } // parse 'penwidth'
+
+
+    var nof_attr_list;
+
+    if (attr_names.includes('penwidth')) {
+      var tmp_attr_list = [];
+      nof_attr_list = attr_list.length;
+
+      for (i = 0; i < nof_attr_list; i++) {
+        // exclude 'width' from attr_list if 'penwidth' exists
+        if (attr_list[i].name !== 'width') {
+          if (attr_list[i].name === 'penwidth') {
+            attr_list[i].name = 'width';
+          }
+
+          tmp_attr_list.push(attr_list[i]);
+        }
+      }
+
+      attr_list = tmp_attr_list;
     }
 
-    var nof_attr_list = attr_list.length;
+    nof_attr_list = attr_list.length;
 
     for (i = 0; i < nof_attr_list; i++) {
       setValue(attr_list[i].attr, attr_list[i].name, attr_list[i].value);
@@ -16233,6 +16254,11 @@
 
       return keycharm;
     });
+  });
+
+  var keycharm$1 = /*#__PURE__*/Object.freeze({
+    'default': keycharm,
+    __moduleExports: keycharm
   });
 
   /*! Hammer.JS - v2.0.15 - 2019-04-04
@@ -19250,6 +19276,11 @@
         return hammerMock();
       };
     }
+  });
+
+  var hammer$1 = /*#__PURE__*/Object.freeze({
+    'default': hammer,
+    __moduleExports: hammer
   });
 
   /**
@@ -33335,12 +33366,15 @@
             //       (This might be paranoia)
 
           } else {
-            // This should not be happening, the state should
+            delete _this4._clusterEdges[edgeId];
+
+            _this4._restoreEdge(edge); // This should not be happening, the state should
             // be properly updated at this point.
             // 
             // If it *is* reached during normal operation, then we have to implement
             // undo clustering for this edge here.
-            throw new Error('remove edge from clustering not implemented!');
+            // throw new Error('remove edge from clustering not implemented!')
+
           }
         }); // Clusters may be nested to any level. Keep on opening until nothing to open
 
@@ -34650,6 +34684,13 @@
         if (options === undefined) {
           options = {};
           return;
+        } // Coerce and verify that the scale is valid.
+
+
+        options.scale = +options.scale;
+
+        if (!(options.scale > 0)) {
+          throw new TypeError('The option "scale" has to be a number greater than zero.');
         }
 
         if (options.offset === undefined) {
@@ -46206,6 +46247,18 @@
   var DOMutil_6 = DOMutil.drawPoint;
   var DOMutil_7 = DOMutil.drawBar;
 
+  var DOMutil$1 = /*#__PURE__*/Object.freeze({
+    'default': DOMutil,
+    __moduleExports: DOMutil,
+    prepareElements: DOMutil_1,
+    cleanupElements: DOMutil_2,
+    resetElements: DOMutil_3,
+    getSVGElement: DOMutil_4,
+    getDOMElement: DOMutil_5,
+    drawPoint: DOMutil_6,
+    drawBar: DOMutil_7
+  });
+
   var moment$2 = createCommonjsModule$2(function (module, exports) {
 
     (function (global, factory) {
@@ -50793,6 +50846,11 @@
 
   var moment$3 = typeof window !== 'undefined' && window['moment'] || moment$2;
 
+  var moment$4 = /*#__PURE__*/Object.freeze({
+    'default': moment$3,
+    __moduleExports: moment$3
+  });
+
   // vis-util
   var network = {
     Images: Images,
@@ -50803,15 +50861,30 @@
     convertGephi: parseGephi
   }; // utils
 
-  exports.DOMutil = DOMutil;
+  var index$2 = /*#__PURE__*/Object.freeze({
+    util: esm,
+    data: esm$1,
+    network: network,
+    DOMutil: DOMutil$1,
+    moment: moment$4,
+    Hammer: hammer$1,
+    keycharm: keycharm$1,
+    DataSet: DataSet,
+    DataView: DataView,
+    Queue: Queue,
+    Network: Network
+  });
+
+  exports.DOMutil = DOMutil$1;
   exports.DataSet = DataSet;
   exports.DataView = DataView;
-  exports.Hammer = hammer;
+  exports.Hammer = hammer$1;
   exports.Network = Network;
   exports.Queue = Queue;
   exports.data = esm$1;
-  exports.keycharm = keycharm;
-  exports.moment = moment$3;
+  exports.default = index$2;
+  exports.keycharm = keycharm$1;
+  exports.moment = moment$4;
   exports.network = network;
   exports.util = esm;
 

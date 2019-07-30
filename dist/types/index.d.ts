@@ -13,8 +13,12 @@ export declare const network: {
     convertDot: any;
     convertGephi: typeof gephiParser.parseGephi;
 };
-export { default as DOMutil } from './DOMutil';
-export { default as moment } from './module/moment';
-export { default as Hammer } from './module/hammer';
-export { default as keycharm } from 'keycharm';
+import * as DOMutil from './DOMutil';
+export { DOMutil };
+import * as moment from './module/moment';
+export { moment };
+import * as Hammer from './module/hammer';
+export { Hammer };
+import * as keycharm from 'keycharm';
+export { keycharm };
 //# sourceMappingURL=index.d.ts.map
