@@ -29,7 +29,7 @@
   "scripts": {
     "test": "BABEL_ENV=test mocha --exit",
     "test-cov": "BABEL_ENV=test-cov nyc mocha --exit",
-    "types:network": "tsc -p tsconfig.types.json",
+    "types:network": "cpy --parents types dist && cpy node_modules/vis-types/index.d.ts dist/types/vis-types && tsc -p tsconfig.types.json",
     "js:network": "rollup --config rollup.config.js",
     "css:network": "concat-glob-cli -f 'lib/{network,shared}/**/*.css' -o dist/vis-network.css",
     "uglify:css:network": "uglifycss dist/vis-network.css > dist/vis-network.min.css",
