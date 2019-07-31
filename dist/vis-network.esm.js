@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 5.1.1
- * @date    2019-07-31T11:02:13Z
+ * @date    2019-07-31T17:55:24Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -15819,14 +15819,14 @@ var dotparser$1 = /*#__PURE__*/Object.freeze({
 });
 
 /**
+ * Convert Gephi to Vis.
  *
- * @param {json} gephiJSON
- * @param {obj} optionsObj
- * @returns {{nodes: Array, edges: Array}}
+ * @param gephiJSON - The parsed JSON data in Gephi format.
+ * @param optionsObj - Additional options.
+ *
+ * @returns The converted data ready to be used in Vis.
  */
 function parseGephi(gephiJSON, optionsObj) {
-  var edges = [];
-  var nodes = [];
   var options = {
     edges: {
       inheritColor: false
@@ -15837,93 +15837,115 @@ function parseGephi(gephiJSON, optionsObj) {
     }
   };
 
-  if (optionsObj !== undefined) {
-    if (optionsObj.fixed !== undefined) {
+  if (optionsObj != null) {
+    if (optionsObj.fixed != null) {
       options.nodes.fixed = optionsObj.fixed;
     }
 
-    if (optionsObj.parseColor !== undefined) {
+    if (optionsObj.parseColor != null) {
       options.nodes.parseColor = optionsObj.parseColor;
     }
 
-    if (optionsObj.inheritColor !== undefined) {
+    if (optionsObj.inheritColor != null) {
       options.edges.inheritColor = optionsObj.inheritColor;
     }
   }
 
   var gEdges = gephiJSON.edges;
-  var gNodes = gephiJSON.nodes;
+  var vEdges = gEdges.map(function (gEdge) {
+    var vEdge = {
+      from: gEdge.source,
+      id: gEdge.id,
+      to: gEdge.target
+    };
 
-  for (var i = 0; i < gEdges.length; i++) {
-    var edge = {};
-    var gEdge = gEdges[i];
-    edge['id'] = gEdge.id;
-    edge['from'] = gEdge.source;
-    edge['to'] = gEdge.target;
-    edge['attributes'] = gEdge.attributes;
-    edge['label'] = gEdge.label;
-    edge['title'] = gEdge.attributes !== undefined ? gEdge.attributes.title : undefined;
-
-    if (gEdge['type'] === 'Directed') {
-      edge['arrows'] = 'to';
-    } //    edge['value'] = gEdge.attributes !== undefined ? gEdge.attributes.Weight : undefined;
-    //    edge['width'] = edge['value'] !== undefined ? undefined : edgegEdge.size;
-
-
-    if (gEdge.color && options.inheritColor === false) {
-      edge['color'] = gEdge.color;
+    if (gEdge.attributes != null) {
+      vEdge.attributes = gEdge.attributes;
     }
 
-    edges.push(edge);
-  }
-
-  for (var j = 0; j < gNodes.length; j++) {
-    var node = {};
-    var gNode = gNodes[j];
-    node['id'] = gNode.id;
-    node['attributes'] = gNode.attributes;
-    node['x'] = gNode.x;
-    node['y'] = gNode.y;
-    node['label'] = gNode.label;
-    node['title'] = gNode.attributes !== undefined ? gNode.attributes.title : gNode.title;
-
-    if (options.nodes.parseColor === true) {
-      node['color'] = gNode.color;
-    } else {
-      node['color'] = gNode.color !== undefined ? {
-        background: gNode.color,
-        border: gNode.color,
-        highlight: {
-          background: gNode.color,
-          border: gNode.color
-        },
-        hover: {
-          background: gNode.color,
-          border: gNode.color
-        }
-      } : undefined;
+    if (gEdge.label != null) {
+      vEdge.label = gEdge.label;
     }
 
-    node['size'] = gNode.size;
-    node['fixed'] = options.nodes.fixed && gNode.x !== undefined && gNode.y !== undefined;
-    nodes.push(node);
-  }
+    if (gEdge.attributes != null && gEdge.attributes.title != null) {
+      vEdge.title = gEdge.attributes.title;
+    }
 
+    if (gEdge.type === 'Directed') {
+      vEdge.arrows = 'to';
+    } // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
+    // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
+
+
+    if (gEdge.color && options.edges.inheritColor === false) {
+      vEdge.color = gEdge.color;
+    }
+
+    return vEdge;
+  });
+  var vNodes = gephiJSON.nodes.map(function (gNode) {
+    var vNode = {
+      id: gNode.id,
+      fixed: options.nodes.fixed && gNode.x != null && gNode.y != null
+    };
+
+    if (gNode.attributes != null) {
+      vNode.attributes = gNode.attributes;
+    }
+
+    if (gNode.label != null) {
+      vNode.label = gNode.label;
+    }
+
+    if (gNode.size != null) {
+      vNode.size = gNode.size;
+    }
+
+    if (gNode.attributes != null && gNode.attributes.title != null) {
+      vNode.title = gNode.attributes.title;
+    }
+
+    if (gNode.title != null) {
+      vNode.title = gNode.title;
+    }
+
+    if (gNode.x != null) {
+      vNode.x = gNode.x;
+    }
+
+    if (gNode.y != null) {
+      vNode.y = gNode.y;
+    }
+
+    if (gNode.color != null) {
+      if (options.nodes.parseColor === true) {
+        vNode.color = gNode.color;
+      } else {
+        vNode.color = {
+          background: gNode.color,
+          border: gNode.color,
+          highlight: {
+            background: gNode.color,
+            border: gNode.color
+          },
+          hover: {
+            background: gNode.color,
+            border: gNode.color
+          }
+        };
+      }
+    }
+
+    return vNode;
+  });
   return {
-    nodes: nodes,
-    edges: edges
+    nodes: vNodes,
+    edges: vEdges
   };
 }
 
-var parseGephi_1 = parseGephi;
-var gephiParser = {
-  parseGephi: parseGephi_1
-};
-
-var gephiParser$1 = /*#__PURE__*/Object.freeze({
-  'default': gephiParser,
-  __moduleExports: gephiParser,
-  parseGephi: parseGephi_1
+var gephiParser = /*#__PURE__*/Object.freeze({
+  parseGephi: parseGephi
 });
 
 var keycharm = createCommonjsModule$2(function (module, exports) {
@@ -45638,7 +45660,7 @@ Network.prototype.setData = function (data) {
   } else if (data && data.gephi) {
     // parse DOT file
     console.log('The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);');
-    var gephiData = gephiParser.parseGephi(data.gephi);
+    var gephiData = parseGephi(data.gephi);
     this.setData(gephiData);
     return;
   } else {
@@ -50827,10 +50849,10 @@ var moment$4 = /*#__PURE__*/Object.freeze({
 var network = {
   Images: Images,
   dotparser: dotparser$1,
-  gephiParser: gephiParser$1,
+  gephiParser: gephiParser,
   allOptions: allOptions$2,
   convertDot: DOTToGraph_1,
-  convertGephi: parseGephi_1
+  convertGephi: parseGephi
 }; // utils
 
 var index$2 = /*#__PURE__*/Object.freeze({

@@ -4,13 +4,14 @@ import * as data from 'vis-data';
 export { data };
 export { DataSet, DataView, Queue } from 'vis-data';
 export * from './network/Network';
+import * as gephiParser from './network/gephiParser';
 export declare const network: {
     Images: any;
     dotparser: any;
-    gephiParser: any;
+    gephiParser: typeof gephiParser;
     allOptions: any;
     convertDot: any;
-    convertGephi: any;
+    convertGephi: typeof gephiParser.parseGephi;
 };
 import * as DOMutil from './DOMutil';
 export { DOMutil };
