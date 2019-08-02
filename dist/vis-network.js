@@ -1,11 +1,11 @@
-/*
+/**
  * vis-network - network
  * http://visjs.org/
  *
  * A dynamic, browser-based visualization library.
  *
  * @version 5.1.1
- * @date    2019-07-31T17:55:24Z
+ * @date    2019-08-02T11:55:44Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -5041,13 +5041,16 @@
    */
 
   function selectiveExtend(props, a) {
-    // @TODO: better solution?
     if (!Array.isArray(props)) {
       throw new Error('Array with property names expected as first argument');
     }
 
-    for (var i = 2; i < (arguments.length <= 2 ? 0 : arguments.length - 2); i++) {
-      var other = i + 2 < 2 || arguments.length <= i + 2 ? undefined : arguments[i + 2];
+    for (var _len = arguments.length, others = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      others[_key - 2] = arguments[_key];
+    }
+
+    for (var _i = 0, _others = others; _i < _others.length; _i++) {
+      var other = _others[_i];
 
       for (var p = 0; p < props.length; p++) {
         var prop = props[p];
@@ -5551,9 +5554,9 @@
       }
     } else {
       // object
-      for (var _key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, _key)) {
-          callback(object[_key], _key, object);
+      for (var _key2 in object) {
+        if (Object.prototype.hasOwnProperty.call(object, _key2)) {
+          callback(object[_key2], _key2, object);
         }
       }
     }
@@ -6064,11 +6067,11 @@
         if (style.trim() != '') {
           var parts = style.split(':');
 
-          var _key2 = parts[0].trim();
+          var _key3 = parts[0].trim();
 
           var _value2 = parts[1].trim();
 
-          styles[_key2] = _value2;
+          styles[_key3] = _value2;
         }
       });
       return styles;
@@ -6107,9 +6110,9 @@
     var styles = cssUtil.split(element.style.cssText);
     var removeStyles = cssUtil.split(cssText);
 
-    for (var _key3 in removeStyles) {
-      if (Object.prototype.hasOwnProperty.call(removeStyles, _key3)) {
-        delete styles[_key3];
+    for (var _key4 in removeStyles) {
+      if (Object.prototype.hasOwnProperty.call(removeStyles, _key4)) {
+        delete styles[_key4];
       }
     }
 
@@ -19606,7 +19609,24 @@
       deleteClusterError: 'Les clusters ne peuvent pas être éffacés.',
       editClusterError: 'Les clusters ne peuvent pas être édites.'
     };
-    exports['fr_FR'] = exports['fr'];
+    exports['fr_FR'] = exports['fr']; // Czech
+
+    exports['cs'] = {
+      edit: 'Upravit',
+      del: 'Smazat výběr',
+      back: 'Zpět',
+      addNode: 'Přidat vrchol',
+      addEdge: 'Přidat hranu',
+      editNode: 'Upravit vrchol',
+      editEdge: 'Upravit hranu',
+      addDescription: 'Kluknutím do prázdného prostoru můžete přidat nový vrchol.',
+      edgeDescription: 'Přetažením z jednoho vrcholu do druhého můžete spojit tyto vrcholy novou hranou.',
+      editEdgeDescription: 'Přetažením kontrolního vrcholu hrany ji můžete připojit k jinému vrcholu.',
+      createEdgeError: 'Nelze připojit hranu ke shluku.',
+      deleteClusterError: 'Nelze mazat shluky.',
+      editClusterError: 'Nelze upravovat shluky.'
+    };
+    exports['cs_CZ'] = exports['cs'];
   });
 
   function _classCallCheck$1(instance, Constructor) {
