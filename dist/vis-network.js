@@ -1,11 +1,11 @@
-/*
+/**
  * vis-network - network
  * http://visjs.org/
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 5.1.1
- * @date    2019-08-01T19:26:29Z
+ * @version 0.0.0-no-version
+ * @date    2019-08-02T13:56:24Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -19609,7 +19609,24 @@
       deleteClusterError: 'Les clusters ne peuvent pas être éffacés.',
       editClusterError: 'Les clusters ne peuvent pas être édites.'
     };
-    exports['fr_FR'] = exports['fr'];
+    exports['fr_FR'] = exports['fr']; // Czech
+
+    exports['cs'] = {
+      edit: 'Upravit',
+      del: 'Smazat výběr',
+      back: 'Zpět',
+      addNode: 'Přidat vrchol',
+      addEdge: 'Přidat hranu',
+      editNode: 'Upravit vrchol',
+      editEdge: 'Upravit hranu',
+      addDescription: 'Kluknutím do prázdného prostoru můžete přidat nový vrchol.',
+      edgeDescription: 'Přetažením z jednoho vrcholu do druhého můžete spojit tyto vrcholy novou hranou.',
+      editEdgeDescription: 'Přetažením kontrolního vrcholu hrany ji můžete připojit k jinému vrcholu.',
+      createEdgeError: 'Nelze připojit hranu ke shluku.',
+      deleteClusterError: 'Nelze mazat shluky.',
+      editClusterError: 'Nelze upravovat shluky.'
+    };
+    exports['cs_CZ'] = exports['cs'];
   });
 
   function _classCallCheck$1(instance, Constructor) {

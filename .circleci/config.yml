@@ -1,0 +1,118 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:12.7
+    working_directory: ~/repo
+
+jobs:
+  prepare:
+    executor: node
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: npm ci
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - '*'
+
+  build:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run: npm run build
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - 'dist'
+
+  lint:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run: npm run lint
+
+  test:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run: npm run test-cov
+
+  release:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Prepare NPM
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+
+      - run:
+          name: Prepare Git
+          command: |
+            git config user.email "tom.vycital@gmail.com"
+            git config user.name "Tomáš Vyčítal"
+
+      - run:
+          name: Release
+          command: |
+            npx semantic-release
+
+workflows:
+  version: 2
+
+  build:
+    jobs:
+      - prepare
+
+      - build:
+          requires:
+            - prepare
+
+      # - lint:
+      #     requires:
+      #       - prepare
+
+      - test:
+          requires:
+            - prepare
+
+      - release:
+          requires:
+            - prepare
+            - build
+            # - lint
+            - test
