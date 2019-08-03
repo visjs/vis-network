@@ -10,9 +10,9 @@ executors:
       - image: circleci/node:12.7
     working_directory: ~/repo
     environment:
-      GIT_AUTHOR_EMAIL: tom.vycital+vis-bot@gmail.com
+      GIT_AUTHOR_EMAIL: visjsbot@gmail.com
       GIT_AUTHOR_NAME: vis-bot
-      GIT_COMMITTER_EMAIL: tom.vycital+vis-bot@gmail.com
+      GIT_COMMITTER_EMAIL: visjsbot@gmail.com
       GIT_COMMITTER_NAME: vis-bot
 
 jobs:
