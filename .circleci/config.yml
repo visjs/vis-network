@@ -9,6 +9,11 @@ executors:
     docker:
       - image: circleci/node:12.7
     working_directory: ~/repo
+    environment:
+      GIT_AUTHOR_EMAIL: tom.vycital+vis-bot@gmail.com
+      GIT_AUTHOR_NAME: vis-bot
+      GIT_COMMITTER_EMAIL: tom.vycital+vis-bot@gmail.com
+      GIT_COMMITTER_NAME: vis-bot
 
 jobs:
   prepare:
@@ -50,14 +55,23 @@ jobs:
           paths:
             - 'dist'
 
-  lint:
+  lint_js:
     executor: node
 
     steps:
       - attach_workspace:
           at: .
 
-      - run: npm run lint
+      - run: npm run lint:js
+
+  lint_ts:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run: npm run lint:ts
 
   test:
     executor: node
@@ -81,12 +95,6 @@ jobs:
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
 
       - run:
-          name: Prepare Git
-          command: |
-            git config user.email "tom.vycital@gmail.com"
-            git config user.name "Tomáš Vyčítal"
-
-      - run:
           name: Release
           command: |
             npx semantic-release
@@ -102,9 +110,13 @@ workflows:
           requires:
             - prepare
 
-      # - lint:
+      # - lint_js:
       #     requires:
       #       - prepare
+
+      - lint_ts:
+          requires:
+            - prepare
 
       - test:
           requires:
@@ -114,5 +126,10 @@ workflows:
           requires:
             - prepare
             - build
-            # - lint
+            # - lint_js
+            - lint_ts
             - test
+          filters:
+            branches:
+              only:
+                - master
