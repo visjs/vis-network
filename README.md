@@ -11,7 +11,7 @@ Network is a visualization to display networks and networks consisting of nodes 
 [![GitHub contributors](https://img.shields.io/github/contributors/visjs/vis-network.svg)](https://github.com/visjs/vis-network/graphs/contributors)
 [![GitHub stars](https://img.shields.io/github/stars/visjs/vis-network.svg)](https://github.com/almende/vis/stargazers)
 
-[![Backers on Open Collective](https://opencollective.com/visjs/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors) 
+[![Backers on Open Collective](https://opencollective.com/visjs/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors) [![Greenkeeper badge](https://badges.greenkeeper.io/visjs/vis-network.svg)](https://greenkeeper.io/) 
 
 ## Install
 
