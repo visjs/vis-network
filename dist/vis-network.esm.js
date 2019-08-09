@@ -4,8 +4,8 @@
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 5.1.1
- * @date    2019-08-02T11:55:44Z
+ * @version 0.0.0-no-version
+ * @date    2019-08-08T15:18:29Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -21538,7 +21538,6 @@ function () {
      * If in-variable is a string, parse it as a font specifier.
      *
      * Note that following is not done here and have to be done after the call:
-     * - No number conversion (size)
      * - Not all font options are set (vadjust, mod)
      *
      * @param {Object} outOptions  out-parameter, object in which to store the parse results (if any)
@@ -22275,7 +22274,7 @@ function () {
     value: function parseFontString(outOptions, inOptions) {
       if (!inOptions || typeof inOptions !== 'string') return false;
       var newOptionsArray = inOptions.split(" ");
-      outOptions.size = newOptionsArray[0].replace("px", '');
+      outOptions.size = +newOptionsArray[0].replace("px", '');
       outOptions.face = newOptionsArray[1];
       outOptions.color = newOptionsArray[2];
       return true;
@@ -34698,36 +34697,72 @@ function () {
       if (options === undefined) {
         options = {};
         return;
-      } // Coerce and verify that the scale is valid.
-
-
-      options.scale = +options.scale;
-
-      if (!(options.scale > 0)) {
-        throw new TypeError('The option "scale" has to be a number greater than zero.');
       }
 
-      if (options.offset === undefined) {
+      if (options.offset != null) {
+        if (options.offset.x != null) {
+          // Coerce and verify that x is valid.
+          options.offset.x = +options.offset.x;
+
+          if (!Number.isFinite(options.offset.x)) {
+            throw new TypeError('The option "offset.x" has to be a finite number.');
+          }
+        } else {
+          options.offset.x = 0;
+        }
+
+        if (options.offset.y != null) {
+          // Coerce and verify that y is valid.
+          options.offset.y = +options.offset.y;
+
+          if (!Number.isFinite(options.offset.y)) {
+            throw new TypeError('The option "offset.y" has to be a finite number.');
+          }
+        } else {
+          options.offset.x = 0;
+        }
+      } else {
         options.offset = {
           x: 0,
           y: 0
         };
       }
 
-      if (options.offset.x === undefined) {
-        options.offset.x = 0;
-      }
+      if (options.position != null) {
+        if (options.position.x != null) {
+          // Coerce and verify that x is valid.
+          options.position.x = +options.position.x;
 
-      if (options.offset.y === undefined) {
-        options.offset.y = 0;
-      }
+          if (!Number.isFinite(options.position.x)) {
+            throw new TypeError('The option "position.x" has to be a finite number.');
+          }
+        } else {
+          options.position.x = 0;
+        }
 
-      if (options.scale === undefined) {
-        options.scale = this.body.view.scale;
-      }
+        if (options.position.y != null) {
+          // Coerce and verify that y is valid.
+          options.position.y = +options.position.y;
 
-      if (options.position === undefined) {
+          if (!Number.isFinite(options.position.y)) {
+            throw new TypeError('The option "position.y" has to be a finite number.');
+          }
+        } else {
+          options.position.x = 0;
+        }
+      } else {
         options.position = this.getViewPosition();
+      }
+
+      if (options.scale != null) {
+        // Coerce and verify that the scale is valid.
+        options.scale = +options.scale;
+
+        if (!(options.scale > 0)) {
+          throw new TypeError('The option "scale" has to be a number greater than zero.');
+        } else {
+          options.scale = this.body.view.scale;
+        }
       }
 
       if (options.animation === undefined) {
