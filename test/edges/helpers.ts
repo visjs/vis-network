@@ -89,7 +89,12 @@ export const body = deepFreeze({
   emitter: {},
 })
 
-export function mockedBody() {
+/**
+ * Clone [[body]] and enrich it with stubs and spies like on, off in emitter or distanceToBorder in nodes.
+ *
+ * @returns Mocked body.
+ */
+export function mockedBody(): any {
   const mockedBody = JSON.parse(JSON.stringify(body))
 
   mockedBody.nodes[1].distanceToBorder = stub()
