@@ -6,7 +6,7 @@ Network is a visualization to display networks and networks consisting of nodes 
 
 ## Badges
 
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) ![npm](https://img.shields.io/npm/v/vis-network)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) ![npm](https://img.shields.io/npm/v/vis-network) [![Greenkeeper badge](https://badges.greenkeeper.io/visjs/vis-network.svg)](https://greenkeeper.io/) 
 
 [![GitHub contributors](https://img.shields.io/github/contributors/visjs/vis-network.svg)](https://github.com/visjs/vis-network/graphs/contributors)
 [![GitHub stars](https://img.shields.io/github/stars/visjs/vis-network.svg)](https://github.com/almende/vis/stargazers)
