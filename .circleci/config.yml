@@ -80,7 +80,7 @@ jobs:
       - attach_workspace:
           at: .
 
-      - run: npm run test-cov
+      - run: npm run test:cov
 
   release:
     executor: node
