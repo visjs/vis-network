@@ -9,6 +9,7 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
+    "css-modules-transform",
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-transform-runtime"
