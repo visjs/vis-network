@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-08T15:18:29Z
+ * @date    2019-08-13T17:54:48Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -34766,9 +34766,9 @@
 
           if (!(options.scale > 0)) {
             throw new TypeError('The option "scale" has to be a number greater than zero.');
-          } else {
-            options.scale = this.body.view.scale;
           }
+        } else {
+          options.scale = this.body.view.scale;
         }
 
         if (options.animation === undefined) {
