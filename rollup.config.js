@@ -45,6 +45,7 @@ export default [
 			format: 'umd',
 			exports: 'named',
 			name: 'vis',
+			extend: true,
 			banner: genHeader('network'),
 			sourcemap: true
 		}],
@@ -68,6 +69,7 @@ export default [
 			format: 'umd',
 			exports: 'named',
 			name: 'vis',
+			extend: true,
 			banner: genHeader('network'),
 			sourcemap: true
 		}],
