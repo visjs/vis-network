@@ -69,8 +69,6 @@
     "babel-plugin-css-modules-transform": "^1.6.2",
     "babel-plugin-istanbul": "^5.2.0",
     "chai": "^4.2.0",
-    "clean-css": "^4.2.1",
-    "concat-glob-cli": "^0.1.0",
     "cpy-cli": "^2.0.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
@@ -94,7 +92,6 @@
     "sinon": "^7.4.1",
     "test-console": "^1.1.0",
     "typescript": "^3.5.3",
-    "uglifycss": "0.0.29",
     "uuid": "^3.3.2"
   },
   "collective": {
