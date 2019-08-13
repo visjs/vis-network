@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-08T15:18:29Z
+ * @date    2019-08-13T16:59:32Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -14258,6 +14258,10 @@
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
+  function getCjsExportFromNamespace (n) {
+  	return n && n['default'] || n;
+  }
+
   var componentEmitter = createCommonjsModule$2(function (module) {
     /**
      * Expose `Emitter`.
@@ -15955,6 +15959,12 @@
 
   var gephiParser = /*#__PURE__*/Object.freeze({
     parseGephi: parseGephi
+  });
+
+
+
+  var Activator = /*#__PURE__*/Object.freeze({
+
   });
 
   var keycharm = createCommonjsModule$2(function (module, exports) {
@@ -19286,6 +19296,8 @@
     __moduleExports: hammer
   });
 
+  getCjsExportFromNamespace(Activator);
+
   /**
    * Turn an element into an clickToUse element.
    * When not active, the element has a transparent overlay. When the overlay is
@@ -19297,7 +19309,7 @@
    * @constructor Activator
    */
 
-  function Activator(container) {
+  function Activator$1(container) {
     this.active = false;
     this.dom = {
       container: container
@@ -19336,14 +19348,14 @@
   } // turn into an event emitter
 
 
-  componentEmitter(Activator.prototype); // The currently active activator
+  componentEmitter(Activator$1.prototype); // The currently active activator
 
-  Activator.current = null;
+  Activator$1.current = null;
   /**
    * Destroy the activator. Cleans up all created DOM and event listeners
    */
 
-  Activator.prototype.destroy = function () {
+  Activator$1.prototype.destroy = function () {
     this.deactivate(); // remove dom
 
     this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
@@ -19368,13 +19380,13 @@
    */
 
 
-  Activator.prototype.activate = function () {
+  Activator$1.prototype.activate = function () {
     // we allow only one active activator at a time
-    if (Activator.current) {
-      Activator.current.deactivate();
+    if (Activator$1.current) {
+      Activator$1.current.deactivate();
     }
 
-    Activator.current = this;
+    Activator$1.current = this;
     this.active = true;
     this.dom.overlay.style.display = 'none';
     util.addClassName(this.dom.container, 'vis-active');
@@ -19390,7 +19402,7 @@
    */
 
 
-  Activator.prototype.deactivate = function () {
+  Activator$1.prototype.deactivate = function () {
     this.active = false;
     this.dom.overlay.style.display = '';
     util.removeClassName(this.dom.container, 'vis-active');
@@ -19405,7 +19417,7 @@
    */
 
 
-  Activator.prototype._onTapOverlay = function (event) {
+  Activator$1.prototype._onTapOverlay = function (event) {
     // activate the container
     this.activate();
     event.stopPropagation();
@@ -19433,7 +19445,7 @@
     return false;
   }
 
-  var Activator_1 = Activator;
+  var Activator_1 = Activator$1;
 
   var locales = createCommonjsModule$2(function (module, exports) {
     // English
@@ -35375,6 +35387,7 @@
   /**
    * Popup is a class to create a popup window with some text
    */
+
   var Popup =
   /*#__PURE__*/
   function () {
