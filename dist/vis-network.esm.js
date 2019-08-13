@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-13T17:27:41Z
+ * @date    2019-08-13T17:54:48Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -14252,10 +14252,6 @@ function createCommonjsModule$2(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-function getCjsExportFromNamespace (n) {
-	return n && n['default'] || n;
-}
-
 var componentEmitter = createCommonjsModule$2(function (module) {
   /**
    * Expose `Emitter`.
@@ -15953,12 +15949,6 @@ function parseGephi(gephiJSON, optionsObj) {
 
 var gephiParser = /*#__PURE__*/Object.freeze({
   parseGephi: parseGephi
-});
-
-
-
-var Activator = /*#__PURE__*/Object.freeze({
-
 });
 
 var keycharm = createCommonjsModule$2(function (module, exports) {
@@ -19290,8 +19280,6 @@ var hammer$1 = /*#__PURE__*/Object.freeze({
   __moduleExports: hammer
 });
 
-getCjsExportFromNamespace(Activator);
-
 /**
  * Turn an element into an clickToUse element.
  * When not active, the element has a transparent overlay. When the overlay is
@@ -19303,7 +19291,7 @@ getCjsExportFromNamespace(Activator);
  * @constructor Activator
  */
 
-function Activator$1(container) {
+function Activator(container) {
   this.active = false;
   this.dom = {
     container: container
@@ -19342,14 +19330,14 @@ function Activator$1(container) {
 } // turn into an event emitter
 
 
-componentEmitter(Activator$1.prototype); // The currently active activator
+componentEmitter(Activator.prototype); // The currently active activator
 
-Activator$1.current = null;
+Activator.current = null;
 /**
  * Destroy the activator. Cleans up all created DOM and event listeners
  */
 
-Activator$1.prototype.destroy = function () {
+Activator.prototype.destroy = function () {
   this.deactivate(); // remove dom
 
   this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
@@ -19374,13 +19362,13 @@ Activator$1.prototype.destroy = function () {
  */
 
 
-Activator$1.prototype.activate = function () {
+Activator.prototype.activate = function () {
   // we allow only one active activator at a time
-  if (Activator$1.current) {
-    Activator$1.current.deactivate();
+  if (Activator.current) {
+    Activator.current.deactivate();
   }
 
-  Activator$1.current = this;
+  Activator.current = this;
   this.active = true;
   this.dom.overlay.style.display = 'none';
   util.addClassName(this.dom.container, 'vis-active');
@@ -19396,7 +19384,7 @@ Activator$1.prototype.activate = function () {
  */
 
 
-Activator$1.prototype.deactivate = function () {
+Activator.prototype.deactivate = function () {
   this.active = false;
   this.dom.overlay.style.display = '';
   util.removeClassName(this.dom.container, 'vis-active');
@@ -19411,7 +19399,7 @@ Activator$1.prototype.deactivate = function () {
  */
 
 
-Activator$1.prototype._onTapOverlay = function (event) {
+Activator.prototype._onTapOverlay = function (event) {
   // activate the container
   this.activate();
   event.stopPropagation();
@@ -19439,7 +19427,7 @@ function _hasParent(element, parent) {
   return false;
 }
 
-var Activator_1 = Activator$1;
+var Activator_1 = Activator;
 
 var locales = createCommonjsModule$2(function (module, exports) {
   // English
@@ -34772,9 +34760,9 @@ function () {
 
         if (!(options.scale > 0)) {
           throw new TypeError('The option "scale" has to be a number greater than zero.');
-        } else {
-          options.scale = this.body.view.scale;
         }
+      } else {
+        options.scale = this.body.view.scale;
       }
 
       if (options.animation === undefined) {
@@ -35381,7 +35369,6 @@ function () {
 /**
  * Popup is a class to create a popup window with some text
  */
-
 var Popup =
 /*#__PURE__*/
 function () {

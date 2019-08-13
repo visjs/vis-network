@@ -1,3 +1,394 @@
+
+div.vis-color-picker {
+  position:absolute;
+  top: 0px;
+  left: 30px;
+  margin-top:-140px;
+  margin-left:30px;
+  width:310px;
+  height:444px;
+  z-index: 1;
+  padding: 10px;
+  border-radius:15px;
+  background-color:#ffffff;
+  display: none;
+  box-shadow: rgba(0,0,0,0.5) 0px 0px 10px 0px;
+}
+
+div.vis-color-picker div.vis-arrow {
+  position: absolute;
+  top:147px;
+  left:5px;
+}
+
+div.vis-color-picker div.vis-arrow::after,
+div.vis-color-picker div.vis-arrow::before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+div.vis-color-picker div.vis-arrow:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-right-color: #ffffff;
+  border-width: 30px;
+  margin-top: -30px;
+}
+
+div.vis-color-picker div.vis-color {
+  position:absolute;
+  width: 289px;
+  height: 289px;
+  cursor: pointer;
+}
+
+
+
+div.vis-color-picker div.vis-brightness {
+  position: absolute;
+  top:313px;
+}
+
+div.vis-color-picker div.vis-opacity {
+  position:absolute;
+  top:350px;
+}
+
+div.vis-color-picker div.vis-selector {
+  position:absolute;
+  top:137px;
+  left:137px;
+  width:15px;
+  height:15px;
+  border-radius:15px;
+  border:1px solid #ffffff;
+  background: #4c4c4c; /* Old browsers */
+  background: -moz-linear-gradient(top,  #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, #000000 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4c4c4c), color-stop(12%,#595959), color-stop(25%,#666666), color-stop(39%,#474747), color-stop(50%,#2c2c2c), color-stop(51%,#000000), color-stop(60%,#111111), color-stop(76%,#2b2b2b), color-stop(91%,#1c1c1c), color-stop(100%,#131313)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
+}
+
+
+
+div.vis-color-picker div.vis-new-color {
+  position:absolute;
+  width:140px;
+  height:20px;
+  border:1px solid rgba(0,0,0,0.1);
+  border-radius:5px;
+  top:380px;
+  left:159px;
+  text-align:right;
+  padding-right:2px;
+  font-size:10px;
+  color:rgba(0,0,0,0.4);
+  vertical-align:middle;
+  line-height:20px;
+
+}
+
+div.vis-color-picker div.vis-initial-color {
+  position:absolute;
+  width:140px;
+  height:20px;
+  border:1px solid rgba(0,0,0,0.1);
+  border-radius:5px;
+  top:380px;
+  left:10px;
+  text-align:left;
+  padding-left:2px;
+  font-size:10px;
+  color:rgba(0,0,0,0.4);
+  vertical-align:middle;
+  line-height:20px;
+}
+
+div.vis-color-picker div.vis-label {
+  position:absolute;
+  width:300px;
+  left:10px;
+}
+
+div.vis-color-picker div.vis-label.vis-brightness {
+  top:300px;
+}
+
+div.vis-color-picker div.vis-label.vis-opacity {
+  top:338px;
+}
+
+div.vis-color-picker div.vis-button {
+  position:absolute;
+  width:68px;
+  height:25px;
+  border-radius:10px;
+  vertical-align: middle;
+  text-align:center;
+  line-height: 25px;
+  top:410px;
+  border:2px solid #d9d9d9;
+  background-color: #f7f7f7;
+  cursor:pointer;
+}
+
+div.vis-color-picker div.vis-button.vis-cancel {
+  /*border:2px solid #ff4e33;*/
+  /*background-color: #ff7761;*/
+  left:5px;
+}
+div.vis-color-picker div.vis-button.vis-load {
+  /*border:2px solid #a153e6;*/
+  /*background-color: #cb8dff;*/
+  left:82px;
+}
+div.vis-color-picker div.vis-button.vis-apply {
+  /*border:2px solid #4588e6;*/
+  /*background-color: #82b6ff;*/
+  left:159px;
+}
+div.vis-color-picker div.vis-button.vis-save {
+  /*border:2px solid #45e655;*/
+  /*background-color: #6dff7c;*/
+  left:236px;
+}
+
+
+div.vis-color-picker input.vis-range {
+  width: 290px;
+  height:20px;
+}
+
+/* TODO: is this redundant?
+div.vis-color-picker input.vis-range-brightness {
+  width: 289px !important;
+}
+
+
+div.vis-color-picker input.vis-saturation-range {
+  width: 289px !important;
+}*/
+div.vis-network div.vis-manipulation {
+  box-sizing: content-box;
+
+  border-width: 0;
+  border-bottom: 1px;
+  border-style:solid;
+  border-color: #d6d9d8;
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #fcfcfc 48%, #fafafa 50%, #fcfcfc 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(48%,#fcfcfc), color-stop(50%,#fafafa), color-stop(100%,#fcfcfc)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */
+
+  padding-top:4px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 28px;
+}
+
+div.vis-network div.vis-edit-mode {
+  position:absolute;
+  left: 0;
+  top: 5px;
+  height: 30px;
+}
+
+/* FIXME: shouldn't the vis-close button be a child of the vis-manipulation div? */
+
+div.vis-network div.vis-close {
+  position:absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+
+  background-position: 20px 3px;
+  background-repeat: no-repeat;
+  background-image: url("img/network/cross.png");
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div.vis-network div.vis-close:hover {
+  opacity: 0.6;
+}
+
+div.vis-network div.vis-manipulation div.vis-button,
+div.vis-network div.vis-edit-mode div.vis-button {
+  float:left;
+  font-family: verdana;
+  font-size: 12px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  display:inline-block;
+  background-position: 0px 0px;
+  background-repeat:no-repeat;
+  height:24px;
+  margin-left: 10px;
+  /*vertical-align:middle;*/
+  cursor: pointer;
+  padding: 0px 8px 0px 8px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div.vis-network div.vis-manipulation div.vis-button:hover {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.20);
+}
+
+div.vis-network div.vis-manipulation div.vis-button:active {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.50);
+}
+
+div.vis-network div.vis-manipulation div.vis-button.vis-back {
+  background-image: url("img/network/backIcon.png");
+}
+
+div.vis-network div.vis-manipulation div.vis-button.vis-none:hover {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);
+  cursor: default;
+}
+div.vis-network div.vis-manipulation div.vis-button.vis-none:active {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);
+}
+div.vis-network div.vis-manipulation div.vis-button.vis-none {
+  padding: 0;
+}
+div.vis-network div.vis-manipulation div.notification {
+  margin: 2px;
+  font-weight: bold;
+}
+
+div.vis-network div.vis-manipulation div.vis-button.vis-add {
+  background-image: url("img/network/addNodeIcon.png");
+}
+
+div.vis-network div.vis-manipulation div.vis-button.vis-edit,
+div.vis-network div.vis-edit-mode div.vis-button.vis-edit {
+  background-image: url("img/network/editIcon.png");
+}
+
+div.vis-network div.vis-edit-mode div.vis-button.vis-edit.vis-edit-mode {
+  background-color: #fcfcfc;
+  border: 1px solid #cccccc;
+}
+
+div.vis-network div.vis-manipulation div.vis-button.vis-connect {
+  background-image: url("img/network/connectIcon.png");
+}
+
+div.vis-network div.vis-manipulation div.vis-button.vis-delete {
+  background-image: url("img/network/deleteIcon.png");
+}
+/* top right bottom left */
+div.vis-network div.vis-manipulation div.vis-label,
+div.vis-network div.vis-edit-mode div.vis-label {
+  margin: 0 0 0 23px;
+  line-height: 25px;
+}
+div.vis-network div.vis-manipulation div.vis-separator-line {
+  float:left;
+  display:inline-block;
+  width:1px;
+  height:21px;
+  background-color: #bdbdbd;
+  margin: 0px 7px 0 15px; /*top right bottom left*/
+}
+
+/* TODO: is this redundant?
+div.network-navigation_wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+*/
+
+div.vis-network div.vis-navigation div.vis-button {
+    width:34px;
+    height:34px;
+    -moz-border-radius: 17px;
+    border-radius: 17px;
+    position:absolute;
+    display:inline-block;
+    background-position: 2px 2px;
+    background-repeat:no-repeat;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+div.vis-network div.vis-navigation div.vis-button:hover {
+    box-shadow: 0 0 3px 3px rgba(56, 207, 21, 0.30);
+}
+
+div.vis-network div.vis-navigation div.vis-button:active {
+    box-shadow: 0 0 1px 3px rgba(56, 207, 21, 0.95);
+}
+
+div.vis-network div.vis-navigation div.vis-button.vis-up {
+    background-image: url("img/network/upArrow.png");
+    bottom:50px;
+    left:55px;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-down {
+    background-image: url("img/network/downArrow.png");
+    bottom:10px;
+    left:55px;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-left {
+    background-image: url("img/network/leftArrow.png");
+    bottom:10px;
+    left:15px;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-right {
+    background-image: url("img/network/rightArrow.png");
+    bottom:10px;
+    left:95px;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-zoomIn {
+    background-image: url("img/network/plus.png");
+    bottom:10px;
+    right:15px;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-zoomOut {
+    background-image: url("img/network/minus.png");
+    bottom:10px;
+    right:55px;
+}
+div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
+    background-image: url("img/network/zoomExtends.png");
+    bottom:50px;
+    right:15px;
+}
 .vis .overlay {
   position: absolute;
   top: 0;
@@ -11,6 +402,13 @@
 
 .vis-active {
   box-shadow: 0 0 10px #86d5f8;
+}
+
+/* override some bootstrap styles screwing up the timelines css */
+
+.vis [class*="span"] {
+  min-height: 0;
+  width: auto;
 }
 
 div.vis-configuration {
@@ -301,158 +699,6 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
     border-width: 12px;
     margin-top: -12px;
 }
-div.vis-network div.vis-manipulation {
-  box-sizing: content-box;
-
-  border-width: 0;
-  border-bottom: 1px;
-  border-style:solid;
-  border-color: #d6d9d8;
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #fcfcfc 48%, #fafafa 50%, #fcfcfc 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(48%,#fcfcfc), color-stop(50%,#fafafa), color-stop(100%,#fcfcfc)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */
-
-  padding-top:4px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 28px;
-}
-
-div.vis-network div.vis-edit-mode {
-  position:absolute;
-  left: 0;
-  top: 5px;
-  height: 30px;
-}
-
-/* FIXME: shouldn't the vis-close button be a child of the vis-manipulation div? */
-
-div.vis-network div.vis-close {
-  position:absolute;
-  right: 0;
-  top: 0;
-  width: 30px;
-  height: 30px;
-
-  background-position: 20px 3px;
-  background-repeat: no-repeat;
-  background-image: url("img/network/cross.png");
-  cursor: pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-div.vis-network div.vis-close:hover {
-  opacity: 0.6;
-}
-
-div.vis-network div.vis-manipulation div.vis-button,
-div.vis-network div.vis-edit-mode div.vis-button {
-  float:left;
-  font-family: verdana;
-  font-size: 12px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  display:inline-block;
-  background-position: 0px 0px;
-  background-repeat:no-repeat;
-  height:24px;
-  margin-left: 10px;
-  /*vertical-align:middle;*/
-  cursor: pointer;
-  padding: 0px 8px 0px 8px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-div.vis-network div.vis-manipulation div.vis-button:hover {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.20);
-}
-
-div.vis-network div.vis-manipulation div.vis-button:active {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.50);
-}
-
-div.vis-network div.vis-manipulation div.vis-button.vis-back {
-  background-image: url("img/network/backIcon.png");
-}
-
-div.vis-network div.vis-manipulation div.vis-button.vis-none:hover {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);
-  cursor: default;
-}
-div.vis-network div.vis-manipulation div.vis-button.vis-none:active {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);
-}
-div.vis-network div.vis-manipulation div.vis-button.vis-none {
-  padding: 0;
-}
-div.vis-network div.vis-manipulation div.notification {
-  margin: 2px;
-  font-weight: bold;
-}
-
-div.vis-network div.vis-manipulation div.vis-button.vis-add {
-  background-image: url("img/network/addNodeIcon.png");
-}
-
-div.vis-network div.vis-manipulation div.vis-button.vis-edit,
-div.vis-network div.vis-edit-mode div.vis-button.vis-edit {
-  background-image: url("img/network/editIcon.png");
-}
-
-div.vis-network div.vis-edit-mode div.vis-button.vis-edit.vis-edit-mode {
-  background-color: #fcfcfc;
-  border: 1px solid #cccccc;
-}
-
-div.vis-network div.vis-manipulation div.vis-button.vis-connect {
-  background-image: url("img/network/connectIcon.png");
-}
-
-div.vis-network div.vis-manipulation div.vis-button.vis-delete {
-  background-image: url("img/network/deleteIcon.png");
-}
-/* top right bottom left */
-div.vis-network div.vis-manipulation div.vis-label,
-div.vis-network div.vis-edit-mode div.vis-label {
-  margin: 0 0 0 23px;
-  line-height: 25px;
-}
-div.vis-network div.vis-manipulation div.vis-separator-line {
-  float:left;
-  display:inline-block;
-  width:1px;
-  height:21px;
-  background-color: #bdbdbd;
-  margin: 0px 7px 0 15px; /*top right bottom left*/
-}
-
-/* TODO: is this redundant?
-div.network-navigation_wrapper {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-*/
-
 div.vis-tooltip {
   position: absolute;
   visibility: hidden;
@@ -473,244 +719,4 @@ div.vis-tooltip {
   pointer-events: none;
 
   z-index: 5;
-}
-
-
-div.vis-color-picker {
-  position:absolute;
-  top: 0px;
-  left: 30px;
-  margin-top:-140px;
-  margin-left:30px;
-  width:310px;
-  height:444px;
-  z-index: 1;
-  padding: 10px;
-  border-radius:15px;
-  background-color:#ffffff;
-  display: none;
-  box-shadow: rgba(0,0,0,0.5) 0px 0px 10px 0px;
-}
-
-div.vis-color-picker div.vis-arrow {
-  position: absolute;
-  top:147px;
-  left:5px;
-}
-
-div.vis-color-picker div.vis-arrow::after,
-div.vis-color-picker div.vis-arrow::before {
-  right: 100%;
-  top: 50%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-div.vis-color-picker div.vis-arrow:after {
-  border-color: rgba(255, 255, 255, 0);
-  border-right-color: #ffffff;
-  border-width: 30px;
-  margin-top: -30px;
-}
-
-div.vis-color-picker div.vis-color {
-  position:absolute;
-  width: 289px;
-  height: 289px;
-  cursor: pointer;
-}
-
-
-
-div.vis-color-picker div.vis-brightness {
-  position: absolute;
-  top:313px;
-}
-
-div.vis-color-picker div.vis-opacity {
-  position:absolute;
-  top:350px;
-}
-
-div.vis-color-picker div.vis-selector {
-  position:absolute;
-  top:137px;
-  left:137px;
-  width:15px;
-  height:15px;
-  border-radius:15px;
-  border:1px solid #ffffff;
-  background: #4c4c4c; /* Old browsers */
-  background: -moz-linear-gradient(top,  #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, #000000 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4c4c4c), color-stop(12%,#595959), color-stop(25%,#666666), color-stop(39%,#474747), color-stop(50%,#2c2c2c), color-stop(51%,#000000), color-stop(60%,#111111), color-stop(76%,#2b2b2b), color-stop(91%,#1c1c1c), color-stop(100%,#131313)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
-}
-
-
-
-div.vis-color-picker div.vis-new-color {
-  position:absolute;
-  width:140px;
-  height:20px;
-  border:1px solid rgba(0,0,0,0.1);
-  border-radius:5px;
-  top:380px;
-  left:159px;
-  text-align:right;
-  padding-right:2px;
-  font-size:10px;
-  color:rgba(0,0,0,0.4);
-  vertical-align:middle;
-  line-height:20px;
-
-}
-
-div.vis-color-picker div.vis-initial-color {
-  position:absolute;
-  width:140px;
-  height:20px;
-  border:1px solid rgba(0,0,0,0.1);
-  border-radius:5px;
-  top:380px;
-  left:10px;
-  text-align:left;
-  padding-left:2px;
-  font-size:10px;
-  color:rgba(0,0,0,0.4);
-  vertical-align:middle;
-  line-height:20px;
-}
-
-div.vis-color-picker div.vis-label {
-  position:absolute;
-  width:300px;
-  left:10px;
-}
-
-div.vis-color-picker div.vis-label.vis-brightness {
-  top:300px;
-}
-
-div.vis-color-picker div.vis-label.vis-opacity {
-  top:338px;
-}
-
-div.vis-color-picker div.vis-button {
-  position:absolute;
-  width:68px;
-  height:25px;
-  border-radius:10px;
-  vertical-align: middle;
-  text-align:center;
-  line-height: 25px;
-  top:410px;
-  border:2px solid #d9d9d9;
-  background-color: #f7f7f7;
-  cursor:pointer;
-}
-
-div.vis-color-picker div.vis-button.vis-cancel {
-  /*border:2px solid #ff4e33;*/
-  /*background-color: #ff7761;*/
-  left:5px;
-}
-div.vis-color-picker div.vis-button.vis-load {
-  /*border:2px solid #a153e6;*/
-  /*background-color: #cb8dff;*/
-  left:82px;
-}
-div.vis-color-picker div.vis-button.vis-apply {
-  /*border:2px solid #4588e6;*/
-  /*background-color: #82b6ff;*/
-  left:159px;
-}
-div.vis-color-picker div.vis-button.vis-save {
-  /*border:2px solid #45e655;*/
-  /*background-color: #6dff7c;*/
-  left:236px;
-}
-
-
-div.vis-color-picker input.vis-range {
-  width: 290px;
-  height:20px;
-}
-
-/* TODO: is this redundant?
-div.vis-color-picker input.vis-range-brightness {
-  width: 289px !important;
-}
-
-
-div.vis-color-picker input.vis-saturation-range {
-  width: 289px !important;
-}*/
-div.vis-network div.vis-navigation div.vis-button {
-    width:34px;
-    height:34px;
-    -moz-border-radius: 17px;
-    border-radius: 17px;
-    position:absolute;
-    display:inline-block;
-    background-position: 2px 2px;
-    background-repeat:no-repeat;
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-div.vis-network div.vis-navigation div.vis-button:hover {
-    box-shadow: 0 0 3px 3px rgba(56, 207, 21, 0.30);
-}
-
-div.vis-network div.vis-navigation div.vis-button:active {
-    box-shadow: 0 0 1px 3px rgba(56, 207, 21, 0.95);
-}
-
-div.vis-network div.vis-navigation div.vis-button.vis-up {
-    background-image: url("img/network/upArrow.png");
-    bottom:50px;
-    left:55px;
-}
-div.vis-network div.vis-navigation div.vis-button.vis-down {
-    background-image: url("img/network/downArrow.png");
-    bottom:10px;
-    left:55px;
-}
-div.vis-network div.vis-navigation div.vis-button.vis-left {
-    background-image: url("img/network/leftArrow.png");
-    bottom:10px;
-    left:15px;
-}
-div.vis-network div.vis-navigation div.vis-button.vis-right {
-    background-image: url("img/network/rightArrow.png");
-    bottom:10px;
-    left:95px;
-}
-div.vis-network div.vis-navigation div.vis-button.vis-zoomIn {
-    background-image: url("img/network/plus.png");
-    bottom:10px;
-    right:15px;
-}
-div.vis-network div.vis-navigation div.vis-button.vis-zoomOut {
-    background-image: url("img/network/minus.png");
-    bottom:10px;
-    right:55px;
-}
-div.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {
-    background-image: url("img/network/zoomExtends.png");
-    bottom:50px;
-    right:15px;
 }
