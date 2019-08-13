@@ -76,7 +76,8 @@ export default [
 			plugins.nodeResolve,
 			plugins.cssMin,
 			plugins.typescript,
-			plugins.babel
+			plugins.babel,
+			plugins.minify
 		]
 	}
 ]
