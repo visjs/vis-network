@@ -64,7 +64,7 @@
     "@types/mocha": "^5.2.7",
     "@types/sinon": "^7.0.13",
     "@types/timsort": "^0.3.0",
-    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "babel-plugin-istanbul": "^5.2.0",
