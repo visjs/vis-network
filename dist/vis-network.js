@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-13T17:54:48Z
+ * @date    2019-08-15T19:56:05Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -26,7 +26,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.vis = {}));
+  (global = global || self, factory(global.vis = global.vis || {}));
 }(this, function (exports) { 'use strict';
 
   function _defineProperty(obj, key, value) {
@@ -5041,16 +5041,13 @@
    */
 
   function selectiveExtend(props, a) {
+    // @TODO: better solution?
     if (!Array.isArray(props)) {
       throw new Error('Array with property names expected as first argument');
     }
 
-    for (var _len = arguments.length, others = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-      others[_key - 2] = arguments[_key];
-    }
-
-    for (var _i = 0, _others = others; _i < _others.length; _i++) {
-      var other = _others[_i];
+    for (var i = 2; i < (arguments.length <= 2 ? 0 : arguments.length - 2); i++) {
+      var other = i + 2 < 2 || arguments.length <= i + 2 ? undefined : arguments[i + 2];
 
       for (var p = 0; p < props.length; p++) {
         var prop = props[p];
@@ -5554,9 +5551,9 @@
       }
     } else {
       // object
-      for (var _key2 in object) {
-        if (Object.prototype.hasOwnProperty.call(object, _key2)) {
-          callback(object[_key2], _key2, object);
+      for (var _key in object) {
+        if (Object.prototype.hasOwnProperty.call(object, _key)) {
+          callback(object[_key], _key, object);
         }
       }
     }
@@ -6067,11 +6064,11 @@
         if (style.trim() != '') {
           var parts = style.split(':');
 
-          var _key3 = parts[0].trim();
+          var _key2 = parts[0].trim();
 
           var _value2 = parts[1].trim();
 
-          styles[_key3] = _value2;
+          styles[_key2] = _value2;
         }
       });
       return styles;
@@ -6110,9 +6107,9 @@
     var styles = cssUtil.split(element.style.cssText);
     var removeStyles = cssUtil.split(cssText);
 
-    for (var _key4 in removeStyles) {
-      if (Object.prototype.hasOwnProperty.call(removeStyles, _key4)) {
-        delete styles[_key4];
+    for (var _key3 in removeStyles) {
+      if (Object.prototype.hasOwnProperty.call(removeStyles, _key3)) {
+        delete styles[_key3];
       }
     }
 
@@ -14258,6 +14255,10 @@
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
+  function getCjsExportFromNamespace (n) {
+  	return n && n['default'] || n;
+  }
+
   var componentEmitter = createCommonjsModule$2(function (module) {
     /**
      * Expose `Emitter`.
@@ -15955,6 +15956,12 @@
 
   var gephiParser = /*#__PURE__*/Object.freeze({
     parseGephi: parseGephi
+  });
+
+
+
+  var Activator = /*#__PURE__*/Object.freeze({
+
   });
 
   var keycharm = createCommonjsModule$2(function (module, exports) {
@@ -19286,6 +19293,8 @@
     __moduleExports: hammer
   });
 
+  getCjsExportFromNamespace(Activator);
+
   /**
    * Turn an element into an clickToUse element.
    * When not active, the element has a transparent overlay. When the overlay is
@@ -19297,7 +19306,7 @@
    * @constructor Activator
    */
 
-  function Activator(container) {
+  function Activator$1(container) {
     this.active = false;
     this.dom = {
       container: container
@@ -19336,14 +19345,14 @@
   } // turn into an event emitter
 
 
-  componentEmitter(Activator.prototype); // The currently active activator
+  componentEmitter(Activator$1.prototype); // The currently active activator
 
-  Activator.current = null;
+  Activator$1.current = null;
   /**
    * Destroy the activator. Cleans up all created DOM and event listeners
    */
 
-  Activator.prototype.destroy = function () {
+  Activator$1.prototype.destroy = function () {
     this.deactivate(); // remove dom
 
     this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
@@ -19368,13 +19377,13 @@
    */
 
 
-  Activator.prototype.activate = function () {
+  Activator$1.prototype.activate = function () {
     // we allow only one active activator at a time
-    if (Activator.current) {
-      Activator.current.deactivate();
+    if (Activator$1.current) {
+      Activator$1.current.deactivate();
     }
 
-    Activator.current = this;
+    Activator$1.current = this;
     this.active = true;
     this.dom.overlay.style.display = 'none';
     util.addClassName(this.dom.container, 'vis-active');
@@ -19390,7 +19399,7 @@
    */
 
 
-  Activator.prototype.deactivate = function () {
+  Activator$1.prototype.deactivate = function () {
     this.active = false;
     this.dom.overlay.style.display = '';
     util.removeClassName(this.dom.container, 'vis-active');
@@ -19405,7 +19414,7 @@
    */
 
 
-  Activator.prototype._onTapOverlay = function (event) {
+  Activator$1.prototype._onTapOverlay = function (event) {
     // activate the container
     this.activate();
     event.stopPropagation();
@@ -19433,7 +19442,7 @@
     return false;
   }
 
-  var Activator_1 = Activator;
+  var Activator_1 = Activator$1;
 
   var locales = createCommonjsModule$2(function (module, exports) {
     // English
@@ -35375,6 +35384,7 @@
   /**
    * Popup is a class to create a popup window with some text
    */
+
   var Popup =
   /*#__PURE__*/
   function () {
@@ -38114,6 +38124,7 @@
   unwrapExports(timsort);
 
   var timsort$1 = timsort;
+  var timsort_1 = timsort$1.sort;
 
   /**
    * Interface definition for direction strategy classes.
@@ -38344,7 +38355,7 @@
     }, {
       key: "sort",
       value: function sort(nodeArray) {
-        timsort$1.sort(nodeArray, function (a, b) {
+        timsort_1(nodeArray, function (a, b) {
           return a.x - b.x;
         });
       }
@@ -38440,7 +38451,7 @@
     }, {
       key: "sort",
       value: function sort(nodeArray) {
-        timsort$1.sort(nodeArray, function (a, b) {
+        timsort_1(nodeArray, function (a, b) {
           return a.y - b.y;
         });
       }
@@ -38463,6 +38474,139 @@
 
     return HorizontalStrategy;
   }(DirectionInterface);
+
+  function _arrayWithoutHoles$2(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
+
+      return arr2;
+    }
+  }
+
+  var arrayWithoutHoles$2 = _arrayWithoutHoles$2;
+
+  function _iterableToArray$2(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  }
+
+  var iterableToArray$2 = _iterableToArray$2;
+
+  function _nonIterableSpread$2() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+  }
+
+  var nonIterableSpread$2 = _nonIterableSpread$2;
+
+  function _toConsumableArray$2(arr) {
+    return arrayWithoutHoles$2(arr) || iterableToArray$2(arr) || nonIterableSpread$2();
+  }
+
+  var toConsumableArray$2 = _toConsumableArray$2;
+
+  /**
+   * Detect whether a node is a part of a cycle.
+   *
+   * @param entryNode - Any node from the graph.
+   *
+   * @returns True if a cycle was found, false if no cycle was found.
+   */
+  function isInCycle(entryNode) {
+    var stack = entryNode.edges.filter(function (edge) {
+      return edge.connected === true && edge.from === entryNode;
+    }).map(function (edge) {
+      return edge.to;
+    });
+    var node;
+
+    while (node = stack.pop()) {
+      if (node === entryNode) {
+        return true;
+      } else {
+        stack.push.apply(stack, toConsumableArray$2(node.edges.filter(function (edge) {
+          return edge.connected === true && edge.from === node;
+        }).map(function (edge) {
+          return edge.to;
+        })));
+      }
+    }
+
+    return false;
+  }
+  /**
+   * Detect cycle(s) in a graph.
+   *
+   * @TODO This is a very slow solution, optimize it!
+   *
+   * @param edges - Edges of the graph.
+   *
+   * @returns True if a cycle was found, false if no cycle was found.
+   */
+
+  function hasCycles(edges) {
+    return edges.some(function (edge) {
+      return isInCycle(edge.from) || isInCycle(edge.to);
+    });
+  }
+  /**
+   * Assign levels to nodes according to their positions in the hierarchy.
+   *
+   * @param edges - Edges of the graph.
+   * @param levels - If present levels will be added to it, if not a new object will be created.
+   *
+   * @returns Populated node levels.
+   */
+
+  function fillLevelsByDirection(edges) {
+    var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+
+    if (hasCycles(edges)) {
+      // Best effort for invalid hierarchy.
+      var stack = edges;
+      var edge;
+
+      while (edge = stack.pop()) {
+        var fromId = edge.from.id;
+        var toId = edge.to.id;
+
+        if (levels[fromId] == null) {
+          levels[fromId] = 0;
+        }
+
+        if (levels[toId] == null || levels[fromId] >= levels[toId]) {
+          levels[toId] = levels[fromId] + 1;
+        }
+      }
+    } else {
+      (function () {
+        // Correct solution for valid hierarchy.
+        var stack = edges.slice();
+        var edge;
+
+        while (edge = stack.pop()) {
+          var _fromId = edge.from.id;
+          var _toId = edge.to.id;
+
+          if (levels[_fromId] == null) {
+            levels[_fromId] = 0;
+            stack.push.apply(stack, toConsumableArray$2(edge.from.edges.filter(function (e) {
+              return e.connected === true && e !== edge && e.to === edge.from;
+            })));
+          }
+
+          if (levels[_toId] == null || levels[_fromId] >= levels[_toId]) {
+            levels[_toId] = levels[_fromId] + 1;
+            stack.push.apply(stack, toConsumableArray$2(edge.to.edges.filter(function (e) {
+              return e.connected === true && e !== edge && e.from === edge.to;
+            })));
+          }
+        }
+      })();
+    }
+
+    return levels;
+  }
 
   /**
    * There's a mix-up with terms in the code. Following are the formal definitions:
@@ -40140,45 +40284,14 @@
     }, {
       key: "_determineLevelsDirected",
       value: function _determineLevelsDirected() {
-        var _this8 = this;
 
-        var minLevel = 10000;
-        /**
-         * Check if there is an edge going the opposite direction for given edge
-         *
-         * @param {Edge} edge  edge to check
-         * @returns {boolean} true if there's another edge going into the opposite direction
-         */
+        var edges = [];
 
-        var isBidirectional = function isBidirectional(edge) {
-          util.forEach(_this8.body.edges, function (otherEdge) {
-            if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
-              return true;
-            }
-          });
-          return false;
-        };
+        this._crawlNetwork(function (_nodeA, _nodeB, edge) {
+          edges.push(edge);
+        });
 
-        var levelByDirection = function levelByDirection(nodeA, nodeB, edge) {
-          var levelA = _this8.hierarchical.levels[nodeA.id];
-          var levelB = _this8.hierarchical.levels[nodeB.id];
-
-          if (isBidirectional(edge)  ) ; // set initial level
-
-
-          if (levelA === undefined) {
-            levelA = _this8.hierarchical.levels[nodeA.id] = minLevel;
-          }
-
-          if (edge.toId == nodeB.id) {
-            _this8.hierarchical.levels[nodeB.id] = levelA + 1;
-          } else {
-            _this8.hierarchical.levels[nodeB.id] = levelA - 1;
-          }
-        };
-
-        this._crawlNetwork(levelByDirection);
-
+        this.hierarchical.levels = fillLevelsByDirection(edges, this.hierarchical.levels);
         this.hierarchical.setMinLevelToZero(this.body.nodes);
       }
       /**
