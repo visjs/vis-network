@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-16T10:35:53Z
+ * @date    2019-08-16T14:10:23Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -38469,134 +38469,143 @@ function (_DirectionInterface2) {
   return HorizontalStrategy;
 }(DirectionInterface);
 
-function _arrayWithoutHoles$2(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
+/**
+ * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
+ *
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+function fillLevelsByDirectionCyclic(nodes, levels) {
+  var edges = new Set();
+  nodes.forEach(function (node) {
+    node.edges.forEach(function (edge) {
+      if (edge.connected) {
+        edges.add(edge);
+      }
+    });
+  });
+  edges.forEach(function (edge) {
+    var fromId = edge.from.id;
+    var toId = edge.to.id;
+
+    if (levels[fromId] == null) {
+      levels[fromId] = 0;
     }
 
-    return arr2;
-  }
-}
-
-var arrayWithoutHoles$2 = _arrayWithoutHoles$2;
-
-function _iterableToArray$2(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-var iterableToArray$2 = _iterableToArray$2;
-
-function _nonIterableSpread$2() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-
-var nonIterableSpread$2 = _nonIterableSpread$2;
-
-function _toConsumableArray$2(arr) {
-  return arrayWithoutHoles$2(arr) || iterableToArray$2(arr) || nonIterableSpread$2();
-}
-
-var toConsumableArray$2 = _toConsumableArray$2;
-
-/**
- * Detect whether a node is a part of a cycle.
- *
- * @param entryNode - Any node from the graph.
- *
- * @returns True if a cycle was found, false if no cycle was found.
- */
-function isInCycle(entryNode) {
-  var stack = entryNode.edges.filter(function (edge) {
-    return edge.connected === true && edge.from === entryNode;
-  }).map(function (edge) {
-    return edge.to;
-  });
-  var node;
-
-  while (node = stack.pop()) {
-    if (node === entryNode) {
-      return true;
-    } else {
-      stack.push.apply(stack, toConsumableArray$2(node.edges.filter(function (edge) {
-        return edge.connected === true && edge.from === node;
-      }).map(function (edge) {
-        return edge.to;
-      })));
+    if (levels[toId] == null || levels[fromId] >= levels[toId]) {
+      levels[toId] = levels[fromId] + 1;
     }
-  }
-
-  return false;
-}
-/**
- * Detect cycle(s) in a graph.
- *
- * @TODO This is a very slow solution, optimize it!
- *
- * @param edges - Edges of the graph.
- *
- * @returns True if a cycle was found, false if no cycle was found.
- */
-
-function hasCycles(edges) {
-  return edges.some(function (edge) {
-    return isInCycle(edge.from) || isInCycle(edge.to);
   });
+  return levels;
 }
 /**
  * Assign levels to nodes according to their positions in the hierarchy.
  *
- * @param edges - Edges of the graph.
+ * @param nodes - Nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
 
-function fillLevelsByDirection(edges) {
+
+function fillLevelsByDirection(nodes) {
   var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+  var limit = nodes.length;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
 
-  if (hasCycles(edges)) {
-    // Best effort for invalid hierarchy.
-    var stack = edges;
-    var edge;
+  try {
+    var _loop = function _loop() {
+      var leaf = _step.value;
 
-    while (edge = stack.pop()) {
-      var fromId = edge.from.id;
-      var toId = edge.to.id;
-
-      if (levels[fromId] == null) {
-        levels[fromId] = 0;
+      if (!leaf.edges.every(function (edge) {
+        return edge.to === leaf;
+      })) {
+        // Not a leaf.
+        return "continue";
       }
 
-      if (levels[toId] == null || levels[fromId] >= levels[toId]) {
-        levels[toId] = levels[fromId] + 1;
+      levels[leaf.id] = 0;
+      var stack = [leaf];
+      var done = 0;
+      var node = void 0;
+
+      while (node = stack.pop()) {
+        var edges = node.edges;
+        var newLevel = levels[node.id] - 1;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = edges[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var edge = _step2.value;
+
+            if (!edge.connected || edge.to !== node) {
+              continue;
+            }
+
+            var fromId = edge.fromId;
+            var oldLevel = levels[fromId];
+
+            if (oldLevel == null || oldLevel > newLevel) {
+              levels[fromId] = newLevel;
+              stack.push(edge.from);
+            }
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+
+        if (done > limit) {
+          // This would run forever on a cyclic graph.
+          return {
+            v: fillLevelsByDirectionCyclic(nodes, levels)
+          };
+        } else {
+          ++done;
+        }
+      }
+    };
+
+    for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var _ret = _loop();
+
+      switch (_ret) {
+        case "continue":
+          continue;
+
+        default:
+          if (_typeof_1$2(_ret) === "object") return _ret.v;
       }
     }
-  } else {
-    (function () {
-      // Correct solution for valid hierarchy.
-      var stack = edges.slice();
-      var edge;
-
-      while (edge = stack.pop()) {
-        var _toId = edge.to.id;
-        var _fromId = edge.from.id;
-
-        if (levels[_toId] == null) {
-          levels[_toId] = 0;
-          stack.push.apply(stack, toConsumableArray$2(edge.to.edges.filter(function (e) {
-            return e.connected === true && e !== edge && e.from === edge.to;
-          })));
-        }
-
-        if (levels[_fromId] == null || levels[_toId] <= levels[_fromId]) {
-          levels[_fromId] = levels[_toId] - 1;
-          stack.push.apply(stack, toConsumableArray$2(edge.from.edges.filter(function (e) {
-            return e.connected === true && e !== edge && e.to === edge.from;
-          })));
-        }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return != null) {
+        _iterator.return();
       }
-    })();
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
   }
 
   return levels;
@@ -40278,14 +40287,11 @@ function () {
   }, {
     key: "_determineLevelsDirected",
     value: function _determineLevelsDirected() {
+      var _this8 = this;
 
-      var edges = [];
-
-      this._crawlNetwork(function (_nodeA, _nodeB, edge) {
-        edges.push(edge);
-      });
-
-      this.hierarchical.levels = fillLevelsByDirection(edges, this.hierarchical.levels);
+      this.hierarchical.levels = fillLevelsByDirection(this.body.nodeIndices.map(function (id) {
+        return _this8.body.nodes[id];
+      }), this.hierarchical.levels);
       this.hierarchical.setMinLevelToZero(this.body.nodes);
     }
     /**
