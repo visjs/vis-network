@@ -91,25 +91,25 @@ export function fillLevelsByDirection(
 
     let edge: Edge | undefined
     while ((edge = stack.pop())) {
-      const fromId = edge.from.id
       const toId = edge.to.id
+      const fromId = edge.from.id
 
-      if (levels[fromId] == null) {
-        levels[fromId] = 0
-        stack.push(
-          ...edge.from.edges.filter(
-            (e): boolean =>
-              e.connected === true && e !== edge && e.to === edge!.from
-          )
-        )
-      }
-
-      if (levels[toId] == null || levels[fromId] >= levels[toId]) {
-        levels[toId] = levels[fromId] + 1
+      if (levels[toId] == null) {
+        levels[toId] = 0
         stack.push(
           ...edge.to.edges.filter(
             (e): boolean =>
               e.connected === true && e !== edge && e.from === edge!.to
+          )
+        )
+      }
+
+      if (levels[fromId] == null || levels[toId] <= levels[fromId]) {
+        levels[fromId] = levels[toId] - 1
+        stack.push(
+          ...edge.from.edges.filter(
+            (e): boolean =>
+              e.connected === true && e !== edge && e.to === edge!.from
           )
         )
       }
