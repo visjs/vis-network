@@ -211,6 +211,104 @@ describe('LayoutEngine', function(): void {
               31: 4,
             },
           },
+          {
+            name: '36 nodes, 19 levels',
+            tree: generateTree([
+              { from: 11, to: 21 },
+              { from: 11, to: 42 },
+              { from: 12, to: 22 },
+              { from: 12, to: 43 },
+
+              { from: 21, to: 31 },
+              { from: 22, to: 31 },
+
+              { from: 31, to: 41 },
+
+              { from: 41, to: 52 },
+              { from: 42, to: 52 },
+              { from: 43, to: 52 },
+
+              { from: 51, to: 61 },
+              { from: 52, to: 62 },
+
+              { from: 61, to: 71 },
+              { from: 62, to: 72 },
+
+              { from: 71, to: 81 },
+              { from: 72, to: 82 },
+              { from: 73, to: 83 },
+
+              { from: 81, to: 91 },
+              { from: 82, to: 91 },
+              { from: 83, to: 91 },
+
+              { from: 91, to: 121 },
+              { from: 91, to: 101 },
+
+              { from: 101, to: 112 },
+
+              { from: 111, to: 122 },
+              { from: 112, to: 123 },
+
+              { from: 121, to: 131 },
+              { from: 122, to: 131 },
+              { from: 123, to: 131 },
+
+              { from: 131, to: 141 },
+              { from: 132, to: 142 },
+
+              { from: 141, to: 151 },
+              { from: 142, to: 151 },
+
+              { from: 151, to: 161 },
+              { from: 152, to: 162 },
+
+              { from: 161, to: 171 },
+              { from: 162, to: 171 },
+
+              { from: 171, to: 181 },
+
+              { from: 181, to: 191 },
+            ]),
+            levels: {
+              11: 0,
+              12: 0,
+              21: 1,
+              22: 1,
+              31: 2,
+              41: 3,
+              42: 3,
+              43: 3,
+              51: 4,
+              52: 4,
+              61: 5,
+              62: 5,
+              71: 6,
+              72: 6,
+              73: 6,
+              81: 7,
+              82: 7,
+              83: 7,
+              91: 8,
+              101: 9,
+              111: 10,
+              112: 10,
+              121: 11,
+              122: 11,
+              123: 11,
+              131: 12,
+              132: 12,
+              141: 13,
+              142: 13,
+              151: 14,
+              152: 14,
+              161: 15,
+              162: 15,
+              171: 16,
+              181: 17,
+              191: 18,
+            },
+          },
         ].forEach(({ name, tree, levels }): void => {
           it(name, function(): void {
             const body = Object.freeze({
