@@ -1,8 +1,10 @@
 type Levels = Record<string | number, number>
 interface Edge {
-  from: Node
-  to: Node
   connected: boolean
+  from: Node
+  fromId: string | number
+  to: Node
+  toId: string | number
 }
 interface Node {
   id: string | number
@@ -46,34 +48,38 @@ export function isInCycle(entryNode: Node): boolean {
  *
  * @TODO This is a very slow solution, optimize it!
  *
- * @param edges - Edges of the graph.
+ * @param nodes - Nodes of the graph.
  *
  * @returns True if a cycle was found, false if no cycle was found.
  */
-export function hasCycles(edges: Edge[]): boolean {
-  return edges.some(
-    (edge): boolean => isInCycle(edge.from) || isInCycle(edge.to)
-  )
+export function hasCycles(nodes: Node[]): boolean {
+  return nodes.some(isInCycle)
 }
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy.
  *
- * @param edges - Edges of the graph.
+ * @param nodes - Nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
 export function fillLevelsByDirection(
-  edges: Edge[],
+  nodes: Node[],
   levels: Levels = Object.create(null)
 ): Levels {
-  if (hasCycles(edges)) {
-    // Best effort for invalid hierarchy.
-    const stack: Edge[] = edges
+  if (hasCycles(nodes)) {
+    // Best effort for invalid (cyclic) hierarchy.
+    const edges = new Set<Edge>()
+    nodes.forEach((node): void => {
+      node.edges.forEach((edge): void => {
+        if (edge.connected) {
+          edges.add(edge)
+        }
+      })
+    })
 
-    let edge: Edge | undefined
-    while ((edge = stack.pop())) {
+    edges.forEach((edge): void => {
       const fromId = edge.from.id
       const toId = edge.to.id
 
@@ -84,36 +90,32 @@ export function fillLevelsByDirection(
       if (levels[toId] == null || levels[fromId] >= levels[toId]) {
         levels[toId] = levels[fromId] + 1
       }
-    }
+    })
   } else {
     // Correct solution for valid hierarchy.
-    const stack: Edge[] = edges.slice()
+    nodes
+      .filter((node): boolean =>
+        node.edges.every((edge): boolean => edge.to === node)
+      )
+      .forEach((leaf): void => {
+        levels[leaf.id] = 0
+        const stack: Node[] = [leaf]
 
-    let edge: Edge | undefined
-    while ((edge = stack.pop())) {
-      const toId = edge.to.id
-      const fromId = edge.from.id
-
-      if (levels[toId] == null) {
-        levels[toId] = 0
-        stack.push(
-          ...edge.to.edges.filter(
-            (e): boolean =>
-              e.connected === true && e !== edge && e.from === edge!.to
-          )
-        )
-      }
-
-      if (levels[fromId] == null || levels[toId] <= levels[fromId]) {
-        levels[fromId] = levels[toId] - 1
-        stack.push(
-          ...edge.from.edges.filter(
-            (e): boolean =>
-              e.connected === true && e !== edge && e.to === edge!.from
-          )
-        )
-      }
-    }
+        let node: Node | undefined
+        while ((node = stack.pop())) {
+          const newLevel = levels[node.id] - 1
+          node.edges
+            .filter((edge): boolean => edge.connected && edge.to === node)
+            .forEach((edge): void => {
+              const fromId = edge.fromId
+              const oldLevel = levels[fromId]
+              if (oldLevel == null || oldLevel > newLevel) {
+                levels[fromId] = newLevel
+                stack.push(edge.from)
+              }
+            })
+        }
+      })
   }
 
   return levels
