@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-15T19:56:05Z
+ * @date    2019-08-16T10:35:53Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -38585,20 +38585,20 @@
         var edge;
 
         while (edge = stack.pop()) {
-          var _fromId = edge.from.id;
           var _toId = edge.to.id;
+          var _fromId = edge.from.id;
 
-          if (levels[_fromId] == null) {
-            levels[_fromId] = 0;
-            stack.push.apply(stack, toConsumableArray$2(edge.from.edges.filter(function (e) {
-              return e.connected === true && e !== edge && e.to === edge.from;
+          if (levels[_toId] == null) {
+            levels[_toId] = 0;
+            stack.push.apply(stack, toConsumableArray$2(edge.to.edges.filter(function (e) {
+              return e.connected === true && e !== edge && e.from === edge.to;
             })));
           }
 
-          if (levels[_toId] == null || levels[_fromId] >= levels[_toId]) {
-            levels[_toId] = levels[_fromId] + 1;
-            stack.push.apply(stack, toConsumableArray$2(edge.to.edges.filter(function (e) {
-              return e.connected === true && e !== edge && e.from === edge.to;
+          if (levels[_fromId] == null || levels[_toId] <= levels[_fromId]) {
+            levels[_fromId] = levels[_toId] - 1;
+            stack.push.apply(stack, toConsumableArray$2(edge.from.edges.filter(function (e) {
+              return e.connected === true && e !== edge && e.to === edge.from;
             })));
           }
         }
