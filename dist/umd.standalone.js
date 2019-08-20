@@ -54754,22 +54754,6 @@
     __moduleExports: moment$3
   });
 
-  // peer
-
-  var indexStandalone = /*#__PURE__*/Object.freeze({
-    util: esm,
-    data: esm$1,
-    moment: moment$4,
-    Hammer: hammer$1,
-    keycharm: keycharm$1,
-    DataSet: DataSet,
-    DataView: DataView,
-    Queue: Queue,
-    network: network,
-    DOMutil: DOMutil$1,
-    Network: Network
-  });
-
   exports.DOMutil = DOMutil$1;
   exports.DataSet = DataSet;
   exports.DataView = DataView;
@@ -54777,7 +54761,6 @@
   exports.Network = Network;
   exports.Queue = Queue;
   exports.data = esm$1;
-  exports.default = indexStandalone;
   exports.keycharm = keycharm$1;
   exports.moment = moment$4;
   exports.network = network;
@@ -54786,4 +54769,4 @@
   Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
-//# sourceMappingURL=vis-network.js.map
+//# sourceMappingURL=umd.standalone.js.map

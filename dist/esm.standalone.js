@@ -54748,22 +54748,5 @@ var moment$4 = /*#__PURE__*/Object.freeze({
   __moduleExports: moment$3
 });
 
-// peer
-
-var indexStandalone = /*#__PURE__*/Object.freeze({
-  util: esm,
-  data: esm$1,
-  moment: moment$4,
-  Hammer: hammer$1,
-  keycharm: keycharm$1,
-  DataSet: DataSet,
-  DataView: DataView,
-  Queue: Queue,
-  network: network,
-  DOMutil: DOMutil$1,
-  Network: Network
-});
-
-export default indexStandalone;
 export { DOMutil$1 as DOMutil, DataSet, DataView, hammer$1 as Hammer, Network, Queue, esm$1 as data, keycharm$1 as keycharm, moment$4 as moment, network, esm as util };
-//# sourceMappingURL=vis-network.esm.js.map
+//# sourceMappingURL=esm.standalone.js.map
