@@ -5,6 +5,7 @@ import typescript from 'rollup-plugin-typescript2';
 import minify from 'rollup-plugin-babel-minify';
 import genHeader from './lib/header';
 import css from 'rollup-plugin-css-porter';
+import packageJSON from './package.json'
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
 // CommonJS because Babel is not 100 % ESM.
@@ -32,9 +33,80 @@ const plugins = {
 	})
 }
 
-export default [
+const options = [
 	{
-		input: 'lib/index-bundle.ts',
+		externalName: '.standalone',
+		external: {},
+		globals: {},
+		input: 'lib/index-standalone.ts',
+	},
+	{
+		externalName: '.peer',
+		external: Object.keys(packageJSON.peerDependencies),
+		globals: {
+			'keycharm': 'keycharm',
+			'moment': 'moment',
+			'vis-data': 'vis',
+			'vis-util': 'vis',
+		},
+		input: 'lib/index-peer.ts',
+	},
+].flatMap(({ externalName, external, globals, input }) => {
+	return [
+		{
+			pluginsName: '',
+			plugins: [
+				plugins.commonjs,
+				plugins.nodeResolve,
+				plugins.cssRaw,
+				plugins.typescript,
+				plugins.babel,
+			],
+		},
+		{
+			pluginsName: '.min',
+			plugins: [
+				plugins.commonjs,
+				plugins.nodeResolve,
+				plugins.cssMin,
+				plugins.typescript,
+				plugins.babel,
+				plugins.minify,
+			],
+		},
+	].flatMap(({ pluginsName, plugins }) => {
+		return [
+			{
+				banner: genHeader('network'),
+				file: `dist/esm${externalName}${pluginsName}.js`,
+				format: 'esm',
+				sourcemap: true,
+			},
+			{
+				banner: genHeader('network'),
+				exports: 'named',
+				extend: true,
+				file: `dist/umd${externalName}${pluginsName}.js`,
+				format: 'umd',
+				globals,
+				name: 'vis',
+				sourcemap: true,
+			},
+		].map(output => {
+			return {
+				input,
+				output,
+				external,
+				plugins,
+			}
+		})
+	})
+})
+
+export default [
+	...options,
+	{
+		input: 'lib/index-standalone-bundle.ts',
 		output: [{
 			file: 'dist/vis-network.esm.js',
 			format: 'esm',
@@ -58,7 +130,7 @@ export default [
 		]
 	},
 	{
-		input: 'lib/index-bundle.ts',
+		input: 'lib/index-standalone-bundle.ts',
 		output: [{
 			file: 'dist/vis-network.esm.min.js',
 			format: 'esm',
