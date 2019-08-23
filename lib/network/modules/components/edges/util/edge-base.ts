@@ -1,71 +1,134 @@
-import util from "vis-util";
-import EndPoints from "./EndPoints";
+import { overrideOpacity } from "vis-util";
+import { EndPoints } from "./end-points";
+import {
+  ArrowData,
+  ArrowDataWithCore,
+  ArrowType,
+  EdgeFormattingValues,
+  EdgeType,
+  Id,
+  Label,
+  EdgeOptions,
+  Point,
+  PointT,
+  SelectiveRequired,
+  VBody,
+  VNode
+} from "./types";
+
+export interface FindBorderPositionOptions<Via> {
+  via: Via;
+}
+export interface FindBorderPositionCircleOptions {
+  x: number;
+  y: number;
+  low: number;
+  high: number;
+  direction: number;
+}
 
 /**
  * The Base Class for all edges.
- *
  */
-class EdgeBase {
+export abstract class EdgeBase<Via = undefined> implements EdgeType {
+  public from!: VNode; // Initialized in setOptions
+  public fromPoint: Point;
+  public to!: VNode; // Initialized in setOptions
+  public toPoint: Point;
+  public via?: VNode;
+
+  public color: unknown = {};
+  public colorDirty: boolean = true;
+  public id!: Id; // Initialized in setOptions
+  public options!: EdgeOptions; // Initialized in setOptions
+  public hoverWidth: number = 1.5;
+  public selectionWidth: number = 2;
+
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
-  constructor(options, body, labelModule) {
-    this.body = body;
-    this.labelModule = labelModule;
-    this.options = {};
+  public constructor(
+    options: EdgeOptions,
+    protected body: VBody,
+    protected labelModule: Label
+  ) {
     this.setOptions(options);
-    this.colorDirty = true;
-    this.color = {};
-    this.selectionWidth = 2;
-    this.hoverWidth = 1.5;
+
     this.fromPoint = this.from;
     this.toPoint = this.to;
   }
 
   /**
-   * Connects a node to itself
+   * Find the intersection between the border of the node and the edge.
+   *
+   * @param node - The node (either from or to node of the edge).
+   * @param ctx - The context that will be used for rendering.
+   * @param options - Additional options.
+   *
+   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
    */
-  connect() {
+  protected abstract _findBorderPosition(
+    node: VNode,
+    ctx: CanvasRenderingContext2D,
+    options?: FindBorderPositionOptions<Via>
+  ): PointT;
+
+  /**
+   * Return additional point(s) the edge passes through.
+   *
+   * @returns Cartesian coordinates of the point(s) the edge passes through.
+   */
+  public abstract getViaNode(): Via;
+
+  /** @inheritdoc */
+  public abstract getPoint(position: number, viaNode?: Via): Point;
+
+  /** @inheritdoc */
+  public connect(): void {
     this.from = this.body.nodes[this.options.from];
     this.to = this.body.nodes[this.options.to];
   }
 
-  /**
-   *
-   * @returns {boolean} always false
-   */
-  cleanup() {
+  /** @inheritdoc */
+  public cleanup(): boolean {
     return false;
   }
 
   /**
+   * Set new edge options.
    *
-   * @param {Object} options
+   * @param options - The new edge options object.
    */
-  setOptions(options) {
+  public setOptions(options: EdgeOptions): void {
     this.options = options;
     this.from = this.body.nodes[this.options.from];
     this.to = this.body.nodes[this.options.to];
     this.id = this.options.id;
   }
 
-  /**
-   * Redraw a edge as a line
-   * Draw this edge in the given canvas
-   * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-   *
-   * @param {CanvasRenderingContext2D}   ctx
-   * @param {Array} values
-   * @param {boolean} selected
-   * @param {boolean} hover
-   * @param {Node} viaNode
-   * @private
-   */
-  drawLine(ctx, values, selected, hover, viaNode) {
+  /** @inheritdoc */
+  public drawLine(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      | "color"
+      | "opacity"
+      | "shadowColor"
+      | "shadowSize"
+      | "shadowX"
+      | "shadowY"
+      | "width"
+    >,
+    _selected?: boolean,
+    _hover?: boolean,
+    viaNode: Via = this.getViaNode()
+  ): void {
     // set style
-    ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+    ctx.strokeStyle = this.getColor(ctx, values);
     ctx.lineWidth = values.width;
 
     if (values.dashes !== false) {
@@ -76,40 +139,54 @@ class EdgeBase {
   }
 
   /**
+   * Draw a line with given style between two nodes through supplied node(s).
    *
-   * @param {CanvasRenderingContext2D}   ctx
-   * @param {Array} values
-   * @param {Node} viaNode
-   * @param {{x: number, y: number}} [fromPoint]
-   * @param {{x: number, y: number}} [toPoint]
-   * @private
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values like color, opacity or shadow.
+   * @param viaNode - Additional control point(s) for the edge.
+   * @param fromPoint - TODO: Seems ignored, remove?
+   * @param toPoint - TODO: Seems ignored, remove?
    */
-  _drawLine(ctx, values, viaNode, fromPoint, toPoint) {
+  private _drawLine(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
+    >,
+    viaNode: Via,
+    fromPoint?: Point,
+    toPoint?: Point
+  ): void {
     if (this.from != this.to) {
       // draw line
       this._line(ctx, values, viaNode, fromPoint, toPoint);
     } else {
-      let [x, y, radius] = this._getCircleData(ctx);
+      const [x, y, radius] = this._getCircleData(ctx);
       this._circle(ctx, values, x, y, radius);
     }
   }
 
   /**
+   * Draw a dashed line with given style between two nodes through supplied node(s).
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Array} values
-   * @param {Node} viaNode
-   * @param {{x: number, y: number}} [fromPoint]  TODO: Remove in next major release
-   * @param {{x: number, y: number}} [toPoint]    TODO: Remove in next major release
-   * @private
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values like color, opacity or shadow.
+   * @param viaNode - Additional control point(s) for the edge.
+   * @param _fromPoint - Ignored (TODO: remove in the future).
+   * @param _toPoint - Ignored (TODO: remove in the future).
    */
-  _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {
-    // eslint-disable-line no-unused-vars
+  private _drawDashedLine(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
+    >,
+    viaNode: Via,
+    _fromPoint?: Point,
+    _toPoint?: Point
+  ): void {
     ctx.lineCap = "round";
-    let pattern = [5, 5];
-    if (Array.isArray(values.dashes) === true) {
-      pattern = values.dashes;
-    }
+    const pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5];
 
     // only firefox and chrome support this method, else we use the legacy one.
     if (ctx.setLineDash !== undefined) {
@@ -124,7 +201,7 @@ class EdgeBase {
         // draw line
         this._line(ctx, values, viaNode);
       } else {
-        let [x, y, radius] = this._getCircleData(ctx);
+        const [x, y, radius] = this._getCircleData(ctx);
         this._circle(ctx, values, x, y, radius);
       }
 
@@ -138,7 +215,7 @@ class EdgeBase {
         // draw line
         ctx.dashedLine(this.from.x, this.from.y, this.to.x, this.to.y, pattern);
       } else {
-        let [x, y, radius] = this._getCircleData(ctx);
+        const [x, y, radius] = this._getCircleData(ctx);
         this._circle(ctx, values, x, y, radius);
       }
       // draw shadow if enabled
@@ -152,62 +229,91 @@ class EdgeBase {
   }
 
   /**
+   * Draw a line with given style between two nodes through supplied node(s).
    *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Object} options
-   * @returns {{x: number, y: number}}
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values like color, opacity or shadow.
+   * @param viaNode - Additional control point(s) for the edge.
+   * @param fromPoint - TODO: Seems ignored, remove?
+   * @param toPoint - TODO: Seems ignored, remove?
    */
-  findBorderPosition(nearNode, ctx, options) {
+  protected abstract _line(
+    ctx: CanvasRenderingContext2D,
+    values: EdgeFormattingValues,
+    viaNode: Via,
+    fromPoint?: Point,
+    toPoint?: Point
+  ): void;
+
+  /**
+   * Find the intersection between the border of the node and the edge.
+   *
+   * @param node - The node (either from or to node of the edge).
+   * @param ctx - The context that will be used for rendering.
+   * @param options - Additional options.
+   *
+   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
+   */
+  public findBorderPosition(
+    node: VNode,
+    ctx: CanvasRenderingContext2D,
+    options?: FindBorderPositionOptions<Via> | FindBorderPositionCircleOptions
+  ): PointT {
     if (this.from != this.to) {
-      return this._findBorderPosition(nearNode, ctx, options);
+      return this._findBorderPosition(node, ctx, options as any);
     } else {
-      return this._findBorderPositionCircle(nearNode, ctx, options);
+      return this._findBorderPositionCircle(node, ctx, options as any);
+    }
+  }
+
+  /** @inheritdoc */
+  public findBorderPositions(
+    ctx: CanvasRenderingContext2D
+  ): {
+    from: Point;
+    to: Point;
+  } {
+    if (this.from != this.to) {
+      return {
+        from: this._findBorderPosition(this.from, ctx),
+        to: this._findBorderPosition(this.to, ctx)
+      };
+    } else {
+      const [x, y] = this._getCircleData(ctx).slice(0, 2);
+
+      return {
+        from: this._findBorderPositionCircle(this.from, ctx, {
+          x,
+          y,
+          low: 0.25,
+          high: 0.6,
+          direction: -1
+        }),
+        to: this._findBorderPositionCircle(this.from, ctx, {
+          x,
+          y,
+          low: 0.6,
+          high: 0.8,
+          direction: 1
+        })
+      };
     }
   }
 
   /**
+   * Compute the center point and radius of an edge connected to the same node at both ends.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @returns {{from: ({x: number, y: number, t: number}|*), to: ({x: number, y: number, t: number}|*)}}
-   */
-  findBorderPositions(ctx) {
-    let from = {};
-    let to = {};
-    if (this.from != this.to) {
-      from = this._findBorderPosition(this.from, ctx);
-      to = this._findBorderPosition(this.to, ctx);
-    } else {
-      let [x, y] = this._getCircleData(ctx).slice(0, 2);
-
-      from = this._findBorderPositionCircle(this.from, ctx, {
-        x,
-        y,
-        low: 0.25,
-        high: 0.6,
-        direction: -1
-      });
-      to = this._findBorderPositionCircle(this.from, ctx, {
-        x,
-        y,
-        low: 0.6,
-        high: 0.8,
-        direction: 1
-      });
-    }
-    return { from, to };
-  }
-
-  /**
+   * @param ctx - The context that will be used for rendering.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @returns {Array.<number>} x, y, radius
-   * @private
+   * @returns `[x, y, radius]`
    */
-  _getCircleData(ctx) {
-    let x, y;
-    let node = this.from;
-    let radius = this.options.selfReferenceSize;
+  protected _getCircleData(
+    ctx?: CanvasRenderingContext2D
+  ): [number, number, number] {
+    let x: number;
+    let y: number;
+    const node = this.from;
+    const radius = this.options.selfReferenceSize;
 
     if (ctx !== undefined) {
       if (node.shape.width === undefined) {
@@ -227,16 +333,22 @@ class EdgeBase {
   }
 
   /**
-   * Get a point on a circle
-   * @param {number} x
-   * @param {number} y
-   * @param {number} radius
-   * @param {number} percentage - Value between 0 (line start) and 1 (line end)
-   * @return {Object} point
-   * @private
+   * Get a point on a circle.
+   *
+   * @param x - Center of the circle on the x axis.
+   * @param y - Center of the circle on the y axis.
+   * @param radius - Radius of the circle.
+   * @param position - Value between 0 (line start) and 1 (line end).
+   *
+   * @returns Cartesian coordinates of requested point on the circle.
    */
-  _pointOnCircle(x, y, radius, percentage) {
-    let angle = percentage * 2 * Math.PI;
+  private _pointOnCircle(
+    x: number,
+    y: number,
+    radius: number,
+    position: number
+  ): Point {
+    const angle = position * 2 * Math.PI;
     return {
       x: x + radius * Math.cos(angle),
       y: y - radius * Math.sin(angle)
@@ -244,37 +356,45 @@ class EdgeBase {
   }
 
   /**
+   * Find the intersection between the border of the node and the edge.
+   *
+   * @remarks
    * This function uses binary search to look for the point where the circle crosses the border of the node.
-   * @param {Node} node
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Object} options
-   * @returns {*}
-   * @private
+   *
+   * @param nearNode - The node (either from or to node of the edge).
+   * @param ctx - The context that will be used for rendering.
+   * @param options - Additional options.
+   *
+   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
    */
-  _findBorderPositionCircle(node, ctx, options) {
-    let x = options.x;
-    let y = options.y;
+  private _findBorderPositionCircle(
+    nearNode: VNode,
+    ctx: CanvasRenderingContext2D,
+    options: FindBorderPositionCircleOptions
+  ): PointT {
+    const x = options.x;
+    const y = options.y;
     let low = options.low;
     let high = options.high;
-    let direction = options.direction;
+    const direction = options.direction;
 
-    let maxIterations = 10;
-    let iteration = 0;
-    let radius = this.options.selfReferenceSize;
-    let pos, angle, distanceToBorder, distanceToPoint, difference;
-    let threshold = 0.05;
+    const maxIterations = 10;
+    const radius = this.options.selfReferenceSize;
+    const threshold = 0.05;
+    let pos: Point;
     let middle = (low + high) * 0.5;
 
-    while (low <= high && iteration < maxIterations) {
+    let iteration = 0;
+    do {
       middle = (low + high) * 0.5;
 
       pos = this._pointOnCircle(x, y, radius, middle);
-      angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-      distanceToBorder = node.distanceToBorder(ctx, angle);
-      distanceToPoint = Math.sqrt(
-        Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2)
+      const angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
+      const distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+      const distanceToPoint = Math.sqrt(
+        Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2)
       );
-      difference = distanceToBorder - distanceToPoint;
+      const difference = distanceToBorder - distanceToPoint;
       if (Math.abs(difference) < threshold) {
         break; // found
       } else if (difference > 0) {
@@ -291,62 +411,66 @@ class EdgeBase {
           low = middle;
         }
       }
-      iteration++;
-    }
-    pos.t = middle;
 
-    return pos;
+      ++iteration;
+    } while (low <= high && iteration < maxIterations);
+
+    return {
+      ...pos,
+      t: middle
+    };
   }
 
   /**
-   * Get the line width of the edge. Depends on width and whether one of the
-   * connected nodes is selected.
-   * @param {boolean} selected
-   * @param {boolean} hover
-   * @returns {number} width
-   * @private
+   * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
+   *
+   * @param selected - Determines wheter the line is selected.
+   * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
+   *
+   * @returns The width of the line.
    */
-  getLineWidth(selected, hover) {
+  public getLineWidth(selected: boolean, hover: boolean): number {
     if (selected === true) {
       return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
+    } else if (hover === true) {
+      return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
     } else {
-      if (hover === true) {
-        return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
-      } else {
-        return Math.max(this.options.width, 0.3 / this.body.view.scale);
-      }
+      return Math.max(this.options.width, 0.3 / this.body.view.scale);
     }
   }
 
   /**
+   * Compute the color or gradient for given edge.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {boolean} selected - Unused
-   * @param {boolean} hover - Unused
-   * @returns {string}
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values like color, opacity or shadow.
+   * @param _selected - Ignored (TODO: remove in the future).
+   * @param _hover - Ignored (TODO: remove in the future).
+   *
+   * @returns Color string if single color is inherited or gradient if two.
    */
-  getColor(ctx, values, selected, hover) {
-    // eslint-disable-line no-unused-vars
+  public getColor(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity">
+  ): string | CanvasGradient {
     if (values.inheritsColor !== false) {
       // when this is a loop edge, just use the 'from' method
       if (values.inheritsColor === "both" && this.from.id !== this.to.id) {
-        let grd = ctx.createLinearGradient(
+        const grd = ctx.createLinearGradient(
           this.from.x,
           this.from.y,
           this.to.x,
           this.to.y
         );
-        let fromColor, toColor;
-        fromColor = this.from.options.color.highlight.border;
-        toColor = this.to.options.color.highlight.border;
+        let fromColor = this.from.options.color.highlight.border;
+        let toColor = this.to.options.color.highlight.border;
 
         if (this.from.selected === false && this.to.selected === false) {
-          fromColor = util.overrideOpacity(
+          fromColor = overrideOpacity(
             this.from.options.color.border,
             values.opacity
           );
-          toColor = util.overrideOpacity(
+          toColor = overrideOpacity(
             this.to.options.color.border,
             values.opacity
           );
@@ -363,33 +487,35 @@ class EdgeBase {
       }
 
       if (values.inheritsColor === "to") {
-        return util.overrideOpacity(
-          this.to.options.color.border,
-          values.opacity
-        );
+        return overrideOpacity(this.to.options.color.border, values.opacity);
       } else {
         // "from"
-        return util.overrideOpacity(
-          this.from.options.color.border,
-          values.opacity
-        );
+        return overrideOpacity(this.from.options.color.border, values.opacity);
       }
     } else {
-      return util.overrideOpacity(values.color, values.opacity);
+      return overrideOpacity(values.color, values.opacity);
     }
   }
 
   /**
-   * Draw a line from a node to itself, a circle
+   * Draw a line from a node to itself, a circle.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Array} values
-   * @param {number} x
-   * @param {number} y
-   * @param {number} radius
-   * @private
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values like color, opacity or shadow.
+   * @param x - Center of the circle on the x axis.
+   * @param y - Center of the circle on the y axis.
+   * @param radius - Radius of the circle.
    */
-  _circle(ctx, values, x, y, radius) {
+  private _circle(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
+    >,
+    x: number,
+    y: number,
+    radius: number
+  ): void {
     // draw shadow if enabled
     this.enableShadow(ctx, values);
 
@@ -403,51 +529,78 @@ class EdgeBase {
   }
 
   /**
-   * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-   * (x3,y3) is the point.
+   * @inheritdoc
    *
+   * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-   *
-   * @param {number} x1
-   * @param {number} y1
-   * @param {number} x2
-   * @param {number} y2
-   * @param {number} x3
-   * @param {number} y3
-   * @param {Node} via
-   * @param {Array} values
-   * @returns {number}
    */
-  getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {
-    // eslint-disable-line no-unused-vars
-    let returnValue = 0;
+  public getDistanceToEdge(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number
+  ): number {
     if (this.from != this.to) {
-      returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via);
+      return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
     } else {
-      let [x, y, radius] = this._getCircleData(undefined);
-      let dx = x - x3;
-      let dy = y - y3;
-      returnValue = Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
+      const [x, y, radius] = this._getCircleData(undefined);
+      const dx = x - x3;
+      const dy = y - y3;
+      return Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
     }
-
-    return returnValue;
   }
 
   /**
+   * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
    *
-   * @param {number} x1
-   * @param {number} y1
-   * @param {number} x2
-   * @param {number} y2
-   * @param {number} x3
-   * @param {number} y3
-   * @returns {number}
-   * @private
+   * @remarks
+   * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
+   *
+   * @param x1 - First end of the line segment on the x axis.
+   * @param y1 - First end of the line segment on the y axis.
+   * @param x2 - Second end of the line segment on the x axis.
+   * @param y2 - Second end of the line segment on the y axis.
+   * @param x3 - Position of the point on the x axis.
+   * @param y3 - Position of the point on the y axis.
+   * @param via - Additional control point(s) for the edge.
+   *
+   * @returns The distance between the line segment and the point.
    */
-  _getDistanceToLine(x1, y1, x2, y2, x3, y3) {
-    let px = x2 - x1;
-    let py = y2 - y1;
-    let something = px * px + py * py;
+  protected abstract _getDistanceToEdge(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number,
+    via?: Via
+  ): number;
+
+  /**
+   * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
+   *
+   * @param x1 - First end of the line segment on the x axis.
+   * @param y1 - First end of the line segment on the y axis.
+   * @param x2 - Second end of the line segment on the x axis.
+   * @param y2 - Second end of the line segment on the y axis.
+   * @param x3 - Position of the point on the x axis.
+   * @param y3 - Position of the point on the y axis.
+   *
+   * @returns The distance between the line segment and the point.
+   */
+  protected _getDistanceToLine(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number
+  ): number {
+    const px = x2 - x1;
+    const py = y2 - y1;
+    const something = px * px + py * py;
     let u = ((x3 - x1) * px + (y3 - y1) * py) / something;
 
     if (u > 1) {
@@ -456,10 +609,10 @@ class EdgeBase {
       u = 0;
     }
 
-    let x = x1 + u * px;
-    let y = y1 + u * py;
-    let dx = x - x3;
-    let dy = y - y3;
+    const x = x1 + u * px;
+    const y = y1 + u * py;
+    const dx = x - x3;
+    const dy = y - y3;
 
     //# Note: If the actual distance does not matter,
     //# if you only want to compare what this function
@@ -470,43 +623,78 @@ class EdgeBase {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  /**
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {string} position
-   * @param {Node} viaNode
-   * @param {boolean} selected
-   * @param {boolean} hover
-   * @param {Array} values
-   * @returns {{point: *, core: {x: number, y: number}, angle: *, length: number, type: *}}
-   */
-  getArrowData(ctx, position, viaNode, selected, hover, values) {
+  /** @inheritdoc */
+  public getArrowData(
+    ctx: CanvasRenderingContext2D,
+    position: "middle",
+    viaNode: VNode,
+    selected: boolean,
+    hover: boolean,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "middleArrowType" | "middleArrowScale" | "width"
+    >
+  ): ArrowDataWithCore;
+  /** @inheritdoc */
+  public getArrowData(
+    ctx: CanvasRenderingContext2D,
+    position: "to",
+    viaNode: VNode,
+    selected: boolean,
+    hover: boolean,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "toArrowType" | "toArrowScale" | "width"
+    >
+  ): ArrowDataWithCore;
+  /** @inheritdoc */
+  public getArrowData(
+    ctx: CanvasRenderingContext2D,
+    position: "from",
+    viaNode: VNode,
+    selected: boolean,
+    hover: boolean,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "fromArrowType" | "fromArrowScale" | "width"
+    >
+  ): ArrowDataWithCore;
+  /** @inheritdoc */
+  public getArrowData(
+    ctx: CanvasRenderingContext2D,
+    position: "from" | "to" | "middle",
+    viaNode: VNode,
+    _selected: boolean,
+    _hover: boolean,
+    values: SelectiveRequired<EdgeFormattingValues, "width">
+  ): ArrowDataWithCore {
     // set lets
-    let angle;
-    let arrowPoint;
-    let node1;
-    let node2;
-    let guideOffset;
-    let scaleFactor;
-    let type;
-    let lineWidth = values.width;
+    let angle: number;
+    let arrowPoint: Point;
+    let node1: VNode;
+    let node2: VNode;
+    let guideOffset: number;
+    let scaleFactor: number;
+    let type: ArrowType;
+    let lineWidth: number = values.width;
 
     if (position === "from") {
       node1 = this.from;
       node2 = this.to;
       guideOffset = 0.1;
-      scaleFactor = values.fromArrowScale;
-      type = values.fromArrowType;
+      scaleFactor = values.fromArrowScale!;
+      type = values.fromArrowType!;
     } else if (position === "to") {
       node1 = this.to;
       node2 = this.from;
       guideOffset = -0.1;
-      scaleFactor = values.toArrowScale;
-      type = values.toArrowType;
+      scaleFactor = values.toArrowScale!;
+      type = values.toArrowType!;
     } else {
       node1 = this.to;
       node2 = this.from;
-      scaleFactor = values.middleArrowScale;
-      type = values.middleArrowType;
+      scaleFactor = values.middleArrowScale!;
+      type = values.middleArrowType!;
     }
 
     // if not connected to itself
@@ -514,18 +702,17 @@ class EdgeBase {
       if (position !== "middle") {
         // draw arrow head
         if (this.options.smooth.enabled === true) {
-          arrowPoint = this.findBorderPosition(node1, ctx, { via: viaNode });
-          let guidePos = this.getPoint(
-            Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)),
+          const pointT = this._findBorderPosition(node1, ctx, { via: viaNode });
+          const guidePos = this.getPoint(
+            // guideOffset is unset only for position === 'middle'
+            Math.max(0.0, Math.min(1.0, pointT.t + guideOffset!)),
             viaNode
           );
-          angle = Math.atan2(
-            arrowPoint.y - guidePos.y,
-            arrowPoint.x - guidePos.x
-          );
+          angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
+          arrowPoint = pointT;
         } else {
           angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-          arrowPoint = this.findBorderPosition(node1, ctx);
+          arrowPoint = this._findBorderPosition(node1, ctx);
         }
       } else {
         angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
@@ -533,38 +720,42 @@ class EdgeBase {
       }
     } else {
       // draw circle
-      let [x, y, radius] = this._getCircleData(ctx);
+      const [x, y, radius] = this._getCircleData(ctx);
 
       if (position === "from") {
-        arrowPoint = this.findBorderPosition(this.from, ctx, {
+        const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
           low: 0.25,
           high: 0.6,
           direction: -1
         });
-        angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+        angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+        arrowPoint = pointT;
       } else if (position === "to") {
-        arrowPoint = this.findBorderPosition(this.from, ctx, {
+        const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
           low: 0.6,
           high: 1.0,
           direction: 1
         });
-        angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+        angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+        arrowPoint = pointT;
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
       }
     }
 
-    if (position === "middle" && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
-    let length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
+    if (position === "middle" && scaleFactor < 0) {
+      lineWidth *= -1; // reversed middle arrow
+    }
+    const length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
-    var xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
-    var yi = arrowPoint.y - length * 0.9 * Math.sin(angle);
-    let arrowCore = { x: xi, y: yi };
+    const xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
+    const yi = arrowPoint.y - length * 0.9 * Math.sin(angle);
+    const arrowCore = { x: xi, y: yi };
 
     return {
       point: arrowPoint,
@@ -575,17 +766,25 @@ class EdgeBase {
     };
   }
 
-  /**
-   *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {boolean} selected
-   * @param {boolean} hover
-   * @param {Object} arrowData
-   */
-  drawArrowHead(ctx, values, selected, hover, arrowData) {
+  /** @inheritdoc */
+  public drawArrowHead(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      | "color"
+      | "opacity"
+      | "shadowColor"
+      | "shadowSize"
+      | "shadowX"
+      | "shadowY"
+      | "width"
+    >,
+    _selected: boolean,
+    _hover: boolean,
+    arrowData: ArrowData
+  ): void {
     // set style
-    ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+    ctx.strokeStyle = this.getColor(ctx, values);
     ctx.fillStyle = ctx.strokeStyle;
     ctx.lineWidth = values.width;
 
@@ -599,11 +798,18 @@ class EdgeBase {
   }
 
   /**
+   * Set the shadow formatting values in the context if enabled, do nothing otherwise.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values for the shadow.
    */
-  enableShadow(ctx, values) {
+  public enableShadow(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
+    >
+  ): void {
     if (values.shadow === true) {
       ctx.shadowColor = values.shadowColor;
       ctx.shadowBlur = values.shadowSize;
@@ -613,11 +819,15 @@ class EdgeBase {
   }
 
   /**
+   * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values for the shadow.
    */
-  disableShadow(ctx, values) {
+  public disableShadow(
+    ctx: CanvasRenderingContext2D,
+    values: EdgeFormattingValues
+  ): void {
     if (values.shadow === true) {
       ctx.shadowColor = "rgba(0,0,0,0)";
       ctx.shadowBlur = 0;
@@ -627,18 +837,25 @@ class EdgeBase {
   }
 
   /**
+   * Render the background according to the formatting values.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {{toArrow: boolean, toArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), toArrowType: *, middleArrow: boolean, middleArrowScale: (number|allOptions.edges.arrows.middle.scaleFactor|{number}|Array), middleArrowType: (allOptions.edges.arrows.middle.type|{string}|string|*), fromArrow: boolean, fromArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), fromArrowType: *, arrowStrikethrough: (*|boolean|allOptions.edges.arrowStrikethrough|{boolean}), color: undefined, inheritsColor: (string|string|string|allOptions.edges.color.inherit|{string, boolean}|Array|*), opacity: *, hidden: *, length: *, shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *, dashes: (*|boolean|Array|allOptions.edges.dashes|{boolean, array}), width: *}} values
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Formatting values for the background.
    */
-  drawBackground(ctx, values) {
+  public drawBackground(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "backgroundColor" | "backgroundSize"
+    >
+  ): void {
     if (values.background !== false) {
-      let attrs = ["strokeStyle", "lineWidth", "dashes"];
-      let origCtxAttr = {};
       // save original line attrs
-      attrs.forEach(function(attrname) {
-        origCtxAttr[attrname] = ctx[attrname];
-      });
+      const origCtxAttr = {
+        strokeStyle: ctx.strokeStyle,
+        lineWidth: ctx.lineWidth,
+        dashes: (ctx as any).dashes
+      };
 
       ctx.strokeStyle = values.backgroundColor;
       ctx.lineWidth = values.backgroundSize;
@@ -647,25 +864,26 @@ class EdgeBase {
       ctx.stroke();
 
       // restore original line attrs
-      attrs.forEach(function(attrname) {
-        ctx[attrname] = origCtxAttr[attrname];
-      });
+      ctx.strokeStyle = origCtxAttr.strokeStyle;
+      ctx.lineWidth = origCtxAttr.lineWidth;
+      (ctx as any).dashes = origCtxAttr.dashes;
       this.setStrokeDashed(ctx, values.dashes);
     }
   }
 
   /**
+   * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {boolean|Array} dashes
+   * @param ctx - The context that will be used for rendering.
+   * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
    */
-  setStrokeDashed(ctx, dashes) {
+  public setStrokeDashed(
+    ctx: CanvasRenderingContext2D,
+    dashes?: boolean | number[]
+  ): void {
     if (dashes !== false) {
       if (ctx.setLineDash !== undefined) {
-        let pattern = [5, 5];
-        if (Array.isArray(dashes) === true) {
-          pattern = dashes;
-        }
+        const pattern = Array.isArray(dashes) ? dashes : [5, 5];
         ctx.setLineDash(pattern);
       } else {
         console.warn(
@@ -683,5 +901,3 @@ class EdgeBase {
     }
   }
 }
-
-export default EdgeBase;

@@ -1,27 +1,38 @@
-import EdgeBase from "./util/EdgeBase";
+import { EdgeBase } from "./util/edge-base";
+import {
+  EdgeFormattingValues,
+  Label,
+  EdgeOptions,
+  Point,
+  PointT,
+  SelectiveRequired,
+  VBody,
+  VNode
+} from "./util/types";
 
 /**
  * A Straight Edge.
- *
- * @extends EdgeBase
  */
-class StraightEdge extends EdgeBase {
+export class StraightEdge extends EdgeBase {
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
-  constructor(options, body, labelModule) {
+  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
     super(options, body, labelModule);
   }
 
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @private
-   */
-  _line(ctx, values) {
+  /** @inheritdoc */
+  protected _line(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
+    >
+  ): void {
     // draw a straight line
     ctx.beginPath();
     ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
@@ -32,36 +43,24 @@ class StraightEdge extends EdgeBase {
     this.disableShadow(ctx, values);
   }
 
-  /**
-   *
-   * @returns {undefined}
-   */
-  getViaNode() {
+  /** @inheritdoc */
+  public getViaNode(): undefined {
     return undefined;
   }
 
-  /**
-   * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-   *
-   * @param {number} percentage
-   * @returns {{x: number, y: number}}
-   * @private
-   */
-  getPoint(percentage) {
+  /** @inheritdoc */
+  public getPoint(position: number): Point {
     return {
-      x: (1 - percentage) * this.fromPoint.x + percentage * this.toPoint.x,
-      y: (1 - percentage) * this.fromPoint.y + percentage * this.toPoint.y
+      x: (1 - position) * this.fromPoint.x + position * this.toPoint.x,
+      y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
     };
   }
 
-  /**
-   *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @returns {{x: number, y: number}}
-   * @private
-   */
-  _findBorderPosition(nearNode, ctx) {
+  /** @inheritdoc */
+  protected _findBorderPosition(
+    nearNode: VNode,
+    ctx: CanvasRenderingContext2D
+  ): PointT {
     let node1 = this.to;
     let node2 = this.from;
     if (nearNode.id === this.from.id) {
@@ -69,35 +68,31 @@ class StraightEdge extends EdgeBase {
       node2 = this.to;
     }
 
-    let angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-    let dx = node1.x - node2.x;
-    let dy = node1.y - node2.y;
-    let edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
-    let toBorderDist = nearNode.distanceToBorder(ctx, angle);
-    let toBorderPoint = (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
+    const angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
+    const dx = node1.x - node2.x;
+    const dy = node1.y - node2.y;
+    const edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
+    const toBorderDist = nearNode.distanceToBorder(ctx, angle);
+    const toBorderPoint =
+      (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
 
-    let borderPos = {};
-    borderPos.x = (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x;
-    borderPos.y = (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y;
-
-    return borderPos;
+    return {
+      x: (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x,
+      y: (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y,
+      t: 0
+    };
   }
 
-  /**
-   *
-   * @param {number} x1
-   * @param {number} y1
-   * @param {number} x2
-   * @param {number} y2
-   * @param {number} x3
-   * @param {number} y3
-   * @returns {number}
-   * @private
-   */
-  _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+  /** @inheritdoc */
+  protected _getDistanceToEdge(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number
+  ): number {
     // x3,y3 is the point
     return this._getDistanceToLine(x1, y1, x2, y2, x3, y3);
   }
 }
-
-export default StraightEdge;

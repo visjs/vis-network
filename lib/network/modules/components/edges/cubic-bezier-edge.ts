@@ -1,29 +1,44 @@
-import CubicBezierEdgeBase from "./util/CubicBezierEdgeBase";
+import { CubicBezierEdgeBase } from "./util/cubic-bezier-edge-base";
+import {
+  EdgeFormattingValues,
+  Label,
+  EdgeOptions,
+  Point,
+  PointT,
+  SelectiveRequired,
+  VBody,
+  VNode
+} from "./util/types";
 
 /**
- * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual
- * curves in paths between nodes.
- *
- * @extends CubicBezierEdgeBase
+ * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
-class CubicBezierEdge extends CubicBezierEdgeBase {
+export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
-  constructor(options, body, labelModule) {
+  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
     super(options, body, labelModule);
   }
 
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {Array.<Node>} viaNodes
-   * @private
-   */
-  _line(ctx, values, viaNodes) {
+  /** @inheritdoc */
+  protected _line(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      | "backgroundColor"
+      | "backgroundSize"
+      | "shadowColor"
+      | "shadowSize"
+      | "shadowX"
+      | "shadowY"
+    >,
+    viaNodes: [Point, Point]
+  ): void {
     // get the coordinates of the support points.
     let via1 = viaNodes[0];
     let via2 = viaNodes[1];
@@ -31,16 +46,19 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
   }
 
   /**
+   * Compute the additional points the edge passes through.
    *
-   * @returns {Array.<{x: number, y: number}>}
-   * @private
+   * @returns Cartesian coordinates of the points the edge passes through.
    */
-  _getViaCoordinates() {
-    let dx = this.from.x - this.to.x;
-    let dy = this.from.y - this.to.y;
+  protected _getViaCoordinates(): [Point, Point] {
+    const dx = this.from.x - this.to.x;
+    const dy = this.from.y - this.to.y;
 
-    let x1, y1, x2, y2;
-    let roundness = this.options.smooth.roundness;
+    let x1: number;
+    let y1: number;
+    let x2: number;
+    let y2: number;
+    const roundness = this.options.smooth.roundness;
 
     // horizontal if x > y or if direction is forced or if direction is horizontal
     if (
@@ -63,72 +81,51 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
     return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
   }
 
-  /**
-   *
-   * @returns {Array.<{x: number, y: number}>}
-   */
-  getViaNode() {
+  /** @inheritdoc */
+  public getViaNode(): [Point, Point] {
     return this._getViaCoordinates();
   }
 
-  /**
-   *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @returns {{x: number, y: number, t: number}}
-   * @private
-   */
-  _findBorderPosition(nearNode, ctx) {
+  /** @inheritdoc */
+  protected _findBorderPosition(
+    nearNode: VNode,
+    ctx: CanvasRenderingContext2D
+  ): PointT {
     return this._findBorderPositionBezier(nearNode, ctx);
   }
 
-  /**
-   *
-   * @param {number} x1
-   * @param {number} y1
-   * @param {number} x2
-   * @param {number} y2
-   * @param {number} x3
-   * @param {number} y3
-   * @param {Node} via1
-   * @param {Node} via2
-   * @returns {number}
-   * @private
-   */
-  _getDistanceToEdge(
-    x1,
-    y1,
-    x2,
-    y2,
-    x3,
-    y3,
-    [via1, via2] = this._getViaCoordinates()
-  ) {
+  /** @inheritdoc */
+  protected _getDistanceToEdge(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number,
+    [via1, via2]: [Point, Point] = this._getViaCoordinates()
+  ): number {
     // x3,y3 is the point
-    return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2);
+    return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
   }
 
-  /**
-   * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-   * @param {number} percentage
-   * @param {{x: number, y: number}} [via1=this._getViaCoordinates()[0]]
-   * @param {{x: number, y: number}} [via2=this._getViaCoordinates()[1]]
-   * @returns {{x: number, y: number}}
-   * @private
-   */
-  getPoint(percentage, [via1, via2] = this._getViaCoordinates()) {
-    let t = percentage;
-    let vec = [];
-    vec[0] = Math.pow(1 - t, 3);
-    vec[1] = 3 * t * Math.pow(1 - t, 2);
-    vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-    vec[3] = Math.pow(t, 3);
-    let x =
+  /** @inheritdoc */
+  public getPoint(
+    position: number,
+    [via1, via2]: [Point, Point] = this._getViaCoordinates()
+  ): Point {
+    const t = position;
+    const vec: [number, number, number, number] = [
+      Math.pow(1 - t, 3),
+      3 * t * Math.pow(1 - t, 2),
+      3 * Math.pow(t, 2) * (1 - t),
+      Math.pow(t, 3)
+    ];
+    const x =
       vec[0] * this.fromPoint.x +
       vec[1] * via1.x +
       vec[2] * via2.x +
       vec[3] * this.toPoint.x;
-    let y =
+    const y =
       vec[0] * this.fromPoint.y +
       vec[1] * via1.y +
       vec[2] * via2.y +
@@ -137,5 +134,3 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
     return { x: x, y: y };
   }
 }
-
-export default CubicBezierEdge;

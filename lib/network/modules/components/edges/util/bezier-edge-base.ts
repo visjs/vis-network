@@ -1,58 +1,79 @@
-import EdgeBase from "./EdgeBase";
+import { EdgeBase } from "./edge-base";
+import {
+  EdgeFormattingValues,
+  Label,
+  EdgeOptions,
+  Point,
+  PointT,
+  SelectiveRequired,
+  VBody,
+  VNode
+} from "./types";
 
 /**
- * The Base Class for all Bezier edges. Bezier curves are used to model smooth
- * gradual curves in paths between nodes.
- *
- * @extends EdgeBase
+ * The Base Class for all Bezier edges.
+ * Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
-class BezierEdgeBase extends EdgeBase {
+export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
-  constructor(options, body, labelModule) {
+  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
     super(options, body, labelModule);
   }
 
   /**
+   * Compute additional point(s) the edge passes through.
+   *
+   * @returns Cartesian coordinates of the point(s) the edge passes through.
+   */
+  protected abstract _getViaCoordinates(): Via;
+
+  /**
+   * Find the intersection between the border of the node and the edge.
+   *
+   * @remarks
    * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
    *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Node} viaNode
-   * @returns {*}
-   * @private
+   * @param nearNode - The node (either from or to node of the edge).
+   * @param ctx - The context that will be used for rendering.
+   * @param viaNode - Additional node(s) the edge passes through.
+   *
+   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
    */
-  _findBorderPositionBezier(
-    nearNode,
-    ctx,
-    viaNode = this._getViaCoordinates()
-  ) {
-    var maxIterations = 10;
-    var iteration = 0;
-    var low = 0;
-    var high = 1;
-    var pos, angle, distanceToBorder, distanceToPoint, difference;
-    var threshold = 0.2;
-    var node = this.to;
-    var from = false;
+  protected _findBorderPositionBezier(
+    nearNode: VNode,
+    ctx: CanvasRenderingContext2D,
+    viaNode: Via = this._getViaCoordinates()
+  ): PointT {
+    const maxIterations = 10;
+    const threshold = 0.2;
+    let from = false;
+    let high = 1;
+    let low = 0;
+    let node = this.to;
+    let pos: Point;
+    let middle: number;
     if (nearNode.id === this.from.id) {
       node = this.from;
       from = true;
     }
 
-    while (low <= high && iteration < maxIterations) {
-      var middle = (low + high) * 0.5;
+    let iteration = 0;
+    do {
+      middle = (low + high) * 0.5;
 
       pos = this.getPoint(middle, viaNode);
-      angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-      distanceToBorder = node.distanceToBorder(ctx, angle);
-      distanceToPoint = Math.sqrt(
+      const angle = Math.atan2(node.y - pos.y, node.x - pos.x);
+      const distanceToBorder = node.distanceToBorder(ctx, angle);
+      const distanceToPoint = Math.sqrt(
         Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2)
       );
-      difference = distanceToBorder - distanceToPoint;
+      const difference = distanceToBorder - distanceToPoint;
       if (Math.abs(difference) < threshold) {
         break; // found
       } else if (difference < 0) {
@@ -70,28 +91,40 @@ class BezierEdgeBase extends EdgeBase {
         }
       }
 
-      iteration++;
-    }
-    pos.t = middle;
+      ++iteration;
+    } while (low <= high && iteration < maxIterations);
 
-    return pos;
+    return {
+      ...pos,
+      t: middle
+    };
   }
 
   /**
-   * Calculate the distance between a point (x3,y3) and a line segment from
-   * (x1,y1) to (x2,y2).
+   * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+   *
+   * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-   * @param {number} x1 from x
-   * @param {number} y1 from y
-   * @param {number} x2 to x
-   * @param {number} y2 to y
-   * @param {number} x3 point to check x
-   * @param {number} y3 point to check y
-   * @param {Node} via
-   * @returns {number}
-   * @private
+   *
+   * @param x1 - First end of the line segment on the x axis.
+   * @param y1 - First end of the line segment on the y axis.
+   * @param x2 - Second end of the line segment on the x axis.
+   * @param y2 - Second end of the line segment on the y axis.
+   * @param x3 - Position of the point on the x axis.
+   * @param y3 - Position of the point on the y axis.
+   * @param via - The control point for the edge.
+   *
+   * @returns The distance between the line segment and the point.
    */
-  _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via) {
+  protected _getDistanceToBezierEdge(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number,
+    via: Point
+  ): number {
     // x3,y3 is the point
     let minDistance = 1e9;
     let distance;
@@ -116,45 +149,57 @@ class BezierEdgeBase extends EdgeBase {
   }
 
   /**
-   * Draw a bezier curve between two nodes
+   * Render a bezier curve between two nodes.
    *
+   * @remarks
    * The method accepts zero, one or two control points.
-   * Passing zero control points just draws a straight line
+   * Passing zero control points just draws a straight line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Object}           values   | options for shadow drawing
-   * @param {Object|undefined} viaNode1 | first control point for curve drawing
-   * @param {Object|undefined} viaNode2 | second control point for curve drawing
-   *
-   * @protected
+   * @param ctx - The context that will be used for rendering.
+   * @param values - Style options for edge drawing.
+   * @param viaNode1 - First control point for curve drawing.
+   * @param viaNode2 - Second control point for curve drawing.
    */
-  _bezierCurve(ctx, values, viaNode1, viaNode2) {
-    var hasNode1 = viaNode1 !== undefined && viaNode1.x !== undefined;
-    var hasNode2 = viaNode2 !== undefined && viaNode2.x !== undefined;
-
+  protected _bezierCurve(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      | "backgroundColor"
+      | "backgroundSize"
+      | "shadowColor"
+      | "shadowSize"
+      | "shadowX"
+      | "shadowY"
+    >,
+    viaNode1?: Point,
+    viaNode2?: Point
+  ): void {
     ctx.beginPath();
     ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
 
-    if (hasNode1 && hasNode2) {
-      ctx.bezierCurveTo(
-        viaNode1.x,
-        viaNode1.y,
-        viaNode2.x,
-        viaNode2.y,
-        this.toPoint.x,
-        this.toPoint.y
-      );
-    } else if (hasNode1) {
-      ctx.quadraticCurveTo(
-        viaNode1.x,
-        viaNode1.y,
-        this.toPoint.x,
-        this.toPoint.y
-      );
+    if (viaNode1 != null && viaNode1.x != null) {
+      if (viaNode2 != null && viaNode2.x != null) {
+        ctx.bezierCurveTo(
+          viaNode1.x,
+          viaNode1.y,
+          viaNode2.x,
+          viaNode2.y,
+          this.toPoint.x,
+          this.toPoint.y
+        );
+      } else {
+        ctx.quadraticCurveTo(
+          viaNode1.x,
+          viaNode1.y,
+          this.toPoint.x,
+          this.toPoint.y
+        );
+      }
     } else {
       // fallback to normal straight edge
       ctx.lineTo(this.toPoint.x, this.toPoint.y);
     }
+
     // draw a background
     this.drawBackground(ctx, values);
 
@@ -164,13 +209,8 @@ class BezierEdgeBase extends EdgeBase {
     this.disableShadow(ctx, values);
   }
 
-  /**
-   *
-   * @returns {*|{x, y}|{x: undefined, y: undefined}}
-   */
-  getViaNode() {
+  /** @inheritdoc */
+  public getViaNode(): Via {
     return this._getViaCoordinates();
   }
 }
-
-export default BezierEdgeBase;

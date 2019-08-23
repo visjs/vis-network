@@ -3,7 +3,7 @@ import { assert, spy, stub } from 'sinon'
 import { deepFreeze } from '../helpers'
 import { body } from './helpers'
 
-import StraightEdge from '../../lib/network/modules/components/edges/StraightEdge'
+import { StraightEdge } from '../../lib/network/modules/components/edges'
 
 describe('StraightEdge', function(): void {
   it('constructor', function(): void {

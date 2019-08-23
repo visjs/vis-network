@@ -25,6 +25,8 @@
  *   `edgeStyles/arrowTypes`.
  * ============================================================================= */
 
+import { ArrowData, Point } from "./types";
+
 /**
  * Common methods for endpoints
  *
@@ -39,24 +41,23 @@ class EndPoint {
    * - multiply the (normalized) coordinates by the passed length
    * - offset by the target coordinates
    *
-   * @param {Array<Point>} points
-   * @param {ArrowData} arrowData
-   * @static
+   * @param points - The point(s) to be transformed.
+   * @param arrowData - The data determining the result of the transformation.
    */
-  static transform(points, arrowData) {
-    if (!(points instanceof Array)) {
+  public static transform(points: Point | Point[], arrowData: ArrowData): void {
+    if (!Array.isArray(points)) {
       points = [points];
     }
 
-    var x = arrowData.point.x;
-    var y = arrowData.point.y;
-    var angle = arrowData.angle;
-    var length = arrowData.length;
+    const x = arrowData.point.x;
+    const y = arrowData.point.y;
+    const angle = arrowData.angle;
+    const length = arrowData.length;
 
-    for (var i = 0; i < points.length; ++i) {
-      var p = points[i];
-      var xt = p.x * Math.cos(angle) - p.y * Math.sin(angle);
-      var yt = p.x * Math.sin(angle) + p.y * Math.cos(angle);
+    for (let i = 0; i < points.length; ++i) {
+      const p = points[i];
+      const xt = p.x * Math.cos(angle) - p.y * Math.sin(angle);
+      const yt = p.x * Math.sin(angle) + p.y * Math.cos(angle);
 
       p.x = x + length * xt;
       p.y = y + length * yt;
@@ -66,14 +67,13 @@ class EndPoint {
   /**
    * Draw a closed path using the given real coordinates.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Array.<Point>} points
-   * @static
+   * @param ctx - The path will be rendered into this context.
+   * @param points - The points of the path.
    */
-  static drawPath(ctx, points) {
+  public static drawPath(ctx: CanvasRenderingContext2D, points: Point[]): void {
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
-    for (var i = 1; i < points.length; ++i) {
+    for (let i = 1; i < points.length; ++i) {
       ctx.lineTo(points[i].x, points[i].y);
     }
     ctx.closePath();
@@ -82,20 +82,21 @@ class EndPoint {
 
 /**
  * Drawing methods for the arrow endpoint.
- * @extends EndPoint
  */
 class Arrow extends EndPoint {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var points = [
+    const points = [
       { x: 0, y: 0 },
       { x: -1, y: 0.3 },
       { x: -0.9, y: 0 },
@@ -109,20 +110,21 @@ class Arrow extends EndPoint {
 
 /**
  * Drawing methods for the crow endpoint.
- * @extends EndPoint
  */
 class Crow {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var points = [
+    const points = [
       { x: -1, y: 0 },
       { x: 0, y: 0.3 },
       { x: -0.4, y: 0 },
@@ -136,20 +138,21 @@ class Crow {
 
 /**
  * Drawing methods for the curve endpoint.
- * @extends EndPoint
  */
 class Curve {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var point = { x: -0.4, y: 0 };
+    const point = { x: -0.4, y: 0 };
     EndPoint.transform(point, arrowData);
 
     // Update endpoint style for drawing transparent arc.
@@ -157,16 +160,16 @@ class Curve {
     ctx.fillStyle = "rgba(0, 0, 0, 0)";
 
     // Define curve endpoint as semicircle.
-    var pi = Math.PI;
-    var start_angle = arrowData.angle - pi / 2;
-    var end_angle = arrowData.angle + pi / 2;
+    const pi = Math.PI;
+    const startAngle = arrowData.angle - pi / 2;
+    const endAngle = arrowData.angle + pi / 2;
     ctx.beginPath();
     ctx.arc(
       point.x,
       point.y,
       arrowData.length * 0.4,
-      start_angle,
-      end_angle,
+      startAngle,
+      endAngle,
       false
     );
     ctx.stroke();
@@ -175,20 +178,21 @@ class Curve {
 
 /**
  * Drawing methods for the inverted curve endpoint.
- * @extends EndPoint
  */
 class InvertedCurve {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var point = { x: -0.3, y: 0 };
+    const point = { x: -0.3, y: 0 };
     EndPoint.transform(point, arrowData);
 
     // Update endpoint style for drawing transparent arc.
@@ -196,16 +200,16 @@ class InvertedCurve {
     ctx.fillStyle = "rgba(0, 0, 0, 0)";
 
     // Define inverted curve endpoint as semicircle.
-    var pi = Math.PI;
-    var start_angle = arrowData.angle + pi / 2;
-    var end_angle = arrowData.angle + (3 * pi) / 2;
+    const pi = Math.PI;
+    const startAngle = arrowData.angle + pi / 2;
+    const endAngle = arrowData.angle + (3 * pi) / 2;
     ctx.beginPath();
     ctx.arc(
       point.x,
       point.y,
       arrowData.length * 0.4,
-      start_angle,
-      end_angle,
+      startAngle,
+      endAngle,
       false
     );
     ctx.stroke();
@@ -214,20 +218,21 @@ class InvertedCurve {
 
 /**
  * Drawing methods for the trinagle endpoint.
- * @extends EndPoint
  */
 class Triangle {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var points = [{ x: 0.02, y: 0 }, { x: -1, y: 0.3 }, { x: -1, y: -0.3 }];
+    const points = [{ x: 0.02, y: 0 }, { x: -1, y: 0.3 }, { x: -1, y: -0.3 }];
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
@@ -236,20 +241,21 @@ class Triangle {
 
 /**
  * Drawing methods for the inverted trinagle endpoint.
- * @extends EndPoint
  */
 class InvertedTriangle {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var points = [{ x: 0, y: 0.3 }, { x: 0, y: -0.3 }, { x: -1, y: 0 }];
+    const points = [{ x: 0, y: 0.3 }, { x: 0, y: -0.3 }, { x: -1, y: 0 }];
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
@@ -263,12 +269,14 @@ class Circle {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
-    var point = { x: -0.4, y: 0 };
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
+    const point = { x: -0.4, y: 0 };
 
     EndPoint.transform(point, arrowData);
     ctx.circle(point.x, point.y, arrowData.length * 0.4);
@@ -282,11 +290,13 @@ class Bar {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     /*
     var points = [
       {x:0, y:0.5},
@@ -300,7 +310,7 @@ class Bar {
     ctx.stroke();
 */
 
-    var points = [
+    const points = [
       { x: 0, y: 0.5 },
       { x: 0, y: -0.5 },
       { x: -0.15, y: -0.5 },
@@ -319,12 +329,14 @@ class Box {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
-    var points = [
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
+    const points = [
       { x: 0, y: 0.3 },
       { x: 0, y: -0.3 },
       { x: -0.6, y: -0.3 },
@@ -343,12 +355,14 @@ class Diamond {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
-    var points = [
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
+    const points = [
       { x: 0, y: 0 },
       { x: -0.5, y: -0.3 },
       { x: -1, y: 0 },
@@ -362,20 +376,21 @@ class Diamond {
 
 /**
  * Drawing methods for the vee endpoint.
- * @extends EndPoint
  */
 class Vee {
   /**
    * Draw this shape at the end of a line.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    var points = [
+    const points = [
       { x: -1, y: 0.3 },
       { x: -0.5, y: 0 },
       { x: -1, y: -0.3 },
@@ -390,16 +405,18 @@ class Vee {
 /**
  * Drawing methods for the endpoints.
  */
-class EndPoints {
+export class EndPoints {
   /**
-   * Draw an endpoint
+   * Draw an endpoint.
    *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowData} arrowData
-   * @static
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
    */
-  static draw(ctx, arrowData) {
-    var type;
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): void {
+    let type;
     if (arrowData.type) {
       type = arrowData.type.toLowerCase();
     }
@@ -441,5 +458,3 @@ class EndPoints {
     }
   }
 }
-
-export default EndPoints;

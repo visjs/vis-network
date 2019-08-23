@@ -1,4 +1,14 @@
-import BezierEdgeBase from "./util/BezierEdgeBase";
+import { BezierEdgeBase } from "./util/bezier-edge-base";
+import {
+  EdgeFormattingValues,
+  Label,
+  EdgeOptions,
+  Point,
+  PointT,
+  SelectiveRequired,
+  VBody,
+  VNode
+} from "./util/types";
 
 /**
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
@@ -7,26 +17,30 @@ import BezierEdgeBase from "./util/BezierEdgeBase";
  *
  * @extends BezierEdgeBase
  */
-class BezierEdgeDynamic extends BezierEdgeBase {
+export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
+  public via: VNode = this.via; // constructor → super → super → setOptions → setupSupportNode
+  private readonly _boundFunction: () => void;
+
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
-  constructor(options, body, labelModule) {
+  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
     //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
     super(options, body, labelModule); // --> this calls the setOptions below
-    this._boundFunction = () => {
+    this._boundFunction = (): void => {
       this.positionBezierNode();
     };
     this.body.emitter.on("_repositionBezierNodes", this._boundFunction);
   }
 
-  /**
-   *
-   * @param {Object} options
-   */
-  setOptions(options) {
+  /** @inheritdoc */
+  public setOptions(options: EdgeOptions): void {
+    super.setOptions(options);
+
     // check if the physics has changed.
     let physicsChange = false;
     if (this.options.physics !== options.physics) {
@@ -50,10 +64,8 @@ class BezierEdgeDynamic extends BezierEdgeBase {
     }
   }
 
-  /**
-   * Connects an edge to node(s)
-   */
-  connect() {
+  /** @inheritdoc */
+  public connect(): void {
     this.from = this.body.nodes[this.options.from];
     this.to = this.body.nodes[this.options.to];
     if (
@@ -72,11 +84,8 @@ class BezierEdgeDynamic extends BezierEdgeBase {
     }
   }
 
-  /**
-   * remove the support nodes
-   * @returns {boolean}
-   */
-  cleanup() {
+  /** @inheritdoc */
+  public cleanup(): boolean {
     this.body.emitter.off("_repositionBezierNodes", this._boundFunction);
     if (this.via !== undefined) {
       delete this.body.nodes[this.via.id];
@@ -87,16 +96,19 @@ class BezierEdgeDynamic extends BezierEdgeBase {
   }
 
   /**
-   * Bezier curves require an anchor point to calculate the smooth flow. These points are nodes. These nodes are invisible but
-   * are used for the force calculation.
+   * Create and add a support node if not already present.
+   *
+   * @remarks
+   * Bezier curves require an anchor point to calculate the smooth flow.
+   * These points are nodes.
+   * These nodes are invisible but are used for the force calculation.
    *
    * The changed data is not called, if needed, it is returned by the main edge constructor.
-   * @private
    */
-  setupSupportNode() {
+  public setupSupportNode(): void {
     if (this.via === undefined) {
-      var nodeId = "edgeId:" + this.id;
-      var node = this.body.functions.createNode({
+      const nodeId = "edgeId:" + this.id;
+      const node = this.body.functions.createNode({
         id: nodeId,
         shape: "circle",
         physics: true,
@@ -110,9 +122,9 @@ class BezierEdgeDynamic extends BezierEdgeBase {
   }
 
   /**
-   * Positions bezier node
+   * Position bezier node.
    */
-  positionBezierNode() {
+  public positionBezierNode(): void {
     if (
       this.via !== undefined &&
       this.from !== undefined &&
@@ -126,81 +138,74 @@ class BezierEdgeDynamic extends BezierEdgeBase {
     }
   }
 
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {Node} viaNode
-   * @private
-   */
-  _line(ctx, values, viaNode) {
+  /** @inheritdoc */
+  protected _line(
+    ctx: CanvasRenderingContext2D,
+    values: SelectiveRequired<
+      EdgeFormattingValues,
+      | "backgroundColor"
+      | "backgroundSize"
+      | "shadowColor"
+      | "shadowSize"
+      | "shadowX"
+      | "shadowY"
+    >,
+    viaNode: VNode
+  ): void {
     this._bezierCurve(ctx, values, viaNode);
   }
 
-  /**
-   *
-   * @returns {Node|undefined|*|{index, line, column}}
-   */
-  getViaNode() {
+  /** @inheritdoc */
+  protected _getViaCoordinates(): Point {
     return this.via;
   }
 
-  /**
-   * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-   *
-   * @param {number} percentage
-   * @param {Node} viaNode
-   * @returns {{x: number, y: number}}
-   * @private
-   */
-  getPoint(percentage, viaNode = this.via) {
-    let t = percentage;
-    let x, y;
-    if (this.from === this.to) {
-      let [cx, cy, cr] = this._getCircleData(this.from);
-      let a = 2 * Math.PI * (1 - t);
-      x = cx + cr * Math.sin(a);
-      y = cy + cr - cr * (1 - Math.cos(a));
-    } else {
-      x =
-        Math.pow(1 - t, 2) * this.fromPoint.x +
-        2 * t * (1 - t) * viaNode.x +
-        Math.pow(t, 2) * this.toPoint.x;
-      y =
-        Math.pow(1 - t, 2) * this.fromPoint.y +
-        2 * t * (1 - t) * viaNode.y +
-        Math.pow(t, 2) * this.toPoint.y;
-    }
-
-    return { x: x, y: y };
+  /** @inheritdoc */
+  public getViaNode(): Point {
+    return this.via;
   }
 
-  /**
-   *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @returns {*}
-   * @private
-   */
-  _findBorderPosition(nearNode, ctx) {
+  /** @inheritdoc */
+  public getPoint(position: number, viaNode: Point = this.via): Point {
+    if (this.from === this.to) {
+      const [cx, cy, cr] = this._getCircleData();
+      const a = 2 * Math.PI * (1 - position);
+      return {
+        x: cx + cr * Math.sin(a),
+        y: cy + cr - cr * (1 - Math.cos(a))
+      };
+    } else {
+      return {
+        x:
+          Math.pow(1 - position, 2) * this.fromPoint.x +
+          2 * position * (1 - position) * viaNode.x +
+          Math.pow(position, 2) * this.toPoint.x,
+        y:
+          Math.pow(1 - position, 2) * this.fromPoint.y +
+          2 * position * (1 - position) * viaNode.y +
+          Math.pow(position, 2) * this.toPoint.y
+      };
+    }
+  }
+
+  /** @inheritdoc */
+  protected _findBorderPosition(
+    nearNode: VNode,
+    ctx: CanvasRenderingContext2D
+  ): PointT {
     return this._findBorderPositionBezier(nearNode, ctx, this.via);
   }
 
-  /**
-   *
-   * @param {number} x1
-   * @param {number} y1
-   * @param {number} x2
-   * @param {number} y2
-   * @param {number} x3
-   * @param {number} y3
-   * @returns {number}
-   * @private
-   */
-  _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+  /** @inheritdoc */
+  protected _getDistanceToEdge(
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
+    x3: number,
+    y3: number
+  ): number {
     // x3,y3 is the point
     return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, this.via);
   }
 }
-
-export default BezierEdgeDynamic;
