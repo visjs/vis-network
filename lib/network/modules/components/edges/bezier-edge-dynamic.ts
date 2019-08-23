@@ -1,4 +1,4 @@
-import BezierEdgeBase from './util/BezierEdgeBase'
+import BezierEdgeBase from "./util/BezierEdgeBase";
 
 /**
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
@@ -16,7 +16,9 @@ class BezierEdgeDynamic extends BezierEdgeBase {
   constructor(options, body, labelModule) {
     //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
     super(options, body, labelModule); // --> this calls the setOptions below
-    this._boundFunction = () => {this.positionBezierNode();};
+    this._boundFunction = () => {
+      this.positionBezierNode();
+    };
     this.body.emitter.on("_repositionBezierNodes", this._boundFunction);
   }
 
@@ -43,7 +45,7 @@ class BezierEdgeDynamic extends BezierEdgeBase {
 
     // when we change the physics state of the edge, we reposition the support node.
     if (physicsChange === true) {
-      this.via.setOptions({physics: this.options.physics});
+      this.via.setOptions({ physics: this.options.physics });
       this.positionBezierNode();
     }
   }
@@ -54,16 +56,18 @@ class BezierEdgeDynamic extends BezierEdgeBase {
   connect() {
     this.from = this.body.nodes[this.options.from];
     this.to = this.body.nodes[this.options.to];
-    if (this.from === undefined || this.to === undefined || this.options.physics === false) {
-      this.via.setOptions({physics:false})
-    }
-    else {
+    if (
+      this.from === undefined ||
+      this.to === undefined ||
+      this.options.physics === false
+    ) {
+      this.via.setOptions({ physics: false });
+    } else {
       // fix weird behaviour where a self referencing node has physics enabled
       if (this.from.id === this.to.id) {
-        this.via.setOptions({physics: false})
-      }
-      else {
-        this.via.setOptions({physics: true})
+        this.via.setOptions({ physics: false });
+      } else {
+        this.via.setOptions({ physics: true });
       }
     }
   }
@@ -94,9 +98,9 @@ class BezierEdgeDynamic extends BezierEdgeBase {
       var nodeId = "edgeId:" + this.id;
       var node = this.body.functions.createNode({
         id: nodeId,
-        shape: 'circle',
-        physics:true,
-        hidden:true
+        shape: "circle",
+        physics: true,
+        hidden: true
       });
       this.body.nodes[nodeId] = node;
       this.via = node;
@@ -109,11 +113,14 @@ class BezierEdgeDynamic extends BezierEdgeBase {
    * Positions bezier node
    */
   positionBezierNode() {
-    if (this.via !== undefined && this.from !== undefined && this.to !== undefined) {
+    if (
+      this.via !== undefined &&
+      this.from !== undefined &&
+      this.to !== undefined
+    ) {
       this.via.x = 0.5 * (this.from.x + this.to.x);
       this.via.y = 0.5 * (this.from.y + this.to.y);
-    }
-    else if (this.via !== undefined) {
+    } else if (this.via !== undefined) {
       this.via.x = 0;
       this.via.y = 0;
     }
@@ -138,7 +145,6 @@ class BezierEdgeDynamic extends BezierEdgeBase {
     return this.via;
   }
 
-
   /**
    * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
    *
@@ -150,17 +156,23 @@ class BezierEdgeDynamic extends BezierEdgeBase {
   getPoint(percentage, viaNode = this.via) {
     let t = percentage;
     let x, y;
-    if (this.from === this.to){
-      let [cx,cy,cr]  = this._getCircleData(this.from);
+    if (this.from === this.to) {
+      let [cx, cy, cr] = this._getCircleData(this.from);
       let a = 2 * Math.PI * (1 - t);
       x = cx + cr * Math.sin(a);
       y = cy + cr - cr * (1 - Math.cos(a));
     } else {
-      x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
-      y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
+      x =
+        Math.pow(1 - t, 2) * this.fromPoint.x +
+        2 * t * (1 - t) * viaNode.x +
+        Math.pow(t, 2) * this.toPoint.x;
+      y =
+        Math.pow(1 - t, 2) * this.fromPoint.y +
+        2 * t * (1 - t) * viaNode.y +
+        Math.pow(t, 2) * this.toPoint.y;
     }
 
-    return {x: x, y: y};
+    return { x: x, y: y };
   }
 
   /**
@@ -185,10 +197,10 @@ class BezierEdgeDynamic extends BezierEdgeBase {
    * @returns {number}
    * @private
    */
-  _getDistanceToEdge(x1, y1, x2, y2, x3, y3) { // x3,y3 is the point
+  _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+    // x3,y3 is the point
     return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, this.via);
   }
 }
-
 
 export default BezierEdgeDynamic;

@@ -1,4 +1,4 @@
-import BezierEdgeBase from './BezierEdgeBase'
+import BezierEdgeBase from "./BezierEdgeBase";
 
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
@@ -32,18 +32,19 @@ class CubicBezierEdgeBase extends BezierEdgeBase {
    * @returns {number}
    * @private
    */
-  _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2) { // x3,y3 is the point
+  _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2) {
+    // x3,y3 is the point
     let minDistance = 1e9;
     let distance;
     let i, t, x, y;
     let lastX = x1;
     let lastY = y1;
-    let vec = [0,0,0,0]
+    let vec = [0, 0, 0, 0];
     for (i = 1; i < 10; i++) {
       t = 0.1 * i;
       vec[0] = Math.pow(1 - t, 3);
       vec[1] = 3 * t * Math.pow(1 - t, 2);
-      vec[2] = 3 * Math.pow(t,2) * (1 - t);
+      vec[2] = 3 * Math.pow(t, 2) * (1 - t);
       vec[3] = Math.pow(t, 3);
       x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
       y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;

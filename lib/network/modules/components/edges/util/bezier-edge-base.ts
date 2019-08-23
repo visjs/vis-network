@@ -1,4 +1,4 @@
-import EdgeBase from './EdgeBase'
+import EdgeBase from "./EdgeBase";
 
 /**
  * The Base Class for all Bezier edges. Bezier curves are used to model smooth
@@ -25,7 +25,11 @@ class BezierEdgeBase extends EdgeBase {
    * @returns {*}
    * @private
    */
-  _findBorderPositionBezier(nearNode, ctx, viaNode = this._getViaCoordinates()) {
+  _findBorderPositionBezier(
+    nearNode,
+    ctx,
+    viaNode = this._getViaCoordinates()
+  ) {
     var maxIterations = 10;
     var iteration = 0;
     var low = 0;
@@ -43,26 +47,25 @@ class BezierEdgeBase extends EdgeBase {
       var middle = (low + high) * 0.5;
 
       pos = this.getPoint(middle, viaNode);
-      angle = Math.atan2((node.y - pos.y), (node.x - pos.x));
+      angle = Math.atan2(node.y - pos.y, node.x - pos.x);
       distanceToBorder = node.distanceToBorder(ctx, angle);
-      distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+      distanceToPoint = Math.sqrt(
+        Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2)
+      );
       difference = distanceToBorder - distanceToPoint;
       if (Math.abs(difference) < threshold) {
         break; // found
-      }
-      else if (difference < 0) { // distance to nodes is larger than distance to border --> t needs to be bigger if we're looking at the to node.
+      } else if (difference < 0) {
+        // distance to nodes is larger than distance to border --> t needs to be bigger if we're looking at the to node.
         if (from === false) {
           low = middle;
-        }
-        else {
+        } else {
           high = middle;
         }
-      }
-      else {
+      } else {
         if (from === false) {
           high = middle;
-        }
-        else {
+        } else {
           low = middle;
         }
       }
@@ -73,8 +76,6 @@ class BezierEdgeBase extends EdgeBase {
 
     return pos;
   }
-
-
 
   /**
    * Calculate the distance between a point (x3,y3) and a line segment from
@@ -90,7 +91,8 @@ class BezierEdgeBase extends EdgeBase {
    * @returns {number}
    * @private
    */
-  _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via) { // x3,y3 is the point
+  _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via) {
+    // x3,y3 is the point
     let minDistance = 1e9;
     let distance;
     let i, t, x, y;
@@ -98,8 +100,10 @@ class BezierEdgeBase extends EdgeBase {
     let lastY = y1;
     for (i = 1; i < 10; i++) {
       t = 0.1 * i;
-      x = Math.pow(1 - t, 2) * x1 + (2 * t * (1 - t)) * via.x + Math.pow(t, 2) * x2;
-      y = Math.pow(1 - t, 2) * y1 + (2 * t * (1 - t)) * via.y + Math.pow(t, 2) * y2;
+      x =
+        Math.pow(1 - t, 2) * x1 + 2 * t * (1 - t) * via.x + Math.pow(t, 2) * x2;
+      y =
+        Math.pow(1 - t, 2) * y1 + 2 * t * (1 - t) * via.y + Math.pow(t, 2) * y2;
       if (i > 0) {
         distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
         minDistance = distance < minDistance ? distance : minDistance;
@@ -110,7 +114,6 @@ class BezierEdgeBase extends EdgeBase {
 
     return minDistance;
   }
-
 
   /**
    * Draw a bezier curve between two nodes
@@ -126,16 +129,28 @@ class BezierEdgeBase extends EdgeBase {
    * @protected
    */
   _bezierCurve(ctx, values, viaNode1, viaNode2) {
-    var hasNode1 = (viaNode1 !== undefined && viaNode1.x !== undefined);
-    var hasNode2 = (viaNode2 !== undefined && viaNode2.x !== undefined);
+    var hasNode1 = viaNode1 !== undefined && viaNode1.x !== undefined;
+    var hasNode2 = viaNode2 !== undefined && viaNode2.x !== undefined;
 
     ctx.beginPath();
     ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
 
     if (hasNode1 && hasNode2) {
-      ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
+      ctx.bezierCurveTo(
+        viaNode1.x,
+        viaNode1.y,
+        viaNode2.x,
+        viaNode2.y,
+        this.toPoint.x,
+        this.toPoint.y
+      );
     } else if (hasNode1) {
-      ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+      ctx.quadraticCurveTo(
+        viaNode1.x,
+        viaNode1.y,
+        this.toPoint.x,
+        this.toPoint.y
+      );
     } else {
       // fallback to normal straight edge
       ctx.lineTo(this.toPoint.x, this.toPoint.y);

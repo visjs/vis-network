@@ -1,6 +1,5 @@
-import util from 'vis-util';
-import EndPoints from './EndPoints';
-
+import util from "vis-util";
+import EndPoints from "./EndPoints";
 
 /**
  * The Base Class for all edges.
@@ -71,12 +70,10 @@ class EdgeBase {
 
     if (values.dashes !== false) {
       this._drawDashedLine(ctx, values, viaNode);
-    }
-    else {
+    } else {
       this._drawLine(ctx, values, viaNode);
     }
   }
-
 
   /**
    *
@@ -91,9 +88,8 @@ class EdgeBase {
     if (this.from != this.to) {
       // draw line
       this._line(ctx, values, viaNode, fromPoint, toPoint);
-    }
-    else {
-      let [x,y,radius] = this._getCircleData(ctx);
+    } else {
+      let [x, y, radius] = this._getCircleData(ctx);
       this._circle(ctx, values, x, y, radius);
     }
   }
@@ -107,9 +103,10 @@ class EdgeBase {
    * @param {{x: number, y: number}} [toPoint]    TODO: Remove in next major release
    * @private
    */
-  _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {  // eslint-disable-line no-unused-vars
-    ctx.lineCap = 'round';
-    let pattern = [5,5];
+  _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {
+    // eslint-disable-line no-unused-vars
+    ctx.lineCap = "round";
+    let pattern = [5, 5];
     if (Array.isArray(values.dashes) === true) {
       pattern = values.dashes;
     }
@@ -126,9 +123,8 @@ class EdgeBase {
       if (this.from != this.to) {
         // draw line
         this._line(ctx, values, viaNode);
-      }
-      else {
-        let [x,y,radius] = this._getCircleData(ctx);
+      } else {
+        let [x, y, radius] = this._getCircleData(ctx);
         this._circle(ctx, values, x, y, radius);
       }
 
@@ -136,14 +132,13 @@ class EdgeBase {
       ctx.setLineDash([0]);
       ctx.lineDashOffset = 0;
       ctx.restore();
-    }
-    else { // unsupporting smooth lines
+    } else {
+      // unsupporting smooth lines
       if (this.from != this.to) {
         // draw line
         ctx.dashedLine(this.from.x, this.from.y, this.to.x, this.to.y, pattern);
-      }
-      else {
-        let [x,y,radius] = this._getCircleData(ctx);
+      } else {
+        let [x, y, radius] = this._getCircleData(ctx);
         this._circle(ctx, values, x, y, radius);
       }
       // draw shadow if enabled
@@ -156,7 +151,6 @@ class EdgeBase {
     }
   }
 
-
   /**
    *
    * @param {Node} nearNode
@@ -167,8 +161,7 @@ class EdgeBase {
   findBorderPosition(nearNode, ctx, options) {
     if (this.from != this.to) {
       return this._findBorderPosition(nearNode, ctx, options);
-    }
-    else {
+    } else {
       return this._findBorderPositionCircle(nearNode, ctx, options);
     }
   }
@@ -184,14 +177,25 @@ class EdgeBase {
     if (this.from != this.to) {
       from = this._findBorderPosition(this.from, ctx);
       to = this._findBorderPosition(this.to, ctx);
-    }
-    else {
-      let [x,y] = this._getCircleData(ctx).slice(0, 2);
+    } else {
+      let [x, y] = this._getCircleData(ctx).slice(0, 2);
 
-      from = this._findBorderPositionCircle(this.from, ctx, {x, y, low:0.25, high:0.6, direction:-1});
-      to = this._findBorderPositionCircle(this.from, ctx, {x, y, low:0.6, high:0.8, direction:1});
+      from = this._findBorderPositionCircle(this.from, ctx, {
+        x,
+        y,
+        low: 0.25,
+        high: 0.6,
+        direction: -1
+      });
+      to = this._findBorderPositionCircle(this.from, ctx, {
+        x,
+        y,
+        low: 0.6,
+        high: 0.8,
+        direction: 1
+      });
     }
-    return {from, to};
+    return { from, to };
   }
 
   /**
@@ -215,12 +219,11 @@ class EdgeBase {
     if (node.shape.width > node.shape.height) {
       x = node.x + node.shape.width * 0.5;
       y = node.y - radius;
-    }
-    else {
+    } else {
       x = node.x + radius;
       y = node.y - node.shape.height * 0.5;
     }
-    return [x,y,radius];
+    return [x, y, radius];
   }
 
   /**
@@ -237,7 +240,7 @@ class EdgeBase {
     return {
       x: x + radius * Math.cos(angle),
       y: y - radius * Math.sin(angle)
-    }
+    };
   }
 
   /**
@@ -266,31 +269,29 @@ class EdgeBase {
       middle = (low + high) * 0.5;
 
       pos = this._pointOnCircle(x, y, radius, middle);
-      angle = Math.atan2((node.y - pos.y), (node.x - pos.x));
+      angle = Math.atan2(node.y - pos.y, node.x - pos.x);
       distanceToBorder = node.distanceToBorder(ctx, angle);
-      distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+      distanceToPoint = Math.sqrt(
+        Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2)
+      );
       difference = distanceToBorder - distanceToPoint;
       if (Math.abs(difference) < threshold) {
         break; // found
-      }
-      else if (difference > 0) { // distance to nodes is larger than distance to border --> t needs to be bigger if we're looking at the to node.
+      } else if (difference > 0) {
+        // distance to nodes is larger than distance to border --> t needs to be bigger if we're looking at the to node.
         if (direction > 0) {
           low = middle;
-        }
-        else {
+        } else {
           high = middle;
         }
-      }
-      else {
+      } else {
         if (direction > 0) {
           high = middle;
-        }
-        else {
+        } else {
           low = middle;
         }
       }
       iteration++;
-
     }
     pos.t = middle;
 
@@ -308,12 +309,10 @@ class EdgeBase {
   getLineWidth(selected, hover) {
     if (selected === true) {
       return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
-    }
-    else {
+    } else {
       if (hover === true) {
         return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
-      }
-      else {
+      } else {
         return Math.max(this.options.width, 0.3 / this.body.view.scale);
       }
     }
@@ -327,23 +326,33 @@ class EdgeBase {
    * @param {boolean} hover - Unused
    * @returns {string}
    */
-  getColor(ctx, values, selected, hover) {  // eslint-disable-line no-unused-vars
+  getColor(ctx, values, selected, hover) {
+    // eslint-disable-line no-unused-vars
     if (values.inheritsColor !== false) {
       // when this is a loop edge, just use the 'from' method
-      if ((values.inheritsColor === 'both') && (this.from.id !== this.to.id)) {
-        let grd = ctx.createLinearGradient(this.from.x, this.from.y, this.to.x, this.to.y);
+      if (values.inheritsColor === "both" && this.from.id !== this.to.id) {
+        let grd = ctx.createLinearGradient(
+          this.from.x,
+          this.from.y,
+          this.to.x,
+          this.to.y
+        );
         let fromColor, toColor;
         fromColor = this.from.options.color.highlight.border;
         toColor = this.to.options.color.highlight.border;
 
-        if ((this.from.selected === false) && (this.to.selected === false)) {
-          fromColor = util.overrideOpacity(this.from.options.color.border, values.opacity);
-          toColor = util.overrideOpacity(this.to.options.color.border, values.opacity);
-        }
-        else if ((this.from.selected === true) && (this.to.selected === false)) {
+        if (this.from.selected === false && this.to.selected === false) {
+          fromColor = util.overrideOpacity(
+            this.from.options.color.border,
+            values.opacity
+          );
+          toColor = util.overrideOpacity(
+            this.to.options.color.border,
+            values.opacity
+          );
+        } else if (this.from.selected === true && this.to.selected === false) {
           toColor = this.to.options.color.border;
-        }
-        else if ((this.from.selected === false) && (this.to.selected === true)) {
+        } else if (this.from.selected === false && this.to.selected === true) {
           fromColor = this.from.options.color.border;
         }
         grd.addColorStop(0, fromColor);
@@ -354,9 +363,16 @@ class EdgeBase {
       }
 
       if (values.inheritsColor === "to") {
-        return util.overrideOpacity(this.to.options.color.border, values.opacity);
-      } else { // "from"
-        return util.overrideOpacity(this.from.options.color.border, values.opacity);
+        return util.overrideOpacity(
+          this.to.options.color.border,
+          values.opacity
+        );
+      } else {
+        // "from"
+        return util.overrideOpacity(
+          this.from.options.color.border,
+          values.opacity
+        );
       }
     } else {
       return util.overrideOpacity(values.color, values.opacity);
@@ -386,7 +402,6 @@ class EdgeBase {
     this.disableShadow(ctx, values);
   }
 
-
   /**
    * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
    * (x3,y3) is the point.
@@ -403,13 +418,13 @@ class EdgeBase {
    * @param {Array} values
    * @returns {number}
    */
-  getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {  // eslint-disable-line no-unused-vars
+  getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {
+    // eslint-disable-line no-unused-vars
     let returnValue = 0;
     if (this.from != this.to) {
-      returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via)
-    }
-    else {
-      let [x,y,radius] = this._getCircleData(undefined);
+      returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via);
+    } else {
+      let [x, y, radius] = this._getCircleData(undefined);
       let dx = x - x3;
       let dy = y - y3;
       returnValue = Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
@@ -417,7 +432,6 @@ class EdgeBase {
 
     return returnValue;
   }
-
 
   /**
    *
@@ -438,8 +452,7 @@ class EdgeBase {
 
     if (u > 1) {
       u = 1;
-    }
-    else if (u < 0) {
+    } else if (u < 0) {
       u = 0;
     }
 
@@ -456,7 +469,6 @@ class EdgeBase {
 
     return Math.sqrt(dx * dx + dy * dy);
   }
-
 
   /**
    * @param {CanvasRenderingContext2D} ctx
@@ -478,21 +490,19 @@ class EdgeBase {
     let type;
     let lineWidth = values.width;
 
-    if (position === 'from') {
+    if (position === "from") {
       node1 = this.from;
       node2 = this.to;
       guideOffset = 0.1;
       scaleFactor = values.fromArrowScale;
       type = values.fromArrowType;
-    }
-    else if (position === 'to') {
+    } else if (position === "to") {
       node1 = this.to;
       node2 = this.from;
       guideOffset = -0.1;
       scaleFactor = values.toArrowScale;
       type = values.toArrowType;
-    }
-    else {
+    } else {
       node1 = this.to;
       node2 = this.from;
       scaleFactor = values.middleArrowScale;
@@ -501,29 +511,47 @@ class EdgeBase {
 
     // if not connected to itself
     if (node1 != node2) {
-      if (position !== 'middle') {
+      if (position !== "middle") {
         // draw arrow head
         if (this.options.smooth.enabled === true) {
           arrowPoint = this.findBorderPosition(node1, ctx, { via: viaNode });
-          let guidePos = this.getPoint(Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)), viaNode);
-          angle = Math.atan2((arrowPoint.y - guidePos.y), (arrowPoint.x - guidePos.x));
+          let guidePos = this.getPoint(
+            Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)),
+            viaNode
+          );
+          angle = Math.atan2(
+            arrowPoint.y - guidePos.y,
+            arrowPoint.x - guidePos.x
+          );
         } else {
-          angle = Math.atan2((node1.y - node2.y), (node1.x - node2.x));
+          angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
           arrowPoint = this.findBorderPosition(node1, ctx);
         }
       } else {
-        angle = Math.atan2((node1.y - node2.y), (node1.x - node2.x));
+        angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
         arrowPoint = this.getPoint(0.5, viaNode); // this is 0.6 to account for the size of the arrow.
       }
     } else {
       // draw circle
-      let [x,y,radius] = this._getCircleData(ctx);
+      let [x, y, radius] = this._getCircleData(ctx);
 
-      if (position === 'from') {
-        arrowPoint = this.findBorderPosition(this.from, ctx, { x, y, low: 0.25, high: 0.6, direction: -1 });
+      if (position === "from") {
+        arrowPoint = this.findBorderPosition(this.from, ctx, {
+          x,
+          y,
+          low: 0.25,
+          high: 0.6,
+          direction: -1
+        });
         angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-      } else if (position === 'to') {
-        arrowPoint = this.findBorderPosition(this.from, ctx, { x, y, low: 0.6, high: 1.0, direction: 1 });
+      } else if (position === "to") {
+        arrowPoint = this.findBorderPosition(this.from, ctx, {
+          x,
+          y,
+          low: 0.6,
+          high: 1.0,
+          direction: 1
+        });
         angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
@@ -531,14 +559,20 @@ class EdgeBase {
       }
     }
 
-    if (position === 'middle' && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
+    if (position === "middle" && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
     let length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
     var xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
     var yi = arrowPoint.y - length * 0.9 * Math.sin(angle);
     let arrowCore = { x: xi, y: yi };
 
-    return { point: arrowPoint, core: arrowCore, angle: angle, length: length, type: type };
+    return {
+      point: arrowPoint,
+      core: arrowCore,
+      angle: angle,
+      length: length,
+      type: type
+    };
   }
 
   /**
@@ -564,7 +598,6 @@ class EdgeBase {
     this.disableShadow(ctx, values);
   }
 
-
   /**
    *
    * @param {CanvasRenderingContext2D} ctx
@@ -586,13 +619,13 @@ class EdgeBase {
    */
   disableShadow(ctx, values) {
     if (values.shadow === true) {
-      ctx.shadowColor = 'rgba(0,0,0,0)';
+      ctx.shadowColor = "rgba(0,0,0,0)";
       ctx.shadowBlur = 0;
       ctx.shadowOffsetX = 0;
       ctx.shadowOffsetY = 0;
     }
   }
-  
+
   /**
    *
    * @param {CanvasRenderingContext2D} ctx
@@ -600,7 +633,7 @@ class EdgeBase {
    */
   drawBackground(ctx, values) {
     if (values.background !== false) {
-      let attrs = ['strokeStyle', 'lineWidth', 'dashes'];
+      let attrs = ["strokeStyle", "lineWidth", "dashes"];
       let origCtxAttr = {};
       // save original line attrs
       attrs.forEach(function(attrname) {
@@ -634,17 +667,18 @@ class EdgeBase {
           pattern = dashes;
         }
         ctx.setLineDash(pattern);
+      } else {
+        console.warn(
+          "setLineDash is not supported in this browser. The dashed stroke cannot be used."
+        );
       }
-      else {
-        console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
-      }
-    }
-    else {
+    } else {
       if (ctx.setLineDash !== undefined) {
         ctx.setLineDash([]);
-      }
-      else {
-        console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
+      } else {
+        console.warn(
+          "setLineDash is not supported in this browser. The dashed stroke cannot be used."
+        );
       }
     }
   }

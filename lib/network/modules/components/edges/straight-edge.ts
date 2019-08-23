@@ -1,4 +1,4 @@
-import EdgeBase from './util/EdgeBase'
+import EdgeBase from "./util/EdgeBase";
 
 /**
  * A Straight Edge.
@@ -51,7 +51,7 @@ class StraightEdge extends EdgeBase {
     return {
       x: (1 - percentage) * this.fromPoint.x + percentage * this.toPoint.x,
       y: (1 - percentage) * this.fromPoint.y + percentage * this.toPoint.y
-    }
+    };
   }
 
   /**
@@ -69,9 +69,9 @@ class StraightEdge extends EdgeBase {
       node2 = this.to;
     }
 
-    let angle = Math.atan2((node1.y - node2.y), (node1.x - node2.x));
-    let dx = (node1.x - node2.x);
-    let dy = (node1.y - node2.y);
+    let angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
+    let dx = node1.x - node2.x;
+    let dy = node1.y - node2.y;
     let edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
     let toBorderDist = nearNode.distanceToBorder(ctx, angle);
     let toBorderPoint = (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
@@ -94,10 +94,10 @@ class StraightEdge extends EdgeBase {
    * @returns {number}
    * @private
    */
-  _getDistanceToEdge(x1, y1, x2, y2, x3, y3) { // x3,y3 is the point
+  _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+    // x3,y3 is the point
     return this._getDistanceToLine(x1, y1, x2, y2, x3, y3);
   }
-
 }
 
 export default StraightEdge;
