@@ -88,7 +88,7 @@
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-css-porter": "^1.0.2",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-typescript2": "^0.22.1",
+    "rollup-plugin-typescript2": "^0.23.0",
     "sinon": "^7.3.2",
     "test-console": "^1.1.0",
     "typescript": "^3.5.3",
