@@ -3,7 +3,7 @@ import { assert, spy, stub } from 'sinon'
 import { deepFreeze } from '../helpers'
 import { body, mockedBody } from './helpers'
 
-import BezierEdgeDynamic from '../../lib/network/modules/components/edges/BezierEdgeDynamic'
+import { BezierEdgeDynamic } from '../../lib/network/modules/components/edges'
 
 describe('BezierEdgeDynamic', function(): void {
   describe('constructor', function(): void {
