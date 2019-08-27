@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { deepFreeze } from '../helpers'
 import { body } from './helpers'
 
-import EdgeBase from '../../lib/network/modules/components/edges/util/EdgeBase'
+import { EdgeBase } from '../../lib/network/modules/components/edges'
 
 describe('EdgeBase', function(): void {
   it('constructor', function(): void {
