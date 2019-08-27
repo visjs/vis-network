@@ -75,7 +75,6 @@ module.exports = {
           'error',
           { private: '^_', protected: '^_', public: '^[^_]' },
         ],
-        '@typescript-eslint/member-ordering': 'error',
         '@typescript-eslint/no-parameter-properties': 'off',
         '@typescript-eslint/no-useless-constructor': 'error',
         '@typescript-eslint/prefer-readonly': 'error',
@@ -158,7 +157,6 @@ module.exports = {
           "error",
           { private: "^_", protected: "^_", public: "^[^_]" }
         ],
-        "@typescript-eslint/member-ordering": "error",
         "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-useless-constructor": "error",
         "@typescript-eslint/prefer-readonly": "error",
