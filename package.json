@@ -6,7 +6,7 @@
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/visjs/vis-network.git"
+    "url": "https://github.com/visjs/vis-network.git"
   },
   "bugs": {
     "url": "https://github.com/visjs/vis-network/issues"
@@ -73,6 +73,7 @@
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "gh-pages": "^2.1.1",
     "jsdoc": "^3.6.3",
     "jsdom": "15.1.1",
     "jsdom-global": "^3.0.2",
