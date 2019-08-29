@@ -240,61 +240,44 @@ describe('LayoutEngine', function(): void {
           {
             name: '36 nodes, 19 levels',
             tree: generateTree([
-              { from: 11, to: 21 },
-              { from: 11, to: 42 },
               { from: 12, to: 22 },
               { from: 12, to: 43 },
-
-              { from: 21, to: 31 },
-              { from: 22, to: 31 },
-
-              { from: 31, to: 41 },
-
-              { from: 41, to: 52 },
-              { from: 42, to: 52 },
-              { from: 43, to: 52 },
-
-              { from: 51, to: 61 },
-              { from: 52, to: 62 },
-
-              { from: 61, to: 71 },
-              { from: 62, to: 72 },
-
-              { from: 71, to: 81 },
-              { from: 72, to: 82 },
-              { from: 73, to: 83 },
-
-              { from: 81, to: 91 },
-              { from: 82, to: 91 },
-              { from: 83, to: 91 },
-
-              { from: 91, to: 121 },
-              { from: 91, to: 101 },
-
-              { from: 101, to: 112 },
-
-              { from: 111, to: 122 },
-              { from: 112, to: 123 },
-
               { from: 121, to: 131 },
-              { from: 122, to: 131 },
-              { from: 123, to: 131 },
-
-              { from: 131, to: 141 },
-              { from: 132, to: 142 },
-
-              { from: 141, to: 151 },
-              { from: 142, to: 151 },
-
-              { from: 151, to: 161 },
-              { from: 152, to: 162 },
-
-              { from: 161, to: 171 },
-              { from: 162, to: 171 },
-
+              { from: 72, to: 82 },
               { from: 171, to: 181 },
-
+              { from: 81, to: 91 },
+              { from: 111, to: 122 },
+              { from: 22, to: 31 },
+              { from: 161, to: 171 },
+              { from: 91, to: 121 },
+              { from: 141, to: 151 },
+              { from: 91, to: 101 },
+              { from: 83, to: 91 },
+              { from: 73, to: 83 },
+              { from: 62, to: 72 },
+              { from: 11, to: 42 },
+              { from: 162, to: 171 },
+              { from: 51, to: 61 },
+              { from: 152, to: 162 },
+              { from: 131, to: 141 },
+              { from: 151, to: 161 },
+              { from: 31, to: 41 },
+              { from: 122, to: 131 },
+              { from: 43, to: 52 },
+              { from: 41, to: 52 },
+              { from: 11, to: 21 },
+              { from: 112, to: 123 },
+              { from: 123, to: 131 },
+              { from: 71, to: 81 },
+              { from: 82, to: 91 },
+              { from: 21, to: 31 },
+              { from: 101, to: 112 },
+              { from: 142, to: 151 },
+              { from: 52, to: 62 },
+              { from: 42, to: 52 },
               { from: 181, to: 191 },
+              { from: 132, to: 142 },
+              { from: 61, to: 71 },
             ]),
             levels: {
               11: 0,
@@ -369,18 +352,18 @@ describe('LayoutEngine', function(): void {
           {
             name: '3 nodes, cyclic, bidirectional edge',
             tree: generateTree([
-              { from: 8, to: 4 },
-              { from: 6, to: 8 },
               { from: 8, to: 6 },
+              { from: 6, to: 8 },
+              { from: 8, to: 4 },
             ]),
             levelKeys: [4, 6, 8],
           },
           {
             name: '3 nodes, cyclic, no bidirectional edges',
             tree: generateTree([
+              { from: 3, to: 1 },
               { from: 1, to: 2 },
               { from: 2, to: 3 },
-              { from: 3, to: 1 },
             ]),
             levelKeys: [1, 2, 3],
           },
