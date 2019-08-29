@@ -1,14 +1,14 @@
-type Levels = Record<string | number, number>
+type Levels = Record<string | number, number>;
 interface Edge {
-  connected: boolean
-  from: Node
-  fromId: string | number
-  to: Node
-  toId: string | number
+  connected: boolean;
+  from: Node;
+  fromId: string | number;
+  to: Node;
+  toId: string | number;
 }
 interface Node {
-  id: string | number
-  edges: Edge[]
+  id: string | number;
+  edges: Edge[];
 }
 
 /**
@@ -20,29 +20,29 @@ interface Node {
  * @returns Populated node levels.
  */
 function fillLevelsByDirectionCyclic(nodes: Node[], levels: Levels): Levels {
-  const edges = new Set<Edge>()
+  const edges = new Set<Edge>();
   nodes.forEach((node): void => {
     node.edges.forEach((edge): void => {
       if (edge.connected) {
-        edges.add(edge)
+        edges.add(edge);
       }
-    })
-  })
+    });
+  });
 
   edges.forEach((edge): void => {
-    const fromId = edge.from.id
-    const toId = edge.to.id
+    const fromId = edge.from.id;
+    const toId = edge.to.id;
 
     if (levels[fromId] == null) {
-      levels[fromId] = 0
+      levels[fromId] = 0;
     }
 
     if (levels[toId] == null || levels[fromId] >= levels[toId]) {
-      levels[toId] = levels[fromId] + 1
+      levels[toId] = levels[fromId] + 1;
     }
-  })
+  });
 
-  return levels
+  return levels;
 }
 
 /**
@@ -57,44 +57,44 @@ export function fillLevelsByDirection(
   nodes: Node[],
   levels: Levels = Object.create(null)
 ): Levels {
-  const limit = nodes.length
+  const limit = nodes.length;
 
   for (const leaf of nodes) {
     if (!leaf.edges.every((edge): boolean => edge.to === leaf)) {
       // Not a leaf.
-      continue
+      continue;
     }
 
-    levels[leaf.id] = 0
-    const stack: Node[] = [leaf]
+    levels[leaf.id] = 0;
+    const stack: Node[] = [leaf];
 
-    let done = 0
-    let node: Node | undefined
+    let done = 0;
+    let node: Node | undefined;
     while ((node = stack.pop())) {
-      const edges = node.edges
-      const newLevel = levels[node.id] - 1
+      const edges = node.edges;
+      const newLevel = levels[node.id] - 1;
 
       for (const edge of edges) {
         if (!edge.connected || edge.to !== node || edge.to === edge.from) {
-          continue
+          continue;
         }
 
-        const fromId = edge.fromId
-        const oldLevel = levels[fromId]
+        const fromId = edge.fromId;
+        const oldLevel = levels[fromId];
         if (oldLevel == null || oldLevel > newLevel) {
-          levels[fromId] = newLevel
-          stack.push(edge.from)
+          levels[fromId] = newLevel;
+          stack.push(edge.from);
         }
       }
 
       if (done > limit) {
         // This would run forever on a cyclic graph.
-        return fillLevelsByDirectionCyclic(nodes, levels)
+        return fillLevelsByDirectionCyclic(nodes, levels);
       } else {
-        ++done
+        ++done;
       }
     }
   }
 
-  return levels
+  return levels;
 }

@@ -1,31 +1,31 @@
-import { expect } from 'chai'
-import { spy } from 'sinon'
+import { expect } from "chai";
+import { spy } from "sinon";
 
-import LayoutEngine from '../lib/network/modules/LayoutEngine'
+import LayoutEngine from "../lib/network/modules/LayoutEngine";
 
-describe('LayoutEngine', function(): void {
-  describe('setupHierarchicalLayout', function(): void {
+describe("LayoutEngine", function(): void {
+  describe("setupHierarchicalLayout", function(): void {
     const generateTree = (
       edgeConnections: { from: number; to: number }[],
       nodeIds: number[] = []
     ): any => {
-      const nodes: Record<number, any> = {}
-      const edges: Record<number, any> = {}
+      const nodes: Record<number, any> = {};
+      const edges: Record<number, any> = {};
 
-      const uniqueNodeIds = new Set<number>(nodeIds)
+      const uniqueNodeIds = new Set<number>(nodeIds);
       edgeConnections.forEach(({ from, to }): void => {
-        uniqueNodeIds.add(from).add(to)
-      })
+        uniqueNodeIds.add(from).add(to);
+      });
 
       uniqueNodeIds.forEach((id): void => {
         nodes[id] = {
           id,
           edges: [],
-          options: { fixed: {} },
-        }
-      })
+          options: { fixed: {} }
+        };
+      });
       edgeConnections.forEach(({ from, to }): void => {
-        const id = from * 10000 + to
+        const id = from * 10000 + to;
 
         edges[id] = {
           id,
@@ -33,40 +33,40 @@ describe('LayoutEngine', function(): void {
           from: nodes[from],
           toId: to,
           to: nodes[to],
-          connected: true,
-        }
+          connected: true
+        };
 
-        nodes[from].edges.push(edges[id])
-        nodes[to].edges.push(edges[id])
-      })
+        nodes[from].edges.push(edges[id]);
+        nodes[to].edges.push(edges[id]);
+      });
 
       return {
         edgeIndices: Object.values(edges).map(({ id }): number => id),
         edges,
         nodeIndices: Object.values(nodes).map(({ id }): number => id),
-        nodes,
-      }
-    }
+        nodes
+      };
+    };
 
-    describe('directed', function(): void {
-      describe('valid', function(): void {
-        ;[
+    describe("directed", function(): void {
+      describe("valid", function(): void {
+        [
           {
-            name: '3 nodes, 2 levels',
+            name: "3 nodes, 2 levels",
             tree: generateTree([{ from: 8, to: 4 }, { from: 8, to: 6 }]),
             levels: {
               4: 1,
               6: 1,
-              8: 0,
-            },
+              8: 0
+            }
           },
           {
-            name: '6 nodes, 2 levels, 2 disconnected trees',
+            name: "6 nodes, 2 levels, 2 disconnected trees",
             tree: generateTree([
               { from: 28, to: 26 },
               { from: 18, to: 14 },
               { from: 18, to: 16 },
-              { from: 28, to: 24 },
+              { from: 28, to: 24 }
             ]),
             levels: {
               14: 1,
@@ -74,11 +74,11 @@ describe('LayoutEngine', function(): void {
               18: 0,
               24: 1,
               26: 1,
-              28: 0,
-            },
+              28: 0
+            }
           },
           {
-            name: '6 nodes, 4 levels, 2 roots',
+            name: "6 nodes, 4 levels, 2 roots",
             tree: generateTree([
               { from: 6, to: 0 },
               { from: 9, to: 5 },
@@ -86,7 +86,7 @@ describe('LayoutEngine', function(): void {
               { from: 4, to: 0 },
               { from: 9, to: 6 },
               { from: 4, to: 6 },
-              { from: 7, to: 5 },
+              { from: 7, to: 5 }
             ]),
             levels: {
               0: 3,
@@ -94,18 +94,18 @@ describe('LayoutEngine', function(): void {
               5: 3,
               6: 2,
               7: 0,
-              9: 1,
-            },
+              9: 1
+            }
           },
           {
-            name: '7 nodes, 5 levels',
+            name: "7 nodes, 5 levels",
             tree: generateTree([
               { from: 5, to: 6 },
               { from: 6, to: 7 },
               { from: 2, to: 4 },
               { from: 3, to: 5 },
               { from: 1, to: 3 },
-              { from: 4, to: 5 },
+              { from: 4, to: 5 }
             ]),
             levels: {
               1: 0,
@@ -114,11 +114,11 @@ describe('LayoutEngine', function(): void {
               4: 1,
               5: 2,
               6: 3,
-              7: 4,
-            },
+              7: 4
+            }
           },
           {
-            name: '7 nodes, 5 levels, with circle edges',
+            name: "7 nodes, 5 levels, with circle edges",
             tree: generateTree([
               { from: 4, to: 5 },
               { from: 5, to: 6 },
@@ -131,7 +131,7 @@ describe('LayoutEngine', function(): void {
               { from: 1, to: 3 },
               { from: 6, to: 6 },
               { from: 2, to: 2 },
-              { from: 2, to: 4 },
+              { from: 2, to: 4 }
             ]),
             levels: {
               1: 0,
@@ -140,11 +140,11 @@ describe('LayoutEngine', function(): void {
               4: 1,
               5: 2,
               6: 3,
-              7: 4,
-            },
+              7: 4
+            }
           },
           {
-            name: '10 nodes, 4 levels, edges skipping levels',
+            name: "10 nodes, 4 levels, edges skipping levels",
             tree: generateTree([
               { from: 9, to: 5 },
               { from: 2, to: 0 },
@@ -154,7 +154,7 @@ describe('LayoutEngine', function(): void {
               { from: 8, to: 5 },
               { from: 1, to: 0 },
               { from: 5, to: 2 },
-              { from: 4, to: 2 },
+              { from: 4, to: 2 }
             ]),
             levels: {
               0: 3,
@@ -166,11 +166,11 @@ describe('LayoutEngine', function(): void {
               6: 1,
               7: 0,
               8: 0,
-              9: 0,
-            },
+              9: 0
+            }
           },
           {
-            name: '20 nodes, 5 levels, balanced binary tree',
+            name: "20 nodes, 5 levels, balanced binary tree",
             tree: generateTree([
               { from: 7, to: 14 },
               { from: 10, to: 20 },
@@ -201,7 +201,7 @@ describe('LayoutEngine', function(): void {
               { from: 1, to: 3 },
               { from: 9, to: 19 },
               { from: 8, to: 16 },
-              { from: 13, to: 27 },
+              { from: 13, to: 27 }
             ]),
             levels: {
               1: 0,
@@ -234,11 +234,11 @@ describe('LayoutEngine', function(): void {
               28: 4,
               29: 4,
               30: 4,
-              31: 4,
-            },
+              31: 4
+            }
           },
           {
-            name: '36 nodes, 19 levels',
+            name: "36 nodes, 19 levels",
             tree: generateTree([
               { from: 12, to: 22 },
               { from: 12, to: 43 },
@@ -277,7 +277,7 @@ describe('LayoutEngine', function(): void {
               { from: 42, to: 52 },
               { from: 181, to: 191 },
               { from: 132, to: 142 },
-              { from: 61, to: 71 },
+              { from: 61, to: 71 }
             ]),
             levels: {
               11: 0,
@@ -315,9 +315,9 @@ describe('LayoutEngine', function(): void {
               162: 15,
               171: 16,
               181: 17,
-              191: 18,
-            },
-          },
+              191: 18
+            }
+          }
         ].forEach(({ name, tree, levels }): void => {
           it(name, function(): void {
             const body = Object.freeze({
@@ -325,48 +325,48 @@ describe('LayoutEngine', function(): void {
 
               emitter: Object.freeze({
                 on: spy(),
-                emit: spy(),
-              }),
-            })
+                emit: spy()
+              })
+            });
 
-            const le = new LayoutEngine(body)
+            const le = new LayoutEngine(body);
             le.setOptions(
               {
                 hierarchical: {
-                  direction: 'UD',
-                  sortMethod: 'directed',
-                },
+                  direction: "UD",
+                  sortMethod: "directed"
+                }
               },
               {}
-            )
+            );
 
-            le.setupHierarchicalLayout()
+            le.setupHierarchicalLayout();
 
-            expect(le.hierarchical.levels).to.deep.equal(levels)
-          })
-        })
-      })
+            expect(le.hierarchical.levels).to.deep.equal(levels);
+          });
+        });
+      });
 
-      describe('cycles (shouldn’t timeout, OOM, etc.)', function(): void {
-        ;[
+      describe("cycles (shouldn’t timeout, OOM, etc.)", function(): void {
+        [
           {
-            name: '3 nodes, cyclic, bidirectional edge',
+            name: "3 nodes, cyclic, bidirectional edge",
             tree: generateTree([
               { from: 8, to: 6 },
               { from: 6, to: 8 },
-              { from: 8, to: 4 },
+              { from: 8, to: 4 }
             ]),
-            levelKeys: [4, 6, 8],
+            levelKeys: [4, 6, 8]
           },
           {
-            name: '3 nodes, cyclic, no bidirectional edges',
+            name: "3 nodes, cyclic, no bidirectional edges",
             tree: generateTree([
               { from: 3, to: 1 },
               { from: 1, to: 2 },
-              { from: 2, to: 3 },
+              { from: 2, to: 3 }
             ]),
-            levelKeys: [1, 2, 3],
-          },
+            levelKeys: [1, 2, 3]
+          }
         ].forEach(({ name, tree, levelKeys }): void => {
           it(name, function(): void {
             const body = Object.freeze({
@@ -374,27 +374,27 @@ describe('LayoutEngine', function(): void {
 
               emitter: Object.freeze({
                 on: spy(),
-                emit: spy(),
-              }),
-            })
+                emit: spy()
+              })
+            });
 
-            const le = new LayoutEngine(body)
+            const le = new LayoutEngine(body);
             le.setOptions(
               {
                 hierarchical: {
-                  direction: 'UD',
-                  sortMethod: 'directed',
-                },
+                  direction: "UD",
+                  sortMethod: "directed"
+                }
               },
               {}
-            )
+            );
 
-            le.setupHierarchicalLayout()
+            le.setupHierarchicalLayout();
 
-            expect(le.hierarchical.levels).to.have.keys(levelKeys)
-          })
-        })
-      })
-    })
-  })
-})
+            expect(le.hierarchical.levels).to.have.keys(levelKeys);
+          });
+        });
+      });
+    });
+  });
+});
