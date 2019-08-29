@@ -118,6 +118,32 @@ describe('LayoutEngine', function(): void {
             },
           },
           {
+            name: '7 nodes, 5 levels, with circle edges',
+            tree: generateTree([
+              { from: 4, to: 5 },
+              { from: 5, to: 6 },
+              { from: 4, to: 4 },
+              { from: 6, to: 7 },
+              { from: 3, to: 3 },
+              { from: 3, to: 3 },
+              { from: 3, to: 3 },
+              { from: 3, to: 5 },
+              { from: 1, to: 3 },
+              { from: 6, to: 6 },
+              { from: 2, to: 2 },
+              { from: 2, to: 4 },
+            ]),
+            levels: {
+              1: 0,
+              2: 0,
+              3: 1,
+              4: 1,
+              5: 2,
+              6: 3,
+              7: 4,
+            },
+          },
+          {
             name: '10 nodes, 4 levels, edges skipping levels',
             tree: generateTree([
               { from: 9, to: 5 },

@@ -75,7 +75,7 @@ export function fillLevelsByDirection(
       const newLevel = levels[node.id] - 1
 
       for (const edge of edges) {
-        if (!edge.connected || edge.to !== node) {
+        if (!edge.connected || edge.to !== node || edge.to === edge.from) {
           continue
         }
 
