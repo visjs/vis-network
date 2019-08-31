@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { stub } from "sinon";
+import { assert, spy, stub } from "sinon";
 import { deepFreeze } from "./helpers";
 
 import Box from "../lib/network/modules/components/nodes/shapes/Box";
@@ -174,6 +174,90 @@ describe("Node Shapes", function(): void {
             ctx,
             "Nothing should be configured if the shadow isn’t enabled."
           ).to.deep.equal({});
+        });
+      });
+
+      describe("Dashes", function(): void {
+        it("Enable default", function(): void {
+          const instance = generateInstance();
+          const ctx = {
+            setLineDash: spy()
+          };
+
+          instance.enableBorderDashes(ctx, {
+            borderDashes: true
+          });
+
+          assert.calledOnce(ctx.setLineDash);
+          assert.alwaysCalledWithExactly(ctx.setLineDash, [5, 15]);
+        });
+
+        it("Enable custom", function(): void {
+          const instance = generateInstance();
+          const ctx = {
+            setLineDash: spy()
+          };
+
+          instance.enableBorderDashes(ctx, {
+            borderDashes: [1, 2, 3, 4]
+          });
+
+          assert.calledOnce(ctx.setLineDash);
+          assert.alwaysCalledWithExactly(ctx.setLineDash, [1, 2, 3, 4]);
+        });
+
+        it("Enable disabled", function(): void {
+          const instance = generateInstance();
+          const ctx = {
+            setLineDash: spy()
+          };
+
+          instance.enableBorderDashes(ctx, {
+            borderDashes: false
+          });
+
+          assert.notCalled(ctx.setLineDash);
+        });
+
+        it("Disable default", function(): void {
+          const instance = generateInstance();
+          const ctx = {
+            setLineDash: spy()
+          };
+
+          instance.disableBorderDashes(ctx, {
+            borderDashes: true
+          });
+
+          assert.calledOnce(ctx.setLineDash);
+          assert.alwaysCalledWithExactly(ctx.setLineDash, [0]);
+        });
+
+        it("Disable custom", function(): void {
+          const instance = generateInstance();
+          const ctx = {
+            setLineDash: spy()
+          };
+
+          instance.disableBorderDashes(ctx, {
+            borderDashes: [1, 2, 3, 4]
+          });
+
+          assert.calledOnce(ctx.setLineDash);
+          assert.alwaysCalledWithExactly(ctx.setLineDash, [0]);
+        });
+
+        it("Disable disabled", function(): void {
+          const instance = generateInstance();
+          const ctx = {
+            setLineDash: spy()
+          };
+
+          instance.disableBorderDashes(ctx, {
+            borderDashes: false
+          });
+
+          assert.notCalled(ctx.setLineDash);
         });
       });
     });
