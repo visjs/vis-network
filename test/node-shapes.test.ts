@@ -33,7 +33,9 @@ describe("Node Shapes", function(): void {
       bottom: 9,
       left: 10
     },
-    shapeProperties: {}
+    shapeProperties: {
+      borderRadius: 3
+    }
   });
 
   const generateBody = (): any => ({});
@@ -42,7 +44,15 @@ describe("Node Shapes", function(): void {
     const labelModule = {
       adjustSizes: stub(),
       differentState: stub(),
-      getTextSize: stub()
+      getTextSize: stub(),
+      size: {
+        top: -31,
+        right: 0,
+        bottom: 37,
+        left: 12,
+        width: 12,
+        height: 68
+      }
     };
 
     labelModule.differentState.returns(true);
@@ -77,13 +87,39 @@ describe("Node Shapes", function(): void {
     height: 494
   });
   [
-    { name: "Box", Clazz: Box, distanceToBorder: 42 },
-    { name: "Circle", Clazz: Circle, distanceToBorder: 125 },
+    {
+      name: "Box",
+      Clazz: Box,
+      distanceToBorder: 42,
+      boundingBox: {
+        bottom: -924,
+        left: -128,
+        right: 128,
+        top: -979
+      }
+    },
+    {
+      name: "Circle",
+      Clazz: Circle,
+      distanceToBorder: 125,
+      boundingBox: {
+        bottom: -827,
+        left: -125,
+        right: 125,
+        top: -1076
+      }
+    },
     {
       name: "CircularImage (not loaded)",
       Clazz: CircularImage,
       args: [img0],
-      distanceToBorder: 31
+      distanceToBorder: 31,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
     },
     {
       name: "CircularImage (don't use image size)",
@@ -94,7 +130,13 @@ describe("Node Shapes", function(): void {
         options.shapeProperties.useImageSize = false;
         return options;
       },
-      distanceToBorder: 54
+      distanceToBorder: 54,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
     },
     {
       name: "CircularImage (use image size)",
@@ -105,19 +147,91 @@ describe("Node Shapes", function(): void {
         options.shapeProperties.useImageSize = true;
         return options;
       },
-      distanceToBorder: 96
+      distanceToBorder: 96,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
     },
-    { name: "Database", Clazz: Database, distanceToBorder: 180 },
-    { name: "Diamond", Clazz: Diamond, distanceToBorder: 50 },
-    { name: "Dot", Clazz: Dot, distanceToBorder: 31 },
-    { name: "Ellipse", Clazz: Ellipse, distanceToBorder: 46 },
-    { name: "Hexagon", Clazz: Hexagon, distanceToBorder: 50 },
-    { name: "Icon", Clazz: Icon, distanceToBorder: 39 },
+    {
+      name: "Database",
+      Clazz: Database,
+      distanceToBorder: 180,
+      boundingBox: {
+        bottom: -827,
+        left: -125,
+        right: 125,
+        top: -1076
+      }
+    },
+    {
+      name: "Diamond",
+      Clazz: Diamond,
+      distanceToBorder: 50,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
+    },
+    {
+      name: "Dot",
+      Clazz: Dot,
+      distanceToBorder: 31,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
+    },
+    {
+      name: "Ellipse",
+      Clazz: Ellipse,
+      distanceToBorder: 46,
+      boundingBox: {
+        bottom: -918,
+        left: -132,
+        right: 132,
+        top: -984
+      }
+    },
+    {
+      name: "Hexagon",
+      Clazz: Hexagon,
+      distanceToBorder: 50,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
+    },
+    {
+      name: "Icon",
+      Clazz: Icon,
+      distanceToBorder: 39,
+      boundingBox: {
+        bottom: -937,
+        left: -15,
+        right: 15,
+        top: -966
+      }
+    },
     {
       name: "Image (not loaded)",
       Clazz: Image,
       args: [img0],
-      distanceToBorder: 50
+      distanceToBorder: 50,
+      boundingBox: {
+        bottom: -920,
+        left: -31,
+        right: 31,
+        top: -982
+      }
     },
     {
       name: "Image (don't use image size)",
@@ -128,7 +242,13 @@ describe("Node Shapes", function(): void {
         options.shapeProperties.useImageSize = false;
         return options;
       },
-      distanceToBorder: 52
+      distanceToBorder: 52,
+      boundingBox: {
+        bottom: -920,
+        left: -54,
+        right: 54,
+        top: -982
+      }
     },
     {
       name: "Image (use image size)",
@@ -139,15 +259,79 @@ describe("Node Shapes", function(): void {
         options.shapeProperties.useImageSize = true;
         return options;
       },
-      distanceToBorder: 87
+      distanceToBorder: 87,
+      boundingBox: {
+        top: -1007,
+        right: 96,
+        bottom: -895,
+        left: -96
+      }
     },
-    { name: "Square", Clazz: Square, distanceToBorder: 50 },
-    { name: "Star", Clazz: Star, distanceToBorder: 50 },
-    { name: "Text", Clazz: Text, distanceToBorder: 42 },
-    { name: "Triangle", Clazz: Triangle, distanceToBorder: 50 },
-    { name: "TriangleDown", Clazz: TriangleDown, distanceToBorder: 50 }
+    {
+      name: "Square",
+      Clazz: Square,
+      distanceToBorder: 50,
+      boundingBox: {
+        top: -982,
+        right: 31,
+        bottom: -920,
+        left: -31
+      }
+    },
+    {
+      name: "Star",
+      Clazz: Star,
+      distanceToBorder: 50,
+      boundingBox: {
+        top: -982,
+        right: 31,
+        bottom: -920,
+        left: -31
+      }
+    },
+    {
+      name: "Text",
+      Clazz: Text,
+      distanceToBorder: 42,
+      boundingBox: {
+        top: -976,
+        left: -125,
+        right: 125,
+        bottom: -927
+      }
+    },
+    {
+      name: "Triangle",
+      Clazz: Triangle,
+      distanceToBorder: 50,
+      boundingBox: {
+        top: -982,
+        right: 31,
+        bottom: -920,
+        left: -31
+      }
+    },
+    {
+      name: "TriangleDown",
+      Clazz: TriangleDown,
+      distanceToBorder: 50,
+      boundingBox: {
+        top: -982,
+        right: 31,
+        bottom: -920,
+        left: -31
+      }
+    }
   ].forEach(
-    ({ name, Clazz, args, img, editOptions, distanceToBorder }): void => {
+    ({
+      name,
+      Clazz,
+      args,
+      img,
+      editOptions,
+      distanceToBorder,
+      boundingBox
+    }): void => {
       describe(name, function(): void {
         const generateInstance = (overrideArgs?: unknown[]): typeof Clazz =>
           new Clazz(
@@ -317,6 +501,33 @@ describe("Node Shapes", function(): void {
             });
 
             assert.notCalled(ctx.setLineDash);
+          });
+        });
+
+        describe("Bounding box", function(): void {
+          it("Update", function(): void {
+            const instance = generateInstance();
+
+            instance.resize({});
+            instance.updateBoundingBox(0, -951);
+
+            expect(instance.boundingBox).to.be.an("object");
+            expect(instance.boundingBox.top, "top").to.be.approximately(
+              boundingBox.top,
+              1
+            );
+            expect(instance.boundingBox.right, "right").to.be.approximately(
+              boundingBox.right,
+              1
+            );
+            expect(instance.boundingBox.bottom, "bottom").to.be.approximately(
+              boundingBox.bottom,
+              1
+            );
+            expect(instance.boundingBox.left, "left").to.be.approximately(
+              boundingBox.left,
+              1
+            );
           });
         });
 
