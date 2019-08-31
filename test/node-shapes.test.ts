@@ -90,18 +90,91 @@ describe("Node Shapes", function(): void {
     { name: "TriangleDown", Clazz: TriangleDown, distanceToBorder: 50 }
   ].forEach(({ name, Clazz, args, distanceToBorder }): void => {
     describe(name, function(): void {
-      it("Distance to Border", function(): void {
-        const instance = new Clazz(
+      const generateInstance = (): typeof Clazz =>
+        new Clazz(
           generateOptions(),
           generateBody(),
           generateLabelModule(),
           ...(args || [])
         );
 
+      it("Distance to Border", function(): void {
+        const instance = generateInstance();
+
         expect(instance.distanceToBorder(ctx, 0.77)).to.be.approximately(
           distanceToBorder,
           1
         );
+      });
+
+      describe("Shadow", function(): void {
+        it("Enable enabled", function(): void {
+          const instance = generateInstance();
+          const ctx = {};
+
+          instance.enableShadow(ctx, {
+            shadow: true,
+            shadowColor: "#123456",
+            shadowSize: 9,
+            shadowX: 77,
+            shadowY: 31
+          });
+
+          expect(ctx).to.deep.equal({
+            shadowColor: "#123456",
+            shadowBlur: 9,
+            shadowOffsetX: 77,
+            shadowOffsetY: 31
+          });
+        });
+
+        it("Enable disabled", function(): void {
+          const instance = generateInstance();
+          const ctx = {};
+
+          instance.enableShadow(ctx, {
+            shadow: false,
+            shadowColor: "#123456",
+            shadowSize: 9,
+            shadowX: 77,
+            shadowY: 31
+          });
+
+          expect(
+            ctx,
+            "Nothing should be configured if the shadow isn’t enabled."
+          ).to.deep.equal({});
+        });
+
+        it("Disable enabled", function(): void {
+          const instance = generateInstance();
+          const ctx = {};
+
+          instance.disableShadow(ctx, {
+            shadow: true
+          });
+
+          expect(ctx).to.deep.equal({
+            shadowColor: "rgba(0,0,0,0)",
+            shadowBlur: 0,
+            shadowOffsetX: 0,
+            shadowOffsetY: 0
+          });
+        });
+
+        it("Disable disabled", function(): void {
+          const instance = generateInstance();
+          const ctx = {};
+
+          instance.disableShadow(ctx, {
+            shadow: false
+          });
+
+          expect(
+            ctx,
+            "Nothing should be configured if the shadow isn’t enabled."
+          ).to.deep.equal({});
+        });
       });
     });
   });
