@@ -19,8 +19,6 @@ import Triangle from "../lib/network/modules/components/nodes/shapes/Triangle";
 import TriangleDown from "../lib/network/modules/components/nodes/shapes/TriangleDown";
 
 describe("Node Shapes", function(): void {
-  const ctx = {};
-
   const generateOptions = (): any => ({
     borderWidth: 7,
     size: 31,
@@ -344,7 +342,7 @@ describe("Node Shapes", function(): void {
         it("Distance to Border", function(): void {
           const instance = generateInstance();
 
-          expect(instance.distanceToBorder(ctx, 0.77)).to.be.approximately(
+          expect(instance.distanceToBorder({}, 0.77)).to.be.approximately(
             distanceToBorder,
             1
           );
