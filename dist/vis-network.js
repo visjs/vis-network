@@ -26138,11 +26138,36 @@
       }
       /**
        *
+       * @private
+	   * @returns {{top,left,bottom.right}}
+       */
+    }, {
+	  key: "_getImagePadding",
+	  value: function _getImagePadding() {
+		var imgPadding = { top: 0, right: 0, bottom: 0, left: 0}
+		if (this.options.imagePadding) {		  
+		  var optImgPadding = this.options.imagePadding
+		  if (_typeof_1$1(optImgPadding) == 'object') {
+		    imgPadding.top = optImgPadding.top;
+		    imgPadding.right = optImgPadding.right;
+		    imgPadding.bottom = optImgPadding.bottom;
+		    imgPadding.left = optImgPadding.left;
+		  } else {
+		    imgPadding.top = optImgPadding;
+		    imgPadding.right = optImgPadding;
+		    imgPadding.bottom = optImgPadding;
+		    imgPadding.left = optImgPadding;
+		  }
+		}
+
+        return imgPadding
+      }
+	  /**
+       *
        * @param {Label} labelModule
        * @private
-       */
-
-    }, {
+       */	
+	}, {
       key: "_setMargins",
       value: function _setMargins(labelModule) {
         this.margin = {};
@@ -26660,8 +26685,9 @@
           height = this.options.size * 2 * ratio_height;
         } else {
           // Use the image size
-          width = this.imageObj.width;
-          height = this.imageObj.height;
+          var imgPadding = this._getImagePadding()
+          width = this.imageObj.width + imgPadding.left + imgPadding.right;
+          height = this.imageObj.height + imgPadding.top + imgPadding.bottom;
         }
 
         this.width = width;
@@ -26704,8 +26730,15 @@
           if (this.options.shapeProperties.interpolation === true) {
             factor = this.imageObj.width / this.width / this.body.view.scale;
           }
-
-          this.imageObj.drawImageAtPosition(ctx, factor, this.left, this.top, this.width, this.height); // disable shadows for other elements.
+		  
+		  
+		  var imgPadding = this._getImagePadding()
+		  	  
+		  var imgPosLeft =  this.left + imgPadding.left
+		  var imgPosTop = this.top + imgPadding.top
+		  var imgWidth = this.width - imgPadding.left - imgPadding.right
+		  var imgHeight = this.height - imgPadding.top - imgPadding.bottom
+          this.imageObj.drawImageAtPosition(ctx, factor, imgPosLeft, imgPosTop, imgWidth, imgHeight); // disable shadows for other elements.
 
           this.disableShadow(ctx, values);
         }
@@ -29176,6 +29209,12 @@
         },
         image: undefined,
         // --> URL
+		imagePadding: { // only for image shape
+			top: 0,			
+			right: 0,
+			bottom: 0,
+			left: 0
+		},
         label: undefined,
         labelHighlightBold: true,
         level: undefined,
@@ -48172,6 +48211,24 @@
         },
         useBorderWithImage: {
           boolean: bool
+        },
+        imagePadding: {
+          top: {
+            number: number
+          },
+          right: {
+            number: number
+          },
+          bottom: {
+            number: number
+          },
+          left: {
+            number: number
+          },
+          __type__: {
+            object: object,
+            number: number
+          }
         },
         __type__: {
           object: object
