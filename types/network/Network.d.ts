@@ -772,7 +772,7 @@ export interface Options {
 
   clickToUse?: boolean;
 
-  configure?: any; // http://visjs.org/docs/network/configure.html#
+  configure?: any; // https://visjs.github.io/vis-network/docs/network/configure.html
 
   edges?: EdgeOptions;
 
@@ -780,13 +780,13 @@ export interface Options {
 
   groups?: any;
 
-  layout?: any; // http://visjs.org/docs/network/layout.html
+  layout?: any; // https://visjs.github.io/vis-network/docs/network/layout.html
 
-  interaction?: any; // visjs.org/docs/network/interaction.html?keywords=edges
+  interaction?: any; // https://visjs.github.io/vis-network/docs/network/interaction.html?keywords=edges
 
-  manipulation?: any; // http://visjs.org/docs/network/manipulation.html#
+  manipulation?: any; // https://visjs.github.io/vis-network/docs/network/manipulation.html
 
-  physics?: any; // http://visjs.org/docs/network/physics.html#
+  physics?: any; // https://visjs.github.io/vis-network/docs/network/physics.html
 }
 
 export interface Image {
