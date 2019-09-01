@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-01T22:05:39Z
+ * @date    2019-09-01T22:21:11Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -29213,6 +29213,13 @@ function () {
       },
       image: undefined,
       // --> URL
+      imagePadding: {
+        // only for image shape
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },
       label: undefined,
       labelHighlightBold: true,
       level: undefined,
@@ -48103,6 +48110,24 @@ var allOptions$1 = {
       __type__: {
         object: object,
         string: string
+      }
+    },
+    imagePadding: {
+      top: {
+        number: number
+      },
+      right: {
+        number: number
+      },
+      bottom: {
+        number: number
+      },
+      left: {
+        number: number
+      },
+      __type__: {
+        object: object,
+        number: number
       }
     },
     label: {
