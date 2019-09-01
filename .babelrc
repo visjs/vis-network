@@ -3,7 +3,9 @@
     [
       "@babel/preset-env",
       {
-        "targets": "> 0.1% or not dead"
+        "targets": "> 0.1% or not dead",
+        "useBuiltIns": "usage",
+        "corejs": 3
       }
     ],
     "@babel/preset-typescript"
@@ -11,8 +13,7 @@
   "plugins": [
     "css-modules-transform",
     "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread",
-    "@babel/plugin-transform-runtime"
+    "@babel/proposal-object-rest-spread"
   ],
   "env": {
     "test": {
