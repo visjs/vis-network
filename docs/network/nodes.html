@@ -742,6 +742,36 @@ network.setOptions(options);
             <td>Selected image URL.
             </td>
         </tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','imagePadding', this);">
+            <td><span parent="imagePadding" class="right-caret"></span> imagePadding</td>
+            <td>Object or Number</td>
+            <td><code>0</code></td>
+            <td>If a number is specified, the paddings of the image inside the shape are set to that value on all sides. These options are only used when the shape is set to <code>image</code>, <code>circularImage</code>.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.top</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The top padding of the image inside the shape is set to this value.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.right</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The right margin of the image inside the shape is set to this value.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.bottom</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The bottom margin of the image inside the shape is set to this value.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.left</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The left margin of the image inside the shape is set to this value.</td>
+        </tr>
         <tr>
             <td>label</td>
             <td>String</td>
