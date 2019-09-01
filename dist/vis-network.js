@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-20T18:52:41Z
+ * @date    2019-08-27T20:16:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -29,45 +29,24 @@
   (global = global || self, factory(global.vis = global.vis || {}));
 }(this, function (exports) { 'use strict';
 
-  /**
+  /*
    * Canvas shapes used by Network
    */
-  if (typeof CanvasRenderingContext2D !== 'undefined') {
-    /**
-     * Draw a circle shape
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} r
-     */
+
+  if (typeof CanvasRenderingContext2D !== "undefined") {
     CanvasRenderingContext2D.prototype.circle = function (x, y, r) {
       this.beginPath();
       this.arc(x, y, r, 0, 2 * Math.PI, false);
       this.closePath();
     };
-    /**
-     * Draw a square shape
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   size, width and height of the square
-     */
-
 
     CanvasRenderingContext2D.prototype.square = function (x, y, r) {
       this.beginPath();
       this.rect(x - r, y - r, r * 2, r * 2);
       this.closePath();
     };
-    /**
-     * Draw a triangle shape
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   radius, half the length of the sides of the triangle
-     */
-
 
     CanvasRenderingContext2D.prototype.triangle = function (x, y, r) {
-      // http://en.wikipedia.org/wiki/Equilateral_triangle
       this.beginPath(); // the change in radius and the offset is here to center the shape
 
       r *= 1.15;
@@ -84,16 +63,8 @@
       this.lineTo(x, y - (h - ir));
       this.closePath();
     };
-    /**
-     * Draw a triangle shape in downward orientation
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r radius
-     */
-
 
     CanvasRenderingContext2D.prototype.triangleDown = function (x, y, r) {
-      // http://en.wikipedia.org/wiki/Equilateral_triangle
       this.beginPath(); // the change in radius and the offset is here to center the shape
 
       r *= 1.15;
@@ -110,13 +81,6 @@
       this.lineTo(x, y + (h - ir));
       this.closePath();
     };
-    /**
-     * Draw a star shape, a star with 5 points
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   radius, half the length of the sides of the triangle
-     */
-
 
     CanvasRenderingContext2D.prototype.star = function (x, y, r) {
       // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
@@ -132,16 +96,8 @@
 
       this.closePath();
     };
-    /**
-     * Draw a Diamond shape
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   radius, half the length of the sides of the triangle
-     */
-
 
     CanvasRenderingContext2D.prototype.diamond = function (x, y, r) {
-      // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
       this.beginPath();
       this.lineTo(x, y + r);
       this.lineTo(x + r, y);
@@ -149,16 +105,6 @@
       this.lineTo(x - r, y);
       this.closePath();
     };
-    /**
-     * http://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     * @param {number} r
-     */
-
 
     CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
       var r2d = Math.PI / 180;
@@ -185,20 +131,9 @@
       this.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
       this.closePath();
     };
-    /**
-     * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-     *
-     * Postfix '_vis' added to discern it from standard method ellipse().
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     */
-
 
     CanvasRenderingContext2D.prototype.ellipse_vis = function (x, y, w, h) {
-      var kappa = .5522848,
+      var kappa = 0.5522848,
           ox = w / 2 * kappa,
           // control point offset horizontal
       oy = h / 2 * kappa,
@@ -219,21 +154,12 @@
       this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
       this.closePath();
     };
-    /**
-     * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     */
-
 
     CanvasRenderingContext2D.prototype.database = function (x, y, w, h) {
       var f = 1 / 3;
       var wEllipse = w;
       var hEllipse = h * f;
-      var kappa = .5522848,
+      var kappa = 0.5522848,
           ox = wEllipse / 2 * kappa,
           // control point offset horizontal
       oy = hEllipse / 2 * kappa,
@@ -261,19 +187,6 @@
       this.bezierCurveTo(xm - ox, yeb, x, ymb + oy, x, ymb);
       this.lineTo(x, ym);
     };
-    /**
-     * Sets up the dashedLine functionality for drawing
-     * Original code came from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
-     * @author David Jordan
-     * @date 2012-08-08
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} x2
-     * @param {number} y2
-     * @param {string} pattern
-     */
-
 
     CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, pattern) {
       this.beginPath();
@@ -286,10 +199,10 @@
       var patternIndex = 0;
       var draw = true;
       var xStep = 0;
-      var dashLength = pattern[0];
+      var dashLength = +pattern[0];
 
       while (distRemaining >= 0.1) {
-        dashLength = pattern[patternIndex++ % patternLength];
+        dashLength = +pattern[patternIndex++ % patternLength];
 
         if (dashLength > distRemaining) {
           dashLength = distRemaining;
@@ -310,13 +223,6 @@
         draw = !draw;
       }
     };
-    /**
-     * Draw a Hexagon shape with 6 sides
-     * @param {Number} x horizontal center
-     * @param {Number} y vertical center
-     * @param {Number} r   radius
-     */
-
 
     CanvasRenderingContext2D.prototype.hexagon = function (x, y, r) {
       this.beginPath();
@@ -15169,8 +15075,8 @@
    * 
    * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
    * 
-   * @version 6.2.0
-   * @date    2019-08-14T22:18:56Z
+   * @version 6.1.0
+   * @date    2019-07-16T13:37:00Z
    * 
    * @copyright (c) 2011-2017 Almende B.V, http://almende.com
    * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -15188,719 +15094,6 @@
    * 
    * vis.js may be distributed under either license.
    */
-  function createCommonjsModule$2(fn, module) {
-    return module = {
-      exports: {}
-    }, fn(module, module.exports), module.exports;
-  }
-
-  var runtime_1 = createCommonjsModule$2(function (module) {
-    /**
-     * Copyright (c) 2014-present, Facebook, Inc.
-     *
-     * This source code is licensed under the MIT license found in the
-     * LICENSE file in the root directory of this source tree.
-     */
-    var runtime = function (exports) {
-      var Op = Object.prototype;
-      var hasOwn = Op.hasOwnProperty;
-      var undefined$1; // More compressible than void 0.
-
-      var $Symbol = typeof Symbol === "function" ? Symbol : {};
-      var iteratorSymbol = $Symbol.iterator || "@@iterator";
-      var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-      var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-      function wrap(innerFn, outerFn, self, tryLocsList) {
-        // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-        var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-        var generator = Object.create(protoGenerator.prototype);
-        var context = new Context(tryLocsList || []); // The ._invoke method unifies the implementations of the .next,
-        // .throw, and .return methods.
-
-        generator._invoke = makeInvokeMethod(innerFn, self, context);
-        return generator;
-      }
-
-      exports.wrap = wrap; // Try/catch helper to minimize deoptimizations. Returns a completion
-      // record like context.tryEntries[i].completion. This interface could
-      // have been (and was previously) designed to take a closure to be
-      // invoked without arguments, but in all the cases we care about we
-      // already have an existing method we want to call, so there's no need
-      // to create a new function object. We can even get away with assuming
-      // the method takes exactly one argument, since that happens to be true
-      // in every case, so we don't have to touch the arguments object. The
-      // only additional allocation required is the completion record, which
-      // has a stable shape and so hopefully should be cheap to allocate.
-
-      function tryCatch(fn, obj, arg) {
-        try {
-          return {
-            type: "normal",
-            arg: fn.call(obj, arg)
-          };
-        } catch (err) {
-          return {
-            type: "throw",
-            arg: err
-          };
-        }
-      }
-
-      var GenStateSuspendedStart = "suspendedStart";
-      var GenStateSuspendedYield = "suspendedYield";
-      var GenStateExecuting = "executing";
-      var GenStateCompleted = "completed"; // Returning this object from the innerFn has the same effect as
-      // breaking out of the dispatch switch statement.
-
-      var ContinueSentinel = {}; // Dummy constructor functions that we use as the .constructor and
-      // .constructor.prototype properties for functions that return Generator
-      // objects. For full spec compliance, you may wish to configure your
-      // minifier not to mangle the names of these two functions.
-
-      function Generator() {}
-
-      function GeneratorFunction() {}
-
-      function GeneratorFunctionPrototype() {} // This is a polyfill for %IteratorPrototype% for environments that
-      // don't natively support it.
-
-
-      var IteratorPrototype = {};
-
-      IteratorPrototype[iteratorSymbol] = function () {
-        return this;
-      };
-
-      var getProto = Object.getPrototypeOf;
-      var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-
-      if (NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-        // This environment has a native %IteratorPrototype%; use it instead
-        // of the polyfill.
-        IteratorPrototype = NativeIteratorPrototype;
-      }
-
-      var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
-      GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-      GeneratorFunctionPrototype.constructor = GeneratorFunction;
-      GeneratorFunctionPrototype[toStringTagSymbol] = GeneratorFunction.displayName = "GeneratorFunction"; // Helper for defining the .next, .throw, and .return methods of the
-      // Iterator interface in terms of a single ._invoke method.
-
-      function defineIteratorMethods(prototype) {
-        ["next", "throw", "return"].forEach(function (method) {
-          prototype[method] = function (arg) {
-            return this._invoke(method, arg);
-          };
-        });
-      }
-
-      exports.isGeneratorFunction = function (genFun) {
-        var ctor = typeof genFun === "function" && genFun.constructor;
-        return ctor ? ctor === GeneratorFunction || // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction" : false;
-      };
-
-      exports.mark = function (genFun) {
-        if (Object.setPrototypeOf) {
-          Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-        } else {
-          genFun.__proto__ = GeneratorFunctionPrototype;
-
-          if (!(toStringTagSymbol in genFun)) {
-            genFun[toStringTagSymbol] = "GeneratorFunction";
-          }
-        }
-
-        genFun.prototype = Object.create(Gp);
-        return genFun;
-      }; // Within the body of any async function, `await x` is transformed to
-      // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-      // `hasOwn.call(value, "__await")` to determine if the yielded value is
-      // meant to be awaited.
-
-
-      exports.awrap = function (arg) {
-        return {
-          __await: arg
-        };
-      };
-
-      function AsyncIterator(generator) {
-        function invoke(method, arg, resolve, reject) {
-          var record = tryCatch(generator[method], generator, arg);
-
-          if (record.type === "throw") {
-            reject(record.arg);
-          } else {
-            var result = record.arg;
-            var value = result.value;
-
-            if (value && typeof value === "object" && hasOwn.call(value, "__await")) {
-              return Promise.resolve(value.__await).then(function (value) {
-                invoke("next", value, resolve, reject);
-              }, function (err) {
-                invoke("throw", err, resolve, reject);
-              });
-            }
-
-            return Promise.resolve(value).then(function (unwrapped) {
-              // When a yielded Promise is resolved, its final value becomes
-              // the .value of the Promise<{value,done}> result for the
-              // current iteration.
-              result.value = unwrapped;
-              resolve(result);
-            }, function (error) {
-              // If a rejected Promise was yielded, throw the rejection back
-              // into the async generator function so it can be handled there.
-              return invoke("throw", error, resolve, reject);
-            });
-          }
-        }
-
-        var previousPromise;
-
-        function enqueue(method, arg) {
-          function callInvokeWithMethodAndArg() {
-            return new Promise(function (resolve, reject) {
-              invoke(method, arg, resolve, reject);
-            });
-          }
-
-          return previousPromise = // If enqueue has been called before, then we want to wait until
-          // all previous Promises have been resolved before calling invoke,
-          // so that results are always delivered in the correct order. If
-          // enqueue has not been called before, then it is important to
-          // call invoke immediately, without waiting on a callback to fire,
-          // so that the async generator function has the opportunity to do
-          // any necessary setup in a predictable way. This predictability
-          // is why the Promise constructor synchronously invokes its
-          // executor callback, and why async functions synchronously
-          // execute code before the first await. Since we implement simple
-          // async functions in terms of async generators, it is especially
-          // important to get this right, even though it requires care.
-          previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-        } // Define the unified helper method that is used to implement .next,
-        // .throw, and .return (see defineIteratorMethods).
-
-
-        this._invoke = enqueue;
-      }
-
-      defineIteratorMethods(AsyncIterator.prototype);
-
-      AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-        return this;
-      };
-
-      exports.AsyncIterator = AsyncIterator; // Note that simple async functions are implemented on top of
-      // AsyncIterator objects; they just return a Promise for the value of
-      // the final result produced by the iterator.
-
-      exports.async = function (innerFn, outerFn, self, tryLocsList) {
-        var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList));
-        return exports.isGeneratorFunction(outerFn) ? iter // If outerFn is a generator, return the full iterator.
-        : iter.next().then(function (result) {
-          return result.done ? result.value : iter.next();
-        });
-      };
-
-      function makeInvokeMethod(innerFn, self, context) {
-        var state = GenStateSuspendedStart;
-        return function invoke(method, arg) {
-          if (state === GenStateExecuting) {
-            throw new Error("Generator is already running");
-          }
-
-          if (state === GenStateCompleted) {
-            if (method === "throw") {
-              throw arg;
-            } // Be forgiving, per 25.3.3.3.3 of the spec:
-            // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-
-
-            return doneResult();
-          }
-
-          context.method = method;
-          context.arg = arg;
-
-          while (true) {
-            var delegate = context.delegate;
-
-            if (delegate) {
-              var delegateResult = maybeInvokeDelegate(delegate, context);
-
-              if (delegateResult) {
-                if (delegateResult === ContinueSentinel) continue;
-                return delegateResult;
-              }
-            }
-
-            if (context.method === "next") {
-              // Setting context._sent for legacy support of Babel's
-              // function.sent implementation.
-              context.sent = context._sent = context.arg;
-            } else if (context.method === "throw") {
-              if (state === GenStateSuspendedStart) {
-                state = GenStateCompleted;
-                throw context.arg;
-              }
-
-              context.dispatchException(context.arg);
-            } else if (context.method === "return") {
-              context.abrupt("return", context.arg);
-            }
-
-            state = GenStateExecuting;
-            var record = tryCatch(innerFn, self, context);
-
-            if (record.type === "normal") {
-              // If an exception is thrown from innerFn, we leave state ===
-              // GenStateExecuting and loop back for another invocation.
-              state = context.done ? GenStateCompleted : GenStateSuspendedYield;
-
-              if (record.arg === ContinueSentinel) {
-                continue;
-              }
-
-              return {
-                value: record.arg,
-                done: context.done
-              };
-            } else if (record.type === "throw") {
-              state = GenStateCompleted; // Dispatch the exception by looping back around to the
-              // context.dispatchException(context.arg) call above.
-
-              context.method = "throw";
-              context.arg = record.arg;
-            }
-          }
-        };
-      } // Call delegate.iterator[context.method](context.arg) and handle the
-      // result, either by returning a { value, done } result from the
-      // delegate iterator, or by modifying context.method and context.arg,
-      // setting context.delegate to null, and returning the ContinueSentinel.
-
-
-      function maybeInvokeDelegate(delegate, context) {
-        var method = delegate.iterator[context.method];
-
-        if (method === undefined$1) {
-          // A .throw or .return when the delegate iterator has no .throw
-          // method always terminates the yield* loop.
-          context.delegate = null;
-
-          if (context.method === "throw") {
-            // Note: ["return"] must be used for ES3 parsing compatibility.
-            if (delegate.iterator["return"]) {
-              // If the delegate iterator has a return method, give it a
-              // chance to clean up.
-              context.method = "return";
-              context.arg = undefined$1;
-              maybeInvokeDelegate(delegate, context);
-
-              if (context.method === "throw") {
-                // If maybeInvokeDelegate(context) changed context.method from
-                // "return" to "throw", let that override the TypeError below.
-                return ContinueSentinel;
-              }
-            }
-
-            context.method = "throw";
-            context.arg = new TypeError("The iterator does not provide a 'throw' method");
-          }
-
-          return ContinueSentinel;
-        }
-
-        var record = tryCatch(method, delegate.iterator, context.arg);
-
-        if (record.type === "throw") {
-          context.method = "throw";
-          context.arg = record.arg;
-          context.delegate = null;
-          return ContinueSentinel;
-        }
-
-        var info = record.arg;
-
-        if (!info) {
-          context.method = "throw";
-          context.arg = new TypeError("iterator result is not an object");
-          context.delegate = null;
-          return ContinueSentinel;
-        }
-
-        if (info.done) {
-          // Assign the result of the finished delegate to the temporary
-          // variable specified by delegate.resultName (see delegateYield).
-          context[delegate.resultName] = info.value; // Resume execution at the desired location (see delegateYield).
-
-          context.next = delegate.nextLoc; // If context.method was "throw" but the delegate handled the
-          // exception, let the outer generator proceed normally. If
-          // context.method was "next", forget context.arg since it has been
-          // "consumed" by the delegate iterator. If context.method was
-          // "return", allow the original .return call to continue in the
-          // outer generator.
-
-          if (context.method !== "return") {
-            context.method = "next";
-            context.arg = undefined$1;
-          }
-        } else {
-          // Re-yield the result returned by the delegate method.
-          return info;
-        } // The delegate iterator is finished, so forget it and continue with
-        // the outer generator.
-
-
-        context.delegate = null;
-        return ContinueSentinel;
-      } // Define Generator.prototype.{next,throw,return} in terms of the
-      // unified ._invoke helper method.
-
-
-      defineIteratorMethods(Gp);
-      Gp[toStringTagSymbol] = "Generator"; // A Generator should always return itself as the iterator object when the
-      // @@iterator function is called on it. Some browsers' implementations of the
-      // iterator prototype chain incorrectly implement this, causing the Generator
-      // object to not be returned from this call. This ensures that doesn't happen.
-      // See https://github.com/facebook/regenerator/issues/274 for more details.
-
-      Gp[iteratorSymbol] = function () {
-        return this;
-      };
-
-      Gp.toString = function () {
-        return "[object Generator]";
-      };
-
-      function pushTryEntry(locs) {
-        var entry = {
-          tryLoc: locs[0]
-        };
-
-        if (1 in locs) {
-          entry.catchLoc = locs[1];
-        }
-
-        if (2 in locs) {
-          entry.finallyLoc = locs[2];
-          entry.afterLoc = locs[3];
-        }
-
-        this.tryEntries.push(entry);
-      }
-
-      function resetTryEntry(entry) {
-        var record = entry.completion || {};
-        record.type = "normal";
-        delete record.arg;
-        entry.completion = record;
-      }
-
-      function Context(tryLocsList) {
-        // The root entry object (effectively a try statement without a catch
-        // or a finally block) gives us a place to store values thrown from
-        // locations where there is no enclosing try statement.
-        this.tryEntries = [{
-          tryLoc: "root"
-        }];
-        tryLocsList.forEach(pushTryEntry, this);
-        this.reset(true);
-      }
-
-      exports.keys = function (object) {
-        var keys = [];
-
-        for (var key in object) {
-          keys.push(key);
-        }
-
-        keys.reverse(); // Rather than returning an object with a next method, we keep
-        // things simple and return the next function itself.
-
-        return function next() {
-          while (keys.length) {
-            var key = keys.pop();
-
-            if (key in object) {
-              next.value = key;
-              next.done = false;
-              return next;
-            }
-          } // To avoid creating an additional object, we just hang the .value
-          // and .done properties off the next function object itself. This
-          // also ensures that the minifier will not anonymize the function.
-
-
-          next.done = true;
-          return next;
-        };
-      };
-
-      function values(iterable) {
-        if (iterable) {
-          var iteratorMethod = iterable[iteratorSymbol];
-
-          if (iteratorMethod) {
-            return iteratorMethod.call(iterable);
-          }
-
-          if (typeof iterable.next === "function") {
-            return iterable;
-          }
-
-          if (!isNaN(iterable.length)) {
-            var i = -1,
-                next = function next() {
-              while (++i < iterable.length) {
-                if (hasOwn.call(iterable, i)) {
-                  next.value = iterable[i];
-                  next.done = false;
-                  return next;
-                }
-              }
-
-              next.value = undefined$1;
-              next.done = true;
-              return next;
-            };
-
-            return next.next = next;
-          }
-        } // Return an iterator with no values.
-
-
-        return {
-          next: doneResult
-        };
-      }
-
-      exports.values = values;
-
-      function doneResult() {
-        return {
-          value: undefined$1,
-          done: true
-        };
-      }
-
-      Context.prototype = {
-        constructor: Context,
-        reset: function (skipTempReset) {
-          this.prev = 0;
-          this.next = 0; // Resetting context._sent for legacy support of Babel's
-          // function.sent implementation.
-
-          this.sent = this._sent = undefined$1;
-          this.done = false;
-          this.delegate = null;
-          this.method = "next";
-          this.arg = undefined$1;
-          this.tryEntries.forEach(resetTryEntry);
-
-          if (!skipTempReset) {
-            for (var name in this) {
-              // Not sure about the optimal order of these conditions:
-              if (name.charAt(0) === "t" && hasOwn.call(this, name) && !isNaN(+name.slice(1))) {
-                this[name] = undefined$1;
-              }
-            }
-          }
-        },
-        stop: function () {
-          this.done = true;
-          var rootEntry = this.tryEntries[0];
-          var rootRecord = rootEntry.completion;
-
-          if (rootRecord.type === "throw") {
-            throw rootRecord.arg;
-          }
-
-          return this.rval;
-        },
-        dispatchException: function (exception) {
-          if (this.done) {
-            throw exception;
-          }
-
-          var context = this;
-
-          function handle(loc, caught) {
-            record.type = "throw";
-            record.arg = exception;
-            context.next = loc;
-
-            if (caught) {
-              // If the dispatched exception was caught by a catch block,
-              // then let that catch block handle the exception normally.
-              context.method = "next";
-              context.arg = undefined$1;
-            }
-
-            return !!caught;
-          }
-
-          for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-            var entry = this.tryEntries[i];
-            var record = entry.completion;
-
-            if (entry.tryLoc === "root") {
-              // Exception thrown outside of any try block that could handle
-              // it, so set the completion value of the entire function to
-              // throw the exception.
-              return handle("end");
-            }
-
-            if (entry.tryLoc <= this.prev) {
-              var hasCatch = hasOwn.call(entry, "catchLoc");
-              var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-              if (hasCatch && hasFinally) {
-                if (this.prev < entry.catchLoc) {
-                  return handle(entry.catchLoc, true);
-                } else if (this.prev < entry.finallyLoc) {
-                  return handle(entry.finallyLoc);
-                }
-              } else if (hasCatch) {
-                if (this.prev < entry.catchLoc) {
-                  return handle(entry.catchLoc, true);
-                }
-              } else if (hasFinally) {
-                if (this.prev < entry.finallyLoc) {
-                  return handle(entry.finallyLoc);
-                }
-              } else {
-                throw new Error("try statement without catch or finally");
-              }
-            }
-          }
-        },
-        abrupt: function (type, arg) {
-          for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-            var entry = this.tryEntries[i];
-
-            if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
-              var finallyEntry = entry;
-              break;
-            }
-          }
-
-          if (finallyEntry && (type === "break" || type === "continue") && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc) {
-            // Ignore the finally entry if control is not jumping to a
-            // location outside the try/catch block.
-            finallyEntry = null;
-          }
-
-          var record = finallyEntry ? finallyEntry.completion : {};
-          record.type = type;
-          record.arg = arg;
-
-          if (finallyEntry) {
-            this.method = "next";
-            this.next = finallyEntry.finallyLoc;
-            return ContinueSentinel;
-          }
-
-          return this.complete(record);
-        },
-        complete: function (record, afterLoc) {
-          if (record.type === "throw") {
-            throw record.arg;
-          }
-
-          if (record.type === "break" || record.type === "continue") {
-            this.next = record.arg;
-          } else if (record.type === "return") {
-            this.rval = this.arg = record.arg;
-            this.method = "return";
-            this.next = "end";
-          } else if (record.type === "normal" && afterLoc) {
-            this.next = afterLoc;
-          }
-
-          return ContinueSentinel;
-        },
-        finish: function (finallyLoc) {
-          for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-            var entry = this.tryEntries[i];
-
-            if (entry.finallyLoc === finallyLoc) {
-              this.complete(entry.completion, entry.afterLoc);
-              resetTryEntry(entry);
-              return ContinueSentinel;
-            }
-          }
-        },
-        "catch": function (tryLoc) {
-          for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-            var entry = this.tryEntries[i];
-
-            if (entry.tryLoc === tryLoc) {
-              var record = entry.completion;
-
-              if (record.type === "throw") {
-                var thrown = record.arg;
-                resetTryEntry(entry);
-              }
-
-              return thrown;
-            }
-          } // The context.catch method must only be called with a location
-          // argument that corresponds to a known catch block.
-
-
-          throw new Error("illegal catch attempt");
-        },
-        delegateYield: function (iterable, resultName, nextLoc) {
-          this.delegate = {
-            iterator: values(iterable),
-            resultName: resultName,
-            nextLoc: nextLoc
-          };
-
-          if (this.method === "next") {
-            // Deliberately forget the last sent value so that we don't
-            // accidentally pass it on to the delegate.
-            this.arg = undefined$1;
-          }
-
-          return ContinueSentinel;
-        }
-      }; // Regardless of whether this script is executing as a CommonJS module
-      // or not, return the runtime object so that we can declare the variable
-      // regeneratorRuntime in the outer scope, which allows this module to be
-      // injected easily by `bin/regenerator --include-runtime script.js`.
-
-      return exports;
-    }( // If this script is executing as a CommonJS module, use module.exports
-    // as the regeneratorRuntime namespace. Otherwise create a new empty
-    // object. Either way, the resulting object will be used to initialize
-    // the regeneratorRuntime variable at the top of this file.
-    module.exports);
-
-    try {
-      regeneratorRuntime = runtime;
-    } catch (accidentalStrictMode) {
-      // This module should not be running in strict mode, so the above
-      // assignment should always work unless something is misconfigured. Just
-      // in case runtime.js accidentally runs in strict mode, we can escape
-      // strict mode using a global Function call. This could conceivably fail
-      // if a Content Security Policy forbids using Function, but in that case
-      // the proper solution is to fix the accidental strict mode problem. If
-      // you've misconfigured your bundler to force strict mode and applied a
-      // CSP to forbid Function, and you're not willing to fix either of those
-      // problems, please detail your unique predicament in a GitHub issue.
-      Function("r", "regeneratorRuntime = r")(runtime);
-    }
-  });
-  var regenerator = runtime_1;
-
   function _defineProperty$1(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -15918,35 +15111,11 @@
 
   var defineProperty$1 = _defineProperty$1;
 
-  function _arrayWithoutHoles$1(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    }
+  function createCommonjsModule$2(fn, module) {
+    return module = {
+      exports: {}
+    }, fn(module, module.exports), module.exports;
   }
-
-  var arrayWithoutHoles = _arrayWithoutHoles$1;
-
-  function _iterableToArray$1(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-  }
-
-  var iterableToArray = _iterableToArray$1;
-
-  function _nonIterableSpread$1() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
-  }
-
-  var nonIterableSpread = _nonIterableSpread$1;
-
-  function _toConsumableArray$1(arr) {
-    return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-  }
-
-  var toConsumableArray = _toConsumableArray$1;
 
   var _typeof_1 = createCommonjsModule$2(function (module) {
     function _typeof2(obj) {
@@ -20908,75 +20077,6 @@
     return moment$1.isMoment(value);
   }
   /**
-   * Copy property from b to a if property present in a.
-   * If property in b explicitly set to null, delete it if `allowDeletion` set.
-   *
-   * Internal helper routine, should not be exported. Not added to `exports` for that reason.
-   *
-   * @param a - Target object.
-   * @param b - Source object.
-   * @param prop - Name of property to copy from b to a.
-   * @param allowDeletion  if true, delete property in a if explicitly set to null in b
-   */
-
-
-  function copyOrDelete$1(a, b, prop, allowDeletion) {
-    var doDeletion = false;
-
-    if (allowDeletion === true) {
-      doDeletion = b[prop] === null && a[prop] !== undefined;
-    }
-
-    if (doDeletion) {
-      delete a[prop];
-    } else {
-      a[prop] = b[prop]; // Remember, this is a reference copy!
-    }
-  }
-  /**
-   * Deep extend an object a with the properties of object b
-   *
-   * @param a - Target object.
-   * @param b - Source object.
-   * @param protoExtend - If true, the prototype values will also be extended
-   * (ie. the options objects that inherit from others will also get the inherited options).
-   * @param allowDeletion - If true, the values of fields that are null will be deleted.
-   *
-   * @returns Argument a.
-   */
-
-
-  function deepExtend$1(a, b) {
-    var protoExtend = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    var allowDeletion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-    for (var prop in b) {
-      if (Object.prototype.hasOwnProperty.call(b, prop) || protoExtend === true) {
-        if (b[prop] && b[prop].constructor === Object) {
-          if (a[prop] === undefined) {
-            a[prop] = {};
-          }
-
-          if (a[prop].constructor === Object) {
-            deepExtend$1(a[prop], b[prop], protoExtend); // NOTE: allowDeletion not propagated!
-          } else {
-            copyOrDelete$1(a, b, prop, allowDeletion);
-          }
-        } else if (Array.isArray(b[prop])) {
-          a[prop] = [];
-
-          for (var i = 0; i < b[prop].length; i++) {
-            a[prop].push(b[prop][i]);
-          }
-        } else {
-          copyOrDelete$1(a, b, prop, allowDeletion);
-        }
-      }
-    }
-
-    return a;
-  }
-  /**
    * Convert an object into another type
    *
    * @param object - Value of unknown type.
@@ -21190,10 +20290,8 @@
 
 
   function isId(value) {
-    return typeof value === "string" || typeof value === "number";
+    return typeof value === 'string' || typeof value === 'number';
   }
-  /* eslint @typescript-eslint/member-ordering: ["error", { "classes": ["field", "constructor", "method"] }] */
-
   /**
    * A queue.
    *
@@ -21229,11 +20327,11 @@
     createClass$1(Queue, [{
       key: "setOptions",
       value: function setOptions(options) {
-        if (options && typeof options.delay !== "undefined") {
+        if (options && typeof options.delay !== 'undefined') {
           this.delay = options.delay;
         }
 
-        if (options && typeof options.max !== "undefined") {
+        if (options && typeof options.max !== 'undefined') {
           this.max = options.max;
         }
 
@@ -21266,7 +20364,6 @@
             var method = methods[i];
 
             if (method.original) {
-              // @TODO: better solution?
               object[method.name] = method.original;
             } else {
               // @TODO: better solution?
@@ -21291,7 +20388,7 @@
         var original = object[method];
 
         if (!original) {
-          throw new Error("Method " + method + " undefined");
+          throw new Error('Method ' + method + ' undefined');
         }
 
         object[method] = function () {
@@ -21316,7 +20413,7 @@
     }, {
       key: "queue",
       value: function queue(entry) {
-        if (typeof entry === "function") {
+        if (typeof entry === 'function') {
           this._queue.push({
             fn: entry
           });
@@ -21346,7 +20443,7 @@
           this._timeout = null;
         }
 
-        if (this.queue.length > 0 && typeof this.delay === "number") {
+        if (this.queue.length > 0 && typeof this.delay === 'number') {
           this._timeout = setTimeout(function () {
             _this.flush();
           }, this.delay);
@@ -21369,7 +20466,7 @@
         var queue = new Queue(options);
 
         if (object.flush !== undefined) {
-          throw new Error("Target object already has a property flush");
+          throw new Error('Target object already has a property flush');
         }
 
         object.flush = function () {
@@ -21377,7 +20474,7 @@
         };
 
         var methods = [{
-          name: "flush",
+          name: 'flush',
           original: undefined
         }];
 
@@ -21403,8 +20500,36 @@
     }]);
     return Queue;
   }();
-  /* eslint-disable @typescript-eslint/member-ordering */
 
+  function _arrayWithoutHoles$1(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
+
+      return arr2;
+    }
+  }
+
+  var arrayWithoutHoles = _arrayWithoutHoles$1;
+
+  function _iterableToArray$1(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  }
+
+  var iterableToArray = _iterableToArray$1;
+
+  function _nonIterableSpread$1() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+  }
+
+  var nonIterableSpread = _nonIterableSpread$1;
+
+  function _toConsumableArray$1(arr) {
+    return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  }
+
+  var toConsumableArray = _toConsumableArray$1;
   /**
    * [[DataSet]] code that can be reused in [[DataView]] or other similar implementations of [[DataInterface]].
    *
@@ -21412,14 +20537,13 @@
    * @typeParam IdProp - Name of the property that contains the id.
    */
 
-
   var DataSetPart =
   /*#__PURE__*/
   function () {
     function DataSetPart() {
       classCallCheck$1(this, DataSetPart);
       this._subscribers = {
-        "*": [],
+        '*': [],
         add: [],
         remove: [],
         update: []
@@ -21447,18 +20571,22 @@
     createClass$1(DataSetPart, [{
       key: "_trigger",
       value: function _trigger(event, payload, senderId) {
-        if (event === "*") {
-          throw new Error("Cannot trigger event *");
+        if (event === '*') {
+          throw new Error('Cannot trigger event *');
         }
 
-        [].concat(toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers["*"])).forEach(function (subscriber) {
-          subscriber(event, payload, senderId != null ? senderId : null);
-        });
+        var subscribers = [].concat(toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers['*']));
+
+        for (var i = 0, len = subscribers.length; i < len; i++) {
+          var subscriber = subscribers[i];
+
+          if (subscriber.callback) {
+            subscriber.callback(event, payload, senderId != null ? senderId : null);
+          }
+        }
       }
       /**
        * Subscribe to an event, add an event listener.
-       *
-       * @remarks Non-function callbacks are ignored.
        *
        * @param event - Event name.
        * @param callback - Callback method.
@@ -21467,10 +20595,9 @@
     }, {
       key: "on",
       value: function on(event, callback) {
-        if (typeof callback === "function") {
-          this._subscribers[event].push(callback);
-        } // @TODO: Maybe throw for invalid callbacks?
-
+        this._subscribers[event].push({
+          callback: callback
+        });
       }
       /**
        * Unsubscribe from an event, remove an event listener.
@@ -21484,942 +20611,12 @@
     }, {
       key: "off",
       value: function off(event, callback) {
-        this._subscribers[event] = this._subscribers[event].filter(function (subscriber) {
-          return subscriber !== callback;
+        this._subscribers[event] = this._subscribers[event].filter(function (listener) {
+          return listener.callback !== callback;
         });
       }
     }]);
     return DataSetPart;
-  }();
-
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-  }
-
-  var arrayWithHoles = _arrayWithHoles;
-
-  function _iterableToArrayLimit(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"] != null) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  var iterableToArrayLimit = _iterableToArrayLimit;
-
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance");
-  }
-
-  var nonIterableRest = _nonIterableRest;
-
-  function _slicedToArray(arr, i) {
-    return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
-  }
-
-  var slicedToArray = _slicedToArray;
-  /**
-   * Data stream
-   *
-   * @remarks
-   * [[DataStream]] offers an always up to date stream of items from a [[DataSet]] or [[DataView]].
-   * That means that the stream is evaluated at the time of iteration, conversion to another data type or when [[cache]] is called, not when the [[DataStream]] was created.
-   * Multiple invocations of for example [[toItemArray]] may yield different results (if the data source like for example [[DataSet]] gets modified).
-   *
-   * @typeparam Item - The item type this stream is going to work with.
-   */
-
-  var DataStream =
-  /*#__PURE__*/
-  function () {
-    /**
-     * Create a new data stream.
-     *
-     * @param _pairs - The id, item pairs.
-     */
-    function DataStream(_pairs) {
-      classCallCheck$1(this, DataStream);
-      this._pairs = _pairs;
-    }
-    /**
-     * Return an iterable of key, value pairs for every entry in the stream.
-     */
-
-
-    createClass$1(DataStream, [{
-      key: Symbol.iterator,
-      value:
-      /*#__PURE__*/
-      regenerator.mark(function value() {
-        var _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _step$value, id, item;
-
-        return regenerator.wrap(function value$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _iteratorNormalCompletion = true;
-                _didIteratorError = false;
-                _iteratorError = undefined;
-                _context.prev = 3;
-                _iterator = this._pairs[Symbol.iterator]();
-
-              case 5:
-                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                  _context.next = 12;
-                  break;
-                }
-
-                _step$value = slicedToArray(_step.value, 2), id = _step$value[0], item = _step$value[1];
-                _context.next = 9;
-                return [id, item];
-
-              case 9:
-                _iteratorNormalCompletion = true;
-                _context.next = 5;
-                break;
-
-              case 12:
-                _context.next = 18;
-                break;
-
-              case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](3);
-                _didIteratorError = true;
-                _iteratorError = _context.t0;
-
-              case 18:
-                _context.prev = 18;
-                _context.prev = 19;
-
-                if (!_iteratorNormalCompletion && _iterator.return != null) {
-                  _iterator.return();
-                }
-
-              case 21:
-                _context.prev = 21;
-
-                if (!_didIteratorError) {
-                  _context.next = 24;
-                  break;
-                }
-
-                throw _iteratorError;
-
-              case 24:
-                return _context.finish(21);
-
-              case 25:
-                return _context.finish(18);
-
-              case 26:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, value, this, [[3, 14, 18, 26], [19,, 21, 25]]);
-      })
-      /**
-       * Return an iterable of key, value pairs for every entry in the stream.
-       */
-
-    }, {
-      key: "entries",
-      value:
-      /*#__PURE__*/
-      regenerator.mark(function entries() {
-        var _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _step2$value, id, item;
-
-        return regenerator.wrap(function entries$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _iteratorNormalCompletion2 = true;
-                _didIteratorError2 = false;
-                _iteratorError2 = undefined;
-                _context2.prev = 3;
-                _iterator2 = this._pairs[Symbol.iterator]();
-
-              case 5:
-                if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
-                  _context2.next = 12;
-                  break;
-                }
-
-                _step2$value = slicedToArray(_step2.value, 2), id = _step2$value[0], item = _step2$value[1];
-                _context2.next = 9;
-                return [id, item];
-
-              case 9:
-                _iteratorNormalCompletion2 = true;
-                _context2.next = 5;
-                break;
-
-              case 12:
-                _context2.next = 18;
-                break;
-
-              case 14:
-                _context2.prev = 14;
-                _context2.t0 = _context2["catch"](3);
-                _didIteratorError2 = true;
-                _iteratorError2 = _context2.t0;
-
-              case 18:
-                _context2.prev = 18;
-                _context2.prev = 19;
-
-                if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                  _iterator2.return();
-                }
-
-              case 21:
-                _context2.prev = 21;
-
-                if (!_didIteratorError2) {
-                  _context2.next = 24;
-                  break;
-                }
-
-                throw _iteratorError2;
-
-              case 24:
-                return _context2.finish(21);
-
-              case 25:
-                return _context2.finish(18);
-
-              case 26:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, entries, this, [[3, 14, 18, 26], [19,, 21, 25]]);
-      })
-      /**
-       * Return an iterable of keys in the stream.
-       */
-
-    }, {
-      key: "keys",
-      value:
-      /*#__PURE__*/
-      regenerator.mark(function keys() {
-        var _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _step3$value, id;
-
-        return regenerator.wrap(function keys$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _iteratorNormalCompletion3 = true;
-                _didIteratorError3 = false;
-                _iteratorError3 = undefined;
-                _context3.prev = 3;
-                _iterator3 = this._pairs[Symbol.iterator]();
-
-              case 5:
-                if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
-                  _context3.next = 12;
-                  break;
-                }
-
-                _step3$value = slicedToArray(_step3.value, 1), id = _step3$value[0];
-                _context3.next = 9;
-                return id;
-
-              case 9:
-                _iteratorNormalCompletion3 = true;
-                _context3.next = 5;
-                break;
-
-              case 12:
-                _context3.next = 18;
-                break;
-
-              case 14:
-                _context3.prev = 14;
-                _context3.t0 = _context3["catch"](3);
-                _didIteratorError3 = true;
-                _iteratorError3 = _context3.t0;
-
-              case 18:
-                _context3.prev = 18;
-                _context3.prev = 19;
-
-                if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-                  _iterator3.return();
-                }
-
-              case 21:
-                _context3.prev = 21;
-
-                if (!_didIteratorError3) {
-                  _context3.next = 24;
-                  break;
-                }
-
-                throw _iteratorError3;
-
-              case 24:
-                return _context3.finish(21);
-
-              case 25:
-                return _context3.finish(18);
-
-              case 26:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, keys, this, [[3, 14, 18, 26], [19,, 21, 25]]);
-      })
-      /**
-       * Return an iterable of values in the stream.
-       */
-
-    }, {
-      key: "values",
-      value:
-      /*#__PURE__*/
-      regenerator.mark(function values() {
-        var _iteratorNormalCompletion4, _didIteratorError4, _iteratorError4, _iterator4, _step4, _step4$value, item;
-
-        return regenerator.wrap(function values$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _iteratorNormalCompletion4 = true;
-                _didIteratorError4 = false;
-                _iteratorError4 = undefined;
-                _context4.prev = 3;
-                _iterator4 = this._pairs[Symbol.iterator]();
-
-              case 5:
-                if (_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done) {
-                  _context4.next = 12;
-                  break;
-                }
-
-                _step4$value = slicedToArray(_step4.value, 2), item = _step4$value[1];
-                _context4.next = 9;
-                return item;
-
-              case 9:
-                _iteratorNormalCompletion4 = true;
-                _context4.next = 5;
-                break;
-
-              case 12:
-                _context4.next = 18;
-                break;
-
-              case 14:
-                _context4.prev = 14;
-                _context4.t0 = _context4["catch"](3);
-                _didIteratorError4 = true;
-                _iteratorError4 = _context4.t0;
-
-              case 18:
-                _context4.prev = 18;
-                _context4.prev = 19;
-
-                if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
-                  _iterator4.return();
-                }
-
-              case 21:
-                _context4.prev = 21;
-
-                if (!_didIteratorError4) {
-                  _context4.next = 24;
-                  break;
-                }
-
-                throw _iteratorError4;
-
-              case 24:
-                return _context4.finish(21);
-
-              case 25:
-                return _context4.finish(18);
-
-              case 26:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, values, this, [[3, 14, 18, 26], [19,, 21, 25]]);
-      })
-      /**
-       * Return an array containing all the ids in this stream.
-       *
-       * @remarks
-       * The array may contain duplicities.
-       *
-       * @returns The array with all ids from this stream.
-       */
-
-    }, {
-      key: "toIdArray",
-      value: function toIdArray() {
-        return toConsumableArray(this._pairs).map(function (pair) {
-          return pair[0];
-        });
-      }
-      /**
-       * Return an array containing all the items in this stream.
-       *
-       * @remarks
-       * The array may contain duplicities.
-       *
-       * @returns The array with all items from this stream.
-       */
-
-    }, {
-      key: "toItemArray",
-      value: function toItemArray() {
-        return toConsumableArray(this._pairs).map(function (pair) {
-          return pair[1];
-        });
-      }
-      /**
-       * Return an array containing all the entries in this stream.
-       *
-       * @remarks
-       * The array may contain duplicities.
-       *
-       * @returns The array with all entries from this stream.
-       */
-
-    }, {
-      key: "toEntryArray",
-      value: function toEntryArray() {
-        return toConsumableArray(this._pairs);
-      }
-      /**
-       * Return an object map containing all the items in this stream accessible by ids.
-       *
-       * @remarks
-       * In case of duplicate ids (coerced to string so `7 == '7'`) the last encoutered appears in the returned object.
-       *
-       * @returns The object map of all id → item pairs from this stream.
-       */
-
-    }, {
-      key: "toObjectMap",
-      value: function toObjectMap() {
-        var map = Object.create(null);
-        var _iteratorNormalCompletion5 = true;
-        var _didIteratorError5 = false;
-        var _iteratorError5 = undefined;
-
-        try {
-          for (var _iterator5 = this._pairs[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-            var _step5$value = slicedToArray(_step5.value, 2),
-                id = _step5$value[0],
-                item = _step5$value[1];
-
-            map[id] = item;
-          }
-        } catch (err) {
-          _didIteratorError5 = true;
-          _iteratorError5 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
-              _iterator5.return();
-            }
-          } finally {
-            if (_didIteratorError5) {
-              throw _iteratorError5;
-            }
-          }
-        }
-
-        return map;
-      }
-      /**
-       * Return a map containing all the items in this stream accessible by ids.
-       *
-       * @returns The map of all id → item pairs from this stream.
-       */
-
-    }, {
-      key: "toMap",
-      value: function toMap() {
-        return new Map(this._pairs);
-      }
-      /**
-       * Return a set containing all the (unique) ids in this stream.
-       *
-       * @returns The set of all ids from this stream.
-       */
-
-    }, {
-      key: "toIdSet",
-      value: function toIdSet() {
-        return new Set(this.toIdArray());
-      }
-      /**
-       * Return a set containing all the (unique) items in this stream.
-       *
-       * @returns The set of all items from this stream.
-       */
-
-    }, {
-      key: "toItemSet",
-      value: function toItemSet() {
-        return new Set(this.toItemArray());
-      }
-      /**
-       * Cache the items from this stream.
-       *
-       * @remarks
-       * This method allows for items to be fetched immediatelly and used (possibly multiple times) later.
-       * It can also be used to optimize performance as [[DataStream]] would otherwise reevaluate everything upon each iteration.
-       *
-       * ## Example
-       * ```javascript
-       * const ds = new DataSet([…])
-       *
-       * const cachedStream = ds.stream()
-       *   .filter(…)
-       *   .sort(…)
-       *   .map(…)
-       *   .cached(…) // Data are fetched, processed and cached here.
-       *
-       * ds.clear()
-       * chachedStream // Still has all the items.
-       * ```
-       *
-       * @returns A new [[DataStream]] with cached items (detached from the original [[DataSet]]).
-       */
-
-    }, {
-      key: "cache",
-      value: function cache() {
-        return new DataStream(toConsumableArray(this._pairs));
-      }
-      /**
-       * Get the distinct values of given property.
-       *
-       * @param callback - The function that picks and possibly converts the property.
-       *
-       * @typeparam T - The type of the distinct value.
-       *
-       * @returns A set of all distinct properties.
-       */
-
-    }, {
-      key: "distinct",
-      value: function distinct(callback) {
-        var set = new Set();
-        var _iteratorNormalCompletion6 = true;
-        var _didIteratorError6 = false;
-        var _iteratorError6 = undefined;
-
-        try {
-          for (var _iterator6 = this._pairs[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-            var _step6$value = slicedToArray(_step6.value, 2),
-                id = _step6$value[0],
-                item = _step6$value[1];
-
-            set.add(callback(item, id));
-          }
-        } catch (err) {
-          _didIteratorError6 = true;
-          _iteratorError6 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion6 && _iterator6.return != null) {
-              _iterator6.return();
-            }
-          } finally {
-            if (_didIteratorError6) {
-              throw _iteratorError6;
-            }
-          }
-        }
-
-        return set;
-      }
-      /**
-       * Filter the items of the stream.
-       *
-       * @param callback - The function that decides whether an item will be included.
-       *
-       * @returns A new data stream with the filtered items.
-       */
-
-    }, {
-      key: "filter",
-      value: function filter(callback) {
-        var pairs = this._pairs;
-        return new DataStream(defineProperty$1({}, Symbol.iterator,
-        /*#__PURE__*/
-        regenerator.mark(function _callee() {
-          var _iteratorNormalCompletion7, _didIteratorError7, _iteratorError7, _iterator7, _step7, _step7$value, id, item;
-
-          return regenerator.wrap(function _callee$(_context5) {
-            while (1) {
-              switch (_context5.prev = _context5.next) {
-                case 0:
-                  _iteratorNormalCompletion7 = true;
-                  _didIteratorError7 = false;
-                  _iteratorError7 = undefined;
-                  _context5.prev = 3;
-                  _iterator7 = pairs[Symbol.iterator]();
-
-                case 5:
-                  if (_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done) {
-                    _context5.next = 13;
-                    break;
-                  }
-
-                  _step7$value = slicedToArray(_step7.value, 2), id = _step7$value[0], item = _step7$value[1];
-
-                  if (!callback(item, id)) {
-                    _context5.next = 10;
-                    break;
-                  }
-
-                  _context5.next = 10;
-                  return [id, item];
-
-                case 10:
-                  _iteratorNormalCompletion7 = true;
-                  _context5.next = 5;
-                  break;
-
-                case 13:
-                  _context5.next = 19;
-                  break;
-
-                case 15:
-                  _context5.prev = 15;
-                  _context5.t0 = _context5["catch"](3);
-                  _didIteratorError7 = true;
-                  _iteratorError7 = _context5.t0;
-
-                case 19:
-                  _context5.prev = 19;
-                  _context5.prev = 20;
-
-                  if (!_iteratorNormalCompletion7 && _iterator7.return != null) {
-                    _iterator7.return();
-                  }
-
-                case 22:
-                  _context5.prev = 22;
-
-                  if (!_didIteratorError7) {
-                    _context5.next = 25;
-                    break;
-                  }
-
-                  throw _iteratorError7;
-
-                case 25:
-                  return _context5.finish(22);
-
-                case 26:
-                  return _context5.finish(19);
-
-                case 27:
-                case "end":
-                  return _context5.stop();
-              }
-            }
-          }, _callee, null, [[3, 15, 19, 27], [20,, 22, 26]]);
-        })));
-      }
-      /**
-       * Execute a callback for each item of the stream.
-       *
-       * @param callback - The function that will be invoked for each item.
-       */
-
-    }, {
-      key: "forEach",
-      value: function forEach(callback) {
-        var _iteratorNormalCompletion8 = true;
-        var _didIteratorError8 = false;
-        var _iteratorError8 = undefined;
-
-        try {
-          for (var _iterator8 = this._pairs[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-            var _step8$value = slicedToArray(_step8.value, 2),
-                id = _step8$value[0],
-                item = _step8$value[1];
-
-            callback(item, id);
-          }
-        } catch (err) {
-          _didIteratorError8 = true;
-          _iteratorError8 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion8 && _iterator8.return != null) {
-              _iterator8.return();
-            }
-          } finally {
-            if (_didIteratorError8) {
-              throw _iteratorError8;
-            }
-          }
-        }
-      }
-      /**
-       * Map the items into a different type.
-       *
-       * @param callback - The function that does the conversion.
-       *
-       * @typeparam Mapped - The type of the item after mapping.
-       *
-       * @returns A new data stream with the mapped items.
-       */
-
-    }, {
-      key: "map",
-      value: function map(callback) {
-        var pairs = this._pairs;
-        return new DataStream(defineProperty$1({}, Symbol.iterator,
-        /*#__PURE__*/
-        regenerator.mark(function _callee2() {
-          var _iteratorNormalCompletion9, _didIteratorError9, _iteratorError9, _iterator9, _step9, _step9$value, id, item;
-
-          return regenerator.wrap(function _callee2$(_context6) {
-            while (1) {
-              switch (_context6.prev = _context6.next) {
-                case 0:
-                  _iteratorNormalCompletion9 = true;
-                  _didIteratorError9 = false;
-                  _iteratorError9 = undefined;
-                  _context6.prev = 3;
-                  _iterator9 = pairs[Symbol.iterator]();
-
-                case 5:
-                  if (_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done) {
-                    _context6.next = 12;
-                    break;
-                  }
-
-                  _step9$value = slicedToArray(_step9.value, 2), id = _step9$value[0], item = _step9$value[1];
-                  _context6.next = 9;
-                  return [id, callback(item, id)];
-
-                case 9:
-                  _iteratorNormalCompletion9 = true;
-                  _context6.next = 5;
-                  break;
-
-                case 12:
-                  _context6.next = 18;
-                  break;
-
-                case 14:
-                  _context6.prev = 14;
-                  _context6.t0 = _context6["catch"](3);
-                  _didIteratorError9 = true;
-                  _iteratorError9 = _context6.t0;
-
-                case 18:
-                  _context6.prev = 18;
-                  _context6.prev = 19;
-
-                  if (!_iteratorNormalCompletion9 && _iterator9.return != null) {
-                    _iterator9.return();
-                  }
-
-                case 21:
-                  _context6.prev = 21;
-
-                  if (!_didIteratorError9) {
-                    _context6.next = 24;
-                    break;
-                  }
-
-                  throw _iteratorError9;
-
-                case 24:
-                  return _context6.finish(21);
-
-                case 25:
-                  return _context6.finish(18);
-
-                case 26:
-                case "end":
-                  return _context6.stop();
-              }
-            }
-          }, _callee2, null, [[3, 14, 18, 26], [19,, 21, 25]]);
-        })));
-      }
-      /**
-       * Get the item with the maximum value of given property.
-       *
-       * @param callback - The function that picks and possibly converts the property.
-       *
-       * @returns The item with the maximum if found otherwise null.
-       */
-
-    }, {
-      key: "max",
-      value: function max(callback) {
-        var iter = this._pairs[Symbol.iterator]();
-
-        var curr = iter.next();
-
-        if (curr.done) {
-          return null;
-        }
-
-        var maxItem = curr.value[1];
-        var maxValue = callback(curr.value[1], curr.value[0]);
-
-        while (!(curr = iter.next()).done) {
-          var _curr$value = slicedToArray(curr.value, 2),
-              id = _curr$value[0],
-              item = _curr$value[1];
-
-          var _value = callback(item, id);
-
-          if (_value > maxValue) {
-            maxValue = _value;
-            maxItem = item;
-          }
-        }
-
-        return maxItem;
-      }
-      /**
-       * Get the item with the minimum value of given property.
-       *
-       * @param callback - The function that picks and possibly converts the property.
-       *
-       * @returns The item with the minimum if found otherwise null.
-       */
-
-    }, {
-      key: "min",
-      value: function min(callback) {
-        var iter = this._pairs[Symbol.iterator]();
-
-        var curr = iter.next();
-
-        if (curr.done) {
-          return null;
-        }
-
-        var minItem = curr.value[1];
-        var minValue = callback(curr.value[1], curr.value[0]);
-
-        while (!(curr = iter.next()).done) {
-          var _curr$value2 = slicedToArray(curr.value, 2),
-              id = _curr$value2[0],
-              item = _curr$value2[1];
-
-          var _value2 = callback(item, id);
-
-          if (_value2 < minValue) {
-            minValue = _value2;
-            minItem = item;
-          }
-        }
-
-        return minItem;
-      }
-      /**
-       * Reduce the items into a single value.
-       *
-       * @param callback - The function that does the reduction.
-       * @param accumulator - The initial value of the accumulator.
-       *
-       * @typeparam T - The type of the accumulated value.
-       *
-       * @returns The reduced value.
-       */
-
-    }, {
-      key: "reduce",
-      value: function reduce(callback, accumulator) {
-        var _iteratorNormalCompletion10 = true;
-        var _didIteratorError10 = false;
-        var _iteratorError10 = undefined;
-
-        try {
-          for (var _iterator10 = this._pairs[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-            var _step10$value = slicedToArray(_step10.value, 2),
-                id = _step10$value[0],
-                item = _step10$value[1];
-
-            accumulator = callback(accumulator, item, id);
-          }
-        } catch (err) {
-          _didIteratorError10 = true;
-          _iteratorError10 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion10 && _iterator10.return != null) {
-              _iterator10.return();
-            }
-          } finally {
-            if (_didIteratorError10) {
-              throw _iteratorError10;
-            }
-          }
-        }
-
-        return accumulator;
-      }
-      /**
-       * Sort the items.
-       *
-       * @param callback - Item comparator.
-       *
-       * @returns A new stream with sorted items.
-       */
-
-    }, {
-      key: "sort",
-      value: function sort(callback) {
-        var _this = this;
-
-        return new DataStream(defineProperty$1({}, Symbol.iterator, function () {
-          return toConsumableArray(_this._pairs).sort(function (_ref3, _ref4) {
-            var _ref5 = slicedToArray(_ref3, 2),
-                idA = _ref5[0],
-                itemA = _ref5[1];
-
-            var _ref6 = slicedToArray(_ref4, 2),
-                idB = _ref6[0],
-                itemB = _ref6[1];
-
-            return callback(itemA, itemB, idA, idB);
-          })[Symbol.iterator]();
-        }));
-      }
-    }]);
-    return DataStream;
   }();
 
   function ownKeys$1(object, enumerableOnly) {
@@ -22542,11 +20739,11 @@
       }
 
       _this._options = options || {};
-      _this._data = new Map(); // map with data indexed by id
+      _this._data = Object.create({}); // map with data indexed by id
 
       _this.length = 0; // number of items in the DataSet
 
-      _this._idProp = _this._options.fieldId || "id"; // name of the field containing id
+      _this._idProp = _this._options.fieldId || 'id'; // name of the field containing id
 
       _this._type = {}; // internal field types (NOTE: this can differ from this._options.type)
       // all variants of a Date are internally stored as Date, so we can convert
@@ -22559,8 +20756,8 @@
           var field = fields[i];
           var value = _this._options.type[field];
 
-          if (value == "Date" || value == "ISODate" || value == "ASPDate") {
-            _this._type[field] = "Date";
+          if (value == 'Date' || value == 'ISODate' || value == 'ASPDate') {
+            _this._type[field] = 'Date';
           } else {
             _this._type[field] = value;
           }
@@ -22598,11 +20795,11 @@
             // create queue and update its options
             if (!this._queue) {
               this._queue = Queue.extend(this, {
-                replace: ["add", "update", "remove"]
+                replace: ['add', 'update', 'remove']
               });
             }
 
-            if (options.queue && _typeof_1(options.queue) === "object") {
+            if (options.queue && _typeof_1(options.queue) === 'object') {
               this._queue.setOptions(options.queue);
             }
           }
@@ -22649,16 +20846,16 @@
             id = this._addItem(data[i]);
             addedIds.push(id);
           }
-        } else if (data && _typeof_1(data) === "object") {
+        } else if (data && _typeof_1(data) === 'object') {
           // Single item
           id = this._addItem(data);
           addedIds.push(id);
         } else {
-          throw new Error("Unknown dataType");
+          throw new Error('Unknown dataType');
         }
 
         if (addedIds.length) {
-          this._trigger("add", {
+          this._trigger('add', {
             items: addedIds
           }, senderId);
         }
@@ -22666,9 +20863,8 @@
         return addedIds;
       }
       /**
-       * Update existing items. When an item does not exist, it will be created.
+       * Update existing items. When an item does not exist, it will be created
        *
-       * @remarks
        * The provided properties will be merged in the existing item. When an item does not exist, it will be created.
        *
        * After the items are updated, the DataSet will trigger an event `add` for the added items, and an event `update`. When a `senderId` is provided, this id will be passed with the triggered event to all subscribers.
@@ -22692,9 +20888,6 @@
        * console.log(ids) // [2, 4]
        * ```
        *
-       * ## Warning for TypeScript users
-       * This method may introduce partial items into the data set. Use add or updateOnly instead for better type safety.
-       *
        * @param data - Items to be updated (if the id is already present) or added (if the id is missing).
        * @param senderId - Sender id.
        *
@@ -22717,10 +20910,10 @@
         var addOrUpdate = function addOrUpdate(item) {
           var origId = item[idProp];
 
-          if (origId != null && _this2._data.has(origId)) {
+          if (origId != null && _this2._data[origId]) {
             var fullItem = item; // it has an id, therefore it is a fullitem
 
-            var oldItem = Object.assign({}, _this2._data.get(origId)); // update item
+            var oldItem = Object.assign({}, _this2._data[origId]); // update item
 
             var id = _this2._updateItem(fullItem);
 
@@ -22738,21 +20931,21 @@
         if (Array.isArray(data)) {
           // Array
           for (var i = 0, len = data.length; i < len; i++) {
-            if (data[i] && _typeof_1(data[i]) === "object") {
+            if (data[i] && _typeof_1(data[i]) === 'object') {
               addOrUpdate(data[i]);
             } else {
-              console.warn("Ignoring input item, which is not an object at index " + i);
+              console.warn('Ignoring input item, which is not an object at index ' + i);
             }
           }
-        } else if (data && _typeof_1(data) === "object") {
+        } else if (data && _typeof_1(data) === 'object') {
           // Single item
           addOrUpdate(data);
         } else {
-          throw new Error("Unknown dataType");
+          throw new Error('Unknown dataType');
         }
 
         if (addedIds.length) {
-          this._trigger("add", {
+          this._trigger('add', {
             items: addedIds
           }, senderId);
         }
@@ -22770,109 +20963,10 @@
           //  }).bind(this)
           //});
 
-          this._trigger("update", props, senderId);
+          this._trigger('update', props, senderId);
         }
 
         return addedIds.concat(updatedIds);
-      }
-      /**
-       * Update existing items. When an item does not exist, an error will be thrown.
-       *
-       * @remarks
-       * The provided properties will be deeply merged into the existing item.
-       * When an item does not exist (id not present in the data set or absent), an error will be thrown and nothing will be changed.
-       *
-       * After the items are updated, the DataSet will trigger an event `update`.
-       * When a `senderId` is provided, this id will be passed with the triggered event to all subscribers.
-       *
-       * ## Example
-       *
-       * ```javascript
-       * // create a DataSet
-       * const data = new vis.DataSet([
-       *   { id: 1, text: 'item 1' },
-       *   { id: 2, text: 'item 2' },
-       *   { id: 3, text: 'item 3' },
-       * ])
-       *
-       * // update items
-       * const ids = data.update([
-       *   { id: 2, text: 'item 2 (updated)' }, // works
-       *   // { id: 4, text: 'item 4 (new)' }, // would throw
-       *   // { text: 'item 4 (new)' }, // would also throw
-       * ])
-       *
-       * console.log(ids) // [2]
-       * ```
-       *
-       * @param data - Updates (the id and optionally other props) to the items in this data set.
-       * @param senderId - Sender id.
-       *
-       * @returns updatedIds - The ids of the updated items.
-       *
-       * @throws When the supplied data is neither an item nor an array of items, when the ids are missing.
-       */
-
-    }, {
-      key: "updateOnly",
-      value: function updateOnly(data, senderId) {
-        var _this3 = this;
-
-        if (!Array.isArray(data)) {
-          data = [data];
-        }
-
-        var updateEventData = data.map(function (update) {
-          var oldData = _this3._data.get(update[_this3._idProp]);
-
-          if (oldData == null) {
-            throw new Error("Updating non-existent items is not allowed.");
-          }
-
-          return {
-            oldData: oldData,
-            update: update
-          };
-        }).map(function (_ref) {
-          var oldData = _ref.oldData,
-              update = _ref.update;
-          var id = oldData[_this3._idProp];
-          var updatedData = deepExtend$1(deepExtend$1({}, oldData), update);
-
-          _this3._data.set(id, updatedData);
-
-          return {
-            id: id,
-            oldData: oldData,
-            updatedData: updatedData
-          };
-        });
-
-        if (updateEventData.length) {
-          var props = {
-            items: updateEventData.map(function (value) {
-              return value.id;
-            }),
-            oldData: updateEventData.map(function (value) {
-              return value.oldData;
-            }),
-            data: updateEventData.map(function (value) {
-              return value.updatedData;
-            })
-          }; // TODO: remove deprecated property 'data' some day
-          //Object.defineProperty(props, 'data', {
-          //  'get': (function() {
-          //    console.warn('Property data is deprecated. Use DataSet.get(ids) to retrieve the new data, use the oldData property on this object to get the old data');
-          //    return updatedData;
-          //  }).bind(this)
-          //});
-
-          this._trigger("update", props, senderId);
-
-          return props.items;
-        } else {
-          return [];
-        }
       }
       /** @inheritdoc */
 
@@ -22899,7 +20993,7 @@
         } // determine the return type
 
 
-        var returnType = options && options.returnType === "Object" ? "Object" : "Array"; // @TODO: WTF is this? Or am I missing something?
+        var returnType = options && options.returnType === 'Object' ? 'Object' : 'Array'; // @TODO: WTF is this? Or am I missing something?
         // var returnType
         // if (options && options.returnType) {
         //   var allowedValues = ['Array', 'Object']
@@ -22937,7 +21031,7 @@
           }
         } else {
           // return all items
-          itemIds = toConsumableArray(this._data.keys());
+          itemIds = Object.keys(this._data);
 
           for (var _i = 0, _len = itemIds.length; _i < _len; _i++) {
             itemId = itemIds[_i];
@@ -22968,7 +21062,7 @@
         } // return the results
 
 
-        if (returnType == "Object") {
+        if (returnType == 'Object') {
           var result = {};
 
           for (var _i3 = 0, _len3 = items.length; _i3 < _len3; _i3++) {
@@ -22999,7 +21093,7 @@
         var filter = options && options.filter;
         var order = options && options.order;
         var type = options && options.type || this._options.type;
-        var itemIds = toConsumableArray(data.keys());
+        var itemIds = Object.keys(data);
         var ids = [];
         var item;
         var items;
@@ -23043,7 +21137,7 @@
 
             for (var _i6 = 0, _len6 = itemIds.length; _i6 < _len6; _i6++) {
               var _id4 = itemIds[_i6];
-              items.push(data.get(_id4));
+              items.push(data[_id4]);
             }
 
             this._sort(items, order);
@@ -23055,7 +21149,7 @@
             // create unordered list
             for (var _i8 = 0, _len8 = itemIds.length; _i8 < _len8; _i8++) {
               var _id5 = itemIds[_i8];
-              item = data.get(_id5);
+              item = data[_id5];
               ids.push(item[this._idProp]);
             }
           }
@@ -23078,7 +21172,7 @@
         var filter = options && options.filter;
         var type = options && options.type || this._options.type;
         var data = this._data;
-        var itemIds = toConsumableArray(data.keys());
+        var itemIds = Object.keys(data);
 
         if (options && options.order) {
           // execute forEach on ordered list
@@ -23111,7 +21205,7 @@
         var type = options && options.type || this._options.type;
         var mappedItems = [];
         var data = this._data;
-        var itemIds = toConsumableArray(data.keys()); // convert and filter items
+        var itemIds = Object.keys(data); // convert and filter items
 
         for (var i = 0, len = itemIds.length; i < len; i++) {
           var id = itemIds[i];
@@ -23168,7 +21262,7 @@
     }, {
       key: "_sort",
       value: function _sort(items, order) {
-        if (typeof order === "string") {
+        if (typeof order === 'string') {
           // order by provided field name
           var name = order; // field name
 
@@ -23178,13 +21272,13 @@
             var bv = b[name];
             return av > bv ? 1 : av < bv ? -1 : 0;
           });
-        } else if (typeof order === "function") {
+        } else if (typeof order === 'function') {
           // order by sort function
           items.sort(order);
         } else {
           // TODO: extend order by an Object {field:string, direction:string}
           //       where direction can be 'asc' or 'desc'
-          throw new TypeError("Order must be a function or a string");
+          throw new TypeError('Order must be a function or a string');
         }
       }
       /**
@@ -23237,7 +21331,7 @@
         }
 
         if (removedIds.length) {
-          this._trigger("remove", {
+          this._trigger('remove', {
             items: removedIds,
             oldData: removedItems
           }, senderId);
@@ -23262,16 +21356,14 @@
 
         if (isId(id)) {
           ident = id;
-        } else if (id && _typeof_1(id) === "object") {
+        } else if (id && _typeof_1(id) === 'object') {
           ident = id[this._idProp]; // look for the identifier field using ._idProp
         } // do the removing if the item is found
 
 
-        if (ident != null && this._data.has(ident)) {
-          var item = this._data.get(ident) || null;
-
-          this._data.delete(ident);
-
+        if (ident != null && this._data[ident]) {
+          var item = this._data[ident];
+          delete this._data[ident];
           --this.length;
           return item;
         }
@@ -23291,18 +21383,17 @@
     }, {
       key: "clear",
       value: function clear(senderId) {
-        var ids = toConsumableArray(this._data.keys());
+        var ids = Object.keys(this._data);
         var items = [];
 
         for (var i = 0, len = ids.length; i < len; i++) {
-          items.push(this._data.get(ids[i]));
+          items.push(this._data[ids[i]]);
         }
 
-        this._data.clear();
-
+        this._data = {};
         this.length = 0;
 
-        this._trigger("remove", {
+        this._trigger('remove', {
           items: ids,
           oldData: items
         }, senderId);
@@ -23320,38 +21411,23 @@
     }, {
       key: "max",
       value: function max(field) {
+        var data = this._data;
+        var itemIds = Object.keys(data);
         var max = null;
         var maxField = null;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
 
-        try {
-          for (var _iterator = this._data.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var item = _step.value;
-            var itemField = item[field];
+        for (var i = 0, len = itemIds.length; i < len; i++) {
+          var id = itemIds[i];
+          var item = data[id];
+          var itemField = item[field];
 
-            if (typeof itemField === "number" && (maxField == null || itemField > maxField)) {
-              max = item;
-              maxField = itemField;
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
+          if (itemField != null && (maxField == null || itemField > maxField)) {
+            max = item;
+            maxField = itemField;
           }
         }
 
-        return max || null;
+        return max;
       }
       /**
        * Find the item with minimum value of a specified field.
@@ -23364,38 +21440,23 @@
     }, {
       key: "min",
       value: function min(field) {
+        var data = this._data;
+        var itemIds = Object.keys(data);
         var min = null;
         var minField = null;
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
 
-        try {
-          for (var _iterator2 = this._data.values()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var item = _step2.value;
-            var itemField = item[field];
+        for (var i = 0, len = itemIds.length; i < len; i++) {
+          var id = itemIds[i];
+          var item = data[id];
+          var itemField = item[field];
 
-            if (typeof itemField === "number" && (minField == null || itemField < minField)) {
-              min = item;
-              minField = itemField;
-            }
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-              _iterator2.return();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
+          if (itemField != null && (minField == null || itemField < minField)) {
+            min = item;
+            minField = itemField;
           }
         }
 
-        return min || null;
+        return min;
       }
       /**
        * Find all distinct values of a specified field
@@ -23409,14 +21470,14 @@
       key: "distinct",
       value: function distinct(prop) {
         var data = this._data;
-        var itemIds = toConsumableArray(data.keys());
+        var itemIds = Object.keys(data);
         var values = [];
         var fieldType = this._options.type && this._options.type[prop] || null;
         var count = 0;
 
         for (var i = 0, len = itemIds.length; i < len; i++) {
           var id = itemIds[i];
-          var item = data.get(id);
+          var item = data[id];
           var value = item[prop];
           var exists = false;
 
@@ -23456,9 +21517,9 @@
 
         if (id != null) {
           // check whether this id is already taken
-          if (this._data.has(id)) {
+          if (this._data[id]) {
             // item already exists
-            throw new Error("Cannot add item: item with id " + id + " already exists");
+            throw new Error('Cannot add item: item with id ' + id + ' already exists');
           }
         } else {
           // generate an id
@@ -23476,9 +21537,8 @@
           d[field] = convert$1(item[field], fieldType);
         }
 
-        this._data.set(id, d);
-
-        ++this.length;
+        this._data[id] = d;
+        this.length++;
         return id;
       }
       /**
@@ -23495,7 +21555,7 @@
       value: function _getItem(id, types) {
         // @TODO: I have no idea how to type this.
         // get the item from the dataset
-        var raw = this._data.get(id);
+        var raw = this._data[id];
 
         if (!raw) {
           return null;
@@ -23539,14 +21599,14 @@
         var id = item[this._idProp];
 
         if (id == null) {
-          throw new Error("Cannot update item: item has no id (item: " + JSON.stringify(item) + ")");
+          throw new Error('Cannot update item: item has no id (item: ' + JSON.stringify(item) + ')');
         }
 
-        var d = this._data.get(id);
+        var d = this._data[id];
 
         if (!d) {
           // item doesn't exist
-          throw new Error("Cannot update item: no item with id " + id + " found");
+          throw new Error('Cannot update item: no item with id ' + id + ' found');
         } // merge with current item
 
 
@@ -23554,101 +21614,12 @@
 
         for (var i = 0, len = fields.length; i < len; i++) {
           var field = fields[i];
-          var fieldType = this._type[field]; // type may be undefined
-
+          var fieldType = this._type[field] // type may be undefined
+          ;
           d[field] = convert$1(item[field], fieldType);
         }
 
         return id;
-      }
-      /** @inheritdoc */
-
-    }, {
-      key: "stream",
-      value: function stream(ids) {
-        if (ids) {
-          var data = this._data;
-          return new DataStream(defineProperty$1({}, Symbol.iterator,
-          /*#__PURE__*/
-          regenerator.mark(function _callee() {
-            var _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, id, item;
-
-            return regenerator.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    _iteratorNormalCompletion3 = true;
-                    _didIteratorError3 = false;
-                    _iteratorError3 = undefined;
-                    _context.prev = 3;
-                    _iterator3 = ids[Symbol.iterator]();
-
-                  case 5:
-                    if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
-                      _context.next = 14;
-                      break;
-                    }
-
-                    id = _step3.value;
-                    item = data.get(id);
-
-                    if (!(item != null)) {
-                      _context.next = 11;
-                      break;
-                    }
-
-                    _context.next = 11;
-                    return [id, item];
-
-                  case 11:
-                    _iteratorNormalCompletion3 = true;
-                    _context.next = 5;
-                    break;
-
-                  case 14:
-                    _context.next = 20;
-                    break;
-
-                  case 16:
-                    _context.prev = 16;
-                    _context.t0 = _context["catch"](3);
-                    _didIteratorError3 = true;
-                    _iteratorError3 = _context.t0;
-
-                  case 20:
-                    _context.prev = 20;
-                    _context.prev = 21;
-
-                    if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-                      _iterator3.return();
-                    }
-
-                  case 23:
-                    _context.prev = 23;
-
-                    if (!_didIteratorError3) {
-                      _context.next = 26;
-                      break;
-                    }
-
-                    throw _iteratorError3;
-
-                  case 26:
-                    return _context.finish(23);
-
-                  case 27:
-                    return _context.finish(20);
-
-                  case 28:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, null, [[3, 16, 20, 28], [21,, 23, 27]]);
-          })));
-        } else {
-          return new DataStream(defineProperty$1({}, Symbol.iterator, this._data.entries.bind(this._data)));
-        }
       }
     }]);
     return DataSet;
@@ -23719,10 +21690,10 @@
       /** @inheritdoc */
 
       _this.length = 0;
-      _this._ids = new Set(); // ids of the items currently in memory (just contains a boolean true)
+      _this._ids = {}; // ids of the items currently in memory (just contains a boolean true)
 
       _this._options = options || {};
-      _this._listener = _this._onEvent.bind(assertThisInitialized(_this));
+      _this.listener = _this._onEvent.bind(assertThisInitialized(_this));
 
       _this.setData(data);
 
@@ -23743,7 +21714,7 @@
         if (this._data) {
           // unsubscribe from current dataset
           if (this._data.off) {
-            this._data.off("*", this._listener);
+            this._data.off('*', this.listener);
           } // trigger a remove of all items in memory
 
 
@@ -23753,11 +21724,10 @@
 
           var items = this._data.get(ids);
 
-          this._ids.clear();
-
+          this._ids = {};
           this.length = 0;
 
-          this._trigger("remove", {
+          this._trigger('remove', {
             items: ids,
             oldData: items
           });
@@ -23772,13 +21742,12 @@
 
           for (var i = 0, len = _ids.length; i < len; i++) {
             var id = _ids[i];
-
-            this._ids.add(id);
+            this._ids[id] = true;
           }
 
           this.length = _ids.length;
 
-          this._trigger("add", {
+          this._trigger('add', {
             items: _ids
           });
         } else {
@@ -23787,7 +21756,7 @@
 
 
         if (this._data.on) {
-          this._data.on("*", this._listener);
+          this._data.on('*', this.listener);
         }
       }
       /**
@@ -23802,7 +21771,7 @@
           filter: this._options.filter
         });
 
-        var oldIds = toConsumableArray(this._ids);
+        var oldIds = Object.keys(this._ids);
         var newIds = {};
         var addedIds = [];
         var removedIds = [];
@@ -23812,10 +21781,9 @@
           var id = ids[i];
           newIds[id] = true;
 
-          if (!this._ids.has(id)) {
+          if (!this._ids[id]) {
             addedIds.push(id);
-
-            this._ids.add(id);
+            this._ids[id] = true;
           }
         } // check for removals
 
@@ -23830,25 +21798,24 @@
             // Doesn't happen during tests or examples.
             // Is it really impossible or could it eventually happen?
             // How to handle it if it does? The types guarantee non-nullable items.
-            console.error("If you see this, report it please.");
+            console.error('If you see this, report it please.');
           } else if (!newIds[_id]) {
             removedIds.push(_id);
             removedItems.push(item);
-
-            this._ids.delete(_id);
+            delete this._ids[_id];
           }
         }
 
         this.length += addedIds.length - removedIds.length; // trigger events
 
         if (addedIds.length) {
-          this._trigger("add", {
+          this._trigger('add', {
             items: addedIds
           });
         }
 
         if (removedIds.length) {
-          this._trigger("remove", {
+          this._trigger('remove', {
             items: removedIds,
             oldData: removedItems
           });
@@ -23987,13 +21954,6 @@
       value: function getDataSet() {
         return this._data.getDataSet();
       }
-      /** @inheritdoc */
-
-    }, {
-      key: "stream",
-      value: function stream(ids) {
-        return this._data.stream(ids || defineProperty$1({}, Symbol.iterator, this._ids.keys.bind(this._ids)));
-      }
       /**
        * Event listener. Will propagate all events from the connected data set to the subscribers of the DataView, but will filter the items and only trigger when there are changes in the filtered data set.
        *
@@ -24018,22 +21978,21 @@
         var removedItems = [];
 
         switch (event) {
-          case "add":
+          case 'add':
             // filter the ids of the added items
             for (var i = 0, len = ids.length; i < len; i++) {
               var id = ids[i];
               var item = this.get(id);
 
               if (item) {
-                this._ids.add(id);
-
+                this._ids[id] = true;
                 addedIds.push(id);
               }
             }
 
             break;
 
-          case "update":
+          case 'update':
             // determine the event from the views viewpoint: an updated
             // item can be added, updated, or removed from this view.
             for (var _i2 = 0, _len2 = ids.length; _i2 < _len2; _i2++) {
@@ -24042,19 +22001,17 @@
               var _item = this.get(_id2);
 
               if (_item) {
-                if (this._ids.has(_id2)) {
+                if (this._ids[_id2]) {
                   updatedIds.push(_id2);
                   updatedItems.push(params.data[_i2]);
                   oldItems.push(params.oldData[_i2]);
                 } else {
-                  this._ids.add(_id2);
-
+                  this._ids[_id2] = true;
                   addedIds.push(_id2);
                 }
               } else {
-                if (this._ids.has(_id2)) {
-                  this._ids.delete(_id2);
-
+                if (this._ids[_id2]) {
+                  delete this._ids[_id2];
                   removedIds.push(_id2);
                   removedItems.push(params.oldData[_i2]);
                 }
@@ -24063,14 +22020,13 @@
 
             break;
 
-          case "remove":
+          case 'remove':
             // filter the ids of the removed items
             for (var _i3 = 0, _len3 = ids.length; _i3 < _len3; _i3++) {
               var _id3 = ids[_i3];
 
-              if (this._ids.has(_id3)) {
-                this._ids.delete(_id3);
-
+              if (this._ids[_id3]) {
+                delete this._ids[_id3];
                 removedIds.push(_id3);
                 removedItems.push(params.oldData[_i3]);
               }
@@ -24082,13 +22038,13 @@
         this.length += addedIds.length - removedIds.length;
 
         if (addedIds.length) {
-          this._trigger("add", {
+          this._trigger('add', {
             items: addedIds
           }, senderId);
         }
 
         if (updatedIds.length) {
-          this._trigger("update", {
+          this._trigger('update', {
             items: updatedIds,
             oldData: oldItems,
             data: updatedItems
@@ -24096,7 +22052,7 @@
         }
 
         if (removedIds.length) {
-          this._trigger("remove", {
+          this._trigger('remove', {
             items: removedIds,
             oldData: removedItems
           }, senderId);
@@ -24115,18 +22071,17 @@
   var esm$1 = /*#__PURE__*/Object.freeze({
     'default': index$1,
     DataSet: DataSet,
-    DataStream: DataStream,
     DataView: DataView,
     Queue: Queue
   });
 
-  function _arrayWithHoles$1(arr) {
+  function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
   }
 
-  var arrayWithHoles$1 = _arrayWithHoles$1;
+  var arrayWithHoles = _arrayWithHoles;
 
-  function _iterableToArrayLimit$1(arr, i) {
+  function _iterableToArrayLimit(arr, i) {
     var _arr = [];
     var _n = true;
     var _d = false;
@@ -24152,19 +22107,19 @@
     return _arr;
   }
 
-  var iterableToArrayLimit$1 = _iterableToArrayLimit$1;
+  var iterableToArrayLimit = _iterableToArrayLimit;
 
-  function _nonIterableRest$1() {
+  function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var nonIterableRest$1 = _nonIterableRest$1;
+  var nonIterableRest = _nonIterableRest;
 
-  function _slicedToArray$1(arr, i) {
-    return arrayWithHoles$1(arr) || iterableToArrayLimit$1(arr, i) || nonIterableRest$1();
+  function _slicedToArray(arr, i) {
+    return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
   }
 
-  var slicedToArray$1 = _slicedToArray$1;
+  var slicedToArray = _slicedToArray;
 
   var _typeof_1$1 = createCommonjsModule(function (module) {
     function _typeof2(obj) {
@@ -24771,7 +22726,7 @@
         var advance = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
         var _this$prepareRegExp = this.prepareRegExp(tag),
-            _this$prepareRegExp2 = slicedToArray$1(_this$prepareRegExp, 2),
+            _this$prepareRegExp2 = slicedToArray(_this$prepareRegExp, 2),
             regExp = _this$prepareRegExp2[0],
             length = _this$prepareRegExp2[1];
 
@@ -25755,7 +23710,7 @@
 
         var _this$_setAlignment = this._setAlignment(ctx, x, y, baseline);
 
-        var _this$_setAlignment2 = slicedToArray$1(_this$_setAlignment, 2);
+        var _this$_setAlignment2 = slicedToArray(_this$_setAlignment, 2);
 
         x = _this$_setAlignment2[0];
         y = _this$_setAlignment2[1];
@@ -25790,7 +23745,7 @@
               ctx.font = block.font;
 
               var _this$_getColor = this._getColor(block.color, viewFontSize, block.strokeColor),
-                  _this$_getColor2 = slicedToArray$1(_this$_getColor, 2),
+                  _this$_getColor2 = slicedToArray(_this$_getColor, 2),
                   fontColor = _this$_getColor2[0],
                   strokeColor = _this$_getColor2[1];
 
@@ -29760,6 +27715,58 @@
     return NodesHandler;
   }();
 
+  function _superPropBase(object, property) {
+    while (!Object.prototype.hasOwnProperty.call(object, property)) {
+      object = getPrototypeOf$1(object);
+      if (object === null) break;
+    }
+
+    return object;
+  }
+
+  var superPropBase = _superPropBase;
+
+  var get = createCommonjsModule(function (module) {
+    function _get(target, property, receiver) {
+      if (typeof Reflect !== "undefined" && Reflect.get) {
+        module.exports = _get = Reflect.get;
+      } else {
+        module.exports = _get = function _get(target, property, receiver) {
+          var base = superPropBase(target, property);
+          if (!base) return;
+          var desc = Object.getOwnPropertyDescriptor(base, property);
+
+          if (desc.get) {
+            return desc.get.call(receiver);
+          }
+
+          return desc.value;
+        };
+      }
+
+      return _get(target, property, receiver || target);
+    }
+
+    module.exports = _get;
+  });
+
+  function _defineProperty$2(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  var defineProperty$2 = _defineProperty$2;
+
   /** ============================================================================
    * Location of all the endpoint drawing routines.
    *
@@ -29810,12 +27817,11 @@
        * - multiply the (normalized) coordinates by the passed length
        * - offset by the target coordinates
        *
-       * @param {Array<Point>} points
-       * @param {ArrowData} arrowData
-       * @static
+       * @param points - The point(s) to be transformed.
+       * @param arrowData - The data determining the result of the transformation.
        */
       value: function transform(points, arrowData) {
-        if (!(points instanceof Array)) {
+        if (!Array.isArray(points)) {
           points = [points];
         }
 
@@ -29835,9 +27841,8 @@
       /**
        * Draw a closed path using the given real coordinates.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Array.<Point>} points
-       * @static
+       * @param ctx - The path will be rendered into this context.
+       * @param points - The points of the path.
        */
 
     }, {
@@ -29858,7 +27863,6 @@
   }();
   /**
    * Drawing methods for the arrow endpoint.
-   * @extends EndPoint
    */
 
 
@@ -29879,9 +27883,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -29908,7 +27911,6 @@
   }(EndPoint);
   /**
    * Drawing methods for the crow endpoint.
-   * @extends EndPoint
    */
 
 
@@ -29925,9 +27927,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -29954,7 +27955,6 @@
   }();
   /**
    * Drawing methods for the curve endpoint.
-   * @extends EndPoint
    */
 
 
@@ -29971,9 +27971,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -29985,13 +27984,13 @@
         EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
         ctx.strokeStyle = ctx.fillStyle;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define curve endpoint as semicircle.
+        ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define curve endpoint as semicircle.
 
         var pi = Math.PI;
-        var start_angle = arrowData.angle - pi / 2;
-        var end_angle = arrowData.angle + pi / 2;
+        var startAngle = arrowData.angle - pi / 2;
+        var endAngle = arrowData.angle + pi / 2;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+        ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
         ctx.stroke();
       }
     }]);
@@ -30000,7 +27999,6 @@
   }();
   /**
    * Drawing methods for the inverted curve endpoint.
-   * @extends EndPoint
    */
 
 
@@ -30017,9 +28015,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -30031,13 +28028,13 @@
         EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
         ctx.strokeStyle = ctx.fillStyle;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define inverted curve endpoint as semicircle.
+        ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define inverted curve endpoint as semicircle.
 
         var pi = Math.PI;
-        var start_angle = arrowData.angle + pi / 2;
-        var end_angle = arrowData.angle + 3 * pi / 2;
+        var startAngle = arrowData.angle + pi / 2;
+        var endAngle = arrowData.angle + 3 * pi / 2;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+        ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
         ctx.stroke();
       }
     }]);
@@ -30046,7 +28043,6 @@
   }();
   /**
    * Drawing methods for the trinagle endpoint.
-   * @extends EndPoint
    */
 
 
@@ -30063,9 +28059,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -30089,7 +28084,6 @@
   }();
   /**
    * Drawing methods for the inverted trinagle endpoint.
-   * @extends EndPoint
    */
 
 
@@ -30106,9 +28100,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -30148,9 +28141,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var point = {
@@ -30182,22 +28174,20 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         /*
-            var points = [
-              {x:0, y:0.5},
-              {x:0, y:-0.5}
-            ];
-        
-            EndPoint.transform(points, arrowData);
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            ctx.lineTo(points[1].x, points[1].y);
-            ctx.stroke();
+        var points = [
+          {x:0, y:0.5},
+          {x:0, y:-0.5}
+        ];
+             EndPoint.transform(points, arrowData);
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[1].x, points[1].y);
+        ctx.stroke();
         */
         var points = [{
           x: 0,
@@ -30237,9 +28227,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var points = [{
@@ -30280,9 +28269,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var points = [{
@@ -30307,7 +28295,6 @@
   }();
   /**
    * Drawing methods for the vee endpoint.
-   * @extends EndPoint
    */
 
 
@@ -30324,9 +28311,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -30367,11 +28353,10 @@
       key: "draw",
 
       /**
-       * Draw an endpoint
+       * Draw an endpoint.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var type;
@@ -30381,47 +28366,47 @@
         }
 
         switch (type) {
-          case 'circle':
+          case "circle":
             Circle$1.draw(ctx, arrowData);
             break;
 
-          case 'box':
+          case "box":
             Box$1.draw(ctx, arrowData);
             break;
 
-          case 'crow':
+          case "crow":
             Crow.draw(ctx, arrowData);
             break;
 
-          case 'curve':
+          case "curve":
             Curve.draw(ctx, arrowData);
             break;
 
-          case 'diamond':
+          case "diamond":
             Diamond$1.draw(ctx, arrowData);
             break;
 
-          case 'inv_curve':
+          case "inv_curve":
             InvertedCurve.draw(ctx, arrowData);
             break;
 
-          case 'triangle':
+          case "triangle":
             Triangle$1.draw(ctx, arrowData);
             break;
 
-          case 'inv_triangle':
+          case "inv_triangle":
             InvertedTriangle.draw(ctx, arrowData);
             break;
 
-          case 'bar':
+          case "bar":
             Bar.draw(ctx, arrowData);
             break;
 
-          case 'vee':
+          case "vee":
             Vee.draw(ctx, arrowData);
             break;
 
-          case 'arrow': // fall-through
+          case "arrow": // fall-through
 
           default:
             Arrow.draw(ctx, arrowData);
@@ -30432,36 +28417,37 @@
     return EndPoints;
   }();
 
+  function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   /**
    * The Base Class for all edges.
-   *
    */
 
   var EdgeBase =
   /*#__PURE__*/
   function () {
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function EdgeBase(options, body, labelModule) {
       classCallCheck(this, EdgeBase);
 
       this.body = body;
       this.labelModule = labelModule;
-      this.options = {};
-      this.setOptions(options);
-      this.colorDirty = true;
       this.color = {};
-      this.selectionWidth = 2;
+      this.colorDirty = true;
       this.hoverWidth = 1.5;
+      this.selectionWidth = 2;
+      this.setOptions(options);
       this.fromPoint = this.from;
       this.toPoint = this.to;
     }
-    /**
-     * Connects a node to itself
-     */
+    /** @inheritdoc */
 
 
     createClass(EdgeBase, [{
@@ -30470,10 +28456,7 @@
         this.from = this.body.nodes[this.options.from];
         this.to = this.body.nodes[this.options.to];
       }
-      /**
-       *
-       * @returns {boolean} always false
-       */
+      /** @inheritdoc */
 
     }, {
       key: "cleanup",
@@ -30481,8 +28464,9 @@
         return false;
       }
       /**
+       * Set new edge options.
        *
-       * @param {Object} options
+       * @param options - The new edge options object.
        */
 
     }, {
@@ -30493,24 +28477,14 @@
         this.to = this.body.nodes[this.options.to];
         this.id = this.options.id;
       }
-      /**
-       * Redraw a edge as a line
-       * Draw this edge in the given canvas
-       * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-       *
-       * @param {CanvasRenderingContext2D}   ctx
-       * @param {Array} values
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @param {Node} viaNode
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "drawLine",
-      value: function drawLine(ctx, values, selected, hover, viaNode) {
+      value: function drawLine(ctx, values, _selected, _hover) {
+        var viaNode = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.getViaNode();
         // set style
-        ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+        ctx.strokeStyle = this.getColor(ctx, values);
         ctx.lineWidth = values.width;
 
         if (values.dashes !== false) {
@@ -30520,13 +28494,13 @@
         }
       }
       /**
+       * Draw a line with given style between two nodes through supplied node(s).
        *
-       * @param {CanvasRenderingContext2D}   ctx
-       * @param {Array} values
-       * @param {Node} viaNode
-       * @param {{x: number, y: number}} [fromPoint]
-       * @param {{x: number, y: number}} [toPoint]
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param viaNode - Additional control point(s) for the edge.
+       * @param fromPoint - TODO: Seems ignored, remove?
+       * @param toPoint - TODO: Seems ignored, remove?
        */
 
     }, {
@@ -30537,7 +28511,7 @@
           this._line(ctx, values, viaNode, fromPoint, toPoint);
         } else {
           var _this$_getCircleData = this._getCircleData(ctx),
-              _this$_getCircleData2 = slicedToArray$1(_this$_getCircleData, 3),
+              _this$_getCircleData2 = slicedToArray(_this$_getCircleData, 3),
               x = _this$_getCircleData2[0],
               y = _this$_getCircleData2[1],
               radius = _this$_getCircleData2[2];
@@ -30546,26 +28520,20 @@
         }
       }
       /**
+       * Draw a dashed line with given style between two nodes through supplied node(s).
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Array} values
-       * @param {Node} viaNode
-       * @param {{x: number, y: number}} [fromPoint]  TODO: Remove in next major release
-       * @param {{x: number, y: number}} [toPoint]    TODO: Remove in next major release
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param viaNode - Additional control point(s) for the edge.
+       * @param _fromPoint - Ignored (TODO: remove in the future).
+       * @param _toPoint - Ignored (TODO: remove in the future).
        */
 
     }, {
       key: "_drawDashedLine",
-      value: function _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {
-        // eslint-disable-line no-unused-vars
-        ctx.lineCap = 'round';
-        var pattern = [5, 5];
-
-        if (Array.isArray(values.dashes) === true) {
-          pattern = values.dashes;
-        } // only firefox and chrome support this method, else we use the legacy one.
-
+      value: function _drawDashedLine(ctx, values, viaNode, _fromPoint, _toPoint) {
+        ctx.lineCap = "round";
+        var pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5]; // only firefox and chrome support this method, else we use the legacy one.
 
         if (ctx.setLineDash !== undefined) {
           ctx.save(); // set dash settings for chrome or firefox
@@ -30578,7 +28546,7 @@
             this._line(ctx, values, viaNode);
           } else {
             var _this$_getCircleData3 = this._getCircleData(ctx),
-                _this$_getCircleData4 = slicedToArray$1(_this$_getCircleData3, 3),
+                _this$_getCircleData4 = slicedToArray(_this$_getCircleData3, 3),
                 x = _this$_getCircleData4[0],
                 y = _this$_getCircleData4[1],
                 radius = _this$_getCircleData4[2];
@@ -30597,7 +28565,7 @@
             ctx.dashedLine(this.from.x, this.from.y, this.to.x, this.to.y, pattern);
           } else {
             var _this$_getCircleData5 = this._getCircleData(ctx),
-                _this$_getCircleData6 = slicedToArray$1(_this$_getCircleData5, 3),
+                _this$_getCircleData6 = slicedToArray(_this$_getCircleData5, 3),
                 _x = _this$_getCircleData6[0],
                 _y = _this$_getCircleData6[1],
                 _radius = _this$_getCircleData6[2];
@@ -30613,75 +28581,71 @@
         }
       }
       /**
+       * Find the intersection between the border of the node and the edge.
        *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object} options
-       * @returns {{x: number, y: number}}
+       * @param node - The node (either from or to node of the edge).
+       * @param ctx - The context that will be used for rendering.
+       * @param options - Additional options.
+       *
+       * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
        */
 
     }, {
       key: "findBorderPosition",
-      value: function findBorderPosition(nearNode, ctx, options) {
+      value: function findBorderPosition(node, ctx, options) {
         if (this.from != this.to) {
-          return this._findBorderPosition(nearNode, ctx, options);
+          return this._findBorderPosition(node, ctx, options);
         } else {
-          return this._findBorderPositionCircle(nearNode, ctx, options);
+          return this._findBorderPositionCircle(node, ctx, options);
         }
       }
-      /**
-       *
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {{from: ({x: number, y: number, t: number}|*), to: ({x: number, y: number, t: number}|*)}}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "findBorderPositions",
       value: function findBorderPositions(ctx) {
-        var from = {};
-        var to = {};
-
         if (this.from != this.to) {
-          from = this._findBorderPosition(this.from, ctx);
-          to = this._findBorderPosition(this.to, ctx);
+          return {
+            from: this._findBorderPosition(this.from, ctx),
+            to: this._findBorderPosition(this.to, ctx)
+          };
         } else {
           var _this$_getCircleData$ = this._getCircleData(ctx).slice(0, 2),
-              _this$_getCircleData$2 = slicedToArray$1(_this$_getCircleData$, 2),
+              _this$_getCircleData$2 = slicedToArray(_this$_getCircleData$, 2),
               x = _this$_getCircleData$2[0],
               y = _this$_getCircleData$2[1];
 
-          from = this._findBorderPositionCircle(this.from, ctx, {
-            x: x,
-            y: y,
-            low: 0.25,
-            high: 0.6,
-            direction: -1
-          });
-          to = this._findBorderPositionCircle(this.from, ctx, {
-            x: x,
-            y: y,
-            low: 0.6,
-            high: 0.8,
-            direction: 1
-          });
+          return {
+            from: this._findBorderPositionCircle(this.from, ctx, {
+              x: x,
+              y: y,
+              low: 0.25,
+              high: 0.6,
+              direction: -1
+            }),
+            to: this._findBorderPositionCircle(this.from, ctx, {
+              x: x,
+              y: y,
+              low: 0.6,
+              high: 0.8,
+              direction: 1
+            })
+          };
         }
-
-        return {
-          from: from,
-          to: to
-        };
       }
       /**
+       * Compute the center point and radius of an edge connected to the same node at both ends.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {Array.<number>} x, y, radius
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       *
+       * @returns `[x, y, radius]`
        */
 
     }, {
       key: "_getCircleData",
       value: function _getCircleData(ctx) {
-        var x, y;
+        var x;
+        var y;
         var node = this.from;
         var radius = this.options.selfReferenceSize;
 
@@ -30703,55 +28667,60 @@
         return [x, y, radius];
       }
       /**
-       * Get a point on a circle
-       * @param {number} x
-       * @param {number} y
-       * @param {number} radius
-       * @param {number} percentage - Value between 0 (line start) and 1 (line end)
-       * @return {Object} point
-       * @private
+       * Get a point on a circle.
+       *
+       * @param x - Center of the circle on the x axis.
+       * @param y - Center of the circle on the y axis.
+       * @param radius - Radius of the circle.
+       * @param position - Value between 0 (line start) and 1 (line end).
+       *
+       * @returns Cartesian coordinates of requested point on the circle.
        */
 
     }, {
       key: "_pointOnCircle",
-      value: function _pointOnCircle(x, y, radius, percentage) {
-        var angle = percentage * 2 * Math.PI;
+      value: function _pointOnCircle(x, y, radius, position) {
+        var angle = position * 2 * Math.PI;
         return {
           x: x + radius * Math.cos(angle),
           y: y - radius * Math.sin(angle)
         };
       }
       /**
+       * Find the intersection between the border of the node and the edge.
+       *
+       * @remarks
        * This function uses binary search to look for the point where the circle crosses the border of the node.
-       * @param {Node} node
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object} options
-       * @returns {*}
-       * @private
+       *
+       * @param nearNode - The node (either from or to node of the edge).
+       * @param ctx - The context that will be used for rendering.
+       * @param options - Additional options.
+       *
+       * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
        */
 
     }, {
       key: "_findBorderPositionCircle",
-      value: function _findBorderPositionCircle(node, ctx, options) {
+      value: function _findBorderPositionCircle(nearNode, ctx, options) {
         var x = options.x;
         var y = options.y;
         var low = options.low;
         var high = options.high;
         var direction = options.direction;
         var maxIterations = 10;
-        var iteration = 0;
         var radius = this.options.selfReferenceSize;
-        var pos, angle, distanceToBorder, distanceToPoint, difference;
         var threshold = 0.05;
+        var pos;
         var middle = (low + high) * 0.5;
+        var iteration = 0;
 
-        while (low <= high && iteration < maxIterations) {
+        do {
           middle = (low + high) * 0.5;
           pos = this._pointOnCircle(x, y, radius, middle);
-          angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-          distanceToBorder = node.distanceToBorder(ctx, angle);
-          distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-          difference = distanceToBorder - distanceToPoint;
+          var angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
+          var distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+          var distanceToPoint = Math.sqrt(Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2));
+          var difference = distanceToBorder - distanceToPoint;
 
           if (Math.abs(difference) < threshold) {
             break; // found
@@ -30770,19 +28739,20 @@
             }
           }
 
-          iteration++;
-        }
+          ++iteration;
+        } while (low <= high && iteration < maxIterations);
 
-        pos.t = middle;
-        return pos;
+        return _objectSpread$1({}, pos, {
+          t: middle
+        });
       }
       /**
-       * Get the line width of the edge. Depends on width and whether one of the
-       * connected nodes is selected.
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @returns {number} width
-       * @private
+       * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
+       *
+       * @param selected - Determines wheter the line is selected.
+       * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
+       *
+       * @returns The width of the line.
        */
 
     }, {
@@ -30790,38 +28760,36 @@
       value: function getLineWidth(selected, hover) {
         if (selected === true) {
           return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
+        } else if (hover === true) {
+          return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
         } else {
-          if (hover === true) {
-            return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
-          } else {
-            return Math.max(this.options.width, 0.3 / this.body.view.scale);
-          }
+          return Math.max(this.options.width, 0.3 / this.body.view.scale);
         }
       }
       /**
+       * Compute the color or gradient for given edge.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
-       * @param {boolean} selected - Unused
-       * @param {boolean} hover - Unused
-       * @returns {string}
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param _selected - Ignored (TODO: remove in the future).
+       * @param _hover - Ignored (TODO: remove in the future).
+       *
+       * @returns Color string if single color is inherited or gradient if two.
        */
 
     }, {
       key: "getColor",
-      value: function getColor(ctx, values, selected, hover) {
-        // eslint-disable-line no-unused-vars
+      value: function getColor(ctx, values) {
         if (values.inheritsColor !== false) {
           // when this is a loop edge, just use the 'from' method
-          if (values.inheritsColor === 'both' && this.from.id !== this.to.id) {
+          if (values.inheritsColor === "both" && this.from.id !== this.to.id) {
             var grd = ctx.createLinearGradient(this.from.x, this.from.y, this.to.x, this.to.y);
-            var fromColor, toColor;
-            fromColor = this.from.options.color.highlight.border;
-            toColor = this.to.options.color.highlight.border;
+            var fromColor = this.from.options.color.highlight.border;
+            var toColor = this.to.options.color.highlight.border;
 
             if (this.from.selected === false && this.to.selected === false) {
-              fromColor = util.overrideOpacity(this.from.options.color.border, values.opacity);
-              toColor = util.overrideOpacity(this.to.options.color.border, values.opacity);
+              fromColor = overrideOpacity(this.from.options.color.border, values.opacity);
+              toColor = overrideOpacity(this.to.options.color.border, values.opacity);
             } else if (this.from.selected === true && this.to.selected === false) {
               toColor = this.to.options.color.border;
             } else if (this.from.selected === false && this.to.selected === true) {
@@ -30835,24 +28803,23 @@
           }
 
           if (values.inheritsColor === "to") {
-            return util.overrideOpacity(this.to.options.color.border, values.opacity);
+            return overrideOpacity(this.to.options.color.border, values.opacity);
           } else {
             // "from"
-            return util.overrideOpacity(this.from.options.color.border, values.opacity);
+            return overrideOpacity(this.from.options.color.border, values.opacity);
           }
         } else {
-          return util.overrideOpacity(values.color, values.opacity);
+          return overrideOpacity(values.color, values.opacity);
         }
       }
       /**
-       * Draw a line from a node to itself, a circle
+       * Draw a line from a node to itself, a circle.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Array} values
-       * @param {number} x
-       * @param {number} y
-       * @param {number} radius
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param x - Center of the circle on the x axis.
+       * @param y - Center of the circle on the y axis.
+       * @param radius - Radius of the circle.
        */
 
     }, {
@@ -30868,54 +28835,40 @@
         this.disableShadow(ctx, values);
       }
       /**
-       * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-       * (x3,y3) is the point.
+       * @inheritdoc
        *
+       * @remarks
        * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @param {Node} via
-       * @param {Array} values
-       * @returns {number}
        */
 
     }, {
       key: "getDistanceToEdge",
-      value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {
-        // eslint-disable-line no-unused-vars
-        var returnValue = 0;
-
+      value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
         if (this.from != this.to) {
-          returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via);
+          return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
         } else {
           var _this$_getCircleData7 = this._getCircleData(undefined),
-              _this$_getCircleData8 = slicedToArray$1(_this$_getCircleData7, 3),
+              _this$_getCircleData8 = slicedToArray(_this$_getCircleData7, 3),
               x = _this$_getCircleData8[0],
               y = _this$_getCircleData8[1],
               radius = _this$_getCircleData8[2];
 
           var dx = x - x3;
           var dy = y - y3;
-          returnValue = Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
+          return Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
         }
-
-        return returnValue;
       }
       /**
+       * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
        *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @returns {number}
-       * @private
+       * @param x1 - First end of the line segment on the x axis.
+       * @param y1 - First end of the line segment on the y axis.
+       * @param x2 - Second end of the line segment on the x axis.
+       * @param y2 - Second end of the line segment on the y axis.
+       * @param x3 - Position of the point on the x axis.
+       * @param y3 - Position of the point on the y axis.
+       *
+       * @returns The distance between the line segment and the point.
        */
 
     }, {
@@ -30943,19 +28896,11 @@
 
         return Math.sqrt(dx * dx + dy * dy);
       }
-      /**
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {string} position
-       * @param {Node} viaNode
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @param {Array} values
-       * @returns {{point: *, core: {x: number, y: number}, angle: *, length: number, type: *}}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getArrowData",
-      value: function getArrowData(ctx, position, viaNode, selected, hover, values) {
+      value: function getArrowData(ctx, position, viaNode, _selected, _hover, values) {
         // set lets
         var angle;
         var arrowPoint;
@@ -30966,13 +28911,13 @@
         var type;
         var lineWidth = values.width;
 
-        if (position === 'from') {
+        if (position === "from") {
           node1 = this.from;
           node2 = this.to;
           guideOffset = 0.1;
           scaleFactor = values.fromArrowScale;
           type = values.fromArrowType;
-        } else if (position === 'to') {
+        } else if (position === "to") {
           node1 = this.to;
           node2 = this.from;
           guideOffset = -0.1;
@@ -30987,17 +28932,20 @@
 
 
         if (node1 != node2) {
-          if (position !== 'middle') {
+          if (position !== "middle") {
             // draw arrow head
             if (this.options.smooth.enabled === true) {
-              arrowPoint = this.findBorderPosition(node1, ctx, {
+              var pointT = this._findBorderPosition(node1, ctx, {
                 via: viaNode
               });
-              var guidePos = this.getPoint(Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)), viaNode);
-              angle = Math.atan2(arrowPoint.y - guidePos.y, arrowPoint.x - guidePos.x);
+
+              var guidePos = this.getPoint( // guideOffset is unset only for position === 'middle'
+              Math.max(0.0, Math.min(1.0, pointT.t + guideOffset)), viaNode);
+              angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
+              arrowPoint = pointT;
             } else {
               angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-              arrowPoint = this.findBorderPosition(node1, ctx);
+              arrowPoint = this._findBorderPosition(node1, ctx);
             }
           } else {
             angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
@@ -31006,36 +28954,42 @@
         } else {
           // draw circle
           var _this$_getCircleData9 = this._getCircleData(ctx),
-              _this$_getCircleData10 = slicedToArray$1(_this$_getCircleData9, 3),
+              _this$_getCircleData10 = slicedToArray(_this$_getCircleData9, 3),
               x = _this$_getCircleData10[0],
               y = _this$_getCircleData10[1],
               radius = _this$_getCircleData10[2];
 
-          if (position === 'from') {
-            arrowPoint = this.findBorderPosition(this.from, ctx, {
+          if (position === "from") {
+            var _pointT = this._findBorderPositionCircle(this.from, ctx, {
               x: x,
               y: y,
               low: 0.25,
               high: 0.6,
               direction: -1
             });
-            angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-          } else if (position === 'to') {
-            arrowPoint = this.findBorderPosition(this.from, ctx, {
+
+            angle = _pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+            arrowPoint = _pointT;
+          } else if (position === "to") {
+            var _pointT2 = this._findBorderPositionCircle(this.from, ctx, {
               x: x,
               y: y,
               low: 0.6,
               high: 1.0,
               direction: 1
             });
-            angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+
+            angle = _pointT2.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+            arrowPoint = _pointT2;
           } else {
             arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
             angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
           }
         }
 
-        if (position === 'middle' && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
+        if (position === "middle" && scaleFactor < 0) {
+          lineWidth *= -1; // reversed middle arrow
+        }
 
         var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
@@ -31053,20 +29007,13 @@
           type: type
         };
       }
-      /**
-       *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @param {Object} arrowData
-       */
+      /** @inheritdoc */
 
     }, {
       key: "drawArrowHead",
-      value: function drawArrowHead(ctx, values, selected, hover, arrowData) {
+      value: function drawArrowHead(ctx, values, _selected, _hover, arrowData) {
         // set style
-        ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+        ctx.strokeStyle = this.getColor(ctx, values);
         ctx.fillStyle = ctx.strokeStyle;
         ctx.lineWidth = values.width;
         EndPoints.draw(ctx, arrowData); // draw shadow if enabled
@@ -31077,9 +29024,10 @@
         this.disableShadow(ctx, values);
       }
       /**
+       * Set the shadow formatting values in the context if enabled, do nothing otherwise.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values for the shadow.
        */
 
     }, {
@@ -31093,52 +29041,55 @@
         }
       }
       /**
+       * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values for the shadow.
        */
 
     }, {
       key: "disableShadow",
       value: function disableShadow(ctx, values) {
         if (values.shadow === true) {
-          ctx.shadowColor = 'rgba(0,0,0,0)';
+          ctx.shadowColor = "rgba(0,0,0,0)";
           ctx.shadowBlur = 0;
           ctx.shadowOffsetX = 0;
           ctx.shadowOffsetY = 0;
         }
       }
       /**
+       * Render the background according to the formatting values.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {{toArrow: boolean, toArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), toArrowType: *, middleArrow: boolean, middleArrowScale: (number|allOptions.edges.arrows.middle.scaleFactor|{number}|Array), middleArrowType: (allOptions.edges.arrows.middle.type|{string}|string|*), fromArrow: boolean, fromArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), fromArrowType: *, arrowStrikethrough: (*|boolean|allOptions.edges.arrowStrikethrough|{boolean}), color: undefined, inheritsColor: (string|string|string|allOptions.edges.color.inherit|{string, boolean}|Array|*), opacity: *, hidden: *, length: *, shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *, dashes: (*|boolean|Array|allOptions.edges.dashes|{boolean, array}), width: *}} values
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values for the background.
        */
 
     }, {
       key: "drawBackground",
       value: function drawBackground(ctx, values) {
         if (values.background !== false) {
-          var attrs = ['strokeStyle', 'lineWidth', 'dashes'];
-          var origCtxAttr = {}; // save original line attrs
-
-          attrs.forEach(function (attrname) {
-            origCtxAttr[attrname] = ctx[attrname];
-          });
+          // save original line attrs
+          var origCtxAttr = {
+            strokeStyle: ctx.strokeStyle,
+            lineWidth: ctx.lineWidth,
+            dashes: ctx.dashes
+          };
           ctx.strokeStyle = values.backgroundColor;
           ctx.lineWidth = values.backgroundSize;
           this.setStrokeDashed(ctx, values.backgroundDashes);
           ctx.stroke(); // restore original line attrs
 
-          attrs.forEach(function (attrname) {
-            ctx[attrname] = origCtxAttr[attrname];
-          });
+          ctx.strokeStyle = origCtxAttr.strokeStyle;
+          ctx.lineWidth = origCtxAttr.lineWidth;
+          ctx.dashes = origCtxAttr.dashes;
           this.setStrokeDashed(ctx, values.dashes);
         }
       }
       /**
+       * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {boolean|Array} dashes
+       * @param ctx - The context that will be used for rendering.
+       * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
        */
 
     }, {
@@ -31146,12 +29097,7 @@
       value: function setStrokeDashed(ctx, dashes) {
         if (dashes !== false) {
           if (ctx.setLineDash !== undefined) {
-            var pattern = [5, 5];
-
-            if (Array.isArray(dashes) === true) {
-              pattern = dashes;
-            }
-
+            var pattern = Array.isArray(dashes) ? dashes : [5, 5];
             ctx.setLineDash(pattern);
           } else {
             console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
@@ -31169,11 +29115,12 @@
     return EdgeBase;
   }();
 
+  function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   /**
-   * The Base Class for all Bezier edges. Bezier curves are used to model smooth
-   * gradual curves in paths between nodes.
-   *
-   * @extends EdgeBase
+   * The Base Class for all Bezier edges.
+   * Bezier curves are used to model smooth gradual curves in paths between nodes.
    */
 
   var BezierEdgeBase =
@@ -31182,9 +29129,11 @@
     inherits$1(BezierEdgeBase, _EdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function BezierEdgeBase(options, body, labelModule) {
       classCallCheck(this, BezierEdgeBase);
@@ -31192,13 +29141,16 @@
       return possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeBase).call(this, options, body, labelModule));
     }
     /**
+     * Find the intersection between the border of the node and the edge.
+     *
+     * @remarks
      * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
      *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Node} viaNode
-     * @returns {*}
-     * @private
+     * @param nearNode - The node (either from or to node of the edge).
+     * @param ctx - The context that will be used for rendering.
+     * @param viaNode - Additional node(s) the edge passes through.
+     *
+     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
 
 
@@ -31207,26 +29159,28 @@
       value: function _findBorderPositionBezier(nearNode, ctx) {
         var viaNode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this._getViaCoordinates();
         var maxIterations = 10;
-        var iteration = 0;
-        var low = 0;
-        var high = 1;
-        var pos, angle, distanceToBorder, distanceToPoint, difference;
         var threshold = 0.2;
-        var node = this.to;
         var from = false;
+        var high = 1;
+        var low = 0;
+        var node = this.to;
+        var pos;
+        var middle;
 
         if (nearNode.id === this.from.id) {
           node = this.from;
           from = true;
         }
 
-        while (low <= high && iteration < maxIterations) {
-          var middle = (low + high) * 0.5;
+        var iteration = 0;
+
+        do {
+          middle = (low + high) * 0.5;
           pos = this.getPoint(middle, viaNode);
-          angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-          distanceToBorder = node.distanceToBorder(ctx, angle);
-          distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-          difference = distanceToBorder - distanceToPoint;
+          var angle = Math.atan2(node.y - pos.y, node.x - pos.x);
+          var distanceToBorder = node.distanceToBorder(ctx, angle);
+          var distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+          var difference = distanceToBorder - distanceToPoint;
 
           if (Math.abs(difference) < threshold) {
             break; // found
@@ -31245,25 +29199,28 @@
             }
           }
 
-          iteration++;
-        }
+          ++iteration;
+        } while (low <= high && iteration < maxIterations);
 
-        pos.t = middle;
-        return pos;
+        return _objectSpread$2({}, pos, {
+          t: middle
+        });
       }
       /**
-       * Calculate the distance between a point (x3,y3) and a line segment from
-       * (x1,y1) to (x2,y2).
+       * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+       *
+       * @remarks
        * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-       * @param {number} x1 from x
-       * @param {number} y1 from y
-       * @param {number} x2 to x
-       * @param {number} y2 to y
-       * @param {number} x3 point to check x
-       * @param {number} y3 point to check y
-       * @param {Node} via
-       * @returns {number}
-       * @private
+       *
+       * @param x1 - First end of the line segment on the x axis.
+       * @param y1 - First end of the line segment on the y axis.
+       * @param x2 - Second end of the line segment on the x axis.
+       * @param y2 - Second end of the line segment on the y axis.
+       * @param x3 - Position of the point on the x axis.
+       * @param y3 - Position of the point on the y axis.
+       * @param via - The control point for the edge.
+       *
+       * @returns The distance between the line segment and the point.
        */
 
     }, {
@@ -31293,31 +29250,30 @@
         return minDistance;
       }
       /**
-       * Draw a bezier curve between two nodes
+       * Render a bezier curve between two nodes.
        *
+       * @remarks
        * The method accepts zero, one or two control points.
-       * Passing zero control points just draws a straight line
+       * Passing zero control points just draws a straight line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object}           values   | options for shadow drawing
-       * @param {Object|undefined} viaNode1 | first control point for curve drawing
-       * @param {Object|undefined} viaNode2 | second control point for curve drawing
-       *
-       * @protected
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Style options for edge drawing.
+       * @param viaNode1 - First control point for curve drawing.
+       * @param viaNode2 - Second control point for curve drawing.
        */
 
     }, {
       key: "_bezierCurve",
       value: function _bezierCurve(ctx, values, viaNode1, viaNode2) {
-        var hasNode1 = viaNode1 !== undefined && viaNode1.x !== undefined;
-        var hasNode2 = viaNode2 !== undefined && viaNode2.x !== undefined;
         ctx.beginPath();
         ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
 
-        if (hasNode1 && hasNode2) {
-          ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
-        } else if (hasNode1) {
-          ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+        if (viaNode1 != null && viaNode1.x != null) {
+          if (viaNode2 != null && viaNode2.x != null) {
+            ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
+          } else {
+            ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+          }
         } else {
           // fallback to normal straight edge
           ctx.lineTo(this.toPoint.x, this.toPoint.y);
@@ -31330,10 +29286,7 @@
         ctx.stroke();
         this.disableShadow(ctx, values);
       }
-      /**
-       *
-       * @returns {*|{x, y}|{x: undefined, y: undefined}}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
@@ -31344,239 +29297,6 @@
 
     return BezierEdgeBase;
   }(EdgeBase);
-
-  /**
-   * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
-   * smooth gradual curves in paths between nodes.
-   *
-   * @extends BezierEdgeBase
-   */
-
-  var CubicBezierEdgeBase =
-  /*#__PURE__*/
-  function (_BezierEdgeBase) {
-    inherits$1(CubicBezierEdgeBase, _BezierEdgeBase);
-
-    /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
-     */
-    function CubicBezierEdgeBase(options, body, labelModule) {
-      classCallCheck(this, CubicBezierEdgeBase);
-
-      return possibleConstructorReturn$1(this, getPrototypeOf$1(CubicBezierEdgeBase).call(this, options, body, labelModule));
-    }
-    /**
-     * Calculate the distance between a point (x3,y3) and a line segment from
-     * (x1,y1) to (x2,y2).
-     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
-     * @param {number} x1 from x
-     * @param {number} y1 from y
-     * @param {number} x2 to x
-     * @param {number} y2 to y
-     * @param {number} x3 point to check x
-     * @param {number} y3 point to check y
-     * @param {Node} via1
-     * @param {Node} via2
-     * @returns {number}
-     * @private
-     */
-
-
-    createClass(CubicBezierEdgeBase, [{
-      key: "_getDistanceToBezierEdge",
-      value: function _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2) {
-        // x3,y3 is the point
-        var minDistance = 1e9;
-        var distance;
-        var i, t, x, y;
-        var lastX = x1;
-        var lastY = y1;
-        var vec = [0, 0, 0, 0];
-
-        for (i = 1; i < 10; i++) {
-          t = 0.1 * i;
-          vec[0] = Math.pow(1 - t, 3);
-          vec[1] = 3 * t * Math.pow(1 - t, 2);
-          vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-          vec[3] = Math.pow(t, 3);
-          x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
-          y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
-
-          if (i > 0) {
-            distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
-            minDistance = distance < minDistance ? distance : minDistance;
-          }
-
-          lastX = x;
-          lastY = y;
-        }
-
-        return minDistance;
-      }
-    }]);
-
-    return CubicBezierEdgeBase;
-  }(BezierEdgeBase);
-
-  /**
-   * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual
-   * curves in paths between nodes.
-   *
-   * @extends CubicBezierEdgeBase
-   */
-
-  var CubicBezierEdge =
-  /*#__PURE__*/
-  function (_CubicBezierEdgeBase) {
-    inherits$1(CubicBezierEdge, _CubicBezierEdgeBase);
-
-    /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
-     */
-    function CubicBezierEdge(options, body, labelModule) {
-      classCallCheck(this, CubicBezierEdge);
-
-      return possibleConstructorReturn$1(this, getPrototypeOf$1(CubicBezierEdge).call(this, options, body, labelModule));
-    }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {Array.<Node>} viaNodes
-     * @private
-     */
-
-
-    createClass(CubicBezierEdge, [{
-      key: "_line",
-      value: function _line(ctx, values, viaNodes) {
-        // get the coordinates of the support points.
-        var via1 = viaNodes[0];
-        var via2 = viaNodes[1];
-
-        this._bezierCurve(ctx, values, via1, via2);
-      }
-      /**
-       *
-       * @returns {Array.<{x: number, y: number}>}
-       * @private
-       */
-
-    }, {
-      key: "_getViaCoordinates",
-      value: function _getViaCoordinates() {
-        var dx = this.from.x - this.to.x;
-        var dy = this.from.y - this.to.y;
-        var x1, y1, x2, y2;
-        var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
-
-        if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === 'horizontal') && this.options.smooth.forceDirection !== 'vertical') {
-          y1 = this.from.y;
-          y2 = this.to.y;
-          x1 = this.from.x - roundness * dx;
-          x2 = this.to.x + roundness * dx;
-        } else {
-          y1 = this.from.y - roundness * dy;
-          y2 = this.to.y + roundness * dy;
-          x1 = this.from.x;
-          x2 = this.to.x;
-        }
-
-        return [{
-          x: x1,
-          y: y1
-        }, {
-          x: x2,
-          y: y2
-        }];
-      }
-      /**
-       *
-       * @returns {Array.<{x: number, y: number}>}
-       */
-
-    }, {
-      key: "getViaNode",
-      value: function getViaNode() {
-        return this._getViaCoordinates();
-      }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {{x: number, y: number, t: number}}
-       * @private
-       */
-
-    }, {
-      key: "_findBorderPosition",
-      value: function _findBorderPosition(nearNode, ctx) {
-        return this._findBorderPositionBezier(nearNode, ctx);
-      }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @param {Node} via1
-       * @param {Node} via2
-       * @returns {number}
-       * @private
-       */
-
-    }, {
-      key: "_getDistanceToEdge",
-      value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
-        var _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
-            _ref2 = slicedToArray$1(_ref, 2),
-            via1 = _ref2[0],
-            via2 = _ref2[1];
-
-        // x3,y3 is the point
-        return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2);
-      }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       * @param {number} percentage
-       * @param {{x: number, y: number}} [via1=this._getViaCoordinates()[0]]
-       * @param {{x: number, y: number}} [via2=this._getViaCoordinates()[1]]
-       * @returns {{x: number, y: number}}
-       * @private
-       */
-
-    }, {
-      key: "getPoint",
-      value: function getPoint(percentage) {
-        var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
-            _ref4 = slicedToArray$1(_ref3, 2),
-            via1 = _ref4[0],
-            via2 = _ref4[1];
-
-        var t = percentage;
-        var vec = [];
-        vec[0] = Math.pow(1 - t, 3);
-        vec[1] = 3 * t * Math.pow(1 - t, 2);
-        vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-        vec[3] = Math.pow(t, 3);
-        var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
-        var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
-        return {
-          x: x,
-          y: y
-        };
-      }
-    }]);
-
-    return CubicBezierEdge;
-  }(CubicBezierEdgeBase);
 
   /**
    * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
@@ -31592,9 +29312,11 @@
     inherits$1(BezierEdgeDynamic, _BezierEdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function BezierEdgeDynamic(options, body, labelModule) {
       var _this;
@@ -31604,6 +29326,8 @@
       //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
       _this = possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeDynamic).call(this, options, body, labelModule)); // --> this calls the setOptions below
 
+      _this.via = _this.via; // constructor → super → super → setOptions → setupSupportNode
+
       _this._boundFunction = function () {
         _this.positionBezierNode();
       };
@@ -31612,16 +29336,15 @@
 
       return _this;
     }
-    /**
-     *
-     * @param {Object} options
-     */
+    /** @inheritdoc */
 
 
     createClass(BezierEdgeDynamic, [{
       key: "setOptions",
       value: function setOptions(options) {
-        // check if the physics has changed.
+        get(getPrototypeOf$1(BezierEdgeDynamic.prototype), "setOptions", this).call(this, options); // check if the physics has changed.
+
+
         var physicsChange = false;
 
         if (this.options.physics !== options.physics) {
@@ -31644,9 +29367,7 @@
           this.positionBezierNode();
         }
       }
-      /**
-       * Connects an edge to node(s)
-       */
+      /** @inheritdoc */
 
     }, {
       key: "connect",
@@ -31671,10 +29392,7 @@
           }
         }
       }
-      /**
-       * remove the support nodes
-       * @returns {boolean}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "cleanup",
@@ -31690,11 +29408,14 @@
         return false;
       }
       /**
-       * Bezier curves require an anchor point to calculate the smooth flow. These points are nodes. These nodes are invisible but
-       * are used for the force calculation.
+       * Create and add a support node if not already present.
+       *
+       * @remarks
+       * Bezier curves require an anchor point to calculate the smooth flow.
+       * These points are nodes.
+       * These nodes are invisible but are used for the force calculation.
        *
        * The changed data is not called, if needed, it is returned by the main edge constructor.
-       * @private
        */
 
     }, {
@@ -31704,7 +29425,7 @@
           var nodeId = "edgeId:" + this.id;
           var node = this.body.functions.createNode({
             id: nodeId,
-            shape: 'circle',
+            shape: "circle",
             physics: true,
             hidden: true
           });
@@ -31715,7 +29436,7 @@
         }
       }
       /**
-       * Positions bezier node
+       * Position bezier node.
        */
 
     }, {
@@ -31729,89 +29450,61 @@
           this.via.y = 0;
         }
       }
-      /**
-       * Draw a line between two nodes
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
-       * @param {Node} viaNode
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_line",
       value: function _line(ctx, values, viaNode) {
         this._bezierCurve(ctx, values, viaNode);
       }
-      /**
-       *
-       * @returns {Node|undefined|*|{index, line, column}}
-       */
+      /** @inheritdoc */
+
+    }, {
+      key: "_getViaCoordinates",
+      value: function _getViaCoordinates() {
+        return this.via;
+      }
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
       value: function getViaNode() {
         return this.via;
       }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       *
-       * @param {number} percentage
-       * @param {Node} viaNode
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getPoint",
-      value: function getPoint(percentage) {
+      value: function getPoint(position) {
         var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.via;
-        var t = percentage;
-        var x, y;
 
         if (this.from === this.to) {
-          var _this$_getCircleData = this._getCircleData(this.from),
-              _this$_getCircleData2 = slicedToArray$1(_this$_getCircleData, 3),
+          var _this$_getCircleData = this._getCircleData(),
+              _this$_getCircleData2 = slicedToArray(_this$_getCircleData, 3),
               cx = _this$_getCircleData2[0],
               cy = _this$_getCircleData2[1],
               cr = _this$_getCircleData2[2];
 
-          var a = 2 * Math.PI * (1 - t);
-          x = cx + cr * Math.sin(a);
-          y = cy + cr - cr * (1 - Math.cos(a));
+          var a = 2 * Math.PI * (1 - position);
+          return {
+            x: cx + cr * Math.sin(a),
+            y: cy + cr - cr * (1 - Math.cos(a))
+          };
         } else {
-          x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
-          y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
+          return {
+            x: Math.pow(1 - position, 2) * this.fromPoint.x + 2 * position * (1 - position) * viaNode.x + Math.pow(position, 2) * this.toPoint.x,
+            y: Math.pow(1 - position, 2) * this.fromPoint.y + 2 * position * (1 - position) * viaNode.y + Math.pow(position, 2) * this.toPoint.y
+          };
         }
-
-        return {
-          x: x,
-          y: y
-        };
       }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {*}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_findBorderPosition",
       value: function _findBorderPosition(nearNode, ctx) {
         return this._findBorderPositionBezier(nearNode, ctx, this.via);
       }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @returns {number}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_getDistanceToEdge",
@@ -31825,10 +29518,7 @@
   }(BezierEdgeBase);
 
   /**
-   * A Static Bezier Edge. Bezier curves are used to model smooth gradual
-   * curves in paths between nodes.
-   *
-   * @extends BezierEdgeBase
+   * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
    */
 
   var BezierEdgeStatic =
@@ -31837,22 +29527,18 @@
     inherits$1(BezierEdgeStatic, _BezierEdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function BezierEdgeStatic(options, body, labelModule) {
       classCallCheck(this, BezierEdgeStatic);
 
       return possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeStatic).call(this, options, body, labelModule));
     }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {Node} viaNode
-     * @private
-     */
+    /** @inheritdoc */
 
 
     createClass(BezierEdgeStatic, [{
@@ -31860,10 +29546,7 @@
       value: function _line(ctx, values, viaNode) {
         this._bezierCurve(ctx, values, viaNode);
       }
-      /**
-       *
-       * @returns {Array.<{x: number, y: number}>}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
@@ -31871,23 +29554,24 @@
         return this._getViaCoordinates();
       }
       /**
+       * Compute the coordinates of the via node.
+       *
+       * @remarks
        * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
-       * @returns {{x: undefined, y: undefined}}
-       * @private
+       *
+       * @returns Cartesian coordinates of the via node.
        */
 
     }, {
       key: "_getViaCoordinates",
       value: function _getViaCoordinates() {
         // Assumption: x/y coordinates in from/to always defined
-        var xVia = undefined;
-        var yVia = undefined;
         var factor = this.options.smooth.roundness;
         var type = this.options.smooth.type;
         var dx = Math.abs(this.from.x - this.to.x);
         var dy = Math.abs(this.from.y - this.to.y);
 
-        if (type === 'discrete' || type === 'diagonalCross') {
+        if (type === "discrete" || type === "diagonalCross") {
           var stepX;
           var stepY;
 
@@ -31897,10 +29581,16 @@
             stepX = stepY = factor * dx;
           }
 
-          if (this.from.x > this.to.x) stepX = -stepX;
-          if (this.from.y >= this.to.y) stepY = -stepY;
-          xVia = this.from.x + stepX;
-          yVia = this.from.y + stepY;
+          if (this.from.x > this.to.x) {
+            stepX = -stepX;
+          }
+
+          if (this.from.y >= this.to.y) {
+            stepY = -stepY;
+          }
+
+          var xVia = this.from.x + stepX;
+          var yVia = this.from.y + stepY;
 
           if (type === "discrete") {
             if (dx <= dy) {
@@ -31909,6 +29599,11 @@
               yVia = dy < factor * dx ? this.from.y : yVia;
             }
           }
+
+          return {
+            x: xVia,
+            y: yVia
+          };
         } else if (type === "straightCross") {
           var _stepX = (1 - factor) * dx;
 
@@ -31917,37 +29612,57 @@
           if (dx <= dy) {
             // up - down
             _stepX = 0;
-            if (this.from.y < this.to.y) _stepY = -_stepY;
+
+            if (this.from.y < this.to.y) {
+              _stepY = -_stepY;
+            }
           } else {
             // left - right
-            if (this.from.x < this.to.x) _stepX = -_stepX;
+            if (this.from.x < this.to.x) {
+              _stepX = -_stepX;
+            }
+
             _stepY = 0;
           }
 
-          xVia = this.to.x + _stepX;
-          yVia = this.to.y + _stepY;
-        } else if (type === 'horizontal') {
+          return {
+            x: this.to.x + _stepX,
+            y: this.to.y + _stepY
+          };
+        } else if (type === "horizontal") {
           var _stepX2 = (1 - factor) * dx;
 
-          if (this.from.x < this.to.x) _stepX2 = -_stepX2;
-          xVia = this.to.x + _stepX2;
-          yVia = this.from.y;
-        } else if (type === 'vertical') {
+          if (this.from.x < this.to.x) {
+            _stepX2 = -_stepX2;
+          }
+
+          return {
+            x: this.to.x + _stepX2,
+            y: this.from.y
+          };
+        } else if (type === "vertical") {
           var _stepY2 = (1 - factor) * dy;
 
-          if (this.from.y < this.to.y) _stepY2 = -_stepY2;
-          xVia = this.from.x;
-          yVia = this.to.y + _stepY2;
-        } else if (type === 'curvedCW') {
+          if (this.from.y < this.to.y) {
+            _stepY2 = -_stepY2;
+          }
+
+          return {
+            x: this.from.x,
+            y: this.to.y + _stepY2
+          };
+        } else if (type === "curvedCW") {
           dx = this.to.x - this.from.x;
           dy = this.from.y - this.to.y;
           var radius = Math.sqrt(dx * dx + dy * dy);
           var pi = Math.PI;
           var originalAngle = Math.atan2(dy, dx);
           var myAngle = (originalAngle + (factor * 0.5 + 0.5) * pi) % (2 * pi);
-          xVia = this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle);
-          yVia = this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle);
-        } else if (type === 'curvedCCW') {
+          return {
+            x: this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle),
+            y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle)
+          };
+        } else if (type === "curvedCCW") {
           dx = this.to.x - this.from.x;
           dy = this.from.y - this.to.y;
 
@@ -31959,8 +29674,10 @@
 
           var _myAngle = (_originalAngle + (-factor * 0.5 + 0.5) * _pi) % (2 * _pi);
 
-          xVia = this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle);
-          yVia = this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle);
+          return {
+            x: this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle),
+            y: this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle)
+          };
         } else {
           // continuous
           var _stepX3;
@@ -31973,39 +29690,39 @@
             _stepX3 = _stepY3 = factor * dx;
           }
 
-          if (this.from.x > this.to.x) _stepX3 = -_stepX3;
-          if (this.from.y >= this.to.y) _stepY3 = -_stepY3;
-          xVia = this.from.x + _stepX3;
-          yVia = this.from.y + _stepY3;
+          if (this.from.x > this.to.x) {
+            _stepX3 = -_stepX3;
+          }
+
+          if (this.from.y >= this.to.y) {
+            _stepY3 = -_stepY3;
+          }
+
+          var _xVia = this.from.x + _stepX3;
+
+          var _yVia = this.from.y + _stepY3;
 
           if (dx <= dy) {
             if (this.from.x <= this.to.x) {
-              xVia = this.to.x < xVia ? this.to.x : xVia;
+              _xVia = this.to.x < _xVia ? this.to.x : _xVia;
             } else {
-              xVia = this.to.x > xVia ? this.to.x : xVia;
+              _xVia = this.to.x > _xVia ? this.to.x : _xVia;
             }
           } else {
             if (this.from.y >= this.to.y) {
-              yVia = this.to.y > yVia ? this.to.y : yVia;
+              _yVia = this.to.y > _yVia ? this.to.y : _yVia;
             } else {
-              yVia = this.to.y < yVia ? this.to.y : yVia;
+              _yVia = this.to.y < _yVia ? this.to.y : _yVia;
             }
           }
-        }
 
-        return {
-          x: xVia,
-          y: yVia
-        };
+          return {
+            x: _xVia,
+            y: _yVia
+          };
+        }
       }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object} options
-       * @returns {*}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_findBorderPosition",
@@ -32013,18 +29730,7 @@
         var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
         return this._findBorderPositionBezier(nearNode, ctx, options.via);
       }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @param {Node} viaNode
-       * @returns {number}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_getDistanceToEdge",
@@ -32033,19 +29739,13 @@
         // x3,y3 is the point
         return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
       }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       * @param {number} percentage
-       * @param {Node} viaNode
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getPoint",
-      value: function getPoint(percentage) {
+      value: function getPoint(position) {
         var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates();
-        var t = percentage;
+        var t = position;
         var x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
         var y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
         return {
@@ -32059,9 +29759,207 @@
   }(BezierEdgeBase);
 
   /**
-   * A Straight Edge.
+   * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
+   * smooth gradual curves in paths between nodes.
    *
-   * @extends EdgeBase
+   * @extends BezierEdgeBase
+   */
+
+  var CubicBezierEdgeBase =
+  /*#__PURE__*/
+  function (_BezierEdgeBase) {
+    inherits$1(CubicBezierEdgeBase, _BezierEdgeBase);
+
+    /**
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
+     */
+    function CubicBezierEdgeBase(options, body, labelModule) {
+      classCallCheck(this, CubicBezierEdgeBase);
+
+      return possibleConstructorReturn$1(this, getPrototypeOf$1(CubicBezierEdgeBase).call(this, options, body, labelModule));
+    }
+    /**
+     * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+     *
+     * @remarks
+     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
+     * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
+     *
+     * @param x1 - First end of the line segment on the x axis.
+     * @param y1 - First end of the line segment on the y axis.
+     * @param x2 - Second end of the line segment on the x axis.
+     * @param y2 - Second end of the line segment on the y axis.
+     * @param x3 - Position of the point on the x axis.
+     * @param y3 - Position of the point on the y axis.
+     * @param via1 - The first point this edge passes through.
+     * @param via2 - The second point this edge passes through.
+     *
+     * @returns The distance between the line segment and the point.
+     */
+
+
+    createClass(CubicBezierEdgeBase, [{
+      key: "_getDistanceToBezierEdge2",
+      value: function _getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2) {
+        // x3,y3 is the point
+        var minDistance = 1e9;
+        var lastX = x1;
+        var lastY = y1;
+        var vec = [0, 0, 0, 0];
+
+        for (var i = 1; i < 10; i++) {
+          var t = 0.1 * i;
+          vec[0] = Math.pow(1 - t, 3);
+          vec[1] = 3 * t * Math.pow(1 - t, 2);
+          vec[2] = 3 * Math.pow(t, 2) * (1 - t);
+          vec[3] = Math.pow(t, 3);
+          var x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
+          var y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
+
+          if (i > 0) {
+            var distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
+
+            minDistance = distance < minDistance ? distance : minDistance;
+          }
+
+          lastX = x;
+          lastY = y;
+        }
+
+        return minDistance;
+      }
+    }]);
+
+    return CubicBezierEdgeBase;
+  }(BezierEdgeBase);
+
+  /**
+   * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
+   */
+
+  var CubicBezierEdge =
+  /*#__PURE__*/
+  function (_CubicBezierEdgeBase) {
+    inherits$1(CubicBezierEdge, _CubicBezierEdgeBase);
+
+    /**
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
+     */
+    function CubicBezierEdge(options, body, labelModule) {
+      classCallCheck(this, CubicBezierEdge);
+
+      return possibleConstructorReturn$1(this, getPrototypeOf$1(CubicBezierEdge).call(this, options, body, labelModule));
+    }
+    /** @inheritdoc */
+
+
+    createClass(CubicBezierEdge, [{
+      key: "_line",
+      value: function _line(ctx, values, viaNodes) {
+        // get the coordinates of the support points.
+        var via1 = viaNodes[0];
+        var via2 = viaNodes[1];
+
+        this._bezierCurve(ctx, values, via1, via2);
+      }
+      /**
+       * Compute the additional points the edge passes through.
+       *
+       * @returns Cartesian coordinates of the points the edge passes through.
+       */
+
+    }, {
+      key: "_getViaCoordinates",
+      value: function _getViaCoordinates() {
+        var dx = this.from.x - this.to.x;
+        var dy = this.from.y - this.to.y;
+        var x1;
+        var y1;
+        var x2;
+        var y2;
+        var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
+
+        if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === "horizontal") && this.options.smooth.forceDirection !== "vertical") {
+          y1 = this.from.y;
+          y2 = this.to.y;
+          x1 = this.from.x - roundness * dx;
+          x2 = this.to.x + roundness * dx;
+        } else {
+          y1 = this.from.y - roundness * dy;
+          y2 = this.to.y + roundness * dy;
+          x1 = this.from.x;
+          x2 = this.to.x;
+        }
+
+        return [{
+          x: x1,
+          y: y1
+        }, {
+          x: x2,
+          y: y2
+        }];
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "getViaNode",
+      value: function getViaNode() {
+        return this._getViaCoordinates();
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "_findBorderPosition",
+      value: function _findBorderPosition(nearNode, ctx) {
+        return this._findBorderPositionBezier(nearNode, ctx);
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "_getDistanceToEdge",
+      value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+        var _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
+            _ref2 = slicedToArray(_ref, 2),
+            via1 = _ref2[0],
+            via2 = _ref2[1];
+
+        // x3,y3 is the point
+        return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "getPoint",
+      value: function getPoint(position) {
+        var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
+            _ref4 = slicedToArray(_ref3, 2),
+            via1 = _ref4[0],
+            via2 = _ref4[1];
+
+        var t = position;
+        var vec = [Math.pow(1 - t, 3), 3 * t * Math.pow(1 - t, 2), 3 * Math.pow(t, 2) * (1 - t), Math.pow(t, 3)];
+        var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
+        var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
+        return {
+          x: x,
+          y: y
+        };
+      }
+    }]);
+
+    return CubicBezierEdge;
+  }(CubicBezierEdgeBase);
+
+  /**
+   * A Straight Edge.
    */
 
   var StraightEdge =
@@ -32070,21 +29968,18 @@
     inherits$1(StraightEdge, _EdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function StraightEdge(options, body, labelModule) {
       classCallCheck(this, StraightEdge);
 
       return possibleConstructorReturn$1(this, getPrototypeOf$1(StraightEdge).call(this, options, body, labelModule));
     }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @private
-     */
+    /** @inheritdoc */
 
 
     createClass(StraightEdge, [{
@@ -32099,39 +29994,24 @@
         ctx.stroke();
         this.disableShadow(ctx, values);
       }
-      /**
-       *
-       * @returns {undefined}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
       value: function getViaNode() {
         return undefined;
       }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       *
-       * @param {number} percentage
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getPoint",
-      value: function getPoint(percentage) {
+      value: function getPoint(position) {
         return {
-          x: (1 - percentage) * this.fromPoint.x + percentage * this.toPoint.x,
-          y: (1 - percentage) * this.fromPoint.y + percentage * this.toPoint.y
+          x: (1 - position) * this.fromPoint.x + position * this.toPoint.x,
+          y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
         };
       }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_findBorderPosition",
@@ -32150,22 +30030,13 @@
         var edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
         var toBorderDist = nearNode.distanceToBorder(ctx, angle);
         var toBorderPoint = (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
-        var borderPos = {};
-        borderPos.x = (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x;
-        borderPos.y = (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y;
-        return borderPos;
+        return {
+          x: (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x,
+          y: (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y,
+          t: 0
+        };
       }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @returns {number}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_getDistanceToEdge",
@@ -43252,7 +41123,7 @@
 
 
               var _this3$_getSpaceAroun = _this3._getSpaceAroundNode(node, branchMap),
-                  _this3$_getSpaceAroun2 = slicedToArray$1(_this3$_getSpaceAroun, 2),
+                  _this3$_getSpaceAroun2 = slicedToArray(_this3$_getSpaceAroun, 2),
                   minSpaceNode = _this3$_getSpaceAroun2[0],
                   maxSpaceNode = _this3$_getSpaceAroun2[1];
 
@@ -43468,7 +41339,7 @@
 
 
             var _this3$_getSpaceAroun3 = _this3._getSpaceAroundNode(node),
-                _this3$_getSpaceAroun4 = slicedToArray$1(_this3$_getSpaceAroun3, 2),
+                _this3$_getSpaceAroun4 = slicedToArray(_this3$_getSpaceAroun3, 2),
                 minSpace = _this3$_getSpaceAroun4[0],
                 maxSpace = _this3$_getSpaceAroun4[1];
 
@@ -43653,7 +41524,7 @@
               var position = this.direction.getPosition(parentNode);
 
               var _this$_getSpaceAround = this._getSpaceAroundNode(parentNode),
-                  _this$_getSpaceAround2 = slicedToArray$1(_this$_getSpaceAround, 2),
+                  _this$_getSpaceAround2 = slicedToArray(_this$_getSpaceAround, 2),
                   minSpace = _this$_getSpaceAround2[0],
                   maxSpace = _this$_getSpaceAround2[1];
 
@@ -48945,7 +46816,7 @@
 
           var _this$_getHighestEner = this._getHighestEnergyNode(ignoreClusters);
 
-          var _this$_getHighestEner2 = slicedToArray$1(_this$_getHighestEner, 4);
+          var _this$_getHighestEner2 = slicedToArray(_this$_getHighestEner, 4);
 
           highE_nodeId = _this$_getHighestEner2[0];
           maxEnergy = _this$_getHighestEner2[1];
@@ -48961,7 +46832,7 @@
 
             var _this$_getEnergy = this._getEnergy(highE_nodeId);
 
-            var _this$_getEnergy2 = slicedToArray$1(_this$_getEnergy, 3);
+            var _this$_getEnergy2 = slicedToArray(_this$_getEnergy, 3);
 
             delta_m = _this$_getEnergy2[0];
             dE_dx = _this$_getEnergy2[1];
@@ -48991,7 +46862,7 @@
 
           if (nodes[m].predefinedPosition === false || nodes[m].isCluster === true && ignoreClusters === true || nodes[m].options.fixed.x === true || nodes[m].options.fixed.y === true) {
             var _this$_getEnergy3 = this._getEnergy(m),
-                _this$_getEnergy4 = slicedToArray$1(_this$_getEnergy3, 3),
+                _this$_getEnergy4 = slicedToArray(_this$_getEnergy3, 3),
                 delta_m = _this$_getEnergy4[0],
                 dE_dx = _this$_getEnergy4[1],
                 dE_dy = _this$_getEnergy4[2];
@@ -49017,7 +46888,7 @@
     }, {
       key: "_getEnergy",
       value: function _getEnergy(m) {
-        var _this$E_sums$m = slicedToArray$1(this.E_sums[m], 2),
+        var _this$E_sums$m = slicedToArray(this.E_sums[m], 2),
             dE_dx = _this$E_sums$m[0],
             dE_dy = _this$E_sums$m[1];
 

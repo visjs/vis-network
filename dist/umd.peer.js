@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-20T18:52:41Z
+ * @date    2019-08-27T20:16:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -29,48 +29,27 @@
   (global = global || self, factory(global.vis = global.vis || {}, global.vis, global.keycharm, global.vis));
 }(this, function (exports, util, keycharm, visData) { 'use strict';
 
-  util = util && util.hasOwnProperty('default') ? util['default'] : util;
+  var util__default = 'default' in util ? util['default'] : util;
   keycharm = keycharm && keycharm.hasOwnProperty('default') ? keycharm['default'] : keycharm;
 
-  /**
+  /*
    * Canvas shapes used by Network
    */
-  if (typeof CanvasRenderingContext2D !== 'undefined') {
-    /**
-     * Draw a circle shape
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} r
-     */
+
+  if (typeof CanvasRenderingContext2D !== "undefined") {
     CanvasRenderingContext2D.prototype.circle = function (x, y, r) {
       this.beginPath();
       this.arc(x, y, r, 0, 2 * Math.PI, false);
       this.closePath();
     };
-    /**
-     * Draw a square shape
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   size, width and height of the square
-     */
-
 
     CanvasRenderingContext2D.prototype.square = function (x, y, r) {
       this.beginPath();
       this.rect(x - r, y - r, r * 2, r * 2);
       this.closePath();
     };
-    /**
-     * Draw a triangle shape
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   radius, half the length of the sides of the triangle
-     */
-
 
     CanvasRenderingContext2D.prototype.triangle = function (x, y, r) {
-      // http://en.wikipedia.org/wiki/Equilateral_triangle
       this.beginPath(); // the change in radius and the offset is here to center the shape
 
       r *= 1.15;
@@ -87,16 +66,8 @@
       this.lineTo(x, y - (h - ir));
       this.closePath();
     };
-    /**
-     * Draw a triangle shape in downward orientation
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r radius
-     */
-
 
     CanvasRenderingContext2D.prototype.triangleDown = function (x, y, r) {
-      // http://en.wikipedia.org/wiki/Equilateral_triangle
       this.beginPath(); // the change in radius and the offset is here to center the shape
 
       r *= 1.15;
@@ -113,13 +84,6 @@
       this.lineTo(x, y + (h - ir));
       this.closePath();
     };
-    /**
-     * Draw a star shape, a star with 5 points
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   radius, half the length of the sides of the triangle
-     */
-
 
     CanvasRenderingContext2D.prototype.star = function (x, y, r) {
       // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
@@ -135,16 +99,8 @@
 
       this.closePath();
     };
-    /**
-     * Draw a Diamond shape
-     * @param {number} x horizontal center
-     * @param {number} y vertical center
-     * @param {number} r   radius, half the length of the sides of the triangle
-     */
-
 
     CanvasRenderingContext2D.prototype.diamond = function (x, y, r) {
-      // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
       this.beginPath();
       this.lineTo(x, y + r);
       this.lineTo(x + r, y);
@@ -152,16 +108,6 @@
       this.lineTo(x - r, y);
       this.closePath();
     };
-    /**
-     * http://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     * @param {number} r
-     */
-
 
     CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
       var r2d = Math.PI / 180;
@@ -188,20 +134,9 @@
       this.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
       this.closePath();
     };
-    /**
-     * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-     *
-     * Postfix '_vis' added to discern it from standard method ellipse().
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     */
-
 
     CanvasRenderingContext2D.prototype.ellipse_vis = function (x, y, w, h) {
-      var kappa = .5522848,
+      var kappa = 0.5522848,
           ox = w / 2 * kappa,
           // control point offset horizontal
       oy = h / 2 * kappa,
@@ -222,21 +157,12 @@
       this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
       this.closePath();
     };
-    /**
-     * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} w
-     * @param {number} h
-     */
-
 
     CanvasRenderingContext2D.prototype.database = function (x, y, w, h) {
       var f = 1 / 3;
       var wEllipse = w;
       var hEllipse = h * f;
-      var kappa = .5522848,
+      var kappa = 0.5522848,
           ox = wEllipse / 2 * kappa,
           // control point offset horizontal
       oy = hEllipse / 2 * kappa,
@@ -264,19 +190,6 @@
       this.bezierCurveTo(xm - ox, yeb, x, ymb + oy, x, ymb);
       this.lineTo(x, ym);
     };
-    /**
-     * Sets up the dashedLine functionality for drawing
-     * Original code came from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
-     * @author David Jordan
-     * @date 2012-08-08
-     *
-     * @param {number} x
-     * @param {number} y
-     * @param {number} x2
-     * @param {number} y2
-     * @param {string} pattern
-     */
-
 
     CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, pattern) {
       this.beginPath();
@@ -289,10 +202,10 @@
       var patternIndex = 0;
       var draw = true;
       var xStep = 0;
-      var dashLength = pattern[0];
+      var dashLength = +pattern[0];
 
       while (distRemaining >= 0.1) {
-        dashLength = pattern[patternIndex++ % patternLength];
+        dashLength = +pattern[patternIndex++ % patternLength];
 
         if (dashLength > distRemaining) {
           dashLength = distRemaining;
@@ -313,13 +226,6 @@
         draw = !draw;
       }
     };
-    /**
-     * Draw a Hexagon shape with 6 sides
-     * @param {Number} x horizontal center
-     * @param {Number} y vertical center
-     * @param {Number} r   radius
-     */
-
 
     CanvasRenderingContext2D.prototype.hexagon = function (x, y, r) {
       this.beginPath();
@@ -5164,7 +5070,7 @@
     Activator$1.current = this;
     this.active = true;
     this.dom.overlay.style.display = 'none';
-    util.addClassName(this.dom.container, 'vis-active');
+    util__default.addClassName(this.dom.container, 'vis-active');
     this.emit('change');
     this.emit('activate'); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
     // keyboard events on a 'change' event
@@ -5180,7 +5086,7 @@
   Activator$1.prototype.deactivate = function () {
     this.active = false;
     this.dom.overlay.style.display = '';
-    util.removeClassName(this.dom.container, 'vis-active');
+    util__default.removeClassName(this.dom.container, 'vis-active');
     this.keycharm.unbind('esc', this.escListener);
     this.emit('change');
     this.emit('deactivate');
@@ -5980,7 +5886,7 @@
       this.defaultOptions = {
         useDefaultGroups: true
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
     }
     /**
      *
@@ -6189,7 +6095,7 @@
         // allowed values for subOption
         var allowed = ['node', 'edge', 'label'];
         var value = true;
-        var chosen = util.topMost(pile, 'chosen');
+        var chosen = util__default.topMost(pile, 'chosen');
 
         if (typeof chosen === 'boolean') {
           value = chosen;
@@ -6198,7 +6104,7 @@
             throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
           }
 
-          var chosenEdge = util.topMost(pile, ['chosen', subOption]);
+          var chosenEdge = util__default.topMost(pile, ['chosen', subOption]);
 
           if (typeof chosenEdge === 'boolean' || typeof chosenEdge === 'function') {
             value = chosenEdge;
@@ -7311,7 +7217,7 @@
 
         // Prepare the multi-font option objects.
         // These will be filled in propagateFonts(), if required
-        util.forEach(multiFontStyle, function (style) {
+        util__default.forEach(multiFontStyle, function (style) {
           _this.fontOptions[style] = {};
         }); // Handle shorthand option, if present
 
@@ -7321,7 +7227,7 @@
         } // Copy over the non-multifont options, if specified
 
 
-        util.forEach(newFontOptions, function (prop, n) {
+        util__default.forEach(newFontOptions, function (prop, n) {
           if (prop !== undefined && prop !== null && _typeof_1(prop) !== 'object') {
             _this.fontOptions[n] = prop;
           }
@@ -7361,37 +7267,37 @@
           minHgt: -1,
           valign: 'middle'
         };
-        var widthConstraint = util.topMost(pile, 'widthConstraint');
+        var widthConstraint = util__default.topMost(pile, 'widthConstraint');
 
         if (typeof widthConstraint === 'number') {
           fontOptions.maxWdt = Number(widthConstraint);
           fontOptions.minWdt = Number(widthConstraint);
         } else if (_typeof_1(widthConstraint) === 'object') {
-          var widthConstraintMaximum = util.topMost(pile, ['widthConstraint', 'maximum']);
+          var widthConstraintMaximum = util__default.topMost(pile, ['widthConstraint', 'maximum']);
 
           if (typeof widthConstraintMaximum === 'number') {
             fontOptions.maxWdt = Number(widthConstraintMaximum);
           }
 
-          var widthConstraintMinimum = util.topMost(pile, ['widthConstraint', 'minimum']);
+          var widthConstraintMinimum = util__default.topMost(pile, ['widthConstraint', 'minimum']);
 
           if (typeof widthConstraintMinimum === 'number') {
             fontOptions.minWdt = Number(widthConstraintMinimum);
           }
         }
 
-        var heightConstraint = util.topMost(pile, 'heightConstraint');
+        var heightConstraint = util__default.topMost(pile, 'heightConstraint');
 
         if (typeof heightConstraint === 'number') {
           fontOptions.minHgt = Number(heightConstraint);
         } else if (_typeof_1(heightConstraint) === 'object') {
-          var heightConstraintMinimum = util.topMost(pile, ['heightConstraint', 'minimum']);
+          var heightConstraintMinimum = util__default.topMost(pile, ['heightConstraint', 'minimum']);
 
           if (typeof heightConstraintMinimum === 'number') {
             fontOptions.minHgt = Number(heightConstraintMinimum);
           }
 
-          var heightConstraintValign = util.topMost(pile, ['heightConstraint', 'valign']);
+          var heightConstraintValign = util__default.topMost(pile, ['heightConstraint', 'valign']);
 
           if (typeof heightConstraintValign === 'string') {
             if (heightConstraintValign === 'top' || heightConstraintValign === 'bottom') {
@@ -7414,7 +7320,7 @@
       value: function update(options, pile) {
         this.setOptions(options, true);
         this.propagateFonts(pile);
-        util.deepExtend(this.fontOptions, this.constrain(pile));
+        util__default.deepExtend(this.fontOptions, this.constrain(pile));
         this.fontOptions.chooser = ComponentUtil.choosify('label', pile);
       }
       /**
@@ -7498,7 +7404,7 @@
             fontOptions = tmpShorthand;
           }
 
-          util.forEach(fontOptions, function (opt, name) {
+          util__default.forEach(fontOptions, function (opt, name) {
             if (opt === undefined) return; // multi-font option need not be present 
 
             if (ret.hasOwnProperty(name)) return; // Keep first value we encounter
@@ -7629,7 +7535,7 @@
           var tmpMultiFontOptions = _this2.getFontOptions(fontPile, mod); // Copy over found values
 
 
-          util.forEach(tmpMultiFontOptions, function (option, n) {
+          util__default.forEach(tmpMultiFontOptions, function (option, n) {
             modOptions[n] = option;
           });
           modOptions.size = Number(modOptions.size);
@@ -7818,8 +7724,8 @@
 
         if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
           var opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
-          fontColor = util.overrideOpacity(fontColor, opacity);
-          strokeColor = util.overrideOpacity(strokeColor, opacity);
+          fontColor = util__default.overrideOpacity(fontColor, opacity);
+          strokeColor = util__default.overrideOpacity(strokeColor, opacity);
         }
 
         return [fontColor, strokeColor];
@@ -10175,7 +10081,7 @@
             log('Invalid option detected in "' + option + '".' + ' Allowed values are:' + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
             errorFound = true;
           } else if (optionType === 'object' && referenceOption !== "__any__") {
-            path = util.copyAndExtendArray(path, option);
+            path = util__default.copyAndExtendArray(path, option);
             Validator.parse(options[option], referenceOptions[referenceOption], path);
           }
         } else if (refOptionObj['any'] === undefined) {
@@ -10296,7 +10202,7 @@
           var distance = void 0;
 
           if (options[op].__type__ !== undefined && recursive === true) {
-            var result = Validator.findInOptions(option, options[op], util.copyAndExtendArray(path, op));
+            var result = Validator.findInOptions(option, options[op], util__default.copyAndExtendArray(path, op));
 
             if (min > result.distance) {
               closestMatch = result.closestMatch;
@@ -10313,7 +10219,7 @@
 
             if (min > distance) {
               closestMatch = op;
-              closestMatchPath = util.copyArray(path);
+              closestMatchPath = util__default.copyArray(path);
               min = distance;
             }
           }
@@ -10463,7 +10369,7 @@
     function Node(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
       classCallCheck(this, Node);
 
-      this.options = util.bridgeObject(globalOptions);
+      this.options = util__default.bridgeObject(globalOptions);
       this.globalOptions = globalOptions;
       this.defaultOptions = defaultOptions;
       this.body = body;
@@ -11041,10 +10947,10 @@
 
         var skipProperties = ['font'];
         if (newOptions !== undefined && newOptions.color !== undefined && newOptions.color != null) skipProperties.push('color');
-        util.selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
+        util__default.selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
         // Since groups can partially overwrite the colors, we parse it again, just in case.
 
-        parentOptions.color = util.parseColor(parentOptions.color);
+        parentOptions.color = util__default.parseColor(parentOptions.color);
       }
       /**
        * This process all possible shorthands in the new options and makes sure that the parentOptions are fully defined.
@@ -11065,16 +10971,16 @@
         var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
         var groupList = arguments.length > 4 ? arguments[4] : undefined;
         var fields = ['color', 'fixed', 'shadow'];
-        util.selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
+        util__default.selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
         Node.checkMass(newOptions); // merge the shadow options into the parent.
 
-        util.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
+        util__default.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
 
         if (newOptions.color !== undefined && newOptions.color !== null) {
-          var parsedColor = util.parseColor(newOptions.color);
-          util.fillIfDefined(parentOptions.color, parsedColor);
+          var parsedColor = util__default.parseColor(newOptions.color);
+          util__default.fillIfDefined(parentOptions.color, parsedColor);
         } else if (allowDeletion === true && newOptions.color === null) {
-          parentOptions.color = util.bridgeObject(globalOptions.color); // set the object back to the global options
+          parentOptions.color = util__default.bridgeObject(globalOptions.color); // set the object back to the global options
         } // handle the fixed options
 
 
@@ -11094,13 +11000,13 @@
         }
 
         if (allowDeletion === true && newOptions.font === null) {
-          parentOptions.font = util.bridgeObject(globalOptions.font); // set the object back to the global options
+          parentOptions.font = util__default.bridgeObject(globalOptions.font); // set the object back to the global options
         }
 
         Node.updateGroupOptions(parentOptions, newOptions, groupList); // handle the scaling options, specifically the label part
 
         if (newOptions.scaling !== undefined) {
-          util.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+          util__default.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
         }
       }
     }, {
@@ -11281,7 +11187,7 @@
         throw 'Internal error: mass in defaultOptions of NodesHandler may not be zero or negative';
       }
 
-      this.options = util.bridgeObject(this.defaultOptions);
+      this.options = util__default.bridgeObject(this.defaultOptions);
       this.bindEventListeners();
     }
     /**
@@ -11298,7 +11204,7 @@
         this.body.emitter.on('refreshNodes', this.refresh.bind(this));
         this.body.emitter.on('refresh', this.refresh.bind(this));
         this.body.emitter.on('destroy', function () {
-          util.forEach(_this2.nodesListeners, function (callback, event) {
+          util__default.forEach(_this2.nodesListeners, function (callback, event) {
             if (_this2.body.data.nodes) _this2.body.data.nodes.off(event, callback);
           });
           delete _this2.body.functions.createNode;
@@ -11379,7 +11285,7 @@
 
         if (oldNodesData) {
           // unsubscribe from old dataset
-          util.forEach(this.nodesListeners, function (callback, event) {
+          util__default.forEach(this.nodesListeners, function (callback, event) {
             oldNodesData.off(event, callback);
           });
         } // remove drawn nodes
@@ -11390,7 +11296,7 @@
         if (this.body.data.nodes) {
           // subscribe to new dataset
           var me = this;
-          util.forEach(this.nodesListeners, function (callback, event) {
+          util__default.forEach(this.nodesListeners, function (callback, event) {
             me.body.data.nodes.on(event, callback);
           }); // draw all new nodes
 
@@ -11520,7 +11426,7 @@
         var _this3 = this;
 
         var clearPositions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-        util.forEach(this.body.nodes, function (node, nodeId) {
+        util__default.forEach(this.body.nodes, function (node, nodeId) {
           var data = _this3.body.data.nodes.get(nodeId);
 
           if (data !== undefined) {
@@ -11710,6 +11616,58 @@
     return NodesHandler;
   }();
 
+  function _superPropBase(object, property) {
+    while (!Object.prototype.hasOwnProperty.call(object, property)) {
+      object = getPrototypeOf(object);
+      if (object === null) break;
+    }
+
+    return object;
+  }
+
+  var superPropBase = _superPropBase;
+
+  var get = createCommonjsModule(function (module) {
+    function _get(target, property, receiver) {
+      if (typeof Reflect !== "undefined" && Reflect.get) {
+        module.exports = _get = Reflect.get;
+      } else {
+        module.exports = _get = function _get(target, property, receiver) {
+          var base = superPropBase(target, property);
+          if (!base) return;
+          var desc = Object.getOwnPropertyDescriptor(base, property);
+
+          if (desc.get) {
+            return desc.get.call(receiver);
+          }
+
+          return desc.value;
+        };
+      }
+
+      return _get(target, property, receiver || target);
+    }
+
+    module.exports = _get;
+  });
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  var defineProperty = _defineProperty;
+
   /** ============================================================================
    * Location of all the endpoint drawing routines.
    *
@@ -11760,12 +11718,11 @@
        * - multiply the (normalized) coordinates by the passed length
        * - offset by the target coordinates
        *
-       * @param {Array<Point>} points
-       * @param {ArrowData} arrowData
-       * @static
+       * @param points - The point(s) to be transformed.
+       * @param arrowData - The data determining the result of the transformation.
        */
       value: function transform(points, arrowData) {
-        if (!(points instanceof Array)) {
+        if (!Array.isArray(points)) {
           points = [points];
         }
 
@@ -11785,9 +11742,8 @@
       /**
        * Draw a closed path using the given real coordinates.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Array.<Point>} points
-       * @static
+       * @param ctx - The path will be rendered into this context.
+       * @param points - The points of the path.
        */
 
     }, {
@@ -11808,7 +11764,6 @@
   }();
   /**
    * Drawing methods for the arrow endpoint.
-   * @extends EndPoint
    */
 
 
@@ -11829,9 +11784,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -11858,7 +11812,6 @@
   }(EndPoint);
   /**
    * Drawing methods for the crow endpoint.
-   * @extends EndPoint
    */
 
 
@@ -11875,9 +11828,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -11904,7 +11856,6 @@
   }();
   /**
    * Drawing methods for the curve endpoint.
-   * @extends EndPoint
    */
 
 
@@ -11921,9 +11872,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -11935,13 +11885,13 @@
         EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
         ctx.strokeStyle = ctx.fillStyle;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define curve endpoint as semicircle.
+        ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define curve endpoint as semicircle.
 
         var pi = Math.PI;
-        var start_angle = arrowData.angle - pi / 2;
-        var end_angle = arrowData.angle + pi / 2;
+        var startAngle = arrowData.angle - pi / 2;
+        var endAngle = arrowData.angle + pi / 2;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+        ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
         ctx.stroke();
       }
     }]);
@@ -11950,7 +11900,6 @@
   }();
   /**
    * Drawing methods for the inverted curve endpoint.
-   * @extends EndPoint
    */
 
 
@@ -11967,9 +11916,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -11981,13 +11929,13 @@
         EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
         ctx.strokeStyle = ctx.fillStyle;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define inverted curve endpoint as semicircle.
+        ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define inverted curve endpoint as semicircle.
 
         var pi = Math.PI;
-        var start_angle = arrowData.angle + pi / 2;
-        var end_angle = arrowData.angle + 3 * pi / 2;
+        var startAngle = arrowData.angle + pi / 2;
+        var endAngle = arrowData.angle + 3 * pi / 2;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+        ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
         ctx.stroke();
       }
     }]);
@@ -11996,7 +11944,6 @@
   }();
   /**
    * Drawing methods for the trinagle endpoint.
-   * @extends EndPoint
    */
 
 
@@ -12013,9 +11960,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -12039,7 +11985,6 @@
   }();
   /**
    * Drawing methods for the inverted trinagle endpoint.
-   * @extends EndPoint
    */
 
 
@@ -12056,9 +12001,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -12098,9 +12042,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var point = {
@@ -12132,22 +12075,20 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         /*
-            var points = [
-              {x:0, y:0.5},
-              {x:0, y:-0.5}
-            ];
-        
-            EndPoint.transform(points, arrowData);
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            ctx.lineTo(points[1].x, points[1].y);
-            ctx.stroke();
+        var points = [
+          {x:0, y:0.5},
+          {x:0, y:-0.5}
+        ];
+             EndPoint.transform(points, arrowData);
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[1].x, points[1].y);
+        ctx.stroke();
         */
         var points = [{
           x: 0,
@@ -12187,9 +12128,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var points = [{
@@ -12230,9 +12170,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var points = [{
@@ -12257,7 +12196,6 @@
   }();
   /**
    * Drawing methods for the vee endpoint.
-   * @extends EndPoint
    */
 
 
@@ -12274,9 +12212,8 @@
       /**
        * Draw this shape at the end of a line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         // Normalized points of closed path, in the order that they should be drawn.
@@ -12317,11 +12254,10 @@
       key: "draw",
 
       /**
-       * Draw an endpoint
+       * Draw an endpoint.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowData} arrowData
-       * @static
+       * @param ctx - The shape will be rendered into this context.
+       * @param arrowData - The data determining the shape.
        */
       value: function draw(ctx, arrowData) {
         var type;
@@ -12331,47 +12267,47 @@
         }
 
         switch (type) {
-          case 'circle':
+          case "circle":
             Circle$1.draw(ctx, arrowData);
             break;
 
-          case 'box':
+          case "box":
             Box$1.draw(ctx, arrowData);
             break;
 
-          case 'crow':
+          case "crow":
             Crow.draw(ctx, arrowData);
             break;
 
-          case 'curve':
+          case "curve":
             Curve.draw(ctx, arrowData);
             break;
 
-          case 'diamond':
+          case "diamond":
             Diamond$1.draw(ctx, arrowData);
             break;
 
-          case 'inv_curve':
+          case "inv_curve":
             InvertedCurve.draw(ctx, arrowData);
             break;
 
-          case 'triangle':
+          case "triangle":
             Triangle$1.draw(ctx, arrowData);
             break;
 
-          case 'inv_triangle':
+          case "inv_triangle":
             InvertedTriangle.draw(ctx, arrowData);
             break;
 
-          case 'bar':
+          case "bar":
             Bar.draw(ctx, arrowData);
             break;
 
-          case 'vee':
+          case "vee":
             Vee.draw(ctx, arrowData);
             break;
 
-          case 'arrow': // fall-through
+          case "arrow": // fall-through
 
           default:
             Arrow.draw(ctx, arrowData);
@@ -12382,36 +12318,37 @@
     return EndPoints;
   }();
 
+  function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   /**
    * The Base Class for all edges.
-   *
    */
 
   var EdgeBase =
   /*#__PURE__*/
   function () {
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function EdgeBase(options, body, labelModule) {
       classCallCheck(this, EdgeBase);
 
       this.body = body;
       this.labelModule = labelModule;
-      this.options = {};
-      this.setOptions(options);
-      this.colorDirty = true;
       this.color = {};
-      this.selectionWidth = 2;
+      this.colorDirty = true;
       this.hoverWidth = 1.5;
+      this.selectionWidth = 2;
+      this.setOptions(options);
       this.fromPoint = this.from;
       this.toPoint = this.to;
     }
-    /**
-     * Connects a node to itself
-     */
+    /** @inheritdoc */
 
 
     createClass(EdgeBase, [{
@@ -12420,10 +12357,7 @@
         this.from = this.body.nodes[this.options.from];
         this.to = this.body.nodes[this.options.to];
       }
-      /**
-       *
-       * @returns {boolean} always false
-       */
+      /** @inheritdoc */
 
     }, {
       key: "cleanup",
@@ -12431,8 +12365,9 @@
         return false;
       }
       /**
+       * Set new edge options.
        *
-       * @param {Object} options
+       * @param options - The new edge options object.
        */
 
     }, {
@@ -12443,24 +12378,14 @@
         this.to = this.body.nodes[this.options.to];
         this.id = this.options.id;
       }
-      /**
-       * Redraw a edge as a line
-       * Draw this edge in the given canvas
-       * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-       *
-       * @param {CanvasRenderingContext2D}   ctx
-       * @param {Array} values
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @param {Node} viaNode
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "drawLine",
-      value: function drawLine(ctx, values, selected, hover, viaNode) {
+      value: function drawLine(ctx, values, _selected, _hover) {
+        var viaNode = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.getViaNode();
         // set style
-        ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+        ctx.strokeStyle = this.getColor(ctx, values);
         ctx.lineWidth = values.width;
 
         if (values.dashes !== false) {
@@ -12470,13 +12395,13 @@
         }
       }
       /**
+       * Draw a line with given style between two nodes through supplied node(s).
        *
-       * @param {CanvasRenderingContext2D}   ctx
-       * @param {Array} values
-       * @param {Node} viaNode
-       * @param {{x: number, y: number}} [fromPoint]
-       * @param {{x: number, y: number}} [toPoint]
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param viaNode - Additional control point(s) for the edge.
+       * @param fromPoint - TODO: Seems ignored, remove?
+       * @param toPoint - TODO: Seems ignored, remove?
        */
 
     }, {
@@ -12496,26 +12421,20 @@
         }
       }
       /**
+       * Draw a dashed line with given style between two nodes through supplied node(s).
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Array} values
-       * @param {Node} viaNode
-       * @param {{x: number, y: number}} [fromPoint]  TODO: Remove in next major release
-       * @param {{x: number, y: number}} [toPoint]    TODO: Remove in next major release
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param viaNode - Additional control point(s) for the edge.
+       * @param _fromPoint - Ignored (TODO: remove in the future).
+       * @param _toPoint - Ignored (TODO: remove in the future).
        */
 
     }, {
       key: "_drawDashedLine",
-      value: function _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {
-        // eslint-disable-line no-unused-vars
-        ctx.lineCap = 'round';
-        var pattern = [5, 5];
-
-        if (Array.isArray(values.dashes) === true) {
-          pattern = values.dashes;
-        } // only firefox and chrome support this method, else we use the legacy one.
-
+      value: function _drawDashedLine(ctx, values, viaNode, _fromPoint, _toPoint) {
+        ctx.lineCap = "round";
+        var pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5]; // only firefox and chrome support this method, else we use the legacy one.
 
         if (ctx.setLineDash !== undefined) {
           ctx.save(); // set dash settings for chrome or firefox
@@ -12563,75 +12482,71 @@
         }
       }
       /**
+       * Find the intersection between the border of the node and the edge.
        *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object} options
-       * @returns {{x: number, y: number}}
+       * @param node - The node (either from or to node of the edge).
+       * @param ctx - The context that will be used for rendering.
+       * @param options - Additional options.
+       *
+       * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
        */
 
     }, {
       key: "findBorderPosition",
-      value: function findBorderPosition(nearNode, ctx, options) {
+      value: function findBorderPosition(node, ctx, options) {
         if (this.from != this.to) {
-          return this._findBorderPosition(nearNode, ctx, options);
+          return this._findBorderPosition(node, ctx, options);
         } else {
-          return this._findBorderPositionCircle(nearNode, ctx, options);
+          return this._findBorderPositionCircle(node, ctx, options);
         }
       }
-      /**
-       *
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {{from: ({x: number, y: number, t: number}|*), to: ({x: number, y: number, t: number}|*)}}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "findBorderPositions",
       value: function findBorderPositions(ctx) {
-        var from = {};
-        var to = {};
-
         if (this.from != this.to) {
-          from = this._findBorderPosition(this.from, ctx);
-          to = this._findBorderPosition(this.to, ctx);
+          return {
+            from: this._findBorderPosition(this.from, ctx),
+            to: this._findBorderPosition(this.to, ctx)
+          };
         } else {
           var _this$_getCircleData$ = this._getCircleData(ctx).slice(0, 2),
               _this$_getCircleData$2 = slicedToArray(_this$_getCircleData$, 2),
               x = _this$_getCircleData$2[0],
               y = _this$_getCircleData$2[1];
 
-          from = this._findBorderPositionCircle(this.from, ctx, {
-            x: x,
-            y: y,
-            low: 0.25,
-            high: 0.6,
-            direction: -1
-          });
-          to = this._findBorderPositionCircle(this.from, ctx, {
-            x: x,
-            y: y,
-            low: 0.6,
-            high: 0.8,
-            direction: 1
-          });
+          return {
+            from: this._findBorderPositionCircle(this.from, ctx, {
+              x: x,
+              y: y,
+              low: 0.25,
+              high: 0.6,
+              direction: -1
+            }),
+            to: this._findBorderPositionCircle(this.from, ctx, {
+              x: x,
+              y: y,
+              low: 0.6,
+              high: 0.8,
+              direction: 1
+            })
+          };
         }
-
-        return {
-          from: from,
-          to: to
-        };
       }
       /**
+       * Compute the center point and radius of an edge connected to the same node at both ends.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {Array.<number>} x, y, radius
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       *
+       * @returns `[x, y, radius]`
        */
 
     }, {
       key: "_getCircleData",
       value: function _getCircleData(ctx) {
-        var x, y;
+        var x;
+        var y;
         var node = this.from;
         var radius = this.options.selfReferenceSize;
 
@@ -12653,55 +12568,60 @@
         return [x, y, radius];
       }
       /**
-       * Get a point on a circle
-       * @param {number} x
-       * @param {number} y
-       * @param {number} radius
-       * @param {number} percentage - Value between 0 (line start) and 1 (line end)
-       * @return {Object} point
-       * @private
+       * Get a point on a circle.
+       *
+       * @param x - Center of the circle on the x axis.
+       * @param y - Center of the circle on the y axis.
+       * @param radius - Radius of the circle.
+       * @param position - Value between 0 (line start) and 1 (line end).
+       *
+       * @returns Cartesian coordinates of requested point on the circle.
        */
 
     }, {
       key: "_pointOnCircle",
-      value: function _pointOnCircle(x, y, radius, percentage) {
-        var angle = percentage * 2 * Math.PI;
+      value: function _pointOnCircle(x, y, radius, position) {
+        var angle = position * 2 * Math.PI;
         return {
           x: x + radius * Math.cos(angle),
           y: y - radius * Math.sin(angle)
         };
       }
       /**
+       * Find the intersection between the border of the node and the edge.
+       *
+       * @remarks
        * This function uses binary search to look for the point where the circle crosses the border of the node.
-       * @param {Node} node
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object} options
-       * @returns {*}
-       * @private
+       *
+       * @param nearNode - The node (either from or to node of the edge).
+       * @param ctx - The context that will be used for rendering.
+       * @param options - Additional options.
+       *
+       * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
        */
 
     }, {
       key: "_findBorderPositionCircle",
-      value: function _findBorderPositionCircle(node, ctx, options) {
+      value: function _findBorderPositionCircle(nearNode, ctx, options) {
         var x = options.x;
         var y = options.y;
         var low = options.low;
         var high = options.high;
         var direction = options.direction;
         var maxIterations = 10;
-        var iteration = 0;
         var radius = this.options.selfReferenceSize;
-        var pos, angle, distanceToBorder, distanceToPoint, difference;
         var threshold = 0.05;
+        var pos;
         var middle = (low + high) * 0.5;
+        var iteration = 0;
 
-        while (low <= high && iteration < maxIterations) {
+        do {
           middle = (low + high) * 0.5;
           pos = this._pointOnCircle(x, y, radius, middle);
-          angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-          distanceToBorder = node.distanceToBorder(ctx, angle);
-          distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-          difference = distanceToBorder - distanceToPoint;
+          var angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
+          var distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+          var distanceToPoint = Math.sqrt(Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2));
+          var difference = distanceToBorder - distanceToPoint;
 
           if (Math.abs(difference) < threshold) {
             break; // found
@@ -12720,19 +12640,20 @@
             }
           }
 
-          iteration++;
-        }
+          ++iteration;
+        } while (low <= high && iteration < maxIterations);
 
-        pos.t = middle;
-        return pos;
+        return _objectSpread({}, pos, {
+          t: middle
+        });
       }
       /**
-       * Get the line width of the edge. Depends on width and whether one of the
-       * connected nodes is selected.
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @returns {number} width
-       * @private
+       * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
+       *
+       * @param selected - Determines wheter the line is selected.
+       * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
+       *
+       * @returns The width of the line.
        */
 
     }, {
@@ -12740,34 +12661,32 @@
       value: function getLineWidth(selected, hover) {
         if (selected === true) {
           return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
+        } else if (hover === true) {
+          return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
         } else {
-          if (hover === true) {
-            return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
-          } else {
-            return Math.max(this.options.width, 0.3 / this.body.view.scale);
-          }
+          return Math.max(this.options.width, 0.3 / this.body.view.scale);
         }
       }
       /**
+       * Compute the color or gradient for given edge.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
-       * @param {boolean} selected - Unused
-       * @param {boolean} hover - Unused
-       * @returns {string}
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param _selected - Ignored (TODO: remove in the future).
+       * @param _hover - Ignored (TODO: remove in the future).
+       *
+       * @returns Color string if single color is inherited or gradient if two.
        */
 
     }, {
       key: "getColor",
-      value: function getColor(ctx, values, selected, hover) {
-        // eslint-disable-line no-unused-vars
+      value: function getColor(ctx, values) {
         if (values.inheritsColor !== false) {
           // when this is a loop edge, just use the 'from' method
-          if (values.inheritsColor === 'both' && this.from.id !== this.to.id) {
+          if (values.inheritsColor === "both" && this.from.id !== this.to.id) {
             var grd = ctx.createLinearGradient(this.from.x, this.from.y, this.to.x, this.to.y);
-            var fromColor, toColor;
-            fromColor = this.from.options.color.highlight.border;
-            toColor = this.to.options.color.highlight.border;
+            var fromColor = this.from.options.color.highlight.border;
+            var toColor = this.to.options.color.highlight.border;
 
             if (this.from.selected === false && this.to.selected === false) {
               fromColor = util.overrideOpacity(this.from.options.color.border, values.opacity);
@@ -12795,14 +12714,13 @@
         }
       }
       /**
-       * Draw a line from a node to itself, a circle
+       * Draw a line from a node to itself, a circle.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Array} values
-       * @param {number} x
-       * @param {number} y
-       * @param {number} radius
-       * @private
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values like color, opacity or shadow.
+       * @param x - Center of the circle on the x axis.
+       * @param y - Center of the circle on the y axis.
+       * @param radius - Radius of the circle.
        */
 
     }, {
@@ -12818,30 +12736,17 @@
         this.disableShadow(ctx, values);
       }
       /**
-       * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-       * (x3,y3) is the point.
+       * @inheritdoc
        *
+       * @remarks
        * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @param {Node} via
-       * @param {Array} values
-       * @returns {number}
        */
 
     }, {
       key: "getDistanceToEdge",
-      value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {
-        // eslint-disable-line no-unused-vars
-        var returnValue = 0;
-
+      value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
         if (this.from != this.to) {
-          returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via);
+          return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
         } else {
           var _this$_getCircleData7 = this._getCircleData(undefined),
               _this$_getCircleData8 = slicedToArray(_this$_getCircleData7, 3),
@@ -12851,21 +12756,20 @@
 
           var dx = x - x3;
           var dy = y - y3;
-          returnValue = Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
+          return Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
         }
-
-        return returnValue;
       }
       /**
+       * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
        *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @returns {number}
-       * @private
+       * @param x1 - First end of the line segment on the x axis.
+       * @param y1 - First end of the line segment on the y axis.
+       * @param x2 - Second end of the line segment on the x axis.
+       * @param y2 - Second end of the line segment on the y axis.
+       * @param x3 - Position of the point on the x axis.
+       * @param y3 - Position of the point on the y axis.
+       *
+       * @returns The distance between the line segment and the point.
        */
 
     }, {
@@ -12893,19 +12797,11 @@
 
         return Math.sqrt(dx * dx + dy * dy);
       }
-      /**
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {string} position
-       * @param {Node} viaNode
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @param {Array} values
-       * @returns {{point: *, core: {x: number, y: number}, angle: *, length: number, type: *}}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getArrowData",
-      value: function getArrowData(ctx, position, viaNode, selected, hover, values) {
+      value: function getArrowData(ctx, position, viaNode, _selected, _hover, values) {
         // set lets
         var angle;
         var arrowPoint;
@@ -12916,13 +12812,13 @@
         var type;
         var lineWidth = values.width;
 
-        if (position === 'from') {
+        if (position === "from") {
           node1 = this.from;
           node2 = this.to;
           guideOffset = 0.1;
           scaleFactor = values.fromArrowScale;
           type = values.fromArrowType;
-        } else if (position === 'to') {
+        } else if (position === "to") {
           node1 = this.to;
           node2 = this.from;
           guideOffset = -0.1;
@@ -12937,17 +12833,20 @@
 
 
         if (node1 != node2) {
-          if (position !== 'middle') {
+          if (position !== "middle") {
             // draw arrow head
             if (this.options.smooth.enabled === true) {
-              arrowPoint = this.findBorderPosition(node1, ctx, {
+              var pointT = this._findBorderPosition(node1, ctx, {
                 via: viaNode
               });
-              var guidePos = this.getPoint(Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)), viaNode);
-              angle = Math.atan2(arrowPoint.y - guidePos.y, arrowPoint.x - guidePos.x);
+
+              var guidePos = this.getPoint( // guideOffset is unset only for position === 'middle'
+              Math.max(0.0, Math.min(1.0, pointT.t + guideOffset)), viaNode);
+              angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
+              arrowPoint = pointT;
             } else {
               angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-              arrowPoint = this.findBorderPosition(node1, ctx);
+              arrowPoint = this._findBorderPosition(node1, ctx);
             }
           } else {
             angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
@@ -12961,31 +12860,37 @@
               y = _this$_getCircleData10[1],
               radius = _this$_getCircleData10[2];
 
-          if (position === 'from') {
-            arrowPoint = this.findBorderPosition(this.from, ctx, {
+          if (position === "from") {
+            var _pointT = this._findBorderPositionCircle(this.from, ctx, {
               x: x,
               y: y,
               low: 0.25,
               high: 0.6,
               direction: -1
             });
-            angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-          } else if (position === 'to') {
-            arrowPoint = this.findBorderPosition(this.from, ctx, {
+
+            angle = _pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+            arrowPoint = _pointT;
+          } else if (position === "to") {
+            var _pointT2 = this._findBorderPositionCircle(this.from, ctx, {
               x: x,
               y: y,
               low: 0.6,
               high: 1.0,
               direction: 1
             });
-            angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+
+            angle = _pointT2.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+            arrowPoint = _pointT2;
           } else {
             arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
             angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
           }
         }
 
-        if (position === 'middle' && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
+        if (position === "middle" && scaleFactor < 0) {
+          lineWidth *= -1; // reversed middle arrow
+        }
 
         var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
@@ -13003,20 +12908,13 @@
           type: type
         };
       }
-      /**
-       *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
-       * @param {boolean} selected
-       * @param {boolean} hover
-       * @param {Object} arrowData
-       */
+      /** @inheritdoc */
 
     }, {
       key: "drawArrowHead",
-      value: function drawArrowHead(ctx, values, selected, hover, arrowData) {
+      value: function drawArrowHead(ctx, values, _selected, _hover, arrowData) {
         // set style
-        ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+        ctx.strokeStyle = this.getColor(ctx, values);
         ctx.fillStyle = ctx.strokeStyle;
         ctx.lineWidth = values.width;
         EndPoints.draw(ctx, arrowData); // draw shadow if enabled
@@ -13027,9 +12925,10 @@
         this.disableShadow(ctx, values);
       }
       /**
+       * Set the shadow formatting values in the context if enabled, do nothing otherwise.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values for the shadow.
        */
 
     }, {
@@ -13043,52 +12942,55 @@
         }
       }
       /**
+       * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values for the shadow.
        */
 
     }, {
       key: "disableShadow",
       value: function disableShadow(ctx, values) {
         if (values.shadow === true) {
-          ctx.shadowColor = 'rgba(0,0,0,0)';
+          ctx.shadowColor = "rgba(0,0,0,0)";
           ctx.shadowBlur = 0;
           ctx.shadowOffsetX = 0;
           ctx.shadowOffsetY = 0;
         }
       }
       /**
+       * Render the background according to the formatting values.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {{toArrow: boolean, toArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), toArrowType: *, middleArrow: boolean, middleArrowScale: (number|allOptions.edges.arrows.middle.scaleFactor|{number}|Array), middleArrowType: (allOptions.edges.arrows.middle.type|{string}|string|*), fromArrow: boolean, fromArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), fromArrowType: *, arrowStrikethrough: (*|boolean|allOptions.edges.arrowStrikethrough|{boolean}), color: undefined, inheritsColor: (string|string|string|allOptions.edges.color.inherit|{string, boolean}|Array|*), opacity: *, hidden: *, length: *, shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *, dashes: (*|boolean|Array|allOptions.edges.dashes|{boolean, array}), width: *}} values
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Formatting values for the background.
        */
 
     }, {
       key: "drawBackground",
       value: function drawBackground(ctx, values) {
         if (values.background !== false) {
-          var attrs = ['strokeStyle', 'lineWidth', 'dashes'];
-          var origCtxAttr = {}; // save original line attrs
-
-          attrs.forEach(function (attrname) {
-            origCtxAttr[attrname] = ctx[attrname];
-          });
+          // save original line attrs
+          var origCtxAttr = {
+            strokeStyle: ctx.strokeStyle,
+            lineWidth: ctx.lineWidth,
+            dashes: ctx.dashes
+          };
           ctx.strokeStyle = values.backgroundColor;
           ctx.lineWidth = values.backgroundSize;
           this.setStrokeDashed(ctx, values.backgroundDashes);
           ctx.stroke(); // restore original line attrs
 
-          attrs.forEach(function (attrname) {
-            ctx[attrname] = origCtxAttr[attrname];
-          });
+          ctx.strokeStyle = origCtxAttr.strokeStyle;
+          ctx.lineWidth = origCtxAttr.lineWidth;
+          ctx.dashes = origCtxAttr.dashes;
           this.setStrokeDashed(ctx, values.dashes);
         }
       }
       /**
+       * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {boolean|Array} dashes
+       * @param ctx - The context that will be used for rendering.
+       * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
        */
 
     }, {
@@ -13096,12 +12998,7 @@
       value: function setStrokeDashed(ctx, dashes) {
         if (dashes !== false) {
           if (ctx.setLineDash !== undefined) {
-            var pattern = [5, 5];
-
-            if (Array.isArray(dashes) === true) {
-              pattern = dashes;
-            }
-
+            var pattern = Array.isArray(dashes) ? dashes : [5, 5];
             ctx.setLineDash(pattern);
           } else {
             console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
@@ -13119,11 +13016,12 @@
     return EdgeBase;
   }();
 
+  function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+  function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
   /**
-   * The Base Class for all Bezier edges. Bezier curves are used to model smooth
-   * gradual curves in paths between nodes.
-   *
-   * @extends EdgeBase
+   * The Base Class for all Bezier edges.
+   * Bezier curves are used to model smooth gradual curves in paths between nodes.
    */
 
   var BezierEdgeBase =
@@ -13132,9 +13030,11 @@
     inherits(BezierEdgeBase, _EdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function BezierEdgeBase(options, body, labelModule) {
       classCallCheck(this, BezierEdgeBase);
@@ -13142,13 +13042,16 @@
       return possibleConstructorReturn(this, getPrototypeOf(BezierEdgeBase).call(this, options, body, labelModule));
     }
     /**
+     * Find the intersection between the border of the node and the edge.
+     *
+     * @remarks
      * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
      *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Node} viaNode
-     * @returns {*}
-     * @private
+     * @param nearNode - The node (either from or to node of the edge).
+     * @param ctx - The context that will be used for rendering.
+     * @param viaNode - Additional node(s) the edge passes through.
+     *
+     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
 
 
@@ -13157,26 +13060,28 @@
       value: function _findBorderPositionBezier(nearNode, ctx) {
         var viaNode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this._getViaCoordinates();
         var maxIterations = 10;
-        var iteration = 0;
-        var low = 0;
-        var high = 1;
-        var pos, angle, distanceToBorder, distanceToPoint, difference;
         var threshold = 0.2;
-        var node = this.to;
         var from = false;
+        var high = 1;
+        var low = 0;
+        var node = this.to;
+        var pos;
+        var middle;
 
         if (nearNode.id === this.from.id) {
           node = this.from;
           from = true;
         }
 
-        while (low <= high && iteration < maxIterations) {
-          var middle = (low + high) * 0.5;
+        var iteration = 0;
+
+        do {
+          middle = (low + high) * 0.5;
           pos = this.getPoint(middle, viaNode);
-          angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-          distanceToBorder = node.distanceToBorder(ctx, angle);
-          distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-          difference = distanceToBorder - distanceToPoint;
+          var angle = Math.atan2(node.y - pos.y, node.x - pos.x);
+          var distanceToBorder = node.distanceToBorder(ctx, angle);
+          var distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+          var difference = distanceToBorder - distanceToPoint;
 
           if (Math.abs(difference) < threshold) {
             break; // found
@@ -13195,25 +13100,28 @@
             }
           }
 
-          iteration++;
-        }
+          ++iteration;
+        } while (low <= high && iteration < maxIterations);
 
-        pos.t = middle;
-        return pos;
+        return _objectSpread$1({}, pos, {
+          t: middle
+        });
       }
       /**
-       * Calculate the distance between a point (x3,y3) and a line segment from
-       * (x1,y1) to (x2,y2).
+       * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+       *
+       * @remarks
        * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-       * @param {number} x1 from x
-       * @param {number} y1 from y
-       * @param {number} x2 to x
-       * @param {number} y2 to y
-       * @param {number} x3 point to check x
-       * @param {number} y3 point to check y
-       * @param {Node} via
-       * @returns {number}
-       * @private
+       *
+       * @param x1 - First end of the line segment on the x axis.
+       * @param y1 - First end of the line segment on the y axis.
+       * @param x2 - Second end of the line segment on the x axis.
+       * @param y2 - Second end of the line segment on the y axis.
+       * @param x3 - Position of the point on the x axis.
+       * @param y3 - Position of the point on the y axis.
+       * @param via - The control point for the edge.
+       *
+       * @returns The distance between the line segment and the point.
        */
 
     }, {
@@ -13243,31 +13151,30 @@
         return minDistance;
       }
       /**
-       * Draw a bezier curve between two nodes
+       * Render a bezier curve between two nodes.
        *
+       * @remarks
        * The method accepts zero, one or two control points.
-       * Passing zero control points just draws a straight line
+       * Passing zero control points just draws a straight line.
        *
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object}           values   | options for shadow drawing
-       * @param {Object|undefined} viaNode1 | first control point for curve drawing
-       * @param {Object|undefined} viaNode2 | second control point for curve drawing
-       *
-       * @protected
+       * @param ctx - The context that will be used for rendering.
+       * @param values - Style options for edge drawing.
+       * @param viaNode1 - First control point for curve drawing.
+       * @param viaNode2 - Second control point for curve drawing.
        */
 
     }, {
       key: "_bezierCurve",
       value: function _bezierCurve(ctx, values, viaNode1, viaNode2) {
-        var hasNode1 = viaNode1 !== undefined && viaNode1.x !== undefined;
-        var hasNode2 = viaNode2 !== undefined && viaNode2.x !== undefined;
         ctx.beginPath();
         ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
 
-        if (hasNode1 && hasNode2) {
-          ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
-        } else if (hasNode1) {
-          ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+        if (viaNode1 != null && viaNode1.x != null) {
+          if (viaNode2 != null && viaNode2.x != null) {
+            ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
+          } else {
+            ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+          }
         } else {
           // fallback to normal straight edge
           ctx.lineTo(this.toPoint.x, this.toPoint.y);
@@ -13280,10 +13187,7 @@
         ctx.stroke();
         this.disableShadow(ctx, values);
       }
-      /**
-       *
-       * @returns {*|{x, y}|{x: undefined, y: undefined}}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
@@ -13294,239 +13198,6 @@
 
     return BezierEdgeBase;
   }(EdgeBase);
-
-  /**
-   * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
-   * smooth gradual curves in paths between nodes.
-   *
-   * @extends BezierEdgeBase
-   */
-
-  var CubicBezierEdgeBase =
-  /*#__PURE__*/
-  function (_BezierEdgeBase) {
-    inherits(CubicBezierEdgeBase, _BezierEdgeBase);
-
-    /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
-     */
-    function CubicBezierEdgeBase(options, body, labelModule) {
-      classCallCheck(this, CubicBezierEdgeBase);
-
-      return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdgeBase).call(this, options, body, labelModule));
-    }
-    /**
-     * Calculate the distance between a point (x3,y3) and a line segment from
-     * (x1,y1) to (x2,y2).
-     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
-     * @param {number} x1 from x
-     * @param {number} y1 from y
-     * @param {number} x2 to x
-     * @param {number} y2 to y
-     * @param {number} x3 point to check x
-     * @param {number} y3 point to check y
-     * @param {Node} via1
-     * @param {Node} via2
-     * @returns {number}
-     * @private
-     */
-
-
-    createClass(CubicBezierEdgeBase, [{
-      key: "_getDistanceToBezierEdge",
-      value: function _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2) {
-        // x3,y3 is the point
-        var minDistance = 1e9;
-        var distance;
-        var i, t, x, y;
-        var lastX = x1;
-        var lastY = y1;
-        var vec = [0, 0, 0, 0];
-
-        for (i = 1; i < 10; i++) {
-          t = 0.1 * i;
-          vec[0] = Math.pow(1 - t, 3);
-          vec[1] = 3 * t * Math.pow(1 - t, 2);
-          vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-          vec[3] = Math.pow(t, 3);
-          x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
-          y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
-
-          if (i > 0) {
-            distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
-            minDistance = distance < minDistance ? distance : minDistance;
-          }
-
-          lastX = x;
-          lastY = y;
-        }
-
-        return minDistance;
-      }
-    }]);
-
-    return CubicBezierEdgeBase;
-  }(BezierEdgeBase);
-
-  /**
-   * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual
-   * curves in paths between nodes.
-   *
-   * @extends CubicBezierEdgeBase
-   */
-
-  var CubicBezierEdge =
-  /*#__PURE__*/
-  function (_CubicBezierEdgeBase) {
-    inherits(CubicBezierEdge, _CubicBezierEdgeBase);
-
-    /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
-     */
-    function CubicBezierEdge(options, body, labelModule) {
-      classCallCheck(this, CubicBezierEdge);
-
-      return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdge).call(this, options, body, labelModule));
-    }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {Array.<Node>} viaNodes
-     * @private
-     */
-
-
-    createClass(CubicBezierEdge, [{
-      key: "_line",
-      value: function _line(ctx, values, viaNodes) {
-        // get the coordinates of the support points.
-        var via1 = viaNodes[0];
-        var via2 = viaNodes[1];
-
-        this._bezierCurve(ctx, values, via1, via2);
-      }
-      /**
-       *
-       * @returns {Array.<{x: number, y: number}>}
-       * @private
-       */
-
-    }, {
-      key: "_getViaCoordinates",
-      value: function _getViaCoordinates() {
-        var dx = this.from.x - this.to.x;
-        var dy = this.from.y - this.to.y;
-        var x1, y1, x2, y2;
-        var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
-
-        if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === 'horizontal') && this.options.smooth.forceDirection !== 'vertical') {
-          y1 = this.from.y;
-          y2 = this.to.y;
-          x1 = this.from.x - roundness * dx;
-          x2 = this.to.x + roundness * dx;
-        } else {
-          y1 = this.from.y - roundness * dy;
-          y2 = this.to.y + roundness * dy;
-          x1 = this.from.x;
-          x2 = this.to.x;
-        }
-
-        return [{
-          x: x1,
-          y: y1
-        }, {
-          x: x2,
-          y: y2
-        }];
-      }
-      /**
-       *
-       * @returns {Array.<{x: number, y: number}>}
-       */
-
-    }, {
-      key: "getViaNode",
-      value: function getViaNode() {
-        return this._getViaCoordinates();
-      }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {{x: number, y: number, t: number}}
-       * @private
-       */
-
-    }, {
-      key: "_findBorderPosition",
-      value: function _findBorderPosition(nearNode, ctx) {
-        return this._findBorderPositionBezier(nearNode, ctx);
-      }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @param {Node} via1
-       * @param {Node} via2
-       * @returns {number}
-       * @private
-       */
-
-    }, {
-      key: "_getDistanceToEdge",
-      value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
-        var _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
-            _ref2 = slicedToArray(_ref, 2),
-            via1 = _ref2[0],
-            via2 = _ref2[1];
-
-        // x3,y3 is the point
-        return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2);
-      }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       * @param {number} percentage
-       * @param {{x: number, y: number}} [via1=this._getViaCoordinates()[0]]
-       * @param {{x: number, y: number}} [via2=this._getViaCoordinates()[1]]
-       * @returns {{x: number, y: number}}
-       * @private
-       */
-
-    }, {
-      key: "getPoint",
-      value: function getPoint(percentage) {
-        var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
-            _ref4 = slicedToArray(_ref3, 2),
-            via1 = _ref4[0],
-            via2 = _ref4[1];
-
-        var t = percentage;
-        var vec = [];
-        vec[0] = Math.pow(1 - t, 3);
-        vec[1] = 3 * t * Math.pow(1 - t, 2);
-        vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-        vec[3] = Math.pow(t, 3);
-        var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
-        var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
-        return {
-          x: x,
-          y: y
-        };
-      }
-    }]);
-
-    return CubicBezierEdge;
-  }(CubicBezierEdgeBase);
 
   /**
    * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
@@ -13542,9 +13213,11 @@
     inherits(BezierEdgeDynamic, _BezierEdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function BezierEdgeDynamic(options, body, labelModule) {
       var _this;
@@ -13554,6 +13227,8 @@
       //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
       _this = possibleConstructorReturn(this, getPrototypeOf(BezierEdgeDynamic).call(this, options, body, labelModule)); // --> this calls the setOptions below
 
+      _this.via = _this.via; // constructor → super → super → setOptions → setupSupportNode
+
       _this._boundFunction = function () {
         _this.positionBezierNode();
       };
@@ -13562,16 +13237,15 @@
 
       return _this;
     }
-    /**
-     *
-     * @param {Object} options
-     */
+    /** @inheritdoc */
 
 
     createClass(BezierEdgeDynamic, [{
       key: "setOptions",
       value: function setOptions(options) {
-        // check if the physics has changed.
+        get(getPrototypeOf(BezierEdgeDynamic.prototype), "setOptions", this).call(this, options); // check if the physics has changed.
+
+
         var physicsChange = false;
 
         if (this.options.physics !== options.physics) {
@@ -13594,9 +13268,7 @@
           this.positionBezierNode();
         }
       }
-      /**
-       * Connects an edge to node(s)
-       */
+      /** @inheritdoc */
 
     }, {
       key: "connect",
@@ -13621,10 +13293,7 @@
           }
         }
       }
-      /**
-       * remove the support nodes
-       * @returns {boolean}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "cleanup",
@@ -13640,11 +13309,14 @@
         return false;
       }
       /**
-       * Bezier curves require an anchor point to calculate the smooth flow. These points are nodes. These nodes are invisible but
-       * are used for the force calculation.
+       * Create and add a support node if not already present.
+       *
+       * @remarks
+       * Bezier curves require an anchor point to calculate the smooth flow.
+       * These points are nodes.
+       * These nodes are invisible but are used for the force calculation.
        *
        * The changed data is not called, if needed, it is returned by the main edge constructor.
-       * @private
        */
 
     }, {
@@ -13654,7 +13326,7 @@
           var nodeId = "edgeId:" + this.id;
           var node = this.body.functions.createNode({
             id: nodeId,
-            shape: 'circle',
+            shape: "circle",
             physics: true,
             hidden: true
           });
@@ -13665,7 +13337,7 @@
         }
       }
       /**
-       * Positions bezier node
+       * Position bezier node.
        */
 
     }, {
@@ -13679,89 +13351,61 @@
           this.via.y = 0;
         }
       }
-      /**
-       * Draw a line between two nodes
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {ArrowOptions} values
-       * @param {Node} viaNode
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_line",
       value: function _line(ctx, values, viaNode) {
         this._bezierCurve(ctx, values, viaNode);
       }
-      /**
-       *
-       * @returns {Node|undefined|*|{index, line, column}}
-       */
+      /** @inheritdoc */
+
+    }, {
+      key: "_getViaCoordinates",
+      value: function _getViaCoordinates() {
+        return this.via;
+      }
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
       value: function getViaNode() {
         return this.via;
       }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       *
-       * @param {number} percentage
-       * @param {Node} viaNode
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getPoint",
-      value: function getPoint(percentage) {
+      value: function getPoint(position) {
         var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.via;
-        var t = percentage;
-        var x, y;
 
         if (this.from === this.to) {
-          var _this$_getCircleData = this._getCircleData(this.from),
+          var _this$_getCircleData = this._getCircleData(),
               _this$_getCircleData2 = slicedToArray(_this$_getCircleData, 3),
               cx = _this$_getCircleData2[0],
               cy = _this$_getCircleData2[1],
               cr = _this$_getCircleData2[2];
 
-          var a = 2 * Math.PI * (1 - t);
-          x = cx + cr * Math.sin(a);
-          y = cy + cr - cr * (1 - Math.cos(a));
+          var a = 2 * Math.PI * (1 - position);
+          return {
+            x: cx + cr * Math.sin(a),
+            y: cy + cr - cr * (1 - Math.cos(a))
+          };
         } else {
-          x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
-          y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
+          return {
+            x: Math.pow(1 - position, 2) * this.fromPoint.x + 2 * position * (1 - position) * viaNode.x + Math.pow(position, 2) * this.toPoint.x,
+            y: Math.pow(1 - position, 2) * this.fromPoint.y + 2 * position * (1 - position) * viaNode.y + Math.pow(position, 2) * this.toPoint.y
+          };
         }
-
-        return {
-          x: x,
-          y: y
-        };
       }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {*}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_findBorderPosition",
       value: function _findBorderPosition(nearNode, ctx) {
         return this._findBorderPositionBezier(nearNode, ctx, this.via);
       }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @returns {number}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_getDistanceToEdge",
@@ -13775,10 +13419,7 @@
   }(BezierEdgeBase);
 
   /**
-   * A Static Bezier Edge. Bezier curves are used to model smooth gradual
-   * curves in paths between nodes.
-   *
-   * @extends BezierEdgeBase
+   * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
    */
 
   var BezierEdgeStatic =
@@ -13787,22 +13428,18 @@
     inherits(BezierEdgeStatic, _BezierEdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function BezierEdgeStatic(options, body, labelModule) {
       classCallCheck(this, BezierEdgeStatic);
 
       return possibleConstructorReturn(this, getPrototypeOf(BezierEdgeStatic).call(this, options, body, labelModule));
     }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {Node} viaNode
-     * @private
-     */
+    /** @inheritdoc */
 
 
     createClass(BezierEdgeStatic, [{
@@ -13810,10 +13447,7 @@
       value: function _line(ctx, values, viaNode) {
         this._bezierCurve(ctx, values, viaNode);
       }
-      /**
-       *
-       * @returns {Array.<{x: number, y: number}>}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
@@ -13821,23 +13455,24 @@
         return this._getViaCoordinates();
       }
       /**
+       * Compute the coordinates of the via node.
+       *
+       * @remarks
        * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
-       * @returns {{x: undefined, y: undefined}}
-       * @private
+       *
+       * @returns Cartesian coordinates of the via node.
        */
 
     }, {
       key: "_getViaCoordinates",
       value: function _getViaCoordinates() {
         // Assumption: x/y coordinates in from/to always defined
-        var xVia = undefined;
-        var yVia = undefined;
         var factor = this.options.smooth.roundness;
         var type = this.options.smooth.type;
         var dx = Math.abs(this.from.x - this.to.x);
         var dy = Math.abs(this.from.y - this.to.y);
 
-        if (type === 'discrete' || type === 'diagonalCross') {
+        if (type === "discrete" || type === "diagonalCross") {
           var stepX;
           var stepY;
 
@@ -13847,10 +13482,16 @@
             stepX = stepY = factor * dx;
           }
 
-          if (this.from.x > this.to.x) stepX = -stepX;
-          if (this.from.y >= this.to.y) stepY = -stepY;
-          xVia = this.from.x + stepX;
-          yVia = this.from.y + stepY;
+          if (this.from.x > this.to.x) {
+            stepX = -stepX;
+          }
+
+          if (this.from.y >= this.to.y) {
+            stepY = -stepY;
+          }
+
+          var xVia = this.from.x + stepX;
+          var yVia = this.from.y + stepY;
 
           if (type === "discrete") {
             if (dx <= dy) {
@@ -13859,6 +13500,11 @@
               yVia = dy < factor * dx ? this.from.y : yVia;
             }
           }
+
+          return {
+            x: xVia,
+            y: yVia
+          };
         } else if (type === "straightCross") {
           var _stepX = (1 - factor) * dx;
 
@@ -13867,37 +13513,57 @@
           if (dx <= dy) {
             // up - down
             _stepX = 0;
-            if (this.from.y < this.to.y) _stepY = -_stepY;
+
+            if (this.from.y < this.to.y) {
+              _stepY = -_stepY;
+            }
           } else {
             // left - right
-            if (this.from.x < this.to.x) _stepX = -_stepX;
+            if (this.from.x < this.to.x) {
+              _stepX = -_stepX;
+            }
+
             _stepY = 0;
           }
 
-          xVia = this.to.x + _stepX;
-          yVia = this.to.y + _stepY;
-        } else if (type === 'horizontal') {
+          return {
+            x: this.to.x + _stepX,
+            y: this.to.y + _stepY
+          };
+        } else if (type === "horizontal") {
           var _stepX2 = (1 - factor) * dx;
 
-          if (this.from.x < this.to.x) _stepX2 = -_stepX2;
-          xVia = this.to.x + _stepX2;
-          yVia = this.from.y;
-        } else if (type === 'vertical') {
+          if (this.from.x < this.to.x) {
+            _stepX2 = -_stepX2;
+          }
+
+          return {
+            x: this.to.x + _stepX2,
+            y: this.from.y
+          };
+        } else if (type === "vertical") {
           var _stepY2 = (1 - factor) * dy;
 
-          if (this.from.y < this.to.y) _stepY2 = -_stepY2;
-          xVia = this.from.x;
-          yVia = this.to.y + _stepY2;
-        } else if (type === 'curvedCW') {
+          if (this.from.y < this.to.y) {
+            _stepY2 = -_stepY2;
+          }
+
+          return {
+            x: this.from.x,
+            y: this.to.y + _stepY2
+          };
+        } else if (type === "curvedCW") {
           dx = this.to.x - this.from.x;
           dy = this.from.y - this.to.y;
           var radius = Math.sqrt(dx * dx + dy * dy);
           var pi = Math.PI;
           var originalAngle = Math.atan2(dy, dx);
           var myAngle = (originalAngle + (factor * 0.5 + 0.5) * pi) % (2 * pi);
-          xVia = this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle);
-          yVia = this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle);
-        } else if (type === 'curvedCCW') {
+          return {
+            x: this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle),
+            y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle)
+          };
+        } else if (type === "curvedCCW") {
           dx = this.to.x - this.from.x;
           dy = this.from.y - this.to.y;
 
@@ -13909,8 +13575,10 @@
 
           var _myAngle = (_originalAngle + (-factor * 0.5 + 0.5) * _pi) % (2 * _pi);
 
-          xVia = this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle);
-          yVia = this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle);
+          return {
+            x: this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle),
+            y: this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle)
+          };
         } else {
           // continuous
           var _stepX3;
@@ -13923,39 +13591,39 @@
             _stepX3 = _stepY3 = factor * dx;
           }
 
-          if (this.from.x > this.to.x) _stepX3 = -_stepX3;
-          if (this.from.y >= this.to.y) _stepY3 = -_stepY3;
-          xVia = this.from.x + _stepX3;
-          yVia = this.from.y + _stepY3;
+          if (this.from.x > this.to.x) {
+            _stepX3 = -_stepX3;
+          }
+
+          if (this.from.y >= this.to.y) {
+            _stepY3 = -_stepY3;
+          }
+
+          var _xVia = this.from.x + _stepX3;
+
+          var _yVia = this.from.y + _stepY3;
 
           if (dx <= dy) {
             if (this.from.x <= this.to.x) {
-              xVia = this.to.x < xVia ? this.to.x : xVia;
+              _xVia = this.to.x < _xVia ? this.to.x : _xVia;
             } else {
-              xVia = this.to.x > xVia ? this.to.x : xVia;
+              _xVia = this.to.x > _xVia ? this.to.x : _xVia;
             }
           } else {
             if (this.from.y >= this.to.y) {
-              yVia = this.to.y > yVia ? this.to.y : yVia;
+              _yVia = this.to.y > _yVia ? this.to.y : _yVia;
             } else {
-              yVia = this.to.y < yVia ? this.to.y : yVia;
+              _yVia = this.to.y < _yVia ? this.to.y : _yVia;
             }
           }
-        }
 
-        return {
-          x: xVia,
-          y: yVia
-        };
+          return {
+            x: _xVia,
+            y: _yVia
+          };
+        }
       }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @param {Object} options
-       * @returns {*}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_findBorderPosition",
@@ -13963,18 +13631,7 @@
         var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
         return this._findBorderPositionBezier(nearNode, ctx, options.via);
       }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @param {Node} viaNode
-       * @returns {number}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_getDistanceToEdge",
@@ -13983,19 +13640,13 @@
         // x3,y3 is the point
         return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
       }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       * @param {number} percentage
-       * @param {Node} viaNode
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getPoint",
-      value: function getPoint(percentage) {
+      value: function getPoint(position) {
         var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates();
-        var t = percentage;
+        var t = position;
         var x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
         var y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
         return {
@@ -14009,9 +13660,207 @@
   }(BezierEdgeBase);
 
   /**
-   * A Straight Edge.
+   * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
+   * smooth gradual curves in paths between nodes.
    *
-   * @extends EdgeBase
+   * @extends BezierEdgeBase
+   */
+
+  var CubicBezierEdgeBase =
+  /*#__PURE__*/
+  function (_BezierEdgeBase) {
+    inherits(CubicBezierEdgeBase, _BezierEdgeBase);
+
+    /**
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
+     */
+    function CubicBezierEdgeBase(options, body, labelModule) {
+      classCallCheck(this, CubicBezierEdgeBase);
+
+      return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdgeBase).call(this, options, body, labelModule));
+    }
+    /**
+     * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+     *
+     * @remarks
+     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
+     * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
+     *
+     * @param x1 - First end of the line segment on the x axis.
+     * @param y1 - First end of the line segment on the y axis.
+     * @param x2 - Second end of the line segment on the x axis.
+     * @param y2 - Second end of the line segment on the y axis.
+     * @param x3 - Position of the point on the x axis.
+     * @param y3 - Position of the point on the y axis.
+     * @param via1 - The first point this edge passes through.
+     * @param via2 - The second point this edge passes through.
+     *
+     * @returns The distance between the line segment and the point.
+     */
+
+
+    createClass(CubicBezierEdgeBase, [{
+      key: "_getDistanceToBezierEdge2",
+      value: function _getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2) {
+        // x3,y3 is the point
+        var minDistance = 1e9;
+        var lastX = x1;
+        var lastY = y1;
+        var vec = [0, 0, 0, 0];
+
+        for (var i = 1; i < 10; i++) {
+          var t = 0.1 * i;
+          vec[0] = Math.pow(1 - t, 3);
+          vec[1] = 3 * t * Math.pow(1 - t, 2);
+          vec[2] = 3 * Math.pow(t, 2) * (1 - t);
+          vec[3] = Math.pow(t, 3);
+          var x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
+          var y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
+
+          if (i > 0) {
+            var distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
+
+            minDistance = distance < minDistance ? distance : minDistance;
+          }
+
+          lastX = x;
+          lastY = y;
+        }
+
+        return minDistance;
+      }
+    }]);
+
+    return CubicBezierEdgeBase;
+  }(BezierEdgeBase);
+
+  /**
+   * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
+   */
+
+  var CubicBezierEdge =
+  /*#__PURE__*/
+  function (_CubicBezierEdgeBase) {
+    inherits(CubicBezierEdge, _CubicBezierEdgeBase);
+
+    /**
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
+     */
+    function CubicBezierEdge(options, body, labelModule) {
+      classCallCheck(this, CubicBezierEdge);
+
+      return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdge).call(this, options, body, labelModule));
+    }
+    /** @inheritdoc */
+
+
+    createClass(CubicBezierEdge, [{
+      key: "_line",
+      value: function _line(ctx, values, viaNodes) {
+        // get the coordinates of the support points.
+        var via1 = viaNodes[0];
+        var via2 = viaNodes[1];
+
+        this._bezierCurve(ctx, values, via1, via2);
+      }
+      /**
+       * Compute the additional points the edge passes through.
+       *
+       * @returns Cartesian coordinates of the points the edge passes through.
+       */
+
+    }, {
+      key: "_getViaCoordinates",
+      value: function _getViaCoordinates() {
+        var dx = this.from.x - this.to.x;
+        var dy = this.from.y - this.to.y;
+        var x1;
+        var y1;
+        var x2;
+        var y2;
+        var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
+
+        if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === "horizontal") && this.options.smooth.forceDirection !== "vertical") {
+          y1 = this.from.y;
+          y2 = this.to.y;
+          x1 = this.from.x - roundness * dx;
+          x2 = this.to.x + roundness * dx;
+        } else {
+          y1 = this.from.y - roundness * dy;
+          y2 = this.to.y + roundness * dy;
+          x1 = this.from.x;
+          x2 = this.to.x;
+        }
+
+        return [{
+          x: x1,
+          y: y1
+        }, {
+          x: x2,
+          y: y2
+        }];
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "getViaNode",
+      value: function getViaNode() {
+        return this._getViaCoordinates();
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "_findBorderPosition",
+      value: function _findBorderPosition(nearNode, ctx) {
+        return this._findBorderPositionBezier(nearNode, ctx);
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "_getDistanceToEdge",
+      value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+        var _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
+            _ref2 = slicedToArray(_ref, 2),
+            via1 = _ref2[0],
+            via2 = _ref2[1];
+
+        // x3,y3 is the point
+        return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
+      }
+      /** @inheritdoc */
+
+    }, {
+      key: "getPoint",
+      value: function getPoint(position) {
+        var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
+            _ref4 = slicedToArray(_ref3, 2),
+            via1 = _ref4[0],
+            via2 = _ref4[1];
+
+        var t = position;
+        var vec = [Math.pow(1 - t, 3), 3 * t * Math.pow(1 - t, 2), 3 * Math.pow(t, 2) * (1 - t), Math.pow(t, 3)];
+        var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
+        var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
+        return {
+          x: x,
+          y: y
+        };
+      }
+    }]);
+
+    return CubicBezierEdge;
+  }(CubicBezierEdgeBase);
+
+  /**
+   * A Straight Edge.
    */
 
   var StraightEdge =
@@ -14020,21 +13869,18 @@
     inherits(StraightEdge, _EdgeBase);
 
     /**
-     * @param {Object} options
-     * @param {Object} body
-     * @param {Label} labelModule
+     * Create a new instance.
+     *
+     * @param options - The options object of given edge.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
     function StraightEdge(options, body, labelModule) {
       classCallCheck(this, StraightEdge);
 
       return possibleConstructorReturn(this, getPrototypeOf(StraightEdge).call(this, options, body, labelModule));
     }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @private
-     */
+    /** @inheritdoc */
 
 
     createClass(StraightEdge, [{
@@ -14049,39 +13895,24 @@
         ctx.stroke();
         this.disableShadow(ctx, values);
       }
-      /**
-       *
-       * @returns {undefined}
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getViaNode",
       value: function getViaNode() {
         return undefined;
       }
-      /**
-       * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-       *
-       * @param {number} percentage
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "getPoint",
-      value: function getPoint(percentage) {
+      value: function getPoint(position) {
         return {
-          x: (1 - percentage) * this.fromPoint.x + percentage * this.toPoint.x,
-          y: (1 - percentage) * this.fromPoint.y + percentage * this.toPoint.y
+          x: (1 - position) * this.fromPoint.x + position * this.toPoint.x,
+          y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
         };
       }
-      /**
-       *
-       * @param {Node} nearNode
-       * @param {CanvasRenderingContext2D} ctx
-       * @returns {{x: number, y: number}}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_findBorderPosition",
@@ -14100,22 +13931,13 @@
         var edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
         var toBorderDist = nearNode.distanceToBorder(ctx, angle);
         var toBorderPoint = (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
-        var borderPos = {};
-        borderPos.x = (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x;
-        borderPos.y = (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y;
-        return borderPos;
+        return {
+          x: (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x,
+          y: (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y,
+          t: 0
+        };
       }
-      /**
-       *
-       * @param {number} x1
-       * @param {number} y1
-       * @param {number} x2
-       * @param {number} y2
-       * @param {number} x3
-       * @param {number} y3
-       * @returns {number}
-       * @private
-       */
+      /** @inheritdoc */
 
     }, {
       key: "_getDistanceToEdge",
@@ -14150,7 +13972,7 @@
       // Following needs to be done only once.
 
 
-      this.options = util.bridgeObject(globalOptions);
+      this.options = util__default.bridgeObject(globalOptions);
       this.globalOptions = globalOptions;
       this.defaultOptions = defaultOptions;
       this.body = body; // initialize variables
@@ -14833,7 +14655,7 @@
         var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
         var fields = ['arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
 
-        util.selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
+        util__default.selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
 
         if (ComponentUtil.isValidLabel(newOptions.label)) {
           parentOptions.label = newOptions.label;
@@ -14841,9 +14663,9 @@
           parentOptions.label = undefined;
         }
 
-        util.mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
-        util.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
-        util.mergeOptions(parentOptions, newOptions, 'background', globalOptions);
+        util__default.mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
+        util__default.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
+        util__default.mergeOptions(parentOptions, newOptions, 'background', globalOptions);
 
         if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
           parentOptions.dashes = newOptions.dashes;
@@ -14861,7 +14683,7 @@
             parentOptions.scaling.max = newOptions.scaling.max;
           }
 
-          util.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+          util__default.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
         } else if (allowDeletion === true && newOptions.scaling === null) {
           parentOptions.scaling = Object.create(globalOptions.scaling); // this sets the pointer of the option back to the global option.
         } // handle multiple input cases for arrows
@@ -14874,9 +14696,9 @@
             parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
             parentOptions.arrows.from.enabled = arrows.indexOf("from") != -1;
           } else if (_typeof_1(newOptions.arrows) === 'object') {
-            util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
-            util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
-            util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
+            util__default.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
+            util__default.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
+            util__default.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
           } else {
             throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + JSON.stringify(newOptions.arrows));
           }
@@ -14890,7 +14712,7 @@
           var toColor = parentOptions.color; // If passed, fill in values from default options - required in the case of no prototype bridging
 
           if (copyFromGlobals) {
-            util.deepExtend(toColor, globalOptions.color, false, allowDeletion);
+            util__default.deepExtend(toColor, globalOptions.color, false, allowDeletion);
           } else {
             // Clear local properties - need to do it like this in order to retain prototype bridges
             for (var i in toColor) {
@@ -14900,7 +14722,7 @@
             }
           }
 
-          if (util.isString(toColor)) {
+          if (util__default.isString(toColor)) {
             toColor.color = toColor;
             toColor.highlight = toColor;
             toColor.hover = toColor;
@@ -14944,11 +14766,11 @@
             }
           }
         } else if (allowDeletion === true && newOptions.color === null) {
-          parentOptions.color = util.bridgeObject(globalOptions.color); // set the object back to the global options
+          parentOptions.color = util__default.bridgeObject(globalOptions.color); // set the object back to the global options
         }
 
         if (allowDeletion === true && newOptions.font === null) {
-          parentOptions.font = util.bridgeObject(globalOptions.font); // set the object back to the global options
+          parentOptions.font = util__default.bridgeObject(globalOptions.font); // set the object back to the global options
         }
       }
     }]);
@@ -15097,7 +14919,7 @@
         width: 1,
         value: undefined
       };
-      util.deepExtend(this.options, this.defaultOptions);
+      util__default.deepExtend(this.options, this.defaultOptions);
       this.bindEventListeners();
     }
     /**
@@ -15169,7 +14991,7 @@
         this.body.emitter.on("refreshEdges", this.refresh.bind(this));
         this.body.emitter.on("refresh", this.refresh.bind(this));
         this.body.emitter.on("destroy", function () {
-          util.forEach(_this2.edgesListeners, function (callback, event) {
+          util__default.forEach(_this2.edgesListeners, function (callback, event) {
             if (_this2.body.data.edges) _this2.body.data.edges.off(event, callback);
           });
           delete _this2.body.functions.createEdge;
@@ -15245,7 +15067,7 @@
 
         if (oldEdgesData) {
           // unsubscribe from old dataset
-          util.forEach(this.edgesListeners, function (callback, event) {
+          util__default.forEach(this.edgesListeners, function (callback, event) {
             oldEdgesData.off(event, callback);
           });
         } // remove drawn edges
@@ -15255,7 +15077,7 @@
 
         if (this.body.data.edges) {
           // subscribe to new dataset
-          util.forEach(this.edgesListeners, function (callback, event) {
+          util__default.forEach(this.edgesListeners, function (callback, event) {
             _this3.body.data.edges.on(event, callback);
           }); // draw all new nodes
 
@@ -15355,7 +15177,7 @@
         if (ids.length === 0) return; // early out
 
         var edges = this.body.edges;
-        util.forEach(ids, function (id) {
+        util__default.forEach(ids, function (id) {
           var edge = edges[id];
 
           if (edge !== undefined) {
@@ -15376,7 +15198,7 @@
       value: function refresh() {
         var _this4 = this;
 
-        util.forEach(this.body.edges, function (edge, edgeId) {
+        util__default.forEach(this.body.edges, function (edge, edgeId) {
           var data = _this4.body.data.edges._data[edgeId];
 
           if (data !== undefined) {
@@ -15470,7 +15292,7 @@
         var _this5 = this;
 
         var edgesToDelete = [];
-        util.forEach(this.body.edges, function (edge, id) {
+        util__default.forEach(this.body.edges, function (edge, id) {
           var toNode = _this5.body.nodes[edge.toId];
           var fromNode = _this5.body.nodes[edge.fromId]; // Skip clustering edges here, let the Clustering module handle those
 
@@ -16730,7 +16552,7 @@
         timestep: 0.5,
         adaptiveTimestep: true
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.timestep = 0.5;
       this.layoutFailed = false;
       this.bindEventListeners();
@@ -16806,8 +16628,8 @@
             this.startSimulation();
           } else {
             this.physicsEnabled = true;
-            util.selectiveNotDeepExtend(['stabilization'], this.options, options);
-            util.mergeOptions(this.options, options, 'stabilization');
+            util__default.selectiveNotDeepExtend(['stabilization'], this.options, options);
+            util__default.mergeOptions(this.options, options, 'stabilization');
 
             if (options.enabled === undefined) {
               this.options.enabled = true;
@@ -17472,7 +17294,7 @@
           var forceSize = Math.sqrt(Math.pow(force.x, 2) + Math.pow(force.x, 2));
           var size = Math.min(Math.max(5, forceSize), 15);
           var arrowSize = 3 * size;
-          var color = util.HSVToHex((180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360, 1, 1);
+          var color = util__default.HSVToHex((180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360, 1, 1);
           var point = {
             x: node.x + factor * force.x,
             y: node.y + factor * force.y
@@ -17649,12 +17471,12 @@
         var clonedOptions = {};
 
         if (type === undefined || type === 'node') {
-          util.deepExtend(clonedOptions, item.options, true);
+          util__default.deepExtend(clonedOptions, item.options, true);
           clonedOptions.x = item.x;
           clonedOptions.y = item.y;
           clonedOptions.amountOfConnections = item.edges.length;
         } else {
-          util.deepExtend(clonedOptions, item.options, true);
+          util__default.deepExtend(clonedOptions, item.options, true);
         }
 
         return clonedOptions;
@@ -17721,26 +17543,26 @@
 
 
         delete this.containedNodes[childClusterId];
-        util.forEach(childCluster.edges, function (edge) {
+        util__default.forEach(childCluster.edges, function (edge) {
           delete _this2.containedEdges[edge.id];
         }); // Transfer nodes and edges
 
-        util.forEach(childCluster.containedNodes, function (node, nodeId) {
+        util__default.forEach(childCluster.containedNodes, function (node, nodeId) {
           _this2.containedNodes[nodeId] = node;
         });
         childCluster.containedNodes = {};
-        util.forEach(childCluster.containedEdges, function (edge, edgeId) {
+        util__default.forEach(childCluster.containedEdges, function (edge, edgeId) {
           _this2.containedEdges[edgeId] = edge;
         });
         childCluster.containedEdges = {}; // Transfer edges within cluster edges which are clustered
 
-        util.forEach(childCluster.edges, function (clusterEdge) {
-          util.forEach(_this2.edges, function (parentClusterEdge) {
+        util__default.forEach(childCluster.edges, function (clusterEdge) {
+          util__default.forEach(_this2.edges, function (parentClusterEdge) {
             // Assumption: a clustered edge can only be present in a single clustering edge
             // Not tested here
             var index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(clusterEdge.id);
             if (index === -1) return;
-            util.forEach(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
+            util__default.forEach(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
               parentClusterEdge.clusteringEdgeReplacingIds.push(srcId); // Maintain correct bookkeeping for transferred edge
 
               _this2.body.edges[srcId].edgeReplacedById = parentClusterEdge.id;
@@ -17778,7 +17600,7 @@
 
       this.options = {};
       this.defaultOptions = {};
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.body.emitter.on('_resetData', function () {
         _this.clusteredNodes = {};
         _this.clusteredEdges = {};
@@ -17840,11 +17662,11 @@
         var childNodesObj = {};
         var childEdgesObj = {}; // collect the nodes that will be in the cluster
 
-        util.forEach(this.body.nodes, function (node, nodeId) {
+        util__default.forEach(this.body.nodes, function (node, nodeId) {
           if (node.options && options.joinCondition(node.options) === true) {
             childNodesObj[nodeId] = node; // collect the edges that will be in the cluster
 
-            util.forEach(node.edges, function (edge) {
+            util__default.forEach(node.edges, function (edge) {
               if (_this2.clusteredEdges[edge.id] === undefined) {
                 childEdgesObj[edge.id] = edge;
               }
@@ -18277,7 +18099,7 @@
           return;
         }
 
-        var clusterNodeProperties = util.deepExtend({}, options.clusterNodeProperties); // construct the clusterNodeProperties
+        var clusterNodeProperties = util__default.deepExtend({}, options.clusterNodeProperties); // construct the clusterNodeProperties
 
         if (options.processProperties !== undefined) {
           // get the childNode options
@@ -18313,7 +18135,7 @@
 
 
         if (clusterNodeProperties.id === undefined) {
-          clusterNodeProperties.id = 'cluster:' + util.randomUUID();
+          clusterNodeProperties.id = 'cluster:' + util__default.randomUUID();
         }
 
         var clusterId = clusterNodeProperties.id;
@@ -18521,7 +18343,7 @@
           }
         } else {
           // copy the position from the cluster
-          util.forEach(containedNodes, function (containedNode) {
+          util__default.forEach(containedNodes, function (containedNode) {
             // inherit position
             if (containedNode.options.fixed.x === false) {
               containedNode.x = clusterNode.x;
@@ -18880,14 +18702,14 @@
         // copy the options of the edge we will replace
         var clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge'); // make sure the properties of clusterEdges are superimposed on it
 
-        util.deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
+        util__default.deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
 
         clonedOptions.from = fromId;
         clonedOptions.to = toId;
-        clonedOptions.id = 'clusterEdge:' + util.randomUUID(); // apply the edge specific options to it if specified
+        clonedOptions.id = 'clusterEdge:' + util__default.randomUUID(); // apply the edge specific options to it if specified
 
         if (extraOptions !== undefined) {
-          util.deepExtend(clonedOptions, extraOptions);
+          util__default.deepExtend(clonedOptions, extraOptions);
         }
 
         var newEdge = this.body.functions.createEdge(clonedOptions);
@@ -19004,7 +18826,7 @@
       key: "_filter",
       value: function _filter(arr, callback) {
         var ret = [];
-        util.forEach(arr, function (item) {
+        util__default.forEach(arr, function (item) {
           if (callback(item)) {
             ret.push(item);
           }
@@ -19036,7 +18858,7 @@
          */
 
         var eachClusterNode = function eachClusterNode(callback) {
-          util.forEach(_this4.body.nodes, function (node) {
+          util__default.forEach(_this4.body.nodes, function (node) {
             if (node.isCluster === true) {
               callback(node);
             }
@@ -19071,7 +18893,7 @@
         // Add the deleted clustered edges to the list
 
 
-        util.forEach(this.clusteredEdges, function (edgeId) {
+        util__default.forEach(this.clusteredEdges, function (edgeId) {
           var edge = _this4.body.edges[edgeId];
 
           if (edge === undefined || !edge.endPointsValid()) {
@@ -19082,7 +18904,7 @@
         // So the cluster nodes also need to be scanned for invalid edges
 
         eachClusterNode(function (clusterNode) {
-          util.forEach(clusterNode.containedEdges, function (edge, edgeId) {
+          util__default.forEach(clusterNode.containedEdges, function (edge, edgeId) {
             if (!edge.endPointsValid() && !deletedEdgeIds[edgeId]) {
               deletedEdgeIds[edgeId] = edgeId;
             }
@@ -19090,14 +18912,14 @@
         }); // Also scan for cluster edges which need to be removed in the active list.
         // Regular edges have been removed beforehand, so this only picks up the cluster edges.
 
-        util.forEach(this.body.edges, function (edge, edgeId) {
+        util__default.forEach(this.body.edges, function (edge, edgeId) {
           // Explicitly scan the contained edges for validity
           var isValid = true;
           var replacedIds = edge.clusteringEdgeReplacingIds;
 
           if (replacedIds !== undefined) {
             var numValid = 0;
-            util.forEach(replacedIds, function (containedEdgeId) {
+            util__default.forEach(replacedIds, function (containedEdgeId) {
               var containedEdge = _this4.body.edges[containedEdgeId];
 
               if (containedEdge !== undefined && containedEdge.endPointsValid()) {
@@ -19113,9 +18935,9 @@
         }); // Remove edges from cluster nodes
 
         eachClusterNode(function (clusterNode) {
-          util.forEach(deletedEdgeIds, function (deletedEdgeId) {
+          util__default.forEach(deletedEdgeIds, function (deletedEdgeId) {
             delete clusterNode.containedEdges[deletedEdgeId];
-            util.forEach(clusterNode.edges, function (edge, m) {
+            util__default.forEach(clusterNode.edges, function (edge, m) {
               if (edge.id === deletedEdgeId) {
                 clusterNode.edges[m] = null; // Don't want to directly delete here, because in the loop
 
@@ -19133,13 +18955,13 @@
           });
         }); // Remove from cluster list
 
-        util.forEach(deletedEdgeIds, function (edgeId) {
+        util__default.forEach(deletedEdgeIds, function (edgeId) {
           delete _this4.clusteredEdges[edgeId];
         }); // Remove cluster edges from active list (this.body.edges).
         // deletedEdgeIds still contains id of regular edges, but these should all
         // be gone when you reach here.
 
-        util.forEach(deletedEdgeIds, function (edgeId) {
+        util__default.forEach(deletedEdgeIds, function (edgeId) {
           delete _this4.body.edges[edgeId];
         }); //
         // Check changed cluster state of edges
@@ -19147,7 +18969,7 @@
         // Iterating over keys here, because edges may be removed in the loop
 
         var ids = Object.keys(this.body.edges);
-        util.forEach(ids, function (edgeId) {
+        util__default.forEach(ids, function (edgeId) {
           var edge = _this4.body.edges[edgeId];
 
           var shouldBeClustered = _this4._isClusteredNode(edge.fromId) || _this4._isClusteredNode(edge.toId);
@@ -19321,7 +19143,7 @@
         hideEdgesOnZoom: false,
         hideNodesOnDrag: false
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
 
       this._determineBrowserMethod();
 
@@ -19403,7 +19225,7 @@
       value: function setOptions(options) {
         if (options !== undefined) {
           var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
-          util.selectiveDeepExtend(fields, this.options, options);
+          util__default.selectiveDeepExtend(fields, this.options, options);
         }
       }
       /**
@@ -19819,7 +19641,7 @@
         height: '100%',
         width: '100%'
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.bindEventListeners();
     }
     /**
@@ -19862,7 +19684,7 @@
 
         if (options !== undefined) {
           var fields = ['width', 'height', 'autoResize'];
-          util.selectiveDeepExtend(fields, this.options, options);
+          util__default.selectiveDeepExtend(fields, this.options, options);
         }
 
         if (this.options.autoResize === true) {
@@ -19877,7 +19699,7 @@
             }
           }, 1000);
           this.resizeFunction = this._onResize.bind(this);
-          util.addEventListener(window, 'resize', this.resizeFunction);
+          util__default.addEventListener(window, 'resize', this.resizeFunction);
         }
       }
       /**
@@ -19892,7 +19714,7 @@
           clearInterval(this.resizeTimer);
         }
 
-        util.removeEventListener(window, 'resize', this.resizeFunction);
+        util__default.removeEventListener(window, 'resize', this.resizeFunction);
         this.resizeFunction = undefined;
       }
       /**
@@ -20710,7 +20532,7 @@
         var finished = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
         this.easingTime += this.animationSpeed;
         this.easingTime = finished === true ? 1.0 : this.easingTime;
-        var progress = util.easingFunctions[this.animationEasingFunction](this.easingTime);
+        var progress = util__default.easingFunctions[this.animationEasingFunction](this.easingTime);
         this.body.view.scale = this.sourceScale + (this.targetScale - this.sourceScale) * progress;
         this.body.view.translation = {
           x: this.sourceTranslation.x + (this.targetTranslation.x - this.sourceTranslation.x) * progress,
@@ -21368,7 +21190,7 @@
         zoomView: true,
         zoomSpeed: 1
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.bindEventListeners();
     }
     /**
@@ -21397,15 +21219,15 @@
         if (options !== undefined) {
           // extend all but the values in fields
           var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag', 'keyboard', 'multiselect', 'selectable', 'selectConnectedEdges'];
-          util.selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
+          util__default.selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
 
-          util.mergeOptions(this.options, options, 'keyboard');
+          util__default.mergeOptions(this.options, options, 'keyboard');
 
           if (options.tooltip) {
-            util.extend(this.options.tooltip, options.tooltip);
+            util__default.extend(this.options.tooltip, options.tooltip);
 
             if (options.tooltip.color) {
-              this.options.tooltip.color = util.parseColor(options.tooltip.color);
+              this.options.tooltip.color = util__default.parseColor(options.tooltip.color);
             }
           }
         }
@@ -21423,8 +21245,8 @@
       key: "getPointer",
       value: function getPointer(touch) {
         return {
-          x: touch.x - util.getAbsoluteLeft(this.canvas.frame.canvas),
-          y: touch.y - util.getAbsoluteTop(this.canvas.frame.canvas)
+          x: touch.x - util__default.getAbsoluteLeft(this.canvas.frame.canvas),
+          y: touch.y - util__default.getAbsoluteTop(this.canvas.frame.canvas)
         };
       }
       /**
@@ -21639,7 +21461,7 @@
         var node = this.selectionHandler.getNodeAt(this.drag.pointer);
         this.drag.dragging = true;
         this.drag.selection = [];
-        this.drag.translation = util.extend({}, this.body.view.translation); // copy the object
+        this.drag.translation = util__default.extend({}, this.body.view.translation); // copy the object
 
         this.drag.nodeId = undefined;
 
@@ -22133,7 +21955,7 @@
         selectConnectedEdges: true,
         hoverConnectedEdges: true
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.body.emitter.on("_dataChanged", function () {
         _this.updateSelection();
       });
@@ -22149,7 +21971,7 @@
       value: function setOptions(options) {
         if (options !== undefined) {
           var fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
-          util.selectiveDeepExtend(fields, this.options, options);
+          util__default.selectiveDeepExtend(fields, this.options, options);
         }
       }
       /**
@@ -24643,7 +24465,7 @@
 
         }
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.bindEventListeners();
     }
     /**
@@ -24690,8 +24512,8 @@
         if (options !== undefined) {
           var hierarchical = this.options.hierarchical;
           var prevHierarchicalState = hierarchical.enabled;
-          util.selectiveDeepExtend(["randomSeed", "improvedLayout"], this.options, options);
-          util.mergeOptions(this.options, options, 'hierarchical');
+          util__default.selectiveDeepExtend(["randomSeed", "improvedLayout"], this.options, options);
+          util__default.mergeOptions(this.options, options, 'hierarchical');
 
           if (options.randomSeed !== undefined) {
             this.initialRandomSeed = options.randomSeed;
@@ -24723,7 +24545,7 @@
             if (prevHierarchicalState === true) {
               // refresh the overridden options for nodes and edges.
               this.body.emitter.emit('refresh');
-              return util.deepExtend(allOptions, this.optionsBackup);
+              return util__default.deepExtend(allOptions, this.optionsBackup);
             }
           }
         }
@@ -25812,7 +25634,7 @@
         var _this4 = this;
 
         var result = [];
-        util.forEach(node.edges, function (edge) {
+        util__default.forEach(node.edges, function (edge) {
           if (_this4.body.edgeIndices.indexOf(edge.id) !== -1) {
             result.push(edge);
           }
@@ -25833,7 +25655,7 @@
 
         var hubSizes = {};
         var nodeIds = this.body.nodeIndices;
-        util.forEach(nodeIds, function (nodeId) {
+        util__default.forEach(nodeIds, function (nodeId) {
           var node = _this5.body.nodes[nodeId];
 
           var hubSize = _this5._getActiveEdges(node).length;
@@ -25842,7 +25664,7 @@
         }); // Make an array of the size sorted descending
 
         var result = [];
-        util.forEach(hubSizes, function (size) {
+        util__default.forEach(hubSizes, function (size) {
           result.push(Number(size));
         });
         timsort$1.sort(result, function (a, b) {
@@ -25870,7 +25692,7 @@
         var _loop = function _loop(i) {
           var hubSize = hubSizes[i];
           if (hubSize === 0) return "break";
-          util.forEach(_this6.body.nodeIndices, function (nodeId) {
+          util__default.forEach(_this6.body.nodeIndices, function (nodeId) {
             var node = _this6.body.nodes[nodeId];
 
             if (hubSize === _this6._getActiveEdges(node).length) {
@@ -25939,7 +25761,7 @@
          */
 
         var isBidirectional = function isBidirectional(edge) {
-          util.forEach(_this8.body.edges, function (otherEdge) {
+          util__default.forEach(_this8.body.edges, function (otherEdge) {
             if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
               return true;
             }
@@ -26274,7 +26096,7 @@
           borderWidthSelected: 2
         }
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.body.emitter.on('destroy', function () {
         _this._clean();
       });
@@ -26328,7 +26150,7 @@
             this.options.enabled = options;
           } else {
             this.options.enabled = true;
-            util.deepExtend(this.options, options);
+            util__default.deepExtend(this.options, options);
           }
 
           if (this.options.initiallyActive === true) {
@@ -26537,7 +26359,7 @@
 
           if (typeof this.options.editNode === 'function') {
             if (node.isCluster !== true) {
-              var data = util.deepExtend({}, node.options, false);
+              var data = util__default.deepExtend({}, node.options, false);
               data.x = node.x;
               data.y = node.y;
 
@@ -26863,8 +26685,8 @@
     }, {
       key: "_getNewTargetNode",
       value: function _getNewTargetNode(x, y) {
-        var controlNodeStyle = util.deepExtend({}, this.options.controlNodeStyle);
-        controlNodeStyle.id = 'targetNode' + util.randomUUID();
+        var controlNodeStyle = util__default.deepExtend({}, this.options.controlNodeStyle);
+        controlNodeStyle.id = 'targetNode' + util__default.randomUUID();
         controlNodeStyle.hidden = false;
         controlNodeStyle.physics = false;
         controlNodeStyle.x = x;
@@ -26892,7 +26714,7 @@
 
         this.manipulationDOM = {}; // empty the editModeDiv
 
-        util.recursiveDOMDelete(this.editModeDiv); // create the contents for the editMode button
+        util__default.recursiveDOMDelete(this.editModeDiv); // create the contents for the editMode button
 
         var locale = this.options.locales[this.options.locale];
 
@@ -26914,8 +26736,8 @@
         this.inMode = false; // _clean the divs
 
         if (this.guiEnabled === true) {
-          util.recursiveDOMDelete(this.editModeDiv);
-          util.recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
+          util__default.recursiveDOMDelete(this.editModeDiv);
+          util__default.recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
 
           this._cleanManipulatorHammers();
         } // remove temporary nodes and edges
@@ -26961,9 +26783,9 @@
         this._clean(); // empty the manipulation divs
 
 
-        util.recursiveDOMDelete(this.manipulationDiv);
-        util.recursiveDOMDelete(this.editModeDiv);
-        util.recursiveDOMDelete(this.closeDiv); // remove the manipulation divs
+        util__default.recursiveDOMDelete(this.manipulationDiv);
+        util__default.recursiveDOMDelete(this.editModeDiv);
+        util__default.recursiveDOMDelete(this.closeDiv); // remove the manipulation divs
 
         if (this.manipulationDiv) {
           this.canvas.frame.removeChild(this.manipulationDiv);
@@ -27256,7 +27078,7 @@
       value: function _controlNodeTouch(event) {
         this.selectionHandler.unselectAll();
         this.lastTouch = this.body.functions.getPointer(event.center);
-        this.lastTouch.translation = util.extend({}, this.body.view.translation); // copy the object
+        this.lastTouch.translation = util__default.extend({}, this.body.view.translation); // copy the object
       }
       /**
        * the drag start is used to mark one of the control nodes as selected.
@@ -27391,7 +27213,7 @@
         // check to avoid double fireing of this function.
         if (new Date().valueOf() - this.touchTime > 100) {
           this.lastTouch = this.body.functions.getPointer(event.center);
-          this.lastTouch.translation = util.extend({}, this.body.view.translation); // copy the object
+          this.lastTouch.translation = util__default.extend({}, this.body.view.translation); // copy the object
 
           var pointer = this.lastTouch;
           var node = this.selectionHandler.getNodeAt(pointer);
@@ -27407,7 +27229,7 @@
               this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
               var connectionEdge = this.body.functions.createEdge({
-                id: 'connectionEdge' + util.randomUUID(),
+                id: 'connectionEdge' + util__default.randomUUID(),
                 from: node.id,
                 to: targetNode.id,
                 physics: false,
@@ -27567,7 +27389,7 @@
         var _this4 = this;
 
         var defaultData = {
-          id: util.randomUUID(),
+          id: util__default.randomUUID(),
           x: clickData.pointer.canvas.x,
           y: clickData.pointer.canvas.y,
           label: 'new'
@@ -27969,8 +27791,8 @@
         } // check format
 
 
-        if (util.isString(color) === true) {
-          if (util.isValidRGB(color) === true) {
+        if (util__default.isString(color) === true) {
+          if (util__default.isValidRGB(color) === true) {
             var rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
             rgba = {
               r: rgbaArray[0],
@@ -27978,7 +27800,7 @@
               b: rgbaArray[2],
               a: 1.0
             };
-          } else if (util.isValidRGBA(color) === true) {
+          } else if (util__default.isValidRGBA(color) === true) {
             var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
 
             rgba = {
@@ -27987,8 +27809,8 @@
               b: _rgbaArray[2],
               a: _rgbaArray[3]
             };
-          } else if (util.isValidHex(color) === true) {
-            var rgbObj = util.hexToRGB(color);
+          } else if (util__default.isValidHex(color) === true) {
+            var rgbObj = util__default.hexToRGB(color);
             rgba = {
               r: rgbObj.r,
               g: rgbObj.g,
@@ -28052,7 +27874,7 @@
 
         // store the previous color for next time;
         if (storePrevious === true) {
-          this.previousColor = util.extend({}, this.color);
+          this.previousColor = util__default.extend({}, this.color);
         }
 
         if (this.applied === true) {
@@ -28124,11 +27946,11 @@
 
         // store the initial color
         if (setInitial === true) {
-          this.initialColor = util.extend({}, rgba);
+          this.initialColor = util__default.extend({}, rgba);
         }
 
         this.color = rgba;
-        var hsv = util.RGBToHSV(rgba.r, rgba.g, rgba.b);
+        var hsv = util__default.RGBToHSV(rgba.r, rgba.g, rgba.b);
         var angleConvert = 2 * Math.PI;
         var radius = this.r * hsv.s;
         var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
@@ -28160,9 +27982,9 @@
     }, {
       key: "_setBrightness",
       value: function _setBrightness(value) {
-        var hsv = util.RGBToHSV(this.color.r, this.color.g, this.color.b);
+        var hsv = util__default.RGBToHSV(this.color.r, this.color.g, this.color.b);
         hsv.v = value / 100;
-        var rgba = util.HSVToRGB(hsv.h, hsv.s, hsv.v);
+        var rgba = util__default.HSVToRGB(hsv.h, hsv.s, hsv.v);
         rgba['a'] = this.color.a;
         this.color = rgba;
 
@@ -28178,7 +28000,7 @@
       key: "_updatePicker",
       value: function _updatePicker() {
         var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
-        var hsv = util.RGBToHSV(rgba.r, rgba.g, rgba.b);
+        var hsv = util__default.RGBToHSV(rgba.r, rgba.g, rgba.b);
         var ctx = this.colorPickerCanvas.getContext('2d');
 
         if (this.pixelRation === undefined) {
@@ -28405,7 +28227,7 @@
             for (sat = 0; sat < this.r; sat++) {
               x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
               y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
-              rgb = util.HSVToRGB(hue * hfac, sat * sfac, 1);
+              rgb = util__default.HSVToRGB(hue * hfac, sat * sfac, 1);
               ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
               ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
             }
@@ -28446,10 +28268,10 @@
         var h = angle / (2 * Math.PI);
         h = h < 0 ? h + 1 : h;
         var s = radius / this.r;
-        var hsv = util.RGBToHSV(this.color.r, this.color.g, this.color.b);
+        var hsv = util__default.RGBToHSV(this.color.r, this.color.g, this.color.b);
         hsv.h = h;
         hsv.s = s;
-        var rgba = util.HSVToRGB(hsv.h, hsv.s, hsv.v);
+        var rgba = util__default.HSVToRGB(hsv.h, hsv.s, hsv.v);
         rgba['a'] = this.color.a;
         this.color = rgba; // update previews
 
@@ -28498,7 +28320,7 @@
         container: undefined,
         showButton: true
       };
-      util.extend(this.options, this.defaultOptions);
+      util__default.extend(this.options, this.defaultOptions);
       this.configureOptions = configureOptions;
       this.moduleOptions = {};
       this.domElements = [];
@@ -29161,7 +28983,7 @@
           if (obj.hasOwnProperty(subObj)) {
             show = true;
             var item = obj[subObj];
-            var newPath = util.copyAndExtendArray(path, subObj);
+            var newPath = util__default.copyAndExtendArray(path, subObj);
 
             if (typeof filter === 'function') {
               show = filter(subObj, path); // if needed we must go deeper into the object.
@@ -29199,7 +29021,7 @@
                 if (draw === true) {
                   // initially collapse options with an disabled enabled option.
                   if (item.enabled !== undefined) {
-                    var enabledPath = util.copyAndExtendArray(newPath, 'enabled');
+                    var enabledPath = util__default.copyAndExtendArray(newPath, 'enabled');
 
                     var enabledValue = this._getValue(enabledPath);
 
@@ -31189,7 +31011,7 @@
       locales: locales,
       clickToUse: false
     };
-    util.extend(this.options, this.defaultOptions);
+    util__default.extend(this.options, this.defaultOptions);
     /**
      * Containers for nodes and edges.
      *
@@ -31315,7 +31137,7 @@
 
 
       var fields = ['locale', 'locales', 'clickToUse'];
-      util.selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
+      util__default.selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
 
       options = this.layoutEngine.setOptions(options.layout, options);
       this.canvas.setOptions(options); // options for canvas are in globals
@@ -31359,18 +31181,18 @@
           physics: {},
           global: {}
         };
-        util.deepExtend(networkOptions.nodes, this.nodesHandler.options);
-        util.deepExtend(networkOptions.edges, this.edgesHandler.options);
-        util.deepExtend(networkOptions.layout, this.layoutEngine.options); // load the selectionHandler and render default options in to the interaction group
+        util__default.deepExtend(networkOptions.nodes, this.nodesHandler.options);
+        util__default.deepExtend(networkOptions.edges, this.edgesHandler.options);
+        util__default.deepExtend(networkOptions.layout, this.layoutEngine.options); // load the selectionHandler and render default options in to the interaction group
 
-        util.deepExtend(networkOptions.interaction, this.selectionHandler.options);
-        util.deepExtend(networkOptions.interaction, this.renderer.options);
-        util.deepExtend(networkOptions.interaction, this.interactionHandler.options);
-        util.deepExtend(networkOptions.manipulation, this.manipulation.options);
-        util.deepExtend(networkOptions.physics, this.physics.options); // load globals into the global object
+        util__default.deepExtend(networkOptions.interaction, this.selectionHandler.options);
+        util__default.deepExtend(networkOptions.interaction, this.renderer.options);
+        util__default.deepExtend(networkOptions.interaction, this.interactionHandler.options);
+        util__default.deepExtend(networkOptions.manipulation, this.manipulation.options);
+        util__default.deepExtend(networkOptions.physics, this.physics.options); // load globals into the global object
 
-        util.deepExtend(networkOptions.global, this.canvas.options);
-        util.deepExtend(networkOptions.global, this.options);
+        util__default.deepExtend(networkOptions.global, this.canvas.options);
+        util__default.deepExtend(networkOptions.global, this.options);
         this.configurator.setModuleOptions(networkOptions);
       } // handle network global options
 
@@ -31564,7 +31386,7 @@
     } // remove the container and everything inside it recursively
 
 
-    util.recursiveDOMDelete(this.body.container);
+    util__default.recursiveDOMDelete(this.body.container);
   };
   /**
    * Update the values of all object in the given array according to the current

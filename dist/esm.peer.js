@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-20T18:52:41Z
+ * @date    2019-08-27T20:16:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -23,49 +23,28 @@
  *
  * vis.js may be distributed under either license.
  */
-import util from 'vis-util';
+import util, { overrideOpacity } from 'vis-util';
 import keycharm from 'keycharm';
 import { DataSet, DataView } from 'vis-data';
 
-/**
+/*
  * Canvas shapes used by Network
  */
-if (typeof CanvasRenderingContext2D !== 'undefined') {
-  /**
-   * Draw a circle shape
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} r
-   */
+
+if (typeof CanvasRenderingContext2D !== "undefined") {
   CanvasRenderingContext2D.prototype.circle = function (x, y, r) {
     this.beginPath();
     this.arc(x, y, r, 0, 2 * Math.PI, false);
     this.closePath();
   };
-  /**
-   * Draw a square shape
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   size, width and height of the square
-   */
-
 
   CanvasRenderingContext2D.prototype.square = function (x, y, r) {
     this.beginPath();
     this.rect(x - r, y - r, r * 2, r * 2);
     this.closePath();
   };
-  /**
-   * Draw a triangle shape
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   radius, half the length of the sides of the triangle
-   */
-
 
   CanvasRenderingContext2D.prototype.triangle = function (x, y, r) {
-    // http://en.wikipedia.org/wiki/Equilateral_triangle
     this.beginPath(); // the change in radius and the offset is here to center the shape
 
     r *= 1.15;
@@ -82,16 +61,8 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.lineTo(x, y - (h - ir));
     this.closePath();
   };
-  /**
-   * Draw a triangle shape in downward orientation
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r radius
-   */
-
 
   CanvasRenderingContext2D.prototype.triangleDown = function (x, y, r) {
-    // http://en.wikipedia.org/wiki/Equilateral_triangle
     this.beginPath(); // the change in radius and the offset is here to center the shape
 
     r *= 1.15;
@@ -108,13 +79,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.lineTo(x, y + (h - ir));
     this.closePath();
   };
-  /**
-   * Draw a star shape, a star with 5 points
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   radius, half the length of the sides of the triangle
-   */
-
 
   CanvasRenderingContext2D.prototype.star = function (x, y, r) {
     // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
@@ -130,16 +94,8 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
 
     this.closePath();
   };
-  /**
-   * Draw a Diamond shape
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   radius, half the length of the sides of the triangle
-   */
-
 
   CanvasRenderingContext2D.prototype.diamond = function (x, y, r) {
-    // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
     this.beginPath();
     this.lineTo(x, y + r);
     this.lineTo(x + r, y);
@@ -147,16 +103,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.lineTo(x - r, y);
     this.closePath();
   };
-  /**
-   * http://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   * @param {number} r
-   */
-
 
   CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     var r2d = Math.PI / 180;
@@ -183,20 +129,9 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
     this.closePath();
   };
-  /**
-   * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-   *
-   * Postfix '_vis' added to discern it from standard method ellipse().
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   */
-
 
   CanvasRenderingContext2D.prototype.ellipse_vis = function (x, y, w, h) {
-    var kappa = .5522848,
+    var kappa = 0.5522848,
         ox = w / 2 * kappa,
         // control point offset horizontal
     oy = h / 2 * kappa,
@@ -217,21 +152,12 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
     this.closePath();
   };
-  /**
-   * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   */
-
 
   CanvasRenderingContext2D.prototype.database = function (x, y, w, h) {
     var f = 1 / 3;
     var wEllipse = w;
     var hEllipse = h * f;
-    var kappa = .5522848,
+    var kappa = 0.5522848,
         ox = wEllipse / 2 * kappa,
         // control point offset horizontal
     oy = hEllipse / 2 * kappa,
@@ -259,19 +185,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.bezierCurveTo(xm - ox, yeb, x, ymb + oy, x, ymb);
     this.lineTo(x, ym);
   };
-  /**
-   * Sets up the dashedLine functionality for drawing
-   * Original code came from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
-   * @author David Jordan
-   * @date 2012-08-08
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} x2
-   * @param {number} y2
-   * @param {string} pattern
-   */
-
 
   CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, pattern) {
     this.beginPath();
@@ -284,10 +197,10 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     var patternIndex = 0;
     var draw = true;
     var xStep = 0;
-    var dashLength = pattern[0];
+    var dashLength = +pattern[0];
 
     while (distRemaining >= 0.1) {
-      dashLength = pattern[patternIndex++ % patternLength];
+      dashLength = +pattern[patternIndex++ % patternLength];
 
       if (dashLength > distRemaining) {
         dashLength = distRemaining;
@@ -308,13 +221,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
       draw = !draw;
     }
   };
-  /**
-   * Draw a Hexagon shape with 6 sides
-   * @param {Number} x horizontal center
-   * @param {Number} y vertical center
-   * @param {Number} r   radius
-   */
-
 
   CanvasRenderingContext2D.prototype.hexagon = function (x, y, r) {
     this.beginPath();
@@ -11705,6 +11611,58 @@ function () {
   return NodesHandler;
 }();
 
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = getPrototypeOf(object);
+    if (object === null) break;
+  }
+
+  return object;
+}
+
+var superPropBase = _superPropBase;
+
+var get = createCommonjsModule(function (module) {
+  function _get(target, property, receiver) {
+    if (typeof Reflect !== "undefined" && Reflect.get) {
+      module.exports = _get = Reflect.get;
+    } else {
+      module.exports = _get = function _get(target, property, receiver) {
+        var base = superPropBase(target, property);
+        if (!base) return;
+        var desc = Object.getOwnPropertyDescriptor(base, property);
+
+        if (desc.get) {
+          return desc.get.call(receiver);
+        }
+
+        return desc.value;
+      };
+    }
+
+    return _get(target, property, receiver || target);
+  }
+
+  module.exports = _get;
+});
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty = _defineProperty;
+
 /** ============================================================================
  * Location of all the endpoint drawing routines.
  *
@@ -11755,12 +11713,11 @@ function () {
      * - multiply the (normalized) coordinates by the passed length
      * - offset by the target coordinates
      *
-     * @param {Array<Point>} points
-     * @param {ArrowData} arrowData
-     * @static
+     * @param points - The point(s) to be transformed.
+     * @param arrowData - The data determining the result of the transformation.
      */
     value: function transform(points, arrowData) {
-      if (!(points instanceof Array)) {
+      if (!Array.isArray(points)) {
         points = [points];
       }
 
@@ -11780,9 +11737,8 @@ function () {
     /**
      * Draw a closed path using the given real coordinates.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Array.<Point>} points
-     * @static
+     * @param ctx - The path will be rendered into this context.
+     * @param points - The points of the path.
      */
 
   }, {
@@ -11803,7 +11759,6 @@ function () {
 }();
 /**
  * Drawing methods for the arrow endpoint.
- * @extends EndPoint
  */
 
 
@@ -11824,9 +11779,8 @@ function (_EndPoint) {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -11853,7 +11807,6 @@ function (_EndPoint) {
 }(EndPoint);
 /**
  * Drawing methods for the crow endpoint.
- * @extends EndPoint
  */
 
 
@@ -11870,9 +11823,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -11899,7 +11851,6 @@ function () {
 }();
 /**
  * Drawing methods for the curve endpoint.
- * @extends EndPoint
  */
 
 
@@ -11916,9 +11867,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -11930,13 +11880,13 @@ function () {
       EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
       ctx.strokeStyle = ctx.fillStyle;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define curve endpoint as semicircle.
+      ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define curve endpoint as semicircle.
 
       var pi = Math.PI;
-      var start_angle = arrowData.angle - pi / 2;
-      var end_angle = arrowData.angle + pi / 2;
+      var startAngle = arrowData.angle - pi / 2;
+      var endAngle = arrowData.angle + pi / 2;
       ctx.beginPath();
-      ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+      ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
       ctx.stroke();
     }
   }]);
@@ -11945,7 +11895,6 @@ function () {
 }();
 /**
  * Drawing methods for the inverted curve endpoint.
- * @extends EndPoint
  */
 
 
@@ -11962,9 +11911,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -11976,13 +11924,13 @@ function () {
       EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
       ctx.strokeStyle = ctx.fillStyle;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define inverted curve endpoint as semicircle.
+      ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define inverted curve endpoint as semicircle.
 
       var pi = Math.PI;
-      var start_angle = arrowData.angle + pi / 2;
-      var end_angle = arrowData.angle + 3 * pi / 2;
+      var startAngle = arrowData.angle + pi / 2;
+      var endAngle = arrowData.angle + 3 * pi / 2;
       ctx.beginPath();
-      ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+      ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
       ctx.stroke();
     }
   }]);
@@ -11991,7 +11939,6 @@ function () {
 }();
 /**
  * Drawing methods for the trinagle endpoint.
- * @extends EndPoint
  */
 
 
@@ -12008,9 +11955,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -12034,7 +11980,6 @@ function () {
 }();
 /**
  * Drawing methods for the inverted trinagle endpoint.
- * @extends EndPoint
  */
 
 
@@ -12051,9 +11996,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -12093,9 +12037,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var point = {
@@ -12127,22 +12070,20 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       /*
-          var points = [
-            {x:0, y:0.5},
-            {x:0, y:-0.5}
-          ];
-      
-          EndPoint.transform(points, arrowData);
-          ctx.beginPath();
-          ctx.moveTo(points[0].x, points[0].y);
-          ctx.lineTo(points[1].x, points[1].y);
-          ctx.stroke();
+      var points = [
+        {x:0, y:0.5},
+        {x:0, y:-0.5}
+      ];
+           EndPoint.transform(points, arrowData);
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.stroke();
       */
       var points = [{
         x: 0,
@@ -12182,9 +12123,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var points = [{
@@ -12225,9 +12165,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var points = [{
@@ -12252,7 +12191,6 @@ function () {
 }();
 /**
  * Drawing methods for the vee endpoint.
- * @extends EndPoint
  */
 
 
@@ -12269,9 +12207,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -12312,11 +12249,10 @@ function () {
     key: "draw",
 
     /**
-     * Draw an endpoint
+     * Draw an endpoint.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var type;
@@ -12326,47 +12262,47 @@ function () {
       }
 
       switch (type) {
-        case 'circle':
+        case "circle":
           Circle$1.draw(ctx, arrowData);
           break;
 
-        case 'box':
+        case "box":
           Box$1.draw(ctx, arrowData);
           break;
 
-        case 'crow':
+        case "crow":
           Crow.draw(ctx, arrowData);
           break;
 
-        case 'curve':
+        case "curve":
           Curve.draw(ctx, arrowData);
           break;
 
-        case 'diamond':
+        case "diamond":
           Diamond$1.draw(ctx, arrowData);
           break;
 
-        case 'inv_curve':
+        case "inv_curve":
           InvertedCurve.draw(ctx, arrowData);
           break;
 
-        case 'triangle':
+        case "triangle":
           Triangle$1.draw(ctx, arrowData);
           break;
 
-        case 'inv_triangle':
+        case "inv_triangle":
           InvertedTriangle.draw(ctx, arrowData);
           break;
 
-        case 'bar':
+        case "bar":
           Bar.draw(ctx, arrowData);
           break;
 
-        case 'vee':
+        case "vee":
           Vee.draw(ctx, arrowData);
           break;
 
-        case 'arrow': // fall-through
+        case "arrow": // fall-through
 
         default:
           Arrow.draw(ctx, arrowData);
@@ -12377,36 +12313,37 @@ function () {
   return EndPoints;
 }();
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
  * The Base Class for all edges.
- *
  */
 
 var EdgeBase =
 /*#__PURE__*/
 function () {
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function EdgeBase(options, body, labelModule) {
     classCallCheck(this, EdgeBase);
 
     this.body = body;
     this.labelModule = labelModule;
-    this.options = {};
-    this.setOptions(options);
-    this.colorDirty = true;
     this.color = {};
-    this.selectionWidth = 2;
+    this.colorDirty = true;
     this.hoverWidth = 1.5;
+    this.selectionWidth = 2;
+    this.setOptions(options);
     this.fromPoint = this.from;
     this.toPoint = this.to;
   }
-  /**
-   * Connects a node to itself
-   */
+  /** @inheritdoc */
 
 
   createClass(EdgeBase, [{
@@ -12415,10 +12352,7 @@ function () {
       this.from = this.body.nodes[this.options.from];
       this.to = this.body.nodes[this.options.to];
     }
-    /**
-     *
-     * @returns {boolean} always false
-     */
+    /** @inheritdoc */
 
   }, {
     key: "cleanup",
@@ -12426,8 +12360,9 @@ function () {
       return false;
     }
     /**
+     * Set new edge options.
      *
-     * @param {Object} options
+     * @param options - The new edge options object.
      */
 
   }, {
@@ -12438,24 +12373,14 @@ function () {
       this.to = this.body.nodes[this.options.to];
       this.id = this.options.id;
     }
-    /**
-     * Redraw a edge as a line
-     * Draw this edge in the given canvas
-     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-     *
-     * @param {CanvasRenderingContext2D}   ctx
-     * @param {Array} values
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {Node} viaNode
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "drawLine",
-    value: function drawLine(ctx, values, selected, hover, viaNode) {
+    value: function drawLine(ctx, values, _selected, _hover) {
+      var viaNode = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.getViaNode();
       // set style
-      ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+      ctx.strokeStyle = this.getColor(ctx, values);
       ctx.lineWidth = values.width;
 
       if (values.dashes !== false) {
@@ -12465,13 +12390,13 @@ function () {
       }
     }
     /**
+     * Draw a line with given style between two nodes through supplied node(s).
      *
-     * @param {CanvasRenderingContext2D}   ctx
-     * @param {Array} values
-     * @param {Node} viaNode
-     * @param {{x: number, y: number}} [fromPoint]
-     * @param {{x: number, y: number}} [toPoint]
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param viaNode - Additional control point(s) for the edge.
+     * @param fromPoint - TODO: Seems ignored, remove?
+     * @param toPoint - TODO: Seems ignored, remove?
      */
 
   }, {
@@ -12491,26 +12416,20 @@ function () {
       }
     }
     /**
+     * Draw a dashed line with given style between two nodes through supplied node(s).
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Array} values
-     * @param {Node} viaNode
-     * @param {{x: number, y: number}} [fromPoint]  TODO: Remove in next major release
-     * @param {{x: number, y: number}} [toPoint]    TODO: Remove in next major release
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param viaNode - Additional control point(s) for the edge.
+     * @param _fromPoint - Ignored (TODO: remove in the future).
+     * @param _toPoint - Ignored (TODO: remove in the future).
      */
 
   }, {
     key: "_drawDashedLine",
-    value: function _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {
-      // eslint-disable-line no-unused-vars
-      ctx.lineCap = 'round';
-      var pattern = [5, 5];
-
-      if (Array.isArray(values.dashes) === true) {
-        pattern = values.dashes;
-      } // only firefox and chrome support this method, else we use the legacy one.
-
+    value: function _drawDashedLine(ctx, values, viaNode, _fromPoint, _toPoint) {
+      ctx.lineCap = "round";
+      var pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5]; // only firefox and chrome support this method, else we use the legacy one.
 
       if (ctx.setLineDash !== undefined) {
         ctx.save(); // set dash settings for chrome or firefox
@@ -12558,75 +12477,71 @@ function () {
       }
     }
     /**
+     * Find the intersection between the border of the node and the edge.
      *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} options
-     * @returns {{x: number, y: number}}
+     * @param node - The node (either from or to node of the edge).
+     * @param ctx - The context that will be used for rendering.
+     * @param options - Additional options.
+     *
+     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
 
   }, {
     key: "findBorderPosition",
-    value: function findBorderPosition(nearNode, ctx, options) {
+    value: function findBorderPosition(node, ctx, options) {
       if (this.from != this.to) {
-        return this._findBorderPosition(nearNode, ctx, options);
+        return this._findBorderPosition(node, ctx, options);
       } else {
-        return this._findBorderPositionCircle(nearNode, ctx, options);
+        return this._findBorderPositionCircle(node, ctx, options);
       }
     }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {{from: ({x: number, y: number, t: number}|*), to: ({x: number, y: number, t: number}|*)}}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "findBorderPositions",
     value: function findBorderPositions(ctx) {
-      var from = {};
-      var to = {};
-
       if (this.from != this.to) {
-        from = this._findBorderPosition(this.from, ctx);
-        to = this._findBorderPosition(this.to, ctx);
+        return {
+          from: this._findBorderPosition(this.from, ctx),
+          to: this._findBorderPosition(this.to, ctx)
+        };
       } else {
         var _this$_getCircleData$ = this._getCircleData(ctx).slice(0, 2),
             _this$_getCircleData$2 = slicedToArray(_this$_getCircleData$, 2),
             x = _this$_getCircleData$2[0],
             y = _this$_getCircleData$2[1];
 
-        from = this._findBorderPositionCircle(this.from, ctx, {
-          x: x,
-          y: y,
-          low: 0.25,
-          high: 0.6,
-          direction: -1
-        });
-        to = this._findBorderPositionCircle(this.from, ctx, {
-          x: x,
-          y: y,
-          low: 0.6,
-          high: 0.8,
-          direction: 1
-        });
+        return {
+          from: this._findBorderPositionCircle(this.from, ctx, {
+            x: x,
+            y: y,
+            low: 0.25,
+            high: 0.6,
+            direction: -1
+          }),
+          to: this._findBorderPositionCircle(this.from, ctx, {
+            x: x,
+            y: y,
+            low: 0.6,
+            high: 0.8,
+            direction: 1
+          })
+        };
       }
-
-      return {
-        from: from,
-        to: to
-      };
     }
     /**
+     * Compute the center point and radius of an edge connected to the same node at both ends.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {Array.<number>} x, y, radius
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     *
+     * @returns `[x, y, radius]`
      */
 
   }, {
     key: "_getCircleData",
     value: function _getCircleData(ctx) {
-      var x, y;
+      var x;
+      var y;
       var node = this.from;
       var radius = this.options.selfReferenceSize;
 
@@ -12648,55 +12563,60 @@ function () {
       return [x, y, radius];
     }
     /**
-     * Get a point on a circle
-     * @param {number} x
-     * @param {number} y
-     * @param {number} radius
-     * @param {number} percentage - Value between 0 (line start) and 1 (line end)
-     * @return {Object} point
-     * @private
+     * Get a point on a circle.
+     *
+     * @param x - Center of the circle on the x axis.
+     * @param y - Center of the circle on the y axis.
+     * @param radius - Radius of the circle.
+     * @param position - Value between 0 (line start) and 1 (line end).
+     *
+     * @returns Cartesian coordinates of requested point on the circle.
      */
 
   }, {
     key: "_pointOnCircle",
-    value: function _pointOnCircle(x, y, radius, percentage) {
-      var angle = percentage * 2 * Math.PI;
+    value: function _pointOnCircle(x, y, radius, position) {
+      var angle = position * 2 * Math.PI;
       return {
         x: x + radius * Math.cos(angle),
         y: y - radius * Math.sin(angle)
       };
     }
     /**
+     * Find the intersection between the border of the node and the edge.
+     *
+     * @remarks
      * This function uses binary search to look for the point where the circle crosses the border of the node.
-     * @param {Node} node
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} options
-     * @returns {*}
-     * @private
+     *
+     * @param nearNode - The node (either from or to node of the edge).
+     * @param ctx - The context that will be used for rendering.
+     * @param options - Additional options.
+     *
+     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
 
   }, {
     key: "_findBorderPositionCircle",
-    value: function _findBorderPositionCircle(node, ctx, options) {
+    value: function _findBorderPositionCircle(nearNode, ctx, options) {
       var x = options.x;
       var y = options.y;
       var low = options.low;
       var high = options.high;
       var direction = options.direction;
       var maxIterations = 10;
-      var iteration = 0;
       var radius = this.options.selfReferenceSize;
-      var pos, angle, distanceToBorder, distanceToPoint, difference;
       var threshold = 0.05;
+      var pos;
       var middle = (low + high) * 0.5;
+      var iteration = 0;
 
-      while (low <= high && iteration < maxIterations) {
+      do {
         middle = (low + high) * 0.5;
         pos = this._pointOnCircle(x, y, radius, middle);
-        angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-        distanceToBorder = node.distanceToBorder(ctx, angle);
-        distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-        difference = distanceToBorder - distanceToPoint;
+        var angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
+        var distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+        var distanceToPoint = Math.sqrt(Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2));
+        var difference = distanceToBorder - distanceToPoint;
 
         if (Math.abs(difference) < threshold) {
           break; // found
@@ -12715,19 +12635,20 @@ function () {
           }
         }
 
-        iteration++;
-      }
+        ++iteration;
+      } while (low <= high && iteration < maxIterations);
 
-      pos.t = middle;
-      return pos;
+      return _objectSpread({}, pos, {
+        t: middle
+      });
     }
     /**
-     * Get the line width of the edge. Depends on width and whether one of the
-     * connected nodes is selected.
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @returns {number} width
-     * @private
+     * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
+     *
+     * @param selected - Determines wheter the line is selected.
+     * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
+     *
+     * @returns The width of the line.
      */
 
   }, {
@@ -12735,38 +12656,36 @@ function () {
     value: function getLineWidth(selected, hover) {
       if (selected === true) {
         return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
+      } else if (hover === true) {
+        return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
       } else {
-        if (hover === true) {
-          return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
-        } else {
-          return Math.max(this.options.width, 0.3 / this.body.view.scale);
-        }
+        return Math.max(this.options.width, 0.3 / this.body.view.scale);
       }
     }
     /**
+     * Compute the color or gradient for given edge.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {boolean} selected - Unused
-     * @param {boolean} hover - Unused
-     * @returns {string}
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param _selected - Ignored (TODO: remove in the future).
+     * @param _hover - Ignored (TODO: remove in the future).
+     *
+     * @returns Color string if single color is inherited or gradient if two.
      */
 
   }, {
     key: "getColor",
-    value: function getColor(ctx, values, selected, hover) {
-      // eslint-disable-line no-unused-vars
+    value: function getColor(ctx, values) {
       if (values.inheritsColor !== false) {
         // when this is a loop edge, just use the 'from' method
-        if (values.inheritsColor === 'both' && this.from.id !== this.to.id) {
+        if (values.inheritsColor === "both" && this.from.id !== this.to.id) {
           var grd = ctx.createLinearGradient(this.from.x, this.from.y, this.to.x, this.to.y);
-          var fromColor, toColor;
-          fromColor = this.from.options.color.highlight.border;
-          toColor = this.to.options.color.highlight.border;
+          var fromColor = this.from.options.color.highlight.border;
+          var toColor = this.to.options.color.highlight.border;
 
           if (this.from.selected === false && this.to.selected === false) {
-            fromColor = util.overrideOpacity(this.from.options.color.border, values.opacity);
-            toColor = util.overrideOpacity(this.to.options.color.border, values.opacity);
+            fromColor = overrideOpacity(this.from.options.color.border, values.opacity);
+            toColor = overrideOpacity(this.to.options.color.border, values.opacity);
           } else if (this.from.selected === true && this.to.selected === false) {
             toColor = this.to.options.color.border;
           } else if (this.from.selected === false && this.to.selected === true) {
@@ -12780,24 +12699,23 @@ function () {
         }
 
         if (values.inheritsColor === "to") {
-          return util.overrideOpacity(this.to.options.color.border, values.opacity);
+          return overrideOpacity(this.to.options.color.border, values.opacity);
         } else {
           // "from"
-          return util.overrideOpacity(this.from.options.color.border, values.opacity);
+          return overrideOpacity(this.from.options.color.border, values.opacity);
         }
       } else {
-        return util.overrideOpacity(values.color, values.opacity);
+        return overrideOpacity(values.color, values.opacity);
       }
     }
     /**
-     * Draw a line from a node to itself, a circle
+     * Draw a line from a node to itself, a circle.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Array} values
-     * @param {number} x
-     * @param {number} y
-     * @param {number} radius
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param x - Center of the circle on the x axis.
+     * @param y - Center of the circle on the y axis.
+     * @param radius - Radius of the circle.
      */
 
   }, {
@@ -12813,30 +12731,17 @@ function () {
       this.disableShadow(ctx, values);
     }
     /**
-     * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-     * (x3,y3) is the point.
+     * @inheritdoc
      *
+     * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @param {Node} via
-     * @param {Array} values
-     * @returns {number}
      */
 
   }, {
     key: "getDistanceToEdge",
-    value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {
-      // eslint-disable-line no-unused-vars
-      var returnValue = 0;
-
+    value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
       if (this.from != this.to) {
-        returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via);
+        return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
       } else {
         var _this$_getCircleData7 = this._getCircleData(undefined),
             _this$_getCircleData8 = slicedToArray(_this$_getCircleData7, 3),
@@ -12846,21 +12751,20 @@ function () {
 
         var dx = x - x3;
         var dy = y - y3;
-        returnValue = Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
+        return Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
       }
-
-      return returnValue;
     }
     /**
+     * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
      *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @returns {number}
-     * @private
+     * @param x1 - First end of the line segment on the x axis.
+     * @param y1 - First end of the line segment on the y axis.
+     * @param x2 - Second end of the line segment on the x axis.
+     * @param y2 - Second end of the line segment on the y axis.
+     * @param x3 - Position of the point on the x axis.
+     * @param y3 - Position of the point on the y axis.
+     *
+     * @returns The distance between the line segment and the point.
      */
 
   }, {
@@ -12888,19 +12792,11 @@ function () {
 
       return Math.sqrt(dx * dx + dy * dy);
     }
-    /**
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {string} position
-     * @param {Node} viaNode
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {Array} values
-     * @returns {{point: *, core: {x: number, y: number}, angle: *, length: number, type: *}}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getArrowData",
-    value: function getArrowData(ctx, position, viaNode, selected, hover, values) {
+    value: function getArrowData(ctx, position, viaNode, _selected, _hover, values) {
       // set lets
       var angle;
       var arrowPoint;
@@ -12911,13 +12807,13 @@ function () {
       var type;
       var lineWidth = values.width;
 
-      if (position === 'from') {
+      if (position === "from") {
         node1 = this.from;
         node2 = this.to;
         guideOffset = 0.1;
         scaleFactor = values.fromArrowScale;
         type = values.fromArrowType;
-      } else if (position === 'to') {
+      } else if (position === "to") {
         node1 = this.to;
         node2 = this.from;
         guideOffset = -0.1;
@@ -12932,17 +12828,20 @@ function () {
 
 
       if (node1 != node2) {
-        if (position !== 'middle') {
+        if (position !== "middle") {
           // draw arrow head
           if (this.options.smooth.enabled === true) {
-            arrowPoint = this.findBorderPosition(node1, ctx, {
+            var pointT = this._findBorderPosition(node1, ctx, {
               via: viaNode
             });
-            var guidePos = this.getPoint(Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)), viaNode);
-            angle = Math.atan2(arrowPoint.y - guidePos.y, arrowPoint.x - guidePos.x);
+
+            var guidePos = this.getPoint( // guideOffset is unset only for position === 'middle'
+            Math.max(0.0, Math.min(1.0, pointT.t + guideOffset)), viaNode);
+            angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
+            arrowPoint = pointT;
           } else {
             angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-            arrowPoint = this.findBorderPosition(node1, ctx);
+            arrowPoint = this._findBorderPosition(node1, ctx);
           }
         } else {
           angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
@@ -12956,31 +12855,37 @@ function () {
             y = _this$_getCircleData10[1],
             radius = _this$_getCircleData10[2];
 
-        if (position === 'from') {
-          arrowPoint = this.findBorderPosition(this.from, ctx, {
+        if (position === "from") {
+          var _pointT = this._findBorderPositionCircle(this.from, ctx, {
             x: x,
             y: y,
             low: 0.25,
             high: 0.6,
             direction: -1
           });
-          angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        } else if (position === 'to') {
-          arrowPoint = this.findBorderPosition(this.from, ctx, {
+
+          angle = _pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+          arrowPoint = _pointT;
+        } else if (position === "to") {
+          var _pointT2 = this._findBorderPositionCircle(this.from, ctx, {
             x: x,
             y: y,
             low: 0.6,
             high: 1.0,
             direction: 1
           });
-          angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+
+          angle = _pointT2.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+          arrowPoint = _pointT2;
         } else {
           arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
           angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         }
       }
 
-      if (position === 'middle' && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
+      if (position === "middle" && scaleFactor < 0) {
+        lineWidth *= -1; // reversed middle arrow
+      }
 
       var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
@@ -12998,20 +12903,13 @@ function () {
         type: type
       };
     }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {Object} arrowData
-     */
+    /** @inheritdoc */
 
   }, {
     key: "drawArrowHead",
-    value: function drawArrowHead(ctx, values, selected, hover, arrowData) {
+    value: function drawArrowHead(ctx, values, _selected, _hover, arrowData) {
       // set style
-      ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+      ctx.strokeStyle = this.getColor(ctx, values);
       ctx.fillStyle = ctx.strokeStyle;
       ctx.lineWidth = values.width;
       EndPoints.draw(ctx, arrowData); // draw shadow if enabled
@@ -13022,9 +12920,10 @@ function () {
       this.disableShadow(ctx, values);
     }
     /**
+     * Set the shadow formatting values in the context if enabled, do nothing otherwise.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values for the shadow.
      */
 
   }, {
@@ -13038,52 +12937,55 @@ function () {
       }
     }
     /**
+     * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values for the shadow.
      */
 
   }, {
     key: "disableShadow",
     value: function disableShadow(ctx, values) {
       if (values.shadow === true) {
-        ctx.shadowColor = 'rgba(0,0,0,0)';
+        ctx.shadowColor = "rgba(0,0,0,0)";
         ctx.shadowBlur = 0;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
       }
     }
     /**
+     * Render the background according to the formatting values.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {{toArrow: boolean, toArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), toArrowType: *, middleArrow: boolean, middleArrowScale: (number|allOptions.edges.arrows.middle.scaleFactor|{number}|Array), middleArrowType: (allOptions.edges.arrows.middle.type|{string}|string|*), fromArrow: boolean, fromArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), fromArrowType: *, arrowStrikethrough: (*|boolean|allOptions.edges.arrowStrikethrough|{boolean}), color: undefined, inheritsColor: (string|string|string|allOptions.edges.color.inherit|{string, boolean}|Array|*), opacity: *, hidden: *, length: *, shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *, dashes: (*|boolean|Array|allOptions.edges.dashes|{boolean, array}), width: *}} values
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values for the background.
      */
 
   }, {
     key: "drawBackground",
     value: function drawBackground(ctx, values) {
       if (values.background !== false) {
-        var attrs = ['strokeStyle', 'lineWidth', 'dashes'];
-        var origCtxAttr = {}; // save original line attrs
-
-        attrs.forEach(function (attrname) {
-          origCtxAttr[attrname] = ctx[attrname];
-        });
+        // save original line attrs
+        var origCtxAttr = {
+          strokeStyle: ctx.strokeStyle,
+          lineWidth: ctx.lineWidth,
+          dashes: ctx.dashes
+        };
         ctx.strokeStyle = values.backgroundColor;
         ctx.lineWidth = values.backgroundSize;
         this.setStrokeDashed(ctx, values.backgroundDashes);
         ctx.stroke(); // restore original line attrs
 
-        attrs.forEach(function (attrname) {
-          ctx[attrname] = origCtxAttr[attrname];
-        });
+        ctx.strokeStyle = origCtxAttr.strokeStyle;
+        ctx.lineWidth = origCtxAttr.lineWidth;
+        ctx.dashes = origCtxAttr.dashes;
         this.setStrokeDashed(ctx, values.dashes);
       }
     }
     /**
+     * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {boolean|Array} dashes
+     * @param ctx - The context that will be used for rendering.
+     * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
      */
 
   }, {
@@ -13091,12 +12993,7 @@ function () {
     value: function setStrokeDashed(ctx, dashes) {
       if (dashes !== false) {
         if (ctx.setLineDash !== undefined) {
-          var pattern = [5, 5];
-
-          if (Array.isArray(dashes) === true) {
-            pattern = dashes;
-          }
-
+          var pattern = Array.isArray(dashes) ? dashes : [5, 5];
           ctx.setLineDash(pattern);
         } else {
           console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
@@ -13114,11 +13011,12 @@ function () {
   return EdgeBase;
 }();
 
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(source, true).forEach(function (key) { defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
- * The Base Class for all Bezier edges. Bezier curves are used to model smooth
- * gradual curves in paths between nodes.
- *
- * @extends EdgeBase
+ * The Base Class for all Bezier edges.
+ * Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 
 var BezierEdgeBase =
@@ -13127,9 +13025,11 @@ function (_EdgeBase) {
   inherits(BezierEdgeBase, _EdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function BezierEdgeBase(options, body, labelModule) {
     classCallCheck(this, BezierEdgeBase);
@@ -13137,13 +13037,16 @@ function (_EdgeBase) {
     return possibleConstructorReturn(this, getPrototypeOf(BezierEdgeBase).call(this, options, body, labelModule));
   }
   /**
+   * Find the intersection between the border of the node and the edge.
+   *
+   * @remarks
    * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
    *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Node} viaNode
-   * @returns {*}
-   * @private
+   * @param nearNode - The node (either from or to node of the edge).
+   * @param ctx - The context that will be used for rendering.
+   * @param viaNode - Additional node(s) the edge passes through.
+   *
+   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
    */
 
 
@@ -13152,26 +13055,28 @@ function (_EdgeBase) {
     value: function _findBorderPositionBezier(nearNode, ctx) {
       var viaNode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this._getViaCoordinates();
       var maxIterations = 10;
-      var iteration = 0;
-      var low = 0;
-      var high = 1;
-      var pos, angle, distanceToBorder, distanceToPoint, difference;
       var threshold = 0.2;
-      var node = this.to;
       var from = false;
+      var high = 1;
+      var low = 0;
+      var node = this.to;
+      var pos;
+      var middle;
 
       if (nearNode.id === this.from.id) {
         node = this.from;
         from = true;
       }
 
-      while (low <= high && iteration < maxIterations) {
-        var middle = (low + high) * 0.5;
+      var iteration = 0;
+
+      do {
+        middle = (low + high) * 0.5;
         pos = this.getPoint(middle, viaNode);
-        angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-        distanceToBorder = node.distanceToBorder(ctx, angle);
-        distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-        difference = distanceToBorder - distanceToPoint;
+        var angle = Math.atan2(node.y - pos.y, node.x - pos.x);
+        var distanceToBorder = node.distanceToBorder(ctx, angle);
+        var distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+        var difference = distanceToBorder - distanceToPoint;
 
         if (Math.abs(difference) < threshold) {
           break; // found
@@ -13190,25 +13095,28 @@ function (_EdgeBase) {
           }
         }
 
-        iteration++;
-      }
+        ++iteration;
+      } while (low <= high && iteration < maxIterations);
 
-      pos.t = middle;
-      return pos;
+      return _objectSpread$1({}, pos, {
+        t: middle
+      });
     }
     /**
-     * Calculate the distance between a point (x3,y3) and a line segment from
-     * (x1,y1) to (x2,y2).
+     * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+     *
+     * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     * @param {number} x1 from x
-     * @param {number} y1 from y
-     * @param {number} x2 to x
-     * @param {number} y2 to y
-     * @param {number} x3 point to check x
-     * @param {number} y3 point to check y
-     * @param {Node} via
-     * @returns {number}
-     * @private
+     *
+     * @param x1 - First end of the line segment on the x axis.
+     * @param y1 - First end of the line segment on the y axis.
+     * @param x2 - Second end of the line segment on the x axis.
+     * @param y2 - Second end of the line segment on the y axis.
+     * @param x3 - Position of the point on the x axis.
+     * @param y3 - Position of the point on the y axis.
+     * @param via - The control point for the edge.
+     *
+     * @returns The distance between the line segment and the point.
      */
 
   }, {
@@ -13238,31 +13146,30 @@ function (_EdgeBase) {
       return minDistance;
     }
     /**
-     * Draw a bezier curve between two nodes
+     * Render a bezier curve between two nodes.
      *
+     * @remarks
      * The method accepts zero, one or two control points.
-     * Passing zero control points just draws a straight line
+     * Passing zero control points just draws a straight line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object}           values   | options for shadow drawing
-     * @param {Object|undefined} viaNode1 | first control point for curve drawing
-     * @param {Object|undefined} viaNode2 | second control point for curve drawing
-     *
-     * @protected
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Style options for edge drawing.
+     * @param viaNode1 - First control point for curve drawing.
+     * @param viaNode2 - Second control point for curve drawing.
      */
 
   }, {
     key: "_bezierCurve",
     value: function _bezierCurve(ctx, values, viaNode1, viaNode2) {
-      var hasNode1 = viaNode1 !== undefined && viaNode1.x !== undefined;
-      var hasNode2 = viaNode2 !== undefined && viaNode2.x !== undefined;
       ctx.beginPath();
       ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
 
-      if (hasNode1 && hasNode2) {
-        ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
-      } else if (hasNode1) {
-        ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+      if (viaNode1 != null && viaNode1.x != null) {
+        if (viaNode2 != null && viaNode2.x != null) {
+          ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
+        } else {
+          ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+        }
       } else {
         // fallback to normal straight edge
         ctx.lineTo(this.toPoint.x, this.toPoint.y);
@@ -13275,10 +13182,7 @@ function (_EdgeBase) {
       ctx.stroke();
       this.disableShadow(ctx, values);
     }
-    /**
-     *
-     * @returns {*|{x, y}|{x: undefined, y: undefined}}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
@@ -13289,239 +13193,6 @@ function (_EdgeBase) {
 
   return BezierEdgeBase;
 }(EdgeBase);
-
-/**
- * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
- * smooth gradual curves in paths between nodes.
- *
- * @extends BezierEdgeBase
- */
-
-var CubicBezierEdgeBase =
-/*#__PURE__*/
-function (_BezierEdgeBase) {
-  inherits(CubicBezierEdgeBase, _BezierEdgeBase);
-
-  /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
-   */
-  function CubicBezierEdgeBase(options, body, labelModule) {
-    classCallCheck(this, CubicBezierEdgeBase);
-
-    return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdgeBase).call(this, options, body, labelModule));
-  }
-  /**
-   * Calculate the distance between a point (x3,y3) and a line segment from
-   * (x1,y1) to (x2,y2).
-   * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-   * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
-   * @param {number} x1 from x
-   * @param {number} y1 from y
-   * @param {number} x2 to x
-   * @param {number} y2 to y
-   * @param {number} x3 point to check x
-   * @param {number} y3 point to check y
-   * @param {Node} via1
-   * @param {Node} via2
-   * @returns {number}
-   * @private
-   */
-
-
-  createClass(CubicBezierEdgeBase, [{
-    key: "_getDistanceToBezierEdge",
-    value: function _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2) {
-      // x3,y3 is the point
-      var minDistance = 1e9;
-      var distance;
-      var i, t, x, y;
-      var lastX = x1;
-      var lastY = y1;
-      var vec = [0, 0, 0, 0];
-
-      for (i = 1; i < 10; i++) {
-        t = 0.1 * i;
-        vec[0] = Math.pow(1 - t, 3);
-        vec[1] = 3 * t * Math.pow(1 - t, 2);
-        vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-        vec[3] = Math.pow(t, 3);
-        x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
-        y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
-
-        if (i > 0) {
-          distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
-          minDistance = distance < minDistance ? distance : minDistance;
-        }
-
-        lastX = x;
-        lastY = y;
-      }
-
-      return minDistance;
-    }
-  }]);
-
-  return CubicBezierEdgeBase;
-}(BezierEdgeBase);
-
-/**
- * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual
- * curves in paths between nodes.
- *
- * @extends CubicBezierEdgeBase
- */
-
-var CubicBezierEdge =
-/*#__PURE__*/
-function (_CubicBezierEdgeBase) {
-  inherits(CubicBezierEdge, _CubicBezierEdgeBase);
-
-  /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
-   */
-  function CubicBezierEdge(options, body, labelModule) {
-    classCallCheck(this, CubicBezierEdge);
-
-    return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdge).call(this, options, body, labelModule));
-  }
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {Array.<Node>} viaNodes
-   * @private
-   */
-
-
-  createClass(CubicBezierEdge, [{
-    key: "_line",
-    value: function _line(ctx, values, viaNodes) {
-      // get the coordinates of the support points.
-      var via1 = viaNodes[0];
-      var via2 = viaNodes[1];
-
-      this._bezierCurve(ctx, values, via1, via2);
-    }
-    /**
-     *
-     * @returns {Array.<{x: number, y: number}>}
-     * @private
-     */
-
-  }, {
-    key: "_getViaCoordinates",
-    value: function _getViaCoordinates() {
-      var dx = this.from.x - this.to.x;
-      var dy = this.from.y - this.to.y;
-      var x1, y1, x2, y2;
-      var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
-
-      if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === 'horizontal') && this.options.smooth.forceDirection !== 'vertical') {
-        y1 = this.from.y;
-        y2 = this.to.y;
-        x1 = this.from.x - roundness * dx;
-        x2 = this.to.x + roundness * dx;
-      } else {
-        y1 = this.from.y - roundness * dy;
-        y2 = this.to.y + roundness * dy;
-        x1 = this.from.x;
-        x2 = this.to.x;
-      }
-
-      return [{
-        x: x1,
-        y: y1
-      }, {
-        x: x2,
-        y: y2
-      }];
-    }
-    /**
-     *
-     * @returns {Array.<{x: number, y: number}>}
-     */
-
-  }, {
-    key: "getViaNode",
-    value: function getViaNode() {
-      return this._getViaCoordinates();
-    }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {{x: number, y: number, t: number}}
-     * @private
-     */
-
-  }, {
-    key: "_findBorderPosition",
-    value: function _findBorderPosition(nearNode, ctx) {
-      return this._findBorderPositionBezier(nearNode, ctx);
-    }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @param {Node} via1
-     * @param {Node} via2
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_getDistanceToEdge",
-    value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
-      var _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
-          _ref2 = slicedToArray(_ref, 2),
-          via1 = _ref2[0],
-          via2 = _ref2[1];
-
-      // x3,y3 is the point
-      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2);
-    }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     * @param {number} percentage
-     * @param {{x: number, y: number}} [via1=this._getViaCoordinates()[0]]
-     * @param {{x: number, y: number}} [via2=this._getViaCoordinates()[1]]
-     * @returns {{x: number, y: number}}
-     * @private
-     */
-
-  }, {
-    key: "getPoint",
-    value: function getPoint(percentage) {
-      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
-          _ref4 = slicedToArray(_ref3, 2),
-          via1 = _ref4[0],
-          via2 = _ref4[1];
-
-      var t = percentage;
-      var vec = [];
-      vec[0] = Math.pow(1 - t, 3);
-      vec[1] = 3 * t * Math.pow(1 - t, 2);
-      vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-      vec[3] = Math.pow(t, 3);
-      var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
-      var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
-      return {
-        x: x,
-        y: y
-      };
-    }
-  }]);
-
-  return CubicBezierEdge;
-}(CubicBezierEdgeBase);
 
 /**
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
@@ -13537,9 +13208,11 @@ function (_BezierEdgeBase) {
   inherits(BezierEdgeDynamic, _BezierEdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function BezierEdgeDynamic(options, body, labelModule) {
     var _this;
@@ -13549,6 +13222,8 @@ function (_BezierEdgeBase) {
     //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
     _this = possibleConstructorReturn(this, getPrototypeOf(BezierEdgeDynamic).call(this, options, body, labelModule)); // --> this calls the setOptions below
 
+    _this.via = _this.via; // constructor → super → super → setOptions → setupSupportNode
+
     _this._boundFunction = function () {
       _this.positionBezierNode();
     };
@@ -13557,16 +13232,15 @@ function (_BezierEdgeBase) {
 
     return _this;
   }
-  /**
-   *
-   * @param {Object} options
-   */
+  /** @inheritdoc */
 
 
   createClass(BezierEdgeDynamic, [{
     key: "setOptions",
     value: function setOptions(options) {
-      // check if the physics has changed.
+      get(getPrototypeOf(BezierEdgeDynamic.prototype), "setOptions", this).call(this, options); // check if the physics has changed.
+
+
       var physicsChange = false;
 
       if (this.options.physics !== options.physics) {
@@ -13589,9 +13263,7 @@ function (_BezierEdgeBase) {
         this.positionBezierNode();
       }
     }
-    /**
-     * Connects an edge to node(s)
-     */
+    /** @inheritdoc */
 
   }, {
     key: "connect",
@@ -13616,10 +13288,7 @@ function (_BezierEdgeBase) {
         }
       }
     }
-    /**
-     * remove the support nodes
-     * @returns {boolean}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "cleanup",
@@ -13635,11 +13304,14 @@ function (_BezierEdgeBase) {
       return false;
     }
     /**
-     * Bezier curves require an anchor point to calculate the smooth flow. These points are nodes. These nodes are invisible but
-     * are used for the force calculation.
+     * Create and add a support node if not already present.
+     *
+     * @remarks
+     * Bezier curves require an anchor point to calculate the smooth flow.
+     * These points are nodes.
+     * These nodes are invisible but are used for the force calculation.
      *
      * The changed data is not called, if needed, it is returned by the main edge constructor.
-     * @private
      */
 
   }, {
@@ -13649,7 +13321,7 @@ function (_BezierEdgeBase) {
         var nodeId = "edgeId:" + this.id;
         var node = this.body.functions.createNode({
           id: nodeId,
-          shape: 'circle',
+          shape: "circle",
           physics: true,
           hidden: true
         });
@@ -13660,7 +13332,7 @@ function (_BezierEdgeBase) {
       }
     }
     /**
-     * Positions bezier node
+     * Position bezier node.
      */
 
   }, {
@@ -13674,89 +13346,61 @@ function (_BezierEdgeBase) {
         this.via.y = 0;
       }
     }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {Node} viaNode
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_line",
     value: function _line(ctx, values, viaNode) {
       this._bezierCurve(ctx, values, viaNode);
     }
-    /**
-     *
-     * @returns {Node|undefined|*|{index, line, column}}
-     */
+    /** @inheritdoc */
+
+  }, {
+    key: "_getViaCoordinates",
+    value: function _getViaCoordinates() {
+      return this.via;
+    }
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return this.via;
     }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     *
-     * @param {number} percentage
-     * @param {Node} viaNode
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getPoint",
-    value: function getPoint(percentage) {
+    value: function getPoint(position) {
       var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.via;
-      var t = percentage;
-      var x, y;
 
       if (this.from === this.to) {
-        var _this$_getCircleData = this._getCircleData(this.from),
+        var _this$_getCircleData = this._getCircleData(),
             _this$_getCircleData2 = slicedToArray(_this$_getCircleData, 3),
             cx = _this$_getCircleData2[0],
             cy = _this$_getCircleData2[1],
             cr = _this$_getCircleData2[2];
 
-        var a = 2 * Math.PI * (1 - t);
-        x = cx + cr * Math.sin(a);
-        y = cy + cr - cr * (1 - Math.cos(a));
+        var a = 2 * Math.PI * (1 - position);
+        return {
+          x: cx + cr * Math.sin(a),
+          y: cy + cr - cr * (1 - Math.cos(a))
+        };
       } else {
-        x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
-        y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
+        return {
+          x: Math.pow(1 - position, 2) * this.fromPoint.x + 2 * position * (1 - position) * viaNode.x + Math.pow(position, 2) * this.toPoint.x,
+          y: Math.pow(1 - position, 2) * this.fromPoint.y + 2 * position * (1 - position) * viaNode.y + Math.pow(position, 2) * this.toPoint.y
+        };
       }
-
-      return {
-        x: x,
-        y: y
-      };
     }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {*}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_findBorderPosition",
     value: function _findBorderPosition(nearNode, ctx) {
       return this._findBorderPositionBezier(nearNode, ctx, this.via);
     }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @returns {number}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -13770,10 +13414,7 @@ function (_BezierEdgeBase) {
 }(BezierEdgeBase);
 
 /**
- * A Static Bezier Edge. Bezier curves are used to model smooth gradual
- * curves in paths between nodes.
- *
- * @extends BezierEdgeBase
+ * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 
 var BezierEdgeStatic =
@@ -13782,22 +13423,18 @@ function (_BezierEdgeBase) {
   inherits(BezierEdgeStatic, _BezierEdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function BezierEdgeStatic(options, body, labelModule) {
     classCallCheck(this, BezierEdgeStatic);
 
     return possibleConstructorReturn(this, getPrototypeOf(BezierEdgeStatic).call(this, options, body, labelModule));
   }
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {Node} viaNode
-   * @private
-   */
+  /** @inheritdoc */
 
 
   createClass(BezierEdgeStatic, [{
@@ -13805,10 +13442,7 @@ function (_BezierEdgeBase) {
     value: function _line(ctx, values, viaNode) {
       this._bezierCurve(ctx, values, viaNode);
     }
-    /**
-     *
-     * @returns {Array.<{x: number, y: number}>}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
@@ -13816,23 +13450,24 @@ function (_BezierEdgeBase) {
       return this._getViaCoordinates();
     }
     /**
+     * Compute the coordinates of the via node.
+     *
+     * @remarks
      * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
-     * @returns {{x: undefined, y: undefined}}
-     * @private
+     *
+     * @returns Cartesian coordinates of the via node.
      */
 
   }, {
     key: "_getViaCoordinates",
     value: function _getViaCoordinates() {
       // Assumption: x/y coordinates in from/to always defined
-      var xVia = undefined;
-      var yVia = undefined;
       var factor = this.options.smooth.roundness;
       var type = this.options.smooth.type;
       var dx = Math.abs(this.from.x - this.to.x);
       var dy = Math.abs(this.from.y - this.to.y);
 
-      if (type === 'discrete' || type === 'diagonalCross') {
+      if (type === "discrete" || type === "diagonalCross") {
         var stepX;
         var stepY;
 
@@ -13842,10 +13477,16 @@ function (_BezierEdgeBase) {
           stepX = stepY = factor * dx;
         }
 
-        if (this.from.x > this.to.x) stepX = -stepX;
-        if (this.from.y >= this.to.y) stepY = -stepY;
-        xVia = this.from.x + stepX;
-        yVia = this.from.y + stepY;
+        if (this.from.x > this.to.x) {
+          stepX = -stepX;
+        }
+
+        if (this.from.y >= this.to.y) {
+          stepY = -stepY;
+        }
+
+        var xVia = this.from.x + stepX;
+        var yVia = this.from.y + stepY;
 
         if (type === "discrete") {
           if (dx <= dy) {
@@ -13854,6 +13495,11 @@ function (_BezierEdgeBase) {
             yVia = dy < factor * dx ? this.from.y : yVia;
           }
         }
+
+        return {
+          x: xVia,
+          y: yVia
+        };
       } else if (type === "straightCross") {
         var _stepX = (1 - factor) * dx;
 
@@ -13862,37 +13508,57 @@ function (_BezierEdgeBase) {
         if (dx <= dy) {
           // up - down
           _stepX = 0;
-          if (this.from.y < this.to.y) _stepY = -_stepY;
+
+          if (this.from.y < this.to.y) {
+            _stepY = -_stepY;
+          }
         } else {
           // left - right
-          if (this.from.x < this.to.x) _stepX = -_stepX;
+          if (this.from.x < this.to.x) {
+            _stepX = -_stepX;
+          }
+
           _stepY = 0;
         }
 
-        xVia = this.to.x + _stepX;
-        yVia = this.to.y + _stepY;
-      } else if (type === 'horizontal') {
+        return {
+          x: this.to.x + _stepX,
+          y: this.to.y + _stepY
+        };
+      } else if (type === "horizontal") {
         var _stepX2 = (1 - factor) * dx;
 
-        if (this.from.x < this.to.x) _stepX2 = -_stepX2;
-        xVia = this.to.x + _stepX2;
-        yVia = this.from.y;
-      } else if (type === 'vertical') {
+        if (this.from.x < this.to.x) {
+          _stepX2 = -_stepX2;
+        }
+
+        return {
+          x: this.to.x + _stepX2,
+          y: this.from.y
+        };
+      } else if (type === "vertical") {
         var _stepY2 = (1 - factor) * dy;
 
-        if (this.from.y < this.to.y) _stepY2 = -_stepY2;
-        xVia = this.from.x;
-        yVia = this.to.y + _stepY2;
-      } else if (type === 'curvedCW') {
+        if (this.from.y < this.to.y) {
+          _stepY2 = -_stepY2;
+        }
+
+        return {
+          x: this.from.x,
+          y: this.to.y + _stepY2
+        };
+      } else if (type === "curvedCW") {
         dx = this.to.x - this.from.x;
         dy = this.from.y - this.to.y;
         var radius = Math.sqrt(dx * dx + dy * dy);
         var pi = Math.PI;
         var originalAngle = Math.atan2(dy, dx);
         var myAngle = (originalAngle + (factor * 0.5 + 0.5) * pi) % (2 * pi);
-        xVia = this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle);
-        yVia = this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle);
-      } else if (type === 'curvedCCW') {
+        return {
+          x: this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle),
+          y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle)
+        };
+      } else if (type === "curvedCCW") {
         dx = this.to.x - this.from.x;
         dy = this.from.y - this.to.y;
 
@@ -13904,8 +13570,10 @@ function (_BezierEdgeBase) {
 
         var _myAngle = (_originalAngle + (-factor * 0.5 + 0.5) * _pi) % (2 * _pi);
 
-        xVia = this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle);
-        yVia = this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle);
+        return {
+          x: this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle),
+          y: this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle)
+        };
       } else {
         // continuous
         var _stepX3;
@@ -13918,39 +13586,39 @@ function (_BezierEdgeBase) {
           _stepX3 = _stepY3 = factor * dx;
         }
 
-        if (this.from.x > this.to.x) _stepX3 = -_stepX3;
-        if (this.from.y >= this.to.y) _stepY3 = -_stepY3;
-        xVia = this.from.x + _stepX3;
-        yVia = this.from.y + _stepY3;
+        if (this.from.x > this.to.x) {
+          _stepX3 = -_stepX3;
+        }
+
+        if (this.from.y >= this.to.y) {
+          _stepY3 = -_stepY3;
+        }
+
+        var _xVia = this.from.x + _stepX3;
+
+        var _yVia = this.from.y + _stepY3;
 
         if (dx <= dy) {
           if (this.from.x <= this.to.x) {
-            xVia = this.to.x < xVia ? this.to.x : xVia;
+            _xVia = this.to.x < _xVia ? this.to.x : _xVia;
           } else {
-            xVia = this.to.x > xVia ? this.to.x : xVia;
+            _xVia = this.to.x > _xVia ? this.to.x : _xVia;
           }
         } else {
           if (this.from.y >= this.to.y) {
-            yVia = this.to.y > yVia ? this.to.y : yVia;
+            _yVia = this.to.y > _yVia ? this.to.y : _yVia;
           } else {
-            yVia = this.to.y < yVia ? this.to.y : yVia;
+            _yVia = this.to.y < _yVia ? this.to.y : _yVia;
           }
         }
-      }
 
-      return {
-        x: xVia,
-        y: yVia
-      };
+        return {
+          x: _xVia,
+          y: _yVia
+        };
+      }
     }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} options
-     * @returns {*}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_findBorderPosition",
@@ -13958,18 +13626,7 @@ function (_BezierEdgeBase) {
       var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       return this._findBorderPositionBezier(nearNode, ctx, options.via);
     }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @param {Node} viaNode
-     * @returns {number}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -13978,19 +13635,13 @@ function (_BezierEdgeBase) {
       // x3,y3 is the point
       return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
     }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     * @param {number} percentage
-     * @param {Node} viaNode
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getPoint",
-    value: function getPoint(percentage) {
+    value: function getPoint(position) {
       var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates();
-      var t = percentage;
+      var t = position;
       var x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
       var y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
       return {
@@ -14004,9 +13655,207 @@ function (_BezierEdgeBase) {
 }(BezierEdgeBase);
 
 /**
- * A Straight Edge.
+ * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
+ * smooth gradual curves in paths between nodes.
  *
- * @extends EdgeBase
+ * @extends BezierEdgeBase
+ */
+
+var CubicBezierEdgeBase =
+/*#__PURE__*/
+function (_BezierEdgeBase) {
+  inherits(CubicBezierEdgeBase, _BezierEdgeBase);
+
+  /**
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
+   */
+  function CubicBezierEdgeBase(options, body, labelModule) {
+    classCallCheck(this, CubicBezierEdgeBase);
+
+    return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdgeBase).call(this, options, body, labelModule));
+  }
+  /**
+   * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+   *
+   * @remarks
+   * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
+   * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
+   *
+   * @param x1 - First end of the line segment on the x axis.
+   * @param y1 - First end of the line segment on the y axis.
+   * @param x2 - Second end of the line segment on the x axis.
+   * @param y2 - Second end of the line segment on the y axis.
+   * @param x3 - Position of the point on the x axis.
+   * @param y3 - Position of the point on the y axis.
+   * @param via1 - The first point this edge passes through.
+   * @param via2 - The second point this edge passes through.
+   *
+   * @returns The distance between the line segment and the point.
+   */
+
+
+  createClass(CubicBezierEdgeBase, [{
+    key: "_getDistanceToBezierEdge2",
+    value: function _getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2) {
+      // x3,y3 is the point
+      var minDistance = 1e9;
+      var lastX = x1;
+      var lastY = y1;
+      var vec = [0, 0, 0, 0];
+
+      for (var i = 1; i < 10; i++) {
+        var t = 0.1 * i;
+        vec[0] = Math.pow(1 - t, 3);
+        vec[1] = 3 * t * Math.pow(1 - t, 2);
+        vec[2] = 3 * Math.pow(t, 2) * (1 - t);
+        vec[3] = Math.pow(t, 3);
+        var x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
+        var y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
+
+        if (i > 0) {
+          var distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
+
+          minDistance = distance < minDistance ? distance : minDistance;
+        }
+
+        lastX = x;
+        lastY = y;
+      }
+
+      return minDistance;
+    }
+  }]);
+
+  return CubicBezierEdgeBase;
+}(BezierEdgeBase);
+
+/**
+ * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
+ */
+
+var CubicBezierEdge =
+/*#__PURE__*/
+function (_CubicBezierEdgeBase) {
+  inherits(CubicBezierEdge, _CubicBezierEdgeBase);
+
+  /**
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
+   */
+  function CubicBezierEdge(options, body, labelModule) {
+    classCallCheck(this, CubicBezierEdge);
+
+    return possibleConstructorReturn(this, getPrototypeOf(CubicBezierEdge).call(this, options, body, labelModule));
+  }
+  /** @inheritdoc */
+
+
+  createClass(CubicBezierEdge, [{
+    key: "_line",
+    value: function _line(ctx, values, viaNodes) {
+      // get the coordinates of the support points.
+      var via1 = viaNodes[0];
+      var via2 = viaNodes[1];
+
+      this._bezierCurve(ctx, values, via1, via2);
+    }
+    /**
+     * Compute the additional points the edge passes through.
+     *
+     * @returns Cartesian coordinates of the points the edge passes through.
+     */
+
+  }, {
+    key: "_getViaCoordinates",
+    value: function _getViaCoordinates() {
+      var dx = this.from.x - this.to.x;
+      var dy = this.from.y - this.to.y;
+      var x1;
+      var y1;
+      var x2;
+      var y2;
+      var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
+
+      if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === "horizontal") && this.options.smooth.forceDirection !== "vertical") {
+        y1 = this.from.y;
+        y2 = this.to.y;
+        x1 = this.from.x - roundness * dx;
+        x2 = this.to.x + roundness * dx;
+      } else {
+        y1 = this.from.y - roundness * dy;
+        y2 = this.to.y + roundness * dy;
+        x1 = this.from.x;
+        x2 = this.to.x;
+      }
+
+      return [{
+        x: x1,
+        y: y1
+      }, {
+        x: x2,
+        y: y2
+      }];
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "getViaNode",
+    value: function getViaNode() {
+      return this._getViaCoordinates();
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_findBorderPosition",
+    value: function _findBorderPosition(nearNode, ctx) {
+      return this._findBorderPositionBezier(nearNode, ctx);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_getDistanceToEdge",
+    value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+      var _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
+          _ref2 = slicedToArray(_ref, 2),
+          via1 = _ref2[0],
+          via2 = _ref2[1];
+
+      // x3,y3 is the point
+      return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "getPoint",
+    value: function getPoint(position) {
+      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
+          _ref4 = slicedToArray(_ref3, 2),
+          via1 = _ref4[0],
+          via2 = _ref4[1];
+
+      var t = position;
+      var vec = [Math.pow(1 - t, 3), 3 * t * Math.pow(1 - t, 2), 3 * Math.pow(t, 2) * (1 - t), Math.pow(t, 3)];
+      var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
+      var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
+      return {
+        x: x,
+        y: y
+      };
+    }
+  }]);
+
+  return CubicBezierEdge;
+}(CubicBezierEdgeBase);
+
+/**
+ * A Straight Edge.
  */
 
 var StraightEdge =
@@ -14015,21 +13864,18 @@ function (_EdgeBase) {
   inherits(StraightEdge, _EdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function StraightEdge(options, body, labelModule) {
     classCallCheck(this, StraightEdge);
 
     return possibleConstructorReturn(this, getPrototypeOf(StraightEdge).call(this, options, body, labelModule));
   }
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @private
-   */
+  /** @inheritdoc */
 
 
   createClass(StraightEdge, [{
@@ -14044,39 +13890,24 @@ function (_EdgeBase) {
       ctx.stroke();
       this.disableShadow(ctx, values);
     }
-    /**
-     *
-     * @returns {undefined}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return undefined;
     }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     *
-     * @param {number} percentage
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getPoint",
-    value: function getPoint(percentage) {
+    value: function getPoint(position) {
       return {
-        x: (1 - percentage) * this.fromPoint.x + percentage * this.toPoint.x,
-        y: (1 - percentage) * this.fromPoint.y + percentage * this.toPoint.y
+        x: (1 - position) * this.fromPoint.x + position * this.toPoint.x,
+        y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
       };
     }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_findBorderPosition",
@@ -14095,22 +13926,13 @@ function (_EdgeBase) {
       var edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
       var toBorderDist = nearNode.distanceToBorder(ctx, angle);
       var toBorderPoint = (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
-      var borderPos = {};
-      borderPos.x = (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x;
-      borderPos.y = (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y;
-      return borderPos;
+      return {
+        x: (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x,
+        y: (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y,
+        t: 0
+      };
     }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @returns {number}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_getDistanceToEdge",
