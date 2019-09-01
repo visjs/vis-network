@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-08-25T13:54:27Z
+ * @date    2019-09-01T22:05:39Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -26138,36 +26138,11 @@
       }
       /**
        *
-       * @private
-	   * @returns {{top,left,bottom.right}}
-       */
-    }, {
-	  key: "_getImagePadding",
-	  value: function _getImagePadding() {
-		var imgPadding = { top: 0, right: 0, bottom: 0, left: 0}
-		if (this.options.imagePadding) {		  
-		  var optImgPadding = this.options.imagePadding
-		  if (_typeof_1$1(optImgPadding) == 'object') {
-		    imgPadding.top = optImgPadding.top;
-		    imgPadding.right = optImgPadding.right;
-		    imgPadding.bottom = optImgPadding.bottom;
-		    imgPadding.left = optImgPadding.left;
-		  } else {
-		    imgPadding.top = optImgPadding;
-		    imgPadding.right = optImgPadding;
-		    imgPadding.bottom = optImgPadding;
-		    imgPadding.left = optImgPadding;
-		  }
-		}
-
-        return imgPadding
-      }
-	  /**
-       *
        * @param {Label} labelModule
        * @private
-       */	
-	}, {
+       */
+
+    }, {
       key: "_setMargins",
       value: function _setMargins(labelModule) {
         this.margin = {};
@@ -26658,6 +26633,41 @@
         }
       }
       /**
+       * Returns Image Padding from node options
+       *
+       * @returns {{top: number,left: number,bottom: number,right: number}} image padding inside this shape
+       * @private
+       */
+
+    }, {
+      key: "_getImagePadding",
+      value: function _getImagePadding() {
+        var imgPadding = {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        };
+
+        if (this.options.imagePadding) {
+          var optImgPadding = this.options.imagePadding;
+
+          if (_typeof_1$1(optImgPadding) == 'object') {
+            imgPadding.top = optImgPadding.top;
+            imgPadding.right = optImgPadding.right;
+            imgPadding.bottom = optImgPadding.bottom;
+            imgPadding.left = optImgPadding.left;
+          } else {
+            imgPadding.top = optImgPadding;
+            imgPadding.right = optImgPadding;
+            imgPadding.bottom = optImgPadding;
+            imgPadding.left = optImgPadding;
+          }
+        }
+
+        return imgPadding;
+      }
+      /**
        * Adjust the node dimensions for a loaded image.
        *
        * Pre: this.imageObj is valid
@@ -26684,8 +26694,9 @@
           width = this.options.size * 2 * ratio_width;
           height = this.options.size * 2 * ratio_height;
         } else {
-          // Use the image size
-          var imgPadding = this._getImagePadding()
+          // Use the image size with image padding
+          var imgPadding = this._getImagePadding();
+
           width = this.imageObj.width + imgPadding.left + imgPadding.right;
           height = this.imageObj.height + imgPadding.top + imgPadding.bottom;
         }
@@ -26730,14 +26741,13 @@
           if (this.options.shapeProperties.interpolation === true) {
             factor = this.imageObj.width / this.width / this.body.view.scale;
           }
-		  
-		  
-		  var imgPadding = this._getImagePadding()
-		  	  
-		  var imgPosLeft =  this.left + imgPadding.left
-		  var imgPosTop = this.top + imgPadding.top
-		  var imgWidth = this.width - imgPadding.left - imgPadding.right
-		  var imgHeight = this.height - imgPadding.top - imgPadding.bottom
+
+          var imgPadding = this._getImagePadding();
+
+          var imgPosLeft = this.left + imgPadding.left;
+          var imgPosTop = this.top + imgPadding.top;
+          var imgWidth = this.width - imgPadding.left - imgPadding.right;
+          var imgHeight = this.height - imgPadding.top - imgPadding.bottom;
           this.imageObj.drawImageAtPosition(ctx, factor, imgPosLeft, imgPosTop, imgWidth, imgHeight); // disable shadows for other elements.
 
           this.disableShadow(ctx, values);
@@ -29209,12 +29219,6 @@
         },
         image: undefined,
         // --> URL
-		imagePadding: { // only for image shape
-			top: 0,			
-			right: 0,
-			bottom: 0,
-			left: 0
-		},
         label: undefined,
         labelHighlightBold: true,
         level: undefined,
@@ -30173,7 +30177,7 @@
           {x:0, y:0.5},
           {x:0, y:-0.5}
         ];
-             EndPoint.transform(points, arrowData);
+              EndPoint.transform(points, arrowData);
         ctx.beginPath();
         ctx.moveTo(points[0].x, points[0].y);
         ctx.lineTo(points[1].x, points[1].y);
@@ -32797,7 +32801,13 @@
 
 
         if (newOptions.color !== undefined && newOptions.color !== null) {
-          var fromColor = newOptions.color;
+          var fromColor = util.isString(newOptions.color) ? {
+            color: newOptions.color,
+            highlight: newOptions.color,
+            hover: newOptions.color,
+            inherit: false,
+            opacity: 1
+          } : newOptions.color;
           var toColor = parentOptions.color; // If passed, fill in values from default options - required in the case of no prototype bridging
 
           if (copyFromGlobals) {
@@ -48211,24 +48221,6 @@
         },
         useBorderWithImage: {
           boolean: bool
-        },
-        imagePadding: {
-          top: {
-            number: number
-          },
-          right: {
-            number: number
-          },
-          bottom: {
-            number: number
-          },
-          left: {
-            number: number
-          },
-          __type__: {
-            object: object,
-            number: number
-          }
         },
         __type__: {
           object: object
