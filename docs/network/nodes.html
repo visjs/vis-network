@@ -162,6 +162,12 @@ var options = {
       color:'#2B7CE9'
     },
     image: undefined,
+    imagePadding: {
+      left: 0,
+      top: 0,
+      bottom: 0,
+      right: 0
+    },
     label: undefined,
     labelHighlightBold: true,
     level: undefined,
@@ -725,7 +731,9 @@ network.setOptions(options);
             <td>Object or String</td>
             <td><code>undefined</code></td>
             <td>When the shape is set to <code>image</code> or <code>circularImage</code>, this option should be the URL
-                to an image. If the image cannot be found, the brokenImage option can be used.
+                to an image. If the image cannot be found, the brokenImage option can be used. 
+                <br><i>Note: Firefox has a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=700533">SVG drawing bug</a>, 
+                there is a <a href="https://stackoverflow.com/a/28692538/469898">workaround</a> - add width/height attributes to root &lt;svg&gt; element of the SVG</a></i>.
             </td>
         </tr>
         <tr parent="image" class="hidden">
