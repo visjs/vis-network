@@ -48,13 +48,13 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    * Create a new instance.
    *
    * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
+   * @param _body - The body of the network.
+   * @param _labelModule - Label module.
    */
   public constructor(
     options: EdgeOptions,
-    protected body: VBody,
-    protected labelModule: Label
+    protected _body: VBody,
+    protected _labelModule: Label
   ) {
     this.setOptions(options);
 
@@ -89,8 +89,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /** @inheritdoc */
   public connect(): void {
-    this.from = this.body.nodes[this.options.from];
-    this.to = this.body.nodes[this.options.to];
+    this.from = this._body.nodes[this.options.from];
+    this.to = this._body.nodes[this.options.to];
   }
 
   /** @inheritdoc */
@@ -105,8 +105,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public setOptions(options: EdgeOptions): void {
     this.options = options;
-    this.from = this.body.nodes[this.options.from];
-    this.to = this.body.nodes[this.options.to];
+    this.from = this._body.nodes[this.options.from];
+    this.to = this._body.nodes[this.options.to];
     this.id = this.options.id;
   }
 
@@ -431,11 +431,11 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public getLineWidth(selected: boolean, hover: boolean): number {
     if (selected === true) {
-      return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
+      return Math.max(this.selectionWidth, 0.3 / this._body.view.scale);
     } else if (hover === true) {
-      return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
+      return Math.max(this.hoverWidth, 0.3 / this._body.view.scale);
     } else {
-      return Math.max(this.options.width, 0.3 / this.body.view.scale);
+      return Math.max(this.options.width, 0.3 / this._body.view.scale);
     }
   }
 
