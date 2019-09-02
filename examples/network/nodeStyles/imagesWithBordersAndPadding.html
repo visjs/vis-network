@@ -39,7 +39,7 @@
         {id: 6,  shape: 'image', image: DIR + '6.png'},
         {id: 7,  shape: 'image', image: DIR + '7.png'},
         {id: 8,  shape: 'image', image: DIR + '8.png'},
-        {id: 9,  shape: 'image', image: DIR + 'blossom.svg', label: "SVG, useImageSize + imagePadding:15", shapeProperties: { useImageSize: true }, imagePadding: 15, color: "yellow" },
+        {id: 9,  shape: 'image', image: DIR + '9.png', label: "useImageSize + imagePadding:15", shapeProperties: { useImageSize: true }, imagePadding: 15, color: "yellow" },
         {id: 10, shape: 'image', image: DIR + '10.png'},
         {id: 11, shape: 'image', image: DIR + '11.png'},
         {id: 12, shape: 'image', image: DIR + '12.png'},
@@ -77,10 +77,11 @@
       };
       var options = {
         nodes: {
-          borderWidth:4,
+          borderWidth:4,  
+          borderWidthSelected: 8,
           size:24,
           color: {
-            border: '#406897',
+            border: 'White',
             background: '#6AAFFF'
           },
           font:{color:'#eeeeee'},
