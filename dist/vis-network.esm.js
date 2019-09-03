@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-03T13:41:07Z
+ * @date    2019-09-03T20:03:14Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -22069,6 +22069,23 @@ function () {
   return Groups;
 }();
 
+function _defineProperty$2(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty$2 = _defineProperty$2;
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
@@ -24676,6 +24693,41 @@ function (_NodeBase) {
       }
     }
     /**
+     * Returns Image Padding from node options
+     *
+     * @returns {{top: number,left: number,bottom: number,right: number}} image padding inside this shape
+     * @private
+     */
+
+  }, {
+    key: "_getImagePadding",
+    value: function _getImagePadding() {
+      var imgPadding = {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      };
+
+      if (this.options.imagePadding) {
+        var optImgPadding = this.options.imagePadding;
+
+        if (_typeof_1$1(optImgPadding) == 'object') {
+          imgPadding.top = optImgPadding.top;
+          imgPadding.right = optImgPadding.right;
+          imgPadding.bottom = optImgPadding.bottom;
+          imgPadding.left = optImgPadding.left;
+        } else {
+          imgPadding.top = optImgPadding;
+          imgPadding.right = optImgPadding;
+          imgPadding.bottom = optImgPadding;
+          imgPadding.left = optImgPadding;
+        }
+      }
+
+      return imgPadding;
+    }
+    /**
      * Adjust the node dimensions for a loaded image.
      *
      * Pre: this.imageObj is valid
@@ -24702,9 +24754,11 @@ function (_NodeBase) {
         width = this.options.size * 2 * ratio_width;
         height = this.options.size * 2 * ratio_height;
       } else {
-        // Use the image size
-        width = this.imageObj.width;
-        height = this.imageObj.height;
+        // Use the image size with image padding
+        var imgPadding = this._getImagePadding();
+
+        width = this.imageObj.width + imgPadding.left + imgPadding.right;
+        height = this.imageObj.height + imgPadding.top + imgPadding.bottom;
       }
 
       this.width = width;
@@ -24748,7 +24802,13 @@ function (_NodeBase) {
           factor = this.imageObj.width / this.width / this.body.view.scale;
         }
 
-        this.imageObj.drawImageAtPosition(ctx, factor, this.left, this.top, this.width, this.height); // disable shadows for other elements.
+        var imgPadding = this._getImagePadding();
+
+        var imgPosLeft = this.left + imgPadding.left;
+        var imgPosTop = this.top + imgPadding.top;
+        var imgWidth = this.width - imgPadding.left - imgPadding.right;
+        var imgHeight = this.height - imgPadding.top - imgPadding.bottom;
+        this.imageObj.drawImageAtPosition(ctx, factor, imgPosLeft, imgPosTop, imgWidth, imgHeight); // disable shadows for other elements.
 
         this.disableShadow(ctx, values);
       }
@@ -26432,6 +26492,9 @@ function () {
   return Validator;
 }();
 
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
  * A node. A node can be connected to other nodes via one or multiple edges.
  */
@@ -26528,6 +26591,14 @@ function () {
 
       if (!options) {
         return; // Note that the return value will be 'undefined'! This is OK.
+      } // Save the color for later.
+      // This is necessary in order to prevent local color from being overwritten by group color.
+      // TODO: To prevent such workarounds the way options are handled should be rewritten from scratch.
+      // This is not the only problem with current options handling.
+
+
+      if (typeof options.color !== 'undefined') {
+        this._localColor = options.color;
       } // basic options
 
 
@@ -26697,7 +26768,9 @@ function () {
         this.options.label = '';
       }
 
-      Node.updateGroupOptions(this.options, options, this.grouplist); //
+      Node.updateGroupOptions(this.options, _objectSpread$1({}, options, {
+        color: options && options.color || this._localColor || undefined
+      }), this.grouplist); //
       // Note:The prototype chain for this.options is:
       //
       // this.options ->    NodesHandler.options    -> NodesHandler.defaultOptions
@@ -27219,6 +27292,13 @@ function () {
       },
       image: undefined,
       // --> URL
+      imagePadding: {
+        // only for image shape
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },
       label: undefined,
       labelHighlightBold: true,
       level: undefined,
@@ -27743,23 +27823,6 @@ var get = createCommonjsModule$2(function (module) {
 
   module.exports = _get;
 });
-
-function _defineProperty$2(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-var defineProperty$2 = _defineProperty$2;
 
 /** ============================================================================
  * Location of all the endpoint drawing routines.
@@ -28411,9 +28474,9 @@ function () {
   return EndPoints;
 }();
 
-function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
  * The Base Class for all edges.
  */
@@ -28736,7 +28799,7 @@ function () {
         ++iteration;
       } while (low <= high && iteration < maxIterations);
 
-      return _objectSpread$1({}, pos, {
+      return _objectSpread$2({}, pos, {
         t: middle
       });
     }
@@ -29109,9 +29172,9 @@ function () {
   return EdgeBase;
 }();
 
-function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
  * The Base Class for all Bezier edges.
  * Bezier curves are used to model smooth gradual curves in paths between nodes.
@@ -29196,7 +29259,7 @@ function (_EdgeBase) {
         ++iteration;
       } while (low <= high && iteration < maxIterations);
 
-      return _objectSpread$2({}, pos, {
+      return _objectSpread$3({}, pos, {
         t: middle
       });
     }
@@ -46220,6 +46283,24 @@ var allOptions$1 = {
       __type__: {
         object: object,
         string: string
+      }
+    },
+    imagePadding: {
+      top: {
+        number: number
+      },
+      right: {
+        number: number
+      },
+      bottom: {
+        number: number
+      },
+      left: {
+        number: number
+      },
+      __type__: {
+        object: object,
+        number: number
       }
     },
     label: {
