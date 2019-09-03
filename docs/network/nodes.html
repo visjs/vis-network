@@ -162,6 +162,12 @@ var options = {
       color:'#2B7CE9'
     },
     image: undefined,
+    imagePadding: {
+      left: 0,
+      top: 0,
+      bottom: 0,
+      right: 0
+    },
     label: undefined,
     labelHighlightBold: true,
     level: undefined,
@@ -726,7 +732,9 @@ network.setOptions(options);
             <td>Object or String</td>
             <td><code>undefined</code></td>
             <td>When the shape is set to <code>image</code> or <code>circularImage</code>, this option should be the URL
-                to an image. If the image cannot be found, the brokenImage option can be used.
+                to an image. If the image cannot be found, the brokenImage option can be used. 
+                <br><i>Note: Firefox has a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=700533">SVG drawing bug</a>, 
+                there is a <a href="https://stackoverflow.com/a/28692538/469898">workaround</a> - add width/height attributes to root &lt;svg&gt; element of the SVG</a></i>.
             </td>
         </tr>
         <tr parent="image" class="hidden">
@@ -742,6 +750,36 @@ network.setOptions(options);
             <td><code>undefined</code></td>
             <td>Selected image URL.
             </td>
+        </tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','imagePadding', this);">
+            <td><span parent="imagePadding" class="right-caret"></span> imagePadding</td>
+            <td>Object or Number</td>
+            <td><code>0</code></td>
+            <td>If a number is specified, the paddings of the image inside the shape are set to that value on all sides. These options are only used when the shape is set to <code>image</code>, <code>circularImage</code>.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.top</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The top padding of the image inside the shape is set to this value.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.right</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The right margin of the image inside the shape is set to this value.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.bottom</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The bottom margin of the image inside the shape is set to this value.</td>
+        </tr>
+        <tr parent="imagePadding" class="hidden">
+            <td class="indent">imagePadding.left</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>The left margin of the image inside the shape is set to this value.</td>
         </tr>
         <tr>
             <td>label</td>
