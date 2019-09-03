@@ -34,7 +34,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     this._boundFunction = (): void => {
       this.positionBezierNode();
     };
-    this.body.emitter.on("_repositionBezierNodes", this._boundFunction);
+    this._body.emitter.on("_repositionBezierNodes", this._boundFunction);
   }
 
   /** @inheritdoc */
@@ -50,8 +50,8 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     // set the options and the to and from nodes
     this.options = options;
     this.id = this.options.id;
-    this.from = this.body.nodes[this.options.from];
-    this.to = this.body.nodes[this.options.to];
+    this.from = this._body.nodes[this.options.from];
+    this.to = this._body.nodes[this.options.to];
 
     // setup the support node and connect
     this.setupSupportNode();
@@ -66,8 +66,8 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
 
   /** @inheritdoc */
   public connect(): void {
-    this.from = this.body.nodes[this.options.from];
-    this.to = this.body.nodes[this.options.to];
+    this.from = this._body.nodes[this.options.from];
+    this.to = this._body.nodes[this.options.to];
     if (
       this.from === undefined ||
       this.to === undefined ||
@@ -86,9 +86,9 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
 
   /** @inheritdoc */
   public cleanup(): boolean {
-    this.body.emitter.off("_repositionBezierNodes", this._boundFunction);
+    this._body.emitter.off("_repositionBezierNodes", this._boundFunction);
     if (this.via !== undefined) {
-      delete this.body.nodes[this.via.id];
+      delete this._body.nodes[this.via.id];
       this.via = undefined;
       return true;
     }
@@ -108,13 +108,13 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
   public setupSupportNode(): void {
     if (this.via === undefined) {
       const nodeId = "edgeId:" + this.id;
-      const node = this.body.functions.createNode({
+      const node = this._body.functions.createNode({
         id: nodeId,
         shape: "circle",
         physics: true,
         hidden: true
       });
-      this.body.nodes[nodeId] = node;
+      this._body.nodes[nodeId] = node;
       this.via = node;
       this.via.parentEdgeId = this.id;
       this.positionBezierNode();
