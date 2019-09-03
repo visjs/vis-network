@@ -13,8 +13,8 @@ export interface FindBorderPositionCircleOptions {
  * The Base Class for all edges.
  */
 export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
-    protected body: VBody;
-    protected labelModule: Label;
+    protected _body: VBody;
+    protected _labelModule: Label;
     from: VNode;
     fromPoint: Point;
     to: VNode;
@@ -30,10 +30,10 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * Create a new instance.
      *
      * @param options - The options object of given edge.
-     * @param body - The body of the network.
-     * @param labelModule - Label module.
+     * @param _body - The body of the network.
+     * @param _labelModule - Label module.
      */
-    constructor(options: EdgeOptions, body: VBody, labelModule: Label);
+    constructor(options: EdgeOptions, _body: VBody, _labelModule: Label);
     /**
      * Find the intersection between the border of the node and the edge.
      *
