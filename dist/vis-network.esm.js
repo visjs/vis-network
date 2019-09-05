@@ -4,8 +4,8 @@
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 0.0.0-no-version
- * @date    2019-09-03T19:49:27Z
+ * @version 5.3.1-20190905
+ * @date    2019-09-05T13:45:54Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -40615,6 +40615,7 @@ function () {
     this.defaultOptions = {
       randomSeed: undefined,
       improvedLayout: true,
+      clusterThreshold: 150,
       hierarchical: {
         enabled: false,
         levelSeparation: 150,
@@ -40676,7 +40677,7 @@ function () {
       if (options !== undefined) {
         var hierarchical = this.options.hierarchical;
         var prevHierarchicalState = hierarchical.enabled;
-        util.selectiveDeepExtend(["randomSeed", "improvedLayout"], this.options, options);
+        util.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
         util.mergeOptions(this.options, options, 'hierarchical');
 
         if (options.randomSeed !== undefined) {
@@ -40871,8 +40872,7 @@ function () {
         if (positionDefined < 0.5 * indices.length) {
           var MAX_LEVELS = 10;
           var level = 0;
-          var clusterThreshold = 150; // TODO add this to options
-          //
+          var clusterThreshold = this.options.clusterThreshold; //
           // Define the options for the hidden cluster nodes
           // These options don't propagate outside the clustering phase.
           //
@@ -45836,6 +45836,9 @@ var allOptions$1 = {
     },
     improvedLayout: {
       boolean: bool
+    },
+    clusterThreshold: {
+      number: number
     },
     hierarchical: {
       enabled: {
