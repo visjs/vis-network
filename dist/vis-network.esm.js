@@ -4,8 +4,8 @@
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 5.3.1-20190905
- * @date    2019-09-05T13:45:54Z
+ * @version 0.0.0-no-version
+ * @date    2019-09-06T16:52:31Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -28963,7 +28963,7 @@ function () {
       var arrowPoint;
       var node1;
       var node2;
-      var guideOffset;
+      var reversed;
       var scaleFactor;
       var type;
       var lineWidth = values.width;
@@ -28971,24 +28971,30 @@ function () {
       if (position === "from") {
         node1 = this.from;
         node2 = this.to;
-        guideOffset = 0.1;
-        scaleFactor = values.fromArrowScale;
+        reversed = values.fromArrowScale < 0;
+        scaleFactor = Math.abs(values.fromArrowScale);
         type = values.fromArrowType;
       } else if (position === "to") {
         node1 = this.to;
         node2 = this.from;
-        guideOffset = -0.1;
-        scaleFactor = values.toArrowScale;
+        reversed = values.toArrowScale < 0;
+        scaleFactor = Math.abs(values.toArrowScale);
         type = values.toArrowType;
       } else {
         node1 = this.to;
         node2 = this.from;
-        scaleFactor = values.middleArrowScale;
+        reversed = values.middleArrowScale < 0;
+        scaleFactor = Math.abs(values.middleArrowScale);
         type = values.middleArrowType;
-      } // if not connected to itself
+      }
 
+      var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
+      // if not connected to itself
 
       if (node1 != node2) {
+        var approximateEdgeLength = Math.hypot(node1.x - node2.x, node1.y - node2.y);
+        var relativeLength = length / approximateEdgeLength;
+
         if (position !== "middle") {
           // draw arrow head
           if (this.options.smooth.enabled === true) {
@@ -28996,8 +29002,7 @@ function () {
               via: viaNode
             });
 
-            var guidePos = this.getPoint( // guideOffset is unset only for position === 'middle'
-            Math.max(0.0, Math.min(1.0, pointT.t + guideOffset)), viaNode);
+            var guidePos = this.getPoint(pointT.t + relativeLength * (position === "from" ? 1 : -1), viaNode);
             angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
             arrowPoint = pointT;
           } else {
@@ -29005,8 +29010,12 @@ function () {
             arrowPoint = this._findBorderPosition(node1, ctx);
           }
         } else {
-          angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-          arrowPoint = this.getPoint(0.5, viaNode); // this is 0.6 to account for the size of the arrow.
+          // Negative half length reverses arrow direction.
+          var halfLength = (reversed ? -relativeLength : relativeLength) / 2;
+          var guidePos1 = this.getPoint(0.5 + halfLength, viaNode);
+          var guidePos2 = this.getPoint(0.5 - halfLength, viaNode);
+          angle = Math.atan2(guidePos1.y - guidePos2.y, guidePos1.x - guidePos2.x);
+          arrowPoint = this.getPoint(0.5, viaNode);
         }
       } else {
         // draw circle
@@ -29043,12 +29052,6 @@ function () {
           angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         }
       }
-
-      if (position === "middle" && scaleFactor < 0) {
-        lineWidth *= -1; // reversed middle arrow
-      }
-
-      var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
       var xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
       var yi = arrowPoint.y - length * 0.9 * Math.sin(angle);
