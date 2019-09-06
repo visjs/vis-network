@@ -673,7 +673,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let arrowPoint: Point;
     let node1: VNode;
     let node2: VNode;
-    let guideOffset: number;
+    let reversed: boolean;
     let scaleFactor: number;
     let type: ArrowType;
     let lineWidth: number = values.width;
@@ -681,31 +681,39 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     if (position === "from") {
       node1 = this.from;
       node2 = this.to;
-      guideOffset = 0.1;
-      scaleFactor = values.fromArrowScale!;
+      reversed = values.fromArrowScale! < 0;
+      scaleFactor = Math.abs(values.fromArrowScale!);
       type = values.fromArrowType!;
     } else if (position === "to") {
       node1 = this.to;
       node2 = this.from;
-      guideOffset = -0.1;
-      scaleFactor = values.toArrowScale!;
+      reversed = values.toArrowScale! < 0;
+      scaleFactor = Math.abs(values.toArrowScale!);
       type = values.toArrowType!;
     } else {
       node1 = this.to;
       node2 = this.from;
-      scaleFactor = values.middleArrowScale!;
+      reversed = values.middleArrowScale! < 0;
+      scaleFactor = Math.abs(values.middleArrowScale!);
       type = values.middleArrowType!;
     }
 
+    const length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
+
     // if not connected to itself
     if (node1 != node2) {
+      const approximateEdgeLength = Math.hypot(
+        node1.x - node2.x,
+        node1.y - node2.y
+      );
+      const relativeLength = length / approximateEdgeLength;
+
       if (position !== "middle") {
         // draw arrow head
         if (this.options.smooth.enabled === true) {
           const pointT = this._findBorderPosition(node1, ctx, { via: viaNode });
           const guidePos = this.getPoint(
-            // guideOffset is unset only for position === 'middle'
-            Math.max(0.0, Math.min(1.0, pointT.t + guideOffset!)),
+            pointT.t + relativeLength * (position === "from" ? 1 : -1),
             viaNode
           );
           angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
@@ -715,8 +723,15 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           arrowPoint = this._findBorderPosition(node1, ctx);
         }
       } else {
-        angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-        arrowPoint = this.getPoint(0.5, viaNode); // this is 0.6 to account for the size of the arrow.
+        // Negative half length reverses arrow direction.
+        const halfLength = (reversed ? -relativeLength : relativeLength) / 2;
+        const guidePos1 = this.getPoint(0.5 + halfLength, viaNode);
+        const guidePos2 = this.getPoint(0.5 - halfLength, viaNode);
+        angle = Math.atan2(
+          guidePos1.y - guidePos2.y,
+          guidePos1.x - guidePos2.x
+        );
+        arrowPoint = this.getPoint(0.5, viaNode);
       }
     } else {
       // draw circle
@@ -747,11 +762,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
       }
     }
-
-    if (position === "middle" && scaleFactor < 0) {
-      lineWidth *= -1; // reversed middle arrow
-    }
-    const length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
     const xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
     const yi = arrowPoint.y - length * 0.9 * Math.sin(angle);
