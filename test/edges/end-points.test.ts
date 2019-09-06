@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { spy } from 'sinon'
 
-import EndPoints from '../../lib/network/modules/components/edges/util/EndPoints'
+import { EndPoints } from '../../lib/network/modules/components/edges'
 
 describe('EndPoints', function(): void {
   describe('methods called', function(): void {

@@ -4,8 +4,8 @@
  *
  * A dynamic, browser-based visualization library.
  *
- * @version 0.0.0-no-version
- * @date    2019-08-08T15:18:29Z
+ * @version 5.3.1-20190905
+ * @date    2019-09-05T13:45:54Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -23,6 +23,914 @@
  *
  * vis.js may be distributed under either license.
  */
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function commonjsRequire() {
+  throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
+}
+
+function createCommonjsModule(fn, module) {
+  return module = {
+    exports: {}
+  }, fn(module, module.exports), module.exports;
+}
+
+var _global = createCommonjsModule(function (module) {
+  // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+  var global = module.exports = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self // eslint-disable-next-line no-new-func
+  : Function('return this')();
+  if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+});
+
+var _core = createCommonjsModule(function (module) {
+  var core = module.exports = {
+    version: '2.6.9'
+  };
+  if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+});
+
+var _core_1 = _core.version;
+var _library = false;
+
+var _shared = createCommonjsModule(function (module) {
+  var SHARED = '__core-js_shared__';
+  var store = _global[SHARED] || (_global[SHARED] = {});
+  (module.exports = function (key, value) {
+    return store[key] || (store[key] = value !== undefined ? value : {});
+  })('versions', []).push({
+    version: _core.version,
+    mode: 'global',
+    copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
+  });
+});
+
+var id = 0;
+var px = Math.random();
+
+var _uid = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+var _wks = createCommonjsModule(function (module) {
+  var store = _shared('wks');
+
+  var Symbol = _global.Symbol;
+  var USE_SYMBOL = typeof Symbol == 'function';
+
+  var $exports = module.exports = function (name) {
+    return store[name] || (store[name] = USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : _uid)('Symbol.' + name));
+  };
+
+  $exports.store = store;
+});
+
+var f = _wks;
+var _wksExt = {
+  f: f
+};
+
+var _isObject = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+var _anObject = function (it) {
+  if (!_isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+var _fails = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+var _descriptors = !_fails(function () {
+  return Object.defineProperty({}, 'a', {
+    get: function () {
+      return 7;
+    }
+  }).a != 7;
+});
+
+var document$1 = _global.document; // typeof document.createElement is 'object' in old IE
+
+var is = _isObject(document$1) && _isObject(document$1.createElement);
+
+var _domCreate = function (it) {
+  return is ? document$1.createElement(it) : {};
+};
+
+var _ie8DomDefine = !_descriptors && !_fails(function () {
+  return Object.defineProperty(_domCreate('div'), 'a', {
+    get: function () {
+      return 7;
+    }
+  }).a != 7;
+}); // instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+
+
+var _toPrimitive = function (it, S) {
+  if (!_isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !_isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !_isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !_isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+var dP = Object.defineProperty;
+var f$1 = _descriptors ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  _anObject(O);
+
+  P = _toPrimitive(P, true);
+
+  _anObject(Attributes);
+
+  if (_ie8DomDefine) try {
+    return dP(O, P, Attributes);
+  } catch (e) {
+    /* empty */
+  }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+var _objectDp = {
+  f: f$1
+};
+var defineProperty = _objectDp.f;
+
+var _wksDefine = function (name) {
+  var $Symbol = _core.Symbol || (_core.Symbol = _global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, {
+    value: _wksExt.f(name)
+  });
+};
+
+_wksDefine('asyncIterator');
+
+var hasOwnProperty = {}.hasOwnProperty;
+
+var _has = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+var _propertyDesc = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+var _hide = _descriptors ? function (object, key, value) {
+  return _objectDp.f(object, key, _propertyDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+var _functionToString = _shared('native-function-to-string', Function.toString);
+
+var _redefine = createCommonjsModule(function (module) {
+  var SRC = _uid('src');
+
+  var TO_STRING = 'toString';
+
+  var TPL = ('' + _functionToString).split(TO_STRING);
+
+  _core.inspectSource = function (it) {
+    return _functionToString.call(it);
+  };
+
+  (module.exports = function (O, key, val, safe) {
+    var isFunction = typeof val == 'function';
+    if (isFunction) _has(val, 'name') || _hide(val, 'name', key);
+    if (O[key] === val) return;
+    if (isFunction) _has(val, SRC) || _hide(val, SRC, O[key] ? '' + O[key] : TPL.join(String(key)));
+
+    if (O === _global) {
+      O[key] = val;
+    } else if (!safe) {
+      delete O[key];
+
+      _hide(O, key, val);
+    } else if (O[key]) {
+      O[key] = val;
+    } else {
+      _hide(O, key, val);
+    } // add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
+
+  })(Function.prototype, TO_STRING, function toString() {
+    return typeof this == 'function' && this[SRC] || _functionToString.call(this);
+  });
+});
+
+var _aFunction = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+var _ctx = function (fn, that, length) {
+  _aFunction(fn);
+
+  if (that === undefined) return fn;
+
+  switch (length) {
+    case 1:
+      return function (a) {
+        return fn.call(that, a);
+      };
+
+    case 2:
+      return function (a, b) {
+        return fn.call(that, a, b);
+      };
+
+    case 3:
+      return function (a, b, c) {
+        return fn.call(that, a, b, c);
+      };
+  }
+
+  return function ()
+  /* ...args */
+  {
+    return fn.apply(that, arguments);
+  };
+};
+
+var PROTOTYPE = 'prototype';
+
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var target = IS_GLOBAL ? _global : IS_STATIC ? _global[name] || (_global[name] = {}) : (_global[name] || {})[PROTOTYPE];
+  var exports = IS_GLOBAL ? _core : _core[name] || (_core[name] = {});
+  var expProto = exports[PROTOTYPE] || (exports[PROTOTYPE] = {});
+  var key, own, out, exp;
+  if (IS_GLOBAL) source = name;
+
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined; // export native or passed
+
+    out = (own ? target : source)[key]; // bind timers to global for call from export context
+
+    exp = IS_BIND && own ? _ctx(out, _global) : IS_PROTO && typeof out == 'function' ? _ctx(Function.call, out) : out; // extend global
+
+    if (target) _redefine(target, key, out, type & $export.U); // export
+
+    if (exports[key] != out) _hide(exports, key, exp);
+    if (IS_PROTO && expProto[key] != out) expProto[key] = out;
+  }
+};
+
+_global.core = _core; // type bitmap
+
+$export.F = 1; // forced
+
+$export.G = 2; // global
+
+$export.S = 4; // static
+
+$export.P = 8; // proto
+
+$export.B = 16; // bind
+
+$export.W = 32; // wrap
+
+$export.U = 64; // safe
+
+$export.R = 128; // real proto method for `library`
+
+var _export = $export;
+
+var _meta = createCommonjsModule(function (module) {
+  var META = _uid('meta');
+
+  var setDesc = _objectDp.f;
+  var id = 0;
+
+  var isExtensible = Object.isExtensible || function () {
+    return true;
+  };
+
+  var FREEZE = !_fails(function () {
+    return isExtensible(Object.preventExtensions({}));
+  });
+
+  var setMeta = function (it) {
+    setDesc(it, META, {
+      value: {
+        i: 'O' + ++id,
+        // object ID
+        w: {} // weak collections IDs
+
+      }
+    });
+  };
+
+  var fastKey = function (it, create) {
+    // return primitive with prefix
+    if (!_isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+
+    if (!_has(it, META)) {
+      // can't set metadata to uncaught frozen object
+      if (!isExtensible(it)) return 'F'; // not necessary to add metadata
+
+      if (!create) return 'E'; // add missing metadata
+
+      setMeta(it); // return object ID
+    }
+
+    return it[META].i;
+  };
+
+  var getWeak = function (it, create) {
+    if (!_has(it, META)) {
+      // can't set metadata to uncaught frozen object
+      if (!isExtensible(it)) return true; // not necessary to add metadata
+
+      if (!create) return false; // add missing metadata
+
+      setMeta(it); // return hash weak collections IDs
+    }
+
+    return it[META].w;
+  }; // add metadata on freeze-family methods calling
+
+
+  var onFreeze = function (it) {
+    if (FREEZE && meta.NEED && isExtensible(it) && !_has(it, META)) setMeta(it);
+    return it;
+  };
+
+  var meta = module.exports = {
+    KEY: META,
+    NEED: false,
+    fastKey: fastKey,
+    getWeak: getWeak,
+    onFreeze: onFreeze
+  };
+});
+
+var _meta_1 = _meta.KEY;
+var _meta_2 = _meta.NEED;
+var _meta_3 = _meta.fastKey;
+var _meta_4 = _meta.getWeak;
+var _meta_5 = _meta.onFreeze;
+var def = _objectDp.f;
+
+var TAG = _wks('toStringTag');
+
+var _setToStringTag = function (it, tag, stat) {
+  if (it && !_has(it = stat ? it : it.prototype, TAG)) def(it, TAG, {
+    configurable: true,
+    value: tag
+  });
+};
+
+var toString = {}.toString;
+
+var _cof = function (it) {
+  return toString.call(it).slice(8, -1);
+}; // eslint-disable-next-line no-prototype-builtins
+
+
+var _iobject = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return _cof(it) == 'String' ? it.split('') : Object(it);
+}; // 7.2.1 RequireObjectCoercible(argument)
+
+
+var _defined = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+var _toIobject = function (it) {
+  return _iobject(_defined(it));
+}; // 7.1.4 ToInteger
+
+
+var ceil = Math.ceil;
+var floor = Math.floor;
+
+var _toInteger = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+var min = Math.min;
+
+var _toLength = function (it) {
+  return it > 0 ? min(_toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+var max = Math.max;
+var min$1 = Math.min;
+
+var _toAbsoluteIndex = function (index, length) {
+  index = _toInteger(index);
+  return index < 0 ? max(index + length, 0) : min$1(index, length);
+}; // true  -> Array#includes
+
+
+var _arrayIncludes = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = _toIobject($this);
+
+    var length = _toLength(O.length);
+
+    var index = _toAbsoluteIndex(fromIndex, length);
+
+    var value; // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++]; // eslint-disable-next-line no-self-compare
+
+      if (value != value) return true; // Array#indexOf ignores holes, Array#includes - not
+    } else for (; length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    }
+    return !IS_INCLUDES && -1;
+  };
+};
+
+var shared = _shared('keys');
+
+var _sharedKey = function (key) {
+  return shared[key] || (shared[key] = _uid(key));
+};
+
+var arrayIndexOf = _arrayIncludes(false);
+
+var IE_PROTO = _sharedKey('IE_PROTO');
+
+var _objectKeysInternal = function (object, names) {
+  var O = _toIobject(object);
+
+  var i = 0;
+  var result = [];
+  var key;
+
+  for (key in O) if (key != IE_PROTO) _has(O, key) && result.push(key); // Don't enum bug & hidden keys
+
+
+  while (names.length > i) if (_has(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+
+  return result;
+}; // IE 8- don't enum bug keys
+
+
+var _enumBugKeys = 'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'.split(',');
+
+var _objectKeys = Object.keys || function keys(O) {
+  return _objectKeysInternal(O, _enumBugKeys);
+};
+
+var f$2 = Object.getOwnPropertySymbols;
+var _objectGops = {
+  f: f$2
+};
+var f$3 = {}.propertyIsEnumerable;
+var _objectPie = {
+  f: f$3
+};
+
+var _enumKeys = function (it) {
+  var result = _objectKeys(it);
+
+  var getSymbols = _objectGops.f;
+
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = _objectPie.f;
+    var i = 0;
+    var key;
+
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  }
+
+  return result;
+};
+
+var _isArray = Array.isArray || function isArray(arg) {
+  return _cof(arg) == 'Array';
+};
+
+var _toObject = function (it) {
+  return Object(_defined(it));
+};
+
+var _objectDps = _descriptors ? Object.defineProperties : function defineProperties(O, Properties) {
+  _anObject(O);
+
+  var keys = _objectKeys(Properties);
+
+  var length = keys.length;
+  var i = 0;
+  var P;
+
+  while (length > i) _objectDp.f(O, P = keys[i++], Properties[P]);
+
+  return O;
+};
+
+var document$2 = _global.document;
+
+var _html = document$2 && document$2.documentElement;
+
+var IE_PROTO$1 = _sharedKey('IE_PROTO');
+
+var Empty = function () {
+  /* empty */
+};
+
+var PROTOTYPE$1 = 'prototype'; // Create object with fake `null` prototype: use iframe Object with cleared prototype
+
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = _domCreate('iframe');
+
+  var i = _enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+
+  _html.appendChild(iframe);
+
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+
+  while (i--) delete createDict[PROTOTYPE$1][_enumBugKeys[i]];
+
+  return createDict();
+};
+
+var _objectCreate = Object.create || function create(O, Properties) {
+  var result;
+
+  if (O !== null) {
+    Empty[PROTOTYPE$1] = _anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE$1] = null; // add "__proto__" for Object.getPrototypeOf polyfill
+
+    result[IE_PROTO$1] = O;
+  } else result = createDict();
+
+  return Properties === undefined ? result : _objectDps(result, Properties);
+};
+
+var hiddenKeys = _enumBugKeys.concat('length', 'prototype');
+
+var f$4 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return _objectKeysInternal(O, hiddenKeys);
+};
+
+var _objectGopn = {
+  f: f$4
+};
+var gOPN = _objectGopn.f;
+var toString$1 = {}.toString;
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return gOPN(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+
+var f$5 = function getOwnPropertyNames(it) {
+  return windowNames && toString$1.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(_toIobject(it));
+};
+
+var _objectGopnExt = {
+  f: f$5
+};
+var gOPD = Object.getOwnPropertyDescriptor;
+var f$6 = _descriptors ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = _toIobject(O);
+  P = _toPrimitive(P, true);
+  if (_ie8DomDefine) try {
+    return gOPD(O, P);
+  } catch (e) {
+    /* empty */
+  }
+  if (_has(O, P)) return _propertyDesc(!_objectPie.f.call(O, P), O[P]);
+};
+var _objectGopd = {
+  f: f$6
+};
+var META = _meta.KEY;
+var gOPD$1 = _objectGopd.f;
+var dP$1 = _objectDp.f;
+var gOPN$1 = _objectGopnExt.f;
+var $Symbol = _global.Symbol;
+var $JSON = _global.JSON;
+
+var _stringify = $JSON && $JSON.stringify;
+
+var PROTOTYPE$2 = 'prototype';
+
+var HIDDEN = _wks('_hidden');
+
+var TO_PRIMITIVE = _wks('toPrimitive');
+
+var isEnum = {}.propertyIsEnumerable;
+
+var SymbolRegistry = _shared('symbol-registry');
+
+var AllSymbols = _shared('symbols');
+
+var OPSymbols = _shared('op-symbols');
+
+var ObjectProto = Object[PROTOTYPE$2];
+var USE_NATIVE = typeof $Symbol == 'function' && !!_objectGops.f;
+var QObject = _global.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+
+var setter = !QObject || !QObject[PROTOTYPE$2] || !QObject[PROTOTYPE$2].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+
+var setSymbolDesc = _descriptors && _fails(function () {
+  return _objectCreate(dP$1({}, 'a', {
+    get: function () {
+      return dP$1(this, 'a', {
+        value: 7
+      }).a;
+    }
+  })).a != 7;
+}) ? function (it, key, D) {
+  var protoDesc = gOPD$1(ObjectProto, key);
+  if (protoDesc) delete ObjectProto[key];
+  dP$1(it, key, D);
+  if (protoDesc && it !== ObjectProto) dP$1(ObjectProto, key, protoDesc);
+} : dP$1;
+
+var wrap = function (tag) {
+  var sym = AllSymbols[tag] = _objectCreate($Symbol[PROTOTYPE$2]);
+
+  sym._k = tag;
+  return sym;
+};
+
+var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return it instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(it, key, D) {
+  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
+
+  _anObject(it);
+
+  key = _toPrimitive(key, true);
+
+  _anObject(D);
+
+  if (_has(AllSymbols, key)) {
+    if (!D.enumerable) {
+      if (!_has(it, HIDDEN)) dP$1(it, HIDDEN, _propertyDesc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if (_has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
+      D = _objectCreate(D, {
+        enumerable: _propertyDesc(0, false)
+      });
+    }
+
+    return setSymbolDesc(it, key, D);
+  }
+
+  return dP$1(it, key, D);
+};
+
+var $defineProperties = function defineProperties(it, P) {
+  _anObject(it);
+
+  var keys = _enumKeys(P = _toIobject(P));
+
+  var i = 0;
+  var l = keys.length;
+  var key;
+
+  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
+
+  return it;
+};
+
+var $create = function create(it, P) {
+  return P === undefined ? _objectCreate(it) : $defineProperties(_objectCreate(it), P);
+};
+
+var $propertyIsEnumerable = function propertyIsEnumerable(key) {
+  var E = isEnum.call(this, key = _toPrimitive(key, true));
+  if (this === ObjectProto && _has(AllSymbols, key) && !_has(OPSymbols, key)) return false;
+  return E || !_has(this, key) || !_has(AllSymbols, key) || _has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
+  it = _toIobject(it);
+  key = _toPrimitive(key, true);
+  if (it === ObjectProto && _has(AllSymbols, key) && !_has(OPSymbols, key)) return;
+  var D = gOPD$1(it, key);
+  if (D && _has(AllSymbols, key) && !(_has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
+  return D;
+};
+
+var $getOwnPropertyNames = function getOwnPropertyNames(it) {
+  var names = gOPN$1(_toIobject(it));
+  var result = [];
+  var i = 0;
+  var key;
+
+  while (names.length > i) {
+    if (!_has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
+  }
+
+  return result;
+};
+
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
+  var IS_OP = it === ObjectProto;
+  var names = gOPN$1(IS_OP ? OPSymbols : _toIobject(it));
+  var result = [];
+  var i = 0;
+  var key;
+
+  while (names.length > i) {
+    if (_has(AllSymbols, key = names[i++]) && (IS_OP ? _has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
+  }
+
+  return result;
+}; // 19.4.1.1 Symbol([description])
+
+
+if (!USE_NATIVE) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
+
+    var tag = _uid(arguments.length > 0 ? arguments[0] : undefined);
+
+    var $set = function (value) {
+      if (this === ObjectProto) $set.call(OPSymbols, value);
+      if (_has(this, HIDDEN) && _has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, _propertyDesc(1, value));
+    };
+
+    if (_descriptors && setter) setSymbolDesc(ObjectProto, tag, {
+      configurable: true,
+      set: $set
+    });
+    return wrap(tag);
+  };
+
+  _redefine($Symbol[PROTOTYPE$2], 'toString', function toString() {
+    return this._k;
+  });
+
+  _objectGopd.f = $getOwnPropertyDescriptor;
+  _objectDp.f = $defineProperty;
+  _objectGopn.f = _objectGopnExt.f = $getOwnPropertyNames;
+  _objectPie.f = $propertyIsEnumerable;
+  _objectGops.f = $getOwnPropertySymbols;
+
+  if (_descriptors && !_library) {
+    _redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+
+  _wksExt.f = function (name) {
+    return wrap(_wks(name));
+  };
+}
+
+_export(_export.G + _export.W + _export.F * !USE_NATIVE, {
+  Symbol: $Symbol
+});
+
+for (var es6Symbols = // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'.split(','), j = 0; es6Symbols.length > j;) _wks(es6Symbols[j++]);
+
+for (var wellKnownSymbols = _objectKeys(_wks.store), k = 0; wellKnownSymbols.length > k;) _wksDefine(wellKnownSymbols[k++]);
+
+_export(_export.S + _export.F * !USE_NATIVE, 'Symbol', {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function (key) {
+    return _has(SymbolRegistry, key += '') ? SymbolRegistry[key] : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
+
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
+  },
+  useSetter: function () {
+    setter = true;
+  },
+  useSimple: function () {
+    setter = false;
+  }
+});
+
+_export(_export.S + _export.F * !USE_NATIVE, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: $create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: $defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: $defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: $getOwnPropertySymbols
+}); // Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
+// https://bugs.chromium.org/p/v8/issues/detail?id=3443
+
+
+var FAILS_ON_PRIMITIVES = _fails(function () {
+  _objectGops.f(1);
+});
+
+_export(_export.S + _export.F * FAILS_ON_PRIMITIVES, 'Object', {
+  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
+    return _objectGops.f(_toObject(it));
+  }
+}); // 24.3.2 JSON.stringify(value [, replacer [, space]])
+
+
+$JSON && _export(_export.S + _export.F * (!USE_NATIVE || _fails(function () {
+  var S = $Symbol(); // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+
+  return _stringify([S]) != '[null]' || _stringify({
+    a: S
+  }) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it) {
+    var args = [it];
+    var i = 1;
+    var replacer, $replacer;
+
+    while (arguments.length > i) args.push(arguments[i++]);
+
+    $replacer = replacer = args[1];
+    if (!_isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
+
+    if (!_isArray(replacer)) replacer = function (key, value) {
+      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+      if (!isSymbol(value)) return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+}); // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+
+$Symbol[PROTOTYPE$2][TO_PRIMITIVE] || _hide($Symbol[PROTOTYPE$2], TO_PRIMITIVE, $Symbol[PROTOTYPE$2].valueOf); // 19.4.3.5 Symbol.prototype[@@toStringTag]
+
+_setToStringTag($Symbol, 'Symbol'); // 20.2.1.9 Math[@@toStringTag]
+
+
+_setToStringTag(Math, 'Math', true); // 24.3.3 JSON[@@toStringTag]
+
+
+_setToStringTag(_global.JSON, 'JSON', true);
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -38,80 +946,1084 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-var defineProperty = _defineProperty;
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
+  }
+
+  if (enumerableOnly) keys = keys.filter(function (sym) {
+    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+  });
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(source, true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(source).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
 
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
 
     return arr2;
   }
 }
 
-var arrayWithoutHoles = _arrayWithoutHoles;
-
 function _iterableToArray(iter) {
   if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
-
-var iterableToArray = _iterableToArray;
 
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-var nonIterableSpread = _nonIterableSpread;
+var _objectSap = function (KEY, exec) {
+  var fn = (_core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
 
-function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
-}
+  _export(_export.S + _export.F * _fails(function () {
+    fn(1);
+  }), 'Object', exp);
+};
 
-var toConsumableArray = _toConsumableArray;
-var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function commonjsRequire() {
-  throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
-}
-
-function createCommonjsModule(fn, module) {
-  return module = {
-    exports: {}
-  }, fn(module, module.exports), module.exports;
-}
-
-var _typeof_1 = createCommonjsModule(function (module) {
-  function _typeof2(obj) {
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof2 = function _typeof2(obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof2 = function _typeof2(obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof2(obj);
-  }
-
-  function _typeof(obj) {
-    if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-      module.exports = _typeof = function _typeof(obj) {
-        return _typeof2(obj);
-      };
-    } else {
-      module.exports = _typeof = function _typeof(obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
-      };
-    }
-
-    return _typeof(obj);
-  }
-
-  module.exports = _typeof;
+_objectSap('keys', function () {
+  return function keys(it) {
+    return _objectKeys(_toObject(it));
+  };
 });
+
+var _flags = function () {
+  var that = _anObject(this);
+
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
+};
+
+if (_descriptors && /./g.flags != 'g') _objectDp.f(RegExp.prototype, 'flags', {
+  configurable: true,
+  get: _flags
+});
+var TO_STRING = 'toString';
+var $toString = /./[TO_STRING];
+
+var define = function (fn) {
+  _redefine(RegExp.prototype, TO_STRING, fn, true);
+}; // 21.2.5.14 RegExp.prototype.toString()
+
+
+if (_fails(function () {
+  return $toString.call({
+    source: 'a',
+    flags: 'b'
+  }) != '/a/b';
+})) {
+  define(function toString() {
+    var R = _anObject(this);
+
+    return '/'.concat(R.source, '/', 'flags' in R ? R.flags : !_descriptors && R instanceof RegExp ? _flags.call(R) : undefined);
+  }); // FF44- RegExp#toString has a wrong name
+} else if ($toString.name != TO_STRING) {
+  define(function toString() {
+    return $toString.call(this);
+  });
+} // false -> String#codePointAt
+
+
+var _stringAt = function (TO_STRING) {
+  return function (that, pos) {
+    var s = String(_defined(that));
+
+    var i = _toInteger(pos);
+
+    var l = s.length;
+    var a, b;
+    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
+    a = s.charCodeAt(i);
+    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff ? TO_STRING ? s.charAt(i) : a : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+  };
+};
+
+var at = _stringAt(true); // `AdvanceStringIndex` abstract operation
+// https://tc39.github.io/ecma262/#sec-advancestringindex
+
+
+var _advanceStringIndex = function (S, index, unicode) {
+  return index + (unicode ? at(S, index).length : 1);
+};
+
+var TAG$1 = _wks('toStringTag'); // ES3 wrong here
+
+
+var ARG = _cof(function () {
+  return arguments;
+}()) == 'Arguments'; // fallback for IE11 Script Access Denied error
+
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (e) {
+    /* empty */
+  }
+};
+
+var _classof = function (it) {
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
+  : typeof (T = tryGet(O = Object(it), TAG$1)) == 'string' ? T // builtinTag case
+  : ARG ? _cof(O) // ES3 arguments fallback
+  : (B = _cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+
+var builtinExec = RegExp.prototype.exec; // `RegExpExec` abstract operation
+// https://tc39.github.io/ecma262/#sec-regexpexec
+
+var _regexpExecAbstract = function (R, S) {
+  var exec = R.exec;
+
+  if (typeof exec === 'function') {
+    var result = exec.call(R, S);
+
+    if (typeof result !== 'object') {
+      throw new TypeError('RegExp exec method returned something other than an Object or null');
+    }
+
+    return result;
+  }
+
+  if (_classof(R) !== 'RegExp') {
+    throw new TypeError('RegExp#exec called on incompatible receiver');
+  }
+
+  return builtinExec.call(R, S);
+};
+
+var nativeExec = RegExp.prototype.exec; // This always refers to the native implementation, because the
+// String#replace polyfill uses ./fix-regexp-well-known-symbol-logic.js,
+// which loads this file before patching the method.
+
+var nativeReplace = String.prototype.replace;
+var patchedExec = nativeExec;
+var LAST_INDEX = 'lastIndex';
+
+var UPDATES_LAST_INDEX_WRONG = function () {
+  var re1 = /a/,
+      re2 = /b*/g;
+  nativeExec.call(re1, 'a');
+  nativeExec.call(re2, 'a');
+  return re1[LAST_INDEX] !== 0 || re2[LAST_INDEX] !== 0;
+}(); // nonparticipating capturing group, copied from es5-shim's String#split patch.
+
+
+var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED;
+
+if (PATCH) {
+  patchedExec = function exec(str) {
+    var re = this;
+    var lastIndex, reCopy, match, i;
+
+    if (NPCG_INCLUDED) {
+      reCopy = new RegExp('^' + re.source + '$(?!\\s)', _flags.call(re));
+    }
+
+    if (UPDATES_LAST_INDEX_WRONG) lastIndex = re[LAST_INDEX];
+    match = nativeExec.call(re, str);
+
+    if (UPDATES_LAST_INDEX_WRONG && match) {
+      re[LAST_INDEX] = re.global ? match.index + match[0].length : lastIndex;
+    }
+
+    if (NPCG_INCLUDED && match && match.length > 1) {
+      // Fix browsers whose `exec` methods don't consistently return `undefined`
+      // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+      // eslint-disable-next-line no-loop-func
+      nativeReplace.call(match[0], reCopy, function () {
+        for (i = 1; i < arguments.length - 2; i++) {
+          if (arguments[i] === undefined) match[i] = undefined;
+        }
+      });
+    }
+
+    return match;
+  };
+}
+
+var _regexpExec = patchedExec;
+
+_export({
+  target: 'RegExp',
+  proto: true,
+  forced: _regexpExec !== /./.exec
+}, {
+  exec: _regexpExec
+});
+
+var SPECIES = _wks('species');
+
+var REPLACE_SUPPORTS_NAMED_GROUPS = !_fails(function () {
+  // #replace needs built-in support for named groups.
+  // #match works fine because it just return the exec results, even if it has
+  // a "grops" property.
+  var re = /./;
+
+  re.exec = function () {
+    var result = [];
+    result.groups = {
+      a: '7'
+    };
+    return result;
+  };
+
+  return ''.replace(re, '$<a>') !== '7';
+});
+
+var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = function () {
+  // Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+  var re = /(?:)/;
+  var originalExec = re.exec;
+
+  re.exec = function () {
+    return originalExec.apply(this, arguments);
+  };
+
+  var result = 'ab'.split(re);
+  return result.length === 2 && result[0] === 'a' && result[1] === 'b';
+}();
+
+var _fixReWks = function (KEY, length, exec) {
+  var SYMBOL = _wks(KEY);
+
+  var DELEGATES_TO_SYMBOL = !_fails(function () {
+    // String methods call symbol-named RegEp methods
+    var O = {};
+
+    O[SYMBOL] = function () {
+      return 7;
+    };
+
+    return ''[KEY](O) != 7;
+  });
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL ? !_fails(function () {
+    // Symbol-named RegExp methods call .exec
+    var execCalled = false;
+    var re = /a/;
+
+    re.exec = function () {
+      execCalled = true;
+      return null;
+    };
+
+    if (KEY === 'split') {
+      // RegExp[@@split] doesn't call the regex's exec method, but first creates
+      // a new one. We need to return the patched regex when creating the new one.
+      re.constructor = {};
+
+      re.constructor[SPECIES] = function () {
+        return re;
+      };
+    }
+
+    re[SYMBOL]('');
+    return !execCalled;
+  }) : undefined;
+
+  if (!DELEGATES_TO_SYMBOL || !DELEGATES_TO_EXEC || KEY === 'replace' && !REPLACE_SUPPORTS_NAMED_GROUPS || KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC) {
+    var nativeRegExpMethod = /./[SYMBOL];
+    var fns = exec(_defined, SYMBOL, ''[KEY], function maybeCallNative(nativeMethod, regexp, str, arg2, forceStringMethod) {
+      if (regexp.exec === _regexpExec) {
+        if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+          // The native String method already delegates to @@method (this
+          // polyfilled function), leasing to infinite recursion.
+          // We avoid it by directly calling the native @@method method.
+          return {
+            done: true,
+            value: nativeRegExpMethod.call(regexp, str, arg2)
+          };
+        }
+
+        return {
+          done: true,
+          value: nativeMethod.call(str, regexp, arg2)
+        };
+      }
+
+      return {
+        done: false
+      };
+    });
+    var strfn = fns[0];
+    var rxfn = fns[1];
+
+    _redefine(String.prototype, KEY, strfn);
+
+    _hide(RegExp.prototype, SYMBOL, length == 2 // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+    // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+    ? function (string, arg) {
+      return rxfn.call(string, this, arg);
+    } // 21.2.5.6 RegExp.prototype[@@match](string)
+    // 21.2.5.9 RegExp.prototype[@@search](string)
+    : function (string) {
+      return rxfn.call(string, this);
+    });
+  }
+};
+
+var max$1 = Math.max;
+var min$2 = Math.min;
+var floor$1 = Math.floor;
+var SUBSTITUTION_SYMBOLS = /\$([$&`']|\d\d?|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&`']|\d\d?)/g;
+
+var maybeToString = function (it) {
+  return it === undefined ? it : String(it);
+}; // @@replace logic
+
+
+_fixReWks('replace', 2, function (defined, REPLACE, $replace, maybeCallNative) {
+  return [// `String.prototype.replace` method
+  // https://tc39.github.io/ecma262/#sec-string.prototype.replace
+  function replace(searchValue, replaceValue) {
+    var O = defined(this);
+    var fn = searchValue == undefined ? undefined : searchValue[REPLACE];
+    return fn !== undefined ? fn.call(searchValue, O, replaceValue) : $replace.call(String(O), searchValue, replaceValue);
+  }, // `RegExp.prototype[@@replace]` method
+  // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@replace
+  function (regexp, replaceValue) {
+    var res = maybeCallNative($replace, regexp, this, replaceValue);
+    if (res.done) return res.value;
+
+    var rx = _anObject(regexp);
+
+    var S = String(this);
+    var functionalReplace = typeof replaceValue === 'function';
+    if (!functionalReplace) replaceValue = String(replaceValue);
+    var global = rx.global;
+
+    if (global) {
+      var fullUnicode = rx.unicode;
+      rx.lastIndex = 0;
+    }
+
+    var results = [];
+
+    while (true) {
+      var result = _regexpExecAbstract(rx, S);
+
+      if (result === null) break;
+      results.push(result);
+      if (!global) break;
+      var matchStr = String(result[0]);
+      if (matchStr === '') rx.lastIndex = _advanceStringIndex(S, _toLength(rx.lastIndex), fullUnicode);
+    }
+
+    var accumulatedResult = '';
+    var nextSourcePosition = 0;
+
+    for (var i = 0; i < results.length; i++) {
+      result = results[i];
+      var matched = String(result[0]);
+      var position = max$1(min$2(_toInteger(result.index), S.length), 0);
+      var captures = []; // NOTE: This is equivalent to
+      //   captures = result.slice(1).map(maybeToString)
+      // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+      // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+      // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+
+      for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
+
+      var namedCaptures = result.groups;
+
+      if (functionalReplace) {
+        var replacerArgs = [matched].concat(captures, position, S);
+        if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+        var replacement = String(replaceValue.apply(undefined, replacerArgs));
+      } else {
+        replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+      }
+
+      if (position >= nextSourcePosition) {
+        accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+        nextSourcePosition = position + matched.length;
+      }
+    }
+
+    return accumulatedResult + S.slice(nextSourcePosition);
+  }]; // https://tc39.github.io/ecma262/#sec-getsubstitution
+
+  function getSubstitution(matched, str, position, captures, namedCaptures, replacement) {
+    var tailPos = position + matched.length;
+    var m = captures.length;
+    var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+
+    if (namedCaptures !== undefined) {
+      namedCaptures = _toObject(namedCaptures);
+      symbols = SUBSTITUTION_SYMBOLS;
+    }
+
+    return $replace.call(replacement, symbols, function (match, ch) {
+      var capture;
+
+      switch (ch.charAt(0)) {
+        case '$':
+          return '$';
+
+        case '&':
+          return matched;
+
+        case '`':
+          return str.slice(0, position);
+
+        case "'":
+          return str.slice(tailPos);
+
+        case '<':
+          capture = namedCaptures[ch.slice(1, -1)];
+          break;
+
+        default:
+          // \d\d?
+          var n = +ch;
+          if (n === 0) return match;
+
+          if (n > m) {
+            var f = floor$1(n / 10);
+            if (f === 0) return match;
+            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+            return match;
+          }
+
+          capture = captures[n - 1];
+      }
+
+      return capture === undefined ? '' : capture;
+    });
+  }
+});
+
+var UNSCOPABLES = _wks('unscopables');
+
+var ArrayProto = Array.prototype;
+if (ArrayProto[UNSCOPABLES] == undefined) _hide(ArrayProto, UNSCOPABLES, {});
+
+var _addToUnscopables = function (key) {
+  ArrayProto[UNSCOPABLES][key] = true;
+};
+
+var _iterStep = function (done, value) {
+  return {
+    value: value,
+    done: !!done
+  };
+};
+
+var _iterators = {};
+var IteratorPrototype = {}; // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+
+_hide(IteratorPrototype, _wks('iterator'), function () {
+  return this;
+});
+
+var _iterCreate = function (Constructor, NAME, next) {
+  Constructor.prototype = _objectCreate(IteratorPrototype, {
+    next: _propertyDesc(1, next)
+  });
+
+  _setToStringTag(Constructor, NAME + ' Iterator');
+};
+
+var IE_PROTO$2 = _sharedKey('IE_PROTO');
+
+var ObjectProto$1 = Object.prototype;
+
+var _objectGpo = Object.getPrototypeOf || function (O) {
+  O = _toObject(O);
+  if (_has(O, IE_PROTO$2)) return O[IE_PROTO$2];
+
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  }
+
+  return O instanceof Object ? ObjectProto$1 : null;
+};
+
+var ITERATOR = _wks('iterator');
+
+var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
+
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+
+var returnThis = function () {
+  return this;
+};
+
+var _iterDefine = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  _iterCreate(Constructor, NAME, next);
+
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+
+    switch (kind) {
+      case KEYS:
+        return function keys() {
+          return new Constructor(this, kind);
+        };
+
+      case VALUES:
+        return function values() {
+          return new Constructor(this, kind);
+        };
+    }
+
+    return function entries() {
+      return new Constructor(this, kind);
+    };
+  };
+
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = $native || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype; // Fix native
+
+  if ($anyNative) {
+    IteratorPrototype = _objectGpo($anyNative.call(new Base()));
+
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      // Set @@toStringTag to native iterators
+      _setToStringTag(IteratorPrototype, TAG, true); // fix for some old engines
+
+
+      if (typeof IteratorPrototype[ITERATOR] != 'function') _hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  } // fix Array#{values, @@iterator}.name in V8 / FF
+
+
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+
+    $default = function values() {
+      return $native.call(this);
+    };
+  } // Define iterator
+
+
+  if (BUGGY || VALUES_BUG || !proto[ITERATOR]) {
+    _hide(proto, ITERATOR, $default);
+  } // Plug for library
+
+
+  _iterators[NAME] = $default;
+  _iterators[TAG] = returnThis;
+
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) _redefine(proto, key, methods[key]);
+    } else _export(_export.P + _export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+
+  return methods;
+}; // 22.1.3.13 Array.prototype.keys()
+// 22.1.3.29 Array.prototype.values()
+// 22.1.3.30 Array.prototype[@@iterator]()
+
+
+var es6_array_iterator = _iterDefine(Array, 'Array', function (iterated, kind) {
+  this._t = _toIobject(iterated); // target
+
+  this._i = 0; // next index
+
+  this._k = kind; // kind
+  // 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var kind = this._k;
+  var index = this._i++;
+
+  if (!O || index >= O.length) {
+    this._t = undefined;
+    return _iterStep(1);
+  }
+
+  if (kind == 'keys') return _iterStep(0, index);
+  if (kind == 'values') return _iterStep(0, O[index]);
+  return _iterStep(0, [index, O[index]]);
+}, 'values'); // argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+
+
+_iterators.Arguments = _iterators.Array;
+
+_addToUnscopables('keys');
+
+_addToUnscopables('values');
+
+_addToUnscopables('entries');
+
+var ITERATOR$1 = _wks('iterator');
+
+var TO_STRING_TAG = _wks('toStringTag');
+
+var ArrayValues = _iterators.Array;
+var DOMIterables = {
+  CSSRuleList: true,
+  // TODO: Not spec compliant, should be false.
+  CSSStyleDeclaration: false,
+  CSSValueList: false,
+  ClientRectList: false,
+  DOMRectList: false,
+  DOMStringList: false,
+  DOMTokenList: true,
+  DataTransferItemList: false,
+  FileList: false,
+  HTMLAllCollection: false,
+  HTMLCollection: false,
+  HTMLFormElement: false,
+  HTMLSelectElement: false,
+  MediaList: true,
+  // TODO: Not spec compliant, should be false.
+  MimeTypeArray: false,
+  NamedNodeMap: false,
+  NodeList: true,
+  PaintRequestList: false,
+  Plugin: false,
+  PluginArray: false,
+  SVGLengthList: false,
+  SVGNumberList: false,
+  SVGPathSegList: false,
+  SVGPointList: false,
+  SVGStringList: false,
+  SVGTransformList: false,
+  SourceBufferList: false,
+  StyleSheetList: true,
+  // TODO: Not spec compliant, should be false.
+  TextTrackCueList: false,
+  TextTrackList: false,
+  TouchList: false
+};
+
+for (var collections = _objectKeys(DOMIterables), i = 0; i < collections.length; i++) {
+  var NAME = collections[i];
+  var explicit = DOMIterables[NAME];
+  var Collection = _global[NAME];
+  var proto = Collection && Collection.prototype;
+  var key;
+
+  if (proto) {
+    if (!proto[ITERATOR$1]) _hide(proto, ITERATOR$1, ArrayValues);
+    if (!proto[TO_STRING_TAG]) _hide(proto, TO_STRING_TAG, NAME);
+    _iterators[NAME] = ArrayValues;
+    if (explicit) for (key in es6_array_iterator) if (!proto[key]) _redefine(proto, key, es6_array_iterator[key], true);
+  }
+}
+
+var test = {};
+test[_wks('toStringTag')] = 'z';
+
+if (test + '' != '[object z]') {
+  _redefine(Object.prototype, 'toString', function toString() {
+    return '[object ' + _classof(this) + ']';
+  }, true);
+}
+
+var isEnum$1 = _objectPie.f;
+
+var _objectToArray = function (isEntries) {
+  return function (it) {
+    var O = _toIobject(it);
+
+    var keys = _objectKeys(O);
+
+    var length = keys.length;
+    var i = 0;
+    var result = [];
+    var key;
+
+    while (length > i) {
+      key = keys[i++];
+
+      if (!_descriptors || isEnum$1.call(O, key)) {
+        result.push(isEntries ? [key, O[key]] : O[key]);
+      }
+    }
+
+    return result;
+  };
+};
+
+var $values = _objectToArray(false);
+
+_export(_export.S, 'Object', {
+  values: function values(it) {
+    return $values(it);
+  }
+});
+
+var MATCH = _wks('match');
+
+var _isRegexp = function (it) {
+  var isRegExp;
+  return _isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : _cof(it) == 'RegExp');
+};
+
+var SPECIES$1 = _wks('species');
+
+var _speciesConstructor = function (O, D) {
+  var C = _anObject(O).constructor;
+
+  var S;
+  return C === undefined || (S = _anObject(C)[SPECIES$1]) == undefined ? D : _aFunction(S);
+};
+
+var $min = Math.min;
+var $push = [].push;
+var $SPLIT = 'split';
+var LENGTH = 'length';
+var LAST_INDEX$1 = 'lastIndex';
+var MAX_UINT32 = 0xffffffff; // babel-minify transpiles RegExp('x', 'y') -> /x/y and it causes SyntaxError
+
+var SUPPORTS_Y = !_fails(function () {
+  RegExp(MAX_UINT32, 'y');
+}); // @@split logic
+
+_fixReWks('split', 2, function (defined, SPLIT, $split, maybeCallNative) {
+  var internalSplit;
+
+  if ('abbc'[$SPLIT](/(b)*/)[1] == 'c' || 'test'[$SPLIT](/(?:)/, -1)[LENGTH] != 4 || 'ab'[$SPLIT](/(?:ab)*/)[LENGTH] != 2 || '.'[$SPLIT](/(.?)(.?)/)[LENGTH] != 4 || '.'[$SPLIT](/()()/)[LENGTH] > 1 || ''[$SPLIT](/.?/)[LENGTH]) {
+    // based on es5-shim implementation, need to rework it
+    internalSplit = function (separator, limit) {
+      var string = String(this);
+      if (separator === undefined && limit === 0) return []; // If `separator` is not a regex, use native split
+
+      if (!_isRegexp(separator)) return $split.call(string, separator, limit);
+      var output = [];
+      var flags = (separator.ignoreCase ? 'i' : '') + (separator.multiline ? 'm' : '') + (separator.unicode ? 'u' : '') + (separator.sticky ? 'y' : '');
+      var lastLastIndex = 0;
+      var splitLimit = limit === undefined ? MAX_UINT32 : limit >>> 0; // Make `global` and avoid `lastIndex` issues by working with a copy
+
+      var separatorCopy = new RegExp(separator.source, flags + 'g');
+      var match, lastIndex, lastLength;
+
+      while (match = _regexpExec.call(separatorCopy, string)) {
+        lastIndex = separatorCopy[LAST_INDEX$1];
+
+        if (lastIndex > lastLastIndex) {
+          output.push(string.slice(lastLastIndex, match.index));
+          if (match[LENGTH] > 1 && match.index < string[LENGTH]) $push.apply(output, match.slice(1));
+          lastLength = match[0][LENGTH];
+          lastLastIndex = lastIndex;
+          if (output[LENGTH] >= splitLimit) break;
+        }
+
+        if (separatorCopy[LAST_INDEX$1] === match.index) separatorCopy[LAST_INDEX$1]++; // Avoid an infinite loop
+      }
+
+      if (lastLastIndex === string[LENGTH]) {
+        if (lastLength || !separatorCopy.test('')) output.push('');
+      } else output.push(string.slice(lastLastIndex));
+
+      return output[LENGTH] > splitLimit ? output.slice(0, splitLimit) : output;
+    }; // Chakra, V8
+
+  } else if ('0'[$SPLIT](undefined, 0)[LENGTH]) {
+    internalSplit = function (separator, limit) {
+      return separator === undefined && limit === 0 ? [] : $split.call(this, separator, limit);
+    };
+  } else {
+    internalSplit = $split;
+  }
+
+  return [// `String.prototype.split` method
+  // https://tc39.github.io/ecma262/#sec-string.prototype.split
+  function split(separator, limit) {
+    var O = defined(this);
+    var splitter = separator == undefined ? undefined : separator[SPLIT];
+    return splitter !== undefined ? splitter.call(separator, O, limit) : internalSplit.call(String(O), separator, limit);
+  }, // `RegExp.prototype[@@split]` method
+  // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@split
+  //
+  // NOTE: This cannot be properly polyfilled in engines that don't support
+  // the 'y' flag.
+  function (regexp, limit) {
+    var res = maybeCallNative(internalSplit, regexp, this, limit, internalSplit !== $split);
+    if (res.done) return res.value;
+
+    var rx = _anObject(regexp);
+
+    var S = String(this);
+
+    var C = _speciesConstructor(rx, RegExp);
+
+    var unicodeMatching = rx.unicode;
+    var flags = (rx.ignoreCase ? 'i' : '') + (rx.multiline ? 'm' : '') + (rx.unicode ? 'u' : '') + (SUPPORTS_Y ? 'y' : 'g'); // ^(? + rx + ) is needed, in combination with some S slicing, to
+    // simulate the 'y' flag.
+
+    var splitter = new C(SUPPORTS_Y ? rx : '^(?:' + rx.source + ')', flags);
+    var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
+    if (lim === 0) return [];
+    if (S.length === 0) return _regexpExecAbstract(splitter, S) === null ? [S] : [];
+    var p = 0;
+    var q = 0;
+    var A = [];
+
+    while (q < S.length) {
+      splitter.lastIndex = SUPPORTS_Y ? q : 0;
+
+      var z = _regexpExecAbstract(splitter, SUPPORTS_Y ? S : S.slice(q));
+
+      var e;
+
+      if (z === null || (e = $min(_toLength(splitter.lastIndex + (SUPPORTS_Y ? 0 : q)), S.length)) === p) {
+        q = _advanceStringIndex(S, q, unicodeMatching);
+      } else {
+        A.push(S.slice(p, q));
+        if (A.length === lim) return A;
+
+        for (var i = 1; i <= z.length - 1; i++) {
+          A.push(z[i]);
+          if (A.length === lim) return A;
+        }
+
+        q = p = e;
+      }
+    }
+
+    A.push(S.slice(p));
+    return A;
+  }];
+});
+
+var $assign = Object.assign; // should work with symbols and should have deterministic property order (V8 bug)
+
+var _objectAssign = !$assign || _fails(function () {
+  var A = {};
+  var B = {}; // eslint-disable-next-line no-undef
+
+  var S = Symbol();
+  var K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function (k) {
+    B[k] = k;
+  });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source) {
+  // eslint-disable-line no-unused-vars
+  var T = _toObject(target);
+
+  var aLen = arguments.length;
+  var index = 1;
+  var getSymbols = _objectGops.f;
+  var isEnum = _objectPie.f;
+
+  while (aLen > index) {
+    var S = _iobject(arguments[index++]);
+
+    var keys = getSymbols ? _objectKeys(S).concat(getSymbols(S)) : _objectKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+
+    while (length > j) {
+      key = keys[j++];
+      if (!_descriptors || isEnum.call(S, key)) T[key] = S[key];
+    }
+  }
+
+  return T;
+} : $assign;
+
+_export(_export.S + _export.F, 'Object', {
+  assign: _objectAssign
+});
+/* eslint-disable no-proto */
+
+
+var check = function (O, proto) {
+  _anObject(O);
+
+  if (!_isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+
+var _setProto = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+  function (test, buggy, set) {
+    try {
+      set = _ctx(Function.call, _objectGopd.f(Object.prototype, '__proto__').set, 2);
+      set(test, []);
+      buggy = !(test instanceof Array);
+    } catch (e) {
+      buggy = true;
+    }
+
+    return function setPrototypeOf(O, proto) {
+      check(O, proto);
+      if (buggy) O.__proto__ = proto;else set(O, proto);
+      return O;
+    };
+  }({}, false) : undefined),
+  check: check
+};
+var setPrototypeOf = _setProto.set;
+
+var _inheritIfRequired = function (that, target, C) {
+  var S = target.constructor;
+  var P;
+
+  if (S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && _isObject(P) && setPrototypeOf) {
+    setPrototypeOf(that, P);
+  }
+
+  return that;
+};
+
+var _stringWs = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' + '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+var space = '[' + _stringWs + ']';
+var non = '\u200b\u0085';
+var ltrim = RegExp('^' + space + space + '*');
+var rtrim = RegExp(space + space + '*$');
+
+var exporter = function (KEY, exec, ALIAS) {
+  var exp = {};
+
+  var FORCE = _fails(function () {
+    return !!_stringWs[KEY]() || non[KEY]() != non;
+  });
+
+  var fn = exp[KEY] = FORCE ? exec(trim) : _stringWs[KEY];
+  if (ALIAS) exp[ALIAS] = fn;
+
+  _export(_export.P + _export.F * FORCE, 'String', exp);
+}; // 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+
+
+var trim = exporter.trim = function (string, TYPE) {
+  string = String(_defined(string));
+  if (TYPE & 1) string = string.replace(ltrim, '');
+  if (TYPE & 2) string = string.replace(rtrim, '');
+  return string;
+};
+
+var _stringTrim = exporter;
+var gOPN$2 = _objectGopn.f;
+var gOPD$2 = _objectGopd.f;
+var dP$2 = _objectDp.f;
+var $trim = _stringTrim.trim;
+var NUMBER = 'Number';
+var $Number = _global[NUMBER];
+var Base = $Number;
+var proto$1 = $Number.prototype; // Opera ~12 has broken Object#toString
+
+var BROKEN_COF = _cof(_objectCreate(proto$1)) == NUMBER;
+var TRIM = 'trim' in String.prototype; // 7.1.3 ToNumber(argument)
+
+var toNumber = function (argument) {
+  var it = _toPrimitive(argument, false);
+
+  if (typeof it == 'string' && it.length > 2) {
+    it = TRIM ? it.trim() : $trim(it, 3);
+    var first = it.charCodeAt(0);
+    var third, radix, maxCode;
+
+    if (first === 43 || first === 45) {
+      third = it.charCodeAt(2);
+      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
+    } else if (first === 48) {
+      switch (it.charCodeAt(1)) {
+        case 66:
+        case 98:
+          radix = 2;
+          maxCode = 49;
+          break;
+        // fast equal /^0b[01]+$/i
+
+        case 79:
+        case 111:
+          radix = 8;
+          maxCode = 55;
+          break;
+        // fast equal /^0o[0-7]+$/i
+
+        default:
+          return +it;
+      }
+
+      for (var digits = it.slice(2), i = 0, l = digits.length, code; i < l; i++) {
+        code = digits.charCodeAt(i); // parseInt parses a string to a first unavailable symbol
+        // but ToNumber should return NaN if a string contains unavailable symbols
+
+        if (code < 48 || code > maxCode) return NaN;
+      }
+
+      return parseInt(digits, radix);
+    }
+  }
+
+  return +it;
+};
+
+if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
+  $Number = function Number(value) {
+    var it = arguments.length < 1 ? 0 : value;
+    var that = this;
+    return that instanceof $Number // check on 1..constructor(foo) case
+    && (BROKEN_COF ? _fails(function () {
+      proto$1.valueOf.call(that);
+    }) : _cof(that) != NUMBER) ? _inheritIfRequired(new Base(toNumber(it)), that, $Number) : toNumber(it);
+  };
+
+  for (var keys = _descriptors ? gOPN$2(Base) : ( // ES3:
+  'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' + // ES6 (in case, if modules with ES6 Number statics required before):
+  'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' + 'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger').split(','), j$1 = 0, key$1; keys.length > j$1; j$1++) {
+    if (_has(Base, key$1 = keys[j$1]) && !_has($Number, key$1)) {
+      dP$2($Number, key$1, gOPD$2(Base, key$1));
+    }
+  }
+
+  $Number.prototype = proto$1;
+  proto$1.constructor = $Number;
+
+  _redefine(_global, NUMBER, $Number);
+}
 
 var moment = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
@@ -4696,8 +6608,8 @@ var moment = createCommonjsModule(function (module, exports) {
 
 var byteToHex = [];
 
-for (var i = 0; i < 256; i++) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+for (var i$1 = 0; i$1 < 256; i$1++) {
+  byteToHex[i$1] = (i$1 + 0x100).toString(16).substr(1);
 }
 /**
  * Represent binary UUID into it's string representation.
@@ -4761,8 +6673,8 @@ var random = function () {
 
 var byteToHex$1 = [];
 
-for (var i$1 = 0; i$1 < 256; i$1++) {
-  byteToHex$1[i$1] = (i$1 + 0x100).toString(16).substr(1);
+for (var i$1$1 = 0; i$1$1 < 256; i$1$1++) {
+  byteToHex$1[i$1$1] = (i$1$1 + 0x100).toString(16).substr(1);
 } // **`v1()` - Generate time-based UUID**
 //
 // Inspired by https://github.com/LiosK/UUID.js
@@ -4816,47 +6728,16 @@ function uuid4() {
 
   return buf || stringifyUUID(rnds);
 } // Rollup will complain about mixing default and named exports in UMD build,
-
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
-  }
-
-  if (enumerableOnly) keys = keys.filter(function (sym) {
-    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-  });
-  return keys;
-}
-
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
-        defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(source).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-} // for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
+// for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
 // code from http://momentjs.com/
 
 
-var ASPDateRegex = /^\/?Date\((-?\d+)/i; // Hex color
+var ASPDateRegex = /^\/?Date\((-?\d+)/i; // Color REs
 
 var fullHexRE = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 var shortHexRE = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+var rgbRE = /^rgb\( *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *\)$/i;
+var rgbaRE = /^rgba\( *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *([01]|0?\.\d+) *\)$/i;
 /**
  * Hue, Saturation, Value.
  */
@@ -4870,7 +6751,7 @@ var shortHexRE = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
  */
 
 function isNumber(value) {
-  return value instanceof Number || typeof value === 'number';
+  return value instanceof Number || typeof value === "number";
 }
 /**
  * Remove everything in the DOM object
@@ -4901,7 +6782,7 @@ function recursiveDOMDelete(DOMobject) {
 
 
 function isString(value) {
-  return value instanceof String || typeof value === 'string';
+  return value instanceof String || typeof value === "string";
 }
 /**
  * Test whether given object is a object (not primitive or null).
@@ -4913,7 +6794,7 @@ function isString(value) {
 
 
 function isObject(value) {
-  return _typeof_1(value) === 'object' && value !== null;
+  return _typeof(value) === "object" && value !== null;
 }
 /**
  * Test whether given object is a Date, or a String containing a Date
@@ -4997,7 +6878,7 @@ function fillIfDefined(a, b) {
 
   for (var prop in a) {
     if (b[prop] !== undefined) {
-      if (b[prop] === null || _typeof_1(b[prop]) !== 'object') {
+      if (b[prop] === null || _typeof(b[prop]) !== "object") {
         // Note: typeof null === 'object'
         copyOrDelete(a, b, prop, allowDeletion);
       } else {
@@ -5036,7 +6917,7 @@ var extend = Object.assign;
 
 function selectiveExtend(props, a) {
   if (!Array.isArray(props)) {
-    throw new Error('Array with property names expected as first argument');
+    throw new Error("Array with property names expected as first argument");
   }
 
   for (var _len = arguments.length, others = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -5079,7 +6960,7 @@ function selectiveDeepExtend(props, a, b) {
   var allowDeletion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false; // TODO: add support for Arrays to deepExtend
 
   if (Array.isArray(b)) {
-    throw new TypeError('Arrays are not supported by deepExtend');
+    throw new TypeError("Arrays are not supported by deepExtend");
   }
 
   for (var p = 0; p < props.length; p++) {
@@ -5097,7 +6978,7 @@ function selectiveDeepExtend(props, a, b) {
           copyOrDelete(a, b, prop, allowDeletion);
         }
       } else if (Array.isArray(b[prop])) {
-        throw new TypeError('Arrays are not supported by deepExtend');
+        throw new TypeError("Arrays are not supported by deepExtend");
       } else {
         copyOrDelete(a, b, prop, allowDeletion);
       }
@@ -5128,7 +7009,7 @@ function selectiveNotDeepExtend(propsToExclude, a, b) {
   // NOTE: array properties have an else-below; apparently, there is a problem here.
 
   if (Array.isArray(b)) {
-    throw new TypeError('Arrays are not supported by deepExtend');
+    throw new TypeError("Arrays are not supported by deepExtend");
   }
 
   for (var prop in b) {
@@ -5184,22 +7065,16 @@ function deepExtend(a, b) {
 
   for (var prop in b) {
     if (Object.prototype.hasOwnProperty.call(b, prop) || protoExtend === true) {
-      if (b[prop] && b[prop].constructor === Object) {
+      if (b[prop] && Object.getPrototypeOf(b[prop]) === Object.prototype) {
         if (a[prop] === undefined) {
-          a[prop] = {};
-        }
-
-        if (a[prop].constructor === Object) {
+          a[prop] = deepExtend({}, b[prop], protoExtend); // NOTE: allowDeletion not propagated!
+        } else if (a[prop] && Object.getPrototypeOf(a[prop]) === Object.prototype) {
           deepExtend(a[prop], b[prop], protoExtend); // NOTE: allowDeletion not propagated!
         } else {
           copyOrDelete(a, b, prop, allowDeletion);
         }
       } else if (Array.isArray(b[prop])) {
-        a[prop] = [];
-
-        for (var i = 0; i < b[prop].length; i++) {
-          a[prop].push(b[prop][i]);
-        }
+        a[prop] = b[prop].slice();
       } else {
         copyOrDelete(a, b, prop, allowDeletion);
       }
@@ -5257,18 +7132,18 @@ function convert(object, type) {
     return object;
   }
 
-  if (!(typeof type === 'string') && !(type instanceof String)) {
-    throw new Error('Type must be a string');
+  if (!(typeof type === "string") && !(type instanceof String)) {
+    throw new Error("Type must be a string");
   } //noinspection FallthroughInSwitchStatementJS
 
 
   switch (type) {
-    case 'boolean':
-    case 'Boolean':
+    case "boolean":
+    case "Boolean":
       return Boolean(object);
 
-    case 'number':
-    case 'Number':
+    case "number":
+    case "Number":
       if (isString(object) && !isNaN(Date.parse(object))) {
         return moment(object).valueOf();
       } else {
@@ -5278,11 +7153,11 @@ function convert(object, type) {
         return Number(object.valueOf());
       }
 
-    case 'string':
-    case 'String':
+    case "string":
+    case "String":
       return String(object);
 
-    case 'Date':
+    case "Date":
       if (isNumber(object)) {
         return new Date(object);
       }
@@ -5303,10 +7178,10 @@ function convert(object, type) {
           return moment(new Date(object)).toDate(); // parse string
         }
       } else {
-        throw new Error('Cannot convert object of type ' + getType(object) + ' to type Date');
+        throw new Error("Cannot convert object of type " + getType(object) + " to type Date");
       }
 
-    case 'Moment':
+    case "Moment":
       if (isNumber(object)) {
         return moment(object);
       }
@@ -5327,10 +7202,10 @@ function convert(object, type) {
           return moment(object); // parse string
         }
       } else {
-        throw new Error('Cannot convert object of type ' + getType(object) + ' to type Date');
+        throw new Error("Cannot convert object of type " + getType(object) + " to type Date");
       }
 
-    case 'ISODate':
+    case "ISODate":
       if (isNumber(object)) {
         return new Date(object);
       } else if (object instanceof Date) {
@@ -5347,14 +7222,14 @@ function convert(object, type) {
           return moment(object).format(); // ISO 8601
         }
       } else {
-        throw new Error('Cannot convert object of type ' + getType(object) + ' to type ISODate');
+        throw new Error("Cannot convert object of type " + getType(object) + " to type ISODate");
       }
 
-    case 'ASPDate':
+    case "ASPDate":
       if (isNumber(object)) {
-        return '/Date(' + object + ')/';
+        return "/Date(" + object + ")/";
       } else if (object instanceof Date || isMoment(object)) {
-        return '/Date(' + object.valueOf() + ')/';
+        return "/Date(" + object.valueOf() + ")/";
       } else if (isString(object)) {
         match = ASPDateRegex.exec(object);
 
@@ -5367,9 +7242,9 @@ function convert(object, type) {
           _value = new Date(object).valueOf(); // parse string
         }
 
-        return '/Date(' + _value + ')/';
+        return "/Date(" + _value + ")/";
       } else {
-        throw new Error('Cannot convert object of type ' + getType(object) + ' to type ASPDate');
+        throw new Error("Cannot convert object of type " + getType(object) + " to type ASPDate");
       }
 
     default:
@@ -5387,50 +7262,50 @@ function convert(object, type) {
 
 
 function getType(object) {
-  var type = _typeof_1(object);
+  var type = _typeof(object);
 
-  if (type === 'object') {
+  if (type === "object") {
     if (object === null) {
-      return 'null';
+      return "null";
     }
 
     if (object instanceof Boolean) {
-      return 'Boolean';
+      return "Boolean";
     }
 
     if (object instanceof Number) {
-      return 'Number';
+      return "Number";
     }
 
     if (object instanceof String) {
-      return 'String';
+      return "String";
     }
 
     if (Array.isArray(object)) {
-      return 'Array';
+      return "Array";
     }
 
     if (object instanceof Date) {
-      return 'Date';
+      return "Date";
     }
 
-    return 'Object';
+    return "Object";
   }
 
-  if (type === 'number') {
-    return 'Number';
+  if (type === "number") {
+    return "Number";
   }
 
-  if (type === 'boolean') {
-    return 'Boolean';
+  if (type === "boolean") {
+    return "Boolean";
   }
 
-  if (type === 'string') {
-    return 'String';
+  if (type === "string") {
+    return "String";
   }
 
   if (type === undefined) {
-    return 'undefined';
+    return "undefined";
   }
 
   return type;
@@ -5446,7 +7321,7 @@ function getType(object) {
 
 
 function copyAndExtendArray(arr, newValue) {
-  return [].concat(toConsumableArray(arr), [newValue]);
+  return [].concat(_toConsumableArray(arr), [newValue]);
 }
 /**
  * Used to extend an array and copy it. This is used to propagate paths recursively.
@@ -5505,12 +7380,12 @@ function getAbsoluteTop(elem) {
 
 
 function addClassName(elem, classNames) {
-  var classes = elem.className.split(' ');
-  var newClasses = classNames.split(' ');
+  var classes = elem.className.split(" ");
+  var newClasses = classNames.split(" ");
   classes = classes.concat(newClasses.filter(function (className) {
     return classes.indexOf(className) < 0;
   }));
-  elem.className = classes.join(' ');
+  elem.className = classes.join(" ");
 }
 /**
  * Remove a className from the given elements style.
@@ -5521,12 +7396,12 @@ function addClassName(elem, classNames) {
 
 
 function removeClassName(elem, classNames) {
-  var classes = elem.className.split(' ');
-  var oldClasses = classNames.split(' ');
+  var classes = elem.className.split(" ");
+  var oldClasses = classNames.split(" ");
   classes = classes.filter(function (className) {
     return oldClasses.indexOf(className) < 0;
   });
-  elem.className = classes.join(' ');
+  elem.className = classes.join(" ");
 }
 /**
  * For each method for both arrays and objects.
@@ -5620,13 +7495,14 @@ function addEventListener(element, action, listener, useCapture) {
       useCapture = false;
     }
 
-    if (action === 'mousewheel' && navigator.userAgent.indexOf('Firefox') >= 0) {
-      action = 'DOMMouseScroll'; // For Firefox
+    if (action === "mousewheel" && navigator.userAgent.indexOf("Firefox") >= 0) {
+      action = "DOMMouseScroll"; // For Firefox
     }
 
     element.addEventListener(action, listener, useCapture);
   } else {
-    element.attachEvent('on' + action, listener); // IE browsers
+    // @TODO: IE types? Does anyone care?
+    element.attachEvent("on" + action, listener); // IE browsers
   }
 }
 /**
@@ -5646,13 +7522,14 @@ function removeEventListener(element, action, listener, useCapture) {
       useCapture = false;
     }
 
-    if (action === 'mousewheel' && navigator.userAgent.indexOf('Firefox') >= 0) {
-      action = 'DOMMouseScroll'; // For Firefox
+    if (action === "mousewheel" && navigator.userAgent.indexOf("Firefox") >= 0) {
+      action = "DOMMouseScroll"; // For Firefox
     }
 
     element.removeEventListener(action, listener, useCapture);
   } else {
-    element.detachEvent('on' + action, listener); // IE browsers
+    // @TODO: IE types? Does anyone care?
+    element.detachEvent("on" + action, listener); // IE browsers
   }
 }
 /**
@@ -5670,6 +7547,7 @@ function preventDefault(event) {
   if (!event) ;else if (event.preventDefault) {
     event.preventDefault(); // non-IE browsers
   } else {
+    // @TODO: IE types? Does anyone care?
     event.returnValue = false; // IE browsers
   }
 }
@@ -5744,7 +7622,7 @@ var option = {
    * @returns Corresponding boolean value, if none then the default value, if none then null.
    */
   asBoolean: function asBoolean(value, defaultValue) {
-    if (typeof value == 'function') {
+    if (typeof value == "function") {
       value = value();
     }
 
@@ -5764,7 +7642,7 @@ var option = {
    * @returns Corresponding **boxed** number value, if none then the default value, if none then null.
    */
   asNumber: function asNumber(value, defaultValue) {
-    if (typeof value == 'function') {
+    if (typeof value == "function") {
       value = value();
     }
 
@@ -5784,7 +7662,7 @@ var option = {
    * @returns Corresponding **boxed** string value, if none then the default value, if none then null.
    */
   asString: function asString(value, defaultValue) {
-    if (typeof value == 'function') {
+    if (typeof value == "function") {
       value = value();
     }
 
@@ -5804,14 +7682,14 @@ var option = {
    * @returns Corresponding string value (number + 'px'), if none then the default value, if none then null.
    */
   asSize: function asSize(value, defaultValue) {
-    if (typeof value == 'function') {
+    if (typeof value == "function") {
       value = value();
     }
 
     if (isString(value)) {
       return value;
     } else if (isNumber(value)) {
-      return value + 'px';
+      return value + "px";
     } else {
       return defaultValue || null;
     }
@@ -5826,7 +7704,7 @@ var option = {
    * @returns The DOM Element, if none then the default value, if none then null.
    */
   asElement: function asElement(value, defaultValue) {
-    if (typeof value == 'function') {
+    if (typeof value == "function") {
       value = value();
     }
 
@@ -5879,18 +7757,18 @@ function hexToRGB(hex) {
 
 
 function overrideOpacity(color, opacity) {
-  if (color.indexOf('rgba') !== -1) {
+  if (color.indexOf("rgba") !== -1) {
     return color;
-  } else if (color.indexOf('rgb') !== -1) {
-    var rgb = color.substr(color.indexOf('(') + 1).replace(')', '').split(',');
-    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + opacity + ')';
+  } else if (color.indexOf("rgb") !== -1) {
+    var rgb = color.substr(color.indexOf("(") + 1).replace(")", "").split(",");
+    return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + opacity + ")";
   } else {
     var _rgb = hexToRGB(color);
 
     if (_rgb == null) {
       return color;
     } else {
-      return 'rgba(' + _rgb.r + ',' + _rgb.g + ',' + _rgb.b + ',' + opacity + ')';
+      return "rgba(" + _rgb.r + "," + _rgb.g + "," + _rgb.b + "," + opacity + ")";
     }
   }
 }
@@ -5906,7 +7784,7 @@ function overrideOpacity(color, opacity) {
 
 
 function RGBToHex(red, green, blue) {
-  return '#' + ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16).slice(1);
+  return "#" + ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16).slice(1);
 }
 /**
  * Parse a color property into an object with border, background, and highlight colors
@@ -5923,7 +7801,7 @@ function parseColor(inputColor, defaultColor) {
     var colorStr = inputColor;
 
     if (isValidRGB(colorStr)) {
-      var rgb = colorStr.substr(4).substr(0, colorStr.length - 5).split(',').map(function (value) {
+      var rgb = colorStr.substr(4).substr(0, colorStr.length - 5).split(",").map(function (value) {
         return parseInt(value);
       });
       colorStr = RGBToHex(rgb[0], rgb[1], rgb[2]);
@@ -6057,9 +7935,9 @@ var cssUtil = {
   // split a string with css styles into an object with key/values
   split: function split(cssText) {
     var styles = {};
-    cssText.split(';').forEach(function (style) {
-      if (style.trim() != '') {
-        var parts = style.split(':');
+    cssText.split(";").forEach(function (style) {
+      if (style.trim() != "") {
+        var parts = style.split(":");
 
         var _key3 = parts[0].trim();
 
@@ -6073,8 +7951,8 @@ var cssUtil = {
   // build a css text string from an object with key/values
   join: function join(styles) {
     return Object.keys(styles).map(function (key) {
-      return key + ': ' + styles[key];
-    }).join('; ');
+      return key + ": " + styles[key];
+    }).join("; ");
   }
 };
 /**
@@ -6088,7 +7966,7 @@ function addCssText(element, cssText) {
   var currentStyles = cssUtil.split(element.style.cssText);
   var newStyles = cssUtil.split(cssText);
 
-  var styles = _objectSpread({}, currentStyles, {}, newStyles);
+  var styles = _objectSpread2({}, currentStyles, {}, newStyles);
 
   element.style.cssText = cssUtil.join(styles);
 }
@@ -6222,9 +8100,7 @@ function isValidHex(hex) {
 
 
 function isValidRGB(rgb) {
-  rgb = rgb.replace(' ', '');
-  var isOk = /rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)/i.test(rgb);
-  return isOk;
+  return rgbRE.test(rgb);
 }
 /**
  * Validate RGBA color string.
@@ -6236,9 +8112,7 @@ function isValidRGB(rgb) {
 
 
 function isValidRGBA(rgba) {
-  rgba = rgba.replace(' ', '');
-  var isOk = /rgba\((\d{1,3}),(\d{1,3}),(\d{1,3}),(0?.{1,3})\)/i.test(rgba);
-  return isOk;
+  return rgbaRE.test(rgba);
 }
 /**
  * This recursively redirects the prototype of JSON objects to the referenceObject.
@@ -6252,13 +8126,13 @@ function isValidRGBA(rgba) {
 
 
 function selectiveBridgeObject(fields, referenceObject) {
-  if (referenceObject !== null && _typeof_1(referenceObject) === 'object') {
+  if (referenceObject !== null && _typeof(referenceObject) === "object") {
     // !!! typeof null === 'object'
     var objectTo = Object.create(referenceObject);
 
     for (var i = 0; i < fields.length; i++) {
       if (Object.prototype.hasOwnProperty.call(referenceObject, fields[i])) {
-        if (_typeof_1(referenceObject[fields[i]]) == 'object') {
+        if (_typeof(referenceObject[fields[i]]) == "object") {
           objectTo[fields[i]] = bridgeObject(referenceObject[fields[i]]);
         }
       }
@@ -6280,7 +8154,7 @@ function selectiveBridgeObject(fields, referenceObject) {
 
 
 function bridgeObject(referenceObject) {
-  if (referenceObject === null || _typeof_1(referenceObject) !== 'object') {
+  if (referenceObject === null || _typeof(referenceObject) !== "object") {
     return null;
   }
 
@@ -6293,7 +8167,7 @@ function bridgeObject(referenceObject) {
 
   for (var i in referenceObject) {
     if (Object.prototype.hasOwnProperty.call(referenceObject, i)) {
-      if (_typeof_1(referenceObject[i]) == 'object') {
+      if (_typeof(referenceObject[i]) == "object") {
         objectTo[i] = bridgeObject(referenceObject[i]);
       }
     }
@@ -6348,7 +8222,7 @@ function mergeOptions(mergeTarget, options, option) {
   };
 
   var isObject = function isObject(obj) {
-    return obj !== null && _typeof_1(obj) === 'object';
+    return obj !== null && _typeof(obj) === "object";
   }; // https://stackoverflow.com/a/34491287/1223531
 
 
@@ -6364,19 +8238,19 @@ function mergeOptions(mergeTarget, options, option) {
 
 
   if (!isObject(mergeTarget)) {
-    throw new Error('Parameter mergeTarget must be an object');
+    throw new Error("Parameter mergeTarget must be an object");
   }
 
   if (!isObject(options)) {
-    throw new Error('Parameter options must be an object');
+    throw new Error("Parameter options must be an object");
   }
 
   if (!isPresent(option)) {
-    throw new Error('Parameter option must have a value');
+    throw new Error("Parameter option must have a value");
   }
 
   if (!isObject(globalOptions)) {
-    throw new Error('Parameter globalOptions must be an object');
+    throw new Error("Parameter globalOptions must be an object");
   } //
   // Actual merge routine, separated from main logic
   // Only a single level of options is merged. Deeper levels are ref'd. This may actually be an issue.
@@ -6410,7 +8284,7 @@ function mergeOptions(mergeTarget, options, option) {
     return; // Nothing to do
   }
 
-  if (typeof srcOption === 'boolean') {
+  if (typeof srcOption === "boolean") {
     if (!isObject(mergeTarget[option])) {
       mergeTarget[option] = {};
     }
@@ -6533,10 +8407,10 @@ function binarySearchValue(orderedItems, target, field, sidePreference, comparat
       return middle;
     } else if (comparator(prevValue, target) < 0 && comparator(value, target) > 0) {
       // target is in between of the previous and the current
-      return sidePreference == 'before' ? Math.max(0, middle - 1) : middle;
+      return sidePreference == "before" ? Math.max(0, middle - 1) : middle;
     } else if (comparator(value, target) < 0 && comparator(nextValue, target) > 0) {
       // target is in between of the current and the next
-      return sidePreference == 'before' ? middle : Math.min(orderedItems.length - 1, middle + 1);
+      return sidePreference == "before" ? middle : Math.min(orderedItems.length - 1, middle + 1);
     } else {
       // didnt find the target, we need to change our boundaries.
       if (comparator(value, target) < 0) {
@@ -6714,21 +8588,21 @@ var easingFunctions = {
  */
 
 function getScrollBarWidth() {
-  var inner = document.createElement('p');
-  inner.style.width = '100%';
-  inner.style.height = '200px';
-  var outer = document.createElement('div');
-  outer.style.position = 'absolute';
-  outer.style.top = '0px';
-  outer.style.left = '0px';
-  outer.style.visibility = 'hidden';
-  outer.style.width = '200px';
-  outer.style.height = '150px';
-  outer.style.overflow = 'hidden';
+  var inner = document.createElement("p");
+  inner.style.width = "100%";
+  inner.style.height = "200px";
+  var outer = document.createElement("div");
+  outer.style.position = "absolute";
+  outer.style.top = "0px";
+  outer.style.left = "0px";
+  outer.style.visibility = "hidden";
+  outer.style.width = "200px";
+  outer.style.height = "150px";
+  outer.style.overflow = "hidden";
   outer.appendChild(inner);
   document.body.appendChild(outer);
   var w1 = inner.offsetWidth;
-  outer.style.overflow = 'scroll';
+  outer.style.overflow = "scroll";
   var w2 = inner.offsetWidth;
 
   if (w1 == w2) {
@@ -6787,7 +8661,7 @@ function topMost(pile, accessors) {
           }
         }
 
-        if (typeof candidate !== 'undefined') {
+        if (typeof candidate !== "undefined") {
           break;
         }
       }
@@ -6977,7 +8851,7 @@ function createCommonjsModule$1(fn, module) {
   }, fn(module, module.exports), module.exports;
 }
 
-var _typeof_1$1 = createCommonjsModule$1(function (module) {
+var _typeof_1 = createCommonjsModule$1(function (module) {
   function _typeof2(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof2 = function _typeof2(obj) {
@@ -7046,7 +8920,7 @@ function _assertThisInitialized(self) {
 var assertThisInitialized = _assertThisInitialized;
 
 function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
+  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -7064,7 +8938,7 @@ var getPrototypeOf = createCommonjsModule$1(function (module) {
 
   module.exports = _getPrototypeOf;
 });
-var setPrototypeOf = createCommonjsModule$1(function (module) {
+var setPrototypeOf$1 = createCommonjsModule$1(function (module) {
   function _setPrototypeOf(o, p) {
     module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
       o.__proto__ = p;
@@ -7089,7 +8963,7 @@ function _inherits(subClass, superClass) {
       configurable: true
     }
   });
-  if (superClass) setPrototypeOf(subClass, superClass);
+  if (superClass) setPrototypeOf$1(subClass, superClass);
 }
 
 var inherits = _inherits; // Maps for number <-> hex string conversion
@@ -7161,8 +9035,8 @@ var random$1 = function () {
 
 var byteToHex$1$1 = [];
 
-for (var i$1$1 = 0; i$1$1 < 256; i$1$1++) {
-  byteToHex$1$1[i$1$1] = (i$1$1 + 0x100).toString(16).substr(1);
+for (var i$1$2 = 0; i$1$2 < 256; i$1$2++) {
+  byteToHex$1$1[i$1$2] = (i$1$2 + 0x100).toString(16).substr(1);
 } // **`v1()` - Generate time-based UUID**
 //
 // Inspired by https://github.com/LiosK/UUID.js
@@ -7218,18 +9092,18 @@ function uuid4$1() {
 } // Rollup will complain about mixing default and named exports in UMD build,
 
 
-function _typeof(obj) {
+function _typeof$1(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
+    _typeof$1 = function (obj) {
       return typeof obj;
     };
   } else {
-    _typeof = function (obj) {
+    _typeof$1 = function (obj) {
       return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
-  return _typeof(obj);
+  return _typeof$1(obj);
 }
 
 var commonjsGlobal$1 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -12092,7 +13966,7 @@ function convert$1(object, type) {
 
 
 function getType$1(object) {
-  var type = _typeof(object);
+  var type = _typeof$1(object);
 
   if (type === 'object') {
     if (object === null) {
@@ -12371,25 +14245,25 @@ function _arrayWithoutHoles$1(arr) {
   }
 }
 
-var arrayWithoutHoles$1 = _arrayWithoutHoles$1;
+var arrayWithoutHoles = _arrayWithoutHoles$1;
 
 function _iterableToArray$1(iter) {
   if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
 
-var iterableToArray$1 = _iterableToArray$1;
+var iterableToArray = _iterableToArray$1;
 
 function _nonIterableSpread$1() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-var nonIterableSpread$1 = _nonIterableSpread$1;
+var nonIterableSpread = _nonIterableSpread$1;
 
 function _toConsumableArray$1(arr) {
-  return arrayWithoutHoles$1(arr) || iterableToArray$1(arr) || nonIterableSpread$1();
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
 }
 
-var toConsumableArray$1 = _toConsumableArray$1;
+var toConsumableArray = _toConsumableArray$1;
 /**
  * [[DataSet]] code that can be reused in [[DataView]] or other similar implementations of [[DataInterface]].
  *
@@ -12435,7 +14309,7 @@ function () {
         throw new Error('Cannot trigger event *');
       }
 
-      var subscribers = [].concat(toConsumableArray$1(this._subscribers[event]), toConsumableArray$1(this._subscribers['*']));
+      var subscribers = [].concat(toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers['*']));
 
       for (var i = 0, len = subscribers.length; i < len; i++) {
         var subscriber = subscribers[i];
@@ -12492,7 +14366,7 @@ function ownKeys$1(object, enumerableOnly) {
   return keys;
 }
 
-function _objectSpread$1(target) {
+function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
 
@@ -12659,7 +14533,7 @@ function (_DataSetPart) {
             });
           }
 
-          if (options.queue && _typeof_1$1(options.queue) === 'object') {
+          if (options.queue && _typeof_1(options.queue) === 'object') {
             this._queue.setOptions(options.queue);
           }
         }
@@ -12706,7 +14580,7 @@ function (_DataSetPart) {
           id = this._addItem(data[i]);
           addedIds.push(id);
         }
-      } else if (data && _typeof_1$1(data) === 'object') {
+      } else if (data && _typeof_1(data) === 'object') {
         // Single item
         id = this._addItem(data);
         addedIds.push(id);
@@ -12791,13 +14665,13 @@ function (_DataSetPart) {
       if (Array.isArray(data)) {
         // Array
         for (var i = 0, len = data.length; i < len; i++) {
-          if (data[i] && _typeof_1$1(data[i]) === 'object') {
+          if (data[i] && _typeof_1(data[i]) === 'object') {
             addOrUpdate(data[i]);
           } else {
             console.warn('Ignoring input item, which is not an object at index ' + i);
           }
         }
-      } else if (data && _typeof_1$1(data) === 'object') {
+      } else if (data && _typeof_1(data) === 'object') {
         // Single item
         addOrUpdate(data);
       } else {
@@ -13216,7 +15090,7 @@ function (_DataSetPart) {
 
       if (isId(id)) {
         ident = id;
-      } else if (id && _typeof_1$1(id) === 'object') {
+      } else if (id && _typeof_1(id) === 'object') {
         ident = id[this._idProp]; // look for the identifier field using ._idProp
       } // do the removing if the item is found
 
@@ -13435,7 +15309,7 @@ function (_DataSetPart) {
         }
       } else {
         // no field types specified, no converting needed
-        converted = _objectSpread$1({}, raw);
+        converted = _objectSpread({}, raw);
       }
 
       if (converted[this._idProp] == null) {
@@ -13935,45 +15809,24 @@ var esm$1 = /*#__PURE__*/Object.freeze({
   Queue: Queue
 });
 
-/**
+/*
  * Canvas shapes used by Network
  */
-if (typeof CanvasRenderingContext2D !== 'undefined') {
-  /**
-   * Draw a circle shape
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} r
-   */
+
+if (typeof CanvasRenderingContext2D !== "undefined") {
   CanvasRenderingContext2D.prototype.circle = function (x, y, r) {
     this.beginPath();
     this.arc(x, y, r, 0, 2 * Math.PI, false);
     this.closePath();
   };
-  /**
-   * Draw a square shape
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   size, width and height of the square
-   */
-
 
   CanvasRenderingContext2D.prototype.square = function (x, y, r) {
     this.beginPath();
     this.rect(x - r, y - r, r * 2, r * 2);
     this.closePath();
   };
-  /**
-   * Draw a triangle shape
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   radius, half the length of the sides of the triangle
-   */
-
 
   CanvasRenderingContext2D.prototype.triangle = function (x, y, r) {
-    // http://en.wikipedia.org/wiki/Equilateral_triangle
     this.beginPath(); // the change in radius and the offset is here to center the shape
 
     r *= 1.15;
@@ -13990,16 +15843,8 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.lineTo(x, y - (h - ir));
     this.closePath();
   };
-  /**
-   * Draw a triangle shape in downward orientation
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r radius
-   */
-
 
   CanvasRenderingContext2D.prototype.triangleDown = function (x, y, r) {
-    // http://en.wikipedia.org/wiki/Equilateral_triangle
     this.beginPath(); // the change in radius and the offset is here to center the shape
 
     r *= 1.15;
@@ -14016,13 +15861,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.lineTo(x, y + (h - ir));
     this.closePath();
   };
-  /**
-   * Draw a star shape, a star with 5 points
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   radius, half the length of the sides of the triangle
-   */
-
 
   CanvasRenderingContext2D.prototype.star = function (x, y, r) {
     // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
@@ -14038,16 +15876,8 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
 
     this.closePath();
   };
-  /**
-   * Draw a Diamond shape
-   * @param {number} x horizontal center
-   * @param {number} y vertical center
-   * @param {number} r   radius, half the length of the sides of the triangle
-   */
-
 
   CanvasRenderingContext2D.prototype.diamond = function (x, y, r) {
-    // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
     this.beginPath();
     this.lineTo(x, y + r);
     this.lineTo(x + r, y);
@@ -14055,16 +15885,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.lineTo(x - r, y);
     this.closePath();
   };
-  /**
-   * http://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   * @param {number} r
-   */
-
 
   CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     var r2d = Math.PI / 180;
@@ -14091,20 +15911,9 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
     this.closePath();
   };
-  /**
-   * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-   *
-   * Postfix '_vis' added to discern it from standard method ellipse().
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   */
-
 
   CanvasRenderingContext2D.prototype.ellipse_vis = function (x, y, w, h) {
-    var kappa = .5522848,
+    var kappa = 0.5522848,
         ox = w / 2 * kappa,
         // control point offset horizontal
     oy = h / 2 * kappa,
@@ -14125,21 +15934,12 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
     this.closePath();
   };
-  /**
-   * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} w
-   * @param {number} h
-   */
-
 
   CanvasRenderingContext2D.prototype.database = function (x, y, w, h) {
     var f = 1 / 3;
     var wEllipse = w;
     var hEllipse = h * f;
-    var kappa = .5522848,
+    var kappa = 0.5522848,
         ox = wEllipse / 2 * kappa,
         // control point offset horizontal
     oy = hEllipse / 2 * kappa,
@@ -14167,19 +15967,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     this.bezierCurveTo(xm - ox, yeb, x, ymb + oy, x, ymb);
     this.lineTo(x, ym);
   };
-  /**
-   * Sets up the dashedLine functionality for drawing
-   * Original code came from http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
-   * @author David Jordan
-   * @date 2012-08-08
-   *
-   * @param {number} x
-   * @param {number} y
-   * @param {number} x2
-   * @param {number} y2
-   * @param {string} pattern
-   */
-
 
   CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, pattern) {
     this.beginPath();
@@ -14192,10 +15979,10 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
     var patternIndex = 0;
     var draw = true;
     var xStep = 0;
-    var dashLength = pattern[0];
+    var dashLength = +pattern[0];
 
     while (distRemaining >= 0.1) {
-      dashLength = pattern[patternIndex++ % patternLength];
+      dashLength = +pattern[patternIndex++ % patternLength];
 
       if (dashLength > distRemaining) {
         dashLength = distRemaining;
@@ -14216,13 +16003,6 @@ if (typeof CanvasRenderingContext2D !== 'undefined') {
       draw = !draw;
     }
   };
-  /**
-   * Draw a Hexagon shape with 6 sides
-   * @param {Number} x horizontal center
-   * @param {Number} y vertical center
-   * @param {Number} r   radius
-   */
-
 
   CanvasRenderingContext2D.prototype.hexagon = function (x, y, r) {
     this.beginPath();
@@ -14250,6 +16030,10 @@ function unwrapExports (x) {
 
 function createCommonjsModule$2(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+function getCjsExportFromNamespace (n) {
+	return n && n['default'] || n;
 }
 
 var componentEmitter = createCommonjsModule$2(function (module) {
@@ -15949,6 +17733,12 @@ function parseGephi(gephiJSON, optionsObj) {
 
 var gephiParser = /*#__PURE__*/Object.freeze({
   parseGephi: parseGephi
+});
+
+
+
+var Activator = /*#__PURE__*/Object.freeze({
+
 });
 
 var keycharm = createCommonjsModule$2(function (module, exports) {
@@ -19280,6 +21070,8 @@ var hammer$1 = /*#__PURE__*/Object.freeze({
   __moduleExports: hammer
 });
 
+getCjsExportFromNamespace(Activator);
+
 /**
  * Turn an element into an clickToUse element.
  * When not active, the element has a transparent overlay. When the overlay is
@@ -19291,7 +21083,7 @@ var hammer$1 = /*#__PURE__*/Object.freeze({
  * @constructor Activator
  */
 
-function Activator(container) {
+function Activator$1(container) {
   this.active = false;
   this.dom = {
     container: container
@@ -19330,14 +21122,14 @@ function Activator(container) {
 } // turn into an event emitter
 
 
-componentEmitter(Activator.prototype); // The currently active activator
+componentEmitter(Activator$1.prototype); // The currently active activator
 
-Activator.current = null;
+Activator$1.current = null;
 /**
  * Destroy the activator. Cleans up all created DOM and event listeners
  */
 
-Activator.prototype.destroy = function () {
+Activator$1.prototype.destroy = function () {
   this.deactivate(); // remove dom
 
   this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
@@ -19362,13 +21154,13 @@ Activator.prototype.destroy = function () {
  */
 
 
-Activator.prototype.activate = function () {
+Activator$1.prototype.activate = function () {
   // we allow only one active activator at a time
-  if (Activator.current) {
-    Activator.current.deactivate();
+  if (Activator$1.current) {
+    Activator$1.current.deactivate();
   }
 
-  Activator.current = this;
+  Activator$1.current = this;
   this.active = true;
   this.dom.overlay.style.display = 'none';
   util.addClassName(this.dom.container, 'vis-active');
@@ -19384,7 +21176,7 @@ Activator.prototype.activate = function () {
  */
 
 
-Activator.prototype.deactivate = function () {
+Activator$1.prototype.deactivate = function () {
   this.active = false;
   this.dom.overlay.style.display = '';
   util.removeClassName(this.dom.container, 'vis-active');
@@ -19399,7 +21191,7 @@ Activator.prototype.deactivate = function () {
  */
 
 
-Activator.prototype._onTapOverlay = function (event) {
+Activator$1.prototype._onTapOverlay = function (event) {
   // activate the container
   this.activate();
   event.stopPropagation();
@@ -19427,7 +21219,7 @@ function _hasParent(element, parent) {
   return false;
 }
 
-var Activator_1 = Activator;
+var Activator_1 = Activator$1;
 
 var locales = createCommonjsModule$2(function (module, exports) {
   // English
@@ -20277,6 +22069,23 @@ function () {
   return Groups;
 }();
 
+function _defineProperty$2(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var defineProperty$2 = _defineProperty$2;
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
@@ -20323,7 +22132,7 @@ function _slicedToArray(arr, i) {
 
 var slicedToArray = _slicedToArray;
 
-var _typeof_1$2 = createCommonjsModule$2(function (module) {
+var _typeof_1$1 = createCommonjsModule$2(function (module) {
   function _typeof2(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof2 = function _typeof2(obj) {
@@ -20400,7 +22209,7 @@ function () {
 
       if (typeof chosen === 'boolean') {
         value = chosen;
-      } else if (_typeof_1$2(chosen) === 'object') {
+      } else if (_typeof_1$1(chosen) === 'object') {
         if (allowed.indexOf(subOption) === -1) {
           throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
         }
@@ -21492,7 +23301,7 @@ function () {
         // font options can be deleted at various levels
         if (typeof options.font === 'string') {
           this.baseSize = this.fontOptions.size;
-        } else if (_typeof_1$2(options.font) === 'object') {
+        } else if (_typeof_1$1(options.font) === 'object') {
           var size = options.font.size;
 
           if (size !== undefined) {
@@ -21529,7 +23338,7 @@ function () {
 
 
       util.forEach(newFontOptions, function (prop, n) {
-        if (prop !== undefined && prop !== null && _typeof_1$2(prop) !== 'object') {
+        if (prop !== undefined && prop !== null && _typeof_1$1(prop) !== 'object') {
           _this.fontOptions[n] = prop;
         }
       });
@@ -21573,7 +23382,7 @@ function () {
       if (typeof widthConstraint === 'number') {
         fontOptions.maxWdt = Number(widthConstraint);
         fontOptions.minWdt = Number(widthConstraint);
-      } else if (_typeof_1$2(widthConstraint) === 'object') {
+      } else if (_typeof_1$1(widthConstraint) === 'object') {
         var widthConstraintMaximum = util.topMost(pile, ['widthConstraint', 'maximum']);
 
         if (typeof widthConstraintMaximum === 'number') {
@@ -21591,7 +23400,7 @@ function () {
 
       if (typeof heightConstraint === 'number') {
         fontOptions.minHgt = Number(heightConstraint);
-      } else if (_typeof_1$2(heightConstraint) === 'object') {
+      } else if (_typeof_1$1(heightConstraint) === 'object') {
         var heightConstraintMinimum = util.topMost(pile, ['heightConstraint', 'minimum']);
 
         if (typeof heightConstraintMinimum === 'number') {
@@ -22295,7 +24104,7 @@ function _assertThisInitialized$2(self) {
 var assertThisInitialized$1 = _assertThisInitialized$2;
 
 function _possibleConstructorReturn$1(self, call) {
-  if (call && (_typeof_1$2(call) === "object" || typeof call === "function")) {
+  if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
     return call;
   }
 
@@ -22315,7 +24124,7 @@ var getPrototypeOf$1 = createCommonjsModule$2(function (module) {
   module.exports = _getPrototypeOf;
 });
 
-var setPrototypeOf$1 = createCommonjsModule$2(function (module) {
+var setPrototypeOf$2 = createCommonjsModule$2(function (module) {
   function _setPrototypeOf(o, p) {
     module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
       o.__proto__ = p;
@@ -22340,7 +24149,7 @@ function _inherits$1(subClass, superClass) {
       configurable: true
     }
   });
-  if (superClass) setPrototypeOf$1(subClass, superClass);
+  if (superClass) setPrototypeOf$2(subClass, superClass);
 }
 
 var inherits$1 = _inherits$1;
@@ -22399,7 +24208,7 @@ function () {
       this.margin = {};
 
       if (this.options.margin) {
-        if (_typeof_1$2(this.options.margin) == 'object') {
+        if (_typeof_1$1(this.options.margin) == 'object') {
           this.margin.top = this.options.margin.top;
           this.margin.right = this.options.margin.right;
           this.margin.bottom = this.options.margin.bottom;
@@ -22884,6 +24693,41 @@ function (_NodeBase) {
       }
     }
     /**
+     * Returns Image Padding from node options
+     *
+     * @returns {{top: number,left: number,bottom: number,right: number}} image padding inside this shape
+     * @private
+     */
+
+  }, {
+    key: "_getImagePadding",
+    value: function _getImagePadding() {
+      var imgPadding = {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      };
+
+      if (this.options.imagePadding) {
+        var optImgPadding = this.options.imagePadding;
+
+        if (_typeof_1$1(optImgPadding) == 'object') {
+          imgPadding.top = optImgPadding.top;
+          imgPadding.right = optImgPadding.right;
+          imgPadding.bottom = optImgPadding.bottom;
+          imgPadding.left = optImgPadding.left;
+        } else {
+          imgPadding.top = optImgPadding;
+          imgPadding.right = optImgPadding;
+          imgPadding.bottom = optImgPadding;
+          imgPadding.left = optImgPadding;
+        }
+      }
+
+      return imgPadding;
+    }
+    /**
      * Adjust the node dimensions for a loaded image.
      *
      * Pre: this.imageObj is valid
@@ -22910,9 +24754,11 @@ function (_NodeBase) {
         width = this.options.size * 2 * ratio_width;
         height = this.options.size * 2 * ratio_height;
       } else {
-        // Use the image size
-        width = this.imageObj.width;
-        height = this.imageObj.height;
+        // Use the image size with image padding
+        var imgPadding = this._getImagePadding();
+
+        width = this.imageObj.width + imgPadding.left + imgPadding.right;
+        height = this.imageObj.height + imgPadding.top + imgPadding.bottom;
       }
 
       this.width = width;
@@ -22956,7 +24802,13 @@ function (_NodeBase) {
           factor = this.imageObj.width / this.width / this.body.view.scale;
         }
 
-        this.imageObj.drawImageAtPosition(ctx, factor, this.left, this.top, this.width, this.height); // disable shadows for other elements.
+        var imgPadding = this._getImagePadding();
+
+        var imgPosLeft = this.left + imgPadding.left;
+        var imgPosTop = this.top + imgPadding.top;
+        var imgWidth = this.width - imgPadding.left - imgPadding.right;
+        var imgHeight = this.height - imgPadding.top - imgPadding.bottom;
+        this.imageObj.drawImageAtPosition(ctx, factor, imgPosLeft, imgPosTop, imgWidth, imgHeight); // disable shadows for other elements.
 
         this.disableShadow(ctx, values);
       }
@@ -24401,7 +26253,7 @@ function () {
   }, {
     key: "getType",
     value: function getType(object) {
-      var type = _typeof_1$2(object);
+      var type = _typeof_1$1(object);
 
       if (type === 'object') {
         if (object === null) {
@@ -24640,6 +26492,9 @@ function () {
   return Validator;
 }();
 
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
  * A node. A node can be connected to other nodes via one or multiple edges.
  */
@@ -24736,6 +26591,14 @@ function () {
 
       if (!options) {
         return; // Note that the return value will be 'undefined'! This is OK.
+      } // Save the color for later.
+      // This is necessary in order to prevent local color from being overwritten by group color.
+      // TODO: To prevent such workarounds the way options are handled should be rewritten from scratch.
+      // This is not the only problem with current options handling.
+
+
+      if (typeof options.color !== 'undefined') {
+        this._localColor = options.color;
       } // basic options
 
 
@@ -24905,7 +26768,9 @@ function () {
         this.options.label = '';
       }
 
-      Node.updateGroupOptions(this.options, options, this.grouplist); //
+      Node.updateGroupOptions(this.options, _objectSpread$1({}, options, {
+        color: options && options.color || this._localColor || undefined
+      }), this.grouplist); //
       // Note:The prototype chain for this.options is:
       //
       // this.options ->    NodesHandler.options    -> NodesHandler.defaultOptions
@@ -25427,6 +27292,13 @@ function () {
       },
       image: undefined,
       // --> URL
+      imagePadding: {
+        // only for image shape
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },
       label: undefined,
       labelHighlightBold: true,
       level: undefined,
@@ -25917,6 +27789,41 @@ function () {
   return NodesHandler;
 }();
 
+function _superPropBase(object, property) {
+  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+    object = getPrototypeOf$1(object);
+    if (object === null) break;
+  }
+
+  return object;
+}
+
+var superPropBase = _superPropBase;
+
+var get = createCommonjsModule$2(function (module) {
+  function _get(target, property, receiver) {
+    if (typeof Reflect !== "undefined" && Reflect.get) {
+      module.exports = _get = Reflect.get;
+    } else {
+      module.exports = _get = function _get(target, property, receiver) {
+        var base = superPropBase(target, property);
+        if (!base) return;
+        var desc = Object.getOwnPropertyDescriptor(base, property);
+
+        if (desc.get) {
+          return desc.get.call(receiver);
+        }
+
+        return desc.value;
+      };
+    }
+
+    return _get(target, property, receiver || target);
+  }
+
+  module.exports = _get;
+});
+
 /** ============================================================================
  * Location of all the endpoint drawing routines.
  *
@@ -25967,12 +27874,11 @@ function () {
      * - multiply the (normalized) coordinates by the passed length
      * - offset by the target coordinates
      *
-     * @param {Array<Point>} points
-     * @param {ArrowData} arrowData
-     * @static
+     * @param points - The point(s) to be transformed.
+     * @param arrowData - The data determining the result of the transformation.
      */
     value: function transform(points, arrowData) {
-      if (!(points instanceof Array)) {
+      if (!Array.isArray(points)) {
         points = [points];
       }
 
@@ -25992,9 +27898,8 @@ function () {
     /**
      * Draw a closed path using the given real coordinates.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Array.<Point>} points
-     * @static
+     * @param ctx - The path will be rendered into this context.
+     * @param points - The points of the path.
      */
 
   }, {
@@ -26015,7 +27920,6 @@ function () {
 }();
 /**
  * Drawing methods for the arrow endpoint.
- * @extends EndPoint
  */
 
 
@@ -26036,9 +27940,8 @@ function (_EndPoint) {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26065,7 +27968,6 @@ function (_EndPoint) {
 }(EndPoint);
 /**
  * Drawing methods for the crow endpoint.
- * @extends EndPoint
  */
 
 
@@ -26082,9 +27984,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26111,7 +28012,6 @@ function () {
 }();
 /**
  * Drawing methods for the curve endpoint.
- * @extends EndPoint
  */
 
 
@@ -26128,9 +28028,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26142,13 +28041,13 @@ function () {
       EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
       ctx.strokeStyle = ctx.fillStyle;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define curve endpoint as semicircle.
+      ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define curve endpoint as semicircle.
 
       var pi = Math.PI;
-      var start_angle = arrowData.angle - pi / 2;
-      var end_angle = arrowData.angle + pi / 2;
+      var startAngle = arrowData.angle - pi / 2;
+      var endAngle = arrowData.angle + pi / 2;
       ctx.beginPath();
-      ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+      ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
       ctx.stroke();
     }
   }]);
@@ -26157,7 +28056,6 @@ function () {
 }();
 /**
  * Drawing methods for the inverted curve endpoint.
- * @extends EndPoint
  */
 
 
@@ -26174,9 +28072,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26188,13 +28085,13 @@ function () {
       EndPoint.transform(point, arrowData); // Update endpoint style for drawing transparent arc.
 
       ctx.strokeStyle = ctx.fillStyle;
-      ctx.fillStyle = 'rgba(0, 0, 0, 0)'; // Define inverted curve endpoint as semicircle.
+      ctx.fillStyle = "rgba(0, 0, 0, 0)"; // Define inverted curve endpoint as semicircle.
 
       var pi = Math.PI;
-      var start_angle = arrowData.angle + pi / 2;
-      var end_angle = arrowData.angle + 3 * pi / 2;
+      var startAngle = arrowData.angle + pi / 2;
+      var endAngle = arrowData.angle + 3 * pi / 2;
       ctx.beginPath();
-      ctx.arc(point.x, point.y, arrowData.length * 0.4, start_angle, end_angle, false);
+      ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
       ctx.stroke();
     }
   }]);
@@ -26203,7 +28100,6 @@ function () {
 }();
 /**
  * Drawing methods for the trinagle endpoint.
- * @extends EndPoint
  */
 
 
@@ -26220,9 +28116,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26246,7 +28141,6 @@ function () {
 }();
 /**
  * Drawing methods for the inverted trinagle endpoint.
- * @extends EndPoint
  */
 
 
@@ -26263,9 +28157,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26305,9 +28198,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var point = {
@@ -26339,22 +28231,20 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       /*
-          var points = [
-            {x:0, y:0.5},
-            {x:0, y:-0.5}
-          ];
-      
-          EndPoint.transform(points, arrowData);
-          ctx.beginPath();
-          ctx.moveTo(points[0].x, points[0].y);
-          ctx.lineTo(points[1].x, points[1].y);
-          ctx.stroke();
+      var points = [
+        {x:0, y:0.5},
+        {x:0, y:-0.5}
+      ];
+           EndPoint.transform(points, arrowData);
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.stroke();
       */
       var points = [{
         x: 0,
@@ -26394,9 +28284,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var points = [{
@@ -26437,9 +28326,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var points = [{
@@ -26464,7 +28352,6 @@ function () {
 }();
 /**
  * Drawing methods for the vee endpoint.
- * @extends EndPoint
  */
 
 
@@ -26481,9 +28368,8 @@ function () {
     /**
      * Draw this shape at the end of a line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -26524,11 +28410,10 @@ function () {
     key: "draw",
 
     /**
-     * Draw an endpoint
+     * Draw an endpoint.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowData} arrowData
-     * @static
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
      */
     value: function draw(ctx, arrowData) {
       var type;
@@ -26538,47 +28423,47 @@ function () {
       }
 
       switch (type) {
-        case 'circle':
+        case "circle":
           Circle$1.draw(ctx, arrowData);
           break;
 
-        case 'box':
+        case "box":
           Box$1.draw(ctx, arrowData);
           break;
 
-        case 'crow':
+        case "crow":
           Crow.draw(ctx, arrowData);
           break;
 
-        case 'curve':
+        case "curve":
           Curve.draw(ctx, arrowData);
           break;
 
-        case 'diamond':
+        case "diamond":
           Diamond$1.draw(ctx, arrowData);
           break;
 
-        case 'inv_curve':
+        case "inv_curve":
           InvertedCurve.draw(ctx, arrowData);
           break;
 
-        case 'triangle':
+        case "triangle":
           Triangle$1.draw(ctx, arrowData);
           break;
 
-        case 'inv_triangle':
+        case "inv_triangle":
           InvertedTriangle.draw(ctx, arrowData);
           break;
 
-        case 'bar':
+        case "bar":
           Bar.draw(ctx, arrowData);
           break;
 
-        case 'vee':
+        case "vee":
           Vee.draw(ctx, arrowData);
           break;
 
-        case 'arrow': // fall-through
+        case "arrow": // fall-through
 
         default:
           Arrow.draw(ctx, arrowData);
@@ -26589,48 +28474,46 @@ function () {
   return EndPoints;
 }();
 
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
  * The Base Class for all edges.
- *
  */
 
 var EdgeBase =
 /*#__PURE__*/
 function () {
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param _body - The body of the network.
+   * @param _labelModule - Label module.
    */
-  function EdgeBase(options, body, labelModule) {
+  function EdgeBase(options, _body, _labelModule) {
     classCallCheck$1(this, EdgeBase);
 
-    this.body = body;
-    this.labelModule = labelModule;
-    this.options = {};
-    this.setOptions(options);
-    this.colorDirty = true;
+    this._body = _body;
+    this._labelModule = _labelModule;
     this.color = {};
-    this.selectionWidth = 2;
+    this.colorDirty = true;
     this.hoverWidth = 1.5;
+    this.selectionWidth = 2;
+    this.setOptions(options);
     this.fromPoint = this.from;
     this.toPoint = this.to;
   }
-  /**
-   * Connects a node to itself
-   */
+  /** @inheritdoc */
 
 
   createClass$1(EdgeBase, [{
     key: "connect",
     value: function connect() {
-      this.from = this.body.nodes[this.options.from];
-      this.to = this.body.nodes[this.options.to];
+      this.from = this._body.nodes[this.options.from];
+      this.to = this._body.nodes[this.options.to];
     }
-    /**
-     *
-     * @returns {boolean} always false
-     */
+    /** @inheritdoc */
 
   }, {
     key: "cleanup",
@@ -26638,36 +28521,27 @@ function () {
       return false;
     }
     /**
+     * Set new edge options.
      *
-     * @param {Object} options
+     * @param options - The new edge options object.
      */
 
   }, {
     key: "setOptions",
     value: function setOptions(options) {
       this.options = options;
-      this.from = this.body.nodes[this.options.from];
-      this.to = this.body.nodes[this.options.to];
+      this.from = this._body.nodes[this.options.from];
+      this.to = this._body.nodes[this.options.to];
       this.id = this.options.id;
     }
-    /**
-     * Redraw a edge as a line
-     * Draw this edge in the given canvas
-     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-     *
-     * @param {CanvasRenderingContext2D}   ctx
-     * @param {Array} values
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {Node} viaNode
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "drawLine",
-    value: function drawLine(ctx, values, selected, hover, viaNode) {
+    value: function drawLine(ctx, values, _selected, _hover) {
+      var viaNode = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : this.getViaNode();
       // set style
-      ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+      ctx.strokeStyle = this.getColor(ctx, values);
       ctx.lineWidth = values.width;
 
       if (values.dashes !== false) {
@@ -26677,13 +28551,13 @@ function () {
       }
     }
     /**
+     * Draw a line with given style between two nodes through supplied node(s).
      *
-     * @param {CanvasRenderingContext2D}   ctx
-     * @param {Array} values
-     * @param {Node} viaNode
-     * @param {{x: number, y: number}} [fromPoint]
-     * @param {{x: number, y: number}} [toPoint]
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param viaNode - Additional control point(s) for the edge.
+     * @param fromPoint - TODO: Seems ignored, remove?
+     * @param toPoint - TODO: Seems ignored, remove?
      */
 
   }, {
@@ -26703,26 +28577,20 @@ function () {
       }
     }
     /**
+     * Draw a dashed line with given style between two nodes through supplied node(s).
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Array} values
-     * @param {Node} viaNode
-     * @param {{x: number, y: number}} [fromPoint]  TODO: Remove in next major release
-     * @param {{x: number, y: number}} [toPoint]    TODO: Remove in next major release
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param viaNode - Additional control point(s) for the edge.
+     * @param _fromPoint - Ignored (TODO: remove in the future).
+     * @param _toPoint - Ignored (TODO: remove in the future).
      */
 
   }, {
     key: "_drawDashedLine",
-    value: function _drawDashedLine(ctx, values, viaNode, fromPoint, toPoint) {
-      // eslint-disable-line no-unused-vars
-      ctx.lineCap = 'round';
-      var pattern = [5, 5];
-
-      if (Array.isArray(values.dashes) === true) {
-        pattern = values.dashes;
-      } // only firefox and chrome support this method, else we use the legacy one.
-
+    value: function _drawDashedLine(ctx, values, viaNode, _fromPoint, _toPoint) {
+      ctx.lineCap = "round";
+      var pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5]; // only firefox and chrome support this method, else we use the legacy one.
 
       if (ctx.setLineDash !== undefined) {
         ctx.save(); // set dash settings for chrome or firefox
@@ -26770,75 +28638,71 @@ function () {
       }
     }
     /**
+     * Find the intersection between the border of the node and the edge.
      *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} options
-     * @returns {{x: number, y: number}}
+     * @param node - The node (either from or to node of the edge).
+     * @param ctx - The context that will be used for rendering.
+     * @param options - Additional options.
+     *
+     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
 
   }, {
     key: "findBorderPosition",
-    value: function findBorderPosition(nearNode, ctx, options) {
+    value: function findBorderPosition(node, ctx, options) {
       if (this.from != this.to) {
-        return this._findBorderPosition(nearNode, ctx, options);
+        return this._findBorderPosition(node, ctx, options);
       } else {
-        return this._findBorderPositionCircle(nearNode, ctx, options);
+        return this._findBorderPositionCircle(node, ctx, options);
       }
     }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {{from: ({x: number, y: number, t: number}|*), to: ({x: number, y: number, t: number}|*)}}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "findBorderPositions",
     value: function findBorderPositions(ctx) {
-      var from = {};
-      var to = {};
-
       if (this.from != this.to) {
-        from = this._findBorderPosition(this.from, ctx);
-        to = this._findBorderPosition(this.to, ctx);
+        return {
+          from: this._findBorderPosition(this.from, ctx),
+          to: this._findBorderPosition(this.to, ctx)
+        };
       } else {
         var _this$_getCircleData$ = this._getCircleData(ctx).slice(0, 2),
             _this$_getCircleData$2 = slicedToArray(_this$_getCircleData$, 2),
             x = _this$_getCircleData$2[0],
             y = _this$_getCircleData$2[1];
 
-        from = this._findBorderPositionCircle(this.from, ctx, {
-          x: x,
-          y: y,
-          low: 0.25,
-          high: 0.6,
-          direction: -1
-        });
-        to = this._findBorderPositionCircle(this.from, ctx, {
-          x: x,
-          y: y,
-          low: 0.6,
-          high: 0.8,
-          direction: 1
-        });
+        return {
+          from: this._findBorderPositionCircle(this.from, ctx, {
+            x: x,
+            y: y,
+            low: 0.25,
+            high: 0.6,
+            direction: -1
+          }),
+          to: this._findBorderPositionCircle(this.from, ctx, {
+            x: x,
+            y: y,
+            low: 0.6,
+            high: 0.8,
+            direction: 1
+          })
+        };
       }
-
-      return {
-        from: from,
-        to: to
-      };
     }
     /**
+     * Compute the center point and radius of an edge connected to the same node at both ends.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {Array.<number>} x, y, radius
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     *
+     * @returns `[x, y, radius]`
      */
 
   }, {
     key: "_getCircleData",
     value: function _getCircleData(ctx) {
-      var x, y;
+      var x;
+      var y;
       var node = this.from;
       var radius = this.options.selfReferenceSize;
 
@@ -26860,55 +28724,60 @@ function () {
       return [x, y, radius];
     }
     /**
-     * Get a point on a circle
-     * @param {number} x
-     * @param {number} y
-     * @param {number} radius
-     * @param {number} percentage - Value between 0 (line start) and 1 (line end)
-     * @return {Object} point
-     * @private
+     * Get a point on a circle.
+     *
+     * @param x - Center of the circle on the x axis.
+     * @param y - Center of the circle on the y axis.
+     * @param radius - Radius of the circle.
+     * @param position - Value between 0 (line start) and 1 (line end).
+     *
+     * @returns Cartesian coordinates of requested point on the circle.
      */
 
   }, {
     key: "_pointOnCircle",
-    value: function _pointOnCircle(x, y, radius, percentage) {
-      var angle = percentage * 2 * Math.PI;
+    value: function _pointOnCircle(x, y, radius, position) {
+      var angle = position * 2 * Math.PI;
       return {
         x: x + radius * Math.cos(angle),
         y: y - radius * Math.sin(angle)
       };
     }
     /**
+     * Find the intersection between the border of the node and the edge.
+     *
+     * @remarks
      * This function uses binary search to look for the point where the circle crosses the border of the node.
-     * @param {Node} node
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} options
-     * @returns {*}
-     * @private
+     *
+     * @param nearNode - The node (either from or to node of the edge).
+     * @param ctx - The context that will be used for rendering.
+     * @param options - Additional options.
+     *
+     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
 
   }, {
     key: "_findBorderPositionCircle",
-    value: function _findBorderPositionCircle(node, ctx, options) {
+    value: function _findBorderPositionCircle(nearNode, ctx, options) {
       var x = options.x;
       var y = options.y;
       var low = options.low;
       var high = options.high;
       var direction = options.direction;
       var maxIterations = 10;
-      var iteration = 0;
       var radius = this.options.selfReferenceSize;
-      var pos, angle, distanceToBorder, distanceToPoint, difference;
       var threshold = 0.05;
+      var pos;
       var middle = (low + high) * 0.5;
+      var iteration = 0;
 
-      while (low <= high && iteration < maxIterations) {
+      do {
         middle = (low + high) * 0.5;
         pos = this._pointOnCircle(x, y, radius, middle);
-        angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-        distanceToBorder = node.distanceToBorder(ctx, angle);
-        distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-        difference = distanceToBorder - distanceToPoint;
+        var angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
+        var distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+        var distanceToPoint = Math.sqrt(Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2));
+        var difference = distanceToBorder - distanceToPoint;
 
         if (Math.abs(difference) < threshold) {
           break; // found
@@ -26927,58 +28796,57 @@ function () {
           }
         }
 
-        iteration++;
-      }
+        ++iteration;
+      } while (low <= high && iteration < maxIterations);
 
-      pos.t = middle;
-      return pos;
+      return _objectSpread$2({}, pos, {
+        t: middle
+      });
     }
     /**
-     * Get the line width of the edge. Depends on width and whether one of the
-     * connected nodes is selected.
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @returns {number} width
-     * @private
+     * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
+     *
+     * @param selected - Determines wheter the line is selected.
+     * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
+     *
+     * @returns The width of the line.
      */
 
   }, {
     key: "getLineWidth",
     value: function getLineWidth(selected, hover) {
       if (selected === true) {
-        return Math.max(this.selectionWidth, 0.3 / this.body.view.scale);
+        return Math.max(this.selectionWidth, 0.3 / this._body.view.scale);
+      } else if (hover === true) {
+        return Math.max(this.hoverWidth, 0.3 / this._body.view.scale);
       } else {
-        if (hover === true) {
-          return Math.max(this.hoverWidth, 0.3 / this.body.view.scale);
-        } else {
-          return Math.max(this.options.width, 0.3 / this.body.view.scale);
-        }
+        return Math.max(this.options.width, 0.3 / this._body.view.scale);
       }
     }
     /**
+     * Compute the color or gradient for given edge.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {boolean} selected - Unused
-     * @param {boolean} hover - Unused
-     * @returns {string}
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param _selected - Ignored (TODO: remove in the future).
+     * @param _hover - Ignored (TODO: remove in the future).
+     *
+     * @returns Color string if single color is inherited or gradient if two.
      */
 
   }, {
     key: "getColor",
-    value: function getColor(ctx, values, selected, hover) {
-      // eslint-disable-line no-unused-vars
+    value: function getColor(ctx, values) {
       if (values.inheritsColor !== false) {
         // when this is a loop edge, just use the 'from' method
-        if (values.inheritsColor === 'both' && this.from.id !== this.to.id) {
+        if (values.inheritsColor === "both" && this.from.id !== this.to.id) {
           var grd = ctx.createLinearGradient(this.from.x, this.from.y, this.to.x, this.to.y);
-          var fromColor, toColor;
-          fromColor = this.from.options.color.highlight.border;
-          toColor = this.to.options.color.highlight.border;
+          var fromColor = this.from.options.color.highlight.border;
+          var toColor = this.to.options.color.highlight.border;
 
           if (this.from.selected === false && this.to.selected === false) {
-            fromColor = util.overrideOpacity(this.from.options.color.border, values.opacity);
-            toColor = util.overrideOpacity(this.to.options.color.border, values.opacity);
+            fromColor = overrideOpacity(this.from.options.color.border, values.opacity);
+            toColor = overrideOpacity(this.to.options.color.border, values.opacity);
           } else if (this.from.selected === true && this.to.selected === false) {
             toColor = this.to.options.color.border;
           } else if (this.from.selected === false && this.to.selected === true) {
@@ -26992,24 +28860,23 @@ function () {
         }
 
         if (values.inheritsColor === "to") {
-          return util.overrideOpacity(this.to.options.color.border, values.opacity);
+          return overrideOpacity(this.to.options.color.border, values.opacity);
         } else {
           // "from"
-          return util.overrideOpacity(this.from.options.color.border, values.opacity);
+          return overrideOpacity(this.from.options.color.border, values.opacity);
         }
       } else {
-        return util.overrideOpacity(values.color, values.opacity);
+        return overrideOpacity(values.color, values.opacity);
       }
     }
     /**
-     * Draw a line from a node to itself, a circle
+     * Draw a line from a node to itself, a circle.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Array} values
-     * @param {number} x
-     * @param {number} y
-     * @param {number} radius
-     * @private
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values like color, opacity or shadow.
+     * @param x - Center of the circle on the x axis.
+     * @param y - Center of the circle on the y axis.
+     * @param radius - Radius of the circle.
      */
 
   }, {
@@ -27025,30 +28892,17 @@ function () {
       this.disableShadow(ctx, values);
     }
     /**
-     * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-     * (x3,y3) is the point.
+     * @inheritdoc
      *
+     * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @param {Node} via
-     * @param {Array} values
-     * @returns {number}
      */
 
   }, {
     key: "getDistanceToEdge",
-    value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3, via, values) {
-      // eslint-disable-line no-unused-vars
-      var returnValue = 0;
-
+    value: function getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
       if (this.from != this.to) {
-        returnValue = this._getDistanceToEdge(x1, y1, x2, y2, x3, y3, via);
+        return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
       } else {
         var _this$_getCircleData7 = this._getCircleData(undefined),
             _this$_getCircleData8 = slicedToArray(_this$_getCircleData7, 3),
@@ -27058,21 +28912,20 @@ function () {
 
         var dx = x - x3;
         var dy = y - y3;
-        returnValue = Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
+        return Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
       }
-
-      return returnValue;
     }
     /**
+     * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
      *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @returns {number}
-     * @private
+     * @param x1 - First end of the line segment on the x axis.
+     * @param y1 - First end of the line segment on the y axis.
+     * @param x2 - Second end of the line segment on the x axis.
+     * @param y2 - Second end of the line segment on the y axis.
+     * @param x3 - Position of the point on the x axis.
+     * @param y3 - Position of the point on the y axis.
+     *
+     * @returns The distance between the line segment and the point.
      */
 
   }, {
@@ -27100,19 +28953,11 @@ function () {
 
       return Math.sqrt(dx * dx + dy * dy);
     }
-    /**
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {string} position
-     * @param {Node} viaNode
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {Array} values
-     * @returns {{point: *, core: {x: number, y: number}, angle: *, length: number, type: *}}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getArrowData",
-    value: function getArrowData(ctx, position, viaNode, selected, hover, values) {
+    value: function getArrowData(ctx, position, viaNode, _selected, _hover, values) {
       // set lets
       var angle;
       var arrowPoint;
@@ -27123,13 +28968,13 @@ function () {
       var type;
       var lineWidth = values.width;
 
-      if (position === 'from') {
+      if (position === "from") {
         node1 = this.from;
         node2 = this.to;
         guideOffset = 0.1;
         scaleFactor = values.fromArrowScale;
         type = values.fromArrowType;
-      } else if (position === 'to') {
+      } else if (position === "to") {
         node1 = this.to;
         node2 = this.from;
         guideOffset = -0.1;
@@ -27144,17 +28989,20 @@ function () {
 
 
       if (node1 != node2) {
-        if (position !== 'middle') {
+        if (position !== "middle") {
           // draw arrow head
           if (this.options.smooth.enabled === true) {
-            arrowPoint = this.findBorderPosition(node1, ctx, {
+            var pointT = this._findBorderPosition(node1, ctx, {
               via: viaNode
             });
-            var guidePos = this.getPoint(Math.max(0.0, Math.min(1.0, arrowPoint.t + guideOffset)), viaNode);
-            angle = Math.atan2(arrowPoint.y - guidePos.y, arrowPoint.x - guidePos.x);
+
+            var guidePos = this.getPoint( // guideOffset is unset only for position === 'middle'
+            Math.max(0.0, Math.min(1.0, pointT.t + guideOffset)), viaNode);
+            angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
+            arrowPoint = pointT;
           } else {
             angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-            arrowPoint = this.findBorderPosition(node1, ctx);
+            arrowPoint = this._findBorderPosition(node1, ctx);
           }
         } else {
           angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
@@ -27168,31 +29016,37 @@ function () {
             y = _this$_getCircleData10[1],
             radius = _this$_getCircleData10[2];
 
-        if (position === 'from') {
-          arrowPoint = this.findBorderPosition(this.from, ctx, {
+        if (position === "from") {
+          var _pointT = this._findBorderPositionCircle(this.from, ctx, {
             x: x,
             y: y,
             low: 0.25,
             high: 0.6,
             direction: -1
           });
-          angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        } else if (position === 'to') {
-          arrowPoint = this.findBorderPosition(this.from, ctx, {
+
+          angle = _pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+          arrowPoint = _pointT;
+        } else if (position === "to") {
+          var _pointT2 = this._findBorderPositionCircle(this.from, ctx, {
             x: x,
             y: y,
             low: 0.6,
             high: 1.0,
             direction: 1
           });
-          angle = arrowPoint.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+
+          angle = _pointT2.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
+          arrowPoint = _pointT2;
         } else {
           arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
           angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         }
       }
 
-      if (position === 'middle' && scaleFactor < 0) lineWidth *= -1; // reversed middle arrow
+      if (position === "middle" && scaleFactor < 0) {
+        lineWidth *= -1; // reversed middle arrow
+      }
 
       var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
@@ -27210,20 +29064,13 @@ function () {
         type: type
       };
     }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {Object} arrowData
-     */
+    /** @inheritdoc */
 
   }, {
     key: "drawArrowHead",
-    value: function drawArrowHead(ctx, values, selected, hover, arrowData) {
+    value: function drawArrowHead(ctx, values, _selected, _hover, arrowData) {
       // set style
-      ctx.strokeStyle = this.getColor(ctx, values, selected, hover);
+      ctx.strokeStyle = this.getColor(ctx, values);
       ctx.fillStyle = ctx.strokeStyle;
       ctx.lineWidth = values.width;
       EndPoints.draw(ctx, arrowData); // draw shadow if enabled
@@ -27234,9 +29081,10 @@ function () {
       this.disableShadow(ctx, values);
     }
     /**
+     * Set the shadow formatting values in the context if enabled, do nothing otherwise.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values for the shadow.
      */
 
   }, {
@@ -27250,52 +29098,55 @@ function () {
       }
     }
     /**
+     * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values for the shadow.
      */
 
   }, {
     key: "disableShadow",
     value: function disableShadow(ctx, values) {
       if (values.shadow === true) {
-        ctx.shadowColor = 'rgba(0,0,0,0)';
+        ctx.shadowColor = "rgba(0,0,0,0)";
         ctx.shadowBlur = 0;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
       }
     }
     /**
+     * Render the background according to the formatting values.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {{toArrow: boolean, toArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), toArrowType: *, middleArrow: boolean, middleArrowScale: (number|allOptions.edges.arrows.middle.scaleFactor|{number}|Array), middleArrowType: (allOptions.edges.arrows.middle.type|{string}|string|*), fromArrow: boolean, fromArrowScale: (allOptions.edges.arrows.to.scaleFactor|{number}|allOptions.edges.arrows.middle.scaleFactor|allOptions.edges.arrows.from.scaleFactor|Array|number), fromArrowType: *, arrowStrikethrough: (*|boolean|allOptions.edges.arrowStrikethrough|{boolean}), color: undefined, inheritsColor: (string|string|string|allOptions.edges.color.inherit|{string, boolean}|Array|*), opacity: *, hidden: *, length: *, shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *, dashes: (*|boolean|Array|allOptions.edges.dashes|{boolean, array}), width: *}} values
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Formatting values for the background.
      */
 
   }, {
     key: "drawBackground",
     value: function drawBackground(ctx, values) {
       if (values.background !== false) {
-        var attrs = ['strokeStyle', 'lineWidth', 'dashes'];
-        var origCtxAttr = {}; // save original line attrs
-
-        attrs.forEach(function (attrname) {
-          origCtxAttr[attrname] = ctx[attrname];
-        });
+        // save original line attrs
+        var origCtxAttr = {
+          strokeStyle: ctx.strokeStyle,
+          lineWidth: ctx.lineWidth,
+          dashes: ctx.dashes
+        };
         ctx.strokeStyle = values.backgroundColor;
         ctx.lineWidth = values.backgroundSize;
         this.setStrokeDashed(ctx, values.backgroundDashes);
         ctx.stroke(); // restore original line attrs
 
-        attrs.forEach(function (attrname) {
-          ctx[attrname] = origCtxAttr[attrname];
-        });
+        ctx.strokeStyle = origCtxAttr.strokeStyle;
+        ctx.lineWidth = origCtxAttr.lineWidth;
+        ctx.dashes = origCtxAttr.dashes;
         this.setStrokeDashed(ctx, values.dashes);
       }
     }
     /**
+     * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {boolean|Array} dashes
+     * @param ctx - The context that will be used for rendering.
+     * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
      */
 
   }, {
@@ -27303,12 +29154,7 @@ function () {
     value: function setStrokeDashed(ctx, dashes) {
       if (dashes !== false) {
         if (ctx.setLineDash !== undefined) {
-          var pattern = [5, 5];
-
-          if (Array.isArray(dashes) === true) {
-            pattern = dashes;
-          }
-
+          var pattern = Array.isArray(dashes) ? dashes : [5, 5];
           ctx.setLineDash(pattern);
         } else {
           console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
@@ -27326,11 +29172,12 @@ function () {
   return EdgeBase;
 }();
 
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(source, true).forEach(function (key) { defineProperty$2(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 /**
- * The Base Class for all Bezier edges. Bezier curves are used to model smooth
- * gradual curves in paths between nodes.
- *
- * @extends EdgeBase
+ * The Base Class for all Bezier edges.
+ * Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 
 var BezierEdgeBase =
@@ -27339,9 +29186,11 @@ function (_EdgeBase) {
   inherits$1(BezierEdgeBase, _EdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function BezierEdgeBase(options, body, labelModule) {
     classCallCheck$1(this, BezierEdgeBase);
@@ -27349,13 +29198,16 @@ function (_EdgeBase) {
     return possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeBase).call(this, options, body, labelModule));
   }
   /**
+   * Find the intersection between the border of the node and the edge.
+   *
+   * @remarks
    * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
    *
-   * @param {Node} nearNode
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {Node} viaNode
-   * @returns {*}
-   * @private
+   * @param nearNode - The node (either from or to node of the edge).
+   * @param ctx - The context that will be used for rendering.
+   * @param viaNode - Additional node(s) the edge passes through.
+   *
+   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
    */
 
 
@@ -27364,26 +29216,28 @@ function (_EdgeBase) {
     value: function _findBorderPositionBezier(nearNode, ctx) {
       var viaNode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this._getViaCoordinates();
       var maxIterations = 10;
-      var iteration = 0;
-      var low = 0;
-      var high = 1;
-      var pos, angle, distanceToBorder, distanceToPoint, difference;
       var threshold = 0.2;
-      var node = this.to;
       var from = false;
+      var high = 1;
+      var low = 0;
+      var node = this.to;
+      var pos;
+      var middle;
 
       if (nearNode.id === this.from.id) {
         node = this.from;
         from = true;
       }
 
-      while (low <= high && iteration < maxIterations) {
-        var middle = (low + high) * 0.5;
+      var iteration = 0;
+
+      do {
+        middle = (low + high) * 0.5;
         pos = this.getPoint(middle, viaNode);
-        angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-        distanceToBorder = node.distanceToBorder(ctx, angle);
-        distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
-        difference = distanceToBorder - distanceToPoint;
+        var angle = Math.atan2(node.y - pos.y, node.x - pos.x);
+        var distanceToBorder = node.distanceToBorder(ctx, angle);
+        var distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+        var difference = distanceToBorder - distanceToPoint;
 
         if (Math.abs(difference) < threshold) {
           break; // found
@@ -27402,25 +29256,28 @@ function (_EdgeBase) {
           }
         }
 
-        iteration++;
-      }
+        ++iteration;
+      } while (low <= high && iteration < maxIterations);
 
-      pos.t = middle;
-      return pos;
+      return _objectSpread$3({}, pos, {
+        t: middle
+      });
     }
     /**
-     * Calculate the distance between a point (x3,y3) and a line segment from
-     * (x1,y1) to (x2,y2).
+     * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+     *
+     * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     * @param {number} x1 from x
-     * @param {number} y1 from y
-     * @param {number} x2 to x
-     * @param {number} y2 to y
-     * @param {number} x3 point to check x
-     * @param {number} y3 point to check y
-     * @param {Node} via
-     * @returns {number}
-     * @private
+     *
+     * @param x1 - First end of the line segment on the x axis.
+     * @param y1 - First end of the line segment on the y axis.
+     * @param x2 - Second end of the line segment on the x axis.
+     * @param y2 - Second end of the line segment on the y axis.
+     * @param x3 - Position of the point on the x axis.
+     * @param y3 - Position of the point on the y axis.
+     * @param via - The control point for the edge.
+     *
+     * @returns The distance between the line segment and the point.
      */
 
   }, {
@@ -27450,31 +29307,30 @@ function (_EdgeBase) {
       return minDistance;
     }
     /**
-     * Draw a bezier curve between two nodes
+     * Render a bezier curve between two nodes.
      *
+     * @remarks
      * The method accepts zero, one or two control points.
-     * Passing zero control points just draws a straight line
+     * Passing zero control points just draws a straight line.
      *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object}           values   | options for shadow drawing
-     * @param {Object|undefined} viaNode1 | first control point for curve drawing
-     * @param {Object|undefined} viaNode2 | second control point for curve drawing
-     *
-     * @protected
+     * @param ctx - The context that will be used for rendering.
+     * @param values - Style options for edge drawing.
+     * @param viaNode1 - First control point for curve drawing.
+     * @param viaNode2 - Second control point for curve drawing.
      */
 
   }, {
     key: "_bezierCurve",
     value: function _bezierCurve(ctx, values, viaNode1, viaNode2) {
-      var hasNode1 = viaNode1 !== undefined && viaNode1.x !== undefined;
-      var hasNode2 = viaNode2 !== undefined && viaNode2.x !== undefined;
       ctx.beginPath();
       ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
 
-      if (hasNode1 && hasNode2) {
-        ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
-      } else if (hasNode1) {
-        ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+      if (viaNode1 != null && viaNode1.x != null) {
+        if (viaNode2 != null && viaNode2.x != null) {
+          ctx.bezierCurveTo(viaNode1.x, viaNode1.y, viaNode2.x, viaNode2.y, this.toPoint.x, this.toPoint.y);
+        } else {
+          ctx.quadraticCurveTo(viaNode1.x, viaNode1.y, this.toPoint.x, this.toPoint.y);
+        }
       } else {
         // fallback to normal straight edge
         ctx.lineTo(this.toPoint.x, this.toPoint.y);
@@ -27487,10 +29343,7 @@ function (_EdgeBase) {
       ctx.stroke();
       this.disableShadow(ctx, values);
     }
-    /**
-     *
-     * @returns {*|{x, y}|{x: undefined, y: undefined}}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
@@ -27501,6 +29354,468 @@ function (_EdgeBase) {
 
   return BezierEdgeBase;
 }(EdgeBase);
+
+/**
+ * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
+ * curves in paths between nodes. The Dynamic piece refers to how the curve
+ * reacts to physics changes.
+ *
+ * @extends BezierEdgeBase
+ */
+
+var BezierEdgeDynamic =
+/*#__PURE__*/
+function (_BezierEdgeBase) {
+  inherits$1(BezierEdgeDynamic, _BezierEdgeBase);
+
+  /**
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
+   */
+  function BezierEdgeDynamic(options, body, labelModule) {
+    var _this;
+
+    classCallCheck$1(this, BezierEdgeDynamic);
+
+    //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
+    _this = possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeDynamic).call(this, options, body, labelModule)); // --> this calls the setOptions below
+
+    _this.via = _this.via; // constructor → super → super → setOptions → setupSupportNode
+
+    _this._boundFunction = function () {
+      _this.positionBezierNode();
+    };
+
+    _this._body.emitter.on("_repositionBezierNodes", _this._boundFunction);
+
+    return _this;
+  }
+  /** @inheritdoc */
+
+
+  createClass$1(BezierEdgeDynamic, [{
+    key: "setOptions",
+    value: function setOptions(options) {
+      get(getPrototypeOf$1(BezierEdgeDynamic.prototype), "setOptions", this).call(this, options); // check if the physics has changed.
+
+
+      var physicsChange = false;
+
+      if (this.options.physics !== options.physics) {
+        physicsChange = true;
+      } // set the options and the to and from nodes
+
+
+      this.options = options;
+      this.id = this.options.id;
+      this.from = this._body.nodes[this.options.from];
+      this.to = this._body.nodes[this.options.to]; // setup the support node and connect
+
+      this.setupSupportNode();
+      this.connect(); // when we change the physics state of the edge, we reposition the support node.
+
+      if (physicsChange === true) {
+        this.via.setOptions({
+          physics: this.options.physics
+        });
+        this.positionBezierNode();
+      }
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "connect",
+    value: function connect() {
+      this.from = this._body.nodes[this.options.from];
+      this.to = this._body.nodes[this.options.to];
+
+      if (this.from === undefined || this.to === undefined || this.options.physics === false) {
+        this.via.setOptions({
+          physics: false
+        });
+      } else {
+        // fix weird behaviour where a self referencing node has physics enabled
+        if (this.from.id === this.to.id) {
+          this.via.setOptions({
+            physics: false
+          });
+        } else {
+          this.via.setOptions({
+            physics: true
+          });
+        }
+      }
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "cleanup",
+    value: function cleanup() {
+      this._body.emitter.off("_repositionBezierNodes", this._boundFunction);
+
+      if (this.via !== undefined) {
+        delete this._body.nodes[this.via.id];
+        this.via = undefined;
+        return true;
+      }
+
+      return false;
+    }
+    /**
+     * Create and add a support node if not already present.
+     *
+     * @remarks
+     * Bezier curves require an anchor point to calculate the smooth flow.
+     * These points are nodes.
+     * These nodes are invisible but are used for the force calculation.
+     *
+     * The changed data is not called, if needed, it is returned by the main edge constructor.
+     */
+
+  }, {
+    key: "setupSupportNode",
+    value: function setupSupportNode() {
+      if (this.via === undefined) {
+        var nodeId = "edgeId:" + this.id;
+
+        var node = this._body.functions.createNode({
+          id: nodeId,
+          shape: "circle",
+          physics: true,
+          hidden: true
+        });
+
+        this._body.nodes[nodeId] = node;
+        this.via = node;
+        this.via.parentEdgeId = this.id;
+        this.positionBezierNode();
+      }
+    }
+    /**
+     * Position bezier node.
+     */
+
+  }, {
+    key: "positionBezierNode",
+    value: function positionBezierNode() {
+      if (this.via !== undefined && this.from !== undefined && this.to !== undefined) {
+        this.via.x = 0.5 * (this.from.x + this.to.x);
+        this.via.y = 0.5 * (this.from.y + this.to.y);
+      } else if (this.via !== undefined) {
+        this.via.x = 0;
+        this.via.y = 0;
+      }
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_line",
+    value: function _line(ctx, values, viaNode) {
+      this._bezierCurve(ctx, values, viaNode);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_getViaCoordinates",
+    value: function _getViaCoordinates() {
+      return this.via;
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "getViaNode",
+    value: function getViaNode() {
+      return this.via;
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "getPoint",
+    value: function getPoint(position) {
+      var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.via;
+
+      if (this.from === this.to) {
+        var _this$_getCircleData = this._getCircleData(),
+            _this$_getCircleData2 = slicedToArray(_this$_getCircleData, 3),
+            cx = _this$_getCircleData2[0],
+            cy = _this$_getCircleData2[1],
+            cr = _this$_getCircleData2[2];
+
+        var a = 2 * Math.PI * (1 - position);
+        return {
+          x: cx + cr * Math.sin(a),
+          y: cy + cr - cr * (1 - Math.cos(a))
+        };
+      } else {
+        return {
+          x: Math.pow(1 - position, 2) * this.fromPoint.x + 2 * position * (1 - position) * viaNode.x + Math.pow(position, 2) * this.toPoint.x,
+          y: Math.pow(1 - position, 2) * this.fromPoint.y + 2 * position * (1 - position) * viaNode.y + Math.pow(position, 2) * this.toPoint.y
+        };
+      }
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_findBorderPosition",
+    value: function _findBorderPosition(nearNode, ctx) {
+      return this._findBorderPositionBezier(nearNode, ctx, this.via);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_getDistanceToEdge",
+    value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+      // x3,y3 is the point
+      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, this.via);
+    }
+  }]);
+
+  return BezierEdgeDynamic;
+}(BezierEdgeBase);
+
+/**
+ * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
+ */
+
+var BezierEdgeStatic =
+/*#__PURE__*/
+function (_BezierEdgeBase) {
+  inherits$1(BezierEdgeStatic, _BezierEdgeBase);
+
+  /**
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
+   */
+  function BezierEdgeStatic(options, body, labelModule) {
+    classCallCheck$1(this, BezierEdgeStatic);
+
+    return possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeStatic).call(this, options, body, labelModule));
+  }
+  /** @inheritdoc */
+
+
+  createClass$1(BezierEdgeStatic, [{
+    key: "_line",
+    value: function _line(ctx, values, viaNode) {
+      this._bezierCurve(ctx, values, viaNode);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "getViaNode",
+    value: function getViaNode() {
+      return this._getViaCoordinates();
+    }
+    /**
+     * Compute the coordinates of the via node.
+     *
+     * @remarks
+     * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
+     *
+     * @returns Cartesian coordinates of the via node.
+     */
+
+  }, {
+    key: "_getViaCoordinates",
+    value: function _getViaCoordinates() {
+      // Assumption: x/y coordinates in from/to always defined
+      var factor = this.options.smooth.roundness;
+      var type = this.options.smooth.type;
+      var dx = Math.abs(this.from.x - this.to.x);
+      var dy = Math.abs(this.from.y - this.to.y);
+
+      if (type === "discrete" || type === "diagonalCross") {
+        var stepX;
+        var stepY;
+
+        if (dx <= dy) {
+          stepX = stepY = factor * dy;
+        } else {
+          stepX = stepY = factor * dx;
+        }
+
+        if (this.from.x > this.to.x) {
+          stepX = -stepX;
+        }
+
+        if (this.from.y >= this.to.y) {
+          stepY = -stepY;
+        }
+
+        var xVia = this.from.x + stepX;
+        var yVia = this.from.y + stepY;
+
+        if (type === "discrete") {
+          if (dx <= dy) {
+            xVia = dx < factor * dy ? this.from.x : xVia;
+          } else {
+            yVia = dy < factor * dx ? this.from.y : yVia;
+          }
+        }
+
+        return {
+          x: xVia,
+          y: yVia
+        };
+      } else if (type === "straightCross") {
+        var _stepX = (1 - factor) * dx;
+
+        var _stepY = (1 - factor) * dy;
+
+        if (dx <= dy) {
+          // up - down
+          _stepX = 0;
+
+          if (this.from.y < this.to.y) {
+            _stepY = -_stepY;
+          }
+        } else {
+          // left - right
+          if (this.from.x < this.to.x) {
+            _stepX = -_stepX;
+          }
+
+          _stepY = 0;
+        }
+
+        return {
+          x: this.to.x + _stepX,
+          y: this.to.y + _stepY
+        };
+      } else if (type === "horizontal") {
+        var _stepX2 = (1 - factor) * dx;
+
+        if (this.from.x < this.to.x) {
+          _stepX2 = -_stepX2;
+        }
+
+        return {
+          x: this.to.x + _stepX2,
+          y: this.from.y
+        };
+      } else if (type === "vertical") {
+        var _stepY2 = (1 - factor) * dy;
+
+        if (this.from.y < this.to.y) {
+          _stepY2 = -_stepY2;
+        }
+
+        return {
+          x: this.from.x,
+          y: this.to.y + _stepY2
+        };
+      } else if (type === "curvedCW") {
+        dx = this.to.x - this.from.x;
+        dy = this.from.y - this.to.y;
+        var radius = Math.sqrt(dx * dx + dy * dy);
+        var pi = Math.PI;
+        var originalAngle = Math.atan2(dy, dx);
+        var myAngle = (originalAngle + (factor * 0.5 + 0.5) * pi) % (2 * pi);
+        return {
+          x: this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle),
+          y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle)
+        };
+      } else if (type === "curvedCCW") {
+        dx = this.to.x - this.from.x;
+        dy = this.from.y - this.to.y;
+
+        var _radius = Math.sqrt(dx * dx + dy * dy);
+
+        var _pi = Math.PI;
+
+        var _originalAngle = Math.atan2(dy, dx);
+
+        var _myAngle = (_originalAngle + (-factor * 0.5 + 0.5) * _pi) % (2 * _pi);
+
+        return {
+          x: this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle),
+          y: this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle)
+        };
+      } else {
+        // continuous
+        var _stepX3;
+
+        var _stepY3;
+
+        if (dx <= dy) {
+          _stepX3 = _stepY3 = factor * dy;
+        } else {
+          _stepX3 = _stepY3 = factor * dx;
+        }
+
+        if (this.from.x > this.to.x) {
+          _stepX3 = -_stepX3;
+        }
+
+        if (this.from.y >= this.to.y) {
+          _stepY3 = -_stepY3;
+        }
+
+        var _xVia = this.from.x + _stepX3;
+
+        var _yVia = this.from.y + _stepY3;
+
+        if (dx <= dy) {
+          if (this.from.x <= this.to.x) {
+            _xVia = this.to.x < _xVia ? this.to.x : _xVia;
+          } else {
+            _xVia = this.to.x > _xVia ? this.to.x : _xVia;
+          }
+        } else {
+          if (this.from.y >= this.to.y) {
+            _yVia = this.to.y > _yVia ? this.to.y : _yVia;
+          } else {
+            _yVia = this.to.y < _yVia ? this.to.y : _yVia;
+          }
+        }
+
+        return {
+          x: _xVia,
+          y: _yVia
+        };
+      }
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_findBorderPosition",
+    value: function _findBorderPosition(nearNode, ctx) {
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return this._findBorderPositionBezier(nearNode, ctx, options.via);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "_getDistanceToEdge",
+    value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
+      var viaNode = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates();
+      // x3,y3 is the point
+      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
+    }
+    /** @inheritdoc */
+
+  }, {
+    key: "getPoint",
+    value: function getPoint(position) {
+      var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates();
+      var t = position;
+      var x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
+      var y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
+      return {
+        x: x,
+        y: y
+      };
+    }
+  }]);
+
+  return BezierEdgeStatic;
+}(BezierEdgeBase);
 
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
@@ -27515,9 +29830,11 @@ function (_BezierEdgeBase) {
   inherits$1(CubicBezierEdgeBase, _BezierEdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function CubicBezierEdgeBase(options, body, labelModule) {
     classCallCheck$1(this, CubicBezierEdgeBase);
@@ -27525,45 +29842,46 @@ function (_BezierEdgeBase) {
     return possibleConstructorReturn$1(this, getPrototypeOf$1(CubicBezierEdgeBase).call(this, options, body, labelModule));
   }
   /**
-   * Calculate the distance between a point (x3,y3) and a line segment from
-   * (x1,y1) to (x2,y2).
+   * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
+   *
+   * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
    * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
-   * @param {number} x1 from x
-   * @param {number} y1 from y
-   * @param {number} x2 to x
-   * @param {number} y2 to y
-   * @param {number} x3 point to check x
-   * @param {number} y3 point to check y
-   * @param {Node} via1
-   * @param {Node} via2
-   * @returns {number}
-   * @private
+   *
+   * @param x1 - First end of the line segment on the x axis.
+   * @param y1 - First end of the line segment on the y axis.
+   * @param x2 - Second end of the line segment on the x axis.
+   * @param y2 - Second end of the line segment on the y axis.
+   * @param x3 - Position of the point on the x axis.
+   * @param y3 - Position of the point on the y axis.
+   * @param via1 - The first point this edge passes through.
+   * @param via2 - The second point this edge passes through.
+   *
+   * @returns The distance between the line segment and the point.
    */
 
 
   createClass$1(CubicBezierEdgeBase, [{
-    key: "_getDistanceToBezierEdge",
-    value: function _getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2) {
+    key: "_getDistanceToBezierEdge2",
+    value: function _getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2) {
       // x3,y3 is the point
       var minDistance = 1e9;
-      var distance;
-      var i, t, x, y;
       var lastX = x1;
       var lastY = y1;
       var vec = [0, 0, 0, 0];
 
-      for (i = 1; i < 10; i++) {
-        t = 0.1 * i;
+      for (var i = 1; i < 10; i++) {
+        var t = 0.1 * i;
         vec[0] = Math.pow(1 - t, 3);
         vec[1] = 3 * t * Math.pow(1 - t, 2);
         vec[2] = 3 * Math.pow(t, 2) * (1 - t);
         vec[3] = Math.pow(t, 3);
-        x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
-        y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
+        var x = vec[0] * x1 + vec[1] * via1.x + vec[2] * via2.x + vec[3] * x2;
+        var y = vec[0] * y1 + vec[1] * via1.y + vec[2] * via2.y + vec[3] * y2;
 
         if (i > 0) {
-          distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
+          var distance = this._getDistanceToLine(lastX, lastY, x, y, x3, y3);
+
           minDistance = distance < minDistance ? distance : minDistance;
         }
 
@@ -27579,10 +29897,7 @@ function (_BezierEdgeBase) {
 }(BezierEdgeBase);
 
 /**
- * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual
- * curves in paths between nodes.
- *
- * @extends CubicBezierEdgeBase
+ * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 
 var CubicBezierEdge =
@@ -27591,22 +29906,18 @@ function (_CubicBezierEdgeBase) {
   inherits$1(CubicBezierEdge, _CubicBezierEdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function CubicBezierEdge(options, body, labelModule) {
     classCallCheck$1(this, CubicBezierEdge);
 
     return possibleConstructorReturn$1(this, getPrototypeOf$1(CubicBezierEdge).call(this, options, body, labelModule));
   }
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {Array.<Node>} viaNodes
-   * @private
-   */
+  /** @inheritdoc */
 
 
   createClass$1(CubicBezierEdge, [{
@@ -27619,9 +29930,9 @@ function (_CubicBezierEdgeBase) {
       this._bezierCurve(ctx, values, via1, via2);
     }
     /**
+     * Compute the additional points the edge passes through.
      *
-     * @returns {Array.<{x: number, y: number}>}
-     * @private
+     * @returns Cartesian coordinates of the points the edge passes through.
      */
 
   }, {
@@ -27629,10 +29940,13 @@ function (_CubicBezierEdgeBase) {
     value: function _getViaCoordinates() {
       var dx = this.from.x - this.to.x;
       var dy = this.from.y - this.to.y;
-      var x1, y1, x2, y2;
+      var x1;
+      var y1;
+      var x2;
+      var y2;
       var roundness = this.options.smooth.roundness; // horizontal if x > y or if direction is forced or if direction is horizontal
 
-      if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === 'horizontal') && this.options.smooth.forceDirection !== 'vertical') {
+      if ((Math.abs(dx) > Math.abs(dy) || this.options.smooth.forceDirection === true || this.options.smooth.forceDirection === "horizontal") && this.options.smooth.forceDirection !== "vertical") {
         y1 = this.from.y;
         y2 = this.to.y;
         x1 = this.from.x - roundness * dx;
@@ -27652,42 +29966,21 @@ function (_CubicBezierEdgeBase) {
         y: y2
       }];
     }
-    /**
-     *
-     * @returns {Array.<{x: number, y: number}>}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return this._getViaCoordinates();
     }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {{x: number, y: number, t: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_findBorderPosition",
     value: function _findBorderPosition(nearNode, ctx) {
       return this._findBorderPositionBezier(nearNode, ctx);
     }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @param {Node} via1
-     * @param {Node} via2
-     * @returns {number}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -27698,31 +29991,20 @@ function (_CubicBezierEdgeBase) {
           via2 = _ref2[1];
 
       // x3,y3 is the point
-      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, via1, via2);
+      return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
     }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     * @param {number} percentage
-     * @param {{x: number, y: number}} [via1=this._getViaCoordinates()[0]]
-     * @param {{x: number, y: number}} [via2=this._getViaCoordinates()[1]]
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getPoint",
-    value: function getPoint(percentage) {
+    value: function getPoint(position) {
       var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
           _ref4 = slicedToArray(_ref3, 2),
           via1 = _ref4[0],
           via2 = _ref4[1];
 
-      var t = percentage;
-      var vec = [];
-      vec[0] = Math.pow(1 - t, 3);
-      vec[1] = 3 * t * Math.pow(1 - t, 2);
-      vec[2] = 3 * Math.pow(t, 2) * (1 - t);
-      vec[3] = Math.pow(t, 3);
+      var t = position;
+      var vec = [Math.pow(1 - t, 3), 3 * t * Math.pow(1 - t, 2), 3 * Math.pow(t, 2) * (1 - t), Math.pow(t, 3)];
       var x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
       var y = vec[0] * this.fromPoint.y + vec[1] * via1.y + vec[2] * via2.y + vec[3] * this.toPoint.y;
       return {
@@ -27736,489 +30018,7 @@ function (_CubicBezierEdgeBase) {
 }(CubicBezierEdgeBase);
 
 /**
- * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
- * curves in paths between nodes. The Dynamic piece refers to how the curve
- * reacts to physics changes.
- *
- * @extends BezierEdgeBase
- */
-
-var BezierEdgeDynamic =
-/*#__PURE__*/
-function (_BezierEdgeBase) {
-  inherits$1(BezierEdgeDynamic, _BezierEdgeBase);
-
-  /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
-   */
-  function BezierEdgeDynamic(options, body, labelModule) {
-    var _this;
-
-    classCallCheck$1(this, BezierEdgeDynamic);
-
-    //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
-    _this = possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeDynamic).call(this, options, body, labelModule)); // --> this calls the setOptions below
-
-    _this._boundFunction = function () {
-      _this.positionBezierNode();
-    };
-
-    _this.body.emitter.on("_repositionBezierNodes", _this._boundFunction);
-
-    return _this;
-  }
-  /**
-   *
-   * @param {Object} options
-   */
-
-
-  createClass$1(BezierEdgeDynamic, [{
-    key: "setOptions",
-    value: function setOptions(options) {
-      // check if the physics has changed.
-      var physicsChange = false;
-
-      if (this.options.physics !== options.physics) {
-        physicsChange = true;
-      } // set the options and the to and from nodes
-
-
-      this.options = options;
-      this.id = this.options.id;
-      this.from = this.body.nodes[this.options.from];
-      this.to = this.body.nodes[this.options.to]; // setup the support node and connect
-
-      this.setupSupportNode();
-      this.connect(); // when we change the physics state of the edge, we reposition the support node.
-
-      if (physicsChange === true) {
-        this.via.setOptions({
-          physics: this.options.physics
-        });
-        this.positionBezierNode();
-      }
-    }
-    /**
-     * Connects an edge to node(s)
-     */
-
-  }, {
-    key: "connect",
-    value: function connect() {
-      this.from = this.body.nodes[this.options.from];
-      this.to = this.body.nodes[this.options.to];
-
-      if (this.from === undefined || this.to === undefined || this.options.physics === false) {
-        this.via.setOptions({
-          physics: false
-        });
-      } else {
-        // fix weird behaviour where a self referencing node has physics enabled
-        if (this.from.id === this.to.id) {
-          this.via.setOptions({
-            physics: false
-          });
-        } else {
-          this.via.setOptions({
-            physics: true
-          });
-        }
-      }
-    }
-    /**
-     * remove the support nodes
-     * @returns {boolean}
-     */
-
-  }, {
-    key: "cleanup",
-    value: function cleanup() {
-      this.body.emitter.off("_repositionBezierNodes", this._boundFunction);
-
-      if (this.via !== undefined) {
-        delete this.body.nodes[this.via.id];
-        this.via = undefined;
-        return true;
-      }
-
-      return false;
-    }
-    /**
-     * Bezier curves require an anchor point to calculate the smooth flow. These points are nodes. These nodes are invisible but
-     * are used for the force calculation.
-     *
-     * The changed data is not called, if needed, it is returned by the main edge constructor.
-     * @private
-     */
-
-  }, {
-    key: "setupSupportNode",
-    value: function setupSupportNode() {
-      if (this.via === undefined) {
-        var nodeId = "edgeId:" + this.id;
-        var node = this.body.functions.createNode({
-          id: nodeId,
-          shape: 'circle',
-          physics: true,
-          hidden: true
-        });
-        this.body.nodes[nodeId] = node;
-        this.via = node;
-        this.via.parentEdgeId = this.id;
-        this.positionBezierNode();
-      }
-    }
-    /**
-     * Positions bezier node
-     */
-
-  }, {
-    key: "positionBezierNode",
-    value: function positionBezierNode() {
-      if (this.via !== undefined && this.from !== undefined && this.to !== undefined) {
-        this.via.x = 0.5 * (this.from.x + this.to.x);
-        this.via.y = 0.5 * (this.from.y + this.to.y);
-      } else if (this.via !== undefined) {
-        this.via.x = 0;
-        this.via.y = 0;
-      }
-    }
-    /**
-     * Draw a line between two nodes
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {ArrowOptions} values
-     * @param {Node} viaNode
-     * @private
-     */
-
-  }, {
-    key: "_line",
-    value: function _line(ctx, values, viaNode) {
-      this._bezierCurve(ctx, values, viaNode);
-    }
-    /**
-     *
-     * @returns {Node|undefined|*|{index, line, column}}
-     */
-
-  }, {
-    key: "getViaNode",
-    value: function getViaNode() {
-      return this.via;
-    }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     *
-     * @param {number} percentage
-     * @param {Node} viaNode
-     * @returns {{x: number, y: number}}
-     * @private
-     */
-
-  }, {
-    key: "getPoint",
-    value: function getPoint(percentage) {
-      var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.via;
-      var t = percentage;
-      var x, y;
-
-      if (this.from === this.to) {
-        var _this$_getCircleData = this._getCircleData(this.from),
-            _this$_getCircleData2 = slicedToArray(_this$_getCircleData, 3),
-            cx = _this$_getCircleData2[0],
-            cy = _this$_getCircleData2[1],
-            cr = _this$_getCircleData2[2];
-
-        var a = 2 * Math.PI * (1 - t);
-        x = cx + cr * Math.sin(a);
-        y = cy + cr - cr * (1 - Math.cos(a));
-      } else {
-        x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
-        y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
-      }
-
-      return {
-        x: x,
-        y: y
-      };
-    }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {*}
-     * @private
-     */
-
-  }, {
-    key: "_findBorderPosition",
-    value: function _findBorderPosition(nearNode, ctx) {
-      return this._findBorderPositionBezier(nearNode, ctx, this.via);
-    }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_getDistanceToEdge",
-    value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
-      // x3,y3 is the point
-      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, this.via);
-    }
-  }]);
-
-  return BezierEdgeDynamic;
-}(BezierEdgeBase);
-
-/**
- * A Static Bezier Edge. Bezier curves are used to model smooth gradual
- * curves in paths between nodes.
- *
- * @extends BezierEdgeBase
- */
-
-var BezierEdgeStatic =
-/*#__PURE__*/
-function (_BezierEdgeBase) {
-  inherits$1(BezierEdgeStatic, _BezierEdgeBase);
-
-  /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
-   */
-  function BezierEdgeStatic(options, body, labelModule) {
-    classCallCheck$1(this, BezierEdgeStatic);
-
-    return possibleConstructorReturn$1(this, getPrototypeOf$1(BezierEdgeStatic).call(this, options, body, labelModule));
-  }
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @param {Node} viaNode
-   * @private
-   */
-
-
-  createClass$1(BezierEdgeStatic, [{
-    key: "_line",
-    value: function _line(ctx, values, viaNode) {
-      this._bezierCurve(ctx, values, viaNode);
-    }
-    /**
-     *
-     * @returns {Array.<{x: number, y: number}>}
-     */
-
-  }, {
-    key: "getViaNode",
-    value: function getViaNode() {
-      return this._getViaCoordinates();
-    }
-    /**
-     * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
-     * @returns {{x: undefined, y: undefined}}
-     * @private
-     */
-
-  }, {
-    key: "_getViaCoordinates",
-    value: function _getViaCoordinates() {
-      // Assumption: x/y coordinates in from/to always defined
-      var xVia = undefined;
-      var yVia = undefined;
-      var factor = this.options.smooth.roundness;
-      var type = this.options.smooth.type;
-      var dx = Math.abs(this.from.x - this.to.x);
-      var dy = Math.abs(this.from.y - this.to.y);
-
-      if (type === 'discrete' || type === 'diagonalCross') {
-        var stepX;
-        var stepY;
-
-        if (dx <= dy) {
-          stepX = stepY = factor * dy;
-        } else {
-          stepX = stepY = factor * dx;
-        }
-
-        if (this.from.x > this.to.x) stepX = -stepX;
-        if (this.from.y >= this.to.y) stepY = -stepY;
-        xVia = this.from.x + stepX;
-        yVia = this.from.y + stepY;
-
-        if (type === "discrete") {
-          if (dx <= dy) {
-            xVia = dx < factor * dy ? this.from.x : xVia;
-          } else {
-            yVia = dy < factor * dx ? this.from.y : yVia;
-          }
-        }
-      } else if (type === "straightCross") {
-        var _stepX = (1 - factor) * dx;
-
-        var _stepY = (1 - factor) * dy;
-
-        if (dx <= dy) {
-          // up - down
-          _stepX = 0;
-          if (this.from.y < this.to.y) _stepY = -_stepY;
-        } else {
-          // left - right
-          if (this.from.x < this.to.x) _stepX = -_stepX;
-          _stepY = 0;
-        }
-
-        xVia = this.to.x + _stepX;
-        yVia = this.to.y + _stepY;
-      } else if (type === 'horizontal') {
-        var _stepX2 = (1 - factor) * dx;
-
-        if (this.from.x < this.to.x) _stepX2 = -_stepX2;
-        xVia = this.to.x + _stepX2;
-        yVia = this.from.y;
-      } else if (type === 'vertical') {
-        var _stepY2 = (1 - factor) * dy;
-
-        if (this.from.y < this.to.y) _stepY2 = -_stepY2;
-        xVia = this.from.x;
-        yVia = this.to.y + _stepY2;
-      } else if (type === 'curvedCW') {
-        dx = this.to.x - this.from.x;
-        dy = this.from.y - this.to.y;
-        var radius = Math.sqrt(dx * dx + dy * dy);
-        var pi = Math.PI;
-        var originalAngle = Math.atan2(dy, dx);
-        var myAngle = (originalAngle + (factor * 0.5 + 0.5) * pi) % (2 * pi);
-        xVia = this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle);
-        yVia = this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle);
-      } else if (type === 'curvedCCW') {
-        dx = this.to.x - this.from.x;
-        dy = this.from.y - this.to.y;
-
-        var _radius = Math.sqrt(dx * dx + dy * dy);
-
-        var _pi = Math.PI;
-
-        var _originalAngle = Math.atan2(dy, dx);
-
-        var _myAngle = (_originalAngle + (-factor * 0.5 + 0.5) * _pi) % (2 * _pi);
-
-        xVia = this.from.x + (factor * 0.5 + 0.5) * _radius * Math.sin(_myAngle);
-        yVia = this.from.y + (factor * 0.5 + 0.5) * _radius * Math.cos(_myAngle);
-      } else {
-        // continuous
-        var _stepX3;
-
-        var _stepY3;
-
-        if (dx <= dy) {
-          _stepX3 = _stepY3 = factor * dy;
-        } else {
-          _stepX3 = _stepY3 = factor * dx;
-        }
-
-        if (this.from.x > this.to.x) _stepX3 = -_stepX3;
-        if (this.from.y >= this.to.y) _stepY3 = -_stepY3;
-        xVia = this.from.x + _stepX3;
-        yVia = this.from.y + _stepY3;
-
-        if (dx <= dy) {
-          if (this.from.x <= this.to.x) {
-            xVia = this.to.x < xVia ? this.to.x : xVia;
-          } else {
-            xVia = this.to.x > xVia ? this.to.x : xVia;
-          }
-        } else {
-          if (this.from.y >= this.to.y) {
-            yVia = this.to.y > yVia ? this.to.y : yVia;
-          } else {
-            yVia = this.to.y < yVia ? this.to.y : yVia;
-          }
-        }
-      }
-
-      return {
-        x: xVia,
-        y: yVia
-      };
-    }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} options
-     * @returns {*}
-     * @private
-     */
-
-  }, {
-    key: "_findBorderPosition",
-    value: function _findBorderPosition(nearNode, ctx) {
-      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      return this._findBorderPositionBezier(nearNode, ctx, options.via);
-    }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @param {Node} viaNode
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_getDistanceToEdge",
-    value: function _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
-      var viaNode = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates();
-      // x3,y3 is the point
-      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
-    }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     * @param {number} percentage
-     * @param {Node} viaNode
-     * @returns {{x: number, y: number}}
-     * @private
-     */
-
-  }, {
-    key: "getPoint",
-    value: function getPoint(percentage) {
-      var viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates();
-      var t = percentage;
-      var x = Math.pow(1 - t, 2) * this.fromPoint.x + 2 * t * (1 - t) * viaNode.x + Math.pow(t, 2) * this.toPoint.x;
-      var y = Math.pow(1 - t, 2) * this.fromPoint.y + 2 * t * (1 - t) * viaNode.y + Math.pow(t, 2) * this.toPoint.y;
-      return {
-        x: x,
-        y: y
-      };
-    }
-  }]);
-
-  return BezierEdgeStatic;
-}(BezierEdgeBase);
-
-/**
  * A Straight Edge.
- *
- * @extends EdgeBase
  */
 
 var StraightEdge =
@@ -28227,21 +30027,18 @@ function (_EdgeBase) {
   inherits$1(StraightEdge, _EdgeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
+   * Create a new instance.
+   *
+   * @param options - The options object of given edge.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
   function StraightEdge(options, body, labelModule) {
     classCallCheck$1(this, StraightEdge);
 
     return possibleConstructorReturn$1(this, getPrototypeOf$1(StraightEdge).call(this, options, body, labelModule));
   }
-  /**
-   * Draw a line between two nodes
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {ArrowOptions} values
-   * @private
-   */
+  /** @inheritdoc */
 
 
   createClass$1(StraightEdge, [{
@@ -28256,39 +30053,24 @@ function (_EdgeBase) {
       ctx.stroke();
       this.disableShadow(ctx, values);
     }
-    /**
-     *
-     * @returns {undefined}
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return undefined;
     }
-    /**
-     * Combined function of pointOnLine and pointOnBezier. This gives the coordinates of a point on the line at a certain percentage of the way
-     *
-     * @param {number} percentage
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "getPoint",
-    value: function getPoint(percentage) {
+    value: function getPoint(position) {
       return {
-        x: (1 - percentage) * this.fromPoint.x + percentage * this.toPoint.x,
-        y: (1 - percentage) * this.fromPoint.y + percentage * this.toPoint.y
+        x: (1 - position) * this.fromPoint.x + position * this.toPoint.x,
+        y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
       };
     }
-    /**
-     *
-     * @param {Node} nearNode
-     * @param {CanvasRenderingContext2D} ctx
-     * @returns {{x: number, y: number}}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_findBorderPosition",
@@ -28307,22 +30089,13 @@ function (_EdgeBase) {
       var edgeSegmentLength = Math.sqrt(dx * dx + dy * dy);
       var toBorderDist = nearNode.distanceToBorder(ctx, angle);
       var toBorderPoint = (edgeSegmentLength - toBorderDist) / edgeSegmentLength;
-      var borderPos = {};
-      borderPos.x = (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x;
-      borderPos.y = (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y;
-      return borderPos;
+      return {
+        x: (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x,
+        y: (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y,
+        t: 0
+      };
     }
-    /**
-     *
-     * @param {number} x1
-     * @param {number} y1
-     * @param {number} x2
-     * @param {number} y2
-     * @param {number} x3
-     * @param {number} y3
-     * @returns {number}
-     * @private
-     */
+    /** @inheritdoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -29080,7 +30853,7 @@ function () {
           parentOptions.arrows.to.enabled = arrows.indexOf("to") != -1;
           parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
           parentOptions.arrows.from.enabled = arrows.indexOf("from") != -1;
-        } else if (_typeof_1$2(newOptions.arrows) === 'object') {
+        } else if (_typeof_1$1(newOptions.arrows) === 'object') {
           util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
           util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
           util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
@@ -29093,7 +30866,13 @@ function () {
 
 
       if (newOptions.color !== undefined && newOptions.color !== null) {
-        var fromColor = newOptions.color;
+        var fromColor = util.isString(newOptions.color) ? {
+          color: newOptions.color,
+          highlight: newOptions.color,
+          hover: newOptions.color,
+          inherit: false,
+          opacity: 1
+        } : newOptions.color;
         var toColor = parentOptions.color; // If passed, fill in values from default options - required in the case of no prototype bridging
 
         if (copyFromGlobals) {
@@ -32003,7 +33782,7 @@ function () {
     value: function clusterByHubsize(hubsize, options) {
       if (hubsize === undefined) {
         hubsize = this._getHubSize();
-      } else if (_typeof_1$2(hubsize) === "object") {
+      } else if (_typeof_1$1(hubsize) === "object") {
         options = this._checkOptions(hubsize);
         hubsize = this._getHubSize();
       }
@@ -34760,9 +36539,9 @@ function () {
 
         if (!(options.scale > 0)) {
           throw new TypeError('The option "scale" has to be a number greater than zero.');
-        } else {
-          options.scale = this.body.view.scale;
         }
+      } else {
+        options.scale = this.body.view.scale;
       }
 
       if (options.animation === undefined) {
@@ -35369,6 +37148,7 @@ function () {
 /**
  * Popup is a class to create a popup window with some text
  */
+
 var Popup =
 /*#__PURE__*/
 function () {
@@ -38835,6 +40615,7 @@ function () {
     this.defaultOptions = {
       randomSeed: undefined,
       improvedLayout: true,
+      clusterThreshold: 150,
       hierarchical: {
         enabled: false,
         levelSeparation: 150,
@@ -38896,7 +40677,7 @@ function () {
       if (options !== undefined) {
         var hierarchical = this.options.hierarchical;
         var prevHierarchicalState = hierarchical.enabled;
-        util.selectiveDeepExtend(["randomSeed", "improvedLayout"], this.options, options);
+        util.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
         util.mergeOptions(this.options, options, 'hierarchical');
 
         if (options.randomSeed !== undefined) {
@@ -38955,7 +40736,7 @@ function () {
           };
           backupPhysics.enabled = backupPhysics.enabled === undefined ? true : backupPhysics.enabled;
           backupPhysics.solver = backupPhysics.solver || 'barnesHut';
-        } else if (_typeof_1$2(allOptions.physics) === 'object') {
+        } else if (_typeof_1$1(allOptions.physics) === 'object') {
           backupPhysics.enabled = allOptions.physics.enabled === undefined ? true : allOptions.physics.enabled;
           backupPhysics.solver = allOptions.physics.solver || 'barnesHut';
           allOptions.physics.solver = 'hierarchicalRepulsion';
@@ -39091,8 +40872,7 @@ function () {
         if (positionDefined < 0.5 * indices.length) {
           var MAX_LEVELS = 10;
           var level = 0;
-          var clusterThreshold = 150; // TODO add this to options
-          //
+          var clusterThreshold = this.options.clusterThreshold; //
           // Define the options for the hidden cluster nodes
           // These options don't propagate outside the clustering phase.
           //
@@ -40830,7 +42610,7 @@ function () {
 
       this.inMode = 'editEdge';
 
-      if (_typeof_1$2(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
+      if (_typeof_1$1(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
         this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
 
         if (this.edgeBeingEditedId !== undefined) {
@@ -41858,7 +43638,7 @@ function () {
       };
       var eeFunct = this.options.editEdge;
 
-      if (_typeof_1$2(eeFunct) === 'object') {
+      if (_typeof_1$1(eeFunct) === 'object') {
         eeFunct = eeFunct.editWithoutDrag;
       }
 
@@ -42737,7 +44517,7 @@ function () {
           this.options.filter = options;
         } else if (options instanceof Array) {
           this.options.filter = options.join();
-        } else if (_typeof_1$2(options) === 'object') {
+        } else if (_typeof_1$1(options) === 'object') {
           if (options == null) {
             throw new TypeError('options cannot be null');
           }
@@ -43220,7 +45000,7 @@ function () {
         checkbox.checked = value;
 
         if (value !== defaultValue) {
-          if (_typeof_1$2(defaultValue) === 'object') {
+          if (_typeof_1$1(defaultValue) === 'object') {
             if (value !== defaultValue.enabled) {
               this.changedOptions.push({
                 path: path,
@@ -44057,6 +45837,9 @@ var allOptions$1 = {
     improvedLayout: {
       boolean: bool
     },
+    clusterThreshold: {
+      number: number
+    },
     hierarchical: {
       enabled: {
         boolean: bool
@@ -44394,6 +46177,24 @@ var allOptions$1 = {
       __type__: {
         object: object,
         string: string
+      }
+    },
+    imagePadding: {
+      top: {
+        number: number
+      },
+      right: {
+        number: number
+      },
+      bottom: {
+        number: number
+      },
+      left: {
+        number: number
+      },
+      __type__: {
+        object: object,
+        number: number
       }
     },
     label: {

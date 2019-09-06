@@ -3,7 +3,7 @@ import { assert, spy, stub } from 'sinon'
 import { deepFreeze } from '../helpers'
 import { body, mockedBody } from './helpers'
 
-import CubicBezierEdge from '../../lib/network/modules/components/edges/CubicBezierEdge'
+import { CubicBezierEdge } from '../../lib/network/modules/components/edges'
 
 describe('CubicBezierEdge', function(): void {
   it('constructor', function(): void {
