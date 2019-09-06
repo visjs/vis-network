@@ -633,10 +633,10 @@ describe('CubicBezierEdge', function(): void {
         },
         position: 'from',
         expected: {
-          angle: -1.5703071700223465,
+          angle: -1.6364976403834781,
           core: {
-            x: 99.983402430029,
-            y: -66.06902003896066,
+            x: 102.30502917621531,
+            y: -66.14474602076933,
           },
           length: 39,
           point: {
@@ -683,10 +683,10 @@ describe('CubicBezierEdge', function(): void {
         },
         position: 'middle',
         expected: {
-          angle: -0.7853981633974483,
+          angle: -1.5641601175223843,
           core: {
-            x: 173.2713636711485,
-            y: -60.77136367114851,
+            x: 199.74915313069414,
+            y: -49.70083233921467,
           },
           length: 42,
           point: {
@@ -707,10 +707,10 @@ describe('CubicBezierEdge', function(): void {
         },
         position: 'to',
         expected: {
-          angle: -1.5703071700223465,
+          angle: 1.139998993005742,
           core: {
-            x: 99.98076098356258,
-            y: -60.669020685001385,
+            x: 83.08795736471299,
+            y: -137.9686554015022,
           },
           length: 45,
           point: {
