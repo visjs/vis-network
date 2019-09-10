@@ -1,7 +1,7 @@
 {
     "extends": "./tsconfig",
     "compilerOptions": {
-        "declarationDir": "dist/types",
+        "declarationDir": "declarations",
         "emitDeclarationOnly": true,
         "noImplicitAny": false
     },

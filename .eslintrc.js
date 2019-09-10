@@ -103,8 +103,6 @@ module.exports = {
     },
     {
       files: [
-        "lib/index-bundle.ts",
-        "lib/index.ts",
         "lib/network/gephiParser.ts",
         "test/NodesHandler.test.ts",
         "test/dot-parser/dot-parser.test.ts",
