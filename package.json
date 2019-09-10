@@ -23,6 +23,11 @@
     "network",
     "browser"
   ],
+  "files": [
+    "dist",
+    "LICENSE-APACHE-2.0",
+    "LICENSE-MIT"
+  ],
   "main": "dist/vis-network.min.js",
   "module": "dist/vis-network.esm.min.js",
   "types": "dist/types/index.d.ts",
