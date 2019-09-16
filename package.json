@@ -54,10 +54,10 @@
     "postinstall": "opencollective postinstall || exit 0"
   },
   "peerDependencies": {
-    "keycharm": "^0.2.0",
-    "moment": "^2.24.0",
-    "vis-data": "^6.1.1",
-    "vis-util": "^1.1.6"
+    "keycharm": "0.2.0",
+    "moment": "2.24.0",
+    "vis-data": "6.1.1",
+    "vis-util": "1.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

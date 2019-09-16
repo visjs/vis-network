@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-16T16:15:32Z
+ * @date    2019-09-16T16:31:05Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -27617,6 +27617,41 @@
 	      }
 	    }
 	    /**
+	     * Returns Image Padding from node options
+	     *
+	     * @returns {{top: number,left: number,bottom: number,right: number}} image padding inside this shape
+	     * @private
+	     */
+
+	  }, {
+	    key: "_getImagePadding",
+	    value: function _getImagePadding() {
+	      var imgPadding = {
+	        top: 0,
+	        right: 0,
+	        bottom: 0,
+	        left: 0
+	      };
+
+	      if (this.options.imagePadding) {
+	        var optImgPadding = this.options.imagePadding;
+
+	        if (_typeof$1(optImgPadding) == 'object') {
+	          imgPadding.top = optImgPadding.top;
+	          imgPadding.right = optImgPadding.right;
+	          imgPadding.bottom = optImgPadding.bottom;
+	          imgPadding.left = optImgPadding.left;
+	        } else {
+	          imgPadding.top = optImgPadding;
+	          imgPadding.right = optImgPadding;
+	          imgPadding.bottom = optImgPadding;
+	          imgPadding.left = optImgPadding;
+	        }
+	      }
+
+	      return imgPadding;
+	    }
+	    /**
 	     * Adjust the node dimensions for a loaded image.
 	     *
 	     * Pre: this.imageObj is valid
@@ -27643,9 +27678,11 @@
 	        width = this.options.size * 2 * ratio_width;
 	        height = this.options.size * 2 * ratio_height;
 	      } else {
-	        // Use the image size
-	        width = this.imageObj.width;
-	        height = this.imageObj.height;
+	        // Use the image size with image padding
+	        var imgPadding = this._getImagePadding();
+
+	        width = this.imageObj.width + imgPadding.left + imgPadding.right;
+	        height = this.imageObj.height + imgPadding.top + imgPadding.bottom;
 	      }
 
 	      this.width = width;
@@ -27689,7 +27726,13 @@
 	          factor = this.imageObj.width / this.width / this.body.view.scale;
 	        }
 
-	        this.imageObj.drawImageAtPosition(ctx, factor, this.left, this.top, this.width, this.height); // disable shadows for other elements.
+	        var imgPadding = this._getImagePadding();
+
+	        var imgPosLeft = this.left + imgPadding.left;
+	        var imgPosTop = this.top + imgPadding.top;
+	        var imgWidth = this.width - imgPadding.left - imgPadding.right;
+	        var imgHeight = this.height - imgPadding.top - imgPadding.bottom;
+	        this.imageObj.drawImageAtPosition(ctx, factor, imgPosLeft, imgPosTop, imgWidth, imgHeight); // disable shadows for other elements.
 
 	        this.disableShadow(ctx, values);
 	      }
@@ -29499,6 +29542,14 @@
 
 	      if (!options) {
 	        return; // Note that the return value will be 'undefined'! This is OK.
+	      } // Save the color for later.
+	      // This is necessary in order to prevent local color from being overwritten by group color.
+	      // TODO: To prevent such workarounds the way options are handled should be rewritten from scratch.
+	      // This is not the only problem with current options handling.
+
+
+	      if (typeof options.color !== 'undefined') {
+	        this._localColor = options.color;
 	      } // basic options
 
 
@@ -29668,7 +29719,9 @@
 	        this.options.label = '';
 	      }
 
-	      Node.updateGroupOptions(this.options, options, this.grouplist); //
+	      Node.updateGroupOptions(this.options, _objectSpread2$1({}, options, {
+	        color: options && options.color || this._localColor || undefined
+	      }), this.grouplist); //
 	      // Note:The prototype chain for this.options is:
 	      //
 	      // this.options ->    NodesHandler.options    -> NodesHandler.defaultOptions
@@ -30190,6 +30243,13 @@
 	      },
 	      image: undefined,
 	      // --> URL
+	      imagePadding: {
+	        // only for image shape
+	        top: 0,
+	        right: 0,
+	        bottom: 0,
+	        left: 0
+	      },
 	      label: undefined,
 	      labelHighlightBold: true,
 	      level: undefined,
@@ -30679,6 +30739,39 @@
 
 	  return NodesHandler;
 	}();
+
+	var abs$1 = Math.abs;
+	var sqrt = Math.sqrt; // `Math.hypot` method
+	// https://tc39.github.io/ecma262/#sec-math.hypot
+
+	_export({
+	  target: 'Math',
+	  stat: true
+	}, {
+	  hypot: function hypot(value1, value2) {
+	    // eslint-disable-line no-unused-vars
+	    var sum = 0;
+	    var i = 0;
+	    var aLen = arguments.length;
+	    var larg = 0;
+	    var arg, div;
+
+	    while (i < aLen) {
+	      arg = abs$1(arguments[i++]);
+
+	      if (larg < arg) {
+	        div = larg / arg;
+	        sum = sum * div * div + 1;
+	        larg = arg;
+	      } else if (arg > 0) {
+	        div = arg / larg;
+	        sum += div * div;
+	      } else sum += arg;
+	    }
+
+	    return larg === Infinity ? Infinity : larg * sqrt(sum);
+	  }
+	});
 
 	/** ============================================================================
 	 * Location of all the endpoint drawing routines.
@@ -31816,7 +31909,7 @@
 	      var arrowPoint;
 	      var node1;
 	      var node2;
-	      var guideOffset;
+	      var reversed;
 	      var scaleFactor;
 	      var type;
 	      var lineWidth = values.width;
@@ -31824,24 +31917,30 @@
 	      if (position === "from") {
 	        node1 = this.from;
 	        node2 = this.to;
-	        guideOffset = 0.1;
-	        scaleFactor = values.fromArrowScale;
+	        reversed = values.fromArrowScale < 0;
+	        scaleFactor = Math.abs(values.fromArrowScale);
 	        type = values.fromArrowType;
 	      } else if (position === "to") {
 	        node1 = this.to;
 	        node2 = this.from;
-	        guideOffset = -0.1;
-	        scaleFactor = values.toArrowScale;
+	        reversed = values.toArrowScale < 0;
+	        scaleFactor = Math.abs(values.toArrowScale);
 	        type = values.toArrowType;
 	      } else {
 	        node1 = this.to;
 	        node2 = this.from;
-	        scaleFactor = values.middleArrowScale;
+	        reversed = values.middleArrowScale < 0;
+	        scaleFactor = Math.abs(values.middleArrowScale);
 	        type = values.middleArrowType;
-	      } // if not connected to itself
+	      }
 
+	      var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
+	      // if not connected to itself
 
 	      if (node1 != node2) {
+	        var approximateEdgeLength = Math.hypot(node1.x - node2.x, node1.y - node2.y);
+	        var relativeLength = length / approximateEdgeLength;
+
 	        if (position !== "middle") {
 	          // draw arrow head
 	          if (this.options.smooth.enabled === true) {
@@ -31849,8 +31948,7 @@
 	              via: viaNode
 	            });
 
-	            var guidePos = this.getPoint( // guideOffset is unset only for position === 'middle'
-	            Math.max(0.0, Math.min(1.0, pointT.t + guideOffset)), viaNode);
+	            var guidePos = this.getPoint(pointT.t + relativeLength * (position === "from" ? 1 : -1), viaNode);
 	            angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
 	            arrowPoint = pointT;
 	          } else {
@@ -31858,8 +31956,12 @@
 	            arrowPoint = this._findBorderPosition(node1, ctx);
 	          }
 	        } else {
-	          angle = Math.atan2(node1.y - node2.y, node1.x - node2.x);
-	          arrowPoint = this.getPoint(0.5, viaNode); // this is 0.6 to account for the size of the arrow.
+	          // Negative half length reverses arrow direction.
+	          var halfLength = (reversed ? -relativeLength : relativeLength) / 2;
+	          var guidePos1 = this.getPoint(0.5 + halfLength, viaNode);
+	          var guidePos2 = this.getPoint(0.5 - halfLength, viaNode);
+	          angle = Math.atan2(guidePos1.y - guidePos2.y, guidePos1.x - guidePos2.x);
+	          arrowPoint = this.getPoint(0.5, viaNode);
 	        }
 	      } else {
 	        // draw circle
@@ -31896,12 +31998,6 @@
 	          angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
 	        }
 	      }
-
-	      if (position === "middle" && scaleFactor < 0) {
-	        lineWidth *= -1; // reversed middle arrow
-	      }
-
-	      var length = 15 * scaleFactor + 3 * lineWidth; // 3* lineWidth is the width of the edge.
 
 	      var xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
 	      var yi = arrowPoint.y - length * 0.9 * Math.sin(angle);
@@ -43512,6 +43608,7 @@
 	    this.defaultOptions = {
 	      randomSeed: undefined,
 	      improvedLayout: true,
+	      clusterThreshold: 150,
 	      hierarchical: {
 	        enabled: false,
 	        levelSeparation: 150,
@@ -43573,7 +43670,7 @@
 	      if (options !== undefined) {
 	        var hierarchical = this.options.hierarchical;
 	        var prevHierarchicalState = hierarchical.enabled;
-	        util.selectiveDeepExtend(["randomSeed", "improvedLayout"], this.options, options);
+	        util.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
 	        util.mergeOptions(this.options, options, 'hierarchical');
 
 	        if (options.randomSeed !== undefined) {
@@ -43768,8 +43865,7 @@
 	        if (positionDefined < 0.5 * indices.length) {
 	          var MAX_LEVELS = 10;
 	          var level = 0;
-	          var clusterThreshold = 150; // TODO add this to options
-	          //
+	          var clusterThreshold = this.options.clusterThreshold; //
 	          // Define the options for the hidden cluster nodes
 	          // These options don't propagate outside the clustering phase.
 	          //
@@ -45516,7 +45612,7 @@
 	        if (this.edgeBeingEditedId !== undefined) {
 	          var edge = this.body.edges[this.edgeBeingEditedId];
 
-	          this._performEditEdge(edge.from, edge.to);
+	          this._performEditEdge(edge.from.id, edge.to.id);
 
 	          return;
 	        }
@@ -48759,6 +48855,9 @@
 	    improvedLayout: {
 	      boolean: bool
 	    },
+	    clusterThreshold: {
+	      number: number
+	    },
 	    hierarchical: {
 	      enabled: {
 	        boolean: bool
@@ -49096,6 +49195,24 @@
 	      __type__: {
 	        object: object,
 	        string: string
+	      }
+	    },
+	    imagePadding: {
+	      top: {
+	        number: number
+	      },
+	      right: {
+	        number: number
+	      },
+	      bottom: {
+	        number: number
+	      },
+	      left: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object,
+	        number: number
 	      }
 	    },
 	    label: {
