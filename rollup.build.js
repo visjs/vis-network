@@ -33,8 +33,8 @@ export default [
   }
 ].flatMap(({ external, globals, injectCSS, input, variant }) => {
   return [false, true].flatMap(min => {
-    const esmFileWithoutExt = `vis-network.${variant}.esm${min ? ".min" : ""}`;
-    const umdFileWithoutExt = `vis-network.${variant}.umd${min ? ".min" : ""}`;
+    const esmFileWithoutExt = `${variant}/esm/vis-network${min ? ".min" : ""}`;
+    const umdFileWithoutExt = `${variant}/umd/vis-network${min ? ".min" : ""}`;
 
     return [
       {
@@ -85,7 +85,7 @@ export default [
             extensions: [".ts", ".js"]
           }),
           postcss({
-            extract: !injectCSS && `vis-network${min ? ".min" : ""}.css`,
+            extract: !injectCSS && `styles/vis-network${min ? ".min" : ""}.css`,
             inject: injectCSS,
             minimize: min,
             sourceMap: true,

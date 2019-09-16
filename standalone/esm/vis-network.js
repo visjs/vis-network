@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-16T16:31:05Z
+ * @date    2019-09-16T17:42:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -50869,4 +50869,4 @@ Network.prototype.getOptionsFromConfigurator = function () {
 var parseDOTNetwork = DOTToGraph_1;
 
 export { DataSet, DataView$2 as DataView, Network, dotparser$1 as NetworkDOTParser, Images as NetworkImages, options as NetworkOptions, Queue, esm$1 as data, gephiParser as networkGephiParser, parseDOTNetwork, parseGephi as parseGephiNetwork, esm as util };
-//# sourceMappingURL=vis-network.standalone.esm.js.map
+//# sourceMappingURL=vis-network.js.map
