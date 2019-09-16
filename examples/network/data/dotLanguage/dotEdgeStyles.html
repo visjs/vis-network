@@ -4,8 +4,7 @@
   <title>Network | DOT edge styles</title>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../../../../dist/vis-network.min.js"></script>
-  <link href="../../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <script src="../../../../standalone/umd/vis-network.min.js"></script>
 
   <style type="text/css">
     body, html {
@@ -211,7 +210,7 @@
       $('#error').html('');
 
       // Provide a string with data in DOT language
-      data = vis.network.convertDot($('#data').val());
+      data = vis.parseDOTNetwork($('#data').val());
 
       network.setData(data);
     }

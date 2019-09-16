@@ -28,8 +28,7 @@
   </style>
 
   <script type="text/javascript" src="../exampleUtil.js"></script>
-  <script type="text/javascript" src="../../../dist/vis-network.min.js"></script>
-  <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../../standalone/umd/vis-network.min.js"></script>
 
   <script type="text/javascript">
     var nodes = null;
@@ -123,9 +122,17 @@
     </tr>
   </table>
   <br />
-  Apart from clicking the icons, you can also navigate using the keyboard. The buttons are in table above.
-  Zoom Extends changes the zoom and position of the camera to encompass all visible nodes. <u>To correctly display the navigation icons, <b>vis.css</b> or <b>vis-network.min.css</b> must be included.</u>
-    The user is free to alter or overload the CSS classes but without them the navigation icons are not visible.
+  Apart from clicking the icons, you can also navigate using the keyboard. The
+  buttons are in table above. Zoom Extends changes the zoom and position of the
+  camera to encompass all visible nodes.
+  <u>
+    Styles have to be loaded to correctly display the icons. Standalone build
+    includes necessary styles and automatically injects them into the page but
+    for peer and legacy builds it's necessry to manually load
+    <b>vis-network.css</b>.
+  </u>
+  The user is free to alter or overload the CSS classes but without them the
+  navigation icons are not visible.
 </div>
 
 <div id="mynetwork"></div>

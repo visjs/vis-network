@@ -2,9 +2,7 @@
 <head>
   <title>Network | DOT Language</title>
 
-  <script src="../../../../dist/vis-network.min.js"></script>
-  <link href="../../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-  
+  <script src="../../../../standalone/umd/vis-network.min.js"></script>
 </head>
 <body>
 <p>
@@ -15,7 +13,7 @@
 <script type="text/javascript">
   var container = document.getElementById('mynetwork');
   var dot = 'dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }';
-  var data = vis.network.convertDot(dot);
+  var data = vis.parseDOTNetwork(dot);
   var network = new vis.Network(container, data);
 </script>
 </body>

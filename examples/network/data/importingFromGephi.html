@@ -6,8 +6,7 @@
   <title>Dynamic Data - Importing from Gephi (JSON)</title>
   <script type="text/javascript" src="../exampleUtil.js"></script>
 
-  <script type="text/javascript" src="../../../dist/vis-network.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="../../../dist/vis-network.min.css">
+  <script type="text/javascript" src="../../../standalone/umd/vis-network.min.js"></script>
 
   <style type="text/css">
     #mynetwork {
@@ -153,7 +152,7 @@
     var fixed = fixedCheckbox.checked;
     var parseColor = parseColorCheckbox.checked;
 
-    var parsed = vis.network.gephiParser.parseGephi(gephiJSON, {
+    var parsed = vis.parseGephiNetwork(gephiJSON, {
       fixed: fixed,
       parseColor: parseColor
     });
