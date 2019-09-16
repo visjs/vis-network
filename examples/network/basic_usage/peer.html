@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Network | Basic Usage | Peer Build
+    </title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+
+    <script type="text/javascript" src="https://unpkg.com/vis-util"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-data"></script>
+    <script
+      type="text/javascript"
+      src="../../../../../peer/umd/vis-network.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../../../styles/vis-network.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Basic Usage</h2>
+        <h3>Peer Build</h3>
+      </div>
+
+      <p>
+        Create a simple network with some nodes and edges.
+      </p>
+
+      <p>
+        Peer build is designed to work well with other packages from the Vis
+        family. Compared to the standalone or legacy builds it doesn't include
+        dependencies which allows the same DataSet (and other dependencies) to
+        be used in Network and other packages (e.g. Timeline). In UMD version
+        this build doesn't suffer from the bug where exported members from
+        different packages get overwritten rendering some functionality
+        unusable.
+      </p>
+
+      <h4>When to use</h4>
+      <p>
+        When you need multiple packages from the Vis family on the same page or
+        finer control over what gets loaded.
+      </p>
+
+      <h4>Content</h4>
+      <ul>
+        <li>
+          Vis Network
+          <ul>
+            <li>Network"</li>
+            <li>NetworkDOTParser"</li>
+            <li>NetworkImages"</li>
+            <li>NetworkOptions"</li>
+            <li>networkGephiParser"</li>
+            <li>parseDOTNetwork"</li>
+            <li>parseGephiNetwork"</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" }
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 }
+      ]);
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {};
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>
