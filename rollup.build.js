@@ -16,7 +16,7 @@ export default [
     external: {},
     globals: {},
     injectCSS: true,
-    input: "lib/index.ts",
+    input: "lib/index-standalone.ts",
     variant: "standalone"
   },
   {
@@ -28,7 +28,7 @@ export default [
       "vis-util": "vis"
     },
     injectCSS: false,
-    input: "lib/index.ts",
+    input: "lib/index-peer.ts",
     variant: "peer"
   }
 ].flatMap(({ external, globals, injectCSS, input, variant }) => {

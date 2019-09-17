@@ -13,11 +13,6 @@ export { gephiParser as networkGephiParser };
 import * as allOptions from "./network/options";
 export { allOptions as NetworkOptions };
 
-// vis-util
-import * as util from "vis-util";
-export { util };
-
-// vis-data
-import * as data from "vis-data";
-export { data };
-export { DataSet, DataView, Queue } from "vis-data";
+// DataSet, utils etc. can't be reexported here because that would cause stack
+// overflow in UMD builds. They all export vis namespace therefore reexporting
+// leads to loading vis to load vis to load vis…
