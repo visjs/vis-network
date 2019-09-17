@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-16T17:42:06Z
+ * @date    2019-09-17T18:16:01Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -23,14 +23,218 @@
  *
  * vis.js may be distributed under either license.
  */
-import util__default, { overrideOpacity } from 'vis-util';
-import * as util from 'vis-util';
-export { util };
+import util__default, { extend as extend$1, topMost, forEach, deepExtend, overrideOpacity, copyAndExtendArray, copyArray, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, bridgeObject, selectiveDeepExtend, isString, HSVToHex, randomUUID, addEventListener, removeEventListener, easingFunctions, getAbsoluteLeft, getAbsoluteTop, recursiveDOMDelete, isValidRGB, isValidRGBA, isValidHex, hexToRGB, RGBToHSV, HSVToRGB } from 'vis-util';
 import keycharm from 'keycharm';
-import { DataSet, DataView as DataView$2 } from 'vis-data';
-import * as visData from 'vis-data';
-export { visData as data };
-export { DataSet, DataView, Queue } from 'vis-data';
+import { DataSet, DataView } from 'vis-data';
+
+/*
+ * Canvas shapes used by Network
+ */
+
+if (typeof CanvasRenderingContext2D !== "undefined") {
+  CanvasRenderingContext2D.prototype.circle = function (x, y, r) {
+    this.beginPath();
+    this.arc(x, y, r, 0, 2 * Math.PI, false);
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.square = function (x, y, r) {
+    this.beginPath();
+    this.rect(x - r, y - r, r * 2, r * 2);
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.triangle = function (x, y, r) {
+    this.beginPath(); // the change in radius and the offset is here to center the shape
+
+    r *= 1.15;
+    y += 0.275 * r;
+    var s = r * 2;
+    var s2 = s / 2;
+    var ir = Math.sqrt(3) / 6 * s; // radius of inner circle
+
+    var h = Math.sqrt(s * s - s2 * s2); // height
+
+    this.moveTo(x, y - (h - ir));
+    this.lineTo(x + s2, y + ir);
+    this.lineTo(x - s2, y + ir);
+    this.lineTo(x, y - (h - ir));
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.triangleDown = function (x, y, r) {
+    this.beginPath(); // the change in radius and the offset is here to center the shape
+
+    r *= 1.15;
+    y -= 0.275 * r;
+    var s = r * 2;
+    var s2 = s / 2;
+    var ir = Math.sqrt(3) / 6 * s; // radius of inner circle
+
+    var h = Math.sqrt(s * s - s2 * s2); // height
+
+    this.moveTo(x, y + (h - ir));
+    this.lineTo(x + s2, y - ir);
+    this.lineTo(x - s2, y - ir);
+    this.lineTo(x, y + (h - ir));
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.star = function (x, y, r) {
+    // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
+    this.beginPath(); // the change in radius and the offset is here to center the shape
+
+    r *= 0.82;
+    y += 0.1 * r;
+
+    for (var n = 0; n < 10; n++) {
+      var radius = n % 2 === 0 ? r * 1.3 : r * 0.5;
+      this.lineTo(x + radius * Math.sin(n * 2 * Math.PI / 10), y - radius * Math.cos(n * 2 * Math.PI / 10));
+    }
+
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.diamond = function (x, y, r) {
+    this.beginPath();
+    this.lineTo(x, y + r);
+    this.lineTo(x + r, y);
+    this.lineTo(x, y - r);
+    this.lineTo(x - r, y);
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+    var r2d = Math.PI / 180;
+
+    if (w - 2 * r < 0) {
+      r = w / 2;
+    } //ensure that the radius isn't too large for x
+
+
+    if (h - 2 * r < 0) {
+      r = h / 2;
+    } //ensure that the radius isn't too large for y
+
+
+    this.beginPath();
+    this.moveTo(x + r, y);
+    this.lineTo(x + w - r, y);
+    this.arc(x + w - r, y + r, r, r2d * 270, r2d * 360, false);
+    this.lineTo(x + w, y + h - r);
+    this.arc(x + w - r, y + h - r, r, 0, r2d * 90, false);
+    this.lineTo(x + r, y + h);
+    this.arc(x + r, y + h - r, r, r2d * 90, r2d * 180, false);
+    this.lineTo(x, y + r);
+    this.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.ellipse_vis = function (x, y, w, h) {
+    var kappa = 0.5522848,
+        ox = w / 2 * kappa,
+        // control point offset horizontal
+    oy = h / 2 * kappa,
+        // control point offset vertical
+    xe = x + w,
+        // x-end
+    ye = y + h,
+        // y-end
+    xm = x + w / 2,
+        // x-middle
+    ym = y + h / 2; // y-middle
+
+    this.beginPath();
+    this.moveTo(x, ym);
+    this.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
+    this.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
+    this.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+    this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+    this.closePath();
+  };
+
+  CanvasRenderingContext2D.prototype.database = function (x, y, w, h) {
+    var f = 1 / 3;
+    var wEllipse = w;
+    var hEllipse = h * f;
+    var kappa = 0.5522848,
+        ox = wEllipse / 2 * kappa,
+        // control point offset horizontal
+    oy = hEllipse / 2 * kappa,
+        // control point offset vertical
+    xe = x + wEllipse,
+        // x-end
+    ye = y + hEllipse,
+        // y-end
+    xm = x + wEllipse / 2,
+        // x-middle
+    ym = y + hEllipse / 2,
+        // y-middle
+    ymb = y + (h - hEllipse / 2),
+        // y-midlle, bottom ellipse
+    yeb = y + h; // y-end, bottom ellipse
+
+    this.beginPath();
+    this.moveTo(xe, ym);
+    this.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+    this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+    this.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
+    this.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
+    this.lineTo(xe, ymb);
+    this.bezierCurveTo(xe, ymb + oy, xm + ox, yeb, xm, yeb);
+    this.bezierCurveTo(xm - ox, yeb, x, ymb + oy, x, ymb);
+    this.lineTo(x, ym);
+  };
+
+  CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, pattern) {
+    this.beginPath();
+    this.moveTo(x, y);
+    var patternLength = pattern.length;
+    var dx = x2 - x;
+    var dy = y2 - y;
+    var slope = dy / dx;
+    var distRemaining = Math.sqrt(dx * dx + dy * dy);
+    var patternIndex = 0;
+    var draw = true;
+    var xStep = 0;
+    var dashLength = +pattern[0];
+
+    while (distRemaining >= 0.1) {
+      dashLength = +pattern[patternIndex++ % patternLength];
+
+      if (dashLength > distRemaining) {
+        dashLength = distRemaining;
+      }
+
+      xStep = Math.sqrt(dashLength * dashLength / (1 + slope * slope));
+      xStep = dx < 0 ? -xStep : xStep;
+      x += xStep;
+      y += slope * xStep;
+
+      if (draw === true) {
+        this.lineTo(x, y);
+      } else {
+        this.moveTo(x, y);
+      }
+
+      distRemaining -= dashLength;
+      draw = !draw;
+    }
+  };
+
+  CanvasRenderingContext2D.prototype.hexagon = function (x, y, r) {
+    this.beginPath();
+    var sides = 6;
+    var a = Math.PI * 2 / sides;
+    this.moveTo(x + r, y);
+
+    for (var i = 1; i < sides; i++) {
+      this.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
+    }
+
+    this.closePath();
+  };
+}
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -45,6 +249,177 @@ function createCommonjsModule(fn, module) {
 function getCjsExportFromNamespace (n) {
 	return n && n['default'] || n;
 }
+
+var componentEmitter = createCommonjsModule(function (module) {
+  /**
+   * Expose `Emitter`.
+   */
+  {
+    module.exports = Emitter;
+  }
+  /**
+   * Initialize a new `Emitter`.
+   *
+   * @api public
+   */
+
+
+  function Emitter(obj) {
+    if (obj) return mixin(obj);
+  }
+  /**
+   * Mixin the emitter properties.
+   *
+   * @param {Object} obj
+   * @return {Object}
+   * @api private
+   */
+
+  function mixin(obj) {
+    for (var key in Emitter.prototype) {
+      obj[key] = Emitter.prototype[key];
+    }
+
+    return obj;
+  }
+  /**
+   * Listen on the given `event` with `fn`.
+   *
+   * @param {String} event
+   * @param {Function} fn
+   * @return {Emitter}
+   * @api public
+   */
+
+
+  Emitter.prototype.on = Emitter.prototype.addEventListener = function (event, fn) {
+    this._callbacks = this._callbacks || {};
+    (this._callbacks['$' + event] = this._callbacks['$' + event] || []).push(fn);
+    return this;
+  };
+  /**
+   * Adds an `event` listener that will be invoked a single
+   * time then automatically removed.
+   *
+   * @param {String} event
+   * @param {Function} fn
+   * @return {Emitter}
+   * @api public
+   */
+
+
+  Emitter.prototype.once = function (event, fn) {
+    function on() {
+      this.off(event, on);
+      fn.apply(this, arguments);
+    }
+
+    on.fn = fn;
+    this.on(event, on);
+    return this;
+  };
+  /**
+   * Remove the given callback for `event` or all
+   * registered callbacks.
+   *
+   * @param {String} event
+   * @param {Function} fn
+   * @return {Emitter}
+   * @api public
+   */
+
+
+  Emitter.prototype.off = Emitter.prototype.removeListener = Emitter.prototype.removeAllListeners = Emitter.prototype.removeEventListener = function (event, fn) {
+    this._callbacks = this._callbacks || {}; // all
+
+    if (0 == arguments.length) {
+      this._callbacks = {};
+      return this;
+    } // specific event
+
+
+    var callbacks = this._callbacks['$' + event];
+    if (!callbacks) return this; // remove all handlers
+
+    if (1 == arguments.length) {
+      delete this._callbacks['$' + event];
+      return this;
+    } // remove specific handler
+
+
+    var cb;
+
+    for (var i = 0; i < callbacks.length; i++) {
+      cb = callbacks[i];
+
+      if (cb === fn || cb.fn === fn) {
+        callbacks.splice(i, 1);
+        break;
+      }
+    } // Remove event specific arrays for event types that no
+    // one is subscribed for to avoid memory leak.
+
+
+    if (callbacks.length === 0) {
+      delete this._callbacks['$' + event];
+    }
+
+    return this;
+  };
+  /**
+   * Emit `event` with the given args.
+   *
+   * @param {String} event
+   * @param {Mixed} ...
+   * @return {Emitter}
+   */
+
+
+  Emitter.prototype.emit = function (event) {
+    this._callbacks = this._callbacks || {};
+    var args = new Array(arguments.length - 1),
+        callbacks = this._callbacks['$' + event];
+
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
+
+    if (callbacks) {
+      callbacks = callbacks.slice(0);
+
+      for (var i = 0, len = callbacks.length; i < len; ++i) {
+        callbacks[i].apply(this, args);
+      }
+    }
+
+    return this;
+  };
+  /**
+   * Return array of callbacks for `event`.
+   *
+   * @param {String} event
+   * @return {Array}
+   * @api public
+   */
+
+
+  Emitter.prototype.listeners = function (event) {
+    this._callbacks = this._callbacks || {};
+    return this._callbacks['$' + event] || [];
+  };
+  /**
+   * Check if this emitter has `event` handlers.
+   *
+   * @param {String} event
+   * @return {Boolean}
+   * @api public
+   */
+
+
+  Emitter.prototype.hasListeners = function (event) {
+    return !!this.listeners(event).length;
+  };
+});
 
 var O = 'object';
 
@@ -541,659 +916,6 @@ var _export = function (options, source) {
   }
 };
 
-var nativeSymbol = !!Object.getOwnPropertySymbols && !fails(function () {
-  // Chrome 38 Symbol has incorrect toString conversion
-  // eslint-disable-next-line no-undef
-  return !String(Symbol());
-});
-
-var Symbol$1 = global_1.Symbol;
-var store$1 = shared('wks');
-
-var wellKnownSymbol = function (name) {
-  return store$1[name] || (store$1[name] = nativeSymbol && Symbol$1[name] || (nativeSymbol ? Symbol$1 : uid)('Symbol.' + name));
-};
-
-var TO_STRING_TAG = wellKnownSymbol('toStringTag'); // ES3 wrong here
-
-var CORRECT_ARGUMENTS = classofRaw(function () {
-  return arguments;
-}()) == 'Arguments'; // fallback for IE11 Script Access Denied error
-
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (error) {
-    /* empty */
-  }
-}; // getting tag from ES6+ `Object.prototype.toString`
-
-
-var classof = function (it) {
-  var O, tag, result;
-  return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
-  : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag // builtinTag case
-  : CORRECT_ARGUMENTS ? classofRaw(O) // ES3 arguments fallback
-  : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
-};
-
-// https://tc39.github.io/ecma262/#sec-toobject
-
-var toObject = function (argument) {
-  return Object(requireObjectCoercible(argument));
-};
-
-var correctPrototypeGetter = !fails(function () {
-  function F() {
-    /* empty */
-  }
-
-  F.prototype.constructor = null;
-  return Object.getPrototypeOf(new F()) !== F.prototype;
-});
-
-var IE_PROTO = sharedKey('IE_PROTO');
-var ObjectPrototype = Object.prototype; // `Object.getPrototypeOf` method
-// https://tc39.github.io/ecma262/#sec-object.getprototypeof
-
-var objectGetPrototypeOf = correctPrototypeGetter ? Object.getPrototypeOf : function (O) {
-  O = toObject(O);
-  if (has(O, IE_PROTO)) return O[IE_PROTO];
-
-  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
-    return O.constructor.prototype;
-  }
-
-  return O instanceof Object ? ObjectPrototype : null;
-};
-
-var aPossiblePrototype = function (it) {
-  if (!isObject(it) && it !== null) {
-    throw TypeError("Can't set " + String(it) + ' as a prototype');
-  }
-
-  return it;
-};
-
-// https://tc39.github.io/ecma262/#sec-object.setprototypeof
-// Works with __proto__ only. Old v8 can't work with null proto objects.
-
-/* eslint-disable no-proto */
-
-var objectSetPrototypeOf = Object.setPrototypeOf || ('__proto__' in {} ? function () {
-  var CORRECT_SETTER = false;
-  var test = {};
-  var setter;
-
-  try {
-    setter = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set;
-    setter.call(test, []);
-    CORRECT_SETTER = test instanceof Array;
-  } catch (error) {
-    /* empty */
-  }
-
-  return function setPrototypeOf(O, proto) {
-    anObject(O);
-    aPossiblePrototype(proto);
-    if (CORRECT_SETTER) setter.call(O, proto);else O.__proto__ = proto;
-    return O;
-  };
-}() : undefined);
-
-var defineProperty = objectDefineProperty.f;
-var DataView = global_1.DataView;
-var DataViewPrototype = DataView && DataView.prototype;
-var Int8Array = global_1.Int8Array;
-var Int8ArrayPrototype = Int8Array && Int8Array.prototype;
-var Uint8ClampedArray = global_1.Uint8ClampedArray;
-var Uint8ClampedArrayPrototype = Uint8ClampedArray && Uint8ClampedArray.prototype;
-var TypedArray = Int8Array && objectGetPrototypeOf(Int8Array);
-var TypedArrayPrototype = Int8ArrayPrototype && objectGetPrototypeOf(Int8ArrayPrototype);
-var ObjectPrototype$1 = Object.prototype;
-var isPrototypeOf = ObjectPrototype$1.isPrototypeOf;
-var TO_STRING_TAG$1 = wellKnownSymbol('toStringTag');
-var TYPED_ARRAY_TAG = uid('TYPED_ARRAY_TAG');
-var NATIVE_ARRAY_BUFFER = !!(global_1.ArrayBuffer && DataView);
-var NATIVE_ARRAY_BUFFER_VIEWS = NATIVE_ARRAY_BUFFER && !!objectSetPrototypeOf;
-var TYPED_ARRAY_TAG_REQIRED = false;
-var NAME;
-var TypedArrayConstructorsList = {
-  Int8Array: 1,
-  Uint8Array: 1,
-  Uint8ClampedArray: 1,
-  Int16Array: 2,
-  Uint16Array: 2,
-  Int32Array: 4,
-  Uint32Array: 4,
-  Float32Array: 4,
-  Float64Array: 8
-};
-
-var isView = function isView(it) {
-  var klass = classof(it);
-  return klass === 'DataView' || has(TypedArrayConstructorsList, klass);
-};
-
-var isTypedArray = function (it) {
-  return isObject(it) && has(TypedArrayConstructorsList, classof(it));
-};
-
-var aTypedArray = function (it) {
-  if (isTypedArray(it)) return it;
-  throw TypeError('Target is not a typed array');
-};
-
-var aTypedArrayConstructor = function (C) {
-  if (objectSetPrototypeOf) {
-    if (isPrototypeOf.call(TypedArray, C)) return C;
-  } else for (var ARRAY in TypedArrayConstructorsList) if (has(TypedArrayConstructorsList, NAME)) {
-    var TypedArrayConstructor = global_1[ARRAY];
-
-    if (TypedArrayConstructor && (C === TypedArrayConstructor || isPrototypeOf.call(TypedArrayConstructor, C))) {
-      return C;
-    }
-  }
-
-  throw TypeError('Target is not a typed array constructor');
-};
-
-var exportProto = function (KEY, property, forced) {
-  if (!descriptors) return;
-  if (forced) for (var ARRAY in TypedArrayConstructorsList) {
-    var TypedArrayConstructor = global_1[ARRAY];
-
-    if (TypedArrayConstructor && has(TypedArrayConstructor.prototype, KEY)) {
-      delete TypedArrayConstructor.prototype[KEY];
-    }
-  }
-
-  if (!TypedArrayPrototype[KEY] || forced) {
-    redefine(TypedArrayPrototype, KEY, forced ? property : NATIVE_ARRAY_BUFFER_VIEWS && Int8ArrayPrototype[KEY] || property);
-  }
-};
-
-var exportStatic = function (KEY, property, forced) {
-  var ARRAY, TypedArrayConstructor;
-  if (!descriptors) return;
-
-  if (objectSetPrototypeOf) {
-    if (forced) for (ARRAY in TypedArrayConstructorsList) {
-      TypedArrayConstructor = global_1[ARRAY];
-
-      if (TypedArrayConstructor && has(TypedArrayConstructor, KEY)) {
-        delete TypedArrayConstructor[KEY];
-      }
-    }
-
-    if (!TypedArray[KEY] || forced) {
-      // V8 ~ Chrome 49-50 `%TypedArray%` methods are non-writable non-configurable
-      try {
-        return redefine(TypedArray, KEY, forced ? property : NATIVE_ARRAY_BUFFER_VIEWS && Int8Array[KEY] || property);
-      } catch (error) {
-        /* empty */
-      }
-    } else return;
-  }
-
-  for (ARRAY in TypedArrayConstructorsList) {
-    TypedArrayConstructor = global_1[ARRAY];
-
-    if (TypedArrayConstructor && (!TypedArrayConstructor[KEY] || forced)) {
-      redefine(TypedArrayConstructor, KEY, property);
-    }
-  }
-};
-
-for (NAME in TypedArrayConstructorsList) {
-  if (!global_1[NAME]) NATIVE_ARRAY_BUFFER_VIEWS = false;
-} // WebKit bug - typed arrays constructors prototype is Object.prototype
-
-
-if (!NATIVE_ARRAY_BUFFER_VIEWS || typeof TypedArray != 'function' || TypedArray === Function.prototype) {
-  // eslint-disable-next-line no-shadow
-  TypedArray = function TypedArray() {
-    throw TypeError('Incorrect invocation');
-  };
-
-  if (NATIVE_ARRAY_BUFFER_VIEWS) for (NAME in TypedArrayConstructorsList) {
-    if (global_1[NAME]) objectSetPrototypeOf(global_1[NAME], TypedArray);
-  }
-}
-
-if (!NATIVE_ARRAY_BUFFER_VIEWS || !TypedArrayPrototype || TypedArrayPrototype === ObjectPrototype$1) {
-  TypedArrayPrototype = TypedArray.prototype;
-  if (NATIVE_ARRAY_BUFFER_VIEWS) for (NAME in TypedArrayConstructorsList) {
-    if (global_1[NAME]) objectSetPrototypeOf(global_1[NAME].prototype, TypedArrayPrototype);
-  }
-} // WebKit bug - one more object in Uint8ClampedArray prototype chain
-
-
-if (NATIVE_ARRAY_BUFFER_VIEWS && objectGetPrototypeOf(Uint8ClampedArrayPrototype) !== TypedArrayPrototype) {
-  objectSetPrototypeOf(Uint8ClampedArrayPrototype, TypedArrayPrototype);
-}
-
-if (descriptors && !has(TypedArrayPrototype, TO_STRING_TAG$1)) {
-  TYPED_ARRAY_TAG_REQIRED = true;
-  defineProperty(TypedArrayPrototype, TO_STRING_TAG$1, {
-    get: function () {
-      return isObject(this) ? this[TYPED_ARRAY_TAG] : undefined;
-    }
-  });
-
-  for (NAME in TypedArrayConstructorsList) if (global_1[NAME]) {
-    hide(global_1[NAME], TYPED_ARRAY_TAG, NAME);
-  }
-} // WebKit bug - the same parent prototype for typed arrays and data view
-
-
-if (NATIVE_ARRAY_BUFFER && objectSetPrototypeOf && objectGetPrototypeOf(DataViewPrototype) !== ObjectPrototype$1) {
-  objectSetPrototypeOf(DataViewPrototype, ObjectPrototype$1);
-}
-
-var arrayBufferViewCore = {
-  NATIVE_ARRAY_BUFFER: NATIVE_ARRAY_BUFFER,
-  NATIVE_ARRAY_BUFFER_VIEWS: NATIVE_ARRAY_BUFFER_VIEWS,
-  TYPED_ARRAY_TAG: TYPED_ARRAY_TAG_REQIRED && TYPED_ARRAY_TAG,
-  aTypedArray: aTypedArray,
-  aTypedArrayConstructor: aTypedArrayConstructor,
-  exportProto: exportProto,
-  exportStatic: exportStatic,
-  isView: isView,
-  isTypedArray: isTypedArray,
-  TypedArray: TypedArray,
-  TypedArrayPrototype: TypedArrayPrototype
-};
-
-var redefineAll = function (target, src, options) {
-  for (var key in src) redefine(target, key, src[key], options);
-
-  return target;
-};
-
-var anInstance = function (it, Constructor, name) {
-  if (!(it instanceof Constructor)) {
-    throw TypeError('Incorrect ' + (name ? name + ' ' : '') + 'invocation');
-  }
-
-  return it;
-};
-
-// https://tc39.github.io/ecma262/#sec-toindex
-
-var toIndex = function (it) {
-  if (it === undefined) return 0;
-  var number = toInteger(it);
-  var length = toLength(number);
-  if (number !== length) throw RangeError('Wrong length or index');
-  return length;
-};
-
-// https://tc39.github.io/ecma262/#sec-array.prototype.fill
-
-
-var arrayFill = function fill(value
-/* , start = 0, end = @length */
-) {
-  var O = toObject(this);
-  var length = toLength(O.length);
-  var argumentsLength = arguments.length;
-  var index = toAbsoluteIndex(argumentsLength > 1 ? arguments[1] : undefined, length);
-  var end = argumentsLength > 2 ? arguments[2] : undefined;
-  var endPos = end === undefined ? length : toAbsoluteIndex(end, length);
-
-  while (endPos > index) O[index++] = value;
-
-  return O;
-};
-
-var defineProperty$1 = objectDefineProperty.f;
-var TO_STRING_TAG$2 = wellKnownSymbol('toStringTag');
-
-var setToStringTag = function (it, TAG, STATIC) {
-  if (it && !has(it = STATIC ? it : it.prototype, TO_STRING_TAG$2)) {
-    defineProperty$1(it, TO_STRING_TAG$2, {
-      configurable: true,
-      value: TAG
-    });
-  }
-};
-
-var arrayBuffer = createCommonjsModule(function (module, exports) {
-
-  var NATIVE_ARRAY_BUFFER = arrayBufferViewCore.NATIVE_ARRAY_BUFFER;
-  var getOwnPropertyNames = objectGetOwnPropertyNames.f;
-  var defineProperty = objectDefineProperty.f;
-  var getInternalState = internalState.get;
-  var setInternalState = internalState.set;
-  var ARRAY_BUFFER = 'ArrayBuffer';
-  var DATA_VIEW = 'DataView';
-  var PROTOTYPE = 'prototype';
-  var WRONG_LENGTH = 'Wrong length';
-  var WRONG_INDEX = 'Wrong index';
-  var NativeArrayBuffer = global_1[ARRAY_BUFFER];
-  var $ArrayBuffer = NativeArrayBuffer;
-  var $DataView = global_1[DATA_VIEW];
-  var Math = global_1.Math;
-  var RangeError = global_1.RangeError; // eslint-disable-next-line no-shadow-restricted-names
-
-  var Infinity = 1 / 0;
-  var abs = Math.abs;
-  var pow = Math.pow;
-  var floor = Math.floor;
-  var log = Math.log;
-  var LN2 = Math.LN2; // IEEE754 conversions based on https://github.com/feross/ieee754
-
-  var packIEEE754 = function (number, mantissaLength, bytes) {
-    var buffer = new Array(bytes);
-    var exponentLength = bytes * 8 - mantissaLength - 1;
-    var eMax = (1 << exponentLength) - 1;
-    var eBias = eMax >> 1;
-    var rt = mantissaLength === 23 ? pow(2, -24) - pow(2, -77) : 0;
-    var sign = number < 0 || number === 0 && 1 / number < 0 ? 1 : 0;
-    var index = 0;
-    var exponent, mantissa, c;
-    number = abs(number); // eslint-disable-next-line no-self-compare
-
-    if (number != number || number === Infinity) {
-      // eslint-disable-next-line no-self-compare
-      mantissa = number != number ? 1 : 0;
-      exponent = eMax;
-    } else {
-      exponent = floor(log(number) / LN2);
-
-      if (number * (c = pow(2, -exponent)) < 1) {
-        exponent--;
-        c *= 2;
-      }
-
-      if (exponent + eBias >= 1) {
-        number += rt / c;
-      } else {
-        number += rt * pow(2, 1 - eBias);
-      }
-
-      if (number * c >= 2) {
-        exponent++;
-        c /= 2;
-      }
-
-      if (exponent + eBias >= eMax) {
-        mantissa = 0;
-        exponent = eMax;
-      } else if (exponent + eBias >= 1) {
-        mantissa = (number * c - 1) * pow(2, mantissaLength);
-        exponent = exponent + eBias;
-      } else {
-        mantissa = number * pow(2, eBias - 1) * pow(2, mantissaLength);
-        exponent = 0;
-      }
-    }
-
-    for (; mantissaLength >= 8; buffer[index++] = mantissa & 255, mantissa /= 256, mantissaLength -= 8);
-
-    exponent = exponent << mantissaLength | mantissa;
-    exponentLength += mantissaLength;
-
-    for (; exponentLength > 0; buffer[index++] = exponent & 255, exponent /= 256, exponentLength -= 8);
-
-    buffer[--index] |= sign * 128;
-    return buffer;
-  };
-
-  var unpackIEEE754 = function (buffer, mantissaLength) {
-    var bytes = buffer.length;
-    var exponentLength = bytes * 8 - mantissaLength - 1;
-    var eMax = (1 << exponentLength) - 1;
-    var eBias = eMax >> 1;
-    var nBits = exponentLength - 7;
-    var index = bytes - 1;
-    var sign = buffer[index--];
-    var exponent = sign & 127;
-    var mantissa;
-    sign >>= 7;
-
-    for (; nBits > 0; exponent = exponent * 256 + buffer[index], index--, nBits -= 8);
-
-    mantissa = exponent & (1 << -nBits) - 1;
-    exponent >>= -nBits;
-    nBits += mantissaLength;
-
-    for (; nBits > 0; mantissa = mantissa * 256 + buffer[index], index--, nBits -= 8);
-
-    if (exponent === 0) {
-      exponent = 1 - eBias;
-    } else if (exponent === eMax) {
-      return mantissa ? NaN : sign ? -Infinity : Infinity;
-    } else {
-      mantissa = mantissa + pow(2, mantissaLength);
-      exponent = exponent - eBias;
-    }
-
-    return (sign ? -1 : 1) * mantissa * pow(2, exponent - mantissaLength);
-  };
-
-  var unpackInt32 = function (buffer) {
-    return buffer[3] << 24 | buffer[2] << 16 | buffer[1] << 8 | buffer[0];
-  };
-
-  var packInt8 = function (number) {
-    return [number & 0xFF];
-  };
-
-  var packInt16 = function (number) {
-    return [number & 0xFF, number >> 8 & 0xFF];
-  };
-
-  var packInt32 = function (number) {
-    return [number & 0xFF, number >> 8 & 0xFF, number >> 16 & 0xFF, number >> 24 & 0xFF];
-  };
-
-  var packFloat32 = function (number) {
-    return packIEEE754(number, 23, 4);
-  };
-
-  var packFloat64 = function (number) {
-    return packIEEE754(number, 52, 8);
-  };
-
-  var addGetter = function (Constructor, key) {
-    defineProperty(Constructor[PROTOTYPE], key, {
-      get: function () {
-        return getInternalState(this)[key];
-      }
-    });
-  };
-
-  var get = function (view, count, index, isLittleEndian) {
-    var numIndex = +index;
-    var intIndex = toIndex(numIndex);
-    var store = getInternalState(view);
-    if (intIndex + count > store.byteLength) throw RangeError(WRONG_INDEX);
-    var bytes = getInternalState(store.buffer).bytes;
-    var start = intIndex + store.byteOffset;
-    var pack = bytes.slice(start, start + count);
-    return isLittleEndian ? pack : pack.reverse();
-  };
-
-  var set = function (view, count, index, conversion, value, isLittleEndian) {
-    var numIndex = +index;
-    var intIndex = toIndex(numIndex);
-    var store = getInternalState(view);
-    if (intIndex + count > store.byteLength) throw RangeError(WRONG_INDEX);
-    var bytes = getInternalState(store.buffer).bytes;
-    var start = intIndex + store.byteOffset;
-    var pack = conversion(+value);
-
-    for (var i = 0; i < count; i++) bytes[start + i] = pack[isLittleEndian ? i : count - i - 1];
-  };
-
-  if (!NATIVE_ARRAY_BUFFER) {
-    $ArrayBuffer = function ArrayBuffer(length) {
-      anInstance(this, $ArrayBuffer, ARRAY_BUFFER);
-      var byteLength = toIndex(length);
-      setInternalState(this, {
-        bytes: arrayFill.call(new Array(byteLength), 0),
-        byteLength: byteLength
-      });
-      if (!descriptors) this.byteLength = byteLength;
-    };
-
-    $DataView = function DataView(buffer, byteOffset, byteLength) {
-      anInstance(this, $DataView, DATA_VIEW);
-      anInstance(buffer, $ArrayBuffer, DATA_VIEW);
-      var bufferLength = getInternalState(buffer).byteLength;
-      var offset = toInteger(byteOffset);
-      if (offset < 0 || offset > bufferLength) throw RangeError('Wrong offset');
-      byteLength = byteLength === undefined ? bufferLength - offset : toLength(byteLength);
-      if (offset + byteLength > bufferLength) throw RangeError(WRONG_LENGTH);
-      setInternalState(this, {
-        buffer: buffer,
-        byteLength: byteLength,
-        byteOffset: offset
-      });
-
-      if (!descriptors) {
-        this.buffer = buffer;
-        this.byteLength = byteLength;
-        this.byteOffset = offset;
-      }
-    };
-
-    if (descriptors) {
-      addGetter($ArrayBuffer, 'byteLength');
-      addGetter($DataView, 'buffer');
-      addGetter($DataView, 'byteLength');
-      addGetter($DataView, 'byteOffset');
-    }
-
-    redefineAll($DataView[PROTOTYPE], {
-      getInt8: function getInt8(byteOffset) {
-        return get(this, 1, byteOffset)[0] << 24 >> 24;
-      },
-      getUint8: function getUint8(byteOffset) {
-        return get(this, 1, byteOffset)[0];
-      },
-      getInt16: function getInt16(byteOffset
-      /* , littleEndian */
-      ) {
-        var bytes = get(this, 2, byteOffset, arguments.length > 1 ? arguments[1] : undefined);
-        return (bytes[1] << 8 | bytes[0]) << 16 >> 16;
-      },
-      getUint16: function getUint16(byteOffset
-      /* , littleEndian */
-      ) {
-        var bytes = get(this, 2, byteOffset, arguments.length > 1 ? arguments[1] : undefined);
-        return bytes[1] << 8 | bytes[0];
-      },
-      getInt32: function getInt32(byteOffset
-      /* , littleEndian */
-      ) {
-        return unpackInt32(get(this, 4, byteOffset, arguments.length > 1 ? arguments[1] : undefined));
-      },
-      getUint32: function getUint32(byteOffset
-      /* , littleEndian */
-      ) {
-        return unpackInt32(get(this, 4, byteOffset, arguments.length > 1 ? arguments[1] : undefined)) >>> 0;
-      },
-      getFloat32: function getFloat32(byteOffset
-      /* , littleEndian */
-      ) {
-        return unpackIEEE754(get(this, 4, byteOffset, arguments.length > 1 ? arguments[1] : undefined), 23);
-      },
-      getFloat64: function getFloat64(byteOffset
-      /* , littleEndian */
-      ) {
-        return unpackIEEE754(get(this, 8, byteOffset, arguments.length > 1 ? arguments[1] : undefined), 52);
-      },
-      setInt8: function setInt8(byteOffset, value) {
-        set(this, 1, byteOffset, packInt8, value);
-      },
-      setUint8: function setUint8(byteOffset, value) {
-        set(this, 1, byteOffset, packInt8, value);
-      },
-      setInt16: function setInt16(byteOffset, value
-      /* , littleEndian */
-      ) {
-        set(this, 2, byteOffset, packInt16, value, arguments.length > 2 ? arguments[2] : undefined);
-      },
-      setUint16: function setUint16(byteOffset, value
-      /* , littleEndian */
-      ) {
-        set(this, 2, byteOffset, packInt16, value, arguments.length > 2 ? arguments[2] : undefined);
-      },
-      setInt32: function setInt32(byteOffset, value
-      /* , littleEndian */
-      ) {
-        set(this, 4, byteOffset, packInt32, value, arguments.length > 2 ? arguments[2] : undefined);
-      },
-      setUint32: function setUint32(byteOffset, value
-      /* , littleEndian */
-      ) {
-        set(this, 4, byteOffset, packInt32, value, arguments.length > 2 ? arguments[2] : undefined);
-      },
-      setFloat32: function setFloat32(byteOffset, value
-      /* , littleEndian */
-      ) {
-        set(this, 4, byteOffset, packFloat32, value, arguments.length > 2 ? arguments[2] : undefined);
-      },
-      setFloat64: function setFloat64(byteOffset, value
-      /* , littleEndian */
-      ) {
-        set(this, 8, byteOffset, packFloat64, value, arguments.length > 2 ? arguments[2] : undefined);
-      }
-    });
-  } else {
-    if (!fails(function () {
-      NativeArrayBuffer(1);
-    }) || !fails(function () {
-      new NativeArrayBuffer(-1); // eslint-disable-line no-new
-    }) || fails(function () {
-      new NativeArrayBuffer(); // eslint-disable-line no-new
-
-      new NativeArrayBuffer(1.5); // eslint-disable-line no-new
-
-      new NativeArrayBuffer(NaN); // eslint-disable-line no-new
-
-      return NativeArrayBuffer.name != ARRAY_BUFFER;
-    })) {
-      $ArrayBuffer = function ArrayBuffer(length) {
-        anInstance(this, $ArrayBuffer);
-        return new NativeArrayBuffer(toIndex(length));
-      };
-
-      var ArrayBufferPrototype = $ArrayBuffer[PROTOTYPE] = NativeArrayBuffer[PROTOTYPE];
-
-      for (var keys = getOwnPropertyNames(NativeArrayBuffer), j = 0, key; keys.length > j;) {
-        if (!((key = keys[j++]) in $ArrayBuffer)) hide($ArrayBuffer, key, NativeArrayBuffer[key]);
-      }
-
-      ArrayBufferPrototype.constructor = $ArrayBuffer;
-    } // iOS Safari 7.x bug
-
-
-    var testView = new $DataView(new $ArrayBuffer(2));
-    var nativeSetInt8 = $DataView[PROTOTYPE].setInt8;
-    testView.setInt8(0, 2147483648);
-    testView.setInt8(1, 2147483649);
-    if (testView.getInt8(0) || !testView.getInt8(1)) redefineAll($DataView[PROTOTYPE], {
-      setInt8: function setInt8(byteOffset, value) {
-        nativeSetInt8.call(this, byteOffset, value << 24 >> 24);
-      },
-      setUint8: function setUint8(byteOffset, value) {
-        nativeSetInt8.call(this, byteOffset, value << 24 >> 24);
-      }
-    }, {
-      unsafe: true
-    });
-  }
-
-  setToStringTag($ArrayBuffer, ARRAY_BUFFER);
-  setToStringTag($DataView, DATA_VIEW);
-  exports[ARRAY_BUFFER] = $ArrayBuffer;
-  exports[DATA_VIEW] = $DataView;
-});
-
 var aFunction$1 = function (it) {
   if (typeof it != 'function') {
     throw TypeError(String(it) + ' is not a function');
@@ -1201,458 +923,6 @@ var aFunction$1 = function (it) {
 
   return it;
 };
-
-var SPECIES = wellKnownSymbol('species'); // `SpeciesConstructor` abstract operation
-// https://tc39.github.io/ecma262/#sec-speciesconstructor
-
-var speciesConstructor = function (O, defaultConstructor) {
-  var C = anObject(O).constructor;
-  var S;
-  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? defaultConstructor : aFunction$1(S);
-};
-
-var ArrayBuffer = arrayBuffer.ArrayBuffer;
-var DataView$1 = arrayBuffer.DataView;
-var nativeArrayBufferSlice = ArrayBuffer.prototype.slice;
-var INCORRECT_SLICE = fails(function () {
-  return !new ArrayBuffer(2).slice(1, undefined).byteLength;
-}); // `ArrayBuffer.prototype.slice` method
-// https://tc39.github.io/ecma262/#sec-arraybuffer.prototype.slice
-
-_export({
-  target: 'ArrayBuffer',
-  proto: true,
-  unsafe: true,
-  forced: INCORRECT_SLICE
-}, {
-  slice: function slice(start, end) {
-    if (nativeArrayBufferSlice !== undefined && end === undefined) {
-      return nativeArrayBufferSlice.call(anObject(this), start); // FF fix
-    }
-
-    var length = anObject(this).byteLength;
-    var first = toAbsoluteIndex(start, length);
-    var fin = toAbsoluteIndex(end === undefined ? length : end, length);
-    var result = new (speciesConstructor(this, ArrayBuffer))(toLength(fin - first));
-    var viewSource = new DataView$1(this);
-    var viewTarget = new DataView$1(result);
-    var index = 0;
-
-    while (first < fin) {
-      viewTarget.setUint8(index++, viewSource.getUint8(first++));
-    }
-
-    return result;
-  }
-});
-
-var NATIVE_ARRAY_BUFFER$1 = arrayBufferViewCore.NATIVE_ARRAY_BUFFER; // `DataView` constructor
-// https://tc39.github.io/ecma262/#sec-dataview-constructor
-
-_export({
-  global: true,
-  forced: !NATIVE_ARRAY_BUFFER$1
-}, {
-  DataView: arrayBuffer.DataView
-});
-
-var TO_STRING_TAG$3 = wellKnownSymbol('toStringTag');
-var test = {};
-test[TO_STRING_TAG$3] = 'z'; // `Object.prototype.toString` method implementation
-// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
-
-var objectToString = String(test) !== '[object z]' ? function toString() {
-  return '[object ' + classof(this) + ']';
-} : test.toString;
-
-var ObjectPrototype$2 = Object.prototype; // `Object.prototype.toString` method
-// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
-
-if (objectToString !== ObjectPrototype$2.toString) {
-  redefine(ObjectPrototype$2, 'toString', objectToString, {
-    unsafe: true
-  });
-}
-
-/*
- * Canvas shapes used by Network
- */
-
-if (typeof CanvasRenderingContext2D !== "undefined") {
-  CanvasRenderingContext2D.prototype.circle = function (x, y, r) {
-    this.beginPath();
-    this.arc(x, y, r, 0, 2 * Math.PI, false);
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.square = function (x, y, r) {
-    this.beginPath();
-    this.rect(x - r, y - r, r * 2, r * 2);
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.triangle = function (x, y, r) {
-    this.beginPath(); // the change in radius and the offset is here to center the shape
-
-    r *= 1.15;
-    y += 0.275 * r;
-    var s = r * 2;
-    var s2 = s / 2;
-    var ir = Math.sqrt(3) / 6 * s; // radius of inner circle
-
-    var h = Math.sqrt(s * s - s2 * s2); // height
-
-    this.moveTo(x, y - (h - ir));
-    this.lineTo(x + s2, y + ir);
-    this.lineTo(x - s2, y + ir);
-    this.lineTo(x, y - (h - ir));
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.triangleDown = function (x, y, r) {
-    this.beginPath(); // the change in radius and the offset is here to center the shape
-
-    r *= 1.15;
-    y -= 0.275 * r;
-    var s = r * 2;
-    var s2 = s / 2;
-    var ir = Math.sqrt(3) / 6 * s; // radius of inner circle
-
-    var h = Math.sqrt(s * s - s2 * s2); // height
-
-    this.moveTo(x, y + (h - ir));
-    this.lineTo(x + s2, y - ir);
-    this.lineTo(x - s2, y - ir);
-    this.lineTo(x, y + (h - ir));
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.star = function (x, y, r) {
-    // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
-    this.beginPath(); // the change in radius and the offset is here to center the shape
-
-    r *= 0.82;
-    y += 0.1 * r;
-
-    for (var n = 0; n < 10; n++) {
-      var radius = n % 2 === 0 ? r * 1.3 : r * 0.5;
-      this.lineTo(x + radius * Math.sin(n * 2 * Math.PI / 10), y - radius * Math.cos(n * 2 * Math.PI / 10));
-    }
-
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.diamond = function (x, y, r) {
-    this.beginPath();
-    this.lineTo(x, y + r);
-    this.lineTo(x + r, y);
-    this.lineTo(x, y - r);
-    this.lineTo(x - r, y);
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
-    var r2d = Math.PI / 180;
-
-    if (w - 2 * r < 0) {
-      r = w / 2;
-    } //ensure that the radius isn't too large for x
-
-
-    if (h - 2 * r < 0) {
-      r = h / 2;
-    } //ensure that the radius isn't too large for y
-
-
-    this.beginPath();
-    this.moveTo(x + r, y);
-    this.lineTo(x + w - r, y);
-    this.arc(x + w - r, y + r, r, r2d * 270, r2d * 360, false);
-    this.lineTo(x + w, y + h - r);
-    this.arc(x + w - r, y + h - r, r, 0, r2d * 90, false);
-    this.lineTo(x + r, y + h);
-    this.arc(x + r, y + h - r, r, r2d * 90, r2d * 180, false);
-    this.lineTo(x, y + r);
-    this.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.ellipse_vis = function (x, y, w, h) {
-    var kappa = 0.5522848,
-        ox = w / 2 * kappa,
-        // control point offset horizontal
-    oy = h / 2 * kappa,
-        // control point offset vertical
-    xe = x + w,
-        // x-end
-    ye = y + h,
-        // y-end
-    xm = x + w / 2,
-        // x-middle
-    ym = y + h / 2; // y-middle
-
-    this.beginPath();
-    this.moveTo(x, ym);
-    this.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-    this.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-    this.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-    this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-    this.closePath();
-  };
-
-  CanvasRenderingContext2D.prototype.database = function (x, y, w, h) {
-    var f = 1 / 3;
-    var wEllipse = w;
-    var hEllipse = h * f;
-    var kappa = 0.5522848,
-        ox = wEllipse / 2 * kappa,
-        // control point offset horizontal
-    oy = hEllipse / 2 * kappa,
-        // control point offset vertical
-    xe = x + wEllipse,
-        // x-end
-    ye = y + hEllipse,
-        // y-end
-    xm = x + wEllipse / 2,
-        // x-middle
-    ym = y + hEllipse / 2,
-        // y-middle
-    ymb = y + (h - hEllipse / 2),
-        // y-midlle, bottom ellipse
-    yeb = y + h; // y-end, bottom ellipse
-
-    this.beginPath();
-    this.moveTo(xe, ym);
-    this.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-    this.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
-    this.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-    this.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-    this.lineTo(xe, ymb);
-    this.bezierCurveTo(xe, ymb + oy, xm + ox, yeb, xm, yeb);
-    this.bezierCurveTo(xm - ox, yeb, x, ymb + oy, x, ymb);
-    this.lineTo(x, ym);
-  };
-
-  CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, pattern) {
-    this.beginPath();
-    this.moveTo(x, y);
-    var patternLength = pattern.length;
-    var dx = x2 - x;
-    var dy = y2 - y;
-    var slope = dy / dx;
-    var distRemaining = Math.sqrt(dx * dx + dy * dy);
-    var patternIndex = 0;
-    var draw = true;
-    var xStep = 0;
-    var dashLength = +pattern[0];
-
-    while (distRemaining >= 0.1) {
-      dashLength = +pattern[patternIndex++ % patternLength];
-
-      if (dashLength > distRemaining) {
-        dashLength = distRemaining;
-      }
-
-      xStep = Math.sqrt(dashLength * dashLength / (1 + slope * slope));
-      xStep = dx < 0 ? -xStep : xStep;
-      x += xStep;
-      y += slope * xStep;
-
-      if (draw === true) {
-        this.lineTo(x, y);
-      } else {
-        this.moveTo(x, y);
-      }
-
-      distRemaining -= dashLength;
-      draw = !draw;
-    }
-  };
-
-  CanvasRenderingContext2D.prototype.hexagon = function (x, y, r) {
-    this.beginPath();
-    var sides = 6;
-    var a = Math.PI * 2 / sides;
-    this.moveTo(x + r, y);
-
-    for (var i = 1; i < sides; i++) {
-      this.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
-    }
-
-    this.closePath();
-  };
-}
-
-var componentEmitter = createCommonjsModule(function (module) {
-  /**
-   * Expose `Emitter`.
-   */
-  {
-    module.exports = Emitter;
-  }
-  /**
-   * Initialize a new `Emitter`.
-   *
-   * @api public
-   */
-
-
-  function Emitter(obj) {
-    if (obj) return mixin(obj);
-  }
-  /**
-   * Mixin the emitter properties.
-   *
-   * @param {Object} obj
-   * @return {Object}
-   * @api private
-   */
-
-  function mixin(obj) {
-    for (var key in Emitter.prototype) {
-      obj[key] = Emitter.prototype[key];
-    }
-
-    return obj;
-  }
-  /**
-   * Listen on the given `event` with `fn`.
-   *
-   * @param {String} event
-   * @param {Function} fn
-   * @return {Emitter}
-   * @api public
-   */
-
-
-  Emitter.prototype.on = Emitter.prototype.addEventListener = function (event, fn) {
-    this._callbacks = this._callbacks || {};
-    (this._callbacks['$' + event] = this._callbacks['$' + event] || []).push(fn);
-    return this;
-  };
-  /**
-   * Adds an `event` listener that will be invoked a single
-   * time then automatically removed.
-   *
-   * @param {String} event
-   * @param {Function} fn
-   * @return {Emitter}
-   * @api public
-   */
-
-
-  Emitter.prototype.once = function (event, fn) {
-    function on() {
-      this.off(event, on);
-      fn.apply(this, arguments);
-    }
-
-    on.fn = fn;
-    this.on(event, on);
-    return this;
-  };
-  /**
-   * Remove the given callback for `event` or all
-   * registered callbacks.
-   *
-   * @param {String} event
-   * @param {Function} fn
-   * @return {Emitter}
-   * @api public
-   */
-
-
-  Emitter.prototype.off = Emitter.prototype.removeListener = Emitter.prototype.removeAllListeners = Emitter.prototype.removeEventListener = function (event, fn) {
-    this._callbacks = this._callbacks || {}; // all
-
-    if (0 == arguments.length) {
-      this._callbacks = {};
-      return this;
-    } // specific event
-
-
-    var callbacks = this._callbacks['$' + event];
-    if (!callbacks) return this; // remove all handlers
-
-    if (1 == arguments.length) {
-      delete this._callbacks['$' + event];
-      return this;
-    } // remove specific handler
-
-
-    var cb;
-
-    for (var i = 0; i < callbacks.length; i++) {
-      cb = callbacks[i];
-
-      if (cb === fn || cb.fn === fn) {
-        callbacks.splice(i, 1);
-        break;
-      }
-    } // Remove event specific arrays for event types that no
-    // one is subscribed for to avoid memory leak.
-
-
-    if (callbacks.length === 0) {
-      delete this._callbacks['$' + event];
-    }
-
-    return this;
-  };
-  /**
-   * Emit `event` with the given args.
-   *
-   * @param {String} event
-   * @param {Mixed} ...
-   * @return {Emitter}
-   */
-
-
-  Emitter.prototype.emit = function (event) {
-    this._callbacks = this._callbacks || {};
-    var args = new Array(arguments.length - 1),
-        callbacks = this._callbacks['$' + event];
-
-    for (var i = 1; i < arguments.length; i++) {
-      args[i - 1] = arguments[i];
-    }
-
-    if (callbacks) {
-      callbacks = callbacks.slice(0);
-
-      for (var i = 0, len = callbacks.length; i < len; ++i) {
-        callbacks[i].apply(this, args);
-      }
-    }
-
-    return this;
-  };
-  /**
-   * Return array of callbacks for `event`.
-   *
-   * @param {String} event
-   * @return {Array}
-   * @api public
-   */
-
-
-  Emitter.prototype.listeners = function (event) {
-    this._callbacks = this._callbacks || {};
-    return this._callbacks['$' + event] || [];
-  };
-  /**
-   * Check if this emitter has `event` handlers.
-   *
-   * @param {String} event
-   * @return {Boolean}
-   * @api public
-   */
-
-
-  Emitter.prototype.hasListeners = function (event) {
-    return !!this.listeners(event).length;
-  };
-});
 
 var bindContext = function (fn, that, length) {
   aFunction$1(fn);
@@ -1687,13 +957,32 @@ var bindContext = function (fn, that, length) {
   };
 };
 
+// https://tc39.github.io/ecma262/#sec-toobject
+
+var toObject = function (argument) {
+  return Object(requireObjectCoercible(argument));
+};
+
 // https://tc39.github.io/ecma262/#sec-isarray
 
 var isArray = Array.isArray || function isArray(arg) {
   return classofRaw(arg) == 'Array';
 };
 
-var SPECIES$1 = wellKnownSymbol('species'); // `ArraySpeciesCreate` abstract operation
+var nativeSymbol = !!Object.getOwnPropertySymbols && !fails(function () {
+  // Chrome 38 Symbol has incorrect toString conversion
+  // eslint-disable-next-line no-undef
+  return !String(Symbol());
+});
+
+var Symbol$1 = global_1.Symbol;
+var store$1 = shared('wks');
+
+var wellKnownSymbol = function (name) {
+  return store$1[name] || (store$1[name] = nativeSymbol && Symbol$1[name] || (nativeSymbol ? Symbol$1 : uid)('Symbol.' + name));
+};
+
+var SPECIES = wellKnownSymbol('species'); // `ArraySpeciesCreate` abstract operation
 // https://tc39.github.io/ecma262/#sec-arrayspeciescreate
 
 var arraySpeciesCreate = function (originalArray, length) {
@@ -1703,7 +992,7 @@ var arraySpeciesCreate = function (originalArray, length) {
     C = originalArray.constructor; // cross-realm fallback
 
     if (typeof C == 'function' && (C === Array || isArray(C.prototype))) C = undefined;else if (isObject(C)) {
-      C = C[SPECIES$1];
+      C = C[SPECIES];
       if (C === null) C = undefined;
     }
   }
@@ -1836,7 +1125,7 @@ var objectDefineProperties = descriptors ? Object.defineProperties : function de
 
 var html = getBuiltIn('document', 'documentElement');
 
-var IE_PROTO$1 = sharedKey('IE_PROTO');
+var IE_PROTO = sharedKey('IE_PROTO');
 var PROTOTYPE = 'prototype';
 
 var Empty = function () {
@@ -1877,13 +1166,13 @@ var objectCreate = Object.create || function create(O, Properties) {
     result = new Empty();
     Empty[PROTOTYPE] = null; // add "__proto__" for Object.getPrototypeOf polyfill
 
-    result[IE_PROTO$1] = O;
+    result[IE_PROTO] = O;
   } else result = createDict();
 
   return Properties === undefined ? result : objectDefineProperties(result, Properties);
 };
 
-hiddenKeys[IE_PROTO$1] = true;
+hiddenKeys[IE_PROTO] = true;
 
 var UNSCOPABLES = wellKnownSymbol('unscopables');
 var ArrayPrototype = Array.prototype; // Array.prototype[@@unscopables]
@@ -1938,14 +1227,14 @@ var createProperty = function (object, key, value) {
   if (propertyKey in object) objectDefineProperty.f(object, propertyKey, createPropertyDescriptor(0, value));else object[propertyKey] = value;
 };
 
-var SPECIES$2 = wellKnownSymbol('species');
+var SPECIES$1 = wellKnownSymbol('species');
 
 var arrayMethodHasSpeciesSupport = function (METHOD_NAME) {
   return !fails(function () {
     var array = [];
     var constructor = array.constructor = {};
 
-    constructor[SPECIES$2] = function () {
+    constructor[SPECIES$1] = function () {
       return {
         foo: 1
       };
@@ -2024,15 +1313,15 @@ _export({
   }
 });
 
-var defineProperty$2 = objectDefineProperty.f;
+var defineProperty = objectDefineProperty.f;
 var FunctionPrototype = Function.prototype;
 var FunctionPrototypeToString = FunctionPrototype.toString;
 var nameRE = /^\s*function ([^ (]*)/;
-var NAME$1 = 'name'; // Function instances `.name` property
+var NAME = 'name'; // Function instances `.name` property
 // https://tc39.github.io/ecma262/#sec-function-instances-name
 
-if (descriptors && !(NAME$1 in FunctionPrototype)) {
-  defineProperty$2(FunctionPrototype, NAME$1, {
+if (descriptors && !(NAME in FunctionPrototype)) {
+  defineProperty(FunctionPrototype, NAME, {
     configurable: true,
     get: function () {
       try {
@@ -2043,6 +1332,40 @@ if (descriptors && !(NAME$1 in FunctionPrototype)) {
     }
   });
 }
+
+var aPossiblePrototype = function (it) {
+  if (!isObject(it) && it !== null) {
+    throw TypeError("Can't set " + String(it) + ' as a prototype');
+  }
+
+  return it;
+};
+
+// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+
+/* eslint-disable no-proto */
+
+var objectSetPrototypeOf = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+  var CORRECT_SETTER = false;
+  var test = {};
+  var setter;
+
+  try {
+    setter = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set;
+    setter.call(test, []);
+    CORRECT_SETTER = test instanceof Array;
+  } catch (error) {
+    /* empty */
+  }
+
+  return function setPrototypeOf(O, proto) {
+    anObject(O);
+    aPossiblePrototype(proto);
+    if (CORRECT_SETTER) setter.call(O, proto);else O.__proto__ = proto;
+    return O;
+  };
+}() : undefined);
 
 var inheritIfRequired = function ($this, dummy, Wrapper) {
   var NewTarget, NewTargetPrototype;
@@ -2083,7 +1406,7 @@ var stringTrim = {
 
 var getOwnPropertyNames = objectGetOwnPropertyNames.f;
 var getOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
-var defineProperty$3 = objectDefineProperty.f;
+var defineProperty$1 = objectDefineProperty.f;
 var trim = stringTrim.trim;
 var NUMBER = 'Number';
 var NativeNumber = global_1[NUMBER];
@@ -2156,7 +1479,7 @@ if (isForced_1(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNu
   'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' + // ES2015 (in case, if modules with ES2015 Number statics required before):
   'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' + 'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger').split(','), j = 0, key; keys$1.length > j; j++) {
     if (has(NativeNumber, key = keys$1[j]) && !has(NumberWrapper, key)) {
-      defineProperty$3(NumberWrapper, key, getOwnPropertyDescriptor$2(NativeNumber, key));
+      defineProperty$1(NumberWrapper, key, getOwnPropertyDescriptor$2(NativeNumber, key));
     }
   }
 
@@ -2289,7 +1612,7 @@ _export({
   }
 });
 
-var SPECIES$3 = wellKnownSymbol('species');
+var SPECIES$2 = wellKnownSymbol('species');
 var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
   // #replace needs built-in support for named groups.
   // #match works fine because it just return the exec results, even if it has
@@ -2347,7 +1670,7 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, length, exec, sham) {
       // a new one. We need to return the patched regex when creating the new one.
       re.constructor = {};
 
-      re.constructor[SPECIES$3] = function () {
+      re.constructor[SPECIES$2] = function () {
         return re;
       };
     }
@@ -2394,6 +1717,15 @@ var fixRegexpWellKnownSymbolLogic = function (KEY, length, exec, sham) {
     });
     if (sham) hide(RegExp.prototype[SYMBOL], 'sham', true);
   }
+};
+
+var SPECIES$3 = wellKnownSymbol('species'); // `SpeciesConstructor` abstract operation
+// https://tc39.github.io/ecma262/#sec-speciesconstructor
+
+var speciesConstructor = function (O, defaultConstructor) {
+  var C = anObject(O).constructor;
+  var S;
+  return C === undefined || (S = anObject(C)[SPECIES$3]) == undefined ? defaultConstructor : aFunction$1(S);
 };
 
 var createMethod$3 = function (CONVERT_TO_STRING) {
@@ -3996,10 +3328,10 @@ var dotparser = {
 };
 
 var dotparser$1 = /*#__PURE__*/Object.freeze({
-	'default': dotparser,
-	__moduleExports: dotparser,
-	parseDOT: parseDOT_1,
-	DOTToGraph: DOTToGraph_1
+  'default': dotparser,
+  __moduleExports: dotparser,
+  parseDOT: parseDOT_1,
+  DOTToGraph: DOTToGraph_1
 });
 
 var $map = arrayIteration.map; // `Array.prototype.map` method
@@ -4177,13 +3509,13 @@ function parseGephi(gephiJSON, optionsObj) {
 }
 
 var gephiParser = /*#__PURE__*/Object.freeze({
-	parseGephi: parseGephi
+  parseGephi: parseGephi
 });
 
 
 
 var Activator = /*#__PURE__*/Object.freeze({
-	'default': undefined
+  'default': undefined
 });
 
 /*! Hammer.JS - v2.0.15 - 2019-04-04
@@ -7168,60 +6500,60 @@ function () {
 }();
 
 var hammer_esm = /*#__PURE__*/Object.freeze({
-	'default': Hammer,
-	INPUT_START: INPUT_START,
-	INPUT_MOVE: INPUT_MOVE,
-	INPUT_END: INPUT_END,
-	INPUT_CANCEL: INPUT_CANCEL,
-	STATE_POSSIBLE: STATE_POSSIBLE,
-	STATE_BEGAN: STATE_BEGAN,
-	STATE_CHANGED: STATE_CHANGED,
-	STATE_ENDED: STATE_ENDED,
-	STATE_RECOGNIZED: STATE_RECOGNIZED,
-	STATE_CANCELLED: STATE_CANCELLED,
-	STATE_FAILED: STATE_FAILED,
-	DIRECTION_NONE: DIRECTION_NONE,
-	DIRECTION_LEFT: DIRECTION_LEFT,
-	DIRECTION_RIGHT: DIRECTION_RIGHT,
-	DIRECTION_UP: DIRECTION_UP,
-	DIRECTION_DOWN: DIRECTION_DOWN,
-	DIRECTION_HORIZONTAL: DIRECTION_HORIZONTAL,
-	DIRECTION_VERTICAL: DIRECTION_VERTICAL,
-	DIRECTION_ALL: DIRECTION_ALL,
-	Manager: Manager,
-	Input: Input,
-	TouchAction: TouchAction,
-	TouchInput: TouchInput,
-	MouseInput: MouseInput,
-	PointerEventInput: PointerEventInput,
-	TouchMouseInput: TouchMouseInput,
-	SingleTouchInput: SingleTouchInput,
-	Recognizer: Recognizer,
-	AttrRecognizer: AttrRecognizer,
-	Tap: TapRecognizer,
-	Pan: PanRecognizer,
-	Swipe: SwipeRecognizer,
-	Pinch: PinchRecognizer,
-	Rotate: RotateRecognizer,
-	Press: PressRecognizer,
-	on: addEventListeners,
-	off: removeEventListeners,
-	each: each,
-	merge: merge$1,
-	extend: extend,
-	assign: assign$1,
-	inherit: inherit,
-	bindFn: bindFn,
-	prefixed: prefixed,
-	toArray: toArray,
-	inArray: inArray,
-	uniqueArray: uniqueArray,
-	splitStr: splitStr,
-	boolOrFn: boolOrFn,
-	hasParent: hasParent,
-	addEventListeners: addEventListeners,
-	removeEventListeners: removeEventListeners,
-	defaults: defaults
+  'default': Hammer,
+  INPUT_START: INPUT_START,
+  INPUT_MOVE: INPUT_MOVE,
+  INPUT_END: INPUT_END,
+  INPUT_CANCEL: INPUT_CANCEL,
+  STATE_POSSIBLE: STATE_POSSIBLE,
+  STATE_BEGAN: STATE_BEGAN,
+  STATE_CHANGED: STATE_CHANGED,
+  STATE_ENDED: STATE_ENDED,
+  STATE_RECOGNIZED: STATE_RECOGNIZED,
+  STATE_CANCELLED: STATE_CANCELLED,
+  STATE_FAILED: STATE_FAILED,
+  DIRECTION_NONE: DIRECTION_NONE,
+  DIRECTION_LEFT: DIRECTION_LEFT,
+  DIRECTION_RIGHT: DIRECTION_RIGHT,
+  DIRECTION_UP: DIRECTION_UP,
+  DIRECTION_DOWN: DIRECTION_DOWN,
+  DIRECTION_HORIZONTAL: DIRECTION_HORIZONTAL,
+  DIRECTION_VERTICAL: DIRECTION_VERTICAL,
+  DIRECTION_ALL: DIRECTION_ALL,
+  Manager: Manager,
+  Input: Input,
+  TouchAction: TouchAction,
+  TouchInput: TouchInput,
+  MouseInput: MouseInput,
+  PointerEventInput: PointerEventInput,
+  TouchMouseInput: TouchMouseInput,
+  SingleTouchInput: SingleTouchInput,
+  Recognizer: Recognizer,
+  AttrRecognizer: AttrRecognizer,
+  Tap: TapRecognizer,
+  Pan: PanRecognizer,
+  Swipe: SwipeRecognizer,
+  Pinch: PinchRecognizer,
+  Rotate: RotateRecognizer,
+  Press: PressRecognizer,
+  on: addEventListeners,
+  off: removeEventListeners,
+  each: each,
+  merge: merge$1,
+  extend: extend,
+  assign: assign$1,
+  inherit: inherit,
+  bindFn: bindFn,
+  prefixed: prefixed,
+  toArray: toArray,
+  inArray: inArray,
+  uniqueArray: uniqueArray,
+  splitStr: splitStr,
+  boolOrFn: boolOrFn,
+  hasParent: hasParent,
+  addEventListeners: addEventListeners,
+  removeEventListeners: removeEventListeners,
+  defaults: defaults
 });
 
 var require$$0 = getCjsExportFromNamespace(hammer_esm);
@@ -8345,7 +7677,7 @@ function () {
     this.defaultOptions = {
       useDefaultGroups: true
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
   }
   /**
    *
@@ -8675,7 +8007,7 @@ function () {
       // allowed values for subOption
       var allowed = ['node', 'edge', 'label'];
       var value = true;
-      var chosen = util__default.topMost(pile, 'chosen');
+      var chosen = topMost(pile, 'chosen');
 
       if (typeof chosen === 'boolean') {
         value = chosen;
@@ -8684,7 +8016,7 @@ function () {
           throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
         }
 
-        var chosenEdge = util__default.topMost(pile, ['chosen', subOption]);
+        var chosenEdge = topMost(pile, ['chosen', subOption]);
 
         if (typeof chosenEdge === 'boolean' || typeof chosenEdge === 'function') {
           value = chosenEdge;
@@ -8816,7 +8148,7 @@ var setSpecies = function (CONSTRUCTOR_NAME) {
   }
 };
 
-var defineProperty$4 = objectDefineProperty.f;
+var defineProperty$2 = objectDefineProperty.f;
 var getOwnPropertyNames$1 = objectGetOwnPropertyNames.f;
 var MATCH$2 = wellKnownSymbol('match');
 var NativeRegExp = global_1.RegExp;
@@ -8841,7 +8173,7 @@ if (FORCED$2) {
   };
 
   var proxy = function (key) {
-    key in RegExpWrapper || defineProperty$4(RegExpWrapper, key, {
+    key in RegExpWrapper || defineProperty$2(RegExpWrapper, key, {
       configurable: true,
       get: function () {
         return NativeRegExp[key];
@@ -8935,6 +8267,30 @@ _export({
   }
 });
 
+var correctPrototypeGetter = !fails(function () {
+  function F() {
+    /* empty */
+  }
+
+  F.prototype.constructor = null;
+  return Object.getPrototypeOf(new F()) !== F.prototype;
+});
+
+var IE_PROTO$1 = sharedKey('IE_PROTO');
+var ObjectPrototype = Object.prototype; // `Object.getPrototypeOf` method
+// https://tc39.github.io/ecma262/#sec-object.getprototypeof
+
+var objectGetPrototypeOf = correctPrototypeGetter ? Object.getPrototypeOf : function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO$1)) return O[IE_PROTO$1];
+
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  }
+
+  return O instanceof Object ? ObjectPrototype : null;
+};
+
 var ITERATOR = wellKnownSymbol('iterator');
 var BUGGY_SAFARI_ITERATORS = false;
 
@@ -8961,6 +8317,18 @@ if ( !has(IteratorPrototype, ITERATOR)) hide(IteratorPrototype, ITERATOR, return
 var iteratorsCore = {
   IteratorPrototype: IteratorPrototype,
   BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
+};
+
+var defineProperty$3 = objectDefineProperty.f;
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+
+var setToStringTag = function (it, TAG, STATIC) {
+  if (it && !has(it = STATIC ? it : it.prototype, TO_STRING_TAG)) {
+    defineProperty$3(it, TO_STRING_TAG, {
+      configurable: true,
+      value: TAG
+    });
+  }
 };
 
 var IteratorPrototype$1 = iteratorsCore.IteratorPrototype;
@@ -9178,8 +8546,49 @@ _export({
   assign: objectAssign
 });
 
+var TO_STRING_TAG$1 = wellKnownSymbol('toStringTag'); // ES3 wrong here
+
+var CORRECT_ARGUMENTS = classofRaw(function () {
+  return arguments;
+}()) == 'Arguments'; // fallback for IE11 Script Access Denied error
+
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (error) {
+    /* empty */
+  }
+}; // getting tag from ES6+ `Object.prototype.toString`
+
+
+var classof = function (it) {
+  var O, tag, result;
+  return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
+  : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG$1)) == 'string' ? tag // builtinTag case
+  : CORRECT_ARGUMENTS ? classofRaw(O) // ES3 arguments fallback
+  : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
+};
+
+var TO_STRING_TAG$2 = wellKnownSymbol('toStringTag');
+var test = {};
+test[TO_STRING_TAG$2] = 'z'; // `Object.prototype.toString` method implementation
+// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+
+var objectToString = String(test) !== '[object z]' ? function toString() {
+  return '[object ' + classof(this) + ']';
+} : test.toString;
+
+var ObjectPrototype$1 = Object.prototype; // `Object.prototype.toString` method
+// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+
+if (objectToString !== ObjectPrototype$1.toString) {
+  redefine(ObjectPrototype$1, 'toString', objectToString, {
+    unsafe: true
+  });
+}
+
 var ITERATOR$2 = wellKnownSymbol('iterator');
-var TO_STRING_TAG$4 = wellKnownSymbol('toStringTag');
+var TO_STRING_TAG$3 = wellKnownSymbol('toStringTag');
 var ArrayValues = es_array_iterator.values;
 
 for (var COLLECTION_NAME$1 in domIterables) {
@@ -9193,7 +8602,7 @@ for (var COLLECTION_NAME$1 in domIterables) {
     } catch (error) {
       CollectionPrototype$1[ITERATOR$2] = ArrayValues;
     }
-    if (!CollectionPrototype$1[TO_STRING_TAG$4]) hide(CollectionPrototype$1, TO_STRING_TAG$4, COLLECTION_NAME$1);
+    if (!CollectionPrototype$1[TO_STRING_TAG$3]) hide(CollectionPrototype$1, TO_STRING_TAG$3, COLLECTION_NAME$1);
     if (domIterables[COLLECTION_NAME$1]) for (var METHOD_NAME in es_array_iterator) {
       // some Chrome versions have non-configurable methods on DOMTokenList
       if (CollectionPrototype$1[METHOD_NAME] !== es_array_iterator[METHOD_NAME]) try {
@@ -10245,7 +9654,7 @@ function () {
 
       // Prepare the multi-font option objects.
       // These will be filled in propagateFonts(), if required
-      util__default.forEach(multiFontStyle, function (style) {
+      forEach(multiFontStyle, function (style) {
         _this.fontOptions[style] = {};
       }); // Handle shorthand option, if present
 
@@ -10255,7 +9664,7 @@ function () {
       } // Copy over the non-multifont options, if specified
 
 
-      util__default.forEach(newFontOptions, function (prop, n) {
+      forEach(newFontOptions, function (prop, n) {
         if (prop !== undefined && prop !== null && _typeof(prop) !== 'object') {
           _this.fontOptions[n] = prop;
         }
@@ -10295,37 +9704,37 @@ function () {
         minHgt: -1,
         valign: 'middle'
       };
-      var widthConstraint = util__default.topMost(pile, 'widthConstraint');
+      var widthConstraint = topMost(pile, 'widthConstraint');
 
       if (typeof widthConstraint === 'number') {
         fontOptions.maxWdt = Number(widthConstraint);
         fontOptions.minWdt = Number(widthConstraint);
       } else if (_typeof(widthConstraint) === 'object') {
-        var widthConstraintMaximum = util__default.topMost(pile, ['widthConstraint', 'maximum']);
+        var widthConstraintMaximum = topMost(pile, ['widthConstraint', 'maximum']);
 
         if (typeof widthConstraintMaximum === 'number') {
           fontOptions.maxWdt = Number(widthConstraintMaximum);
         }
 
-        var widthConstraintMinimum = util__default.topMost(pile, ['widthConstraint', 'minimum']);
+        var widthConstraintMinimum = topMost(pile, ['widthConstraint', 'minimum']);
 
         if (typeof widthConstraintMinimum === 'number') {
           fontOptions.minWdt = Number(widthConstraintMinimum);
         }
       }
 
-      var heightConstraint = util__default.topMost(pile, 'heightConstraint');
+      var heightConstraint = topMost(pile, 'heightConstraint');
 
       if (typeof heightConstraint === 'number') {
         fontOptions.minHgt = Number(heightConstraint);
       } else if (_typeof(heightConstraint) === 'object') {
-        var heightConstraintMinimum = util__default.topMost(pile, ['heightConstraint', 'minimum']);
+        var heightConstraintMinimum = topMost(pile, ['heightConstraint', 'minimum']);
 
         if (typeof heightConstraintMinimum === 'number') {
           fontOptions.minHgt = Number(heightConstraintMinimum);
         }
 
-        var heightConstraintValign = util__default.topMost(pile, ['heightConstraint', 'valign']);
+        var heightConstraintValign = topMost(pile, ['heightConstraint', 'valign']);
 
         if (typeof heightConstraintValign === 'string') {
           if (heightConstraintValign === 'top' || heightConstraintValign === 'bottom') {
@@ -10348,7 +9757,7 @@ function () {
     value: function update(options, pile) {
       this.setOptions(options, true);
       this.propagateFonts(pile);
-      util__default.deepExtend(this.fontOptions, this.constrain(pile));
+      deepExtend(this.fontOptions, this.constrain(pile));
       this.fontOptions.chooser = ComponentUtil.choosify('label', pile);
     }
     /**
@@ -10432,7 +9841,7 @@ function () {
           fontOptions = tmpShorthand;
         }
 
-        util__default.forEach(fontOptions, function (opt, name) {
+        forEach(fontOptions, function (opt, name) {
           if (opt === undefined) return; // multi-font option need not be present 
 
           if (ret.hasOwnProperty(name)) return; // Keep first value we encounter
@@ -10563,7 +9972,7 @@ function () {
         var tmpMultiFontOptions = _this2.getFontOptions(fontPile, mod); // Copy over found values
 
 
-        util__default.forEach(tmpMultiFontOptions, function (option, n) {
+        forEach(tmpMultiFontOptions, function (option, n) {
           modOptions[n] = option;
         });
         modOptions.size = Number(modOptions.size);
@@ -10752,8 +10161,8 @@ function () {
 
       if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
         var opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
-        fontColor = util__default.overrideOpacity(fontColor, opacity);
-        strokeColor = util__default.overrideOpacity(strokeColor, opacity);
+        fontColor = overrideOpacity(fontColor, opacity);
+        strokeColor = overrideOpacity(strokeColor, opacity);
       }
 
       return [fontColor, strokeColor];
@@ -11010,6 +10419,24 @@ function () {
 
   return Label;
 }();
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+
+
+var arrayFill = function fill(value
+/* , start = 0, end = @length */
+) {
+  var O = toObject(this);
+  var length = toLength(O.length);
+  var argumentsLength = arguments.length;
+  var index = toAbsoluteIndex(argumentsLength > 1 ? arguments[1] : undefined, length);
+  var end = argumentsLength > 2 ? arguments[2] : undefined;
+  var endPos = end === undefined ? length : toAbsoluteIndex(end, length);
+
+  while (endPos > index) O[index++] = value;
+
+  return O;
+};
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.fill
 
@@ -13132,7 +12559,7 @@ function () {
           log('Invalid option detected in "' + option + '".' + ' Allowed values are:' + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
           errorFound = true;
         } else if (optionType === 'object' && referenceOption !== "__any__") {
-          path = util__default.copyAndExtendArray(path, option);
+          path = copyAndExtendArray(path, option);
           Validator.parse(options[option], referenceOptions[referenceOption], path);
         }
       } else if (refOptionObj['any'] === undefined) {
@@ -13253,7 +12680,7 @@ function () {
         var distance = void 0;
 
         if (options[op].__type__ !== undefined && recursive === true) {
-          var result = Validator.findInOptions(option, options[op], util__default.copyAndExtendArray(path, op));
+          var result = Validator.findInOptions(option, options[op], copyAndExtendArray(path, op));
 
           if (min > result.distance) {
             closestMatch = result.closestMatch;
@@ -13270,7 +12697,7 @@ function () {
 
           if (min > distance) {
             closestMatch = op;
-            closestMatchPath = util__default.copyArray(path);
+            closestMatchPath = copyArray(path);
             min = distance;
           }
         }
@@ -13420,7 +12847,7 @@ function () {
   function Node(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
     _classCallCheck(this, Node);
 
-    this.options = util__default.bridgeObject(globalOptions);
+    this.options = bridgeObject(globalOptions);
     this.globalOptions = globalOptions;
     this.defaultOptions = defaultOptions;
     this.body = body;
@@ -14008,10 +13435,10 @@ function () {
 
       var skipProperties = ['font'];
       if (newOptions !== undefined && newOptions.color !== undefined && newOptions.color != null) skipProperties.push('color');
-      util__default.selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
+      selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
       // Since groups can partially overwrite the colors, we parse it again, just in case.
 
-      parentOptions.color = util__default.parseColor(parentOptions.color);
+      parentOptions.color = parseColor(parentOptions.color);
     }
     /**
      * This process all possible shorthands in the new options and makes sure that the parentOptions are fully defined.
@@ -14032,16 +13459,16 @@ function () {
       var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
       var groupList = arguments.length > 4 ? arguments[4] : undefined;
       var fields = ['color', 'fixed', 'shadow'];
-      util__default.selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
+      selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
       Node.checkMass(newOptions); // merge the shadow options into the parent.
 
-      util__default.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
+      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
 
       if (newOptions.color !== undefined && newOptions.color !== null) {
-        var parsedColor = util__default.parseColor(newOptions.color);
-        util__default.fillIfDefined(parentOptions.color, parsedColor);
+        var parsedColor = parseColor(newOptions.color);
+        fillIfDefined(parentOptions.color, parsedColor);
       } else if (allowDeletion === true && newOptions.color === null) {
-        parentOptions.color = util__default.bridgeObject(globalOptions.color); // set the object back to the global options
+        parentOptions.color = bridgeObject(globalOptions.color); // set the object back to the global options
       } // handle the fixed options
 
 
@@ -14061,13 +13488,13 @@ function () {
       }
 
       if (allowDeletion === true && newOptions.font === null) {
-        parentOptions.font = util__default.bridgeObject(globalOptions.font); // set the object back to the global options
+        parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
       }
 
       Node.updateGroupOptions(parentOptions, newOptions, groupList); // handle the scaling options, specifically the label part
 
       if (newOptions.scaling !== undefined) {
-        util__default.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
       }
     }
   }, {
@@ -14255,7 +13682,7 @@ function () {
       throw 'Internal error: mass in defaultOptions of NodesHandler may not be zero or negative';
     }
 
-    this.options = util__default.bridgeObject(this.defaultOptions);
+    this.options = bridgeObject(this.defaultOptions);
     this.bindEventListeners();
   }
   /**
@@ -14272,7 +13699,7 @@ function () {
       this.body.emitter.on('refreshNodes', this.refresh.bind(this));
       this.body.emitter.on('refresh', this.refresh.bind(this));
       this.body.emitter.on('destroy', function () {
-        util__default.forEach(_this2.nodesListeners, function (callback, event) {
+        forEach(_this2.nodesListeners, function (callback, event) {
           if (_this2.body.data.nodes) _this2.body.data.nodes.off(event, callback);
         });
         delete _this2.body.functions.createNode;
@@ -14340,7 +13767,7 @@ function () {
       var doNotEmit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var oldNodesData = this.body.data.nodes;
 
-      if (nodes instanceof DataSet || nodes instanceof DataView$2) {
+      if (nodes instanceof DataSet || nodes instanceof DataView) {
         this.body.data.nodes = nodes;
       } else if (Array.isArray(nodes)) {
         this.body.data.nodes = new DataSet();
@@ -14353,7 +13780,7 @@ function () {
 
       if (oldNodesData) {
         // unsubscribe from old dataset
-        util__default.forEach(this.nodesListeners, function (callback, event) {
+        forEach(this.nodesListeners, function (callback, event) {
           oldNodesData.off(event, callback);
         });
       } // remove drawn nodes
@@ -14364,7 +13791,7 @@ function () {
       if (this.body.data.nodes) {
         // subscribe to new dataset
         var me = this;
-        util__default.forEach(this.nodesListeners, function (callback, event) {
+        forEach(this.nodesListeners, function (callback, event) {
           me.body.data.nodes.on(event, callback);
         }); // draw all new nodes
 
@@ -14494,7 +13921,7 @@ function () {
       var _this3 = this;
 
       var clearPositions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      util__default.forEach(this.body.nodes, function (node, nodeId) {
+      forEach(this.body.nodes, function (node, nodeId) {
         var data = _this3.body.data.nodes.get(nodeId);
 
         if (data !== undefined) {
@@ -17020,7 +16447,7 @@ function () {
     // Following needs to be done only once.
 
 
-    this.options = util__default.bridgeObject(globalOptions);
+    this.options = bridgeObject(globalOptions);
     this.globalOptions = globalOptions;
     this.defaultOptions = defaultOptions;
     this.body = body; // initialize variables
@@ -17703,7 +17130,7 @@ function () {
       var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
       var fields = ['arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
 
-      util__default.selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
+      selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
 
       if (ComponentUtil.isValidLabel(newOptions.label)) {
         parentOptions.label = newOptions.label;
@@ -17711,9 +17138,9 @@ function () {
         parentOptions.label = undefined;
       }
 
-      util__default.mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
-      util__default.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
-      util__default.mergeOptions(parentOptions, newOptions, 'background', globalOptions);
+      mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
+      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
+      mergeOptions(parentOptions, newOptions, 'background', globalOptions);
 
       if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
         parentOptions.dashes = newOptions.dashes;
@@ -17731,7 +17158,7 @@ function () {
           parentOptions.scaling.max = newOptions.scaling.max;
         }
 
-        util__default.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
       } else if (allowDeletion === true && newOptions.scaling === null) {
         parentOptions.scaling = Object.create(globalOptions.scaling); // this sets the pointer of the option back to the global option.
       } // handle multiple input cases for arrows
@@ -17744,9 +17171,9 @@ function () {
           parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
           parentOptions.arrows.from.enabled = arrows.indexOf("from") != -1;
         } else if (_typeof(newOptions.arrows) === 'object') {
-          util__default.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
-          util__default.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
-          util__default.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
+          mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
+          mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
+          mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
         } else {
           throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + JSON.stringify(newOptions.arrows));
         }
@@ -17756,7 +17183,7 @@ function () {
 
 
       if (newOptions.color !== undefined && newOptions.color !== null) {
-        var fromColor = util__default.isString(newOptions.color) ? {
+        var fromColor = isString(newOptions.color) ? {
           color: newOptions.color,
           highlight: newOptions.color,
           hover: newOptions.color,
@@ -17766,7 +17193,7 @@ function () {
         var toColor = parentOptions.color; // If passed, fill in values from default options - required in the case of no prototype bridging
 
         if (copyFromGlobals) {
-          util__default.deepExtend(toColor, globalOptions.color, false, allowDeletion);
+          deepExtend(toColor, globalOptions.color, false, allowDeletion);
         } else {
           // Clear local properties - need to do it like this in order to retain prototype bridges
           for (var i in toColor) {
@@ -17776,7 +17203,7 @@ function () {
           }
         }
 
-        if (util__default.isString(toColor)) {
+        if (isString(toColor)) {
           toColor.color = toColor;
           toColor.highlight = toColor;
           toColor.hover = toColor;
@@ -17820,11 +17247,11 @@ function () {
           }
         }
       } else if (allowDeletion === true && newOptions.color === null) {
-        parentOptions.color = util__default.bridgeObject(globalOptions.color); // set the object back to the global options
+        parentOptions.color = bridgeObject(globalOptions.color); // set the object back to the global options
       }
 
       if (allowDeletion === true && newOptions.font === null) {
-        parentOptions.font = util__default.bridgeObject(globalOptions.font); // set the object back to the global options
+        parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
       }
     }
   }]);
@@ -17973,7 +17400,7 @@ function () {
       width: 1,
       value: undefined
     };
-    util__default.deepExtend(this.options, this.defaultOptions);
+    deepExtend(this.options, this.defaultOptions);
     this.bindEventListeners();
   }
   /**
@@ -18045,7 +17472,7 @@ function () {
       this.body.emitter.on("refreshEdges", this.refresh.bind(this));
       this.body.emitter.on("refresh", this.refresh.bind(this));
       this.body.emitter.on("destroy", function () {
-        util__default.forEach(_this2.edgesListeners, function (callback, event) {
+        forEach(_this2.edgesListeners, function (callback, event) {
           if (_this2.body.data.edges) _this2.body.data.edges.off(event, callback);
         });
         delete _this2.body.functions.createEdge;
@@ -18107,7 +17534,7 @@ function () {
       var doNotEmit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var oldEdgesData = this.body.data.edges;
 
-      if (edges instanceof DataSet || edges instanceof DataView$2) {
+      if (edges instanceof DataSet || edges instanceof DataView) {
         this.body.data.edges = edges;
       } else if (Array.isArray(edges)) {
         this.body.data.edges = new DataSet();
@@ -18121,7 +17548,7 @@ function () {
 
       if (oldEdgesData) {
         // unsubscribe from old dataset
-        util__default.forEach(this.edgesListeners, function (callback, event) {
+        forEach(this.edgesListeners, function (callback, event) {
           oldEdgesData.off(event, callback);
         });
       } // remove drawn edges
@@ -18131,7 +17558,7 @@ function () {
 
       if (this.body.data.edges) {
         // subscribe to new dataset
-        util__default.forEach(this.edgesListeners, function (callback, event) {
+        forEach(this.edgesListeners, function (callback, event) {
           _this3.body.data.edges.on(event, callback);
         }); // draw all new nodes
 
@@ -18231,7 +17658,7 @@ function () {
       if (ids.length === 0) return; // early out
 
       var edges = this.body.edges;
-      util__default.forEach(ids, function (id) {
+      forEach(ids, function (id) {
         var edge = edges[id];
 
         if (edge !== undefined) {
@@ -18252,7 +17679,7 @@ function () {
     value: function refresh() {
       var _this4 = this;
 
-      util__default.forEach(this.body.edges, function (edge, edgeId) {
+      forEach(this.body.edges, function (edge, edgeId) {
         var data = _this4.body.data.edges._data[edgeId];
 
         if (data !== undefined) {
@@ -18346,7 +17773,7 @@ function () {
       var _this5 = this;
 
       var edgesToDelete = [];
-      util__default.forEach(this.body.edges, function (edge, id) {
+      forEach(this.body.edges, function (edge, id) {
         var toNode = _this5.body.nodes[edge.toId];
         var fromNode = _this5.body.nodes[edge.fromId]; // Skip clustering edges here, let the Clustering module handle those
 
@@ -19606,7 +19033,7 @@ function () {
       timestep: 0.5,
       adaptiveTimestep: true
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.timestep = 0.5;
     this.layoutFailed = false;
     this.bindEventListeners();
@@ -19682,8 +19109,8 @@ function () {
           this.startSimulation();
         } else {
           this.physicsEnabled = true;
-          util__default.selectiveNotDeepExtend(['stabilization'], this.options, options);
-          util__default.mergeOptions(this.options, options, 'stabilization');
+          selectiveNotDeepExtend(['stabilization'], this.options, options);
+          mergeOptions(this.options, options, 'stabilization');
 
           if (options.enabled === undefined) {
             this.options.enabled = true;
@@ -20348,7 +19775,7 @@ function () {
         var forceSize = Math.sqrt(Math.pow(force.x, 2) + Math.pow(force.x, 2));
         var size = Math.min(Math.max(5, forceSize), 15);
         var arrowSize = 3 * size;
-        var color = util__default.HSVToHex((180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360, 1, 1);
+        var color = HSVToHex((180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360, 1, 1);
         var point = {
           x: node.x + factor * force.x,
           y: node.y + factor * force.y
@@ -20525,12 +19952,12 @@ function () {
       var clonedOptions = {};
 
       if (type === undefined || type === 'node') {
-        util__default.deepExtend(clonedOptions, item.options, true);
+        deepExtend(clonedOptions, item.options, true);
         clonedOptions.x = item.x;
         clonedOptions.y = item.y;
         clonedOptions.amountOfConnections = item.edges.length;
       } else {
-        util__default.deepExtend(clonedOptions, item.options, true);
+        deepExtend(clonedOptions, item.options, true);
       }
 
       return clonedOptions;
@@ -20597,26 +20024,26 @@ function (_Node) {
 
 
       delete this.containedNodes[childClusterId];
-      util__default.forEach(childCluster.edges, function (edge) {
+      forEach(childCluster.edges, function (edge) {
         delete _this2.containedEdges[edge.id];
       }); // Transfer nodes and edges
 
-      util__default.forEach(childCluster.containedNodes, function (node, nodeId) {
+      forEach(childCluster.containedNodes, function (node, nodeId) {
         _this2.containedNodes[nodeId] = node;
       });
       childCluster.containedNodes = {};
-      util__default.forEach(childCluster.containedEdges, function (edge, edgeId) {
+      forEach(childCluster.containedEdges, function (edge, edgeId) {
         _this2.containedEdges[edgeId] = edge;
       });
       childCluster.containedEdges = {}; // Transfer edges within cluster edges which are clustered
 
-      util__default.forEach(childCluster.edges, function (clusterEdge) {
-        util__default.forEach(_this2.edges, function (parentClusterEdge) {
+      forEach(childCluster.edges, function (clusterEdge) {
+        forEach(_this2.edges, function (parentClusterEdge) {
           // Assumption: a clustered edge can only be present in a single clustering edge
           // Not tested here
           var index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(clusterEdge.id);
           if (index === -1) return;
-          util__default.forEach(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
+          forEach(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
             parentClusterEdge.clusteringEdgeReplacingIds.push(srcId); // Maintain correct bookkeeping for transferred edge
 
             _this2.body.edges[srcId].edgeReplacedById = parentClusterEdge.id;
@@ -20654,7 +20081,7 @@ function () {
 
     this.options = {};
     this.defaultOptions = {};
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.body.emitter.on('_resetData', function () {
       _this.clusteredNodes = {};
       _this.clusteredEdges = {};
@@ -20716,11 +20143,11 @@ function () {
       var childNodesObj = {};
       var childEdgesObj = {}; // collect the nodes that will be in the cluster
 
-      util__default.forEach(this.body.nodes, function (node, nodeId) {
+      forEach(this.body.nodes, function (node, nodeId) {
         if (node.options && options.joinCondition(node.options) === true) {
           childNodesObj[nodeId] = node; // collect the edges that will be in the cluster
 
-          util__default.forEach(node.edges, function (edge) {
+          forEach(node.edges, function (edge) {
             if (_this2.clusteredEdges[edge.id] === undefined) {
               childEdgesObj[edge.id] = edge;
             }
@@ -21153,7 +20580,7 @@ function () {
         return;
       }
 
-      var clusterNodeProperties = util__default.deepExtend({}, options.clusterNodeProperties); // construct the clusterNodeProperties
+      var clusterNodeProperties = deepExtend({}, options.clusterNodeProperties); // construct the clusterNodeProperties
 
       if (options.processProperties !== undefined) {
         // get the childNode options
@@ -21189,7 +20616,7 @@ function () {
 
 
       if (clusterNodeProperties.id === undefined) {
-        clusterNodeProperties.id = 'cluster:' + util__default.randomUUID();
+        clusterNodeProperties.id = 'cluster:' + randomUUID();
       }
 
       var clusterId = clusterNodeProperties.id;
@@ -21397,7 +20824,7 @@ function () {
         }
       } else {
         // copy the position from the cluster
-        util__default.forEach(containedNodes, function (containedNode) {
+        forEach(containedNodes, function (containedNode) {
           // inherit position
           if (containedNode.options.fixed.x === false) {
             containedNode.x = clusterNode.x;
@@ -21756,14 +21183,14 @@ function () {
       // copy the options of the edge we will replace
       var clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge'); // make sure the properties of clusterEdges are superimposed on it
 
-      util__default.deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
+      deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
 
       clonedOptions.from = fromId;
       clonedOptions.to = toId;
-      clonedOptions.id = 'clusterEdge:' + util__default.randomUUID(); // apply the edge specific options to it if specified
+      clonedOptions.id = 'clusterEdge:' + randomUUID(); // apply the edge specific options to it if specified
 
       if (extraOptions !== undefined) {
-        util__default.deepExtend(clonedOptions, extraOptions);
+        deepExtend(clonedOptions, extraOptions);
       }
 
       var newEdge = this.body.functions.createEdge(clonedOptions);
@@ -21880,7 +21307,7 @@ function () {
     key: "_filter",
     value: function _filter(arr, callback) {
       var ret = [];
-      util__default.forEach(arr, function (item) {
+      forEach(arr, function (item) {
         if (callback(item)) {
           ret.push(item);
         }
@@ -21912,7 +21339,7 @@ function () {
        */
 
       var eachClusterNode = function eachClusterNode(callback) {
-        util__default.forEach(_this4.body.nodes, function (node) {
+        forEach(_this4.body.nodes, function (node) {
           if (node.isCluster === true) {
             callback(node);
           }
@@ -21947,7 +21374,7 @@ function () {
       // Add the deleted clustered edges to the list
 
 
-      util__default.forEach(this.clusteredEdges, function (edgeId) {
+      forEach(this.clusteredEdges, function (edgeId) {
         var edge = _this4.body.edges[edgeId];
 
         if (edge === undefined || !edge.endPointsValid()) {
@@ -21958,7 +21385,7 @@ function () {
       // So the cluster nodes also need to be scanned for invalid edges
 
       eachClusterNode(function (clusterNode) {
-        util__default.forEach(clusterNode.containedEdges, function (edge, edgeId) {
+        forEach(clusterNode.containedEdges, function (edge, edgeId) {
           if (!edge.endPointsValid() && !deletedEdgeIds[edgeId]) {
             deletedEdgeIds[edgeId] = edgeId;
           }
@@ -21966,14 +21393,14 @@ function () {
       }); // Also scan for cluster edges which need to be removed in the active list.
       // Regular edges have been removed beforehand, so this only picks up the cluster edges.
 
-      util__default.forEach(this.body.edges, function (edge, edgeId) {
+      forEach(this.body.edges, function (edge, edgeId) {
         // Explicitly scan the contained edges for validity
         var isValid = true;
         var replacedIds = edge.clusteringEdgeReplacingIds;
 
         if (replacedIds !== undefined) {
           var numValid = 0;
-          util__default.forEach(replacedIds, function (containedEdgeId) {
+          forEach(replacedIds, function (containedEdgeId) {
             var containedEdge = _this4.body.edges[containedEdgeId];
 
             if (containedEdge !== undefined && containedEdge.endPointsValid()) {
@@ -21989,9 +21416,9 @@ function () {
       }); // Remove edges from cluster nodes
 
       eachClusterNode(function (clusterNode) {
-        util__default.forEach(deletedEdgeIds, function (deletedEdgeId) {
+        forEach(deletedEdgeIds, function (deletedEdgeId) {
           delete clusterNode.containedEdges[deletedEdgeId];
-          util__default.forEach(clusterNode.edges, function (edge, m) {
+          forEach(clusterNode.edges, function (edge, m) {
             if (edge.id === deletedEdgeId) {
               clusterNode.edges[m] = null; // Don't want to directly delete here, because in the loop
 
@@ -22009,13 +21436,13 @@ function () {
         });
       }); // Remove from cluster list
 
-      util__default.forEach(deletedEdgeIds, function (edgeId) {
+      forEach(deletedEdgeIds, function (edgeId) {
         delete _this4.clusteredEdges[edgeId];
       }); // Remove cluster edges from active list (this.body.edges).
       // deletedEdgeIds still contains id of regular edges, but these should all
       // be gone when you reach here.
 
-      util__default.forEach(deletedEdgeIds, function (edgeId) {
+      forEach(deletedEdgeIds, function (edgeId) {
         delete _this4.body.edges[edgeId];
       }); //
       // Check changed cluster state of edges
@@ -22023,7 +21450,7 @@ function () {
       // Iterating over keys here, because edges may be removed in the loop
 
       var ids = Object.keys(this.body.edges);
-      util__default.forEach(ids, function (edgeId) {
+      forEach(ids, function (edgeId) {
         var edge = _this4.body.edges[edgeId];
 
         var shouldBeClustered = _this4._isClusteredNode(edge.fromId) || _this4._isClusteredNode(edge.toId);
@@ -22197,7 +21624,7 @@ function () {
       hideEdgesOnZoom: false,
       hideNodesOnDrag: false
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
 
     this._determineBrowserMethod();
 
@@ -22279,7 +21706,7 @@ function () {
     value: function setOptions(options) {
       if (options !== undefined) {
         var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
-        util__default.selectiveDeepExtend(fields, this.options, options);
+        selectiveDeepExtend(fields, this.options, options);
       }
     }
     /**
@@ -22695,7 +22122,7 @@ function () {
       height: '100%',
       width: '100%'
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.bindEventListeners();
   }
   /**
@@ -22738,7 +22165,7 @@ function () {
 
       if (options !== undefined) {
         var fields = ['width', 'height', 'autoResize'];
-        util__default.selectiveDeepExtend(fields, this.options, options);
+        selectiveDeepExtend(fields, this.options, options);
       }
 
       if (this.options.autoResize === true) {
@@ -22753,7 +22180,7 @@ function () {
           }
         }, 1000);
         this.resizeFunction = this._onResize.bind(this);
-        util__default.addEventListener(window, 'resize', this.resizeFunction);
+        addEventListener(window, 'resize', this.resizeFunction);
       }
     }
     /**
@@ -22768,7 +22195,7 @@ function () {
         clearInterval(this.resizeTimer);
       }
 
-      util__default.removeEventListener(window, 'resize', this.resizeFunction);
+      removeEventListener(window, 'resize', this.resizeFunction);
       this.resizeFunction = undefined;
     }
     /**
@@ -23602,7 +23029,7 @@ function () {
       var finished = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       this.easingTime += this.animationSpeed;
       this.easingTime = finished === true ? 1.0 : this.easingTime;
-      var progress = util__default.easingFunctions[this.animationEasingFunction](this.easingTime);
+      var progress = easingFunctions[this.animationEasingFunction](this.easingTime);
       this.body.view.scale = this.sourceScale + (this.targetScale - this.sourceScale) * progress;
       this.body.view.translation = {
         x: this.sourceTranslation.x + (this.targetTranslation.x - this.sourceTranslation.x) * progress,
@@ -24260,7 +23687,7 @@ function () {
       zoomView: true,
       zoomSpeed: 1
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.bindEventListeners();
   }
   /**
@@ -24289,15 +23716,15 @@ function () {
       if (options !== undefined) {
         // extend all but the values in fields
         var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag', 'keyboard', 'multiselect', 'selectable', 'selectConnectedEdges'];
-        util__default.selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
+        selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
 
-        util__default.mergeOptions(this.options, options, 'keyboard');
+        mergeOptions(this.options, options, 'keyboard');
 
         if (options.tooltip) {
-          util__default.extend(this.options.tooltip, options.tooltip);
+          extend$1(this.options.tooltip, options.tooltip);
 
           if (options.tooltip.color) {
-            this.options.tooltip.color = util__default.parseColor(options.tooltip.color);
+            this.options.tooltip.color = parseColor(options.tooltip.color);
           }
         }
       }
@@ -24315,8 +23742,8 @@ function () {
     key: "getPointer",
     value: function getPointer(touch) {
       return {
-        x: touch.x - util__default.getAbsoluteLeft(this.canvas.frame.canvas),
-        y: touch.y - util__default.getAbsoluteTop(this.canvas.frame.canvas)
+        x: touch.x - getAbsoluteLeft(this.canvas.frame.canvas),
+        y: touch.y - getAbsoluteTop(this.canvas.frame.canvas)
       };
     }
     /**
@@ -24531,7 +23958,7 @@ function () {
       var node = this.selectionHandler.getNodeAt(this.drag.pointer);
       this.drag.dragging = true;
       this.drag.selection = [];
-      this.drag.translation = util__default.extend({}, this.body.view.translation); // copy the object
+      this.drag.translation = extend$1({}, this.body.view.translation); // copy the object
 
       this.drag.nodeId = undefined;
 
@@ -25025,7 +24452,7 @@ function () {
       selectConnectedEdges: true,
       hoverConnectedEdges: true
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.body.emitter.on("_dataChanged", function () {
       _this.updateSelection();
     });
@@ -25041,7 +24468,7 @@ function () {
     value: function setOptions(options) {
       if (options !== undefined) {
         var fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
-        util__default.selectiveDeepExtend(fields, this.options, options);
+        selectiveDeepExtend(fields, this.options, options);
       }
     }
     /**
@@ -27561,7 +26988,7 @@ function () {
 
       }
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.bindEventListeners();
   }
   /**
@@ -27608,8 +27035,8 @@ function () {
       if (options !== undefined) {
         var hierarchical = this.options.hierarchical;
         var prevHierarchicalState = hierarchical.enabled;
-        util__default.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
-        util__default.mergeOptions(this.options, options, 'hierarchical');
+        selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
+        mergeOptions(this.options, options, 'hierarchical');
 
         if (options.randomSeed !== undefined) {
           this.initialRandomSeed = options.randomSeed;
@@ -27641,7 +27068,7 @@ function () {
           if (prevHierarchicalState === true) {
             // refresh the overridden options for nodes and edges.
             this.body.emitter.emit('refresh');
-            return util__default.deepExtend(allOptions, this.optionsBackup);
+            return deepExtend(allOptions, this.optionsBackup);
           }
         }
       }
@@ -28729,7 +28156,7 @@ function () {
       var _this4 = this;
 
       var result = [];
-      util__default.forEach(node.edges, function (edge) {
+      forEach(node.edges, function (edge) {
         if (_this4.body.edgeIndices.indexOf(edge.id) !== -1) {
           result.push(edge);
         }
@@ -28750,7 +28177,7 @@ function () {
 
       var hubSizes = {};
       var nodeIds = this.body.nodeIndices;
-      util__default.forEach(nodeIds, function (nodeId) {
+      forEach(nodeIds, function (nodeId) {
         var node = _this5.body.nodes[nodeId];
 
         var hubSize = _this5._getActiveEdges(node).length;
@@ -28759,7 +28186,7 @@ function () {
       }); // Make an array of the size sorted descending
 
       var result = [];
-      util__default.forEach(hubSizes, function (size) {
+      forEach(hubSizes, function (size) {
         result.push(Number(size));
       });
       timsort$1.sort(result, function (a, b) {
@@ -28787,7 +28214,7 @@ function () {
       var _loop = function _loop(i) {
         var hubSize = hubSizes[i];
         if (hubSize === 0) return "break";
-        util__default.forEach(_this6.body.nodeIndices, function (nodeId) {
+        forEach(_this6.body.nodeIndices, function (nodeId) {
           var node = _this6.body.nodes[nodeId];
 
           if (hubSize === _this6._getActiveEdges(node).length) {
@@ -28856,7 +28283,7 @@ function () {
        */
 
       var isBidirectional = function isBidirectional(edge) {
-        util__default.forEach(_this8.body.edges, function (otherEdge) {
+        forEach(_this8.body.edges, function (otherEdge) {
           if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
             return true;
           }
@@ -29191,7 +28618,7 @@ function () {
         borderWidthSelected: 2
       }
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.body.emitter.on('destroy', function () {
       _this._clean();
     });
@@ -29245,7 +28672,7 @@ function () {
           this.options.enabled = options;
         } else {
           this.options.enabled = true;
-          util__default.deepExtend(this.options, options);
+          deepExtend(this.options, options);
         }
 
         if (this.options.initiallyActive === true) {
@@ -29454,7 +28881,7 @@ function () {
 
         if (typeof this.options.editNode === 'function') {
           if (node.isCluster !== true) {
-            var data = util__default.deepExtend({}, node.options, false);
+            var data = deepExtend({}, node.options, false);
             data.x = node.x;
             data.y = node.y;
 
@@ -29780,8 +29207,8 @@ function () {
   }, {
     key: "_getNewTargetNode",
     value: function _getNewTargetNode(x, y) {
-      var controlNodeStyle = util__default.deepExtend({}, this.options.controlNodeStyle);
-      controlNodeStyle.id = 'targetNode' + util__default.randomUUID();
+      var controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
+      controlNodeStyle.id = 'targetNode' + randomUUID();
       controlNodeStyle.hidden = false;
       controlNodeStyle.physics = false;
       controlNodeStyle.x = x;
@@ -29809,7 +29236,7 @@ function () {
 
       this.manipulationDOM = {}; // empty the editModeDiv
 
-      util__default.recursiveDOMDelete(this.editModeDiv); // create the contents for the editMode button
+      recursiveDOMDelete(this.editModeDiv); // create the contents for the editMode button
 
       var locale = this.options.locales[this.options.locale];
 
@@ -29831,8 +29258,8 @@ function () {
       this.inMode = false; // _clean the divs
 
       if (this.guiEnabled === true) {
-        util__default.recursiveDOMDelete(this.editModeDiv);
-        util__default.recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
+        recursiveDOMDelete(this.editModeDiv);
+        recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
 
         this._cleanManipulatorHammers();
       } // remove temporary nodes and edges
@@ -29878,9 +29305,9 @@ function () {
       this._clean(); // empty the manipulation divs
 
 
-      util__default.recursiveDOMDelete(this.manipulationDiv);
-      util__default.recursiveDOMDelete(this.editModeDiv);
-      util__default.recursiveDOMDelete(this.closeDiv); // remove the manipulation divs
+      recursiveDOMDelete(this.manipulationDiv);
+      recursiveDOMDelete(this.editModeDiv);
+      recursiveDOMDelete(this.closeDiv); // remove the manipulation divs
 
       if (this.manipulationDiv) {
         this.canvas.frame.removeChild(this.manipulationDiv);
@@ -30173,7 +29600,7 @@ function () {
     value: function _controlNodeTouch(event) {
       this.selectionHandler.unselectAll();
       this.lastTouch = this.body.functions.getPointer(event.center);
-      this.lastTouch.translation = util__default.extend({}, this.body.view.translation); // copy the object
+      this.lastTouch.translation = extend$1({}, this.body.view.translation); // copy the object
     }
     /**
      * the drag start is used to mark one of the control nodes as selected.
@@ -30308,7 +29735,7 @@ function () {
       // check to avoid double fireing of this function.
       if (new Date().valueOf() - this.touchTime > 100) {
         this.lastTouch = this.body.functions.getPointer(event.center);
-        this.lastTouch.translation = util__default.extend({}, this.body.view.translation); // copy the object
+        this.lastTouch.translation = extend$1({}, this.body.view.translation); // copy the object
 
         var pointer = this.lastTouch;
         var node = this.selectionHandler.getNodeAt(pointer);
@@ -30324,7 +29751,7 @@ function () {
             this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
             var connectionEdge = this.body.functions.createEdge({
-              id: 'connectionEdge' + util__default.randomUUID(),
+              id: 'connectionEdge' + randomUUID(),
               from: node.id,
               to: targetNode.id,
               physics: false,
@@ -30484,7 +29911,7 @@ function () {
       var _this4 = this;
 
       var defaultData = {
-        id: util__default.randomUUID(),
+        id: randomUUID(),
         x: clickData.pointer.canvas.x,
         y: clickData.pointer.canvas.y,
         label: 'new'
@@ -30902,8 +30329,8 @@ function () {
       } // check format
 
 
-      if (util__default.isString(color) === true) {
-        if (util__default.isValidRGB(color) === true) {
+      if (isString(color) === true) {
+        if (isValidRGB(color) === true) {
           var rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
           rgba = {
             r: rgbaArray[0],
@@ -30911,7 +30338,7 @@ function () {
             b: rgbaArray[2],
             a: 1.0
           };
-        } else if (util__default.isValidRGBA(color) === true) {
+        } else if (isValidRGBA(color) === true) {
           var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
 
           rgba = {
@@ -30920,8 +30347,8 @@ function () {
             b: _rgbaArray[2],
             a: _rgbaArray[3]
           };
-        } else if (util__default.isValidHex(color) === true) {
-          var rgbObj = util__default.hexToRGB(color);
+        } else if (isValidHex(color) === true) {
+          var rgbObj = hexToRGB(color);
           rgba = {
             r: rgbObj.r,
             g: rgbObj.g,
@@ -30985,7 +30412,7 @@ function () {
 
       // store the previous color for next time;
       if (storePrevious === true) {
-        this.previousColor = util__default.extend({}, this.color);
+        this.previousColor = extend$1({}, this.color);
       }
 
       if (this.applied === true) {
@@ -31057,11 +30484,11 @@ function () {
 
       // store the initial color
       if (setInitial === true) {
-        this.initialColor = util__default.extend({}, rgba);
+        this.initialColor = extend$1({}, rgba);
       }
 
       this.color = rgba;
-      var hsv = util__default.RGBToHSV(rgba.r, rgba.g, rgba.b);
+      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
       var angleConvert = 2 * Math.PI;
       var radius = this.r * hsv.s;
       var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
@@ -31093,9 +30520,9 @@ function () {
   }, {
     key: "_setBrightness",
     value: function _setBrightness(value) {
-      var hsv = util__default.RGBToHSV(this.color.r, this.color.g, this.color.b);
+      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
       hsv.v = value / 100;
-      var rgba = util__default.HSVToRGB(hsv.h, hsv.s, hsv.v);
+      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
       rgba['a'] = this.color.a;
       this.color = rgba;
 
@@ -31111,7 +30538,7 @@ function () {
     key: "_updatePicker",
     value: function _updatePicker() {
       var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
-      var hsv = util__default.RGBToHSV(rgba.r, rgba.g, rgba.b);
+      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
       var ctx = this.colorPickerCanvas.getContext('2d');
 
       if (this.pixelRation === undefined) {
@@ -31338,7 +30765,7 @@ function () {
           for (sat = 0; sat < this.r; sat++) {
             x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
             y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
-            rgb = util__default.HSVToRGB(hue * hfac, sat * sfac, 1);
+            rgb = HSVToRGB(hue * hfac, sat * sfac, 1);
             ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
             ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
           }
@@ -31379,10 +30806,10 @@ function () {
       var h = angle / (2 * Math.PI);
       h = h < 0 ? h + 1 : h;
       var s = radius / this.r;
-      var hsv = util__default.RGBToHSV(this.color.r, this.color.g, this.color.b);
+      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
       hsv.h = h;
       hsv.s = s;
-      var rgba = util__default.HSVToRGB(hsv.h, hsv.s, hsv.v);
+      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
       rgba['a'] = this.color.a;
       this.color = rgba; // update previews
 
@@ -31431,7 +30858,7 @@ function () {
       container: undefined,
       showButton: true
     };
-    util__default.extend(this.options, this.defaultOptions);
+    extend$1(this.options, this.defaultOptions);
     this.configureOptions = configureOptions;
     this.moduleOptions = {};
     this.domElements = [];
@@ -32094,7 +31521,7 @@ function () {
         if (obj.hasOwnProperty(subObj)) {
           show = true;
           var item = obj[subObj];
-          var newPath = util__default.copyAndExtendArray(path, subObj);
+          var newPath = copyAndExtendArray(path, subObj);
 
           if (typeof filter === 'function') {
             show = filter(subObj, path); // if needed we must go deeper into the object.
@@ -32132,7 +31559,7 @@ function () {
               if (draw === true) {
                 // initially collapse options with an disabled enabled option.
                 if (item.enabled !== undefined) {
-                  var enabledPath = util__default.copyAndExtendArray(newPath, 'enabled');
+                  var enabledPath = copyAndExtendArray(newPath, 'enabled');
 
                   var enabledValue = this._getValue(enabledPath);
 
@@ -33684,8 +33111,8 @@ var configureOptions = {
 };
 
 var options = /*#__PURE__*/Object.freeze({
-	allOptions: allOptions$1,
-	configureOptions: configureOptions
+  allOptions: allOptions$1,
+  configureOptions: configureOptions
 });
 
 /**
@@ -34143,7 +33570,7 @@ function Network(container, data, options) {
     locales: locales,
     clickToUse: false
   };
-  util__default.extend(this.options, this.defaultOptions);
+  extend$1(this.options, this.defaultOptions);
   /**
    * Containers for nodes and edges.
    *
@@ -34269,7 +33696,7 @@ Network.prototype.setOptions = function (options) {
 
 
     var fields = ['locale', 'locales', 'clickToUse'];
-    util__default.selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
+    selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
 
     options = this.layoutEngine.setOptions(options.layout, options);
     this.canvas.setOptions(options); // options for canvas are in globals
@@ -34313,18 +33740,18 @@ Network.prototype.setOptions = function (options) {
         physics: {},
         global: {}
       };
-      util__default.deepExtend(networkOptions.nodes, this.nodesHandler.options);
-      util__default.deepExtend(networkOptions.edges, this.edgesHandler.options);
-      util__default.deepExtend(networkOptions.layout, this.layoutEngine.options); // load the selectionHandler and render default options in to the interaction group
+      deepExtend(networkOptions.nodes, this.nodesHandler.options);
+      deepExtend(networkOptions.edges, this.edgesHandler.options);
+      deepExtend(networkOptions.layout, this.layoutEngine.options); // load the selectionHandler and render default options in to the interaction group
 
-      util__default.deepExtend(networkOptions.interaction, this.selectionHandler.options);
-      util__default.deepExtend(networkOptions.interaction, this.renderer.options);
-      util__default.deepExtend(networkOptions.interaction, this.interactionHandler.options);
-      util__default.deepExtend(networkOptions.manipulation, this.manipulation.options);
-      util__default.deepExtend(networkOptions.physics, this.physics.options); // load globals into the global object
+      deepExtend(networkOptions.interaction, this.selectionHandler.options);
+      deepExtend(networkOptions.interaction, this.renderer.options);
+      deepExtend(networkOptions.interaction, this.interactionHandler.options);
+      deepExtend(networkOptions.manipulation, this.manipulation.options);
+      deepExtend(networkOptions.physics, this.physics.options); // load globals into the global object
 
-      util__default.deepExtend(networkOptions.global, this.canvas.options);
-      util__default.deepExtend(networkOptions.global, this.options);
+      deepExtend(networkOptions.global, this.canvas.options);
+      deepExtend(networkOptions.global, this.options);
       this.configurator.setModuleOptions(networkOptions);
     } // handle network global options
 
@@ -34518,7 +33945,7 @@ Network.prototype.destroy = function () {
   } // remove the container and everything inside it recursively
 
 
-  util__default.recursiveDOMDelete(this.body.container);
+  recursiveDOMDelete(this.body.container);
 };
 /**
  * Update the values of all object in the given array according to the current
@@ -34802,6 +34229,8 @@ Network.prototype.getOptionsFromConfigurator = function () {
 };
 
 var parseDOTNetwork = DOTToGraph_1;
+// overflow in UMD builds. They all export vis namespace therefore reexporting
+// leads to loading vis to load vis to load vis…
 
 export { Network, dotparser$1 as NetworkDOTParser, Images as NetworkImages, options as NetworkOptions, gephiParser as networkGephiParser, parseDOTNetwork, parseGephi as parseGephiNetwork };
 //# sourceMappingURL=vis-network.js.map

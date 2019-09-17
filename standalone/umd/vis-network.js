@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-16T17:42:06Z
+ * @date    2019-09-17T18:16:01Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -17395,7 +17395,7 @@
 	    this.defaultOptions = {
 	      useDefaultGroups: true
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	  }
 	  /**
 	   *
@@ -24731,7 +24731,7 @@
 	      // allowed values for subOption
 	      var allowed = ['node', 'edge', 'label'];
 	      var value = true;
-	      var chosen = util.topMost(pile, 'chosen');
+	      var chosen = topMost(pile, 'chosen');
 
 	      if (typeof chosen === 'boolean') {
 	        value = chosen;
@@ -24740,7 +24740,7 @@
 	          throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
 	        }
 
-	        var chosenEdge = util.topMost(pile, ['chosen', subOption]);
+	        var chosenEdge = topMost(pile, ['chosen', subOption]);
 
 	        if (typeof chosenEdge === 'boolean' || typeof chosenEdge === 'function') {
 	          value = chosenEdge;
@@ -26301,7 +26301,7 @@
 
 	      // Prepare the multi-font option objects.
 	      // These will be filled in propagateFonts(), if required
-	      util.forEach(multiFontStyle, function (style) {
+	      forEach(multiFontStyle, function (style) {
 	        _this.fontOptions[style] = {};
 	      }); // Handle shorthand option, if present
 
@@ -26311,7 +26311,7 @@
 	      } // Copy over the non-multifont options, if specified
 
 
-	      util.forEach(newFontOptions, function (prop, n) {
+	      forEach(newFontOptions, function (prop, n) {
 	        if (prop !== undefined && prop !== null && _typeof$1(prop) !== 'object') {
 	          _this.fontOptions[n] = prop;
 	        }
@@ -26351,37 +26351,37 @@
 	        minHgt: -1,
 	        valign: 'middle'
 	      };
-	      var widthConstraint = util.topMost(pile, 'widthConstraint');
+	      var widthConstraint = topMost(pile, 'widthConstraint');
 
 	      if (typeof widthConstraint === 'number') {
 	        fontOptions.maxWdt = Number(widthConstraint);
 	        fontOptions.minWdt = Number(widthConstraint);
 	      } else if (_typeof$1(widthConstraint) === 'object') {
-	        var widthConstraintMaximum = util.topMost(pile, ['widthConstraint', 'maximum']);
+	        var widthConstraintMaximum = topMost(pile, ['widthConstraint', 'maximum']);
 
 	        if (typeof widthConstraintMaximum === 'number') {
 	          fontOptions.maxWdt = Number(widthConstraintMaximum);
 	        }
 
-	        var widthConstraintMinimum = util.topMost(pile, ['widthConstraint', 'minimum']);
+	        var widthConstraintMinimum = topMost(pile, ['widthConstraint', 'minimum']);
 
 	        if (typeof widthConstraintMinimum === 'number') {
 	          fontOptions.minWdt = Number(widthConstraintMinimum);
 	        }
 	      }
 
-	      var heightConstraint = util.topMost(pile, 'heightConstraint');
+	      var heightConstraint = topMost(pile, 'heightConstraint');
 
 	      if (typeof heightConstraint === 'number') {
 	        fontOptions.minHgt = Number(heightConstraint);
 	      } else if (_typeof$1(heightConstraint) === 'object') {
-	        var heightConstraintMinimum = util.topMost(pile, ['heightConstraint', 'minimum']);
+	        var heightConstraintMinimum = topMost(pile, ['heightConstraint', 'minimum']);
 
 	        if (typeof heightConstraintMinimum === 'number') {
 	          fontOptions.minHgt = Number(heightConstraintMinimum);
 	        }
 
-	        var heightConstraintValign = util.topMost(pile, ['heightConstraint', 'valign']);
+	        var heightConstraintValign = topMost(pile, ['heightConstraint', 'valign']);
 
 	        if (typeof heightConstraintValign === 'string') {
 	          if (heightConstraintValign === 'top' || heightConstraintValign === 'bottom') {
@@ -26404,7 +26404,7 @@
 	    value: function update(options, pile) {
 	      this.setOptions(options, true);
 	      this.propagateFonts(pile);
-	      util.deepExtend(this.fontOptions, this.constrain(pile));
+	      deepExtend(this.fontOptions, this.constrain(pile));
 	      this.fontOptions.chooser = ComponentUtil.choosify('label', pile);
 	    }
 	    /**
@@ -26488,7 +26488,7 @@
 	          fontOptions = tmpShorthand;
 	        }
 
-	        util.forEach(fontOptions, function (opt, name) {
+	        forEach(fontOptions, function (opt, name) {
 	          if (opt === undefined) return; // multi-font option need not be present 
 
 	          if (ret.hasOwnProperty(name)) return; // Keep first value we encounter
@@ -26619,7 +26619,7 @@
 	        var tmpMultiFontOptions = _this2.getFontOptions(fontPile, mod); // Copy over found values
 
 
-	        util.forEach(tmpMultiFontOptions, function (option, n) {
+	        forEach(tmpMultiFontOptions, function (option, n) {
 	          modOptions[n] = option;
 	        });
 	        modOptions.size = Number(modOptions.size);
@@ -26808,8 +26808,8 @@
 
 	      if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
 	        var opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
-	        fontColor = util.overrideOpacity(fontColor, opacity);
-	        strokeColor = util.overrideOpacity(strokeColor, opacity);
+	        fontColor = overrideOpacity(fontColor, opacity);
+	        strokeColor = overrideOpacity(strokeColor, opacity);
 	      }
 
 	      return [fontColor, strokeColor];
@@ -29188,7 +29188,7 @@
 	          log('Invalid option detected in "' + option + '".' + ' Allowed values are:' + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
 	          errorFound = true;
 	        } else if (optionType === 'object' && referenceOption !== "__any__") {
-	          path = util.copyAndExtendArray(path, option);
+	          path = copyAndExtendArray(path, option);
 	          Validator.parse(options[option], referenceOptions[referenceOption], path);
 	        }
 	      } else if (refOptionObj['any'] === undefined) {
@@ -29309,7 +29309,7 @@
 	        var distance = void 0;
 
 	        if (options[op].__type__ !== undefined && recursive === true) {
-	          var result = Validator.findInOptions(option, options[op], util.copyAndExtendArray(path, op));
+	          var result = Validator.findInOptions(option, options[op], copyAndExtendArray(path, op));
 
 	          if (min > result.distance) {
 	            closestMatch = result.closestMatch;
@@ -29326,7 +29326,7 @@
 
 	          if (min > distance) {
 	            closestMatch = op;
-	            closestMatchPath = util.copyArray(path);
+	            closestMatchPath = copyArray(path);
 	            min = distance;
 	          }
 	        }
@@ -29476,7 +29476,7 @@
 	  function Node(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
 	    _classCallCheck(this, Node);
 
-	    this.options = util.bridgeObject(globalOptions);
+	    this.options = bridgeObject(globalOptions);
 	    this.globalOptions = globalOptions;
 	    this.defaultOptions = defaultOptions;
 	    this.body = body;
@@ -30064,10 +30064,10 @@
 
 	      var skipProperties = ['font'];
 	      if (newOptions !== undefined && newOptions.color !== undefined && newOptions.color != null) skipProperties.push('color');
-	      util.selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
+	      selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
 	      // Since groups can partially overwrite the colors, we parse it again, just in case.
 
-	      parentOptions.color = util.parseColor(parentOptions.color);
+	      parentOptions.color = parseColor(parentOptions.color);
 	    }
 	    /**
 	     * This process all possible shorthands in the new options and makes sure that the parentOptions are fully defined.
@@ -30088,16 +30088,16 @@
 	      var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 	      var groupList = arguments.length > 4 ? arguments[4] : undefined;
 	      var fields = ['color', 'fixed', 'shadow'];
-	      util.selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
+	      selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
 	      Node.checkMass(newOptions); // merge the shadow options into the parent.
 
-	      util.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
+	      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
 
 	      if (newOptions.color !== undefined && newOptions.color !== null) {
-	        var parsedColor = util.parseColor(newOptions.color);
-	        util.fillIfDefined(parentOptions.color, parsedColor);
+	        var parsedColor = parseColor(newOptions.color);
+	        fillIfDefined(parentOptions.color, parsedColor);
 	      } else if (allowDeletion === true && newOptions.color === null) {
-	        parentOptions.color = util.bridgeObject(globalOptions.color); // set the object back to the global options
+	        parentOptions.color = bridgeObject(globalOptions.color); // set the object back to the global options
 	      } // handle the fixed options
 
 
@@ -30117,13 +30117,13 @@
 	      }
 
 	      if (allowDeletion === true && newOptions.font === null) {
-	        parentOptions.font = util.bridgeObject(globalOptions.font); // set the object back to the global options
+	        parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
 	      }
 
 	      Node.updateGroupOptions(parentOptions, newOptions, groupList); // handle the scaling options, specifically the label part
 
 	      if (newOptions.scaling !== undefined) {
-	        util.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+	        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
 	      }
 	    }
 	  }, {
@@ -30311,7 +30311,7 @@
 	      throw 'Internal error: mass in defaultOptions of NodesHandler may not be zero or negative';
 	    }
 
-	    this.options = util.bridgeObject(this.defaultOptions);
+	    this.options = bridgeObject(this.defaultOptions);
 	    this.bindEventListeners();
 	  }
 	  /**
@@ -30328,7 +30328,7 @@
 	      this.body.emitter.on('refreshNodes', this.refresh.bind(this));
 	      this.body.emitter.on('refresh', this.refresh.bind(this));
 	      this.body.emitter.on('destroy', function () {
-	        util.forEach(_this2.nodesListeners, function (callback, event) {
+	        forEach(_this2.nodesListeners, function (callback, event) {
 	          if (_this2.body.data.nodes) _this2.body.data.nodes.off(event, callback);
 	        });
 	        delete _this2.body.functions.createNode;
@@ -30409,7 +30409,7 @@
 
 	      if (oldNodesData) {
 	        // unsubscribe from old dataset
-	        util.forEach(this.nodesListeners, function (callback, event) {
+	        forEach(this.nodesListeners, function (callback, event) {
 	          oldNodesData.off(event, callback);
 	        });
 	      } // remove drawn nodes
@@ -30420,7 +30420,7 @@
 	      if (this.body.data.nodes) {
 	        // subscribe to new dataset
 	        var me = this;
-	        util.forEach(this.nodesListeners, function (callback, event) {
+	        forEach(this.nodesListeners, function (callback, event) {
 	          me.body.data.nodes.on(event, callback);
 	        }); // draw all new nodes
 
@@ -30550,7 +30550,7 @@
 	      var _this3 = this;
 
 	      var clearPositions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	      util.forEach(this.body.nodes, function (node, nodeId) {
+	      forEach(this.body.nodes, function (node, nodeId) {
 	        var data = _this3.body.data.nodes.get(nodeId);
 
 	        if (data !== undefined) {
@@ -33076,7 +33076,7 @@
 	    // Following needs to be done only once.
 
 
-	    this.options = util.bridgeObject(globalOptions);
+	    this.options = bridgeObject(globalOptions);
 	    this.globalOptions = globalOptions;
 	    this.defaultOptions = defaultOptions;
 	    this.body = body; // initialize variables
@@ -33759,7 +33759,7 @@
 	      var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
 	      var fields = ['arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
 
-	      util.selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
+	      selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
 
 	      if (ComponentUtil.isValidLabel(newOptions.label)) {
 	        parentOptions.label = newOptions.label;
@@ -33767,9 +33767,9 @@
 	        parentOptions.label = undefined;
 	      }
 
-	      util.mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
-	      util.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
-	      util.mergeOptions(parentOptions, newOptions, 'background', globalOptions);
+	      mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
+	      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
+	      mergeOptions(parentOptions, newOptions, 'background', globalOptions);
 
 	      if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
 	        parentOptions.dashes = newOptions.dashes;
@@ -33787,7 +33787,7 @@
 	          parentOptions.scaling.max = newOptions.scaling.max;
 	        }
 
-	        util.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+	        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
 	      } else if (allowDeletion === true && newOptions.scaling === null) {
 	        parentOptions.scaling = Object.create(globalOptions.scaling); // this sets the pointer of the option back to the global option.
 	      } // handle multiple input cases for arrows
@@ -33800,9 +33800,9 @@
 	          parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
 	          parentOptions.arrows.from.enabled = arrows.indexOf("from") != -1;
 	        } else if (_typeof$1(newOptions.arrows) === 'object') {
-	          util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
-	          util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
-	          util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
+	          mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
+	          mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
+	          mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
 	        } else {
 	          throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + JSON.stringify(newOptions.arrows));
 	        }
@@ -33812,7 +33812,7 @@
 
 
 	      if (newOptions.color !== undefined && newOptions.color !== null) {
-	        var fromColor = util.isString(newOptions.color) ? {
+	        var fromColor = isString(newOptions.color) ? {
 	          color: newOptions.color,
 	          highlight: newOptions.color,
 	          hover: newOptions.color,
@@ -33822,7 +33822,7 @@
 	        var toColor = parentOptions.color; // If passed, fill in values from default options - required in the case of no prototype bridging
 
 	        if (copyFromGlobals) {
-	          util.deepExtend(toColor, globalOptions.color, false, allowDeletion);
+	          deepExtend(toColor, globalOptions.color, false, allowDeletion);
 	        } else {
 	          // Clear local properties - need to do it like this in order to retain prototype bridges
 	          for (var i in toColor) {
@@ -33832,7 +33832,7 @@
 	          }
 	        }
 
-	        if (util.isString(toColor)) {
+	        if (isString(toColor)) {
 	          toColor.color = toColor;
 	          toColor.highlight = toColor;
 	          toColor.hover = toColor;
@@ -33876,11 +33876,11 @@
 	          }
 	        }
 	      } else if (allowDeletion === true && newOptions.color === null) {
-	        parentOptions.color = util.bridgeObject(globalOptions.color); // set the object back to the global options
+	        parentOptions.color = bridgeObject(globalOptions.color); // set the object back to the global options
 	      }
 
 	      if (allowDeletion === true && newOptions.font === null) {
-	        parentOptions.font = util.bridgeObject(globalOptions.font); // set the object back to the global options
+	        parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
 	      }
 	    }
 	  }]);
@@ -34029,7 +34029,7 @@
 	      width: 1,
 	      value: undefined
 	    };
-	    util.deepExtend(this.options, this.defaultOptions);
+	    deepExtend(this.options, this.defaultOptions);
 	    this.bindEventListeners();
 	  }
 	  /**
@@ -34101,7 +34101,7 @@
 	      this.body.emitter.on("refreshEdges", this.refresh.bind(this));
 	      this.body.emitter.on("refresh", this.refresh.bind(this));
 	      this.body.emitter.on("destroy", function () {
-	        util.forEach(_this2.edgesListeners, function (callback, event) {
+	        forEach(_this2.edgesListeners, function (callback, event) {
 	          if (_this2.body.data.edges) _this2.body.data.edges.off(event, callback);
 	        });
 	        delete _this2.body.functions.createEdge;
@@ -34177,7 +34177,7 @@
 
 	      if (oldEdgesData) {
 	        // unsubscribe from old dataset
-	        util.forEach(this.edgesListeners, function (callback, event) {
+	        forEach(this.edgesListeners, function (callback, event) {
 	          oldEdgesData.off(event, callback);
 	        });
 	      } // remove drawn edges
@@ -34187,7 +34187,7 @@
 
 	      if (this.body.data.edges) {
 	        // subscribe to new dataset
-	        util.forEach(this.edgesListeners, function (callback, event) {
+	        forEach(this.edgesListeners, function (callback, event) {
 	          _this3.body.data.edges.on(event, callback);
 	        }); // draw all new nodes
 
@@ -34287,7 +34287,7 @@
 	      if (ids.length === 0) return; // early out
 
 	      var edges = this.body.edges;
-	      util.forEach(ids, function (id) {
+	      forEach(ids, function (id) {
 	        var edge = edges[id];
 
 	        if (edge !== undefined) {
@@ -34308,7 +34308,7 @@
 	    value: function refresh() {
 	      var _this4 = this;
 
-	      util.forEach(this.body.edges, function (edge, edgeId) {
+	      forEach(this.body.edges, function (edge, edgeId) {
 	        var data = _this4.body.data.edges._data[edgeId];
 
 	        if (data !== undefined) {
@@ -34402,7 +34402,7 @@
 	      var _this5 = this;
 
 	      var edgesToDelete = [];
-	      util.forEach(this.body.edges, function (edge, id) {
+	      forEach(this.body.edges, function (edge, id) {
 	        var toNode = _this5.body.nodes[edge.toId];
 	        var fromNode = _this5.body.nodes[edge.fromId]; // Skip clustering edges here, let the Clustering module handle those
 
@@ -35662,7 +35662,7 @@
 	      timestep: 0.5,
 	      adaptiveTimestep: true
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.timestep = 0.5;
 	    this.layoutFailed = false;
 	    this.bindEventListeners();
@@ -35738,8 +35738,8 @@
 	          this.startSimulation();
 	        } else {
 	          this.physicsEnabled = true;
-	          util.selectiveNotDeepExtend(['stabilization'], this.options, options);
-	          util.mergeOptions(this.options, options, 'stabilization');
+	          selectiveNotDeepExtend(['stabilization'], this.options, options);
+	          mergeOptions(this.options, options, 'stabilization');
 
 	          if (options.enabled === undefined) {
 	            this.options.enabled = true;
@@ -36404,7 +36404,7 @@
 	        var forceSize = Math.sqrt(Math.pow(force.x, 2) + Math.pow(force.x, 2));
 	        var size = Math.min(Math.max(5, forceSize), 15);
 	        var arrowSize = 3 * size;
-	        var color = util.HSVToHex((180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360, 1, 1);
+	        var color = HSVToHex((180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360, 1, 1);
 	        var point = {
 	          x: node.x + factor * force.x,
 	          y: node.y + factor * force.y
@@ -36581,12 +36581,12 @@
 	      var clonedOptions = {};
 
 	      if (type === undefined || type === 'node') {
-	        util.deepExtend(clonedOptions, item.options, true);
+	        deepExtend(clonedOptions, item.options, true);
 	        clonedOptions.x = item.x;
 	        clonedOptions.y = item.y;
 	        clonedOptions.amountOfConnections = item.edges.length;
 	      } else {
-	        util.deepExtend(clonedOptions, item.options, true);
+	        deepExtend(clonedOptions, item.options, true);
 	      }
 
 	      return clonedOptions;
@@ -36653,26 +36653,26 @@
 
 
 	      delete this.containedNodes[childClusterId];
-	      util.forEach(childCluster.edges, function (edge) {
+	      forEach(childCluster.edges, function (edge) {
 	        delete _this2.containedEdges[edge.id];
 	      }); // Transfer nodes and edges
 
-	      util.forEach(childCluster.containedNodes, function (node, nodeId) {
+	      forEach(childCluster.containedNodes, function (node, nodeId) {
 	        _this2.containedNodes[nodeId] = node;
 	      });
 	      childCluster.containedNodes = {};
-	      util.forEach(childCluster.containedEdges, function (edge, edgeId) {
+	      forEach(childCluster.containedEdges, function (edge, edgeId) {
 	        _this2.containedEdges[edgeId] = edge;
 	      });
 	      childCluster.containedEdges = {}; // Transfer edges within cluster edges which are clustered
 
-	      util.forEach(childCluster.edges, function (clusterEdge) {
-	        util.forEach(_this2.edges, function (parentClusterEdge) {
+	      forEach(childCluster.edges, function (clusterEdge) {
+	        forEach(_this2.edges, function (parentClusterEdge) {
 	          // Assumption: a clustered edge can only be present in a single clustering edge
 	          // Not tested here
 	          var index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(clusterEdge.id);
 	          if (index === -1) return;
-	          util.forEach(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
+	          forEach(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
 	            parentClusterEdge.clusteringEdgeReplacingIds.push(srcId); // Maintain correct bookkeeping for transferred edge
 
 	            _this2.body.edges[srcId].edgeReplacedById = parentClusterEdge.id;
@@ -36710,7 +36710,7 @@
 
 	    this.options = {};
 	    this.defaultOptions = {};
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.body.emitter.on('_resetData', function () {
 	      _this.clusteredNodes = {};
 	      _this.clusteredEdges = {};
@@ -36772,11 +36772,11 @@
 	      var childNodesObj = {};
 	      var childEdgesObj = {}; // collect the nodes that will be in the cluster
 
-	      util.forEach(this.body.nodes, function (node, nodeId) {
+	      forEach(this.body.nodes, function (node, nodeId) {
 	        if (node.options && options.joinCondition(node.options) === true) {
 	          childNodesObj[nodeId] = node; // collect the edges that will be in the cluster
 
-	          util.forEach(node.edges, function (edge) {
+	          forEach(node.edges, function (edge) {
 	            if (_this2.clusteredEdges[edge.id] === undefined) {
 	              childEdgesObj[edge.id] = edge;
 	            }
@@ -37209,7 +37209,7 @@
 	        return;
 	      }
 
-	      var clusterNodeProperties = util.deepExtend({}, options.clusterNodeProperties); // construct the clusterNodeProperties
+	      var clusterNodeProperties = deepExtend({}, options.clusterNodeProperties); // construct the clusterNodeProperties
 
 	      if (options.processProperties !== undefined) {
 	        // get the childNode options
@@ -37245,7 +37245,7 @@
 
 
 	      if (clusterNodeProperties.id === undefined) {
-	        clusterNodeProperties.id = 'cluster:' + util.randomUUID();
+	        clusterNodeProperties.id = 'cluster:' + uuid4();
 	      }
 
 	      var clusterId = clusterNodeProperties.id;
@@ -37453,7 +37453,7 @@
 	        }
 	      } else {
 	        // copy the position from the cluster
-	        util.forEach(containedNodes, function (containedNode) {
+	        forEach(containedNodes, function (containedNode) {
 	          // inherit position
 	          if (containedNode.options.fixed.x === false) {
 	            containedNode.x = clusterNode.x;
@@ -37812,14 +37812,14 @@
 	      // copy the options of the edge we will replace
 	      var clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge'); // make sure the properties of clusterEdges are superimposed on it
 
-	      util.deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
+	      deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
 
 	      clonedOptions.from = fromId;
 	      clonedOptions.to = toId;
-	      clonedOptions.id = 'clusterEdge:' + util.randomUUID(); // apply the edge specific options to it if specified
+	      clonedOptions.id = 'clusterEdge:' + uuid4(); // apply the edge specific options to it if specified
 
 	      if (extraOptions !== undefined) {
-	        util.deepExtend(clonedOptions, extraOptions);
+	        deepExtend(clonedOptions, extraOptions);
 	      }
 
 	      var newEdge = this.body.functions.createEdge(clonedOptions);
@@ -37936,7 +37936,7 @@
 	    key: "_filter",
 	    value: function _filter(arr, callback) {
 	      var ret = [];
-	      util.forEach(arr, function (item) {
+	      forEach(arr, function (item) {
 	        if (callback(item)) {
 	          ret.push(item);
 	        }
@@ -37968,7 +37968,7 @@
 	       */
 
 	      var eachClusterNode = function eachClusterNode(callback) {
-	        util.forEach(_this4.body.nodes, function (node) {
+	        forEach(_this4.body.nodes, function (node) {
 	          if (node.isCluster === true) {
 	            callback(node);
 	          }
@@ -38003,7 +38003,7 @@
 	      // Add the deleted clustered edges to the list
 
 
-	      util.forEach(this.clusteredEdges, function (edgeId) {
+	      forEach(this.clusteredEdges, function (edgeId) {
 	        var edge = _this4.body.edges[edgeId];
 
 	        if (edge === undefined || !edge.endPointsValid()) {
@@ -38014,7 +38014,7 @@
 	      // So the cluster nodes also need to be scanned for invalid edges
 
 	      eachClusterNode(function (clusterNode) {
-	        util.forEach(clusterNode.containedEdges, function (edge, edgeId) {
+	        forEach(clusterNode.containedEdges, function (edge, edgeId) {
 	          if (!edge.endPointsValid() && !deletedEdgeIds[edgeId]) {
 	            deletedEdgeIds[edgeId] = edgeId;
 	          }
@@ -38022,14 +38022,14 @@
 	      }); // Also scan for cluster edges which need to be removed in the active list.
 	      // Regular edges have been removed beforehand, so this only picks up the cluster edges.
 
-	      util.forEach(this.body.edges, function (edge, edgeId) {
+	      forEach(this.body.edges, function (edge, edgeId) {
 	        // Explicitly scan the contained edges for validity
 	        var isValid = true;
 	        var replacedIds = edge.clusteringEdgeReplacingIds;
 
 	        if (replacedIds !== undefined) {
 	          var numValid = 0;
-	          util.forEach(replacedIds, function (containedEdgeId) {
+	          forEach(replacedIds, function (containedEdgeId) {
 	            var containedEdge = _this4.body.edges[containedEdgeId];
 
 	            if (containedEdge !== undefined && containedEdge.endPointsValid()) {
@@ -38045,9 +38045,9 @@
 	      }); // Remove edges from cluster nodes
 
 	      eachClusterNode(function (clusterNode) {
-	        util.forEach(deletedEdgeIds, function (deletedEdgeId) {
+	        forEach(deletedEdgeIds, function (deletedEdgeId) {
 	          delete clusterNode.containedEdges[deletedEdgeId];
-	          util.forEach(clusterNode.edges, function (edge, m) {
+	          forEach(clusterNode.edges, function (edge, m) {
 	            if (edge.id === deletedEdgeId) {
 	              clusterNode.edges[m] = null; // Don't want to directly delete here, because in the loop
 
@@ -38065,13 +38065,13 @@
 	        });
 	      }); // Remove from cluster list
 
-	      util.forEach(deletedEdgeIds, function (edgeId) {
+	      forEach(deletedEdgeIds, function (edgeId) {
 	        delete _this4.clusteredEdges[edgeId];
 	      }); // Remove cluster edges from active list (this.body.edges).
 	      // deletedEdgeIds still contains id of regular edges, but these should all
 	      // be gone when you reach here.
 
-	      util.forEach(deletedEdgeIds, function (edgeId) {
+	      forEach(deletedEdgeIds, function (edgeId) {
 	        delete _this4.body.edges[edgeId];
 	      }); //
 	      // Check changed cluster state of edges
@@ -38079,7 +38079,7 @@
 	      // Iterating over keys here, because edges may be removed in the loop
 
 	      var ids = Object.keys(this.body.edges);
-	      util.forEach(ids, function (edgeId) {
+	      forEach(ids, function (edgeId) {
 	        var edge = _this4.body.edges[edgeId];
 
 	        var shouldBeClustered = _this4._isClusteredNode(edge.fromId) || _this4._isClusteredNode(edge.toId);
@@ -38253,7 +38253,7 @@
 	      hideEdgesOnZoom: false,
 	      hideNodesOnDrag: false
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 
 	    this._determineBrowserMethod();
 
@@ -38335,7 +38335,7 @@
 	    value: function setOptions(options) {
 	      if (options !== undefined) {
 	        var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
-	        util.selectiveDeepExtend(fields, this.options, options);
+	        selectiveDeepExtend(fields, this.options, options);
 	      }
 	    }
 	    /**
@@ -38751,7 +38751,7 @@
 	      height: '100%',
 	      width: '100%'
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.bindEventListeners();
 	  }
 	  /**
@@ -38794,7 +38794,7 @@
 
 	      if (options !== undefined) {
 	        var fields = ['width', 'height', 'autoResize'];
-	        util.selectiveDeepExtend(fields, this.options, options);
+	        selectiveDeepExtend(fields, this.options, options);
 	      }
 
 	      if (this.options.autoResize === true) {
@@ -38809,7 +38809,7 @@
 	          }
 	        }, 1000);
 	        this.resizeFunction = this._onResize.bind(this);
-	        util.addEventListener(window, 'resize', this.resizeFunction);
+	        addEventListener(window, 'resize', this.resizeFunction);
 	      }
 	    }
 	    /**
@@ -38824,7 +38824,7 @@
 	        clearInterval(this.resizeTimer);
 	      }
 
-	      util.removeEventListener(window, 'resize', this.resizeFunction);
+	      removeEventListener(window, 'resize', this.resizeFunction);
 	      this.resizeFunction = undefined;
 	    }
 	    /**
@@ -39658,7 +39658,7 @@
 	      var finished = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	      this.easingTime += this.animationSpeed;
 	      this.easingTime = finished === true ? 1.0 : this.easingTime;
-	      var progress = util.easingFunctions[this.animationEasingFunction](this.easingTime);
+	      var progress = easingFunctions[this.animationEasingFunction](this.easingTime);
 	      this.body.view.scale = this.sourceScale + (this.targetScale - this.sourceScale) * progress;
 	      this.body.view.translation = {
 	        x: this.sourceTranslation.x + (this.targetTranslation.x - this.sourceTranslation.x) * progress,
@@ -40322,7 +40322,7 @@
 	      zoomView: true,
 	      zoomSpeed: 1
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.bindEventListeners();
 	  }
 	  /**
@@ -40351,15 +40351,15 @@
 	      if (options !== undefined) {
 	        // extend all but the values in fields
 	        var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag', 'keyboard', 'multiselect', 'selectable', 'selectConnectedEdges'];
-	        util.selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
+	        selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
 
-	        util.mergeOptions(this.options, options, 'keyboard');
+	        mergeOptions(this.options, options, 'keyboard');
 
 	        if (options.tooltip) {
-	          util.extend(this.options.tooltip, options.tooltip);
+	          extend(this.options.tooltip, options.tooltip);
 
 	          if (options.tooltip.color) {
-	            this.options.tooltip.color = util.parseColor(options.tooltip.color);
+	            this.options.tooltip.color = parseColor(options.tooltip.color);
 	          }
 	        }
 	      }
@@ -40377,8 +40377,8 @@
 	    key: "getPointer",
 	    value: function getPointer(touch) {
 	      return {
-	        x: touch.x - util.getAbsoluteLeft(this.canvas.frame.canvas),
-	        y: touch.y - util.getAbsoluteTop(this.canvas.frame.canvas)
+	        x: touch.x - getAbsoluteLeft(this.canvas.frame.canvas),
+	        y: touch.y - getAbsoluteTop(this.canvas.frame.canvas)
 	      };
 	    }
 	    /**
@@ -40593,7 +40593,7 @@
 	      var node = this.selectionHandler.getNodeAt(this.drag.pointer);
 	      this.drag.dragging = true;
 	      this.drag.selection = [];
-	      this.drag.translation = util.extend({}, this.body.view.translation); // copy the object
+	      this.drag.translation = extend({}, this.body.view.translation); // copy the object
 
 	      this.drag.nodeId = undefined;
 
@@ -41087,7 +41087,7 @@
 	      selectConnectedEdges: true,
 	      hoverConnectedEdges: true
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.body.emitter.on("_dataChanged", function () {
 	      _this.updateSelection();
 	    });
@@ -41103,7 +41103,7 @@
 	    value: function setOptions(options) {
 	      if (options !== undefined) {
 	        var fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
-	        util.selectiveDeepExtend(fields, this.options, options);
+	        selectiveDeepExtend(fields, this.options, options);
 	      }
 	    }
 	    /**
@@ -43623,7 +43623,7 @@
 
 	      }
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.bindEventListeners();
 	  }
 	  /**
@@ -43670,8 +43670,8 @@
 	      if (options !== undefined) {
 	        var hierarchical = this.options.hierarchical;
 	        var prevHierarchicalState = hierarchical.enabled;
-	        util.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
-	        util.mergeOptions(this.options, options, 'hierarchical');
+	        selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
+	        mergeOptions(this.options, options, 'hierarchical');
 
 	        if (options.randomSeed !== undefined) {
 	          this.initialRandomSeed = options.randomSeed;
@@ -43703,7 +43703,7 @@
 	          if (prevHierarchicalState === true) {
 	            // refresh the overridden options for nodes and edges.
 	            this.body.emitter.emit('refresh');
-	            return util.deepExtend(allOptions, this.optionsBackup);
+	            return deepExtend(allOptions, this.optionsBackup);
 	          }
 	        }
 	      }
@@ -44791,7 +44791,7 @@
 	      var _this4 = this;
 
 	      var result = [];
-	      util.forEach(node.edges, function (edge) {
+	      forEach(node.edges, function (edge) {
 	        if (_this4.body.edgeIndices.indexOf(edge.id) !== -1) {
 	          result.push(edge);
 	        }
@@ -44812,7 +44812,7 @@
 
 	      var hubSizes = {};
 	      var nodeIds = this.body.nodeIndices;
-	      util.forEach(nodeIds, function (nodeId) {
+	      forEach(nodeIds, function (nodeId) {
 	        var node = _this5.body.nodes[nodeId];
 
 	        var hubSize = _this5._getActiveEdges(node).length;
@@ -44821,7 +44821,7 @@
 	      }); // Make an array of the size sorted descending
 
 	      var result = [];
-	      util.forEach(hubSizes, function (size) {
+	      forEach(hubSizes, function (size) {
 	        result.push(Number(size));
 	      });
 	      timsort$1.sort(result, function (a, b) {
@@ -44849,7 +44849,7 @@
 	      var _loop = function _loop(i) {
 	        var hubSize = hubSizes[i];
 	        if (hubSize === 0) return "break";
-	        util.forEach(_this6.body.nodeIndices, function (nodeId) {
+	        forEach(_this6.body.nodeIndices, function (nodeId) {
 	          var node = _this6.body.nodes[nodeId];
 
 	          if (hubSize === _this6._getActiveEdges(node).length) {
@@ -44918,7 +44918,7 @@
 	       */
 
 	      var isBidirectional = function isBidirectional(edge) {
-	        util.forEach(_this8.body.edges, function (otherEdge) {
+	        forEach(_this8.body.edges, function (otherEdge) {
 	          if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
 	            return true;
 	          }
@@ -45256,7 +45256,7 @@
 	        borderWidthSelected: 2
 	      }
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.body.emitter.on('destroy', function () {
 	      _this._clean();
 	    });
@@ -45310,7 +45310,7 @@
 	          this.options.enabled = options;
 	        } else {
 	          this.options.enabled = true;
-	          util.deepExtend(this.options, options);
+	          deepExtend(this.options, options);
 	        }
 
 	        if (this.options.initiallyActive === true) {
@@ -45519,7 +45519,7 @@
 
 	        if (typeof this.options.editNode === 'function') {
 	          if (node.isCluster !== true) {
-	            var data = util.deepExtend({}, node.options, false);
+	            var data = deepExtend({}, node.options, false);
 	            data.x = node.x;
 	            data.y = node.y;
 
@@ -45845,8 +45845,8 @@
 	  }, {
 	    key: "_getNewTargetNode",
 	    value: function _getNewTargetNode(x, y) {
-	      var controlNodeStyle = util.deepExtend({}, this.options.controlNodeStyle);
-	      controlNodeStyle.id = 'targetNode' + util.randomUUID();
+	      var controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
+	      controlNodeStyle.id = 'targetNode' + uuid4();
 	      controlNodeStyle.hidden = false;
 	      controlNodeStyle.physics = false;
 	      controlNodeStyle.x = x;
@@ -45874,7 +45874,7 @@
 
 	      this.manipulationDOM = {}; // empty the editModeDiv
 
-	      util.recursiveDOMDelete(this.editModeDiv); // create the contents for the editMode button
+	      recursiveDOMDelete(this.editModeDiv); // create the contents for the editMode button
 
 	      var locale = this.options.locales[this.options.locale];
 
@@ -45896,8 +45896,8 @@
 	      this.inMode = false; // _clean the divs
 
 	      if (this.guiEnabled === true) {
-	        util.recursiveDOMDelete(this.editModeDiv);
-	        util.recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
+	        recursiveDOMDelete(this.editModeDiv);
+	        recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
 
 	        this._cleanManipulatorHammers();
 	      } // remove temporary nodes and edges
@@ -45943,9 +45943,9 @@
 	      this._clean(); // empty the manipulation divs
 
 
-	      util.recursiveDOMDelete(this.manipulationDiv);
-	      util.recursiveDOMDelete(this.editModeDiv);
-	      util.recursiveDOMDelete(this.closeDiv); // remove the manipulation divs
+	      recursiveDOMDelete(this.manipulationDiv);
+	      recursiveDOMDelete(this.editModeDiv);
+	      recursiveDOMDelete(this.closeDiv); // remove the manipulation divs
 
 	      if (this.manipulationDiv) {
 	        this.canvas.frame.removeChild(this.manipulationDiv);
@@ -46238,7 +46238,7 @@
 	    value: function _controlNodeTouch(event) {
 	      this.selectionHandler.unselectAll();
 	      this.lastTouch = this.body.functions.getPointer(event.center);
-	      this.lastTouch.translation = util.extend({}, this.body.view.translation); // copy the object
+	      this.lastTouch.translation = extend({}, this.body.view.translation); // copy the object
 	    }
 	    /**
 	     * the drag start is used to mark one of the control nodes as selected.
@@ -46373,7 +46373,7 @@
 	      // check to avoid double fireing of this function.
 	      if (new Date().valueOf() - this.touchTime > 100) {
 	        this.lastTouch = this.body.functions.getPointer(event.center);
-	        this.lastTouch.translation = util.extend({}, this.body.view.translation); // copy the object
+	        this.lastTouch.translation = extend({}, this.body.view.translation); // copy the object
 
 	        var pointer = this.lastTouch;
 	        var node = this.selectionHandler.getNodeAt(pointer);
@@ -46389,7 +46389,7 @@
 	            this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
 	            var connectionEdge = this.body.functions.createEdge({
-	              id: 'connectionEdge' + util.randomUUID(),
+	              id: 'connectionEdge' + uuid4(),
 	              from: node.id,
 	              to: targetNode.id,
 	              physics: false,
@@ -46549,7 +46549,7 @@
 	      var _this4 = this;
 
 	      var defaultData = {
-	        id: util.randomUUID(),
+	        id: uuid4(),
 	        x: clickData.pointer.canvas.x,
 	        y: clickData.pointer.canvas.y,
 	        label: 'new'
@@ -46973,8 +46973,8 @@
 	      } // check format
 
 
-	      if (util.isString(color) === true) {
-	        if (util.isValidRGB(color) === true) {
+	      if (isString(color) === true) {
+	        if (isValidRGB(color) === true) {
 	          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
 	          rgba = {
 	            r: rgbaArray[0],
@@ -46982,7 +46982,7 @@
 	            b: rgbaArray[2],
 	            a: 1.0
 	          };
-	        } else if (util.isValidRGBA(color) === true) {
+	        } else if (isValidRGBA(color) === true) {
 	          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
 
 	          rgba = {
@@ -46991,8 +46991,8 @@
 	            b: _rgbaArray[2],
 	            a: _rgbaArray[3]
 	          };
-	        } else if (util.isValidHex(color) === true) {
-	          var rgbObj = util.hexToRGB(color);
+	        } else if (isValidHex(color) === true) {
+	          var rgbObj = hexToRGB(color);
 	          rgba = {
 	            r: rgbObj.r,
 	            g: rgbObj.g,
@@ -47056,7 +47056,7 @@
 
 	      // store the previous color for next time;
 	      if (storePrevious === true) {
-	        this.previousColor = util.extend({}, this.color);
+	        this.previousColor = extend({}, this.color);
 	      }
 
 	      if (this.applied === true) {
@@ -47128,11 +47128,11 @@
 
 	      // store the initial color
 	      if (setInitial === true) {
-	        this.initialColor = util.extend({}, rgba);
+	        this.initialColor = extend({}, rgba);
 	      }
 
 	      this.color = rgba;
-	      var hsv = util.RGBToHSV(rgba.r, rgba.g, rgba.b);
+	      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
 	      var angleConvert = 2 * Math.PI;
 	      var radius = this.r * hsv.s;
 	      var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
@@ -47164,9 +47164,9 @@
 	  }, {
 	    key: "_setBrightness",
 	    value: function _setBrightness(value) {
-	      var hsv = util.RGBToHSV(this.color.r, this.color.g, this.color.b);
+	      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
 	      hsv.v = value / 100;
-	      var rgba = util.HSVToRGB(hsv.h, hsv.s, hsv.v);
+	      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
 	      rgba['a'] = this.color.a;
 	      this.color = rgba;
 
@@ -47182,7 +47182,7 @@
 	    key: "_updatePicker",
 	    value: function _updatePicker() {
 	      var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
-	      var hsv = util.RGBToHSV(rgba.r, rgba.g, rgba.b);
+	      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
 	      var ctx = this.colorPickerCanvas.getContext('2d');
 
 	      if (this.pixelRation === undefined) {
@@ -47409,7 +47409,7 @@
 	          for (sat = 0; sat < this.r; sat++) {
 	            x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
 	            y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
-	            rgb = util.HSVToRGB(hue * hfac, sat * sfac, 1);
+	            rgb = HSVToRGB(hue * hfac, sat * sfac, 1);
 	            ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
 	            ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
 	          }
@@ -47450,10 +47450,10 @@
 	      var h = angle / (2 * Math.PI);
 	      h = h < 0 ? h + 1 : h;
 	      var s = radius / this.r;
-	      var hsv = util.RGBToHSV(this.color.r, this.color.g, this.color.b);
+	      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
 	      hsv.h = h;
 	      hsv.s = s;
-	      var rgba = util.HSVToRGB(hsv.h, hsv.s, hsv.v);
+	      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
 	      rgba['a'] = this.color.a;
 	      this.color = rgba; // update previews
 
@@ -47502,7 +47502,7 @@
 	      container: undefined,
 	      showButton: true
 	    };
-	    util.extend(this.options, this.defaultOptions);
+	    extend(this.options, this.defaultOptions);
 	    this.configureOptions = configureOptions;
 	    this.moduleOptions = {};
 	    this.domElements = [];
@@ -48165,7 +48165,7 @@
 	        if (obj.hasOwnProperty(subObj)) {
 	          show = true;
 	          var item = obj[subObj];
-	          var newPath = util.copyAndExtendArray(path, subObj);
+	          var newPath = copyAndExtendArray(path, subObj);
 
 	          if (typeof filter === 'function') {
 	            show = filter(subObj, path); // if needed we must go deeper into the object.
@@ -48203,7 +48203,7 @@
 	              if (draw === true) {
 	                // initially collapse options with an disabled enabled option.
 	                if (item.enabled !== undefined) {
-	                  var enabledPath = util.copyAndExtendArray(newPath, 'enabled');
+	                  var enabledPath = copyAndExtendArray(newPath, 'enabled');
 
 	                  var enabledValue = this._getValue(enabledPath);
 
@@ -50214,7 +50214,7 @@
 	    locales: locales,
 	    clickToUse: false
 	  };
-	  util.extend(this.options, this.defaultOptions);
+	  extend(this.options, this.defaultOptions);
 	  /**
 	   * Containers for nodes and edges.
 	   *
@@ -50340,7 +50340,7 @@
 
 
 	    var fields = ['locale', 'locales', 'clickToUse'];
-	    util.selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
+	    selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
 
 	    options = this.layoutEngine.setOptions(options.layout, options);
 	    this.canvas.setOptions(options); // options for canvas are in globals
@@ -50384,18 +50384,18 @@
 	        physics: {},
 	        global: {}
 	      };
-	      util.deepExtend(networkOptions.nodes, this.nodesHandler.options);
-	      util.deepExtend(networkOptions.edges, this.edgesHandler.options);
-	      util.deepExtend(networkOptions.layout, this.layoutEngine.options); // load the selectionHandler and render default options in to the interaction group
+	      deepExtend(networkOptions.nodes, this.nodesHandler.options);
+	      deepExtend(networkOptions.edges, this.edgesHandler.options);
+	      deepExtend(networkOptions.layout, this.layoutEngine.options); // load the selectionHandler and render default options in to the interaction group
 
-	      util.deepExtend(networkOptions.interaction, this.selectionHandler.options);
-	      util.deepExtend(networkOptions.interaction, this.renderer.options);
-	      util.deepExtend(networkOptions.interaction, this.interactionHandler.options);
-	      util.deepExtend(networkOptions.manipulation, this.manipulation.options);
-	      util.deepExtend(networkOptions.physics, this.physics.options); // load globals into the global object
+	      deepExtend(networkOptions.interaction, this.selectionHandler.options);
+	      deepExtend(networkOptions.interaction, this.renderer.options);
+	      deepExtend(networkOptions.interaction, this.interactionHandler.options);
+	      deepExtend(networkOptions.manipulation, this.manipulation.options);
+	      deepExtend(networkOptions.physics, this.physics.options); // load globals into the global object
 
-	      util.deepExtend(networkOptions.global, this.canvas.options);
-	      util.deepExtend(networkOptions.global, this.options);
+	      deepExtend(networkOptions.global, this.canvas.options);
+	      deepExtend(networkOptions.global, this.options);
 	      this.configurator.setModuleOptions(networkOptions);
 	    } // handle network global options
 
@@ -50589,7 +50589,7 @@
 	  } // remove the container and everything inside it recursively
 
 
-	  util.recursiveDOMDelete(this.body.container);
+	  recursiveDOMDelete(this.body.container);
 	};
 	/**
 	 * Update the values of all object in the given array according to the current
@@ -50873,6 +50873,8 @@
 	};
 
 	var parseDOTNetwork = DOTToGraph_1;
+	// overflow in UMD builds. They all export vis namespace therefore reexporting
+	// leads to loading vis to load vis to load vis…
 
 	exports.DataSet = DataSet;
 	exports.DataView = DataView$2;
