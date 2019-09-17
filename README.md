@@ -21,7 +21,7 @@ Install via npm:
 
 ## Example
 
-A basic example on loading a Timeline is shown below. More examples can be
+A basic example on loading a Network is shown below. More examples can be
 found in the [examples directory](https://github.com/visjs/vis-network/tree/master/examples/)
 of the project.
 
