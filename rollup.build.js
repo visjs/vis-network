@@ -62,12 +62,12 @@ export default [
           copy({
             targets: [
               {
-                src: "./dev-lib/bundle.d.ts",
+                src: `./dev-lib/bundle-${variant}.d.ts`,
                 dest: ".",
                 rename: esmFileWithoutExt + ".d.ts"
               },
               {
-                src: "./dev-lib/bundle.d.ts",
+                src: `./dev-lib/bundle-${variant}.d.ts`,
                 dest: ".",
                 rename: umdFileWithoutExt + ".d.ts"
               }
