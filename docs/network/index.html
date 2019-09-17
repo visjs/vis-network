@@ -1655,7 +1655,7 @@ var parserOptions = {
 
 // parse the gephi file to receive an object
 // containing nodes and edges in vis format.
-var parsed = vis.network.convertGephi(gephiJSON, parserOptions);
+var parsed = vis.parseGephiNetwork(gephiJSON, parserOptions);
 
 // provide data in the normal fashion
 var data = {
@@ -1708,7 +1708,7 @@ var network = new vis.Network(container, data);
         <p>
             Network supports data in the
             <a href="http://en.wikipedia.org/wiki/DOT_language" target="_blank">DOT language</a>.
-            To use data in the DOT language, you can use the vis.network.convertDot converter to transform the DOT
+            To use data in the DOT language, you can use the vis.convertDOTNetwork converter to transform the DOT
             language
             into a vis.Network compatible nodes, edges and options objects. You can extend the options object with other
             options if you'd like.
@@ -1721,7 +1721,7 @@ var network = new vis.Network(container, data);
 <pre class="prettyprint lang-js">
 // provide data in the DOT language
 var DOTstring = 'dinetwork {1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }';
-var parsedData = vis.network.convertDot(DOTstring);
+var parsedData = vis.convertDOTNetwork(DOTstring);
 
 var data = {
   nodes: parsedData.nodes,
