@@ -1,4 +1,4 @@
-export * from './index-peer'
+export * from "./index-peer";
 
 // vis-util
 import * as util from "vis-util";
