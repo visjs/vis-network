@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-17T18:16:01Z
+ * @date    2019-09-17T21:46:17Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -50870,5 +50870,5 @@ var parseDOTNetwork = DOTToGraph_1;
 // overflow in UMD builds. They all export vis namespace therefore reexporting
 // leads to loading vis to load vis to load vis…
 
-export { DataSet, DataView$2 as DataView, Network, dotparser$1 as NetworkDOTParser, Images as NetworkImages, options as NetworkOptions, Queue, esm$1 as data, gephiParser as networkGephiParser, parseDOTNetwork, parseGephi as parseGephiNetwork, esm as util };
+export { DataSet, DataView$2 as DataView, Network, Images as NetworkImages, Queue, esm$1 as data, dotparser$1 as networkDOTParser, gephiParser as networkGephiParser, options as networkOptions, parseDOTNetwork, parseGephi as parseGephiNetwork, esm as util };
 //# sourceMappingURL=vis-network.js.map

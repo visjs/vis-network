@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-17T18:16:01Z
+ * @date    2019-09-17T21:46:17Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -34238,10 +34238,10 @@
   // leads to loading vis to load vis to load vis…
 
   exports.Network = Network;
-  exports.NetworkDOTParser = dotparser$1;
   exports.NetworkImages = Images;
-  exports.NetworkOptions = options;
+  exports.networkDOTParser = dotparser$1;
   exports.networkGephiParser = gephiParser;
+  exports.networkOptions = options;
   exports.parseDOTNetwork = parseDOTNetwork;
   exports.parseGephiNetwork = parseGephi;
 
