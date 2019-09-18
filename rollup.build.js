@@ -7,8 +7,10 @@ import nodeResolve from "rollup-plugin-node-resolve";
 import packageJSON from "./package.json";
 import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
+import { readFileSync } from "fs";
 import { terser } from "rollup-plugin-terser";
 
+const babelrc = JSON.parse(readFileSync("./.babelrc"));
 const banner = genHeader("network");
 
 export default [
@@ -82,7 +84,10 @@ export default [
           }),
           commonjs(),
           babel({
-            extensions: [".ts", ".js"]
+            ...babelrc,
+            babelrc: false,
+            extensions: [".ts", ".js"],
+            exclude: [/node_modules[\/\\]core-js/]
           }),
           postcss({
             extract: !injectCSS && `styles/vis-network${min ? ".min" : ""}.css`,
