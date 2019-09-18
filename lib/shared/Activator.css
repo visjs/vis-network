@@ -1,9 +1,9 @@
-.vis .overlay {
+.vis-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 
   /* Must be displayed above for example selected Timeline items */
   z-index: 10;
