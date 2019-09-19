@@ -453,6 +453,28 @@ div.network-navigation_wrapper {
 }
 */
 
+div.vis-tooltip {
+  position: absolute;
+  visibility: hidden;
+  padding: 5px;
+  white-space: nowrap;
+
+  font-family: verdana;
+  font-size:14px;
+  color:#000000;
+  background-color: #f5f4ed;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #808074;
+
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+
+  z-index: 5;
+}
+
 
 div.vis-color-picker {
   position:absolute;
@@ -631,28 +653,6 @@ div.vis-color-picker input.vis-range-brightness {
 div.vis-color-picker input.vis-saturation-range {
   width: 289px !important;
 }*/
-div.vis-tooltip {
-  position: absolute;
-  visibility: hidden;
-  padding: 5px;
-  white-space: nowrap;
-
-  font-family: verdana;
-  font-size:14px;
-  color:#000000;
-  background-color: #f5f4ed;
-
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #808074;
-
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  pointer-events: none;
-
-  z-index: 5;
-}
-
 div.vis-network div.vis-navigation div.vis-button {
     width:34px;
     height:34px;

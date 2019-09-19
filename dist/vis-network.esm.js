@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-06T18:54:54Z
+ * @date    2019-09-19T21:42:11Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -42728,7 +42728,7 @@ function () {
         if (this.edgeBeingEditedId !== undefined) {
           var edge = this.body.edges[this.edgeBeingEditedId];
 
-          this._performEditEdge(edge.from, edge.to);
+          this._performEditEdge(edge.from.id, edge.to.id);
 
           return;
         }
