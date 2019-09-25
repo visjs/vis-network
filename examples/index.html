@@ -1,126 +1,676 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network Examples</title>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Network Examples</title>
-    <link rel="icon" HREF="favicon.ico">
-</head>
-<body>
-<div class="contentWrapper">
-    <div id="networkContainer"></div>
-    <div id="contentContainer">
-        <h1>Network Examples</h1>
-        <div>This page contains examples which show how to use Network. For the documentation, please click the button below:</div>
-        <br>
-        <a class="btn btn-primary" href="../docs/network" role="button">View docs »</a>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <h3>basic usage</h3>
-        <a class='exampleLink' href="network/basicUsage.html">basic usage</a><br />
+    <style>
+      h1 {
+        font-size: 12ex;
+      }
+      h2 {
+        font-size: 4ex;
+      }
+      h3 {
+        font-size: 3.5ex;
+      }
+      h4 {
+        font-size: 3ex;
+      }
+      h5 {
+        font-size: 2.5ex;
+      }
+      h6 {
+        font-size: 2ex;
+      }
 
-        <h3>version migration</h3>
-        <a class='exampleLink' href="network/version_migration/index.html">version migration examples</a><br />
+      body {
+        margin-left: 100px;
+        margin-bottom: 200px;
+        margin-right: 100px;
+      }
 
-        <h3>node styles</h3>
-        <a class='exampleLink' href="network/nodeStyles/circularImages.html">circular images</a><br />
-        <a class='exampleLink' href="network/nodeStyles/colors.html">colors</a><br />
-        <a class='exampleLink' href="network/nodeStyles/customGroups.html">custom groups</a><br />
-        <a class='exampleLink' href="network/nodeStyles/groups.html">groups</a><br />
-        <a class='exampleLink' href="network/nodeStyles/overwriteGroups.html">overwritting groups</a><br />
-        <a class='exampleLink' href="network/nodeStyles/HTMLInNodes.html">HTML in nodes</a><br />
-        <a class='exampleLink' href="network/nodeStyles/icons.html">icons (Fontawesome and Ionicons)</a><br />
-        <a class='exampleLink' href="network/nodeStyles/images.html">images</a><br />
-        <a class='exampleLink' href="network/nodeStyles/imagesWithBorders.html">images with borders</a><br />
-        <a class='exampleLink' href="network/nodeStyles/imagesWithBordersAndPadding.html">images with borders and image padding (PNG, JPG, SVG images)</a><br />
-        <a class='exampleLink' href="network/nodeStyles/shadows.html">node shadows</a><br />
-        <a class='exampleLink' href="network/nodeStyles/shapes.html">node shapes</a><br />
-        <a class='exampleLink' href="network/nodeStyles/shapesWithDashedBorders.html">dashed borders</a><br />
-        <a class='exampleLink' href="network/nodeStyles/widthHeight.html">width height</a><br />
+      .example-link {
+        position: relative;
+        margin: 1em;
+        width: 200px;
 
-        <h3>edge styles</h3>
-        <a class='exampleLink' href="network/edgeStyles/arrows.html">arrows (also combined with dashes)</a><br />
-        <a class='exampleLink' href="network/edgeStyles/arrowTypes.html">arrow types</a><br />
-        <a class='exampleLink' href="network/edgeStyles/arrowAlignment.html">arrow alignment</a><br />
-        <a class='exampleLink' href="network/edgeStyles/colors.html">different colors</a><br />
-        <a class='exampleLink' href="network/edgeStyles/dashes.html">dashes</a><br />
-        <a class='exampleLink' href="network/edgeStyles/smooth.html">smooth curves</a><br />
-        <a class='exampleLink' href="network/edgeStyles/smoothWorldCup.html">smooth curves in action</a><br />
+        display: inline-block;
+        text-align: center;
+      }
 
-        <h3>labels</h3>
-        <a class='exampleLink' href="network/labels/labelAlignment.html">label alignment (for edges only)</a><br />
-        <a class='exampleLink' href="network/labels/labelBackground.html">label background</a><br />
-        <a class='exampleLink' href="network/labels/labelColorAndSize.html">colors and sizes</a><br />
-        <a class='exampleLink' href="network/labels/labelMargins.html">label margins</a><br />
-        <a class='exampleLink' href="network/labels/labelMultifont.html">label multiple fonts</a><br />
-        <a class='exampleLink' href="network/labels/labelStroke.html">label stroke</a><br />
-        <a class='exampleLink' href="network/labels/multilineText.html">multiline text</a><br />
+      .example-link .example-image {
+        position: relative;
+        margin-top: 1ex;
+        width: 200px;
+        height: 200px;
+      }
+      .example-link .example-image > img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 200px;
+        height: 200px;
 
-        <h3>layout</h3>
-        <a class='exampleLink' href="network/layout/hierarchicalLayout.html">hierarchical layout</a><br />
-        <a class='exampleLink' href="network/layout/hierarchicalLayoutMethods.html">hierarchical layout - different methods</a><br />
-        <a class='exampleLink' href="network/layout/hierarchicalLayoutUserdefined.html">hierarchical layout - user defined</a><br />
-        <a class='exampleLink' href="network/layout/hierarchicalLayoutWithoutPhysics.html">hierarchical layout - without physics</a><br />
-        <a class='exampleLink' href="network/layout/randomSeed.html">set the random seed so every network will be the same</a><br />
+        border: 1px solid #2b7ce9;
 
-        <h3>events</h3>
-        <a class='exampleLink' href="network/events/interactionEvents.html">interaction events, click, rightclick, drag etc.</a><br />
-        <a class='exampleLink' href="network/events/physicsEvents.html">physics events, stabilization etc.</a><br />
-        <a class='exampleLink' href="network/events/renderEvents.html">rendering events, use to draw custom items on the canvas.</a><br />
-
-        <h3>dynamic data - dot language</h3>
-        <a class='exampleLink' href="network/data/dotLanguage/dotEdgeStyles.html">DOT edge styles</a><br />
-        <a class='exampleLink' href="network/data/dotLanguage/dotLanguage.html">DOT Language</a><br />
-        <a class='exampleLink' href="network/data/dotLanguage/dotPlayground.html">DOT language playground</a><br />
-
-        <h3>dynamic data</h3>
-        <a class='exampleLink' href="network/data/datasets.html">dataset for dynamic data</a><br />
-        <a class='exampleLink' href="network/data/dynamicData.html">dynamic data, playground</a><br />
-        <a class='exampleLink' href="network/data/dynamicFiltering.html">dynamic filtering with DataView</a><br />
-        <a class='exampleLink' href="network/data/importingFromGephi.html">importing data from gephi</a><br />
-        <a class='exampleLink' href="network/data/scalingCustom.html">scaling the nodes with the value.</a><br />
-        <a class='exampleLink' href="network/data/scalingNodesEdges.html">scaling the nodes and edges with the value.</a><br />
-        <a class='exampleLink' href="network/data/scalingNodesEdgesLabels.html">scaling the nodes, edges and labels with the value.</a><br />
-
-        <h3>animation</h3>
-        <a class='exampleLink' href="network/other/animationShowcase.html">animation showcase</a><br />
-
-        <h3>clustering</h3>
-        <a class='exampleLink' href="network/other/changingClusteredEdgesNodes.html">changing clustered edges nodes</a><br />
-        <a class='exampleLink' href="network/other/clustering.html">clustering possibilities</a><br />
-        <a class='exampleLink' href="network/other/clusteringByZoom.html">clustering by zoom</a><br />
-        <a class='exampleLink' href="network/other/clustersOfclusters.html">clusters of clusters</a><br />
-
-        <h3>dynamic configuration interface</h3>
-        <a class='exampleLink' href="network/other/configuration.html">dynamic configuration</a><br />
-
-        <h3>physics</h3>
-        <a class='exampleLink' href="network/physics/physicsConfiguration.html">physics configuration</a><br />
-
-        <h3>data manipulation interface</h3>
-        <a class='exampleLink' href="network/other/manipulation.html">manipulation interface and localization</a><br />
-        <a class='exampleLink' href="network/other/manipulationEditEdgeNoDrag.html">manipulation edit edge no drag</a><br />
-
-        <h3>navigation buttons</h3>
-        <a class='exampleLink' href="network/other/navigation.html">navigation buttons and keyboard shortcuts</a><br />
-
-        <h3>misc</h3>
-        <a class='exampleLink' href="network/other/chosen.html">chosen</a><br />
-        <a class='exampleLink' href="network/other/cursorChange.html">cursor change</a><br />
-        <a class='exampleLink' href="network/other/onLoadAnimation.html">onLoad animation</a><br />
-        <a class='exampleLink' href="network/other/performance.html">performance test with scale free network</a><br />
-        <a class='exampleLink' href="network/other/saveAndLoad.html">save and load</a><br />
-
-
-        <h3>example applications</h3>
-        <a class='exampleLink' href="network/exampleApplications/disassemblerExample.html">disassembler example</a><br />
-        <a class='exampleLink' href="network/exampleApplications/lesMiserables.html">les miserables cast</a><br />
-        <a class='exampleLink' href="network/exampleApplications/loadingBar.html">loading bar during stabilization</a><br />
-        <a class='exampleLink' href="network/exampleApplications/neighbourhoodHighlight.html">neighbourhood highlight</a><br />
-        <a class='exampleLink' href="network/exampleApplications/nodeLegend.html">using nodes as a legend</a><br />
-        <a class='exampleLink' href="network/exampleApplications/worldCupPerformance.html">performance test with the worldcup data</a><br />
-
-</div>
-</body>
+        transition: transform 2s ease 0s, z-index 2s linear 0s;
+        z-index: 1;
+      }
+      .example-link:hover .example-image > img {
+        transform: translate(0px, 95px) scale(2, 2);
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <section>
+        <h1>Vis Network</h1>
+        <div>
+          <a class="example-link" href="network/basicUsage.html"
+            ><div>Basic usage</div>
+            <div class="example-image">
+              <img
+                src="./thumbnails/4607b73c2988979a66b460b3b460f7d789d8fcdbea172c6bf5944195569981fd.png"
+                alt="Basic usage"
+              /></div
+          ></a>
+        </div>
+        <section>
+          <h2>Data</h2>
+          <div>
+            <a class="example-link" href="network/data/scalingCustom.html"
+              ><div>Custom Scaling</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/156974012457784b755a6bfc3e8a255cf1957786b78a8f5ebb8a0d3c8a1f2985.png"
+                  alt="Custom Scaling"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/data/dotLanguage/dotEdgeStyles.html"
+              ><div>DOT edge styles</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/41b7017c611e621a0709dbf43d2a7511a7bb9b0f9160f72388a7d930a6005aaf.png"
+                  alt="DOT edge styles"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/data/dotLanguage/dotLanguage.html"
+              ><div>DOT Language</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/eddd5e815c5cafce058ff9c941abe9c177d5a7db7b044d4bec602307ed33cfd2.png"
+                  alt="DOT Language"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/data/dotLanguage/dotPlayground.html"
+              ><div>DOT language playground</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/2a04bd22b1f65d1f95593b980b73710c93ddb8da296fbca6783d0c36fa9c629b.png"
+                  alt="DOT language playground"
+                /></div></a
+            ><a class="example-link" href="network/data/datasets.html"
+              ><div>Dynamic Data</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/aee898c2d3eb2076225df6c797d2ed075976095c7e570fda91f3c8ba2899e588.png"
+                  alt="Dynamic Data"
+                /></div></a
+            ><a class="example-link" href="network/data/dynamicFiltering.html"
+              ><div>Dynamic filtering</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/a5f9d2b64c37e3e86d83f30bbe754a0696189376b1e4a8a630510349b75b1efa.png"
+                  alt="Dynamic filtering"
+                /></div></a
+            ><a class="example-link" href="network/data/importingFromGephi.html"
+              ><div>Importing from Gephi (JSON)</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/acdf282337303f5369d82023eb06899573a272b95bee522d1023bedbed9d1f5e.png"
+                  alt="Importing from Gephi (JSON)"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/data/scalingNodesEdgesLabels.html"
+              ><div>Scaling Labels</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/02538c76de6b26fe4d5c6a7ca308a4918882bc3827c0a8daf79abab7f56d18f8.png"
+                  alt="Scaling Labels"
+                /></div></a
+            ><a class="example-link" href="network/data/scalingNodesEdges.html"
+              ><div>Scaling Nodes and Edges</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/07c631d714d73556ae43a24cffaf40e250aa44bf2e87240f9990f852297d1061.png"
+                  alt="Scaling Nodes and Edges"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Edge Styles</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/edgeStyles/arrowAlignment.html"
+              ><div>Arrow Alignment</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/4dca4f9bca2bbd3029d5e7e4a22bdaff6083c69bb695b1d28ea9536a657c715b.png"
+                  alt="Arrow Alignment"
+                /></div></a
+            ><a class="example-link" href="network/edgeStyles/arrowTypes.html"
+              ><div>Arrow Types</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/43af978e4c07fab2b596e648caa67dfdb5bfcb63af7a2fcb8a03dc51e62df021.png"
+                  alt="Arrow Types"
+                /></div></a
+            ><a class="example-link" href="network/edgeStyles/arrows.html"
+              ><div>Arrows</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/6413d2544cfac75a09fae7aa95afe17ece1f4120096191e529fab39d0f3e5e75.png"
+                  alt="Arrows"
+                /></div></a
+            ><a class="example-link" href="network/edgeStyles/colors.html"
+              ><div>Colors</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/ab1318d2099292643d6ba8500f0a80c7a0c7ceeb881b0ffbc3d960cd11d60a18.png"
+                  alt="Colors"
+                /></div></a
+            ><a class="example-link" href="network/edgeStyles/dashes.html"
+              ><div>Dashes</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/72b380787085a0477ff61f24458b68e18836794bcbd2b047426e01fa6c9d2a7d.png"
+                  alt="Dashes"
+                /></div></a
+            ><a class="example-link" href="network/edgeStyles/background.html"
+              ><div>Edge background</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/216a43994b85014e118975741e1fadbe692501ebb755343c8947bed655c4c218.png"
+                  alt="Edge background"
+                /></div></a
+            ><a class="example-link" href="network/edgeStyles/smooth.html"
+              ><div>Static smooth curves</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/1500dd082d3184fb7b31b91acbe1db4ae72537ff6953d340eaebd818019a6f8d.png"
+                  alt="Static smooth curves"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/edgeStyles/smoothWorldCup.html"
+              ><div>Static smooth curves - World Cup Network</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/a813e20bf59fe573f2861c0b2f6da40c90a49d6f6b78cc8e0b68d8521bde5aec.png"
+                  alt="Static smooth curves - World Cup Network"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Events</h2>
+          <div>
+            <a class="example-link" href="network/events/interactionEvents.html"
+              ><div>Interaction events</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/c3918052b7e5925e2eb66c50277e262b49b2ef9042a5b9ad42c6d2e0cf6e3ca7.png"
+                  alt="Interaction events"
+                /></div></a
+            ><a class="example-link" href="network/events/physicsEvents.html"
+              ><div>Physics Events</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/1ca4f3a1ba5c3cb5d1c70d5e8ed9b749e42f57636c2aed3622cd349bd8bbed08.png"
+                  alt="Physics Events"
+                /></div></a
+            ><a class="example-link" href="network/events/renderEvents.html"
+              ><div>Rendering Events</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/25c7199e7afc2c7423338b2a1d49d67131be868f44554faa22a6385a256055d4.png"
+                  alt="Rendering Events"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Example Applications</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/exampleApplications/disassemblerExample.html"
+              ><div>Disassembler</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/d24b2416886bce5be8071a92d4ac019b474e3264dd401a45ec128f58b915fdeb.png"
+                  alt="Disassembler"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/exampleApplications/lesMiserables.html"
+              ><div>Les miserables</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/4b440421da00087ae9c75222d7bfe9a57a5a8a3c178aca036b0ccca370894155.png"
+                  alt="Les miserables"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/exampleApplications/loadingBar.html"
+              ><div>Loading Bar</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/f482744abcc1d4fdf6b76b647434cb72bec5254992f1e19fd4f18d9a56d680e2.png"
+                  alt="Loading Bar"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/exampleApplications/neighbourhoodHighlight.html"
+              ><div>Neighbourhood Highlighting</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/948bcd9d1620e90501f90b76c52595034840c9155be8eed0fa8633daa690f922.png"
+                  alt="Neighbourhood Highlighting"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/exampleApplications/nodeLegend.html"
+              ><div>Node Legend</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/47b82826ab7f0195cb45197469ef4daa3b6855aea62fe3a7a474bf1829856b6d.png"
+                  alt="Node Legend"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/exampleApplications/worldCupPerformance.html"
+              ><div>World Cup Network</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/2330d0df1a367cbe7625e7a924d080ed5cb71993ab3c0b757b223c4866c01ec3.png"
+                  alt="World Cup Network"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Labels</h2>
+          <div>
+            <a class="example-link" href="network/labels/labelAlignment.html"
+              ><div>Label Alignment</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/666403951e442aba398d3485f0c13c823f6b1cff2469babd0f6d0e24b38fa2cb.png"
+                  alt="Label Alignment"
+                /></div></a
+            ><a class="example-link" href="network/labels/labelBackground.html"
+              ><div>Label Background</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/3987bed8021704457b5911358488c9ac806ab2ec2d509f62723eceaf6d44632f.png"
+                  alt="Label Background"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/labels/labelColorAndSize.html"
+              ><div>Label Color and Size</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/6456bf2b233b408bdf4fedc0d0fbd4175df794e9bf1f0ba20c36f5a81039ad55.png"
+                  alt="Label Color and Size"
+                /></div></a
+            ><a class="example-link" href="network/labels/labelMargins.html"
+              ><div>Label Margins</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/5f7985d4f32c100639fbbb747027044c3e0eae599c78bedfb5dbd5dc6d880df5.png"
+                  alt="Label Margins"
+                /></div></a
+            ><a class="example-link" href="network/labels/labelStroke.html"
+              ><div>Label stroke</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/a7770b255dbd750beb448a8305eb0bdb81c4c8448dceac28a969f8b3b13fd583.png"
+                  alt="Label stroke"
+                /></div></a
+            ><a class="example-link" href="network/labels/labelMultifont.html"
+              ><div>Multifont Labels</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/8e1fb1c7afd038d0e2b284b2ca0c1473f20fabaf189718257e3919f66ab7c87e.png"
+                  alt="Multifont Labels"
+                /></div></a
+            ><a class="example-link" href="network/labels/multilineText.html"
+              ><div>Multiline text</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/6e4a2016992ae345b2c01cb8dee1fd22f5e3bd61e24870b1f7d14ab6bd42ba72.png"
+                  alt="Multiline text"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Layouts</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/layout/hierarchicalLayoutDynamicChanges.html"
+              ><div>Dynamic Hierarchical Layout Changes</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/2d4a91daf946c35a2b192a3078c17f17bcc82ddbb6c09f85bfbc6c012787ec06.png"
+                  alt="Dynamic Hierarchical Layout Changes"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/layout/hierarchicalLayout.html"
+              ><div>Hierarchical Layout</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/ff0945a6e1f00a1b437809c78049ebad36fa62b4550eb4a935661c6df1e4b834.png"
+                  alt="Hierarchical Layout"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/layout/hierarchicalLayoutMethods.html"
+              ><div>Hierarchical Layout Difference</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/1c12e3425cbcde797ad03af11329383a9af5659524daaebbb57d13c78e31f118.png"
+                  alt="Hierarchical Layout Difference"
+                /></div></a
+            ><a class="example-link" href="network/layout/randomSeed.html"
+              ><div>Setting the Random Seed</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/09f56750343be2d9d8728cefaf1c6015237b254756b3f522910cce806b22892c.png"
+                  alt="Setting the Random Seed"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/layout/hierarchicalLayoutBigUserDefined.html"
+              ><div>User Defined Hierarchical Layout (Big)</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/49a82aadf3559a8121a48034e266218beaa37a3bc3c9bb8821729d595bf65388.png"
+                  alt="User Defined Hierarchical Layout (Big)"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/layout/hierarchicalLayoutUserdefined.html"
+              ><div>User Defined Hierarchical Layout (Configurable)</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/76bcf8ea14cb899ead2eb77adc4f4654542441355028a02189be639232f1bc7d.png"
+                  alt="User Defined Hierarchical Layout (Configurable)"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Manipulation</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/other/manipulationEditEdgeNoDrag.html"
+              ><div>Edit Edge Without Drag</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/4562462dc25a94f52d8c97fc09bddc7d8a2ac5756e1351c1792abfc1afec635d.png"
+                  alt="Edit Edge Without Drag"
+                /></div></a
+            ><a class="example-link" href="network/other/manipulation.html"
+              ><div>Manipulation with Localization</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/4fd510a54ffab70d70810fef2767b771be236f57fe07d73bdd0ea5f498cb8399.png"
+                  alt="Manipulation with Localization"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Migrating from 5.4.1 to 6.0.0</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/version_migration/5.4.1_to_6.0.0/manipulationEditEdgeNoDrag.html"
+              ><div>Edit Edge Without Drag</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/108a704c43120cb66fdbaee70d3812129250d68a79c50ba18636ed881678e7cb.png"
+                  alt="Edit Edge Without Drag"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Node Styles</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/nodeStyles/circularImages.html"
+              ><div>Circular Images</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/c57c6ee9d730fa018ce7592038df08126e9dac5a3538c02b39cf67c6f623ce55.png"
+                  alt="Circular Images"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/colors.html"
+              ><div>Colors</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/07c3fee8c7388725dda10406b7b55861f002bd9f22cba5b4466398bf7ad98429.png"
+                  alt="Colors"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/customGroups.html"
+              ><div>Custom Groups</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/3631ddaddbbd6445b3d9b8bcda938f751cae49cc4b7642a62b7fd46922cd2e48.png"
+                  alt="Custom Groups"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/groups.html"
+              ><div>Groups</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/c5e9205c4b69d36781d3d0e6031f0caa13939788892b3cd53bda329d5f3ca805.png"
+                  alt="Groups"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/HTMLInNodes.html"
+              ><div>HTML in Nodes</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/f97a1c623473886ecae96304f16792fff5c2655f21d9cee659a89f67b7215f7e.png"
+                  alt="HTML in Nodes"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/images.html"
+              ><div>Images</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/46f542b5145d5ad74b0e364209e37446e25aa88eac944f342d97269a95d9cb54.png"
+                  alt="Images"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/nodeStyles/imagesWithBorders.html"
+              ><div>Images with Borders</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/0840bf73e94256fed523c2321ef1840f26d27326e2aea30ff2a751366b919ede.png"
+                  alt="Images with Borders"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/nodeStyles/imagesWithBordersAndPadding.html"
+              ><div>Images with Borders and Image Padding</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/d15c3bd39e5ff42c2decc1d916b95a9500b4f468c89bd5f262bb5361da108860.png"
+                  alt="Images with Borders and Image Padding"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/widthHeight.html"
+              ><div>Label Width and Height Settings</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/f15e35bd72f13419ff80079a90d6c599ef394f3c07d20a2e517b4662b1708e3b.png"
+                  alt="Label Width and Height Settings"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/nodeStyles/overwriteGroups.html"
+              ><div>Overriding Group Styles</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/a0324c238323686f12c0dc8229405aa20d0ba13cbb2ca60ee86876afa55a7b7f.png"
+                  alt="Overriding Group Styles"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/imageSelected/imageSelected.html"
+              ><div>Selected/Unselected Image</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/769fe02fbbd8c05b62bbe9b23de6f712088637699bf4e73b67b10de045151de0.png"
+                  alt="Selected/Unselected Image"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/shadows.html"
+              ><div>Shadows</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/f3cfd794065006254e0132673add3478d757a01f95d5a5eb1ae4962ee1089e87.png"
+                  alt="Shadows"
+                /></div></a
+            ><a class="example-link" href="network/nodeStyles/shapes.html"
+              ><div>Shapes</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/3f47bf0c31b5f02ff29a289d145b4a0c804f2a529c7e1ff367c44f9fa5688c3a.png"
+                  alt="Shapes"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/nodeStyles/shapesWithDashedBorders.html"
+              ><div>Shapes with Dashed Borders</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/01314bf69c64aaed499725910a2a21a29dcdb704de03d4134ff4b8479129008a.png"
+                  alt="Shapes with Dashed Borders"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Other</h2>
+          <div>
+            <a class="example-link" href="network/other/animationShowcase.html"
+              ><div>Animations</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/8083c2b46de87054e7617f83dfce39cf3375507f8524b2e05aa38a46610ee507.png"
+                  alt="Animations"
+                /></div></a
+            ><a
+              class="example-link"
+              href="network/other/changingClusteredEdgesNodes.html"
+              ><div>Changing Clustered Edges and Nodes</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/be625b0494b04a0c79ef5f60651a48de763226e059b6cca975d574c6946581c5.png"
+                  alt="Changing Clustered Edges and Nodes"
+                /></div></a
+            ><a class="example-link" href="network/other/chosen.html"
+              ><div>Chosen Elements</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/46f860fa00a0a59a2c392cfd0f8c5955a7299a7360cbf88ca549dee7a7710f90.png"
+                  alt="Chosen Elements"
+                /></div></a
+            ><a class="example-link" href="network/other/clustering.html"
+              ><div>Clustering</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/ad355c1587dec88eda1651bd1d4af6e73f9bfb00f4a32015669906eb66f78494.png"
+                  alt="Clustering"
+                /></div></a
+            ><a class="example-link" href="network/other/clusteringByZoom.html"
+              ><div>Clustering by Zoom Level</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/eaaa2cb1a04b89c324269565182fbd198ecc29fc5297985d67f2462b1ef02f72.png"
+                  alt="Clustering by Zoom Level"
+                /></div></a
+            ><a class="example-link" href="network/other/cursorChange.html"
+              ><div>Cursor Change</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/4f1852b8f3a0faa7a98b070af6963d0b0e0cc52312dd68d9734eebc9e0041585.png"
+                  alt="Cursor Change"
+                /></div></a
+            ><a class="example-link" href="network/other/navigation.html"
+              ><div>Navigation</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/dba8e20f8e75e8abd660d0c176c993db20a26d231dffe77079c1b975c8ba055d.png"
+                  alt="Navigation"
+                /></div></a
+            ><a class="example-link" href="network/other/onLoadAnimation.html"
+              ><div>On Load Animation</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/2962eb102acd5d2e0700b0af4ed2bb25e637672de0d493e5039729ec6c731715.png"
+                  alt="On Load Animation"
+                /></div></a
+            ><a class="example-link" href="network/other/performance.html"
+              ><div>Performance</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/99d82a833d8c0606c6ef7a04046062bad7ffb30dc33f8df715e17875619b926c.png"
+                  alt="Performance"
+                /></div></a
+            ><a class="example-link" href="network/other/configuration.html"
+              ><div>Playing with Physics</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/f498a37a3ea66927d186994953816b97289b52dcddecc7a3c8936b9f86df5c17.png"
+                  alt="Playing with Physics"
+                /></div
+            ></a>
+          </div>
+        </section>
+        <section>
+          <h2>Physics</h2>
+          <div>
+            <a
+              class="example-link"
+              href="network/physics/physicsConfiguration.html"
+              ><div>Playing with Physics</div>
+              <div class="example-image">
+                <img
+                  src="./thumbnails/81e9adda1bc6902ed4da55bd7be0b9ac4b34650ad089a0153a7fcc4e3d695bfe.png"
+                  alt="Playing with Physics"
+                /></div
+            ></a>
+          </div>
+        </section>
+      </section>
+    </div>
+  </body>
 </html>

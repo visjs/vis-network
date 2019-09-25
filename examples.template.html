@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network Examples</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      h1 {
+        font-size: 12ex;
+      }
+      h2 {
+        font-size: 4ex;
+      }
+      h3 {
+        font-size: 3.5ex;
+      }
+      h4 {
+        font-size: 3ex;
+      }
+      h5 {
+        font-size: 2.5ex;
+      }
+      h6 {
+        font-size: 2ex;
+      }
+
+      body {
+        margin-left: 100px;
+        margin-bottom: 200px;
+        margin-right: 100px;
+      }
+
+      .example-link {
+        position: relative;
+        margin: 1em;
+        width: 200px;
+
+        display: inline-block;
+        text-align: center;
+      }
+
+      .example-link .example-image {
+        position: relative;
+        margin-top: 1ex;
+        width: 200px;
+        height: 200px;
+      }
+      .example-link .example-image > img {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 200px;
+        height: 200px;
+
+        border: 1px solid #2b7ce9;
+
+        transition: transform 2s ease 0s, z-index 2s linear 0s;
+        z-index: 1;
+      }
+      .example-link:hover .example-image > img {
+        transform: translate(0px, 95px) scale(2, 2);
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body></body>
+</html>
