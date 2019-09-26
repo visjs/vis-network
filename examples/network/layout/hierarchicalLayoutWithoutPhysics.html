@@ -6,7 +6,7 @@
     <script type="text/javascript" src="../datasources/largeHierarchicalDataset.js"></script>
     <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-        #network{
+        #mynetwork{
             width: 1000px;
             height: 400px;
             border: 1px solid lightgray;
@@ -54,14 +54,14 @@ The hierarchical layout can now be controlled without the use of physics. This i
 </table>
 <br /><br />
 Play with the settings below the network and see how the layout changes!
-<div id="network"></div>
+<div id="mynetwork"></div>
 <script>
     var data = {
         nodes: nodes,
         edges: edges
     };
     // create a network
-    var container = document.getElementById('network');
+    var container = document.getElementById('mynetwork');
     var options = {
         layout: {
             hierarchical: {

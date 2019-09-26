@@ -6,7 +6,7 @@
     <script type="text/javascript" src="../../../dist/vis-network.min.js"></script>
     <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-        #network{
+        #mynetwork{
             width: 1200px;
             height: 800px;
             border: 1px solid lightgray;
@@ -19,7 +19,7 @@
 <h4>Click on node 3. Drag it to the right. Release the mouse. Then hover over it. The graph will reset (it shouldn't). This addresses visjs-network issue #67</h4>
 </div>
 
-<div id="network"></div>
+<div id="mynetwork"></div>
 
 <script>
 var nodes = null;
@@ -56,7 +56,7 @@ edges.push({
 });
 
 // create a network
-var container = document.getElementById('network');
+var container = document.getElementById('mynetwork');
 var data = {
     nodes: nodes,
     edges: edges

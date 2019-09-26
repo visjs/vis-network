@@ -49,7 +49,7 @@ type ExamplesRoot = {
 type Examples = {
   [Key: string]: Examples | Example;
 };
-type Example = { path: string; delay: number };
+type Example = { path: string; delay: number; selector: string };
 
 function isExample(value: any): value is Example {
   return (
@@ -63,14 +63,32 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 const collator = new Intl.Collator("US");
 
+function getMeta(page: CheerioStatic, name: string, fallback: number): number;
+function getMeta(page: CheerioStatic, name: string, fallback: string): string;
+function getMeta(
+  page: CheerioStatic,
+  name: string,
+  fallback: number | string
+): number | string {
+  const content = page(`meta[name="${name}"]`).attr("content");
+
+  if (typeof fallback === "number") {
+    const nmContent = Number.parseFloat(content);
+    return !Number.isNaN(nmContent) ? nmContent : fallback;
+  } else {
+    return content != null ? content : fallback;
+  }
+}
+
 class ContentBuilder {
   private _root: Cheerio;
-  private _screenshotTodo: { pagePath: string; delay: number }[] = [];
+  private _screenshotTodo: {
+    pagePath: string;
+    selector: string;
+    delay: number;
+  }[] = [];
 
-  public constructor(
-    private _examples: ExamplesRoot,
-    private _selector: string
-  ) {
+  public constructor(private _examples: ExamplesRoot) {
     this._root = cheerio("<div>");
   }
 
@@ -99,12 +117,16 @@ class ContentBuilder {
           const total = this._screenshotTodo.length;
           let finished = 0;
           await Promise.all(
-            new Array(20).fill(null).map(
+            new Array(6).fill(null).map(
               async (): Promise<void> => {
                 while (this._screenshotTodo.length) {
-                  const { pagePath, delay } = this._screenshotTodo.pop();
+                  const {
+                    pagePath,
+                    selector,
+                    delay
+                  } = this._screenshotTodo.pop();
 
-                  await this._generateScreenshot(pagePath, delay);
+                  await this._generateScreenshot(pagePath, selector, delay);
 
                   ++finished;
                   console.info(
@@ -160,6 +182,7 @@ class ContentBuilder {
 
         this._screenshotTodo.push({
           pagePath: example.path,
+          selector: example.selector,
           delay: example.delay
         });
       } else {
@@ -171,22 +194,31 @@ class ContentBuilder {
   }
   private async _generateScreenshot(
     pagePath: string,
+    selector: string,
     delay: number
   ): Promise<void> {
     const shotPath = this._pageToScreenshotPath(pagePath);
+    const size = 400;
 
     await new Pageres({
       delay,
-      selector: this._selector,
+      selector,
       css: [
-        `${this._selector} {`,
+        `${selector} {`,
         "  border: none !important;",
-        "  height: 400px !important;",
-        "  max-height: 400px !important;",
-        "  max-width: 400px !important;",
-        "  min-height: 400px !important;",
-        "  min-width: 400px !important;",
-        "  width: 400px !important;",
+
+        "  position: relative !important;",
+        "  top: unset !important;",
+        "  left: unset !important;",
+        "  bottom: unset !important;",
+        "  right: unset !important;",
+
+        `  height: ${size}px !important;`,
+        `  max-height: ${size}px !important;`,
+        `  max-width: ${size}px !important;`,
+        `  min-height: ${size}px !important;`,
+        `  min-width: ${size}px !important;`,
+        `  width: ${size}px !important;`,
         "}"
       ].join("\n"),
       filename: shotPath.replace(/^.*\/([^\/]*)\.png$/, "$1"),
@@ -256,19 +288,27 @@ const exampleLinter = {
   const indexTemplate = readFile("../examples.template.html", "utf-8");
   const selector = "#" + yargs.argv.containerId;
   const stats = { examples: 0 };
+  const skipped: string[] = [];
 
   await Promise.all(
     (await globby("**/*.html")).map(
-      async (path): Promise<any> => {
-        const page = cheerio.load(await readFile(path, "utf-8"));
+      async (pagePath): Promise<any> => {
+        const page = cheerio.load(await readFile(pagePath, "utf-8"));
+        const pageDelay = getMeta(page, "example-screenshot-delay", 5);
+        const pageSelector = getMeta(
+          page,
+          "example-screenshot-selector",
+          selector
+        );
 
         // Is this an examples?
-        if (page(selector).length === 0) {
+        if (page(pageSelector).length === 0) {
+          skipped.push(pagePath);
           return;
         }
 
         if (yargs.argv.lint) {
-          exampleLinter.lint(path, page);
+          exampleLinter.lint(pagePath, page);
         }
 
         // Body titles.
@@ -290,7 +330,7 @@ const exampleLinter = {
 
         // File path fallback.
         if (titles.length < 2) {
-          titles = path.split("/");
+          titles = pagePath.split("/");
         }
 
         // Just ignore it.
@@ -315,23 +355,31 @@ const exampleLinter = {
           return;
         }
 
-        const delay = page('meta[name="example-screenshot-delay"]').attr(
-          "content"
-        );
+        group.path = pagePath;
+        group.delay = pageDelay;
+        group.selector = pageSelector;
 
-        group.path = path;
-        group.delay = delay != null ? +delay : 5;
         ++stats.examples;
       }
     )
   );
+
+  if (skipped.length) {
+    process.stdout.write("\n");
+    console.info(
+      [
+        "The following files don't look like examples (there is nothing to take a screenshot of):",
+        ...skipped.sort()
+      ].join("\n  ")
+    );
+  }
 
   if (stats.examples === 0) {
     console.info("No usable example files were found.");
   } else if (yargs.argv.index || yargs.argv.screenshots) {
     process.stdout.write("\n");
 
-    const builtData = new ContentBuilder(examples, selector).build({
+    const builtData = new ContentBuilder(examples).build({
       renderScreenshots: yargs.argv.screenshots as boolean
     });
 
