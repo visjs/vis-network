@@ -849,6 +849,7 @@ export interface NodeOptions {
     code?: string,
     size?: number,  // 50,
     color?: string,
+    weight?: number | string,
   };
 
   image?: string | Image;
