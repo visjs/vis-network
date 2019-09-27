@@ -9,10 +9,12 @@
   <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css" />
 
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.1/css/all.css">
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
   <style>
-    #mynetworkFA,
+    #mynetworkFA4,
+    #mynetworkFA5,
     #mynetworkIO {
       height: 300px;
       width: 700px;
@@ -27,9 +29,9 @@
   <script language="JavaScript">
     function draw() {
       /*
-       * Example for FontAwesome
+       * Example for FontAwesome 4
        */
-      var optionsFA = {
+      var optionsFA4 = {
         groups: {
           usergroups: {
             shape: 'icon',
@@ -53,7 +55,7 @@
       };
 
       // create an array with nodes
-      var nodesFA = [{
+      var nodesFA4 = [{
         id: 1,
         label: 'User 1',
         group: 'users'
@@ -100,13 +102,98 @@
       }];
 
       // create a network
-      var containerFA = document.getElementById('mynetworkFA');
-      var dataFA = {
-        nodes: nodesFA,
+      var containerFA4 = document.getElementById('mynetworkFA4');
+      var dataFA4 = {
+        nodes: nodesFA4,
         edges: edges
       };
 
-      var networkFA = new vis.Network(containerFA, dataFA, optionsFA);
+      var networkFA4 = new vis.Network(containerFA4, dataFA4, optionsFA4);
+
+      /*
+       * Example for FontAwesome 5
+       */
+      var optionsFA5 = {
+        groups: {
+          usergroups: {
+            shape: 'icon',
+            icon: {
+              face: "'Font Awesome 5 Free'",
+              weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
+              code: '\uf0c0',
+              size: 50,
+              color: '#57169a'
+            }
+          },
+          users: {
+            shape: 'icon',
+            icon: {
+              face: "'Font Awesome 5 Free'",
+              weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
+              code: '\uf007',
+              size: 50,
+              color: '#aa00ff'
+            }
+          }
+        }
+      };
+
+      // create an array with nodes
+      var nodesFA5 = [{
+        id: 1,
+        label: 'User 1',
+        group: 'users'
+      }, {
+        id: 2,
+        label: 'User 2',
+        group: 'users'
+      }, {
+        id: 3,
+        label: 'Usergroup 1',
+        group: 'usergroups'
+      }, {
+        id: 4,
+        label: 'Usergroup 2',
+        group: 'usergroups'
+      }, {
+        id: 5,
+        label: 'Organisation 1',
+        shape: 'icon',
+        icon: {
+          face: "'Font Awesome 5 Free'",
+          weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
+          code: '\uf1ad',
+          size: 50,
+          color: '#f0a30a'
+        }
+      }];
+
+      // create an array with edges
+      var edges = [{
+        from: 1,
+        to: 3
+      }, {
+        from: 1,
+        to: 4
+      }, {
+        from: 2,
+        to: 4
+      }, {
+        from: 3,
+        to: 5
+      }, {
+        from: 4,
+        to: 5
+      }];
+
+      // create a network
+      var containerFA5 = document.getElementById('mynetworkFA5');
+      var dataFA5 = {
+        nodes: nodesFA5,
+        edges: edges
+      };
+
+      var networkFA5 = new vis.Network(containerFA5, dataFA5, optionsFA5);
 
       /*
        * Example for Ionicons
@@ -185,8 +272,11 @@ Icons can be used for nodes as well. This example shows Icons from fontAwesome a
 </p>
 
 <h2>
-  <i class="fa fa-flag"></i> Use FontAwesome-icons for nodes</h2>
-<div id="mynetworkFA"></div>
+  <i class="fa fa-flag"></i> Use FontAwesome-icons 4 for nodes</h2>
+<div id="mynetworkFA4"></div>
+<h2>
+  <i class="fa fa-flag"></i> Use FontAwesome-icons 5 for nodes</h2>
+<div id="mynetworkFA5"></div>
 <h2>
   <i class="ion ion-ionic"></i> Use Ionicons-icons for nodes</h2>
 <div id="mynetworkIO"></div>
