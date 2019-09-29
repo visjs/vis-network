@@ -198,25 +198,32 @@ class ContentBuilder {
       const example = examples[key];
 
       if (isExample(example)) {
-        const link = cheerio("<div>");
-        link.text(key);
-
-        const image = cheerio("<img>");
-        image.attr("src", this._pageToScreenshotPath(example.path));
-        image.attr("alt", key);
-
-        const imageContainer = cheerio("<div>");
-        imageContainer.addClass("example-image");
-        imageContainer.append(image);
-
-        const item = cheerio("<a>");
-        item.addClass("example-link");
-        item.attr("href", example.path);
-        item.append(
-          link,
-          await this._generateJSFiddle(example),
-          imageContainer
+        const header = cheerio("<div>").append(
+          // Title
+          cheerio("<a>")
+            .attr("href", example.path)
+            .text(key),
+          // JSFiddle
+          cheerio("<span>")
+            .addClass("sandboxes")
+            .append(await this._generateJSFiddle(example))
         );
+
+        const image = cheerio("<a>")
+          .attr("href", example.path)
+          .append(
+            cheerio("<div>")
+              .addClass("example-image")
+              .append(
+                cheerio("<img>")
+                  .attr("src", this._pageToScreenshotPath(example.path))
+                  .attr("alt", key)
+              )
+          );
+
+        const item = cheerio("<span>")
+          .addClass("example-link")
+          .append(header, image);
 
         list.append(item);
 
@@ -237,8 +244,13 @@ class ContentBuilder {
     form.attr("action", "http://jsfiddle.net/api/post/library/pure/");
     form.attr("method", "post");
     form.attr("target", "_blank");
-
-    form.append(cheerio("<button>").text("JSFiddle"));
+    form.append(
+      cheerio("<button>")
+        .addClass("icon jsfiddle")
+        .attr("alt", "JSFiddle")
+        .attr("title", "JSFiddle")
+        .html("&nbsp;") // No break space helps align the icon better.
+    );
 
     // JavaScript
     const eventListeners = (Object.entries(
