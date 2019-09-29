@@ -205,8 +205,11 @@ class ContentBuilder {
             .text(key),
           // JSFiddle
           cheerio("<span>")
-            .addClass("sandboxes")
-            .append(await this._generateJSFiddle(example))
+            .addClass("playgrounds")
+            .append(
+              this._generateJSFiddle(example),
+              this._generateCodePen(example)
+            )
         );
 
         const image = cheerio("<a>")
@@ -239,19 +242,19 @@ class ContentBuilder {
 
     return section;
   }
-  private async _generateJSFiddle(example: Example): Promise<Cheerio> {
-    const form = cheerio("<form>");
-    form.attr("action", "http://jsfiddle.net/api/post/library/pure/");
-    form.attr("method", "post");
-    form.attr("target", "_blank");
-    form.append(
-      cheerio("<button>")
-        .addClass("icon jsfiddle")
-        .attr("alt", "JSFiddle")
-        .attr("title", "JSFiddle")
-        .html("&nbsp;") // No break space helps align the icon better.
-    );
-
+  private _generatePlaygroundData(
+    example: Example
+  ): {
+    code: {
+      css: string;
+      html: string;
+      js: string;
+    };
+    resources: {
+      css: string[];
+      js: string[];
+    };
+  } {
     // JavaScript
     const eventListeners = (Object.entries(
       example.$("body").get(0).attribs
@@ -273,12 +276,6 @@ class ContentBuilder {
         "\n\n;" +
         eventListeners
     );
-    form.append(
-      cheerio("<input>")
-        .attr("type", "hidden")
-        .attr("name", "js")
-        .attr("value", js)
-    );
 
     // Cascading Style Sheets
     const css = formatCSS(
@@ -289,49 +286,87 @@ class ContentBuilder {
         .map((elem): string => elem.data)
         .join("")
     );
-    form.append(
-      cheerio("<input>")
-        .attr("type", "hidden")
-        .attr("name", "css")
-        .attr("value", css)
-    );
 
     // Hypertext Markup Language
     const $html = cheerio.load(example.$("body").html());
     $html("script").remove();
 
     const html = formatHTML($html("body").html());
+
+    // Resources
+    const fixPath = (rawPath: string): string =>
+      /^https?:\/\//.test(rawPath)
+        ? rawPath
+        : path
+            .resolve(path.dirname(example.path) + path.sep + rawPath)
+            .replace(this._projectPath, this._webURL);
+    const resources = {
+      js: example
+        .$("script")
+        .map((_i, elem): string => cheerio(elem).attr("src"))
+        .get()
+        .map(fixPath),
+      css: example
+        .$("link[rel='stylesheet']")
+        .map((_i, elem): string => cheerio(elem).attr("href"))
+        .get()
+        .map(fixPath)
+    };
+
+    return {
+      code: {
+        css,
+        html,
+        js
+      },
+      resources
+    };
+  }
+  private _generateJSFiddle(example: Example): Cheerio {
+    const data = this._generatePlaygroundData(example);
+
+    const form = cheerio("<form>");
+    form.attr("action", "http://jsfiddle.net/api/post/library/pure/");
+    form.attr("method", "post");
+    form.attr("target", "_blank");
+    form.append(
+      cheerio("<button>")
+        .addClass("icon jsfiddle")
+        .attr("alt", "JSFiddle")
+        .attr("title", "JSFiddle")
+        .html("&nbsp;") // No break space helps align the icon better.
+    );
+
+    // JavaScript
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "js")
+        .attr("value", data.code.js)
+    );
+
+    // Cascading Style Sheets
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "css")
+        .attr("value", data.code.css)
+    );
+
+    // Hypertext Markup Language
     form.append(
       cheerio("<input>")
         .attr("type", "hidden")
         .attr("name", "html")
-        .attr("value", html)
+        .attr("value", data.code.html)
     );
 
     // Resources
-    const resources = [
-      ...example
-        .$("script")
-        .map((_i, elem): string => cheerio(elem).attr("src"))
-        .get(),
-      ...example
-        .$("link[rel='stylesheet']")
-        .map((_i, elem): string => cheerio(elem).attr("href"))
-        .get()
-    ]
-      .map((rawPath: string): string =>
-        /^https?:\/\//.test(rawPath)
-          ? rawPath
-          : path
-              .resolve(path.dirname(example.path) + path.sep + rawPath)
-              .replace(this._projectPath, this._webURL)
-      )
-      .join(",");
     form.append(
       cheerio("<input>")
         .attr("type", "hidden")
         .attr("name", "resources")
-        .attr("value", resources)
+        .attr("value", [...data.resources.css, ...data.resources.js].join(","))
     );
 
     // Don't run JS before the DOM is ready.
@@ -348,6 +383,61 @@ class ContentBuilder {
         .attr("type", "hidden")
         .attr("name", "title")
         .attr("value", example.titles.join(" | "))
+    );
+
+    return form;
+  }
+  private _generateCodePen(example: Example): Cheerio {
+    const data = this._generatePlaygroundData(example);
+
+    const form = cheerio("<form>");
+    form.attr("action", "https://codepen.io/pen/define");
+    form.attr("method", "post");
+    form.attr("target", "_blank");
+    form.append(
+      cheerio("<button>")
+        .addClass("icon codepen")
+        .attr("alt", "CodePen")
+        .attr("title", "CodePen")
+        .html("&nbsp;"), // No break space helps align the icon better.
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "data")
+        .attr(
+          "value",
+          JSON.stringify({
+            css: data.code.css,
+            css_external: data.resources.css.join(";"),
+            html: data.code.html,
+            js: data.code.js,
+            js_external: data.resources.js.join(";"),
+            title: example.titles.join(" | ")
+          })
+        )
+    );
+
+    // JavaScript
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "js")
+        .attr("value", data.code.js)
+    );
+
+    // Cascading Style Sheets
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "css")
+        .attr("value", data.code.css)
+    );
+
+    // Hypertext Markup Language
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "html")
+        .attr("value", data.code.html)
     );
 
     return form;
