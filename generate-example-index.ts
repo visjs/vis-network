@@ -1,8 +1,10 @@
 import Pageres from "pageres";
 import cheerio from "cheerio";
+import childProcess from "child_process";
 import crypto from "crypto";
 import fs from "fs";
 import globby from "globby";
+import path from "path";
 import prettier from "prettier";
 import util from "util";
 import yargs from "yargs";
@@ -11,29 +13,44 @@ yargs
   .usage("node -r ./babel.mocha.js generate-example-index.ts [options]")
   .hide("version")
   .help()
-  .string("examples-directory")
-  .describe(
-    "examples-directory",
-    "The directory where index.html and thumbnails will be written to and examples located."
-  )
-  .alias("examples-directory", "d")
-  .default("examples-directory", "./examples")
-  .boolean("lint")
-  .describe("lint", "Lint examples.")
-  .alias("lint", "l")
-  .default("lint", false)
-  .boolean("index")
-  .describe("index", "Generate index file.")
-  .alias("index", "i")
-  .default("index", false)
-  .boolean("screenshots")
-  .describe("screenshots", "Render screenshot thumbnails.")
-  .alias("screenshots", "s")
-  .default("screenshots", false)
-  .string("container-id")
-  .describe("container-id", "The id of the elements where Vis will put canvas.")
-  .alias("container-id", "c")
-  .default("container-id", "vis-container");
+
+  .option("examples-directory", {
+    alias: "d",
+    default: "./examples",
+    describe:
+      "The directory where index.html and thumbnails will be written to and examples located.",
+    type: "string"
+  })
+  .option("lint", {
+    alias: "l",
+    default: false,
+    describe: "Lint examples.",
+    type: "boolean"
+  })
+  .option("index", {
+    alias: "i",
+    default: false,
+    describe: "Generate index file.",
+    type: "boolean"
+  })
+  .option("screenshots", {
+    alias: "s",
+    default: false,
+    describe: "Render screenshot thumbnails.",
+    type: "boolean"
+  })
+  .option("container-id", {
+    alias: "c",
+    default: "vis-container",
+    describe: "The id of the elements where Vis will put canvas.",
+    type: "string"
+  })
+  .option("web-url", {
+    alias: "w",
+    demand: true,
+    describe: "The URL of web presentation (for example GitHub Pages).",
+    type: "string"
+  });
 
 // Pageres uses quite a lot of listeners when invoked multiple times in
 // parallel. This ensures there are no warnings about it.
@@ -49,7 +66,14 @@ type ExamplesRoot = {
 type Examples = {
   [Key: string]: Examples | Example;
 };
-type Example = { path: string; delay: number; selector: string };
+type Example = {
+  $: CheerioStatic;
+  delay: number;
+  html: string;
+  path: string;
+  selector: string;
+  titles: string[];
+};
 
 function isExample(value: any): value is Example {
   return (
@@ -59,9 +83,17 @@ function isExample(value: any): value is Example {
   );
 }
 
+const collator = new Intl.Collator("US");
+const exec = util.promisify(childProcess.exec);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
-const collator = new Intl.Collator("US");
+
+const formatHTML = (html: string): string =>
+  prettier.format(html, { filepath: "index.html" });
+const formatJS = (js: string): string =>
+  prettier.format(js, { filepath: "script.js" });
+const formatCSS = (css: string): string =>
+  prettier.format(css, { filepath: "style.css" });
 
 function getMeta(page: CheerioStatic, name: string, fallback: number): number;
 function getMeta(page: CheerioStatic, name: string, fallback: string): string;
@@ -88,7 +120,11 @@ class ContentBuilder {
     delay: number;
   }[] = [];
 
-  public constructor(private _examples: ExamplesRoot) {
+  public constructor(
+    private _examples: ExamplesRoot,
+    private _projectPath: string,
+    private _webURL: string
+  ) {
     this._root = cheerio("<div>");
   }
 
@@ -112,7 +148,7 @@ class ContentBuilder {
           await html;
 
           // Generate screenshots.
-          // There is quite long delay to ensure the network is rendered properly
+          // There is quite long delay to ensure the chart is rendered properly
           // so it's much faster to run a lot of them at the same time.
           const total = this._screenshotTodo.length;
           let finished = 0;
@@ -176,7 +212,11 @@ class ContentBuilder {
         const item = cheerio("<a>");
         item.addClass("example-link");
         item.attr("href", example.path);
-        item.append(link, imageContainer);
+        item.append(
+          link,
+          await this._generateJSFiddle(example),
+          imageContainer
+        );
 
         list.append(item);
 
@@ -191,6 +231,114 @@ class ContentBuilder {
     }
 
     return section;
+  }
+  private async _generateJSFiddle(example: Example): Promise<Cheerio> {
+    const form = cheerio("<form>");
+    form.attr("action", "http://jsfiddle.net/api/post/library/pure/");
+    form.attr("method", "post");
+    form.attr("target", "_blank");
+
+    form.append(cheerio("<button>").text("JSFiddle"));
+
+    // JavaScript
+    const eventListeners = (Object.entries(
+      example.$("body").get(0).attribs
+    ) as [string, string][])
+      .filter(([name]): boolean => /^on/.test(name))
+      .map(([name, value]): [string, string] => [name.slice(2), value])
+      .map(
+        ([name, value]): string =>
+          `window.addEventListener("${name}", () => { ${value} });`
+      )
+      .join("\n");
+    const js = formatJS(
+      example
+        .$("script")
+        .map((_i, elem) => elem.children[0])
+        .get()
+        .map((elem): string => elem.data)
+        .join("") +
+        "\n\n;" +
+        eventListeners
+    );
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "js")
+        .attr("value", js)
+    );
+
+    // Cascading Style Sheets
+    const css = formatCSS(
+      example
+        .$("style")
+        .map((_i, elem) => elem.children[0])
+        .get()
+        .map((elem): string => elem.data)
+        .join("")
+    );
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "css")
+        .attr("value", css)
+    );
+
+    // Hypertext Markup Language
+    const $html = cheerio.load(example.$("body").html());
+    $html("script").remove();
+
+    const html = formatHTML($html("body").html());
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "html")
+        .attr("value", html)
+    );
+
+    // Resources
+    const resources = [
+      ...example
+        .$("script")
+        .map((_i, elem): string => cheerio(elem).attr("src"))
+        .get(),
+      ...example
+        .$("link[rel='stylesheet']")
+        .map((_i, elem): string => cheerio(elem).attr("href"))
+        .get()
+    ]
+      .map((rawPath: string): string =>
+        /^https?:\/\//.test(rawPath)
+          ? rawPath
+          : path
+              .resolve(path.dirname(example.path) + path.sep + rawPath)
+              .replace(this._projectPath, this._webURL)
+      )
+      .join(",");
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "resources")
+        .attr("value", resources)
+    );
+
+    // Don't run JS before the DOM is ready.
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "wrap")
+        .attr("value", "b")
+    );
+
+    // Title
+    form.append(
+      cheerio("<input>")
+        .attr("type", "hidden")
+        .attr("name", "title")
+        .attr("value", example.titles.join(" | "))
+    );
+
+    return form;
   }
   private async _generateScreenshot(
     pagePath: string,
@@ -293,36 +441,37 @@ const exampleLinter = {
   await Promise.all(
     (await globby("**/*.html")).map(
       async (pagePath): Promise<any> => {
-        const page = cheerio.load(await readFile(pagePath, "utf-8"));
-        const pageDelay = getMeta(page, "example-screenshot-delay", 5);
+        const html = await readFile(pagePath, "utf-8");
+        const $page = cheerio.load(html);
+        const pageDelay = getMeta($page, "example-screenshot-delay", 5);
         const pageSelector = getMeta(
-          page,
+          $page,
           "example-screenshot-selector",
           selector
         );
 
         // Is this an examples?
-        if (page(pageSelector).length === 0) {
+        if ($page(pageSelector).length === 0) {
           skipped.push(pagePath);
           return;
         }
 
         if (yargs.argv.lint) {
-          exampleLinter.lint(pagePath, page);
+          exampleLinter.lint(pagePath, $page);
         }
 
         // Body titles.
-        let titles = page("#title > *")
+        let titles = $page("#title > *")
           .get()
           .map((elem): string =>
-            page(elem)
+            $page(elem)
               .text()
               .trim()
           );
 
         // Head title fallback.
         if (titles.length < 2) {
-          titles = page("head > title")
+          titles = $page("head > title")
             .text()
             .split("|")
             .map((title): string => title.trim());
@@ -339,7 +488,7 @@ const exampleLinter = {
           return;
         }
 
-        const group: Example = titles.reduce((acc, title): any => {
+        const example: Example = titles.reduce((acc, title): any => {
           while (acc[title] != null && acc[title].path != null) {
             console.error("The following category already exists: ", titles);
             title += "!";
@@ -347,7 +496,7 @@ const exampleLinter = {
           return (acc[title] = acc[title] || {});
         }, examples);
 
-        if (Object.keys(group).length) {
+        if (Object.keys(example).length) {
           console.error(
             "The following example has the same name as an already existing category: ",
             titles
@@ -355,9 +504,12 @@ const exampleLinter = {
           return;
         }
 
-        group.path = pagePath;
-        group.delay = pageDelay;
-        group.selector = pageSelector;
+        example.$ = $page;
+        example.delay = pageDelay;
+        example.html = html;
+        example.path = pagePath;
+        example.selector = pageSelector;
+        example.titles = titles;
 
         ++stats.examples;
       }
@@ -379,7 +531,13 @@ const exampleLinter = {
   } else if (yargs.argv.index || yargs.argv.screenshots) {
     process.stdout.write("\n");
 
-    const builtData = new ContentBuilder(examples).build({
+    // Get the project and web URL for JSFiddles.
+    const projectPath = path.resolve(
+      (await exec("npm prefix")).stdout.slice(0, -1)
+    );
+    const webURL = yargs.argv["web-url"] as string;
+
+    const builtData = new ContentBuilder(examples, projectPath, webURL).build({
       renderScreenshots: yargs.argv.screenshots as boolean
     });
 
@@ -387,10 +545,7 @@ const exampleLinter = {
     if (yargs.argv.index) {
       const page = cheerio.load(await indexTemplate);
       page("body").append(await builtData.html);
-      await writeFile(
-        "./index.html",
-        prettier.format(page.html(), { filepath: "index.html" })
-      );
+      await writeFile("./index.html", formatHTML(page.html()));
       console.info(`Index file with ${stats.examples} example(s) was written.`);
     }
 
