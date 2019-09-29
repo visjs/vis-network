@@ -64,6 +64,7 @@
     "@types/cheerio": "^0.22.13",
     "@types/hammerjs": "^2.0.36",
     "@types/mocha": "^5.2.7",
+    "@types/prettier": "^1.18.2",
     "@types/sinon": "^7.0.13",
     "@types/timsort": "^0.3.0",
     "@types/yargs": "^13.0.3",
