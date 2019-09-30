@@ -36,7 +36,7 @@
     "build": "npm run types:network && npm run js:network && npm run images:network",
     "watch": "npm run images:network && rollup --watch --config rollup.config.js",
     "watch-dev": "npm run watch-dev",
-    "generate-examples-index": "node -r ./babel.mocha.js scripts/examples-index/generate.ts -c mynetwork -w https://visjs.github.io/vis-network -lis",
+    "generate-examples-index": "node -r babel.mocha.js scripts/examples-index/generate.ts -c mynetwork -w https://visjs.github.io/vis-network -lis",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint '{lib,test}/**/*.js'",
     "lint:ts": "eslint '{lib,test}/**/*.ts'",

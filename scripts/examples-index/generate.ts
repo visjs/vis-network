@@ -535,7 +535,10 @@ const exampleLinter = {
   }
 
   const examples: ExamplesRoot = {};
-  const indexTemplate = readFile("../examples.template.html", "utf-8");
+  const indexTemplate = readFile(
+    path.join(__dirname, "index.template.html"),
+    "utf-8"
+  );
   const selector = "#" + yargs.argv.containerId;
   const stats = { examples: 0 };
   const skipped: string[] = [];
