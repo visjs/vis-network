@@ -191,7 +191,7 @@ class ContentBuilder {
 
     const list = cheerio("<div>");
 
-    const section = cheerio("<section>");
+    const section = cheerio("<div>");
     section.append(heading, list);
 
     for (const key of Object.keys(examples).sort(collator.compare)) {
