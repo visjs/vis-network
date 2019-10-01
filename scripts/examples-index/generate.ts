@@ -50,11 +50,24 @@ yargs
     demand: true,
     describe: "The URL of web presentation (for example GitHub Pages).",
     type: "string"
+  })
+  .option("screenshot-script", {
+    alias: "S",
+    demand: false,
+    describe:
+      "The path of JavaScript file that will be executed before taking a screenshot (and before any other JavaScript in the page).",
+    type: "string"
   });
 
 // Pageres uses quite a lot of listeners when invoked multiple times in
 // parallel. This ensures there are no warnings about it.
 process.setMaxListeners(40);
+
+// Resolve paths before cd.
+const screenshotScriptPath =
+  typeof yargs.argv.screenshotScript === "string"
+    ? path.resolve(yargs.argv.screenshotScript)
+    : undefined;
 
 // Set PWD. If omitted assumes it was executed in the root of the project.
 const examplesRoot = yargs.argv.examplesDirectory as string;
@@ -86,6 +99,7 @@ function isExample(value: any): value is Example {
 const collator = new Intl.Collator("US");
 const exec = util.promisify(childProcess.exec);
 const readFile = util.promisify(fs.readFile);
+const unlink = util.promisify(fs.unlink);
 const writeFile = util.promisify(fs.writeFile);
 
 const formatHTML = (html: string): string =>
@@ -114,16 +128,13 @@ function getMeta(
 
 class ContentBuilder {
   private _root: Cheerio;
-  private _screenshotTodo: {
-    pagePath: string;
-    selector: string;
-    delay: number;
-  }[] = [];
+  private _screenshotTodo: Example[] = [];
 
   public constructor(
     private _examples: ExamplesRoot,
     private _projectPath: string,
-    private _webURL: string
+    private _webURL: string,
+    private _screenshotScript: string = ""
   ) {
     this._root = cheerio("<div>");
   }
@@ -156,20 +167,16 @@ class ContentBuilder {
             new Array(6).fill(null).map(
               async (): Promise<void> => {
                 while (this._screenshotTodo.length) {
-                  const {
-                    pagePath,
-                    selector,
-                    delay
-                  } = this._screenshotTodo.pop();
+                  const example = this._screenshotTodo.pop();
 
-                  await this._generateScreenshot(pagePath, selector, delay);
+                  await this._generateScreenshot(example);
 
                   ++finished;
                   console.info(
                     `${("" + Math.floor((finished / total) * 100)).padStart(
                       3,
                       " "
-                    )}% - ${pagePath}`
+                    )}% - ${example.path}`
                   );
                 }
               }
@@ -230,11 +237,7 @@ class ContentBuilder {
 
         list.append(item);
 
-        this._screenshotTodo.push({
-          pagePath: example.path,
-          selector: example.selector,
-          delay: example.delay
-        });
+        this._screenshotTodo.push(example);
       } else {
         section.append(await this._processGroup(example, key, level + 1));
       }
@@ -442,19 +445,32 @@ class ContentBuilder {
 
     return form;
   }
-  private async _generateScreenshot(
-    pagePath: string,
-    selector: string,
-    delay: number
-  ): Promise<void> {
-    const shotPath = this._pageToScreenshotPath(pagePath);
+  private async _generateScreenshot(example: Example): Promise<void> {
+    const shotPath = this._pageToScreenshotPath(example.path);
     const size = 400;
 
+    // Prepare the page. It has to be written to the disk so that files with
+    // relative URLs can be loaded. Pageres' script can't be used here because
+    // it runs after the existing scripts on the page and therefore doesn't
+    // allow to modify things prior to their invocation.
+    const tmpPath = path.join(
+      path.dirname(example.path),
+      ".tmp.example.screenshot." + path.basename(example.path)
+    );
+    const screenshotPage = cheerio.load(example.html);
+    screenshotPage("head").prepend(
+      cheerio("<script>")
+        .attr("type", "text/javascript")
+        .text(this._screenshotScript)
+    );
+    await writeFile(tmpPath, formatHTML(screenshotPage.html()));
+
+    // Render the page and take the screenshot.
     await new Pageres({
-      delay,
-      selector,
+      delay: example.delay,
+      selector: example.selector,
       css: [
-        `${selector} {`,
+        `${example.selector} {`,
         "  border: none !important;",
 
         "  position: relative !important;",
@@ -474,9 +490,12 @@ class ContentBuilder {
       filename: shotPath.replace(/^.*\/([^\/]*)\.png$/, "$1"),
       format: "png"
     })
-      .src(pagePath, ["1280x720"])
+      .src(tmpPath, ["1280x720"])
       .dest(shotPath.replace(/\/[^\/]*$/, ""))
       .run();
+
+    // Remove the temporary file.
+    await unlink(tmpPath);
   }
   private _pageToScreenshotPath(pagePath: string): string {
     return `./thumbnails/${crypto
@@ -641,8 +660,17 @@ const exampleLinter = {
       (await exec("npm prefix")).stdout.slice(0, -1)
     );
     const webURL = yargs.argv["web-url"] as string;
+    const screenshotScript =
+      screenshotScriptPath != null
+        ? await readFile(screenshotScriptPath, "utf-8")
+        : undefined;
 
-    const builtData = new ContentBuilder(examples, projectPath, webURL).build({
+    const builtData = new ContentBuilder(
+      examples,
+      projectPath,
+      webURL,
+      screenshotScript
+    ).build({
       renderScreenshots: yargs.argv.screenshots as boolean
     });
 
