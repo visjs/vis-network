@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-06T16:52:31Z
+ * @date    2019-10-01T19:56:39Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -21090,6 +21090,8 @@
    */
 
   function Activator$1(container) {
+    var _this = this;
+
     this.active = false;
     this.dom = {
       container: container
@@ -21100,18 +21102,17 @@
     this.hammer = hammer(this.dom.overlay);
     this.hammer.on('tap', this._onTapOverlay.bind(this)); // block all touch events (except tap)
 
-    var me = this;
     var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
     events.forEach(function (event) {
-      me.hammer.on(event, function (event) {
-        event.stopPropagation();
+      _this.hammer.on(event, function (event) {
+        event.srcEvent.stopPropagation();
       });
     }); // attach a click event to the window, in order to deactivate when clicking outside the timeline
 
     if (document && document.body) {
       this.onClick = function (event) {
         if (!_hasParent(event.target, container)) {
-          me.deactivate();
+          _this.deactivate();
         }
       };
 
@@ -21184,7 +21185,7 @@
 
   Activator$1.prototype.deactivate = function () {
     this.active = false;
-    this.dom.overlay.style.display = '';
+    this.dom.overlay.style.display = 'block';
     util.removeClassName(this.dom.container, 'vis-active');
     this.keycharm.unbind('esc', this.escListener);
     this.emit('change');
@@ -21200,7 +21201,7 @@
   Activator$1.prototype._onTapOverlay = function (event) {
     // activate the container
     this.activate();
-    event.stopPropagation();
+    event.srcEvent.stopPropagation();
   };
   /**
    * Test whether the element has the requested parent element somewhere in
@@ -25599,7 +25600,9 @@
         var iconSize = Number(this.options.icon.size);
 
         if (this.options.icon.code !== undefined) {
-          ctx.font = (selected ? "bold " : "") + iconSize + "px " + this.options.icon.face; // draw icon
+          ctx.font = [this.options.icon.weight != null ? this.options.icon.weight : selected ? "bold" : "", // If the weight is forced (for example to make Font Awesome 5 work
+          // properly) substitute slightly bigger size for bold font face.
+          (this.options.icon.weight != null && selected ? 5 : 0) + iconSize + "px", this.options.icon.face].join(" "); // draw icon
 
           ctx.fillStyle = this.options.icon.color || "black";
           ctx.textAlign = "center";
@@ -30166,7 +30169,7 @@
     /**
      * Set or overwrite options for the edge
      * @param {Object} options  an object with options
-     * @returns {null|boolean} null if no options, boolean if date changed
+     * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
      */
 
 
@@ -30175,15 +30178,10 @@
       value: function setOptions(options) {
         if (!options) {
           return;
-        } // record old value of this.options.hidden
+        } // Following options if changed affect the layout.
 
 
-        var oldHidden = this.options.hidden;
-
-        if (oldHidden === undefined || oldHidden === null) {
-          oldHidden = false;
-        }
-
+        var affectsLayout = typeof options.physics !== "undefined" && this.options.physics !== options.physics || typeof options.hidden !== "undefined" && (this.options.hidden || false) !== (options.hidden || false) || typeof options.from !== "undefined" && this.options.from !== options.from || typeof options.to !== "undefined" && this.options.to !== options.to;
         Edge.parseOptions(this.options, options, true, this.globalOptions);
 
         if (options.id !== undefined) {
@@ -30209,29 +30207,15 @@
         var pile = [options, this.options, this.defaultOptions];
         this.chooser = ComponentUtil.choosify('edge', pile); // update label Module
 
-        this.updateLabelModule(options);
-        var dataChanged = this.updateEdgeType(); // if anything has been updates, reset the selection width and the hover width
+        this.updateLabelModule(options); // Update edge type, this if changed affects the layout.
+
+        affectsLayout = this.updateEdgeType() || affectsLayout; // if anything has been updates, reset the selection width and the hover width
 
         this._setInteractionWidths(); // A node is connected when it has a from and to node that both exist in the network.body.nodes.
 
 
         this.connect();
-        var newHidden = this.options.hidden;
-
-        if (newHidden === undefined || newHidden === null) {
-          newHidden = false;
-        }
-
-        if (newHidden != oldHidden || options.physics !== undefined) {
-          dataChanged = true;
-        } // there might be a similar problem with physics, but a bug has not been reported	
-
-
-        if (options.physics !== undefined) {
-          dataChanged = true;
-        }
-
-        return dataChanged;
+        return affectsLayout;
       }
       /**
        *
@@ -39897,6 +39881,7 @@
   unwrapExports(timsort);
 
   var timsort$1 = timsort;
+  var timsort_1 = timsort$1.sort;
 
   /**
    * Interface definition for direction strategy classes.
@@ -40127,7 +40112,7 @@
     }, {
       key: "sort",
       value: function sort(nodeArray) {
-        timsort$1.sort(nodeArray, function (a, b) {
+        timsort_1(nodeArray, function (a, b) {
           return a.x - b.x;
         });
       }
@@ -40223,7 +40208,7 @@
     }, {
       key: "sort",
       value: function sort(nodeArray) {
-        timsort$1.sort(nodeArray, function (a, b) {
+        timsort_1(nodeArray, function (a, b) {
           return a.y - b.y;
         });
       }
@@ -40246,6 +40231,148 @@
 
     return HorizontalStrategy;
   }(DirectionInterface);
+
+  /**
+   * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
+   *
+   * @param nodes - Nodes of the graph.
+   * @param levels - If present levels will be added to it, if not a new object will be created.
+   *
+   * @returns Populated node levels.
+   */
+  function fillLevelsByDirectionCyclic(nodes, levels) {
+    var edges = new Set();
+    nodes.forEach(function (node) {
+      node.edges.forEach(function (edge) {
+        if (edge.connected) {
+          edges.add(edge);
+        }
+      });
+    });
+    edges.forEach(function (edge) {
+      var fromId = edge.from.id;
+      var toId = edge.to.id;
+
+      if (levels[fromId] == null) {
+        levels[fromId] = 0;
+      }
+
+      if (levels[toId] == null || levels[fromId] >= levels[toId]) {
+        levels[toId] = levels[fromId] + 1;
+      }
+    });
+    return levels;
+  }
+  /**
+   * Assign levels to nodes according to their positions in the hierarchy.
+   *
+   * @param nodes - Nodes of the graph.
+   * @param levels - If present levels will be added to it, if not a new object will be created.
+   *
+   * @returns Populated node levels.
+   */
+
+
+  function fillLevelsByDirection(nodes) {
+    var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+    var limit = nodes.length;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      var _loop = function _loop() {
+        var leaf = _step.value;
+
+        if (!leaf.edges.every(function (edge) {
+          return edge.to === leaf;
+        })) {
+          // Not a leaf.
+          return "continue";
+        }
+
+        levels[leaf.id] = 0;
+        var stack = [leaf];
+        var done = 0;
+        var node = void 0;
+
+        while (node = stack.pop()) {
+          var edges = node.edges;
+          var newLevel = levels[node.id] - 1;
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = edges[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var edge = _step2.value;
+
+              if (!edge.connected || edge.to !== node || edge.to === edge.from) {
+                continue;
+              }
+
+              var fromId = edge.fromId;
+              var oldLevel = levels[fromId];
+
+              if (oldLevel == null || oldLevel > newLevel) {
+                levels[fromId] = newLevel;
+                stack.push(edge.from);
+              }
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+
+          if (done > limit) {
+            // This would run forever on a cyclic graph.
+            return {
+              v: fillLevelsByDirectionCyclic(nodes, levels)
+            };
+          } else {
+            ++done;
+          }
+        }
+      };
+
+      for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var _ret = _loop();
+
+        switch (_ret) {
+          case "continue":
+            continue;
+
+          default:
+            if (_typeof_1$1(_ret) === "object") return _ret.v;
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    return levels;
+  }
 
   /**
    * There's a mix-up with terms in the code. Following are the formal definitions:
@@ -41925,43 +42052,9 @@
       value: function _determineLevelsDirected() {
         var _this8 = this;
 
-        var minLevel = 10000;
-        /**
-         * Check if there is an edge going the opposite direction for given edge
-         *
-         * @param {Edge} edge  edge to check
-         * @returns {boolean} true if there's another edge going into the opposite direction
-         */
-
-        var isBidirectional = function isBidirectional(edge) {
-          util.forEach(_this8.body.edges, function (otherEdge) {
-            if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
-              return true;
-            }
-          });
-          return false;
-        };
-
-        var levelByDirection = function levelByDirection(nodeA, nodeB, edge) {
-          var levelA = _this8.hierarchical.levels[nodeA.id];
-          var levelB = _this8.hierarchical.levels[nodeB.id];
-
-          if (isBidirectional(edge)  ) ; // set initial level
-
-
-          if (levelA === undefined) {
-            levelA = _this8.hierarchical.levels[nodeA.id] = minLevel;
-          }
-
-          if (edge.toId == nodeB.id) {
-            _this8.hierarchical.levels[nodeB.id] = levelA + 1;
-          } else {
-            _this8.hierarchical.levels[nodeB.id] = levelA - 1;
-          }
-        };
-
-        this._crawlNetwork(levelByDirection);
-
+        this.hierarchical.levels = fillLevelsByDirection(this.body.nodeIndices.map(function (id) {
+          return _this8.body.nodes[id];
+        }), this.hierarchical.levels);
         this.hierarchical.setMinLevelToZero(this.body.nodes);
       }
       /**
@@ -42625,7 +42718,7 @@
           if (this.edgeBeingEditedId !== undefined) {
             var edge = this.body.edges[this.edgeBeingEditedId];
 
-            this._performEditEdge(edge.from, edge.to);
+            this._performEditEdge(edge.from.id, edge.to.id);
 
             return;
           }
@@ -46163,6 +46256,10 @@
         //50,
         color: {
           string: string
+        },
+        weight: {
+          string: string,
+          number: number
         },
         __type__: {
           object: object
