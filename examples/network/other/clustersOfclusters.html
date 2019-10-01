@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cluster Test</title>
+    <title>Vis Network | Other | Clustering Clusters</title>
     <script type="text/javascript" src="../../../dist/vis-network.min.js"></script>
     <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
-        #network_graph {
+        #mynetwork {
             width: 1000px;
             height: 800px;
             border: 1px solid lightgray;
@@ -20,7 +20,7 @@
 to clusterNodeProperties<br/>
 In this example repeatedly clicking on the node with open the Clusters.
 </p>
-<div id="network_graph"></div>
+<div id="mynetwork"></div>
 <div id="info"></div>
 <script type="text/javascript">
     var network;
@@ -40,7 +40,7 @@ In this example repeatedly clicking on the node with open the Clusters.
 
     function draw() {
         network = new vis.Network(
-                document.getElementById('network_graph'),
+                document.getElementById('mynetwork'),
                 {
                     nodes: nodes,
                     edges: edges
