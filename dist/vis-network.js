@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-01T08:44:23Z
+ * @date    2019-10-01T19:56:39Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -21090,6 +21090,8 @@
    */
 
   function Activator$1(container) {
+    var _this = this;
+
     this.active = false;
     this.dom = {
       container: container
@@ -21100,18 +21102,17 @@
     this.hammer = hammer(this.dom.overlay);
     this.hammer.on('tap', this._onTapOverlay.bind(this)); // block all touch events (except tap)
 
-    var me = this;
     var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
     events.forEach(function (event) {
-      me.hammer.on(event, function (event) {
-        event.stopPropagation();
+      _this.hammer.on(event, function (event) {
+        event.srcEvent.stopPropagation();
       });
     }); // attach a click event to the window, in order to deactivate when clicking outside the timeline
 
     if (document && document.body) {
       this.onClick = function (event) {
         if (!_hasParent(event.target, container)) {
-          me.deactivate();
+          _this.deactivate();
         }
       };
 
@@ -21184,7 +21185,7 @@
 
   Activator$1.prototype.deactivate = function () {
     this.active = false;
-    this.dom.overlay.style.display = '';
+    this.dom.overlay.style.display = 'block';
     util.removeClassName(this.dom.container, 'vis-active');
     this.keycharm.unbind('esc', this.escListener);
     this.emit('change');
@@ -21200,7 +21201,7 @@
   Activator$1.prototype._onTapOverlay = function (event) {
     // activate the container
     this.activate();
-    event.stopPropagation();
+    event.srcEvent.stopPropagation();
   };
   /**
    * Test whether the element has the requested parent element somewhere in
@@ -25599,7 +25600,9 @@
         var iconSize = Number(this.options.icon.size);
 
         if (this.options.icon.code !== undefined) {
-          ctx.font = (selected ? "bold " : "") + iconSize + "px " + this.options.icon.face; // draw icon
+          ctx.font = [this.options.icon.weight != null ? this.options.icon.weight : selected ? "bold" : "", // If the weight is forced (for example to make Font Awesome 5 work
+          // properly) substitute slightly bigger size for bold font face.
+          (this.options.icon.weight != null && selected ? 5 : 0) + iconSize + "px", this.options.icon.face].join(" "); // draw icon
 
           ctx.fillStyle = this.options.icon.color || "black";
           ctx.textAlign = "center";
@@ -30166,7 +30169,7 @@
     /**
      * Set or overwrite options for the edge
      * @param {Object} options  an object with options
-     * @returns {null|boolean} null if no options, boolean if date changed
+     * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
      */
 
 
@@ -30175,15 +30178,10 @@
       value: function setOptions(options) {
         if (!options) {
           return;
-        } // record old value of this.options.hidden
+        } // Following options if changed affect the layout.
 
 
-        var oldHidden = this.options.hidden;
-
-        if (oldHidden === undefined || oldHidden === null) {
-          oldHidden = false;
-        }
-
+        var affectsLayout = typeof options.physics !== "undefined" && this.options.physics !== options.physics || typeof options.hidden !== "undefined" && (this.options.hidden || false) !== (options.hidden || false) || typeof options.from !== "undefined" && this.options.from !== options.from || typeof options.to !== "undefined" && this.options.to !== options.to;
         Edge.parseOptions(this.options, options, true, this.globalOptions);
 
         if (options.id !== undefined) {
@@ -30209,29 +30207,15 @@
         var pile = [options, this.options, this.defaultOptions];
         this.chooser = ComponentUtil.choosify('edge', pile); // update label Module
 
-        this.updateLabelModule(options);
-        var dataChanged = this.updateEdgeType(); // if anything has been updates, reset the selection width and the hover width
+        this.updateLabelModule(options); // Update edge type, this if changed affects the layout.
+
+        affectsLayout = this.updateEdgeType() || affectsLayout; // if anything has been updates, reset the selection width and the hover width
 
         this._setInteractionWidths(); // A node is connected when it has a from and to node that both exist in the network.body.nodes.
 
 
         this.connect();
-        var newHidden = this.options.hidden;
-
-        if (newHidden === undefined || newHidden === null) {
-          newHidden = false;
-        }
-
-        if (newHidden != oldHidden || options.physics !== undefined) {
-          dataChanged = true;
-        } // there might be a similar problem with physics, but a bug has not been reported	
-
-
-        if (options.physics !== undefined) {
-          dataChanged = true;
-        }
-
-        return dataChanged;
+        return affectsLayout;
       }
       /**
        *
@@ -46272,6 +46256,10 @@
         //50,
         color: {
           string: string
+        },
+        weight: {
+          string: string,
+          number: number
         },
         __type__: {
           object: object

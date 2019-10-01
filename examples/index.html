@@ -7,29 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
-      h1 {
-        font-size: 12ex;
-      }
-      h2 {
-        font-size: 4ex;
-      }
-      h3 {
-        font-size: 3.5ex;
-      }
-      h4 {
-        font-size: 3ex;
-      }
-      h5 {
-        font-size: 2.5ex;
-      }
-      h6 {
-        font-size: 2ex;
-      }
-
       body {
-        margin-left: 100px;
-        margin-bottom: 200px;
-        margin-right: 100px;
+        margin: 50px auto 200px;
+        min-width: calc(200px + 2em);
+        width: calc(100vw - 200px);
       }
 
       a {
@@ -63,7 +44,7 @@
 
         border: 1px solid #2b7ce9;
 
-        transition: transform 2s ease 0s, z-index 2s linear 0s;
+        transition: transform 0.5s ease 0s, z-index 0.5s linear 0s;
         z-index: 1;
       }
       .example-link:hover .example-image > img {
@@ -99,7 +80,7 @@
   </head>
   <body>
     <div>
-      <section>
+      <div>
         <h1>Vis Network</h1>
         <div>
           <span class="example-link"
@@ -242,7 +223,7 @@ var network = new vis.Network(container, data, options);
                 /></div></a
           ></span>
         </div>
-        <section>
+        <div>
           <h2>Data</h2>
           <div>
             <span class="example-link"
@@ -3834,8 +3815,8 @@ body {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Edge Styles</h2>
           <div>
             <span class="example-link"
@@ -5414,8 +5395,8 @@ redrawAll();
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Events</h2>
           <div>
             <span class="example-link"
@@ -6143,8 +6124,8 @@ p {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Example Applications</h2>
           <div>
             <span class="example-link"
@@ -9364,8 +9345,8 @@ redrawAll();
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Labels</h2>
           <div>
             <span class="example-link"
@@ -10838,8 +10819,8 @@ window.addEventListener("load", () =&gt; {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Layouts</h2>
           <div>
             <span class="example-link"
@@ -12525,8 +12506,8 @@ window.addEventListener("load", () =&gt; {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Manipulation</h2>
           <div>
             <span class="example-link"
@@ -13593,8 +13574,8 @@ div.table_description {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Migrating from 5.4.1 to 6.0.0</h2>
           <div>
             <span class="example-link"
@@ -13946,8 +13927,8 @@ const options = {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Node Styles</h2>
           <div>
             <span class="example-link"
@@ -15227,9 +15208,9 @@ window.addEventListener("load", () =&gt; {
                       name="js"
                       value='function draw() {
   /*
-   * Example for FontAwesome
+   * Example for FontAwesome 4
    */
-  var optionsFA = {
+  var optionsFA4 = {
     groups: {
       usergroups: {
         shape: "icon",
@@ -15253,7 +15234,7 @@ window.addEventListener("load", () =&gt; {
   };
 
   // create an array with nodes
-  var nodesFA = [
+  var nodesFA4 = [
     {
       id: 1,
       label: "User 1",
@@ -15312,13 +15293,110 @@ window.addEventListener("load", () =&gt; {
   ];
 
   // create a network
-  var containerFA = document.getElementById("mynetworkFA");
-  var dataFA = {
-    nodes: nodesFA,
+  var containerFA4 = document.getElementById("mynetworkFA4");
+  var dataFA4 = {
+    nodes: nodesFA4,
     edges: edges
   };
 
-  var networkFA = new vis.Network(containerFA, dataFA, optionsFA);
+  var networkFA4 = new vis.Network(containerFA4, dataFA4, optionsFA4);
+
+  /*
+   * Example for FontAwesome 5
+   */
+  var optionsFA5 = {
+    groups: {
+      usergroups: {
+        shape: "icon",
+        icon: {
+          face: "&apos;Font Awesome 5 Free&apos;",
+          weight: "bold", // Font Awesome 5 doesn&apos;t work properly unless bold.
+          code: "\uf0c0",
+          size: 50,
+          color: "#57169a"
+        }
+      },
+      users: {
+        shape: "icon",
+        icon: {
+          face: "&apos;Font Awesome 5 Free&apos;",
+          weight: "bold", // Font Awesome 5 doesn&apos;t work properly unless bold.
+          code: "\uf007",
+          size: 50,
+          color: "#aa00ff"
+        }
+      }
+    }
+  };
+
+  // create an array with nodes
+  var nodesFA5 = [
+    {
+      id: 1,
+      label: "User 1",
+      group: "users"
+    },
+    {
+      id: 2,
+      label: "User 2",
+      group: "users"
+    },
+    {
+      id: 3,
+      label: "Usergroup 1",
+      group: "usergroups"
+    },
+    {
+      id: 4,
+      label: "Usergroup 2",
+      group: "usergroups"
+    },
+    {
+      id: 5,
+      label: "Organisation 1",
+      shape: "icon",
+      icon: {
+        face: "&apos;Font Awesome 5 Free&apos;",
+        weight: "bold", // Font Awesome 5 doesn&apos;t work properly unless bold.
+        code: "\uf1ad",
+        size: 50,
+        color: "#f0a30a"
+      }
+    }
+  ];
+
+  // create an array with edges
+  var edges = [
+    {
+      from: 1,
+      to: 3
+    },
+    {
+      from: 1,
+      to: 4
+    },
+    {
+      from: 2,
+      to: 4
+    },
+    {
+      from: 3,
+      to: 5
+    },
+    {
+      from: 4,
+      to: 5
+    }
+  ];
+
+  // create a network
+  var containerFA5 = document.getElementById("mynetworkFA5");
+  var dataFA5 = {
+    nodes: nodesFA5,
+    edges: edges
+  };
+
+  var networkFA5 = new vis.Network(containerFA5, dataFA5, optionsFA5);
 
   /*
    * Example for Ionicons
@@ -15398,7 +15476,8 @@ window.addEventListener("load", () =&gt; {
                     /><input
                       type="hidden"
                       name="css"
-                      value="#mynetworkFA,
+                      value="#mynetworkFA4,
+#mynetworkFA5,
 #mynetworkIO {
   height: 300px;
   width: 700px;
@@ -15425,15 +15504,17 @@ p {
   loaded). A redraw will fix that.
 &lt;/p&gt;
 
-&lt;h2&gt;&lt;i class="fa fa-flag"&gt;&lt;/i&gt; Use FontAwesome-icons for nodes&lt;/h2&gt;
-&lt;div id="mynetworkFA"&gt;&lt;/div&gt;
+&lt;h2&gt;&lt;i class="fa fa-flag"&gt;&lt;/i&gt; Use FontAwesome-icons 4 for nodes&lt;/h2&gt;
+&lt;div id="mynetworkFA4"&gt;&lt;/div&gt;
+&lt;h2&gt;&lt;i class="fa fa-flag"&gt;&lt;/i&gt; Use FontAwesome-icons 5 for nodes&lt;/h2&gt;
+&lt;div id="mynetworkFA5"&gt;&lt;/div&gt;
 &lt;h2&gt;&lt;i class="ion ion-ionic"&gt;&lt;/i&gt; Use Ionicons-icons for nodes&lt;/h2&gt;
 &lt;div id="mynetworkIO"&gt;&lt;/div&gt;
 '
                     /><input
                       type="hidden"
                       name="resources"
-                      value="https://visjs.github.io/vis-network/dist/vis-network.min.css,http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css,http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css,https://visjs.github.io/vis-network/dist/vis-network.min.js"
+                      value="https://visjs.github.io/vis-network/dist/vis-network.min.css,http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css,https://use.fontawesome.com/releases/v5.11.1/css/all.css,http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css,https://visjs.github.io/vis-network/dist/vis-network.min.js"
                     /><input type="hidden" name="wrap" value="b" /><input
                       type="hidden"
                       name="title"
@@ -15451,15 +15532,15 @@ p {
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"#mynetworkFA,\n#mynetworkIO {\n  height: 300px;\n  width: 700px;\n  border: 1px solid lightgrey;\n}\n\np {\n  max-width: 700px;\n}\n","css_external":"https://visjs.github.io/vis-network/dist/vis-network.min.css;http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css;http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css","html":"&lt;p&gt;\n  Icons can be used for nodes as well. This example shows Icons from fontAwesome\n  and Ionicons but it should work with similar packages as well. It uses unicode\n  and css to define the icons.&lt;br /&gt;&lt;br /&gt;\n  &lt;b\n    &gt;Remember! Unicode in javascript is done like this: \\uf274 for the unicode\n    f274.&lt;/b\n  &gt;\n  &lt;br /&gt;\n  If a node is shown as a rectangle, it means the css is not loaded (or not yet\n  loaded). A redraw will fix that.\n&lt;/p&gt;\n\n&lt;h2&gt;&lt;i class=\"fa fa-flag\"&gt;&lt;/i&gt; Use FontAwesome-icons for nodes&lt;/h2&gt;\n&lt;div id=\"mynetworkFA\"&gt;&lt;/div&gt;\n&lt;h2&gt;&lt;i class=\"ion ion-ionic\"&gt;&lt;/i&gt; Use Ionicons-icons for nodes&lt;/h2&gt;\n&lt;div id=\"mynetworkIO\"&gt;&lt;/div&gt;\n","js":"function draw() {\n  /*\n   * Example for FontAwesome\n   */\n  var optionsFA = {\n    groups: {\n      usergroups: {\n        shape: \"icon\",\n        icon: {\n          face: \"FontAwesome\",\n          code: \"\\uf0c0\",\n          size: 50,\n          color: \"#57169a\"\n        }\n      },\n      users: {\n        shape: \"icon\",\n        icon: {\n          face: \"FontAwesome\",\n          code: \"\\uf007\",\n          size: 50,\n          color: \"#aa00ff\"\n        }\n      }\n    }\n  };\n\n  // create an array with nodes\n  var nodesFA = [\n    {\n      id: 1,\n      label: \"User 1\",\n      group: \"users\"\n    },\n    {\n      id: 2,\n      label: \"User 2\",\n      group: \"users\"\n    },\n    {\n      id: 3,\n      label: \"Usergroup 1\",\n      group: \"usergroups\"\n    },\n    {\n      id: 4,\n      label: \"Usergroup 2\",\n      group: \"usergroups\"\n    },\n    {\n      id: 5,\n      label: \"Organisation 1\",\n      shape: \"icon\",\n      icon: {\n        face: \"FontAwesome\",\n        code: \"\\uf1ad\",\n        size: 50,\n        color: \"#f0a30a\"\n      }\n    }\n  ];\n\n  // create an array with edges\n  var edges = [\n    {\n      from: 1,\n      to: 3\n    },\n    {\n      from: 1,\n      to: 4\n    },\n    {\n      from: 2,\n      to: 4\n    },\n    {\n      from: 3,\n      to: 5\n    },\n    {\n      from: 4,\n      to: 5\n    }\n  ];\n\n  // create a network\n  var containerFA = document.getElementById(\"mynetworkFA\");\n  var dataFA = {\n    nodes: nodesFA,\n    edges: edges\n  };\n\n  var networkFA = new vis.Network(containerFA, dataFA, optionsFA);\n\n  /*\n   * Example for Ionicons\n   */\n  var optionsIO = {\n    groups: {\n      usergroups: {\n        shape: \"icon\",\n        icon: {\n          face: \"Ionicons\",\n          code: \"\\uf47c\",\n          size: 50,\n          color: \"#57169a\"\n        }\n      },\n      users: {\n        shape: \"icon\",\n        icon: {\n          face: \"Ionicons\",\n          code: \"\\uf47e\",\n          size: 50,\n          color: \"#aa00ff\"\n        }\n      }\n    }\n  };\n\n  // create an array with nodes\n  var nodesIO = [\n    {\n      id: 1,\n      label: \"User 1\",\n      group: \"users\"\n    },\n    {\n      id: 2,\n      label: \"User 2\",\n      group: \"users\"\n    },\n    {\n      id: 3,\n      label: \"Usergroup 1\",\n      group: \"usergroups\"\n    },\n    {\n      id: 4,\n      label: \"Usergroup 2\",\n      group: \"usergroups\"\n    },\n    {\n      id: 5,\n      label: \"Organisation 1\",\n      shape: \"icon\",\n      icon: {\n        face: \"Ionicons\",\n        code: \"\\uf276\",\n        size: 50,\n        color: \"#f0a30a\"\n      }\n    }\n  ];\n\n  // create a network\n  var containerIO = document.getElementById(\"mynetworkIO\");\n  var dataIO = {\n    nodes: nodesIO,\n    edges: edges\n  };\n\n  var networkIO = new vis.Network(containerIO, dataIO, optionsIO);\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/dist/vis-network.min.js","title":"Vis Network | Node Styles | Icons"}'
+                      value='{"css":"#mynetworkFA4,\n#mynetworkFA5,\n#mynetworkIO {\n  height: 300px;\n  width: 700px;\n  border: 1px solid lightgrey;\n}\n\np {\n  max-width: 700px;\n}\n","css_external":"https://visjs.github.io/vis-network/dist/vis-network.min.css;http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css;https://use.fontawesome.com/releases/v5.11.1/css/all.css;http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css","html":"&lt;p&gt;\n  Icons can be used for nodes as well. This example shows Icons from fontAwesome\n  and Ionicons but it should work with similar packages as well. It uses unicode\n  and css to define the icons.&lt;br /&gt;&lt;br /&gt;\n  &lt;b\n    &gt;Remember! Unicode in javascript is done like this: \\uf274 for the unicode\n    f274.&lt;/b\n  &gt;\n  &lt;br /&gt;\n  If a node is shown as a rectangle, it means the css is not loaded (or not yet\n  loaded). A redraw will fix that.\n&lt;/p&gt;\n\n&lt;h2&gt;&lt;i class=\"fa fa-flag\"&gt;&lt;/i&gt; Use FontAwesome-icons 4 for nodes&lt;/h2&gt;\n&lt;div id=\"mynetworkFA4\"&gt;&lt;/div&gt;\n&lt;h2&gt;&lt;i class=\"fa fa-flag\"&gt;&lt;/i&gt; Use FontAwesome-icons 5 for nodes&lt;/h2&gt;\n&lt;div id=\"mynetworkFA5\"&gt;&lt;/div&gt;\n&lt;h2&gt;&lt;i class=\"ion ion-ionic\"&gt;&lt;/i&gt; Use Ionicons-icons for nodes&lt;/h2&gt;\n&lt;div id=\"mynetworkIO\"&gt;&lt;/div&gt;\n","js":"function draw() {\n  /*\n   * Example for FontAwesome 4\n   */\n  var optionsFA4 = {\n    groups: {\n      usergroups: {\n        shape: \"icon\",\n        icon: {\n          face: \"FontAwesome\",\n          code: \"\\uf0c0\",\n          size: 50,\n          color: \"#57169a\"\n        }\n      },\n      users: {\n        shape: \"icon\",\n        icon: {\n          face: \"FontAwesome\",\n          code: \"\\uf007\",\n          size: 50,\n          color: \"#aa00ff\"\n        }\n      }\n    }\n  };\n\n  // create an array with nodes\n  var nodesFA4 = [\n    {\n      id: 1,\n      label: \"User 1\",\n      group: \"users\"\n    },\n    {\n      id: 2,\n      label: \"User 2\",\n      group: \"users\"\n    },\n    {\n      id: 3,\n      label: \"Usergroup 1\",\n      group: \"usergroups\"\n    },\n    {\n      id: 4,\n      label: \"Usergroup 2\",\n      group: \"usergroups\"\n    },\n    {\n      id: 5,\n      label: \"Organisation 1\",\n      shape: \"icon\",\n      icon: {\n        face: \"FontAwesome\",\n        code: \"\\uf1ad\",\n        size: 50,\n        color: \"#f0a30a\"\n      }\n    }\n  ];\n\n  // create an array with edges\n  var edges = [\n    {\n      from: 1,\n      to: 3\n    },\n    {\n      from: 1,\n      to: 4\n    },\n    {\n      from: 2,\n      to: 4\n    },\n    {\n      from: 3,\n      to: 5\n    },\n    {\n      from: 4,\n      to: 5\n    }\n  ];\n\n  // create a network\n  var containerFA4 = document.getElementById(\"mynetworkFA4\");\n  var dataFA4 = {\n    nodes: nodesFA4,\n    edges: edges\n  };\n\n  var networkFA4 = new vis.Network(containerFA4, dataFA4, optionsFA4);\n\n  /*\n   * Example for FontAwesome 5\n   */\n  var optionsFA5 = {\n    groups: {\n      usergroups: {\n        shape: \"icon\",\n        icon: {\n          face: \"&apos;Font Awesome 5 Free&apos;\",\n          weight: \"bold\", // Font Awesome 5 doesn&apos;t work properly unless bold.\n          code: \"\\uf0c0\",\n          size: 50,\n          color: \"#57169a\"\n        }\n      },\n      users: {\n        shape: \"icon\",\n        icon: {\n          face: \"&apos;Font Awesome 5 Free&apos;\",\n          weight: \"bold\", // Font Awesome 5 doesn&apos;t work properly unless bold.\n          code: \"\\uf007\",\n          size: 50,\n          color: \"#aa00ff\"\n        }\n      }\n    }\n  };\n\n  // create an array with nodes\n  var nodesFA5 = [\n    {\n      id: 1,\n      label: \"User 1\",\n      group: \"users\"\n    },\n    {\n      id: 2,\n      label: \"User 2\",\n      group: \"users\"\n    },\n    {\n      id: 3,\n      label: \"Usergroup 1\",\n      group: \"usergroups\"\n    },\n    {\n      id: 4,\n      label: \"Usergroup 2\",\n      group: \"usergroups\"\n    },\n    {\n      id: 5,\n      label: \"Organisation 1\",\n      shape: \"icon\",\n      icon: {\n        face: \"&apos;Font Awesome 5 Free&apos;\",\n        weight: \"bold\", // Font Awesome 5 doesn&apos;t work properly unless bold.\n        code: \"\\uf1ad\",\n        size: 50,\n        color: \"#f0a30a\"\n      }\n    }\n  ];\n\n  // create an array with edges\n  var edges = [\n    {\n      from: 1,\n      to: 3\n    },\n    {\n      from: 1,\n      to: 4\n    },\n    {\n      from: 2,\n      to: 4\n    },\n    {\n      from: 3,\n      to: 5\n    },\n    {\n      from: 4,\n      to: 5\n    }\n  ];\n\n  // create a network\n  var containerFA5 = document.getElementById(\"mynetworkFA5\");\n  var dataFA5 = {\n    nodes: nodesFA5,\n    edges: edges\n  };\n\n  var networkFA5 = new vis.Network(containerFA5, dataFA5, optionsFA5);\n\n  /*\n   * Example for Ionicons\n   */\n  var optionsIO = {\n    groups: {\n      usergroups: {\n        shape: \"icon\",\n        icon: {\n          face: \"Ionicons\",\n          code: \"\\uf47c\",\n          size: 50,\n          color: \"#57169a\"\n        }\n      },\n      users: {\n        shape: \"icon\",\n        icon: {\n          face: \"Ionicons\",\n          code: \"\\uf47e\",\n          size: 50,\n          color: \"#aa00ff\"\n        }\n      }\n    }\n  };\n\n  // create an array with nodes\n  var nodesIO = [\n    {\n      id: 1,\n      label: \"User 1\",\n      group: \"users\"\n    },\n    {\n      id: 2,\n      label: \"User 2\",\n      group: \"users\"\n    },\n    {\n      id: 3,\n      label: \"Usergroup 1\",\n      group: \"usergroups\"\n    },\n    {\n      id: 4,\n      label: \"Usergroup 2\",\n      group: \"usergroups\"\n    },\n    {\n      id: 5,\n      label: \"Organisation 1\",\n      shape: \"icon\",\n      icon: {\n        face: \"Ionicons\",\n        code: \"\\uf276\",\n        size: 50,\n        color: \"#f0a30a\"\n      }\n    }\n  ];\n\n  // create a network\n  var containerIO = document.getElementById(\"mynetworkIO\");\n  var dataIO = {\n    nodes: nodesIO,\n    edges: edges\n  };\n\n  var networkIO = new vis.Network(containerIO, dataIO, optionsIO);\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/dist/vis-network.min.js","title":"Vis Network | Node Styles | Icons"}'
                     /><input
                       type="hidden"
                       name="js"
                       value='function draw() {
   /*
-   * Example for FontAwesome
+   * Example for FontAwesome 4
    */
-  var optionsFA = {
+  var optionsFA4 = {
     groups: {
       usergroups: {
         shape: "icon",
@@ -15483,7 +15564,7 @@ p {
   };
 
   // create an array with nodes
-  var nodesFA = [
+  var nodesFA4 = [
     {
       id: 1,
       label: "User 1",
@@ -15542,13 +15623,110 @@ p {
   ];
 
   // create a network
-  var containerFA = document.getElementById("mynetworkFA");
-  var dataFA = {
-    nodes: nodesFA,
+  var containerFA4 = document.getElementById("mynetworkFA4");
+  var dataFA4 = {
+    nodes: nodesFA4,
     edges: edges
   };
 
-  var networkFA = new vis.Network(containerFA, dataFA, optionsFA);
+  var networkFA4 = new vis.Network(containerFA4, dataFA4, optionsFA4);
+
+  /*
+   * Example for FontAwesome 5
+   */
+  var optionsFA5 = {
+    groups: {
+      usergroups: {
+        shape: "icon",
+        icon: {
+          face: "&apos;Font Awesome 5 Free&apos;",
+          weight: "bold", // Font Awesome 5 doesn&apos;t work properly unless bold.
+          code: "\uf0c0",
+          size: 50,
+          color: "#57169a"
+        }
+      },
+      users: {
+        shape: "icon",
+        icon: {
+          face: "&apos;Font Awesome 5 Free&apos;",
+          weight: "bold", // Font Awesome 5 doesn&apos;t work properly unless bold.
+          code: "\uf007",
+          size: 50,
+          color: "#aa00ff"
+        }
+      }
+    }
+  };
+
+  // create an array with nodes
+  var nodesFA5 = [
+    {
+      id: 1,
+      label: "User 1",
+      group: "users"
+    },
+    {
+      id: 2,
+      label: "User 2",
+      group: "users"
+    },
+    {
+      id: 3,
+      label: "Usergroup 1",
+      group: "usergroups"
+    },
+    {
+      id: 4,
+      label: "Usergroup 2",
+      group: "usergroups"
+    },
+    {
+      id: 5,
+      label: "Organisation 1",
+      shape: "icon",
+      icon: {
+        face: "&apos;Font Awesome 5 Free&apos;",
+        weight: "bold", // Font Awesome 5 doesn&apos;t work properly unless bold.
+        code: "\uf1ad",
+        size: 50,
+        color: "#f0a30a"
+      }
+    }
+  ];
+
+  // create an array with edges
+  var edges = [
+    {
+      from: 1,
+      to: 3
+    },
+    {
+      from: 1,
+      to: 4
+    },
+    {
+      from: 2,
+      to: 4
+    },
+    {
+      from: 3,
+      to: 5
+    },
+    {
+      from: 4,
+      to: 5
+    }
+  ];
+
+  // create a network
+  var containerFA5 = document.getElementById("mynetworkFA5");
+  var dataFA5 = {
+    nodes: nodesFA5,
+    edges: edges
+  };
+
+  var networkFA5 = new vis.Network(containerFA5, dataFA5, optionsFA5);
 
   /*
    * Example for Ionicons
@@ -15628,7 +15806,8 @@ window.addEventListener("load", () =&gt; {
                     /><input
                       type="hidden"
                       name="css"
-                      value="#mynetworkFA,
+                      value="#mynetworkFA4,
+#mynetworkFA5,
 #mynetworkIO {
   height: 300px;
   width: 700px;
@@ -15655,8 +15834,10 @@ p {
   loaded). A redraw will fix that.
 &lt;/p&gt;
 
-&lt;h2&gt;&lt;i class="fa fa-flag"&gt;&lt;/i&gt; Use FontAwesome-icons for nodes&lt;/h2&gt;
-&lt;div id="mynetworkFA"&gt;&lt;/div&gt;
+&lt;h2&gt;&lt;i class="fa fa-flag"&gt;&lt;/i&gt; Use FontAwesome-icons 4 for nodes&lt;/h2&gt;
+&lt;div id="mynetworkFA4"&gt;&lt;/div&gt;
+&lt;h2&gt;&lt;i class="fa fa-flag"&gt;&lt;/i&gt; Use FontAwesome-icons 5 for nodes&lt;/h2&gt;
+&lt;div id="mynetworkFA5"&gt;&lt;/div&gt;
 &lt;h2&gt;&lt;i class="ion ion-ionic"&gt;&lt;/i&gt; Use Ionicons-icons for nodes&lt;/h2&gt;
 &lt;div id="mynetworkIO"&gt;&lt;/div&gt;
 '
@@ -18459,8 +18640,8 @@ window.addEventListener("load", () =&gt; {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Other</h2>
           <div>
             <span class="example-link"
@@ -24413,8 +24594,8 @@ p {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Physics</h2>
           <div>
             <span class="example-link"
@@ -24620,8 +24801,8 @@ window.addEventListener("load", () =&gt; {
                   /></div></a
             ></span>
           </div>
-        </section>
-        <section>
+        </div>
+        <div>
           <h2>Tests</h2>
           <div>
             <span class="example-link"
@@ -24893,8 +25074,8 @@ network.on("blurEdge", function(e) {
                   /></div></a
             ></span>
           </div>
-        </section>
-      </section>
+        </div>
+      </div>
     </div>
   </body>
 </html>
