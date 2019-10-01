@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-10T10:15:21Z
+ * @date    2019-10-01T08:44:23Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -39891,6 +39891,7 @@ var timsort = createCommonjsModule$2(function (module, exports) {
 unwrapExports(timsort);
 
 var timsort$1 = timsort;
+var timsort_1 = timsort$1.sort;
 
 /**
  * Interface definition for direction strategy classes.
@@ -40121,7 +40122,7 @@ function (_DirectionInterface) {
   }, {
     key: "sort",
     value: function sort(nodeArray) {
-      timsort$1.sort(nodeArray, function (a, b) {
+      timsort_1(nodeArray, function (a, b) {
         return a.x - b.x;
       });
     }
@@ -40217,7 +40218,7 @@ function (_DirectionInterface2) {
   }, {
     key: "sort",
     value: function sort(nodeArray) {
-      timsort$1.sort(nodeArray, function (a, b) {
+      timsort_1(nodeArray, function (a, b) {
         return a.y - b.y;
       });
     }
@@ -40240,6 +40241,148 @@ function (_DirectionInterface2) {
 
   return HorizontalStrategy;
 }(DirectionInterface);
+
+/**
+ * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
+ *
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+function fillLevelsByDirectionCyclic(nodes, levels) {
+  var edges = new Set();
+  nodes.forEach(function (node) {
+    node.edges.forEach(function (edge) {
+      if (edge.connected) {
+        edges.add(edge);
+      }
+    });
+  });
+  edges.forEach(function (edge) {
+    var fromId = edge.from.id;
+    var toId = edge.to.id;
+
+    if (levels[fromId] == null) {
+      levels[fromId] = 0;
+    }
+
+    if (levels[toId] == null || levels[fromId] >= levels[toId]) {
+      levels[toId] = levels[fromId] + 1;
+    }
+  });
+  return levels;
+}
+/**
+ * Assign levels to nodes according to their positions in the hierarchy.
+ *
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+
+
+function fillLevelsByDirection(nodes) {
+  var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+  var limit = nodes.length;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    var _loop = function _loop() {
+      var leaf = _step.value;
+
+      if (!leaf.edges.every(function (edge) {
+        return edge.to === leaf;
+      })) {
+        // Not a leaf.
+        return "continue";
+      }
+
+      levels[leaf.id] = 0;
+      var stack = [leaf];
+      var done = 0;
+      var node = void 0;
+
+      while (node = stack.pop()) {
+        var edges = node.edges;
+        var newLevel = levels[node.id] - 1;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = edges[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var edge = _step2.value;
+
+            if (!edge.connected || edge.to !== node || edge.to === edge.from) {
+              continue;
+            }
+
+            var fromId = edge.fromId;
+            var oldLevel = levels[fromId];
+
+            if (oldLevel == null || oldLevel > newLevel) {
+              levels[fromId] = newLevel;
+              stack.push(edge.from);
+            }
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+              _iterator2.return();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+
+        if (done > limit) {
+          // This would run forever on a cyclic graph.
+          return {
+            v: fillLevelsByDirectionCyclic(nodes, levels)
+          };
+        } else {
+          ++done;
+        }
+      }
+    };
+
+    for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var _ret = _loop();
+
+      switch (_ret) {
+        case "continue":
+          continue;
+
+        default:
+          if (_typeof_1$1(_ret) === "object") return _ret.v;
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return != null) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return levels;
+}
 
 /**
  * There's a mix-up with terms in the code. Following are the formal definitions:
@@ -41919,43 +42062,9 @@ function () {
     value: function _determineLevelsDirected() {
       var _this8 = this;
 
-      var minLevel = 10000;
-      /**
-       * Check if there is an edge going the opposite direction for given edge
-       *
-       * @param {Edge} edge  edge to check
-       * @returns {boolean} true if there's another edge going into the opposite direction
-       */
-
-      var isBidirectional = function isBidirectional(edge) {
-        util.forEach(_this8.body.edges, function (otherEdge) {
-          if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
-            return true;
-          }
-        });
-        return false;
-      };
-
-      var levelByDirection = function levelByDirection(nodeA, nodeB, edge) {
-        var levelA = _this8.hierarchical.levels[nodeA.id];
-        var levelB = _this8.hierarchical.levels[nodeB.id];
-
-        if (isBidirectional(edge)  ) ; // set initial level
-
-
-        if (levelA === undefined) {
-          levelA = _this8.hierarchical.levels[nodeA.id] = minLevel;
-        }
-
-        if (edge.toId == nodeB.id) {
-          _this8.hierarchical.levels[nodeB.id] = levelA + 1;
-        } else {
-          _this8.hierarchical.levels[nodeB.id] = levelA - 1;
-        }
-      };
-
-      this._crawlNetwork(levelByDirection);
-
+      this.hierarchical.levels = fillLevelsByDirection(this.body.nodeIndices.map(function (id) {
+        return _this8.body.nodes[id];
+      }), this.hierarchical.levels);
       this.hierarchical.setMinLevelToZero(this.body.nodes);
     }
     /**
