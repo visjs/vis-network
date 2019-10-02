@@ -57,6 +57,12 @@ yargs
     describe:
       "The path of JavaScript file that will be executed before taking a screenshot (and before any other JavaScript in the page).",
     type: "string"
+  })
+  .option("title", {
+    alias: "t",
+    default: "Examples",
+    describe: "The title of the examples index.",
+    type: "string"
   });
 
 // Pageres uses quite a lot of listeners when invoked multiple times in
@@ -677,6 +683,7 @@ const exampleLinter = {
     // Create and write the page.
     if (yargs.argv.index) {
       const page = cheerio.load(await indexTemplate);
+      page("title").text(yargs.argv.title as string);
       page("body").append(await builtData.html);
       await writeFile("./index.html", formatHTML(page.html()));
       console.info(`Index file with ${stats.examples} example(s) was written.`);
