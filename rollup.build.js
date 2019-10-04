@@ -13,104 +13,115 @@ import { terser } from "rollup-plugin-terser";
 const babelrc = JSON.parse(readFileSync("./.babelrc"));
 const banner = genHeader("network");
 
-export default [
-  {
-    external: {},
-    globals: {},
-    injectCSS: true,
-    input: "lib/index-standalone.ts",
-    variant: "standalone"
-  },
-  {
-    external: Object.keys(packageJSON.peerDependencies),
-    globals: {
-      keycharm: "keycharm",
-      moment: "moment",
-      "vis-data": "vis",
-      "vis-util": "vis"
+export default [].concat.apply(
+  [],
+  [
+    {
+      external: {},
+      globals: {},
+      injectCSS: true,
+      input: "lib/index-standalone.ts",
+      variant: "standalone"
     },
-    injectCSS: false,
-    input: "lib/index-peer.ts",
-    variant: "peer"
-  }
-].flatMap(({ external, globals, injectCSS, input, variant }) => {
-  return [false, true].flatMap(min => {
-    const esmFileWithoutExt = `${variant}/esm/vis-network${min ? ".min" : ""}`;
-    const umdFileWithoutExt = `${variant}/umd/vis-network${min ? ".min" : ""}`;
+    {
+      external: Object.keys(packageJSON.peerDependencies),
+      globals: {
+        keycharm: "keycharm",
+        moment: "moment",
+        "vis-data": "vis",
+        "vis-util": "vis"
+      },
+      injectCSS: false,
+      input: "lib/index-peer.ts",
+      variant: "peer"
+    }
+  ].map(({ external, globals, injectCSS, input, variant }) => {
+    return [].concat.apply(
+      [],
+      [false, true].map(min => {
+        const esmFileWithoutExt = `${variant}/esm/vis-network${
+          min ? ".min" : ""
+        }`;
+        const umdFileWithoutExt = `${variant}/umd/vis-network${
+          min ? ".min" : ""
+        }`;
 
-    return [
-      {
-        input,
-        output: [
+        return [
           {
-            banner,
-            file: esmFileWithoutExt + ".js",
-            format: "esm",
-            sourcemap: true
-          },
-          {
-            banner,
-            exports: "named",
-            extend: true,
-            file: umdFileWithoutExt + ".js",
-            format: "umd",
-            globals,
-            name: "vis",
-            sourcemap: true
-          }
-        ],
-        external,
-        plugins: [
-          copy({
-            targets: [
+            input,
+            output: [
               {
-                src: `./dev-lib/bundle-${variant}.d.ts`,
-                dest: ".",
-                rename: esmFileWithoutExt + ".d.ts"
+                banner,
+                file: esmFileWithoutExt + ".js",
+                format: "esm",
+                sourcemap: true
               },
               {
-                src: `./dev-lib/bundle-${variant}.d.ts`,
-                dest: ".",
-                rename: umdFileWithoutExt + ".d.ts"
+                banner,
+                exports: "named",
+                extend: true,
+                file: umdFileWithoutExt + ".js",
+                format: "umd",
+                globals,
+                name: "vis",
+                sourcemap: true
               }
-            ]
-          }),
-          nodeResolve({
-            extensions: [".ts", ".js", ".json"]
-          }),
-          typescript({
-            objectHashIgnoreUnknownHack: true,
-            tsconfig: "tsconfig.code.json"
-          }),
-          commonjs(),
-          babel({
-            ...babelrc,
-            babelrc: false,
-            extensions: [".ts", ".js"],
-            exclude: [/node_modules[\/\\]core-js/]
-          }),
-          postcss({
-            extract: !injectCSS && `styles/vis-network${min ? ".min" : ""}.css`,
-            inject: injectCSS,
-            minimize: min,
-            sourceMap: true,
+            ],
+            external,
             plugins: [
-              assets({
-                loadPaths: ["lib/assets/"]
-              })
-            ]
-          }),
-          ...(!min
-            ? []
-            : [
-                terser({
-                  output: {
-                    comments: (_node, { value }) => /@license/.test(value)
+              copy({
+                targets: [
+                  {
+                    src: `./dev-lib/bundle-${variant}.d.ts`,
+                    dest: ".",
+                    rename: esmFileWithoutExt + ".d.ts"
+                  },
+                  {
+                    src: `./dev-lib/bundle-${variant}.d.ts`,
+                    dest: ".",
+                    rename: umdFileWithoutExt + ".d.ts"
                   }
-                })
-              ])
-        ]
-      }
-    ];
-  });
-});
+                ]
+              }),
+              nodeResolve({
+                extensions: [".ts", ".js", ".json"]
+              }),
+              typescript({
+                objectHashIgnoreUnknownHack: true,
+                tsconfig: "tsconfig.code.json"
+              }),
+              commonjs(),
+              babel({
+                ...babelrc,
+                babelrc: false,
+                extensions: [".ts", ".js"],
+                exclude: [/node_modules[\/\\]core-js/]
+              }),
+              postcss({
+                extract:
+                  !injectCSS && `styles/vis-network${min ? ".min" : ""}.css`,
+                inject: injectCSS,
+                minimize: min,
+                sourceMap: true,
+                plugins: [
+                  assets({
+                    loadPaths: ["lib/assets/"]
+                  })
+                ]
+              }),
+              ...(!min
+                ? []
+                : [
+                    terser({
+                      output: {
+                        comments: (_node, { value }) => /@license/.test(value)
+                      }
+                    })
+                  ])
+            ]
+          }
+        ];
+      })
+    );
+  })
+);
