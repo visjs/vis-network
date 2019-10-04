@@ -90,7 +90,11 @@ export default [].concat.apply(
                 objectHashIgnoreUnknownHack: true,
                 tsconfig: "tsconfig.code.json"
               }),
-              commonjs(),
+              commonjs({
+                namedExports: {
+                  timsort: ["sort"]
+                }
+              }),
               babel({
                 ...babelrc,
                 babelrc: false,

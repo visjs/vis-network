@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-22T15:42:30Z
+ * @date    2019-10-04T20:58:31Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -15413,7 +15413,7 @@
 	  }
 	}
 
-	var css = ".vis .overlay {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFjdGl2YXRvci5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBa0I7RUFDbEIsTUFBTTtFQUNOLE9BQU87RUFDUCxXQUFXO0VBQ1gsWUFBWTs7RUFFWixnRUFBZ0U7RUFDaEUsV0FBVztBQUNiOztBQUVBO0VBQ0UsNEJBQTRCO0FBQzlCIiwiZmlsZSI6IkFjdGl2YXRvci5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudmlzIC5vdmVybGF5IHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDA7XG4gIGxlZnQ6IDA7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IDEwMCU7XG5cbiAgLyogTXVzdCBiZSBkaXNwbGF5ZWQgYWJvdmUgZm9yIGV4YW1wbGUgc2VsZWN0ZWQgVGltZWxpbmUgaXRlbXMgKi9cbiAgei1pbmRleDogMTA7XG59XG5cbi52aXMtYWN0aXZlIHtcbiAgYm94LXNoYWRvdzogMCAwIDEwcHggIzg2ZDVmODtcbn1cbiJdfQ== */";
+	var css = ".vis-overlay {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFjdGl2YXRvci5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBa0I7RUFDbEIsUUFBUTtFQUNSLFVBQVU7RUFDVixXQUFXO0VBQ1gsU0FBUzs7RUFFVCxnRUFBZ0U7RUFDaEUsV0FBVztBQUNiOztBQUVBO0VBQ0UsNEJBQTRCO0FBQzlCIiwiZmlsZSI6IkFjdGl2YXRvci5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudmlzLW92ZXJsYXkge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMHB4O1xuICByaWdodDogMHB4O1xuICBib3R0b206IDBweDtcbiAgbGVmdDogMHB4O1xuXG4gIC8qIE11c3QgYmUgZGlzcGxheWVkIGFib3ZlIGZvciBleGFtcGxlIHNlbGVjdGVkIFRpbWVsaW5lIGl0ZW1zICovXG4gIHotaW5kZXg6IDEwO1xufVxuXG4udmlzLWFjdGl2ZSB7XG4gIGJveC1zaGFkb3c6IDAgMCAxMHB4ICM4NmQ1Zjg7XG59XG4iXX0= */";
 	styleInject(css);
 
 	var Activator = /*#__PURE__*/Object.freeze({
@@ -18753,6 +18753,8 @@
 	 */
 
 	function Activator$1(container) {
+	  var _this = this;
+
 	  this.active = false;
 	  this.dom = {
 	    container: container
@@ -18763,18 +18765,17 @@
 	  this.hammer = hammer(this.dom.overlay);
 	  this.hammer.on('tap', this._onTapOverlay.bind(this)); // block all touch events (except tap)
 
-	  var me = this;
 	  var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
 	  events.forEach(function (event) {
-	    me.hammer.on(event, function (event) {
-	      event.stopPropagation();
+	    _this.hammer.on(event, function (event) {
+	      event.srcEvent.stopPropagation();
 	    });
 	  }); // attach a click event to the window, in order to deactivate when clicking outside the timeline
 
 	  if (document && document.body) {
 	    this.onClick = function (event) {
 	      if (!_hasParent(event.target, container)) {
-	        me.deactivate();
+	        _this.deactivate();
 	      }
 	    };
 
@@ -18847,7 +18848,7 @@
 
 	Activator$1.prototype.deactivate = function () {
 	  this.active = false;
-	  this.dom.overlay.style.display = '';
+	  this.dom.overlay.style.display = 'block';
 	  util.removeClassName(this.dom.container, 'vis-active');
 	  this.keycharm.unbind('esc', this.escListener);
 	  this.emit('change');
@@ -18863,7 +18864,7 @@
 	Activator$1.prototype._onTapOverlay = function (event) {
 	  // activate the container
 	  this.activate();
-	  event.stopPropagation();
+	  event.srcEvent.stopPropagation();
 	};
 	/**
 	 * Test whether the element has the requested parent element somewhere in
@@ -30114,7 +30115,9 @@
 	      var iconSize = Number(this.options.icon.size);
 
 	      if (this.options.icon.code !== undefined) {
-	        ctx.font = (selected ? "bold " : "") + iconSize + "px " + this.options.icon.face; // draw icon
+	        ctx.font = [this.options.icon.weight != null ? this.options.icon.weight : selected ? "bold" : "", // If the weight is forced (for example to make Font Awesome 5 work
+	        // properly) substitute slightly bigger size for bold font face.
+	        (this.options.icon.weight != null && selected ? 5 : 0) + iconSize + "px", this.options.icon.face].join(" "); // draw icon
 
 	        ctx.fillStyle = this.options.icon.color || "black";
 	        ctx.textAlign = "center";
@@ -34664,7 +34667,7 @@
 	  /**
 	   * Set or overwrite options for the edge
 	   * @param {Object} options  an object with options
-	   * @returns {null|boolean} null if no options, boolean if date changed
+	   * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
 	   */
 
 
@@ -34673,15 +34676,10 @@
 	    value: function setOptions(options) {
 	      if (!options) {
 	        return;
-	      } // record old value of this.options.hidden
+	      } // Following options if changed affect the layout.
 
 
-	      var oldHidden = this.options.hidden;
-
-	      if (oldHidden === undefined || oldHidden === null) {
-	        oldHidden = false;
-	      }
-
+	      var affectsLayout = typeof options.physics !== "undefined" && this.options.physics !== options.physics || typeof options.hidden !== "undefined" && (this.options.hidden || false) !== (options.hidden || false) || typeof options.from !== "undefined" && this.options.from !== options.from || typeof options.to !== "undefined" && this.options.to !== options.to;
 	      Edge.parseOptions(this.options, options, true, this.globalOptions);
 
 	      if (options.id !== undefined) {
@@ -34707,29 +34705,15 @@
 	      var pile = [options, this.options, this.defaultOptions];
 	      this.chooser = ComponentUtil.choosify('edge', pile); // update label Module
 
-	      this.updateLabelModule(options);
-	      var dataChanged = this.updateEdgeType(); // if anything has been updates, reset the selection width and the hover width
+	      this.updateLabelModule(options); // Update edge type, this if changed affects the layout.
+
+	      affectsLayout = this.updateEdgeType() || affectsLayout; // if anything has been updates, reset the selection width and the hover width
 
 	      this._setInteractionWidths(); // A node is connected when it has a from and to node that both exist in the network.body.nodes.
 
 
 	      this.connect();
-	      var newHidden = this.options.hidden;
-
-	      if (newHidden === undefined || newHidden === null) {
-	        newHidden = false;
-	      }
-
-	      if (newHidden != oldHidden || options.physics !== undefined) {
-	        dataChanged = true;
-	      } // there might be a similar problem with physics, but a bug has not been reported	
-
-
-	      if (options.physics !== undefined) {
-	        dataChanged = true;
-	      }
-
-	      return dataChanged;
+	      return affectsLayout;
 	    }
 	    /**
 	     *
@@ -44413,6 +44397,7 @@
 	unwrapExports(timsort);
 
 	var timsort$1 = timsort;
+	var timsort_1 = timsort$1.sort;
 
 	/**
 	 * Interface definition for direction strategy classes.
@@ -44643,7 +44628,7 @@
 	  }, {
 	    key: "sort",
 	    value: function sort(nodeArray) {
-	      timsort$1.sort(nodeArray, function (a, b) {
+	      timsort_1(nodeArray, function (a, b) {
 	        return a.x - b.x;
 	      });
 	    }
@@ -44739,7 +44724,7 @@
 	  }, {
 	    key: "sort",
 	    value: function sort(nodeArray) {
-	      timsort$1.sort(nodeArray, function (a, b) {
+	      timsort_1(nodeArray, function (a, b) {
 	        return a.y - b.y;
 	      });
 	    }
@@ -44762,6 +44747,473 @@
 
 	  return HorizontalStrategy;
 	}(DirectionInterface);
+
+	var $every$1 = arrayIteration.every;
+
+
+	// `Array.prototype.every` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.every
+	_export({ target: 'Array', proto: true, forced: sloppyArrayMethod('every') }, {
+	  every: function every(callbackfn /* , thisArg */) {
+	    return $every$1(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	  }
+	});
+
+	var iterate_1 = createCommonjsModule(function (module) {
+	var Result = function (stopped, result) {
+	  this.stopped = stopped;
+	  this.result = result;
+	};
+
+	var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITERATOR) {
+	  var boundFunction = bindContext(fn, that, AS_ENTRIES ? 2 : 1);
+	  var iterator, iterFn, index, length, result, step;
+
+	  if (IS_ITERATOR) {
+	    iterator = iterable;
+	  } else {
+	    iterFn = getIteratorMethod(iterable);
+	    if (typeof iterFn != 'function') throw TypeError('Target is not iterable');
+	    // optimisation for array iterators
+	    if (isArrayIteratorMethod(iterFn)) {
+	      for (index = 0, length = toLength(iterable.length); length > index; index++) {
+	        result = AS_ENTRIES
+	          ? boundFunction(anObject(step = iterable[index])[0], step[1])
+	          : boundFunction(iterable[index]);
+	        if (result && result instanceof Result) return result;
+	      } return new Result(false);
+	    }
+	    iterator = iterFn.call(iterable);
+	  }
+
+	  while (!(step = iterator.next()).done) {
+	    result = callWithSafeIterationClosing(iterator, boundFunction, step.value, AS_ENTRIES);
+	    if (result && result instanceof Result) return result;
+	  } return new Result(false);
+	};
+
+	iterate.stop = function (result) {
+	  return new Result(true, result);
+	};
+	});
+
+	var collection = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
+	  var NativeConstructor = global_1[CONSTRUCTOR_NAME];
+	  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
+	  var Constructor = NativeConstructor;
+	  var ADDER = IS_MAP ? 'set' : 'add';
+	  var exported = {};
+
+	  var fixMethod = function (KEY) {
+	    var nativeMethod = NativePrototype[KEY];
+	    redefine(NativePrototype, KEY,
+	      KEY == 'add' ? function add(a) {
+	        nativeMethod.call(this, a === 0 ? 0 : a);
+	        return this;
+	      } : KEY == 'delete' ? function (a) {
+	        return IS_WEAK && !isObject(a) ? false : nativeMethod.call(this, a === 0 ? 0 : a);
+	      } : KEY == 'get' ? function get(a) {
+	        return IS_WEAK && !isObject(a) ? undefined : nativeMethod.call(this, a === 0 ? 0 : a);
+	      } : KEY == 'has' ? function has(a) {
+	        return IS_WEAK && !isObject(a) ? false : nativeMethod.call(this, a === 0 ? 0 : a);
+	      } : function set(a, b) {
+	        nativeMethod.call(this, a === 0 ? 0 : a, b);
+	        return this;
+	      }
+	    );
+	  };
+
+	  // eslint-disable-next-line max-len
+	  if (isForced_1(CONSTRUCTOR_NAME, typeof NativeConstructor != 'function' || !(IS_WEAK || NativePrototype.forEach && !fails(function () {
+	    new NativeConstructor().entries().next();
+	  })))) {
+	    // create collection constructor
+	    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
+	    internalMetadata.REQUIRED = true;
+	  } else if (isForced_1(CONSTRUCTOR_NAME, true)) {
+	    var instance = new Constructor();
+	    // early implementations not supports chaining
+	    var HASNT_CHAINING = instance[ADDER](IS_WEAK ? {} : -0, 1) != instance;
+	    // V8 ~  Chromium 40- weak-collections throws on primitives, but should return false
+	    var THROWS_ON_PRIMITIVES = fails(function () { instance.has(1); });
+	    // most early implementations doesn't supports iterables, most modern - not close it correctly
+	    // eslint-disable-next-line no-new
+	    var ACCEPT_ITERABLES = checkCorrectnessOfIteration(function (iterable) { new NativeConstructor(iterable); });
+	    // for early implementations -0 and +0 not the same
+	    var BUGGY_ZERO = !IS_WEAK && fails(function () {
+	      // V8 ~ Chromium 42- fails only with 5+ elements
+	      var $instance = new NativeConstructor();
+	      var index = 5;
+	      while (index--) $instance[ADDER](index, index);
+	      return !$instance.has(-0);
+	    });
+
+	    if (!ACCEPT_ITERABLES) {
+	      Constructor = wrapper(function (dummy, iterable) {
+	        anInstance(dummy, Constructor, CONSTRUCTOR_NAME);
+	        var that = inheritIfRequired(new NativeConstructor(), dummy, Constructor);
+	        if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+	        return that;
+	      });
+	      Constructor.prototype = NativePrototype;
+	      NativePrototype.constructor = Constructor;
+	    }
+
+	    if (THROWS_ON_PRIMITIVES || BUGGY_ZERO) {
+	      fixMethod('delete');
+	      fixMethod('has');
+	      IS_MAP && fixMethod('get');
+	    }
+
+	    if (BUGGY_ZERO || HASNT_CHAINING) fixMethod(ADDER);
+
+	    // weak collections should not contains .clear method
+	    if (IS_WEAK && NativePrototype.clear) delete NativePrototype.clear;
+	  }
+
+	  exported[CONSTRUCTOR_NAME] = Constructor;
+	  _export({ global: true, forced: Constructor != NativeConstructor }, exported);
+
+	  setToStringTag(Constructor, CONSTRUCTOR_NAME);
+
+	  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
+
+	  return Constructor;
+	};
+
+	var defineProperty$9 = objectDefineProperty.f;
+
+
+
+
+
+
+
+
+	var fastKey = internalMetadata.fastKey;
+
+
+	var setInternalState$3 = internalState.set;
+	var internalStateGetterFor = internalState.getterFor;
+
+	var collectionStrong = {
+	  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+	    var C = wrapper(function (that, iterable) {
+	      anInstance(that, C, CONSTRUCTOR_NAME);
+	      setInternalState$3(that, {
+	        type: CONSTRUCTOR_NAME,
+	        index: objectCreate(null),
+	        first: undefined,
+	        last: undefined,
+	        size: 0
+	      });
+	      if (!descriptors) that.size = 0;
+	      if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+	    });
+
+	    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
+
+	    var define = function (that, key, value) {
+	      var state = getInternalState(that);
+	      var entry = getEntry(that, key);
+	      var previous, index;
+	      // change existing entry
+	      if (entry) {
+	        entry.value = value;
+	      // create new entry
+	      } else {
+	        state.last = entry = {
+	          index: index = fastKey(key, true),
+	          key: key,
+	          value: value,
+	          previous: previous = state.last,
+	          next: undefined,
+	          removed: false
+	        };
+	        if (!state.first) state.first = entry;
+	        if (previous) previous.next = entry;
+	        if (descriptors) state.size++;
+	        else that.size++;
+	        // add to index
+	        if (index !== 'F') state.index[index] = entry;
+	      } return that;
+	    };
+
+	    var getEntry = function (that, key) {
+	      var state = getInternalState(that);
+	      // fast case
+	      var index = fastKey(key);
+	      var entry;
+	      if (index !== 'F') return state.index[index];
+	      // frozen object case
+	      for (entry = state.first; entry; entry = entry.next) {
+	        if (entry.key == key) return entry;
+	      }
+	    };
+
+	    redefineAll(C.prototype, {
+	      // 23.1.3.1 Map.prototype.clear()
+	      // 23.2.3.2 Set.prototype.clear()
+	      clear: function clear() {
+	        var that = this;
+	        var state = getInternalState(that);
+	        var data = state.index;
+	        var entry = state.first;
+	        while (entry) {
+	          entry.removed = true;
+	          if (entry.previous) entry.previous = entry.previous.next = undefined;
+	          delete data[entry.index];
+	          entry = entry.next;
+	        }
+	        state.first = state.last = undefined;
+	        if (descriptors) state.size = 0;
+	        else that.size = 0;
+	      },
+	      // 23.1.3.3 Map.prototype.delete(key)
+	      // 23.2.3.4 Set.prototype.delete(value)
+	      'delete': function (key) {
+	        var that = this;
+	        var state = getInternalState(that);
+	        var entry = getEntry(that, key);
+	        if (entry) {
+	          var next = entry.next;
+	          var prev = entry.previous;
+	          delete state.index[entry.index];
+	          entry.removed = true;
+	          if (prev) prev.next = next;
+	          if (next) next.previous = prev;
+	          if (state.first == entry) state.first = next;
+	          if (state.last == entry) state.last = prev;
+	          if (descriptors) state.size--;
+	          else that.size--;
+	        } return !!entry;
+	      },
+	      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
+	      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
+	      forEach: function forEach(callbackfn /* , that = undefined */) {
+	        var state = getInternalState(this);
+	        var boundFunction = bindContext(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
+	        var entry;
+	        while (entry = entry ? entry.next : state.first) {
+	          boundFunction(entry.value, entry.key, this);
+	          // revert to the last existing entry
+	          while (entry && entry.removed) entry = entry.previous;
+	        }
+	      },
+	      // 23.1.3.7 Map.prototype.has(key)
+	      // 23.2.3.7 Set.prototype.has(value)
+	      has: function has(key) {
+	        return !!getEntry(this, key);
+	      }
+	    });
+
+	    redefineAll(C.prototype, IS_MAP ? {
+	      // 23.1.3.6 Map.prototype.get(key)
+	      get: function get(key) {
+	        var entry = getEntry(this, key);
+	        return entry && entry.value;
+	      },
+	      // 23.1.3.9 Map.prototype.set(key, value)
+	      set: function set(key, value) {
+	        return define(this, key === 0 ? 0 : key, value);
+	      }
+	    } : {
+	      // 23.2.3.1 Set.prototype.add(value)
+	      add: function add(value) {
+	        return define(this, value = value === 0 ? 0 : value, value);
+	      }
+	    });
+	    if (descriptors) defineProperty$9(C.prototype, 'size', {
+	      get: function () {
+	        return getInternalState(this).size;
+	      }
+	    });
+	    return C;
+	  },
+	  setStrong: function (C, CONSTRUCTOR_NAME, IS_MAP) {
+	    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
+	    var getInternalCollectionState = internalStateGetterFor(CONSTRUCTOR_NAME);
+	    var getInternalIteratorState = internalStateGetterFor(ITERATOR_NAME);
+	    // add .keys, .values, .entries, [@@iterator]
+	    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
+	    defineIterator(C, CONSTRUCTOR_NAME, function (iterated, kind) {
+	      setInternalState$3(this, {
+	        type: ITERATOR_NAME,
+	        target: iterated,
+	        state: getInternalCollectionState(iterated),
+	        kind: kind,
+	        last: undefined
+	      });
+	    }, function () {
+	      var state = getInternalIteratorState(this);
+	      var kind = state.kind;
+	      var entry = state.last;
+	      // revert to the last existing entry
+	      while (entry && entry.removed) entry = entry.previous;
+	      // get next entry
+	      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
+	        // or finish the iteration
+	        state.target = undefined;
+	        return { value: undefined, done: true };
+	      }
+	      // return step by kind
+	      if (kind == 'keys') return { value: entry.key, done: false };
+	      if (kind == 'values') return { value: entry.value, done: false };
+	      return { value: [entry.key, entry.value], done: false };
+	    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
+
+	    // add [@@species], 23.1.2.2, 23.2.2.2
+	    setSpecies(CONSTRUCTOR_NAME);
+	  }
+	};
+
+	// `Set` constructor
+	// https://tc39.github.io/ecma262/#sec-set-objects
+	var es_set = collection('Set', function (get) {
+	  return function Set() { return get(this, arguments.length ? arguments[0] : undefined); };
+	}, collectionStrong);
+
+	/**
+	 * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
+	 *
+	 * @param nodes - Nodes of the graph.
+	 * @param levels - If present levels will be added to it, if not a new object will be created.
+	 *
+	 * @returns Populated node levels.
+	 */
+	function fillLevelsByDirectionCyclic(nodes, levels) {
+	  var edges = new Set();
+	  nodes.forEach(function (node) {
+	    node.edges.forEach(function (edge) {
+	      if (edge.connected) {
+	        edges.add(edge);
+	      }
+	    });
+	  });
+	  edges.forEach(function (edge) {
+	    var fromId = edge.from.id;
+	    var toId = edge.to.id;
+
+	    if (levels[fromId] == null) {
+	      levels[fromId] = 0;
+	    }
+
+	    if (levels[toId] == null || levels[fromId] >= levels[toId]) {
+	      levels[toId] = levels[fromId] + 1;
+	    }
+	  });
+	  return levels;
+	}
+	/**
+	 * Assign levels to nodes according to their positions in the hierarchy.
+	 *
+	 * @param nodes - Nodes of the graph.
+	 * @param levels - If present levels will be added to it, if not a new object will be created.
+	 *
+	 * @returns Populated node levels.
+	 */
+
+
+	function fillLevelsByDirection(nodes) {
+	  var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+	  var limit = nodes.length;
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    var _loop = function _loop() {
+	      var leaf = _step.value;
+
+	      if (!leaf.edges.every(function (edge) {
+	        return edge.to === leaf;
+	      })) {
+	        // Not a leaf.
+	        return "continue";
+	      }
+
+	      levels[leaf.id] = 0;
+	      var stack = [leaf];
+	      var done = 0;
+	      var node = void 0;
+
+	      while (node = stack.pop()) {
+	        var edges = node.edges;
+	        var newLevel = levels[node.id] - 1;
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+
+	        try {
+	          for (var _iterator2 = edges[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var edge = _step2.value;
+
+	            if (!edge.connected || edge.to !== node || edge.to === edge.from) {
+	              continue;
+	            }
+
+	            var fromId = edge.fromId;
+	            var oldLevel = levels[fromId];
+
+	            if (oldLevel == null || oldLevel > newLevel) {
+	              levels[fromId] = newLevel;
+	              stack.push(edge.from);
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+	              _iterator2.return();
+	            }
+	          } finally {
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
+	            }
+	          }
+	        }
+
+	        if (done > limit) {
+	          // This would run forever on a cyclic graph.
+	          return {
+	            v: fillLevelsByDirectionCyclic(nodes, levels)
+	          };
+	        } else {
+	          ++done;
+	        }
+	      }
+	    };
+
+	    for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var _ret = _loop();
+
+	      switch (_ret) {
+	        case "continue":
+	          continue;
+
+	        default:
+	          if (_typeof(_ret) === "object") return _ret.v;
+	      }
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return != null) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return levels;
+	}
 
 	/**
 	 * There's a mix-up with terms in the code. Following are the formal definitions:
@@ -46441,43 +46893,9 @@
 	    value: function _determineLevelsDirected() {
 	      var _this8 = this;
 
-	      var minLevel = 10000;
-	      /**
-	       * Check if there is an edge going the opposite direction for given edge
-	       *
-	       * @param {Edge} edge  edge to check
-	       * @returns {boolean} true if there's another edge going into the opposite direction
-	       */
-
-	      var isBidirectional = function isBidirectional(edge) {
-	        forEach(_this8.body.edges, function (otherEdge) {
-	          if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
-	            return true;
-	          }
-	        });
-	        return false;
-	      };
-
-	      var levelByDirection = function levelByDirection(nodeA, nodeB, edge) {
-	        var levelA = _this8.hierarchical.levels[nodeA.id];
-	        var levelB = _this8.hierarchical.levels[nodeB.id];
-
-	        if (isBidirectional(edge)  ) ; // set initial level
-
-
-	        if (levelA === undefined) {
-	          levelA = _this8.hierarchical.levels[nodeA.id] = minLevel;
-	        }
-
-	        if (edge.toId == nodeB.id) {
-	          _this8.hierarchical.levels[nodeB.id] = levelA + 1;
-	        } else {
-	          _this8.hierarchical.levels[nodeB.id] = levelA - 1;
-	        }
-	      };
-
-	      this._crawlNetwork(levelByDirection);
-
+	      this.hierarchical.levels = fillLevelsByDirection(this.body.nodeIndices.map(function (id) {
+	        return _this8.body.nodes[id];
+	      }), this.hierarchical.levels);
 	      this.hierarchical.setMinLevelToZero(this.body.nodes);
 	    }
 	    /**
@@ -50688,6 +51106,10 @@
 	      //50,
 	      color: {
 	        string: string
+	      },
+	      weight: {
+	        string: string,
+	        number: number
 	      },
 	      __type__: {
 	        object: object

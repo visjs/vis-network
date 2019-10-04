@@ -46,7 +46,7 @@ function getScaleFreeNetwork(nodeCount) {
     }
     else if (i > 1) {
       var conn = edges.length * 2;
-      var rand = Math.floor(Math.random() * conn);
+      var rand = Math.floor(seededRandom() * conn);
       var cum = 0;
       var j = 0;
       while (j < connectionCount.length && cum < rand) {

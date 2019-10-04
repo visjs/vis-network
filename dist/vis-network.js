@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-09-22T15:44:55Z
+ * @date    2019-10-04T21:00:37Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -16310,6 +16310,8 @@
 	 */
 
 	function Activator$1(container) {
+	  var _this = this;
+
 	  this.active = false;
 	  this.dom = {
 	    container: container
@@ -16320,18 +16322,17 @@
 	  this.hammer = hammer(this.dom.overlay);
 	  this.hammer.on('tap', this._onTapOverlay.bind(this)); // block all touch events (except tap)
 
-	  var me = this;
 	  var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
 	  events.forEach(function (event) {
-	    me.hammer.on(event, function (event) {
-	      event.stopPropagation();
+	    _this.hammer.on(event, function (event) {
+	      event.srcEvent.stopPropagation();
 	    });
 	  }); // attach a click event to the window, in order to deactivate when clicking outside the timeline
 
 	  if (document && document.body) {
 	    this.onClick = function (event) {
 	      if (!_hasParent(event.target, container)) {
-	        me.deactivate();
+	        _this.deactivate();
 	      }
 	    };
 
@@ -16404,7 +16405,7 @@
 
 	Activator$1.prototype.deactivate = function () {
 	  this.active = false;
-	  this.dom.overlay.style.display = '';
+	  this.dom.overlay.style.display = 'block';
 	  util.removeClassName(this.dom.container, 'vis-active');
 	  this.keycharm.unbind('esc', this.escListener);
 	  this.emit('change');
@@ -16420,7 +16421,7 @@
 	Activator$1.prototype._onTapOverlay = function (event) {
 	  // activate the container
 	  this.activate();
-	  event.stopPropagation();
+	  event.srcEvent.stopPropagation();
 	};
 	/**
 	 * Test whether the element has the requested parent element somewhere in
@@ -24975,6 +24976,8 @@
 	  }
 	});
 
+	var iterators = {};
+
 	var ITERATOR$2 = wellKnownSymbol('iterator');
 	var BUGGY_SAFARI_ITERATORS = false;
 
@@ -25005,12 +25008,17 @@
 
 	var IteratorPrototype$2 = iteratorsCore.IteratorPrototype;
 
+	var returnThis$2 = function () {
+	  return this;
+	};
+
 	var createIteratorConstructor = function (IteratorConstructor, NAME, next) {
 	  var TO_STRING_TAG = NAME + ' Iterator';
 	  IteratorConstructor.prototype = objectCreate(IteratorPrototype$2, {
 	    next: createPropertyDescriptor(1, next)
 	  });
 	  setToStringTag(IteratorConstructor, TO_STRING_TAG, false);
+	  iterators[TO_STRING_TAG] = returnThis$2;
 	  return IteratorConstructor;
 	};
 
@@ -25021,7 +25029,7 @@
 	var VALUES$1 = 'values';
 	var ENTRIES = 'entries';
 
-	var returnThis$2 = function () {
+	var returnThis$3 = function () {
 	  return this;
 	};
 
@@ -25070,7 +25078,7 @@
 	        if (objectSetPrototypeOf) {
 	          objectSetPrototypeOf(CurrentIteratorPrototype, IteratorPrototype$3);
 	        } else if (typeof CurrentIteratorPrototype[ITERATOR$3] != 'function') {
-	          hide(CurrentIteratorPrototype, ITERATOR$3, returnThis$2);
+	          hide(CurrentIteratorPrototype, ITERATOR$3, returnThis$3);
 	        }
 	      } // Set @@toStringTag to native iterators
 
@@ -25092,6 +25100,8 @@
 	  if ( IterablePrototype[ITERATOR$3] !== defaultIterator) {
 	    hide(IterablePrototype, ITERATOR$3, defaultIterator);
 	  }
+
+	  iterators[NAME] = defaultIterator; // export additional methods
 
 	  if (DEFAULT) {
 	    methods = {
@@ -25164,6 +25174,10 @@
 	    done: false
 	  };
 	}, 'values'); // argumentsList[@@iterator] is %ArrayProto_values%
+	// https://tc39.github.io/ecma262/#sec-createunmappedargumentsobject
+	// https://tc39.github.io/ecma262/#sec-createmappedargumentsobject
+
+	iterators.Arguments = iterators.Array; // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
 
 	addToUnscopables('keys');
 	addToUnscopables('values');
@@ -28501,7 +28515,9 @@
 	      var iconSize = Number(this.options.icon.size);
 
 	      if (this.options.icon.code !== undefined) {
-	        ctx.font = (selected ? "bold " : "") + iconSize + "px " + this.options.icon.face; // draw icon
+	        ctx.font = [this.options.icon.weight != null ? this.options.icon.weight : selected ? "bold" : "", // If the weight is forced (for example to make Font Awesome 5 work
+	        // properly) substitute slightly bigger size for bold font face.
+	        (this.options.icon.weight != null && selected ? 5 : 0) + iconSize + "px", this.options.icon.face].join(" "); // draw icon
 
 	        ctx.fillStyle = this.options.icon.color || "black";
 	        ctx.textAlign = "center";
@@ -33087,7 +33103,7 @@
 	  /**
 	   * Set or overwrite options for the edge
 	   * @param {Object} options  an object with options
-	   * @returns {null|boolean} null if no options, boolean if date changed
+	   * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
 	   */
 
 
@@ -33096,15 +33112,10 @@
 	    value: function setOptions(options) {
 	      if (!options) {
 	        return;
-	      } // record old value of this.options.hidden
+	      } // Following options if changed affect the layout.
 
 
-	      var oldHidden = this.options.hidden;
-
-	      if (oldHidden === undefined || oldHidden === null) {
-	        oldHidden = false;
-	      }
-
+	      var affectsLayout = typeof options.physics !== "undefined" && this.options.physics !== options.physics || typeof options.hidden !== "undefined" && (this.options.hidden || false) !== (options.hidden || false) || typeof options.from !== "undefined" && this.options.from !== options.from || typeof options.to !== "undefined" && this.options.to !== options.to;
 	      Edge.parseOptions(this.options, options, true, this.globalOptions);
 
 	      if (options.id !== undefined) {
@@ -33130,29 +33141,15 @@
 	      var pile = [options, this.options, this.defaultOptions];
 	      this.chooser = ComponentUtil.choosify('edge', pile); // update label Module
 
-	      this.updateLabelModule(options);
-	      var dataChanged = this.updateEdgeType(); // if anything has been updates, reset the selection width and the hover width
+	      this.updateLabelModule(options); // Update edge type, this if changed affects the layout.
+
+	      affectsLayout = this.updateEdgeType() || affectsLayout; // if anything has been updates, reset the selection width and the hover width
 
 	      this._setInteractionWidths(); // A node is connected when it has a from and to node that both exist in the network.body.nodes.
 
 
 	      this.connect();
-	      var newHidden = this.options.hidden;
-
-	      if (newHidden === undefined || newHidden === null) {
-	        newHidden = false;
-	      }
-
-	      if (newHidden != oldHidden || options.physics !== undefined) {
-	        dataChanged = true;
-	      } // there might be a similar problem with physics, but a bug has not been reported	
-
-
-	      if (options.physics !== undefined) {
-	        dataChanged = true;
-	      }
-
-	      return dataChanged;
+	      return affectsLayout;
 	    }
 	    /**
 	     *
@@ -42859,6 +42856,7 @@
 	unwrapExports(timsort);
 
 	var timsort$1 = timsort;
+	var timsort_1 = timsort$1.sort;
 
 	/**
 	 * Interface definition for direction strategy classes.
@@ -43089,7 +43087,7 @@
 	  }, {
 	    key: "sort",
 	    value: function sort(nodeArray) {
-	      timsort$1.sort(nodeArray, function (a, b) {
+	      timsort_1(nodeArray, function (a, b) {
 	        return a.x - b.x;
 	      });
 	    }
@@ -43185,7 +43183,7 @@
 	  }, {
 	    key: "sort",
 	    value: function sort(nodeArray) {
-	      timsort$1.sort(nodeArray, function (a, b) {
+	      timsort_1(nodeArray, function (a, b) {
 	        return a.y - b.y;
 	      });
 	    }
@@ -43208,6 +43206,1060 @@
 
 	  return HorizontalStrategy;
 	}(DirectionInterface);
+
+	var nativeGetOwnPropertyNames = objectGetOwnPropertyNames.f;
+	var toString$2 = {}.toString;
+	var windowNames$1 = typeof window == 'object' && window && Object.getOwnPropertyNames ? Object.getOwnPropertyNames(window) : [];
+
+	var getWindowNames$1 = function (it) {
+	  try {
+	    return nativeGetOwnPropertyNames(it);
+	  } catch (error) {
+	    return windowNames$1.slice();
+	  }
+	}; // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+
+
+	var f$7 = function getOwnPropertyNames(it) {
+	  return windowNames$1 && toString$2.call(it) == '[object Window]' ? getWindowNames$1(it) : nativeGetOwnPropertyNames(toIndexedObject(it));
+	};
+
+	var objectGetOwnPropertyNamesExternal = {
+	  f: f$7
+	};
+
+	var f$8 = wellKnownSymbol;
+	var wrappedWellKnownSymbol = {
+	  f: f$8
+	};
+
+	var defineProperty$7 = objectDefineProperty.f;
+
+	var defineWellKnownSymbol = function (NAME) {
+	  var Symbol = path.Symbol || (path.Symbol = {});
+	  if (!has(Symbol, NAME)) defineProperty$7(Symbol, NAME, {
+	    value: wrappedWellKnownSymbol.f(NAME)
+	  });
+	};
+
+	var $forEach$1 = arrayIteration.forEach;
+	var HIDDEN$1 = sharedKey('hidden');
+	var SYMBOL = 'Symbol';
+	var PROTOTYPE$4 = 'prototype';
+	var TO_PRIMITIVE$1 = wellKnownSymbol('toPrimitive');
+	var setInternalState$1 = internalState.set;
+	var getInternalState$1 = internalState.getterFor(SYMBOL);
+	var ObjectPrototype$3 = Object[PROTOTYPE$4];
+	var $Symbol$1 = global_1.Symbol;
+	var JSON$1 = global_1.JSON;
+	var nativeJSONStringify = JSON$1 && JSON$1.stringify;
+	var nativeGetOwnPropertyDescriptor$1 = objectGetOwnPropertyDescriptor.f;
+	var nativeDefineProperty$1 = objectDefineProperty.f;
+	var nativeGetOwnPropertyNames$1 = objectGetOwnPropertyNamesExternal.f;
+	var nativePropertyIsEnumerable$1 = objectPropertyIsEnumerable.f;
+	var AllSymbols$1 = shared('symbols');
+	var ObjectPrototypeSymbols = shared('op-symbols');
+	var StringToSymbolRegistry = shared('string-to-symbol-registry');
+	var SymbolToStringRegistry = shared('symbol-to-string-registry');
+	var WellKnownSymbolsStore = shared('wks');
+	var QObject$1 = global_1.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+
+	var USE_SETTER = !QObject$1 || !QObject$1[PROTOTYPE$4] || !QObject$1[PROTOTYPE$4].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+
+	var setSymbolDescriptor = descriptors && fails(function () {
+	  return objectCreate(nativeDefineProperty$1({}, 'a', {
+	    get: function () {
+	      return nativeDefineProperty$1(this, 'a', {
+	        value: 7
+	      }).a;
+	    }
+	  })).a != 7;
+	}) ? function (O, P, Attributes) {
+	  var ObjectPrototypeDescriptor = nativeGetOwnPropertyDescriptor$1(ObjectPrototype$3, P);
+	  if (ObjectPrototypeDescriptor) delete ObjectPrototype$3[P];
+	  nativeDefineProperty$1(O, P, Attributes);
+
+	  if (ObjectPrototypeDescriptor && O !== ObjectPrototype$3) {
+	    nativeDefineProperty$1(ObjectPrototype$3, P, ObjectPrototypeDescriptor);
+	  }
+	} : nativeDefineProperty$1;
+
+	var wrap$1 = function (tag, description) {
+	  var symbol = AllSymbols$1[tag] = objectCreate($Symbol$1[PROTOTYPE$4]);
+	  setInternalState$1(symbol, {
+	    type: SYMBOL,
+	    tag: tag,
+	    description: description
+	  });
+	  if (!descriptors) symbol.description = description;
+	  return symbol;
+	};
+
+	var isSymbol$1 = nativeSymbol && typeof $Symbol$1.iterator == 'symbol' ? function (it) {
+	  return typeof it == 'symbol';
+	} : function (it) {
+	  return Object(it) instanceof $Symbol$1;
+	};
+
+	var $defineProperty$1 = function defineProperty(O, P, Attributes) {
+	  if (O === ObjectPrototype$3) $defineProperty$1(ObjectPrototypeSymbols, P, Attributes);
+	  anObject(O);
+	  var key = toPrimitive(P, true);
+	  anObject(Attributes);
+
+	  if (has(AllSymbols$1, key)) {
+	    if (!Attributes.enumerable) {
+	      if (!has(O, HIDDEN$1)) nativeDefineProperty$1(O, HIDDEN$1, createPropertyDescriptor(1, {}));
+	      O[HIDDEN$1][key] = true;
+	    } else {
+	      if (has(O, HIDDEN$1) && O[HIDDEN$1][key]) O[HIDDEN$1][key] = false;
+	      Attributes = objectCreate(Attributes, {
+	        enumerable: createPropertyDescriptor(0, false)
+	      });
+	    }
+
+	    return setSymbolDescriptor(O, key, Attributes);
+	  }
+
+	  return nativeDefineProperty$1(O, key, Attributes);
+	};
+
+	var $defineProperties$1 = function defineProperties(O, Properties) {
+	  anObject(O);
+	  var properties = toIndexedObject(Properties);
+	  var keys = objectKeys(properties).concat($getOwnPropertySymbols$1(properties));
+	  $forEach$1(keys, function (key) {
+	    if (!descriptors || $propertyIsEnumerable$1.call(properties, key)) $defineProperty$1(O, key, properties[key]);
+	  });
+	  return O;
+	};
+
+	var $create$1 = function create(O, Properties) {
+	  return Properties === undefined ? objectCreate(O) : $defineProperties$1(objectCreate(O), Properties);
+	};
+
+	var $propertyIsEnumerable$1 = function propertyIsEnumerable(V) {
+	  var P = toPrimitive(V, true);
+	  var enumerable = nativePropertyIsEnumerable$1.call(this, P);
+	  if (this === ObjectPrototype$3 && has(AllSymbols$1, P) && !has(ObjectPrototypeSymbols, P)) return false;
+	  return enumerable || !has(this, P) || !has(AllSymbols$1, P) || has(this, HIDDEN$1) && this[HIDDEN$1][P] ? enumerable : true;
+	};
+
+	var $getOwnPropertyDescriptor$1 = function getOwnPropertyDescriptor(O, P) {
+	  var it = toIndexedObject(O);
+	  var key = toPrimitive(P, true);
+	  if (it === ObjectPrototype$3 && has(AllSymbols$1, key) && !has(ObjectPrototypeSymbols, key)) return;
+	  var descriptor = nativeGetOwnPropertyDescriptor$1(it, key);
+
+	  if (descriptor && has(AllSymbols$1, key) && !(has(it, HIDDEN$1) && it[HIDDEN$1][key])) {
+	    descriptor.enumerable = true;
+	  }
+
+	  return descriptor;
+	};
+
+	var $getOwnPropertyNames$1 = function getOwnPropertyNames(O) {
+	  var names = nativeGetOwnPropertyNames$1(toIndexedObject(O));
+	  var result = [];
+	  $forEach$1(names, function (key) {
+	    if (!has(AllSymbols$1, key) && !has(hiddenKeys, key)) result.push(key);
+	  });
+	  return result;
+	};
+
+	var $getOwnPropertySymbols$1 = function getOwnPropertySymbols(O) {
+	  var IS_OBJECT_PROTOTYPE = O === ObjectPrototype$3;
+	  var names = nativeGetOwnPropertyNames$1(IS_OBJECT_PROTOTYPE ? ObjectPrototypeSymbols : toIndexedObject(O));
+	  var result = [];
+	  $forEach$1(names, function (key) {
+	    if (has(AllSymbols$1, key) && (!IS_OBJECT_PROTOTYPE || has(ObjectPrototype$3, key))) {
+	      result.push(AllSymbols$1[key]);
+	    }
+	  });
+	  return result;
+	}; // `Symbol` constructor
+	// https://tc39.github.io/ecma262/#sec-symbol-constructor
+
+
+	if (!nativeSymbol) {
+	  $Symbol$1 = function Symbol() {
+	    if (this instanceof $Symbol$1) throw TypeError('Symbol is not a constructor');
+	    var description = !arguments.length || arguments[0] === undefined ? undefined : String(arguments[0]);
+	    var tag = uid(description);
+
+	    var setter = function (value) {
+	      if (this === ObjectPrototype$3) setter.call(ObjectPrototypeSymbols, value);
+	      if (has(this, HIDDEN$1) && has(this[HIDDEN$1], tag)) this[HIDDEN$1][tag] = false;
+	      setSymbolDescriptor(this, tag, createPropertyDescriptor(1, value));
+	    };
+
+	    if (descriptors && USE_SETTER) setSymbolDescriptor(ObjectPrototype$3, tag, {
+	      configurable: true,
+	      set: setter
+	    });
+	    return wrap$1(tag, description);
+	  };
+
+	  redefine($Symbol$1[PROTOTYPE$4], 'toString', function toString() {
+	    return getInternalState$1(this).tag;
+	  });
+	  objectPropertyIsEnumerable.f = $propertyIsEnumerable$1;
+	  objectDefineProperty.f = $defineProperty$1;
+	  objectGetOwnPropertyDescriptor.f = $getOwnPropertyDescriptor$1;
+	  objectGetOwnPropertyNames.f = objectGetOwnPropertyNamesExternal.f = $getOwnPropertyNames$1;
+	  objectGetOwnPropertySymbols.f = $getOwnPropertySymbols$1;
+
+	  if (descriptors) {
+	    // https://github.com/tc39/proposal-Symbol-description
+	    nativeDefineProperty$1($Symbol$1[PROTOTYPE$4], 'description', {
+	      configurable: true,
+	      get: function description() {
+	        return getInternalState$1(this).description;
+	      }
+	    });
+
+	    {
+	      redefine(ObjectPrototype$3, 'propertyIsEnumerable', $propertyIsEnumerable$1, {
+	        unsafe: true
+	      });
+	    }
+	  }
+
+	  wrappedWellKnownSymbol.f = function (name) {
+	    return wrap$1(wellKnownSymbol(name), name);
+	  };
+	}
+
+	_export({
+	  global: true,
+	  wrap: true,
+	  forced: !nativeSymbol,
+	  sham: !nativeSymbol
+	}, {
+	  Symbol: $Symbol$1
+	});
+	$forEach$1(objectKeys(WellKnownSymbolsStore), function (name) {
+	  defineWellKnownSymbol(name);
+	});
+	_export({
+	  target: SYMBOL,
+	  stat: true,
+	  forced: !nativeSymbol
+	}, {
+	  // `Symbol.for` method
+	  // https://tc39.github.io/ecma262/#sec-symbol.for
+	  'for': function (key) {
+	    var string = String(key);
+	    if (has(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
+	    var symbol = $Symbol$1(string);
+	    StringToSymbolRegistry[string] = symbol;
+	    SymbolToStringRegistry[symbol] = string;
+	    return symbol;
+	  },
+	  // `Symbol.keyFor` method
+	  // https://tc39.github.io/ecma262/#sec-symbol.keyfor
+	  keyFor: function keyFor(sym) {
+	    if (!isSymbol$1(sym)) throw TypeError(sym + ' is not a symbol');
+	    if (has(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
+	  },
+	  useSetter: function () {
+	    USE_SETTER = true;
+	  },
+	  useSimple: function () {
+	    USE_SETTER = false;
+	  }
+	});
+	_export({
+	  target: 'Object',
+	  stat: true,
+	  forced: !nativeSymbol,
+	  sham: !descriptors
+	}, {
+	  // `Object.create` method
+	  // https://tc39.github.io/ecma262/#sec-object.create
+	  create: $create$1,
+	  // `Object.defineProperty` method
+	  // https://tc39.github.io/ecma262/#sec-object.defineproperty
+	  defineProperty: $defineProperty$1,
+	  // `Object.defineProperties` method
+	  // https://tc39.github.io/ecma262/#sec-object.defineproperties
+	  defineProperties: $defineProperties$1,
+	  // `Object.getOwnPropertyDescriptor` method
+	  // https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
+	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor$1
+	});
+	_export({
+	  target: 'Object',
+	  stat: true,
+	  forced: !nativeSymbol
+	}, {
+	  // `Object.getOwnPropertyNames` method
+	  // https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	  getOwnPropertyNames: $getOwnPropertyNames$1,
+	  // `Object.getOwnPropertySymbols` method
+	  // https://tc39.github.io/ecma262/#sec-object.getownpropertysymbols
+	  getOwnPropertySymbols: $getOwnPropertySymbols$1
+	}); // Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
+	// https://bugs.chromium.org/p/v8/issues/detail?id=3443
+
+	_export({
+	  target: 'Object',
+	  stat: true,
+	  forced: fails(function () {
+	    objectGetOwnPropertySymbols.f(1);
+	  })
+	}, {
+	  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
+	    return objectGetOwnPropertySymbols.f(toObject(it));
+	  }
+	}); // `JSON.stringify` method behavior with symbols
+	// https://tc39.github.io/ecma262/#sec-json.stringify
+
+	JSON$1 && _export({
+	  target: 'JSON',
+	  stat: true,
+	  forced: !nativeSymbol || fails(function () {
+	    var symbol = $Symbol$1(); // MS Edge converts symbol values to JSON as {}
+
+	    return nativeJSONStringify([symbol]) != '[null]' // WebKit converts symbol values to JSON as null
+	    || nativeJSONStringify({
+	      a: symbol
+	    }) != '{}' // V8 throws on boxed symbols
+	    || nativeJSONStringify(Object(symbol)) != '{}';
+	  })
+	}, {
+	  stringify: function stringify(it) {
+	    var args = [it];
+	    var index = 1;
+	    var replacer, $replacer;
+
+	    while (arguments.length > index) args.push(arguments[index++]);
+
+	    $replacer = replacer = args[1];
+	    if (!isObject(replacer) && it === undefined || isSymbol$1(it)) return; // IE8 returns string on undefined
+
+	    if (!isArray(replacer)) replacer = function (key, value) {
+	      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+	      if (!isSymbol$1(value)) return value;
+	    };
+	    args[1] = replacer;
+	    return nativeJSONStringify.apply(JSON$1, args);
+	  }
+	}); // `Symbol.prototype[@@toPrimitive]` method
+	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@toprimitive
+
+	if (!$Symbol$1[PROTOTYPE$4][TO_PRIMITIVE$1]) hide($Symbol$1[PROTOTYPE$4], TO_PRIMITIVE$1, $Symbol$1[PROTOTYPE$4].valueOf); // `Symbol.prototype[@@toStringTag]` property
+	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@tostringtag
+
+	setToStringTag($Symbol$1, SYMBOL);
+	hiddenKeys[HIDDEN$1] = true;
+
+	var defineProperty$8 = objectDefineProperty.f;
+	var NativeSymbol = global_1.Symbol;
+
+	if (descriptors && typeof NativeSymbol == 'function' && (!('description' in NativeSymbol.prototype) || // Safari 12 bug
+	NativeSymbol().description !== undefined)) {
+	  var EmptyStringDescriptionStore = {}; // wrap Symbol constructor for correct work with undefined description
+
+	  var SymbolWrapper = function Symbol() {
+	    var description = arguments.length < 1 || arguments[0] === undefined ? undefined : String(arguments[0]);
+	    var result = this instanceof SymbolWrapper ? new NativeSymbol(description) // in Edge 13, String(Symbol(undefined)) === 'Symbol(undefined)'
+	    : description === undefined ? NativeSymbol() : NativeSymbol(description);
+	    if (description === '') EmptyStringDescriptionStore[result] = true;
+	    return result;
+	  };
+
+	  copyConstructorProperties(SymbolWrapper, NativeSymbol);
+	  var symbolPrototype = SymbolWrapper.prototype = NativeSymbol.prototype;
+	  symbolPrototype.constructor = SymbolWrapper;
+	  var symbolToString = symbolPrototype.toString;
+	  var native = String(NativeSymbol('test')) == 'Symbol(test)';
+	  var regexp = /^Symbol\((.*)\)[^)]+$/;
+	  defineProperty$8(symbolPrototype, 'description', {
+	    configurable: true,
+	    get: function description() {
+	      var symbol = isObject(this) ? this.valueOf() : this;
+	      var string = symbolToString.call(symbol);
+	      if (has(EmptyStringDescriptionStore, symbol)) return '';
+	      var desc = native ? string.slice(7, -1) : string.replace(regexp, '$1');
+	      return desc === '' ? undefined : desc;
+	    }
+	  });
+	  _export({
+	    global: true,
+	    forced: true
+	  }, {
+	    Symbol: SymbolWrapper
+	  });
+	}
+
+	// https://tc39.github.io/ecma262/#sec-symbol.iterator
+
+	defineWellKnownSymbol('iterator');
+
+	var $every = arrayIteration.every; // `Array.prototype.every` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.every
+
+	_export({
+	  target: 'Array',
+	  proto: true,
+	  forced: sloppyArrayMethod('every')
+	}, {
+	  every: function every(callbackfn
+	  /* , thisArg */
+	  ) {
+	    return $every(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	  }
+	});
+
+	var freezing = !fails(function () {
+	  return Object.isExtensible(Object.preventExtensions({}));
+	});
+
+	var internalMetadata = createCommonjsModule(function (module) {
+	  var defineProperty = objectDefineProperty.f;
+	  var METADATA = uid('meta');
+	  var id = 0;
+
+	  var isExtensible = Object.isExtensible || function () {
+	    return true;
+	  };
+
+	  var setMetadata = function (it) {
+	    defineProperty(it, METADATA, {
+	      value: {
+	        objectID: 'O' + ++id,
+	        // object ID
+	        weakData: {} // weak collections IDs
+
+	      }
+	    });
+	  };
+
+	  var fastKey = function (it, create) {
+	    // return a primitive with prefix
+	    if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+
+	    if (!has(it, METADATA)) {
+	      // can't set metadata to uncaught frozen object
+	      if (!isExtensible(it)) return 'F'; // not necessary to add metadata
+
+	      if (!create) return 'E'; // add missing metadata
+
+	      setMetadata(it); // return object ID
+	    }
+
+	    return it[METADATA].objectID;
+	  };
+
+	  var getWeakData = function (it, create) {
+	    if (!has(it, METADATA)) {
+	      // can't set metadata to uncaught frozen object
+	      if (!isExtensible(it)) return true; // not necessary to add metadata
+
+	      if (!create) return false; // add missing metadata
+
+	      setMetadata(it); // return the store of weak collections IDs
+	    }
+
+	    return it[METADATA].weakData;
+	  }; // add metadata on freeze-family methods calling
+
+
+	  var onFreeze = function (it) {
+	    if (freezing && meta.REQUIRED && isExtensible(it) && !has(it, METADATA)) setMetadata(it);
+	    return it;
+	  };
+
+	  var meta = module.exports = {
+	    REQUIRED: false,
+	    fastKey: fastKey,
+	    getWeakData: getWeakData,
+	    onFreeze: onFreeze
+	  };
+	  hiddenKeys[METADATA] = true;
+	});
+	var internalMetadata_1 = internalMetadata.REQUIRED;
+	var internalMetadata_2 = internalMetadata.fastKey;
+	var internalMetadata_3 = internalMetadata.getWeakData;
+	var internalMetadata_4 = internalMetadata.onFreeze;
+
+	var ITERATOR$5 = wellKnownSymbol('iterator');
+	var ArrayPrototype$1 = Array.prototype; // check on default Array iterator
+
+	var isArrayIteratorMethod = function (it) {
+	  return it !== undefined && (iterators.Array === it || ArrayPrototype$1[ITERATOR$5] === it);
+	};
+
+	var ITERATOR$6 = wellKnownSymbol('iterator');
+
+	var getIteratorMethod = function (it) {
+	  if (it != undefined) return it[ITERATOR$6] || it['@@iterator'] || iterators[classof(it)];
+	};
+
+	var callWithSafeIterationClosing = function (iterator, fn, value, ENTRIES) {
+	  try {
+	    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value); // 7.4.6 IteratorClose(iterator, completion)
+	  } catch (error) {
+	    var returnMethod = iterator['return'];
+	    if (returnMethod !== undefined) anObject(returnMethod.call(iterator));
+	    throw error;
+	  }
+	};
+
+	var iterate_1 = createCommonjsModule(function (module) {
+	  var Result = function (stopped, result) {
+	    this.stopped = stopped;
+	    this.result = result;
+	  };
+
+	  var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITERATOR) {
+	    var boundFunction = bindContext(fn, that, AS_ENTRIES ? 2 : 1);
+	    var iterator, iterFn, index, length, result, step;
+
+	    if (IS_ITERATOR) {
+	      iterator = iterable;
+	    } else {
+	      iterFn = getIteratorMethod(iterable);
+	      if (typeof iterFn != 'function') throw TypeError('Target is not iterable'); // optimisation for array iterators
+
+	      if (isArrayIteratorMethod(iterFn)) {
+	        for (index = 0, length = toLength(iterable.length); length > index; index++) {
+	          result = AS_ENTRIES ? boundFunction(anObject(step = iterable[index])[0], step[1]) : boundFunction(iterable[index]);
+	          if (result && result instanceof Result) return result;
+	        }
+
+	        return new Result(false);
+	      }
+
+	      iterator = iterFn.call(iterable);
+	    }
+
+	    while (!(step = iterator.next()).done) {
+	      result = callWithSafeIterationClosing(iterator, boundFunction, step.value, AS_ENTRIES);
+	      if (result && result instanceof Result) return result;
+	    }
+
+	    return new Result(false);
+	  };
+
+	  iterate.stop = function (result) {
+	    return new Result(true, result);
+	  };
+	});
+
+	var ITERATOR$7 = wellKnownSymbol('iterator');
+	var SAFE_CLOSING = false;
+
+	try {
+	  var called = 0;
+	  var iteratorWithReturn = {
+	    next: function () {
+	      return {
+	        done: !!called++
+	      };
+	    },
+	    'return': function () {
+	      SAFE_CLOSING = true;
+	    }
+	  };
+
+	  iteratorWithReturn[ITERATOR$7] = function () {
+	    return this;
+	  }; // eslint-disable-next-line no-throw-literal
+
+
+	  Array.from(iteratorWithReturn, function () {
+	    throw 2;
+	  });
+	} catch (error) {
+	  /* empty */
+	}
+
+	var checkCorrectnessOfIteration = function (exec, SKIP_CLOSING) {
+	  if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+	  var ITERATION_SUPPORT = false;
+
+	  try {
+	    var object = {};
+
+	    object[ITERATOR$7] = function () {
+	      return {
+	        next: function () {
+	          return {
+	            done: ITERATION_SUPPORT = true
+	          };
+	        }
+	      };
+	    };
+
+	    exec(object);
+	  } catch (error) {
+	    /* empty */
+	  }
+
+	  return ITERATION_SUPPORT;
+	};
+
+	var collection = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
+	  var NativeConstructor = global_1[CONSTRUCTOR_NAME];
+	  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
+	  var Constructor = NativeConstructor;
+	  var ADDER = IS_MAP ? 'set' : 'add';
+	  var exported = {};
+
+	  var fixMethod = function (KEY) {
+	    var nativeMethod = NativePrototype[KEY];
+	    redefine(NativePrototype, KEY, KEY == 'add' ? function add(a) {
+	      nativeMethod.call(this, a === 0 ? 0 : a);
+	      return this;
+	    } : KEY == 'delete' ? function (a) {
+	      return IS_WEAK && !isObject(a) ? false : nativeMethod.call(this, a === 0 ? 0 : a);
+	    } : KEY == 'get' ? function get(a) {
+	      return IS_WEAK && !isObject(a) ? undefined : nativeMethod.call(this, a === 0 ? 0 : a);
+	    } : KEY == 'has' ? function has(a) {
+	      return IS_WEAK && !isObject(a) ? false : nativeMethod.call(this, a === 0 ? 0 : a);
+	    } : function set(a, b) {
+	      nativeMethod.call(this, a === 0 ? 0 : a, b);
+	      return this;
+	    });
+	  }; // eslint-disable-next-line max-len
+
+
+	  if (isForced_1(CONSTRUCTOR_NAME, typeof NativeConstructor != 'function' || !(IS_WEAK || NativePrototype.forEach && !fails(function () {
+	    new NativeConstructor().entries().next();
+	  })))) {
+	    // create collection constructor
+	    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
+	    internalMetadata.REQUIRED = true;
+	  } else if (isForced_1(CONSTRUCTOR_NAME, true)) {
+	    var instance = new Constructor(); // early implementations not supports chaining
+
+	    var HASNT_CHAINING = instance[ADDER](IS_WEAK ? {} : -0, 1) != instance; // V8 ~  Chromium 40- weak-collections throws on primitives, but should return false
+
+	    var THROWS_ON_PRIMITIVES = fails(function () {
+	      instance.has(1);
+	    }); // most early implementations doesn't supports iterables, most modern - not close it correctly
+	    // eslint-disable-next-line no-new
+
+	    var ACCEPT_ITERABLES = checkCorrectnessOfIteration(function (iterable) {
+	      new NativeConstructor(iterable);
+	    }); // for early implementations -0 and +0 not the same
+
+	    var BUGGY_ZERO = !IS_WEAK && fails(function () {
+	      // V8 ~ Chromium 42- fails only with 5+ elements
+	      var $instance = new NativeConstructor();
+	      var index = 5;
+
+	      while (index--) $instance[ADDER](index, index);
+
+	      return !$instance.has(-0);
+	    });
+
+	    if (!ACCEPT_ITERABLES) {
+	      Constructor = wrapper(function (dummy, iterable) {
+	        anInstance(dummy, Constructor, CONSTRUCTOR_NAME);
+	        var that = inheritIfRequired(new NativeConstructor(), dummy, Constructor);
+	        if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+	        return that;
+	      });
+	      Constructor.prototype = NativePrototype;
+	      NativePrototype.constructor = Constructor;
+	    }
+
+	    if (THROWS_ON_PRIMITIVES || BUGGY_ZERO) {
+	      fixMethod('delete');
+	      fixMethod('has');
+	      IS_MAP && fixMethod('get');
+	    }
+
+	    if (BUGGY_ZERO || HASNT_CHAINING) fixMethod(ADDER); // weak collections should not contains .clear method
+
+	    if (IS_WEAK && NativePrototype.clear) delete NativePrototype.clear;
+	  }
+
+	  exported[CONSTRUCTOR_NAME] = Constructor;
+	  _export({
+	    global: true,
+	    forced: Constructor != NativeConstructor
+	  }, exported);
+	  setToStringTag(Constructor, CONSTRUCTOR_NAME);
+	  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
+	  return Constructor;
+	};
+
+	var defineProperty$9 = objectDefineProperty.f;
+	var fastKey = internalMetadata.fastKey;
+	var setInternalState$2 = internalState.set;
+	var internalStateGetterFor = internalState.getterFor;
+	var collectionStrong = {
+	  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+	    var C = wrapper(function (that, iterable) {
+	      anInstance(that, C, CONSTRUCTOR_NAME);
+	      setInternalState$2(that, {
+	        type: CONSTRUCTOR_NAME,
+	        index: objectCreate(null),
+	        first: undefined,
+	        last: undefined,
+	        size: 0
+	      });
+	      if (!descriptors) that.size = 0;
+	      if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+	    });
+	    var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
+
+	    var define = function (that, key, value) {
+	      var state = getInternalState(that);
+	      var entry = getEntry(that, key);
+	      var previous, index; // change existing entry
+
+	      if (entry) {
+	        entry.value = value; // create new entry
+	      } else {
+	        state.last = entry = {
+	          index: index = fastKey(key, true),
+	          key: key,
+	          value: value,
+	          previous: previous = state.last,
+	          next: undefined,
+	          removed: false
+	        };
+	        if (!state.first) state.first = entry;
+	        if (previous) previous.next = entry;
+	        if (descriptors) state.size++;else that.size++; // add to index
+
+	        if (index !== 'F') state.index[index] = entry;
+	      }
+
+	      return that;
+	    };
+
+	    var getEntry = function (that, key) {
+	      var state = getInternalState(that); // fast case
+
+	      var index = fastKey(key);
+	      var entry;
+	      if (index !== 'F') return state.index[index]; // frozen object case
+
+	      for (entry = state.first; entry; entry = entry.next) {
+	        if (entry.key == key) return entry;
+	      }
+	    };
+
+	    redefineAll(C.prototype, {
+	      // 23.1.3.1 Map.prototype.clear()
+	      // 23.2.3.2 Set.prototype.clear()
+	      clear: function clear() {
+	        var that = this;
+	        var state = getInternalState(that);
+	        var data = state.index;
+	        var entry = state.first;
+
+	        while (entry) {
+	          entry.removed = true;
+	          if (entry.previous) entry.previous = entry.previous.next = undefined;
+	          delete data[entry.index];
+	          entry = entry.next;
+	        }
+
+	        state.first = state.last = undefined;
+	        if (descriptors) state.size = 0;else that.size = 0;
+	      },
+	      // 23.1.3.3 Map.prototype.delete(key)
+	      // 23.2.3.4 Set.prototype.delete(value)
+	      'delete': function (key) {
+	        var that = this;
+	        var state = getInternalState(that);
+	        var entry = getEntry(that, key);
+
+	        if (entry) {
+	          var next = entry.next;
+	          var prev = entry.previous;
+	          delete state.index[entry.index];
+	          entry.removed = true;
+	          if (prev) prev.next = next;
+	          if (next) next.previous = prev;
+	          if (state.first == entry) state.first = next;
+	          if (state.last == entry) state.last = prev;
+	          if (descriptors) state.size--;else that.size--;
+	        }
+
+	        return !!entry;
+	      },
+	      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
+	      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
+	      forEach: function forEach(callbackfn
+	      /* , that = undefined */
+	      ) {
+	        var state = getInternalState(this);
+	        var boundFunction = bindContext(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
+	        var entry;
+
+	        while (entry = entry ? entry.next : state.first) {
+	          boundFunction(entry.value, entry.key, this); // revert to the last existing entry
+
+	          while (entry && entry.removed) entry = entry.previous;
+	        }
+	      },
+	      // 23.1.3.7 Map.prototype.has(key)
+	      // 23.2.3.7 Set.prototype.has(value)
+	      has: function has(key) {
+	        return !!getEntry(this, key);
+	      }
+	    });
+	    redefineAll(C.prototype, IS_MAP ? {
+	      // 23.1.3.6 Map.prototype.get(key)
+	      get: function get(key) {
+	        var entry = getEntry(this, key);
+	        return entry && entry.value;
+	      },
+	      // 23.1.3.9 Map.prototype.set(key, value)
+	      set: function set(key, value) {
+	        return define(this, key === 0 ? 0 : key, value);
+	      }
+	    } : {
+	      // 23.2.3.1 Set.prototype.add(value)
+	      add: function add(value) {
+	        return define(this, value = value === 0 ? 0 : value, value);
+	      }
+	    });
+	    if (descriptors) defineProperty$9(C.prototype, 'size', {
+	      get: function () {
+	        return getInternalState(this).size;
+	      }
+	    });
+	    return C;
+	  },
+	  setStrong: function (C, CONSTRUCTOR_NAME, IS_MAP) {
+	    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
+	    var getInternalCollectionState = internalStateGetterFor(CONSTRUCTOR_NAME);
+	    var getInternalIteratorState = internalStateGetterFor(ITERATOR_NAME); // add .keys, .values, .entries, [@@iterator]
+	    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
+
+	    defineIterator(C, CONSTRUCTOR_NAME, function (iterated, kind) {
+	      setInternalState$2(this, {
+	        type: ITERATOR_NAME,
+	        target: iterated,
+	        state: getInternalCollectionState(iterated),
+	        kind: kind,
+	        last: undefined
+	      });
+	    }, function () {
+	      var state = getInternalIteratorState(this);
+	      var kind = state.kind;
+	      var entry = state.last; // revert to the last existing entry
+
+	      while (entry && entry.removed) entry = entry.previous; // get next entry
+
+
+	      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
+	        // or finish the iteration
+	        state.target = undefined;
+	        return {
+	          value: undefined,
+	          done: true
+	        };
+	      } // return step by kind
+
+
+	      if (kind == 'keys') return {
+	        value: entry.key,
+	        done: false
+	      };
+	      if (kind == 'values') return {
+	        value: entry.value,
+	        done: false
+	      };
+	      return {
+	        value: [entry.key, entry.value],
+	        done: false
+	      };
+	    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true); // add [@@species], 23.1.2.2, 23.2.2.2
+
+	    setSpecies(CONSTRUCTOR_NAME);
+	  }
+	};
+
+	// https://tc39.github.io/ecma262/#sec-set-objects
+
+
+	var es_set = collection('Set', function (get) {
+	  return function Set() {
+	    return get(this, arguments.length ? arguments[0] : undefined);
+	  };
+	}, collectionStrong);
+
+	var charAt$1 = stringMultibyte.charAt;
+	var STRING_ITERATOR = 'String Iterator';
+	var setInternalState$3 = internalState.set;
+	var getInternalState$2 = internalState.getterFor(STRING_ITERATOR); // `String.prototype[@@iterator]` method
+	// https://tc39.github.io/ecma262/#sec-string.prototype-@@iterator
+
+	defineIterator(String, 'String', function (iterated) {
+	  setInternalState$3(this, {
+	    type: STRING_ITERATOR,
+	    string: String(iterated),
+	    index: 0
+	  }); // `%StringIteratorPrototype%.next` method
+	  // https://tc39.github.io/ecma262/#sec-%stringiteratorprototype%.next
+	}, function next() {
+	  var state = getInternalState$2(this);
+	  var string = state.string;
+	  var index = state.index;
+	  var point;
+	  if (index >= string.length) return {
+	    value: undefined,
+	    done: true
+	  };
+	  point = charAt$1(string, index);
+	  state.index += point.length;
+	  return {
+	    value: point,
+	    done: false
+	  };
+	});
+
+	/**
+	 * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
+	 *
+	 * @param nodes - Nodes of the graph.
+	 * @param levels - If present levels will be added to it, if not a new object will be created.
+	 *
+	 * @returns Populated node levels.
+	 */
+	function fillLevelsByDirectionCyclic(nodes, levels) {
+	  var edges = new Set();
+	  nodes.forEach(function (node) {
+	    node.edges.forEach(function (edge) {
+	      if (edge.connected) {
+	        edges.add(edge);
+	      }
+	    });
+	  });
+	  edges.forEach(function (edge) {
+	    var fromId = edge.from.id;
+	    var toId = edge.to.id;
+
+	    if (levels[fromId] == null) {
+	      levels[fromId] = 0;
+	    }
+
+	    if (levels[toId] == null || levels[fromId] >= levels[toId]) {
+	      levels[toId] = levels[fromId] + 1;
+	    }
+	  });
+	  return levels;
+	}
+	/**
+	 * Assign levels to nodes according to their positions in the hierarchy.
+	 *
+	 * @param nodes - Nodes of the graph.
+	 * @param levels - If present levels will be added to it, if not a new object will be created.
+	 *
+	 * @returns Populated node levels.
+	 */
+
+
+	function fillLevelsByDirection(nodes) {
+	  var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+	  var limit = nodes.length;
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    var _loop = function _loop() {
+	      var leaf = _step.value;
+
+	      if (!leaf.edges.every(function (edge) {
+	        return edge.to === leaf;
+	      })) {
+	        // Not a leaf.
+	        return "continue";
+	      }
+
+	      levels[leaf.id] = 0;
+	      var stack = [leaf];
+	      var done = 0;
+	      var node = void 0;
+
+	      while (node = stack.pop()) {
+	        var edges = node.edges;
+	        var newLevel = levels[node.id] - 1;
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+
+	        try {
+	          for (var _iterator2 = edges[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var edge = _step2.value;
+
+	            if (!edge.connected || edge.to !== node || edge.to === edge.from) {
+	              continue;
+	            }
+
+	            var fromId = edge.fromId;
+	            var oldLevel = levels[fromId];
+
+	            if (oldLevel == null || oldLevel > newLevel) {
+	              levels[fromId] = newLevel;
+	              stack.push(edge.from);
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+	              _iterator2.return();
+	            }
+	          } finally {
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
+	            }
+	          }
+	        }
+
+	        if (done > limit) {
+	          // This would run forever on a cyclic graph.
+	          return {
+	            v: fillLevelsByDirectionCyclic(nodes, levels)
+	          };
+	        } else {
+	          ++done;
+	        }
+	      }
+	    };
+
+	    for (var _iterator = nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var _ret = _loop();
+
+	      switch (_ret) {
+	        case "continue":
+	          continue;
+
+	        default:
+	          if (_typeof$1(_ret) === "object") return _ret.v;
+	      }
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return != null) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return levels;
+	}
 
 	/**
 	 * There's a mix-up with terms in the code. Following are the formal definitions:
@@ -44887,43 +45939,9 @@
 	    value: function _determineLevelsDirected() {
 	      var _this8 = this;
 
-	      var minLevel = 10000;
-	      /**
-	       * Check if there is an edge going the opposite direction for given edge
-	       *
-	       * @param {Edge} edge  edge to check
-	       * @returns {boolean} true if there's another edge going into the opposite direction
-	       */
-
-	      var isBidirectional = function isBidirectional(edge) {
-	        forEach(_this8.body.edges, function (otherEdge) {
-	          if (otherEdge.toId === edge.fromId && otherEdge.fromId === edge.toId) {
-	            return true;
-	          }
-	        });
-	        return false;
-	      };
-
-	      var levelByDirection = function levelByDirection(nodeA, nodeB, edge) {
-	        var levelA = _this8.hierarchical.levels[nodeA.id];
-	        var levelB = _this8.hierarchical.levels[nodeB.id];
-
-	        if (isBidirectional(edge)  ) ; // set initial level
-
-
-	        if (levelA === undefined) {
-	          levelA = _this8.hierarchical.levels[nodeA.id] = minLevel;
-	        }
-
-	        if (edge.toId == nodeB.id) {
-	          _this8.hierarchical.levels[nodeB.id] = levelA + 1;
-	        } else {
-	          _this8.hierarchical.levels[nodeB.id] = levelA - 1;
-	        }
-	      };
-
-	      this._crawlNetwork(levelByDirection);
-
+	      this.hierarchical.levels = fillLevelsByDirection(this.body.nodeIndices.map(function (id) {
+	        return _this8.body.nodes[id];
+	      }), this.hierarchical.levels);
 	      this.hierarchical.setMinLevelToZero(this.body.nodes);
 	    }
 	    /**
@@ -49141,6 +50159,10 @@
 	      //50,
 	      color: {
 	        string: string
+	      },
+	      weight: {
+	        string: string,
+	        number: number
 	      },
 	      __type__: {
 	        object: object

@@ -158,6 +158,7 @@ var options = {
     icon: {
       face: 'FontAwesome',
       code: undefined,
+      weight: undefined,
       size: 50,  //50,
       color:'#2B7CE9'
     },
@@ -720,6 +721,18 @@ network.setOptions(options);
             <td>String</td>
             <td><code>'#2B7CE9'</code></td>
             <td>The color of the icon.</td>
+        </tr>
+        <tr parent="icon" class="hidden">
+            <td class="indent">icon.weight</td>
+            <td>Number or String</td>
+            <td><code>undefined</code></td>
+            <td>
+              This allows for weight to be forced regardless of selection
+              status. For example Font Awesome 5 doesn't work properly unless
+              weight is forced to <code>'bold'</code> or <code>700</code>. If
+              this option is set then selection is indicated by bigger size
+              instead of bold font face.
+            </td>
         </tr>
         <tr>
             <td>id</td>

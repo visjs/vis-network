@@ -3,13 +3,13 @@
     <head>
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <title>Network | Saving and loading networks</title>
+        <title>Vis Network | Other | Saving and Loading Networks</title>
 
         <style type="text/css">
             body {
               font: 10pt sans;
             }
-            #network {
+            #mynetwork {
                 float:left;
                 width: 600px;
                 height: 600px;
@@ -43,7 +43,7 @@
             Try this out by exporting the network to JSON, clearing the network and then importing it again. The nodes will all appear in the same position as they were before the network was destroyed.
         </p>
 
-        <div id="network"></div>
+        <div id="mynetwork"></div>
 
         <div>
             <textarea id=input_output></textarea>
@@ -60,7 +60,7 @@
             var exportButton;
 
             function init() {
-                container = document.getElementById('network');
+                container = document.getElementById('mynetwork');
                 exportArea = document.getElementById('input_output');
                 importButton = document.getElementById('import_button');
                 exportButton = document.getElementById('export_button');
