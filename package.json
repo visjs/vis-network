@@ -31,7 +31,8 @@
     "declarations",
     "dist",
     "peer",
-    "standalone"
+    "standalone",
+    "styles"
   ],
   "scripts": {
     "test": "BABEL_ENV=test mocha --exit",
