@@ -83,17 +83,67 @@ class EndPoint {
 /**
  * Drawing methods for the arrow endpoint.
  */
+class Image extends EndPoint {
+  /**
+   * Draw this shape at the end of a line.
+   *
+   * @param ctx - The shape will be rendered into this context.
+   * @param arrowData - The data determining the shape.
+   *
+   * @returns False as there is no way to fill an image.
+   */
+  public static draw(
+    ctx: CanvasRenderingContext2D,
+    arrowData: ArrowData
+  ): false {
+    if (arrowData.image) {
+      ctx.save();
+
+      ctx.translate(arrowData.point.x, arrowData.point.y);
+      ctx.rotate(Math.PI / 2 + arrowData.angle);
+
+      const width =
+        arrowData.imageWidth != null
+          ? arrowData.imageWidth
+          : arrowData.image.width;
+      const height =
+        arrowData.imageHeight != null
+          ? 
+        arrowData.imageHeight
+          : arrowData.image.height;
+
+      arrowData.image.drawImageAtPosition(
+        ctx,
+        1, // scale
+        -width / 2, // x
+        0, // y
+        width,
+        height
+      );
+
+      ctx.restore();
+    }
+
+    return false;
+  }
+}
+
+/**
+ * Drawing methods for the arrow endpoint.
+ */
 class Arrow extends EndPoint {
   /**
    * Draw this shape at the end of a line.
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const points = [
@@ -105,6 +155,8 @@ class Arrow extends EndPoint {
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -117,11 +169,13 @@ class Crow {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const points = [
@@ -133,6 +187,8 @@ class Crow {
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -145,11 +201,13 @@ class Curve {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const point = { x: -0.4, y: 0 };
@@ -173,6 +231,8 @@ class Curve {
       false
     );
     ctx.stroke();
+
+    return true;
   }
 }
 
@@ -185,11 +245,13 @@ class InvertedCurve {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const point = { x: -0.3, y: 0 };
@@ -213,6 +275,8 @@ class InvertedCurve {
       false
     );
     ctx.stroke();
+
+    return true;
   }
 }
 
@@ -225,17 +289,21 @@ class Triangle {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const points = [{ x: 0.02, y: 0 }, { x: -1, y: 0.3 }, { x: -1, y: -0.3 }];
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -248,17 +316,21 @@ class InvertedTriangle {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const points = [{ x: 0, y: 0.3 }, { x: 0, y: -0.3 }, { x: -1, y: 0 }];
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -271,15 +343,19 @@ class Circle {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     const point = { x: -0.4, y: 0 };
 
     EndPoint.transform(point, arrowData);
     ctx.circle(point.x, point.y, arrowData.length * 0.4);
+
+    return true;
   }
 }
 
@@ -292,11 +368,13 @@ class Bar {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     /*
     var points = [
       {x:0, y:0.5},
@@ -319,6 +397,8 @@ class Bar {
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -331,11 +411,13 @@ class Box {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     const points = [
       { x: 0, y: 0.3 },
       { x: 0, y: -0.3 },
@@ -345,6 +427,8 @@ class Box {
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -357,11 +441,13 @@ class Diamond {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     const points = [
       { x: 0, y: 0 },
       { x: -0.5, y: -0.3 },
@@ -371,6 +457,8 @@ class Diamond {
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -383,11 +471,13 @@ class Vee {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
     const points = [
@@ -399,6 +489,8 @@ class Vee {
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
+
+    return true;
   }
 }
 
@@ -411,50 +503,44 @@ export class EndPoints {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
+   *
+   * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
     arrowData: ArrowData
-  ): void {
+  ): boolean {
     let type;
     if (arrowData.type) {
       type = arrowData.type.toLowerCase();
     }
 
     switch (type) {
+      case "image":
+        return Image.draw(ctx, arrowData);
       case "circle":
-        Circle.draw(ctx, arrowData);
-        break;
+        return Circle.draw(ctx, arrowData);
       case "box":
-        Box.draw(ctx, arrowData);
-        break;
+        return Box.draw(ctx, arrowData);
       case "crow":
-        Crow.draw(ctx, arrowData);
-        break;
+        return Crow.draw(ctx, arrowData);
       case "curve":
-        Curve.draw(ctx, arrowData);
-        break;
+        return Curve.draw(ctx, arrowData);
       case "diamond":
-        Diamond.draw(ctx, arrowData);
-        break;
+        return Diamond.draw(ctx, arrowData);
       case "inv_curve":
-        InvertedCurve.draw(ctx, arrowData);
-        break;
+        return InvertedCurve.draw(ctx, arrowData);
       case "triangle":
-        Triangle.draw(ctx, arrowData);
-        break;
+        return Triangle.draw(ctx, arrowData);
       case "inv_triangle":
-        InvertedTriangle.draw(ctx, arrowData);
-        break;
+        return InvertedTriangle.draw(ctx, arrowData);
       case "bar":
-        Bar.draw(ctx, arrowData);
-        break;
+        return Bar.draw(ctx, arrowData);
       case "vee":
-        Vee.draw(ctx, arrowData);
-        break;
+        return Vee.draw(ctx, arrowData);
       case "arrow": // fall-through
       default:
-        Arrow.draw(ctx, arrowData);
+        return Arrow.draw(ctx, arrowData);
     }
   }
 }

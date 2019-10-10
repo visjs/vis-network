@@ -43,6 +43,7 @@ export type ArrowType =
   | "crow"
   | "curve"
   | "diamond"
+  | "image"
   | "inv_curve"
   | "inv_triangle"
   | "triangle"
@@ -50,8 +51,23 @@ export type ArrowType =
 
 export type ColorInheritance = boolean | "both" | "from" | "to";
 
+export interface CachedImage {
+  width: number;
+  height: number;
+  drawImageAtPosition(
+    ctx: CanvasRenderingContext2D,
+    factor: number,
+    left: number,
+    top: number,
+    width?: number,
+    height?: number
+  ): void;
+}
 export interface ArrowData {
   angle: number;
+  image?: CachedImage;
+  imageHeight?: number;
+  imageWidth?: number;
   length: number;
   point: Point;
   type: ArrowType;

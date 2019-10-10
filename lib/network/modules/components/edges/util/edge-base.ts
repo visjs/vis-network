@@ -798,13 +798,15 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     ctx.fillStyle = ctx.strokeStyle;
     ctx.lineWidth = values.width;
 
-    EndPoints.draw(ctx, arrowData);
+    const canFill = EndPoints.draw(ctx, arrowData);
 
-    // draw shadow if enabled
-    this.enableShadow(ctx, values);
-    ctx.fill();
-    // disable shadows for other elements.
-    this.disableShadow(ctx, values);
+    if (canFill) {
+      // draw shadow if enabled
+      this.enableShadow(ctx, values);
+      ctx.fill();
+      // disable shadows for other elements.
+      this.disableShadow(ctx, values);
+    }
   }
 
   /**
