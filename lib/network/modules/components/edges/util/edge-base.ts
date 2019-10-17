@@ -105,6 +105,22 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public setOptions(options: EdgeOptions): void {
     this.options = options;
+
+    if (Object.prototype.hasOwnProperty.call(options, "selfReferenceSize")) {
+      console.log(
+        'The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, side:"top"}'
+      );
+      if (
+        !Object.prototype.hasOwnProperty.call(options, "selfReference") ||
+        !Object.prototype.hasOwnProperty.call(options.selfReference, "size")
+      ) {
+        this.options.selfReference = {
+          size: options.selfReferenceSize,
+          side: "none"
+        };
+      }
+    }
+
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
     this.id = this.options.id;
@@ -322,7 +338,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    if (this.options.selfReference.side !== null) {
+    if (this.options.selfReference.side !== "none") {
       if (this.options.selfReference.side === "top") {
         //top center
         x = node.x;
