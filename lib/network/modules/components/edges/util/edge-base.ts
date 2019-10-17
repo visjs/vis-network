@@ -314,16 +314,16 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let y: number;
     const node = this.from;
     const radius =
-    typeof this.options.selfReferenceSize === "number"
-      ? this.options.selfReferenceSize
-      : this.options.selfReferenceSize.size;
-    
+      typeof this.options.selfReferenceSize === "number"
+        ? this.options.selfReferenceSize
+        : this.options.selfReferenceSize.size;
+
     if (ctx !== undefined) {
       if (node.shape.width === undefined) {
         node.shape.resize(ctx);
       }
     }
-    
+
     // get circle coordinates
     if (
       this.options.selfReferenceSize.side !== null &&
@@ -357,7 +357,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       x = node.x + radius;
       y = node.y - node.shape.height * 0.5;
     }
-    
+
     return [x, y, radius];
   }
 
@@ -408,7 +408,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     const direction = options.direction;
 
     const maxIterations = 10;
-    const radius = (typeof this.options.selfReferenceSize === "number")? this.options.selfReferenceSize : this.options.selfReferenceSize.size;
+    const radius =
+      typeof this.options.selfReferenceSize === "number"
+        ? this.options.selfReferenceSize
+        : this.options.selfReferenceSize.size;
     const threshold = 0.05;
     let pos: Point;
 
@@ -778,7 +781,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           low = 0.6;
           high = 1.0;
         }
-      
+
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
@@ -799,7 +802,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           low = 0.25;
           high = 0.6;
         }
-      
+
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
@@ -825,7 +828,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           }
         }
       }
-      
     }
 
     const xi = arrowPoint.x - length * 0.9 * Math.cos(angle);
