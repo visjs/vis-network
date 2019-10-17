@@ -202,7 +202,8 @@ var options = {
       }
     },
     selectionWidth: 1,
-    selfReferenceSize:{
+    selfReferenceSize: 20,
+    selfReference:{
         size: 20,
         side: null
     },
@@ -893,23 +894,29 @@ var options: {
                 You can taylor the logic in the function as long as it returns a <code>Number</code>.
             </td>
         </tr>
-        <tr class='toggle collapsible' onclick="toggleTable('optionTable','selfReferenceSize', this);">
-            <td><span parent="arrows" class="right-caret"></span> selfReferenceSize</td>
-            <td>Object or Number</td>
+        <tr>
+            <td>selfReferenceSize</td>
+            <td>Number</td>
             <td><code>false</code></td>
-            <td>When the to and from nodes are the same, a circle is drawn. This is the radius of that circle.
-                However if you want to specify if additional properties for the selfReferenceSize such as (side), then it must be 
-                an object which can contain (size, side)
+            <td>When the to and from nodes are the same, a circle is drawn. This is the radius of that circle. 
+                This property is deprecated please use selfReference instead.
             </td>
         </tr>
-        <tr parent="selfReferenceSize" class="hidden">
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','selfReference', this);">
+            <td><span parent="arrows" class="right-caret"></span> selfReference</td>
+            <td>Object</td>
+            <td><code>Object</code></td>
+            <td>When the to and from nodes are the same, a circle is drawn. This provides radius of circle and position.
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
             <td class="indent">size</td>
             <td>Number</td>
             <td><code>false</code></td>
             <td>This is the radius of circle.
             </td>
         </tr>
-        <tr parent="selfReferenceSize" class="hidden">
+        <tr parent="selfReference" class="hidden">
             <td class="indent">side</td>
             <td>string</td>
             <td><code>undefined</code></td>
