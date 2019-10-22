@@ -121,25 +121,6 @@ jobs:
             echo 'machine github.com' >> ~/.netrc
             echo "        login $GIT_AUTHOR_NAME" >> ~/.netrc
             echo "        password $GH_TOKEN" >> ~/.netrc
-
-      - run:
-          name: Publish GitHub Pages
-          command: |
-            npx gh-pages --dist . --message "chore: update to $(git rev-parse HEAD) [ci skip]" --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" --src '{{coverage,dist,docs,examples}/**/*,LICENSE*,*.{html,md}}'
-
-  gh_pages:
-    executor: node
-
-    steps:
-      - attach_workspace:
-          at: .
-
-      - run:
-          name: Set Git credentials
-          command: |
-            echo 'machine github.com' >> ~/.netrc
-            echo "        login $GIT_AUTHOR_NAME" >> ~/.netrc
-            echo "        password $GH_TOKEN" >> ~/.netrc
       - run:
           name: Publish GitHub Pages
           command: |
