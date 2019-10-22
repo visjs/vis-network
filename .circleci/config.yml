@@ -39,7 +39,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - '*'
+            - "*"
 
   build:
     executor: node
@@ -53,7 +53,33 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - 'dist'
+            - "dist"
+
+  examples:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Install dependencies for headless Chromium
+          command: |
+            sudo apt-get install -yq \
+            ca-certificates fonts-liberation gconf-service libappindicator1 \
+            libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
+            libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 \
+            libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 \
+            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 \
+            libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 \
+            libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release wget \
+            xdg-utils
+      - run: npm run generate-examples-index
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "examples"
 
   lint_js:
     executor: node
@@ -101,6 +127,24 @@ jobs:
           command: |
             npx gh-pages --dist . --message "chore: update to $(git rev-parse HEAD) [ci skip]" --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" --src '{{coverage,dist,docs,examples}/**/*,LICENSE*,*.{html,md}}'
 
+  gh_pages:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Set Git credentials
+          command: |
+            echo 'machine github.com' >> ~/.netrc
+            echo "        login $GIT_AUTHOR_NAME" >> ~/.netrc
+            echo "        password $GH_TOKEN" >> ~/.netrc
+      - run:
+          name: Publish GitHub Pages
+          command: |
+            npx gh-pages --dist . --message "chore: update to $(git rev-parse HEAD) [ci skip]" --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" --src '{{coverage,dist,docs,examples}/**/*,LICENSE*,*.{html,md}}'
+
   release:
     executor: node
 
@@ -129,6 +173,11 @@ workflows:
           requires:
             - prepare
 
+      - examples:
+          requires:
+            - prepare
+            - build
+
       # - lint_js:
       #     requires:
       #       - prepare
@@ -145,6 +194,7 @@ workflows:
           requires:
             - prepare
             - build
+            - examples
             # - lint_js
             - lint_ts
             - test

@@ -36,7 +36,7 @@
     "build": "npm run types:network && npm run js:network && npm run images:network",
     "watch": "npm run images:network && rollup --watch --config rollup.config.js",
     "watch-dev": "npm run watch-dev",
-    "generate-examples-index": "node -r ./babel.mocha.js ./scripts/examples-index/generate.ts -t \"Vis Network Examples\" -c mynetwork -w https://visjs.github.io/vis-network -S ./scripts/examples-index/screenshot-script.js -lis",
+    "generate-examples-index": "generate-examples-index -t \"Vis Network Examples\" -c mynetwork -d ./examples -w https://visjs.github.io/vis-network -S ./scripts/examples-index/screenshot-script.js -lis",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint '{lib,test}/**/*.js'",
     "lint:ts": "eslint '{lib,test}/**/*.ts'",
@@ -98,6 +98,7 @@
     "rollup-plugin-typescript2": "^0.24.0",
     "sinon": "^7.3.2",
     "typescript": "^3.5.3",
+    "vis-dev-utils": "^1.0.0",
     "yargs": "^14.0.0"
   },
   "collective": {
