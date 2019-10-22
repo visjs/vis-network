@@ -16,7 +16,11 @@ const plugins = {
 	typescript: typescript({
 		tsconfig: 'tsconfig.code.json'
 	}),
-	commonjs: commonjs(),
+	commonjs: commonjs({
+		namedExports: {
+			'timsort': ['sort']
+		}
+	}),
 	babel: babel({
 		extensions: ['.ts', '.js'],
 		runtimeHelpers: true
