@@ -46,6 +46,50 @@ function fillLevelsByDirectionCyclic(nodes: Node[], levels: Levels): Levels {
 }
 
 /**
+ * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
+ *
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+export function fillLevelsByDirectionLeaves(
+  nodes: Node[],
+  levels: Levels = Object.create(null)
+): Levels {
+  return fillLevelsByDirection(
+    (node): boolean => !node.edges.every((edge): boolean => edge.to === node),
+    (node, edge): boolean => edge.to === node,
+    (newLevel, oldLevel): boolean => oldLevel > newLevel,
+    "from",
+    nodes,
+    levels
+  );
+}
+
+/**
+ * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
+ *
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+export function fillLevelsByDirectionRoots(
+  nodes: Node[],
+  levels: Levels = Object.create(null)
+): Levels {
+  return fillLevelsByDirection(
+    (node): boolean => !node.edges.every((edge): boolean => edge.from === node),
+    (node, edge): boolean => edge.from === node,
+    (newLevel, oldLevel): boolean => oldLevel < newLevel,
+    "to",
+    nodes,
+    levels
+  );
+}
+
+/**
  * Assign levels to nodes according to their positions in the hierarchy.
  *
  * @param nodes - Nodes of the graph.
@@ -53,39 +97,47 @@ function fillLevelsByDirectionCyclic(nodes: Node[], levels: Levels): Levels {
  *
  * @returns Populated node levels.
  */
-export function fillLevelsByDirection(
+function fillLevelsByDirection(
+  isEntryNode: (node: Node) => boolean,
+  shouldEdgeBeFollowed: (node: Node, edge: Edge) => boolean,
+  shouldLevelBeReplaced: (newLevel: number, oldLevel: number) => boolean,
+  direction: "to" | "from",
   nodes: Node[],
-  levels: Levels = Object.create(null)
+  levels: Levels
 ): Levels {
   const limit = nodes.length;
+  const edgeIdProp = direction + "Id";
+  const newLevelDiff = direction === "to" ? 1 : -1;
 
-  for (const leaf of nodes) {
-    if (!leaf.edges.every((edge): boolean => edge.to === leaf)) {
-      // Not a leaf.
+  for (const entryNode of nodes) {
+    if (isEntryNode(entryNode)) {
       continue;
     }
 
-    levels[leaf.id] = 0;
-    const stack: Node[] = [leaf];
+    levels[entryNode.id] = 0;
+    const stack: Node[] = [entryNode];
 
     let done = 0;
-    let node: Node | undefined;
-    while ((node = stack.pop())) {
-      const edges = node.edges;
-      const newLevel = levels[node.id] - 1;
+    let node: Node;
+    while ((node = stack.pop()!)) {
+      const newLevel = levels[node.id] + newLevelDiff;
 
-      for (const edge of edges) {
-        if (!edge.connected || edge.to !== node || edge.to === edge.from) {
-          continue;
-        }
+      node.edges
+        .filter(
+          (edge): boolean =>
+            edge.connected &&
+            edge.to !== edge.from &&
+            shouldEdgeBeFollowed(node, edge)
+        )
+        .forEach((edge): void => {
+          const targetNodeId = edge[edgeIdProp];
+          const oldLevel = levels[targetNodeId];
 
-        const fromId = edge.fromId;
-        const oldLevel = levels[fromId];
-        if (oldLevel == null || oldLevel > newLevel) {
-          levels[fromId] = newLevel;
-          stack.push(edge.from);
-        }
-      }
+          if (oldLevel == null || shouldLevelBeReplaced(newLevel, oldLevel)) {
+            levels[targetNodeId] = newLevel;
+            stack.push(edge[direction]);
+          }
+        });
 
       if (done > limit) {
         // This would run forever on a cyclic graph.
