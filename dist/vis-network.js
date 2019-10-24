@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-24T07:36:51Z
+ * @date    2019-10-24T07:42:44Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -42314,7 +42314,7 @@
      * @param {Canvas} canvas
      * @param {SelectionHandler} selectionHandler
      */
-    function ManipulationSystem(body, canvas, selectionHandler) {
+    function ManipulationSystem(body, canvas, selectionHandler, interactionHandler) {
       var _this = this;
 
       classCallCheck$1(this, ManipulationSystem);
@@ -42322,6 +42322,7 @@
       this.body = body;
       this.canvas = canvas;
       this.selectionHandler = selectionHandler;
+      this.interactionHandler = interactionHandler;
       this.editMode = false;
       this.manipulationDiv = undefined;
       this.editModeDiv = undefined;
@@ -43399,13 +43400,7 @@
           this.selectedControlNode.x = pos.x;
           this.selectedControlNode.y = pos.y;
         } else {
-          // if the drag was not started properly because the click started outside the network div, start it now.
-          var diffX = pointer.x - this.lastTouch.x;
-          var diffY = pointer.y - this.lastTouch.y;
-          this.body.view.translation = {
-            x: this.lastTouch.translation.x + diffX,
-            y: this.lastTouch.translation.y + diffY
-          };
+          this.interactionHandler.onDrag(event);
         }
 
         this.body.emitter.emit('_redraw');
@@ -43562,12 +43557,7 @@
           targetNode.y = this.canvas._YconvertDOMtoCanvas(pointer.y);
           this.body.emitter.emit('_redraw');
         } else {
-          var diffX = pointer.x - this.lastTouch.x;
-          var diffY = pointer.y - this.lastTouch.y;
-          this.body.view.translation = {
-            x: this.lastTouch.translation.x + diffX,
-            y: this.lastTouch.translation.y + diffY
-          };
+          this.interactionHandler.onDrag(event);
         }
       }
       /**
@@ -47388,7 +47378,7 @@
 
     this.clustering = new ClusterEngine(this.body); // clustering api
 
-    this.manipulation = new ManipulationSystem(this.body, this.canvas, this.selectionHandler); // data manipulation system
+    this.manipulation = new ManipulationSystem(this.body, this.canvas, this.selectionHandler, this.interactionHandler); // data manipulation system
 
     this.nodesHandler = new NodesHandler(this.body, this.images, this.groups, this.layoutEngine); // Handle adding, deleting and updating of nodes as well as global options
 
