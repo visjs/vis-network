@@ -62,7 +62,7 @@ export function fillLevelsByDirectionLeaves(
     (node): boolean => !node.edges.every((edge): boolean => edge.to === node),
     // Use the lowest level.
     (newLevel, oldLevel): boolean => oldLevel > newLevel,
-    // Go agains the direction of the edges.
+    // Go against the direction of the edges.
     "from",
     nodes,
     levels
