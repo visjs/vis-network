@@ -125,8 +125,8 @@ function fillLevelsByDirection(
 
     const stack: Node[] = [entryNode];
     let done = 0;
-    let node: Node;
-    while ((node = stack.pop()!)) {
+    let node: Node | undefined;
+    while ((node = stack.pop())) {
       const newLevel = levels[node.id] + newLevelDiff;
 
       node.edges
