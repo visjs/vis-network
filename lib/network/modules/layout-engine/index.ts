@@ -58,9 +58,11 @@ export function fillLevelsByDirectionLeaves(
   levels: Levels = Object.create(null)
 ): Levels {
   return fillLevelsByDirection(
+    // Pick only leaves (nodes without children).
     (node): boolean => !node.edges.every((edge): boolean => edge.to === node),
-    (node, edge): boolean => edge.to === node,
+    // Use the lowest level.
     (newLevel, oldLevel): boolean => oldLevel > newLevel,
+    // Go agains the direction of the edges.
     "from",
     nodes,
     levels
@@ -80,9 +82,11 @@ export function fillLevelsByDirectionRoots(
   levels: Levels = Object.create(null)
 ): Levels {
   return fillLevelsByDirection(
+    // Pick only roots (nodes without parents).
     (node): boolean => !node.edges.every((edge): boolean => edge.from === node),
-    (node, edge): boolean => edge.from === node,
+    // Use the highest level.
     (newLevel, oldLevel): boolean => oldLevel < newLevel,
+    // Go in the direction of the edges.
     "to",
     nodes,
     levels
@@ -93,7 +97,6 @@ export function fillLevelsByDirectionRoots(
  * Assign levels to nodes according to their positions in the hierarchy.
  *
  * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
- * @param shouldEdgeBeFollowed - Checks and returns true if the traversal should continue further through this edge.
  * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
  * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
  * @param nodes - Nodes of the graph.
@@ -103,7 +106,6 @@ export function fillLevelsByDirectionRoots(
  */
 function fillLevelsByDirection(
   isEntryNode: (node: Node) => boolean,
-  shouldEdgeBeFollowed: (node: Node, edge: Edge) => boolean,
   shouldLevelBeReplaced: (newLevel: number, oldLevel: number) => boolean,
   direction: "to" | "from",
   nodes: Node[],
@@ -118,9 +120,10 @@ function fillLevelsByDirection(
       continue;
     }
 
+    // Line up all the entry nodes on level 0.
     levels[entryNode.id] = 0;
-    const stack: Node[] = [entryNode];
 
+    const stack: Node[] = [entryNode];
     let done = 0;
     let node: Node;
     while ((node = stack.pop()!)) {
@@ -129,9 +132,12 @@ function fillLevelsByDirection(
       node.edges
         .filter(
           (edge): boolean =>
+            // Ignore disconnected edges.
             edge.connected &&
+            // Ignore circular edges.
             edge.to !== edge.from &&
-            shouldEdgeBeFollowed(node, edge)
+            // Ignore edges leading to the node that's currently being processed.
+            edge[direction] !== node
         )
         .forEach((edge): void => {
           const targetNodeId = edge[edgeIdProp];
