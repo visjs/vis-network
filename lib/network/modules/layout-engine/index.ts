@@ -92,6 +92,10 @@ export function fillLevelsByDirectionRoots(
 /**
  * Assign levels to nodes according to their positions in the hierarchy.
  *
+ * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
+ * @param shouldEdgeBeFollowed - Checks and returns true if the traversal should continue further through this edge.
+ * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
+ * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
  * @param nodes - Nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
