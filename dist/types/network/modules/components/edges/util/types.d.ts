@@ -26,10 +26,18 @@ export interface PointT extends Point {
 export declare type SelectiveRequired<T, RequiredKey extends keyof Extract<T, object>> = T & {
     [Key in RequiredKey]-?: NonNullable<Extract<T, object>[Key]>;
 };
-export declare type ArrowType = "arrow" | "bar" | "box" | "circle" | "crow" | "curve" | "diamond" | "inv_curve" | "inv_triangle" | "triangle" | "vee";
+export declare type ArrowType = "arrow" | "bar" | "box" | "circle" | "crow" | "curve" | "diamond" | "image" | "inv_curve" | "inv_triangle" | "triangle" | "vee";
 export declare type ColorInheritance = boolean | "both" | "from" | "to";
+export interface CachedImage {
+    width: number;
+    height: number;
+    drawImageAtPosition(ctx: CanvasRenderingContext2D, factor: number, left: number, top: number, width?: number, height?: number): void;
+}
 export interface ArrowData {
     angle: number;
+    image?: CachedImage;
+    imageHeight?: number;
+    imageWidth?: number;
     length: number;
     point: Point;
     type: ArrowType;

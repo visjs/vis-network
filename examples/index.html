@@ -4978,6 +4978,301 @@ var network = new vis.Network(container, data, options);
                   /></div></a></span
             ><span class="example-link"
               ><div>
+                <a href="network/edgeStyles/imageArrowHeads.html"
+                  >Image Arrow Heads</a
+                ><span class="playgrounds"
+                  ><form
+                    action="http://jsfiddle.net/api/post/library/pure/"
+                    method="post"
+                    target="_blank"
+                  >
+                    <button
+                      class="icon jsfiddle"
+                      alt="JSFiddle"
+                      title="JSFiddle"
+                    >
+                      &#xA0;</button
+                    ><input
+                      type="hidden"
+                      name="js"
+                      value='// create an array with nodes
+var nodes = new vis.DataSet([
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" }
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+var options = {
+  edges: {
+    arrows: {
+      to: {
+        enabled: true,
+        type: "image",
+        imageWidth: 24,
+        imageHeight: 24,
+        src:
+          "data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; style=&apos;width:24px;height:24px&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cpath fill=&apos;%23000000&apos; d=&apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&apos; /%3E%3C/svg%3E"
+      }
+    }
+  }
+};
+var network = new vis.Network(container, data, options);
+'
+                    /><input
+                      type="hidden"
+                      name="css"
+                      value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  right: 0%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+
+pre {
+  overflow-x: auto;
+}
+"
+                    /><input
+                      type="hidden"
+                      name="html"
+                      value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Edge Styles&lt;/h2&gt;
+    &lt;h3&gt;Image Arrow Heads&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;
+      All formats supported by canvas are supported here (like SVG, PNG, JPG).
+    &lt;/li&gt;
+    &lt;li&gt;Image can be specified using any URL including data URLs.&lt;/li&gt;
+    &lt;li&gt;
+      Width and height can be set explicitly to scale the image to the desired
+      size.
+    &lt;/li&gt;
+    &lt;li&gt;
+      The arrow head points to the top with the point in the middle of the top
+      edge of the image.
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;pre&gt;&lt;code&gt;
+const options = {
+  edges: {
+    arrows: {
+      to: {
+        enabled: true,
+        type: &amp;quot;image&amp;quot;,
+        imageWidth: 24,
+        imageHeight: 24,
+        src:
+          &amp;quot;data:image/svg+xml,%3Csvg xmlns=&amp;apos;http://www.w3.org/2000/svg&amp;apos; style=&amp;apos;width:24px;height:24px&amp;apos; viewBox=&amp;apos;0 0 24 24&amp;apos;%3E%3Cpath fill=&amp;apos;%23000000&amp;apos; d=&amp;apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&amp;apos; /%3E%3C/svg%3E&amp;quot;
+      }
+    }
+  }
+};
+      &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+                    /><input
+                      type="hidden"
+                      name="resources"
+                      value="/home/circleci/dist/vis-network.min.css,/home/circleci/dist/vis-network.min.js"
+                    /><input type="hidden" name="wrap" value="b" /><input
+                      type="hidden"
+                      name="title"
+                      value="Vis Network | Edge Styles | Image Arrow Heads"
+                    />
+                  </form>
+
+                  <form
+                    action="https://codepen.io/pen/define"
+                    method="post"
+                    target="_blank"
+                  >
+                    <button class="icon codepen" alt="CodePen" title="CodePen">
+                      &#xA0;</button
+                    ><input
+                      type="hidden"
+                      name="data"
+                      value='{"css":"html,\nbody,\n#mynetwork {\n  margin: 0px;\n  padding: 0px;\n}\n\n#mynetwork {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  bottom: 0px;\n  right: 50%;\n  min-height: 100vh;\n  border-right: 1px solid lightgray;\n  background: white;\n}\n\n#text {\n  position: absolute;\n  left: 50%;\n  right: 0%;\n  padding: 1em;\n}\n\n#title {\n  margin-bottom: 5em;\n}\n\npre {\n  overflow-x: auto;\n}\n","css_external":"/home/circleci/dist/vis-network.min.css","html":"&lt;div id=\"text\"&gt;\n  &lt;div id=\"title\"&gt;\n    &lt;h1&gt;Vis Network&lt;/h1&gt;\n    &lt;h2&gt;Edge Styles&lt;/h2&gt;\n    &lt;h3&gt;Image Arrow Heads&lt;/h3&gt;\n  &lt;/div&gt;\n\n  &lt;ul&gt;\n    &lt;li&gt;\n      All formats supported by canvas are supported here (like SVG, PNG, JPG).\n    &lt;/li&gt;\n    &lt;li&gt;Image can be specified using any URL including data URLs.&lt;/li&gt;\n    &lt;li&gt;\n      Width and height can be set explicitly to scale the image to the desired\n      size.\n    &lt;/li&gt;\n    &lt;li&gt;\n      The arrow head points to the top with the point in the middle of the top\n      edge of the image.\n    &lt;/li&gt;\n  &lt;/ul&gt;\n\n  &lt;pre&gt;&lt;code&gt;\nconst options = {\n  edges: {\n    arrows: {\n      to: {\n        enabled: true,\n        type: &amp;quot;image&amp;quot;,\n        imageWidth: 24,\n        imageHeight: 24,\n        src:\n          &amp;quot;data:image/svg+xml,%3Csvg xmlns=&amp;apos;http://www.w3.org/2000/svg&amp;apos; style=&amp;apos;width:24px;height:24px&amp;apos; viewBox=&amp;apos;0 0 24 24&amp;apos;%3E%3Cpath fill=&amp;apos;%23000000&amp;apos; d=&amp;apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&amp;apos; /%3E%3C/svg%3E&amp;quot;\n      }\n    }\n  }\n};\n      &lt;/code&gt;&lt;/pre&gt;\n&lt;/div&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  { id: 1, label: \"Node 1\" },\n  { id: 2, label: \"Node 2\" },\n  { id: 3, label: \"Node 3\" },\n  { id: 4, label: \"Node 4\" },\n  { id: 5, label: \"Node 5\" }\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 3 },\n  { from: 1, to: 2 },\n  { from: 2, to: 4 },\n  { from: 2, to: 5 },\n  { from: 3, to: 3 }\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {\n  edges: {\n    arrows: {\n      to: {\n        enabled: true,\n        type: \"image\",\n        imageWidth: 24,\n        imageHeight: 24,\n        src:\n          \"data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; style=&apos;width:24px;height:24px&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cpath fill=&apos;%23000000&apos; d=&apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&apos; /%3E%3C/svg%3E\"\n      }\n    }\n  }\n};\nvar network = new vis.Network(container, data, options);\n","js_external":"/home/circleci/dist/vis-network.min.js","title":"Vis Network | Edge Styles | Image Arrow Heads"}'
+                    /><input
+                      type="hidden"
+                      name="js"
+                      value='// create an array with nodes
+var nodes = new vis.DataSet([
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" }
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+var options = {
+  edges: {
+    arrows: {
+      to: {
+        enabled: true,
+        type: "image",
+        imageWidth: 24,
+        imageHeight: 24,
+        src:
+          "data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; style=&apos;width:24px;height:24px&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cpath fill=&apos;%23000000&apos; d=&apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&apos; /%3E%3C/svg%3E"
+      }
+    }
+  }
+};
+var network = new vis.Network(container, data, options);
+'
+                    /><input
+                      type="hidden"
+                      name="css"
+                      value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  right: 0%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+
+pre {
+  overflow-x: auto;
+}
+"
+                    /><input
+                      type="hidden"
+                      name="html"
+                      value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Edge Styles&lt;/h2&gt;
+    &lt;h3&gt;Image Arrow Heads&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;
+      All formats supported by canvas are supported here (like SVG, PNG, JPG).
+    &lt;/li&gt;
+    &lt;li&gt;Image can be specified using any URL including data URLs.&lt;/li&gt;
+    &lt;li&gt;
+      Width and height can be set explicitly to scale the image to the desired
+      size.
+    &lt;/li&gt;
+    &lt;li&gt;
+      The arrow head points to the top with the point in the middle of the top
+      edge of the image.
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;pre&gt;&lt;code&gt;
+const options = {
+  edges: {
+    arrows: {
+      to: {
+        enabled: true,
+        type: &amp;quot;image&amp;quot;,
+        imageWidth: 24,
+        imageHeight: 24,
+        src:
+          &amp;quot;data:image/svg+xml,%3Csvg xmlns=&amp;apos;http://www.w3.org/2000/svg&amp;apos; style=&amp;apos;width:24px;height:24px&amp;apos; viewBox=&amp;apos;0 0 24 24&amp;apos;%3E%3Cpath fill=&amp;apos;%23000000&amp;apos; d=&amp;apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&amp;apos; /%3E%3C/svg%3E&amp;quot;
+      }
+    }
+  }
+};
+      &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+                    /></form
+                ></span>
+              </div>
+              <a href="network/edgeStyles/imageArrowHeads.html"
+                ><div class="example-image">
+                  <img
+                    src="thumbnails/78e171ef75f1fd6e65e80ad31cfacf61d4cfcc4352dd6a28e7afb421d14cb6a1.png"
+                    alt="Image Arrow Heads"
+                  /></div></a></span
+            ><span class="example-link"
+              ><div>
                 <a href="network/edgeStyles/smooth.html">Static smooth curves</a
                 ><span class="playgrounds"
                   ><form

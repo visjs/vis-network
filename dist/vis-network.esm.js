@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-27T14:00:00Z
+ * @date    2019-10-27T14:08:48Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -27926,10 +27926,57 @@ function () {
  */
 
 
-var Arrow =
+var Image$2 =
 /*#__PURE__*/
 function (_EndPoint) {
-  inherits$1(Arrow, _EndPoint);
+  inherits$1(Image, _EndPoint);
+
+  function Image() {
+    classCallCheck$1(this, Image);
+
+    return possibleConstructorReturn$1(this, getPrototypeOf$1(Image).apply(this, arguments));
+  }
+
+  createClass$1(Image, null, [{
+    key: "draw",
+
+    /**
+     * Draw this shape at the end of a line.
+     *
+     * @param ctx - The shape will be rendered into this context.
+     * @param arrowData - The data determining the shape.
+     *
+     * @returns False as there is no way to fill an image.
+     */
+    value: function draw(ctx, arrowData) {
+      if (arrowData.image) {
+        ctx.save();
+        ctx.translate(arrowData.point.x, arrowData.point.y);
+        ctx.rotate(Math.PI / 2 + arrowData.angle);
+        var width = arrowData.imageWidth != null ? arrowData.imageWidth : arrowData.image.width;
+        var height = arrowData.imageHeight != null ? arrowData.imageHeight : arrowData.image.height;
+        arrowData.image.drawImageAtPosition(ctx, 1, // scale
+        -width / 2, // x
+        0, // y
+        width, height);
+        ctx.restore();
+      }
+
+      return false;
+    }
+  }]);
+
+  return Image;
+}(EndPoint);
+/**
+ * Drawing methods for the arrow endpoint.
+ */
+
+
+var Arrow =
+/*#__PURE__*/
+function (_EndPoint2) {
+  inherits$1(Arrow, _EndPoint2);
 
   function Arrow() {
     classCallCheck$1(this, Arrow);
@@ -27945,6 +27992,8 @@ function (_EndPoint) {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -27964,6 +28013,7 @@ function (_EndPoint) {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -27989,6 +28039,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -28008,6 +28060,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28033,6 +28086,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -28052,6 +28107,7 @@ function () {
       ctx.beginPath();
       ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
       ctx.stroke();
+      return true;
     }
   }]);
 
@@ -28077,6 +28133,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -28096,6 +28154,7 @@ function () {
       ctx.beginPath();
       ctx.arc(point.x, point.y, arrowData.length * 0.4, startAngle, endAngle, false);
       ctx.stroke();
+      return true;
     }
   }]);
 
@@ -28121,6 +28180,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -28137,6 +28198,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28162,6 +28224,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -28178,6 +28242,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28203,6 +28268,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       var point = {
@@ -28211,6 +28278,7 @@ function () {
       };
       EndPoint.transform(point, arrowData);
       ctx.circle(point.x, point.y, arrowData.length * 0.4);
+      return true;
     }
   }]);
 
@@ -28236,6 +28304,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       /*
@@ -28264,6 +28334,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28289,6 +28360,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       var points = [{
@@ -28306,6 +28379,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28331,6 +28405,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       var points = [{
@@ -28348,6 +28424,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28373,6 +28450,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True because ctx.fill() can be used to fill the arrow.
      */
     value: function draw(ctx, arrowData) {
       // Normalized points of closed path, in the order that they should be drawn.
@@ -28392,6 +28471,7 @@ function () {
       }];
       EndPoint.transform(points, arrowData);
       EndPoint.drawPath(ctx, points);
+      return true;
     }
   }]);
 
@@ -28417,6 +28497,8 @@ function () {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
      */
     value: function draw(ctx, arrowData) {
       var type;
@@ -28426,50 +28508,43 @@ function () {
       }
 
       switch (type) {
+        case "image":
+          return Image$2.draw(ctx, arrowData);
+
         case "circle":
-          Circle$1.draw(ctx, arrowData);
-          break;
+          return Circle$1.draw(ctx, arrowData);
 
         case "box":
-          Box$1.draw(ctx, arrowData);
-          break;
+          return Box$1.draw(ctx, arrowData);
 
         case "crow":
-          Crow.draw(ctx, arrowData);
-          break;
+          return Crow.draw(ctx, arrowData);
 
         case "curve":
-          Curve.draw(ctx, arrowData);
-          break;
+          return Curve.draw(ctx, arrowData);
 
         case "diamond":
-          Diamond$1.draw(ctx, arrowData);
-          break;
+          return Diamond$1.draw(ctx, arrowData);
 
         case "inv_curve":
-          InvertedCurve.draw(ctx, arrowData);
-          break;
+          return InvertedCurve.draw(ctx, arrowData);
 
         case "triangle":
-          Triangle$1.draw(ctx, arrowData);
-          break;
+          return Triangle$1.draw(ctx, arrowData);
 
         case "inv_triangle":
-          InvertedTriangle.draw(ctx, arrowData);
-          break;
+          return InvertedTriangle.draw(ctx, arrowData);
 
         case "bar":
-          Bar.draw(ctx, arrowData);
-          break;
+          return Bar.draw(ctx, arrowData);
 
         case "vee":
-          Vee.draw(ctx, arrowData);
-          break;
+          return Vee.draw(ctx, arrowData);
 
         case "arrow": // fall-through
 
         default:
-          Arrow.draw(ctx, arrowData);
+          return Arrow.draw(ctx, arrowData);
       }
     }
   }]);
@@ -29079,12 +29154,15 @@ function () {
       ctx.strokeStyle = this.getColor(ctx, values);
       ctx.fillStyle = ctx.strokeStyle;
       ctx.lineWidth = values.width;
-      EndPoints.draw(ctx, arrowData); // draw shadow if enabled
+      var canFill = EndPoints.draw(ctx, arrowData);
 
-      this.enableShadow(ctx, values);
-      ctx.fill(); // disable shadows for other elements.
+      if (canFill) {
+        // draw shadow if enabled
+        this.enableShadow(ctx, values);
+        ctx.fill(); // disable shadows for other elements.
 
-      this.disableShadow(ctx, values);
+        this.disableShadow(ctx, values);
+      }
     }
     /**
      * Set the shadow formatting values in the context if enabled, do nothing otherwise.
@@ -30124,10 +30202,11 @@ function () {
   /**
    * @param {Object} options        values specific to this edge, must contain at least 'from' and 'to'
    * @param {Object} body           shared state from Network instance
+   * @param {Network.Images} imagelist  A list with images. Only needed when the edge has image arrows.
    * @param {Object} globalOptions  options from the EdgesHandler instance
    * @param {Object} defaultOptions default options from the EdgeHandler instance. Value and reference are constant
    */
-  function Edge(options, body, globalOptions, defaultOptions) {
+  function Edge(options, body, imagelist, globalOptions, defaultOptions) {
     classCallCheck$1(this, Edge);
 
     if (body === undefined) {
@@ -30139,7 +30218,8 @@ function () {
     this.options = util.bridgeObject(globalOptions);
     this.globalOptions = globalOptions;
     this.defaultOptions = defaultOptions;
-    this.body = body; // initialize variables
+    this.body = body;
+    this.imagelist = imagelist; // initialize variables
 
     this.id = undefined;
     this.fromId = undefined;
@@ -30236,12 +30316,21 @@ function () {
         toArrow: toArrow,
         toArrowScale: this.options.arrows.to.scaleFactor,
         toArrowType: this.options.arrows.to.type,
+        toArrowSrc: this.options.arrows.to.src,
+        toArrowImageWidth: this.options.arrows.to.imageWidth,
+        toArrowImageHeight: this.options.arrows.to.imageHeight,
         middleArrow: middleArrow,
         middleArrowScale: this.options.arrows.middle.scaleFactor,
         middleArrowType: this.options.arrows.middle.type,
+        middleArrowSrc: this.options.arrows.middle.src,
+        middleArrowImageWidth: this.options.arrows.middle.imageWidth,
+        middleArrowImageHeight: this.options.arrows.middle.imageHeight,
         fromArrow: fromArrow,
         fromArrowScale: this.options.arrows.from.scaleFactor,
         fromArrowType: this.options.arrows.from.type,
+        fromArrowSrc: this.options.arrows.from.src,
+        fromArrowImageWidth: this.options.arrows.from.imageWidth,
+        fromArrowImageHeight: this.options.arrows.from.imageHeight,
         arrowStrikethrough: this.options.arrowStrikethrough,
         color: inheritsColor ? undefined : this.options.color.color,
         inheritsColor: inheritsColor,
@@ -30518,18 +30607,54 @@ function () {
       this.edgeType.toPoint = this.edgeType.to; // from and to arrows give a different end point for edges. we set them here
 
       if (values.fromArrow) {
-        arrowData.from = this.edgeType.getArrowData(ctx, 'from', viaNode, this.selected, this.hover, values);
+        arrowData.from = this.edgeType.getArrowData(ctx, "from", viaNode, this.selected, this.hover, values);
         if (values.arrowStrikethrough === false) this.edgeType.fromPoint = arrowData.from.core;
+
+        if (values.fromArrowSrc) {
+          arrowData.from.image = this.imagelist.load(values.fromArrowSrc);
+        }
+
+        if (values.fromArrowImageWidth) {
+          arrowData.from.imageWidth = values.fromArrowImageWidth;
+        }
+
+        if (values.fromArrowImageHeight) {
+          arrowData.from.imageHeight = values.fromArrowImageHeight;
+        }
       }
 
       if (values.toArrow) {
-        arrowData.to = this.edgeType.getArrowData(ctx, 'to', viaNode, this.selected, this.hover, values);
+        arrowData.to = this.edgeType.getArrowData(ctx, "to", viaNode, this.selected, this.hover, values);
         if (values.arrowStrikethrough === false) this.edgeType.toPoint = arrowData.to.core;
+
+        if (values.toArrowSrc) {
+          arrowData.to.image = this.imagelist.load(values.toArrowSrc);
+        }
+
+        if (values.toArrowImageWidth) {
+          arrowData.to.imageWidth = values.toArrowImageWidth;
+        }
+
+        if (values.toArrowImageHeight) {
+          arrowData.to.imageHeight = values.toArrowImageHeight;
+        }
       } // the middle arrow depends on the line, which can depend on the to and from arrows so we do this one lastly.
 
 
       if (values.middleArrow) {
-        arrowData.middle = this.edgeType.getArrowData(ctx, 'middle', viaNode, this.selected, this.hover, values);
+        arrowData.middle = this.edgeType.getArrowData(ctx, "middle", viaNode, this.selected, this.hover, values);
+
+        if (values.middleArrowSrc) {
+          arrowData.middle.image = this.imagelist.load(values.middleArrowSrc);
+        }
+
+        if (values.middleArrowImageWidth) {
+          arrowData.middle.imageWidth = values.middleArrowImageWidth;
+        }
+
+        if (values.middleArrowImageHeight) {
+          arrowData.middle.imageHeight = values.middleArrowImageHeight;
+        }
       } // draw everything
 
 
@@ -31366,7 +31491,7 @@ function () {
   }, {
     key: "create",
     value: function create(properties) {
-      return new Edge(properties, this.body, this.options, this.defaultOptions);
+      return new Edge(properties, this.body, this.images, this.options, this.defaultOptions);
     }
     /**
      * Reconnect all edges
@@ -45491,7 +45616,7 @@ var object = 'object'; // should only be in a __type__ property
 var dom = 'dom';
 var any = 'any'; // List of endpoints
 
-var endPoints = ['arrow', 'circle', 'bar'];
+var endPoints = ["arrow", "bar", "box", "circle", "crow", "curve", "diamond", "image", "inv_curve", "inv_triangle", "triangle", "vee"];
 var allOptions$1 = {
   configure: {
     enabled: {
@@ -45529,6 +45654,15 @@ var allOptions$1 = {
         type: {
           string: endPoints
         },
+        imageHeight: {
+          number: number
+        },
+        imageWidth: {
+          number: number
+        },
+        src: {
+          string: string
+        },
         __type__: {
           object: object,
           boolean: bool
@@ -45543,6 +45677,15 @@ var allOptions$1 = {
         },
         type: {
           string: endPoints
+        },
+        imageWidth: {
+          number: number
+        },
+        imageHeight: {
+          number: number
+        },
+        src: {
+          string: string
         },
         __type__: {
           object: object,
@@ -45559,13 +45702,22 @@ var allOptions$1 = {
         type: {
           string: endPoints
         },
+        imageWidth: {
+          number: number
+        },
+        imageHeight: {
+          number: number
+        },
+        src: {
+          string: string
+        },
         __type__: {
           object: object,
           boolean: bool
         }
       },
       __type__: {
-        string: ['from', 'to', 'middle'],
+        string: ["from", "to", "middle"],
         object: object
       }
     },

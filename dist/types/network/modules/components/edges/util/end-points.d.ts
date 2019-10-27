@@ -34,7 +34,9 @@ export declare class EndPoints {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
+     *
+     * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
      */
-    static draw(ctx: CanvasRenderingContext2D, arrowData: ArrowData): void;
+    static draw(ctx: CanvasRenderingContext2D, arrowData: ArrowData): boolean;
 }
 //# sourceMappingURL=end-points.d.ts.map
