@@ -101,9 +101,30 @@
 var options = {
   edges:{
     arrows: {
-      to:     {enabled: false, scaleFactor:1, type:'arrow'},
-      middle: {enabled: false, scaleFactor:1, type:'arrow'},
-      from:   {enabled: false, scaleFactor:1, type:'arrow'}
+      to: {
+        enabled: false,
+        scaleFactor: 1,
+        type: "arrow",
+        src: undefined,
+        imageWidth: undefined,
+        imageHeight: undefined
+      },
+      middle: {
+        enabled: false,
+        scaleFactor: 1,
+        type: "image",
+        src: "http://placehold.it/32x32/008888",
+        imageWidth: 32,
+        imageHeight: 32
+      },
+      from: {
+        enabled: false,
+        scaleFactor: 1,
+        type: "arrow",
+        src: undefined,
+        imageWidth: undefined,
+        imageHeight: undefined
+      }
     },
     arrowStrikethrough: true,
     chosen: true,
@@ -265,7 +286,25 @@ network.setOptions(options);
             <td class="indent2">arrows.to.type</td>
             <td>String</td>
             <td><code>arrow</code></td>
-            <td>The type of endpoint. Possible values are: <code>arrow</code>, <code>bar</code>, <code>circle</code>. The default is <code>arrow</code>.
+            <td>The type of endpoint. Possible values are: <code>arrow</code>, <code>bar</code>, <code>circle</code> and <code>image</code>. The default is <code>arrow</code></td>.
+        </tr>
+        <tr parent="arrows" class="hidden">
+            <td class="indent2">arrows.to.src</td>
+            <td>String</td>
+            <td><code>undefined</code></td>
+            <td>The URL for the image arrow type.</td>.
+        </tr>
+        <tr parent="arrows" class="hidden">
+            <td class="indent2">arrows.to.imageWidth</td>
+            <td>Number</td>
+            <td><code>undefined</code></td>
+            <td>The width of the image arrow. The width of the image file is used if this isn't defined.</td>.
+        </tr>
+        <tr parent="arrows" class="hidden">
+            <td class="indent2">arrows.to.imageHeight</td>
+            <td>Number</td>
+            <td><code>undefined</code></td>
+            <td>The height of the image arrow. The height of the image file is used if this isn't defined.</td>.
         </tr>
         <tr parent="arrows" class="hidden">
             <td class="indent">arrows.middle</td>
