@@ -125,8 +125,14 @@
     <h3>Creating a Network</h3>
 
     <p>
-        Creating a vis network is easy. <a href="http://visjs.org/#download_install" target="_blank">It requires you to
-        include the vis.js and css files which you can get here</a>. If you have these
+        Creating a Vis Network is easy. It requires you to include the
+        vis-network.js and vis-network.css files which you can download from
+        <a href="https://visjs.org/#download_install" target="_blank">visjs.org</a>,
+        link them from
+        <a href="https://unpkg.com/vis-network/" target="_blank">unpkg.com</a>
+        or require/import from
+        <a href="https://www.npmjs.com/package/vis-network" target="_blank">npm package</a>.
+        If you have these
         added to your application, you will need to specify your nodes and edges. You can use DOT language or export
         nodes and edges from Gephi if you'd like but we will do it without these for now.
         For more information on this click the tabs below. You can also use the vis.DataSets for dynamic data binding,
@@ -136,11 +142,63 @@
         can use an options object to customize many aspects of the network. In code this
         looks like this:</p>
 
+    <p>
+      There are three ways how to import Vis Network:
+      <ul>
+        <li>
+          Standalone build:
+          <ul>
+            <li>simple to use (link/require/import a single file),</li>
+            <li>CSS included and automatically injected into the page,</li>
+            <li>JavaScript dependencies bundled,</li>
+            <li>doesn't work with other Vis family packages,</li>
+            <li>
+              <a href="../../examples/network/basic_usage/standalone.html" target="_blank">example usage</a>,
+            </li>
+            <li>
+              <a href="https://unpkg.com/vis-network/standalone/" target="_blank">linkable files on unpkg</a>.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Peer build:
+          <ul>
+            <li>in case of UMD Vis Data nad Vis Util have to be loaded manually,</li>
+            <li>in case of ESM DataSets, DataViews etc. have to be loaded from Vis Data,</li>
+            <li>CSS has to be included sepparately,</li>
+            <li>works with other Vis family packages,</li>
+            <li>
+              <a href="../../examples/network/basic_usage/peer.html" target="_blank">example usage</a>,
+            </li>
+            <li>
+              <a href="https://unpkg.com/vis-network/peer/" target="_blank">linkable files on unpkg</a>.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Legacy build:
+          <ul>
+            <li>kept only for backward compatibility, please <strong>don't</strong> use,</li>
+            <li>contains Moment which is not used by Vis Network (aka bloatware),</li>
+            <li>CSS has to be included sepparately,</li>
+            <li>JavaScript dependencies bundled,</li>
+            <li>doesn't play well with tree shaking,</li>
+            <li>doesn't work with other Vis family packages,</li>
+            <li>
+              <a href="../../examples/network/basic_usage/legacy.html" target="_blank">example usage</a>,
+            </li>
+            <li>
+              <a href="https://unpkg.com/vis-network/dist/" target="_blank">linkable files on unpkg</a>.
+            </li>
+          </ul>
+        </li>
+    </p>
+
+    <h4>Simplest example (using standalone build)</h4>
         <pre class="prettyprint lang-html options">
 &lt;html&gt;
 &lt;head&gt;
-    &lt;script type="text/javascript" src="../../dist/vis.js"&gt;&lt;/script&gt;
-    &lt;link href="../../dist/vis.css" rel="stylesheet" type="text/css" /&gt;
+    &lt;script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"&gt;&lt;/script&gt;
 
     &lt;style type="text/css"&gt;
         #mynetwork {
@@ -1597,7 +1655,7 @@ var parserOptions = {
 
 // parse the gephi file to receive an object
 // containing nodes and edges in vis format.
-var parsed = vis.network.convertGephi(gephiJSON, parserOptions);
+var parsed = vis.parseGephiNetwork(gephiJSON, parserOptions);
 
 // provide data in the normal fashion
 var data = {
@@ -1650,7 +1708,7 @@ var network = new vis.Network(container, data);
         <p>
             Network supports data in the
             <a href="http://en.wikipedia.org/wiki/DOT_language" target="_blank">DOT language</a>.
-            To use data in the DOT language, you can use the vis.network.convertDot converter to transform the DOT
+            To use data in the DOT language, you can use the vis.convertDOTNetwork converter to transform the DOT
             language
             into a vis.Network compatible nodes, edges and options objects. You can extend the options object with other
             options if you'd like.
@@ -1663,7 +1721,7 @@ var network = new vis.Network(container, data);
 <pre class="prettyprint lang-js">
 // provide data in the DOT language
 var DOTstring = 'dinetwork {1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }';
-var parsedData = vis.network.convertDot(DOTstring);
+var parsedData = vis.convertDOTNetwork(DOTstring);
 
 var data = {
   nodes: parsedData.nodes,

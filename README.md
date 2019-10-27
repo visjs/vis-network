@@ -18,7 +18,7 @@ Install via npm:
 
 ## Example
 
-A basic example on loading a Timeline is shown below. More examples can be
+A basic example on loading a Network is shown below. More examples can be
 found in the [examples directory](https://github.com/visjs/vis-network/tree/master/examples/)
 of the project.
 
@@ -27,8 +27,7 @@ of the project.
 <html>
 <head>
   <title>Network</title>
-  <script type="text/javascript" src="https://unpkg.com/vis-network@latest/dist/vis-network.min.js"></script>
-  <link href="https://unpkg.com/vis-network@latest/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
   <style type="text/css">
     #mynetwork {
       width: 600px;
