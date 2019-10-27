@@ -46,46 +46,108 @@ function fillLevelsByDirectionCyclic(nodes: Node[], levels: Levels): Levels {
 }
 
 /**
- * Assign levels to nodes according to their positions in the hierarchy.
+ * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
  *
  * @param nodes - Nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
-export function fillLevelsByDirection(
+export function fillLevelsByDirectionLeaves(
   nodes: Node[],
   levels: Levels = Object.create(null)
 ): Levels {
-  const limit = nodes.length;
+  return fillLevelsByDirection(
+    // Pick only leaves (nodes without children).
+    (node): boolean => !node.edges.every((edge): boolean => edge.to === node),
+    // Use the lowest level.
+    (newLevel, oldLevel): boolean => oldLevel > newLevel,
+    // Go against the direction of the edges.
+    "from",
+    nodes,
+    levels
+  );
+}
 
-  for (const leaf of nodes) {
-    if (!leaf.edges.every((edge): boolean => edge.to === leaf)) {
-      // Not a leaf.
+/**
+ * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
+ *
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+export function fillLevelsByDirectionRoots(
+  nodes: Node[],
+  levels: Levels = Object.create(null)
+): Levels {
+  return fillLevelsByDirection(
+    // Pick only roots (nodes without parents).
+    (node): boolean => !node.edges.every((edge): boolean => edge.from === node),
+    // Use the highest level.
+    (newLevel, oldLevel): boolean => oldLevel < newLevel,
+    // Go in the direction of the edges.
+    "to",
+    nodes,
+    levels
+  );
+}
+
+/**
+ * Assign levels to nodes according to their positions in the hierarchy.
+ *
+ * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
+ * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
+ * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
+ * @param nodes - Nodes of the graph.
+ * @param levels - If present levels will be added to it, if not a new object will be created.
+ *
+ * @returns Populated node levels.
+ */
+function fillLevelsByDirection(
+  isEntryNode: (node: Node) => boolean,
+  shouldLevelBeReplaced: (newLevel: number, oldLevel: number) => boolean,
+  direction: "to" | "from",
+  nodes: Node[],
+  levels: Levels
+): Levels {
+  const limit = nodes.length;
+  const edgeIdProp = direction + "Id";
+  const newLevelDiff = direction === "to" ? 1 : -1;
+
+  for (const entryNode of nodes) {
+    if (isEntryNode(entryNode)) {
       continue;
     }
 
-    levels[leaf.id] = 0;
-    const stack: Node[] = [leaf];
+    // Line up all the entry nodes on level 0.
+    levels[entryNode.id] = 0;
 
+    const stack: Node[] = [entryNode];
     let done = 0;
     let node: Node | undefined;
     while ((node = stack.pop())) {
-      const edges = node.edges;
-      const newLevel = levels[node.id] - 1;
+      const newLevel = levels[node.id] + newLevelDiff;
 
-      for (const edge of edges) {
-        if (!edge.connected || edge.to !== node || edge.to === edge.from) {
-          continue;
-        }
+      node.edges
+        .filter(
+          (edge): boolean =>
+            // Ignore disconnected edges.
+            edge.connected &&
+            // Ignore circular edges.
+            edge.to !== edge.from &&
+            // Ignore edges leading to the node that's currently being processed.
+            edge[direction] !== node
+        )
+        .forEach((edge): void => {
+          const targetNodeId = edge[edgeIdProp];
+          const oldLevel = levels[targetNodeId];
 
-        const fromId = edge.fromId;
-        const oldLevel = levels[fromId];
-        if (oldLevel == null || oldLevel > newLevel) {
-          levels[fromId] = newLevel;
-          stack.push(edge.from);
-        }
-      }
+          if (oldLevel == null || shouldLevelBeReplaced(newLevel, oldLevel)) {
+            levels[targetNodeId] = newLevel;
+            stack.push(edge[direction]);
+          }
+        });
 
       if (done > limit) {
         // This would run forever on a cyclic graph.
