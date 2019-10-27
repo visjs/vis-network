@@ -50,7 +50,7 @@
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint '{lib,test}/**/*.js'",
     "lint:ts": "eslint '{lib,test}/**/*.ts'",
-    "clean": "rimraf \"dist\" \"declarations\" \"peer\" \"standalone\" \"vis-network*\"",
+    "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/thumbnails\" \"peer\" \"standalone\" \"vis-network*\"",
     "postinstall": "opencollective postinstall || exit 0"
   },
   "peerDependencies": {
