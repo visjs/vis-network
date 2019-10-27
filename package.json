@@ -6,7 +6,7 @@
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
     "type": "git",
-    "url": "git://github.com/visjs/vis-network.git"
+    "url": "https://github.com/visjs/vis-network.git"
   },
   "bugs": {
     "url": "https://github.com/visjs/vis-network/issues"
@@ -46,7 +46,7 @@
     "build": "npm run build:declarations && npm run build:code && npm run build:legacy:types && npm run build:legacy:code && npm run build:legacy:images",
     "watch": "rollup --watch --config rollup.build.js",
     "watch-dev": "npm run watch-dev",
-    "generate-examples-index": "node -r ./babel.mocha.js ./scripts/examples-index/generate.ts -t \"Vis Network Examples\" -c mynetwork -w https://visjs.github.io/vis-network -S ./scripts/examples-index/screenshot-script.js -lis",
+    "generate-examples-index": "generate-examples-index -t \"Vis Network Examples\" -c mynetwork -d ./examples -w https://visjs.github.io/vis-network -S ./scripts/examples-index/screenshot-script.js -lis",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint '{lib,test}/**/*.js'",
     "lint:ts": "eslint '{lib,test}/**/*.ts'",
@@ -88,9 +88,10 @@
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "gh-pages": "^2.1.1",
     "globby": "^10.0.1",
     "jsdoc": "^3.6.3",
-    "jsdom": "15.1.1",
+    "jsdom": "15.2.0",
     "jsdom-global": "^3.0.2",
     "keycharm": "^0.2.0",
     "mocha": "^6.2.0",
@@ -115,6 +116,7 @@
     "typescript": "^3.5.3",
     "vis-data": "^6.1.1",
     "vis-util": "^1.1.6",
+    "vis-dev-utils": "^1.0.0",
     "yargs": "^14.0.0"
   },
   "collective": {

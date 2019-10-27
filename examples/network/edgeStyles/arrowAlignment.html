@@ -38,18 +38,21 @@
     </div>
 
     <script type="text/javascript">
-      const types = [
-        "curvedCW",
-        "diagonalCross",
-        "continuous",
-        "cubicBezier",
-        "discrete",
-        "dynamic",
-        "horizontal",
-        "straightCross",
-        "vertical",
-        "curvedCCW"
-      ].flatMap(type => [{ type, scaleFactor: 1 }, { type, scaleFactor: -1 }]);
+      var types = [].concat.apply(
+        [],
+        [
+          "curvedCW",
+          "diagonalCross",
+          "continuous",
+          "cubicBezier",
+          "discrete",
+          "dynamic",
+          "horizontal",
+          "straightCross",
+          "vertical",
+          "curvedCCW"
+        ].map(type => [{ type, scaleFactor: 1 }, { type, scaleFactor: -1 }])
+      );
 
       // create an array with nodes
       var nodes = new vis.DataSet();
