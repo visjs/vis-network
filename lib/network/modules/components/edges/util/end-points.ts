@@ -108,8 +108,7 @@ class Image extends EndPoint {
           : arrowData.image.width;
       const height =
         arrowData.imageHeight != null
-          ? 
-        arrowData.imageHeight
+          ? arrowData.imageHeight
           : arrowData.image.height;
 
       arrowData.image.drawImageAtPosition(
