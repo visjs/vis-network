@@ -117,7 +117,8 @@ var options = {
       springLength: 100,
       springConstant: 0.01,
       nodeDistance: 120,
-      damping: 0.09
+      damping: 0.09,
+      avoidOverlap: 0
     },
     maxVelocity: 50,
     minVelocity: 0.1,
@@ -182,6 +183,7 @@ network.setOptions(options);
         <tr parent="hierarchicalRepulsion" class="hidden"><td class="indent">hierarchicalRepulsion.springLength</td>     <td>Number</td>         <td><code>100</code></td>       <td>The edges are modelled as springs. This springLength here is the the rest length of the spring.</td></tr>
         <tr parent="hierarchicalRepulsion" class="hidden"><td class="indent">hierarchicalRepulsion.springConstant</td>   <td>Number</td>         <td><code>0.01</code></td>      <td>This is how 'sturdy' the springs are. Higher values mean stronger springs.</td></tr>
         <tr parent="hierarchicalRepulsion" class="hidden"><td class="indent">hierarchicalRepulsion.damping</td>          <td>Number</td>         <td><code>0.09</code></td>      <td>Accepted range: <code>[0 .. 1]</code>. The damping factor is how much of the velocity from the previous physics simulation iteration carries over to the next iteration.</td></tr>
+        <tr parent="hierarchicalRepulsion" class="hidden"><td class="indent">hierarchicalRepulsion.avoidOverlap</td>     <td>Number</td>         <td><code>0</code></td>         <td>Accepted range: <code>[0 .. 1]</code>. When larger than 0, the size of the node is taken into account. The distance will be calculated from the radius of the encompassing circle of the node for both the gravity model. Value 1 is maximum overlap avoidance.</td></tr>
 
         <tr><td>maxVelocity</td>                            <td>Number</td>         <td><code>50</code></td>        <td>The physics module limits the maximum velocity of the nodes to increase the time to stabilization. This is the maximium value.</td></tr>
         <tr><td>minVelocity</td>                            <td>Number</td>         <td><code>0.1</code></td>       <td>Once the minimum velocity is reached for all nodes, we assume the network has been stabilized and the simulation stops.</td></tr>

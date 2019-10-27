@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-27T13:54:53Z
+ * @date    2019-10-27T14:00:00Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -32126,6 +32126,12 @@
     return RepulsionSolver;
   }();
 
+  function _readOnlyError(name) {
+    throw new Error("\"" + name + "\" is read-only");
+  }
+
+  var readOnlyError = _readOnlyError;
+
   /**
    * Hierarchical Repulsion Solver
    */
@@ -32154,6 +32160,7 @@
       key: "setOptions",
       value: function setOptions(options) {
         this.options = options;
+        this.overlapAvoidanceFactor = Math.max(0, Math.min(1, this.options.avoidOverlap || 0));
       }
       /**
        * Calculate the forces the nodes apply on each other based on a repulsion field.
@@ -32165,7 +32172,6 @@
     }, {
       key: "solve",
       value: function solve() {
-        var dx, dy, distance, fx, fy, repulsingForce, node1, node2, i, j;
         var nodes = this.body.nodes;
         var nodeIndices = this.physicsBody.physicsNodeIndices;
         var forces = this.physicsBody.forces; // repulsing forces between nodes
@@ -32173,33 +32179,35 @@
         var nodeDistance = this.options.nodeDistance; // we loop from i over all but the last entree in the array
         // j loops from i+1 to the last. This way we do not double count any of the indices, nor i === j
 
-        for (i = 0; i < nodeIndices.length - 1; i++) {
-          node1 = nodes[nodeIndices[i]];
+        for (var i = 0; i < nodeIndices.length - 1; i++) {
+          var node1 = nodes[nodeIndices[i]];
 
-          for (j = i + 1; j < nodeIndices.length; j++) {
-            node2 = nodes[nodeIndices[j]]; // nodes only affect nodes on their level
+          for (var j = i + 1; j < nodeIndices.length; j++) {
+            var node2 = nodes[nodeIndices[j]]; // nodes only affect nodes on their level
 
             if (node1.level === node2.level) {
-              dx = node2.x - node1.x;
-              dy = node2.y - node1.y;
-              distance = Math.sqrt(dx * dx + dy * dy);
+              var theseNodesDistance = nodeDistance + this.overlapAvoidanceFactor * ((node1.shape.radius || 0) / 2 + (node2.shape.radius || 0) / 2);
+              var dx = node2.x - node1.x;
+              var dy = node2.y - node1.y;
+              var distance = Math.sqrt(dx * dx + dy * dy);
               var steepness = 0.05;
+              var repulsingForce = void 0;
 
-              if (distance < nodeDistance) {
-                repulsingForce = -Math.pow(steepness * distance, 2) + Math.pow(steepness * nodeDistance, 2);
+              if (distance < theseNodesDistance) {
+                repulsingForce = -Math.pow(steepness * distance, 2) + Math.pow(steepness * theseNodesDistance, 2);
               } else {
                 repulsingForce = 0;
               } // normalize force with
 
 
               if (distance === 0) {
-                distance = 0.01;
+                distance = (readOnlyError("distance"), 0.01);
               } else {
                 repulsingForce = repulsingForce / distance;
               }
 
-              fx = dx * repulsingForce;
-              fy = dy * repulsingForce;
+              var fx = dx * repulsingForce;
+              var fy = dy * repulsingForce;
               forces[node1.id].x -= fx;
               forces[node1.id].y -= fy;
               forces[node2.id].x += fx;
@@ -46575,6 +46583,9 @@
         damping: {
           number: number
         },
+        avoidOverlap: {
+          number: number
+        },
         __type__: {
           object: object
         }
@@ -46870,7 +46881,8 @@
         springLength: [100, 0, 500, 5],
         springConstant: [0.01, 0, 1.2, 0.005],
         nodeDistance: [120, 0, 500, 5],
-        damping: [0.09, 0, 1, 0.01]
+        damping: [0.09, 0, 1, 0.01],
+        avoidOverlap: [0, 0, 1, 0.01]
       },
       maxVelocity: [50, 0, 150, 1],
       minVelocity: [0.1, 0.01, 0.5, 0.01],
