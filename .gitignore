@@ -17,5 +17,12 @@ gen/
 .nyc_output/
 coverage/
 .rpt2_cache
-vis-network-*.tgz
+
+# built files
+/declarations/
 /dist/
+/examples/index.html
+/examples/thumbnails/
+/peer/
+/standalone/
+vis-network-*.tgz

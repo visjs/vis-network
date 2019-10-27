@@ -2,8 +2,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
-import minify from 'rollup-plugin-babel-minify';
-import genHeader from './lib/header';
+import { terser } from 'rollup-plugin-terser';
+import genHeader from './dev-lib/header';
 import css from 'rollup-plugin-css-porter';
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
@@ -25,7 +25,11 @@ const plugins = {
 		extensions: ['.ts', '.js'],
 		runtimeHelpers: true
 	}),
-	minify: minify({ comments: false }),
+	minify: terser({
+		output: {
+			comments: (_node, { value }) => /@license/.test(value)
+		}
+	}),
 	cssRaw: css({
 		raw: 'dist/vis-network.css',
 		minified: false
@@ -38,7 +42,7 @@ const plugins = {
 
 export default [
 	{
-		input: 'lib/index-bundle.ts',
+		input: 'lib/index-legacy-bundle.ts',
 		output: [{
 			file: 'dist/vis-network.esm.js',
 			format: 'esm',
@@ -62,7 +66,7 @@ export default [
 		]
 	},
 	{
-		input: 'lib/index-bundle.ts',
+		input: 'lib/index-legacy-bundle.ts',
 		output: [{
 			file: 'dist/vis-network.esm.min.js',
 			format: 'esm',

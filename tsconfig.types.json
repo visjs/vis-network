@@ -1,6 +1,7 @@
 {
     "extends": "./tsconfig",
     "compilerOptions": {
+        "declarationDir": "dist/types",
         "emitDeclarationOnly": true,
         "noImplicitAny": false
     },
