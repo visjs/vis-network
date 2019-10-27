@@ -103,27 +103,27 @@ var options = {
     arrows: {
       to: {
         enabled: false,
-        scaleFactor: 1,
-        type: "arrow",
-        src: undefined,
+        imageHeight: undefined,
         imageWidth: undefined,
-        imageHeight: undefined
+        scaleFactor: 1,
+        src: undefined,
+        type: "arrow"
       },
       middle: {
         enabled: false,
-        scaleFactor: 1,
-        type: "image",
-        src: "http://placehold.it/32x32/008888",
+        imageHeight: 32,
         imageWidth: 32,
-        imageHeight: 32
+        scaleFactor: 1,
+        src: "http://placehold.it/32x32/008888",
+        type: "image"
       },
       from: {
         enabled: false,
-        scaleFactor: 1,
-        type: "arrow",
-        src: undefined,
+        imageHeight: undefined,
         imageWidth: undefined,
-        imageHeight: undefined
+        scaleFactor: 1,
+        src: undefined,
+        type: "arrow"
       }
     },
     arrowStrikethrough: true,
@@ -277,22 +277,10 @@ network.setOptions(options);
             </td>
         </tr>
         <tr parent="arrows" class="hidden">
-            <td class="indent2">arrows.to.scaleFactor</td>
+            <td class="indent2">arrows.to.imageHeight</td>
             <td>Number</td>
-            <td><code>1</code></td>
-            <td>The scale factor allows you to change the size of the arrowhead.</td>
-        </tr>
-        <tr parent="arrows" class="hidden">
-            <td class="indent2">arrows.to.type</td>
-            <td>String</td>
-            <td><code>arrow</code></td>
-            <td>The type of endpoint. Possible values are: <code>arrow</code>, <code>bar</code>, <code>circle</code> and <code>image</code>. The default is <code>arrow</code></td>.
-        </tr>
-        <tr parent="arrows" class="hidden">
-            <td class="indent2">arrows.to.src</td>
-            <td>String</td>
             <td><code>undefined</code></td>
-            <td>The URL for the image arrow type.</td>.
+            <td>The height of the image arrow. The height of the image file is used if this isn't defined.</td>.
         </tr>
         <tr parent="arrows" class="hidden">
             <td class="indent2">arrows.to.imageWidth</td>
@@ -301,10 +289,22 @@ network.setOptions(options);
             <td>The width of the image arrow. The width of the image file is used if this isn't defined.</td>.
         </tr>
         <tr parent="arrows" class="hidden">
-            <td class="indent2">arrows.to.imageHeight</td>
+            <td class="indent2">arrows.to.scaleFactor</td>
             <td>Number</td>
+            <td><code>1</code></td>
+            <td>The scale factor allows you to change the size of the arrowhead.</td>
+        </tr>
+        <tr parent="arrows" class="hidden">
+            <td class="indent2">arrows.to.src</td>
+            <td>String</td>
             <td><code>undefined</code></td>
-            <td>The height of the image arrow. The height of the image file is used if this isn't defined.</td>.
+            <td>The URL for the image arrow type.</td>.
+        </tr>
+        <tr parent="arrows" class="hidden">
+            <td class="indent2">arrows.to.type</td>
+            <td>String</td>
+            <td><code>arrow</code></td>
+            <td>The type of endpoint. Possible values are: <code>arrow</code>, <code>bar</code>, <code>circle</code> and <code>image</code>. The default is <code>arrow</code></td>.
         </tr>
         <tr parent="arrows" class="hidden">
             <td class="indent">arrows.middle</td>
