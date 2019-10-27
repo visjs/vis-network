@@ -103,7 +103,8 @@ var options = {
       edgeMinimization: true,
       parentCentralization: true,
       direction: 'UD',        // UD, DU, LR, RL
-      sortMethod: 'hubsize'   // hubsize, directed
+      sortMethod: 'hubsize',  // hubsize, directed
+      shakeTowards: 'leaves'  // roots, leaves
     }
   }
 }
@@ -141,6 +142,7 @@ network.setOptions(options);
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.sortMethod</td><td>String</td><td><code>'hubsize'</code></td>  <td>The algorithm used to ascertain the levels of the nodes based on the data. The possible options are: <code>hubsize, directed</code>. <br><br>
             Hubsize takes the nodes with the most edges and puts them at the top. From that the rest of the hierarchy is evaluated. <br><br>
             Directed adheres to the to and from data of the edges. A --> B so B is a level lower than A.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.shakeTowards</td><td>String</td><td><code>'roots'</code></td>        <td>Controls whether in <code>directed</code> layout should all the roots be lined up at the top and their child nodes as close to their roots as possible (<code>roots</code>) or all the leaves lined up at the bottom and their parents as close to their children as possible (<code>leaves</code>, default).</td></tr>
     </table>
 
 </div>

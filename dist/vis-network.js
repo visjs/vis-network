@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-24T07:42:44Z
+ * @date    2019-10-27T13:54:53Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -40264,7 +40264,7 @@
     return levels;
   }
   /**
-   * Assign levels to nodes according to their positions in the hierarchy.
+   * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
    *
    * @param nodes - Nodes of the graph.
    * @param levels - If present levels will be added to it, if not a new object will be created.
@@ -40273,75 +40273,109 @@
    */
 
 
-  function fillLevelsByDirection(nodes) {
+  function fillLevelsByDirectionLeaves(nodes) {
     var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+    return fillLevelsByDirection( // Pick only leaves (nodes without children).
+    function (node) {
+      return !node.edges.every(function (edge) {
+        return edge.to === node;
+      });
+    }, // Use the lowest level.
+    function (newLevel, oldLevel) {
+      return oldLevel > newLevel;
+    }, // Go against the direction of the edges.
+    "from", nodes, levels);
+  }
+  /**
+   * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
+   *
+   * @param nodes - Nodes of the graph.
+   * @param levels - If present levels will be added to it, if not a new object will be created.
+   *
+   * @returns Populated node levels.
+   */
+
+  function fillLevelsByDirectionRoots(nodes) {
+    var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Object.create(null);
+    return fillLevelsByDirection( // Pick only roots (nodes without parents).
+    function (node) {
+      return !node.edges.every(function (edge) {
+        return edge.from === node;
+      });
+    }, // Use the highest level.
+    function (newLevel, oldLevel) {
+      return oldLevel < newLevel;
+    }, // Go in the direction of the edges.
+    "to", nodes, levels);
+  }
+  /**
+   * Assign levels to nodes according to their positions in the hierarchy.
+   *
+   * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
+   * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
+   * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
+   * @param nodes - Nodes of the graph.
+   * @param levels - If present levels will be added to it, if not a new object will be created.
+   *
+   * @returns Populated node levels.
+   */
+
+  function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes, levels) {
     var limit = nodes.length;
+    var edgeIdProp = direction + "Id";
+    var newLevelDiff = direction === "to" ? 1 : -1;
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
       var _loop = function _loop() {
-        var leaf = _step.value;
+        var entryNode = _step.value;
 
-        if (!leaf.edges.every(function (edge) {
-          return edge.to === leaf;
-        })) {
-          // Not a leaf.
+        if (isEntryNode(entryNode)) {
           return "continue";
-        }
+        } // Line up all the entry nodes on level 0.
 
-        levels[leaf.id] = 0;
-        var stack = [leaf];
+
+        levels[entryNode.id] = 0;
+        var stack = [entryNode];
         var done = 0;
         var node = void 0;
 
-        while (node = stack.pop()) {
-          var edges = node.edges;
-          var newLevel = levels[node.id] - 1;
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
+        var _loop2 = function _loop2() {
+          var newLevel = levels[node.id] + newLevelDiff;
+          node.edges.filter(function (edge) {
+            return (// Ignore disconnected edges.
+              edge.connected && // Ignore circular edges.
+              edge.to !== edge.from && // Ignore edges leading to the node that's currently being processed.
+              edge[direction] !== node
+            );
+          }).forEach(function (edge) {
+            var targetNodeId = edge[edgeIdProp];
+            var oldLevel = levels[targetNodeId];
 
-          try {
-            for (var _iterator2 = edges[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var edge = _step2.value;
-
-              if (!edge.connected || edge.to !== node || edge.to === edge.from) {
-                continue;
-              }
-
-              var fromId = edge.fromId;
-              var oldLevel = levels[fromId];
-
-              if (oldLevel == null || oldLevel > newLevel) {
-                levels[fromId] = newLevel;
-                stack.push(edge.from);
-              }
+            if (oldLevel == null || shouldLevelBeReplaced(newLevel, oldLevel)) {
+              levels[targetNodeId] = newLevel;
+              stack.push(edge[direction]);
             }
-          } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                _iterator2.return();
-              }
-            } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
-              }
-            }
-          }
+          });
 
           if (done > limit) {
             // This would run forever on a cyclic graph.
             return {
-              v: fillLevelsByDirectionCyclic(nodes, levels)
+              v: {
+                v: fillLevelsByDirectionCyclic(nodes, levels)
+              }
             };
           } else {
             ++done;
           }
+        };
+
+        while (node = stack.pop()) {
+          var _ret2 = _loop2();
+
+          if (_typeof_1$1(_ret2) === "object") return _ret2.v;
         }
       };
 
@@ -42052,9 +42086,17 @@
       value: function _determineLevelsDirected() {
         var _this8 = this;
 
-        this.hierarchical.levels = fillLevelsByDirection(this.body.nodeIndices.map(function (id) {
+        var nodes = this.body.nodeIndices.map(function (id) {
           return _this8.body.nodes[id];
-        }), this.hierarchical.levels);
+        });
+        var levels = this.hierarchical.levels;
+
+        if (this.options.hierarchical.shakeTowards === "roots") {
+          this.hierarchical.levels = fillLevelsByDirectionRoots(nodes, this.hierarchical.levels);
+        } else {
+          this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes, this.hierarchical.levels);
+        }
+
         this.hierarchical.setMinLevelToZero(this.body.nodes);
       }
       /**
@@ -45962,6 +46004,10 @@
           string: ['hubsize', 'directed']
         },
         // hubsize, directed
+        shakeTowards: {
+          string: ['leaves', 'roots']
+        },
+        // leaves, roots
         __type__: {
           object: object,
           boolean: bool
@@ -46757,7 +46803,9 @@
         parentCentralization: true,
         direction: ['UD', 'DU', 'LR', 'RL'],
         // UD, DU, LR, RL
-        sortMethod: ['hubsize', 'directed'] // hubsize, directed
+        sortMethod: ['hubsize', 'directed'],
+        // hubsize, directed
+        shakeTowards: ['leaves', 'roots'] // leaves, roots
 
       }
     },

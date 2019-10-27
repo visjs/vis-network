@@ -11405,7 +11405,6 @@ window.addEventListener("load", () =&gt; {
                       type="hidden"
                       name="js"
                       value='var network = null;
-var layoutMethod = "directed";
 
 function destroy() {
   if (network !== null) {
@@ -11451,7 +11450,8 @@ function draw() {
   var options = {
     layout: {
       hierarchical: {
-        sortMethod: layoutMethod
+        sortMethod: document.getElementById("layout-method").value,
+        shakeTowards: document.getElementById("shake-towards").value
       }
     },
     edges: {
@@ -11462,11 +11462,23 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-var dropdown = document.getElementById("layout");
-dropdown.onchange = function() {
-  layoutMethod = dropdown.value;
-  draw();
-};
+(function() {
+  const values = ["hubsize", "directed"];
+  var button = document.getElementById("layout-method");
+  button.onclick = function() {
+    button.value = values[(values.indexOf(button.value) + 1) % values.length];
+    draw();
+  };
+})();
+(function() {
+  const values = ["roots", "leaves"];
+  var button = document.getElementById("shake-towards");
+  button.onclick = function() {
+    button.value = values[(values.indexOf(button.value) + 1) % values.length];
+    draw();
+  };
+})();
+
 window.addEventListener("load", () =&gt; {
   draw();
 });
@@ -11492,14 +11504,18 @@ window.addEventListener("load", () =&gt; {
   Hubsize is based on the amount of edges connected to a node. The node with the
   most connections (the largest hub) is drawn at the top of the tree. The
   direction method is based on the direction of the edges. Try switching between
-  the methods with the dropdown box below.
+  the methods by clicking on the buttons bellow.
 &lt;/div&gt;
-Layout method:
-&lt;select id="layout"&gt;
-  &lt;option value="hubsize"&gt;hubsize&lt;/option&gt;
-  &lt;option value="directed"&gt;directed&lt;/option&gt; &lt;/select
-&gt;&lt;br /&gt;
-&lt;br /&gt;
+
+&lt;p&gt;
+  Layout method:
+  &lt;input type="button" id="layout-method" value="directed" /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  Shake towards:
+  &lt;input type="button" id="shake-towards" value="leaves" /&gt;
+  (Applies to &lt;code&gt;directed&lt;/code&gt; only.)
+&lt;/p&gt;
 
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
 
@@ -11526,12 +11542,11 @@ Layout method:
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"body {\n  font: 10pt sans;\n}\n#mynetwork {\n  width: 800px;\n  height: 500px;\n  border: 1px solid lightgray;\n}\n","css_external":"https://visjs.github.io/vis-network/dist/vis-network.min.css","html":"&lt;h2&gt;Hierarchical layout difference&lt;/h2&gt;\n&lt;div style=\"width:700px; font-size:14px; text-align: justify;\"&gt;\n  This example shows a the effect of the different hierarchical layout methods.\n  Hubsize is based on the amount of edges connected to a node. The node with the\n  most connections (the largest hub) is drawn at the top of the tree. The\n  direction method is based on the direction of the edges. Try switching between\n  the methods with the dropdown box below.\n&lt;/div&gt;\nLayout method:\n&lt;select id=\"layout\"&gt;\n  &lt;option value=\"hubsize\"&gt;hubsize&lt;/option&gt;\n  &lt;option value=\"directed\"&gt;directed&lt;/option&gt; &lt;/select\n&gt;&lt;br /&gt;\n&lt;br /&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n\n&lt;p id=\"selection\"&gt;&lt;/p&gt;\n","js":"var network = null;\nvar layoutMethod = \"directed\";\n\nfunction destroy() {\n  if (network !== null) {\n    network.destroy();\n    network = null;\n  }\n}\n\nfunction draw() {\n  destroy();\n\n  var nodes = [];\n  var edges = [];\n  // randomly create some nodes and edges\n  for (var i = 0; i &lt; 19; i++) {\n    nodes.push({ id: i, label: String(i) });\n  }\n  edges.push({ from: 0, to: 1 });\n  edges.push({ from: 0, to: 6 });\n  edges.push({ from: 0, to: 13 });\n  edges.push({ from: 0, to: 11 });\n  edges.push({ from: 1, to: 2 });\n  edges.push({ from: 2, to: 3 });\n  edges.push({ from: 2, to: 4 });\n  edges.push({ from: 3, to: 5 });\n  edges.push({ from: 1, to: 10 });\n  edges.push({ from: 1, to: 7 });\n  edges.push({ from: 2, to: 8 });\n  edges.push({ from: 2, to: 9 });\n  edges.push({ from: 3, to: 14 });\n  edges.push({ from: 1, to: 12 });\n  edges.push({ from: 16, to: 15 });\n  edges.push({ from: 15, to: 17 });\n  edges.push({ from: 18, to: 17 });\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges\n  };\n\n  var options = {\n    layout: {\n      hierarchical: {\n        sortMethod: layoutMethod\n      }\n    },\n    edges: {\n      smooth: true,\n      arrows: { to: true }\n    }\n  };\n  network = new vis.Network(container, data, options);\n}\n\nvar dropdown = document.getElementById(\"layout\");\ndropdown.onchange = function() {\n  layoutMethod = dropdown.value;\n  draw();\n};\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/dist/vis-network.min.js","title":"Vis Network | Layouts | Hierarchical Layout Difference"}'
+                      value='{"css":"body {\n  font: 10pt sans;\n}\n#mynetwork {\n  width: 800px;\n  height: 500px;\n  border: 1px solid lightgray;\n}\n","css_external":"https://visjs.github.io/vis-network/dist/vis-network.min.css","html":"&lt;h2&gt;Hierarchical layout difference&lt;/h2&gt;\n&lt;div style=\"width:700px; font-size:14px; text-align: justify;\"&gt;\n  This example shows a the effect of the different hierarchical layout methods.\n  Hubsize is based on the amount of edges connected to a node. The node with the\n  most connections (the largest hub) is drawn at the top of the tree. The\n  direction method is based on the direction of the edges. Try switching between\n  the methods by clicking on the buttons bellow.\n&lt;/div&gt;\n\n&lt;p&gt;\n  Layout method:\n  &lt;input type=\"button\" id=\"layout-method\" value=\"directed\" /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n  Shake towards:\n  &lt;input type=\"button\" id=\"shake-towards\" value=\"leaves\" /&gt;\n  (Applies to &lt;code&gt;directed&lt;/code&gt; only.)\n&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n\n&lt;p id=\"selection\"&gt;&lt;/p&gt;\n","js":"var network = null;\n\nfunction destroy() {\n  if (network !== null) {\n    network.destroy();\n    network = null;\n  }\n}\n\nfunction draw() {\n  destroy();\n\n  var nodes = [];\n  var edges = [];\n  // randomly create some nodes and edges\n  for (var i = 0; i &lt; 19; i++) {\n    nodes.push({ id: i, label: String(i) });\n  }\n  edges.push({ from: 0, to: 1 });\n  edges.push({ from: 0, to: 6 });\n  edges.push({ from: 0, to: 13 });\n  edges.push({ from: 0, to: 11 });\n  edges.push({ from: 1, to: 2 });\n  edges.push({ from: 2, to: 3 });\n  edges.push({ from: 2, to: 4 });\n  edges.push({ from: 3, to: 5 });\n  edges.push({ from: 1, to: 10 });\n  edges.push({ from: 1, to: 7 });\n  edges.push({ from: 2, to: 8 });\n  edges.push({ from: 2, to: 9 });\n  edges.push({ from: 3, to: 14 });\n  edges.push({ from: 1, to: 12 });\n  edges.push({ from: 16, to: 15 });\n  edges.push({ from: 15, to: 17 });\n  edges.push({ from: 18, to: 17 });\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges\n  };\n\n  var options = {\n    layout: {\n      hierarchical: {\n        sortMethod: document.getElementById(\"layout-method\").value,\n        shakeTowards: document.getElementById(\"shake-towards\").value\n      }\n    },\n    edges: {\n      smooth: true,\n      arrows: { to: true }\n    }\n  };\n  network = new vis.Network(container, data, options);\n}\n\n(function() {\n  const values = [\"hubsize\", \"directed\"];\n  var button = document.getElementById(\"layout-method\");\n  button.onclick = function() {\n    button.value = values[(values.indexOf(button.value) + 1) % values.length];\n    draw();\n  };\n})();\n(function() {\n  const values = [\"roots\", \"leaves\"];\n  var button = document.getElementById(\"shake-towards\");\n  button.onclick = function() {\n    button.value = values[(values.indexOf(button.value) + 1) % values.length];\n    draw();\n  };\n})();\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/dist/vis-network.min.js","title":"Vis Network | Layouts | Hierarchical Layout Difference"}'
                     /><input
                       type="hidden"
                       name="js"
                       value='var network = null;
-var layoutMethod = "directed";
 
 function destroy() {
   if (network !== null) {
@@ -11577,7 +11592,8 @@ function draw() {
   var options = {
     layout: {
       hierarchical: {
-        sortMethod: layoutMethod
+        sortMethod: document.getElementById("layout-method").value,
+        shakeTowards: document.getElementById("shake-towards").value
       }
     },
     edges: {
@@ -11588,11 +11604,23 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-var dropdown = document.getElementById("layout");
-dropdown.onchange = function() {
-  layoutMethod = dropdown.value;
-  draw();
-};
+(function() {
+  const values = ["hubsize", "directed"];
+  var button = document.getElementById("layout-method");
+  button.onclick = function() {
+    button.value = values[(values.indexOf(button.value) + 1) % values.length];
+    draw();
+  };
+})();
+(function() {
+  const values = ["roots", "leaves"];
+  var button = document.getElementById("shake-towards");
+  button.onclick = function() {
+    button.value = values[(values.indexOf(button.value) + 1) % values.length];
+    draw();
+  };
+})();
+
 window.addEventListener("load", () =&gt; {
   draw();
 });
@@ -11618,14 +11646,18 @@ window.addEventListener("load", () =&gt; {
   Hubsize is based on the amount of edges connected to a node. The node with the
   most connections (the largest hub) is drawn at the top of the tree. The
   direction method is based on the direction of the edges. Try switching between
-  the methods with the dropdown box below.
+  the methods by clicking on the buttons bellow.
 &lt;/div&gt;
-Layout method:
-&lt;select id="layout"&gt;
-  &lt;option value="hubsize"&gt;hubsize&lt;/option&gt;
-  &lt;option value="directed"&gt;directed&lt;/option&gt; &lt;/select
-&gt;&lt;br /&gt;
-&lt;br /&gt;
+
+&lt;p&gt;
+  Layout method:
+  &lt;input type="button" id="layout-method" value="directed" /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+  Shake towards:
+  &lt;input type="button" id="shake-towards" value="leaves" /&gt;
+  (Applies to &lt;code&gt;directed&lt;/code&gt; only.)
+&lt;/p&gt;
 
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
 
