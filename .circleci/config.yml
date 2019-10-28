@@ -37,34 +37,36 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - persist_to_workspace:
-          root: .
+          root: ..
           paths:
-            - "*"
+            - "repo"
+            - ".cache/Cypress"
 
   build:
     executor: node
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
       - run: npm run build
 
       - persist_to_workspace:
-          root: .
+          root: ..
           paths:
-            - "dist"
+            - "repo/dist"
 
   examples:
     executor: node
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
       - run:
           name: Install dependencies for headless Chromium
           command: |
+            sudo apt-get update
             sudo apt-get install -yq \
             ca-certificates fonts-liberation gconf-service libappindicator1 \
             libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
@@ -77,16 +79,16 @@ jobs:
       - run: npm run generate-examples-index
 
       - persist_to_workspace:
-          root: .
+          root: ..
           paths:
-            - "examples"
+            - "repo/examples"
 
   lint_js:
     executor: node
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
       - run: npm run lint:js
 
@@ -95,25 +97,41 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
       - run: npm run lint:ts
 
-  test:
+  test_unit:
     executor: node
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
-      - run: npm run test-cov
+      - run: npm run test:unit
+
+  test_e2e:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run:
+          name: Install dependencies for Cypress
+          command: |
+            sudo apt-get update
+            sudo apt-get install -yq \
+            xvfb libgtk-3-dev libnotify-dev libgconf-2-4 libnss3 libxss1 \
+            libasound2
+      - run: npm run test:e2e
 
   gh_pages:
     executor: node
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
       - run:
           name: Set Git credentials
@@ -131,7 +149,7 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: .
+          at: ..
 
       - run:
           name: Prepare NPM
@@ -167,18 +185,24 @@ workflows:
           requires:
             - prepare
 
-      - test:
+      - test_unit:
           requires:
             - prepare
 
-      - gh_pages:
+      - test_e2e:
           requires:
             - prepare
+            - build
+
+      - gh_pages:
+          requires:
             - build
             - examples
             # - lint_js
             - lint_ts
-            - test
+            - prepare
+            - test_e2e
+            - test_unit
           filters:
             branches:
               only:
@@ -186,11 +210,13 @@ workflows:
 
       - release:
           requires:
-            - prepare
             - build
+            - gh_pages
             # - lint_js
             - lint_ts
-            - test
+            - prepare
+            - test_e2e
+            - test_unit
           filters:
             branches:
               only:
