@@ -15,5 +15,5 @@
         "target": "esnext"
     },
     "exclude": ["node_modules", "**/__tests__/*"],
-    "include": ["lib", "test"]
+    "include": ["cypress", "lib", "test"]
 }

@@ -5,5 +5,5 @@
         "emitDeclarationOnly": true,
         "noImplicitAny": false
     },
-    "exclude": ["test"]
+    "exclude": ["cypress", "test"]
 }

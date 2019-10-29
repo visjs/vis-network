@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["esnext", "dom"],
+    "outDir": ".",
+    "strict": true,
+    "target": "es5",
+    "types": ["cypress"]
+  },
+  "exclude": ["../node_modules"],
+  "include": ["**/*.ts"]
+}

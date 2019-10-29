@@ -19,6 +19,9 @@ coverage/
 .rpt2_cache
 
 # built files
+/cypress/screenshots/
+/cypress/support/**/*.js.map
+/cypress/videos/
 /declarations/
 /dist/
 /examples/index.html

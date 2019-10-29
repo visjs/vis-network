@@ -1,5 +1,6 @@
 module.exports = {
   env: {
+    "cypress/globals": true,
     browser: true,
     es6: true,
     node: true,
@@ -13,7 +14,7 @@ module.exports = {
     project: 'tsconfig.json',
   },
 
-  plugins: ['prettier', '@typescript-eslint'],
+  plugins: ["prettier", "@typescript-eslint", "cypress"],
 
   extends: ['eslint:recommended', 'prettier'],
 
