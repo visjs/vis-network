@@ -55,7 +55,7 @@
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint '{cypress,lib,test}/**/*.js'",
     "lint:ts": "eslint '{cypress,lib,test}/**/*.ts'",
-    "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/thumbnails\" \"peer\" \"standalone\" \"vis-network*\"",
+    "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/thumbnails\" \"peer\" \"standalone\" \"styles\" \"vis-network*\"",
     "postinstall": "opencollective postinstall || exit 0"
   },
   "peerDependencies": {
@@ -130,7 +130,7 @@
     "timsort": "0.3.0",
     "typescript": "3.6.4",
     "vis-data": "6.2.1",
-    "vis-dev-utils": "1.0.1",
+    "vis-dev-utils": "1.1.0",
     "vis-util": "1.1.8",
     "yargs": "14.2.0"
   },

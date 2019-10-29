@@ -54,7 +54,11 @@ jobs:
       - persist_to_workspace:
           root: ..
           paths:
+            - "repo/declarations"
             - "repo/dist"
+            - "repo/peer"
+            - "repo/standalone"
+            - "repo/styles"
 
   examples:
     executor: node
