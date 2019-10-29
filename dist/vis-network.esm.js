@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-01T19:56:39Z
+ * @date    2019-10-29T05:31:51Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -35763,6 +35763,58 @@ var hammerUtil_3 = hammerUtil.offTouch;
 var hammerUtil_4 = hammerUtil.offRelease;
 var hammerUtil_5 = hammerUtil.disablePreventDefaultVertically;
 
+/*
+    Auto detects which wheel listener is supported by
+    the current browser, and normalizes the event to
+    the modern 'wheel' api
+*/
+var prefix = "",
+    _addEventListener,
+    support;
+
+if (window.addEventListener) {
+  _addEventListener = 'addEventListener';
+} else {
+  _addEventListener = 'attachEvent';
+  prefix = "on";
+}
+
+support = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll"; // Takes in an element to add the listener to, callback and boolean to capture the event or not
+
+function addWheelListener(elem, callback, useCapture) {
+  _addWheelListener(elem, support, callback);
+
+  if (support == 'DOMMouseScroll') {
+    _addWheelListener(elem, 'MozMousePixelScroll', callback);
+  }
+}
+
+function _addWheelListener(elem, eventName, callback, useCapture) {
+  elem[_addEventListener](prefix + eventName, support === 'wheel' ? callback : function (originalEvent) {
+    !originalEvent && (originalEvent = window.event);
+    var event = {
+      originalEvent: originalEvent,
+      target: originalEvent.target || originalEvent.srcElement,
+      type: "wheel",
+      deltaMode: originalEvent.type === "MozMousePixelScroll" ? 0 : 1,
+      deltaX: 0,
+      deltaY: 0,
+      preventDefault: function preventDefault() {
+        originalEvent.preventDefault ? originalEvent.preventDefault() : originalEvent.returnValue = false;
+      }
+    };
+
+    if (support === 'mousewheel') {
+      event.deltaY = -1 / 40 * originalEvent.wheelDelta;
+      originalEvent.wheelDeltaX && (event.deltaX = -1 / 40 * originalEvent.wheelDeltaX);
+    } else {
+      event.deltaY = originalEvent.detail;
+    }
+
+    return callback(event);
+  });
+}
+
 /**
  * Create the main frame for the Network.
  * This function is executed once when a Network object is created. The frame
@@ -36055,12 +36107,13 @@ function () {
         _this3.body.eventListeners.onPinch(event);
       }); // TODO: neatly cleanup these handlers when re-creating the Canvas, IF these are done with hammer, event.stopPropagation will not work?
 
-      this.frame.canvas.addEventListener('mousewheel', function (event) {
-        _this3.body.eventListeners.onMouseWheel(event);
-      });
-      this.frame.canvas.addEventListener('DOMMouseScroll', function (event) {
-        _this3.body.eventListeners.onMouseWheel(event);
-      });
+      addWheelListener(this.frame.canvas, this.body.eventListeners.onMouseWheel); // this.frame.canvas.addEventListener(support, (event) => {this.body.eventListeners.onMouseWheel(event)});
+      // DOMMouseScroll is deprecated - https://developer.mozilla.org/en-US/docs/Web/API/Element/DOMMouseScroll_event
+      // For older FireFox versions
+      // this.frame.canvas.addEventListener('DOMMouseScroll', (event) => {this.body.eventListeners.onMouseWheel(event)});
+      // For Modern Browsers
+      // this.frame.canvas.addEventListener('wheel', (event) => {this.body.eventListeners.onMouseWheel(event)});
+
       this.frame.canvas.addEventListener('mousemove', function (event) {
         _this3.body.eventListeners.onMouseMove(event);
       });
@@ -37837,31 +37890,38 @@ function () {
     value: function onMouseWheel(event) {
       if (this.options.zoomView === true) {
         // retrieve delta
-        var delta = 0;
 
-        if (event.wheelDelta) {
-          /* IE/Opera. */
-          delta = event.wheelDelta / 120;
-        } else if (event.detail) {
-          /* Mozilla case. */
-          // In Mozilla, sign of delta is different than in IE.
-          // Also, delta is multiple of 3.
-          delta = -event.detail / 3;
-        } // If delta is nonzero, handle it.
+        /*
+          No need for if statement as new wheel listener function
+          normalizes the event to the 'wheel' api
+        */
+        var delta = event.deltaY; // if (event.deltaY) { /* Modern browsers */
+        //   delta = -event.deltaY;
+        //   console.log(event.deltaY, delta);
+        // } else if (event.wheelDelta) { /* IE/Opera. */
+        //   delta = event.wheelDelta / 120;
+        // } else if (event.detail) { /* Mozilla case. */
+        //   // In Mozilla, sign of delta is different than in IE.
+        //   // Also, delta is multiple of 3.
+        //   // For older FireFox versions
+        //   delta = -event.detail / 3;
+        // }
+        // If delta is nonzero, handle it.
         // Basically, delta is now positive if wheel was scrolled up,
         // and negative, if wheel was scrolled down.
-
 
         if (delta !== 0) {
           // calculate the new scale
           var scale = this.body.view.scale;
-          var zoom = delta * (this.options.zoomSpeed / 10);
+          var direction = delta < 0 ? 1 : -1; // times is faster than divide
+          // not using delta creates a more consistent experience across browsers
 
-          if (delta < 0) {
-            zoom = zoom / (1 - zoom);
-          }
+          var zoom = 1 + direction * (this.options.zoomSpeed * 0.1); // let zoom = delta * (this.options.zoomSpeed / 10);
+          // if (delta < 0) {
+          //   zoom = zoom / (1 - zoom);
+          // }
 
-          scale *= 1 + zoom; // calculate the pointer location
+          scale *= zoom; // calculate the pointer location
 
           var pointer = this.getPointer({
             x: event.clientX,
