@@ -146,7 +146,11 @@ jobs:
       - run:
           name: Publish GitHub Pages
           command: |
-            npx gh-pages --dist . --message "chore: update to $(git rev-parse HEAD) [ci skip]" --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" --src '{{coverage,dist,docs,examples}/**/*,LICENSE*,*.{html,md}}'
+            npx gh-pages \
+              --dist . \
+              --message "chore: update to $(git rev-parse HEAD) [ci skip]" \
+              --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" \
+              --src "{{coverage,docs,examples,$(node -e 'process.stdout.write(require("./package.json").files.join(","))')}/**/*,*.{html,md}}"
 
   release:
     executor: node
