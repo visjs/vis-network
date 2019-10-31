@@ -99,7 +99,7 @@ export default [].concat.apply(
                 ...babelrc,
                 babelrc: false,
                 extensions: [".ts", ".js"],
-                exclude: [/node_modules[\/\\]core-js/]
+                runtimeHelpers: true
               }),
               postcss({
                 extract:
