@@ -26,6 +26,7 @@
  * ============================================================================= */
 
 import { ArrowData, Point } from "./types";
+import { drawCircle } from "./shapes";
 
 /**
  * Common methods for endpoints
@@ -352,7 +353,7 @@ class Circle {
     const point = { x: -0.4, y: 0 };
 
     EndPoint.transform(point, arrowData);
-    ctx.circle(point.x, point.y, arrowData.length * 0.4);
+    drawCircle(ctx, point.x, point.y, arrowData.length * 0.4);
 
     return true;
   }

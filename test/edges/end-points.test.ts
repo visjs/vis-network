@@ -8,7 +8,20 @@ describe('EndPoints', function(): void {
     ;[
       {
         type: 'circle',
-        methods: { circle: [[35.60100282465478, -37.113292320674645, 6.4]] },
+        methods: {
+          beginPath: [[]],
+          closePath: [[]],
+          arc: [
+            [
+              35.60100282465478,
+              -37.113292320674645,
+              6.4,
+              0,
+              6.283185307179586,
+              false,
+            ],
+          ],
+        },
       },
       {
         type: 'box',
