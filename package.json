@@ -68,7 +68,7 @@
     "@babel/core": "7.7.0",
     "@babel/plugin-proposal-class-properties": "7.7.0",
     "@babel/preset-env": "7.7.0",
-    "@babel/preset-typescript": "7.6.0",
+    "@babel/preset-typescript": "7.7.0",
     "@babel/register": "7.6.2",
     "@babel/runtime": "7.6.3",
     "@egjs/hammerjs": "2.0.15",
