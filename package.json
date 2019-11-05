@@ -70,7 +70,7 @@
     "@babel/preset-env": "7.7.0",
     "@babel/preset-typescript": "7.7.0",
     "@babel/register": "7.7.0",
-    "@babel/runtime": "7.6.3",
+    "@babel/runtime": "7.7.0",
     "@egjs/hammerjs": "2.0.15",
     "@semantic-release/commit-analyzer": "6.3.1",
     "@semantic-release/github": "5.5.5",
