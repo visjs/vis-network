@@ -34,11 +34,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/**
+ * Recursively saves the current state of supplied objects (intended for window
+ * or global but will work with any object) and checks for additions, changes
+ * and removals later on. The purpose of this is to identify problems like
+ * prototype pollution etc.
+ */
 var PollutionDetector = /** @class */ (function () {
     function PollutionDetector() {
         this._originalValues = new Map();
         this._saved = [];
     }
+    /**
+     * Traverses the provided object ommiting whitelisted paths, getters and
+     * ignoring exceptions.
+     */
     PollutionDetector.prototype._traverse = function (_a) {
         var callback = _a.callback, done = _a.done, prefix = _a.prefix, root = _a.root, whitelist = _a.whitelist;
         return __awaiter(this, void 0, void 0, function () {
@@ -96,6 +106,16 @@ var PollutionDetector = /** @class */ (function () {
             });
         });
     };
+    /**
+     * Recursively save current state.
+     *
+     * @param prefix - The path to the root in dot notation.
+     * @param root - The object to be traversed from.
+     * @param whitelist - A set of paths to be ignored during traversal. This
+     * includes all descendants of given paths.
+     *
+     * @returns A set of all saved paths.
+     */
     PollutionDetector.prototype.save = function (prefix, root, whitelist) {
         if (whitelist === void 0) { whitelist = []; }
         return __awaiter(this, void 0, void 0, function () {
@@ -125,6 +145,11 @@ var PollutionDetector = /** @class */ (function () {
             });
         });
     };
+    /**
+     * Recursively check the differences between current state and saved state.
+     *
+     * @returns Sets listing paths of found differences (additions, changes and deletions).
+     */
     PollutionDetector.prototype.check = function () {
         return __awaiter(this, void 0, void 0, function () {
             var added, changed, missing, _i, _a, _b, prefix, root, whitelist;
@@ -179,6 +204,9 @@ var PollutionDetector = /** @class */ (function () {
             });
         });
     };
+    /**
+     * Delete all saved states.
+     */
     PollutionDetector.prototype.clear = function () {
         this._originalValues.clear();
         this._saved.length = 0;

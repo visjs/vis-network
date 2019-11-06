@@ -1,5 +1,43 @@
+interface TraverseParameters {
+  /**
+   * Callback that is executed for each value found during traversal.
+   *
+   * @param value - Current value.
+   * @param path - Path to the value in dot notation.
+   *
+   * @returns True to investigate this value further, false to ignore this
+   * value's descendants.
+   */
+  callback: (value: unknown, path: string) => boolean;
+  /**
+   * A set of values that have already been processed. Should be an empty set
+   * if this is the first invocation. It's purpose is to prevent infinite
+   * cycling on cyclic references.
+   */
+  done: Set<unknown>;
+  /**
+   * The path to the root in dot notation.
+   */
+  prefix: string;
+  /**
+   * The object to be traversed from.
+   */
+  root: any;
+  /**
+   * A set of paths to be ignored during traversal. This includes all
+   * descendants of given paths.
+   */
+  whitelist: Set<string>;
+}
+
+/**
+ * Recursively saves the current state of supplied objects (intended for window
+ * or global but will work with any object) and checks for additions, changes
+ * and removals later on. The purpose of this is to identify problems like
+ * prototype pollution etc.
+ */
 export class PollutionDetector {
-  private _originalValues: Map<
+  private readonly _originalValues: Map<
     string,
     {
       path: string;
@@ -7,25 +45,23 @@ export class PollutionDetector {
       value: unknown;
     }
   > = new Map();
-  private _saved: {
+  private readonly _saved: {
     prefix: string;
     root: any;
     whitelist: Set<string>;
   }[] = [];
 
+  /**
+   * Traverses the provided object ommiting whitelisted paths, getters and
+   * ignoring exceptions.
+   */
   private async _traverse({
     callback,
     done,
     prefix,
     root,
     whitelist
-  }: {
-    callback: (value: unknown, path: string) => boolean;
-    done: Set<unknown>;
-    prefix: string;
-    root: any;
-    whitelist: Set<string>;
-  }): Promise<void> {
+  }: TraverseParameters): Promise<void> {
     if (done.has(root)) {
       return;
     } else {
@@ -58,10 +94,22 @@ export class PollutionDetector {
             whitelist
           });
         }
-      } catch (_error) {}
+      } catch (_error) {
+        // If it throws there's nothing that can be done about it.
+      }
     }
   }
 
+  /**
+   * Recursively save current state.
+   *
+   * @param prefix - The path to the root in dot notation.
+   * @param root - The object to be traversed from.
+   * @param whitelist - A set of paths to be ignored during traversal. This
+   * includes all descendants of given paths.
+   *
+   * @returns A set of all saved paths.
+   */
   public async save(
     prefix: string,
     root: any,
@@ -86,6 +134,11 @@ export class PollutionDetector {
     return saved;
   }
 
+  /**
+   * Recursively check the differences between current state and saved state.
+   *
+   * @returns Sets listing paths of found differences (additions, changes and deletions).
+   */
   public async check(): Promise<{
     added: Set<string>;
     changed: Set<string>;
@@ -130,6 +183,9 @@ export class PollutionDetector {
     return { added, changed, missing };
   }
 
+  /**
+   * Delete all saved states.
+   */
   public clear() {
     this._originalValues.clear();
     this._saved.length = 0;
