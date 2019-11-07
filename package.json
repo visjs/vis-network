@@ -105,7 +105,7 @@
     "jsdoc": "3.6.3",
     "jsdom": "15.2.0",
     "jsdom-global": "3.0.2",
-    "keycharm": "0.2.0",
+    "keycharm": "0.3.0",
     "mocha": "6.2.2",
     "moment": "2.24.0",
     "nyc": "14.1.1",
