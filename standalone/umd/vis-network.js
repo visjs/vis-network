@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-10-30T13:08:20Z
+ * @date    2019-11-08T18:54:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -43640,10 +43640,7 @@
 	        _this3.body.eventListeners.onPinch(event);
 	      }); // TODO: neatly cleanup these handlers when re-creating the Canvas, IF these are done with hammer, event.stopPropagation will not work?
 
-	      this.frame.canvas.addEventListener('mousewheel', function (event) {
-	        _this3.body.eventListeners.onMouseWheel(event);
-	      });
-	      this.frame.canvas.addEventListener('DOMMouseScroll', function (event) {
+	      this.frame.canvas.addEventListener('wheel', function (event) {
 	        _this3.body.eventListeners.onMouseWheel(event);
 	      });
 	      this.frame.canvas.addEventListener('mousemove', function (event) {
@@ -45439,32 +45436,13 @@
 	    key: "onMouseWheel",
 	    value: function onMouseWheel(event) {
 	      if (this.options.zoomView === true) {
-	        // retrieve delta
-	        var delta = 0;
-
-	        if (event.wheelDelta) {
-	          /* IE/Opera. */
-	          delta = event.wheelDelta / 120;
-	        } else if (event.detail) {
-	          /* Mozilla case. */
-	          // In Mozilla, sign of delta is different than in IE.
-	          // Also, delta is multiple of 3.
-	          delta = -event.detail / 3;
-	        } // If delta is nonzero, handle it.
+	        // If delta is nonzero, handle it.
 	        // Basically, delta is now positive if wheel was scrolled up,
 	        // and negative, if wheel was scrolled down.
-
-
-	        if (delta !== 0) {
+	        if (event.deltaY !== 0) {
 	          // calculate the new scale
 	          var scale = this.body.view.scale;
-	          var zoom = delta * (this.options.zoomSpeed / 10);
-
-	          if (delta < 0) {
-	            zoom = zoom / (1 - zoom);
-	          }
-
-	          scale *= 1 + zoom; // calculate the pointer location
+	          scale *= 1 + (event.deltaY < 0 ? 1 : -1) * (this.options.zoomSpeed * 0.1); // calculate the pointer location
 
 	          var pointer = this.getPointer({
 	            x: event.clientX,
