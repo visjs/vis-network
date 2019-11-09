@@ -86,7 +86,7 @@
     "@types/yargs": "13.0.3",
     "@typescript-eslint/eslint-plugin": "2.5.0",
     "@typescript-eslint/parser": "2.5.0",
-    "@wessberg/rollup-plugin-ts": "1.1.73",
+    "@wessberg/rollup-plugin-ts": "1.1.74",
     "babel-plugin-css-modules-transform": "1.6.2",
     "babel-plugin-istanbul": "5.2.0",
     "babel-preset-minify": "0.5.1",
