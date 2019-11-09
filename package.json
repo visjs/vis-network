@@ -112,7 +112,7 @@
     "opencollective": "1.0.3",
     "pageres": "5.2.0",
     "postcss-assets": "5.0.0",
-    "prettier": "1.18.2",
+    "prettier": "1.19.0",
     "rimraf": "3.0.0",
     "rollup": "1.25.2",
     "rollup-plugin-babel": "4.3.3",
