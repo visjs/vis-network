@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-08T18:55:06Z
+ * @date    2019-11-10T19:14:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -12997,7 +12997,8 @@
 
 
 	var Activator = /*#__PURE__*/Object.freeze({
-		__proto__: null
+		__proto__: null,
+		'default': undefined
 	});
 
 	var keycharm = createCommonjsModule(function (module, exports) {
