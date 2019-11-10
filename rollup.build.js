@@ -80,6 +80,46 @@ export default [].concat.apply(
                     src: `./dev-lib/bundle-${variant}.d.ts`,
                     dest: ".",
                     rename: umdFileWithoutExt + ".d.ts"
+                  },
+                  {
+                    src: "./dev-lib/bundle-esm-index.d.ts",
+                    dest: ".",
+                    rename: `${variant}/index.d.ts`
+                  },
+                  {
+                    src: "./dev-lib/bundle-esm-index.d.ts",
+                    dest: ".",
+                    rename: `${variant}/index.js`
+                  },
+                  {
+                    src: "./dev-lib/bundle-vis-network-index.d.ts",
+                    dest: ".",
+                    rename: `${variant}/esm/index.d.ts`
+                  },
+                  {
+                    src: "./dev-lib/bundle-vis-network-index.d.ts",
+                    dest: ".",
+                    rename: `${variant}/esm/index.js`
+                  },
+                  {
+                    src: "./dev-lib/bundle-vis-network-index.d.ts",
+                    dest: ".",
+                    rename: `${variant}/umd/index.d.ts`
+                  },
+                  {
+                    src: "./dev-lib/bundle-vis-network-index.d.ts",
+                    dest: ".",
+                    rename: `${variant}/umd/index.js`
+                  },
+                  {
+                    src: "./dev-lib/bundle-css.d.ts",
+                    dest: ".",
+                    rename: "styles/index.d.ts"
+                  },
+                  {
+                    src: "./dev-lib/bundle-css.d.ts",
+                    dest: ".",
+                    rename: "styles/index.js"
                   }
                 ]
               }),
