@@ -4,7 +4,8 @@ import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
 import genHeader from './dev-lib/header';
-import css from 'rollup-plugin-css-porter';
+import assets from 'postcss-assets';
+import postcss from 'rollup-plugin-postcss';
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
 // CommonJS because Babel is not 100 % ESM.
@@ -30,13 +31,27 @@ const plugins = {
 			comments: (_node, { value }) => /@license/.test(value)
 		}
 	}),
-	cssRaw: css({
-		raw: 'dist/vis-network.css',
-		minified: false
+	cssRaw: postcss({
+		extract: 'dist/vis-network.css',
+		inject: false,
+		minimize: false,
+		sourceMap: false,
+		plugins: [
+			assets({
+				loadPaths: ["lib/assets/"]
+			})
+		]
 	}),
-	cssMin: css({
-		raw: false,
-		minified: 'dist/vis-network.min.css'
+	cssMin: postcss({
+		extract: 'dist/vis-network.min.css',
+		inject: false,
+		minimize: true,
+		sourceMap: false,
+		plugins: [
+			assets({
+				loadPaths: ["lib/assets/"]
+			})
+		]
 	})
 }
 
