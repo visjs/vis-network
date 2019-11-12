@@ -313,7 +313,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let x: number;
     let y: number;
     const node = this.from;
-    const radius = this.options.selfReferenceSize;
+    const radius =  (typeof this.options.selfReferenceSize === "number")? this.options.selfReferenceSize : this.options.selfReferenceSize.size;
 
     if (ctx !== undefined) {
       if (node.shape.width === undefined) {
@@ -322,13 +322,36 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    if (node.shape.width > node.shape.height) {
+    if(this.options.selfReferenceSize.side !== null){
+      if(this.options.selfReferenceSize.side === "top"){
+        //top center
+        x = node.x;
+        y = node.y - node.shape.height * 0.5;
+      }else if(this.options.selfReferenceSize.side === "bottom"){
+        //bottom center
+        x = node.x;
+        y = node.y + node.shape.height * 0.5;
+      }else if(this.options.selfReferenceSize.side === "left"){
+        //left center
+        x = node.x - node.shape.width * 0.5;
+        y = node.y;   
+      }else if(this.options.selfReferenceSize.side === "right"){
+        //right center
+        x = node.x + node.shape.width * 0.5;
+        y = node.y;   
+      }else{
+        //top center
+        x = node.x;
+        y = node.y - node.shape.height * 0.5;
+      }
+    }else if (node.shape.width > node.shape.height) {
       x = node.x + node.shape.width * 0.5;
       y = node.y - radius;
     } else {
       x = node.x + radius;
       y = node.y - node.shape.height * 0.5;
     }
+
     return [x, y, radius];
   }
 
@@ -379,7 +402,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     const direction = options.direction;
 
     const maxIterations = 10;
-    const radius = this.options.selfReferenceSize;
+    const radius = (typeof this.options.selfReferenceSize === "number")? this.options.selfReferenceSize : this.options.selfReferenceSize.size;
     const threshold = 0.05;
     let pos: Point;
     let middle = (low + high) * 0.5;

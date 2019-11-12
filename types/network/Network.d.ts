@@ -966,7 +966,10 @@ export interface EdgeOptions {
 
   selectionWidth?: number; // please note, selectionWidth could be also a function. This case is not represented here
 
-  selfReferenceSize?: number;
+  selfReferenceSize?: number | {
+    size: number,
+    side?: string,
+  };
 
   shadow?: boolean | OptionsShadow;
 

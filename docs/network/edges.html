@@ -202,7 +202,10 @@ var options = {
       }
     },
     selectionWidth: 1,
-    selfReferenceSize:20,
+    selfReferenceSize:{
+        size: 20,
+        side: null
+    },
     shadow:{
       enabled: false,
       color: 'rgba(0,0,0,0.5)',
@@ -890,11 +893,29 @@ var options: {
                 You can taylor the logic in the function as long as it returns a <code>Number</code>.
             </td>
         </tr>
-        <tr>
-            <td>selfReferenceSize</td>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','selfReferenceSize', this);">
+            <td><span parent="arrows" class="right-caret"></span> selfReferenceSize</td>
+            <td>Object or Number</td>
+            <td><code>false</code></td>
+            <td>When the to and from nodes are the same, a circle is drawn. This is the radius of that circle.
+                However if you want to specify if additional properties for the selfReferenceSize such as (side), then it must be 
+                an object which can contain (size, side)
+            </td>
+        </tr>
+        <tr parent="selfReferenceSize" class="hidden">
+            <td class="indent">size</td>
             <td>Number</td>
             <td><code>false</code></td>
-            <td>When the to and from nodes are the same, a circle is drawn. This is the radius of that circle.</td>
+            <td>This is the radius of circle.
+            </td>
+        </tr>
+        <tr parent="selfReferenceSize" class="hidden">
+            <td class="indent">side</td>
+            <td>string</td>
+            <td><code>undefined</code></td>
+            <td> This is the flag to indicate position for the circle top, bottom, left, right. If position is not provided then it will 
+                be automatically determined.
+            </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shadow', this);">
             <td><span parent="shadow" class="right-caret"></span> shadow</td>
