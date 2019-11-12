@@ -313,45 +313,51 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let x: number;
     let y: number;
     const node = this.from;
-    const radius =  (typeof this.options.selfReferenceSize === "number")? this.options.selfReferenceSize : this.options.selfReferenceSize.size;
-
+    const radius =
+    typeof this.options.selfReferenceSize === "number"
+      ? this.options.selfReferenceSize
+      : this.options.selfReferenceSize.size;
+    
     if (ctx !== undefined) {
       if (node.shape.width === undefined) {
         node.shape.resize(ctx);
       }
     }
-
+    
     // get circle coordinates
-    if(this.options.selfReferenceSize.side !== null && typeof this.options.selfReferenceSize !== "number"){
-      if(this.options.selfReferenceSize.side === "top"){
+    if (
+      this.options.selfReferenceSize.side !== null &&
+      typeof this.options.selfReferenceSize !== "number"
+    ) {
+      if (this.options.selfReferenceSize.side === "top") {
         //top center
         x = node.x;
         y = node.y - node.shape.height * 0.5;
-      }else if(this.options.selfReferenceSize.side === "bottom"){
+      } else if (this.options.selfReferenceSize.side === "bottom") {
         //bottom center
         x = node.x;
         y = node.y + node.shape.height * 0.5;
-      }else if(this.options.selfReferenceSize.side === "left"){
+      } else if (this.options.selfReferenceSize.side === "left") {
         //left center
         x = node.x - node.shape.width * 0.5;
-        y = node.y;   
-      }else if(this.options.selfReferenceSize.side === "right"){
+        y = node.y;
+      } else if (this.options.selfReferenceSize.side === "right") {
         //right center
         x = node.x + node.shape.width * 0.5;
-        y = node.y;   
-      }else{
+        y = node.y;
+      } else {
         //top center
         x = node.x;
         y = node.y - node.shape.height * 0.5;
       }
-    }else if (node.shape.width > node.shape.height) {
+    } else if (node.shape.width > node.shape.height) {
       x = node.x + node.shape.width * 0.5;
       y = node.y - radius;
     } else {
       x = node.x + radius;
       y = node.y - node.shape.height * 0.5;
     }
-
+    
     return [x, y, radius];
   }
 
@@ -764,11 +770,15 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       if (position === "from") {
         let low = 0.25;
         let high = 0.6;
-        if(typeof this.options.selfReferenceSize !== "number" && (this.options.selfReferenceSize.side === "bottom" || this.options.selfReferenceSize.side === "left")){
+        if (
+          typeof this.options.selfReferenceSize !== "number" &&
+          (this.options.selfReferenceSize.side === "bottom" ||
+            this.options.selfReferenceSize.side === "left")
+        ) {
           low = 0.6;
           high = 1.0;
         }
-
+      
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
@@ -781,11 +791,15 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else if (position === "to") {
         let low = 0.6;
         let high = 1.0;
-        if(typeof this.options.selfReferenceSize !== "number" && (this.options.selfReferenceSize.side === "bottom" || this.options.selfReferenceSize.side === "left")){
-           low = 0.25;
-           high = 0.6;
+        if (
+          typeof this.options.selfReferenceSize !== "number" &&
+          (this.options.selfReferenceSize.side === "bottom" ||
+            this.options.selfReferenceSize.side === "left")
+        ) {
+          low = 0.25;
+          high = 0.6;
         }
-
+      
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
@@ -798,19 +812,20 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        if(typeof this.options.selfReferenceSize !== "number"){
-          if(this.options.selfReferenceSize.side === "bottom"){
+        if (typeof this.options.selfReferenceSize !== "number") {
+          if (this.options.selfReferenceSize.side === "bottom") {
             arrowPoint = this._pointOnCircle(x, y, radius, -0.35);
-            angle = 7.225663103256524;  // === -0.35 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-          } else if(this.options.selfReferenceSize.side === "right"){
+            angle = 7.225663103256524; // === -0.35 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+          } else if (this.options.selfReferenceSize.side === "right") {
             arrowPoint = this._pointOnCircle(x, y, radius, -0.095);
-            angle = 5.62345084992573;  // === -0.095 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-          } else if(this.options.selfReferenceSize.side === "left"){
+            angle = 5.62345084992573; // === -0.095 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+          } else if (this.options.selfReferenceSize.side === "left") {
             arrowPoint = this._pointOnCircle(x, y, radius, 0.4);
-            angle = 2.5132741228718345;  // === 0.4 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-          } 
+            angle = 2.5132741228718345; // === 0.4 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+          }
         }
       }
+      
     }
 
     const xi = arrowPoint.x - length * 0.9 * Math.cos(angle);

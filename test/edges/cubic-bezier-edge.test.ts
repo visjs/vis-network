@@ -146,9 +146,7 @@ describe('CubicBezierEdge', function(): void {
           smooth: {
             roundness: 2,
           },
-          selfReferenceSize: {
-            size: 42
-          },
+          selfReferenceSize: 42,
         },
         body as any,
         {} as any
@@ -537,9 +535,7 @@ describe('CubicBezierEdge', function(): void {
             smooth: {
               roundness: 2,
             },
-            selfReferenceSize: {
-              size: 42
-            },
+            selfReferenceSize: 42,
           },
           body,
           {} as any
@@ -745,9 +741,7 @@ describe('CubicBezierEdge', function(): void {
                 enabled: smooth,
                 roundness: 2,
               },
-              selfReferenceSize: {
-                size: 13
-              },
+              selfReferenceSize: 13,
             },
             body,
             {} as any
