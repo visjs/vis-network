@@ -66,13 +66,25 @@
             id: 10 * i + 1,
             label: type,
             x: 0,
-            y: i * 50
+            y: i * 60
           },
           {
             id: 10 * i + 2,
             label: type,
             x: 800,
-            y: i * 50
+            y: i * 60
+          },
+          {
+            id: 10 * i + 3,
+            label: type,
+            x: 1000,
+            y: i * 60
+          },
+          {
+            id: 10 * i + 4,
+            label: type,
+            x: 1200 + (i % 5) * 250,
+            y: 200 + Math.floor(i / 5) * 5 * 50
           }
         ]);
         edges.add([
@@ -80,6 +92,27 @@
             from: 10 * i + 1,
             to: 10 * i + 2,
             smooth: { type },
+            arrows: {
+              from: { enabled: true, scaleFactor },
+              middle: { enabled: true, scaleFactor },
+              to: { enabled: true, scaleFactor }
+            }
+          },
+          {
+            from: 10 * i + 3,
+            to: 10 * i + 3,
+            smooth: { type },
+            arrows: {
+              from: { enabled: true, scaleFactor },
+              middle: { enabled: true, scaleFactor },
+              to: { enabled: true, scaleFactor }
+            }
+          },
+          {
+            from: 10 * i + 4,
+            to: 10 * i + 4,
+            smooth: { type },
+            selfReferenceSize: 100,
             arrows: {
               from: { enabled: true, scaleFactor },
               middle: { enabled: true, scaleFactor },
