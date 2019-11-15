@@ -34,6 +34,10 @@
     "standalone",
     "styles"
   ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/visjs"
+  },
   "scripts": {
     "serve": "serve -l tcp://localhost:58253",
     "test": "npm run test:unit && npm run test:e2e",
