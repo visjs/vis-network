@@ -135,7 +135,7 @@
     "vis-data": "6.2.1",
     "vis-dev-utils": "1.1.0",
     "vis-util": "1.1.8",
-    "yargs": "14.2.0"
+    "yargs": "15.0.1"
   },
   "collective": {
     "type": "opencollective",
