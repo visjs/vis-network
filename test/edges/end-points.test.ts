@@ -140,13 +140,10 @@ describe('EndPoints', function(): void {
       },
     ].forEach(({ methods, type }): void => {
       describe(`${type}`, function(): void {
-        const ctx = Object.keys(methods).reduce(
-          (acc, method): any => {
-            acc[method] = spy()
-            return acc
-          },
-          {} as any
-        )
+        const ctx = Object.keys(methods).reduce((acc, method): any => {
+          acc[method] = spy()
+          return acc
+        }, {} as any)
 
         const arrowData = {
           type,

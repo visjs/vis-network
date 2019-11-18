@@ -53,7 +53,10 @@ describe("LayoutEngine", function(): void {
         [
           {
             name: "3 nodes, 2 levels",
-            tree: generateTree([{ from: 8, to: 4 }, { from: 8, to: 6 }]),
+            tree: generateTree([
+              { from: 8, to: 4 },
+              { from: 8, to: 6 }
+            ]),
             levels: {
               4: 1,
               6: 1,

@@ -403,7 +403,7 @@ const shapeMap = {
  * `(ctx: CanvasRenderingContext2D, ...originalArgs) => void`.
  */
 export function getShape(
-  name: (keyof CanvasRenderingContext2D) | (keyof typeof shapeMap)
+  name: keyof CanvasRenderingContext2D | keyof typeof shapeMap
 ): any {
   if (Object.prototype.hasOwnProperty.call(shapeMap, name)) {
     return (shapeMap as any)[name];
