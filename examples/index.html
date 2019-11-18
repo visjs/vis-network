@@ -5142,7 +5142,10 @@ body {
     "straightCross",
     "vertical",
     "curvedCCW"
-  ].map(type =&gt; [{ type, scaleFactor: 1 }, { type, scaleFactor: -1 }])
+  ].map(type =&gt; [
+    { type, scaleFactor: 1 },
+    { type, scaleFactor: -1 }
+  ])
 );
 
 // create an array with nodes
@@ -5157,13 +5160,25 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       id: 10 * i + 1,
       label: type,
       x: 0,
-      y: i * 50
+      y: i * 60
     },
     {
       id: 10 * i + 2,
       label: type,
       x: 800,
-      y: i * 50
+      y: i * 60
+    },
+    {
+      id: 10 * i + 3,
+      label: type,
+      x: 1000,
+      y: i * 60
+    },
+    {
+      id: 10 * i + 4,
+      label: type,
+      x: 1200 + (i % 5) * 250,
+      y: 200 + Math.floor(i / 5) * 5 * 50
     }
   ]);
   edges.add([
@@ -5171,6 +5186,27 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       from: 10 * i + 1,
       to: 10 * i + 2,
       smooth: { type },
+      arrows: {
+        from: { enabled: true, scaleFactor },
+        middle: { enabled: true, scaleFactor },
+        to: { enabled: true, scaleFactor }
+      }
+    },
+    {
+      from: 10 * i + 3,
+      to: 10 * i + 3,
+      smooth: { type },
+      arrows: {
+        from: { enabled: true, scaleFactor },
+        middle: { enabled: true, scaleFactor },
+        to: { enabled: true, scaleFactor }
+      }
+    },
+    {
+      from: 10 * i + 4,
+      to: 10 * i + 4,
+      smooth: { type },
+      selfReferenceSize: 100,
       arrows: {
         from: { enabled: true, scaleFactor },
         middle: { enabled: true, scaleFactor },
@@ -5249,7 +5285,7 @@ body {
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"html,\nbody {\n  height: 100%;\n  width: 100%;\n  margin: 0px;\n  padding: 0px;\n}\n\n.mycontainer {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n#mynetwork {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n","css_external":"","html":"&lt;div class=\".mycontainer\"&gt;\n  &lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;/div&gt;\n","js":"var types = [].concat.apply(\n  [],\n  [\n    \"curvedCW\",\n    \"diagonalCross\",\n    \"continuous\",\n    \"cubicBezier\",\n    \"discrete\",\n    \"dynamic\",\n    \"horizontal\",\n    \"straightCross\",\n    \"vertical\",\n    \"curvedCCW\"\n  ].map(type =&gt; [{ type, scaleFactor: 1 }, { type, scaleFactor: -1 }])\n);\n\n// create an array with nodes\nvar nodes = new vis.DataSet();\n\n// create an array with edges\nvar edges = new vis.DataSet();\n\ntypes.forEach(({ type, scaleFactor }, i) =&gt; {\n  nodes.add([\n    {\n      id: 10 * i + 1,\n      label: type,\n      x: 0,\n      y: i * 50\n    },\n    {\n      id: 10 * i + 2,\n      label: type,\n      x: 800,\n      y: i * 50\n    }\n  ]);\n  edges.add([\n    {\n      from: 10 * i + 1,\n      to: 10 * i + 2,\n      smooth: { type },\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor }\n      }\n    }\n  ]);\n});\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\n\n// provide the data in the vis format\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {\n  physics: {\n    enabled: false\n  }\n};\n\n// initialize your network!\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Edge Styles | Arrow Alignment"}'
+                      value='{"css":"html,\nbody {\n  height: 100%;\n  width: 100%;\n  margin: 0px;\n  padding: 0px;\n}\n\n.mycontainer {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n#mynetwork {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n","css_external":"","html":"&lt;div class=\".mycontainer\"&gt;\n  &lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;/div&gt;\n","js":"var types = [].concat.apply(\n  [],\n  [\n    \"curvedCW\",\n    \"diagonalCross\",\n    \"continuous\",\n    \"cubicBezier\",\n    \"discrete\",\n    \"dynamic\",\n    \"horizontal\",\n    \"straightCross\",\n    \"vertical\",\n    \"curvedCCW\"\n  ].map(type =&gt; [\n    { type, scaleFactor: 1 },\n    { type, scaleFactor: -1 }\n  ])\n);\n\n// create an array with nodes\nvar nodes = new vis.DataSet();\n\n// create an array with edges\nvar edges = new vis.DataSet();\n\ntypes.forEach(({ type, scaleFactor }, i) =&gt; {\n  nodes.add([\n    {\n      id: 10 * i + 1,\n      label: type,\n      x: 0,\n      y: i * 60\n    },\n    {\n      id: 10 * i + 2,\n      label: type,\n      x: 800,\n      y: i * 60\n    },\n    {\n      id: 10 * i + 3,\n      label: type,\n      x: 1000,\n      y: i * 60\n    },\n    {\n      id: 10 * i + 4,\n      label: type,\n      x: 1200 + (i % 5) * 250,\n      y: 200 + Math.floor(i / 5) * 5 * 50\n    }\n  ]);\n  edges.add([\n    {\n      from: 10 * i + 1,\n      to: 10 * i + 2,\n      smooth: { type },\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor }\n      }\n    },\n    {\n      from: 10 * i + 3,\n      to: 10 * i + 3,\n      smooth: { type },\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor }\n      }\n    },\n    {\n      from: 10 * i + 4,\n      to: 10 * i + 4,\n      smooth: { type },\n      selfReferenceSize: 100,\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor }\n      }\n    }\n  ]);\n});\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\n\n// provide the data in the vis format\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {\n  physics: {\n    enabled: false\n  }\n};\n\n// initialize your network!\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Edge Styles | Arrow Alignment"}'
                     /><input
                       type="hidden"
                       name="js"
@@ -5266,7 +5302,10 @@ body {
     "straightCross",
     "vertical",
     "curvedCCW"
-  ].map(type =&gt; [{ type, scaleFactor: 1 }, { type, scaleFactor: -1 }])
+  ].map(type =&gt; [
+    { type, scaleFactor: 1 },
+    { type, scaleFactor: -1 }
+  ])
 );
 
 // create an array with nodes
@@ -5281,13 +5320,25 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       id: 10 * i + 1,
       label: type,
       x: 0,
-      y: i * 50
+      y: i * 60
     },
     {
       id: 10 * i + 2,
       label: type,
       x: 800,
-      y: i * 50
+      y: i * 60
+    },
+    {
+      id: 10 * i + 3,
+      label: type,
+      x: 1000,
+      y: i * 60
+    },
+    {
+      id: 10 * i + 4,
+      label: type,
+      x: 1200 + (i % 5) * 250,
+      y: 200 + Math.floor(i / 5) * 5 * 50
     }
   ]);
   edges.add([
@@ -5295,6 +5346,27 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       from: 10 * i + 1,
       to: 10 * i + 2,
       smooth: { type },
+      arrows: {
+        from: { enabled: true, scaleFactor },
+        middle: { enabled: true, scaleFactor },
+        to: { enabled: true, scaleFactor }
+      }
+    },
+    {
+      from: 10 * i + 3,
+      to: 10 * i + 3,
+      smooth: { type },
+      arrows: {
+        from: { enabled: true, scaleFactor },
+        middle: { enabled: true, scaleFactor },
+        to: { enabled: true, scaleFactor }
+      }
+    },
+    {
+      from: 10 * i + 4,
+      to: 10 * i + 4,
+      smooth: { type },
+      selfReferenceSize: 100,
       arrows: {
         from: { enabled: true, scaleFactor },
         middle: { enabled: true, scaleFactor },
@@ -7566,7 +7638,18 @@ network.on("beforeDrawing", function(ctx) {
   var nodePosition = network.getPositions([nodeId]);
   ctx.strokeStyle = "#A6D5F7";
   ctx.fillStyle = "#294475";
-  ctx.circle(nodePosition[nodeId].x, nodePosition[nodeId].y, 50);
+
+  ctx.beginPath();
+  ctx.arc(
+    nodePosition[nodeId].x,
+    nodePosition[nodeId].y,
+    50,
+    0,
+    2 * Math.PI,
+    false
+  );
+  ctx.closePath();
+
   ctx.fill();
   ctx.stroke();
 });
@@ -7576,7 +7659,18 @@ network.on("afterDrawing", function(ctx) {
   ctx.strokeStyle = "#294475";
   ctx.lineWidth = 4;
   ctx.fillStyle = "#A6D5F7";
-  ctx.circle(nodePosition[nodeId].x, nodePosition[nodeId].y, 20);
+
+  ctx.beginPath();
+  ctx.arc(
+    nodePosition[nodeId].x,
+    nodePosition[nodeId].y,
+    20,
+    0,
+    2 * Math.PI,
+    false
+  );
+  ctx.closePath();
+
   ctx.fill();
   ctx.stroke();
 });
@@ -7627,7 +7721,7 @@ p {
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"#mynetwork {\n  width: 600px;\n  height: 400px;\n  border: 1px solid lightgray;\n}\n\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;\n  You can draw on the canvas using normal HTML5 canvas functions. The before\n  drawing will be behind the network, the after drawing will be in front of the\n  network.\n&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;pre id=\"eventSpan\"&gt;&lt;/pre&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  { id: 1, label: \"Node 1\" },\n  { id: 2, label: \"Node 2\" },\n  { id: 3, label: \"Node 3\" },\n  { id: 4, label: \"Node 4\" },\n  { id: 5, label: \"Node 5\" }\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 3 },\n  { from: 1, to: 2 },\n  { from: 2, to: 4 },\n  { from: 2, to: 5 }\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {};\nvar network = new vis.Network(container, data, options);\n\nnetwork.on(\"initRedraw\", function() {\n  // do something like move some custom elements?\n});\nnetwork.on(\"beforeDrawing\", function(ctx) {\n  var nodeId = 1;\n  var nodePosition = network.getPositions([nodeId]);\n  ctx.strokeStyle = \"#A6D5F7\";\n  ctx.fillStyle = \"#294475\";\n  ctx.circle(nodePosition[nodeId].x, nodePosition[nodeId].y, 50);\n  ctx.fill();\n  ctx.stroke();\n});\nnetwork.on(\"afterDrawing\", function(ctx) {\n  var nodeId = 1;\n  var nodePosition = network.getPositions([nodeId]);\n  ctx.strokeStyle = \"#294475\";\n  ctx.lineWidth = 4;\n  ctx.fillStyle = \"#A6D5F7\";\n  ctx.circle(nodePosition[nodeId].x, nodePosition[nodeId].y, 20);\n  ctx.fill();\n  ctx.stroke();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Events | Rendering Events"}'
+                      value='{"css":"#mynetwork {\n  width: 600px;\n  height: 400px;\n  border: 1px solid lightgray;\n}\n\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;\n  You can draw on the canvas using normal HTML5 canvas functions. The before\n  drawing will be behind the network, the after drawing will be in front of the\n  network.\n&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;pre id=\"eventSpan\"&gt;&lt;/pre&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  { id: 1, label: \"Node 1\" },\n  { id: 2, label: \"Node 2\" },\n  { id: 3, label: \"Node 3\" },\n  { id: 4, label: \"Node 4\" },\n  { id: 5, label: \"Node 5\" }\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 3 },\n  { from: 1, to: 2 },\n  { from: 2, to: 4 },\n  { from: 2, to: 5 }\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {};\nvar network = new vis.Network(container, data, options);\n\nnetwork.on(\"initRedraw\", function() {\n  // do something like move some custom elements?\n});\nnetwork.on(\"beforeDrawing\", function(ctx) {\n  var nodeId = 1;\n  var nodePosition = network.getPositions([nodeId]);\n  ctx.strokeStyle = \"#A6D5F7\";\n  ctx.fillStyle = \"#294475\";\n\n  ctx.beginPath();\n  ctx.arc(\n    nodePosition[nodeId].x,\n    nodePosition[nodeId].y,\n    50,\n    0,\n    2 * Math.PI,\n    false\n  );\n  ctx.closePath();\n\n  ctx.fill();\n  ctx.stroke();\n});\nnetwork.on(\"afterDrawing\", function(ctx) {\n  var nodeId = 1;\n  var nodePosition = network.getPositions([nodeId]);\n  ctx.strokeStyle = \"#294475\";\n  ctx.lineWidth = 4;\n  ctx.fillStyle = \"#A6D5F7\";\n\n  ctx.beginPath();\n  ctx.arc(\n    nodePosition[nodeId].x,\n    nodePosition[nodeId].y,\n    20,\n    0,\n    2 * Math.PI,\n    false\n  );\n  ctx.closePath();\n\n  ctx.fill();\n  ctx.stroke();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Events | Rendering Events"}'
                     /><input
                       type="hidden"
                       name="js"
@@ -7665,7 +7759,18 @@ network.on("beforeDrawing", function(ctx) {
   var nodePosition = network.getPositions([nodeId]);
   ctx.strokeStyle = "#A6D5F7";
   ctx.fillStyle = "#294475";
-  ctx.circle(nodePosition[nodeId].x, nodePosition[nodeId].y, 50);
+
+  ctx.beginPath();
+  ctx.arc(
+    nodePosition[nodeId].x,
+    nodePosition[nodeId].y,
+    50,
+    0,
+    2 * Math.PI,
+    false
+  );
+  ctx.closePath();
+
   ctx.fill();
   ctx.stroke();
 });
@@ -7675,7 +7780,18 @@ network.on("afterDrawing", function(ctx) {
   ctx.strokeStyle = "#294475";
   ctx.lineWidth = 4;
   ctx.fillStyle = "#A6D5F7";
-  ctx.circle(nodePosition[nodeId].x, nodePosition[nodeId].y, 20);
+
+  ctx.beginPath();
+  ctx.arc(
+    nodePosition[nodeId].x,
+    nodePosition[nodeId].y,
+    20,
+    0,
+    2 * Math.PI,
+    false
+  );
+  ctx.closePath();
+
   ctx.fill();
   ctx.stroke();
 });
@@ -11512,7 +11628,11 @@ var nodes = [
 ];
 
 // create an array with edges
-var edges = [{ from: 1, to: 2 }, { from: 2, to: 3 }, { from: 3, to: 4 }];
+var edges = [
+  { from: 1, to: 2 },
+  { from: 2, to: 3 },
+  { from: 3, to: 4 }
+];
 
 // create a network
 var container = document.getElementById("mynetwork");
@@ -11579,7 +11699,7 @@ p {
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;\n  The labels of box, circle, database, icon and text nodes may have different\n  margin values. Top, right, bottom and left margins may be different for each\n  node.\n&lt;/p&gt;\n&lt;p&gt;\n  Setting the margin value in the network&amp;apos;s nodes property sets it as the\n  default.\n&lt;/p&gt;\n&lt;p&gt;\n  Setting a the value to a number uses that number for the margins. If the value\n  is an object, a different value for each margin will be set.\n&lt;/p&gt;\n&lt;p&gt;Note that negative values appropriately push labels outside the node.&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = [\n  { id: 1, label: \"Default Value\\n(5)\", x: -150, y: -150 },\n  { id: 2, label: \"Single Value\\n(25)\", margin: 20, x: 0, y: 0 },\n  {\n    id: 3,\n    label: \"Different Values\\n(10, 20, 40, 30)\",\n    margin: { top: 10, right: 20, bottom: 40, left: 30 },\n    x: 120,\n    y: 120\n  },\n  {\n    id: 4,\n    label: \"A Negative Value\\n(10, 20, 40, -50)\",\n    margin: { top: 10, right: 20, bottom: 30, left: -20 },\n    x: 300,\n    y: -300\n  }\n];\n\n// create an array with edges\nvar edges = [{ from: 1, to: 2 }, { from: 2, to: 3 }, { from: 3, to: 4 }];\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {\n  nodes: {\n    shape: \"box\"\n  }\n};\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Labels | Label Margins"}'
+                      value='{"css":"#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;\n  The labels of box, circle, database, icon and text nodes may have different\n  margin values. Top, right, bottom and left margins may be different for each\n  node.\n&lt;/p&gt;\n&lt;p&gt;\n  Setting the margin value in the network&amp;apos;s nodes property sets it as the\n  default.\n&lt;/p&gt;\n&lt;p&gt;\n  Setting a the value to a number uses that number for the margins. If the value\n  is an object, a different value for each margin will be set.\n&lt;/p&gt;\n&lt;p&gt;Note that negative values appropriately push labels outside the node.&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = [\n  { id: 1, label: \"Default Value\\n(5)\", x: -150, y: -150 },\n  { id: 2, label: \"Single Value\\n(25)\", margin: 20, x: 0, y: 0 },\n  {\n    id: 3,\n    label: \"Different Values\\n(10, 20, 40, 30)\",\n    margin: { top: 10, right: 20, bottom: 40, left: 30 },\n    x: 120,\n    y: 120\n  },\n  {\n    id: 4,\n    label: \"A Negative Value\\n(10, 20, 40, -50)\",\n    margin: { top: 10, right: 20, bottom: 30, left: -20 },\n    x: 300,\n    y: -300\n  }\n];\n\n// create an array with edges\nvar edges = [\n  { from: 1, to: 2 },\n  { from: 2, to: 3 },\n  { from: 3, to: 4 }\n];\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {\n  nodes: {\n    shape: \"box\"\n  }\n};\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Labels | Label Margins"}'
                     /><input
                       type="hidden"
                       name="js"
@@ -11604,7 +11724,11 @@ var nodes = [
 ];
 
 // create an array with edges
-var edges = [{ from: 1, to: 2 }, { from: 2, to: 3 }, { from: 3, to: 4 }];
+var edges = [
+  { from: 1, to: 2 },
+  { from: 2, to: 3 },
+  { from: 3, to: 4 }
+];
 
 // create a network
 var container = document.getElementById("mynetwork");
@@ -19700,7 +19824,10 @@ var nodes = new vis.DataSet([
 ]);
 
 // create an array with edges
-var edges = new vis.DataSet([{ from: 1, to: 2 }, { from: 2, to: 3 }]);
+var edges = new vis.DataSet([
+  { from: 1, to: 2 },
+  { from: 2, to: 3 }
+]);
 
 // create a network
 var container = document.getElementById("mynetwork");
@@ -19760,7 +19887,7 @@ var network = new vis.Network(container, data, options);
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"body {\n  font: 10pt arial;\n}\n#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  {\n    id: 1,\n    shape: \"image\",\n    size: 20,\n    label: \"No select image\",\n    image: \"./unselected.svg\"\n  },\n  {\n    id: 2,\n    shape: \"image\",\n    size: 20,\n    label: \"Select image broken\",\n    image: {\n      unselected: \"./unselected.svg\",\n      selected: \"./BROKEN_LINK/selected.svg\"\n    }\n  },\n  {\n    id: 3,\n    shape: \"image\",\n    size: 20,\n    label: \"Select works!\",\n    image: {\n      unselected: \"./unselected.svg\",\n      selected: \"./selected.svg\"\n    },\n    shapeProperties: {\n      borderDashes: [15, 5],\n      interpolation: false\n    }\n  }\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([{ from: 1, to: 2 }, { from: 2, to: 3 }]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\n\n// provide the data in the vis format\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\n\nvar options = {\n  layout: {\n    randomSeed: 5\n  },\n  nodes: {\n    brokenImage: \"./broken-image.png\"\n  }\n};\n// initialize!\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Selected/Unselected Image"}'
+                      value='{"css":"body {\n  font: 10pt arial;\n}\n#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  {\n    id: 1,\n    shape: \"image\",\n    size: 20,\n    label: \"No select image\",\n    image: \"./unselected.svg\"\n  },\n  {\n    id: 2,\n    shape: \"image\",\n    size: 20,\n    label: \"Select image broken\",\n    image: {\n      unselected: \"./unselected.svg\",\n      selected: \"./BROKEN_LINK/selected.svg\"\n    }\n  },\n  {\n    id: 3,\n    shape: \"image\",\n    size: 20,\n    label: \"Select works!\",\n    image: {\n      unselected: \"./unselected.svg\",\n      selected: \"./selected.svg\"\n    },\n    shapeProperties: {\n      borderDashes: [15, 5],\n      interpolation: false\n    }\n  }\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 2 },\n  { from: 2, to: 3 }\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\n\n// provide the data in the vis format\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\n\nvar options = {\n  layout: {\n    randomSeed: 5\n  },\n  nodes: {\n    brokenImage: \"./broken-image.png\"\n  }\n};\n// initialize!\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Selected/Unselected Image"}'
                     /><input
                       type="hidden"
                       name="js"
@@ -19800,7 +19927,10 @@ var nodes = new vis.DataSet([
 ]);
 
 // create an array with edges
-var edges = new vis.DataSet([{ from: 1, to: 2 }, { from: 2, to: 3 }]);
+var edges = new vis.DataSet([
+  { from: 1, to: 2 },
+  { from: 2, to: 3 }
+]);
 
 // create a network
 var container = document.getElementById("mynetwork");
