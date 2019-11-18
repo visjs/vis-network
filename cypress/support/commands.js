@@ -1,3 +1,4 @@
+// eslint-disable-next-line require-jsdoc
 export function visPlaceNode(x, y) {
     // Open manipulation GUI.
     cy.get(".vis-edit-mode .vis-button.vis-edit").click();
@@ -15,6 +16,7 @@ export function visPlaceNode(x, y) {
     cy.get("#events .click .node").should("have.length", 1);
 }
 Cypress.Commands.add("visPlaceNode", visPlaceNode);
+// eslint-disable-next-line require-jsdoc
 export function visConnectNodes(from, to) {
     var middle = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 };
     // Open manipulation GUI.

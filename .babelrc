@@ -4,8 +4,7 @@
       "@babel/preset-env",
       {
         "targets": "> 0.1% or not dead",
-        "useBuiltIns": "usage",
-        "corejs": 3
+        "useBuiltIns": false
       }
     ],
     "@babel/preset-typescript"
@@ -13,7 +12,17 @@
   "plugins": [
     "css-modules-transform",
     "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread"
+    "@babel/proposal-object-rest-spread",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": 3
+      }
+    ]
+  ],
+  "exclude": [
+    "node_modules/@babel/runtime-corejs3/**",
+    "node_modules/core-js-pure/**"
   ],
   "env": {
     "test": {
