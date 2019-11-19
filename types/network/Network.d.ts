@@ -832,7 +832,7 @@ export interface NodeOptions {
     strokeWidth?: number, // px
     strokeColor?: string,
     align?: string,
-    vadjust?: string,
+    vadjust?: number,
     multi?: string,
     bold?: string | FontOptions,
     ital?: string | FontOptions,
@@ -942,7 +942,7 @@ export interface EdgeOptions {
     strokeWidth?: number, // px
     strokeColor?: string,
     align?: string,
-    vadjust?: string,
+    vadjust?: number,
     multi?: string,
     bold?: string | FontOptions,
     ital?: string | FontOptions,
@@ -989,7 +989,7 @@ export interface FontOptions {
   size?: number;
   face?: string;
   mod?: string;
-  vadjust?: string;
+  vadjust?: number;
 }
 
 export interface OptionsScaling {
