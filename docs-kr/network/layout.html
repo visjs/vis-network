@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-61231638-1', 'auto');ga('send', 'pageview');</script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="ko"><head><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-61231638-1', 'auto');ga('send', 'pageview');</script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" HREF="favicon.ico">
-    <title>vis.js - Layout documentation.</title>
+    <title>vis.js - Layout 문서.</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +57,7 @@
                     </ul>
                     <form class="navbar-form navbar-right" role="search">
                         <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="Enter keywords">
-                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">Go!</button>
+                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">검색</button>
                     </form>
                     <div id="search-results-wrapper" class="panel panel-default">
                       <div class="panel-body">
@@ -77,18 +77,18 @@
 
 <div class="container full">
     <h1>Network - layout</h1>
-    <p>Acts as the camera that looks on the canvas. Does the animation, zooming and focusing.</p>
-    <h3>Options</h3>
-    <p>The options for the layout module have to be contained in an object titled 'layout'.</p>
-    <p>Click on the full options or shorthand options to show how these options are supposed to be used.</p>
+    <p>canvas 위에서 보는 카메라 역할을 합니다. 애니메이션 확대/축소 및 포커싱을 수행합니다.</p>
+    <h3>옵션</h3>
+    <p> layout 모듈의 옵션은 'layout'이라는 제목의 object에 포함되어야 합니다.</p>
+    <p>전체 옵션 혹은 요약 옵션을 클릭하여 사용하는 방법을 표시합니다.</p>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">options hidden</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">full options</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">shorthand options</a></li>
+        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">옵션 숨기기</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">전체 옵션</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">요약 옵션</a></li>
     </ul>
     <br>
 <pre class="prettyprint lang-js options top hidden" id="fullOptions">
-// these are all options in full.
+// 모든 옵션들 입니다.
 var options = {
   layout: {
     randomSeed: undefined,
@@ -113,7 +113,7 @@ network.setOptions(options);
 </pre>
 
 <pre class="prettyprint lang-js options top hidden" id="shortOptions">
-// only the options that have shorthand notations are shown.
+// 단축 옵션만 표시합니다.
 var options = {
   layout:{
     hierarchical: true
@@ -122,27 +122,25 @@ var options = {
 
 network.setOptions(options);
 </pre>
-    <p>When enabling the hierarchical layout, it overrules some of the other options. The physics is set to the hierarchical repulsion solver and dynamic smooth edges are converted to static smooth edges.</p>
+    <p>hierarchical layout을 사용하도록 설정한다면, 다른 옵션 중 일부를 재정의합니다. physics는 hierarchical repulsion solver로 설정되고 동적 곡선 Edge는 정적 곡선 Edge로 변환됩니다.</p>
     <table class="options" id="optionTable">
-        <tr><th>Name</th><th>Type</th><th>Default</th><td>Description</td></tr>
-        <tr><td>randomSeed</td><td>Number</td><td><code>undefined</code></td>               <td>When NOT using the hierarchical layout, the nodes are randomly positioned initially. This means that the settled result is different every time. If you provide a random seed manually, the layout will be the same every time. Ideally you try with an undefined seed, reload until you are happy with the layout and use the <code>getSeed()</code> method to ascertain the seed.</td></tr>
-        <tr id="layout"><td>improvedLayout</td><td>Boolean</td><td><code>true</code></td>   <td>When enabled, the network will use the Kamada Kawai algorithm for initial layout. For networks larger than 100 nodes, clustering will be performed automatically to reduce the amount of nodes. This can greatly improve the stabilization times. If the network is very interconnected (no or few leaf nodes), this may not work and it will revert back to the old method. Performance will be improved in the future.</td></tr>
-        <tr><td>clusterThreshold</td><td>Number</td><td><code>150</code></td>               <td>Cluster threshold to which <code>improvedLayout</code> applies.</td></tr>
-        <tr class='toggle collapsible' onclick="toggleTable('optionTable','hierarchical', this);"><td><span parent="repulsion" class="right-caret"></span> hierarchical</td><td>Object or Boolean</td><td><code>Object</code></td>      <td>When true, the layout engine positions the nodes in a hierarchical fashion using default settings. For customization you can supply an object.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.enabled</td><td>Boolean</td><td><code>false</code></td>        <td>Toggle the usage of the hierarchical layout system. If this option is not defined, it is set to true if any of the properties in this object are defined.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.levelSeparation</td><td>Number</td><td><code>150</code></td>   <td>The distance between the different levels.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.nodeSpacing</td><td>Number</td><td><code>100</code></td>       <td>Minimum distance between nodes on the free axis. This is only for the initial layout. If you enable physics, the node distance there will be the effective node distance.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.treeSpacing</td><td>Number</td><td><code>200</code></td>       <td>Distance between different trees (independent networks). This is only for the initial layout. If you enable physics, the repulsion model will denote the distance between the trees.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.blockShifting</td><td>Boolean</td><td><code>true</code></td>    <td>Method for reducing whitespace. Can be used alone or together with edge minimization. Each node will check for whitespace and will shift
-            it's branch along with it for as far as it can, respecting the nodeSpacing on any level. This is mainly for the initial layout. If you enable physics, they layout will be determined by the physics. This will greatly speed up the stabilization time though!</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.edgeMinimization</td><td>Boolean</td><td><code>true</code></td> <td>Method for reducing whitespace. Can be used alone or together with block shifting. Enabling block shifting will usually speed up the layout process.
-            Each node will try to move along its free axis to reduce the total length of it's edges. This is mainly for the initial layout. If you enable physics, they layout will be determined by the physics. This will greatly speed up the stabilization time though!</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.parentCentralization</td><td>Boolean</td><td><code>true</code></td> <td>When true, the parents nodes will be centered again after the the layout algorithm has been finished.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.direction</td><td>String</td><td><code>'UD'</code></td>        <td>The direction of the hierarchical layout. The available options are: <code>UD, DU, LR, RL</code>. To simplify: up-down, down-up, left-right, right-left.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.sortMethod</td><td>String</td><td><code>'hubsize'</code></td>  <td>The algorithm used to ascertain the levels of the nodes based on the data. The possible options are: <code>hubsize, directed</code>. <br><br>
-            Hubsize takes the nodes with the most edges and puts them at the top. From that the rest of the hierarchy is evaluated. <br><br>
-            Directed adheres to the to and from data of the edges. A --> B so B is a level lower than A.</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.shakeTowards</td><td>String</td><td><code>'roots'</code></td>        <td>Controls whether in <code>directed</code> layout should all the roots be lined up at the top and their child nodes as close to their roots as possible (<code>roots</code>) or all the leaves lined up at the bottom and their parents as close to their children as possible (<code>leaves</code>, default).</td></tr>
+        <tr><th>이름</th><th>Type</th><th>Default</th><td>설명</td></tr>
+        <tr><td>randomSeed</td><td>Number</td><td><code>undefined</code></td>               <td>hierarchical layout을 사용하지 않는 경우, Node들은 처음에 랜덤하게 배치됩니다. 매번 결과가 다르다는 의미입니다. 랜덤 시드를 수동으로 제공하는 경우 layout이 매번 동일합니다. 정의되지 않은 시드로 시도하고 layout이 마음에 들면 <code>getSeed()</code>를 이용해 시드를 확인하는 것이 좋습니다.</td></tr>
+        <tr id="layout"><td>improvedLayout</td><td>Boolean</td><td><code>true</code></td>   <td>활성화가 되면 Network는 초기 layout에 Kamada Kawai 알고리즘을 사용합니다. Node가 100개 이상인 Network의 경우 Node를 줄이기 위해 클러스터링이 자동으로 수행됩니다. (리프 Node가 적거나 없음), 이것이 작동하지 않을 수 있으며 이전 메소드로 돌아갑니다. 이는 개선될 것입니다.</td></tr>
+        <tr><td>clusterThreshold</td><td>Number</td><td><code>150</code></td>               <td><code>improvedLayout</code>이 적용되는 클러스터 임계값입니다.</td></tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','hierarchical', this);"><td><span parent="repulsion" class="right-caret"></span> hierarchical</td><td>Object or Boolean</td><td><code>Object</code></td>      <td>True이면, layout 엔진은 기본 설정을 사용하여 Node를 hierarchical 방식으로 배치합니다. 사용자 설정을 위해 object를 제공할 수 있습니다.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.enabled</td><td>Boolean</td><td><code>false</code></td>        <td>hierarchical layout 시스템의 사용을 전환합니다. 이 옵션이 정의되지 않은 경우 이 object의 속성 중 하나가 true로 정의됩니다. </td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.levelSeparation</td><td>Number</td><td><code>150</code></td>   <td>서로 다른 레벨 사이의 거리입니다.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.nodeSpacing</td><td>Number</td><td><code>100</code></td>       <td>자유 축의 Node간의 최소 거리입니다. 이것은 처음 layout에만 해당됩니다. physics를 활성화하면 해당 Node 거리가 유효 Node 거리로 변경됩니다.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.treeSpacing</td><td>Number</td><td><code>200</code></td>       <td>서로 다른 트리 사이의 거리 (독립된 Network들) 입니다. 이것은 처음 layout에만 해당됩니다. physics를 활성화하면, repulsion 모델은 트리 사이의 거리를 나타냅니다.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.blockShifting</td><td>Boolean</td><td><code>true</code></td>    <td>공백을 줄이는 방법입니다. 단독으로 사용하거나, Edge 최소화와 함께 사용할 수 있습니다. 각 Node는 공백을 확인하고 모든 레벨의 Node spacing에 따라 가능한 한 부분을 이동시킵니다. 이는 주로 첫 layout을 위한 것입니다. physics를 활성화하면 physics에 의해 layout이 결정됩니다. 하지만 이것은 안정화 시간을 크게 단축할 것입니다!</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.edgeMinimization</td><td>Boolean</td><td><code>true</code></td> <td>공백을 줄이는 방법입니다. 단독으로 사용하거나 block shifting과 함께 사용할 수 있습니다. block shifting을 활성화하면 일반적으로 layout 프로세스의 속도가 빨라집니다. 각 Node는 각 Edge의 총 길이를 줄이기 위해 자유 축을 따라 이동하려고 시도합니다. 이것은 주로 첫 layout을 위한 것입니다. physics를 활성화하면 physics에 의해 layout이 결정됩니다. 하지만 이것은 안정화 시간을 크게 단축시킬 것입니다!</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.parentCentralization</td><td>Boolean</td><td><code>true</code></td> <td>True이면 layout 알고리즘 완료된 후 상위 Node의 중심이 다시 맞춰집니다.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.direction</td><td>String</td><td><code>'UD'</code></td>        <td>hierarchical layout의 방향입니다. 사용 가능한 옵션은 <code>UD, DU, LR, RL</code>입니다. 이 단어들의 요약입니다. up-down, down-up, left-right, right-left.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.sortMethod</td><td>String</td><td><code>'hubsize'</code></td>  <td>데이터를 기반으로 Node의 레벨을 확인하는 데 사용하는 알고리즘입니다. 가능한 옵션: <code>hubsize, directed</code>. <br><br>
+            Hubsize는 가장 많은 Edge를 가진 Node를 최상단에 배치합니다. 이를 통해 나머지 층이 계산됩니다. <br><br>
+            Edge 데이터로 연결됩니다. A->B 그래서 B는 A보다 낮은 레벨입니다.</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.shakeTowards</td><td>String</td><td><code>'roots'</code></td>        <td> layout에서 모든 루트가 가능한 상위 및 하위 Node에 정렬되어야 하는지(<code>roots</code>) <code>directed</code> 또는 모든 leaf가 하단에 정렬되어 있고  부모(<code>leaves</code>, default)가 가능한 자식에게 근접해야 하는지 여부를 제어합니다.</td></tr>
     </table>
 
 </div>

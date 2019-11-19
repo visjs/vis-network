@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" HREF="favicon.ico">
-    <title>vis.js - Configure documentation.</title>
+    <title>vis.js - 환경 설정 문서.</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -79,20 +78,20 @@
 </div>
 
 <div class="container full">
-    <h1>Network - configure</h1>
+    <h1>Network - 환경 설정</h1>
 
-    <p>Handles the HTML part of the canvas.</p>
-    <h3>Options</h3>
-    <p>The options for the canvas have to be contained in an object titled 'configure'.</p>
-    <p>Click on the full options or shorthand options to show how these options are supposed to be used.</p>
+    <p>Canvas의 HTML에 대한 부분입니다.</p>
+    <h3>옵션</h3>
+    <p>Canvas의 옵션은 'configure'라는 object에 있습니다.</p>
+    <p>전체 옵션 혹은 요약 옵션을 클릭하면 옵션에 대한 사용법을 보여줍니다.</p>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">options hidden</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">full options</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">shorthand options</a></li>
+        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">옵션 숨기기</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">전체 옵션</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">요약 옵션</a></li>
     </ul>
     <br>
 <pre class="prettyprint lang-js options top hidden" id="fullOptions">
-// these are all options in full.
+// 모든 옵션들 입니다.
 var options = {
   configure: {
     enabled: true,
@@ -106,7 +105,7 @@ network.setOptions(options);
 </pre>
 
 <pre class="prettyprint lang-js options top hidden" id="shortOptions">
-// only the options that have shorthand notations are shown.
+// 단축 옵션만 표시합니다.
 var options = {
   configure: 'nodes,edges'
 }
@@ -114,49 +113,46 @@ var options = {
 network.setOptions(options);
 </pre>
 
-    <p>As shown above, alternative to supplying an object, you can supply a <code>String</code>, <code>Array</code>, <code>Function</code> or
-        <code>Boolean</code>. These will do the same as the filter option described below.</p>
+    <p>object를 통해 지원할 수 있습니다. <code>String</code>, <code>Array</code>, <code>Function</code> 혹은
+        <code>Boolean</code>. 이러한 옵션은 아래에 설명된 필터 옵션과 동일합니다.</p>
     <table class="options">
         <tr>
-            <th>Name</th>
+            <th>이름</th>
             <th>Type</th>
             <th>Default</th>
-            <th>Description</th>
+            <th>설명</th>
         </tr>
         <tr>
             <td>enabled</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>Toggle the configuration interface on or off. This is an optional parameter. If left undefined and any of the other properties of this object are defined, this will be set to true.
+            <td>구성 인터페이스를 켜거나 끌 수 있습니다. 이 옵션은 선택사항입니다. Default 값은 true로 설정됩니다.
             </td>
         </tr>
         <tr>
             <td>filter</td>
             <td>String, Array, Boolean, Function</td>
             <td><code>true</code></td>
-            <td>When a boolean, true gives you all options, false will not show any. If a string is supplied, any
-                combination of the following is allowed: nodes, edges, layout, interaction, manipulation, physics,
-                selection, renderer. Feel free to come up with a fun seperating character. Finally, when supplied an
-                array of strings, any of the previously mentioned fields are accepted. <br><br>
-                When supplying a function, you receive two arguments. The option and the path of the option within the options object. If it returns true, the options will be shown in the configurator. Example:
+            <td>옵션을 true로 설정한다면, 모든 옵션을 킬 수 있고 false일 경우는 아무것도 보이지 않습니다. 문자열이 제공된 경우 Node, Edge, layout, interaction, manipulation, physics, selection, render등의 모든 조합이 허용됩니다. 마지막으로 문자열 배열을 제공하면 앞서 언급한 필드가 모두 허용됩니다. <br><br>
+                함수를 제공할때, 2개의 인자를 받습니다. 옵션과 옵션 객체에 대한 경로입니다. 이 옵션이 true로 반환되면 설정에 옵션이 표시됩니다. 예제:
                 <pre class="prettyprint lang-js">
 function (option, path) {
   return path.indexOf('physics') !== -1;
 }</pre>
-                This only shows the physics options.
+                이 옵션은 물리 옵션만 표시합니다.
             </td>
         </tr>
         <tr>
             <td>container</td>
             <td>DOM element</td>
             <td><code>undefined</code></td>
-            <td>This allows you to put the configure list in another HTML container than below the network.</td>
+            <td>옵션을 허용한다면, 구성을 Network 아래에 하는 것이 아닌, HTML container에 넣을 수 있습니다.</td>
         </tr>
         <tr>
             <td>showButton</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>Show the generate options button at the bottom of the configurator.</td>
+            <td>옵션 하단에 generate options 버튼을 표시합니다.</td>
         </tr>
     </table>
 
