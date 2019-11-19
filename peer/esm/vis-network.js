@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-19T20:25:48Z
+ * @date    2019-11-19T20:42:03Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -8454,6 +8454,25 @@ function () {
   return Groups;
 }();
 
+var ITERATOR$2 = wellKnownSymbol('iterator');
+
+var getIteratorMethod = function (it) {
+  if (it != undefined) return it[ITERATOR$2]
+    || it['@@iterator']
+    || iterators[classof(it)];
+};
+
+var getIterator = function (it) {
+  var iteratorMethod = getIteratorMethod(it);
+  if (typeof iteratorMethod != 'function') {
+    throw TypeError(String(it) + ' is not iterable');
+  } return anObject(iteratorMethod.call(it));
+};
+
+var getIterator$1 = getIterator;
+
+var getIterator$2 = getIterator$1;
+
 var $some = arrayIteration.some;
 
 
@@ -8645,25 +8664,6 @@ function _arrayWithHoles(arr) {
 }
 
 var arrayWithHoles = _arrayWithHoles;
-
-var ITERATOR$2 = wellKnownSymbol('iterator');
-
-var getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR$2]
-    || it['@@iterator']
-    || iterators[classof(it)];
-};
-
-var getIterator = function (it) {
-  var iteratorMethod = getIteratorMethod(it);
-  if (typeof iteratorMethod != 'function') {
-    throw TypeError(String(it) + ' is not iterable');
-  } return anObject(iteratorMethod.call(it));
-};
-
-var getIterator$1 = getIterator;
-
-var getIterator$2 = getIterator$1;
 
 var ITERATOR$3 = wellKnownSymbol('iterator');
 
@@ -14373,17 +14373,37 @@ function () {
       // todo: add support for clusters and hierarchical.
       var dataArray = [];
       var dataset = this.body.data.nodes.getDataSet();
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-      for (var nodeId in dataset._data) {
-        if (dataset._data.hasOwnProperty(nodeId)) {
-          var node = this.body.nodes[nodeId];
+      try {
+        for (var _iterator = getIterator$2(dataset.get()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var dsNode = _step.value;
+          var id = dsNode.id;
+          var bodyNode = this.body.nodes[id];
+          var x = Math.round(bodyNode.x);
+          var y = Math.round(bodyNode.y);
 
-          if (dataset._data[nodeId].x != Math.round(node.x) || dataset._data[nodeId].y != Math.round(node.y)) {
+          if (dsNode.x !== x || dsNode.y !== y) {
             dataArray.push({
-              id: node.id,
-              x: Math.round(node.x),
-              y: Math.round(node.y)
+              id: id,
+              x: x,
+              y: y
             });
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
           }
         }
       }
@@ -17971,8 +17991,10 @@ function () {
         for (var edgeId in _this2.body.edges) {
           if (_this2.body.edges.hasOwnProperty(edgeId)) {
             var edge = _this2.body.edges[edgeId];
-            var edgeData = _this2.body.data.edges._data[edgeId]; // only forcibly remove the smooth curve if the data has been set of the edge has the smooth curves defined.
+
+            var edgeData = _this2.body.data.edges.get(edgeId); // only forcibly remove the smooth curve if the data has been set of the edge has the smooth curves defined.
             // this is because a change in the global would not affect these curves.
+
 
             if (edgeData !== undefined) {
               var smoothOptions = edgeData.smooth;
@@ -18225,7 +18247,7 @@ function () {
       var _this4 = this;
 
       forEach$4(this.body.edges, function (edge, edgeId) {
-        var data = _this4.body.data.edges._data[edgeId];
+        var data = _this4.body.data.edges.get(edgeId);
 
         if (data !== undefined) {
           edge.setOptions(data);
@@ -31258,7 +31280,7 @@ function () {
         id: this.edgeBeingEditedId,
         from: sourceNodeId,
         to: targetNodeId,
-        label: this.body.data.edges._data[this.edgeBeingEditedId].label
+        label: this.body.data.edges.get(this.edgeBeingEditedId).label
       };
       var eeFunct = this.options.editEdge;
 

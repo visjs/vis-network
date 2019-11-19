@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-19T20:27:03Z
+ * @date    2019-11-19T20:43:10Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -12497,6 +12497,77 @@ var setTimeout$1 = path.setTimeout;
 
 var setTimeout$2 = setTimeout$1;
 
+var createMethod$7 = function (CONVERT_TO_STRING) {
+  return function ($this, pos) {
+    var S = String(requireObjectCoercible($this));
+    var position = toInteger$1(pos);
+    var size = S.length;
+    var first, second;
+    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+    first = S.charCodeAt(position);
+    return first < 0xD800 || first > 0xDBFF || position + 1 === size || (second = S.charCodeAt(position + 1)) < 0xDC00 || second > 0xDFFF ? CONVERT_TO_STRING ? S.charAt(position) : first : CONVERT_TO_STRING ? S.slice(position, position + 2) : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+  };
+};
+
+var stringMultibyte$1 = {
+  // `String.prototype.codePointAt` method
+  // https://tc39.github.io/ecma262/#sec-string.prototype.codepointat
+  codeAt: createMethod$7(false),
+  // `String.prototype.at` method
+  // https://github.com/mathiasbynens/String.prototype.at
+  charAt: createMethod$7(true)
+};
+
+var charAt$1 = stringMultibyte$1.charAt;
+var STRING_ITERATOR$1 = 'String Iterator';
+var setInternalState$4 = internalState$1.set;
+var getInternalState$4 = internalState$1.getterFor(STRING_ITERATOR$1); // `String.prototype[@@iterator]` method
+// https://tc39.github.io/ecma262/#sec-string.prototype-@@iterator
+
+defineIterator$1(String, 'String', function (iterated) {
+  setInternalState$4(this, {
+    type: STRING_ITERATOR$1,
+    string: String(iterated),
+    index: 0
+  }); // `%StringIteratorPrototype%.next` method
+  // https://tc39.github.io/ecma262/#sec-%stringiteratorprototype%.next
+}, function next() {
+  var state = getInternalState$4(this);
+  var string = state.string;
+  var index = state.index;
+  var point;
+  if (index >= string.length) return {
+    value: undefined,
+    done: true
+  };
+  point = charAt$1(string, index);
+  state.index += point.length;
+  return {
+    value: point,
+    done: false
+  };
+});
+
+var ITERATOR$8 = wellKnownSymbol$1('iterator');
+
+var getIteratorMethod$1 = function (it) {
+  if (it != undefined) return it[ITERATOR$8] || it['@@iterator'] || iterators$1[classof$1(it)];
+};
+
+var getIterator$3 = function (it) {
+  var iteratorMethod = getIteratorMethod$1(it);
+
+  if (typeof iteratorMethod != 'function') {
+    throw TypeError(String(it) + ' is not iterable');
+  }
+
+  return anObject(iteratorMethod.call(it));
+};
+
+var getIterator$4 = getIterator$3;
+
+var getIterator$5 = getIterator$4;
+
 var $some = arrayIteration$1.some; // `Array.prototype.some` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.some
 
@@ -13926,7 +13997,7 @@ var toAbsoluteIndex$2 = function (index, length) {
 }; // `Array.prototype.{ indexOf, includes }` methods implementation
 
 
-var createMethod$7 = function (IS_INCLUDES) {
+var createMethod$8 = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIndexedObject$2($this);
     var length = toLength$2(O.length);
@@ -13948,10 +14019,10 @@ var createMethod$7 = function (IS_INCLUDES) {
 var arrayIncludes$2 = {
   // `Array.prototype.includes` method
   // https://tc39.github.io/ecma262/#sec-array.prototype.includes
-  includes: createMethod$7(true),
+  includes: createMethod$8(true),
   // `Array.prototype.indexOf` method
   // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
-  indexOf: createMethod$7(false)
+  indexOf: createMethod$8(false)
 };
 var hiddenKeys$3 = {};
 var indexOf$8 = arrayIncludes$2.indexOf;
@@ -14459,8 +14530,8 @@ var HIDDEN$1 = sharedKey$2('hidden');
 var SYMBOL$1 = 'Symbol';
 var PROTOTYPE$1$1 = 'prototype';
 var TO_PRIMITIVE$1 = wellKnownSymbol$2('toPrimitive');
-var setInternalState$4 = internalState$2.set;
-var getInternalState$4 = internalState$2.getterFor(SYMBOL$1);
+var setInternalState$5 = internalState$2.set;
+var getInternalState$5 = internalState$2.getterFor(SYMBOL$1);
 var ObjectPrototype$3 = Object[PROTOTYPE$1$1];
 var $Symbol$1 = global_1$2.Symbol;
 var JSON$1 = global_1$2.JSON;
@@ -14498,7 +14569,7 @@ var setSymbolDescriptor$1 = descriptors$2 && fails$2(function () {
 
 var wrap$2 = function (tag, description) {
   var symbol = AllSymbols$1[tag] = objectCreate$2($Symbol$1[PROTOTYPE$1$1]);
-  setInternalState$4(symbol, {
+  setInternalState$5(symbol, {
     type: SYMBOL$1,
     tag: tag,
     description: description
@@ -14613,7 +14684,7 @@ if (!nativeSymbol$2) {
   };
 
   redefine$2($Symbol$1[PROTOTYPE$1$1], 'toString', function toString() {
-    return getInternalState$4(this).tag;
+    return getInternalState$5(this).tag;
   });
   objectPropertyIsEnumerable$2.f = $propertyIsEnumerable$1;
   objectDefineProperty$2.f = $defineProperty$1;
@@ -14626,7 +14697,7 @@ if (!nativeSymbol$2) {
     nativeDefineProperty$1$2($Symbol$1[PROTOTYPE$1$1], 'description', {
       configurable: true,
       get: function description() {
-        return getInternalState$4(this).description;
+        return getInternalState$5(this).description;
       }
     });
   }
@@ -14792,7 +14863,7 @@ var objectGetPrototypeOf$2 = correctPrototypeGetter$2 ? Object.getPrototypeOf : 
 
   return O instanceof Object ? ObjectPrototype$1$1 : null;
 };
-var ITERATOR$8 = wellKnownSymbol$2('iterator');
+var ITERATOR$9 = wellKnownSymbol$2('iterator');
 var BUGGY_SAFARI_ITERATORS$4 = false; // `%IteratorPrototype%` object
 // https://tc39.github.io/ecma262/#sec-%iteratorprototype%-object
 
@@ -15071,7 +15142,7 @@ var createMethod$2$1 = function (CONVERT_TO_STRING) {
   };
 };
 
-var stringMultibyte$1 = {
+var stringMultibyte$2 = {
   // `String.prototype.codePointAt` method
   // https://tc39.github.io/ecma262/#sec-string.prototype.codepointat
   codeAt: createMethod$2$1(false),
@@ -15079,15 +15150,15 @@ var stringMultibyte$1 = {
   // https://github.com/mathiasbynens/String.prototype.at
   charAt: createMethod$2$1(true)
 };
-var charAt$1 = stringMultibyte$1.charAt;
-var STRING_ITERATOR$1 = 'String Iterator';
+var charAt$2 = stringMultibyte$2.charAt;
+var STRING_ITERATOR$2 = 'String Iterator';
 var setInternalState$2$1 = internalState$2.set;
-var getInternalState$2$1 = internalState$2.getterFor(STRING_ITERATOR$1); // `String.prototype[@@iterator]` method
+var getInternalState$2$1 = internalState$2.getterFor(STRING_ITERATOR$2); // `String.prototype[@@iterator]` method
 // https://tc39.github.io/ecma262/#sec-string.prototype-@@iterator
 
 defineIterator$2(String, 'String', function (iterated) {
   setInternalState$2$1(this, {
-    type: STRING_ITERATOR$1,
+    type: STRING_ITERATOR$2,
     string: String(iterated),
     index: 0
   }); // `%StringIteratorPrototype%.next` method
@@ -15101,7 +15172,7 @@ defineIterator$2(String, 'String', function (iterated) {
     value: undefined,
     done: true
   };
-  point = charAt$1(string, index);
+  point = charAt$2(string, index);
   state.index += point.length;
   return {
     value: point,
@@ -15110,7 +15181,7 @@ defineIterator$2(String, 'String', function (iterated) {
 });
 var ITERATOR$2$1 = wellKnownSymbol$2('iterator');
 
-var getIteratorMethod$1 = function (it) {
+var getIteratorMethod$2 = function (it) {
   if (it != undefined) return it[ITERATOR$2$1] || it['@@iterator'] || iterators$2[classof$2(it)];
 }; // https://tc39.github.io/ecma262/#sec-object.create
 
@@ -15482,7 +15553,7 @@ var arrayFrom$1 = function from(arrayLike
   var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
   var mapping = mapfn !== undefined;
   var index = 0;
-  var iteratorMethod = getIteratorMethod$1(O);
+  var iteratorMethod = getIteratorMethod$2(O);
   var length, result, step, iterator, next;
   if (mapping) mapfn = bindContext$2(mapfn, argumentsLength > 2 ? arguments[2] : undefined, 2); // if the target is not iterable or it's an array with the default iterator - use a simple case
 
@@ -24065,8 +24136,8 @@ var HIDDEN$2 = sharedKey$1('hidden');
 var SYMBOL$2 = 'Symbol';
 var PROTOTYPE$4 = 'prototype';
 var TO_PRIMITIVE$2 = wellKnownSymbol$1('toPrimitive');
-var setInternalState$5 = internalState$1.set;
-var getInternalState$5 = internalState$1.getterFor(SYMBOL$2);
+var setInternalState$6 = internalState$1.set;
+var getInternalState$6 = internalState$1.getterFor(SYMBOL$2);
 var ObjectPrototype$4 = Object[PROTOTYPE$4];
 var $Symbol$2 = global_1.Symbol;
 var $stringify$1 = getBuiltIn$1('JSON', 'stringify');
@@ -24103,7 +24174,7 @@ var setSymbolDescriptor$2 = descriptors && fails(function () {
 
 var wrap$3 = function (tag, description) {
   var symbol = AllSymbols$2[tag] = objectCreate$1($Symbol$2[PROTOTYPE$4]);
-  setInternalState$5(symbol, {
+  setInternalState$6(symbol, {
     type: SYMBOL$2,
     tag: tag,
     description: description
@@ -24218,7 +24289,7 @@ if (!nativeSymbol$1) {
   };
 
   redefine$1($Symbol$2[PROTOTYPE$4], 'toString', function toString() {
-    return getInternalState$5(this).tag;
+    return getInternalState$6(this).tag;
   });
   objectPropertyIsEnumerable.f = $propertyIsEnumerable$2;
   objectDefineProperty.f = $defineProperty$2;
@@ -24231,7 +24302,7 @@ if (!nativeSymbol$1) {
     nativeDefineProperty$3($Symbol$2[PROTOTYPE$4], 'description', {
       configurable: true,
       get: function description() {
-        return getInternalState$5(this).description;
+        return getInternalState$6(this).description;
       }
     });
   }
@@ -24425,7 +24496,7 @@ var whitespace$2 = '[' + whitespaces$2 + ']';
 var ltrim$2 = RegExp('^' + whitespace$2 + whitespace$2 + '*');
 var rtrim$2 = RegExp(whitespace$2 + whitespace$2 + '*$'); // `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
 
-var createMethod$8 = function (TYPE) {
+var createMethod$9 = function (TYPE) {
   return function ($this) {
     var string = String(requireObjectCoercible($this));
     if (TYPE & 1) string = string.replace(ltrim$2, '');
@@ -24437,13 +24508,13 @@ var createMethod$8 = function (TYPE) {
 var stringTrim$2 = {
   // `String.prototype.{ trimLeft, trimStart }` methods
   // https://tc39.github.io/ecma262/#sec-string.prototype.trimstart
-  start: createMethod$8(1),
+  start: createMethod$9(1),
   // `String.prototype.{ trimRight, trimEnd }` methods
   // https://tc39.github.io/ecma262/#sec-string.prototype.trimend
-  end: createMethod$8(2),
+  end: createMethod$9(2),
   // `String.prototype.trim` method
   // https://tc39.github.io/ecma262/#sec-string.prototype.trim
-  trim: createMethod$8(3)
+  trim: createMethod$9(3)
 };
 
 var trim$5 = stringTrim$2.trim;
@@ -24507,77 +24578,6 @@ function _arrayWithHoles$1(arr) {
 }
 
 var arrayWithHoles$1 = _arrayWithHoles$1;
-
-var createMethod$9 = function (CONVERT_TO_STRING) {
-  return function ($this, pos) {
-    var S = String(requireObjectCoercible($this));
-    var position = toInteger$1(pos);
-    var size = S.length;
-    var first, second;
-    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
-    first = S.charCodeAt(position);
-    return first < 0xD800 || first > 0xDBFF || position + 1 === size || (second = S.charCodeAt(position + 1)) < 0xDC00 || second > 0xDFFF ? CONVERT_TO_STRING ? S.charAt(position) : first : CONVERT_TO_STRING ? S.slice(position, position + 2) : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
-  };
-};
-
-var stringMultibyte$2 = {
-  // `String.prototype.codePointAt` method
-  // https://tc39.github.io/ecma262/#sec-string.prototype.codepointat
-  codeAt: createMethod$9(false),
-  // `String.prototype.at` method
-  // https://github.com/mathiasbynens/String.prototype.at
-  charAt: createMethod$9(true)
-};
-
-var charAt$2 = stringMultibyte$2.charAt;
-var STRING_ITERATOR$2 = 'String Iterator';
-var setInternalState$6 = internalState$1.set;
-var getInternalState$6 = internalState$1.getterFor(STRING_ITERATOR$2); // `String.prototype[@@iterator]` method
-// https://tc39.github.io/ecma262/#sec-string.prototype-@@iterator
-
-defineIterator$1(String, 'String', function (iterated) {
-  setInternalState$6(this, {
-    type: STRING_ITERATOR$2,
-    string: String(iterated),
-    index: 0
-  }); // `%StringIteratorPrototype%.next` method
-  // https://tc39.github.io/ecma262/#sec-%stringiteratorprototype%.next
-}, function next() {
-  var state = getInternalState$6(this);
-  var string = state.string;
-  var index = state.index;
-  var point;
-  if (index >= string.length) return {
-    value: undefined,
-    done: true
-  };
-  point = charAt$2(string, index);
-  state.index += point.length;
-  return {
-    value: point,
-    done: false
-  };
-});
-
-var ITERATOR$9 = wellKnownSymbol$1('iterator');
-
-var getIteratorMethod$2 = function (it) {
-  if (it != undefined) return it[ITERATOR$9] || it['@@iterator'] || iterators$1[classof$1(it)];
-};
-
-var getIterator$3 = function (it) {
-  var iteratorMethod = getIteratorMethod$2(it);
-
-  if (typeof iteratorMethod != 'function') {
-    throw TypeError(String(it) + ' is not iterable');
-  }
-
-  return anObject(iteratorMethod.call(it));
-};
-
-var getIterator$4 = getIterator$3;
-
-var getIterator$5 = getIterator$4;
 
 var ITERATOR$a = wellKnownSymbol$1('iterator');
 
@@ -30592,17 +30592,37 @@ function () {
       // todo: add support for clusters and hierarchical.
       var dataArray = [];
       var dataset = this.body.data.nodes.getDataSet();
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-      for (var nodeId in dataset._data) {
-        if (dataset._data.hasOwnProperty(nodeId)) {
-          var node = this.body.nodes[nodeId];
+      try {
+        for (var _iterator = getIterator$5(dataset.get()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var dsNode = _step.value;
+          var id = dsNode.id;
+          var bodyNode = this.body.nodes[id];
+          var x = Math.round(bodyNode.x);
+          var y = Math.round(bodyNode.y);
 
-          if (dataset._data[nodeId].x != Math.round(node.x) || dataset._data[nodeId].y != Math.round(node.y)) {
+          if (dsNode.x !== x || dsNode.y !== y) {
             dataArray.push({
-              id: node.id,
-              x: Math.round(node.x),
-              y: Math.round(node.y)
+              id: id,
+              x: x,
+              y: y
             });
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
           }
         }
       }
@@ -34197,8 +34217,10 @@ function () {
         for (var edgeId in _this2.body.edges) {
           if (_this2.body.edges.hasOwnProperty(edgeId)) {
             var edge = _this2.body.edges[edgeId];
-            var edgeData = _this2.body.data.edges._data[edgeId]; // only forcibly remove the smooth curve if the data has been set of the edge has the smooth curves defined.
+
+            var edgeData = _this2.body.data.edges.get(edgeId); // only forcibly remove the smooth curve if the data has been set of the edge has the smooth curves defined.
             // this is because a change in the global would not affect these curves.
+
 
             if (edgeData !== undefined) {
               var smoothOptions = edgeData.smooth;
@@ -34451,7 +34473,7 @@ function () {
       var _this4 = this;
 
       forEach$3(this.body.edges, function (edge, edgeId) {
-        var data = _this4.body.data.edges._data[edgeId];
+        var data = _this4.body.data.edges.get(edgeId);
 
         if (data !== undefined) {
           edge.setOptions(data);
@@ -43631,7 +43653,7 @@ var iterate_1 = createCommonjsModule(function (module) {
     if (IS_ITERATOR) {
       iterator = iterable;
     } else {
-      iterFn = getIteratorMethod$2(iterable);
+      iterFn = getIteratorMethod$1(iterable);
       if (typeof iterFn != 'function') throw TypeError('Target is not iterable'); // optimisation for array iterators
 
       if (isArrayIteratorMethod$2(iterFn)) {
@@ -47562,7 +47584,7 @@ function () {
         id: this.edgeBeingEditedId,
         from: sourceNodeId,
         to: targetNodeId,
-        label: this.body.data.edges._data[this.edgeBeingEditedId].label
+        label: this.body.data.edges.get(this.edgeBeingEditedId).label
       };
       var eeFunct = this.options.editEdge;
 
