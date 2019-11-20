@@ -149,7 +149,7 @@ network.setOptions(options);
 </pre>
     <p>아래는 각각의 옵션들에 대한 설명입니다.</p>
     <table class="options" id="optionTable">
-        <tr><th>이름</th><th>Type</th><th>Default 값</th><th>설명</th></tr>
+        <tr><th>이름</th><th>Type</th><th>Default</th><th>설명</th></tr>
         <tr><td>enabled</td>                    <td>Boolean</td>                <td><code>true</code></td>     <td>physics 시스템을 켜거나 끄는 옵션입니다. 이 옵션은 필수가 아닙니다. 아래 옵션들을 정의하고 실행된 옵션이 없는 경우 이 옵션은 true로 설정됩니다.</td></tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','barnesHut', this);"><td><span parent="barnesHut" class="right-caret"></span> barnesHut</td>                       <td>Object</td>         <td><code>Object</code></td>    <td>BarnesHut은 queadtree 기준으로 중력 모델입니다. 이것은 가장 빠르며, Default와 non-hierarchical 레이아웃에 solver를 추천합니다. </td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.gravitationalConstant</td>        <td>Number</td>         <td><code>-2000</code></td>     <td>중력의 값을 설정하는 옵셥입니다. 중력을 강하게 하려면 값을 줄이면 됩니다. (-10000, -50000)</td></tr>

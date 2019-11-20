@@ -232,7 +232,7 @@ pre.hidden {
 #navbar form[role="search"]::after {
   background: rgba(0, 0, 0, 0) url("../img/arrow.svg") no-repeat scroll 145px 0;
   background-size: 27%;
-  content: "Just search it";
+  content: "검색하세요!";
   display: block;
   padding: 40px 40px;
   position: absolute;
