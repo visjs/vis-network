@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="kr"><head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,8 +52,8 @@
                     <ul class="nav navbar-nav">
                     </ul>
                     <form class="navbar-form navbar-right" role="search">
-                        <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="Enter keywords">
-                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">Go!</button>
+                        <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="키워드 입력">
+                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">찾기!</button>
                     </form>
                     <div id="search-results-wrapper" class="panel panel-default">
                       <div class="panel-body">
@@ -73,14 +73,14 @@
 
 <div class="container full">
     <h1>Network - interaction</h1>
-    <p>Used for all user interaction with the network. Handles mouse and touch events as well as the navigation buttons and the popups.</p>
-    <h3>Options</h3>
-    <p>The options for the interaction module have to be contained in an object titled 'interaction'.</p>
-    <p>Click on the full options or shorthand options to show how these options are supposed to be used.</p>
+    <p>network와의 모든 사용자 상호 작용에 사용됩니다. 내비게이션 버튼 및 팝업뿐만 아니라 마우스 및 터치 이벤트를 처리합니다.</p>
+    <h3>옵션</h3>
+    <p>상호 작용 모듈의 옵션은 ‘interaction’이라는 제목의 object에 포함되어야 합니다.</p>
+    <p>전체 옵션 또는 요약 옵션을 클릭하여 이러한 옵션들의 사용 방법을 확인하십시오.</p>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">options hidden</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">full options</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">shorthand options</a></li>
+        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">옵션 숨기기</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">전체 옵션</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">요약 옵션</a></li>
     </ul>
     <br>
 <pre class="prettyprint lang-js options top hidden" id="fullOptions">
@@ -122,28 +122,28 @@ var options = {
 network.setOptions(options);
 </pre>
 
-    <p>This is a list of all the methods in the public API. They are collected here from all individual modules.</p>
+    <p>이것은 공개 API의 모든 메소드 목록입니다. 모든 개별적인 모듈에서 수집되었습니다.</p>
     <table class="options" id="optionTable">
-        <tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
-        <tr><td>dragNodes</td>              <td>Boolean</td>            <td><code>true</code></td>      <td>When true, the nodes that are not fixed can be dragged by the user.</td></tr>
-        <tr><td>dragView</td>               <td>Boolean</td>            <td><code>true</code></td>      <td>When true, the view can be dragged around by the user.</td></tr>
-        <tr><td>hideEdgesOnDrag</td>        <td>Boolean</td>            <td><code>false</code></td>     <td>When true, the edges are not drawn when dragging the view. This can greatly speed up responsiveness on dragging, improving user experience.</td></tr>
-        <tr><td>hideEdgesOnZoom</td>        <td>Boolean</td>            <td><code>false</code></td>     <td>When true, the edges are not drawn when zooming the view. This can greatly speed up responsiveness on zooming, improving user experience.</td></tr>
-        <tr><td>hideNodesOnDrag</td>        <td>Boolean</td>            <td><code>false</code></td>     <td>When true, the nodes are not drawn when dragging the view. This can greatly speed up responsiveness on dragging, improving user experience.</td></tr>
-        <tr><td>hover</td>                  <td>Boolean</td>            <td><code>false</code></td>     <td>When true, the nodes use their hover colors when the mouse moves over them.</td></tr>
-        <tr><td>hoverConnectedEdges</td>     <td>Boolean</td>            <td><code>true</code></td>      <td>When true, on hovering over a node, it's connecting edges are highlighted.</td></tr>
-        <tr class='toggle collapsible' onclick="toggleTable('optionTable','keyboard', this);"><td><span parent="keyboard" class="right-caret"></span> keyboard</td>               <td>Object or Boolean</td>   <td><code>Object</code></td>    <td>When true, the keyboard shortcuts are enabled with the default settings. For further customization, you can supply an object.</td></tr>
-        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.enabled</td>       <td>Boolean</td>            <td><code>false</code></td>     <td>Toggle the usage of the keyboard shortcuts. If this option is not defined, it is set to true if any of the properties in this object are defined.</td></tr>
-        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.speed.x</td>       <td>Number</td>             <td><code>1</code></td>         <td>The speed at which the view moves in the x direction on pressing a key or pressing a navigation button.</td></tr>
-        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.speed.y</td>       <td>Number</td>             <td><code>1</code></td>         <td>The speed at which the view moves in the y direction on pressing a key or pressing a navigation button.</td></tr>
-        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.speed.zoom</td>    <td>Number</td>             <td><code>0.02</code></td>      <td>The speed at which the view zooms in or out pressing a key or pressing a navigation button.</td></tr>
-        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.bindToWindow</td>  <td>Boolean</td>            <td><code>true</code></td>      <td>When binding the keyboard shortcuts to the window, they will work regardless of which DOM object has the focus. If you have multiple networks on your page, you could set this to false, making sure the keyboard shortcuts only work on the network that has the focus.</td></tr>
-        <tr><td>multiselect</td>            <td>Boolean</td>            <td><code>false</code></td>     <td>When true, a longheld click (or touch) as well as a control-click will add to the selection.</td></tr>
-        <tr><td>navigationButtons</td>      <td>Boolean</td>            <td><code>false</code></td>     <td>When true, navigation buttons are drawn on the network canvas. These are HTML buttons and can be completely customized using CSS.</td></tr>
-        <tr><td>selectable</td>             <td>Boolean</td><td><code>true</code></td><td>When true, the nodes and edges can be selected by the user.</td></tr>
-        <tr><td>selectConnectedEdges</td>   <td>Boolean</td><td><code>true</code></td><td>When true, on selecting a node, its connecting edges are highlighted.</td></tr>
-        <tr><td>tooltipDelay</td>           <td>Number</td>             <td><code>300</code></td>        <td>When nodes or edges have a defined <code>'title'</code> field, this can be shown as a pop-up tooltip. The tooltip itself is an HTML element that can be fully styled using CSS. The delay is the amount of time in milliseconds it takes before the tooltip is shown.</td></tr>
-        <tr><td>zoomView</td>               <td>Boolean</td>            <td><code>true</code></td>      <td>When true, the user can zoom in.</td></tr>
+        <tr><th>이름</th><th>타입</th><th>디폴트</th><th>설명</th></tr>
+        <tr><td>dragNodes</td>              <td>Boolean</td>            <td><code>true</code></td>      <td>true인 경우, 고정되지 않은 노드를 사용자가 드래그할 수 있습니다.</td></tr>
+        <tr><td>dragView</td>               <td>Boolean</td>            <td><code>true</code></td>      <td>true인 경우, 사용자가 화면을 드래그할 수 있습니다.</td></tr>
+        <tr><td>hideEdgesOnDrag</td>        <td>Boolean</td>            <td><code>false</code></td>     <td>true인 경우, 화면을 드래그할 때 Edge가 그려지지 않습니다. 이를 통해 드래그 응답 속도가 크게 향상되어 UX가 향상됩니다.</td></tr>
+        <tr><td>hideEdgesOnZoom</td>        <td>Boolean</td>            <td><code>false</code></td>     <td>true인 경우, 화면을 확대 / 축소할 때 Edge가 그려지지 않습니다. 이를 통해 확대 / 축소에 대한 응답 속도가 크게 향상되어 UX가 향상됩니다.</td></tr>
+        <tr><td>hideNodesOnDrag</td>        <td>Boolean</td>            <td><code>false</code></td>     <td>true인 경우, 화면을 드래그할 때 Node가 그려지지 않습니다. 이를 통해 드래그 응답 속도가 크게 향상되어 UX가 향상됩니다.</td></tr>
+        <tr><td>hover</td>                  <td>Boolean</td>            <td><code>false</code></td>     <td>true인 경우, 마우스로 Node 위에서 움직일 때 Node가 hover 색상을 사용합니다.</td></tr>
+        <tr><td>hoverConnectedEdges</td>     <td>Boolean</td>            <td><code>true</code></td>      <td>true인 경우, Node 위로 마우스를 가져가면 연결 Edge가 강조표시가 됩니다.</td></tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','keyboard', this);"><td><span parent="keyboard" class="right-caret"></span> keyboard</td>               <td>Object or Boolean</td>   <td><code>Object</code></td>    <td>true인 경우, 키보드 단축키가 디폴트 설정으로 활성화됩니다. 추가적인 사용자 정의를 위해 object를 할당할 수 있습니다.</td></tr>
+        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.enabled</td>       <td>Boolean</td>            <td><code>false</code></td>     <td>키보드 단축키 사용을 활성화하거나 비활성화합니다. 이 옵션이 정의되어 있지 않으면 이 object의 속성이 정의되어 있을 때 true로 설정됩니다.</td></tr>
+        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.speed.x</td>       <td>Number</td>             <td><code>1</code></td>         <td>키를 누르거나 내비게이션 버튼을 누를 때 뷰가 x 방향으로 이동하는 속도입니다.</td></tr>
+        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.speed.y</td>       <td>Number</td>             <td><code>1</code></td>         <td>키를 누르거나 내비게이션 버튼을 누를 때 뷰가 y 방향으로 이동하는 속도입니다.</td></tr>
+        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.speed.zoom</td>    <td>Number</td>             <td><code>0.02</code></td>      <td>키를 누르거나 내비게이션 버튼을 누르면 뷰가 확대 / 축소되는 속도입니다.</td></tr>
+        <tr parent="keyboard" class="hidden"><td class="indent">keyboard.bindToWindow</td>  <td>Boolean</td>            <td><code>true</code></td>      <td>키보드 단축키를 창에 바인딩하면, 포커스가 있는 DOM object에 관계없이 작동합니다. 페이지에 network가 여러 개인 경우, 이 설정을 false로 설정하면, 키보드 단축키가 포커스가 있는 network에서만 작동합니다.</td></tr>
+        <tr><td>multiselect</td>            <td>Boolean</td>            <td><code>false</code></td>     <td>true인 경우, 길게 누르기 (또는 터치) 와 control-click이 선택 항목에 추가된다.</td></tr>
+        <tr><td>navigationButtons</td>      <td>Boolean</td>            <td><code>false</code></td>     <td>true인 경우, 내비게이션 버튼이 network 캔버스에 그려집니다. 이들은 HTML 버튼이며 CSS를 사용하여 사용자가 정의할 수 있습니다.</td></tr>
+        <tr><td>selectable</td>             <td>Boolean</td><td><code>true</code></td><td>true인 경우, 사용자가 노드와 Edge를 선택할 수 있습니다.</td></tr>
+        <tr><td>selectConnectedEdges</td>   <td>Boolean</td><td><code>true</code></td><td>true인 경우, Node를 선택할 때, 연결 Edge가 강조 표시됩니다.</td></tr>
+        <tr><td>tooltipDelay</td>           <td>Number</td>             <td><code>300</code></td>        <td>Node나 Edge에 정의된 <code>'title'</code> 필드가 있다면, 팝업 툴팁으로 표시될 수 있습니다. 툴팁 자체는 CSS를 사용하여 완전히 스타일을 지정할 수 있는 HTML 요소입니다. 지연 시간은 툴팁이 표시되기까지 걸리는 시간(밀리 초)입니다.</td></tr>
+        <tr><td>zoomView</td>               <td>Boolean</td>            <td><code>true</code></td>      <td>true인 경우, 사용자가 확대할 수 있습니다.</td></tr>
     </table>
 
 </div>
