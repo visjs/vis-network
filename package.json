@@ -83,7 +83,7 @@
     "@semantic-release/release-notes-generator": "7.3.4",
     "@types/chai": "4.2.5",
     "@types/mocha": "5.2.7",
-    "@types/sinon": "7.5.0",
+    "@types/sinon": "7.5.1",
     "@types/timsort": "0.3.0",
     "@typescript-eslint/eslint-plugin": "2.8.0",
     "@typescript-eslint/parser": "2.8.0",
