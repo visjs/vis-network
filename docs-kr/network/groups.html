@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" HREF="favicon.ico">
-    <title>vis.js - Groups documentation.</title>
+    <title>vis.js - Groups 문서.</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -57,8 +57,8 @@
                     <ul class="nav navbar-nav">
                     </ul>
                     <form class="navbar-form navbar-right" role="search">
-                        <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="Keyword 입력">
-                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">검색</button>
+                        <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="Enter keywords">
+                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">Go!</button>
                     </form>
                     <div id="search-results-wrapper" class="panel panel-default">
                       <div class="panel-body">
@@ -79,14 +79,14 @@
 <div class="container full">
     <h1>Network - groups</h1>
 
-    <p>Handles the group styling.</p>
-    <h3>Options</h3>
+    <p>Group의 스타일을 다루어 봅니다.</p>
+    <h3>옵션</h3>
 
-    <p>The options for the canvas have to be contained in an object titled 'groups'.</p>
-    <p>Click on the options shown to show how these options are supposed to be used.</p>
+    <p>canvas에 대한 옵션은 'groups'이라고 이름붙은 object를 포함합니다.</p>
+    <p>옵션 살펴보기를 클릭하여 옵션을 사용하는 방법을 볼 수 있습니다.</p>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">options hidden</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">options shown</a></li>
+        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">옵션 숨기기</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">옵션 살펴보기</a></li>
     </ul>
     <br>
 <pre class="prettyprint lang-js options hidden" id="fullOptions">
@@ -101,10 +101,10 @@ var options = {
 
 network.setOptions(options);
 </pre>
-    <p>All of the individual options are explained here:</p>
+    <p>모든 개별 옵션이 여기에 설명되어 있습니다:</p>
     <table class="options">
         <tr>
-            <th>Name</th>
+            <th>이름</th>
             <th>Type</th>
             <th>Default</th>
             <th>Description</th>
@@ -113,9 +113,7 @@ network.setOptions(options);
             <td>useDefaultGroups</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>If your nodes have groups defined that are not in the Groups module, the module loops over the groups it
-                does have, allocating one for each unknown group. When all are used, it goes back to the first group. By
-                setting this to false, the default groups will not be used in this cycle.
+            <td>만약 당신의 Nodes이 Group들의 모듈에 속하지 않기로 정의된 Group을 가진다면, 모듈은 각각의 알 수 없는 Group에 하나씩 할당하면서 해당 Group을 순환합니다. 모두 사용될 때, 그것은 첫 번째 Group으로 되돌아갑니다. 이를 거짓 값으로 설정함으로써, 초기 Group들은 이 cycle.group* Object에서 사용되지 않을 것입니다. 
             </td>
         </tr>
         <tr>
@@ -123,9 +121,7 @@ network.setOptions(options);
             <td>Object</td>
             <td><code></code></td>
             <td>
-                You can add multiple groups containing styling information that applies to a certain subset of groups.
-                All options described in the <a href="./nodes.html">nodes module</a> that make sense can be used here
-                (you're not going to set the same id or x,y position for a group of nodes).
+                하위 Group에 적용되는 스타일 정보를 포함하는 여러 Group을 추가할 수 있습니다. 여기서 Node 모듈에 설명되는 모든 옵션들은 여기서 사용될 수 있습니다. (동일한 ID 또는 Node의 Group의 x,y 좌표를 설정하지 않을 것입니다.)
                 Example:
 <pre class="prettyprint lang-js options">
 var nodes = [
@@ -138,8 +134,7 @@ var options = {
   }
 }
 </pre>
-                *) the option is not called group, as shown by the example but can by any custom id, except for
-                'useDefaultGroups'.
+                *) 예시와 같이 보여진 것처럼 그룹이라 불리지 않는 옵션이지만, 'useDefaultGroups'.을 제외하고 사용자 지정 ID로 호출할 수 있습니다.
             </td>
         </tr>
     </table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" HREF="favicon.ico">
-    <title>vis.js - Nodes documentation.</title>
+    <title>vis.js - Nodes 문서.</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -53,8 +53,8 @@
                     <ul class="nav navbar-nav">
                     </ul>
                     <form class="navbar-form navbar-right" role="search">
-                        <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="Keyword 입력">
-                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">검색</button>
+                        <input name="q" id="tipue_search_input" autocomplete="off" type="text" class="form-control" placeholder="Enter keywords">
+                        <button type="button" class="btn btn-default" onclick="vis.initSiteSearch(true);">Go!</button>
                     </form>
                     <div id="search-results-wrapper" class="panel panel-default">
                       <div class="panel-body">
@@ -75,18 +75,15 @@
 <div class="container full">
     <h1>Network - nodes</h1>
 
-    <p>Handles the creation and deletion of nodes and contains the global node options and styles.</p>
-    <h3>Options</h3>
-    <p>The options for the nodes have to be contained in an object titled 'nodes'. All of these options can be supplied per node as well. Obviously, 'id' should not be defined globally but per node. Options defined
-        in the global nodes object, are applied to all nodes. If a node has options of its own, those will be used instead of the global options.</p>
-    <p><b><i>When you have given a node an option, you will override the global option for that property, and also the group option for that property if the node is in a group. If you then set that option to <code>null</code>,
-        it will revert back to the default value.</i></b>
-    </p>
-    <p>Click on the full options or shorthand options to show how these options are supposed to be used.</p>
+    <p>Node의 생성과 소멸을 처리하고 전체적인 Node의 옵션들과 스타일을 포함합니다.</p>
+    <h3>옵션</h3>
+    <p>Node에 대한 옵션은 'nodes'라 이름 붙은 object에 대한 Node들을 포함하고 있어야합니다. 이러한 모든 옵션들은 또한 각각의 Node에 대해서도 제공되어져야 합니다. 명백하게, 'id'는 전체 Node가 아닌 해당 Node에 대해서만 정의되어야 합니다. 옵션은 전체적인 Node object에 대해 정의되었고, 모든 Node에 적용됩니다. 만약 Node가 자기 자신에 대한 옵션을 가지고 있다면, 이는 전체적인 옵션 대신에 사용되어 질 것입니다.</p>
+    <p><b><i> 당신에게 Node 옵션 하나가 주어졌을 때, 그러한 특성에 대한 전체적인 옵션과 그룹에 속한 Node라면 그 특성에 대한 그룹 옵션 또한 오버라이드 할 것입니다. 그리고나서 <code>null</code> 옵션을 설정한다면, 그것은 default 값으로 되돌아갈 것입니다. </i></b></p>
+    <p>이러한 옵션들이 어떻게 사용하는것이 지원되는지 보길 위해서는 전체 옵션 또는 요약 옵션 클릭하시오.</p>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">options hidden</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">full options</a></li>
-        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">shorthand options</a></li>
+        <li role="presentation" class="active" onclick="toggleTab(this)"><a href="#">옵션 숨기기</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="fullOptions"><a href="#">전체 옵션</a></li>
+        <li role="presentation" onclick="toggleTab(this);" targetNode="shortOptions"><a href="#">요약 옵션</a></li>
     </ul>
     <br>
 <pre class="prettyprint lang-js options top hidden" id="fullOptions">
@@ -237,7 +234,7 @@ var options = {
 network.setOptions(options);
 </pre>
 
-    <p>These options can also be set per individual node. All of the individual options are explained here:</p>
+    <p>이러한 옵션들은 각 개별 Node에 대해 역시 설정되어 있습니다. 모든 개별 옵션이 여기에 설명되어 있습니다:</p>
     <table class="options" id="optionTable">
         <tr>
             <th>Name</th>
@@ -249,20 +246,19 @@ network.setOptions(options);
             <td>borderWidth</td>
             <td>Number</td>
             <td><code>1</code></td>
-            <td>The width of the border of the node.</td>
+            <td>Node 테두리의 굵기.</td>
         </tr>
         <tr>
             <td>borderWidthSelected</td>
             <td>Number</td>
             <td><code>2</code></td>
-            <td>The width of the border of the node when it is selected. When undefined, the borderWidth * 2 is used.</td>
+            <td>선택 된 Node의 테두리의 굵기 . 지정되지 않았을 때, 테두리의 굵기의 2배가 사용되어 집니다.</td>
         </tr>
         <tr>
             <td>brokenImage</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>When the shape is set to <code>image</code> or <code>circularImage</code>, this option can be an URL to
-                a backup image in case the URL supplied in the image option cannot be resolved.
+            <td> 도형이 <code>image</code> 또는 <code>circularImage</code>으로 설정될 때, 이미지 옵션에 제공된 URL을 확인 할 수 없는 경우 이 옵션은 백업 이미지의 URL이 될 수 있습니다.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','chosen', this);">
@@ -270,9 +266,9 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>true</code></td>
             <td>
-              When true, selecting or hovering on a node will change it and its label's characteristics according the default.
-              When false, no change to the node or its label will occur when the node is chosen.
-              If an object is supplied, finer-grained adjustment of node and label characteristics is available when a node is chosen.
+              참일때, Node를 선택하거나 또는 Node에서 맴도는 것은 Node 또는 Node 라벨의 특성을 default에 따라 바꿔줍니다.
+              거짓일때, Node를 선택할 때 Node 또는 해당 label에 변화가 발생하지 않습니다.
+              object가 제공된 경우에는 Node를 선택할 때 Node 및 label의 특성을 보다 세부적으로 조정 할 수 있습니다.             
             </td>
         </tr>
         <tr parent="chosen" class="hidden">
@@ -280,22 +276,23 @@ network.setOptions(options);
             <td>Function or Boolean</td>
             <td>undefined</td>
             <td>
-              When true, selecting or hovering on a node will change its characteristics according the default.
-              When false, no change to the node will occur when the node is chosen.
-              <p>
-                If a function is supplied, it is called when the node is chosen.
+            참일때, Node를 선택하거나 또는 Node에서 맴도는 것은 Node 또는 Node 라벨의 특성을 default에 따라 바꿔줍니다.
+            거짓일때, Node를 선택할 때 Node 또는 해당 label에 변화가 발생하지 않습니다.
+            <p>
+             function이 제공되어진다면, Node가 선택될 때 호출되어집니다.
+              
                 <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
   }</pre>
               </p>
               <p>
-                Any of the incoming arguments may be used to determine characteristic changes.
-                If a property is not specifically assigned by the supplied function, it will be left unchanged.
-                A specific function may be assigned to each particular node in its options, or to all in the network's <code>nodes</code> options.
+                들어오는 어떤 arguments라도 특성의 변화를 결정하기위해 사용되어질 수 있습니다.
+                만약 a property가 제공된 function에 특별히 할당되지 않는다면, 바뀌지 않은채로 남아있을 것입니다.
+                특정 function은 옵션에서 각각의 특정 Node를 또는 네트워크의 <code>nodes</code> 옵션에 할당할 수도 있습니다.
               </p>
               <p>
-                The properties define the characteristics that can be changed as follows:
+                속성은 다음과 같이 변경할 수 있는 특성을 정의합니다:
               </p>
               <table>
                 <tr><th>Property</th><th>Node Reference</th></tr>
@@ -319,22 +316,22 @@ network.setOptions(options);
             <td>Function or Boolean</td>
             <td>undefined</td>
             <td>
-              When true, selecting or hovering on a node will change its label's characteristics according the default.
-              When false, no change to the node's label will occur when the node is chosen.
+              참일때, Node를 선택하거나 또는 Node에서 맴도는 것은 Node 또는 Node 라벨의 특성을 default에 따라 바꿔줍니다.
+              거짓일때, Node를 선택할 때 Node 또는 해당 label에 변화가 발생하지 않습니다.
               <p>
-                If a function is supplied, it is called when the node is chosen.
+              function이 제공되어진다면, Node가 선택될 때 호출되어집니다.
                 <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
   }</pre>
               </p>
               <p>
-                Any of the incoming arguments may be used to determine characteristic changes.
-                If a property is not specifically assigned by the supplied function, it will be left unchanged.
-                A specific function may be assigned to each particular node in its options, or to all in the network's <code>nodes</code> options.
+                들어오는 어떤 arguments라도 특성의 변화를 결정하기위해 사용되어질 수 있습니다.
+                만약 a property가 제공된 function에 특별히 할당되지 않는다면, 바뀌지 않은채로 남아있을 것입니다.
+                특정 function은 옵션에서 각각의 특정 Node를 또는 네트워크의 <code>nodes</code> 옵션에 할당할 수도 있습니다.
               </p>
               <p>
-                The properties define the characteristics that can be changed as follows:
+                속성은 다음과 같이 변경할 수 있는 특성을 정의합니다:
               </p>
               <table>
                 <tr><th>Property</th><th>Node Reference</th></tr>
@@ -353,594 +350,565 @@ network.setOptions(options);
             <td><span parent="color" class="right-caret"></span> color</td>
             <td>Object or String</td>
             <td><code>Object</code></td>
-            <td>The color object contains the color information of the node in every situation. When the node only needs
-                a single color, a color value like <code>'rgba(120,32,14,1)'</code>, <code>'#ffffff'</code> or <code>'red'</code>
-                can be supplied instead of an object.
+            <td>
+            색상 객체는 모든 상황에 대한 Node의 색상 정보를 포함합니다. Node가 단일 색상만 필요할 때, 객체 대신 <code>'rgba(120,32,14,1)'<code>, <code>'#ffffff'<code> 또는 <code>'red'<code>와 같은 색상 값을 제공합니다.
             </td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent">color.border</td>
             <td>String</td>
             <td><code>'#2B7CE9'</code></td>
-            <td>The color of the border of the node when it is not selected or hovered over <i>(assuming hover is
-                enabled in the interaction module)</i>.
+            <td>
+            선택하지 않거나 또는 맴돌지 않는 Node의 테두리의 색상 <i>(상호작용 모듈에 hover가 사용가능하다고 가정한다면)<i>.              
             </td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent">color.background</td>
             <td>String</td>
             <td><code>'#D2E5FF'</code></td>
-            <td>The color of the background of the node when it is not selected or hovered over <i>(assuming hover is
-                enabled in the interaction module)</i>.
+            <td>
+            선택하지 않거나 또는 맴돌지 않는 Node의 배경색<i>(상호작용 모듈에 hover가 사용가능하다고 가정한다면)</i>.
             </td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent">color.highlight</td>
             <td>Object or String</td>
             <td><code>Object</code></td>
-            <td>The color the node when it is selected. Alternatively you can just supply a string color value.</td>
+            <td>
+            선택된 Node의 색상. 대신에 문자열 색상 값을 제공하기만 하면 됩니다.
+            </td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent2">color.highlight.border</td>
             <td>String</td>
             <td><code>'#2B7CE9'</code></td>
-            <td>The color of the border of the node when it is selected.</td>
+            <td>선택된 Node의 테두리의 색상.
+            </td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent2">color.highlight.background</td>
             <td>String</td>
             <td><code>'#D2E5FF'</code></td>
-            <td>The color of the background of the node when it is selected.</td>
+            <td>선택된 Node의 배경색.</td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent">color.hover</td>
             <td>Object or String</td>
             <td><code>Object</code></td>
-            <td>The color the node when the mouse hovers over it <i>(assuming hover is enabled in the interaction
-                module)</i>. Shorthand like above is also supported.
+            <td>
+              마우스가 Node 위로 이동할 때 Node의 색상입니다 <i>(상호작용 모듈에서 hover가 사용된다고 가정할 때).</i> 위와 같은 속기도 지원됩니다.
             </td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent2">color.hover.border</td>
             <td>String</td>
             <td><code>'#2B7CE9'</code></td>
-            <td>The color of the border of the node when the mouse hovers over it <i>(assuming hover is enabled in the
-                interaction module)</i>.
-            </td>
+            <td> 마우스로 이리저리 이동하는 Node의 테두리의 색상 <i>(상호작용 모듈안에서 호버가 활성화 되어있다고 가정)</i>.</td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent2">color.hover.background</td>
             <td>String</td>
             <td><code>'#D2E5FF'</code></td>
-            <td>The color of the background of the node when the mouse hovers over it <i>(assuming hover is enabled in
-                the interaction module)</i>.
-            </td>
+            <td> 마우스로 이리저리 이동하는 Node의 배경의 색상 <i>(상호작용 모듈안에서 호버가 활성화 되어있다고 가정)</i>.</td>
+            
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','fixed', this);">
             <td><span parent="fixed" class="right-caret"></span> fixed</td>
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
-            <td>When true, the node will not move but IS part of the physics simulation. When defined as an object,
-                movement in either X or Y direction can be disabled.
+            <td>
+            참일 때, Node는 움직이지 않고 물리 시뮬레이션의 일부입니다. 하나의 오브젝트로 정의된다면, X 또는 Y 방향으로 움직이는것이 불가능 합니다. 
             </td>
         </tr>
         <tr parent="fixed" class="hidden">
             <td class="indent">fixed.x</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>When true, the node will not move in the X direction.</td>
+            <td> 참일때, Node느 X 방향으로 움직이지 않을 것입니다.</td>
         </tr>
         <tr parent="fixed" class="hidden">
             <td class="indent">fixed.y</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>When true, the node will not move in the Y direction.</td>
+            <td> 참일때, Node느 Y 방향으로 움직이지 않을 것입니다.</td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','font', this);">
             <td><span parent="font" class="right-caret"></span> font</td>
             <td>Object or String</td>
             <td><code>false</code></td>
-            <td>This object defines the details of the label. A shorthand is also supported in the form <code>'size face
-                color'</code> for example: <code>'14px arial red'</code>.
+            <td>이 객체는 라벨에 대한 세부 사항을 정의합니다.
+            속기는 <code>'size face color'</code>의 형식을 지원합니다. 예시: <code>'14px arial red'</code>.
             </td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.color</td>
             <td>String</td>
             <td><code>'#343434'</code></td>
-            <td>Color of the label text.</td>
+            <td>label 텍스트의 색상</td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.size</td>
             <td>Number</td>
             <td><code>14</code></td>
-            <td>Size of the label text.</td>
+            <td>label 텍스트의 크기</td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.face</td>
             <td>String</td>
             <td><code>'arial'</code></td>
-            <td>Font face (or font family) of the label text.</td>
+            <td> label 텍스트의 폰트 페이스(또는 폰트 가족).</td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.background</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>When not <code>undefined</code> but a <b>color string</b>, a background rectangle will be drawn behind
-                the label in the supplied color.
-            </td>
+            <td> <code>undefined</code> 인 상태가 아닌 <b>color string</b> 상태일 때, 직사각형의 배경이 제공된 색상으로 label 뒤에 그려질 것입니다.</td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.strokeWidth</td>
             <td>Number</td>
             <td><code>0</code></td>
-            <td>As an alternative to the background rectangle, a stroke can be drawn around the text. When a value
-                higher than 0 is supplied, the stroke will be drawn.
+            <td> 직사각형의 배경을 대체하여, stroke는 텍스트 주변으로 그려질 수 있습니다. 값이 0보다 클때, stroke는 그려질 것입니다.
             </td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.strokeColor</td>
             <td>String</td>
             <td><code>'#ffffff'</code></td>
-            <td>This is the color of the stroke <i>assuming the value for stroke is higher than 0</i>.</td>
+             <td>이것은 <i>stroke에 대한 값이 0보다 크다고 추정하는</i> stroke의 색상입니다.</td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.align</td>
             <td>String</td>
             <td><code>'center'</code></td>
-            <td>This can be set to 'left' to make the label left-aligned. Otherwise,
-                defaults to 'center'.</td>
+            <td>이것은 label을 왼쪽으로 정렬하기 위해 '왼쪽'설정을 할 수 있게 합니다. 반면에, 기본값은 '가운데' 입니다.
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.vadjust</td>
             <td>String</td>
             <td><code>0</code></td>
-            <td>A font-specific correction to the vertical positioning of the base font in the label text. (Positive is down.)</td>
+            <td> label 텍스트에서 기본 글꼴의 수직적 위치에 대한 글꼴에 대한 보정입니다. (양의 아래쪽 입니다.)</td>
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.multi</td>
             <td>Boolean or String</td>
             <td><code>false</code></td>
-            <td>If <code>false</code>, the label is treated as pure text drawn with the base font. If <code>true</code> or <code>'html'</code> the label may be multifonted, with bold, italic and code markup, interpreted as html. If the value is <code>'markdown'</code> or <code>'md'</code> the label may be multifonted, with bold, italic and code markup, interpreted as markdown.
-              The bold, italic, bold-italic and monospaced fonts may be set up under in the font.bold, font.ital, font.boldital and font.mono properties, respectively.</td>
+            <td> <code>false</code>이라면, label은 기본 글꼴로 그린 순수 텍스트로 처리하게 됩니다. 만약 <code>true</code>이거나 또는 <code>'html'</code>이라면, label은 굵음 글꼴, 기울임꼴 그리고 코드 마크업으로 HTML이 해석되는 여러 글꼴로 될 수 있습니다. 해당 값이 <code>'markdown'</code> 또는 <code>'md'</code>라면 label은 굵음 글꼴, 기울임꼴 그리고 코드 마크업으로 markdown이라고 해석되는 여러 글꼴로 될 수 있습니다. 굵은 글꼴, 기울임꼴, 굵은 글꼴 및 단색 글꼴은 각각 font.bold, font.ital, font.boldital, font.mono 속성으로 설정 할 수 있습니다.</td>
         </tr>
         <tr parent="font" class='hidden toggle collapsible' onclick="toggleTable('optionTable','bold', this);">
             <td><span parent="bold" class="right-caret"></span> font.bold</td>
             <td>Object or String</td>
             <td><code>false</code></td>
-            <td>This object defines the details of the bold font in the label. A shorthand is also supported in the form <code>'size face
-                color'</code> for example: <code>'14px arial red'</code>.
-            </td>
+            <td> 이 object는 label에 있는 굵은 글꼴에 대한 세부항목을 정의하고 있습니다. 예를 들어: <code>'14px arial red'</code>와 같은 <code>'size face
+            color'</code> 유형으로도 또한 지원가능한 단축이 있습니다.</td>
         </tr>
         <tr parent="bold" class="hidden">
             <td class="indent">font.bold.color</td>
             <td>String</td>
             <td><code>'#343434'</code></td>
-            <td>Color of the bold font in the label text. Defaults to the base font's color.</td>
+            <td>label 텍스트 내의 굵은 글꼴의 색상. default는 글꼴의 색상에 기반합니다.</td>
         </tr>
         <tr parent="bold" class="hidden">
             <td class="indent">font.bold.size</td>
             <td>Number</td>
             <td><code>14</code></td>
-            <td>Size of the bold font in the label text. Defaults to the base font's size.</td>
+            <td>label 텍스트 내의 굵은 글꼴의 크기. default는 글꼴의 크기에 기반합니다.</td>
         </tr>
         <tr parent="bold" class="hidden">
             <td class="indent">font.bold.face</td>
             <td>String</td>
             <td><code>'arial'</code></td>
-            <td>Font face (or font family) of the bold font in the label text. Defaults to the base font's face.</td>
+            <td> label 텍스트의 굵은 글꼴의 글꼴면(또는 글꼴의 집합)입니다. default는 글꼴의 글꼴면에 기반합니다.</td>
         </tr>
         <tr parent="bold" class="hidden">
             <td class="indent">font.bold.mod</td>
             <td>String</td>
             <td><code>'bold'</code></td>
-            <td>A string added to the face and size when determining the bold font in the label text.</td>
+            <td>label 텍스트에서 굵은 글꼴을 결정할 깨 면과 크기에 추가된 문자열.</td>
         </tr>
         <tr parent="bold" class="hidden">
             <td class="indent">font.bold.vadjust</td>
             <td>String</td>
             <td><code>0</code></td>
-            <td>A font-specific correction to the vertical positioning of the bold italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
+            <td>label 텍스트에서 굵은 기울임이 있는 글꼴의 세로 위치에 대한 글꼴별 수정입니다. (양수는 작동하지 않습니다.) default는 글꼴읠 valign에 기반합니다.
+            </td>
         </tr>
         <tr parent="font" class='hidden toggle collapsible' onclick="toggleTable('optionTable','ital', this);">
             <td><span parent="ital" class="right-caret"></span> font.ital</td>
             <td>Object or String</td>
             <td><code>false</code></td>
-            <td>This object defines the details of the italic font in the label. A shorthand is also supported in the form <code>'size face
-                color'</code> for example: <code>'14px arial red'</code>.
-            </td>
+            <td>이 object는 label의 기울어진 글꼴에 관한 세부항목들을 정의하고 있습니다. 예를 들어: <code>'14px arial red'</code>와 같은 <code>'size face
+                color'</code> 유형으로 또한 지원되는 요약이 있습니다.</td>
         </tr>
         <tr parent="ital" class="hidden">
             <td class="indent">font.ital.color</td>
             <td>String</td>
             <td><code>'#343434'</code></td>
-            <td>Color of the italic font in the label text. Defaults to the base font's color.</td>
+            <td> label 텍스의 기울어진 글꼴의 색상. default는 기본 글꼴의 색상에 기반합니다.</td>
         </tr>
         <tr parent="ital" class="hidden">
             <td class="indent">font.ital.size</td>
             <td>Number</td>
             <td><code>14</code></td>
-            <td>Size of the italic font in the label text. Defaults to the base font's size.</td>
+            <td>label 텍스의 기울어진 글꼴의 크기. default는 기본 글꼴의 크기에 기반합니다.</td>
         </tr>
         <tr parent="ital" class="hidden">
             <td class="indent">font.ital.face</td>
             <td>String</td>
             <td><code>'arial'</code></td>
-            <td>Font face (or font family) of the italic font in the label text. Defaults to the base font's face.</td>
+            <td>label 텍스트의 기울어진 글꼴의 글꼴면(또는 글꼴의 집합)입니다. default는 글꼴의 글꼴면에 기반합니다.</td>
         </tr>
         <tr parent="ital" class="hidden">
             <td class="indent">font.ital.mod</td>
             <td>String</td>
             <td><code>'italic'</code></td>
-            <td>A string added to the face and size when determining the italic font in the label text.</td>
+            <td> label 텍스트에서 기울어진 글꼴을 결정할 때 면과 크기에 추가된 문자열.</td>
         </tr>
         <tr parent="ital" class="hidden">
             <td class="indent">font.ital.vadjust</td>
             <td>String</td>
             <td><code>0</code></td>
-            <td>A font-specific correction to the vertical positioning of the italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
+            <td> label 텍스트에 기울림 글꼴의 수직적 위치에 대한 글꼴 별 수정입니다.(양수에서는 작동하지 않습니다.) default는 글꼴의 valign에 기반합니다.</td>
         </tr>
         <tr parent="font" class='hidden toggle collapsible' onclick="toggleTable('optionTable','boldital', this);">
             <td><span parent="boldital" class="right-caret"></span> font.boldital</td>
             <td>Object or String</td>
             <td><code>false</code></td>
-            <td>This object defines the details of the bold italic font in the label. A shorthand is also supported in the form <code>'size face
-                color'</code> for example: <code>'14px arial red'</code>.
-            </td>
+            <td> 이 object는 label에 있는 굵은 기울림 글꼴에 대한 세부사항을 정의합니다. 예를 들어: <code>'14px arial red'</code>와 같은 <code>'size face color'</code>유형으로도 또한 지원가능한 단축이 있습니다. </td>
         </tr>
         <tr parent="boldital" class="hidden">
             <td class="indent">font.boldital.color</td>
             <td>String</td>
             <td><code>'#343434'</code></td>
-            <td>Color of the bold italic font in the label text. Defaults to the base font's color.</td>
+            <td>label의 굵은 기울림 글꼴에 대한 색상. default는 기본 글꼴에 기반합니다.</td>
         </tr>
         <tr parent="boldital" class="hidden">
             <td class="indent">font.boldital.size</td>
             <td>Number</td>
             <td><code>14</code></td>
-            <td>Size of the bold italic font in the label text. Defaults to the base font's size.</td>
+            <td>label의 굵은 기울림 글꼴에 대한 크기. default는 기본 글꼴에 기반합니다.</td>
         </tr>
         <tr parent="boldital" class="hidden">
             <td class="indent">font.boldital.face</td>
             <td>String</td>
             <td><code>'arial'</code></td>
-            <td>Font face (or font family) of the bold italic font in the label text. Defaults to the base font's face.</td>
+            <td> label 텍스트의 굵은 기울림 글꼴의 글꼴면(또는 글꼴의 집합)입니다. default는 글꼴의 글꼴면에 기반합니다.</td>
         </tr>
         <tr parent="boldital" class="hidden">
             <td class="indent">font.boldital.mod</td>
             <td>String</td>
             <td><code>'bold'</code></td>
-            <td>A string added to the face and size when determining the bold italic font in the label text.</td>
+            <td>label 텍스트에서 굵은 기울림 글꼴을 결정할 때, 면과 크기에 추가된 문자열.</td>
         </tr>
         <tr parent="boldital" class="hidden">
             <td class="indent">font.boldital.vadjust</td>
             <td>String</td>
             <td><code>0</code></td>
-            <td>A font-specific correction to the vertical positioning of the bold italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
+            <td>label 텍스트에 굵은 기울림 글꼴의 수직적 위치에 대한 글꼴 별 수정입니다.(양수에서는 작동하지 않습니다.) default는 글꼴의 valign에 기반합니다.</td>
         </tr>
         <tr parent="font" class='hidden toggle collapsible' onclick="toggleTable('optionTable','mono', this);">
             <td><span parent="mono" class="right-caret"></span> font.mono</td>
             <td>Object or String</td>
             <td><code>false</code></td>
-            <td>This object defines the details of the monospaced font in the label. A shorthand is also supported in the form <code>'size face
-                color'</code> for example: <code>'15px courier red'</code>.
+            <td> 이 object는 label에 있는 폭 고정 글꼴에 대한 세부항목을 정의하고 있습니다. 예를 들어: <code>'15px courier red'</code>와 같은 <code>'size face color'</code> 유형으로도 또한 지원가능한 단축이 있습니다.</td>
+                color'</code> for example: <code>'15px courier red'</code>.-->
             </td>
         </tr>
         <tr parent="mono" class="hidden">
             <td class="indent">font.mono.color</td>
             <td>String</td>
             <td><code>'#343434'</code></td>
-            <td>Color of the monospaced font in the label text. Defaults to the base font's color.</td>
+            <td>label 텍스트의 고정 폭 글꼴에 대한 색상. default는 기본 글꼴의 색상에 기반합니다.</td>
         </tr>
         <tr parent="mono" class="hidden">
             <td class="indent">font.mono.size</td>
             <td>Number</td>
             <td><code>15</code></td>
-            <td>Size of the monospaced font in the label text. Defaults to the base font's size.</td>
+            <td>label 텍스트의 고정 폭 글꼴에 대한 크기. default는 기본 글꼴의 크기에 기반합니다.</td>
         </tr>
         <tr parent="mono" class="hidden">
             <td class="indent">font.mono.face</td>
             <td>String</td>
             <td><code>'courier new'</code></td>
-            <td>Font face (or font family) of the monospaced font in the label text.</td>
+            <td> label 텍스트의 폭 고정 글꼴의 글꼴면(또는 글꼴의 집합)입니다.</td>
         </tr>
         <tr parent="mono" class="hidden">
             <td class="indent">font.mono.mod</td>
             <td>String</td>
             <td><code>''</code></td>
-            <td>A string added to the face and size when determining the monospaced font in the label text.</td>
+            <td>label 텍스트에서 폭 고정 글꼴을 결정할 때, 면과 크기에 추가된 문자열.</td>
         </tr>
         <tr parent="mono" class="hidden">
             <td class="indent">font.mono.vadjust</td>
             <td>String</td>
             <td><code>2</code></td>
-            <td>A font-specific correction to the vertical positioning of the monospaced font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
+            <td> label 텍스트에 폭 고정 글꼴의 수직적 위치에 대한 글꼴 별 수정입니다.(양수에서는 작동하지 않습니다.) default는 글꼴의 valign에 기반합니다.</td>
         </tr>
         <tr>
             <td>group</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>When not <code>undefined</code>, the node will belong to the defined group. Styling information of
-                that group will apply to this node. Node specific styling overrides group styling.
+            <td>
+              <code>undefined</code>일 때, Node는 정의된 그룹에 속해질 것이다. 그 그룹의 정보를 스타일링 하는 것은 이 Node에 적용된다. Node의 특정 스타일링은 그룹 스타일링을 오버라이드합니다.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','heightConstraint', this);">
             <td><span parent="heightConstraint" class="right-caret"></span> heightConstraint</td>
             <td>Number, Boolean or Object</td>
             <td><code>false</code></td>
-            <td>If false, no heightConstraint is applied. If a number is specified, the value is used as the minimum height of the node. The node's height will be be set to the minimum if less than the value.</td>
+            <td>
+            거짓일 때, heightConstraint가 적용되지 않는다. 숫자가 특정된다면, 이 값은 Node의 최소 높이로 사용된다. Node의 높이가 값보다 작을 경우 최소값으로 설정된다.</td>
         </tr>
         <tr parent="heightConstraint" class="hidden">
             <td class="indent">heightConstraint.minimum</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>If a number is specified, the value is used as the minimum height of the node. The node's height will be be set to the minimum if less than the value.</td>
+            <td> 특정 한 수가 있다면, 그 값은 Node의 최소 높이로써 사용되어 집니다. Node의 높이는 그 값보다 작다면 최소치로 설정 될 것입니다. 
+          </td>
         </tr>
         <tr parent="heightConstraint" class="hidden">
             <td class="indent">heightConstraint.valign</td>
             <td>String</td>
             <td><code>'middle'</code></td>
-            <td>Valid values are <code>'top'</code>, <code>'middle'</code>, and <code>'bottom'</code>.
-               When specified, if the height of the label text is less than the minimum (including any top or bottom margins), it will be offset vertically to the designated position.</td>
+            <td> <code>'top'</code>, <code>'middle'</code>, <code>'bottom'</code>와 같은 유효 값이 있습니다. 구체화할 때, label 텍스트의 높이가 최솟값(어떤 위쪽 또는 아래쪽 여백)보다 작다면, When specified, if the height of the label text is less than the minimum (including any top or bottom margins), 지정된 위치에 수직으로 오프셋됩니다.</td>
         </tr>
         <tr>
             <td>hidden</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>When true, the node will not be shown. It will still be part of the physics simulation though!</td>
+            <td>
+            참일 때, Node가 나타나지 않습니다. 그것은 여전히 물리 시뮬레이션의 일부일 것입니다.</td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','icon', this);">
             <td><span parent="icon" class="right-caret"></span> icon</td>
             <td>Object</td>
             <td><code>Object</code></td>
-            <td>These options are only used when the shape is set to <code>icon</code>.</td>
+            <td> 이러한 옵션들은 모양이 <code>icon</code>으로 설정되었을 떄만 사용되어집니다.</td>
         </tr>
         <tr parent="icon" class="hidden">
             <td class="indent">icon.face</td>
             <td>String</td>
             <td><code>'FontAwesome'</code></td>
-            <td>These options are only used when the shape is set to <code>icon</code>. The possible values for the
-                face option are any font faces that are loaded on given page such as <code>'FontAwesome'</code> or
-                <code>'Ionicons'</code>.
-            </td>
+            <td> 이 옵션들은 도형이 <code>icon</code>으로 설정된 경우에만 사용됩니다. face 옵션으로 사용가능한 값은 <code>'FontAwesome'</code> 또는
+            <code>'Ionicons'</code>와 같은 주어진 페이지에 로드되는 모든 글꼴면입니다.</td>
         </tr>
         <tr parent="icon" class="hidden">
             <td class="indent">icon.code</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>This is the code of the icon, for example <code>'\uf007'</code>.</td>
+            <td>이것은 아이콘의 코드입니다. 예로, <code>'\uf007'</code>.</td>
         </tr>
         <tr parent="icon" class="hidden">
             <td class="indent">icon.size</td>
             <td>Number</td>
             <td><code>50</code></td>
-            <td>The size of the icon.</td>
+            <td>아이콘의 크기.</td>
         </tr>
         <tr parent="icon" class="hidden">
             <td class="indent">icon.color</td>
             <td>String</td>
             <td><code>'#2B7CE9'</code></td>
-            <td>The color of the icon.</td>
+            <td>아이콘의 색깔.</td>
         </tr>
         <tr parent="icon" class="hidden">
             <td class="indent">icon.weight</td>
             <td>Number or String</td>
             <td><code>undefined</code></td>
-            <td>
-              This allows for weight to be forced regardless of selection
-              status. For example Font Awesome 5 doesn't work properly unless
-              weight is forced to <code>'bold'</code> or <code>700</code>. If
-              this option is set then selection is indicated by bigger size
-              instead of bold font face.
+            <td> 이것은 선택된 상태와 관계없이 가중치가 강요되어집니다. 예를 들어 가중치가 <code>'bold'</code> 또는 <code>700</code>으로 설정되어 있으면 Font Awesome 5가 제대로 작동하지 않습니다. 만약 이런 옵션이 선택된다면 굵은 글꼴 대신 더 큰 크기로 표시 됩니다.
             </td>
         </tr>
         <tr>
             <td>id</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>The id of the node. The id is mandatory for nodes and they have to be unique. This should obviously be set per node, not globally.</td>
+            <td>
+              Node의 id. Node는id가 필수적이며 그리고 고유해야만 합니다. 이는 분명히 전반적으로 설정되지 않고 Node별로 설정되어야 합니다.
+          </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','image', this);">
             <td><span parent="image" class="right-caret"></span> image</td>
             <td>Object or String</td>
             <td><code>undefined</code></td>
-            <td>When the shape is set to <code>image</code> or <code>circularImage</code>, this option should be the URL
-                to an image. If the image cannot be found, the brokenImage option can be used. 
-                <br><i>Note: Firefox has a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=700533">SVG drawing bug</a>, 
-                there is a <a href="https://stackoverflow.com/a/28692538/469898">workaround</a> - add width/height attributes to root &lt;svg&gt; element of the SVG</a></i>.
-            </td>
+            <td>
+            모양이 <code>image</code> 또는 <code>circularImage</code>으로 설정된 경우, 이 옵션은 이미지에 대한 URL입니다. 이미지를 찾을 수 없는 경우, brokenImage 옵션이 사용될 수 있습니다. 
+            <br><i>참고: Firefox에는 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=700533">SVG 그리기 버그</a>가 있으며, 한가지 <a href="https://stackoverflow.com/a/28692538/469898"> 해결방안 </a> - width/height 특성들을 루트 &lt;svg&gt; SVG의 요소인 추가하는 것</a></i>.</td>
         </tr>
         <tr parent="image" class="hidden">
             <td class="indent">image.unselected</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>Unselected (default) image URL.
-            </td>
+            <td>선택되지 않은(default) 이미지에 대한 URL.</td>
         </tr>
         <tr parent="image" class="hidden">
             <td class="indent">image.selected</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>Selected image URL.
+            <td>S선택된 이미지에 대한 URL.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','imagePadding', this);">
             <td><span parent="imagePadding" class="right-caret"></span> imagePadding</td>
             <td>Object or Number</td>
             <td><code>0</code></td>
-            <td>If a number is specified, the paddings of the image inside the shape are set to that value on all sides. These options are only used when the shape is set to <code>image</code>, <code>circularImage</code>.</td>
+            <td>숫자가 지정되면 형상 내부에 있는 영상의 패딩은 모든 면에서 해당값으로 설정됩니다. 이런 옵션은 모양이 <code>image</code>, <code>circularImage</code>로 설정된 경우에만 사용된다.</td>
         </tr>
         <tr parent="imagePadding" class="hidden">
             <td class="indent">imagePadding.top</td>
             <td>Number</td>
             <td><code>0</code></td>
-            <td>The top padding of the image inside the shape is set to this value.</td>
+            <td>모양 내부의 이미지의 윗쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr parent="imagePadding" class="hidden">
             <td class="indent">imagePadding.right</td>
             <td>Number</td>
             <td><code>0</code></td>
-            <td>The right margin of the image inside the shape is set to this value.</td>
+            <td>모양 내부의 이미지의 오른쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr parent="imagePadding" class="hidden">
             <td class="indent">imagePadding.bottom</td>
             <td>Number</td>
             <td><code>0</code></td>
-            <td>The bottom margin of the image inside the shape is set to this value.</td>
+            <td>모양 내부의 이미지의 아래쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr parent="imagePadding" class="hidden">
             <td class="indent">imagePadding.left</td>
             <td>Number</td>
             <td><code>0</code></td>
-            <td>The left margin of the image inside the shape is set to this value.</td>
+            <td>모양 내부의 이미지의 왼쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr>
             <td>label</td>
             <td>String</td>
             <td><code>undefined</code></td>
-            <td>The label is the piece of text shown in or under the node, depending on the shape.</td>
+            <td> label은 Node의 안 또는 아래에 보여지며 그 모양에 의존하는 텍스트 조각입니다.</td>
         </tr>
         <tr>
             <td>labelHighlightBold</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>Determines whether or not the label becomes bold when the node is selected.</td>
+            <td> Node가 선택되면 label이 굵게 할지 말지를 결정합니다.</td>
         </tr>
         <tr>
             <td>level</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>When using the hierarchical layout, the level determines where the node is going to be positioned.</td>
+            <td>hierarchical layout을 사용할 때, level은 Node의 위치하는 곳을 결정합니다.</td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','margin', this);">
             <td><span parent="margin" class="right-caret"></span> margin</td>
             <td>Object or Number</td>
             <td><code>5</code></td>
-            <td>If a number is specified, the margins of the label are set to that value on all sides. These options are only used when the shape is set to <code>box</code>, <code>circle</code>, <code>database</code>, <code>icon</code> or <code>text</code>.</td>
+            <td> 특정 숫자가 정해진다면, label의 여백들은 모든 방향으로 그 값을 설정합니다. 이 옵션은 모양이 <code>box</code>, <code>circle</code>, <code>database</code>, <code>icon</code> or <code>text</code>으로 설정된 경우에만 사용하십시오.</td>
         </tr>
         <tr parent="margin" class="hidden">
             <td class="indent">margin.top</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>The top margin of the label is set to this value.</td>
+            <td>label의 위쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr parent="margin" class="hidden">
             <td class="indent">margin.right</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>The right margin of the label is set to this value.</td>
+            <td>label의 오른쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr parent="margin" class="hidden">
             <td class="indent">margin.bottom</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>The bottom margin of the label is set to this value.</td>
+            <td>label의 아래쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr parent="margin" class="hidden">
             <td class="indent">margin.left</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>The left margin of the label is set to this value.</td>
+            <td>label의 왼쪽 여백이 이 값으로 설정됩니다.</td>
         </tr>
         <tr>
             <td>mass</td>
             <td>Number</td>
             <td><code>1</code></td>
-            <td>The barnesHut physics model (which is enabled by default) is based on an inverted gravity model. By
-                increasing the mass of a node, you increase it's repulsion.
-                <br><br>
-                Values between 0 and 1 are not recommended.<br>
-                Negative or zero values are not allowed. These will generate a console error and will be set to 1.
-            </td>
+            <td>
+            barnesHut physics 모델 (이것은 default가 활성화 되있습니다)은 inverted gravity 모델에 기반합니다. Node의 mass가 증가함에 따라, Node의 반발력을 증가시킬 수 있습니다.<br><br>
+            0과 1사이의 값은 추천하지 않습니다. <br> 이들은 음수 혹은 0 값은 허용되지 않습니다. 이것들은 console error를 출력하고 1로 설정 될 것입니다.</td>
         </tr>
         <tr>
             <td>physics</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>When false, the node is not part of the physics simulation. It will not move except for from manual
-                dragging.
+            <td> 거짓일때, Node는 physics 시뮬레이션의 부분은 아닙니다. 수동 드래그를 제외하고 움직이지 않을 것입니다.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','scaling', this);">
             <td><span parent="scaling" class="right-caret"></span> scaling</td>
             <td>Object</td>
             <td><code>Object</code></td>
-            <td>If the <code>value</code> option is specified, the size of the nodes will be scaled according to the
-                properties in this object. All node shapes can be scaled, but some only when label scaling is enabled as
-                their size is based on the size of the label.
-                Only scalable when label scaling is enabled are:
+            <td>
+              <code>value</code> 옵션을 분명히 한다면, Node의 크기는 이 객체의 속성에 따라서 조정될 것입니다. 모든 Node의 모양은 바뀔수 있지만, 몇몇의 Node는 label의 크기에 따른 크기가 활성화 됐을 때만 크기를 조정할 수 있습니다.
+              오직 label의 조정이 활성화 된 경우: 
                 <code>ellipse</code>, <code>circle</code>, <code>database</code>, <code>box</code>, <code>text</code>.
-                Always scalable are:
-                <code>image</code>, <code>circularImage</code>, <code>diamond</code>, <code>dot</code>,
-                <code>star</code>, <code>triangle</code>, <code>triangleDown</code>, <code>hexagon</code>, <code>square</code> and
-                <code>icon</code>. Keep in mind that when using scaling, the <code>size</code> option is neglected.
+               항상 조정 가능한 경우:
+                <code>image</code>, <code>circularImage</code>, <code>diamond</code>, <code>dot</code>, <code>star</code>, <code>triangle</code>, <code>triangleDown</code>, <code>hexagon</code>, <code>square</code>, <code>icon</code>.
+              조정을 사용할 때, <code>size</code> 옵션이 무시된다는 것을 명심하시오.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent">scaling.min</td>
             <td>Number</td>
             <td><code>10</code></td>
-            <td>If nodes have a value, their sizes are determined by the value, the scaling function and the min max
-                values. The min value is the minimum allowed value.
-            </td>
+            <td>Node에 값이 있다면, Node의 크기가 value와 scaling function과 최소, 최댓값에 의해 결정되어 집니다.</td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent">scaling.max</td>
             <td>Number</td>
             <td><code>30</code></td>
-            <td>This is the maximum allowed size when the nodes are scaled using the value option.</td>
+            <td>value 옵션을 사용하여 Node가 조정될 떄, 해당 크기를 최댓값으로 허용합니다.</td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent">scaling.label</td>
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
-            <td>This can be false if the label is not allowed to scale with the node. If true it will scale using
-                default settigns. For further customization, you can supply an object.
+            <td> label을 Node와 함꼐 확장할 수 없는 경우에 false 일 수 있습니다. 만약 참이라면 초기 설정을 사용하는 것일 겁니다. 추가 사용자 정의를 위해 object를 제공할 수 있습니다.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent2">scaling.label.enabled</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of
-                the properties in this object are defined.
+            <td> label의 변경을 켜고 끕니다. 이러한 옵션이 정의되지 않았다면, 이 정의된 object의 어떤 특성들도 참일 것입니다.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent2">scaling.label.min</td>
             <td>Number</td>
             <td><code>14</code></td>
-            <td>The minimum font-size used for labels when scaling.</td>
+            <td> 조정할 때, label에 사용되는 글꼴 사이즈의 최솟값.</td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent2">scaling.label.max</td>
             <td>Number</td>
             <td><code>30</code></td>
-            <td>The maximum font-size used for labels when scaling.</td>
+            <td> 조정할 때, label에 사용되는 글꼴 사이즈의 최댓값.</td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent2">scaling.label.maxVisible</td>
             <td>Number</td>
             <td><code>30</code></td>
-            <td>When zooming in, the font is drawn larger as well. You can limit the perceived font size using this
-                option. If set to 30, the font will never look larger than size 30 zoomed at 100%.
+            <td>확대를 할 떄, 글꼴 또한 크게 그려집니다. 이 기능을 사용하면 인식된 글꼴의 크기를 제한할 수 있습니다. 30으로 설정을 맞춘다면, 글꼴의 크기는 100% 확대해도 30보다 크게 보일 수 없을 것입니다.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent2">scaling.label.drawThreshold</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>When zooming out, the font will be drawn smaller. This defines a lower limit for when the font is drawn.
-                When using font scaling, you can use this together with the maxVisible to first show labels of important
-                nodes when zoomed out and only show the rest when zooming in.
+            <td> 축소할 떄, 글꼴을 작게 그려질 것입니다. 글꼴을 그릴 때, 하한을 정의합니다. 글꼴 조정을 사용할 떄,중요한 Node의 label을 먼저 가장 크게 보여주는 기능과 함께 이것을 사용할 수 있습니다. 
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
             <td class="indent">scaling.customScalingFunction</td>
             <td>Function</td>
             <td>in description</td>
-            <td>If nodes have <code>value</code> fields, this function determines how the size of the nodes are scaled
-                based on their values. The default function is:
+            <td>Node가 <code>value</code> 필드를 갖는다면, 이 function은 어떻게 Node의 크기가 값에 따라 조정되는지를 결정합니다. 초기 function:
 <pre>
 function (min,max,total,value) {
   if (max === min) {
@@ -952,178 +920,156 @@ function (min,max,total,value) {
   }
 }
 </pre>
-                The function receives the minimum value of the set, the maximum value, the total sum of all values and
-                finally the value of the node or edge it works on. <b>It has to return a value between 0 and 1.</b> The
-                nodes and edges then calculate their size as follows:
+                function은 집합의 최솟값과 최댓값, 모든 값의 총합, 그리고 최종적으로 Node와 엣지가 작동한 값을 받습니다. <b> 0과 1의 값이 반환 되어야만 합니다.</b> Node와 엣지는 다음 과정에 따라 계산됩니다: 
 <pre>
 var scale = customScalingFunction(min,max,total,value);
 var diff = maxSize - minSize;
 mySize = minSize + diff * scale;
 </pre>
-                Please note: <code>maxSize</code> and <code>minSize</code> are the values <code>scaling.max</code>
-                and <code>scaling.min</code> provided in the options.
+                참고 : <code>maxSize</code>와 <code>minSize</code>는 옵션으로 제공받은<code>scaling.max</code>와<code>scaling.min</code>의 값입니다.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shadow', this);">
             <td><span parent="shadow" class="right-caret"></span> shadow</td>
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
-            <td>When true, the node casts a shadow using the default settings. This can be further refined by supplying
-                an object.
-            </td>
+            <td>참일 때, Node는 default 설정을 사용하는 shadow를 만듭니다. 이는 하나의 object를 제공함으로써 더욱 정교해집니다. </td>
         </tr>
         <tr parent="shadow" class="hidden">
             <td class="indent">shadow.enabled</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>Toggle the casting of shadows. If this option is not defined, it is set to true if any of the properties
-                in this object are defined.
+            <td>shadow 던지기로 전환합니다. 이러한 옵션이 정의되지 않는다면, 이 object의 어떤 속성들이 정의되어 있다면 true로 설정됩니다. 
             </td>
         </tr>
         <tr parent="shadow" class="hidden">
             <td class="indent">shadow.color</td>
             <td>String</td>
             <td><code>'rgba(0,0,0,0.5)'</code></td>
-            <td>The color size of the shadow as a string. Supported formats are 'rgb(255,255,255)', 'rgba(255,255,255,1)' and '#FFFFFF'.</td>
+            <td>문자열로써의 shadow의 색상 크기. 지원되는 형식들은 'rgb(255,255,255)', 'rgba(255,255,255,1)', '#FFFFFF'입니다.</td>
         </tr>
         <tr parent="shadow" class="hidden">
             <td class="indent">shadow.size</td>
             <td>Number</td>
             <td><code>10</code></td>
-            <td>The blur size of the shadow.</td>
+            <td>shadow의 흐림의 크기.</td>
         </tr>
         <tr parent="shadow" class="hidden">
             <td class="indent">shadow.x</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>The x offset.</td>
+            <td>x의 오프셋입니다..</td>
         </tr>
         <tr parent="shadow" class="hidden">
             <td class="indent">shadow.y</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td>The y offset.</td>
+            <td>y의 오프셋입니다..</td>
         </tr>
         <tr>
             <td>shape</td>
             <td>String</td>
             <td><code>'ellipse'</code></td>
-            <td>The shape defines what the node looks like. There are two types of nodes. One type has the label inside
-                of it and the other type has the label underneath it. The types with the label inside of it are:
+            <td> shape는 Node가 어떻게 보여지는지를 정의합니다. Node에는 두가지 유형이 있습니다. 하나는 label을 안쪽에 가지고 있고, 다른 하나는 label을 아래쪽에 지니고 있습니다. 
+            label을 Node 안쪽에 갖고 있는 유형은 다음과 같습니다: 
                 <code>ellipse</code>, <code>circle</code>, <code>database</code>, <code>box</code>, <code>text</code>.
-                The ones with the label outside of it are: <code>image</code>, <code>circularImage</code>,
+            label을 Node 바깥쪽에 갖고 있는 유형은 다음과 같습니다:
+                <code>image</code>, <code>circularImage</code>,
                 <code>diamond</code>, <code>dot</code>, <code>star</code>, <code>triangle</code>,
-                <code>triangleDown</code>, <code>hexagon</code>, <code>square</code> and <code>icon</code>.
+                <code>triangleDown</code>, <code>hexagon</code>, <code>square</code>, <code>icon</code>.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shapeProperties', this);">
             <td><span parent="shapeProperties" class="right-caret"></span> shapeProperties</td>
             <td>Object</td>
             <td><code>Object</code></td>
-            <td>This object contains configuration for specific shapes
+            <td> 이 object에는 특정 shape에 대한 구성이 포함되어있습니다.
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
             <td class="indent">shapeProperties.borderDashes</td>
             <td>Array or Boolean</td>
             <td><code>false</code></td>
-            <td>This property applies to all shapes that have borders.
-                You set the dashes by supplying an Array. Array formart: [dash length, gap length].
-                You can also use a Boolean, false is disable and true is default [5,15].
+            <td> 이 속성은 테두리가 있는 모든 모양에 적용됩니다. 배열을 제공함으로써 대시를 설정합니다. 배열의 형식: [dash length, gap length]. 또한 boolean을 사용가능하며, 거짓은 사용할 수 없고 참 값은 default [5,15]입니다.
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
             <td class="indent">shapeProperties.borderRadius</td>
             <td>Number</td>
             <td><code>6</code></td>
-            <td>This property is used only for the <code>box</code> shape. It allows you to determine the roundness of the corners of the shape.
+            <td>이 속성은 <code>box</code> 모양에만 사용됩니다. 당신이 그 모양의 모서리 굴곡률을 결정하게 해줍니다.
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
             <td class="indent">shapeProperties.interpolation</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>This property only applies to the <code>image</code> and <code>circularImage</code> shapes. When true, the image is resampled when scaled down, resulting in a nicer image at the cost of computional time.</i>
+            <td> 이 속성은 <code> image </ code> 및 <code> circularImage </code> 모양에만 적용됩니다. 참일 때, 이미지를 축소하는 것이 더 좋은 이미지으로 리샘플링 되므로 시간 계산이 좋아집니다.</i>
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
             <td class="indent">shapeProperties.useImageSize</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>This property only applies to the <code>image</code> and <code>circularImage</code> shapes. When false, the size option is used, when true, the size of the image is used. <br><i><b>Important</b>:
-                if this is set to true, the image cannot be scaled with the value option!</i>
-            </td>
+            <td>이 속성은 <code> image </ code> 및 <code> circularImage </ code> 모양에만 적용됩니다. 거짓인 경우, 크기 옵션이 사용되거, 참일때, 이미지 옵션이 사용됩니다. <br><i><b>Important</b>: 이것이 참으로 설정된다면, 변수 옵션으로 이미지의 크기를 조정할 수 없습니다!</i></td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
             <td class="indent">shapeProperties.useBorderWithImage</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>This property only applies to the <code>image</code> shape.
-                When true, the color object is used. A rectangle with the background color is
-                drawn behind it and it has a border. This means all border options are taken into account.
+            <td>이 속성은 <code> image </ code> 모양에만 적용됩니다. 참이면 색상 개체가 사용됩니다. 배경색이있는 사각형은 그것 뒤에 그려지며, 테두리를 가지게 됩니다. 이는 모든 테두리 옵션들이 고려되고 있음을 의미하고 있습니다.
             </td>
         </tr>
         <tr>
             <td>size</td>
             <td>Number</td>
             <td><code>25</code></td>
-            <td>The size is used to determine the size of node shapes that do not have the label inside of them. These
-                shapes are: <code>image</code>, <code>circularImage</code>, <code>diamond</code>, <code>dot</code>,
-                <code>star</code>, <code>triangle</code>, <code>triangleDown</code>, <code>hexagon</code>, <code>square</code> and
-                <code>icon</code></td>
+            <td> size는 내부에 label을 갖고 있지 않은 Node의 shape의 크기를 결정하는 사용됩니다. 이러한 shape에는 다음 것들이 있습니다.: <code>image</code>, <code>circularImage</code>, <code>diamond</code>, <code>dot</code>,
+            <code>star</code>, <code>triangle</code>, <code>triangleDown</code>, <code>hexagon</code>, <code>square</code>, <code>icon</code></td>
         </tr>
         <tr>
             <td>title</td>
             <td>String or Element</td>
             <td><code>undefined</code></td>
-            <td>Title to be displayed when the user hovers over the node. The title can be an HTML element or a string
-                containing plain text or HTML.
+            <td>사용자가 Node 위로 마우스를 가져갈 때, 표시되는 title입니다. title은 HTML 요소 또는 일반 텍스트 또는 HTML을 포함하는 문자열 일 수 있습니다.
             </td>
         </tr>
         <tr>
             <td>value</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>When a value is set, the nodes will be scaled using the options in the scaling object defined above.
-            </td>
+            <td> 값이 설정될 때, Node는 위에서 정의된 object를 조정하는 옵션들을 사용하여 조정될 수 있습니다.</td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','widthConstraint', this);">
             <td><span parent="widthConstraint" class="right-caret"></span> widthConstraint</td>
             <td>Number, Boolean or Object</td>
             <td><code>false</code></td>
-            <td>If false, no widthConstraint is applied. If a number is specified, the minimum and maximum widths of the node are set to the value. The node's label's lines will be broken on spaces to stay below the maximum and the node's width will be set to the minimum if less than the value.</td>
+            <td>
+              거짓일 경우, widthConstraint는 적용될 수 없습니다. 수가 특정된다면, Node의 넓이의 최솟값과 최댓값은 해당 값으로 설정될 수 있습니다. Node label의 선들은 최대치 이하로 유지하기 위해 공간상에서 깨질 것이며, Node의 width는 해당 값보다 작다면 최소값으로 설정될 것입니다.</td>
         </tr>
         <tr parent="widthConstraint" class="hidden">
             <td class="indent">widthConstraint.minimum</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>If a number is specified, the minimum width of the node is set to the value. The node's width will be set to the minimum if less than the value.</td>
+            <td>숫자를 지정하면 Node의 최소 너비가 값으로 설정됩니다. 값보다 작으면 Node의 너비가 최소로 설정됩니다.</td>
         </tr>
         <tr parent="widthConstraint" class="hidden">
             <td class="indent">widthConstraint.maximum</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>If a number is specified, the maximum width of the node is set to the value. The node's label's lines will be broken on spaces to stay below the maximum.</td>
+            <td>숫자를 지정하면 Node의 최대 너비가 값으로 설정됩니다. Node의 label 라인이 최대 값 아래로 유지되도록 공백에서 끊어집니다.</td>
         </tr>
         <tr>
             <td>x</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>This gives a node an initial x position. When using the hierarchical layout, either the x or y position
-                is set by the layout engine depending on the type of view. The other value remains untouched. When using
-                stabilization, the stabilized position may be different from the initial one. To lock the node to that
-                position use the physics or fixed options.
-            </td>
+            <td> 여기에 Node의 초기 x 좌표가 주어집니다. hierarchical적 레이아웃을 사용할 때, x  또는 y 좌표는 뷰의 유형에 의존하는 레이아웃 엔진으로 설정되어집니다. 또 다른 값은 손대지않은 채로 남아있게 됩니다. 안정화를 사용할 때, 안정화 된 위치는 초기 위치와는 다를 수 있습니다. Node를 해당 위치에 고정하고자 한다면 물리 또는 고정 옵션을 사용하십시오.</td>
         </tr>
         <tr>
             <td>y</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>This gives a node an initial y position. When using the hierarchical layout, either the x or y position
-                is set by the layout engine depending on the type of view. The other value remains untouched. When using
-                stabilization, the stabilized position may be different from the initial one. To lock the node to that
-                position use the physics or fixed options.
-            </td>
+            <td> 여기에 Node의 초기 y 좌표가 주어집니다. hierarchical적 레이아웃을 사용할 때, , x  또는 y 좌표는 뷰의 유형에 의존하는 레이아웃 엔진으로 설정되어집니다. 또 다른 값은 손대지않은 채로 남아있게 됩니다. 안정화를 사용할 때, 안정화 된 위치는 초기 위치와는 다를 수 있습니다. Node를 해당 위치에 고정하고자 한다면 물리 또는 고정 옵션을 사용하십시오.</td>
         </tr>
     </table>
 
