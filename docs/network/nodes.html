@@ -270,7 +270,7 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>true</code></td>
             <td>
-              When true, selecting or hovering on a node will change it and its label's characteristics according the default.
+              When true, selecting or hovering on a node will change it and its label's characteristics according to the default.
               When false, no change to the node or its label will occur when the node is chosen.
               If an object is supplied, finer-grained adjustment of node and label characteristics is available when a node is chosen.
             </td>
@@ -280,7 +280,7 @@ network.setOptions(options);
             <td>Function or Boolean</td>
             <td>undefined</td>
             <td>
-              When true, selecting or hovering on a node will change its characteristics according the default.
+              When true, selecting or hovering on a node will change its characteristics according to the default.
               When false, no change to the node will occur when the node is chosen.
               <p>
                 If a function is supplied, it is called when the node is chosen.
@@ -319,7 +319,7 @@ network.setOptions(options);
             <td>Function or Boolean</td>
             <td>undefined</td>
             <td>
-              When true, selecting or hovering on a node will change its label's characteristics according the default.
+              When true, selecting or hovering on a node will change its label's characteristics according to the default.
               When false, no change to the node's label will occur when the node is chosen.
               <p>
                 If a function is supplied, it is called when the node is chosen.
@@ -378,7 +378,7 @@ network.setOptions(options);
             <td class="indent">color.highlight</td>
             <td>Object or String</td>
             <td><code>Object</code></td>
-            <td>The color the node when it is selected. Alternatively you can just supply a string color value.</td>
+            <td>The color of the node when it is selected. Alternatively, you can just supply a string color value.</td>
         </tr>
         <tr parent="color" class="hidden">
             <td class="indent2">color.highlight.border</td>
@@ -396,7 +396,7 @@ network.setOptions(options);
             <td class="indent">color.hover</td>
             <td>Object or String</td>
             <td><code>Object</code></td>
-            <td>The color the node when the mouse hovers over it <i>(assuming hover is enabled in the interaction
+            <td>The color of the node when the mouse hovers over it <i>(assuming hover is enabled in the interaction
                 module)</i>. Shorthand like above is also supported.
             </td>
         </tr>
@@ -540,7 +540,7 @@ network.setOptions(options);
             <td class="indent">font.bold.vadjust</td>
             <td>Number</td>
             <td><code>0</code></td>
-            <td>A font-specific correction to the vertical positioning of the bold italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
+            <td>A font-specific correction to the vertical positioning of the bold font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
         </tr>
         <tr parent="font" class='hidden toggle collapsible' onclick="toggleTable('optionTable','ital', this);">
             <td><span parent="ital" class="right-caret"></span> font.ital</td>
@@ -668,13 +668,13 @@ network.setOptions(options);
             <td><span parent="heightConstraint" class="right-caret"></span> heightConstraint</td>
             <td>Number, Boolean or Object</td>
             <td><code>false</code></td>
-            <td>If false, no heightConstraint is applied. If a number is specified, the value is used as the minimum height of the node. The node's height will be be set to the minimum if less than the value.</td>
+            <td>If false, no heightConstraint is applied. If a number is specified, the value is used as the minimum height of the node. The node's height will be set to the minimum if less than the value.</td>
         </tr>
         <tr parent="heightConstraint" class="hidden">
             <td class="indent">heightConstraint.minimum</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>If a number is specified, the value is used as the minimum height of the node. The node's height will be be set to the minimum if less than the value.</td>
+            <td>If a number is specified, the value is used as the minimum height of the node. The node's height will be set to the minimum if less than the value.</td>
         </tr>
         <tr parent="heightConstraint" class="hidden">
             <td class="indent">heightConstraint.valign</td>
@@ -895,7 +895,7 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
             <td>This can be false if the label is not allowed to scale with the node. If true it will scale using
-                default settigns. For further customization, you can supply an object.
+                default settings. For further customization, you can supply an object.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
@@ -1020,7 +1020,7 @@ mySize = minSize + diff * scale;
             <td><span parent="shapeProperties" class="right-caret"></span> shapeProperties</td>
             <td>Object</td>
             <td><code>Object</code></td>
-            <td>This object contains configuration for specific shapes
+            <td>This object contains configuration for specific shapes.
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
@@ -1028,7 +1028,7 @@ mySize = minSize + diff * scale;
             <td>Array or Boolean</td>
             <td><code>false</code></td>
             <td>This property applies to all shapes that have borders.
-                You set the dashes by supplying an Array. Array formart: [dash length, gap length].
+                You set the dashes by supplying an Array. Array format: [dash length, gap length].
                 You can also use a Boolean, false is disable and true is default [5,15].
             </td>
         </tr>
@@ -1043,7 +1043,7 @@ mySize = minSize + diff * scale;
             <td class="indent">shapeProperties.interpolation</td>
             <td>Boolean</td>
             <td><code>true</code></td>
-            <td>This property only applies to the <code>image</code> and <code>circularImage</code> shapes. When true, the image is resampled when scaled down, resulting in a nicer image at the cost of computional time.</i>
+            <td>This property only applies to the <code>image</code> and <code>circularImage</code> shapes. When true, the image is resampled when scaled down, resulting in a nicer image at the cost of computational time.</i>
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
