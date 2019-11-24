@@ -20,10 +20,7 @@
       }
     ]
   ],
-  "exclude": [
-    "node_modules/@babel/runtime-corejs3/**",
-    "node_modules/core-js-pure/**"
-  ],
+  "exclude": ["**/node_modules/**"],
   "env": {
     "test": {
       "presets": [
@@ -32,8 +29,7 @@
           {
             "targets": "maintained node versions"
           }
-        ],
-        "@babel/preset-typescript"
+        ]
       ]
     },
     "test-cov": {
@@ -43,8 +39,7 @@
           {
             "targets": "maintained node versions"
           }
-        ],
-        "@babel/preset-typescript"
+        ]
       ],
       "plugins": ["istanbul"]
     }
