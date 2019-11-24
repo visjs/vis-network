@@ -3,7 +3,10 @@
     [
       "@babel/preset-env",
       {
-        "targets": "> 0.1% or not dead",
+        "targets": {
+          "browsers": "> 0.1% or not dead",
+          "esmodules": false
+        },
         "useBuiltIns": false
       }
     ],
