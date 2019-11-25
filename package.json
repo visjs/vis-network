@@ -86,7 +86,7 @@
     "@types/sinon": "7.5.1",
     "@types/timsort": "0.3.0",
     "@typescript-eslint/eslint-plugin": "2.9.0",
-    "@typescript-eslint/parser": "2.8.0",
+    "@typescript-eslint/parser": "2.9.0",
     "babel-plugin-css-modules-transform": "1.6.2",
     "babel-plugin-istanbul": "5.2.0",
     "chai": "4.2.0",
