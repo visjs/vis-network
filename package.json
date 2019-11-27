@@ -80,7 +80,7 @@
     "@semantic-release/commit-analyzer": "6.3.3",
     "@semantic-release/github": "5.5.5",
     "@semantic-release/npm": "5.3.4",
-    "@semantic-release/release-notes-generator": "7.3.4",
+    "@semantic-release/release-notes-generator": "7.3.5",
     "@types/chai": "4.2.5",
     "@types/mocha": "5.2.7",
     "@types/sinon": "7.5.1",
