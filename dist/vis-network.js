@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-28T18:01:32Z
+ * @date    2019-11-28T18:15:54Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -37138,7 +37138,7 @@
 	            // this is because a change in the global would not affect these curves.
 
 
-	            if (edgeData !== undefined) {
+	            if (edgeData != null) {
 	              var smoothOptions = edgeData.smooth;
 
 	              if (smoothOptions !== undefined) {
