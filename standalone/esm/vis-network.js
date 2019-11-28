@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-28T18:14:48Z
+ * @date    2019-11-28T18:20:06Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -44890,6 +44890,480 @@ function () {
   return SelectionHandler;
 }();
 
+var freezing$1 = !fails(function () {
+  return Object.isExtensible(Object.preventExtensions({}));
+});
+
+var internalMetadata$1 = createCommonjsModule(function (module) {
+var defineProperty = objectDefineProperty.f;
+
+
+
+var METADATA = uid$1('meta');
+var id = 0;
+
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+
+var setMetadata = function (it) {
+  defineProperty(it, METADATA, { value: {
+    objectID: 'O' + ++id, // object ID
+    weakData: {}          // weak collections IDs
+  } });
+};
+
+var fastKey = function (it, create) {
+  // return a primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, METADATA)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMetadata(it);
+  // return object ID
+  } return it[METADATA].objectID;
+};
+
+var getWeakData = function (it, create) {
+  if (!has(it, METADATA)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMetadata(it);
+  // return the store of weak collections IDs
+  } return it[METADATA].weakData;
+};
+
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (freezing$1 && meta.REQUIRED && isExtensible(it) && !has(it, METADATA)) setMetadata(it);
+  return it;
+};
+
+var meta = module.exports = {
+  REQUIRED: false,
+  fastKey: fastKey,
+  getWeakData: getWeakData,
+  onFreeze: onFreeze
+};
+
+hiddenKeys$2[METADATA] = true;
+});
+var internalMetadata_1$1 = internalMetadata$1.REQUIRED;
+var internalMetadata_2$1 = internalMetadata$1.fastKey;
+var internalMetadata_3$1 = internalMetadata$1.getWeakData;
+var internalMetadata_4$1 = internalMetadata$1.onFreeze;
+
+var ITERATOR$b = wellKnownSymbol$1('iterator');
+var ArrayPrototype$j = Array.prototype;
+
+// check on default Array iterator
+var isArrayIteratorMethod$2 = function (it) {
+  return it !== undefined && (iterators$1.Array === it || ArrayPrototype$j[ITERATOR$b] === it);
+};
+
+// call something on iterator step with safe closing on error
+var callWithSafeIterationClosing$2 = function (iterator, fn, value, ENTRIES) {
+  try {
+    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
+  // 7.4.6 IteratorClose(iterator, completion)
+  } catch (error) {
+    var returnMethod = iterator['return'];
+    if (returnMethod !== undefined) anObject(returnMethod.call(iterator));
+    throw error;
+  }
+};
+
+var iterate_1$1 = createCommonjsModule(function (module) {
+var Result = function (stopped, result) {
+  this.stopped = stopped;
+  this.result = result;
+};
+
+var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITERATOR) {
+  var boundFunction = bindContext(fn, that, AS_ENTRIES ? 2 : 1);
+  var iterator, iterFn, index, length, result, next, step;
+
+  if (IS_ITERATOR) {
+    iterator = iterable;
+  } else {
+    iterFn = getIteratorMethod$1(iterable);
+    if (typeof iterFn != 'function') throw TypeError('Target is not iterable');
+    // optimisation for array iterators
+    if (isArrayIteratorMethod$2(iterFn)) {
+      for (index = 0, length = toLength$1(iterable.length); length > index; index++) {
+        result = AS_ENTRIES
+          ? boundFunction(anObject(step = iterable[index])[0], step[1])
+          : boundFunction(iterable[index]);
+        if (result && result instanceof Result) return result;
+      } return new Result(false);
+    }
+    iterator = iterFn.call(iterable);
+  }
+
+  next = iterator.next;
+  while (!(step = next.call(iterator)).done) {
+    result = callWithSafeIterationClosing$2(iterator, boundFunction, step.value, AS_ENTRIES);
+    if (typeof result == 'object' && result && result instanceof Result) return result;
+  } return new Result(false);
+};
+
+iterate.stop = function (result) {
+  return new Result(true, result);
+};
+});
+
+var anInstance$1 = function (it, Constructor, name) {
+  if (!(it instanceof Constructor)) {
+    throw TypeError('Incorrect ' + (name ? name + ' ' : '') + 'invocation');
+  } return it;
+};
+
+var defineProperty$f = objectDefineProperty.f;
+var forEach$8 = arrayIteration$1.forEach;
+
+
+
+var setInternalState$7 = internalState$1.set;
+var internalStateGetterFor$2 = internalState$1.getterFor;
+
+var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
+  var NativeConstructor = global_1[CONSTRUCTOR_NAME];
+  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
+  var ADDER = IS_MAP ? 'set' : 'add';
+  var exported = {};
+  var Constructor;
+
+  if (!descriptors || typeof NativeConstructor != 'function'
+    || !(IS_WEAK || NativePrototype.forEach && !fails(function () { new NativeConstructor().entries().next(); }))
+  ) {
+    // create collection constructor
+    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
+    internalMetadata$1.REQUIRED = true;
+  } else {
+    Constructor = wrapper(function (target, iterable) {
+      setInternalState$7(anInstance$1(target, Constructor, CONSTRUCTOR_NAME), {
+        type: CONSTRUCTOR_NAME,
+        collection: new NativeConstructor()
+      });
+      if (iterable != undefined) iterate_1$1(iterable, target[ADDER], target, IS_MAP);
+    });
+
+    var getInternalState = internalStateGetterFor$2(CONSTRUCTOR_NAME);
+
+    forEach$8(['add', 'clear', 'delete', 'forEach', 'get', 'has', 'set', 'keys', 'values', 'entries'], function (KEY) {
+      var IS_ADDER = KEY == 'add' || KEY == 'set';
+      if (KEY in NativePrototype && !(IS_WEAK && KEY == 'clear')) {
+        createNonEnumerableProperty(Constructor.prototype, KEY, function (a, b) {
+          var collection = getInternalState(this).collection;
+          if (!IS_ADDER && IS_WEAK && !isObject(a)) return KEY == 'get' ? undefined : false;
+          var result = collection[KEY](a === 0 ? 0 : a, b);
+          return IS_ADDER ? this : result;
+        });
+      }
+    });
+
+    IS_WEAK || defineProperty$f(Constructor.prototype, 'size', {
+      get: function () {
+        return getInternalState(this).collection.size;
+      }
+    });
+  }
+
+  setToStringTag$1(Constructor, CONSTRUCTOR_NAME, false, true);
+
+  exported[CONSTRUCTOR_NAME] = Constructor;
+  _export({ global: true, forced: true }, exported);
+
+  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
+
+  return Constructor;
+};
+
+var redefineAll$1 = function (target, src, options) {
+  for (var key in src) {
+    if (options && options.unsafe && target[key]) target[key] = src[key];
+    else redefine$1(target, key, src[key], options);
+  } return target;
+};
+
+var SPECIES$7 = wellKnownSymbol$1('species');
+
+var setSpecies$1 = function (CONSTRUCTOR_NAME) {
+  var Constructor = getBuiltIn$1(CONSTRUCTOR_NAME);
+  var defineProperty = objectDefineProperty.f;
+
+  if (descriptors && Constructor && !Constructor[SPECIES$7]) {
+    defineProperty(Constructor, SPECIES$7, {
+      configurable: true,
+      get: function () { return this; }
+    });
+  }
+};
+
+var defineProperty$g = objectDefineProperty.f;
+
+
+
+
+
+
+
+
+var fastKey$1 = internalMetadata$1.fastKey;
+
+
+var setInternalState$8 = internalState$1.set;
+var internalStateGetterFor$3 = internalState$1.getterFor;
+
+var collectionStrong$1 = {
+  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+    var C = wrapper(function (that, iterable) {
+      anInstance$1(that, C, CONSTRUCTOR_NAME);
+      setInternalState$8(that, {
+        type: CONSTRUCTOR_NAME,
+        index: objectCreate$1(null),
+        first: undefined,
+        last: undefined,
+        size: 0
+      });
+      if (!descriptors) that.size = 0;
+      if (iterable != undefined) iterate_1$1(iterable, that[ADDER], that, IS_MAP);
+    });
+
+    var getInternalState = internalStateGetterFor$3(CONSTRUCTOR_NAME);
+
+    var define = function (that, key, value) {
+      var state = getInternalState(that);
+      var entry = getEntry(that, key);
+      var previous, index;
+      // change existing entry
+      if (entry) {
+        entry.value = value;
+      // create new entry
+      } else {
+        state.last = entry = {
+          index: index = fastKey$1(key, true),
+          key: key,
+          value: value,
+          previous: previous = state.last,
+          next: undefined,
+          removed: false
+        };
+        if (!state.first) state.first = entry;
+        if (previous) previous.next = entry;
+        if (descriptors) state.size++;
+        else that.size++;
+        // add to index
+        if (index !== 'F') state.index[index] = entry;
+      } return that;
+    };
+
+    var getEntry = function (that, key) {
+      var state = getInternalState(that);
+      // fast case
+      var index = fastKey$1(key);
+      var entry;
+      if (index !== 'F') return state.index[index];
+      // frozen object case
+      for (entry = state.first; entry; entry = entry.next) {
+        if (entry.key == key) return entry;
+      }
+    };
+
+    redefineAll$1(C.prototype, {
+      // 23.1.3.1 Map.prototype.clear()
+      // 23.2.3.2 Set.prototype.clear()
+      clear: function clear() {
+        var that = this;
+        var state = getInternalState(that);
+        var data = state.index;
+        var entry = state.first;
+        while (entry) {
+          entry.removed = true;
+          if (entry.previous) entry.previous = entry.previous.next = undefined;
+          delete data[entry.index];
+          entry = entry.next;
+        }
+        state.first = state.last = undefined;
+        if (descriptors) state.size = 0;
+        else that.size = 0;
+      },
+      // 23.1.3.3 Map.prototype.delete(key)
+      // 23.2.3.4 Set.prototype.delete(value)
+      'delete': function (key) {
+        var that = this;
+        var state = getInternalState(that);
+        var entry = getEntry(that, key);
+        if (entry) {
+          var next = entry.next;
+          var prev = entry.previous;
+          delete state.index[entry.index];
+          entry.removed = true;
+          if (prev) prev.next = next;
+          if (next) next.previous = prev;
+          if (state.first == entry) state.first = next;
+          if (state.last == entry) state.last = prev;
+          if (descriptors) state.size--;
+          else that.size--;
+        } return !!entry;
+      },
+      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
+      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
+      forEach: function forEach(callbackfn /* , that = undefined */) {
+        var state = getInternalState(this);
+        var boundFunction = bindContext(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
+        var entry;
+        while (entry = entry ? entry.next : state.first) {
+          boundFunction(entry.value, entry.key, this);
+          // revert to the last existing entry
+          while (entry && entry.removed) entry = entry.previous;
+        }
+      },
+      // 23.1.3.7 Map.prototype.has(key)
+      // 23.2.3.7 Set.prototype.has(value)
+      has: function has(key) {
+        return !!getEntry(this, key);
+      }
+    });
+
+    redefineAll$1(C.prototype, IS_MAP ? {
+      // 23.1.3.6 Map.prototype.get(key)
+      get: function get(key) {
+        var entry = getEntry(this, key);
+        return entry && entry.value;
+      },
+      // 23.1.3.9 Map.prototype.set(key, value)
+      set: function set(key, value) {
+        return define(this, key === 0 ? 0 : key, value);
+      }
+    } : {
+      // 23.2.3.1 Set.prototype.add(value)
+      add: function add(value) {
+        return define(this, value = value === 0 ? 0 : value, value);
+      }
+    });
+    if (descriptors) defineProperty$g(C.prototype, 'size', {
+      get: function () {
+        return getInternalState(this).size;
+      }
+    });
+    return C;
+  },
+  setStrong: function (C, CONSTRUCTOR_NAME, IS_MAP) {
+    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
+    var getInternalCollectionState = internalStateGetterFor$3(CONSTRUCTOR_NAME);
+    var getInternalIteratorState = internalStateGetterFor$3(ITERATOR_NAME);
+    // add .keys, .values, .entries, [@@iterator]
+    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
+    defineIterator$1(C, CONSTRUCTOR_NAME, function (iterated, kind) {
+      setInternalState$8(this, {
+        type: ITERATOR_NAME,
+        target: iterated,
+        state: getInternalCollectionState(iterated),
+        kind: kind,
+        last: undefined
+      });
+    }, function () {
+      var state = getInternalIteratorState(this);
+      var kind = state.kind;
+      var entry = state.last;
+      // revert to the last existing entry
+      while (entry && entry.removed) entry = entry.previous;
+      // get next entry
+      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
+        // or finish the iteration
+        state.target = undefined;
+        return { value: undefined, done: true };
+      }
+      // return step by kind
+      if (kind == 'keys') return { value: entry.key, done: false };
+      if (kind == 'values') return { value: entry.value, done: false };
+      return { value: [entry.key, entry.value], done: false };
+    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
+
+    // add [@@species], 23.1.2.2, 23.2.2.2
+    setSpecies$1(CONSTRUCTOR_NAME);
+  }
+};
+
+// `Map` constructor
+// https://tc39.github.io/ecma262/#sec-map-objects
+var es_map$1 = collection$1('Map', function (get) {
+  return function Map() { return get(this, arguments.length ? arguments[0] : undefined); };
+}, collectionStrong$1, true);
+
+var map$7 = path.Map;
+
+var map$8 = map$7;
+
+var map$9 = map$8;
+
+// `Array.prototype.{ reduce, reduceRight }` methods implementation
+var createMethod$a = function (IS_RIGHT) {
+  return function (that, callbackfn, argumentsLength, memo) {
+    aFunction(callbackfn);
+    var O = toObject$1(that);
+    var self = indexedObject(O);
+    var length = toLength$1(O.length);
+    var index = IS_RIGHT ? length - 1 : 0;
+    var i = IS_RIGHT ? -1 : 1;
+    if (argumentsLength < 2) while (true) {
+      if (index in self) {
+        memo = self[index];
+        index += i;
+        break;
+      }
+      index += i;
+      if (IS_RIGHT ? index < 0 : length <= index) {
+        throw TypeError('Reduce of empty array with no initial value');
+      }
+    }
+    for (;IS_RIGHT ? index >= 0 : length > index; index += i) if (index in self) {
+      memo = callbackfn(memo, self[index], index, O);
+    }
+    return memo;
+  };
+};
+
+var arrayReduce$1 = {
+  // `Array.prototype.reduce` method
+  // https://tc39.github.io/ecma262/#sec-array.prototype.reduce
+  left: createMethod$a(false),
+  // `Array.prototype.reduceRight` method
+  // https://tc39.github.io/ecma262/#sec-array.prototype.reduceright
+  right: createMethod$a(true)
+};
+
+var $reduce$1 = arrayReduce$1.left;
+
+
+// `Array.prototype.reduce` method
+// https://tc39.github.io/ecma262/#sec-array.prototype.reduce
+_export({ target: 'Array', proto: true, forced: sloppyArrayMethod$1('reduce') }, {
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    return $reduce$1(this, callbackfn, arguments.length, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+var reduce$3 = entryVirtual('Array').reduce;
+
+var ArrayPrototype$k = Array.prototype;
+
+var reduce_1$1 = function (it) {
+  var own = it.reduce;
+  return it === ArrayPrototype$k || (it instanceof Array && own === ArrayPrototype$k.reduce) ? reduce$3 : own;
+};
+
+var reduce$4 = reduce_1$1;
+
+var reduce$5 = reduce$4;
+
 var test$4 = [];
 var nativeSort$2 = test$4.sort;
 
@@ -44918,11 +45392,11 @@ _export({ target: 'Array', proto: true, forced: FORCED$a }, {
 
 var sort$4 = entryVirtual('Array').sort;
 
-var ArrayPrototype$j = Array.prototype;
+var ArrayPrototype$l = Array.prototype;
 
 var sort_1$2 = function (it) {
   var own = it.sort;
-  return it === ArrayPrototype$j || (it instanceof Array && own === ArrayPrototype$j.sort) ? sort$4 : own;
+  return it === ArrayPrototype$l || (it instanceof Array && own === ArrayPrototype$l.sort) ? sort$4 : own;
 };
 
 var sort$5 = sort_1$2;
@@ -46105,418 +46579,16 @@ _export({ target: 'Array', proto: true, forced: sloppyArrayMethod$1('every') }, 
 
 var every = entryVirtual('Array').every;
 
-var ArrayPrototype$k = Array.prototype;
+var ArrayPrototype$m = Array.prototype;
 
 var every_1 = function (it) {
   var own = it.every;
-  return it === ArrayPrototype$k || (it instanceof Array && own === ArrayPrototype$k.every) ? every : own;
+  return it === ArrayPrototype$m || (it instanceof Array && own === ArrayPrototype$m.every) ? every : own;
 };
 
 var every$1 = every_1;
 
 var every$2 = every$1;
-
-var freezing$1 = !fails(function () {
-  return Object.isExtensible(Object.preventExtensions({}));
-});
-
-var internalMetadata$1 = createCommonjsModule(function (module) {
-var defineProperty = objectDefineProperty.f;
-
-
-
-var METADATA = uid$1('meta');
-var id = 0;
-
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-
-var setMetadata = function (it) {
-  defineProperty(it, METADATA, { value: {
-    objectID: 'O' + ++id, // object ID
-    weakData: {}          // weak collections IDs
-  } });
-};
-
-var fastKey = function (it, create) {
-  // return a primitive with prefix
-  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if (!has(it, METADATA)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F';
-    // not necessary to add metadata
-    if (!create) return 'E';
-    // add missing metadata
-    setMetadata(it);
-  // return object ID
-  } return it[METADATA].objectID;
-};
-
-var getWeakData = function (it, create) {
-  if (!has(it, METADATA)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true;
-    // not necessary to add metadata
-    if (!create) return false;
-    // add missing metadata
-    setMetadata(it);
-  // return the store of weak collections IDs
-  } return it[METADATA].weakData;
-};
-
-// add metadata on freeze-family methods calling
-var onFreeze = function (it) {
-  if (freezing$1 && meta.REQUIRED && isExtensible(it) && !has(it, METADATA)) setMetadata(it);
-  return it;
-};
-
-var meta = module.exports = {
-  REQUIRED: false,
-  fastKey: fastKey,
-  getWeakData: getWeakData,
-  onFreeze: onFreeze
-};
-
-hiddenKeys$2[METADATA] = true;
-});
-var internalMetadata_1$1 = internalMetadata$1.REQUIRED;
-var internalMetadata_2$1 = internalMetadata$1.fastKey;
-var internalMetadata_3$1 = internalMetadata$1.getWeakData;
-var internalMetadata_4$1 = internalMetadata$1.onFreeze;
-
-var ITERATOR$b = wellKnownSymbol$1('iterator');
-var ArrayPrototype$l = Array.prototype;
-
-// check on default Array iterator
-var isArrayIteratorMethod$2 = function (it) {
-  return it !== undefined && (iterators$1.Array === it || ArrayPrototype$l[ITERATOR$b] === it);
-};
-
-// call something on iterator step with safe closing on error
-var callWithSafeIterationClosing$2 = function (iterator, fn, value, ENTRIES) {
-  try {
-    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
-  } catch (error) {
-    var returnMethod = iterator['return'];
-    if (returnMethod !== undefined) anObject(returnMethod.call(iterator));
-    throw error;
-  }
-};
-
-var iterate_1$1 = createCommonjsModule(function (module) {
-var Result = function (stopped, result) {
-  this.stopped = stopped;
-  this.result = result;
-};
-
-var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITERATOR) {
-  var boundFunction = bindContext(fn, that, AS_ENTRIES ? 2 : 1);
-  var iterator, iterFn, index, length, result, next, step;
-
-  if (IS_ITERATOR) {
-    iterator = iterable;
-  } else {
-    iterFn = getIteratorMethod$1(iterable);
-    if (typeof iterFn != 'function') throw TypeError('Target is not iterable');
-    // optimisation for array iterators
-    if (isArrayIteratorMethod$2(iterFn)) {
-      for (index = 0, length = toLength$1(iterable.length); length > index; index++) {
-        result = AS_ENTRIES
-          ? boundFunction(anObject(step = iterable[index])[0], step[1])
-          : boundFunction(iterable[index]);
-        if (result && result instanceof Result) return result;
-      } return new Result(false);
-    }
-    iterator = iterFn.call(iterable);
-  }
-
-  next = iterator.next;
-  while (!(step = next.call(iterator)).done) {
-    result = callWithSafeIterationClosing$2(iterator, boundFunction, step.value, AS_ENTRIES);
-    if (typeof result == 'object' && result && result instanceof Result) return result;
-  } return new Result(false);
-};
-
-iterate.stop = function (result) {
-  return new Result(true, result);
-};
-});
-
-var anInstance$1 = function (it, Constructor, name) {
-  if (!(it instanceof Constructor)) {
-    throw TypeError('Incorrect ' + (name ? name + ' ' : '') + 'invocation');
-  } return it;
-};
-
-var defineProperty$f = objectDefineProperty.f;
-var forEach$8 = arrayIteration$1.forEach;
-
-
-
-var setInternalState$7 = internalState$1.set;
-var internalStateGetterFor$2 = internalState$1.getterFor;
-
-var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
-  var NativeConstructor = global_1[CONSTRUCTOR_NAME];
-  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
-  var ADDER = IS_MAP ? 'set' : 'add';
-  var exported = {};
-  var Constructor;
-
-  if (!descriptors || typeof NativeConstructor != 'function'
-    || !(IS_WEAK || NativePrototype.forEach && !fails(function () { new NativeConstructor().entries().next(); }))
-  ) {
-    // create collection constructor
-    Constructor = common.getConstructor(wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER);
-    internalMetadata$1.REQUIRED = true;
-  } else {
-    Constructor = wrapper(function (target, iterable) {
-      setInternalState$7(anInstance$1(target, Constructor, CONSTRUCTOR_NAME), {
-        type: CONSTRUCTOR_NAME,
-        collection: new NativeConstructor()
-      });
-      if (iterable != undefined) iterate_1$1(iterable, target[ADDER], target, IS_MAP);
-    });
-
-    var getInternalState = internalStateGetterFor$2(CONSTRUCTOR_NAME);
-
-    forEach$8(['add', 'clear', 'delete', 'forEach', 'get', 'has', 'set', 'keys', 'values', 'entries'], function (KEY) {
-      var IS_ADDER = KEY == 'add' || KEY == 'set';
-      if (KEY in NativePrototype && !(IS_WEAK && KEY == 'clear')) {
-        createNonEnumerableProperty(Constructor.prototype, KEY, function (a, b) {
-          var collection = getInternalState(this).collection;
-          if (!IS_ADDER && IS_WEAK && !isObject(a)) return KEY == 'get' ? undefined : false;
-          var result = collection[KEY](a === 0 ? 0 : a, b);
-          return IS_ADDER ? this : result;
-        });
-      }
-    });
-
-    IS_WEAK || defineProperty$f(Constructor.prototype, 'size', {
-      get: function () {
-        return getInternalState(this).collection.size;
-      }
-    });
-  }
-
-  setToStringTag$1(Constructor, CONSTRUCTOR_NAME, false, true);
-
-  exported[CONSTRUCTOR_NAME] = Constructor;
-  _export({ global: true, forced: true }, exported);
-
-  if (!IS_WEAK) common.setStrong(Constructor, CONSTRUCTOR_NAME, IS_MAP);
-
-  return Constructor;
-};
-
-var redefineAll$1 = function (target, src, options) {
-  for (var key in src) {
-    if (options && options.unsafe && target[key]) target[key] = src[key];
-    else redefine$1(target, key, src[key], options);
-  } return target;
-};
-
-var SPECIES$7 = wellKnownSymbol$1('species');
-
-var setSpecies$1 = function (CONSTRUCTOR_NAME) {
-  var Constructor = getBuiltIn$1(CONSTRUCTOR_NAME);
-  var defineProperty = objectDefineProperty.f;
-
-  if (descriptors && Constructor && !Constructor[SPECIES$7]) {
-    defineProperty(Constructor, SPECIES$7, {
-      configurable: true,
-      get: function () { return this; }
-    });
-  }
-};
-
-var defineProperty$g = objectDefineProperty.f;
-
-
-
-
-
-
-
-
-var fastKey$1 = internalMetadata$1.fastKey;
-
-
-var setInternalState$8 = internalState$1.set;
-var internalStateGetterFor$3 = internalState$1.getterFor;
-
-var collectionStrong$1 = {
-  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
-    var C = wrapper(function (that, iterable) {
-      anInstance$1(that, C, CONSTRUCTOR_NAME);
-      setInternalState$8(that, {
-        type: CONSTRUCTOR_NAME,
-        index: objectCreate$1(null),
-        first: undefined,
-        last: undefined,
-        size: 0
-      });
-      if (!descriptors) that.size = 0;
-      if (iterable != undefined) iterate_1$1(iterable, that[ADDER], that, IS_MAP);
-    });
-
-    var getInternalState = internalStateGetterFor$3(CONSTRUCTOR_NAME);
-
-    var define = function (that, key, value) {
-      var state = getInternalState(that);
-      var entry = getEntry(that, key);
-      var previous, index;
-      // change existing entry
-      if (entry) {
-        entry.value = value;
-      // create new entry
-      } else {
-        state.last = entry = {
-          index: index = fastKey$1(key, true),
-          key: key,
-          value: value,
-          previous: previous = state.last,
-          next: undefined,
-          removed: false
-        };
-        if (!state.first) state.first = entry;
-        if (previous) previous.next = entry;
-        if (descriptors) state.size++;
-        else that.size++;
-        // add to index
-        if (index !== 'F') state.index[index] = entry;
-      } return that;
-    };
-
-    var getEntry = function (that, key) {
-      var state = getInternalState(that);
-      // fast case
-      var index = fastKey$1(key);
-      var entry;
-      if (index !== 'F') return state.index[index];
-      // frozen object case
-      for (entry = state.first; entry; entry = entry.next) {
-        if (entry.key == key) return entry;
-      }
-    };
-
-    redefineAll$1(C.prototype, {
-      // 23.1.3.1 Map.prototype.clear()
-      // 23.2.3.2 Set.prototype.clear()
-      clear: function clear() {
-        var that = this;
-        var state = getInternalState(that);
-        var data = state.index;
-        var entry = state.first;
-        while (entry) {
-          entry.removed = true;
-          if (entry.previous) entry.previous = entry.previous.next = undefined;
-          delete data[entry.index];
-          entry = entry.next;
-        }
-        state.first = state.last = undefined;
-        if (descriptors) state.size = 0;
-        else that.size = 0;
-      },
-      // 23.1.3.3 Map.prototype.delete(key)
-      // 23.2.3.4 Set.prototype.delete(value)
-      'delete': function (key) {
-        var that = this;
-        var state = getInternalState(that);
-        var entry = getEntry(that, key);
-        if (entry) {
-          var next = entry.next;
-          var prev = entry.previous;
-          delete state.index[entry.index];
-          entry.removed = true;
-          if (prev) prev.next = next;
-          if (next) next.previous = prev;
-          if (state.first == entry) state.first = next;
-          if (state.last == entry) state.last = prev;
-          if (descriptors) state.size--;
-          else that.size--;
-        } return !!entry;
-      },
-      // 23.2.3.6 Set.prototype.forEach(callbackfn, thisArg = undefined)
-      // 23.1.3.5 Map.prototype.forEach(callbackfn, thisArg = undefined)
-      forEach: function forEach(callbackfn /* , that = undefined */) {
-        var state = getInternalState(this);
-        var boundFunction = bindContext(callbackfn, arguments.length > 1 ? arguments[1] : undefined, 3);
-        var entry;
-        while (entry = entry ? entry.next : state.first) {
-          boundFunction(entry.value, entry.key, this);
-          // revert to the last existing entry
-          while (entry && entry.removed) entry = entry.previous;
-        }
-      },
-      // 23.1.3.7 Map.prototype.has(key)
-      // 23.2.3.7 Set.prototype.has(value)
-      has: function has(key) {
-        return !!getEntry(this, key);
-      }
-    });
-
-    redefineAll$1(C.prototype, IS_MAP ? {
-      // 23.1.3.6 Map.prototype.get(key)
-      get: function get(key) {
-        var entry = getEntry(this, key);
-        return entry && entry.value;
-      },
-      // 23.1.3.9 Map.prototype.set(key, value)
-      set: function set(key, value) {
-        return define(this, key === 0 ? 0 : key, value);
-      }
-    } : {
-      // 23.2.3.1 Set.prototype.add(value)
-      add: function add(value) {
-        return define(this, value = value === 0 ? 0 : value, value);
-      }
-    });
-    if (descriptors) defineProperty$g(C.prototype, 'size', {
-      get: function () {
-        return getInternalState(this).size;
-      }
-    });
-    return C;
-  },
-  setStrong: function (C, CONSTRUCTOR_NAME, IS_MAP) {
-    var ITERATOR_NAME = CONSTRUCTOR_NAME + ' Iterator';
-    var getInternalCollectionState = internalStateGetterFor$3(CONSTRUCTOR_NAME);
-    var getInternalIteratorState = internalStateGetterFor$3(ITERATOR_NAME);
-    // add .keys, .values, .entries, [@@iterator]
-    // 23.1.3.4, 23.1.3.8, 23.1.3.11, 23.1.3.12, 23.2.3.5, 23.2.3.8, 23.2.3.10, 23.2.3.11
-    defineIterator$1(C, CONSTRUCTOR_NAME, function (iterated, kind) {
-      setInternalState$8(this, {
-        type: ITERATOR_NAME,
-        target: iterated,
-        state: getInternalCollectionState(iterated),
-        kind: kind,
-        last: undefined
-      });
-    }, function () {
-      var state = getInternalIteratorState(this);
-      var kind = state.kind;
-      var entry = state.last;
-      // revert to the last existing entry
-      while (entry && entry.removed) entry = entry.previous;
-      // get next entry
-      if (!state.target || !(state.last = entry = entry ? entry.next : state.state.first)) {
-        // or finish the iteration
-        state.target = undefined;
-        return { value: undefined, done: true };
-      }
-      // return step by kind
-      if (kind == 'keys') return { value: entry.key, done: false };
-      if (kind == 'values') return { value: entry.value, done: false };
-      return { value: [entry.key, entry.value], done: false };
-    }, IS_MAP ? 'entries' : 'values', !IS_MAP, true);
-
-    // add [@@species], 23.1.2.2, 23.2.2.2
-    setSpecies$1(CONSTRUCTOR_NAME);
-  }
-};
 
 // `Set` constructor
 // https://tc39.github.io/ecma262/#sec-set-objects
@@ -46533,7 +46605,7 @@ var set$7 = set$6;
 /**
  * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
  *
- * @param nodes - Nodes of the graph.
+ * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
@@ -46569,7 +46641,7 @@ function fillLevelsByDirectionCyclic(nodes, levels) {
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
  *
- * @param nodes - Nodes of the graph.
+ * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
@@ -46580,9 +46652,13 @@ function fillLevelsByDirectionLeaves(nodes) {
   var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : create$5(null);
   return fillLevelsByDirection( // Pick only leaves (nodes without children).
   function (node) {
-    var _context2;
+    var _context2, _context3;
 
-    return !every$2(_context2 = node.edges).call(_context2, function (edge) {
+    return every$2(_context2 = filter$6(_context3 = node.edges // Take only visible nodes into account.
+    ).call(_context3, function (edge) {
+      return nodes.has(edge.toId);
+    }) // Check that all edges lead to this node (leaf).
+    ).call(_context2, function (edge) {
       return edge.to === node;
     });
   }, // Use the lowest level.
@@ -46594,7 +46670,7 @@ function fillLevelsByDirectionLeaves(nodes) {
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
  *
- * @param nodes - Nodes of the graph.
+ * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
@@ -46604,9 +46680,13 @@ function fillLevelsByDirectionRoots(nodes) {
   var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : create$5(null);
   return fillLevelsByDirection( // Pick only roots (nodes without parents).
   function (node) {
-    var _context3;
+    var _context4, _context5;
 
-    return !every$2(_context3 = node.edges).call(_context3, function (edge) {
+    return every$2(_context4 = filter$6(_context5 = node.edges // Take only visible nodes into account.
+    ).call(_context5, function (edge) {
+      return nodes.has(edge.toId);
+    }) // Check that all edges lead from this node (root).
+    ).call(_context4, function (edge) {
       return edge.from === node;
     });
   }, // Use the highest level.
@@ -46621,14 +46701,14 @@ function fillLevelsByDirectionRoots(nodes) {
  * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
  * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
  * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
- * @param nodes - Nodes of the graph.
+ * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
 
 function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes, levels) {
-  var limit = nodes.length;
+  var limit = nodes.size;
   var edgeIdProp = direction + "Id";
   var newLevelDiff = direction === "to" ? 1 : -1;
   var _iteratorNormalCompletion = true;
@@ -46637,30 +46717,41 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
 
   try {
     var _loop = function _loop() {
-      var entryNode = _step.value;
+      var _step$value = slicedToArray$1(_step.value, 2),
+          entryNodeId = _step$value[0],
+          entryNode = _step$value[1];
 
-      if (isEntryNode(entryNode)) {
+      if ( // Skip if the node is not visible.
+      !nodes.has(entryNodeId) || // Skip if the node is not an entry node.
+      !isEntryNode(entryNode)) {
         return "continue";
       } // Line up all the entry nodes on level 0.
 
 
-      levels[entryNode.id] = 0;
+      levels[entryNodeId] = 0;
       var stack = [entryNode];
       var done = 0;
       var node = void 0;
 
       var _loop2 = function _loop2() {
-        var _context4, _context5;
+        var _context6, _context7;
+
+        if (!nodes.has(entryNodeId)) {
+          // Skip if the node is not visible.
+          return "continue";
+        }
 
         var newLevel = levels[node.id] + newLevelDiff;
 
-        forEach$6(_context4 = filter$6(_context5 = node.edges).call(_context5, function (edge) {
+        forEach$6(_context6 = filter$6(_context7 = node.edges).call(_context7, function (edge) {
           return (// Ignore disconnected edges.
             edge.connected && // Ignore circular edges.
             edge.to !== edge.from && // Ignore edges leading to the node that's currently being processed.
-            edge[direction] !== node
+            edge[direction] !== node && // Ignore edges connecting to an invisible node.
+            nodes.has(edge.toId) && // Ignore edges connecting from an invisible node.
+            nodes.has(edge.fromId)
           );
-        })).call(_context4, function (edge) {
+        })).call(_context6, function (edge) {
           var targetNodeId = edge[edgeIdProp];
           var oldLevel = levels[targetNodeId];
 
@@ -46685,7 +46776,13 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
       while (node = stack.pop()) {
         var _ret2 = _loop2();
 
-        if (_typeof_1$2(_ret2) === "object") return _ret2.v;
+        switch (_ret2) {
+          case "continue":
+            continue;
+
+          default:
+            if (_typeof_1$2(_ret2) === "object") return _ret2.v;
+        }
       }
     };
 
@@ -48409,16 +48506,17 @@ function () {
       var _context4,
           _this8 = this;
 
-      var nodes = map$5(_context4 = this.body.nodeIndices).call(_context4, function (id) {
-        return _this8.body.nodes[id];
-      });
+      var nodes = reduce$5(_context4 = this.body.nodeIndices).call(_context4, function (acc, id) {
+        acc.set(id, _this8.body.nodes[id]);
+        return acc;
+      }, new map$9());
 
       var levels = this.hierarchical.levels;
 
       if (this.options.hierarchical.shakeTowards === "roots") {
-        this.hierarchical.levels = fillLevelsByDirectionRoots(nodes, this.hierarchical.levels);
+        this.hierarchical.levels = fillLevelsByDirectionRoots(nodes, levels);
       } else {
-        this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes, this.hierarchical.levels);
+        this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes, levels);
       }
 
       this.hierarchical.setMinLevelToZero(this.body.nodes);

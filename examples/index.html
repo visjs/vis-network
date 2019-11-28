@@ -13098,7 +13098,7 @@ window.addEventListener("load", () =&gt; {
             ><span class="example-link"
               ><div>
                 <a href="network/layout/hierarchicalLayoutMethods.html"
-                  >Hierarchical Layout Difference</a
+                  >Hierarchical Layout Methods</a
                 ><span class="playgrounds"
                   ><form
                     action="http://jsfiddle.net/api/post/library/pure/"
@@ -13114,54 +13114,77 @@ window.addEventListener("load", () =&gt; {
                     ><input
                       type="hidden"
                       name="js"
-                      value='var network = null;
+                      value='window.addEventListener("load", function() {
+  var conf = document.getElementById("conf");
 
-function destroy() {
+  function handleConfChange() {
+    draw(new FormData(conf));
+  }
+
+  conf.addEventListener("change", handleConfChange);
+  handleConfChange();
+});
+
+var network = null;
+
+function draw(formData) {
   if (network !== null) {
     network.destroy();
     network = null;
   }
-}
 
-function draw() {
-  destroy();
+  var nodes = [
+    { id: 0, label: "0" },
+    { id: 1, label: "1" },
+    { id: 2, label: "2" },
+    { id: 3, label: "3" },
+    { id: 4, label: "4" },
+    { id: 5, label: "5" },
+    { id: 6, label: "6" },
+    { id: 7, label: "7" },
+    { id: 8, label: "8" },
+    { id: 9, label: "9" },
+    { id: 10, label: "10" },
+    { id: 11, label: "11" },
+    { id: 12, label: "12" },
+    { id: 13, label: "13" },
+    { id: 14, label: "14" },
+    { id: 15, label: "15" },
+    { id: 16, label: "16" },
+    { id: 17, label: "17" },
+    { id: 18, label: "18" }
+  ];
+  var edges = [
+    { from: 0, to: 1 },
+    { from: 0, to: 6 },
+    { from: 0, to: 13 },
+    { from: 0, to: 11 },
+    { from: 1, to: 2 },
+    { from: 2, to: 3 },
+    { from: 2, to: 4 },
+    { from: 3, to: 5 },
+    { from: 1, to: 10 },
+    { from: 1, to: 7 },
+    { from: 2, to: 8 },
+    { from: 2, to: 9 },
+    { from: 3, to: 14 },
+    { from: 1, to: 12 },
+    { from: 16, to: 15 },
+    { from: 15, to: 17 },
+    { from: 18, to: 17 }
+  ];
 
-  var nodes = [];
-  var edges = [];
-  // randomly create some nodes and edges
-  for (var i = 0; i &lt; 19; i++) {
-    nodes.push({ id: i, label: String(i) });
-  }
-  edges.push({ from: 0, to: 1 });
-  edges.push({ from: 0, to: 6 });
-  edges.push({ from: 0, to: 13 });
-  edges.push({ from: 0, to: 11 });
-  edges.push({ from: 1, to: 2 });
-  edges.push({ from: 2, to: 3 });
-  edges.push({ from: 2, to: 4 });
-  edges.push({ from: 3, to: 5 });
-  edges.push({ from: 1, to: 10 });
-  edges.push({ from: 1, to: 7 });
-  edges.push({ from: 2, to: 8 });
-  edges.push({ from: 2, to: 9 });
-  edges.push({ from: 3, to: 14 });
-  edges.push({ from: 1, to: 12 });
-  edges.push({ from: 16, to: 15 });
-  edges.push({ from: 15, to: 17 });
-  edges.push({ from: 18, to: 17 });
-
-  // create a network
+  // create the network
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
     edges: edges
   };
-
   var options = {
     layout: {
       hierarchical: {
-        sortMethod: document.getElementById("layout-method").value,
-        shakeTowards: document.getElementById("shake-towards").value
+        sortMethod: formData.get("layout-method"),
+        shakeTowards: formData.get("shake-towards")
       }
     },
     edges: {
@@ -13170,66 +13193,211 @@ function draw() {
     }
   };
   network = new vis.Network(container, data, options);
+
+  network.cluster({
+    joinCondition(nodeOptions) {
+      return !!formData.get(`cluster-node-${nodeOptions.id}`);
+    }
+  });
 }
-
-(function() {
-  const values = ["hubsize", "directed"];
-  var button = document.getElementById("layout-method");
-  button.onclick = function() {
-    button.value = values[(values.indexOf(button.value) + 1) % values.length];
-    draw();
-  };
-})();
-(function() {
-  const values = ["roots", "leaves"];
-  var button = document.getElementById("shake-towards");
-  button.onclick = function() {
-    button.value = values[(values.indexOf(button.value) + 1) % values.length];
-    draw();
-  };
-})();
-
-window.addEventListener("load", () =&gt; {
-  draw();
-});
 '
                     /><input
                       type="hidden"
                       name="css"
-                      value="body {
-  font: 10pt sans;
-}
+                      value="html,
+body,
 #mynetwork {
-  width: 800px;
-  height: 500px;
-  border: 1px solid lightgray;
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
 }
 "
                     /><input
                       type="hidden"
                       name="html"
-                      value='&lt;h2&gt;Hierarchical layout difference&lt;/h2&gt;
-&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
-  This example shows a the effect of the different hierarchical layout methods.
-  Hubsize is based on the amount of edges connected to a node. The node with the
-  most connections (the largest hub) is drawn at the top of the tree. The
-  direction method is based on the direction of the edges. Try switching between
-  the methods by clicking on the buttons bellow.
+                      value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Layouts&lt;/h2&gt;
+    &lt;h3&gt;Hierarchical Layout Methods&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    This example shows the effect of the different hierarchical layouting
+    methods, node shaking and how hierarchical layouts work with clustering.
+    Also note that it&amp;apos;s impossible to properly position a
+    &amp;quot;hierarchy&amp;quot; with a cycle (If node 1 is above node 2 and node 2 is
+    above node 1 which one is actually on top?)
+  &lt;/p&gt;
+
+  &lt;h4&gt;Hub Size&lt;/h4&gt;
+  &lt;p&gt;
+    The hub size layouting method is based on the amount of edges connected to a
+    node. The node with the most connections (the largest hub) is drawn at the
+    top of the tree.
+  &lt;/p&gt;
+
+  &lt;h4&gt;Direction&lt;/h4&gt;
+  &lt;p&gt;
+    The direction layouting method is based on the direction of the edges. The
+    from nodes are placed above the to nodes in the hierarchy. Nodes that can be
+    placed on multiple levels are by default shaken towards towards the leaves.
+    All the leaves are then in a single line at the very bottom of the
+    hierarchy. Optionally they can be shaken towards the roots which results in
+    the roots being in a single line at the very top of the hierarchy.
+  &lt;/p&gt;
+
+  &lt;h4&gt;Interactive Configuration&lt;/h4&gt;
+  &lt;form id="conf"&gt;
+    &lt;p&gt;
+      Layout method:
+      &lt;br /&gt;
+
+      &lt;input
+        checked
+        id="layout-method-directed"
+        name="layout-method"
+        type="radio"
+        value="directed"
+      /&gt;
+      &lt;label for="layout-method-directed"&gt;Directed&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input
+        id="layout-method-hubsize"
+        name="layout-method"
+        type="radio"
+        value="hubsize"
+      /&gt;
+      &lt;label for="layout-method-hubsize"&gt;Hub Size&lt;/label&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      Shake towards (Applies to &lt;code&gt;directed&lt;/code&gt; only.):
+      &lt;br /&gt;
+
+      &lt;input
+        checked
+        id="shake-towards-leaves"
+        name="shake-towards"
+        type="radio"
+        value="leaves"
+      /&gt;
+      &lt;label for="shake-towards-leaves"&gt;Leaves&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input
+        id="shake-towards-roots"
+        name="shake-towards"
+        type="radio"
+        value="roots"
+      /&gt;
+      &lt;label for="shake-towards-roots"&gt;Roots&lt;/label&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      Cluster:
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-0" name="cluster-node-0" type="checkbox" /&gt;
+      &lt;label for="cluster-node-0"&gt;Node 0&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-1" name="cluster-node-1" type="checkbox" /&gt;
+      &lt;label for="cluster-node-1"&gt;Node 1&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-2" name="cluster-node-2" type="checkbox" /&gt;
+      &lt;label for="cluster-node-2"&gt;Node 2&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-3" name="cluster-node-3" type="checkbox" /&gt;
+      &lt;label for="cluster-node-3"&gt;Node 3&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-4" name="cluster-node-4" type="checkbox" /&gt;
+      &lt;label for="cluster-node-4"&gt;Node 4&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-5" name="cluster-node-5" type="checkbox" /&gt;
+      &lt;label for="cluster-node-5"&gt;Node 5&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-6" name="cluster-node-6" type="checkbox" /&gt;
+      &lt;label for="cluster-node-6"&gt;Node 6&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-7" name="cluster-node-7" type="checkbox" /&gt;
+      &lt;label for="cluster-node-7"&gt;Node 7&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-8" name="cluster-node-8" type="checkbox" /&gt;
+      &lt;label for="cluster-node-8"&gt;Node 8&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-9" name="cluster-node-9" type="checkbox" /&gt;
+      &lt;label for="cluster-node-9"&gt;Node 9&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-10" name="cluster-node-10" type="checkbox" /&gt;
+      &lt;label for="cluster-node-10"&gt;Node 10&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-11" name="cluster-node-11" type="checkbox" /&gt;
+      &lt;label for="cluster-node-11"&gt;Node 11&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-12" name="cluster-node-12" type="checkbox" /&gt;
+      &lt;label for="cluster-node-12"&gt;Node 12&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-13" name="cluster-node-13" type="checkbox" /&gt;
+      &lt;label for="cluster-node-13"&gt;Node 13&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-14" name="cluster-node-14" type="checkbox" /&gt;
+      &lt;label for="cluster-node-14"&gt;Node 14&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-15" name="cluster-node-15" type="checkbox" /&gt;
+      &lt;label for="cluster-node-15"&gt;Node 15&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-16" name="cluster-node-16" type="checkbox" /&gt;
+      &lt;label for="cluster-node-16"&gt;Node 16&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-17" name="cluster-node-17" type="checkbox" /&gt;
+      &lt;label for="cluster-node-17"&gt;Node 17&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-18" name="cluster-node-18" type="checkbox" /&gt;
+      &lt;label for="cluster-node-18"&gt;Node 18&lt;/label&gt;
+    &lt;/p&gt;
+  &lt;/form&gt;
 &lt;/div&gt;
 
-&lt;p&gt;
-  Layout method:
-  &lt;input type="button" id="layout-method" value="directed" /&gt;
-&lt;/p&gt;
-&lt;p&gt;
-  Shake towards:
-  &lt;input type="button" id="shake-towards" value="leaves" /&gt;
-  (Applies to &lt;code&gt;directed&lt;/code&gt; only.)
-&lt;/p&gt;
-
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
-
-&lt;p id="selection"&gt;&lt;/p&gt;
 '
                     /><input
                       type="hidden"
@@ -13238,7 +13406,7 @@ window.addEventListener("load", () =&gt; {
                     /><input type="hidden" name="wrap" value="b" /><input
                       type="hidden"
                       name="title"
-                      value="Vis Network | Layouts | Hierarchical Layout Difference"
+                      value="Vis Network | Layouts | Hierarchical Layout Methods"
                     />
                   </form>
 
@@ -13252,58 +13420,81 @@ window.addEventListener("load", () =&gt; {
                     ><input
                       type="hidden"
                       name="data"
-                      value='{"css":"body {\n  font: 10pt sans;\n}\n#mynetwork {\n  width: 800px;\n  height: 500px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;h2&gt;Hierarchical layout difference&lt;/h2&gt;\n&lt;div style=\"width:700px; font-size:14px; text-align: justify;\"&gt;\n  This example shows a the effect of the different hierarchical layout methods.\n  Hubsize is based on the amount of edges connected to a node. The node with the\n  most connections (the largest hub) is drawn at the top of the tree. The\n  direction method is based on the direction of the edges. Try switching between\n  the methods by clicking on the buttons bellow.\n&lt;/div&gt;\n\n&lt;p&gt;\n  Layout method:\n  &lt;input type=\"button\" id=\"layout-method\" value=\"directed\" /&gt;\n&lt;/p&gt;\n&lt;p&gt;\n  Shake towards:\n  &lt;input type=\"button\" id=\"shake-towards\" value=\"leaves\" /&gt;\n  (Applies to &lt;code&gt;directed&lt;/code&gt; only.)\n&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n\n&lt;p id=\"selection\"&gt;&lt;/p&gt;\n","js":"var network = null;\n\nfunction destroy() {\n  if (network !== null) {\n    network.destroy();\n    network = null;\n  }\n}\n\nfunction draw() {\n  destroy();\n\n  var nodes = [];\n  var edges = [];\n  // randomly create some nodes and edges\n  for (var i = 0; i &lt; 19; i++) {\n    nodes.push({ id: i, label: String(i) });\n  }\n  edges.push({ from: 0, to: 1 });\n  edges.push({ from: 0, to: 6 });\n  edges.push({ from: 0, to: 13 });\n  edges.push({ from: 0, to: 11 });\n  edges.push({ from: 1, to: 2 });\n  edges.push({ from: 2, to: 3 });\n  edges.push({ from: 2, to: 4 });\n  edges.push({ from: 3, to: 5 });\n  edges.push({ from: 1, to: 10 });\n  edges.push({ from: 1, to: 7 });\n  edges.push({ from: 2, to: 8 });\n  edges.push({ from: 2, to: 9 });\n  edges.push({ from: 3, to: 14 });\n  edges.push({ from: 1, to: 12 });\n  edges.push({ from: 16, to: 15 });\n  edges.push({ from: 15, to: 17 });\n  edges.push({ from: 18, to: 17 });\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges\n  };\n\n  var options = {\n    layout: {\n      hierarchical: {\n        sortMethod: document.getElementById(\"layout-method\").value,\n        shakeTowards: document.getElementById(\"shake-towards\").value\n      }\n    },\n    edges: {\n      smooth: true,\n      arrows: { to: true }\n    }\n  };\n  network = new vis.Network(container, data, options);\n}\n\n(function() {\n  const values = [\"hubsize\", \"directed\"];\n  var button = document.getElementById(\"layout-method\");\n  button.onclick = function() {\n    button.value = values[(values.indexOf(button.value) + 1) % values.length];\n    draw();\n  };\n})();\n(function() {\n  const values = [\"roots\", \"leaves\"];\n  var button = document.getElementById(\"shake-towards\");\n  button.onclick = function() {\n    button.value = values[(values.indexOf(button.value) + 1) % values.length];\n    draw();\n  };\n})();\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Layouts | Hierarchical Layout Difference"}'
+                      value='{"css":"html,\nbody,\n#mynetwork {\n  margin: 0px;\n  padding: 0px;\n}\n\n#mynetwork {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  bottom: 0px;\n  right: 50%;\n  min-height: 100vh;\n  border-right: 1px solid lightgray;\n  background: white;\n}\n\n#text {\n  position: absolute;\n  left: 50%;\n  padding: 1em;\n}\n\n#title {\n  margin-bottom: 5em;\n}\n","css_external":"","html":"&lt;div id=\"text\"&gt;\n  &lt;div id=\"title\"&gt;\n    &lt;h1&gt;Vis Network&lt;/h1&gt;\n    &lt;h2&gt;Layouts&lt;/h2&gt;\n    &lt;h3&gt;Hierarchical Layout Methods&lt;/h3&gt;\n  &lt;/div&gt;\n\n  &lt;p&gt;\n    This example shows the effect of the different hierarchical layouting\n    methods, node shaking and how hierarchical layouts work with clustering.\n    Also note that it&amp;apos;s impossible to properly position a\n    &amp;quot;hierarchy&amp;quot; with a cycle (If node 1 is above node 2 and node 2 is\n    above node 1 which one is actually on top?)\n  &lt;/p&gt;\n\n  &lt;h4&gt;Hub Size&lt;/h4&gt;\n  &lt;p&gt;\n    The hub size layouting method is based on the amount of edges connected to a\n    node. The node with the most connections (the largest hub) is drawn at the\n    top of the tree.\n  &lt;/p&gt;\n\n  &lt;h4&gt;Direction&lt;/h4&gt;\n  &lt;p&gt;\n    The direction layouting method is based on the direction of the edges. The\n    from nodes are placed above the to nodes in the hierarchy. Nodes that can be\n    placed on multiple levels are by default shaken towards towards the leaves.\n    All the leaves are then in a single line at the very bottom of the\n    hierarchy. Optionally they can be shaken towards the roots which results in\n    the roots being in a single line at the very top of the hierarchy.\n  &lt;/p&gt;\n\n  &lt;h4&gt;Interactive Configuration&lt;/h4&gt;\n  &lt;form id=\"conf\"&gt;\n    &lt;p&gt;\n      Layout method:\n      &lt;br /&gt;\n\n      &lt;input\n        checked\n        id=\"layout-method-directed\"\n        name=\"layout-method\"\n        type=\"radio\"\n        value=\"directed\"\n      /&gt;\n      &lt;label for=\"layout-method-directed\"&gt;Directed&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input\n        id=\"layout-method-hubsize\"\n        name=\"layout-method\"\n        type=\"radio\"\n        value=\"hubsize\"\n      /&gt;\n      &lt;label for=\"layout-method-hubsize\"&gt;Hub Size&lt;/label&gt;\n    &lt;/p&gt;\n\n    &lt;p&gt;\n      Shake towards (Applies to &lt;code&gt;directed&lt;/code&gt; only.):\n      &lt;br /&gt;\n\n      &lt;input\n        checked\n        id=\"shake-towards-leaves\"\n        name=\"shake-towards\"\n        type=\"radio\"\n        value=\"leaves\"\n      /&gt;\n      &lt;label for=\"shake-towards-leaves\"&gt;Leaves&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input\n        id=\"shake-towards-roots\"\n        name=\"shake-towards\"\n        type=\"radio\"\n        value=\"roots\"\n      /&gt;\n      &lt;label for=\"shake-towards-roots\"&gt;Roots&lt;/label&gt;\n    &lt;/p&gt;\n\n    &lt;p&gt;\n      Cluster:\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-0\" name=\"cluster-node-0\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-0\"&gt;Node 0&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-1\" name=\"cluster-node-1\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-1\"&gt;Node 1&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-2\" name=\"cluster-node-2\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-2\"&gt;Node 2&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-3\" name=\"cluster-node-3\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-3\"&gt;Node 3&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-4\" name=\"cluster-node-4\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-4\"&gt;Node 4&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-5\" name=\"cluster-node-5\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-5\"&gt;Node 5&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-6\" name=\"cluster-node-6\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-6\"&gt;Node 6&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-7\" name=\"cluster-node-7\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-7\"&gt;Node 7&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-8\" name=\"cluster-node-8\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-8\"&gt;Node 8&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-9\" name=\"cluster-node-9\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-9\"&gt;Node 9&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-10\" name=\"cluster-node-10\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-10\"&gt;Node 10&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-11\" name=\"cluster-node-11\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-11\"&gt;Node 11&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-12\" name=\"cluster-node-12\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-12\"&gt;Node 12&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-13\" name=\"cluster-node-13\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-13\"&gt;Node 13&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-14\" name=\"cluster-node-14\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-14\"&gt;Node 14&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-15\" name=\"cluster-node-15\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-15\"&gt;Node 15&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-16\" name=\"cluster-node-16\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-16\"&gt;Node 16&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-17\" name=\"cluster-node-17\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-17\"&gt;Node 17&lt;/label&gt;\n      &lt;br /&gt;\n\n      &lt;input id=\"cluster-node-18\" name=\"cluster-node-18\" type=\"checkbox\" /&gt;\n      &lt;label for=\"cluster-node-18\"&gt;Node 18&lt;/label&gt;\n    &lt;/p&gt;\n  &lt;/form&gt;\n&lt;/div&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"window.addEventListener(\"load\", function() {\n  var conf = document.getElementById(\"conf\");\n\n  function handleConfChange() {\n    draw(new FormData(conf));\n  }\n\n  conf.addEventListener(\"change\", handleConfChange);\n  handleConfChange();\n});\n\nvar network = null;\n\nfunction draw(formData) {\n  if (network !== null) {\n    network.destroy();\n    network = null;\n  }\n\n  var nodes = [\n    { id: 0, label: \"0\" },\n    { id: 1, label: \"1\" },\n    { id: 2, label: \"2\" },\n    { id: 3, label: \"3\" },\n    { id: 4, label: \"4\" },\n    { id: 5, label: \"5\" },\n    { id: 6, label: \"6\" },\n    { id: 7, label: \"7\" },\n    { id: 8, label: \"8\" },\n    { id: 9, label: \"9\" },\n    { id: 10, label: \"10\" },\n    { id: 11, label: \"11\" },\n    { id: 12, label: \"12\" },\n    { id: 13, label: \"13\" },\n    { id: 14, label: \"14\" },\n    { id: 15, label: \"15\" },\n    { id: 16, label: \"16\" },\n    { id: 17, label: \"17\" },\n    { id: 18, label: \"18\" }\n  ];\n  var edges = [\n    { from: 0, to: 1 },\n    { from: 0, to: 6 },\n    { from: 0, to: 13 },\n    { from: 0, to: 11 },\n    { from: 1, to: 2 },\n    { from: 2, to: 3 },\n    { from: 2, to: 4 },\n    { from: 3, to: 5 },\n    { from: 1, to: 10 },\n    { from: 1, to: 7 },\n    { from: 2, to: 8 },\n    { from: 2, to: 9 },\n    { from: 3, to: 14 },\n    { from: 1, to: 12 },\n    { from: 16, to: 15 },\n    { from: 15, to: 17 },\n    { from: 18, to: 17 }\n  ];\n\n  // create the network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges\n  };\n  var options = {\n    layout: {\n      hierarchical: {\n        sortMethod: formData.get(\"layout-method\"),\n        shakeTowards: formData.get(\"shake-towards\")\n      }\n    },\n    edges: {\n      smooth: true,\n      arrows: { to: true }\n    }\n  };\n  network = new vis.Network(container, data, options);\n\n  network.cluster({\n    joinCondition(nodeOptions) {\n      return !!formData.get(`cluster-node-${nodeOptions.id}`);\n    }\n  });\n}\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Layouts | Hierarchical Layout Methods"}'
                     /><input
                       type="hidden"
                       name="js"
-                      value='var network = null;
+                      value='window.addEventListener("load", function() {
+  var conf = document.getElementById("conf");
 
-function destroy() {
+  function handleConfChange() {
+    draw(new FormData(conf));
+  }
+
+  conf.addEventListener("change", handleConfChange);
+  handleConfChange();
+});
+
+var network = null;
+
+function draw(formData) {
   if (network !== null) {
     network.destroy();
     network = null;
   }
-}
 
-function draw() {
-  destroy();
+  var nodes = [
+    { id: 0, label: "0" },
+    { id: 1, label: "1" },
+    { id: 2, label: "2" },
+    { id: 3, label: "3" },
+    { id: 4, label: "4" },
+    { id: 5, label: "5" },
+    { id: 6, label: "6" },
+    { id: 7, label: "7" },
+    { id: 8, label: "8" },
+    { id: 9, label: "9" },
+    { id: 10, label: "10" },
+    { id: 11, label: "11" },
+    { id: 12, label: "12" },
+    { id: 13, label: "13" },
+    { id: 14, label: "14" },
+    { id: 15, label: "15" },
+    { id: 16, label: "16" },
+    { id: 17, label: "17" },
+    { id: 18, label: "18" }
+  ];
+  var edges = [
+    { from: 0, to: 1 },
+    { from: 0, to: 6 },
+    { from: 0, to: 13 },
+    { from: 0, to: 11 },
+    { from: 1, to: 2 },
+    { from: 2, to: 3 },
+    { from: 2, to: 4 },
+    { from: 3, to: 5 },
+    { from: 1, to: 10 },
+    { from: 1, to: 7 },
+    { from: 2, to: 8 },
+    { from: 2, to: 9 },
+    { from: 3, to: 14 },
+    { from: 1, to: 12 },
+    { from: 16, to: 15 },
+    { from: 15, to: 17 },
+    { from: 18, to: 17 }
+  ];
 
-  var nodes = [];
-  var edges = [];
-  // randomly create some nodes and edges
-  for (var i = 0; i &lt; 19; i++) {
-    nodes.push({ id: i, label: String(i) });
-  }
-  edges.push({ from: 0, to: 1 });
-  edges.push({ from: 0, to: 6 });
-  edges.push({ from: 0, to: 13 });
-  edges.push({ from: 0, to: 11 });
-  edges.push({ from: 1, to: 2 });
-  edges.push({ from: 2, to: 3 });
-  edges.push({ from: 2, to: 4 });
-  edges.push({ from: 3, to: 5 });
-  edges.push({ from: 1, to: 10 });
-  edges.push({ from: 1, to: 7 });
-  edges.push({ from: 2, to: 8 });
-  edges.push({ from: 2, to: 9 });
-  edges.push({ from: 3, to: 14 });
-  edges.push({ from: 1, to: 12 });
-  edges.push({ from: 16, to: 15 });
-  edges.push({ from: 15, to: 17 });
-  edges.push({ from: 18, to: 17 });
-
-  // create a network
+  // create the network
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
     edges: edges
   };
-
   var options = {
     layout: {
       hierarchical: {
-        sortMethod: document.getElementById("layout-method").value,
-        shakeTowards: document.getElementById("shake-towards").value
+        sortMethod: formData.get("layout-method"),
+        shakeTowards: formData.get("shake-towards")
       }
     },
     edges: {
@@ -13312,66 +13503,211 @@ function draw() {
     }
   };
   network = new vis.Network(container, data, options);
+
+  network.cluster({
+    joinCondition(nodeOptions) {
+      return !!formData.get(`cluster-node-${nodeOptions.id}`);
+    }
+  });
 }
-
-(function() {
-  const values = ["hubsize", "directed"];
-  var button = document.getElementById("layout-method");
-  button.onclick = function() {
-    button.value = values[(values.indexOf(button.value) + 1) % values.length];
-    draw();
-  };
-})();
-(function() {
-  const values = ["roots", "leaves"];
-  var button = document.getElementById("shake-towards");
-  button.onclick = function() {
-    button.value = values[(values.indexOf(button.value) + 1) % values.length];
-    draw();
-  };
-})();
-
-window.addEventListener("load", () =&gt; {
-  draw();
-});
 '
                     /><input
                       type="hidden"
                       name="css"
-                      value="body {
-  font: 10pt sans;
-}
+                      value="html,
+body,
 #mynetwork {
-  width: 800px;
-  height: 500px;
-  border: 1px solid lightgray;
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
 }
 "
                     /><input
                       type="hidden"
                       name="html"
-                      value='&lt;h2&gt;Hierarchical layout difference&lt;/h2&gt;
-&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
-  This example shows a the effect of the different hierarchical layout methods.
-  Hubsize is based on the amount of edges connected to a node. The node with the
-  most connections (the largest hub) is drawn at the top of the tree. The
-  direction method is based on the direction of the edges. Try switching between
-  the methods by clicking on the buttons bellow.
+                      value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Layouts&lt;/h2&gt;
+    &lt;h3&gt;Hierarchical Layout Methods&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    This example shows the effect of the different hierarchical layouting
+    methods, node shaking and how hierarchical layouts work with clustering.
+    Also note that it&amp;apos;s impossible to properly position a
+    &amp;quot;hierarchy&amp;quot; with a cycle (If node 1 is above node 2 and node 2 is
+    above node 1 which one is actually on top?)
+  &lt;/p&gt;
+
+  &lt;h4&gt;Hub Size&lt;/h4&gt;
+  &lt;p&gt;
+    The hub size layouting method is based on the amount of edges connected to a
+    node. The node with the most connections (the largest hub) is drawn at the
+    top of the tree.
+  &lt;/p&gt;
+
+  &lt;h4&gt;Direction&lt;/h4&gt;
+  &lt;p&gt;
+    The direction layouting method is based on the direction of the edges. The
+    from nodes are placed above the to nodes in the hierarchy. Nodes that can be
+    placed on multiple levels are by default shaken towards towards the leaves.
+    All the leaves are then in a single line at the very bottom of the
+    hierarchy. Optionally they can be shaken towards the roots which results in
+    the roots being in a single line at the very top of the hierarchy.
+  &lt;/p&gt;
+
+  &lt;h4&gt;Interactive Configuration&lt;/h4&gt;
+  &lt;form id="conf"&gt;
+    &lt;p&gt;
+      Layout method:
+      &lt;br /&gt;
+
+      &lt;input
+        checked
+        id="layout-method-directed"
+        name="layout-method"
+        type="radio"
+        value="directed"
+      /&gt;
+      &lt;label for="layout-method-directed"&gt;Directed&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input
+        id="layout-method-hubsize"
+        name="layout-method"
+        type="radio"
+        value="hubsize"
+      /&gt;
+      &lt;label for="layout-method-hubsize"&gt;Hub Size&lt;/label&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      Shake towards (Applies to &lt;code&gt;directed&lt;/code&gt; only.):
+      &lt;br /&gt;
+
+      &lt;input
+        checked
+        id="shake-towards-leaves"
+        name="shake-towards"
+        type="radio"
+        value="leaves"
+      /&gt;
+      &lt;label for="shake-towards-leaves"&gt;Leaves&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input
+        id="shake-towards-roots"
+        name="shake-towards"
+        type="radio"
+        value="roots"
+      /&gt;
+      &lt;label for="shake-towards-roots"&gt;Roots&lt;/label&gt;
+    &lt;/p&gt;
+
+    &lt;p&gt;
+      Cluster:
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-0" name="cluster-node-0" type="checkbox" /&gt;
+      &lt;label for="cluster-node-0"&gt;Node 0&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-1" name="cluster-node-1" type="checkbox" /&gt;
+      &lt;label for="cluster-node-1"&gt;Node 1&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-2" name="cluster-node-2" type="checkbox" /&gt;
+      &lt;label for="cluster-node-2"&gt;Node 2&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-3" name="cluster-node-3" type="checkbox" /&gt;
+      &lt;label for="cluster-node-3"&gt;Node 3&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-4" name="cluster-node-4" type="checkbox" /&gt;
+      &lt;label for="cluster-node-4"&gt;Node 4&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-5" name="cluster-node-5" type="checkbox" /&gt;
+      &lt;label for="cluster-node-5"&gt;Node 5&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-6" name="cluster-node-6" type="checkbox" /&gt;
+      &lt;label for="cluster-node-6"&gt;Node 6&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-7" name="cluster-node-7" type="checkbox" /&gt;
+      &lt;label for="cluster-node-7"&gt;Node 7&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-8" name="cluster-node-8" type="checkbox" /&gt;
+      &lt;label for="cluster-node-8"&gt;Node 8&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-9" name="cluster-node-9" type="checkbox" /&gt;
+      &lt;label for="cluster-node-9"&gt;Node 9&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-10" name="cluster-node-10" type="checkbox" /&gt;
+      &lt;label for="cluster-node-10"&gt;Node 10&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-11" name="cluster-node-11" type="checkbox" /&gt;
+      &lt;label for="cluster-node-11"&gt;Node 11&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-12" name="cluster-node-12" type="checkbox" /&gt;
+      &lt;label for="cluster-node-12"&gt;Node 12&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-13" name="cluster-node-13" type="checkbox" /&gt;
+      &lt;label for="cluster-node-13"&gt;Node 13&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-14" name="cluster-node-14" type="checkbox" /&gt;
+      &lt;label for="cluster-node-14"&gt;Node 14&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-15" name="cluster-node-15" type="checkbox" /&gt;
+      &lt;label for="cluster-node-15"&gt;Node 15&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-16" name="cluster-node-16" type="checkbox" /&gt;
+      &lt;label for="cluster-node-16"&gt;Node 16&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-17" name="cluster-node-17" type="checkbox" /&gt;
+      &lt;label for="cluster-node-17"&gt;Node 17&lt;/label&gt;
+      &lt;br /&gt;
+
+      &lt;input id="cluster-node-18" name="cluster-node-18" type="checkbox" /&gt;
+      &lt;label for="cluster-node-18"&gt;Node 18&lt;/label&gt;
+    &lt;/p&gt;
+  &lt;/form&gt;
 &lt;/div&gt;
 
-&lt;p&gt;
-  Layout method:
-  &lt;input type="button" id="layout-method" value="directed" /&gt;
-&lt;/p&gt;
-&lt;p&gt;
-  Shake towards:
-  &lt;input type="button" id="shake-towards" value="leaves" /&gt;
-  (Applies to &lt;code&gt;directed&lt;/code&gt; only.)
-&lt;/p&gt;
-
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
-
-&lt;p id="selection"&gt;&lt;/p&gt;
 '
                     /></form
                 ></span>
@@ -13380,7 +13716,7 @@ window.addEventListener("load", () =&gt; {
                 ><div class="example-image">
                   <img
                     src="thumbnails/1c12e3425cbcde797ad03af11329383a9af5659524daaebbb57d13c78e31f118.png"
-                    alt="Hierarchical Layout Difference"
+                    alt="Hierarchical Layout Methods"
                   /></div></a></span
             ><span class="example-link"
               ><div>
