@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-28T18:21:09Z
+ * @date    2019-11-29T20:47:31Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -12608,8 +12608,8 @@
 	 * 
 	 * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
 	 * 
-	 * @version 6.2.3
-	 * @date    2019-11-19T20:26:09Z
+	 * @version 6.2.4
+	 * @date    2019-11-28T17:58:58Z
 	 * 
 	 * @copyright (c) 2011-2017 Almende B.V, http://almende.com
 	 * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -16959,7 +16959,7 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore$1$1[key] || (sharedStore$1$1[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.3.6',
+	    version: '3.4.1',
 	    mode: 'pure',
 	    copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 	  });
@@ -17286,8 +17286,7 @@
 	var getInternalState$3$1 = internalState$1$1.getterFor(SYMBOL$1$1);
 	var ObjectPrototype$2$1 = Object[PROTOTYPE$1$1$1];
 	var $Symbol$1$1 = global_1$1$1.Symbol;
-	var JSON$1 = global_1$1$1.JSON;
-	var nativeJSONStringify = JSON$1 && JSON$1.stringify;
+	var $stringify$2 = getBuiltIn$1$1('JSON', 'stringify');
 	var nativeGetOwnPropertyDescriptor$2$1$1 = objectGetOwnPropertyDescriptor$1$1.f;
 	var nativeDefineProperty$1$1$1 = objectDefineProperty$1$1.f;
 	var nativeGetOwnPropertyNames$1$1$1 = objectGetOwnPropertyNamesExternal$1$1.f;
@@ -17550,38 +17549,44 @@
 	// https://tc39.github.io/ecma262/#sec-json.stringify
 
 
-	JSON$1 && _export$1$1({
-	  target: 'JSON',
-	  stat: true,
-	  forced: !nativeSymbol$1$1 || fails$1$1(function () {
+	if ($stringify$2) {
+	  var FORCED_JSON_STRINGIFY$1$1 = !nativeSymbol$1$1 || fails$1$1(function () {
 	    var symbol = $Symbol$1$1(); // MS Edge converts symbol values to JSON as {}
 
-	    return nativeJSONStringify([symbol]) != '[null]' // WebKit converts symbol values to JSON as null
-	    || nativeJSONStringify({
+	    return $stringify$2([symbol]) != '[null]' // WebKit converts symbol values to JSON as null
+	    || $stringify$2({
 	      a: symbol
 	    }) != '{}' // V8 throws on boxed symbols
-	    || nativeJSONStringify(Object(symbol)) != '{}';
-	  })
-	}, {
-	  stringify: function stringify(it) {
-	    var args = [it];
-	    var index = 1;
-	    var replacer, $replacer;
+	    || $stringify$2(Object(symbol)) != '{}';
+	  });
 
-	    while (arguments.length > index) args.push(arguments[index++]);
+	  _export$1$1({
+	    target: 'JSON',
+	    stat: true,
+	    forced: FORCED_JSON_STRINGIFY$1$1
+	  }, {
+	    // eslint-disable-next-line no-unused-vars
+	    stringify: function stringify(it, replacer, space) {
+	      var args = [it];
+	      var index = 1;
+	      var $replacer;
 
-	    $replacer = replacer = args[1];
-	    if (!isObject$1$2(replacer) && it === undefined || isSymbol$1$1(it)) return; // IE8 returns string on undefined
+	      while (arguments.length > index) args.push(arguments[index++]);
 
-	    if (!isArray$6$1(replacer)) replacer = function (key, value) {
-	      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
-	      if (!isSymbol$1$1(value)) return value;
-	    };
-	    args[1] = replacer;
-	    return nativeJSONStringify.apply(JSON$1, args);
-	  }
-	}); // `Symbol.prototype[@@toPrimitive]` method
+	      $replacer = replacer;
+	      if (!isObject$1$2(replacer) && it === undefined || isSymbol$1$1(it)) return; // IE8 returns string on undefined
+
+	      if (!isArray$6$1(replacer)) replacer = function (key, value) {
+	        if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+	        if (!isSymbol$1$1(value)) return value;
+	      };
+	      args[1] = replacer;
+	      return $stringify$2.apply(null, args);
+	    }
+	  });
+	} // `Symbol.prototype[@@toPrimitive]` method
 	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@toprimitive
+
 
 	if (!$Symbol$1$1[PROTOTYPE$1$1$1][TO_PRIMITIVE$1$1]) {
 	  createNonEnumerableProperty$1$1($Symbol$1$1[PROTOTYPE$1$1$1], TO_PRIMITIVE$1$1, $Symbol$1$1[PROTOTYPE$1$1$1].valueOf);
@@ -18683,8 +18688,8 @@
 	var now$1 = path$1$1.Date.now;
 	var now$1$1 = now$1;
 	var now$2 = now$1$1;
-	var nativeSort$1 = [].sort;
-	var test$1$1$1 = [1, 2, 3]; // IE8-
+	var test$1$1$1 = [];
+	var nativeSort$1 = test$1$1$1.sort; // IE8-
 
 	var FAILS_ON_UNDEFINED$1 = fails$1$1(function () {
 	  test$1$1$1.sort(undefined);
@@ -27056,7 +27061,7 @@
 	var getInternalState$6 = internalState$1.getterFor(SYMBOL$2);
 	var ObjectPrototype$4 = Object[PROTOTYPE$4];
 	var $Symbol$2 = global_1.Symbol;
-	var $stringify$2 = getBuiltIn$1('JSON', 'stringify');
+	var $stringify$3 = getBuiltIn$1('JSON', 'stringify');
 	var nativeGetOwnPropertyDescriptor$5 = objectGetOwnPropertyDescriptor.f;
 	var nativeDefineProperty$3 = objectDefineProperty.f;
 	var nativeGetOwnPropertyNames$4 = objectGetOwnPropertyNamesExternal$2.f;
@@ -27313,15 +27318,15 @@
 	}); // `JSON.stringify` method behavior with symbols
 	// https://tc39.github.io/ecma262/#sec-json.stringify
 
-	if ($stringify$2) {
+	if ($stringify$3) {
 	  var FORCED_JSON_STRINGIFY$2 = !nativeSymbol$1 || fails(function () {
 	    var symbol = $Symbol$2(); // MS Edge converts symbol values to JSON as {}
 
-	    return $stringify$2([symbol]) != '[null]' // WebKit converts symbol values to JSON as null
-	    || $stringify$2({
+	    return $stringify$3([symbol]) != '[null]' // WebKit converts symbol values to JSON as null
+	    || $stringify$3({
 	      a: symbol
 	    }) != '{}' // V8 throws on boxed symbols
-	    || $stringify$2(Object(symbol)) != '{}';
+	    || $stringify$3(Object(symbol)) != '{}';
 	  });
 	  _export({
 	    target: 'JSON',
@@ -27344,7 +27349,7 @@
 	        if (!isSymbol$2(value)) return value;
 	      };
 	      args[1] = replacer;
-	      return $stringify$2.apply(null, args);
+	      return $stringify$3.apply(null, args);
 	    }
 	  });
 	} // `Symbol.prototype[@@toPrimitive]` method
@@ -31891,7 +31896,7 @@
 	  return TriangleDown;
 	}(ShapeBase);
 
-	var $stringify$3 = getBuiltIn$1('JSON', 'stringify');
+	var $stringify$4 = getBuiltIn$1('JSON', 'stringify');
 	var re$1 = /[\uD800-\uDFFF]/g;
 	var low$1 = /^[\uD800-\uDBFF]$/;
 	var hi$1 = /^[\uDC00-\uDFFF]$/;
@@ -31908,10 +31913,10 @@
 	};
 
 	var FORCED$9 = fails(function () {
-	  return $stringify$3('\uDF06\uD834') !== '"\\udf06\\ud834"' || $stringify$3('\uDEAD') !== '"\\udead"';
+	  return $stringify$4('\uDF06\uD834') !== '"\\udf06\\ud834"' || $stringify$4('\uDEAD') !== '"\\udead"';
 	});
 
-	if ($stringify$3) {
+	if ($stringify$4) {
 	  // https://github.com/tc39/proposal-well-formed-stringify
 	  _export({
 	    target: 'JSON',
@@ -31920,7 +31925,7 @@
 	  }, {
 	    // eslint-disable-next-line no-unused-vars
 	    stringify: function stringify(it, replacer, space) {
-	      var result = $stringify$3.apply(null, arguments);
+	      var result = $stringify$4.apply(null, arguments);
 	      return typeof result == 'string' ? result.replace(re$1, fix$1) : result;
 	    }
 	  });
