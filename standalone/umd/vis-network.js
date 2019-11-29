@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-29T20:46:35Z
+ * @date    2019-11-29T20:53:33Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -3272,19 +3272,17 @@
 	 * @returns String representation of the UUID.
 	 */
 
-
 	function stringifyUUID(buf, offset) {
 	  var i = offset || 0;
 	  var bth = byteToHex;
 	  return bth[buf[i++]] + bth[buf[i++]] + bth[buf[i++]] + bth[buf[i++]] + '-' + bth[buf[i++]] + bth[buf[i++]] + '-' + bth[buf[i++]] + bth[buf[i++]] + '-' + bth[buf[i++]] + bth[buf[i++]] + '-' + bth[buf[i++]] + bth[buf[i++]] + bth[buf[i++]] + bth[buf[i++]] + bth[buf[i++]] + bth[buf[i++]];
 	}
+
 	/**
 	 * Generate 16 random bytes to be used as a base for UUID.
 	 *
 	 * @ignore
 	 */
-
-
 	var random = function () {
 	  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
 	    // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
@@ -3339,6 +3337,7 @@
 	var defaultNodeId = [seedBytes[0] | 0x01, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]]; // Per 4.2.2, randomize (14 bit) clockseq
 
 	var defaultClockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff; // Previous uuid creation time
+
 	/**
 	 * UUIDv4 options.
 	 */
@@ -3353,13 +3352,11 @@
 	 *
 	 * @returns UUIDv4
 	 */
-
-
 	function uuid4() {
 	  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	  var buf = arguments.length > 1 ? arguments[1] : undefined;
-	  var offset = arguments.length > 2 ? arguments[2] : undefined; // Deprecated - 'format' argument, as supported in v1.2
-
+	  var offset = arguments.length > 2 ? arguments[2] : undefined;
+	  // Deprecated - 'format' argument, as supported in v1.2
 	  var i = buf && offset || 0;
 
 	  if (typeof options === 'string') {
@@ -3379,7 +3376,7 @@
 	  }
 
 	  return buf || stringifyUUID(rnds);
-	} // Rollup will complain about mixing default and named exports in UMD build,
+	}
 
 	function ownKeys$1(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 

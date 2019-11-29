@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-11-29T20:47:31Z
+ * @date    2019-11-29T20:54:31Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -3478,8 +3478,7 @@
 	  }
 
 	  return buf || stringifyUUID(rnds);
-	} // Rollup will complain about mixing default and named exports in UMD build,
-
+	}
 
 	function ownKeys$1(object, enumerableOnly) {
 	  var keys = keys$3(object);
