@@ -36,8 +36,14 @@
       }
     </style>
 
-    <script type="text/javascript" src="https://unpkg.com/vis-util@latest"></script>
-    <script type="text/javascript" src="https://unpkg.com/vis-data@latest"></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-util@latest"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-data@latest"
+    ></script>
     <script
       type="text/javascript"
       src="../../../peer/umd/vis-network.js"
@@ -108,6 +114,7 @@
 &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://unpkg.com/vis-network/styles/vis-network.min.css&quot; /&gt;
 &lt;!-- You may include other packages like Vis Timeline or Vis Graph3D here. --&gt;
 
+&lt;div id=&quot;mynetwork&quot;&gt;&lt;/div&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
   // create an array with nodes
   var nodes = new vis.DataSet([
@@ -170,6 +177,12 @@ const data = {
 };
 const options = {};
 const network = new Network(container, data, options);
+      </code></pre>
+
+      The code above has to be injected into a page which contains an element
+      with <code>mynetwork</code> id. Like for example:
+      <pre><code>
+&lt;div id=&quot;mynetwork&quot;&gt;&lt;/div&gt;
       </code></pre>
     </div>
 
