@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-12-03T20:48:06Z
+ * @date    2019-12-06T15:02:48Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -5468,16 +5468,19 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore$1[key] || (sharedStore$1[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.4.1',
+	    version: '3.4.7',
 	    mode:  'pure' ,
 	    copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 	  });
 	});
 
-	var functionToString$1 = shared$1('native-function-to-string', Function.toString);
+	var functionToString$1 = Function.toString;
+	var inspectSource = shared$1('inspectSource', function (it) {
+	  return functionToString$1.call(it);
+	});
 
 	var WeakMap$2 = global_1.WeakMap;
-	var nativeWeakMap$1 = typeof WeakMap$2 === 'function' && /native code/.test(functionToString$1.call(WeakMap$2));
+	var nativeWeakMap$1 = typeof WeakMap$2 === 'function' && /native code/.test(inspectSource(WeakMap$2));
 
 	var id$1 = 0;
 	var postfix$1 = Math.random();
@@ -5593,11 +5596,20 @@
 	  return !String(Symbol());
 	});
 
+	var useSymbolAsUid = nativeSymbol$1 // eslint-disable-next-line no-undef
+	&& !Symbol.sham // eslint-disable-next-line no-undef
+	&& typeof Symbol() == 'symbol';
+
+	var WellKnownSymbolsStore$1 = shared$1('wks');
 	var Symbol$2 = global_1.Symbol;
-	var store$5 = shared$1('wks');
+	var createWellKnownSymbol = useSymbolAsUid ? Symbol$2 : uid$1;
 
 	var wellKnownSymbol$1 = function (name) {
-	  return store$5[name] || (store$5[name] = nativeSymbol$1 && Symbol$2[name] || (nativeSymbol$1 ? Symbol$2 : uid$1)('Symbol.' + name));
+	  if (!has(WellKnownSymbolsStore$1, name)) {
+	    if (nativeSymbol$1 && has(Symbol$2, name)) WellKnownSymbolsStore$1[name] = Symbol$2[name];else WellKnownSymbolsStore$1[name] = createWellKnownSymbol('Symbol.' + name);
+	  }
+
+	  return WellKnownSymbolsStore$1[name];
 	};
 
 	var ITERATOR$6 = wellKnownSymbol$1('iterator');
@@ -5641,7 +5653,7 @@
 	var max$2 = Math.max;
 	var min$3 = Math.min; // Helper for a popular repeating case of the spec:
 	// Let integer be ? ToInteger(index).
-	// If integer < 0, let result be max((length + integer), 0); else let result be min(length, length).
+	// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
 
 	var toAbsoluteIndex$1 = function (index, length) {
 	  var integer = toInteger$1(index);
@@ -5776,7 +5788,12 @@
 
 	hiddenKeys$2[IE_PROTO$3] = true;
 
-	var TO_STRING_TAG$4 = wellKnownSymbol$1('toStringTag'); // ES3 wrong here
+	var TO_STRING_TAG$4 = wellKnownSymbol$1('toStringTag');
+	var test$1 = {};
+	test$1[TO_STRING_TAG$4] = 'z';
+	var toStringTagSupport = String(test$1) === '[object z]';
+
+	var TO_STRING_TAG$5 = wellKnownSymbol$1('toStringTag'); // ES3 wrong here
 
 	var CORRECT_ARGUMENTS$1 = classofRaw(function () {
 	  return arguments;
@@ -5791,26 +5808,23 @@
 	}; // getting tag from ES6+ `Object.prototype.toString`
 
 
-	var classof$1 = function (it) {
+	var classof$1 = toStringTagSupport ? classofRaw : function (it) {
 	  var O, tag, result;
 	  return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
-	  : typeof (tag = tryGet$1(O = Object(it), TO_STRING_TAG$4)) == 'string' ? tag // builtinTag case
+	  : typeof (tag = tryGet$1(O = Object(it), TO_STRING_TAG$5)) == 'string' ? tag // builtinTag case
 	  : CORRECT_ARGUMENTS$1 ? classofRaw(O) // ES3 arguments fallback
 	  : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
 	};
 
-	var TO_STRING_TAG$5 = wellKnownSymbol$1('toStringTag');
-	var test$1 = {};
-	test$1[TO_STRING_TAG$5] = 'z'; // `Object.prototype.toString` method implementation
 	// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
 
-	var objectToString$1 = String(test$1) !== '[object z]' ? function toString() {
+
+	var objectToString$1 = toStringTagSupport ? {}.toString : function toString() {
 	  return '[object ' + classof$1(this) + ']';
-	} : test$1.toString;
+	};
 
 	var defineProperty$7 = objectDefineProperty.f;
 	var TO_STRING_TAG$6 = wellKnownSymbol$1('toStringTag');
-	var METHOD_REQUIRED$1 = objectToString$1 !== {}.toString;
 
 	var setToStringTag$1 = function (it, TAG, STATIC, SET_METHOD) {
 	  if (it) {
@@ -5823,7 +5837,7 @@
 	      });
 	    }
 
-	    if (SET_METHOD && METHOD_REQUIRED$1) {
+	    if (SET_METHOD && !toStringTagSupport) {
 	      createNonEnumerableProperty(target, 'toString', objectToString$1);
 	    }
 	  }
@@ -7922,14 +7936,24 @@
 		DOTToGraph: DOTToGraph_1
 	});
 
-	var $map$1 = arrayIteration$1.map; // `Array.prototype.map` method
+	var $map$1 = arrayIteration$1.map;
+	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport$1('map'); // FF49- issue
+
+	var USES_TO_LENGTH = HAS_SPECIES_SUPPORT && !fails(function () {
+	  [].map.call({
+	    length: -1,
+	    0: 1
+	  }, function (it) {
+	    throw it;
+	  });
+	}); // `Array.prototype.map` method
 	// https://tc39.github.io/ecma262/#sec-array.prototype.map
 	// with adding support of @@species
 
 	_export({
 	  target: 'Array',
 	  proto: true,
-	  forced: !arrayMethodHasSpeciesSupport$1('map')
+	  forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH
 	}, {
 	  map: function map(callbackfn
 	  /* , thisArg */
@@ -12569,9 +12593,9 @@
 	  return anObject(iteratorMethod.call(it));
 	};
 
-	var getIterator$4 = getIterator$3;
+	var getIterator_1 = getIterator$3;
 
-	var getIterator$5 = getIterator$4;
+	var getIterator$4 = getIterator_1;
 
 	var $some = arrayIteration$1.some; // `Array.prototype.some` method
 	// https://tc39.github.io/ecma262/#sec-array.prototype.some
@@ -13152,8 +13176,8 @@
 	};
 
 	var SHARED$2 = '__core-js_shared__';
-	var store$6 = global_1$2[SHARED$2] || setGlobal$2(SHARED$2, {});
-	var sharedStore$2 = store$6;
+	var store$5 = global_1$2[SHARED$2] || setGlobal$2(SHARED$2, {});
+	var sharedStore$2 = store$5;
 	var shared$2 = createCommonjsModule$2(function (module) {
 	  (module.exports = function (key, value) {
 	    return sharedStore$2[key] || (sharedStore$2[key] = value !== undefined ? value : {});
@@ -13382,7 +13406,7 @@
 	} : test$2.toString;
 	var defineProperty$2$1 = objectDefineProperty$2.f;
 	var TO_STRING_TAG$2$1 = wellKnownSymbol$2('toStringTag');
-	var METHOD_REQUIRED$2 = objectToString$2 !== {}.toString;
+	var METHOD_REQUIRED$1 = objectToString$2 !== {}.toString;
 
 	var setToStringTag$2 = function (it, TAG, STATIC, SET_METHOD) {
 	  if (it) {
@@ -13395,7 +13419,7 @@
 	      });
 	    }
 
-	    if (SET_METHOD && METHOD_REQUIRED$2) {
+	    if (SET_METHOD && METHOD_REQUIRED$1) {
 	      createNonEnumerableProperty$2(target, 'toString', objectToString$2);
 	    }
 	  }
@@ -13873,7 +13897,7 @@
 	var ObjectPrototypeSymbols$1 = shared$2('op-symbols');
 	var StringToSymbolRegistry$1 = shared$2('string-to-symbol-registry');
 	var SymbolToStringRegistry$1 = shared$2('symbol-to-string-registry');
-	var WellKnownSymbolsStore$1 = shared$2('wks');
+	var WellKnownSymbolsStore$2 = shared$2('wks');
 	var QObject$1 = global_1$2.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 
 	var USE_SETTER$1 = !QObject$1 || !QObject$1[PROTOTYPE$1$1] || !QObject$1[PROTOTYPE$1$1].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
@@ -14045,7 +14069,7 @@
 	  Symbol: $Symbol$1
 	});
 
-	$forEach$1$1(objectKeys$2(WellKnownSymbolsStore$1), function (name) {
+	$forEach$1$1(objectKeys$2(WellKnownSymbolsStore$2), function (name) {
 	  defineWellKnownSymbol$1(name);
 	});
 
@@ -15089,7 +15113,7 @@
 	  if (it != undefined) return it[ITERATOR$2$1] || it['@@iterator'] || iterators$2[classof$2(it)];
 	};
 
-	var getIterator$6 = function (it) {
+	var getIterator$5 = function (it) {
 	  var iteratorMethod = getIteratorMethod$2(it);
 
 	  if (typeof iteratorMethod != 'function') {
@@ -15099,7 +15123,7 @@
 	  return anObject$2(iteratorMethod.call(it));
 	};
 
-	var getIterator$1$1 = getIterator$6;
+	var getIterator$1$1 = getIterator$5;
 	var getIterator$2$1 = getIterator$1$1;
 	var nativeSort = [].sort;
 	var test$1$1 = [1, 2, 3]; // IE8-
@@ -26987,14 +27011,24 @@
 
 	var getOwnPropertyDescriptor$6 = getOwnPropertyDescriptor$5;
 
-	var $filter$2 = arrayIteration$1.filter; // `Array.prototype.filter` method
+	var $filter$2 = arrayIteration$1.filter;
+	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('filter'); // Edge 14- issue
+
+	var USES_TO_LENGTH$1 = HAS_SPECIES_SUPPORT$1 && !fails(function () {
+	  [].filter.call({
+	    length: -1,
+	    0: 1
+	  }, function (it) {
+	    throw it;
+	  });
+	}); // `Array.prototype.filter` method
 	// https://tc39.github.io/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
 
 	_export({
 	  target: 'Array',
 	  proto: true,
-	  forced: !arrayMethodHasSpeciesSupport$1('filter')
+	  forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$1
 	}, {
 	  filter: function filter(callbackfn
 	  /* , thisArg */
@@ -27069,7 +27103,7 @@
 	var ObjectPrototypeSymbols$2 = shared$1('op-symbols');
 	var StringToSymbolRegistry$2 = shared$1('string-to-symbol-registry');
 	var SymbolToStringRegistry$2 = shared$1('symbol-to-string-registry');
-	var WellKnownSymbolsStore$2 = shared$1('wks');
+	var WellKnownSymbolsStore$3 = shared$1('wks');
 	var QObject$2 = global_1.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 
 	var USE_SETTER$2 = !QObject$2 || !QObject$2[PROTOTYPE$4] || !QObject$2[PROTOTYPE$4].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
@@ -27226,7 +27260,9 @@
 	      }
 	    });
 	  }
+	}
 
+	if (!useSymbolAsUid) {
 	  wrappedWellKnownSymbol$2.f = function (name) {
 	    return wrap$3(wellKnownSymbol$1(name), name);
 	  };
@@ -27240,7 +27276,7 @@
 	}, {
 	  Symbol: $Symbol$2
 	});
-	$forEach$4(objectKeys$1(WellKnownSymbolsStore$2), function (name) {
+	$forEach$4(objectKeys$1(WellKnownSymbolsStore$3), function (name) {
 	  defineWellKnownSymbol$2(name);
 	});
 	_export({
@@ -27507,12 +27543,12 @@
 	  || iterators$1.hasOwnProperty(classof$1(O));
 	};
 
-	var isIterable$5 = isIterable$4;
+	var isIterable_1 = isIterable$4;
 
-	var isIterable$6 = isIterable$5;
+	var isIterable$5 = isIterable_1;
 
 	function _iterableToArrayLimit$1(arr, i) {
-	  if (!(isIterable$6(Object(arr)) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+	  if (!(isIterable$5(Object(arr)) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
 	    return;
 	  }
 
@@ -27522,7 +27558,7 @@
 	  var _e = undefined;
 
 	  try {
-	    for (var _i = getIterator$5(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
+	    for (var _i = getIterator$4(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
 	      _arr.push(_s.value);
 
 	      if (i && _arr.length === i) break;
@@ -27693,33 +27729,19 @@
 
 	defineWellKnownSymbol$2('replaceAll');
 
-	var symbol$5 = symbol$4; // TODO: Remove from `core-js@4`
+	var symbol$5 = symbol$4;
 
 	var symbol$6 = symbol$5;
 
 	var _typeof_1$2 = createCommonjsModule(function (module) {
-	  function _typeof2(obj) {
+	  function _typeof(obj) {
 	    if (typeof symbol$6 === "function" && typeof iterator$8 === "symbol") {
-	      _typeof2 = function _typeof2(obj) {
+	      module.exports = _typeof = function _typeof(obj) {
 	        return typeof obj;
 	      };
 	    } else {
-	      _typeof2 = function _typeof2(obj) {
+	      module.exports = _typeof = function _typeof(obj) {
 	        return obj && typeof symbol$6 === "function" && obj.constructor === symbol$6 && obj !== symbol$6.prototype ? "symbol" : typeof obj;
-	      };
-	    }
-
-	    return _typeof2(obj);
-	  }
-
-	  function _typeof(obj) {
-	    if (typeof symbol$6 === "function" && _typeof2(iterator$8) === "symbol") {
-	      module.exports = _typeof = function _typeof(obj) {
-	        return _typeof2(obj);
-	      };
-	    } else {
-	      module.exports = _typeof = function _typeof(obj) {
-	        return obj && typeof symbol$6 === "function" && obj.constructor === symbol$6 && obj !== symbol$6.prototype ? "symbol" : _typeof2(obj);
 	      };
 	    }
 
@@ -27926,11 +27948,26 @@
 
 	var values$6 = values_1$1;
 
-	var nativeAssign$2 = Object.assign; // `Object.assign` method
+	var nativeAssign$2 = Object.assign;
+	var defineProperty$f = Object.defineProperty; // `Object.assign` method
 	// https://tc39.github.io/ecma262/#sec-object.assign
-	// should work with symbols and should have deterministic property order (V8 bug)
 
 	var objectAssign$2 = !nativeAssign$2 || fails(function () {
+	  // should have correct order of operations (Edge bug)
+	  if (descriptors && nativeAssign$2({
+	    b: 1
+	  }, nativeAssign$2(defineProperty$f({}, 'a', {
+	    enumerable: true,
+	    get: function () {
+	      defineProperty$f(this, 'b', {
+	        value: 3,
+	        enumerable: false
+	      });
+	    }
+	  }), {
+	    b: 2
+	  })).b !== 1) return true; // should work with symbols and should have deterministic property order (V8 bug)
+
 	  var A = {};
 	  var B = {}; // eslint-disable-next-line no-undef
 
@@ -33517,7 +33554,7 @@
 	      var _iteratorError = undefined;
 
 	      try {
-	        for (var _iterator = getIterator$5(dataset.get()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	        for (var _iterator = getIterator$4(dataset.get()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	          var dsNode = _step.value;
 	          var id = dsNode.id;
 	          var bodyNode = this.body.nodes[id];
@@ -45382,15 +45419,17 @@
 	  return it;
 	};
 
-	var defineProperty$f = objectDefineProperty.f;
+	var defineProperty$g = objectDefineProperty.f;
 	var forEach$8 = arrayIteration$1.forEach;
 	var setInternalState$7 = internalState$1.set;
 	var internalStateGetterFor$2 = internalState$1.getterFor;
 
-	var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
+	var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common) {
+	  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
+	  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
+	  var ADDER = IS_MAP ? 'set' : 'add';
 	  var NativeConstructor = global_1[CONSTRUCTOR_NAME];
 	  var NativePrototype = NativeConstructor && NativeConstructor.prototype;
-	  var ADDER = IS_MAP ? 'set' : 'add';
 	  var exported = {};
 	  var Constructor;
 
@@ -45421,7 +45460,8 @@
 	        });
 	      }
 	    });
-	    IS_WEAK || defineProperty$f(Constructor.prototype, 'size', {
+	    IS_WEAK || defineProperty$g(Constructor.prototype, 'size', {
+	      configurable: true,
 	      get: function () {
 	        return getInternalState(this).collection.size;
 	      }
@@ -45462,7 +45502,7 @@
 	  }
 	};
 
-	var defineProperty$g = objectDefineProperty.f;
+	var defineProperty$h = objectDefineProperty.f;
 	var fastKey$1 = internalMetadata$1.fastKey;
 	var setInternalState$8 = internalState$1.set;
 	var internalStateGetterFor$3 = internalState$1.getterFor;
@@ -45597,7 +45637,7 @@
 	        return define(this, value = value === 0 ? 0 : value, value);
 	      }
 	    });
-	    if (descriptors) defineProperty$g(C.prototype, 'size', {
+	    if (descriptors) defineProperty$h(C.prototype, 'size', {
 	      get: function () {
 	        return getInternalState(this).size;
 	      }
@@ -45657,11 +45697,11 @@
 	// https://tc39.github.io/ecma262/#sec-map-objects
 
 
-	var es_map$1 = collection$1('Map', function (get) {
+	var es_map$1 = collection$1('Map', function (init) {
 	  return function Map() {
-	    return get(this, arguments.length ? arguments[0] : undefined);
+	    return init(this, arguments.length ? arguments[0] : undefined);
 	  };
-	}, collectionStrong$1, true);
+	}, collectionStrong$1);
 
 	var map$7 = path.Map;
 
@@ -46968,9 +47008,9 @@
 	// https://tc39.github.io/ecma262/#sec-set-objects
 
 
-	var es_set$1 = collection$1('Set', function (get) {
+	var es_set$1 = collection$1('Set', function (init) {
 	  return function Set() {
-	    return get(this, arguments.length ? arguments[0] : undefined);
+	    return init(this, arguments.length ? arguments[0] : undefined);
 	  };
 	}, collectionStrong$1);
 
@@ -47164,7 +47204,7 @@
 	      }
 	    };
 
-	    for (var _iterator = getIterator$5(nodes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	    for (var _iterator = getIterator$4(nodes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	      var _ret = _loop();
 
 	      switch (_ret) {
