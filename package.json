@@ -75,7 +75,7 @@
     "@babel/preset-env": "7.7.5",
     "@babel/preset-typescript": "7.7.4",
     "@babel/register": "7.7.4",
-    "@babel/runtime-corejs3": "7.7.5",
+    "@babel/runtime-corejs3": "7.7.6",
     "@egjs/hammerjs": "2.0.16",
     "@semantic-release/commit-analyzer": "6.3.3",
     "@semantic-release/github": "5.5.5",
