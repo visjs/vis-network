@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-12-19T17:09:36Z
+ * @date    2019-12-20T10:55:47Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -1311,7 +1311,7 @@ var min$1 = Math.min;
 
 // Helper for a popular repeating case of the spec:
 // Let integer be ? ToInteger(index).
-// If integer < 0, let result be max((length + integer), 0); else let result be min(length, length).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
 var toAbsoluteIndex = function (index, length) {
   var integer = toInteger(index);
   return integer < 0 ? max(integer + length, 0) : min$1(integer, length);
@@ -1511,6 +1511,12 @@ var nativeSymbol = !!Object.getOwnPropertySymbols && !fails$1(function () {
   return !String(Symbol());
 });
 
+var useSymbolAsUid = nativeSymbol
+  // eslint-disable-next-line no-undef
+  && !Symbol.sham
+  // eslint-disable-next-line no-undef
+  && typeof Symbol() == 'symbol';
+
 // `IsArray` abstract operation
 // https://tc39.github.io/ecma262/#sec-isarray
 var isArray = Array.isArray || function isArray(arg) {
@@ -1542,7 +1548,7 @@ var shared = createCommonjsModule$1(function (module) {
 (module.exports = function (key, value) {
   return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.4.1',
+  version: '3.6.0',
   mode:  'pure' ,
   copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 });
@@ -1561,48 +1567,76 @@ var sharedKey = function (key) {
   return keys[key] || (keys[key] = uid(key));
 };
 
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
 var IE_PROTO = sharedKey('IE_PROTO');
 
-var PROTOTYPE = 'prototype';
-var Empty = function () { /* empty */ };
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  activeXDocument = null; // avoid memory leak
+  return temp;
+};
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
+var NullProtoObjectViaIFrame = function () {
   // Thrash, waste and sodomy: IE GC bug
   var iframe = documentCreateElement$1('iframe');
-  var length = enumBugKeys.length;
-  var lt = '<';
-  var script = 'script';
-  var gt = '>';
-  var js = 'java' + script + ':';
+  var JS = 'java' + SCRIPT + ':';
   var iframeDocument;
   iframe.style.display = 'none';
   html.appendChild(iframe);
-  iframe.src = String(js);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
   iframeDocument = iframe.contentWindow.document;
   iframeDocument.open();
-  iframeDocument.write(lt + script + gt + 'document.F=Object' + lt + '/' + script + gt);
+  iframeDocument.write(scriptTag('document.F=Object'));
   iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (length--) delete createDict[PROTOTYPE][enumBugKeys[length]];
-  return createDict();
+  return iframeDocument.F;
 };
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    /* global ActiveXObject */
+    activeXDocument = document.domain && new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = activeXDocument ? NullProtoObjectViaActiveX(activeXDocument) : NullProtoObjectViaIFrame();
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
 
 // `Object.create` method
 // https://tc39.github.io/ecma262/#sec-object.create
 var objectCreate = Object.create || function create(O, Properties) {
   var result;
   if (O !== null) {
-    Empty[PROTOTYPE] = anObject$1(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
+    EmptyConstructor[PROTOTYPE] = anObject$1(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
     // add "__proto__" for Object.getPrototypeOf polyfill
     result[IE_PROTO] = O;
-  } else result = createDict();
+  } else result = NullProtoObject();
   return Properties === undefined ? result : objectDefineProperties(result, Properties);
 };
-
-hiddenKeys[IE_PROTO] = true;
 
 var nativeGetOwnPropertyNames = objectGetOwnPropertyNames.f;
 
@@ -1635,12 +1669,15 @@ var redefine = function (target, key, value, options) {
   else createNonEnumerableProperty$1(target, key, value);
 };
 
+var WellKnownSymbolsStore = shared('wks');
 var Symbol$1 = global_1$1.Symbol;
-var store$1 = shared('wks');
+var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : uid;
 
 var wellKnownSymbol = function (name) {
-  return store$1[name] || (store$1[name] = nativeSymbol && Symbol$1[name]
-    || (nativeSymbol ? Symbol$1 : uid)('Symbol.' + name));
+  if (!has$1(WellKnownSymbolsStore, name)) {
+    if (nativeSymbol && has$1(Symbol$1, name)) WellKnownSymbolsStore[name] = Symbol$1[name];
+    else WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
+  } return WellKnownSymbolsStore[name];
 };
 
 var f$6 = wellKnownSymbol;
@@ -1659,6 +1696,13 @@ var defineWellKnownSymbol = function (NAME) {
 };
 
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var test = {};
+
+test[TO_STRING_TAG] = 'z';
+
+var toStringTagSupport = String(test) === '[object z]';
+
+var TO_STRING_TAG$1 = wellKnownSymbol('toStringTag');
 // ES3 wrong here
 var CORRECT_ARGUMENTS = classofRaw$1(function () { return arguments; }()) == 'Arguments';
 
@@ -1670,27 +1714,22 @@ var tryGet = function (it, key) {
 };
 
 // getting tag from ES6+ `Object.prototype.toString`
-var classof = function (it) {
+var classof = toStringTagSupport ? classofRaw$1 : function (it) {
   var O, tag, result;
   return it === undefined ? 'Undefined' : it === null ? 'Null'
     // @@toStringTag case
-    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag
+    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG$1)) == 'string' ? tag
     // builtinTag case
     : CORRECT_ARGUMENTS ? classofRaw$1(O)
     // ES3 arguments fallback
     : (result = classofRaw$1(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
 };
 
-var TO_STRING_TAG$1 = wellKnownSymbol('toStringTag');
-var test = {};
-
-test[TO_STRING_TAG$1] = 'z';
-
 // `Object.prototype.toString` method implementation
 // https://tc39.github.io/ecma262/#sec-object.prototype.tostring
-var objectToString = String(test) !== '[object z]' ? function toString() {
+var objectToString = toStringTagSupport ? {}.toString : function toString() {
   return '[object ' + classof(this) + ']';
-} : test.toString;
+};
 
 var defineProperty$3 = objectDefineProperty$1.f;
 
@@ -1699,7 +1738,6 @@ var defineProperty$3 = objectDefineProperty$1.f;
 
 
 var TO_STRING_TAG$2 = wellKnownSymbol('toStringTag');
-var METHOD_REQUIRED = objectToString !== ({}).toString;
 
 var setToStringTag = function (it, TAG, STATIC, SET_METHOD) {
   if (it) {
@@ -1707,17 +1745,26 @@ var setToStringTag = function (it, TAG, STATIC, SET_METHOD) {
     if (!has$1(target, TO_STRING_TAG$2)) {
       defineProperty$3(target, TO_STRING_TAG$2, { configurable: true, value: TAG });
     }
-    if (SET_METHOD && METHOD_REQUIRED) {
+    if (SET_METHOD && !toStringTagSupport) {
       createNonEnumerableProperty$1(target, 'toString', objectToString);
     }
   }
 };
 
-var functionToString = shared('native-function-to-string', Function.toString);
+var functionToString = Function.toString;
+
+// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+if (typeof sharedStore.inspectSource != 'function') {
+  sharedStore.inspectSource = function (it) {
+    return functionToString.call(it);
+  };
+}
+
+var inspectSource = sharedStore.inspectSource;
 
 var WeakMap = global_1$1.WeakMap;
 
-var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(functionToString.call(WeakMap));
+var nativeWeakMap = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
 
 var WeakMap$1 = global_1$1.WeakMap;
 var set, get, has$1$1;
@@ -1736,19 +1783,19 @@ var getterFor = function (TYPE) {
 };
 
 if (nativeWeakMap) {
-  var store$2 = new WeakMap$1();
-  var wmget = store$2.get;
-  var wmhas = store$2.has;
-  var wmset = store$2.set;
+  var store$1 = new WeakMap$1();
+  var wmget = store$1.get;
+  var wmhas = store$1.has;
+  var wmset = store$1.set;
   set = function (it, metadata) {
-    wmset.call(store$2, it, metadata);
+    wmset.call(store$1, it, metadata);
     return metadata;
   };
   get = function (it) {
-    return wmget.call(store$2, it) || {};
+    return wmget.call(store$1, it) || {};
   };
   has$1$1 = function (it) {
-    return wmhas.call(store$2, it);
+    return wmhas.call(store$1, it);
   };
 } else {
   var STATE = sharedKey('state');
@@ -1869,7 +1916,7 @@ var AllSymbols = shared('symbols');
 var ObjectPrototypeSymbols = shared('op-symbols');
 var StringToSymbolRegistry = shared('string-to-symbol-registry');
 var SymbolToStringRegistry = shared('symbol-to-string-registry');
-var WellKnownSymbolsStore = shared('wks');
+var WellKnownSymbolsStore$1 = shared('wks');
 var QObject = global_1$1.QObject;
 // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 var USE_SETTER = !QObject || !QObject[PROTOTYPE$1] || !QObject[PROTOTYPE$1].findChild;
@@ -2009,7 +2056,9 @@ if (!nativeSymbol) {
       }
     });
   }
+}
 
+if (!useSymbolAsUid) {
   wrappedWellKnownSymbol.f = function (name) {
     return wrap(wellKnownSymbol(name), name);
   };
@@ -2019,7 +2068,7 @@ _export$1({ global: true, wrap: true, forced: !nativeSymbol, sham: !nativeSymbol
   Symbol: $Symbol
 });
 
-$forEach(objectKeys(WellKnownSymbolsStore), function (name) {
+$forEach(objectKeys(WellKnownSymbolsStore$1), function (name) {
   defineWellKnownSymbol(name);
 });
 
@@ -2443,9 +2492,9 @@ var getIterator = function (it) {
   } return anObject$1(iteratorMethod.call(it));
 };
 
-var getIterator$1 = getIterator;
+var getIterator_1 = getIterator;
 
-var getIterator$2 = getIterator$1;
+var getIterator$1 = getIterator_1;
 
 // `Object.create` method
 // https://tc39.github.io/ecma262/#sec-object.create
@@ -2651,10 +2700,17 @@ var arrayMethodHasSpeciesSupport = function (METHOD_NAME) {
 var $map = arrayIteration.map;
 
 
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('map');
+// FF49- issue
+var USES_TO_LENGTH = HAS_SPECIES_SUPPORT && !fails$1(function () {
+  [].map.call({ length: -1, 0: 1 }, function (it) { throw it; });
+});
+
 // `Array.prototype.map` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.map
 // with adding support of @@species
-_export$1({ target: 'Array', proto: true, forced: !arrayMethodHasSpeciesSupport('map') }, {
+_export$1({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
   map: function map(callbackfn /* , thisArg */) {
     return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -2748,10 +2804,17 @@ var values$2 = values$1;
 var $filter = arrayIteration.filter;
 
 
+
+var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport('filter');
+// Edge 14- issue
+var USES_TO_LENGTH$1 = HAS_SPECIES_SUPPORT$1 && !fails$1(function () {
+  [].filter.call({ length: -1, 0: 1 }, function (it) { throw it; });
+});
+
 // `Array.prototype.filter` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.filter
 // with adding support of @@species
-_export$1({ target: 'Array', proto: true, forced: !arrayMethodHasSpeciesSupport('filter') }, {
+_export$1({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$1 }, {
   filter: function filter(callbackfn /* , thisArg */) {
     return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -2972,12 +3035,12 @@ var isIterable = function (it) {
     || iterators.hasOwnProperty(classof(O));
 };
 
-var isIterable$1 = isIterable;
+var isIterable_1 = isIterable;
 
-var isIterable$2 = isIterable$1;
+var isIterable$1 = isIterable_1;
 
 function _iterableToArray(iter) {
-  if (isIterable$2(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_1$2(iter);
+  if (isIterable$1(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_1$2(iter);
 }
 
 var iterableToArray = _iterableToArray;
@@ -3095,11 +3158,22 @@ var isArray$4 = isArray$1;
 var isArray$5 = isArray$4;
 
 var nativeAssign = Object.assign;
+var defineProperty$7 = Object.defineProperty;
 
 // `Object.assign` method
 // https://tc39.github.io/ecma262/#sec-object.assign
-// should work with symbols and should have deterministic property order (V8 bug)
 var objectAssign = !nativeAssign || fails$1(function () {
+  // should have correct order of operations (Edge bug)
+  if (descriptors$1 && nativeAssign({ b: 1 }, nativeAssign(defineProperty$7({}, 'a', {
+    enumerable: true,
+    get: function () {
+      defineProperty$7(this, 'b', {
+        value: 3,
+        enumerable: false
+      });
+    }
+  }), { b: 2 })).b !== 1) return true;
+  // should work with symbols and should have deterministic property order (V8 bug)
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -3227,21 +3301,22 @@ defineWellKnownSymbol('patternMatch');
 
 defineWellKnownSymbol('replaceAll');
 
+// TODO: Remove from `core-js@4`
+
+
 var symbol$1 = symbol;
 
 var symbol$2 = symbol$1;
 
 var _typeof_1 = createCommonjsModule$1(function (module) {
-function _typeof2(obj) { if (typeof symbol$2 === "function" && typeof iterator$2 === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof symbol$2 === "function" && obj.constructor === symbol$2 && obj !== symbol$2.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
-
 function _typeof(obj) {
-  if (typeof symbol$2 === "function" && _typeof2(iterator$2) === "symbol") {
+  if (typeof symbol$2 === "function" && typeof iterator$2 === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
+      return typeof obj;
     };
   } else {
     module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof symbol$2 === "function" && obj.constructor === symbol$2 && obj !== symbol$2.prototype ? "symbol" : _typeof2(obj);
+      return obj && typeof symbol$2 === "function" && obj.constructor === symbol$2 && obj !== symbol$2.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -3374,7 +3449,7 @@ function uuid4() {
 
 function ownKeys$1(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; forEach$2(_context11 = ownKeys$1(source, true)).call(_context11, function (key) { defineProperty$6(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context12; forEach$2(_context12 = ownKeys$1(source)).call(_context12, function (key) { defineProperty$1(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; forEach$2(_context11 = ownKeys$1(Object(source), true)).call(_context11, function (key) { defineProperty$6(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context12; forEach$2(_context12 = ownKeys$1(Object(source))).call(_context12, function (key) { defineProperty$1(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
 // for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
 // code from http://momentjs.com/
 
@@ -5114,7 +5189,7 @@ function topMost(pile, accessors) {
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = getIterator$2(pile), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = getIterator$1(pile), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var member = _step.value;
 
       if (member) {
@@ -5275,9 +5350,9 @@ var setGlobal$1 = function (key, value) {
 };
 
 var SHARED$1 = '__core-js_shared__';
-var store$3 = global_1[SHARED$1] || setGlobal$1(SHARED$1, {});
+var store$2 = global_1[SHARED$1] || setGlobal$1(SHARED$1, {});
 
-var sharedStore$1 = store$3;
+var sharedStore$1 = store$2;
 
 var shared$1 = createCommonjsModule(function (module) {
 (module.exports = function (key, value) {
@@ -5291,13 +5366,13 @@ var shared$1 = createCommonjsModule(function (module) {
 
 var functionToString$1 = Function.toString;
 
-var inspectSource = shared$1('inspectSource', function (it) {
+var inspectSource$1 = shared$1('inspectSource', function (it) {
   return functionToString$1.call(it);
 });
 
 var WeakMap$2 = global_1.WeakMap;
 
-var nativeWeakMap$1 = typeof WeakMap$2 === 'function' && /native code/.test(inspectSource(WeakMap$2));
+var nativeWeakMap$1 = typeof WeakMap$2 === 'function' && /native code/.test(inspectSource$1(WeakMap$2));
 
 var id$1 = 0;
 var postfix$1 = Math.random();
@@ -5331,19 +5406,19 @@ var getterFor$1 = function (TYPE) {
 };
 
 if (nativeWeakMap$1) {
-  var store$4 = new WeakMap$3();
-  var wmget$1 = store$4.get;
-  var wmhas$1 = store$4.has;
-  var wmset$1 = store$4.set;
+  var store$3 = new WeakMap$3();
+  var wmget$1 = store$3.get;
+  var wmhas$1 = store$3.has;
+  var wmset$1 = store$3.set;
   set$1 = function (it, metadata) {
-    wmset$1.call(store$4, it, metadata);
+    wmset$1.call(store$3, it, metadata);
     return metadata;
   };
   get$1 = function (it) {
-    return wmget$1.call(store$4, it) || {};
+    return wmget$1.call(store$3, it) || {};
   };
   has$2 = function (it) {
-    return wmhas$1.call(store$4, it);
+    return wmhas$1.call(store$3, it);
   };
 } else {
   var STATE$1 = sharedKey$1('state');
@@ -5399,21 +5474,21 @@ var nativeSymbol$1 = !!Object.getOwnPropertySymbols && !fails(function () {
   return !String(Symbol());
 });
 
-var useSymbolAsUid = nativeSymbol$1
+var useSymbolAsUid$1 = nativeSymbol$1
   // eslint-disable-next-line no-undef
   && !Symbol.sham
   // eslint-disable-next-line no-undef
   && typeof Symbol() == 'symbol';
 
-var WellKnownSymbolsStore$1 = shared$1('wks');
+var WellKnownSymbolsStore$2 = shared$1('wks');
 var Symbol$2 = global_1.Symbol;
-var createWellKnownSymbol = useSymbolAsUid ? Symbol$2 : uid$1;
+var createWellKnownSymbol$1 = useSymbolAsUid$1 ? Symbol$2 : uid$1;
 
 var wellKnownSymbol$1 = function (name) {
-  if (!has(WellKnownSymbolsStore$1, name)) {
-    if (nativeSymbol$1 && has(Symbol$2, name)) WellKnownSymbolsStore$1[name] = Symbol$2[name];
-    else WellKnownSymbolsStore$1[name] = createWellKnownSymbol('Symbol.' + name);
-  } return WellKnownSymbolsStore$1[name];
+  if (!has(WellKnownSymbolsStore$2, name)) {
+    if (nativeSymbol$1 && has(Symbol$2, name)) WellKnownSymbolsStore$2[name] = Symbol$2[name];
+    else WellKnownSymbolsStore$2[name] = createWellKnownSymbol$1('Symbol.' + name);
+  } return WellKnownSymbolsStore$2[name];
 };
 
 var ITERATOR$6 = wellKnownSymbol$1('iterator');
@@ -5556,10 +5631,10 @@ var html$1 = getBuiltIn$1('document', 'documentElement');
 var IE_PROTO$3 = sharedKey$1('IE_PROTO');
 
 var PROTOTYPE$2 = 'prototype';
-var Empty$1 = function () { /* empty */ };
+var Empty = function () { /* empty */ };
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict$1 = function () {
+var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
   var iframe = documentCreateElement('iframe');
   var length = enumBugKeys$1.length;
@@ -5575,9 +5650,9 @@ var createDict$1 = function () {
   iframeDocument.open();
   iframeDocument.write(lt + script + gt + 'document.F=Object' + lt + '/' + script + gt);
   iframeDocument.close();
-  createDict$1 = iframeDocument.F;
-  while (length--) delete createDict$1[PROTOTYPE$2][enumBugKeys$1[length]];
-  return createDict$1();
+  createDict = iframeDocument.F;
+  while (length--) delete createDict[PROTOTYPE$2][enumBugKeys$1[length]];
+  return createDict();
 };
 
 // `Object.create` method
@@ -5585,12 +5660,12 @@ var createDict$1 = function () {
 var objectCreate$1 = Object.create || function create(O, Properties) {
   var result;
   if (O !== null) {
-    Empty$1[PROTOTYPE$2] = anObject(O);
-    result = new Empty$1();
-    Empty$1[PROTOTYPE$2] = null;
+    Empty[PROTOTYPE$2] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE$2] = null;
     // add "__proto__" for Object.getPrototypeOf polyfill
     result[IE_PROTO$3] = O;
-  } else result = createDict$1();
+  } else result = createDict();
   return Properties === undefined ? result : objectDefineProperties$1(result, Properties);
 };
 
@@ -5601,7 +5676,7 @@ var test$1 = {};
 
 test$1[TO_STRING_TAG$4] = 'z';
 
-var toStringTagSupport = String(test$1) === '[object z]';
+var toStringTagSupport$1 = String(test$1) === '[object z]';
 
 var TO_STRING_TAG$5 = wellKnownSymbol$1('toStringTag');
 // ES3 wrong here
@@ -5615,7 +5690,7 @@ var tryGet$1 = function (it, key) {
 };
 
 // getting tag from ES6+ `Object.prototype.toString`
-var classof$1 = toStringTagSupport ? classofRaw : function (it) {
+var classof$1 = toStringTagSupport$1 ? classofRaw : function (it) {
   var O, tag, result;
   return it === undefined ? 'Undefined' : it === null ? 'Null'
     // @@toStringTag case
@@ -5628,11 +5703,11 @@ var classof$1 = toStringTagSupport ? classofRaw : function (it) {
 
 // `Object.prototype.toString` method implementation
 // https://tc39.github.io/ecma262/#sec-object.prototype.tostring
-var objectToString$1 = toStringTagSupport ? {}.toString : function toString() {
+var objectToString$1 = toStringTagSupport$1 ? {}.toString : function toString() {
   return '[object ' + classof$1(this) + ']';
 };
 
-var defineProperty$7 = objectDefineProperty.f;
+var defineProperty$8 = objectDefineProperty.f;
 
 
 
@@ -5644,9 +5719,9 @@ var setToStringTag$1 = function (it, TAG, STATIC, SET_METHOD) {
   if (it) {
     var target = STATIC ? it : it.prototype;
     if (!has(target, TO_STRING_TAG$6)) {
-      defineProperty$7(target, TO_STRING_TAG$6, { configurable: true, value: TAG });
+      defineProperty$8(target, TO_STRING_TAG$6, { configurable: true, value: TAG });
     }
-    if (SET_METHOD && !toStringTagSupport) {
+    if (SET_METHOD && !toStringTagSupport$1) {
       createNonEnumerableProperty(target, 'toString', objectToString$1);
     }
   }
@@ -7644,16 +7719,16 @@ var $map$1 = arrayIteration$1.map;
 
 
 
-var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport$1('map');
+var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport$1('map');
 // FF49- issue
-var USES_TO_LENGTH = HAS_SPECIES_SUPPORT && !fails(function () {
+var USES_TO_LENGTH$2 = HAS_SPECIES_SUPPORT$2 && !fails(function () {
   [].map.call({ length: -1, 0: 1 }, function (it) { throw it; });
 });
 
 // `Array.prototype.map` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.map
 // with adding support of @@species
-_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 || !USES_TO_LENGTH$2 }, {
   map: function map(callbackfn /* , thisArg */) {
     return $map$1(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -8030,7 +8105,7 @@ var keycharm = createCommonjsModule(function (module, exports) {
 }));
 });
 
-/*! Hammer.JS - v2.0.16 - 2019-11-11
+/*! Hammer.JS - v2.0.17-rc - 2019-12-16
  * http://naver.github.io/egjs
  *
  * Forked By Naver egjs
@@ -8708,7 +8783,7 @@ function computeInputData(manager, input) {
   } else if (srcEvent.path) {
     srcEventTarget = srcEvent.path[0];
   } else {
-    srcEventTarget = target;
+    srcEventTarget = srcEvent.target;
   }
 
   if (hasParent$1(srcEventTarget, target)) {
@@ -9750,6 +9825,548 @@ function () {
   return Recognizer;
 }();
 
+/**
+ * @private
+ * A tap is recognized when the pointer is doing a small tap/click. Multiple taps are recognized if they occur
+ * between the given interval and position. The delay option can be used to recognize multi-taps without firing
+ * a single tap.
+ *
+ * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
+ * multi-taps being recognized.
+ * @constructor
+ * @extends Recognizer
+ */
+
+var TapRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(TapRecognizer, _Recognizer);
+
+  function TapRecognizer(options) {
+    var _this;
+
+    if (options === void 0) {
+      options = {};
+    }
+
+    _this = _Recognizer.call(this, _extends({
+      event: 'tap',
+      pointers: 1,
+      taps: 1,
+      interval: 300,
+      // max time between the multi-tap taps
+      time: 250,
+      // max time of the pointer to be down (like finger on the screen)
+      threshold: 9,
+      // a minimal movement is ok, but keep it low
+      posThreshold: 10
+    }, options)) || this; // previous time and center,
+    // used for tap counting
+
+    _this.pTime = false;
+    _this.pCenter = false;
+    _this._timer = null;
+    _this._input = null;
+    _this.count = 0;
+    return _this;
+  }
+
+  var _proto = TapRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_MANIPULATION];
+  };
+
+  _proto.process = function process(input) {
+    var _this2 = this;
+
+    var options = this.options;
+    var validPointers = input.pointers.length === options.pointers;
+    var validMovement = input.distance < options.threshold;
+    var validTouchTime = input.deltaTime < options.time;
+    this.reset();
+
+    if (input.eventType & INPUT_START && this.count === 0) {
+      return this.failTimeout();
+    } // we only allow little movement
+    // and we've reached an end event, so a tap is possible
+
+
+    if (validMovement && validTouchTime && validPointers) {
+      if (input.eventType !== INPUT_END) {
+        return this.failTimeout();
+      }
+
+      var validInterval = this.pTime ? input.timeStamp - this.pTime < options.interval : true;
+      var validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
+      this.pTime = input.timeStamp;
+      this.pCenter = input.center;
+
+      if (!validMultiTap || !validInterval) {
+        this.count = 1;
+      } else {
+        this.count += 1;
+      }
+
+      this._input = input; // if tap count matches we have recognized it,
+      // else it has began recognizing...
+
+      var tapCount = this.count % options.taps;
+
+      if (tapCount === 0) {
+        // no failing requirements, immediately trigger the tap event
+        // or wait as long as the multitap interval to trigger
+        if (!this.hasRequireFailures()) {
+          return STATE_RECOGNIZED;
+        } else {
+          this._timer = setTimeout(function () {
+            _this2.state = STATE_RECOGNIZED;
+
+            _this2.tryEmit();
+          }, options.interval);
+          return STATE_BEGAN;
+        }
+      }
+    }
+
+    return STATE_FAILED;
+  };
+
+  _proto.failTimeout = function failTimeout() {
+    var _this3 = this;
+
+    this._timer = setTimeout(function () {
+      _this3.state = STATE_FAILED;
+    }, this.options.interval);
+    return STATE_FAILED;
+  };
+
+  _proto.reset = function reset() {
+    clearTimeout(this._timer);
+  };
+
+  _proto.emit = function emit() {
+    if (this.state === STATE_RECOGNIZED) {
+      this._input.tapCount = this.count;
+      this.manager.emit(this.options.event, this._input);
+    }
+  };
+
+  return TapRecognizer;
+}(Recognizer);
+
+/**
+ * @private
+ * This recognizer is just used as a base for the simple attribute recognizers.
+ * @constructor
+ * @extends Recognizer
+ */
+
+var AttrRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(AttrRecognizer, _Recognizer);
+
+  function AttrRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _Recognizer.call(this, _extends({
+      pointers: 1
+    }, options)) || this;
+  }
+  /**
+   * @private
+   * Used to check if it the recognizer receives valid input, like input.distance > 10.
+   * @memberof AttrRecognizer
+   * @param {Object} input
+   * @returns {Boolean} recognized
+   */
+
+
+  var _proto = AttrRecognizer.prototype;
+
+  _proto.attrTest = function attrTest(input) {
+    var optionPointers = this.options.pointers;
+    return optionPointers === 0 || input.pointers.length === optionPointers;
+  };
+  /**
+   * @private
+   * Process the input and return the state for the recognizer
+   * @memberof AttrRecognizer
+   * @param {Object} input
+   * @returns {*} State
+   */
+
+
+  _proto.process = function process(input) {
+    var state = this.state;
+    var eventType = input.eventType;
+    var isRecognized = state & (STATE_BEGAN | STATE_CHANGED);
+    var isValid = this.attrTest(input); // on cancel input and we've recognized before, return STATE_CANCELLED
+
+    if (isRecognized && (eventType & INPUT_CANCEL || !isValid)) {
+      return state | STATE_CANCELLED;
+    } else if (isRecognized || isValid) {
+      if (eventType & INPUT_END) {
+        return state | STATE_ENDED;
+      } else if (!(state & STATE_BEGAN)) {
+        return STATE_BEGAN;
+      }
+
+      return state | STATE_CHANGED;
+    }
+
+    return STATE_FAILED;
+  };
+
+  return AttrRecognizer;
+}(Recognizer);
+
+/**
+ * @private
+ * direction cons to string
+ * @param {constant} direction
+ * @returns {String}
+ */
+
+function directionStr(direction) {
+  if (direction === DIRECTION_DOWN) {
+    return 'down';
+  } else if (direction === DIRECTION_UP) {
+    return 'up';
+  } else if (direction === DIRECTION_LEFT) {
+    return 'left';
+  } else if (direction === DIRECTION_RIGHT) {
+    return 'right';
+  }
+
+  return '';
+}
+
+/**
+ * @private
+ * Pan
+ * Recognized when the pointer is down and moved in the allowed direction.
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var PanRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(PanRecognizer, _AttrRecognizer);
+
+  function PanRecognizer(options) {
+    var _this;
+
+    if (options === void 0) {
+      options = {};
+    }
+
+    _this = _AttrRecognizer.call(this, _extends({
+      event: 'pan',
+      threshold: 10,
+      pointers: 1,
+      direction: DIRECTION_ALL
+    }, options)) || this;
+    _this.pX = null;
+    _this.pY = null;
+    return _this;
+  }
+
+  var _proto = PanRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    var direction = this.options.direction;
+    var actions = [];
+
+    if (direction & DIRECTION_HORIZONTAL) {
+      actions.push(TOUCH_ACTION_PAN_Y);
+    }
+
+    if (direction & DIRECTION_VERTICAL) {
+      actions.push(TOUCH_ACTION_PAN_X);
+    }
+
+    return actions;
+  };
+
+  _proto.directionTest = function directionTest(input) {
+    var options = this.options;
+    var hasMoved = true;
+    var distance = input.distance;
+    var direction = input.direction;
+    var x = input.deltaX;
+    var y = input.deltaY; // lock to axis?
+
+    if (!(direction & options.direction)) {
+      if (options.direction & DIRECTION_HORIZONTAL) {
+        direction = x === 0 ? DIRECTION_NONE : x < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+        hasMoved = x !== this.pX;
+        distance = Math.abs(input.deltaX);
+      } else {
+        direction = y === 0 ? DIRECTION_NONE : y < 0 ? DIRECTION_UP : DIRECTION_DOWN;
+        hasMoved = y !== this.pY;
+        distance = Math.abs(input.deltaY);
+      }
+    }
+
+    input.direction = direction;
+    return hasMoved && distance > options.threshold && direction & options.direction;
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    return AttrRecognizer.prototype.attrTest.call(this, input) && ( // replace with a super call
+    this.state & STATE_BEGAN || !(this.state & STATE_BEGAN) && this.directionTest(input));
+  };
+
+  _proto.emit = function emit(input) {
+    this.pX = input.deltaX;
+    this.pY = input.deltaY;
+    var direction = directionStr(input.direction);
+
+    if (direction) {
+      input.additionalEvent = this.options.event + direction;
+    }
+
+    _AttrRecognizer.prototype.emit.call(this, input);
+  };
+
+  return PanRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Swipe
+ * Recognized when the pointer is moving fast (velocity), with enough distance in the allowed direction.
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var SwipeRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(SwipeRecognizer, _AttrRecognizer);
+
+  function SwipeRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _AttrRecognizer.call(this, _extends({
+      event: 'swipe',
+      threshold: 10,
+      velocity: 0.3,
+      direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
+      pointers: 1
+    }, options)) || this;
+  }
+
+  var _proto = SwipeRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return PanRecognizer.prototype.getTouchAction.call(this);
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    var direction = this.options.direction;
+    var velocity;
+
+    if (direction & (DIRECTION_HORIZONTAL | DIRECTION_VERTICAL)) {
+      velocity = input.overallVelocity;
+    } else if (direction & DIRECTION_HORIZONTAL) {
+      velocity = input.overallVelocityX;
+    } else if (direction & DIRECTION_VERTICAL) {
+      velocity = input.overallVelocityY;
+    }
+
+    return _AttrRecognizer.prototype.attrTest.call(this, input) && direction & input.offsetDirection && input.distance > this.options.threshold && input.maxPointers === this.options.pointers && abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
+  };
+
+  _proto.emit = function emit(input) {
+    var direction = directionStr(input.offsetDirection);
+
+    if (direction) {
+      this.manager.emit(this.options.event + direction, input);
+    }
+
+    this.manager.emit(this.options.event, input);
+  };
+
+  return SwipeRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Pinch
+ * Recognized when two or more pointers are moving toward (zoom-in) or away from each other (zoom-out).
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var PinchRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(PinchRecognizer, _AttrRecognizer);
+
+  function PinchRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _AttrRecognizer.call(this, _extends({
+      event: 'pinch',
+      threshold: 0,
+      pointers: 2
+    }, options)) || this;
+  }
+
+  var _proto = PinchRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_NONE];
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
+  };
+
+  _proto.emit = function emit(input) {
+    if (input.scale !== 1) {
+      var inOut = input.scale < 1 ? 'in' : 'out';
+      input.additionalEvent = this.options.event + inOut;
+    }
+
+    _AttrRecognizer.prototype.emit.call(this, input);
+  };
+
+  return PinchRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Rotate
+ * Recognized when two or more pointer are moving in a circular motion.
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var RotateRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(RotateRecognizer, _AttrRecognizer);
+
+  function RotateRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _AttrRecognizer.call(this, _extends({
+      event: 'rotate',
+      threshold: 0,
+      pointers: 2
+    }, options)) || this;
+  }
+
+  var _proto = RotateRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_NONE];
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
+  };
+
+  return RotateRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Press
+ * Recognized when the pointer is down for x ms without any movement.
+ * @constructor
+ * @extends Recognizer
+ */
+
+var PressRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(PressRecognizer, _Recognizer);
+
+  function PressRecognizer(options) {
+    var _this;
+
+    if (options === void 0) {
+      options = {};
+    }
+
+    _this = _Recognizer.call(this, _extends({
+      event: 'press',
+      pointers: 1,
+      time: 251,
+      // minimal time of the pointer to be pressed
+      threshold: 9
+    }, options)) || this;
+    _this._timer = null;
+    _this._input = null;
+    return _this;
+  }
+
+  var _proto = PressRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_AUTO];
+  };
+
+  _proto.process = function process(input) {
+    var _this2 = this;
+
+    var options = this.options;
+    var validPointers = input.pointers.length === options.pointers;
+    var validMovement = input.distance < options.threshold;
+    var validTime = input.deltaTime > options.time;
+    this._input = input; // we only allow little movement
+    // and we've reached an end event, so a tap is possible
+
+    if (!validMovement || !validPointers || input.eventType & (INPUT_END | INPUT_CANCEL) && !validTime) {
+      this.reset();
+    } else if (input.eventType & INPUT_START) {
+      this.reset();
+      this._timer = setTimeout(function () {
+        _this2.state = STATE_RECOGNIZED;
+
+        _this2.tryEmit();
+      }, options.time);
+    } else if (input.eventType & INPUT_END) {
+      return STATE_RECOGNIZED;
+    }
+
+    return STATE_FAILED;
+  };
+
+  _proto.reset = function reset() {
+    clearTimeout(this._timer);
+  };
+
+  _proto.emit = function emit(input) {
+    if (this.state !== STATE_RECOGNIZED) {
+      return;
+    }
+
+    if (input && input.eventType & INPUT_END) {
+      this.manager.emit(this.options.event + "up", input);
+    } else {
+      this._input.timeStamp = now();
+      this.manager.emit(this.options.event, this._input);
+    }
+  };
+
+  return PressRecognizer;
+}(Recognizer);
+
 var defaults = {
   /**
    * @private
@@ -9793,14 +10410,6 @@ var defaults = {
    * @default null
    */
   inputClass: null,
-
-  /**
-   * @private
-   * Default recognizer setup when calling `Hammer()`
-   * When creating a new Manager these will be skipped.
-   * @type {Array}
-   */
-  preset: [],
 
   /**
    * @private
@@ -9861,6 +10470,26 @@ var defaults = {
     tapHighlightColor: "rgba(0,0,0,0)"
   }
 };
+/**
+ * @private
+ * Default recognizer setup when calling `Hammer()`
+ * When creating a new Manager these will be skipped.
+ * This is separated with other defaults because of tree-shaking.
+ * @type {Array}
+ */
+
+var preset = [[RotateRecognizer, {
+  enable: false
+}], [PinchRecognizer, {
+  enable: false
+}, ['rotate']], [SwipeRecognizer, {
+  direction: DIRECTION_HORIZONTAL
+}], [PanRecognizer, {
+  direction: DIRECTION_HORIZONTAL
+}, ['swipe']], [TapRecognizer], [TapRecognizer, {
+  event: 'doubletap',
+  taps: 2
+}, ['tap']], [PressRecognizer]];
 
 var STOP = 1;
 var FORCED_STOP = 2;
@@ -10282,548 +10911,6 @@ function normalizeSingleTouches(ev, type) {
 
 /**
  * @private
- * This recognizer is just used as a base for the simple attribute recognizers.
- * @constructor
- * @extends Recognizer
- */
-
-var AttrRecognizer =
-/*#__PURE__*/
-function (_Recognizer) {
-  _inheritsLoose(AttrRecognizer, _Recognizer);
-
-  function AttrRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _Recognizer.call(this, _extends({
-      pointers: 1
-    }, options)) || this;
-  }
-  /**
-   * @private
-   * Used to check if it the recognizer receives valid input, like input.distance > 10.
-   * @memberof AttrRecognizer
-   * @param {Object} input
-   * @returns {Boolean} recognized
-   */
-
-
-  var _proto = AttrRecognizer.prototype;
-
-  _proto.attrTest = function attrTest(input) {
-    var optionPointers = this.options.pointers;
-    return optionPointers === 0 || input.pointers.length === optionPointers;
-  };
-  /**
-   * @private
-   * Process the input and return the state for the recognizer
-   * @memberof AttrRecognizer
-   * @param {Object} input
-   * @returns {*} State
-   */
-
-
-  _proto.process = function process(input) {
-    var state = this.state;
-    var eventType = input.eventType;
-    var isRecognized = state & (STATE_BEGAN | STATE_CHANGED);
-    var isValid = this.attrTest(input); // on cancel input and we've recognized before, return STATE_CANCELLED
-
-    if (isRecognized && (eventType & INPUT_CANCEL || !isValid)) {
-      return state | STATE_CANCELLED;
-    } else if (isRecognized || isValid) {
-      if (eventType & INPUT_END) {
-        return state | STATE_ENDED;
-      } else if (!(state & STATE_BEGAN)) {
-        return STATE_BEGAN;
-      }
-
-      return state | STATE_CHANGED;
-    }
-
-    return STATE_FAILED;
-  };
-
-  return AttrRecognizer;
-}(Recognizer);
-
-/**
- * @private
- * A tap is recognized when the pointer is doing a small tap/click. Multiple taps are recognized if they occur
- * between the given interval and position. The delay option can be used to recognize multi-taps without firing
- * a single tap.
- *
- * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
- * multi-taps being recognized.
- * @constructor
- * @extends Recognizer
- */
-
-var TapRecognizer =
-/*#__PURE__*/
-function (_Recognizer) {
-  _inheritsLoose(TapRecognizer, _Recognizer);
-
-  function TapRecognizer(options) {
-    var _this;
-
-    if (options === void 0) {
-      options = {};
-    }
-
-    _this = _Recognizer.call(this, _extends({
-      event: 'tap',
-      pointers: 1,
-      taps: 1,
-      interval: 300,
-      // max time between the multi-tap taps
-      time: 250,
-      // max time of the pointer to be down (like finger on the screen)
-      threshold: 9,
-      // a minimal movement is ok, but keep it low
-      posThreshold: 10
-    }, options)) || this; // previous time and center,
-    // used for tap counting
-
-    _this.pTime = false;
-    _this.pCenter = false;
-    _this._timer = null;
-    _this._input = null;
-    _this.count = 0;
-    return _this;
-  }
-
-  var _proto = TapRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_MANIPULATION];
-  };
-
-  _proto.process = function process(input) {
-    var _this2 = this;
-
-    var options = this.options;
-    var validPointers = input.pointers.length === options.pointers;
-    var validMovement = input.distance < options.threshold;
-    var validTouchTime = input.deltaTime < options.time;
-    this.reset();
-
-    if (input.eventType & INPUT_START && this.count === 0) {
-      return this.failTimeout();
-    } // we only allow little movement
-    // and we've reached an end event, so a tap is possible
-
-
-    if (validMovement && validTouchTime && validPointers) {
-      if (input.eventType !== INPUT_END) {
-        return this.failTimeout();
-      }
-
-      var validInterval = this.pTime ? input.timeStamp - this.pTime < options.interval : true;
-      var validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
-      this.pTime = input.timeStamp;
-      this.pCenter = input.center;
-
-      if (!validMultiTap || !validInterval) {
-        this.count = 1;
-      } else {
-        this.count += 1;
-      }
-
-      this._input = input; // if tap count matches we have recognized it,
-      // else it has began recognizing...
-
-      var tapCount = this.count % options.taps;
-
-      if (tapCount === 0) {
-        // no failing requirements, immediately trigger the tap event
-        // or wait as long as the multitap interval to trigger
-        if (!this.hasRequireFailures()) {
-          return STATE_RECOGNIZED;
-        } else {
-          this._timer = setTimeout(function () {
-            _this2.state = STATE_RECOGNIZED;
-
-            _this2.tryEmit();
-          }, options.interval);
-          return STATE_BEGAN;
-        }
-      }
-    }
-
-    return STATE_FAILED;
-  };
-
-  _proto.failTimeout = function failTimeout() {
-    var _this3 = this;
-
-    this._timer = setTimeout(function () {
-      _this3.state = STATE_FAILED;
-    }, this.options.interval);
-    return STATE_FAILED;
-  };
-
-  _proto.reset = function reset() {
-    clearTimeout(this._timer);
-  };
-
-  _proto.emit = function emit() {
-    if (this.state === STATE_RECOGNIZED) {
-      this._input.tapCount = this.count;
-      this.manager.emit(this.options.event, this._input);
-    }
-  };
-
-  return TapRecognizer;
-}(Recognizer);
-
-/**
- * @private
- * direction cons to string
- * @param {constant} direction
- * @returns {String}
- */
-
-function directionStr(direction) {
-  if (direction === DIRECTION_DOWN) {
-    return 'down';
-  } else if (direction === DIRECTION_UP) {
-    return 'up';
-  } else if (direction === DIRECTION_LEFT) {
-    return 'left';
-  } else if (direction === DIRECTION_RIGHT) {
-    return 'right';
-  }
-
-  return '';
-}
-
-/**
- * @private
- * Pan
- * Recognized when the pointer is down and moved in the allowed direction.
- * @constructor
- * @extends AttrRecognizer
- */
-
-var PanRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(PanRecognizer, _AttrRecognizer);
-
-  function PanRecognizer(options) {
-    var _this;
-
-    if (options === void 0) {
-      options = {};
-    }
-
-    _this = _AttrRecognizer.call(this, _extends({
-      event: 'pan',
-      threshold: 10,
-      pointers: 1,
-      direction: DIRECTION_ALL
-    }, options)) || this;
-    _this.pX = null;
-    _this.pY = null;
-    return _this;
-  }
-
-  var _proto = PanRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    var direction = this.options.direction;
-    var actions = [];
-
-    if (direction & DIRECTION_HORIZONTAL) {
-      actions.push(TOUCH_ACTION_PAN_Y);
-    }
-
-    if (direction & DIRECTION_VERTICAL) {
-      actions.push(TOUCH_ACTION_PAN_X);
-    }
-
-    return actions;
-  };
-
-  _proto.directionTest = function directionTest(input) {
-    var options = this.options;
-    var hasMoved = true;
-    var distance = input.distance;
-    var direction = input.direction;
-    var x = input.deltaX;
-    var y = input.deltaY; // lock to axis?
-
-    if (!(direction & options.direction)) {
-      if (options.direction & DIRECTION_HORIZONTAL) {
-        direction = x === 0 ? DIRECTION_NONE : x < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
-        hasMoved = x !== this.pX;
-        distance = Math.abs(input.deltaX);
-      } else {
-        direction = y === 0 ? DIRECTION_NONE : y < 0 ? DIRECTION_UP : DIRECTION_DOWN;
-        hasMoved = y !== this.pY;
-        distance = Math.abs(input.deltaY);
-      }
-    }
-
-    input.direction = direction;
-    return hasMoved && distance > options.threshold && direction & options.direction;
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    return AttrRecognizer.prototype.attrTest.call(this, input) && ( // replace with a super call
-    this.state & STATE_BEGAN || !(this.state & STATE_BEGAN) && this.directionTest(input));
-  };
-
-  _proto.emit = function emit(input) {
-    this.pX = input.deltaX;
-    this.pY = input.deltaY;
-    var direction = directionStr(input.direction);
-
-    if (direction) {
-      input.additionalEvent = this.options.event + direction;
-    }
-
-    _AttrRecognizer.prototype.emit.call(this, input);
-  };
-
-  return PanRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Swipe
- * Recognized when the pointer is moving fast (velocity), with enough distance in the allowed direction.
- * @constructor
- * @extends AttrRecognizer
- */
-
-var SwipeRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(SwipeRecognizer, _AttrRecognizer);
-
-  function SwipeRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _AttrRecognizer.call(this, _extends({
-      event: 'swipe',
-      threshold: 10,
-      velocity: 0.3,
-      direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
-      pointers: 1
-    }, options)) || this;
-  }
-
-  var _proto = SwipeRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return PanRecognizer.prototype.getTouchAction.call(this);
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    var direction = this.options.direction;
-    var velocity;
-
-    if (direction & (DIRECTION_HORIZONTAL | DIRECTION_VERTICAL)) {
-      velocity = input.overallVelocity;
-    } else if (direction & DIRECTION_HORIZONTAL) {
-      velocity = input.overallVelocityX;
-    } else if (direction & DIRECTION_VERTICAL) {
-      velocity = input.overallVelocityY;
-    }
-
-    return _AttrRecognizer.prototype.attrTest.call(this, input) && direction & input.offsetDirection && input.distance > this.options.threshold && input.maxPointers === this.options.pointers && abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
-  };
-
-  _proto.emit = function emit(input) {
-    var direction = directionStr(input.offsetDirection);
-
-    if (direction) {
-      this.manager.emit(this.options.event + direction, input);
-    }
-
-    this.manager.emit(this.options.event, input);
-  };
-
-  return SwipeRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Pinch
- * Recognized when two or more pointers are moving toward (zoom-in) or away from each other (zoom-out).
- * @constructor
- * @extends AttrRecognizer
- */
-
-var PinchRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(PinchRecognizer, _AttrRecognizer);
-
-  function PinchRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _AttrRecognizer.call(this, _extends({
-      event: 'pinch',
-      threshold: 0,
-      pointers: 2
-    }, options)) || this;
-  }
-
-  var _proto = PinchRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_NONE];
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
-  };
-
-  _proto.emit = function emit(input) {
-    if (input.scale !== 1) {
-      var inOut = input.scale < 1 ? 'in' : 'out';
-      input.additionalEvent = this.options.event + inOut;
-    }
-
-    _AttrRecognizer.prototype.emit.call(this, input);
-  };
-
-  return PinchRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Rotate
- * Recognized when two or more pointer are moving in a circular motion.
- * @constructor
- * @extends AttrRecognizer
- */
-
-var RotateRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(RotateRecognizer, _AttrRecognizer);
-
-  function RotateRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _AttrRecognizer.call(this, _extends({
-      event: 'rotate',
-      threshold: 0,
-      pointers: 2
-    }, options)) || this;
-  }
-
-  var _proto = RotateRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_NONE];
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
-  };
-
-  return RotateRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Press
- * Recognized when the pointer is down for x ms without any movement.
- * @constructor
- * @extends Recognizer
- */
-
-var PressRecognizer =
-/*#__PURE__*/
-function (_Recognizer) {
-  _inheritsLoose(PressRecognizer, _Recognizer);
-
-  function PressRecognizer(options) {
-    var _this;
-
-    if (options === void 0) {
-      options = {};
-    }
-
-    _this = _Recognizer.call(this, _extends({
-      event: 'press',
-      pointers: 1,
-      time: 251,
-      // minimal time of the pointer to be pressed
-      threshold: 9
-    }, options)) || this;
-    _this._timer = null;
-    _this._input = null;
-    return _this;
-  }
-
-  var _proto = PressRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_AUTO];
-  };
-
-  _proto.process = function process(input) {
-    var _this2 = this;
-
-    var options = this.options;
-    var validPointers = input.pointers.length === options.pointers;
-    var validMovement = input.distance < options.threshold;
-    var validTime = input.deltaTime > options.time;
-    this._input = input; // we only allow little movement
-    // and we've reached an end event, so a tap is possible
-
-    if (!validMovement || !validPointers || input.eventType & (INPUT_END | INPUT_CANCEL) && !validTime) {
-      this.reset();
-    } else if (input.eventType & INPUT_START) {
-      this.reset();
-      this._timer = setTimeout(function () {
-        _this2.state = STATE_RECOGNIZED;
-
-        _this2.tryEmit();
-      }, options.time);
-    } else if (input.eventType & INPUT_END) {
-      return STATE_RECOGNIZED;
-    }
-
-    return STATE_FAILED;
-  };
-
-  _proto.reset = function reset() {
-    clearTimeout(this._timer);
-  };
-
-  _proto.emit = function emit(input) {
-    if (this.state !== STATE_RECOGNIZED) {
-      return;
-    }
-
-    if (input && input.eventType & INPUT_END) {
-      this.manager.emit(this.options.event + "up", input);
-    } else {
-      this._input.timeStamp = now();
-      this.manager.emit(this.options.event, this._input);
-    }
-  };
-
-  return PressRecognizer;
-}(Recognizer);
-
-/**
- * @private
  * wrap a method with a deprecation warning and stack trace
  * @param {Function} method
  * @param {String} name
@@ -10938,23 +11025,11 @@ function () {
     }
 
     return new Manager(element, _extends({
-      recognizers: [// RecognizerClass, options, [recognizeWith, ...], [requireFailure, ...]
-      [RotateRecognizer, {
-        enable: false
-      }], [PinchRecognizer, {
-        enable: false
-      }, ['rotate']], [SwipeRecognizer, {
-        direction: DIRECTION_HORIZONTAL
-      }], [PanRecognizer, {
-        direction: DIRECTION_HORIZONTAL
-      }, ['swipe']], [TapRecognizer], [TapRecognizer, {
-        event: 'doubletap',
-        taps: 2
-      }, ['tap']], [PressRecognizer]]
+      recognizers: preset.concat()
     }, options));
   };
 
-  Hammer.VERSION = "2.0.16";
+  Hammer.VERSION = "2.0.17-rc";
   Hammer.DIRECTION_ALL = DIRECTION_ALL;
   Hammer.DIRECTION_DOWN = DIRECTION_DOWN;
   Hammer.DIRECTION_LEFT = DIRECTION_LEFT;
@@ -11009,7 +11084,9 @@ function () {
   Hammer.hasParent = hasParent$1;
   Hammer.addEventListeners = addEventListeners;
   Hammer.removeEventListeners = removeEventListeners;
-  Hammer.defaults = defaults;
+  Hammer.defaults = assign$1$1({}, defaults, {
+    preset: preset
+  });
   return Hammer;
 }();
 
@@ -11425,9 +11502,9 @@ var defineProperty = module.exports = function defineProperty(it, key, desc) {
 if (Object.defineProperty.sham) defineProperty.sham = true;
 });
 
-var defineProperty$8 = defineProperty_1$1;
+var defineProperty$9 = defineProperty_1$1;
 
-var defineProperty$9 = defineProperty$8;
+var defineProperty$a = defineProperty$9;
 
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
@@ -11436,7 +11513,7 @@ function _defineProperties(target, props) {
     descriptor.configurable = true;
     if ("value" in descriptor) descriptor.writable = true;
 
-    defineProperty$9(target, descriptor.key, descriptor);
+    defineProperty$a(target, descriptor.key, descriptor);
   }
 }
 
@@ -12167,16 +12244,16 @@ var getIteratorMethod$1 = function (it) {
     || iterators$1[classof$1(it)];
 };
 
-var getIterator$3 = function (it) {
+var getIterator$2 = function (it) {
   var iteratorMethod = getIteratorMethod$1(it);
   if (typeof iteratorMethod != 'function') {
     throw TypeError(String(it) + ' is not iterable');
   } return anObject(iteratorMethod.call(it));
 };
 
-var getIterator_1 = getIterator$3;
+var getIterator_1$1 = getIterator$2;
 
-var getIterator$4 = getIterator_1;
+var getIterator$3 = getIterator_1$1;
 
 var $some = arrayIteration$1.some;
 
@@ -12208,8 +12285,8 @@ var some$2 = some$1;
  * 
  * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
  * 
- * @version 6.2.4
- * @date    2019-11-28T17:58:58Z
+ * @version 6.2.5
+ * @date    2019-12-19T22:51:12Z
  * 
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -12229,6 +12306,10 @@ var some$2 = some$1;
  */
 
 var commonjsGlobal$2 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
+}
 
 function createCommonjsModule$2(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -12575,9 +12656,9 @@ var defineProperty_1$2 = createCommonjsModule$2(function (module) {
   if (Object.defineProperty.sham) defineProperty.sham = true;
 });
 
-var defineProperty$a = defineProperty_1$2;
+var defineProperty$b = defineProperty_1$2;
 
-var defineProperty$1$1 = defineProperty$a;
+var defineProperty$1$1 = defineProperty$b;
 
 var ceil$2 = Math.ceil;
 var floor$2 = Math.floor; // `ToInteger` abstract operation
@@ -12597,7 +12678,7 @@ var toLength$2 = function (argument) {
 var max$4 = Math.max;
 var min$1$1 = Math.min; // Helper for a popular repeating case of the spec:
 // Let integer be ? ToInteger(index).
-// If integer < 0, let result be max((length + integer), 0); else let result be min(length, length).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
 
 var toAbsoluteIndex$2 = function (index, length) {
   var integer = toInteger$2(index);
@@ -12778,23 +12859,26 @@ var setGlobal$2 = function (key, value) {
 };
 
 var SHARED$2 = '__core-js_shared__';
-var store$5 = global_1$2[SHARED$2] || setGlobal$2(SHARED$2, {});
-var sharedStore$2 = store$5;
+var store$4 = global_1$2[SHARED$2] || setGlobal$2(SHARED$2, {});
+var sharedStore$2 = store$4;
 
 var shared$2 = createCommonjsModule$2(function (module) {
   (module.exports = function (key, value) {
     return sharedStore$2[key] || (sharedStore$2[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.4.0',
+    version: '3.4.5',
     mode:  'pure' ,
     copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
   });
 });
 
-var functionToString$2 = shared$2('native-function-to-string', Function.toString);
+var functionToString$2 = Function.toString;
+var inspectSource$2 = shared$2('inspectSource', function (it) {
+  return functionToString$2.call(it);
+});
 
 var WeakMap$4 = global_1$2.WeakMap;
-var nativeWeakMap$2 = typeof WeakMap$4 === 'function' && /native code/.test(functionToString$2.call(WeakMap$4));
+var nativeWeakMap$2 = typeof WeakMap$4 === 'function' && /native code/.test(inspectSource$2(WeakMap$4));
 
 var id$2 = 0;
 var postfix$2 = Math.random();
@@ -12908,11 +12992,20 @@ var nativeSymbol$2 = !!Object.getOwnPropertySymbols && !fails$2(function () {
   return !String(Symbol());
 });
 
+var useSymbolAsUid$2 = nativeSymbol$2 // eslint-disable-next-line no-undef
+&& !Symbol.sham // eslint-disable-next-line no-undef
+&& typeof Symbol() == 'symbol';
+
+var WellKnownSymbolsStore$3 = shared$2('wks');
 var Symbol$1$1 = global_1$2.Symbol;
-var store$2$1 = shared$2('wks');
+var createWellKnownSymbol$2 = useSymbolAsUid$2 ? Symbol$1$1 : uid$2;
 
 var wellKnownSymbol$2 = function (name) {
-  return store$2$1[name] || (store$2$1[name] = nativeSymbol$2 && Symbol$1$1[name] || (nativeSymbol$2 ? Symbol$1$1 : uid$2)('Symbol.' + name));
+  if (!has$3(WellKnownSymbolsStore$3, name)) {
+    if (nativeSymbol$2 && has$3(Symbol$1$1, name)) WellKnownSymbolsStore$3[name] = Symbol$1$1[name];else WellKnownSymbolsStore$3[name] = createWellKnownSymbol$2('Symbol.' + name);
+  }
+
+  return WellKnownSymbolsStore$3[name];
 };
 
 var ITERATOR$9 = wellKnownSymbol$2('iterator');
@@ -12943,12 +13036,12 @@ var html$2 = getBuiltIn$2('document', 'documentElement');
 var IE_PROTO$1$1 = sharedKey$2('IE_PROTO');
 var PROTOTYPE$3 = 'prototype';
 
-var Empty$2 = function () {
+var Empty$1 = function () {
   /* empty */
 }; // Create object with fake `null` prototype: use iframe Object with cleared prototype
 
 
-var createDict$2 = function () {
+var createDict$1 = function () {
   // Thrash, waste and sodomy: IE GC bug
   var iframe = documentCreateElement$2('iframe');
   var length = enumBugKeys$2.length;
@@ -12964,11 +13057,11 @@ var createDict$2 = function () {
   iframeDocument.open();
   iframeDocument.write(lt + script + gt + 'document.F=Object' + lt + '/' + script + gt);
   iframeDocument.close();
-  createDict$2 = iframeDocument.F;
+  createDict$1 = iframeDocument.F;
 
-  while (length--) delete createDict$2[PROTOTYPE$3][enumBugKeys$2[length]];
+  while (length--) delete createDict$1[PROTOTYPE$3][enumBugKeys$2[length]];
 
-  return createDict$2();
+  return createDict$1();
 }; // `Object.create` method
 // https://tc39.github.io/ecma262/#sec-object.create
 
@@ -12977,19 +13070,24 @@ var objectCreate$2 = Object.create || function create(O, Properties) {
   var result;
 
   if (O !== null) {
-    Empty$2[PROTOTYPE$3] = anObject$2(O);
-    result = new Empty$2();
-    Empty$2[PROTOTYPE$3] = null; // add "__proto__" for Object.getPrototypeOf polyfill
+    Empty$1[PROTOTYPE$3] = anObject$2(O);
+    result = new Empty$1();
+    Empty$1[PROTOTYPE$3] = null; // add "__proto__" for Object.getPrototypeOf polyfill
 
     result[IE_PROTO$1$1] = O;
-  } else result = createDict$2();
+  } else result = createDict$1();
 
   return Properties === undefined ? result : objectDefineProperties$2(result, Properties);
 };
 
 hiddenKeys$3[IE_PROTO$1$1] = true;
 
-var TO_STRING_TAG$8 = wellKnownSymbol$2('toStringTag'); // ES3 wrong here
+var TO_STRING_TAG$8 = wellKnownSymbol$2('toStringTag');
+var test$2 = {};
+test$2[TO_STRING_TAG$8] = 'z';
+var toStringTagSupport$2 = String(test$2) === '[object z]';
+
+var TO_STRING_TAG$1$1 = wellKnownSymbol$2('toStringTag'); // ES3 wrong here
 
 var CORRECT_ARGUMENTS$2 = classofRaw$2(function () {
   return arguments;
@@ -13004,26 +13102,23 @@ var tryGet$2 = function (it, key) {
 }; // getting tag from ES6+ `Object.prototype.toString`
 
 
-var classof$2 = function (it) {
+var classof$2 = toStringTagSupport$2 ? classofRaw$2 : function (it) {
   var O, tag, result;
   return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
-  : typeof (tag = tryGet$2(O = Object(it), TO_STRING_TAG$8)) == 'string' ? tag // builtinTag case
+  : typeof (tag = tryGet$2(O = Object(it), TO_STRING_TAG$1$1)) == 'string' ? tag // builtinTag case
   : CORRECT_ARGUMENTS$2 ? classofRaw$2(O) // ES3 arguments fallback
   : (result = classofRaw$2(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
 };
 
-var TO_STRING_TAG$1$1 = wellKnownSymbol$2('toStringTag');
-var test$2 = {};
-test$2[TO_STRING_TAG$1$1] = 'z'; // `Object.prototype.toString` method implementation
 // https://tc39.github.io/ecma262/#sec-object.prototype.tostring
 
-var objectToString$2 = String(test$2) !== '[object z]' ? function toString() {
+
+var objectToString$2 = toStringTagSupport$2 ? {}.toString : function toString() {
   return '[object ' + classof$2(this) + ']';
-} : test$2.toString;
+};
 
 var defineProperty$2$1 = objectDefineProperty$2.f;
 var TO_STRING_TAG$2$1 = wellKnownSymbol$2('toStringTag');
-var METHOD_REQUIRED$1 = objectToString$2 !== {}.toString;
 
 var setToStringTag$2 = function (it, TAG, STATIC, SET_METHOD) {
   if (it) {
@@ -13036,7 +13131,7 @@ var setToStringTag$2 = function (it, TAG, STATIC, SET_METHOD) {
       });
     }
 
-    if (SET_METHOD && METHOD_REQUIRED$1) {
+    if (SET_METHOD && !toStringTagSupport$2) {
       createNonEnumerableProperty$2(target, 'toString', objectToString$2);
     }
   }
@@ -13530,7 +13625,7 @@ var AllSymbols$1 = shared$2('symbols');
 var ObjectPrototypeSymbols$1 = shared$2('op-symbols');
 var StringToSymbolRegistry$1 = shared$2('string-to-symbol-registry');
 var SymbolToStringRegistry$1 = shared$2('symbol-to-string-registry');
-var WellKnownSymbolsStore$2 = shared$2('wks');
+var WellKnownSymbolsStore$1$1 = shared$2('wks');
 var QObject$1 = global_1$2.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 
 var USE_SETTER$1 = !QObject$1 || !QObject$1[PROTOTYPE$1$1] || !QObject$1[PROTOTYPE$1$1].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
@@ -13687,7 +13782,9 @@ if (!nativeSymbol$2) {
       }
     });
   }
+}
 
+if (!useSymbolAsUid$2) {
   wrappedWellKnownSymbol$1.f = function (name) {
     return wrap$2(wellKnownSymbol$2(name), name);
   };
@@ -13701,7 +13798,7 @@ _export$2({
 }, {
   Symbol: $Symbol$1
 });
-$forEach$1$1(objectKeys$2(WellKnownSymbolsStore$2), function (name) {
+$forEach$1$1(objectKeys$2(WellKnownSymbolsStore$1$1), function (name) {
   defineWellKnownSymbol$1(name);
 });
 _export$2({
@@ -14766,7 +14863,7 @@ var getIteratorMethod$2 = function (it) {
   if (it != undefined) return it[ITERATOR$2$1] || it['@@iterator'] || iterators$2[classof$2(it)];
 };
 
-var getIterator$5 = function (it) {
+var getIterator$4 = function (it) {
   var iteratorMethod = getIteratorMethod$2(it);
 
   if (typeof iteratorMethod != 'function') {
@@ -14776,12 +14873,12 @@ var getIterator$5 = function (it) {
   return anObject$2(iteratorMethod.call(it));
 };
 
-var getIterator$1$1 = getIterator$5;
+var getIterator_1$2 = getIterator$4;
 
-var getIterator$2$1 = getIterator$1$1;
+var getIterator$1$1 = getIterator_1$2;
 
-var nativeSort = [].sort;
-var test$1$1 = [1, 2, 3]; // IE8-
+var test$1$1 = [];
+var nativeSort = test$1$1.sort; // IE8-
 
 var FAILS_ON_UNDEFINED = fails$2(function () {
   test$1$1.sort(undefined);
@@ -15058,18 +15155,18 @@ var from_1$2$1 = from_1$1$1;
 
 var ITERATOR$5$1 = wellKnownSymbol$2('iterator');
 
-var isIterable$3 = function (it) {
+var isIterable$2 = function (it) {
   var O = Object(it);
   return O[ITERATOR$5$1] !== undefined || '@@iterator' in O // eslint-disable-next-line no-prototype-builtins
   || iterators$2.hasOwnProperty(classof$2(O));
 };
 
-var isIterable$1$1 = isIterable$3;
+var isIterable_1$1 = isIterable$2;
 
-var isIterable$2$1 = isIterable$1$1;
+var isIterable$1$1 = isIterable_1$1;
 
 function _iterableToArray$1(iter) {
-  if (isIterable$2$1(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_1$2$1(iter);
+  if (isIterable$1$1(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return from_1$2$1(iter);
 }
 
 var iterableToArray$1 = _iterableToArray$1;
@@ -15127,14 +15224,24 @@ var arrayMethodHasSpeciesSupport$2 = function (METHOD_NAME) {
   });
 };
 
-var $filter$1 = arrayIteration$2.filter; // `Array.prototype.filter` method
+var $filter$1 = arrayIteration$2.filter;
+var HAS_SPECIES_SUPPORT$3 = arrayMethodHasSpeciesSupport$2('filter'); // Edge 14- issue
+
+var USES_TO_LENGTH$3 = HAS_SPECIES_SUPPORT$3 && !fails$2(function () {
+  [].filter.call({
+    length: -1,
+    0: 1
+  }, function (it) {
+    throw it;
+  });
+}); // `Array.prototype.filter` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.filter
 // with adding support of @@species
 
 _export$2({
   target: 'Array',
   proto: true,
-  forced: !arrayMethodHasSpeciesSupport$2('filter')
+  forced: !HAS_SPECIES_SUPPORT$3 || !USES_TO_LENGTH$3
 }, {
   filter: function filter(callbackfn
   /* , thisArg */
@@ -15223,11 +15330,26 @@ var concat$1$1 = concat_1$1;
 
 var concat$2$1 = concat$1$1;
 
-var nativeAssign$1 = Object.assign; // `Object.assign` method
+var nativeAssign$1 = Object.assign;
+var defineProperty$7$1 = Object.defineProperty; // `Object.assign` method
 // https://tc39.github.io/ecma262/#sec-object.assign
-// should work with symbols and should have deterministic property order (V8 bug)
 
 var objectAssign$1 = !nativeAssign$1 || fails$2(function () {
+  // should have correct order of operations (Edge bug)
+  if (descriptors$2 && nativeAssign$1({
+    b: 1
+  }, nativeAssign$1(defineProperty$7$1({}, 'a', {
+    enumerable: true,
+    get: function () {
+      defineProperty$7$1(this, 'b', {
+        value: 3,
+        enumerable: false
+      });
+    }
+  }), {
+    b: 2
+  })).b !== 1) return true; // should work with symbols and should have deterministic property order (V8 bug)
+
   var A = {};
   var B = {}; // eslint-disable-next-line no-undef
 
@@ -15306,14 +15428,24 @@ var some$1$1 = some_1$1;
 
 var some$2$1 = some$1$1;
 
-var $map$2 = arrayIteration$2.map; // `Array.prototype.map` method
+var $map$2 = arrayIteration$2.map;
+var HAS_SPECIES_SUPPORT$1$1 = arrayMethodHasSpeciesSupport$2('map'); // FF49- issue
+
+var USES_TO_LENGTH$1$1 = HAS_SPECIES_SUPPORT$1$1 && !fails$2(function () {
+  [].map.call({
+    length: -1,
+    0: 1
+  }, function (it) {
+    throw it;
+  });
+}); // `Array.prototype.map` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.map
 // with adding support of @@species
 
 _export$2({
   target: 'Array',
   proto: true,
-  forced: !arrayMethodHasSpeciesSupport$2('map')
+  forced: !HAS_SPECIES_SUPPORT$1$1 || !USES_TO_LENGTH$1$1
 }, {
   map: function map(callbackfn
   /* , thisArg */
@@ -15413,7 +15545,7 @@ defineWellKnownSymbol$1('patternMatch');
 
 defineWellKnownSymbol$1('replaceAll');
 
-var symbol$1$1 = symbol$3; // TODO: Remove from `core-js@4`
+var symbol$1$1 = symbol$3;
 
 var symbol$2$1 = symbol$1$1;
 
@@ -15593,15 +15725,17 @@ var anInstance = function (it, Constructor, name) {
   return it;
 };
 
-var defineProperty$7$1 = objectDefineProperty$2.f;
+var defineProperty$8$1 = objectDefineProperty$2.f;
 var forEach$3$1 = arrayIteration$2.forEach;
 var setInternalState$3$1 = internalState$2.set;
 var internalStateGetterFor = internalState$2.getterFor;
 
-var collection = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
+var collection = function (CONSTRUCTOR_NAME, wrapper, common) {
+  var IS_MAP = CONSTRUCTOR_NAME.indexOf('Map') !== -1;
+  var IS_WEAK = CONSTRUCTOR_NAME.indexOf('Weak') !== -1;
+  var ADDER = IS_MAP ? 'set' : 'add';
   var NativeConstructor = global_1$2[CONSTRUCTOR_NAME];
   var NativePrototype = NativeConstructor && NativeConstructor.prototype;
-  var ADDER = IS_MAP ? 'set' : 'add';
   var exported = {};
   var Constructor;
 
@@ -15632,7 +15766,8 @@ var collection = function (CONSTRUCTOR_NAME, wrapper, common, IS_MAP, IS_WEAK) {
         });
       }
     });
-    IS_WEAK || defineProperty$7$1(Constructor.prototype, 'size', {
+    IS_WEAK || defineProperty$8$1(Constructor.prototype, 'size', {
+      configurable: true,
       get: function () {
         return getInternalState(this).collection.size;
       }
@@ -15673,7 +15808,7 @@ var setSpecies = function (CONSTRUCTOR_NAME) {
   }
 };
 
-var defineProperty$8$1 = objectDefineProperty$2.f;
+var defineProperty$9$1 = objectDefineProperty$2.f;
 var fastKey = internalMetadata.fastKey;
 var setInternalState$4$1 = internalState$2.set;
 var internalStateGetterFor$1 = internalState$2.getterFor;
@@ -15808,7 +15943,7 @@ var collectionStrong = {
         return define(this, value = value === 0 ? 0 : value, value);
       }
     });
-    if (descriptors$2) defineProperty$8$1(C.prototype, 'size', {
+    if (descriptors$2) defineProperty$9$1(C.prototype, 'size', {
       get: function () {
         return getInternalState(this).size;
       }
@@ -15868,11 +16003,11 @@ var collectionStrong = {
 // https://tc39.github.io/ecma262/#sec-map-objects
 
 
-var es_map = collection('Map', function (get) {
+var es_map = collection('Map', function (init) {
   return function Map() {
-    return get(this, arguments.length ? arguments[0] : undefined);
+    return init(this, arguments.length ? arguments[0] : undefined);
   };
-}, collectionStrong, true);
+}, collectionStrong);
 
 var map$3$1 = path$2.Map;
 
@@ -16154,10 +16289,6 @@ function uuid4$1() {
 } // Rollup will complain about mixing default and named exports in UMD build,
 
 var commonjsGlobal$1$1 = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function commonjsRequire() {
-  throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
-}
 
 function createCommonjsModule$1$1(fn, module) {
   return module = {
@@ -16732,8 +16863,8 @@ var setGlobal$1$1 = function (key, value) {
 };
 
 var SHARED$1$1 = '__core-js_shared__';
-var store$3$1 = global_1$1$1[SHARED$1$1] || setGlobal$1$1(SHARED$1$1, {});
-var sharedStore$1$1 = store$3$1;
+var store$2$1 = global_1$1$1[SHARED$1$1] || setGlobal$1$1(SHARED$1$1, {});
+var sharedStore$1$1 = store$2$1;
 var shared$1$1 = createCommonjsModule$1$1(function (module) {
   (module.exports = function (key, value) {
     return sharedStore$1$1[key] || (sharedStore$1$1[key] = value !== undefined ? value : {});
@@ -16882,7 +17013,7 @@ var objectToString$1$1 = String(test$2$1) !== '[object z]' ? function toString()
 } : test$2$1.toString;
 var defineProperty$3$1$1 = objectDefineProperty$1$1.f;
 var TO_STRING_TAG$2$1$1 = wellKnownSymbol$1$1('toStringTag');
-var METHOD_REQUIRED$1$1 = objectToString$1$1 !== {}.toString;
+var METHOD_REQUIRED = objectToString$1$1 !== {}.toString;
 
 var setToStringTag$1$1 = function (it, TAG, STATIC, SET_METHOD) {
   if (it) {
@@ -16895,7 +17026,7 @@ var setToStringTag$1$1 = function (it, TAG, STATIC, SET_METHOD) {
       });
     }
 
-    if (SET_METHOD && METHOD_REQUIRED$1$1) {
+    if (SET_METHOD && METHOD_REQUIRED) {
       createNonEnumerableProperty$1$1(target, 'toString', objectToString$1$1);
     }
   }
@@ -17074,7 +17205,7 @@ var AllSymbols$1$1 = shared$1$1('symbols');
 var ObjectPrototypeSymbols$1$1 = shared$1$1('op-symbols');
 var StringToSymbolRegistry$1$1 = shared$1$1('string-to-symbol-registry');
 var SymbolToStringRegistry$1$1 = shared$1$1('symbol-to-string-registry');
-var WellKnownSymbolsStore$1$1 = shared$1$1('wks');
+var WellKnownSymbolsStore$2$1 = shared$1$1('wks');
 var QObject$1$1 = global_1$1$1.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 
 var USE_SETTER$1$1 = !QObject$1$1 || !QObject$1$1[PROTOTYPE$1$1$1] || !QObject$1$1[PROTOTYPE$1$1$1].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
@@ -17246,7 +17377,7 @@ _export$1$1({
   Symbol: $Symbol$1$1
 });
 
-$forEach$2$1(objectKeys$1$1(WellKnownSymbolsStore$1$1), function (name) {
+$forEach$2$1(objectKeys$1$1(WellKnownSymbolsStore$2$1), function (name) {
   defineWellKnownSymbol$1$1(name);
 });
 
@@ -17745,8 +17876,6 @@ _export$1$1({
 });
 
 var keys$1$1$1 = path$1$1.Object.keys;
-var keys$2$1$1 = keys$1$1$1;
-var keys$3$1$1 = keys$2$1$1; // a string of all valid unicode whitespaces
 // eslint-disable-next-line max-len
 
 var whitespaces$1 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
@@ -17831,20 +17960,6 @@ _export$1$1({
 });
 
 var forEach$4$1 = entryVirtual$1$1('Array').forEach;
-var forEach$1$1$1 = forEach$4$1;
-var ArrayPrototype$b$1 = Array.prototype;
-var DOMIterables$4 = {
-  DOMTokenList: true,
-  NodeList: true
-};
-
-var forEach_1$1$1 = function (it) {
-  var own = it.forEach;
-  return it === ArrayPrototype$b$1 || it instanceof Array && own === ArrayPrototype$b$1.forEach // eslint-disable-next-line no-prototype-builtins
-  || DOMIterables$4.hasOwnProperty(classof$1$1(it)) ? forEach$1$1$1 : own;
-};
-
-var forEach$2$1$1 = forEach_1$1$1;
 var userAgent$1$1 = getBuiltIn$1$1('navigator', 'userAgent') || '';
 var process$1$1 = global_1$1$1.process;
 var versions$1$1 = process$1$1 && process$1$1.versions;
@@ -17920,10 +18035,6 @@ _export$1$1({
 }, {
   parseInt: _parseInt$4
 });
-
-var _parseInt$1$1 = path$1$1.parseInt;
-var _parseInt$2$1 = _parseInt$1$1;
-var _parseInt$3$1 = _parseInt$2$1;
 var propertyIsEnumerable$1 = objectPropertyIsEnumerable$1$1.f; // `Object.{ entries, values }` methods implementation
 
 var createMethod$4$1$1 = function (TO_ENTRIES) {
@@ -18040,15 +18151,6 @@ _export$1$1({
 });
 
 var concat$3$1 = entryVirtual$1$1('Array').concat;
-var ArrayPrototype$3$1$1 = Array.prototype;
-
-var concat_1$1$1 = function (it) {
-  var own = it.concat;
-  return it === ArrayPrototype$3$1$1 || it instanceof Array && own === ArrayPrototype$3$1$1.concat ? concat$3$1 : own;
-};
-
-var concat$1$1$1 = concat_1$1$1;
-var concat$2$1$1 = concat$1$1$1; // `Array.isArray` method
 // https://tc39.github.io/ecma262/#sec-array.isarray
 
 _export$1$1({
@@ -18273,15 +18375,6 @@ _export$1$1({
 });
 
 var indexOf$1$1$1 = entryVirtual$1$1('Array').indexOf;
-var ArrayPrototype$6$1$1 = Array.prototype;
-
-var indexOf_1$2 = function (it) {
-  var own = it.indexOf;
-  return it === ArrayPrototype$6$1$1 || it instanceof Array && own === ArrayPrototype$6$1$1.indexOf ? indexOf$1$1$1 : own;
-};
-
-var indexOf$2$1 = indexOf_1$2;
-var indexOf$3$1 = indexOf$2$1;
 var isArray$4$1$1 = isArray$1$1$1;
 var isArray$5$1$1 = isArray$4$1$1;
 var nativeAssign$1$1 = Object.assign; // `Object.assign` method
@@ -18428,150 +18521,232 @@ var _typeof_1$1$1 = createCommonjsModule$1$1(function (module) {
   }
 
   module.exports = _typeof;
-});
-
-var trim$4$1 = stringTrim$1.trim;
-var nativeParseFloat = global_1$1$1.parseFloat;
-var FORCED$3$1$1 = 1 / nativeParseFloat(whitespaces$1 + '-0') !== -Infinity; // `parseFloat` method
-// https://tc39.github.io/ecma262/#sec-parsefloat-string
-
-var _parseFloat = FORCED$3$1$1 ? function parseFloat(string) {
-  var trimmedString = trim$4$1(String(string));
-  var result = nativeParseFloat(trimmedString);
-  return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
-} : nativeParseFloat; // `parseFloat` method
-// https://tc39.github.io/ecma262/#sec-parsefloat-string
+}); // Maps for number <-> hex string conversion
 
 
-_export$1$1({
-  global: true,
-  forced: parseFloat != _parseFloat
-}, {
-  parseFloat: _parseFloat
-});
+var byteToHex$2$1 = [];
 
-var _parseFloat$1 = path$1$1.parseFloat;
-var _parseFloat$2 = _parseFloat$1;
-var _parseFloat$3 = _parseFloat$2; // `Date.now` method
-// https://tc39.github.io/ecma262/#sec-date.now
+for (var i$2$1 = 0; i$2$1 < 256; i$2$1++) {
+  byteToHex$2$1[i$2$1] = (i$2$1 + 0x100).toString(16).substr(1);
+}
+/**
+ * Generate 16 random bytes to be used as a base for UUID.
+ *
+ * @ignore
+ */
 
-_export$1$1({
-  target: 'Date',
-  stat: true
-}, {
-  now: function now() {
-    return new Date().getTime();
+
+var random$1$1 = function () {
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
+    // Moderately fast, high quality
+    var _rnds8 = new Uint8Array(16);
+
+    return function whatwgRNG() {
+      crypto.getRandomValues(_rnds8);
+      return _rnds8;
+    };
+  } // Math.random()-based (RNG)
+  //
+  // If all else fails, use Math.random().
+  // It's fast, but is of unspecified quality.
+
+
+  var _rnds = new Array(16);
+
+  return function () {
+    for (var i = 0, r; i < 16; i++) {
+      if ((i & 0x03) === 0) {
+        r = Math.random() * 0x100000000;
+      }
+
+      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+    }
+
+    return _rnds;
+  }; //     uuid.js
+  //
+  //     Copyright (c) 2010-2012 Robert Kieffer
+  //     MIT License - http://opensource.org/licenses/mit-license.php
+  // Unique ID creation requires a high quality random # generator.  We feature
+  // detect to determine the best RNG source, normalizing to a function that
+  // returns 128-bits of randomness, since that's what's usually required
+  // return require('./rng');
+}();
+
+var byteToHex$1$1$1 = [];
+
+for (var i$1$1$1 = 0; i$1$1$1 < 256; i$1$1$1++) {
+  byteToHex$1$1$1[i$1$1$1] = (i$1$1$1 + 0x100).toString(16).substr(1);
+} // **`v1()` - Generate time-based UUID**
+//
+// Inspired by https://github.com/LiosK/UUID.js
+// and http://docs.python.org/library/uuid.html
+// random #'s we need to init node and clockseq
+
+
+var seedBytes$1$1 = random$1$1(); // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+
+var defaultNodeId$1$1 = [seedBytes$1$1[0] | 0x01, seedBytes$1$1[1], seedBytes$1$1[2], seedBytes$1$1[3], seedBytes$1$1[4], seedBytes$1$1[5]]; // Per 4.2.2, randomize (14 bit) clockseq
+
+var defaultClockseq$1$1 = (seedBytes$1$1[6] << 8 | seedBytes$1$1[7]) & 0x3fff; // Previous uuid creation time
+/**
+ * Hue, Saturation, Value.
+ */
+
+/**
+ * Test whether given object is a number
+ *
+ * @param value - Input value of unknown type.
+ *
+ * @returns True if number, false otherwise.
+ */
+
+function isNumber$1(value) {
+  return value instanceof Number || typeof value === "number";
+}
+/**
+ * Test whether given object is a string
+ *
+ * @param value - Input value of unknown type.
+ *
+ * @returns True if string, false otherwise.
+ */
+
+
+function isString$1(value) {
+  return value instanceof String || typeof value === "string";
+}
+/**
+ * Copy property from b to a if property present in a.
+ * If property in b explicitly set to null, delete it if `allowDeletion` set.
+ *
+ * Internal helper routine, should not be exported. Not added to `exports` for that reason.
+ *
+ * @param a - Target object.
+ * @param b - Source object.
+ * @param prop - Name of property to copy from b to a.
+ * @param allowDeletion  if true, delete property in a if explicitly set to null in b
+ */
+
+
+function copyOrDelete$1(a, b, prop, allowDeletion) {
+  var doDeletion = false;
+
+  if (allowDeletion === true) {
+    doDeletion = b[prop] === null && a[prop] !== undefined;
   }
-});
 
-var now$1 = path$1$1.Date.now;
-var now$1$1 = now$1;
-var now$2 = now$1$1;
-var test$1$1$1 = [];
-var nativeSort$1 = test$1$1$1.sort; // IE8-
-
-var FAILS_ON_UNDEFINED$1 = fails$1$1(function () {
-  test$1$1$1.sort(undefined);
-}); // V8 bug
-
-var FAILS_ON_NULL$1 = fails$1$1(function () {
-  test$1$1$1.sort(null);
-}); // Old WebKit
-
-var SLOPPY_METHOD$1$1$1 = sloppyArrayMethod$1$1('sort');
-var FORCED$4$1 = FAILS_ON_UNDEFINED$1 || !FAILS_ON_NULL$1 || SLOPPY_METHOD$1$1$1; // `Array.prototype.sort` method
-// https://tc39.github.io/ecma262/#sec-array.prototype.sort
-
-_export$1$1({
-  target: 'Array',
-  proto: true,
-  forced: FORCED$4$1
-}, {
-  sort: function sort(comparefn) {
-    return comparefn === undefined ? nativeSort$1.call(toObject$1$1(this)) : nativeSort$1.call(toObject$1$1(this), aFunction$2$1(comparefn));
+  if (doDeletion) {
+    delete a[prop];
+  } else {
+    a[prop] = b[prop]; // Remember, this is a reference copy!
   }
-});
+}
+/**
+ * Deep extend an object a with the properties of object b
+ *
+ * @param a - Target object.
+ * @param b - Source object.
+ * @param protoExtend - If true, the prototype values will also be extended
+ * (ie. the options objects that inherit from others will also get the inherited options).
+ * @param allowDeletion - If true, the values of fields that are null will be deleted.
+ *
+ * @returns Argument a.
+ */
 
-var sort$3 = entryVirtual$1$1('Array').sort;
-var ArrayPrototype$7$1$1 = Array.prototype;
 
-var sort_1$1 = function (it) {
-  var own = it.sort;
-  return it === ArrayPrototype$7$1$1 || it instanceof Array && own === ArrayPrototype$7$1$1.sort ? sort$3 : own;
-};
+function deepExtend$1(a, b) {
+  var protoExtend = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var allowDeletion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
-var sort$1$1 = sort_1$1;
-var sort$2$1 = sort$1$1;
-var nativeIsFrozen = Object.isFrozen;
-var FAILS_ON_PRIMITIVES$3$1$1 = fails$1$1(function () {
-  nativeIsFrozen(1);
-}); // `Object.isFrozen` method
-// https://tc39.github.io/ecma262/#sec-object.isfrozen
+  for (var prop in b) {
+    if (Object.prototype.hasOwnProperty.call(b, prop) || protoExtend === true) {
+      if (_typeof_1$1$1(b[prop]) === "object" && b[prop] !== null && getPrototypeOf$2$1$1(b[prop]) === Object.prototype) {
+        if (a[prop] === undefined) {
+          a[prop] = deepExtend$1({}, b[prop], protoExtend); // NOTE: allowDeletion not propagated!
+        } else if (_typeof_1$1$1(a[prop]) === "object" && a[prop] !== null && getPrototypeOf$2$1$1(a[prop]) === Object.prototype) {
+          deepExtend$1(a[prop], b[prop], protoExtend); // NOTE: allowDeletion not propagated!
+        } else {
+          copyOrDelete$1(a, b, prop, allowDeletion);
+        }
+      } else if (isArray$5$1$1(b[prop])) {
+        var _context;
 
-_export$1$1({
-  target: 'Object',
-  stat: true,
-  forced: FAILS_ON_PRIMITIVES$3$1$1
-}, {
-  isFrozen: function isFrozen(it) {
-    return isObject$1$2(it) ? nativeIsFrozen ? nativeIsFrozen(it) : false : true;
+        a[prop] = slice$2$1(_context = b[prop]).call(_context);
+      } else {
+        copyOrDelete$1(a, b, prop, allowDeletion);
+      }
+    }
   }
-});
 
-var isFrozen = path$1$1.Object.isFrozen;
-var isFrozen$1 = isFrozen;
-var isFrozen$2 = isFrozen$1;
-var $some$1$1 = arrayIteration$1$1.some; // `Array.prototype.some` method
-// https://tc39.github.io/ecma262/#sec-array.prototype.some
+  return a;
+}
+/**
+ * Get the type of an object, for example exports.getType([]) returns 'Array'
+ *
+ * @param object - Input value of unknown type.
+ *
+ * @returns Detected type.
+ */
 
-_export$1$1({
-  target: 'Array',
-  proto: true,
-  forced: sloppyArrayMethod$1$1('some')
-}, {
-  some: function some(callbackfn
-  /* , thisArg */
-  ) {
-    return $some$1$1(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+
+function getType$1(object) {
+  var type = _typeof_1$1$1(object);
+
+  if (type === "object") {
+    if (object === null) {
+      return "null";
+    }
+
+    if (object instanceof Boolean) {
+      return "Boolean";
+    }
+
+    if (object instanceof Number) {
+      return "Number";
+    }
+
+    if (object instanceof String) {
+      return "String";
+    }
+
+    if (isArray$5$1$1(object)) {
+      return "Array";
+    }
+
+    if (object instanceof Date) {
+      return "Date";
+    }
+
+    return "Object";
   }
-});
 
-var some$3$1 = entryVirtual$1$1('Array').some;
-var ArrayPrototype$8$1$1 = Array.prototype;
+  if (type === "number") {
+    return "Number";
+  }
 
-var some_1$1$1 = function (it) {
-  var own = it.some;
-  return it === ArrayPrototype$8$1$1 || it instanceof Array && own === ArrayPrototype$8$1$1.some ? some$3$1 : own;
-};
+  if (type === "boolean") {
+    return "Boolean";
+  }
 
-var some$1$1$1 = some_1$1$1;
-var some$2$1$1 = some$1$1$1;
-var nativeGetOwnPropertyNames$2$1$1 = objectGetOwnPropertyNamesExternal$1$1.f;
-var FAILS_ON_PRIMITIVES$4 = fails$1$1(function () {
-  return !Object.getOwnPropertyNames(1);
-}); // `Object.getOwnPropertyNames` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+  if (type === "string") {
+    return "String";
+  }
 
-_export$1$1({
-  target: 'Object',
-  stat: true,
-  forced: FAILS_ON_PRIMITIVES$4
-}, {
-  getOwnPropertyNames: nativeGetOwnPropertyNames$2$1$1
-});
+  if (type === undefined) {
+    return "undefined";
+  }
 
-var Object$2$1 = path$1$1.Object;
+  return type;
+}
 
-var getOwnPropertyNames = function getOwnPropertyNames(it) {
-  return Object$2$1.getOwnPropertyNames(it);
-};
+var moment = createCommonjsModule$2(function (module, exports) {
 
-var getOwnPropertyNames$1 = getOwnPropertyNames;
-var getOwnPropertyNames$2 = getOwnPropertyNames$1;
-var moment = createCommonjsModule$1$1(function (module, exports) {
   (function (global, factory) {
-    module.exports = factory();
-  })(commonjsGlobal$1$1, function () {
+     module.exports = factory() ;
+  })(commonjsGlobal$2, function () {
+
     var hookCallback;
 
     function hooks() {
@@ -18595,8 +18770,8 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
     }
 
     function isObjectEmpty(obj) {
-      if (getOwnPropertyNames$2) {
-        return getOwnPropertyNames$2(obj).length === 0;
+      if (Object.getOwnPropertyNames) {
+        return Object.getOwnPropertyNames(obj).length === 0;
       } else {
         var k;
 
@@ -18689,10 +18864,10 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
     var some;
 
-    if (some$2$1$1(Array.prototype)) {
-      some = some$2$1$1(Array.prototype);
+    if (Array.prototype.some) {
+      some = Array.prototype.some;
     } else {
-      some = function some(fun) {
+      some = function (fun) {
         var t = Object(this);
         var len = t.length >>> 0;
 
@@ -18718,7 +18893,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
           isNowValid = isNowValid && flags.charsLeftOver === 0 && flags.unusedTokens.length === 0 && flags.bigHour === undefined;
         }
 
-        if (isFrozen$2 == null || !isFrozen$2(m)) {
+        if (Object.isFrozen == null || !Object.isFrozen(m)) {
           m._isValid = isNowValid;
         } else {
           return isNowValid;
@@ -18880,14 +19055,14 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
           for (var i = 0; i < arguments.length; i++) {
             arg = '';
 
-            if (_typeof_1$1$1(arguments[i]) === 'object') {
+            if (typeof arguments[i] === 'object') {
               arg += '\n[' + i + '] ';
 
               for (var key in arguments[0]) {
                 arg += key + ': ' + arguments[0][key] + ', ';
               }
 
-              arg = slice$2$1(arg).call(arg, 0, -2); // Remove trailing comma and space
+              arg = arg.slice(0, -2); // Remove trailing comma and space
             } else {
               arg = arguments[i];
             }
@@ -18895,7 +19070,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
             args.push(arg);
           }
 
-          warn(msg + '\nArguments: ' + slice$2$1(Array.prototype).call(args).join('') + '\n' + new Error().stack);
+          warn(msg + '\nArguments: ' + Array.prototype.slice.call(args).join('') + '\n' + new Error().stack);
           firstTime = false;
         }
 
@@ -18979,10 +19154,10 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
     var keys;
 
-    if (keys$3$1$1) {
-      keys = keys$3$1$1;
+    if (Object.keys) {
+      keys = Object.keys;
     } else {
-      keys = function keys(obj) {
+      keys = function (obj) {
         var i,
             res = [];
 
@@ -19028,7 +19203,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       }
 
       this._longDateFormat[key] = formatUpper.replace(/MMMM|MM|DD|dddd/g, function (val) {
-        return slice$2$1(val).call(val, 1);
+        return val.slice(1);
       });
       return this._longDateFormat[key];
     }
@@ -19118,7 +19293,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
         });
       }
 
-      sort$2$1(units).call(units, function (a, b) {
+      units.sort(function (a, b) {
         return a.priority - b.priority;
       });
       return units;
@@ -19143,7 +19318,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       var func = callback;
 
       if (typeof callback === 'string') {
-        func = function func() {
+        func = function () {
           return this[callback]();
         };
       }
@@ -19300,7 +19475,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       }
 
       if (isNumber(callback)) {
-        func = function func(input, array) {
+        func = function (input, array) {
           array[callback] = toInt(input);
         };
       }
@@ -19361,7 +19536,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       array[YEAR] = hooks.parseTwoDigitYear(input);
     });
     addParseToken('Y', function (input, array) {
-      array[YEAR] = _parseInt$3$1(input, 10);
+      array[YEAR] = parseInt(input, 10);
     }); // HELPERS
 
     function daysInYear(year) {
@@ -19422,7 +19597,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
     }
 
     function stringSet(units, value) {
-      if (_typeof_1$1$1(units) === 'object') {
+      if (typeof units === 'object') {
         units = normalizeObjectUnits(units);
         var prioritized = getPrioritizedUnits(units);
 
@@ -19446,10 +19621,10 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
     var indexOf;
 
-    if (indexOf$3$1(Array.prototype)) {
-      indexOf = indexOf$3$1(Array.prototype);
+    if (Array.prototype.indexOf) {
+      indexOf = Array.prototype.indexOf;
     } else {
-      indexOf = function indexOf(o) {
+      indexOf = function (o) {
         // I know
         var i;
 
@@ -19730,9 +19905,9 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       // will match the longer piece.
 
 
-      sort$2$1(shortPieces).call(shortPieces, cmpLenRev);
-      sort$2$1(longPieces).call(longPieces, cmpLenRev);
-      sort$2$1(mixedPieces).call(mixedPieces, cmpLenRev);
+      shortPieces.sort(cmpLenRev);
+      longPieces.sort(cmpLenRev);
+      mixedPieces.sort(cmpLenRev);
 
       for (i = 0; i < 12; i++) {
         shortPieces[i] = regexEscape(shortPieces[i]);
@@ -19772,7 +19947,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       var date; // the Date.UTC function remaps years 0-99 to 1900-1999
 
       if (y < 100 && y >= 0) {
-        var args = slice$2$1(Array.prototype).call(arguments); // preserve leap years using a full 400 year cycle, then reset
+        var args = Array.prototype.slice.call(arguments); // preserve leap years using a full 400 year cycle, then reset
 
         args[0] = y + 400;
         date = new Date(Date.UTC.apply(null, args));
@@ -19953,7 +20128,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       }
 
       if (!isNaN(input)) {
-        return _parseInt$3$1(input, 10);
+        return parseInt(input, 10);
       }
 
       input = locale.weekdaysParse(input);
@@ -19975,9 +20150,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
 
     function shiftWeekdays(ws, n) {
-      var _context;
-
-      return concat$2$1$1(_context = slice$2$1(ws).call(ws, n, 7)).call(_context, slice$2$1(ws).call(ws, 0, n));
+      return ws.slice(n, 7).concat(ws.slice(0, n));
     }
 
     var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
@@ -20259,10 +20432,10 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       // will match the longer piece.
 
 
-      sort$2$1(minPieces).call(minPieces, cmpLenRev);
-      sort$2$1(shortPieces).call(shortPieces, cmpLenRev);
-      sort$2$1(longPieces).call(longPieces, cmpLenRev);
-      sort$2$1(mixedPieces).call(mixedPieces, cmpLenRev);
+      minPieces.sort(cmpLenRev);
+      shortPieces.sort(cmpLenRev);
+      longPieces.sort(cmpLenRev);
+      mixedPieces.sort(cmpLenRev);
 
       for (i = 0; i < 7; i++) {
         shortPieces[i] = regexEscape(shortPieces[i]);
@@ -20435,7 +20608,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
         next = next ? next.split('-') : null;
 
         while (j > 0) {
-          locale = loadLocale(slice$2$1(split).call(split, 0, j).join('-'));
+          locale = loadLocale(split.slice(0, j).join('-'));
 
           if (locale) {
             return locale;
@@ -20531,9 +20704,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
         locales[name] = new Locale(mergeConfigs(parentConfig, config));
 
         if (localeFamilies[name]) {
-          var _context2;
-
-          forEach$2$1$1(_context2 = localeFamilies[name]).call(_context2, function (x) {
+          localeFamilies[name].forEach(function (x) {
             defineLocale(x.name, x.config);
           });
         } // backwards compat for now: also set the locale
@@ -20868,17 +21039,17 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
     var rfc2822 = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/;
 
     function extractFromRFC2822Strings(yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr) {
-      var result = [untruncateYear(yearStr), indexOf$3$1(defaultLocaleMonthsShort).call(defaultLocaleMonthsShort, monthStr), _parseInt$3$1(dayStr, 10), _parseInt$3$1(hourStr, 10), _parseInt$3$1(minuteStr, 10)];
+      var result = [untruncateYear(yearStr), defaultLocaleMonthsShort.indexOf(monthStr), parseInt(dayStr, 10), parseInt(hourStr, 10), parseInt(minuteStr, 10)];
 
       if (secondStr) {
-        result.push(_parseInt$3$1(secondStr, 10));
+        result.push(parseInt(secondStr, 10));
       }
 
       return result;
     }
 
     function untruncateYear(yearStr) {
-      var year = _parseInt$3$1(yearStr, 10);
+      var year = parseInt(yearStr, 10);
 
       if (year <= 49) {
         return 2000 + year;
@@ -20897,7 +21068,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
     function checkWeekday(weekdayStr, parsedInput, config) {
       if (weekdayStr) {
         // TODO: Replace the vanilla JS Date object with an indepentent day-of-week check.
-        var weekdayProvided = indexOf$3$1(defaultLocaleWeekdaysShort).call(defaultLocaleWeekdaysShort, weekdayStr),
+        var weekdayProvided = defaultLocaleWeekdaysShort.indexOf(weekdayStr),
             weekdayActual = new Date(parsedInput[0], parsedInput[1], parsedInput[2]).getDay();
 
         if (weekdayProvided !== weekdayActual) {
@@ -20930,8 +21101,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
         // the only allowed military tz is Z
         return 0;
       } else {
-        var hm = _parseInt$3$1(numOffset, 10);
-
+        var hm = parseInt(numOffset, 10);
         var m = hm % 100,
             h = (hm - m) / 100;
         return h * 60 + m;
@@ -21001,9 +21171,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
 
     function configFromStringAndFormat(config) {
-      var _context3; // TODO: Move this to another part of the creation flow to prevent circular deps
-
-
+      // TODO: Move this to another part of the creation flow to prevent circular deps
       if (config._f === hooks.ISO_8601) {
         configFromISO(config);
         return;
@@ -21033,13 +21201,13 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
         //         'regex', getParseRegexForToken(token, config));
 
         if (parsedInput) {
-          skipped = string.substr(0, indexOf$3$1(string).call(string, parsedInput));
+          skipped = string.substr(0, string.indexOf(parsedInput));
 
           if (skipped.length > 0) {
             getParsingFlags(config).unusedInput.push(skipped);
           }
 
-          string = slice$2$1(string).call(string, indexOf$3$1(string).call(string, parsedInput) + parsedInput.length);
+          string = string.slice(string.indexOf(parsedInput) + parsedInput.length);
           totalParsedInputLength += parsedInput.length;
         } // don't parse if it's not a known token
 
@@ -21069,7 +21237,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
         getParsingFlags(config).bigHour = undefined;
       }
 
-      getParsingFlags(config).parsedDateParts = slice$2$1(_context3 = config._a).call(_context3, 0);
+      getParsingFlags(config).parsedDateParts = config._a.slice(0);
       getParsingFlags(config).meridiem = config._meridiem; // handle meridiem
 
       config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR], config._meridiem);
@@ -21153,7 +21321,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
       var i = normalizeObjectUnits(config._i);
       config._a = map([i.year, i.month, i.day || i.date, i.hour, i.minute, i.second, i.millisecond], function (obj) {
-        return obj && _parseInt$3$1(obj, 10);
+        return obj && parseInt(obj, 10);
       });
       configFromArray(config);
     }
@@ -21214,8 +21382,8 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       } else if (typeof input === 'string') {
         configFromString(config);
       } else if (isArray(input)) {
-        config._a = map(slice$2$1(input).call(input, 0), function (obj) {
-          return _parseInt$3$1(obj, 10);
+        config._a = map(input.slice(0), function (obj) {
+          return parseInt(obj, 10);
         });
         configFromArray(config);
       } else if (isObject(input)) {
@@ -21302,17 +21470,17 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
 
     function min() {
-      var args = slice$2$1([]).call(arguments, 0);
+      var args = [].slice.call(arguments, 0);
       return pickBy('isBefore', args);
     }
 
     function max() {
-      var args = slice$2$1([]).call(arguments, 0);
+      var args = [].slice.call(arguments, 0);
       return pickBy('isAfter', args);
     }
 
-    var now = function now() {
-      return now$2 ? now$2() : +new Date();
+    var now = function () {
+      return Date.now ? Date.now() : +new Date();
     };
 
     var ordering = ['year', 'quarter', 'month', 'week', 'day', 'hour', 'minute', 'second', 'millisecond'];
@@ -21332,7 +21500,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
             return false; // only allow non-integers for smallest unit
           }
 
-          if (_parseFloat$3(m[ordering[i]]) !== toInt(m[ordering[i]])) {
+          if (parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) {
             unitHasDecimal = true;
           }
         }
@@ -21663,7 +21831,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       } else if (duration == null) {
         // checks for null or undefined
         duration = {};
-      } else if (_typeof_1$1$1(duration) === 'object' && ('from' in duration || 'to' in duration)) {
+      } else if (typeof duration === 'object' && ('from' in duration || 'to' in duration)) {
         diffRes = momentsDifference(createLocal(duration.from), createLocal(duration.to));
         duration = {};
         duration.ms = diffRes.milliseconds;
@@ -21686,8 +21854,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
       // We'd normally use ~~inp for this, but unfortunately it also
       // converts floats to ints.
       // inp may be undefined, so careful calling replace on it.
-      var res = inp && _parseFloat$3(inp.replace(',', '.')); // apply sign while we're at it
-
+      var res = inp && parseFloat(inp.replace(',', '.')); // apply sign while we're at it
 
       return (isNaN(res) ? 0 : res) * sign;
     }
@@ -22714,7 +22881,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
 
     getSetGlobalLocale('en', {
       dayOfMonthOrdinalParse: /\d{1,2}(th|st|nd|rd)/,
-      ordinal: function ordinal(number) {
+      ordinal: function (number) {
         var b = number % 10,
             output = toInt(number % 100 / 10) === 1 ? 'th' : b === 1 ? 'st' : b === 2 ? 'nd' : b === 3 ? 'rd' : 'th';
         return number + output;
@@ -23097,7 +23264,7 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
     addRegexToken('x', matchSigned);
     addRegexToken('X', matchTimestamp);
     addParseToken('X', function (input, array, config) {
-      config._d = new Date(_parseFloat$3(input, 10) * 1000);
+      config._d = new Date(parseFloat(input, 10) * 1000);
     });
     addParseToken('x', function (input, array, config) {
       config._d = new Date(toInt(input));
@@ -23155,182 +23322,23 @@ var moment = createCommonjsModule$1$1(function (module, exports) {
     };
     return hooks;
   });
-}); // Maps for number <-> hex string conversion
+});
 
-var byteToHex$2$1 = [];
-
-for (var i$2$1 = 0; i$2$1 < 256; i$2$1++) {
-  byteToHex$2$1[i$2$1] = (i$2$1 + 0x100).toString(16).substr(1);
-}
-/**
- * Generate 16 random bytes to be used as a base for UUID.
- *
- * @ignore
- */
-
-
-var random$1$1 = function () {
-  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
-    // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
-    // Moderately fast, high quality
-    var _rnds8 = new Uint8Array(16);
-
-    return function whatwgRNG() {
-      crypto.getRandomValues(_rnds8);
-      return _rnds8;
-    };
-  } // Math.random()-based (RNG)
-  //
-  // If all else fails, use Math.random().
-  // It's fast, but is of unspecified quality.
-
-
-  var _rnds = new Array(16);
-
-  return function () {
-    for (var i = 0, r; i < 16; i++) {
-      if ((i & 0x03) === 0) {
-        r = Math.random() * 0x100000000;
-      }
-
-      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-    }
-
-    return _rnds;
-  }; //     uuid.js
-  //
-  //     Copyright (c) 2010-2012 Robert Kieffer
-  //     MIT License - http://opensource.org/licenses/mit-license.php
-  // Unique ID creation requires a high quality random # generator.  We feature
-  // detect to determine the best RNG source, normalizing to a function that
-  // returns 128-bits of randomness, since that's what's usually required
-  // return require('./rng');
-}();
-
-var byteToHex$1$1$1 = [];
-
-for (var i$1$1$1 = 0; i$1$1$1 < 256; i$1$1$1++) {
-  byteToHex$1$1$1[i$1$1$1] = (i$1$1$1 + 0x100).toString(16).substr(1);
-} // **`v1()` - Generate time-based UUID**
-//
-// Inspired by https://github.com/LiosK/UUID.js
-// and http://docs.python.org/library/uuid.html
-// random #'s we need to init node and clockseq
-
-
-var seedBytes$1$1 = random$1$1(); // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-
-var defaultNodeId$1$1 = [seedBytes$1$1[0] | 0x01, seedBytes$1$1[1], seedBytes$1$1[2], seedBytes$1$1[3], seedBytes$1$1[4], seedBytes$1$1[5]]; // Per 4.2.2, randomize (14 bit) clockseq
-
-var defaultClockseq$1$1 = (seedBytes$1$1[6] << 8 | seedBytes$1$1[7]) & 0x3fff; // Previous uuid creation time
+// utility functions
+// for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
 // code from http://momentjs.com/
 
-
-var ASPDateRegex$1 = /^\/?Date\((-?\d+)/i; // Color REs
-/**
- * Hue, Saturation, Value.
- */
-
-/**
- * Test whether given object is a number
- *
- * @param value - Input value of unknown type.
- *
- * @returns True if number, false otherwise.
- */
-
-function isNumber$1(value) {
-  return value instanceof Number || typeof value === "number";
-}
-/**
- * Test whether given object is a string
- *
- * @param value - Input value of unknown type.
- *
- * @returns True if string, false otherwise.
- */
-
-
-function isString$1(value) {
-  return value instanceof String || typeof value === "string";
-}
+var ASPDateRegex$1 = /^\/?Date\((-?\d+)/i;
 /**
  * Test whether given object is a Moment date.
- * @TODO: This is basically a workaround, if Moment was imported property it wouldn't necessary as moment.isMoment is a TS type guard.
  *
  * @param value - Input value of unknown type.
  *
  * @returns True if Moment instance, false otherwise.
  */
 
-
 function isMoment(value) {
   return moment.isMoment(value);
-}
-/**
- * Copy property from b to a if property present in a.
- * If property in b explicitly set to null, delete it if `allowDeletion` set.
- *
- * Internal helper routine, should not be exported. Not added to `exports` for that reason.
- *
- * @param a - Target object.
- * @param b - Source object.
- * @param prop - Name of property to copy from b to a.
- * @param allowDeletion  if true, delete property in a if explicitly set to null in b
- */
-
-
-function copyOrDelete$1(a, b, prop, allowDeletion) {
-  var doDeletion = false;
-
-  if (allowDeletion === true) {
-    doDeletion = b[prop] === null && a[prop] !== undefined;
-  }
-
-  if (doDeletion) {
-    delete a[prop];
-  } else {
-    a[prop] = b[prop]; // Remember, this is a reference copy!
-  }
-}
-/**
- * Deep extend an object a with the properties of object b
- *
- * @param a - Target object.
- * @param b - Source object.
- * @param protoExtend - If true, the prototype values will also be extended
- * (ie. the options objects that inherit from others will also get the inherited options).
- * @param allowDeletion - If true, the values of fields that are null will be deleted.
- *
- * @returns Argument a.
- */
-
-
-function deepExtend$1(a, b) {
-  var protoExtend = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var allowDeletion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  for (var prop in b) {
-    if (Object.prototype.hasOwnProperty.call(b, prop) || protoExtend === true) {
-      if (_typeof_1$1$1(b[prop]) === "object" && b[prop] !== null && getPrototypeOf$2$1$1(b[prop]) === Object.prototype) {
-        if (a[prop] === undefined) {
-          a[prop] = deepExtend$1({}, b[prop], protoExtend); // NOTE: allowDeletion not propagated!
-        } else if (_typeof_1$1$1(a[prop]) === "object" && a[prop] !== null && getPrototypeOf$2$1$1(a[prop]) === Object.prototype) {
-          deepExtend$1(a[prop], b[prop], protoExtend); // NOTE: allowDeletion not propagated!
-        } else {
-          copyOrDelete$1(a, b, prop, allowDeletion);
-        }
-      } else if (isArray$5$1$1(b[prop])) {
-        var _context;
-
-        a[prop] = slice$2$1(_context = b[prop]).call(_context);
-      } else {
-        copyOrDelete$1(a, b, prop, allowDeletion);
-      }
-    }
-  }
-
-  return a;
 }
 /**
  * Convert an object into another type
@@ -23458,17 +23466,16 @@ function convert(object, type) {
         return "/Date(" + object.valueOf() + ")/";
       } else if (isString$1(object)) {
         match = ASPDateRegex$1.exec(object);
-
-        var _value;
+        var value;
 
         if (match) {
           // object is an ASP date
-          _value = new Date(Number(match[1])).valueOf(); // parse number
+          value = new Date(Number(match[1])).valueOf(); // parse number
         } else {
-          _value = new Date(object).valueOf(); // parse string
+          value = new Date(object).valueOf(); // parse string
         }
 
-        return "/Date(" + _value + ")/";
+        return "/Date(" + value + ")/";
       } else {
         throw new Error("Cannot convert object of type " + getType$1(object) + " to type ASPDate");
       }
@@ -23477,64 +23484,6 @@ function convert(object, type) {
       var never = type;
       throw new Error("Unknown type ".concat(never));
   }
-}
-/**
- * Get the type of an object, for example exports.getType([]) returns 'Array'
- *
- * @param object - Input value of unknown type.
- *
- * @returns Detected type.
- */
-
-
-function getType$1(object) {
-  var type = _typeof_1$1$1(object);
-
-  if (type === "object") {
-    if (object === null) {
-      return "null";
-    }
-
-    if (object instanceof Boolean) {
-      return "Boolean";
-    }
-
-    if (object instanceof Number) {
-      return "Number";
-    }
-
-    if (object instanceof String) {
-      return "String";
-    }
-
-    if (isArray$5$1$1(object)) {
-      return "Array";
-    }
-
-    if (object instanceof Date) {
-      return "Date";
-    }
-
-    return "Object";
-  }
-
-  if (type === "number") {
-    return "Number";
-  }
-
-  if (type === "boolean") {
-    return "Boolean";
-  }
-
-  if (type === "string") {
-    return "String";
-  }
-
-  if (type === undefined) {
-    return "undefined";
-  }
-
-  return type;
 }
 
 /**
@@ -23619,11 +23568,11 @@ _export$2({
 
 var splice$3 = entryVirtual$2('Array').splice;
 
-var ArrayPrototype$c$1 = Array.prototype;
+var ArrayPrototype$b$1 = Array.prototype;
 
 var splice_1$1 = function (it) {
   var own = it.splice;
-  return it === ArrayPrototype$c$1 || it instanceof Array && own === ArrayPrototype$c$1.splice ? splice$3 : own;
+  return it === ArrayPrototype$b$1 || it instanceof Array && own === ArrayPrototype$b$1.splice ? splice$3 : own;
 };
 
 var splice$1$1 = splice_1$1;
@@ -23976,9 +23925,9 @@ function () {
 // https://tc39.github.io/ecma262/#sec-set-objects
 
 
-var es_set = collection('Set', function (get) {
+var es_set = collection('Set', function (init) {
   return function Set() {
-    return get(this, arguments.length ? arguments[0] : undefined);
+    return init(this, arguments.length ? arguments[0] : undefined);
   };
 }, collectionStrong);
 
@@ -23999,7 +23948,7 @@ function _arrayWithHoles(arr) {
 var arrayWithHoles = _arrayWithHoles;
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(isIterable$2$1(Object(arr)) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+  if (!(isIterable$1$1(Object(arr)) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
     return;
   }
 
@@ -24009,7 +23958,7 @@ function _iterableToArrayLimit(arr, i) {
   var _e = undefined;
 
   try {
-    for (var _i = getIterator$2$1(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (var _i = getIterator$1$1(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -24085,7 +24034,7 @@ function () {
               _didIteratorError = false;
               _iteratorError = undefined;
               _context.prev = 3;
-              _iterator = getIterator$2$1(this._pairs);
+              _iterator = getIterator$1$1(this._pairs);
 
             case 5:
               if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
@@ -24162,7 +24111,7 @@ function () {
               _didIteratorError2 = false;
               _iteratorError2 = undefined;
               _context2.prev = 3;
-              _iterator2 = getIterator$2$1(this._pairs);
+              _iterator2 = getIterator$1$1(this._pairs);
 
             case 5:
               if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
@@ -24239,7 +24188,7 @@ function () {
               _didIteratorError3 = false;
               _iteratorError3 = undefined;
               _context3.prev = 3;
-              _iterator3 = getIterator$2$1(this._pairs);
+              _iterator3 = getIterator$1$1(this._pairs);
 
             case 5:
               if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
@@ -24316,7 +24265,7 @@ function () {
               _didIteratorError4 = false;
               _iteratorError4 = undefined;
               _context4.prev = 3;
-              _iterator4 = getIterator$2$1(this._pairs);
+              _iterator4 = getIterator$1$1(this._pairs);
 
             case 5:
               if (_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done) {
@@ -24443,7 +24392,7 @@ function () {
       var _iteratorError5 = undefined;
 
       try {
-        for (var _iterator5 = getIterator$2$1(this._pairs), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+        for (var _iterator5 = getIterator$1$1(this._pairs), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
           var _step5$value = slicedToArray(_step5.value, 2),
               id = _step5$value[0],
               item = _step5$value[1];
@@ -24548,7 +24497,7 @@ function () {
       var _iteratorError6 = undefined;
 
       try {
-        for (var _iterator6 = getIterator$2$1(this._pairs), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+        for (var _iterator6 = getIterator$1$1(this._pairs), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
           var _step6$value = slicedToArray(_step6.value, 2),
               id = _step6$value[0],
               item = _step6$value[1];
@@ -24597,7 +24546,7 @@ function () {
                 _didIteratorError7 = false;
                 _iteratorError7 = undefined;
                 _context7.prev = 3;
-                _iterator7 = getIterator$2$1(pairs);
+                _iterator7 = getIterator$1$1(pairs);
 
               case 5:
                 if (_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done) {
@@ -24676,7 +24625,7 @@ function () {
       var _iteratorError8 = undefined;
 
       try {
-        for (var _iterator8 = getIterator$2$1(this._pairs), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+        for (var _iterator8 = getIterator$1$1(this._pairs), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
           var _step8$value = slicedToArray(_step8.value, 2),
               id = _step8$value[0],
               item = _step8$value[1];
@@ -24725,7 +24674,7 @@ function () {
                 _didIteratorError9 = false;
                 _iteratorError9 = undefined;
                 _context8.prev = 3;
-                _iterator9 = getIterator$2$1(pairs);
+                _iterator9 = getIterator$1$1(pairs);
 
               case 5:
                 if (_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done) {
@@ -24795,7 +24744,7 @@ function () {
   }, {
     key: "max",
     value: function max(callback) {
-      var iter = getIterator$2$1(this._pairs);
+      var iter = getIterator$1$1(this._pairs);
 
       var curr = iter.next();
 
@@ -24832,7 +24781,7 @@ function () {
   }, {
     key: "min",
     value: function min(callback) {
-      var iter = getIterator$2$1(this._pairs);
+      var iter = getIterator$1$1(this._pairs);
 
       var curr = iter.next();
 
@@ -24877,7 +24826,7 @@ function () {
       var _iteratorError10 = undefined;
 
       try {
-        for (var _iterator10 = getIterator$2$1(this._pairs), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+        for (var _iterator10 = getIterator$1$1(this._pairs), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
           var _step10$value = slicedToArray(_step10.value, 2),
               id = _step10$value[0],
               item = _step10$value[1];
@@ -24917,7 +24866,7 @@ function () {
       return new DataStream(defineProperty$6$1({}, iterator$2$1, function () {
         var _context9;
 
-        return getIterator$2$1(sort$2(_context9 = toConsumableArray$1(_this._pairs)).call(_context9, function (_ref3, _ref4) {
+        return getIterator$1$1(sort$2(_context9 = toConsumableArray$1(_this._pairs)).call(_context9, function (_ref3, _ref4) {
           var _ref5 = slicedToArray(_ref3, 2),
               idA = _ref5[0],
               itemA = _ref5[1];
@@ -24937,7 +24886,7 @@ function () {
 
 function ownKeys$2$1(object, enumerableOnly) { var keys = keys$6(object); if (getOwnPropertySymbols$2$1) { var symbols = getOwnPropertySymbols$2$1(object); if (enumerableOnly) symbols = filter$2$1(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3$1(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context9; forEach$2$1(_context9 = ownKeys$2$1(source, true)).call(_context9, function (key) { defineProperty$6$1(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2$1) { defineProperties$1$1(target, getOwnPropertyDescriptors$2$1(source)); } else { var _context10; forEach$2$1(_context10 = ownKeys$2$1(source)).call(_context10, function (key) { defineProperty$1$1(target, key, getOwnPropertyDescriptor$3$1(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context9; forEach$2$1(_context9 = ownKeys$2$1(Object(source), true)).call(_context9, function (key) { defineProperty$6$1(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2$1) { defineProperties$1$1(target, getOwnPropertyDescriptors$2$1(source)); } else { var _context10; forEach$2$1(_context10 = ownKeys$2$1(Object(source))).call(_context10, function (key) { defineProperty$1$1(target, key, getOwnPropertyDescriptor$3$1(source, key)); }); } } return target; }
 /**
  * # DataSet
  *
@@ -25843,7 +25792,7 @@ function (_DataSetPart) {
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = getIterator$2$1(values$2$1(_context5 = this._data).call(_context5)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = getIterator$1$1(values$2$1(_context5 = this._data).call(_context5)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var _context5;
 
           var item = _step.value;
@@ -25889,7 +25838,7 @@ function (_DataSetPart) {
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = getIterator$2$1(values$2$1(_context6 = this._data).call(_context6)), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (var _iterator2 = getIterator$1$1(values$2$1(_context6 = this._data).call(_context6)), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var _context6;
 
           var item = _step2.value;
@@ -26105,7 +26054,7 @@ function (_DataSetPart) {
                   _didIteratorError3 = false;
                   _iteratorError3 = undefined;
                   _context7.prev = 3;
-                  _iterator3 = getIterator$2$1(ids);
+                  _iterator3 = getIterator$1$1(ids);
 
                 case 5:
                   if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
@@ -26666,9 +26615,9 @@ var esm = /*#__PURE__*/Object.freeze({
 	Queue: Queue
 });
 
-var defineProperty$b = defineProperty_1$1;
+var defineProperty$c = defineProperty_1$1;
 
-var defineProperty$c = defineProperty$b;
+var defineProperty$d = defineProperty$c;
 
 // `Object.defineProperties` method
 // https://tc39.github.io/ecma262/#sec-object.defineproperties
@@ -26742,8 +26691,8 @@ var getOwnPropertyDescriptors$6 = getOwnPropertyDescriptors$5;
 var nativeGetOwnPropertyDescriptor$4 = objectGetOwnPropertyDescriptor.f;
 
 
-var FAILS_ON_PRIMITIVES$5 = fails(function () { nativeGetOwnPropertyDescriptor$4(1); });
-var FORCED$5 = !descriptors || FAILS_ON_PRIMITIVES$5;
+var FAILS_ON_PRIMITIVES$4 = fails(function () { nativeGetOwnPropertyDescriptor$4(1); });
+var FORCED$5 = !descriptors || FAILS_ON_PRIMITIVES$4;
 
 // `Object.getOwnPropertyDescriptor` method
 // https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
@@ -26771,16 +26720,16 @@ var $filter$2 = arrayIteration$1.filter;
 
 
 
-var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport$1('filter');
+var HAS_SPECIES_SUPPORT$4 = arrayMethodHasSpeciesSupport$1('filter');
 // Edge 14- issue
-var USES_TO_LENGTH$1 = HAS_SPECIES_SUPPORT$1 && !fails(function () {
+var USES_TO_LENGTH$4 = HAS_SPECIES_SUPPORT$4 && !fails(function () {
   [].filter.call({ length: -1, 0: 1 }, function (it) { throw it; });
 });
 
 // `Array.prototype.filter` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.filter
 // with adding support of @@species
-_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$1 }, {
+_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$4 || !USES_TO_LENGTH$4 }, {
   filter: function filter(callbackfn /* , thisArg */) {
     return $filter$2(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
@@ -26831,11 +26780,11 @@ var wrappedWellKnownSymbol$2 = {
 	f: f$b
 };
 
-var defineProperty$d = objectDefineProperty.f;
+var defineProperty$e = objectDefineProperty.f;
 
 var defineWellKnownSymbol$2 = function (NAME) {
   var Symbol = path.Symbol || (path.Symbol = {});
-  if (!has(Symbol, NAME)) defineProperty$d(Symbol, NAME, {
+  if (!has(Symbol, NAME)) defineProperty$e(Symbol, NAME, {
     value: wrappedWellKnownSymbol$2.f(NAME)
   });
 };
@@ -26859,7 +26808,7 @@ var AllSymbols$2 = shared$1('symbols');
 var ObjectPrototypeSymbols$2 = shared$1('op-symbols');
 var StringToSymbolRegistry$2 = shared$1('string-to-symbol-registry');
 var SymbolToStringRegistry$2 = shared$1('symbol-to-string-registry');
-var WellKnownSymbolsStore$3 = shared$1('wks');
+var WellKnownSymbolsStore$4 = shared$1('wks');
 var QObject$2 = global_1.QObject;
 // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 var USE_SETTER$2 = !QObject$2 || !QObject$2[PROTOTYPE$4] || !QObject$2[PROTOTYPE$4].findChild;
@@ -27001,7 +26950,7 @@ if (!nativeSymbol$1) {
   }
 }
 
-if (!useSymbolAsUid) {
+if (!useSymbolAsUid$1) {
   wrappedWellKnownSymbol$2.f = function (name) {
     return wrap$3(wellKnownSymbol$1(name), name);
   };
@@ -27011,7 +26960,7 @@ _export({ global: true, wrap: true, forced: !nativeSymbol$1, sham: !nativeSymbol
   Symbol: $Symbol$2
 });
 
-$forEach$4(objectKeys$1(WellKnownSymbolsStore$3), function (name) {
+$forEach$4(objectKeys$1(WellKnownSymbolsStore$4), function (name) {
   defineWellKnownSymbol$2(name);
 });
 
@@ -27117,11 +27066,11 @@ var getOwnPropertySymbols$5 = getOwnPropertySymbols$4;
 
 var getOwnPropertySymbols$6 = getOwnPropertySymbols$5;
 
-var FAILS_ON_PRIMITIVES$6 = fails(function () { objectKeys$1(1); });
+var FAILS_ON_PRIMITIVES$5 = fails(function () { objectKeys$1(1); });
 
 // `Object.keys` method
 // https://tc39.github.io/ecma262/#sec-object.keys
-_export({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$6 }, {
+_export({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$5 }, {
   keys: function keys(it) {
     return objectKeys$1(toObject$1(it));
   }
@@ -27135,7 +27084,7 @@ var keys$a = keys$9;
 
 function _defineProperty$2(obj, key, value) {
   if (key in obj) {
-    defineProperty$9(obj, key, {
+    defineProperty$a(obj, key, {
       value: value,
       enumerable: true,
       configurable: true,
@@ -27148,7 +27097,7 @@ function _defineProperty$2(obj, key, value) {
   return obj;
 }
 
-var defineProperty$e = _defineProperty$2;
+var defineProperty$f = _defineProperty$2;
 
 // a string of all valid unicode whitespaces
 // eslint-disable-next-line max-len
@@ -27183,28 +27132,28 @@ var stringTrim$2 = {
 var trim$5 = stringTrim$2.trim;
 
 
-var nativeParseFloat$1 = global_1.parseFloat;
-var FORCED$6 = 1 / nativeParseFloat$1(whitespaces$2 + '-0') !== -Infinity;
+var nativeParseFloat = global_1.parseFloat;
+var FORCED$6 = 1 / nativeParseFloat(whitespaces$2 + '-0') !== -Infinity;
 
 // `parseFloat` method
 // https://tc39.github.io/ecma262/#sec-parsefloat-string
-var _parseFloat$4 = FORCED$6 ? function parseFloat(string) {
+var _parseFloat = FORCED$6 ? function parseFloat(string) {
   var trimmedString = trim$5(String(string));
-  var result = nativeParseFloat$1(trimmedString);
+  var result = nativeParseFloat(trimmedString);
   return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
-} : nativeParseFloat$1;
+} : nativeParseFloat;
 
 // `parseFloat` method
 // https://tc39.github.io/ecma262/#sec-parsefloat-string
-_export({ global: true, forced: parseFloat != _parseFloat$4 }, {
-  parseFloat: _parseFloat$4
+_export({ global: true, forced: parseFloat != _parseFloat }, {
+  parseFloat: _parseFloat
 });
 
-var _parseFloat$5 = path.parseFloat;
+var _parseFloat$1 = path.parseFloat;
 
-var _parseFloat$6 = _parseFloat$5;
+var _parseFloat$2 = _parseFloat$1;
 
-var _parseFloat$7 = _parseFloat$6;
+var _parseFloat$3 = _parseFloat$2;
 
 var trim$6 = stringTrim$2.trim;
 
@@ -27244,7 +27193,7 @@ var arrayWithHoles$1 = _arrayWithHoles$1;
 
 var ITERATOR$a = wellKnownSymbol$1('iterator');
 
-var isIterable$4 = function (it) {
+var isIterable$3 = function (it) {
   var O = Object(it);
   return O[ITERATOR$a] !== undefined
     || '@@iterator' in O
@@ -27252,12 +27201,12 @@ var isIterable$4 = function (it) {
     || iterators$1.hasOwnProperty(classof$1(O));
 };
 
-var isIterable_1 = isIterable$4;
+var isIterable_1$2 = isIterable$3;
 
-var isIterable$5 = isIterable_1;
+var isIterable$4 = isIterable_1$2;
 
 function _iterableToArrayLimit$1(arr, i) {
-  if (!(isIterable$5(Object(arr)) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+  if (!(isIterable$4(Object(arr)) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
     return;
   }
 
@@ -27267,7 +27216,7 @@ function _iterableToArrayLimit$1(arr, i) {
   var _e = undefined;
 
   try {
-    for (var _i = getIterator$4(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (var _i = getIterator$3(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -27638,7 +27587,7 @@ var values$5 = values$4;
 
 var ArrayPrototype$g = Array.prototype;
 
-var DOMIterables$5 = {
+var DOMIterables$4 = {
   DOMTokenList: true,
   NodeList: true
 };
@@ -27647,22 +27596,22 @@ var values_1$1 = function (it) {
   var own = it.values;
   return it === ArrayPrototype$g || (it instanceof Array && own === ArrayPrototype$g.values)
     // eslint-disable-next-line no-prototype-builtins
-    || DOMIterables$5.hasOwnProperty(classof$1(it)) ? values$5 : own;
+    || DOMIterables$4.hasOwnProperty(classof$1(it)) ? values$5 : own;
 };
 
 var values$6 = values_1$1;
 
 var nativeAssign$2 = Object.assign;
-var defineProperty$f = Object.defineProperty;
+var defineProperty$g = Object.defineProperty;
 
 // `Object.assign` method
 // https://tc39.github.io/ecma262/#sec-object.assign
 var objectAssign$2 = !nativeAssign$2 || fails(function () {
   // should have correct order of operations (Edge bug)
-  if (descriptors && nativeAssign$2({ b: 1 }, nativeAssign$2(defineProperty$f({}, 'a', {
+  if (descriptors && nativeAssign$2({ b: 1 }, nativeAssign$2(defineProperty$g({}, 'a', {
     enumerable: true,
     get: function () {
-      defineProperty$f(this, 'b', {
+      defineProperty$g(this, 'b', {
         value: 3,
         enumerable: false
       });
@@ -29538,11 +29487,11 @@ function _possibleConstructorReturn$1(self, call) {
 
 var possibleConstructorReturn$1 = _possibleConstructorReturn$1;
 
-var FAILS_ON_PRIMITIVES$7 = fails(function () { objectGetPrototypeOf$1(1); });
+var FAILS_ON_PRIMITIVES$6 = fails(function () { objectGetPrototypeOf$1(1); });
 
 // `Object.getPrototypeOf` method
 // https://tc39.github.io/ecma262/#sec-object.getprototypeof
-_export({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$7, sham: !correctPrototypeGetter$1 }, {
+_export({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$6, sham: !correctPrototypeGetter$1 }, {
   getPrototypeOf: function getPrototypeOf(it) {
     return objectGetPrototypeOf$1(toObject$1(it));
   }
@@ -32030,7 +31979,7 @@ function () {
 
 function ownKeys$4(object, enumerableOnly) { var keys = keys$a(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context4; forEach$6(_context4 = ownKeys$4(Object(source), true)).call(_context4, function (key) { defineProperty$e(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context5; forEach$6(_context5 = ownKeys$4(Object(source))).call(_context5, function (key) { defineProperty$c(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context4; forEach$6(_context4 = ownKeys$4(Object(source), true)).call(_context4, function (key) { defineProperty$f(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context5; forEach$6(_context5 = ownKeys$4(Object(source))).call(_context5, function (key) { defineProperty$d(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
 /**
  * A node. A node can be connected to other nodes via one or multiple edges.
  */
@@ -32180,7 +32129,7 @@ function () {
       }
 
       if (options.value !== undefined) {
-        options.value = _parseFloat$7(options.value);
+        options.value = _parseFloat$3(options.value);
       } // this transforms all shorthands into fully defined options
 
 
@@ -33220,7 +33169,7 @@ function () {
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = getIterator$4(dataset.get()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = getIterator$3(dataset.get()), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var dsNode = _step.value;
           var id = dsNode.id;
           var bodyNode = this.body.nodes[id];
@@ -34158,7 +34107,7 @@ function () {
 
 function ownKeys$5(object, enumerableOnly) { var keys = keys$a(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; forEach$6(_context2 = ownKeys$5(Object(source), true)).call(_context2, function (key) { defineProperty$e(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context3; forEach$6(_context3 = ownKeys$5(Object(source))).call(_context3, function (key) { defineProperty$c(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; forEach$6(_context2 = ownKeys$5(Object(source), true)).call(_context2, function (key) { defineProperty$f(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context3; forEach$6(_context3 = ownKeys$5(Object(source))).call(_context3, function (key) { defineProperty$d(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
 /**
  * The Base Class for all edges.
  */
@@ -34867,7 +34816,7 @@ function () {
 
 function ownKeys$6(object, enumerableOnly) { var keys = keys$a(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$6(_context = ownKeys$6(Object(source), true)).call(_context, function (key) { defineProperty$e(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context2; forEach$6(_context2 = ownKeys$6(Object(source))).call(_context2, function (key) { defineProperty$c(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$6(_context = ownKeys$6(Object(source), true)).call(_context, function (key) { defineProperty$f(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context2; forEach$6(_context2 = ownKeys$6(Object(source))).call(_context2, function (key) { defineProperty$d(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
 /**
  * The Base Class for all Bezier edges.
  * Bezier curves are used to model smooth gradual curves in paths between nodes.
@@ -35884,7 +35833,7 @@ function () {
       }
 
       if (options.value !== undefined) {
-        options.value = _parseFloat$7(options.value);
+        options.value = _parseFloat$3(options.value);
       }
 
       var pile = [options, this.options, this.defaultOptions];
@@ -37236,11 +37185,11 @@ _export({ target: 'Date', stat: true }, {
   }
 });
 
-var now$3 = path.Date.now;
+var now$1 = path.Date.now;
 
-var now$4 = now$3;
+var now$2 = now$1;
 
-var now$5 = now$4;
+var now$3 = now$2;
 
 /**
  * Barnes Hut Solver
@@ -38675,10 +38624,10 @@ function () {
     key: "simulationStep",
     value: function simulationStep() {
       // check if the physics have settled
-      var startTime = now$5();
+      var startTime = now$3();
 
       this.physicsTick();
-      var physicsTime = now$5() - startTime; // run double speed if it is a little graph
+      var physicsTime = now$3() - startTime; // run double speed if it is a little graph
 
       if ((physicsTime < 0.4 * this.simulationInterval || this.runDoubleSpeed === true) && this.stabilized === false) {
         this.physicsTick(); // this makes sure there is no jitter. The decision is taken once to run it at double speed.
@@ -45068,7 +45017,7 @@ var anInstance$1 = function (it, Constructor, name) {
   } return it;
 };
 
-var defineProperty$g = objectDefineProperty.f;
+var defineProperty$h = objectDefineProperty.f;
 var forEach$8 = arrayIteration$1.forEach;
 
 
@@ -45114,7 +45063,7 @@ var collection$1 = function (CONSTRUCTOR_NAME, wrapper, common) {
       }
     });
 
-    IS_WEAK || defineProperty$g(Constructor.prototype, 'size', {
+    IS_WEAK || defineProperty$h(Constructor.prototype, 'size', {
       configurable: true,
       get: function () {
         return getInternalState(this).collection.size;
@@ -45153,7 +45102,7 @@ var setSpecies$1 = function (CONSTRUCTOR_NAME) {
   }
 };
 
-var defineProperty$h = objectDefineProperty.f;
+var defineProperty$i = objectDefineProperty.f;
 
 
 
@@ -45295,7 +45244,7 @@ var collectionStrong$1 = {
         return define(this, value = value === 0 ? 0 : value, value);
       }
     });
-    if (descriptors) defineProperty$h(C.prototype, 'size', {
+    if (descriptors) defineProperty$i(C.prototype, 'size', {
       get: function () {
         return getInternalState(this).size;
       }
@@ -45412,43 +45361,43 @@ var reduce$4 = reduce_1$1;
 var reduce$5 = reduce$4;
 
 var test$4 = [];
-var nativeSort$2 = test$4.sort;
+var nativeSort$1 = test$4.sort;
 
 // IE8-
-var FAILS_ON_UNDEFINED$2 = fails(function () {
+var FAILS_ON_UNDEFINED$1 = fails(function () {
   test$4.sort(undefined);
 });
 // V8 bug
-var FAILS_ON_NULL$2 = fails(function () {
+var FAILS_ON_NULL$1 = fails(function () {
   test$4.sort(null);
 });
 // Old WebKit
 var SLOPPY_METHOD$3 = sloppyArrayMethod$1('sort');
 
-var FORCED$a = FAILS_ON_UNDEFINED$2 || !FAILS_ON_NULL$2 || SLOPPY_METHOD$3;
+var FORCED$a = FAILS_ON_UNDEFINED$1 || !FAILS_ON_NULL$1 || SLOPPY_METHOD$3;
 
 // `Array.prototype.sort` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.sort
 _export({ target: 'Array', proto: true, forced: FORCED$a }, {
   sort: function sort(comparefn) {
     return comparefn === undefined
-      ? nativeSort$2.call(toObject$1(this))
-      : nativeSort$2.call(toObject$1(this), aFunction(comparefn));
+      ? nativeSort$1.call(toObject$1(this))
+      : nativeSort$1.call(toObject$1(this), aFunction(comparefn));
   }
 });
 
-var sort$4 = entryVirtual('Array').sort;
+var sort$3 = entryVirtual('Array').sort;
 
 var ArrayPrototype$l = Array.prototype;
 
-var sort_1$2 = function (it) {
+var sort_1$1 = function (it) {
   var own = it.sort;
-  return it === ArrayPrototype$l || (it instanceof Array && own === ArrayPrototype$l.sort) ? sort$4 : own;
+  return it === ArrayPrototype$l || (it instanceof Array && own === ArrayPrototype$l.sort) ? sort$3 : own;
 };
 
-var sort$5 = sort_1$2;
+var sort$4 = sort_1$1;
 
-var sort$6 = sort$5;
+var sort$5 = sort$4;
 
 var timsort = createCommonjsModule(function (module, exports) {
 /****
@@ -46833,7 +46782,7 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
       }
     };
 
-    for (var _iterator = getIterator$4(nodes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = getIterator$3(nodes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var _ret = _loop();
 
       switch (_ret) {
@@ -48247,7 +48196,7 @@ function () {
 
           nodeArray = this._indexArrayToNodes(nodeArray);
 
-          sort$6(_context = this.direction).call(_context, nodeArray);
+          sort$5(_context = this.direction).call(_context, nodeArray);
 
           var handledNodeCount = 0;
 
@@ -48301,7 +48250,7 @@ function () {
       } // use the positions to order the nodes.
 
 
-      sort$6(_context2 = this.direction).call(_context2, childNodes); // position the childNodes
+      sort$5(_context2 = this.direction).call(_context2, childNodes); // position the childNodes
 
 
       for (var _i5 = 0; _i5 < childNodes.length; _i5++) {
@@ -48466,7 +48415,7 @@ function () {
         result.push(Number(size));
       });
 
-      sort$6(timsort$1).call(timsort$1, result, function (a, b) {
+      sort$5(timsort$1).call(timsort$1, result, function (a, b) {
         return b - a;
       });
 

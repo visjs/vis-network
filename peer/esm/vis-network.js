@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-12-19T17:09:36Z
+ * @date    2019-12-20T10:55:47Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -3497,7 +3497,7 @@ var Activator = /*#__PURE__*/Object.freeze({
 	'default': undefined
 });
 
-/*! Hammer.JS - v2.0.16 - 2019-11-11
+/*! Hammer.JS - v2.0.17-rc - 2019-12-16
  * http://naver.github.io/egjs
  *
  * Forked By Naver egjs
@@ -4175,7 +4175,7 @@ function computeInputData(manager, input) {
   } else if (srcEvent.path) {
     srcEventTarget = srcEvent.path[0];
   } else {
-    srcEventTarget = target;
+    srcEventTarget = srcEvent.target;
   }
 
   if (hasParent(srcEventTarget, target)) {
@@ -5217,6 +5217,548 @@ function () {
   return Recognizer;
 }();
 
+/**
+ * @private
+ * A tap is recognized when the pointer is doing a small tap/click. Multiple taps are recognized if they occur
+ * between the given interval and position. The delay option can be used to recognize multi-taps without firing
+ * a single tap.
+ *
+ * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
+ * multi-taps being recognized.
+ * @constructor
+ * @extends Recognizer
+ */
+
+var TapRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(TapRecognizer, _Recognizer);
+
+  function TapRecognizer(options) {
+    var _this;
+
+    if (options === void 0) {
+      options = {};
+    }
+
+    _this = _Recognizer.call(this, _extends({
+      event: 'tap',
+      pointers: 1,
+      taps: 1,
+      interval: 300,
+      // max time between the multi-tap taps
+      time: 250,
+      // max time of the pointer to be down (like finger on the screen)
+      threshold: 9,
+      // a minimal movement is ok, but keep it low
+      posThreshold: 10
+    }, options)) || this; // previous time and center,
+    // used for tap counting
+
+    _this.pTime = false;
+    _this.pCenter = false;
+    _this._timer = null;
+    _this._input = null;
+    _this.count = 0;
+    return _this;
+  }
+
+  var _proto = TapRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_MANIPULATION];
+  };
+
+  _proto.process = function process(input) {
+    var _this2 = this;
+
+    var options = this.options;
+    var validPointers = input.pointers.length === options.pointers;
+    var validMovement = input.distance < options.threshold;
+    var validTouchTime = input.deltaTime < options.time;
+    this.reset();
+
+    if (input.eventType & INPUT_START && this.count === 0) {
+      return this.failTimeout();
+    } // we only allow little movement
+    // and we've reached an end event, so a tap is possible
+
+
+    if (validMovement && validTouchTime && validPointers) {
+      if (input.eventType !== INPUT_END) {
+        return this.failTimeout();
+      }
+
+      var validInterval = this.pTime ? input.timeStamp - this.pTime < options.interval : true;
+      var validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
+      this.pTime = input.timeStamp;
+      this.pCenter = input.center;
+
+      if (!validMultiTap || !validInterval) {
+        this.count = 1;
+      } else {
+        this.count += 1;
+      }
+
+      this._input = input; // if tap count matches we have recognized it,
+      // else it has began recognizing...
+
+      var tapCount = this.count % options.taps;
+
+      if (tapCount === 0) {
+        // no failing requirements, immediately trigger the tap event
+        // or wait as long as the multitap interval to trigger
+        if (!this.hasRequireFailures()) {
+          return STATE_RECOGNIZED;
+        } else {
+          this._timer = setTimeout(function () {
+            _this2.state = STATE_RECOGNIZED;
+
+            _this2.tryEmit();
+          }, options.interval);
+          return STATE_BEGAN;
+        }
+      }
+    }
+
+    return STATE_FAILED;
+  };
+
+  _proto.failTimeout = function failTimeout() {
+    var _this3 = this;
+
+    this._timer = setTimeout(function () {
+      _this3.state = STATE_FAILED;
+    }, this.options.interval);
+    return STATE_FAILED;
+  };
+
+  _proto.reset = function reset() {
+    clearTimeout(this._timer);
+  };
+
+  _proto.emit = function emit() {
+    if (this.state === STATE_RECOGNIZED) {
+      this._input.tapCount = this.count;
+      this.manager.emit(this.options.event, this._input);
+    }
+  };
+
+  return TapRecognizer;
+}(Recognizer);
+
+/**
+ * @private
+ * This recognizer is just used as a base for the simple attribute recognizers.
+ * @constructor
+ * @extends Recognizer
+ */
+
+var AttrRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(AttrRecognizer, _Recognizer);
+
+  function AttrRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _Recognizer.call(this, _extends({
+      pointers: 1
+    }, options)) || this;
+  }
+  /**
+   * @private
+   * Used to check if it the recognizer receives valid input, like input.distance > 10.
+   * @memberof AttrRecognizer
+   * @param {Object} input
+   * @returns {Boolean} recognized
+   */
+
+
+  var _proto = AttrRecognizer.prototype;
+
+  _proto.attrTest = function attrTest(input) {
+    var optionPointers = this.options.pointers;
+    return optionPointers === 0 || input.pointers.length === optionPointers;
+  };
+  /**
+   * @private
+   * Process the input and return the state for the recognizer
+   * @memberof AttrRecognizer
+   * @param {Object} input
+   * @returns {*} State
+   */
+
+
+  _proto.process = function process(input) {
+    var state = this.state;
+    var eventType = input.eventType;
+    var isRecognized = state & (STATE_BEGAN | STATE_CHANGED);
+    var isValid = this.attrTest(input); // on cancel input and we've recognized before, return STATE_CANCELLED
+
+    if (isRecognized && (eventType & INPUT_CANCEL || !isValid)) {
+      return state | STATE_CANCELLED;
+    } else if (isRecognized || isValid) {
+      if (eventType & INPUT_END) {
+        return state | STATE_ENDED;
+      } else if (!(state & STATE_BEGAN)) {
+        return STATE_BEGAN;
+      }
+
+      return state | STATE_CHANGED;
+    }
+
+    return STATE_FAILED;
+  };
+
+  return AttrRecognizer;
+}(Recognizer);
+
+/**
+ * @private
+ * direction cons to string
+ * @param {constant} direction
+ * @returns {String}
+ */
+
+function directionStr(direction) {
+  if (direction === DIRECTION_DOWN) {
+    return 'down';
+  } else if (direction === DIRECTION_UP) {
+    return 'up';
+  } else if (direction === DIRECTION_LEFT) {
+    return 'left';
+  } else if (direction === DIRECTION_RIGHT) {
+    return 'right';
+  }
+
+  return '';
+}
+
+/**
+ * @private
+ * Pan
+ * Recognized when the pointer is down and moved in the allowed direction.
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var PanRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(PanRecognizer, _AttrRecognizer);
+
+  function PanRecognizer(options) {
+    var _this;
+
+    if (options === void 0) {
+      options = {};
+    }
+
+    _this = _AttrRecognizer.call(this, _extends({
+      event: 'pan',
+      threshold: 10,
+      pointers: 1,
+      direction: DIRECTION_ALL
+    }, options)) || this;
+    _this.pX = null;
+    _this.pY = null;
+    return _this;
+  }
+
+  var _proto = PanRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    var direction = this.options.direction;
+    var actions = [];
+
+    if (direction & DIRECTION_HORIZONTAL) {
+      actions.push(TOUCH_ACTION_PAN_Y);
+    }
+
+    if (direction & DIRECTION_VERTICAL) {
+      actions.push(TOUCH_ACTION_PAN_X);
+    }
+
+    return actions;
+  };
+
+  _proto.directionTest = function directionTest(input) {
+    var options = this.options;
+    var hasMoved = true;
+    var distance = input.distance;
+    var direction = input.direction;
+    var x = input.deltaX;
+    var y = input.deltaY; // lock to axis?
+
+    if (!(direction & options.direction)) {
+      if (options.direction & DIRECTION_HORIZONTAL) {
+        direction = x === 0 ? DIRECTION_NONE : x < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+        hasMoved = x !== this.pX;
+        distance = Math.abs(input.deltaX);
+      } else {
+        direction = y === 0 ? DIRECTION_NONE : y < 0 ? DIRECTION_UP : DIRECTION_DOWN;
+        hasMoved = y !== this.pY;
+        distance = Math.abs(input.deltaY);
+      }
+    }
+
+    input.direction = direction;
+    return hasMoved && distance > options.threshold && direction & options.direction;
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    return AttrRecognizer.prototype.attrTest.call(this, input) && ( // replace with a super call
+    this.state & STATE_BEGAN || !(this.state & STATE_BEGAN) && this.directionTest(input));
+  };
+
+  _proto.emit = function emit(input) {
+    this.pX = input.deltaX;
+    this.pY = input.deltaY;
+    var direction = directionStr(input.direction);
+
+    if (direction) {
+      input.additionalEvent = this.options.event + direction;
+    }
+
+    _AttrRecognizer.prototype.emit.call(this, input);
+  };
+
+  return PanRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Swipe
+ * Recognized when the pointer is moving fast (velocity), with enough distance in the allowed direction.
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var SwipeRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(SwipeRecognizer, _AttrRecognizer);
+
+  function SwipeRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _AttrRecognizer.call(this, _extends({
+      event: 'swipe',
+      threshold: 10,
+      velocity: 0.3,
+      direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
+      pointers: 1
+    }, options)) || this;
+  }
+
+  var _proto = SwipeRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return PanRecognizer.prototype.getTouchAction.call(this);
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    var direction = this.options.direction;
+    var velocity;
+
+    if (direction & (DIRECTION_HORIZONTAL | DIRECTION_VERTICAL)) {
+      velocity = input.overallVelocity;
+    } else if (direction & DIRECTION_HORIZONTAL) {
+      velocity = input.overallVelocityX;
+    } else if (direction & DIRECTION_VERTICAL) {
+      velocity = input.overallVelocityY;
+    }
+
+    return _AttrRecognizer.prototype.attrTest.call(this, input) && direction & input.offsetDirection && input.distance > this.options.threshold && input.maxPointers === this.options.pointers && abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
+  };
+
+  _proto.emit = function emit(input) {
+    var direction = directionStr(input.offsetDirection);
+
+    if (direction) {
+      this.manager.emit(this.options.event + direction, input);
+    }
+
+    this.manager.emit(this.options.event, input);
+  };
+
+  return SwipeRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Pinch
+ * Recognized when two or more pointers are moving toward (zoom-in) or away from each other (zoom-out).
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var PinchRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(PinchRecognizer, _AttrRecognizer);
+
+  function PinchRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _AttrRecognizer.call(this, _extends({
+      event: 'pinch',
+      threshold: 0,
+      pointers: 2
+    }, options)) || this;
+  }
+
+  var _proto = PinchRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_NONE];
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
+  };
+
+  _proto.emit = function emit(input) {
+    if (input.scale !== 1) {
+      var inOut = input.scale < 1 ? 'in' : 'out';
+      input.additionalEvent = this.options.event + inOut;
+    }
+
+    _AttrRecognizer.prototype.emit.call(this, input);
+  };
+
+  return PinchRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Rotate
+ * Recognized when two or more pointer are moving in a circular motion.
+ * @constructor
+ * @extends AttrRecognizer
+ */
+
+var RotateRecognizer =
+/*#__PURE__*/
+function (_AttrRecognizer) {
+  _inheritsLoose(RotateRecognizer, _AttrRecognizer);
+
+  function RotateRecognizer(options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return _AttrRecognizer.call(this, _extends({
+      event: 'rotate',
+      threshold: 0,
+      pointers: 2
+    }, options)) || this;
+  }
+
+  var _proto = RotateRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_NONE];
+  };
+
+  _proto.attrTest = function attrTest(input) {
+    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
+  };
+
+  return RotateRecognizer;
+}(AttrRecognizer);
+
+/**
+ * @private
+ * Press
+ * Recognized when the pointer is down for x ms without any movement.
+ * @constructor
+ * @extends Recognizer
+ */
+
+var PressRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(PressRecognizer, _Recognizer);
+
+  function PressRecognizer(options) {
+    var _this;
+
+    if (options === void 0) {
+      options = {};
+    }
+
+    _this = _Recognizer.call(this, _extends({
+      event: 'press',
+      pointers: 1,
+      time: 251,
+      // minimal time of the pointer to be pressed
+      threshold: 9
+    }, options)) || this;
+    _this._timer = null;
+    _this._input = null;
+    return _this;
+  }
+
+  var _proto = PressRecognizer.prototype;
+
+  _proto.getTouchAction = function getTouchAction() {
+    return [TOUCH_ACTION_AUTO];
+  };
+
+  _proto.process = function process(input) {
+    var _this2 = this;
+
+    var options = this.options;
+    var validPointers = input.pointers.length === options.pointers;
+    var validMovement = input.distance < options.threshold;
+    var validTime = input.deltaTime > options.time;
+    this._input = input; // we only allow little movement
+    // and we've reached an end event, so a tap is possible
+
+    if (!validMovement || !validPointers || input.eventType & (INPUT_END | INPUT_CANCEL) && !validTime) {
+      this.reset();
+    } else if (input.eventType & INPUT_START) {
+      this.reset();
+      this._timer = setTimeout(function () {
+        _this2.state = STATE_RECOGNIZED;
+
+        _this2.tryEmit();
+      }, options.time);
+    } else if (input.eventType & INPUT_END) {
+      return STATE_RECOGNIZED;
+    }
+
+    return STATE_FAILED;
+  };
+
+  _proto.reset = function reset() {
+    clearTimeout(this._timer);
+  };
+
+  _proto.emit = function emit(input) {
+    if (this.state !== STATE_RECOGNIZED) {
+      return;
+    }
+
+    if (input && input.eventType & INPUT_END) {
+      this.manager.emit(this.options.event + "up", input);
+    } else {
+      this._input.timeStamp = now();
+      this.manager.emit(this.options.event, this._input);
+    }
+  };
+
+  return PressRecognizer;
+}(Recognizer);
+
 var defaults = {
   /**
    * @private
@@ -5260,14 +5802,6 @@ var defaults = {
    * @default null
    */
   inputClass: null,
-
-  /**
-   * @private
-   * Default recognizer setup when calling `Hammer()`
-   * When creating a new Manager these will be skipped.
-   * @type {Array}
-   */
-  preset: [],
 
   /**
    * @private
@@ -5328,6 +5862,26 @@ var defaults = {
     tapHighlightColor: "rgba(0,0,0,0)"
   }
 };
+/**
+ * @private
+ * Default recognizer setup when calling `Hammer()`
+ * When creating a new Manager these will be skipped.
+ * This is separated with other defaults because of tree-shaking.
+ * @type {Array}
+ */
+
+var preset = [[RotateRecognizer, {
+  enable: false
+}], [PinchRecognizer, {
+  enable: false
+}, ['rotate']], [SwipeRecognizer, {
+  direction: DIRECTION_HORIZONTAL
+}], [PanRecognizer, {
+  direction: DIRECTION_HORIZONTAL
+}, ['swipe']], [TapRecognizer], [TapRecognizer, {
+  event: 'doubletap',
+  taps: 2
+}, ['tap']], [PressRecognizer]];
 
 var STOP = 1;
 var FORCED_STOP = 2;
@@ -5749,548 +6303,6 @@ function normalizeSingleTouches(ev, type) {
 
 /**
  * @private
- * This recognizer is just used as a base for the simple attribute recognizers.
- * @constructor
- * @extends Recognizer
- */
-
-var AttrRecognizer =
-/*#__PURE__*/
-function (_Recognizer) {
-  _inheritsLoose(AttrRecognizer, _Recognizer);
-
-  function AttrRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _Recognizer.call(this, _extends({
-      pointers: 1
-    }, options)) || this;
-  }
-  /**
-   * @private
-   * Used to check if it the recognizer receives valid input, like input.distance > 10.
-   * @memberof AttrRecognizer
-   * @param {Object} input
-   * @returns {Boolean} recognized
-   */
-
-
-  var _proto = AttrRecognizer.prototype;
-
-  _proto.attrTest = function attrTest(input) {
-    var optionPointers = this.options.pointers;
-    return optionPointers === 0 || input.pointers.length === optionPointers;
-  };
-  /**
-   * @private
-   * Process the input and return the state for the recognizer
-   * @memberof AttrRecognizer
-   * @param {Object} input
-   * @returns {*} State
-   */
-
-
-  _proto.process = function process(input) {
-    var state = this.state;
-    var eventType = input.eventType;
-    var isRecognized = state & (STATE_BEGAN | STATE_CHANGED);
-    var isValid = this.attrTest(input); // on cancel input and we've recognized before, return STATE_CANCELLED
-
-    if (isRecognized && (eventType & INPUT_CANCEL || !isValid)) {
-      return state | STATE_CANCELLED;
-    } else if (isRecognized || isValid) {
-      if (eventType & INPUT_END) {
-        return state | STATE_ENDED;
-      } else if (!(state & STATE_BEGAN)) {
-        return STATE_BEGAN;
-      }
-
-      return state | STATE_CHANGED;
-    }
-
-    return STATE_FAILED;
-  };
-
-  return AttrRecognizer;
-}(Recognizer);
-
-/**
- * @private
- * A tap is recognized when the pointer is doing a small tap/click. Multiple taps are recognized if they occur
- * between the given interval and position. The delay option can be used to recognize multi-taps without firing
- * a single tap.
- *
- * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
- * multi-taps being recognized.
- * @constructor
- * @extends Recognizer
- */
-
-var TapRecognizer =
-/*#__PURE__*/
-function (_Recognizer) {
-  _inheritsLoose(TapRecognizer, _Recognizer);
-
-  function TapRecognizer(options) {
-    var _this;
-
-    if (options === void 0) {
-      options = {};
-    }
-
-    _this = _Recognizer.call(this, _extends({
-      event: 'tap',
-      pointers: 1,
-      taps: 1,
-      interval: 300,
-      // max time between the multi-tap taps
-      time: 250,
-      // max time of the pointer to be down (like finger on the screen)
-      threshold: 9,
-      // a minimal movement is ok, but keep it low
-      posThreshold: 10
-    }, options)) || this; // previous time and center,
-    // used for tap counting
-
-    _this.pTime = false;
-    _this.pCenter = false;
-    _this._timer = null;
-    _this._input = null;
-    _this.count = 0;
-    return _this;
-  }
-
-  var _proto = TapRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_MANIPULATION];
-  };
-
-  _proto.process = function process(input) {
-    var _this2 = this;
-
-    var options = this.options;
-    var validPointers = input.pointers.length === options.pointers;
-    var validMovement = input.distance < options.threshold;
-    var validTouchTime = input.deltaTime < options.time;
-    this.reset();
-
-    if (input.eventType & INPUT_START && this.count === 0) {
-      return this.failTimeout();
-    } // we only allow little movement
-    // and we've reached an end event, so a tap is possible
-
-
-    if (validMovement && validTouchTime && validPointers) {
-      if (input.eventType !== INPUT_END) {
-        return this.failTimeout();
-      }
-
-      var validInterval = this.pTime ? input.timeStamp - this.pTime < options.interval : true;
-      var validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
-      this.pTime = input.timeStamp;
-      this.pCenter = input.center;
-
-      if (!validMultiTap || !validInterval) {
-        this.count = 1;
-      } else {
-        this.count += 1;
-      }
-
-      this._input = input; // if tap count matches we have recognized it,
-      // else it has began recognizing...
-
-      var tapCount = this.count % options.taps;
-
-      if (tapCount === 0) {
-        // no failing requirements, immediately trigger the tap event
-        // or wait as long as the multitap interval to trigger
-        if (!this.hasRequireFailures()) {
-          return STATE_RECOGNIZED;
-        } else {
-          this._timer = setTimeout(function () {
-            _this2.state = STATE_RECOGNIZED;
-
-            _this2.tryEmit();
-          }, options.interval);
-          return STATE_BEGAN;
-        }
-      }
-    }
-
-    return STATE_FAILED;
-  };
-
-  _proto.failTimeout = function failTimeout() {
-    var _this3 = this;
-
-    this._timer = setTimeout(function () {
-      _this3.state = STATE_FAILED;
-    }, this.options.interval);
-    return STATE_FAILED;
-  };
-
-  _proto.reset = function reset() {
-    clearTimeout(this._timer);
-  };
-
-  _proto.emit = function emit() {
-    if (this.state === STATE_RECOGNIZED) {
-      this._input.tapCount = this.count;
-      this.manager.emit(this.options.event, this._input);
-    }
-  };
-
-  return TapRecognizer;
-}(Recognizer);
-
-/**
- * @private
- * direction cons to string
- * @param {constant} direction
- * @returns {String}
- */
-
-function directionStr(direction) {
-  if (direction === DIRECTION_DOWN) {
-    return 'down';
-  } else if (direction === DIRECTION_UP) {
-    return 'up';
-  } else if (direction === DIRECTION_LEFT) {
-    return 'left';
-  } else if (direction === DIRECTION_RIGHT) {
-    return 'right';
-  }
-
-  return '';
-}
-
-/**
- * @private
- * Pan
- * Recognized when the pointer is down and moved in the allowed direction.
- * @constructor
- * @extends AttrRecognizer
- */
-
-var PanRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(PanRecognizer, _AttrRecognizer);
-
-  function PanRecognizer(options) {
-    var _this;
-
-    if (options === void 0) {
-      options = {};
-    }
-
-    _this = _AttrRecognizer.call(this, _extends({
-      event: 'pan',
-      threshold: 10,
-      pointers: 1,
-      direction: DIRECTION_ALL
-    }, options)) || this;
-    _this.pX = null;
-    _this.pY = null;
-    return _this;
-  }
-
-  var _proto = PanRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    var direction = this.options.direction;
-    var actions = [];
-
-    if (direction & DIRECTION_HORIZONTAL) {
-      actions.push(TOUCH_ACTION_PAN_Y);
-    }
-
-    if (direction & DIRECTION_VERTICAL) {
-      actions.push(TOUCH_ACTION_PAN_X);
-    }
-
-    return actions;
-  };
-
-  _proto.directionTest = function directionTest(input) {
-    var options = this.options;
-    var hasMoved = true;
-    var distance = input.distance;
-    var direction = input.direction;
-    var x = input.deltaX;
-    var y = input.deltaY; // lock to axis?
-
-    if (!(direction & options.direction)) {
-      if (options.direction & DIRECTION_HORIZONTAL) {
-        direction = x === 0 ? DIRECTION_NONE : x < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
-        hasMoved = x !== this.pX;
-        distance = Math.abs(input.deltaX);
-      } else {
-        direction = y === 0 ? DIRECTION_NONE : y < 0 ? DIRECTION_UP : DIRECTION_DOWN;
-        hasMoved = y !== this.pY;
-        distance = Math.abs(input.deltaY);
-      }
-    }
-
-    input.direction = direction;
-    return hasMoved && distance > options.threshold && direction & options.direction;
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    return AttrRecognizer.prototype.attrTest.call(this, input) && ( // replace with a super call
-    this.state & STATE_BEGAN || !(this.state & STATE_BEGAN) && this.directionTest(input));
-  };
-
-  _proto.emit = function emit(input) {
-    this.pX = input.deltaX;
-    this.pY = input.deltaY;
-    var direction = directionStr(input.direction);
-
-    if (direction) {
-      input.additionalEvent = this.options.event + direction;
-    }
-
-    _AttrRecognizer.prototype.emit.call(this, input);
-  };
-
-  return PanRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Swipe
- * Recognized when the pointer is moving fast (velocity), with enough distance in the allowed direction.
- * @constructor
- * @extends AttrRecognizer
- */
-
-var SwipeRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(SwipeRecognizer, _AttrRecognizer);
-
-  function SwipeRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _AttrRecognizer.call(this, _extends({
-      event: 'swipe',
-      threshold: 10,
-      velocity: 0.3,
-      direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
-      pointers: 1
-    }, options)) || this;
-  }
-
-  var _proto = SwipeRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return PanRecognizer.prototype.getTouchAction.call(this);
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    var direction = this.options.direction;
-    var velocity;
-
-    if (direction & (DIRECTION_HORIZONTAL | DIRECTION_VERTICAL)) {
-      velocity = input.overallVelocity;
-    } else if (direction & DIRECTION_HORIZONTAL) {
-      velocity = input.overallVelocityX;
-    } else if (direction & DIRECTION_VERTICAL) {
-      velocity = input.overallVelocityY;
-    }
-
-    return _AttrRecognizer.prototype.attrTest.call(this, input) && direction & input.offsetDirection && input.distance > this.options.threshold && input.maxPointers === this.options.pointers && abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
-  };
-
-  _proto.emit = function emit(input) {
-    var direction = directionStr(input.offsetDirection);
-
-    if (direction) {
-      this.manager.emit(this.options.event + direction, input);
-    }
-
-    this.manager.emit(this.options.event, input);
-  };
-
-  return SwipeRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Pinch
- * Recognized when two or more pointers are moving toward (zoom-in) or away from each other (zoom-out).
- * @constructor
- * @extends AttrRecognizer
- */
-
-var PinchRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(PinchRecognizer, _AttrRecognizer);
-
-  function PinchRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _AttrRecognizer.call(this, _extends({
-      event: 'pinch',
-      threshold: 0,
-      pointers: 2
-    }, options)) || this;
-  }
-
-  var _proto = PinchRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_NONE];
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
-  };
-
-  _proto.emit = function emit(input) {
-    if (input.scale !== 1) {
-      var inOut = input.scale < 1 ? 'in' : 'out';
-      input.additionalEvent = this.options.event + inOut;
-    }
-
-    _AttrRecognizer.prototype.emit.call(this, input);
-  };
-
-  return PinchRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Rotate
- * Recognized when two or more pointer are moving in a circular motion.
- * @constructor
- * @extends AttrRecognizer
- */
-
-var RotateRecognizer =
-/*#__PURE__*/
-function (_AttrRecognizer) {
-  _inheritsLoose(RotateRecognizer, _AttrRecognizer);
-
-  function RotateRecognizer(options) {
-    if (options === void 0) {
-      options = {};
-    }
-
-    return _AttrRecognizer.call(this, _extends({
-      event: 'rotate',
-      threshold: 0,
-      pointers: 2
-    }, options)) || this;
-  }
-
-  var _proto = RotateRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_NONE];
-  };
-
-  _proto.attrTest = function attrTest(input) {
-    return _AttrRecognizer.prototype.attrTest.call(this, input) && (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
-  };
-
-  return RotateRecognizer;
-}(AttrRecognizer);
-
-/**
- * @private
- * Press
- * Recognized when the pointer is down for x ms without any movement.
- * @constructor
- * @extends Recognizer
- */
-
-var PressRecognizer =
-/*#__PURE__*/
-function (_Recognizer) {
-  _inheritsLoose(PressRecognizer, _Recognizer);
-
-  function PressRecognizer(options) {
-    var _this;
-
-    if (options === void 0) {
-      options = {};
-    }
-
-    _this = _Recognizer.call(this, _extends({
-      event: 'press',
-      pointers: 1,
-      time: 251,
-      // minimal time of the pointer to be pressed
-      threshold: 9
-    }, options)) || this;
-    _this._timer = null;
-    _this._input = null;
-    return _this;
-  }
-
-  var _proto = PressRecognizer.prototype;
-
-  _proto.getTouchAction = function getTouchAction() {
-    return [TOUCH_ACTION_AUTO];
-  };
-
-  _proto.process = function process(input) {
-    var _this2 = this;
-
-    var options = this.options;
-    var validPointers = input.pointers.length === options.pointers;
-    var validMovement = input.distance < options.threshold;
-    var validTime = input.deltaTime > options.time;
-    this._input = input; // we only allow little movement
-    // and we've reached an end event, so a tap is possible
-
-    if (!validMovement || !validPointers || input.eventType & (INPUT_END | INPUT_CANCEL) && !validTime) {
-      this.reset();
-    } else if (input.eventType & INPUT_START) {
-      this.reset();
-      this._timer = setTimeout(function () {
-        _this2.state = STATE_RECOGNIZED;
-
-        _this2.tryEmit();
-      }, options.time);
-    } else if (input.eventType & INPUT_END) {
-      return STATE_RECOGNIZED;
-    }
-
-    return STATE_FAILED;
-  };
-
-  _proto.reset = function reset() {
-    clearTimeout(this._timer);
-  };
-
-  _proto.emit = function emit(input) {
-    if (this.state !== STATE_RECOGNIZED) {
-      return;
-    }
-
-    if (input && input.eventType & INPUT_END) {
-      this.manager.emit(this.options.event + "up", input);
-    } else {
-      this._input.timeStamp = now();
-      this.manager.emit(this.options.event, this._input);
-    }
-  };
-
-  return PressRecognizer;
-}(Recognizer);
-
-/**
- * @private
  * wrap a method with a deprecation warning and stack trace
  * @param {Function} method
  * @param {String} name
@@ -6405,23 +6417,11 @@ function () {
     }
 
     return new Manager(element, _extends({
-      recognizers: [// RecognizerClass, options, [recognizeWith, ...], [requireFailure, ...]
-      [RotateRecognizer, {
-        enable: false
-      }], [PinchRecognizer, {
-        enable: false
-      }, ['rotate']], [SwipeRecognizer, {
-        direction: DIRECTION_HORIZONTAL
-      }], [PanRecognizer, {
-        direction: DIRECTION_HORIZONTAL
-      }, ['swipe']], [TapRecognizer], [TapRecognizer, {
-        event: 'doubletap',
-        taps: 2
-      }, ['tap']], [PressRecognizer]]
+      recognizers: preset.concat()
     }, options));
   };
 
-  Hammer.VERSION = "2.0.16";
+  Hammer.VERSION = "2.0.17-rc";
   Hammer.DIRECTION_ALL = DIRECTION_ALL;
   Hammer.DIRECTION_DOWN = DIRECTION_DOWN;
   Hammer.DIRECTION_LEFT = DIRECTION_LEFT;
@@ -6476,9 +6476,15 @@ function () {
   Hammer.hasParent = hasParent;
   Hammer.addEventListeners = addEventListeners;
   Hammer.removeEventListeners = removeEventListeners;
-  Hammer.defaults = defaults;
+  Hammer.defaults = assign$1({}, defaults, {
+    preset: preset
+  });
   return Hammer;
 }();
+
+//  style loader but by script tag, not by the loader.
+
+var defaults$1 = Hammer.defaults;
 
 var hammer_esm = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -6535,7 +6541,7 @@ var hammer_esm = /*#__PURE__*/Object.freeze({
 	hasParent: hasParent,
 	addEventListeners: addEventListeners,
 	removeEventListeners: removeEventListeners,
-	defaults: defaults
+	defaults: defaults$1
 });
 
 var require$$0 = getCjsExportFromNamespace(hammer_esm);
