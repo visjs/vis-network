@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-12-20T10:55:47Z
+ * @date    2019-12-21T20:04:33Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -5360,25 +5360,30 @@
 
 	var sharedStore$1 = store$2;
 
-	var shared$1 = createCommonjsModule(function (module) {
-	(module.exports = function (key, value) {
-	  return sharedStore$1[key] || (sharedStore$1[key] = value !== undefined ? value : {});
-	})('versions', []).push({
-	  version: '3.4.7',
-	  mode:  'pure' ,
-	  copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
-	});
-	});
-
 	var functionToString$1 = Function.toString;
 
-	var inspectSource$1 = shared$1('inspectSource', function (it) {
-	  return functionToString$1.call(it);
-	});
+	// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+	if (typeof sharedStore$1.inspectSource != 'function') {
+	  sharedStore$1.inspectSource = function (it) {
+	    return functionToString$1.call(it);
+	  };
+	}
+
+	var inspectSource$1 = sharedStore$1.inspectSource;
 
 	var WeakMap$2 = global_1.WeakMap;
 
 	var nativeWeakMap$1 = typeof WeakMap$2 === 'function' && /native code/.test(inspectSource$1(WeakMap$2));
+
+	var shared$1 = createCommonjsModule(function (module) {
+	(module.exports = function (key, value) {
+	  return sharedStore$1[key] || (sharedStore$1[key] = value !== undefined ? value : {});
+	})('versions', []).push({
+	  version: '3.6.0',
+	  mode:  'pure' ,
+	  copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
+	});
+	});
 
 	var id$1 = 0;
 	var postfix$1 = Math.random();
@@ -5634,48 +5639,76 @@
 
 	var html$1 = getBuiltIn$1('document', 'documentElement');
 
+	var GT$1 = '>';
+	var LT$1 = '<';
+	var PROTOTYPE$2 = 'prototype';
+	var SCRIPT$1 = 'script';
 	var IE_PROTO$3 = sharedKey$1('IE_PROTO');
 
-	var PROTOTYPE$2 = 'prototype';
-	var Empty = function () { /* empty */ };
+	var EmptyConstructor$1 = function () { /* empty */ };
+
+	var scriptTag$1 = function (content) {
+	  return LT$1 + SCRIPT$1 + GT$1 + content + LT$1 + '/' + SCRIPT$1 + GT$1;
+	};
+
+	// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+	var NullProtoObjectViaActiveX$1 = function (activeXDocument) {
+	  activeXDocument.write(scriptTag$1(''));
+	  activeXDocument.close();
+	  var temp = activeXDocument.parentWindow.Object;
+	  activeXDocument = null; // avoid memory leak
+	  return temp;
+	};
 
 	// Create object with fake `null` prototype: use iframe Object with cleared prototype
-	var createDict = function () {
+	var NullProtoObjectViaIFrame$1 = function () {
 	  // Thrash, waste and sodomy: IE GC bug
 	  var iframe = documentCreateElement('iframe');
-	  var length = enumBugKeys$1.length;
-	  var lt = '<';
-	  var script = 'script';
-	  var gt = '>';
-	  var js = 'java' + script + ':';
+	  var JS = 'java' + SCRIPT$1 + ':';
 	  var iframeDocument;
 	  iframe.style.display = 'none';
 	  html$1.appendChild(iframe);
-	  iframe.src = String(js);
+	  // https://github.com/zloirock/core-js/issues/475
+	  iframe.src = String(JS);
 	  iframeDocument = iframe.contentWindow.document;
 	  iframeDocument.open();
-	  iframeDocument.write(lt + script + gt + 'document.F=Object' + lt + '/' + script + gt);
+	  iframeDocument.write(scriptTag$1('document.F=Object'));
 	  iframeDocument.close();
-	  createDict = iframeDocument.F;
-	  while (length--) delete createDict[PROTOTYPE$2][enumBugKeys$1[length]];
-	  return createDict();
+	  return iframeDocument.F;
 	};
+
+	// Check for document.domain and active x support
+	// No need to use active x approach when document.domain is not set
+	// see https://github.com/es-shims/es5-shim/issues/150
+	// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+	// avoid IE GC bug
+	var activeXDocument$1;
+	var NullProtoObject$1 = function () {
+	  try {
+	    /* global ActiveXObject */
+	    activeXDocument$1 = document.domain && new ActiveXObject('htmlfile');
+	  } catch (error) { /* ignore */ }
+	  NullProtoObject$1 = activeXDocument$1 ? NullProtoObjectViaActiveX$1(activeXDocument$1) : NullProtoObjectViaIFrame$1();
+	  var length = enumBugKeys$1.length;
+	  while (length--) delete NullProtoObject$1[PROTOTYPE$2][enumBugKeys$1[length]];
+	  return NullProtoObject$1();
+	};
+
+	hiddenKeys$2[IE_PROTO$3] = true;
 
 	// `Object.create` method
 	// https://tc39.github.io/ecma262/#sec-object.create
 	var objectCreate$1 = Object.create || function create(O, Properties) {
 	  var result;
 	  if (O !== null) {
-	    Empty[PROTOTYPE$2] = anObject(O);
-	    result = new Empty();
-	    Empty[PROTOTYPE$2] = null;
+	    EmptyConstructor$1[PROTOTYPE$2] = anObject(O);
+	    result = new EmptyConstructor$1();
+	    EmptyConstructor$1[PROTOTYPE$2] = null;
 	    // add "__proto__" for Object.getPrototypeOf polyfill
 	    result[IE_PROTO$3] = O;
-	  } else result = createDict();
+	  } else result = NullProtoObject$1();
 	  return Properties === undefined ? result : objectDefineProperties$1(result, Properties);
 	};
-
-	hiddenKeys$2[IE_PROTO$3] = true;
 
 	var TO_STRING_TAG$4 = wellKnownSymbol$1('toStringTag');
 	var test$1 = {};
@@ -13042,12 +13075,12 @@
 	var IE_PROTO$1$1 = sharedKey$2('IE_PROTO');
 	var PROTOTYPE$3 = 'prototype';
 
-	var Empty$1 = function () {
+	var Empty = function () {
 	  /* empty */
 	}; // Create object with fake `null` prototype: use iframe Object with cleared prototype
 
 
-	var createDict$1 = function () {
+	var createDict = function () {
 	  // Thrash, waste and sodomy: IE GC bug
 	  var iframe = documentCreateElement$2('iframe');
 	  var length = enumBugKeys$2.length;
@@ -13063,11 +13096,11 @@
 	  iframeDocument.open();
 	  iframeDocument.write(lt + script + gt + 'document.F=Object' + lt + '/' + script + gt);
 	  iframeDocument.close();
-	  createDict$1 = iframeDocument.F;
+	  createDict = iframeDocument.F;
 
-	  while (length--) delete createDict$1[PROTOTYPE$3][enumBugKeys$2[length]];
+	  while (length--) delete createDict[PROTOTYPE$3][enumBugKeys$2[length]];
 
-	  return createDict$1();
+	  return createDict();
 	}; // `Object.create` method
 	// https://tc39.github.io/ecma262/#sec-object.create
 
@@ -13076,12 +13109,12 @@
 	  var result;
 
 	  if (O !== null) {
-	    Empty$1[PROTOTYPE$3] = anObject$2(O);
-	    result = new Empty$1();
-	    Empty$1[PROTOTYPE$3] = null; // add "__proto__" for Object.getPrototypeOf polyfill
+	    Empty[PROTOTYPE$3] = anObject$2(O);
+	    result = new Empty();
+	    Empty[PROTOTYPE$3] = null; // add "__proto__" for Object.getPrototypeOf polyfill
 
 	    result[IE_PROTO$1$1] = O;
-	  } else result = createDict$1();
+	  } else result = createDict();
 
 	  return Properties === undefined ? result : objectDefineProperties$2(result, Properties);
 	};
@@ -16896,12 +16929,12 @@
 	var IE_PROTO$2$1 = sharedKey$1$1('IE_PROTO');
 	var PROTOTYPE$2$1 = 'prototype';
 
-	var Empty$1$1 = function () {
+	var Empty$1 = function () {
 	  /* empty */
 	}; // Create object with fake `null` prototype: use iframe Object with cleared prototype
 
 
-	var createDict$1$1 = function () {
+	var createDict$1 = function () {
 	  // Thrash, waste and sodomy: IE GC bug
 	  var iframe = documentCreateElement$1$1('iframe');
 	  var length = enumBugKeys$1$1.length;
@@ -16917,11 +16950,11 @@
 	  iframeDocument.open();
 	  iframeDocument.write(lt + script + gt + 'document.F=Object' + lt + '/' + script + gt);
 	  iframeDocument.close();
-	  createDict$1$1 = iframeDocument.F;
+	  createDict$1 = iframeDocument.F;
 
-	  while (length--) delete createDict$1$1[PROTOTYPE$2$1][enumBugKeys$1$1[length]];
+	  while (length--) delete createDict$1[PROTOTYPE$2$1][enumBugKeys$1$1[length]];
 
-	  return createDict$1$1();
+	  return createDict$1();
 	}; // `Object.create` method
 	// https://tc39.github.io/ecma262/#sec-object.create
 
@@ -16930,12 +16963,12 @@
 	  var result;
 
 	  if (O !== null) {
-	    Empty$1$1[PROTOTYPE$2$1] = anObject$1$1(O);
-	    result = new Empty$1$1();
-	    Empty$1$1[PROTOTYPE$2$1] = null; // add "__proto__" for Object.getPrototypeOf polyfill
+	    Empty$1[PROTOTYPE$2$1] = anObject$1$1(O);
+	    result = new Empty$1();
+	    Empty$1[PROTOTYPE$2$1] = null; // add "__proto__" for Object.getPrototypeOf polyfill
 
 	    result[IE_PROTO$2$1] = O;
-	  } else result = createDict$1$1();
+	  } else result = createDict$1();
 
 	  return Properties === undefined ? result : objectDefineProperties$1$1(result, Properties);
 	};
