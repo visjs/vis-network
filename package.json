@@ -84,7 +84,7 @@
     "@babel/preset-typescript": "7.7.7",
     "@babel/register": "7.7.7",
     "@babel/runtime-corejs3": "7.7.7",
-    "@egjs/hammerjs": "2.0.16",
+    "@egjs/hammerjs": "2.0.17",
     "@semantic-release/commit-analyzer": "6.3.3",
     "@semantic-release/github": "5.5.5",
     "@semantic-release/npm": "5.3.4",
@@ -131,9 +131,9 @@
     "start-server-and-test": "1.10.6",
     "timsort": "0.3.0",
     "typescript": "3.7.2",
-    "vis-data": "6.2.4",
+    "vis-data": "6.2.5",
     "vis-dev-utils": "1.1.0",
-    "vis-util": "2.0.1"
+    "vis-util": "2.0.2"
   },
   "collective": {
     "type": "opencollective",
