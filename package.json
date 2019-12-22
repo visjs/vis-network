@@ -127,7 +127,7 @@
     "rollup-plugin-typescript2": "0.25.3",
     "semantic-release": "15.13.31",
     "serve": "11.2.0",
-    "sinon": "7.5.0",
+    "sinon": "8.0.0",
     "start-server-and-test": "1.10.6",
     "timsort": "0.3.0",
     "typescript": "3.7.2",
