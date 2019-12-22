@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-12-22T20:24:43Z
+ * @date    2019-12-22T21:03:02Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -12324,8 +12324,8 @@
 	 * 
 	 * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
 	 * 
-	 * @version 6.2.5
-	 * @date    2019-12-19T22:51:12Z
+	 * @version 6.3.0
+	 * @date    2019-12-22T20:33:43Z
 	 * 
 	 * @copyright (c) 2011-2017 Almende B.V, http://almende.com
 	 * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
@@ -24926,6 +24926,11 @@
 	function ownKeys$2$1(object, enumerableOnly) { var keys = keys$6(object); if (getOwnPropertySymbols$2$1) { var symbols = getOwnPropertySymbols$2$1(object); if (enumerableOnly) symbols = filter$2$1(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3$1(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context9; forEach$2$1(_context9 = ownKeys$2$1(Object(source), true)).call(_context9, function (key) { defineProperty$6$1(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2$1) { defineProperties$1$1(target, getOwnPropertyDescriptors$2$1(source)); } else { var _context10; forEach$2$1(_context10 = ownKeys$2$1(Object(source))).call(_context10, function (key) { defineProperty$1$1(target, key, getOwnPropertyDescriptor$3$1(source, key)); }); } } return target; }
+
+	var warnTypeCorectionDeprecation = function warnTypeCorectionDeprecation() {
+	  console.warn("Type coercion has been deprecated. " + "Please, use data pipes instead. " + "See https://visjs.github.io/vis-data/data/datapipe.html#TypeCoercion for more details with working migration example.");
+	  console.trace();
+	};
 	/**
 	 * # DataSet
 	 *
@@ -24975,20 +24980,12 @@
 	 *   }
 	 * });
 	 * console.log('filtered items', items);
-	 *
-	 * // retrieve formatted items
-	 * var items = data.get({
-	 *   fields: ['id', 'date'],
-	 *   type: {
-	 *     date: 'ISODate'
-	 *   }
-	 * });
-	 * console.log('formatted items', items);
 	 * ```
 	 *
 	 * @typeParam Item - Item type that may or may not have an id.
 	 * @typeParam IdProp - Name of the property that contains the id.
 	 */
+
 
 	var DataSet =
 	/*#__PURE__*/
@@ -25025,6 +25022,8 @@
 	    // from everything to everything (also from ISODate to Number for example)
 
 	    if (_this._options.type) {
+	      warnTypeCorectionDeprecation();
+
 	      var fields = keys$6(_this._options.type);
 
 	      for (var i = 0, len = fields.length; i < len; i++) {
@@ -25944,6 +25943,8 @@
 	      }
 
 	      if (fieldType) {
+	        warnTypeCorectionDeprecation();
+
 	        for (var _i10 = 0, _len10 = values.length; _i10 < _len10; _i10++) {
 	          values[_i10] = convert(values[_i10], fieldType);
 	        }
@@ -25984,6 +25985,10 @@
 	        var field = fields[i];
 	        var fieldType = this._type[field]; // type may be undefined
 
+	        if (fieldType != null) {
+	          warnTypeCorectionDeprecation();
+	        }
+
 	        d[field] = convert(item[field], fieldType);
 	      }
 
@@ -26018,6 +26023,7 @@
 	      var fields = keys$6(raw);
 
 	      if (types) {
+	        warnTypeCorectionDeprecation();
 	        converted = {};
 
 	        for (var i = 0, len = fields.length; i < len; i++) {
@@ -26067,6 +26073,10 @@
 	      for (var i = 0, len = fields.length; i < len; i++) {
 	        var field = fields[i];
 	        var fieldType = this._type[field]; // type may be undefined
+
+	        if (fieldType != null) {
+	          warnTypeCorectionDeprecation();
+	        }
 
 	        d[field] = convert(item[field], fieldType);
 	      }
