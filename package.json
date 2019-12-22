@@ -131,7 +131,7 @@
     "start-server-and-test": "1.10.6",
     "timsort": "0.3.0",
     "typescript": "3.7.2",
-    "vis-data": "6.2.5",
+    "vis-data": "6.3.0",
     "vis-dev-utils": "1.1.0",
     "vis-util": "2.0.2"
   },
