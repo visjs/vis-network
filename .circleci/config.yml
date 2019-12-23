@@ -150,7 +150,7 @@ jobs:
               --dist . \
               --message "chore: update to $(git rev-parse HEAD) [ci skip]" \
               --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" \
-              --src "{{coverage,docs,examples,$(node -e 'process.stdout.write(require("./package.json").files.join(","))')}/**/*,*.{html,md}}"
+              --src "{{common-docs-files,coverage,docs,docs-kr,examples,$(node -e 'process.stdout.write(require("./package.json").files.join(","))')}/**/*,*.{html,md}}"
 
   release:
     executor: node

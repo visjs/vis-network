@@ -3,11 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "lib": ["esnext", "dom"],
+    "module": "es2015",
     "outDir": ".",
-    "strict": true,
-    "target": "es5",
+    "target": "es2015",
     "types": ["cypress"]
   },
-  "exclude": ["../node_modules"],
+  "exclude": ["../node_modules", "./plugins", "./screenshots", "./videos"],
   "include": ["**/*.ts"]
 }
