@@ -108,7 +108,7 @@ context("Clicks", () => {
 
   describe("Clicks", function(): void {
     clicks.forEach(({ name, shouldTrigger, x, y }): void => {
-      describe(`At ${x}x${y}`, function(): void {
+      describe(`At ${x}x${y} ${name || ""}`, function(): void {
         const events: VisEvent[] = [];
 
         it("Triggering and capturing", () => {
