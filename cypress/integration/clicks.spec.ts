@@ -146,7 +146,7 @@ context("Clicks", () => {
               x - canvasOffsetFromHTML.x
             );
             expect(events[0].pointer.DOM.y).to.equal(
-              x - canvasOffsetFromHTML.y
+              y - canvasOffsetFromHTML.y
             );
 
             if (name) {
