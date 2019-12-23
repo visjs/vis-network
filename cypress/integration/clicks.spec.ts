@@ -1,4 +1,4 @@
-type VisEvent = any;
+import { VisEvent } from "./helpers";
 
 context("Clicks", () => {
   /*
