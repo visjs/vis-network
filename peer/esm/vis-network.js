@@ -1,16 +1,16 @@
 /**
- * vis-network - network
- * http://visjs.org/
+ * vis-network
+ * https://visjs.github.io/vis-network/
  *
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2019-12-30T16:16:15Z
+ * @date    2019-12-30T19:25:23.814Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
- * @copyright (c) 2018-2019 visjs contributors, https://github.com/visjs
+ * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
  *
- * @license 
+ * @license
  * vis.js is dual licensed under both
  *
  *   1. The Apache 2.0 License
@@ -23,6 +23,7 @@
  *
  * vis.js may be distributed under either license.
  */
+
 import util__default, { extend as extend$1, topMost, forEach as forEach$4, deepExtend, overrideOpacity, copyAndExtendArray, copyArray, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, bridgeObject, selectiveDeepExtend, isString, HSVToHex, randomUUID, addEventListener, removeEventListener, easingFunctions, getAbsoluteLeft, getAbsoluteTop, recursiveDOMDelete, isValidRGB, isValidRGBA, isValidHex, hexToRGB, RGBToHSV, HSVToRGB } from 'vis-util';
 import keycharm from 'keycharm';
 import { DataSet, DataView } from 'vis-data';
