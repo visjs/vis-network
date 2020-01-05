@@ -132,7 +132,7 @@
     "timsort": "0.3.0",
     "typescript": "3.7.2",
     "vis-data": "6.3.0",
-    "vis-dev-utils": "1.2.0",
+    "vis-dev-utils": "2.0.0",
     "vis-util": "2.0.2"
   },
   "collective": {
