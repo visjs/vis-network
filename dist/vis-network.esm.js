@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-12T19:22:44.081Z
+ * @date    2020-01-12T19:23:52.764Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -42646,7 +42646,18 @@ function () {
         options.nodes = this.body.nodeIndices;
       }
 
-      if (initialZoom === true) {
+      var canvasWidth = this.canvas.frame.canvas.clientWidth;
+      var canvasHeight = this.canvas.frame.canvas.clientHeight;
+
+      if (canvasWidth === 0 || canvasHeight === 0) {
+        // There's no point in trying to fit into zero sized canvas. This could
+        // potentially even result in invalid values being computed. For example
+        // for network without nodes and zero sized canvas the zoom level would
+        // end up being computed as 0/0 which results in NaN. In any other case
+        // this would be 0/something which is again pointless to compute.
+        zoomLevel = 1;
+        range = NetworkUtil.getRange(this.body.nodes, options.nodes);
+      } else if (initialZoom === true) {
         // check if more than half of the nodes have a predefined position. If so, we use the range, not the approximation.
         var positionDefined = 0;
 
@@ -42670,15 +42681,15 @@ function () {
         zoomLevel = 12.662 / (numberOfNodes + 7.4147) + 0.0964822; // this is obtained from fitting a dataset from 5 points with scale levels that looked good.
         // correct for larger canvasses.
 
-        var factor = Math.min(this.canvas.frame.canvas.clientWidth / 600, this.canvas.frame.canvas.clientHeight / 600);
+        var factor = Math.min(canvasWidth / 600, canvasHeight / 600);
         zoomLevel *= factor;
       } else {
         this.body.emitter.emit("_resizeNodes");
         range = NetworkUtil.getRange(this.body.nodes, options.nodes);
         var xDistance = Math.abs(range.maxX - range.minX) * 1.1;
         var yDistance = Math.abs(range.maxY - range.minY) * 1.1;
-        var xZoomLevel = this.canvas.frame.canvas.clientWidth / xDistance;
-        var yZoomLevel = this.canvas.frame.canvas.clientHeight / yDistance;
+        var xZoomLevel = canvasWidth / xDistance;
+        var yZoomLevel = canvasHeight / yDistance;
         zoomLevel = xZoomLevel <= yZoomLevel ? xZoomLevel : yZoomLevel;
       }
 
