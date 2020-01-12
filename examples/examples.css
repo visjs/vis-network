@@ -1,0 +1,68 @@
+.examples-root {
+  margin: 50px auto 200px;
+  min-width: calc(200px + 2em);
+  width: calc(100vw - 200px);
+}
+
+.examples-root a {
+  color: #2b7ce9;
+}
+.examples-root a:visited {
+  color: #46417a;
+}
+
+.examples-root .example-link {
+  margin: 1em;
+  position: relative;
+  width: 200px;
+
+  display: inline-block;
+}
+
+.examples-root .example-link .example-image {
+  display: block;
+  height: 200px;
+  margin-top: 1ex;
+  position: relative;
+  width: 200px;
+}
+.examples-root .example-link .example-image > img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 200px;
+  height: 200px;
+
+  background: #2b7ce9;
+  border: 1px solid #2b7ce9;
+  color: #ffffff;
+
+  transition: transform 0.5s ease 0s, z-index 0.5s linear 0s;
+  z-index: 1;
+}
+.examples-root .example-link:hover .example-image > img {
+  transform: translate(0px, 95px) scale(2, 2);
+  z-index: 100;
+}
+
+.examples-root .example-header > *:last-child {
+  margin-left: 0.5em;
+}
+.examples-root .icon {
+  height: 1.5em;
+  margin-bottom: -0.25em;
+  width: 1.5em;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+}
+.examples-root .icon.jsfiddle {
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%232b7ce9' d='M16.45,17.5C17.45,17.5 18.3,17.15 19,16.5C19.67,15.8 20,15 20,14C20,13.05 19.66,12.22 18.96,11.53C18.26,10.84 17.41,10.5 16.41,10.5C15.47,10.5 14.64,10.83 13.92,11.5L9.14,15.56C8.7,16 8.17,16.22 7.55,16.22C6.92,16.22 6.39,16 5.95,15.56C5.5,15.13 5.3,14.61 5.3,14C5.3,13.42 5.5,12.91 5.95,12.47C6.39,12.03 6.92,11.81 7.55,11.81C8.14,11.81 8.69,12.03 9.19,12.47L9.94,13.13L10.92,12.23L10.08,11.53C9.39,10.84 8.55,10.5 7.55,10.5C6.58,10.5 5.74,10.84 5.04,11.53C4.34,12.22 4,13.05 4,14C4,15 4.34,15.8 5.04,16.5C5.74,17.15 6.59,17.5 7.59,17.5C8.53,17.5 9.36,17.16 10.08,16.5L14.86,12.42C15.27,12 15.8,11.81 16.45,11.81C17.08,11.81 17.61,12.03 18.05,12.47C18.5,12.91 18.7,13.42 18.7,14C18.7,14.61 18.5,15.13 18.05,15.56C17.61,16 17.08,16.22 16.45,16.22C15.89,16.22 15.34,16 14.81,15.5L14.06,14.86L13.08,15.75L13.92,16.45C14.61,17.14 15.45,17.5 16.45,17.5M19.36,10.03C20.64,10.13 21.73,10.65 22.64,11.6C23.55,12.55 24,13.69 24,15C24,16.38 23.5,17.55 22.5,18.54C21.54,19.5 20.36,20 19,20H6C4.34,20 2.93,19.43 1.76,18.26C0.59,17.09 0,15.67 0,14C0,12.55 0.5,11.23 1.57,10.05C2.62,8.88 3.88,8.22 5.34,8.06C6,6.84 6.92,5.86 8.11,5.11C9.3,4.36 10.59,4 12,4C13.69,4 15.26,4.58 16.71,5.77C18.16,6.95 19.05,8.38 19.36,10.03Z' /%3E%3C/svg%3E");
+}
+.examples-root .icon.codepen {
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%232b7ce9' d='M15.09,12L12,14.08V14.09L8.91,12L12,9.92V9.92L15.09,12M12,2C11.84,2 11.68,2.06 11.53,2.15L2.5,8.11C2.27,8.22 2.09,8.43 2,8.67V14.92C2,15.33 2,15.33 2.15,15.53L11.53,21.86C11.67,21.96 11.84,22 12,22C12.16,22 12.33,21.95 12.47,21.85L21.85,15.5C22,15.33 22,15.33 22,14.92V8.67C21.91,8.42 21.73,8.22 21.5,8.1L12.47,2.15C12.32,2.05 12.16,2 12,2M16.58,13L19.59,15.04L12.83,19.6V15.53L16.58,13M19.69,8.9L16.58,11L12.83,8.47V4.38L19.69,8.9M20.33,10.47V13.53L18.07,12L20.33,10.47M7.42,13L11.17,15.54V19.6L4.41,15.04L7.42,13M4.31,8.9L11.17,4.39V8.5L7.42,11L4.31,8.9M3.67,10.5L5.93,12L3.67,13.54V10.5Z' /%3E%3C/svg%3E");
+}

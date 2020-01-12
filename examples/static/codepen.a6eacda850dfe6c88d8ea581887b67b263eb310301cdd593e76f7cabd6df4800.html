@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Example Applications | Neighbourhood Highlighting
+    </title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 800px;\n  height: 800px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;h2&gt;Dynamic Data - Neighbourhood Highlight&lt;/h2&gt;\n&lt;div style=\"width:800px; font-size:14px;\"&gt;\n  This example shows the power of the DataSet. Once a node is clicked, all nodes\n  are greyed out except for the first and second order connected nodes. In this\n  example we show how you can determine the order of connection per node as well\n  as applying individual styling to the nodes based on whether or not they are\n  connected to the selected node. The code doing the highlighting only takes\n  about 1ms, the rest of the time is the redrawing of the network (9200\n  edges..).\n  &lt;br /&gt;&lt;br /&gt;\n&lt;/div&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var network;\nvar allNodes;\nvar highlightActive = false;\n\nvar nodesDataset = new vis.DataSet(nodes); // these come from WorldCup2014.js\nvar edgesDataset = new vis.DataSet(edges); // these come from WorldCup2014.js\n\nfunction redrawAll() {\n  var container = document.getElementById(\"mynetwork\");\n  var options = {\n    nodes: {\n      shape: \"dot\",\n      scaling: {\n        min: 10,\n        max: 30,\n        label: {\n          min: 8,\n          max: 30,\n          drawThreshold: 12,\n          maxVisible: 20\n        }\n      },\n      font: {\n        size: 12,\n        face: \"Tahoma\"\n      }\n    },\n    edges: {\n      width: 0.15,\n      color: { inherit: \"from\" },\n      smooth: {\n        type: \"continuous\"\n      }\n    },\n    physics: false,\n    interaction: {\n      tooltipDelay: 200,\n      hideEdgesOnDrag: true,\n      hideEdgesOnZoom: true\n    }\n  };\n  var data = { nodes: nodesDataset, edges: edgesDataset }; // Note: data is coming from ./datasources/WorldCup2014.js\n\n  network = new vis.Network(container, data, options);\n\n  // get a JSON object\n  allNodes = nodesDataset.get({ returnType: \"Object\" });\n\n  network.on(\"click\", neighbourhoodHighlight);\n}\n\nfunction neighbourhoodHighlight(params) {\n  // if something is selected:\n  if (params.nodes.length &gt; 0) {\n    highlightActive = true;\n    var i, j;\n    var selectedNode = params.nodes[0];\n    var degrees = 2;\n\n    // mark all nodes as hard to read.\n    for (var nodeId in allNodes) {\n      allNodes[nodeId].color = \"rgba(200,200,200,0.5)\";\n      if (allNodes[nodeId].hiddenLabel === undefined) {\n        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;\n        allNodes[nodeId].label = undefined;\n      }\n    }\n    var connectedNodes = network.getConnectedNodes(selectedNode);\n    var allConnectedNodes = [];\n\n    // get the second degree nodes\n    for (i = 1; i &lt; degrees; i++) {\n      for (j = 0; j &lt; connectedNodes.length; j++) {\n        allConnectedNodes = allConnectedNodes.concat(\n          network.getConnectedNodes(connectedNodes[j])\n        );\n      }\n    }\n\n    // all second degree nodes get a different color and their label back\n    for (i = 0; i &lt; allConnectedNodes.length; i++) {\n      allNodes[allConnectedNodes[i]].color = \"rgba(150,150,150,0.75)\";\n      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {\n        allNodes[allConnectedNodes[i]].label =\n          allNodes[allConnectedNodes[i]].hiddenLabel;\n        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;\n      }\n    }\n\n    // all first degree nodes get their own color and their label back\n    for (i = 0; i &lt; connectedNodes.length; i++) {\n      allNodes[connectedNodes[i]].color = undefined;\n      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {\n        allNodes[connectedNodes[i]].label =\n          allNodes[connectedNodes[i]].hiddenLabel;\n        allNodes[connectedNodes[i]].hiddenLabel = undefined;\n      }\n    }\n\n    // the main node gets its own color and its label back.\n    allNodes[selectedNode].color = undefined;\n    if (allNodes[selectedNode].hiddenLabel !== undefined) {\n      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;\n      allNodes[selectedNode].hiddenLabel = undefined;\n    }\n  } else if (highlightActive === true) {\n    // reset all nodes\n    for (var nodeId in allNodes) {\n      allNodes[nodeId].color = undefined;\n      if (allNodes[nodeId].hiddenLabel !== undefined) {\n        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;\n        allNodes[nodeId].hiddenLabel = undefined;\n      }\n    }\n    highlightActive = false;\n  }\n\n  // transform the object into an array\n  var updateArray = [];\n  for (nodeId in allNodes) {\n    if (allNodes.hasOwnProperty(nodeId)) {\n      updateArray.push(allNodes[nodeId]);\n    }\n  }\n  nodesDataset.update(updateArray);\n}\n\nredrawAll();\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js;https://visjs.github.io/vis-network/examples/network/datasources/WorldCup2014.js","title":"Vis Network | Example Applications | Neighbourhood Highlighting"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

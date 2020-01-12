@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Data | Scaling Labels</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"html,\nbody {\n  font: 10pt arial;\n}\n#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;p&gt;\n  Scale nodes and edges depending on their value. Hover over edges to get a\n  popup with more information.\n&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var nodes = null;\nvar edges = null;\nvar network = null;\n\nfunction draw() {\n  // create people.\n  // value corresponds with the age of the person\n  nodes = [\n    { id: 1, value: 2, label: \"Algie\" },\n    { id: 2, value: 31, label: \"Alston\" },\n    { id: 3, value: 12, label: \"Barney\" },\n    { id: 4, value: 16, label: \"Coley\" },\n    { id: 5, value: 17, label: \"Grant\" },\n    { id: 6, value: 15, label: \"Langdon\" },\n    { id: 7, value: 6, label: \"Lee\" },\n    { id: 8, value: 5, label: \"Merlin\" },\n    { id: 9, value: 30, label: \"Mick\" },\n    { id: 10, value: 18, label: \"Tod\" }\n  ];\n\n  // create connections between people\n  // value corresponds with the amount of contact between two people\n  edges = [\n    { from: 2, to: 8, value: 3, title: \"3 emails per week\" },\n    { from: 2, to: 9, value: 5, title: \"5 emails per week\" },\n    { from: 2, to: 10, value: 1, title: \"1 emails per week\" },\n    { from: 4, to: 6, value: 8, title: \"8 emails per week\" },\n    { from: 5, to: 7, value: 2, title: \"2 emails per week\" },\n    { from: 4, to: 5, value: 1, title: \"1 emails per week\" },\n    { from: 9, to: 10, value: 2, title: \"2 emails per week\" },\n    { from: 2, to: 3, value: 6, title: \"6 emails per week\" },\n    { from: 3, to: 9, value: 4, title: \"4 emails per week\" },\n    { from: 5, to: 3, value: 1, title: \"1 emails per week\" },\n    { from: 2, to: 7, value: 4, title: \"4 emails per week\" }\n  ];\n\n  // Instantiate our network object.\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges\n  };\n  var options = {\n    nodes: {\n      shape: \"dot\",\n      scaling: {\n        label: {\n          min: 8,\n          max: 20\n        }\n      }\n    }\n  };\n  network = new vis.Network(container, data, options);\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Data | Scaling Labels"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

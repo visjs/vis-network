@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Layouts | Hierarchical Layout</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body {
+  font: 10pt sans;
+}
+
+#mynetwork {
+  width: 600px;
+  height: 600px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Hierarchical Layout - Scale-Free-Network&lt;/h2&gt;
+
+&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
+  This example shows the randomly generated &lt;b&gt;scale-free-network&lt;/b&gt; set of
+  nodes and connected edges from example 2. In this example, hierarchical layout
+  has been enabled and the vertical levels are determined automatically.
+&lt;/div&gt;
+&lt;br /&gt;
+
+&lt;form onsubmit="draw(); return false;"&gt;
+  &lt;label for="nodeCount"&gt;Number of nodes:&lt;/label&gt;
+  &lt;input id="nodeCount" type="text" value="25" style="width: 50px;" /&gt;
+  &lt;input type="submit" value="Go" /&gt;
+&lt;/form&gt;
+&lt;p&gt;
+  &lt;input type="button" id="btn-UD" value="Up-Down" /&gt;
+  &lt;input type="button" id="btn-DU" value="Down-Up" /&gt;
+  &lt;input type="button" id="btn-LR" value="Left-Right" /&gt;
+  &lt;input type="button" id="btn-RL" value="Right-Left" /&gt;
+  &lt;input type="hidden" id="direction" value="UD" /&gt;
+&lt;/p&gt;
+
+&lt;br /&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+
+&lt;p id="selection"&gt;&lt;/p&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var nodes = null;
+var edges = null;
+var network = null;
+
+function destroy() {
+  if (network !== null) {
+    network.destroy();
+    network = null;
+  }
+}
+
+function draw() {
+  destroy();
+  // randomly create some nodes and edges
+  var nodeCount = document.getElementById("nodeCount").value;
+  var data = getScaleFreeNetwork(nodeCount);
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var directionInput = document.getElementById("direction").value;
+  var options = {
+    layout: {
+      hierarchical: {
+        direction: directionInput
+      }
+    }
+  };
+  network = new vis.Network(container, data, options);
+
+  // add event listeners
+  network.on("select", function(params) {
+    document.getElementById("selection").innerHTML =
+      "Selection: " + params.nodes;
+  });
+}
+
+var directionInput = document.getElementById("direction");
+var btnUD = document.getElementById("btn-UD");
+btnUD.onclick = function() {
+  directionInput.value = "UD";
+  draw();
+};
+var btnDU = document.getElementById("btn-DU");
+btnDU.onclick = function() {
+  directionInput.value = "DU";
+  draw();
+};
+var btnLR = document.getElementById("btn-LR");
+btnLR.onclick = function() {
+  directionInput.value = "LR";
+  draw();
+};
+var btnRL = document.getElementById("btn-RL");
+btnRL.onclick = function() {
+  directionInput.value = "RL";
+  draw();
+};
+
+window.addEventListener("load", () =&gt; {
+  draw();
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/examples/network/exampleUtil.js,https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Layouts | Hierarchical Layout"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Changing Clustered Edges and Nodes</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\np {\n  max-width: 600px;\n}\n\nh4 {\n  margin-bottom: 3px;\n}\n","css_external":"","html":"&lt;p&gt;\n  Demonstrating getBaseEdges, getClusteredEdges updateEdge and\n  updateClusteredNode. &lt;br /&gt;\n&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;\n    Clicking on the cluster will change it to a star (updateClusteredNode).\n  &lt;/li&gt;\n  &lt;li&gt;\n    Clicking on an edge will make it red regardless of whether it is a\n    clusteredEdge or not (updateEdge)\n  &lt;/li&gt;\n  &lt;li&gt;\n    Clicking on an edge will also show the results of getBaseEdges and\n    getClusteredEdge\n  &lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;pre id=\"eventSpan\"&gt;&lt;/pre&gt;\n","js":"// create an array with nodes\nvar nodes = [\n  { id: 1, label: \"Node 1\", color: \"orange\" },\n  { id: 2, label: \"Node 2\", color: \"DarkViolet\", font: { color: \"white\" } },\n  { id: 3, label: \"Node 3\", color: \"orange\" },\n  { id: 4, label: \"Node 4\", color: \"DarkViolet\", font: { color: \"white\" } },\n  { id: 5, label: \"Node 5\", color: \"orange\" },\n  { id: 6, label: \"cid = 1\", cid: 1, color: \"orange\" },\n  {\n    id: 7,\n    label: \"cid = 1\",\n    cid: 1,\n    color: \"DarkViolet\",\n    font: { color: \"white\" }\n  },\n  { id: 8, label: \"cid = 1\", cid: 1, color: \"lime\" },\n  { id: 9, label: \"cid = 1\", cid: 1, color: \"orange\" },\n  { id: 10, label: \"cid = 1\", cid: 1, color: \"lime\" }\n];\n\n// create an array with edges\nvar edges = [\n  { from: 1, to: 2 },\n  { from: 1, to: 3 },\n  { from: 10, to: 4 },\n  { from: 2, to: 5 },\n  { from: 6, to: 2 },\n  { from: 7, to: 5 },\n  { from: 8, to: 6 },\n  { from: 9, to: 7 },\n  { from: 10, to: 9 }\n];\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = { layout: { randomSeed: 8 } };\nvar network = new vis.Network(container, data, options);\nvar clusterOptionsByData = {\n  joinCondition: function(childOptions) {\n    return childOptions.cid == 1;\n  },\n  clusterNodeProperties: { id: \"cidCluster\", borderWidth: 3, shape: \"database\" }\n};\nnetwork.cluster(clusterOptionsByData);\n\nnetwork.on(\"selectNode\", function(params) {\n  if (params.nodes.length == 1) {\n    if (network.isCluster(params.nodes[0]) == true) {\n      network.clustering.updateClusteredNode(params.nodes[0], {\n        shape: \"star\"\n      });\n    }\n  }\n});\n\nnetwork.on(\"selectEdge\", function(params) {\n  if (params.edges.length == 1) {\n    // Single edge selected\n    var obj = {};\n    obj.clicked_id = params.edges[0];\n    network.clustering.updateEdge(params.edges[0], { color: \"#aa0000\" });\n    obj.base_edges = network.clustering.getBaseEdges(params.edges[0]);\n    obj.all_clustered_edges = network.clustering.getClusteredEdges(\n      params.edges[0]\n    );\n    document.getElementById(\"eventSpan\").innerHTML =\n      \"&lt;h2&gt;selectEdge event:&lt;/h2&gt;\" + JSON.stringify(obj, null, 4);\n  }\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Other | Changing Clustered Edges and Nodes"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Layouts | Hierarchical Layout without Physics</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 1000px;
+  height: 400px;
+  border: 1px solid lightgray;
+}
+
+td {
+  vertical-align: top;
+}
+table {
+  width: 800px;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h1&gt;Hierarchical Layout without Physics&lt;/h1&gt;
+The hierarchical layout can now be controlled without the use of physics. This
+is much quicker. The options for this are: &lt;br /&gt;&lt;br /&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td width="150px"&gt;&lt;code&gt;levelSeparation&lt;/code&gt;&lt;/td&gt;
+      &lt;td width="400px"&gt;Distance between levels.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;nodeSpacing&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Minimum distance between nodes on the free axis.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;treeSpacing&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Distance between different trees (independent networks).&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;blockShifting&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;
+        Method for reducing whitespace. Can be used alone or together with edge
+        minimization. Each node will check for whitespace and will shift
+        it&amp;apos;s branch along with it for as far as it can, respecting the
+        nodeSpacing on any level.
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;edgeMinimization&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;
+        Method for reducing whitespace. Can be used alone or together with block
+        shifting. Enabling block shifting will usually speed up the layout
+        process. Each node will try to move along its free axis to reduce the
+        total length of it&amp;apos;s edges.
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;parentCentralization&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;
+        When true, the parents nodes will be centered again after the the layout
+        algorithm has been finished.
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;br /&gt;&lt;br /&gt;
+Play with the settings below the network and see how the layout changes!
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var data = {
+  nodes: nodes,
+  edges: edges
+};
+// create a network
+var container = document.getElementById("mynetwork");
+var options = {
+  layout: {
+    hierarchical: {
+      direction: "UD",
+      sortMethod: "directed"
+    }
+  },
+  interaction: { dragNodes: false },
+  physics: {
+    enabled: false
+  },
+  configure: {
+    filter: function(option, path) {
+      if (path.indexOf("hierarchical") !== -1) {
+        return true;
+      }
+      return false;
+    },
+    showButton: false
+  }
+};
+var network = new vis.Network(container, data, options);
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/datasources/largeHierarchicalDataset.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Layouts | Hierarchical Layout without Physics"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

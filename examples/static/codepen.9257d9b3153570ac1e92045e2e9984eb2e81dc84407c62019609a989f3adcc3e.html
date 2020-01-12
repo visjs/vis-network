@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Playing with Physics</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"body {\n  font: 10pt sans;\n}\n#mynetwork {\n  float: left;\n  width: 600px;\n  height: 600px;\n  margin: 5px;\n  border: 1px solid lightgray;\n}\n#config {\n  float: left;\n  width: 400px;\n  height: 600px;\n}\n\np {\n  font-size: 16px;\n  max-width: 700px;\n}\n","css_external":"","html":"&lt;p&gt;\n  The configurator can be used to play with the options. In this example, all\n  options that can be configured with this tool are shown. You can also supply a\n  custom filter function or filter string. You can press the generate options\n  button below to have an options object printed. You can then use this in the\n  network.\n&lt;/p&gt;\n&lt;p&gt;\n  &lt;b&gt;Note:&lt;/b&gt; The configurator is recreated in the dom tree on input change.\n  This may cause undesired scrolls in your application. In order to avoid this,\n  explicitly set the height of the configurator (see this example&amp;apos;s source\n  code).\n&lt;/p&gt;\n&lt;br /&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n\n&lt;p id=\"selection\"&gt;&lt;/p&gt;\n","js":"var nodes = null;\nvar edges = null;\nvar network = null;\n\nfunction draw() {\n  nodes = [];\n  edges = [];\n  // randomly create some nodes and edges\n  var data = getScaleFreeNetwork(25);\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n\n  var options = {\n    physics: {\n      stabilization: false\n    },\n    configure: true\n  };\n  network = new vis.Network(container, data, options);\n\n  network.on(\"configChange\", function() {\n    // this will immediately fix the height of the configuration\n    // wrapper to prevent unecessary scrolls in chrome.\n    // see https://github.com/almende/vis/issues/1568\n    var div = container.getElementsByClassName(\"vis-configuration-wrapper\")[0];\n    div.style[\"height\"] = div.getBoundingClientRect().height + \"px\";\n  });\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/examples/network/exampleUtil.js;https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Other | Playing with Physics"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

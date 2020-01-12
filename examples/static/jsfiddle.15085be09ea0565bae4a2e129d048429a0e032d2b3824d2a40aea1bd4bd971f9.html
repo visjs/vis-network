@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Edge Styles | Static smooth curves - World Cup Network
+    </title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 800px;
+  height: 800px;
+  border: 1px solid lightgray;
+}
+#optionsContainer {
+  height: 280px;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Static smooth curves - World Cup Network&lt;/h2&gt;
+
+&lt;div style="width:700px; font-size:14px;"&gt;
+  The static smooth curves are based only on the positions of the connected
+  nodes. There are multiple ways to determine the way this curve is drawn. This
+  example shows the effect of the different types on a large network.
+  &lt;br /&gt;
+  &lt;br /&gt;
+  Also shown in this example is the inheritColor option of the edges as well as
+  the roundness factor. Because the physics has been disabled, the dynamic
+  smooth curves do not work here.
+&lt;/div&gt;
+
+&lt;div id="optionsContainer"&gt;&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var network;
+
+function redrawAll() {
+  var container = document.getElementById("mynetwork");
+  var options = {
+    nodes: {
+      shape: "dot",
+      scaling: {
+        min: 10,
+        max: 30
+      },
+      font: {
+        size: 12,
+        face: "Tahoma"
+      }
+    },
+    edges: {
+      color: { inherit: true },
+      width: 0.15,
+      smooth: {
+        type: "continuous"
+      }
+    },
+    interaction: {
+      hideEdgesOnDrag: true,
+      tooltipDelay: 200
+    },
+    configure: {
+      filter: function(option, path) {
+        if (option === "inherit") {
+          return true;
+        }
+        if (option === "type" &amp;&amp; path.indexOf("smooth") !== -1) {
+          return true;
+        }
+        if (option === "roundness") {
+          return true;
+        }
+        if (option === "hideEdgesOnDrag") {
+          return true;
+        }
+        if (option === "hideNodesOnDrag") {
+          return true;
+        }
+        return false;
+      },
+      container: document.getElementById("optionsContainer"),
+      showButton: false
+    },
+    physics: false
+  };
+
+  var data = { nodes: nodes, edges: edges };
+  // Note: data is coming from ./data/WorldCup2014.js
+  network = new vis.Network(container, data, options);
+}
+
+redrawAll();
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/datasources/WorldCup2014.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Edge Styles | Static smooth curves - World Cup Network"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

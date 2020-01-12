@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Playing with Physics</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body {
+  font: 10pt sans;
+}
+#mynetwork {
+  float: left;
+  width: 600px;
+  height: 600px;
+  margin: 5px;
+  border: 1px solid lightgray;
+}
+#config {
+  float: left;
+  width: 400px;
+  height: 600px;
+}
+
+p {
+  font-size: 16px;
+  max-width: 700px;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;p&gt;
+  The configurator can be used to play with the options. In this example, all
+  options that can be configured with this tool are shown. You can also supply a
+  custom filter function or filter string. You can press the generate options
+  button below to have an options object printed. You can then use this in the
+  network.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;b&gt;Note:&lt;/b&gt; The configurator is recreated in the dom tree on input change.
+  This may cause undesired scrolls in your application. In order to avoid this,
+  explicitly set the height of the configurator (see this example&amp;apos;s source
+  code).
+&lt;/p&gt;
+&lt;br /&gt;
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+
+&lt;p id="selection"&gt;&lt;/p&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var nodes = null;
+var edges = null;
+var network = null;
+
+function draw() {
+  nodes = [];
+  edges = [];
+  // randomly create some nodes and edges
+  var data = getScaleFreeNetwork(25);
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+
+  var options = {
+    physics: {
+      stabilization: false
+    },
+    configure: true
+  };
+  network = new vis.Network(container, data, options);
+
+  network.on("configChange", function() {
+    // this will immediately fix the height of the configuration
+    // wrapper to prevent unecessary scrolls in chrome.
+    // see https://github.com/almende/vis/issues/1568
+    var div = container.getElementsByClassName("vis-configuration-wrapper")[0];
+    div.style["height"] = div.getBoundingClientRect().height + "px";
+  });
+}
+
+window.addEventListener("load", () =&gt; {
+  draw();
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/examples/network/exampleUtil.js,https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Other | Playing with Physics"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

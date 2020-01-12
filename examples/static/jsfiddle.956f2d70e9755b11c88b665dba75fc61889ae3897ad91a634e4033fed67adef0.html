@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Basic Usage | Peer Build</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Basic Usage&lt;/h2&gt;
+    &lt;h3&gt;Peer Build&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    Create a simple network with some nodes and edges.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Peer build is designed to work well with other packages from the Vis family.
+    Compared to the standalone or legacy builds it doesn&amp;apos;t include
+    dependencies which allows the same DataSet (and other dependencies) to be
+    used in Network and other packages (e.g. Timeline). In UMD version this
+    build doesn&amp;apos;t suffer from the bug where exported members from different
+    packages get overwritten rendering some functionality unusable.
+  &lt;/p&gt;
+
+  &lt;h4&gt;When to use&lt;/h4&gt;
+  &lt;p&gt;
+    When you need multiple packages from the Vis family on the same page or
+    finer control over what gets loaded.
+  &lt;/p&gt;
+
+  &lt;h4&gt;Content&lt;/h4&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      Vis Network
+      &lt;ul&gt;
+        &lt;li&gt;Network&amp;quot;&lt;/li&gt;
+        &lt;li&gt;NetworkDOTParser&amp;quot;&lt;/li&gt;
+        &lt;li&gt;NetworkImages&amp;quot;&lt;/li&gt;
+        &lt;li&gt;NetworkOptions&amp;quot;&lt;/li&gt;
+        &lt;li&gt;networkGephiParser&amp;quot;&lt;/li&gt;
+        &lt;li&gt;parseDOTNetwork&amp;quot;&lt;/li&gt;
+        &lt;li&gt;parseGephiNetwork&amp;quot;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;h4&gt;How to use&lt;/h4&gt;
+
+  &lt;h5&gt;Browser UMD&lt;/h5&gt;
+  &lt;pre&gt;&lt;code&gt;
+&amp;lt;!--
+  In the following URLs you may want to replace @latest by @version
+  to prevent unexpected potentionally breaking updates.
+  For example vis-data@1.0.0 instead of vis-data@latest.
+--&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-util@latest&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-data@latest&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; type=&amp;quot;text/css&amp;quot; href=&amp;quot;https://unpkg.com/vis-network/styles/vis-network.min.css&amp;quot; /&amp;gt;
+&amp;lt;!-- You may include other packages like Vis Timeline or Vis Graph3D here. --&amp;gt;
+
+&amp;lt;div id=&amp;quot;mynetwork&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
+  // create an array with nodes
+  var nodes = new vis.DataSet([
+    { id: 1, label: &amp;quot;Node 1&amp;quot; },
+    { id: 2, label: &amp;quot;Node 2&amp;quot; },
+    { id: 3, label: &amp;quot;Node 3&amp;quot; },
+    { id: 4, label: &amp;quot;Node 4&amp;quot; },
+    { id: 5, label: &amp;quot;Node 5&amp;quot; }
+  ]);
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+    { from: 1, to: 3 },
+    { from: 1, to: 2 },
+    { from: 2, to: 4 },
+    { from: 2, to: 5 },
+    { from: 3, to: 3 }
+  ]);
+
+  // create a network
+  var container = document.getElementById(&amp;quot;mynetwork&amp;quot;);
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+&amp;lt;/script&amp;gt;
+      &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;h5&gt;Bundled ESM&lt;/h5&gt;
+  &lt;pre&gt;&lt;code&gt;
+import { DataSet } from &amp;quot;vis-data&amp;quot;;
+import { Network } from &amp;quot;vis-network/peer/esm/vis-network&amp;quot;;
+import &amp;quot;vis-network/styles/vis-network.css&amp;quot;;
+
+// create an array with nodes
+const nodes = new DataSet([
+  { id: 1, label: &amp;quot;Node 1&amp;quot; },
+  { id: 2, label: &amp;quot;Node 2&amp;quot; },
+  { id: 3, label: &amp;quot;Node 3&amp;quot; },
+  { id: 4, label: &amp;quot;Node 4&amp;quot; },
+  { id: 5, label: &amp;quot;Node 5&amp;quot; }
+]);
+
+// create an array with edges
+const edges = new DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+const container = document.getElementById(&amp;quot;mynetwork&amp;quot;);
+const data = {
+  nodes: nodes,
+  edges: edges
+};
+const options = {};
+const network = new Network(container, data, options);
+      &lt;/code&gt;&lt;/pre&gt;
+
+  The code above has to be injected into a page which contains an element with
+  &lt;code&gt;mynetwork&lt;/code&gt; id. Like for example:
+  &lt;pre&gt;&lt;code&gt;
+&amp;lt;div id=&amp;quot;mynetwork&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+      &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// create an array with nodes
+var nodes = new vis.DataSet([
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" }
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+var options = {};
+var network = new vis.Network(container, data, options);
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/styles/vis-network.min.css,https://unpkg.com/vis-util@latest,https://unpkg.com/vis-data@latest,https://visjs.github.io/vis-network/peer/umd/vis-network.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Basic Usage | Peer Build"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Data | Importing from Gephi (JSON)</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 800px;
+  height: 800px;
+  border: 1px solid lightgray;
+}
+
+div.nodeContent {
+  position: relative;
+  border: 1px solid lightgray;
+  width: 480px;
+  height: 780px;
+  margin-top: -802px;
+  margin-left: 810px;
+  padding: 10px;
+}
+
+pre {
+  padding: 5px;
+  margin: 5px;
+}
+
+.string {
+  color: green;
+}
+
+.number {
+  color: darkorange;
+}
+
+.boolean {
+  color: blue;
+}
+
+.null {
+  color: magenta;
+}
+
+.key {
+  color: red;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Dynamic Data - Importing from Gephi (JSON)&lt;/h2&gt;
+
+&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
+  This example shows how to import a JSON file exported by Gephi. The two
+  options available for the import are available through the checkboxes. You can
+  download the Gephi JSON exporter here:
+  &lt;a href="https://marketplace.gephi.org/plugin/json-exporter/" target="_blank"
+    &gt;https://marketplace.gephi.org/plugin/json-exporter/&lt;/a
+  &gt;. All of Gephi&amp;apos;s attributes are also contained within the node elements.
+  This means you can access all of this data through the DataSet.
+  &lt;br /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+  &lt;label
+    &gt;&lt;input type="checkbox" id="fixed" checked="checked" /&gt; Fix in place after
+    import.&lt;/label
+  &gt;&lt;br /&gt;
+  &lt;label
+    &gt;&lt;input type="checkbox" id="parseColor" /&gt; Parse the color instead of copy
+    (adds borders, highlights etc.)&lt;/label
+  &gt;
+&lt;/p&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+&lt;div class="nodeContent"&gt;
+  &lt;h4&gt;Node Content:&lt;/h4&gt;
+  &lt;pre id="nodeContent"&gt;&lt;/pre&gt;
+&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var network;
+
+var nodes = new vis.DataSet();
+var edges = new vis.DataSet();
+var gephiImported;
+var fixedCheckbox = document.getElementById("fixed");
+fixedCheckbox.onchange = redrawAll;
+
+var parseColorCheckbox = document.getElementById("parseColor");
+parseColorCheckbox.onchange = redrawAll;
+
+var nodeContent = document.getElementById("nodeContent");
+
+loadJSON("../datasources/WorldCup2014.json", redrawAll, function(err) {
+  console.log("error");
+});
+
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+var options = {
+  nodes: {
+    shape: "dot",
+    font: {
+      face: "Tahoma"
+    }
+  },
+  edges: {
+    width: 0.15,
+    smooth: {
+      type: "continuous"
+    }
+  },
+  interaction: {
+    tooltipDelay: 200,
+    hideEdgesOnDrag: true
+  },
+  physics: {
+    stabilization: false,
+    barnesHut: {
+      gravitationalConstant: -10000,
+      springConstant: 0.002,
+      springLength: 150
+    }
+  }
+};
+
+network = new vis.Network(container, data, options);
+network.on("click", function(params) {
+  if (params.nodes.length &gt; 0) {
+    var data = nodes.get(params.nodes[0]); // get the data from selected node
+    nodeContent.innerHTML = JSON.stringify(data, undefined, 3); // show the data in the div
+  }
+});
+
+/**
+ * This function fills the DataSets. These DataSets will update the network.
+ */
+function redrawAll(gephiJSON) {
+  if (gephiJSON.nodes === undefined) {
+    gephiJSON = gephiImported;
+  } else {
+    gephiImported = gephiJSON;
+  }
+
+  nodes.clear();
+  edges.clear();
+
+  var fixed = fixedCheckbox.checked;
+  var parseColor = parseColorCheckbox.checked;
+
+  var parsed = vis.parseGephiNetwork(gephiJSON, {
+    fixed: fixed,
+    parseColor: parseColor
+  });
+
+  // add the parsed data to the DataSets.
+  nodes.add(parsed.nodes);
+  edges.add(parsed.edges);
+
+  var data = nodes.get(2); // get the data from node 2 as example
+  nodeContent.innerHTML = JSON.stringify(data, undefined, 3); // show the data in the div
+  network.fit(); // zoom to fit
+}
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/examples/network/exampleUtil.js,https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Data | Importing from Gephi (JSON)"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

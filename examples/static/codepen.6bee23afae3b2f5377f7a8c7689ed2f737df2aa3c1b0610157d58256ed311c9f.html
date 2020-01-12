@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Tests | Hidden Edge Test</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 1200px;\n  height: 800px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;div id=\"explanation\"&gt;\n  &lt;h4&gt;\n    Click on node 3. Drag it to the right. Release the mouse. Then hover over\n    it. The graph will reset (it shouldn&amp;apos;t). This addresses visjs-network\n    issue #67\n  &lt;/h4&gt;\n&lt;/div&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var nodes = null;\nvar edges = null;\nvar network = null;\n//\nnodes = [];\nedges = [];\nnodes.push({\n  id: 1,\n  label: \"node 1\"\n});\nnodes.push({\n  id: 2,\n  label: \"node 2\"\n});\nnodes.push({\n  id: 3,\n  label: \"node 3\"\n});\nedges.push({\n  from: 1,\n  to: 1,\n  label: \"Edge label 1\",\n  hidden: true\n});\nedges.push({\n  from: 2,\n  to: 3,\n  label: \"Edge label 2\",\n  hidden: false\n});\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = {\n  nodes: {\n    scaling: {\n      min: 16,\n      max: 32\n    }\n  },\n\n  width: \"100%\",\n  height: \"100%\",\n  interaction: {\n    hover: true\n  },\n  layout: {\n    hierarchical: {\n      enabled: true,\n      levelSeparation: 160,\n      nodeSpacing: 10,\n      blockShifting: true,\n      edgeMinimization: true,\n      sortMethod: \"directed\"\n    }\n  },\n  edges: {\n    smooth: false\n  }\n};\n\nnetwork = new vis.Network(container, data, options);\n\nnetwork.on(\"hoverEdge\", function(e) {\n  this.body.data.edges.update({\n    id: e.edge,\n    font: {\n      size: 14\n    }\n  });\n});\n\nnetwork.on(\"blurEdge\", function(e) {\n  this.body.data.edges.update({\n    id: e.edge,\n    font: {\n      size: 0\n    }\n  });\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Tests | Hidden Edge Test"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Data | DOT language playground</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body,
+html {
+  font: 10pt sans;
+  line-height: 1.5em;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: #4d4d4d;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#header {
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#contents {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#left,
+#right {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+#left {
+  top: 0;
+  left: 0;
+}
+
+#right {
+  top: 0;
+  right: 0;
+}
+
+#error {
+  color: red;
+}
+
+#data {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d3d3d3;
+  box-sizing: border-box;
+  resize: none;
+}
+
+#draw {
+  padding: 5px 15px;
+}
+
+#mynetwork {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d3d3d3;
+  box-sizing: border-box;
+}
+
+a:hover {
+  color: red;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="header"&gt;
+  &lt;h1&gt;DOT language playground&lt;/h1&gt;
+
+  &lt;p&gt;
+    Play around with the DOT language in the textarea below, or select one of
+    the following examples:
+  &lt;/p&gt;
+  &lt;p style="margin-left: 30px;"&gt;
+    &lt;a href="#" class="example" data-url="data/simple.gv.txt"&gt;simple&lt;/a&gt;,
+    &lt;a href="#" class="example" data-url="data/computer_network.gv.txt"
+      &gt;computer network&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="data/cellular_automata.gv.txt"
+      &gt;cellular automata&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/fsm.gv.txt"&gt;fsm *&lt;/a&gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/hello.gv.txt"
+      &gt;hello *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/process.gv.txt"
+      &gt;process *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/siblings.gv.txt"
+      &gt;siblings *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/softmaint.gv.txt"
+      &gt;softmaint *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/traffic_lights.gv.txt"
+      &gt;traffic lights *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/transparency.gv.txt"
+      &gt;transparency *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/twopi2.gv.txt"
+      &gt;twopi2 *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/unix.gv.txt"&gt;unix *&lt;/a
+    &gt;,
+    &lt;a href="#" class="example" data-url="graphvizGallery/world.gv.txt"
+      &gt;world *&lt;/a
+    &gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    The examples marked with a star (*) come straight from the
+    &lt;a href="http://www.graphviz.org/Gallery.php"&gt;GraphViz gallery&lt;/a&gt;.
+  &lt;/p&gt;
+  &lt;div&gt;
+    &lt;button id="draw" title="Draw the DOT graph (Ctrl+Enter)"&gt;Draw&lt;/button&gt;
+    &lt;span id="error"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="contents"&gt;
+  &lt;div id="left"&gt;
+    &lt;textarea id="data"&gt;
+digraph {
+  node [shape=circle fontsize=16]
+  edge [length=100, color=gray, fontcolor=black]
+
+  A -&amp;gt; A[label=0.5];
+  B -&amp;gt; B[label=1.2] -&amp;gt; C[label=0.7] -- A;
+  B -&amp;gt; D;
+  D -&amp;gt; {B; C}
+  D -&amp;gt; E[label=0.2];
+  F -&amp;gt; F;
+  A [
+    fontcolor=white,
+    color=red,
+  ]
+}
+    &lt;/textarea&gt;
+  &lt;/div&gt;
+  &lt;div id="right"&gt;
+    &lt;div id="mynetwork"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// create a network
+var container = document.getElementById("mynetwork");
+var options = {
+  physics: {
+    stabilization: false,
+    barnesHut: {
+      springLength: 200
+    }
+  }
+};
+var data = {};
+var network = new vis.Network(container, data, options);
+
+$("#draw").click(draw);
+
+$("a.example").click(function(event) {
+  var url = $(event.target).data("url");
+  $.get(url)
+    .done(function(dotData) {
+      $("#data").val(dotData);
+      draw();
+    })
+    .fail(function() {
+      $("#error").html(
+        "Error: Cannot fetch the example data because of security restrictions in JavaScript. Run the example from a server instead of as a local file to resolve this problem. Alternatively, you can copy/paste the data of DOT graphs manually in the textarea below."
+      );
+      resize();
+    });
+});
+
+$(window).resize(resize);
+$(window).load(draw);
+
+$("#data").keydown(function(event) {
+  if (event.ctrlKey &amp;&amp; event.keyCode === 13) {
+    // Ctrl+Enter
+    draw();
+    event.stopPropagation();
+    event.preventDefault();
+  }
+});
+
+function resize() {
+  $("#contents").height($("body").height() - $("#header").height() - 30);
+}
+
+function draw() {
+  try {
+    resize();
+    $("#error").html("");
+
+    // Provide a string with data in DOT language
+    data = vis.parseDOTNetwork($("#data").val());
+
+    network.setData(data);
+  } catch (err) {
+    // set the cursor at the position where the error occurred
+    var match = /\(char (.*)\)/.exec(err);
+    if (match) {
+      var pos = Number(match[1]);
+      var textarea = $("#data")[0];
+      if (textarea.setSelectionRange) {
+        textarea.focus();
+        textarea.setSelectionRange(pos, pos);
+      }
+    }
+
+    // show an error message
+    $("#error").html(err.toString());
+  }
+}
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js,https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Data | DOT language playground"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

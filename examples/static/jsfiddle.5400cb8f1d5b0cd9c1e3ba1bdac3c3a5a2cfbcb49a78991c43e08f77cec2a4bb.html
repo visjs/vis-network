@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Layouts | Hierarchical Layout Overlap Avoidance</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Layouts&lt;/h2&gt;
+    &lt;h3&gt;Hierarchical Layout Overlap Avoidance&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    Overlap avoidance increases the space between nodes depending on their size
+    in order to prevent big nodes from overlapping. The value can be set from 0
+    which is the default and means no overlap avoidance at all to 1 which puts
+    the most space around nodes. Any value in between is also valid.
+  &lt;/p&gt;
+
+  Avoid ovelap:
+  &lt;input
+    type="number"
+    value="1"
+    min="0"
+    max="1"
+    step="0.01"
+    id="avoid-overlap"
+  /&gt;
+&lt;/div&gt;
+
+&lt;!-- Redraw the network when avoid overlap is changed. --&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var avoidOverlapInput = document.getElementById("avoid-overlap");
+avoidOverlapInput.onchange = function() {
+  draw();
+};
+
+var nodes = [
+  { id: 0 },
+  { id: 1 },
+  { id: 2 },
+  { id: 3 },
+  { id: 4 },
+  { id: 5 },
+  { id: 6 },
+  { id: 7 },
+  { id: 8 },
+  { id: 9 },
+  { id: 10 },
+  { id: 11 },
+  { id: 12 },
+  { id: 13 },
+  { id: 14 },
+  { id: 15 },
+  { id: 16 },
+  { id: 17 },
+  { id: 18 },
+  { id: 19 },
+  { id: 20 },
+  { id: 21 },
+  { id: 22 },
+  { id: 23 },
+  { id: 24 },
+  { id: 25 },
+  { id: 26 },
+  { id: 27 },
+  { id: 28 },
+  { id: 29 },
+  { id: 30 },
+  { id: 31 },
+  { id: 32 },
+  { id: 33 },
+  { id: 34 },
+  { id: 35 },
+  { id: 36 },
+  { id: 37 },
+  { id: 38 },
+  { id: 39 },
+  { id: 40 },
+  { id: 41 },
+  { id: 42 },
+  { id: 43 },
+  { id: 44 },
+  { id: 45 },
+  { id: 46 }
+].map(
+  // Make the nodes wide, the higher the id the wider, except for every third.
+  node =&gt; (
+    (node.label =
+      node.id % 3 === 0
+        ? `${node.id}`
+        : `| ${"-".repeat(node.id)} ${node.id} ${"-".repeat(node.id)} |`),
+    node
+  )
+);
+var edges = [
+  { from: 0, to: 1 },
+  { from: 0, to: 2 },
+  { from: 1, to: 3 },
+  { from: 1, to: 4 },
+  { from: 2, to: 5 },
+  { from: 2, to: 6 },
+  { from: 3, to: 7 },
+  { from: 3, to: 8 },
+  { from: 4, to: 9 },
+  { from: 4, to: 10 },
+  { from: 5, to: 11 },
+  { from: 5, to: 12 },
+  { from: 6, to: 13 },
+  { from: 6, to: 14 },
+  { from: 7, to: 15 },
+  { from: 7, to: 16 },
+  { from: 8, to: 17 },
+  { from: 8, to: 18 },
+  { from: 9, to: 19 },
+  { from: 9, to: 20 },
+  { from: 10, to: 21 },
+  { from: 10, to: 22 },
+  { from: 11, to: 23 },
+  { from: 11, to: 24 },
+  { from: 12, to: 25 },
+  { from: 12, to: 26 },
+  { from: 13, to: 27 },
+  { from: 13, to: 28 },
+  { from: 14, to: 29 },
+  { from: 14, to: 30 },
+  { from: 15, to: 31 },
+  { from: 16, to: 32 },
+  { from: 17, to: 33 },
+  { from: 18, to: 34 },
+  { from: 19, to: 35 },
+  { from: 20, to: 36 },
+  { from: 21, to: 37 },
+  { from: 22, to: 38 },
+  { from: 23, to: 39 },
+  { from: 24, to: 40 },
+  { from: 25, to: 41 },
+  { from: 26, to: 42 },
+  { from: 27, to: 43 },
+  { from: 28, to: 44 },
+  { from: 29, to: 45 },
+  { from: 30, to: 46 }
+];
+var network = null;
+
+function draw() {
+  // clean up old network
+  if (network != null) {
+    network.destroy();
+    network = null;
+  }
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var data = { nodes, edges };
+  var options = {
+    layout: {
+      hierarchical: {
+        direction: "UD",
+        sortMethod: "directed"
+      }
+    },
+    physics: {
+      hierarchicalRepulsion: {
+        avoidOverlap: +document.getElementById("avoid-overlap").value
+      }
+    }
+  };
+  network = new vis.Network(container, data, options);
+
+  // add event listeners
+  network.on("select", function(params) {
+    document.getElementById("selection").innerHTML =
+      "Selection: " + params.nodes;
+  });
+}
+
+window.addEventListener("load", () =&gt; {
+  draw();
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/dist/vis-network.min.css,https://visjs.github.io/vis-network/dist/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Layouts | Hierarchical Layout Overlap Avoidance"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

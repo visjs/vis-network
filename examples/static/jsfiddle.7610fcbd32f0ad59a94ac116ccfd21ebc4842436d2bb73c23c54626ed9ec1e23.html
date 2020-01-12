@@ -1,0 +1,122 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Example Applications | World Cup Network</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 800px;
+  height: 800px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Performance - World Cup Network&lt;/h2&gt;
+
+&lt;div style="width:700px; font-size:14px;"&gt;
+  This example shows the performance of vis with a larger network. The edges in
+  particular (~9200) are very computationally intensive to draw. Drag and hold
+  the graph to see the performance difference if the edges are hidden.
+  &lt;br /&gt;&lt;br /&gt;
+  We use the following physics configuration: &lt;br /&gt;
+  &lt;code
+    &gt;{barnesHut: {gravitationalConstant: -80000, springConstant: 0.001,
+    springLength: 200}}&lt;/code
+  &gt;
+  &lt;br /&gt;&lt;br /&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var network;
+
+function redrawAll() {
+  // remove positoins
+  for (var i = 0; i &lt; nodes.length; i++) {
+    delete nodes[i].x;
+    delete nodes[i].y;
+  }
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {
+    nodes: {
+      shape: "dot",
+      scaling: {
+        min: 10,
+        max: 30
+      },
+      font: {
+        size: 12,
+        face: "Tahoma"
+      }
+    },
+    edges: {
+      width: 0.15,
+      color: { inherit: "from" },
+      smooth: {
+        type: "continuous"
+      }
+    },
+    physics: {
+      stabilization: false,
+      barnesHut: {
+        gravitationalConstant: -80000,
+        springConstant: 0.001,
+        springLength: 200
+      }
+    },
+    interaction: {
+      tooltipDelay: 200,
+      hideEdgesOnDrag: true
+    }
+  };
+
+  // Note: data is coming from ./datasources/WorldCup2014.js
+  network = new vis.Network(container, data, options);
+}
+
+redrawAll();
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/datasources/WorldCup2014.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Example Applications | World Cup Network"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

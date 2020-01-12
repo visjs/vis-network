@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Layouts | User Defined Hierarchical Layout (Big)
+    </title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body {
+  font: 10pt sans;
+}
+
+#mynetwork {
+  width: 600px;
+  height: 600px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Hierarchical Layout&lt;/h2&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var network = null;
+
+function p(data) {
+  var container = document.getElementById("mynetwork");
+  var options = {
+    layout: {
+      hierarchical: {}
+    }
+  };
+  console.log("starting layout");
+  network = new vis.Network(container, data, options);
+  console.log("layout complete");
+}
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/layout/demo.jsonp"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Layouts | User Defined Hierarchical Layout (Big)"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Labels | Label Alignment</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 600px;\n  height: 400px;\n  border: 1px solid lightgray;\n}\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;Labels of edges can be aligned to edges in various ways.&lt;/p&gt;\n&lt;p&gt;\n  Text-alignment within node labels can be &amp;apos;left&amp;apos; or\n  &amp;apos;center&amp;apos;, other font alignments not implemented.\n&lt;/p&gt;\n&lt;p&gt;\n  Label alignment (placement of label &amp;quot;box&amp;quot;) for nodes (top, bottom,\n  left, right, inside) is planned but not in vis yet.\n&lt;/p&gt;\n&lt;p&gt;\n  The click event is captured and displayed to illustrate how the clicking on\n  labels works. You can drag the nodes over each other to see how this\n  influences the click event values.\n&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;pre id=\"eventSpan\"&gt;&lt;/pre&gt;\n","js":"// create an array with nodes\nvar nodes = [\n  { id: 1, label: \"Node 1\" },\n  { id: 2, label: \"Node 2\" },\n  {\n    id: 3,\n    label: \"Node 3:\\nLeft-Aligned\",\n    font: { face: \"Monospace\", align: \"left\" }\n  },\n  { id: 4, label: \"Node 4\" },\n  {\n    id: 5,\n    label: \"Node 5\\nLeft-Aligned box\",\n    shape: \"box\",\n    font: { face: \"Monospace\", align: \"left\" }\n  }\n];\n\n// create an array with edges\nvar edges = [\n  { from: 1, to: 2, label: \"middle\", font: { align: \"middle\" } },\n  { from: 1, to: 3, label: \"top\", font: { align: \"top\" } },\n  { from: 2, to: 4, label: \"horizontal\", font: { align: \"horizontal\" } },\n  { from: 2, to: 5, label: \"bottom\", font: { align: \"bottom\" } }\n];\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges\n};\nvar options = { physics: false };\nvar network = new vis.Network(container, data, options);\n\nnetwork.on(\"click\", function(params) {\n  params.event = \"[original event]\";\n  document.getElementById(\"eventSpan\").innerHTML =\n    \"&lt;h2&gt;Click event:&lt;/h2&gt;\" + JSON.stringify(params, null, 4);\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Labels | Label Alignment"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>
