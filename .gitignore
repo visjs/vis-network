@@ -31,7 +31,9 @@ coverage/
 /cypress/videos/
 /declarations/
 /dist/
+/examples/examples.css
 /examples/index.html
+/examples/static/
 /examples/thumbnails/
 /peer/
 /standalone/

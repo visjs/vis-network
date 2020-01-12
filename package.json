@@ -63,7 +63,7 @@
     "build": "npm run build:declarations && npm run build:code && npm run build:legacy:types && npm run build:legacy:code && npm run build:legacy:images",
     "watch": "rollup --watch --config rollup.build.js",
     "watch-dev": "npm run watch-dev",
-    "generate-examples-index": "generate-examples-index -t \"Vis Network Examples\" -c mynetwork -d ./examples -w https://visjs.github.io/vis-network -S ./scripts/examples-index/screenshot-script.js -lis",
+    "generate-examples-index": "generate-examples-index --config generate-examples-index.json",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint '{lib,test}/**/*.js'",
     "lint:ts": "eslint '{cypress,lib,test}/**/*.ts'",
@@ -132,7 +132,7 @@
     "timsort": "0.3.0",
     "typescript": "3.7.2",
     "vis-data": "6.3.2",
-    "vis-dev-utils": "1.2.0",
+    "vis-dev-utils": "2.1.0",
     "vis-util": "2.0.2"
   },
   "collective": {
