@@ -133,7 +133,7 @@
     "typescript": "3.7.2",
     "vis-data": "6.3.2",
     "vis-dev-utils": "2.1.0",
-    "vis-util": "2.0.2"
+    "vis-util": "2.1.0"
   },
   "collective": {
     "type": "opencollective",
