@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-12T19:23:52.764Z
+ * @date    2020-01-12T19:46:51.368Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -40881,7 +40881,7 @@
 	    }
 	    /**
 	    * Using a clustered nodeId, update with the new options
-	    * @param {vis.Edge.id} clusteredNodeId
+	    * @param {Node.id} clusteredNodeId
 	    * @param {object} newOptions
 	    */
 
@@ -54850,6 +54850,26 @@
 
 	Network.prototype.clusterByHubsize = function () {
 	  return this.clustering.clusterByHubsize.apply(this.clustering, arguments);
+	};
+
+	Network.prototype.updateClusteredNode = function () {
+	  return this.clustering.updateClusteredNode.apply(this.clustering, arguments);
+	};
+
+	Network.prototype.getClusteredEdges = function () {
+	  return this.clustering.getClusteredEdges.apply(this.clustering, arguments);
+	};
+
+	Network.prototype.getBaseEdge = function () {
+	  return this.clustering.getBaseEdge.apply(this.clustering, arguments);
+	};
+
+	Network.prototype.getBaseEdges = function () {
+	  return this.clustering.getBaseEdges.apply(this.clustering, arguments);
+	};
+
+	Network.prototype.updateEdge = function () {
+	  return this.clustering.updateEdge.apply(this.clustering, arguments);
 	};
 	/**
 	 * This method will cluster all nodes with 1 edge with their respective connected node.
