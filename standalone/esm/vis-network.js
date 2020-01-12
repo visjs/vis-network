@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-12T16:12:23.996Z
+ * @date    2020-01-12T19:20:48.729Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -41770,7 +41770,7 @@ function () {
   }, {
     key: "_setCameraState",
     value: function _setCameraState() {
-      if (this.cameraState.scale !== undefined && this.frame.canvas.clientWidth !== 0 && this.frame.canvas.clientHeight !== 0 && this.pixelRatio !== 0 && this.cameraState.previousWidth > 0) {
+      if (this.cameraState.scale !== undefined && this.frame.canvas.clientWidth !== 0 && this.frame.canvas.clientHeight !== 0 && this.pixelRatio !== 0 && this.cameraState.previousWidth > 0 && this.cameraState.previousHeight > 0) {
         var widthRatio = this.frame.canvas.width / this.pixelRatio / this.cameraState.previousWidth;
         var heightRatio = this.frame.canvas.height / this.pixelRatio / this.cameraState.previousHeight;
         var newScale = this.cameraState.scale;
