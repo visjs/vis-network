@@ -845,15 +845,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           arrowPoint = this._pointOnCircle(x, y, radius, -0.35);
           angle = 7.225663103256524; // === -0.35 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         } else if (
-          (this.options.selfReference.angle <= Math.PI * 2 &&
-            this.options.selfReference.angle >= 5.5) ||
-          (this.options.selfReference.angle >= 0 &&
-            this.options.selfReference.angle <= 0.8)
-        ) {
-          //right
-          arrowPoint = this._pointOnCircle(x, y, radius, -0.095);
-          angle = 5.62345084992573; // === -0.095 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        } else if (
           this.options.selfReference.angle <= 3.9 &&
           this.options.selfReference.angle >= 2.3
         ) {
