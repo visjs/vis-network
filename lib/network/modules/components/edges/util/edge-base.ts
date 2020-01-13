@@ -108,7 +108,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
     if (Object.prototype.hasOwnProperty.call(options, "selfReferenceSize")) {
       console.log(
-        'The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, side:"top"}'
+        'The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:null}'
       );
       if (
         !Object.prototype.hasOwnProperty.call(options, "selfReference") ||
@@ -116,7 +116,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       ) {
         this.options.selfReference = {
           size: options.selfReferenceSize,
-          side: "none"
+          angle: null
         };
       }
     }
@@ -338,27 +338,33 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    if (this.options.selfReference.side !== "none") {
-      if (this.options.selfReference.side === "top") {
-        //top center
-        x = node.x;
-        y = node.y - node.shape.height * 0.5;
-      } else if (this.options.selfReference.side === "bottom") {
-        //bottom center
-        x = node.x;
-        y = node.y + node.shape.height * 0.5;
-      } else if (this.options.selfReference.side === "left") {
-        //left center
-        x = node.x - node.shape.width * 0.5;
-        y = node.y;
-      } else if (this.options.selfReference.side === "right") {
-        //right center
-        x = node.x + node.shape.width * 0.5;
-        y = node.y;
-      } else {
-        //top center
-        x = node.x;
-        y = node.y - node.shape.height * 0.5;
+    if (this.options.selfReference.angle !== null) {
+      x = node.x;
+      y = node.y;
+      
+      if(ctx){
+        const toBorderDist = node.distanceToBorder(ctx, this.options.selfReference.angle);
+        const sin = Math.sin(this.options.selfReference.angle)*toBorderDist;
+        const cos = Math.cos(this.options.selfReference.angle)*toBorderDist;
+
+        if(cos === toBorderDist){
+          x += toBorderDist;
+          y = node.y;
+        }else if(sin === toBorderDist){
+          x = node.x;
+          y -= toBorderDist;
+        }else{
+          if(sin > 0){
+            y -= Math.abs(sin);
+          }else{
+            y += Math.abs(sin);
+          }
+          if(cos > 0){
+            x += Math.abs(cos);
+          }else{
+            x -= Math.abs(cos);
+          }
+        }
       }
     } else if (node.shape.width > node.shape.height) {
       x = node.x + node.shape.width * 0.5;
@@ -778,12 +784,13 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       const [x, y, radius] = this._getCircleData(ctx);
 
       if (position === "from") {
+
+
         let low = 0.25;
         let high = 0.6;
-        if (
-          this.options.selfReference.side === "bottom" ||
-          this.options.selfReference.side === "left"
-        ) {
+
+        if((this.options.selfReference.angle<=3.9 && this.options.selfReference.angle >=2.3) || //left
+        (this.options.selfReference.angle<=5.5 && this.options.selfReference.angle >=3.9)) {//bottom
           low = 0.6;
           high = 1.0;
         }
@@ -800,10 +807,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else if (position === "to") {
         let low = 0.6;
         let high = 1.0;
-        if (
-          this.options.selfReference.side === "bottom" ||
-          this.options.selfReference.side === "left"
-        ) {
+  
+        if((this.options.selfReference.angle<=3.9 && this.options.selfReference.angle >=2.3) || //left
+        (this.options.selfReference.angle<=5.5 && this.options.selfReference.angle >=3.9)) {//bottom
           low = 0.25;
           high = 0.6;
         }
@@ -820,13 +826,14 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        if (this.options.selfReference.side === "bottom") {
+        if (this.options.selfReference.angle<=5.5 && this.options.selfReference.angle >=3.9) {//bottom
           arrowPoint = this._pointOnCircle(x, y, radius, -0.35);
           angle = 7.225663103256524; // === -0.35 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        } else if (this.options.selfReference.side === "right") {
+        } else if ((this.options.selfReference.angle<=Math.PI*2 && this.options.selfReference.angle >=5.5) ||
+        (this.options.selfReference.angle>=0 && this.options.selfReference.angle <=0.8)) {//right
           arrowPoint = this._pointOnCircle(x, y, radius, -0.095);
           angle = 5.62345084992573; // === -0.095 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        } else if (this.options.selfReference.side === "left") {
+        } else if (this.options.selfReference.angle<=3.9 && this.options.selfReference.angle >=2.3) {//left
           arrowPoint = this._pointOnCircle(x, y, radius, 0.4);
           angle = 2.5132741228718345; // === 0.4 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         }
