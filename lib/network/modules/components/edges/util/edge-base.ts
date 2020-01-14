@@ -338,7 +338,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    if (typeof this.options.selfReference.angle !== "undefined" && this.options.selfReference.angle !== null) {
+    if (
+      typeof this.options.selfReference.angle !== "undefined" &&
+      this.options.selfReference.angle !== null
+    ) {
       x = node.x;
       y = node.y;
 
