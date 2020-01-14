@@ -344,7 +344,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
       if (ctx) {
         //calculating opposite and adjacent
-        //distaneToBorder becomes Hypotenuse. 
+        //distaneToBorder becomes Hypotenuse.
         //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
         const toBorderDist = node.distanceToBorder(
           ctx,
