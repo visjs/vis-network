@@ -115,8 +115,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         !Object.prototype.hasOwnProperty.call(options.selfReference, "size")
       ) {
         this.options.selfReference = {
-          size: options.selfReferenceSize,
-          angle: null
+          size: options.selfReferenceSize
         };
       }
     }
