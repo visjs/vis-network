@@ -338,11 +338,14 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    if (this.options.selfReference.angle !== null) {
+    if (typeof this.options.selfReference.angle !== "undefined") {
       x = node.x;
       y = node.y;
 
       if (ctx) {
+        //calculating opposite and adjacent
+        //distaneToBorder becomes Hypotenuse. 
+        //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
         const toBorderDist = node.distanceToBorder(
           ctx,
           this.options.selfReference.angle
@@ -350,6 +353,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         const sin = Math.sin(this.options.selfReference.angle) * toBorderDist;
         const cos = Math.cos(this.options.selfReference.angle) * toBorderDist;
 
+        //cos is basically x and if cos equals to the distance to border then it means
+        //that y does not need calculation because it is equal node.height / 2 or node.y
+        //same thing with y and if sin equals to the distance to border then it means
+        //that x is equal node.width / 2 or node.x
         if (cos === toBorderDist) {
           x += toBorderDist;
           y = node.y;
@@ -357,6 +364,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           x = node.x;
           y -= toBorderDist;
         } else {
+          //Sin/Cos sign needs changes based on wich side angle is
+          //ref https://en.wikipedia.org/wiki/Radian#/media/File:Degree-Radian_Conversion.svg
+          //So cos is x. If cos is with a plus sign then it means that base x needs to add cos because it is under plus side of coordinates
+          //So sin is y. If sin is with a plus sign then it means that base y needs to add sin because it is under plus side of coordinates
           if (sin > 0) {
             y -= Math.abs(sin);
           } else {
@@ -790,6 +801,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         let low = 0.25;
         let high = 0.6;
 
+        //changing low and high for the arrows to avoid overlapping with the parent shape
+        //left and bottom are hardcoded
+        //ref https://en.wikipedia.org/wiki/Radian#/media/File:Degree-Radian_Conversion.svg
         if (
           (this.options.selfReference.angle <= 3.9 &&
             this.options.selfReference.angle >= 2.3) || //left
@@ -814,6 +828,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         let low = 0.6;
         let high = 1.0;
 
+        //changing low and high for the arrows to avoid overlapping with the parent shape
+        //left and bottom are hardcoded
+        //ref https://en.wikipedia.org/wiki/Radian#/media/File:Degree-Radian_Conversion.svg
         if (
           (this.options.selfReference.angle <= 3.9 &&
             this.options.selfReference.angle >= 2.3) || //left
@@ -837,6 +854,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+        //changing angle and arrowPoint if self ref is in the left / bottom sides
         if (
           this.options.selfReference.angle <= 5.5 &&
           this.options.selfReference.angle >= 3.9

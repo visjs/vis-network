@@ -969,7 +969,7 @@ export interface EdgeOptions {
   selfReferenceSize?: number;
 
   selfReference?: {
-    size: number,
+    size?: number,
     angle?: number,
   };
 
