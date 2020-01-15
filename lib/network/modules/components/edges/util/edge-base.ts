@@ -18,6 +18,7 @@ import {
 import { drawDashedLine } from "./shapes";
 import * as ComponentUtil from "./../../shared/ComponentUtil";
 
+
 export interface FindBorderPositionOptions<Via> {
   via: Via;
 }
@@ -107,24 +108,21 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public setOptions(options: EdgeOptions): void {
     this.options = options;
-
     if (Object.prototype.hasOwnProperty.call(options, "selfReferenceSize")) {
-      console.log(
-        "The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:null}"
-      );
       if (
         !Object.prototype.hasOwnProperty.call(options, "selfReference") ||
         !Object.prototype.hasOwnProperty.call(options.selfReference, "size")
       ) {
         this.options.selfReference = {
-          size: options.selfReferenceSize
+          size: options.selfReferenceSize,
+          angle: null
         };
       }
     }
-
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
     this.id = this.options.id;
+    
   }
 
   /** @inheritdoc */
@@ -343,13 +341,16 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    var coordinates = ComponentUtil.default.getSelfRefCoordinates(
+    const coordinates = ComponentUtil.default.getSelfRefCoordinates(
       ctx,
       this.options.selfReference.angle,
       radius,
       this.from
     );
 
+ 
+
+    
     return [coordinates.x, coordinates.y, radius];
   }
 
@@ -765,18 +766,16 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
         //changing low and high for the arrows to avoid overlapping with the parent shape
         if (
-          typeof this.options.selfReference.angle !== "undefined" &&
           this.options.selfReference.angle !== null
         ) {
           low = this.options.selfReference.angle - 2 * Math.PI;
           high = this.options.selfReference.angle;
         }
-
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
-          low: low,
-          high: high,
+          low,
+          high,
           direction: -1
         });
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
@@ -787,7 +786,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
         //changing low and high for the arrows to avoid overlapping with the parent shape
         if (
-          typeof this.options.selfReference.angle !== "undefined" &&
           this.options.selfReference.angle !== null
         ) {
           low = this.options.selfReference.angle - 2 * Math.PI;
@@ -797,8 +795,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
-          low: low,
-          high: high,
+          low,
+          high,
           direction: 1
         });
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
@@ -808,10 +806,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         //changing low and high for the arrows to avoid overlapping with the parent shape
         if (
-          typeof this.options.selfReference.angle !== "undefined" &&
           this.options.selfReference.angle !== null
         ) {
-          var pos = this.options.selfReference.angle / (2 * Math.PI);
+          const pos = this.options.selfReference.angle / (2 * Math.PI);
           arrowPoint = this._pointOnCircle(x, y, radius, pos);
           angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         }
@@ -848,6 +845,11 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     _hover: boolean,
     arrowData: ArrowData
   ): void {
+
+
+
+
+   
     // set style
     ctx.strokeStyle = this.getColor(ctx, values);
     ctx.fillStyle = ctx.strokeStyle;
