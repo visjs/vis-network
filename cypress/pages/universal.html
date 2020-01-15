@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vis Network | Cypress | Universal</title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        background: white;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="../../standalone/umd/vis-network.js"
+    ></script>
+  </head>
+
+  <body>
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      /*
+       * Create a network
+       */
+      const container = document.getElementById("mynetwork");
+      const nodes = new vis.DataSet();
+      const edges = new vis.DataSet();
+      const data = { nodes, edges };
+      const options = {
+        physics: false
+      };
+      const network = new vis.Network(container, data, options);
+
+      /*
+       * Expose the variables for test specs.
+       */
+      window.edges = edges;
+      window.nodes = nodes;
+      window.network = network;
+    </script>
+  </body>
+</html>

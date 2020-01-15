@@ -15,6 +15,7 @@ import {
   VBody,
   VNode
 } from "./types";
+import { drawDashedLine } from "./shapes";
 
 export interface FindBorderPositionOptions<Via> {
   via: Via;
@@ -228,7 +229,14 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       // unsupporting smooth lines
       if (this.from != this.to) {
         // draw line
-        ctx.dashedLine(this.from.x, this.from.y, this.to.x, this.to.y, pattern);
+        drawDashedLine(
+          ctx,
+          this.from.x,
+          this.from.y,
+          this.to.x,
+          this.to.y,
+          pattern
+        );
       } else {
         const [x, y, radius] = this._getCircleData(ctx);
         this._circle(ctx, values, x, y, radius);

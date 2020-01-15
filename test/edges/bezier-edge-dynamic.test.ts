@@ -140,7 +140,9 @@ describe('BezierEdgeDynamic', function(): void {
       const body = mockedBody()
 
       const ctx = {
-        dashedLine: spy(),
+        beginPath: spy(),
+        lineTo: spy(),
+        moveTo: spy(),
         stroke: spy(),
       }
 
@@ -157,15 +159,23 @@ describe('BezierEdgeDynamic', function(): void {
         {} as any
       )
 
-      edge.drawLine(ctx, { dashes: [1, 2, 3] }, false, false, body.nodes[2])
+      edge.drawLine(
+        ctx as any,
+        { dashes: [1, 2, 3] } as any,
+        false,
+        false,
+        body.nodes[2]
+      )
 
-      assert.calledOnce(ctx.dashedLine)
-      assert.alwaysCalledOn(ctx.dashedLine, ctx)
-      assert.alwaysCalledWithExactly(ctx.dashedLine, 100, -100, 300, -300, [
-        1,
-        2,
-        3,
-      ])
+      assert.calledOnce(ctx.beginPath)
+      assert.alwaysCalledOn(ctx.beginPath, ctx)
+      assert.alwaysCalledWithExactly(ctx.beginPath)
+
+      assert.callCount(ctx.lineTo, 71)
+      assert.alwaysCalledOn(ctx.lineTo, ctx)
+
+      assert.callCount(ctx.moveTo, 72)
+      assert.alwaysCalledOn(ctx.moveTo, ctx)
 
       assert.calledOnce(ctx.stroke)
       assert.alwaysCalledOn(ctx.stroke, ctx)

@@ -14,7 +14,8 @@
     <!-- Tipue vendor css -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet">
 
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet">
+    <link href="../css/overrides.css" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css" type="text/css" rel="stylesheet"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
@@ -36,7 +37,7 @@
             width: 90px;
         }
     </style>
-    <script type="text/javascript" src="../js/toggleTable.js"></script>
+    <script type="text/javascript" src="../../common-docs-files/js/toggleTable.js"></script>
 </head>
 
 <body onload="prettyPrint();">
@@ -333,7 +334,7 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>true</code></td>
             <td>
-              When true, selecting or hovering on an edge will change it and its label's characteristics according the default.
+              When true, selecting or hovering on an edge will change it and its label's characteristics according to the default.
               When false, no change to the edge or its label will occur when the edge is chosen.
               If an object is supplied, finer-grained adjustment of edge and label characteristics is available when an edge is chosen.
             </td>
@@ -343,7 +344,7 @@ network.setOptions(options);
             <td>Function or Boolean</td>
             <td>undefined</td>
             <td>
-              When true, selecting or hovering on an edge will change its characteristics according the default.
+              When true, selecting or hovering on an edge will change its characteristics according to the default.
               When false, no change to the edge will occur when the edge is chosen.
               <p>
                 If a function is supplied, it is called when the edge is chosen.
@@ -393,7 +394,7 @@ network.setOptions(options);
             <td>Function or Boolean</td>
             <td>undefined</td>
             <td>
-              When true, selecting or hovering on an edge will change its label's characteristics according the default.
+              When true, selecting or hovering on an edge will change its label's characteristics according to the default.
               When false, no change to the edge's label will occur when the edge is chosen.
               <p>
                 If a function is supplied, it is called when the edge is chosen.
@@ -548,7 +549,7 @@ network.setOptions(options);
         </tr>
         <tr parent="font" class="hidden">
             <td class="indent">font.vadjust</td>
-            <td>String</td>
+            <td>Number</td>
             <td><code>0</code></td>
             <td>A font-specific correction to the vertical positioning of the base font in the label text. (Positive is down.)</td>
         </tr>
@@ -593,9 +594,9 @@ network.setOptions(options);
         </tr>
         <tr parent="bold" class="hidden">
             <td class="indent">font.bold.vadjust</td>
-            <td>String</td>
+            <td>Number</td>
             <td><code>0</code></td>
-            <td>A font-specific correction to the vertical positioning of the bold italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
+            <td>A font-specific correction to the vertical positioning of the bold font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
         </tr>
         <tr parent="font" class='hidden toggle collapsible' onclick="toggleTable('optionTable','ital', this);">
             <td><span parent="ital" class="right-caret"></span> font.ital</td>
@@ -631,7 +632,7 @@ network.setOptions(options);
         </tr>
         <tr parent="ital" class="hidden">
             <td class="indent">font.ital.vadjust</td>
-            <td>String</td>
+            <td>Number</td>
             <td><code>0</code></td>
             <td>A font-specific correction to the vertical positioning of the italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
         </tr>
@@ -669,7 +670,7 @@ network.setOptions(options);
         </tr>
         <tr parent="boldital" class="hidden">
             <td class="indent">font.boldital.vadjust</td>
-            <td>String</td>
+            <td>Number</td>
             <td><code>0</code></td>
             <td>A font-specific correction to the vertical positioning of the bold italic font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
         </tr>
@@ -707,7 +708,7 @@ network.setOptions(options);
         </tr>
         <tr parent="mono" class="hidden">
             <td class="indent">font.mono.vadjust</td>
-            <td>String</td>
+            <td>Number</td>
             <td><code>2</code></td>
             <td>A font-specific correction to the vertical positioning of the monospaced font in the label text. (Positive is down.) Defaults to the base font's valign.</td>
         </tr>
@@ -805,7 +806,7 @@ var options: {
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
             <td>When false, the label is not allowed to scale with the edge. If true it will scale using default
-                settigns. For further customization, you can supply an object.
+                settings. For further customization, you can supply an object.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
@@ -972,7 +973,7 @@ var options: {
                 that of straight curves but it looks better.
                 There is a difference between dynamic smooth curves and static smooth curves. The dynamic smooth curves
                 have an invisible support node that takes part in the physics simulation. If you have a lot of edges,
-                you may want to consider picking a different type of smooth curves then dynamic for better performance.
+                you may want to consider picking a different type of smooth curves than dynamic for better performance.
             </td>
         </tr>
         <tr parent="smooth" class="hidden">
@@ -1050,6 +1051,10 @@ var options: {
         </tr>
     </table>
 
+    <div class="flagbar">
+      <a href="../../docs/network/edges.html"><span class="flag en"></span></a>
+      <a href="../../docs-kr/network/edges.html"><span class="flag kr"></span></a>
+    </div>
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -1058,12 +1063,12 @@ var options: {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
 <!-- jquery extensions -->
-<script src="../js/jquery.highlight.js"></script>
-<script src="../js/jquery.url.min.js"></script>
+<script src="../../common-docs-files/js/jquery.highlight.js"></script>
+<script src="../../common-docs-files/js/jquery.url.min.js"></script>
 <!-- Tipue vendor js -->
-<script src="../js/tipuesearch.config.js"></script>
+<script src="../../common-docs-files/js/tipuesearch.config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
 <!-- controller -->
-<script src="../js/main.js"></script>
+<script src="../../common-docs-files/js/main.js"></script>

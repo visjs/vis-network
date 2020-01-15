@@ -26,6 +26,7 @@
  * ============================================================================= */
 
 import { ArrowData, Point } from "./types";
+import { drawCircle } from "./shapes";
 
 /**
  * Common methods for endpoints
@@ -297,7 +298,11 @@ class Triangle {
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    const points = [{ x: 0.02, y: 0 }, { x: -1, y: 0.3 }, { x: -1, y: -0.3 }];
+    const points = [
+      { x: 0.02, y: 0 },
+      { x: -1, y: 0.3 },
+      { x: -1, y: -0.3 }
+    ];
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
@@ -324,7 +329,11 @@ class InvertedTriangle {
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
-    const points = [{ x: 0, y: 0.3 }, { x: 0, y: -0.3 }, { x: -1, y: 0 }];
+    const points = [
+      { x: 0, y: 0.3 },
+      { x: 0, y: -0.3 },
+      { x: -1, y: 0 }
+    ];
 
     EndPoint.transform(points, arrowData);
     EndPoint.drawPath(ctx, points);
@@ -352,7 +361,7 @@ class Circle {
     const point = { x: -0.4, y: 0 };
 
     EndPoint.transform(point, arrowData);
-    ctx.circle(point.x, point.y, arrowData.length * 0.4);
+    drawCircle(ctx, point.x, point.y, arrowData.length * 0.4);
 
     return true;
   }

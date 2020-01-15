@@ -1,0 +1,23 @@
+{
+  "base-url": "https://visjs.github.io/vis-network/",
+  "output-directory": "./examples",
+
+  "assets-local-directory": "./examples/static",
+  "assets-web-directory": "./static",
+  "examples-local-directory": "./examples/network",
+  "examples-web-directory": "./network",
+  "pages-local-directory": "./examples/static",
+  "pages-web-directory": "./static",
+
+  "index": true,
+  "lint": true,
+  "playgrounds": true,
+  "screenshots": true,
+
+  "container-id": "mynetwork",
+  "format": "html",
+  "parallel": 6,
+  "screenshot-script": "./scripts/examples-index/screenshot-script.js",
+  "title": "Vis Network Examples",
+  "verify": 100
+}
