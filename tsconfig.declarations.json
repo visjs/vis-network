@@ -1,7 +1,9 @@
 {
     "extends": "./tsconfig",
     "compilerOptions": {
+        "declaration": true,
         "declarationDir": "declarations",
+        "declarationMap": true,
         "emitDeclarationOnly": true,
         "noImplicitAny": false
     },

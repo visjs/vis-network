@@ -2,7 +2,7 @@ import assets from "postcss-assets";
 import babel from "rollup-plugin-babel";
 import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
-import genHeader from "./dev-lib/header";
+import { generateHeader } from "vis-dev-utils";
 import nodeResolve from "rollup-plugin-node-resolve";
 import packageJSON from "./package.json";
 import postcss from "rollup-plugin-postcss";
@@ -11,7 +11,7 @@ import { readFileSync } from "fs";
 import { terser } from "rollup-plugin-terser";
 
 const babelrc = JSON.parse(readFileSync("./.babelrc"));
-const banner = genHeader("network");
+const banner = generateHeader();
 
 export default [].concat.apply(
   [],
@@ -139,7 +139,7 @@ export default [].concat.apply(
                 ...babelrc,
                 babelrc: false,
                 extensions: [".ts", ".js"],
-                exclude: [/node_modules[\/\\]core-js/]
+                runtimeHelpers: true
               }),
               postcss({
                 extract:

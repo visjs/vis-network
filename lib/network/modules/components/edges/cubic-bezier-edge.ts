@@ -78,7 +78,10 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
       x2 = this.to.x;
     }
 
-    return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+    return [
+      { x: x1, y: y1 },
+      { x: x2, y: y2 }
+    ];
   }
 
   /** @inheritdoc */

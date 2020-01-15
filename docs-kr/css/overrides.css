@@ -1,0 +1,3 @@
+#navbar form[role="search"]::after {
+  content: "검색하세요!";
+}
