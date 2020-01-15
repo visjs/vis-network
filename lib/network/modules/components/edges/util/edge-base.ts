@@ -768,7 +768,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           typeof this.options.selfReference.angle !== "undefined" &&
           this.options.selfReference.angle !== null
         ) {
-          low = this.options.selfReference.angle-2*Math.PI;
+          low = this.options.selfReference.angle - 2 * Math.PI;
           high = this.options.selfReference.angle;
         }
 
@@ -790,7 +790,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           typeof this.options.selfReference.angle !== "undefined" &&
           this.options.selfReference.angle !== null
         ) {
-          low = this.options.selfReference.angle-2*Math.PI;
+          low = this.options.selfReference.angle - 2 * Math.PI;
           high = this.options.selfReference.angle;
         }
 
@@ -806,7 +806,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-       //changing low and high for the arrows to avoid overlapping with the parent shape
+        //changing low and high for the arrows to avoid overlapping with the parent shape
         if (
           typeof this.options.selfReference.angle !== "undefined" &&
           this.options.selfReference.angle !== null
