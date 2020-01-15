@@ -334,38 +334,18 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   protected _getCircleData(
     ctx?: CanvasRenderingContext2D
   ): [number, number, number] {
-    let x: number;
-    let y: number;
-    const node = this.from;
     const radius = this.options.selfReference.size;
 
     if (ctx !== undefined) {
-      if (node.shape.width === undefined) {
-        node.shape.resize(ctx);
+      if (this.from.shape.width === undefined) {
+        this.from.shape.resize(ctx);
       }
     }
 
-    // get circle coordinates
-    if (
-      typeof this.options.selfReference.angle !== "undefined" &&
-      this.options.selfReference.angle !== null
-    ) {
-      x = node.x;
-      y = node.y;
+     // get circle coordinates
+    var coordinates = ComponentUtil.default.getSelfRefCoordinates(ctx, this.options.selfReference.angle, radius, this.from);
 
-      var coordinates = ComponentUtil.default.getSelfRefCoordinates(ctx, this.options.selfReference.angle, node);
-      x = coordinates.x;
-      y = coordinates.y;
-
-    } else if (node.shape.width > node.shape.height) {
-      x = node.x + node.shape.width * 0.5;
-      y = node.y - radius;
-    } else {
-      x = node.x + radius;
-      y = node.y - node.shape.height * 0.5;
-    }
-
-    return [x, y, radius];
+    return [coordinates.x, coordinates.y, radius];
   }
 
   /**
