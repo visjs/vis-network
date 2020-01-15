@@ -764,17 +764,12 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         let high = 0.6;
 
         //changing low and high for the arrows to avoid overlapping with the parent shape
-        //left and bottom are hardcoded
-        //ref https://en.wikipedia.org/wiki/Radian#/media/File:Degree-Radian_Conversion.svg
         if (
-          (this.options.selfReference.angle <= 3.9 &&
-            this.options.selfReference.angle >= 2.3) || //left
-          (this.options.selfReference.angle <= 5.5 &&
-            this.options.selfReference.angle >= 3.9)
+          typeof this.options.selfReference.angle !== "undefined" &&
+          this.options.selfReference.angle !== null
         ) {
-          //bottom
-          low = 0.6;
-          high = 1.0;
+          low = this.options.selfReference.angle-2*Math.PI;
+          high = this.options.selfReference.angle;
         }
 
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
@@ -791,17 +786,12 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         let high = 1.0;
 
         //changing low and high for the arrows to avoid overlapping with the parent shape
-        //left and bottom are hardcoded
-        //ref https://en.wikipedia.org/wiki/Radian#/media/File:Degree-Radian_Conversion.svg
         if (
-          (this.options.selfReference.angle <= 3.9 &&
-            this.options.selfReference.angle >= 2.3) || //left
-          (this.options.selfReference.angle <= 5.5 &&
-            this.options.selfReference.angle >= 3.9)
+          typeof this.options.selfReference.angle !== "undefined" &&
+          this.options.selfReference.angle !== null
         ) {
-          //bottom
-          low = 0.25;
-          high = 0.6;
+          low = this.options.selfReference.angle-2*Math.PI;
+          high = this.options.selfReference.angle;
         }
 
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
@@ -816,21 +806,14 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       } else {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        //changing angle and arrowPoint if self ref is in the left / bottom sides
+       //changing low and high for the arrows to avoid overlapping with the parent shape
         if (
-          this.options.selfReference.angle <= 5.5 &&
-          this.options.selfReference.angle >= 3.9
+          typeof this.options.selfReference.angle !== "undefined" &&
+          this.options.selfReference.angle !== null
         ) {
-          //bottom
-          arrowPoint = this._pointOnCircle(x, y, radius, -0.35);
-          angle = 7.225663103256524; // === -0.35 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        } else if (
-          this.options.selfReference.angle <= 3.9 &&
-          this.options.selfReference.angle >= 2.3
-        ) {
-          //left
-          arrowPoint = this._pointOnCircle(x, y, radius, 0.4);
-          angle = 2.5132741228718345; // === 0.4 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+          var pos = this.options.selfReference.angle / (2 * Math.PI);
+          arrowPoint = this._pointOnCircle(x, y, radius, pos);
+          angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         }
       }
     }
