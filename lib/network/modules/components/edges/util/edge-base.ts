@@ -18,7 +18,6 @@ import {
 import { drawDashedLine } from "./shapes";
 import * as ComponentUtil from "./../../shared/ComponentUtil";
 
-
 export interface FindBorderPositionOptions<Via> {
   via: Via;
 }
@@ -122,7 +121,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
     this.id = this.options.id;
-    
   }
 
   /** @inheritdoc */
@@ -348,9 +346,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       this.from
     );
 
- 
-
-    
     return [coordinates.x, coordinates.y, radius];
   }
 
@@ -765,9 +760,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         let high = 0.6;
 
         //changing low and high for the arrows to avoid overlapping with the parent shape
-        if (
-          this.options.selfReference.angle !== null
-        ) {
+        if (this.options.selfReference.angle !== null) {
           low = this.options.selfReference.angle - 2 * Math.PI;
           high = this.options.selfReference.angle;
         }
@@ -785,9 +778,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         let high = 1.0;
 
         //changing low and high for the arrows to avoid overlapping with the parent shape
-        if (
-          this.options.selfReference.angle !== null
-        ) {
+        if (this.options.selfReference.angle !== null) {
           low = this.options.selfReference.angle - 2 * Math.PI;
           high = this.options.selfReference.angle;
         }
@@ -805,9 +796,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
         angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         //changing low and high for the arrows to avoid overlapping with the parent shape
-        if (
-          this.options.selfReference.angle !== null
-        ) {
+        if (this.options.selfReference.angle !== null) {
           const pos = this.options.selfReference.angle / (2 * Math.PI);
           arrowPoint = this._pointOnCircle(x, y, radius, pos);
           angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
@@ -845,11 +834,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     _hover: boolean,
     arrowData: ArrowData
   ): void {
-
-
-
-
-   
     // set style
     ctx.strokeStyle = this.getColor(ctx, values);
     ctx.fillStyle = ctx.strokeStyle;
