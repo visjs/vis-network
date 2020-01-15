@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Vis Network | Events | Interaction events</title>
+
+    <script type="text/javascript" src="../../../standalone/umd/vis-network.js"></script>
+
+    <style type="text/css">
+        #mynetwork {
+            width: 800px;
+            height: 600px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+
+        // create an array with nodes
+        var nodes = new vis.DataSet([
+            {
+                id: 1,
+                label:
+                    "I'm an alligator,\nI'm a mama-papa coming for you.\nI'm the space invader,\nI'll be a rock 'n' rollin' bitch for you",
+                x:0,
+                y:0
+            },
+            {
+                id: 2,
+                label:
+                    "Test shape",
+                widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
+                x:200,
+                y:200
+            }
+        ]);
+
+        // create an array with edges
+        var edges = new vis.DataSet([
+            { from: 1, to: 1, label: "Moonage Daydream" },
+            { from: 2, to: 2, label: "Testing", arrows: 'to, middle, from', selfReference: { size: 40, angle: Math.PI / 6 } }
+        ]);
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {};
+        var network = new vis.Network(container, data, options);
+
+        (async () => {
+            let angle = -100;
+
+            for (; ;) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+
+                ++angle;
+                console.log("set self reference angle to", angle / 10);
+                network.setOptions({
+                    edges: {
+                        arrows: { to: true, from: true, middle: true },
+                        selfReference: {
+                            size: 20,
+                            angle: angle / 10
+                        }
+                    }
+                });
+            }
+        })();
+
+
+    </script>
+
+
+</body>
+
+</html>
