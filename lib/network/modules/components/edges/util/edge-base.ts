@@ -342,8 +342,13 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       }
     }
 
-     // get circle coordinates
-    var coordinates = ComponentUtil.default.getSelfRefCoordinates(ctx, this.options.selfReference.angle, radius, this.from);
+    // get circle coordinates
+    var coordinates = ComponentUtil.default.getSelfRefCoordinates(
+      ctx,
+      this.options.selfReference.angle,
+      radius,
+      this.from
+    );
 
     return [coordinates.x, coordinates.y, radius];
   }
