@@ -16,6 +16,7 @@ import {
   VNode
 } from "./types";
 import { drawDashedLine } from "./shapes";
+import * as ComponentUtil from "./../../shared/ComponentUtil";
 
 export interface FindBorderPositionOptions<Via> {
   via: Via;
@@ -352,44 +353,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       x = node.x;
       y = node.y;
 
-      if (ctx) {
-        //calculating opposite and adjacent
-        //distaneToBorder becomes Hypotenuse.
-        //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
-        const toBorderDist = node.distanceToBorder(
-          ctx,
-          this.options.selfReference.angle
-        );
-        const sin = Math.sin(this.options.selfReference.angle) * toBorderDist;
-        const cos = Math.cos(this.options.selfReference.angle) * toBorderDist;
+      var coordinates = ComponentUtil.default.getSelfRefCoordinates(ctx, this.options.selfReference.angle, node);
+      x = coordinates.x;
+      y = coordinates.y;
 
-        //cos is basically x and if cos equals to the distance to border then it means
-        //that y does not need calculation because it is equal node.height / 2 or node.y
-        //same thing with y and if sin equals to the distance to border then it means
-        //that x is equal node.width / 2 or node.x
-        if (cos === toBorderDist) {
-          x += toBorderDist;
-          y = node.y;
-        } else if (sin === toBorderDist) {
-          x = node.x;
-          y -= toBorderDist;
-        } else {
-          //Sin/Cos sign needs changes based on wich side angle is
-          //ref https://en.wikipedia.org/wiki/Radian#/media/File:Degree-Radian_Conversion.svg
-          //So cos is x. If cos is with a plus sign then it means that base x needs to add cos because it is under plus side of coordinates
-          //So sin is y. If sin is with a plus sign then it means that base y needs to add sin because it is under plus side of coordinates
-          if (sin > 0) {
-            y -= Math.abs(sin);
-          } else {
-            y += Math.abs(sin);
-          }
-          if (cos > 0) {
-            x += Math.abs(cos);
-          } else {
-            x -= Math.abs(cos);
-          }
-        }
-      }
     } else if (node.shape.width > node.shape.height) {
       x = node.x + node.shape.width * 0.5;
       y = node.y - radius;
