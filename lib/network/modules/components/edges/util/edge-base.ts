@@ -107,17 +107,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public setOptions(options: EdgeOptions): void {
     this.options = options;
-    if (Object.prototype.hasOwnProperty.call(options, "selfReferenceSize")) {
-      if (
-        !Object.prototype.hasOwnProperty.call(options, "selfReference") ||
-        !Object.prototype.hasOwnProperty.call(options.selfReference, "size")
-      ) {
-        this.options.selfReference = {
-          size: options.selfReferenceSize,
-          angle: null
-        };
-      }
-    }
+
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
     this.id = this.options.id;
@@ -756,14 +746,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       const [x, y, radius] = this._getCircleData(ctx);
 
       if (position === "from") {
-        let low = 0.25;
-        let high = 0.6;
+        const low = this.options.selfReference.angle - 2 * Math.PI;
+        const high = this.options.selfReference.angle;
 
-        //changing low and high for the arrows to avoid overlapping with the parent shape
-        if (this.options.selfReference.angle !== null) {
-          low = this.options.selfReference.angle - 2 * Math.PI;
-          high = this.options.selfReference.angle;
-        }
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
@@ -774,14 +759,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         arrowPoint = pointT;
       } else if (position === "to") {
-        let low = 0.6;
-        let high = 1.0;
-
-        //changing low and high for the arrows to avoid overlapping with the parent shape
-        if (this.options.selfReference.angle !== null) {
-          low = this.options.selfReference.angle - 2 * Math.PI;
-          high = this.options.selfReference.angle;
-        }
+        const low = this.options.selfReference.angle - 2 * Math.PI;
+        const high = this.options.selfReference.angle;
 
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
@@ -793,14 +772,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
         arrowPoint = pointT;
       } else {
-        arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
-        angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        //changing low and high for the arrows to avoid overlapping with the parent shape
-        if (this.options.selfReference.angle !== null) {
-          const pos = this.options.selfReference.angle / (2 * Math.PI);
-          arrowPoint = this._pointOnCircle(x, y, radius, pos);
-          angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
-        }
+        const pos = this.options.selfReference.angle / (2 * Math.PI);
+        arrowPoint = this._pointOnCircle(x, y, radius, pos);
+        angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
       }
     }
 
