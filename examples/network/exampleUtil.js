@@ -1,5 +1,9 @@
 /**
  * Created by Alex on 5/20/2015.
+ *
+ * @remarks
+ * This depends on Alea from Vis Util and therefore has to be loaded AFTER Vis
+ * Util or standalone Vis Network has already been loaded.
  */
 
 function loadJSON(path, success, error) {
@@ -69,11 +73,7 @@ function getScaleFreeNetwork(nodeCount) {
   return {nodes:nodes, edges:edges};
 }
 
-var randomSeed = 764; // Math.round(Math.random()*1000);
-function seededRandom() {
-  var x = Math.sin(randomSeed++) * 10000;
-  return x - Math.floor(x);
-}
+var seededRandom = vis.util.Alea('SEED')
 
 function getScaleFreeNetworkSeeded(nodeCount, seed) {
   if (seed) {
