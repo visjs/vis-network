@@ -159,7 +159,7 @@ const dataconfigs = [
   }
 ];
 
-describe.only("Physics snapshots", function(): void {
+describe("Physics snapshots", function(): void {
   beforeEach(function() {
     this.clearJSDOM = canvasMockify("<div id='mynetwork'></div>");
     this.container = document.getElementById("mynetwork");
