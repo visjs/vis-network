@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-18T20:39:39.160Z
+ * @date    2020-01-18T20:57:59.320Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7815,6 +7815,22 @@
 
 	var some$2 = some$1;
 
+	var FAILS_ON_PRIMITIVES = fails(function () { objectKeys(1); });
+
+	// `Object.keys` method
+	// https://tc39.github.io/ecma262/#sec-object.keys
+	_export({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES }, {
+	  keys: function keys(it) {
+	    return objectKeys(toObject(it));
+	  }
+	});
+
+	var keys$1 = path.Object.keys;
+
+	var keys$2 = keys$1;
+
+	var keys$3 = keys$2;
+
 	var defineProperty$4 = defineProperty_1;
 
 	var defineProperty$5 = defineProperty$4;
@@ -7891,8 +7907,8 @@
 	var nativeGetOwnPropertyDescriptor$1 = objectGetOwnPropertyDescriptor.f;
 
 
-	var FAILS_ON_PRIMITIVES = fails(function () { nativeGetOwnPropertyDescriptor$1(1); });
-	var FORCED = !descriptors || FAILS_ON_PRIMITIVES;
+	var FAILS_ON_PRIMITIVES$1 = fails(function () { nativeGetOwnPropertyDescriptor$1(1); });
+	var FORCED = !descriptors || FAILS_ON_PRIMITIVES$1;
 
 	// `Object.getOwnPropertyDescriptor` method
 	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
@@ -8265,22 +8281,6 @@
 	var getOwnPropertySymbols$1 = getOwnPropertySymbols;
 
 	var getOwnPropertySymbols$2 = getOwnPropertySymbols$1;
-
-	var FAILS_ON_PRIMITIVES$1 = fails(function () { objectKeys(1); });
-
-	// `Object.keys` method
-	// https://tc39.github.io/ecma262/#sec-object.keys
-	_export({ target: 'Object', stat: true, forced: FAILS_ON_PRIMITIVES$1 }, {
-	  keys: function keys(it) {
-	    return objectKeys(toObject(it));
-	  }
-	});
-
-	var keys$1 = path.Object.keys;
-
-	var keys$2 = keys$1;
-
-	var keys$3 = keys$2;
 
 	function _defineProperty(obj, key, value) {
 	  if (key in obj) {
@@ -14117,16 +14117,16 @@
 	              this.body.nodes[nodeId].updateShape();
 	            }
 	          }
-	        } // update the font in all nodes
+	        } // Update the labels of nodes if any relevant options changed.
 
 
-	        if (options.font !== undefined) {
-	          for (var _nodeId in this.body.nodes) {
-	            if (this.body.nodes.hasOwnProperty(_nodeId)) {
-	              this.body.nodes[_nodeId].updateLabelModule();
+	        if (typeof options.font !== "undefined" || typeof options.widthConstraint !== "undefined" || typeof options.heightConstraint !== "undefined") {
+	          for (var _i = 0, _Object$keys = keys$3(this.body.nodes); _i < _Object$keys.length; _i++) {
+	            var _nodeId = _Object$keys[_i];
 
-	              this.body.nodes[_nodeId].needsRefresh();
-	            }
+	            this.body.nodes[_nodeId].updateLabelModule();
+
+	            this.body.nodes[_nodeId].needsRefresh();
 	          }
 	        } // update the shape size in all nodes
 
@@ -14362,9 +14362,9 @@
 	          }
 	        }
 	      } else {
-	        for (var _i = 0; _i < this.body.nodeIndices.length; _i++) {
-	          var _node2 = this.body.nodes[this.body.nodeIndices[_i]];
-	          dataArray[this.body.nodeIndices[_i]] = {
+	        for (var _i2 = 0; _i2 < this.body.nodeIndices.length; _i2++) {
+	          var _node2 = this.body.nodes[this.body.nodeIndices[_i2]];
+	          dataArray[this.body.nodeIndices[_i2]] = {
 	            x: Math.round(_node2.x),
 	            y: Math.round(_node2.y)
 	          };

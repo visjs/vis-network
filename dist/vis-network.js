@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-18T20:40:52.724Z
+ * @date    2020-01-18T20:58:53.914Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -12974,6 +12974,27 @@
 
 	var some$2 = some$1;
 
+	var FAILS_ON_PRIMITIVES$3 = fails(function () {
+	  objectKeys$1(1);
+	}); // `Object.keys` method
+	// https://tc39.github.io/ecma262/#sec-object.keys
+
+	_export({
+	  target: 'Object',
+	  stat: true,
+	  forced: FAILS_ON_PRIMITIVES$3
+	}, {
+	  keys: function keys(it) {
+	    return objectKeys$1(toObject$1(it));
+	  }
+	});
+
+	var keys$5 = path.Object.keys;
+
+	var keys$6 = keys$5;
+
+	var keys$7 = keys$6;
+
 	/**
 	 * vis-data
 	 * http://visjs.org/
@@ -13558,10 +13579,10 @@
 	  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id$2 + postfix$2).toString(36);
 	};
 
-	var keys$5 = shared$2('keys');
+	var keys$8 = shared$2('keys');
 
 	var sharedKey$2 = function (key) {
-	  return keys$5[key] || (keys$5[key] = uid$2(key));
+	  return keys$8[key] || (keys$8[key] = uid$2(key));
 	};
 
 	var WeakMap$1$1 = global_1$2.WeakMap;
@@ -14252,10 +14273,10 @@
 
 	var forEach$2$1 = forEach_1$2;
 	var nativeGetOwnPropertyDescriptor$1$2 = objectGetOwnPropertyDescriptor$2.f;
-	var FAILS_ON_PRIMITIVES$3 = fails$2(function () {
+	var FAILS_ON_PRIMITIVES$4 = fails$2(function () {
 	  nativeGetOwnPropertyDescriptor$1$2(1);
 	});
-	var FORCED$3 = !descriptors$2 || FAILS_ON_PRIMITIVES$3; // `Object.getOwnPropertyDescriptor` method
+	var FORCED$3 = !descriptors$2 || FAILS_ON_PRIMITIVES$4; // `Object.getOwnPropertyDescriptor` method
 	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
 
 	_export$2({
@@ -16185,7 +16206,7 @@
 
 	var keys$4$1 = path$2.Object.keys;
 	var keys$5$1 = keys$4$1;
-	var keys$6 = keys$5$1;
+	var keys$6$1 = keys$5$1;
 	var freezing = !fails$2(function () {
 	  return Object.isExtensible(Object.preventExtensions({}));
 	});
@@ -17444,10 +17465,10 @@
 	  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id$1$1 + postfix$1$1).toString(36);
 	};
 
-	var keys$7 = shared$1$1('keys');
+	var keys$7$1 = shared$1$1('keys');
 
 	var sharedKey$1$1 = function (key) {
-	  return keys$7[key] || (keys$7[key] = uid$1$1(key));
+	  return keys$7$1[key] || (keys$7$1[key] = uid$1$1(key));
 	};
 
 	var IE_PROTO$2$1 = sharedKey$1$1('IE_PROTO');
@@ -25432,7 +25453,7 @@
 	}();
 
 	function ownKeys$2$1(object, enumerableOnly) {
-	  var keys = keys$6(object);
+	  var keys = keys$6$1(object);
 
 	  if (getOwnPropertySymbols$2$1) {
 	    var symbols = getOwnPropertySymbols$2$1(object);
@@ -25564,7 +25585,7 @@
 
 	    if (_this._options.type) {
 	      warnTypeCorectionDeprecation();
-	      var fields = keys$6(_this._options.type);
+	      var fields = keys$6$1(_this._options.type);
 
 	      for (var i = 0, len = fields.length; i < len; i++) {
 	        var field = fields[i];
@@ -26179,7 +26200,7 @@
 
 	      return reduce$2(_context3 = isArray$5$1(fields) ? // Use the supplied array
 	      fields : // Use the keys of the supplied object
-	      keys$6(fields)).call(_context3, function (filteredItem, field) {
+	      keys$6$1(fields)).call(_context3, function (filteredItem, field) {
 	        filteredItem[field] = item[field];
 	        return filteredItem;
 	      }, {});
@@ -26503,7 +26524,7 @@
 	      }
 
 	      var d = {};
-	      var fields = keys$6(item);
+	      var fields = keys$6$1(item);
 
 	      for (var i = 0, len = fields.length; i < len; i++) {
 	        var field = fields[i];
@@ -26543,7 +26564,7 @@
 
 
 	      var converted;
-	      var fields = keys$6(raw);
+	      var fields = keys$6$1(raw);
 
 	      if (types) {
 	        warnTypeCorectionDeprecation();
@@ -26591,7 +26612,7 @@
 	      } // merge with current item
 
 
-	      var fields = keys$6(item);
+	      var fields = keys$6$1(item);
 
 	      for (var i = 0, len = fields.length; i < len; i++) {
 	        var field = fields[i];
@@ -27258,10 +27279,10 @@
 	var getOwnPropertyDescriptors$6 = getOwnPropertyDescriptors$5;
 
 	var nativeGetOwnPropertyDescriptor$4 = objectGetOwnPropertyDescriptor.f;
-	var FAILS_ON_PRIMITIVES$4 = fails(function () {
+	var FAILS_ON_PRIMITIVES$5 = fails(function () {
 	  nativeGetOwnPropertyDescriptor$4(1);
 	});
-	var FORCED$5 = !descriptors || FAILS_ON_PRIMITIVES$4; // `Object.getOwnPropertyDescriptor` method
+	var FORCED$5 = !descriptors || FAILS_ON_PRIMITIVES$5; // `Object.getOwnPropertyDescriptor` method
 	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
 
 	_export({
@@ -27677,27 +27698,6 @@
 	var getOwnPropertySymbols$5 = getOwnPropertySymbols$4;
 
 	var getOwnPropertySymbols$6 = getOwnPropertySymbols$5;
-
-	var FAILS_ON_PRIMITIVES$5 = fails(function () {
-	  objectKeys$1(1);
-	}); // `Object.keys` method
-	// https://tc39.github.io/ecma262/#sec-object.keys
-
-	_export({
-	  target: 'Object',
-	  stat: true,
-	  forced: FAILS_ON_PRIMITIVES$5
-	}, {
-	  keys: function keys(it) {
-	    return objectKeys$1(toObject$1(it));
-	  }
-	});
-
-	var keys$8 = path.Object.keys;
-
-	var keys$9 = keys$8;
-
-	var keys$a = keys$9;
 
 	function _defineProperty$2(obj, key, value) {
 	  if (key in obj) {
@@ -32385,7 +32385,7 @@
 	        }
 	      } else if (refOptionObj['any'] === undefined) {
 	        // type of the field is incorrect and the field cannot be any
-	        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$a(refOptionObj)) + '. Received [' + optionType + '] "' + options[option] + '"');
+	        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$7(refOptionObj)) + '. Received [' + optionType + '] "' + options[option] + '"');
 	        errorFound = true;
 	      }
 	    }
@@ -32470,7 +32470,7 @@
 	      } else if (localSearch.distance <= localSearchThreshold) {
 	        msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator.printLocation(localSearch.path, option);
 	      } else {
-	        msg = '. Did you mean one of these: ' + Validator.print(keys$a(options)) + Validator.printLocation(path, option);
+	        msg = '. Did you mean one of these: ' + Validator.print(keys$7(options)) + Validator.printLocation(path, option);
 	      }
 
 	      console.log('%cUnknown option detected: "' + option + '"' + msg, printStyle);
@@ -32640,7 +32640,7 @@
 	  return Validator;
 	}();
 
-	function ownKeys$4(object, enumerableOnly) { var keys = keys$a(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$4(object, enumerableOnly) { var keys = keys$7(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 	function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context4; forEach$6(_context4 = ownKeys$4(Object(source), true)).call(_context4, function (key) { defineProperty$g(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context5; forEach$6(_context5 = ownKeys$4(Object(source))).call(_context5, function (key) { defineProperty$e(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
 	/**
@@ -33561,16 +33561,16 @@
 	              this.body.nodes[nodeId].updateShape();
 	            }
 	          }
-	        } // update the font in all nodes
+	        } // Update the labels of nodes if any relevant options changed.
 
 
-	        if (options.font !== undefined) {
-	          for (var _nodeId in this.body.nodes) {
-	            if (this.body.nodes.hasOwnProperty(_nodeId)) {
-	              this.body.nodes[_nodeId].updateLabelModule();
+	        if (typeof options.font !== "undefined" || typeof options.widthConstraint !== "undefined" || typeof options.heightConstraint !== "undefined") {
+	          for (var _i = 0, _Object$keys = keys$7(this.body.nodes); _i < _Object$keys.length; _i++) {
+	            var _nodeId = _Object$keys[_i];
 
-	              this.body.nodes[_nodeId].needsRefresh();
-	            }
+	            this.body.nodes[_nodeId].updateLabelModule();
+
+	            this.body.nodes[_nodeId].needsRefresh();
 	          }
 	        } // update the shape size in all nodes
 
@@ -33806,9 +33806,9 @@
 	          }
 	        }
 	      } else {
-	        for (var _i = 0; _i < this.body.nodeIndices.length; _i++) {
-	          var _node2 = this.body.nodes[this.body.nodeIndices[_i]];
-	          dataArray[this.body.nodeIndices[_i]] = {
+	        for (var _i2 = 0; _i2 < this.body.nodeIndices.length; _i2++) {
+	          var _node2 = this.body.nodes[this.body.nodeIndices[_i2]];
+	          dataArray[this.body.nodeIndices[_i2]] = {
 	            x: Math.round(_node2.x),
 	            y: Math.round(_node2.y)
 	          };
@@ -34775,7 +34775,7 @@
 	  return EndPoints;
 	}();
 
-	function ownKeys$5(object, enumerableOnly) { var keys = keys$a(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$5(object, enumerableOnly) { var keys = keys$7(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 	function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; forEach$6(_context2 = ownKeys$5(Object(source), true)).call(_context2, function (key) { defineProperty$g(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context3; forEach$6(_context3 = ownKeys$5(Object(source))).call(_context3, function (key) { defineProperty$e(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
 	/**
@@ -35484,7 +35484,7 @@
 	  return EdgeBase;
 	}();
 
-	function ownKeys$6(object, enumerableOnly) { var keys = keys$a(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$6(object, enumerableOnly) { var keys = keys$7(object); if (getOwnPropertySymbols$6) { var symbols = getOwnPropertySymbols$6(object); if (enumerableOnly) symbols = filter$6(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$6(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$6(_context = ownKeys$6(Object(source), true)).call(_context, function (key) { defineProperty$g(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$6) { defineProperties$4(target, getOwnPropertyDescriptors$6(source)); } else { var _context2; forEach$6(_context2 = ownKeys$6(Object(source))).call(_context2, function (key) { defineProperty$e(target, key, getOwnPropertyDescriptor$6(source, key)); }); } } return target; }
 	/**
@@ -39482,7 +39482,7 @@
 	  }, {
 	    key: "revert",
 	    value: function revert() {
-	      var nodeIds = keys$a(this.previousStates);
+	      var nodeIds = keys$7(this.previousStates);
 
 	      var nodes = this.body.nodes;
 	      var velocities = this.physicsBody.velocities;
@@ -40322,7 +40322,7 @@
 	            } // add to the cluster queue
 
 
-	            if (keys$a(childNodesObj).length > 0 && keys$a(childEdgesObj).length > 0 && gatheringSuccessful === true) {
+	            if (keys$7(childNodesObj).length > 0 && keys$7(childEdgesObj).length > 0 && gatheringSuccessful === true) {
 	              /**
 	               * Search for cluster data that contains any of the node id's
 	               * @returns {Boolean} true if no joinCondition, otherwise return value of joinCondition
@@ -40485,7 +40485,7 @@
 	        }
 	      }
 
-	      var childNodeIDs = map$5(_context = keys$a(childNodesObj)).call(_context, function (childNode) {
+	      var childNodeIDs = map$5(_context = keys$7(childNodesObj)).call(_context, function (childNode) {
 	        return childNodesObj[childNode].id;
 	      });
 
@@ -40521,7 +40521,7 @@
 	      var edge, childNodeId, childNode, toId, fromId, otherNodeId; // loop over all child nodes and their edges to find edges going out of the cluster
 	      // these edges will be replaced by clusterEdges.
 
-	      var childKeys = keys$a(childNodesObj);
+	      var childKeys = keys$7(childNodesObj);
 
 	      var createEdges = [];
 
@@ -40667,12 +40667,12 @@
 	      } // kill condition: no nodes don't bother
 
 
-	      if (keys$a(childNodesObj).length == 0) {
+	      if (keys$7(childNodesObj).length == 0) {
 	        return;
 	      } // allow clusters of 1 if options allow
 
 
-	      if (keys$a(childNodesObj).length == 1 && options.clusterNodeProperties.allowSingleNodeCluster != true) {
+	      if (keys$7(childNodesObj).length == 1 && options.clusterNodeProperties.allowSingleNodeCluster != true) {
 	        return;
 	      }
 
@@ -40817,7 +40817,7 @@
 	  }, {
 	    key: "_getClusterPosition",
 	    value: function _getClusterPosition(childNodesObj) {
-	      var childKeys = keys$a(childNodesObj);
+	      var childKeys = keys$7(childNodesObj);
 
 	      var minX = childNodesObj[childKeys[0]].x;
 	      var maxX = childNodesObj[childKeys[0]].x;
@@ -41549,7 +41549,7 @@
 	      //
 	      // Iterating over keys here, because edges may be removed in the loop
 
-	      var ids = keys$a(this.body.edges);
+	      var ids = keys$7(this.body.edges);
 
 	      forEach$3(ids, function (edgeId) {
 	        var edge = _this4.body.edges[edgeId];
@@ -41595,7 +41595,7 @@
 	        var clustersToOpen = []; // Determine the id's of clusters that need opening
 
 	        eachClusterNode(function (clusterNode) {
-	          var numNodes = keys$a(clusterNode.containedNodes).length;
+	          var numNodes = keys$7(clusterNode.containedNodes).length;
 
 	          var allowSingle = clusterNode.options.allowSingleNodeCluster === true;
 
@@ -45322,9 +45322,9 @@
 	      }
 
 	      if (object !== undefined) {
-	        var hoveredEdgesCount = keys$a(this.hoverObj.edges).length;
+	        var hoveredEdgesCount = keys$7(this.hoverObj.edges).length;
 
-	        var hoveredNodesCount = keys$a(this.hoverObj.nodes).length;
+	        var hoveredNodesCount = keys$7(this.hoverObj.nodes).length;
 
 	        var newOnlyHoveredEdge = object instanceof Edge && hoveredEdgesCount === 0 && hoveredNodesCount === 0;
 	        var newOnlyHoveredNode = object instanceof Node && hoveredEdgesCount === 0 && hoveredNodesCount === 0;
@@ -47840,7 +47840,7 @@
 	  }, {
 	    key: "getLevels",
 	    value: function getLevels() {
-	      return keys$a(this.distributionOrdering);
+	      return keys$7(this.distributionOrdering);
 	    }
 	    /**
 	     * Add a node to the ordering per level
@@ -48910,7 +48910,7 @@
 	          var _context;
 
 	          // sort nodes in level by position:
-	          var nodeArray = keys$a(distribution[level]);
+	          var nodeArray = keys$7(distribution[level]);
 
 	          nodeArray = this._indexArrayToNodes(nodeArray);
 
@@ -50456,7 +50456,7 @@
 	        this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[UIfunctionName];
 	        this.body.eventListeners[UIfunctionName] = newFunction;
 	      } else {
-	        throw new Error('This UI function does not exist. Typo? You tried: ' + UIfunctionName + ' possible are: ' + stringify$5(keys$a(this.body.eventListeners)));
+	        throw new Error('This UI function does not exist. Typo? You tried: ' + UIfunctionName + ' possible are: ' + stringify$5(keys$7(this.body.eventListeners)));
 	      }
 	    }
 	    /**
