@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-18T12:41:42.770Z
+ * @date    2020-01-18T20:39:39.160Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -37790,6 +37790,7 @@
 	/**
 	 * Barnes Hut Solver
 	 */
+
 	var BarnesHutSolver =
 	/*#__PURE__*/
 	function () {
@@ -37805,7 +37806,7 @@
 	    this.physicsBody = physicsBody;
 	    this.barnesHutTree;
 	    this.setOptions(options);
-	    this.randomSeed = 5; // debug: show grid
+	    this._rng = Alea("BARNES HUT SOLVER"); // debug: show grid
 	    // this.body.emitter.on("afterDrawing", (ctx) => {this._debug(ctx,'#ff0000')})
 	  }
 	  /**
@@ -37821,17 +37822,6 @@
 	      this.thetaInversed = 1 / this.options.theta; // if 1 then min distance = 0.5, if 0.5 then min distance = 0.5 + 0.5*node.shape.radius
 
 	      this.overlapAvoidanceFactor = 1 - Math.max(0, Math.min(1, this.options.avoidOverlap));
-	    }
-	    /**
-	     *
-	     * @returns {number} random integer
-	     */
-
-	  }, {
-	    key: "seededRandom",
-	    value: function seededRandom() {
-	      var x = Math.sin(this.randomSeed++) * 10000;
-	      return x - Math.floor(x);
 	    }
 	    /**
 	     * This function calculates the forces the nodes apply on each other based on a gravitational model.
@@ -38139,8 +38129,8 @@
 	          // if there are two nodes exactly overlapping (on init, on opening of cluster etc.)
 	          // we move one node a little bit and we do not put it in the tree.
 	          if (children.children.data.x === node.x && children.children.data.y === node.y) {
-	            node.x += this.seededRandom();
-	            node.y += this.seededRandom();
+	            node.x += this._rng();
+	            node.y += this._rng();
 	          } else {
 	            this._splitBranch(children);
 
@@ -38336,6 +38326,7 @@
 	/**
 	 * Repulsion Solver
 	 */
+
 	var RepulsionSolver =
 	/*#__PURE__*/
 	function () {
@@ -38347,6 +38338,7 @@
 	  function RepulsionSolver(body, physicsBody, options) {
 	    classCallCheck(this, RepulsionSolver);
 
+	    this._rng = Alea("REPULSION SOLVER");
 	    this.body = body;
 	    this.physicsBody = physicsBody;
 	    this.setOptions(options);
@@ -38393,7 +38385,7 @@
 	          distance = Math.sqrt(dx * dx + dy * dy); // same condition as BarnesHutSolver, making sure nodes are never 100% overlapping.
 
 	          if (distance === 0) {
-	            distance = 0.1 * Math.random();
+	            distance = 0.1 * this._rng();
 	            dx = distance;
 	          }
 
@@ -38834,9 +38826,13 @@
 	   * @param {Object} options
 	   */
 	  function ForceAtlas2BasedRepulsionSolver(body, physicsBody, options) {
+	    var _this;
+
 	    classCallCheck(this, ForceAtlas2BasedRepulsionSolver);
 
-	    return possibleConstructorReturn$1(this, getPrototypeOf$8(ForceAtlas2BasedRepulsionSolver).call(this, body, physicsBody, options));
+	    _this = possibleConstructorReturn$1(this, getPrototypeOf$8(ForceAtlas2BasedRepulsionSolver).call(this, body, physicsBody, options));
+	    _this._rng = Alea("FORCE ATLAS 2 BASED REPULSION SOLVER");
+	    return _this;
 	  }
 	  /**
 	   * Calculate the forces based on the distance.
@@ -38854,7 +38850,7 @@
 	    key: "_calculateForces",
 	    value: function _calculateForces(distance, dx, dy, node, parentBranch) {
 	      if (distance === 0) {
-	        distance = 0.1 * Math.random();
+	        distance = 0.1 * this._rng();
 	        dx = distance;
 	      }
 
@@ -47792,9 +47788,11 @@
 	  function LayoutEngine(body) {
 	    classCallCheck(this, LayoutEngine);
 
-	    this.body = body;
-	    this.initialRandomSeed = Math.round(Math.random() * 1000000);
-	    this.randomSeed = this.initialRandomSeed;
+	    this.body = body; // Make sure there always is some RNG because the setOptions method won't
+	    // set it unless there's a seed for it.
+
+	    this._resetRNG(Math.random() + ":" + now$6());
+
 	    this.setPhysics = false;
 	    this.options = {};
 	    this.optionsBackup = {
@@ -47869,7 +47867,7 @@
 	        mergeOptions(this.options, options, 'hierarchical');
 
 	        if (options.randomSeed !== undefined) {
-	          this.initialRandomSeed = options.randomSeed;
+	          this._resetRNG(options.randomSeed);
 	        }
 
 	        if (hierarchical.enabled === true) {
@@ -47904,6 +47902,18 @@
 	      }
 
 	      return allOptions;
+	    }
+	    /**
+	     * Reset the random number generator with given seed.
+	     *
+	     * @param {any} seed - The seed that will be forwarded the the RNG.
+	     */
+
+	  }, {
+	    key: "_resetRNG",
+	    value: function _resetRNG(seed) {
+	      this.initialRandomSeed = seed;
+	      this._rng = Alea(this.initialRandomSeed);
 	    }
 	    /**
 	     *
@@ -47999,17 +48009,6 @@
 	    }
 	    /**
 	     *
-	     * @returns {number}
-	     */
-
-	  }, {
-	    key: "seededRandom",
-	    value: function seededRandom() {
-	      var x = Math.sin(this.randomSeed++) * 10000;
-	      return x - Math.floor(x);
-	    }
-	    /**
-	     *
 	     * @param {Array.<Node>} nodesArray
 	     */
 
@@ -48017,12 +48016,14 @@
 	    key: "positionInitially",
 	    value: function positionInitially(nodesArray) {
 	      if (this.options.hierarchical.enabled !== true) {
-	        this.randomSeed = this.initialRandomSeed;
+	        this._resetRNG(this.initialRandomSeed);
+
 	        var radius = nodesArray.length + 50;
 
 	        for (var i = 0; i < nodesArray.length; i++) {
 	          var node = nodesArray[i];
-	          var angle = 2 * Math.PI * this.seededRandom();
+
+	          var angle = 2 * Math.PI * this._rng();
 
 	          if (node.x === undefined) {
 	            node.x = radius * Math.cos(angle);
@@ -48153,8 +48154,8 @@
 	            var _node = this.body.nodes[indices[_i]];
 
 	            if (_node.predefinedPosition === false) {
-	              _node.x += (0.5 - this.seededRandom()) * offset;
-	              _node.y += (0.5 - this.seededRandom()) * offset;
+	              _node.x += (0.5 - this._rng()) * offset;
+	              _node.y += (0.5 - this._rng()) * offset;
 	            }
 	          } // uncluster all clusters
 
