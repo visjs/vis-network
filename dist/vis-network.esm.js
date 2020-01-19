@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-19T12:42:20.487Z
+ * @date    2020-01-19T13:04:44.412Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -37847,6 +37847,24 @@ var now$5 = now$4;
 
 var now$6 = now$5;
 
+// https://tc39.github.io/ecma262/#sec-number.isnan
+
+_export({
+  target: 'Number',
+  stat: true
+}, {
+  isNaN: function isNaN(number) {
+    // eslint-disable-next-line no-self-compare
+    return number != number;
+  }
+});
+
+var isNan = path.Number.isNaN;
+
+var isNan$1 = isNan;
+
+var isNan$2 = isNan$1;
+
 /**
  * Barnes Hut Solver
  */
@@ -39065,7 +39083,11 @@ function () {
         fit: true
       },
       timestep: 0.5,
-      adaptiveTimestep: true
+      adaptiveTimestep: true,
+      wind: {
+        x: 0,
+        y: 0
+      }
     };
     extend(this.options, this.defaultOptions);
     this.timestep = 0.5;
@@ -39153,6 +39175,18 @@ function () {
           if (this.options.enabled === false) {
             this.physicsEnabled = false;
             this.stopSimulation();
+          }
+
+          var wind = this.options.wind;
+
+          if (wind) {
+            if (typeof wind.x !== 'number' || isNan$2(wind.x)) {
+              wind.x = 0;
+            }
+
+            if (typeof wind.y !== 'number' || isNan$2(wind.y)) {
+              wind.y = 0;
+            }
           } // set the timestep
 
 
@@ -39588,6 +39622,12 @@ function () {
     value: function _performStep(nodeId) {
       var node = this.body.nodes[nodeId];
       var force = this.physicsBody.forces[nodeId];
+
+      if (this.options.wind) {
+        force.x += this.options.wind.x;
+        force.y += this.options.wind.y;
+      }
+
       var velocity = this.physicsBody.velocities[nodeId]; // store the state so we can revert
 
       this.previousStates[nodeId] = {
@@ -52483,7 +52523,7 @@ function () {
               var draw = true;
 
               if (indexOf$7(path).call(path, 'physics') !== -1) {
-                if (this.moduleOptions.physics.solver !== subObj) {
+                if (this.moduleOptions.physics.solver !== subObj && subObj !== 'wind') {
                   draw = false;
                 }
               }
@@ -53819,6 +53859,17 @@ var allOptions$1 = {
     adaptiveTimestep: {
       boolean: bool
     },
+    wind: {
+      x: {
+        number: number
+      },
+      y: {
+        number: number
+      },
+      __type__: {
+        object: object
+      }
+    },
     __type__: {
       object: object,
       boolean: bool
@@ -54078,7 +54129,11 @@ var configureOptions = {
     maxVelocity: [50, 0, 150, 1],
     minVelocity: [0.1, 0.01, 0.5, 0.01],
     solver: ['barnesHut', 'forceAtlas2Based', 'repulsion', 'hierarchicalRepulsion'],
-    timestep: [0.5, 0.01, 1, 0.01] //adaptiveTimestep: true
+    timestep: [0.5, 0.01, 1, 0.01],
+    wind: {
+      x: [0, -10, 10, 0.1],
+      y: [0, -10, 10, 0.1]
+    } //adaptiveTimestep: true
 
   }
 };

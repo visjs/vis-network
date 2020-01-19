@@ -194,6 +194,9 @@ network.setOptions(options);
         <tr parent="stabilization" class="hidden"><td class="indent">stabilization.fit</td>                      <td>Boolean</td>        <td><code>true</code></td>       <td>안정화가 완료되면 모든 Node에 맞게 확대/축소할지 여부로 전환됩니다.</td></tr>
         <tr><td>timestep</td>                               <td>Number</td>         <td><code>0.5</code></td>        <td>physics 시뮬레이션은 별개입니다. 즉, 시간이 지나면서 힘을 계산하고, Node를 이동하고, 다른 단계를 밟습니다. 이 수를 늘리면 단계가 많아져서 Network가 불안정해질 수 있습니다. Network에서 jittery가 많이 이동하면 이 값을 조금 줄일 수 있습니다.</td></tr>
         <tr><td>adaptiveTimestep</td>                       <td>Boolean</td>        <td><code>true</code></td>       <td>만약 활성화되면 <b>(안정화가 활성화되고, 안정화가 진행되는 동안!)</b> 안정화 시간을 크게 줄일 수 있습니다. 위에 구성된 timestep은 최소 timestep으로 간주됩니다. <a href="layout.html#layout" target="_blank">이 기능은 개선된 Layout 알고리즘을 사용하여 더욱 개선할 수 있습니다.</a>.</td></tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','wind', this);"><td><span parent="wind" class="right-caret"></span> wind</td>                                                     <td>Object</td><td><code>Object</code></td>    <td>TODO</td></tr>
+        <tr parent="wind" class="hidden"><td class="indent">wind.x</td>     <td>Number</td>         <td><code>0</code></td>       <td>TODO</td></tr>
+        <tr parent="wind" class="hidden"><td class="indent">wind.y</td>     <td>Number</td>         <td><code>0</code></td>       <td>TODO</td></tr>
     </table>
 
     <div class="flagbar">
