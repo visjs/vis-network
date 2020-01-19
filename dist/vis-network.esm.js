@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-18T20:58:53.914Z
+ * @date    2020-01-19T08:52:54.615Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -12995,8 +12995,8 @@ var keys$7 = keys$6;
  *
  * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
  *
- * @version 6.3.2
- * @date    2020-01-12T13:36:28.026Z
+ * @version 6.3.4
+ * @date    2020-01-19T08:30:47.188Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25486,7 +25486,6 @@ function _objectSpread$1(target) {
 
 var warnTypeCorectionDeprecation = function warnTypeCorectionDeprecation() {
   console.warn("Type coercion has been deprecated. " + "Please, use data pipes instead. " + "See https://visjs.github.io/vis-data/data/datapipe.html#TypeCoercion for more details with working migration example.");
-  console.trace();
 };
 /**
  * # DataSet
@@ -26483,8 +26482,6 @@ function (_DataSetPart) {
       }
 
       if (fieldType) {
-        warnTypeCorectionDeprecation();
-
         for (var _i10 = 0, _len10 = values.length; _i10 < _len10; _i10++) {
           values[_i10] = convert(values[_i10], fieldType);
         }
@@ -26523,10 +26520,6 @@ function (_DataSetPart) {
       for (var i = 0, len = fields.length; i < len; i++) {
         var field = fields[i];
         var fieldType = this._type[field]; // type may be undefined
-
-        if (fieldType != null) {
-          warnTypeCorectionDeprecation();
-        }
 
         d[field] = convert(item[field], fieldType);
       }
@@ -26611,10 +26604,6 @@ function (_DataSetPart) {
       for (var i = 0, len = fields.length; i < len; i++) {
         var field = fields[i];
         var fieldType = this._type[field]; // type may be undefined
-
-        if (fieldType != null) {
-          warnTypeCorectionDeprecation();
-        }
 
         d[field] = convert(item[field], fieldType);
       }
