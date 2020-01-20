@@ -113,7 +113,7 @@
     "eslint-plugin-prettier": "3.1.2",
     "gh-pages": "2.1.1",
     "jsdoc": "3.6.3",
-    "jsdom": "15.2.1",
+    "jsdom": "16.0.1",
     "jsdom-global": "3.0.2",
     "keycharm": "0.3.1",
     "mocha": "6.2.2",
