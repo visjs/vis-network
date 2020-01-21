@@ -132,7 +132,8 @@ var options = {
       fit: true
     },
     timestep: 0.5,
-    adaptiveTimestep: true
+    adaptiveTimestep: true,
+    wind: { x: 0, y: 0 }
   }
 }
 
@@ -197,6 +198,11 @@ network.setOptions(options);
         <tr parent="stabilization" class="hidden"><td class="indent">stabilization.fit</td>                      <td>Boolean</td>        <td><code>true</code></td>       <td>Toggle whether or not you want the view to zoom to fit all nodes when the stabilization is finished.</td></tr>
         <tr><td>timestep</td>                               <td>Number</td>         <td><code>0.5</code></td>        <td>The physics simulation is discrete. This means we take a step in time, calculate the forces, move the nodes and take another step. If you increase this number the steps will be too large and the network can get unstable. If you see a lot of jittery movement in the network, you may want to reduce this value a little.</td></tr>
         <tr><td>adaptiveTimestep</td>                       <td>Boolean</td>        <td><code>true</code></td>       <td>If this is enabled, the timestep will intelligently be adapted <b>(only during the stabilization stage if stabilization is enabled!)</b> to greatly decrease stabilization times. The timestep configured above is taken as the minimum timestep. <a href="layout.html#layout" target="_blank">This can be further improved by using the improvedLayout algorithm</a>.</td></tr>
+
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','wind', this);"><td><span parent="wind" class="right-caret"></span> wind</td>                                                     <td>Object</td><td><code>Object</code></td>    <td>A force that pushes all non-fixed nodes in the given direction.<br/>Requires all nodes are connected to nodes which are `fixed`, otherwise non-attached nodes will keep moving indefinitely.</td></tr>
+        <tr parent="wind" class="hidden"><td class="indent">wind.x</td>     <td>Number</td>         <td><code>0</code></td>       <td>The amount of force to be applied pushing non-fixed nodes to the right (positive value) or to the left (negative value).</td></tr>
+        <tr parent="wind" class="hidden"><td class="indent">wind.y</td>     <td>Number</td>         <td><code>0</code></td>       <td>The amount of force to be applied pushing non-fixed nodes downwards (positive value) or upwards (negative value).</td></tr>
+
     </table>
 
     <div class="flagbar">

@@ -70,6 +70,12 @@
     "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/thumbnails\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\"",
     "postinstall": "opencollective postinstall || exit 0"
   },
+  "config": {
+    "snap-shot-it": {
+      "sortSnapshots": true,
+      "useRelativePath": true
+    }
+  },
   "peerDependencies": {
     "keycharm": "^0.2.0",
     "moment": "^2.24.0",
@@ -79,10 +85,10 @@
   "devDependencies": {
     "@babel/core": "7.8.0",
     "@babel/plugin-proposal-class-properties": "7.8.0",
-    "@babel/plugin-transform-runtime": "7.8.0",
+    "@babel/plugin-transform-runtime": "7.8.3",
     "@babel/preset-env": "7.8.2",
     "@babel/preset-typescript": "7.7.7",
-    "@babel/register": "7.8.0",
+    "@babel/register": "7.8.3",
     "@babel/runtime-corejs3": "7.8.0",
     "@egjs/hammerjs": "2.0.17",
     "@semantic-release/commit-analyzer": "7.0.0",
@@ -107,7 +113,7 @@
     "eslint-plugin-prettier": "3.1.2",
     "gh-pages": "2.1.1",
     "jsdoc": "3.6.3",
-    "jsdom": "15.2.1",
+    "jsdom": "16.0.1",
     "jsdom-global": "3.0.2",
     "keycharm": "0.3.1",
     "mocha": "6.2.2",
@@ -120,18 +126,19 @@
     "rollup": "1.27.6",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",
-    "rollup-plugin-copy": "3.1.0",
+    "rollup-plugin-copy": "3.2.1",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-postcss": "2.0.3",
     "rollup-plugin-terser": "5.1.3",
     "rollup-plugin-typescript2": "0.25.3",
     "semantic-release": "16.0.0",
     "serve": "11.2.0",
-    "sinon": "8.0.2",
+    "sinon": "8.1.0",
+    "snap-shot-it": "^7.9.1",
     "start-server-and-test": "1.10.6",
     "timsort": "0.3.0",
     "typescript": "3.7.2",
-    "vis-data": "6.3.2",
+    "vis-data": "6.3.4",
     "vis-dev-utils": "2.1.0",
     "vis-util": "2.1.0"
   },
