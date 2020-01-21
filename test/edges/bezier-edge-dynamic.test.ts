@@ -239,7 +239,10 @@ describe('BezierEdgeDynamic', function(): void {
           smooth: {
             roundness: 2,
           },
-          selfReferenceSize: 2,
+          selfReference: {
+            size: 2,
+            angle: Math.PI / 2,
+          },
         },
         body,
         {} as any
