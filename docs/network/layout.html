@@ -13,7 +13,8 @@
     <!-- Tipue vendor css -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet">
 
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet">
+    <link href="../css/overrides.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -31,7 +32,7 @@
     <!-- Tipue vendor css -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet">
     
-    <script type="text/javascript" src="../js/toggleTable.js"></script>
+    <script type="text/javascript" src="../../common-docs-files/js/toggleTable.js"></script>
 </head>
 <body onload="prettyPrint();">
 <!-- NAVBAR
@@ -134,10 +135,10 @@ network.setOptions(options);
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.nodeSpacing</td><td>Number</td><td><code>100</code></td>       <td>Minimum distance between nodes on the free axis. This is only for the initial layout. If you enable physics, the node distance there will be the effective node distance.</td></tr>
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.treeSpacing</td><td>Number</td><td><code>200</code></td>       <td>Distance between different trees (independent networks). This is only for the initial layout. If you enable physics, the repulsion model will denote the distance between the trees.</td></tr>
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.blockShifting</td><td>Boolean</td><td><code>true</code></td>    <td>Method for reducing whitespace. Can be used alone or together with edge minimization. Each node will check for whitespace and will shift
-            it's branch along with it for as far as it can, respecting the nodeSpacing on any level. This is mainly for the initial layout. If you enable physics, they layout will be determined by the physics. This will greatly speed up the stabilization time though!</td></tr>
+            it's branch along with it for as far as it can, respecting the nodeSpacing on any level. This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics. This will greatly speed up the stabilization time though!</td></tr>
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.edgeMinimization</td><td>Boolean</td><td><code>true</code></td> <td>Method for reducing whitespace. Can be used alone or together with block shifting. Enabling block shifting will usually speed up the layout process.
-            Each node will try to move along its free axis to reduce the total length of it's edges. This is mainly for the initial layout. If you enable physics, they layout will be determined by the physics. This will greatly speed up the stabilization time though!</td></tr>
-        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.parentCentralization</td><td>Boolean</td><td><code>true</code></td> <td>When true, the parents nodes will be centered again after the the layout algorithm has been finished.</td></tr>
+            Each node will try to move along its free axis to reduce the total length of it's edges. This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics. This will greatly speed up the stabilization time though!</td></tr>
+        <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.parentCentralization</td><td>Boolean</td><td><code>true</code></td> <td>When true, the parents nodes will be centered again after the layout algorithm has been finished.</td></tr>
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.direction</td><td>String</td><td><code>'UD'</code></td>        <td>The direction of the hierarchical layout. The available options are: <code>UD, DU, LR, RL</code>. To simplify: up-down, down-up, left-right, right-left.</td></tr>
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.sortMethod</td><td>String</td><td><code>'hubsize'</code></td>  <td>The algorithm used to ascertain the levels of the nodes based on the data. The possible options are: <code>hubsize, directed</code>. <br><br>
             Hubsize takes the nodes with the most edges and puts them at the top. From that the rest of the hierarchy is evaluated. <br><br>
@@ -145,6 +146,10 @@ network.setOptions(options);
         <tr parent="hierarchical" class="hidden"><td class="indent">hierarchical.shakeTowards</td><td>String</td><td><code>'roots'</code></td>        <td>Controls whether in <code>directed</code> layout should all the roots be lined up at the top and their child nodes as close to their roots as possible (<code>roots</code>) or all the leaves lined up at the bottom and their parents as close to their children as possible (<code>leaves</code>, default).</td></tr>
     </table>
 
+    <div class="flagbar">
+      <a href="../../docs/network/layout.html"><span class="flag en"></span></a>
+      <a href="../../docs-kr/network/layout.html"><span class="flag kr"></span></a>
+    </div>
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -153,12 +158,12 @@ network.setOptions(options);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
 <!-- jquery extensions -->
-<script src="../js/jquery.highlight.js"></script>
-<script src="../js/jquery.url.min.js"></script>
+<script src="../../common-docs-files/js/jquery.highlight.js"></script>
+<script src="../../common-docs-files/js/jquery.url.min.js"></script>
 <!-- Tipue vendor js -->
-<script src="../js/tipuesearch.config.js"></script>
+<script src="../../common-docs-files/js/tipuesearch.config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
 <!-- controller -->
-<script src="../js/main.js"></script>
+<script src="../../common-docs-files/js/main.js"></script>

@@ -14,7 +14,8 @@
     <!-- Tipue vendor css -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet">
 
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet">
+    <link href="../css/overrides.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -66,7 +67,7 @@
         }
     </script>
 
-    <script type="text/javascript" src="../js/toggleTable.js"></script>
+    <script type="text/javascript" src="../../common-docs-files/js/toggleTable.js"></script>
 </head>
 <body onload="prettyPrint();">
 
@@ -163,9 +164,9 @@
         <li>
           Peer build:
           <ul>
-            <li>in case of UMD Vis Data nad Vis Util have to be loaded manually,</li>
+            <li>in case of UMD Vis Data and Vis Util have to be loaded manually,</li>
             <li>in case of ESM DataSets, DataViews etc. have to be loaded from Vis Data,</li>
-            <li>CSS has to be included sepparately,</li>
+            <li>CSS has to be included separately,</li>
             <li>works with other Vis family packages,</li>
             <li>
               <a href="../../examples/network/basic_usage/peer.html" target="_blank">example usage</a>,
@@ -679,7 +680,7 @@ var locales = {
             </tr>
             <tr class="hidden" parent="getClusteredEdges">
                 <td class="midMethods">Returns: Array</td>
-                <td>Similiar to <code>findNode</code> in that it returns all the edge ids that were created from the provided edge during clustering
+                <td>Similar to <code>findNode</code> in that it returns all the edge ids that were created from the provided edge during clustering
                 </td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','getBaseEdge', this);">
@@ -713,7 +714,7 @@ var locales = {
                 <td class="midMethods">Returns: none</td>
                 <td>Visible edges between clustered nodes are not the same edge as the ones provided in <code>data.edges</code> passed on <code>network</code> creation<br/>
                     With each layer of clustering, copies of the edges between clusters are created and the previous edges are hidden, until the cluster is opened.<br/>
-                    This method takes an edgeId (ie. a base edgeId from <data>data.edges</code>) and applys the options to it and any edges that were created from it while clustering.<br><br> Example:
+                    This method takes an edgeId (ie. a base edgeId from <data>data.edges</code>) and applies the options to it and any edges that were created from it while clustering.<br><br> Example:
                     <code>network.clustering.updateEdge(originalEdge.id, {color : '#aa0000'});</code><br/>
                     This would turn the base edge and any subsequent edges red, so when opening clusters the edges will all be the same color.
                 </td>
@@ -796,14 +797,14 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="hidden" parent="enableEditMode">
                 <td class="midMethods">Returns: none</td>
-                <td>Programatically enable the edit mode. Similar effect to pressing the edit button.</td>
+                <td>Programmatically enable the edit mode. Similar effect to pressing the edit button.</td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','disableEditMode', this);">
                 <td colspan="2"><span parent="disableEditMode" class="right-caret" id="method_disableEditMode"></span> disableEditMode()</td>
             </tr>
             <tr class="hidden" parent="disableEditMode">
                 <td class="midMethods">Returns: none</td>
-                <td>Programatically disable the edit mode. Similar effect to pressing the close icon (small cross in the
+                <td>Programmatically disable the edit mode. Similar effect to pressing the close icon (small cross in the
                     corner of the toolbar).
                 </td>
             </tr>
@@ -824,21 +825,21 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="hidden" parent="editNode">
                 <td class="midMethods">Returns: none</td>
-                <td>Edit the selected node. The explaination from <code>addNodeMode</code> applies here as well.</td>
+                <td>Edit the selected node. The explanation from <code>addNodeMode</code> applies here as well.</td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','addEdgeMode', this);">
                 <td colspan="2"><span parent="addEdgeMode" class="right-caret" id="method_addEdgeMode"></span> addEdgeMode()</td>
             </tr>
             <tr class="hidden" parent="addEdgeMode">
                 <td class="midMethods">Returns: none</td>
-                <td>Go into addEdge mode. The explaination from <code>addNodeMode</code> applies here as well.</td>
+                <td>Go into addEdge mode. The explanation from <code>addNodeMode</code> applies here as well.</td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','editEdgeMode', this);">
                 <td colspan="2"><span parent="editEdgeMode" class="right-caret" id="method_editEdgeMode"></span> editEdgeMode()</td>
             </tr>
             <tr class="hidden" parent="editEdgeMode">
                 <td class="midMethods">Returns: none</td>
-                <td>Go into editEdge mode. The explaination from <code>addNodeMode</code> applies here as well.</td>
+                <td>Go into editEdge mode. The explanation from <code>addNodeMode</code> applies here as well.</td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','deleteSelected', this);">
                 <td colspan="2"><span parent="deleteSelected" class="right-caret" id="method_deleteSelected"></span> deleteSelected()</td>
@@ -883,7 +884,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
                     positions of all nodes into that dataset. If you're loading your nodes from a database and have
                     this dynamically coupled with
                     the DataSet, you can
-                    use this to stablize your network once, then save the positions in that database through the DataSet
+                    use this to stabilize your network once, then save the positions in that database through the DataSet
                     so
                     the next
                     time you load the nodes, stabilization will be near instantaneous.
@@ -904,7 +905,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="hidden" parent="moveNode">
                 <td class="midMethods">Returns: none</td>
-                <td>You can use this to programatically move a node. <i>The supplied x and y positions have to be in canvas space!</i>
+                <td>You can use this to programmatically move a node. <i>The supplied x and y positions have to be in canvas space!</i>
                 </td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','getBoundingBox', this);">
@@ -1036,9 +1037,9 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="hidden" parent="getEdgeAt">
                 <td class="midMethods">Returns: String</td>
-                <td>Returns a edgeId or undefined. The DOM positions are expected to be in pixels from the top left
+                <td>Returns an edgeId or undefined. The DOM positions are expected to be in pixels from the top left
                     corner
-                    of the canvas..
+                    of the canvas.
                 </td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','selectNodes', this);">
@@ -1107,7 +1108,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="hidden" parent="getScale">
                 <td class="midMethods">Returns: Number</td>
-                <td>Returns the current scale of the network. 1.0 is comparible to 100%, 0 is zoomed out infinitely.
+                <td>Returns the current scale of the network. 1.0 is comparable to 100%, 0 is zoomed out infinitely.
                 </td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','clusterByHubsize', this);">
@@ -1209,7 +1210,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="hidden" parent="releaseNode">
                 <td class="midMethods">Returns: none</td>
-                <td>Programatically release the focussed node.</td>
+                <td>Programmatically release the focussed node.</td>
             </tr>
             <tr id="methodConfigurator" class="subHeader">
                 <td colspan="2">Methods to use with the configurator module.</td>
@@ -1430,7 +1431,7 @@ Thus, to get the topmost item, get the value at index 0.
             </tr>
             <tr><td id="event_selectEdge">selectEdge</td>
                 <td>same as <code>click</code>.</td>
-                <td>Fired when a edge has been selected by the user.</td>
+                <td>Fired when an edge has been selected by the user.</td>
             </tr>
             <tr><td id="event_deselectNode">deselectNode</td>
                 <td>Object
@@ -1455,7 +1456,7 @@ Thus, to get the topmost item, get the value at index 0.
             </tr>
             <tr><td id="event_deselectEdge">deselectEdge</td>
                 <td>same as <code>deselectNode</code>.</td>
-                <td>Fired when a edge (or edges) has (or have) been deselected by the user. The previous selection is
+                <td>Fired when an edge (or edges) has (or have) been deselected by the user. The previous selection is
                     the
                     list of nodes and edges that were selected before the last user event.
                 </td>
@@ -1534,7 +1535,7 @@ Thus, to get the topmost item, get the value at index 0.
                 <td>none</td>
                 <td>Fired when stabilization starts. This is also the case when you drag a node and the physics
                     simulation
-                    restarts to stabilize again. Stabilization does not neccesarily imply 'without showing'.
+                    restarts to stabilize again. Stabilization does not necessarily imply 'without showing'.
                 </td>
             <tr><td id="event_stabilizationProgress">stabilizationProgress</td>
                 <td>Object</td>
@@ -1690,7 +1691,7 @@ var network = new vis.Network(container, data);
                 <td>Boolean</td>
                 <td><code>false</code></td>
                 <td>If true, the color will be parsed by the vis parser, generating extra colors for the borders,
-                    highlighs and hover. If false, the node will be the supplied color.
+                    highlights and hover. If false, the node will be the supplied color.
                 </td>
             </tr>
             <tr><td>edges.inheritColor</td>
@@ -1742,6 +1743,10 @@ var network = new vis.Network(container, data, options);
     </div>
 
 
+    <div class="flagbar">
+      <a href="../../docs/network/index.html"><span class="flag en"></span></a>
+      <a href="../../docs-kr/network/index.html"><span class="flag kr"></span></a>
+    </div>
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -1750,12 +1755,12 @@ var network = new vis.Network(container, data, options);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
+<script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
 <!-- jquery extensions -->
-<script src="../js/jquery.highlight.js"></script>
-<script src="../js/jquery.url.min.js"></script>
+<script src="../../common-docs-files/js/jquery.highlight.js"></script>
+<script src="../../common-docs-files/js/jquery.url.min.js"></script>
 <!-- Tipue vendor js -->
-<script src="../js/tipuesearch.config.js"></script>
+<script src="../../common-docs-files/js/tipuesearch.config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
 <!-- controller -->
-<script src="../js/main.js"></script>
+<script src="../../common-docs-files/js/main.js"></script>

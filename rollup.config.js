@@ -3,12 +3,14 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
-import genHeader from './dev-lib/header';
+import { generateHeader } from "vis-dev-utils";
 import assets from 'postcss-assets';
 import postcss from 'rollup-plugin-postcss';
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
 // CommonJS because Babel is not 100 % ESM.
+
+const banner = generateHeader();
 
 const plugins = {
 	nodeResolve: nodeResolve({
@@ -61,7 +63,7 @@ export default [
 		output: [{
 			file: 'dist/vis-network.esm.js',
 			format: 'esm',
-			banner: genHeader('network'),
+			banner,
 			sourcemap: true
 		}, {
 			file: 'dist/vis-network.js',
@@ -69,7 +71,7 @@ export default [
 			exports: 'named',
 			name: 'vis',
 			extend: true,
-			banner: genHeader('network'),
+			banner,
 			sourcemap: true
 		}],
 		plugins: [
@@ -85,7 +87,7 @@ export default [
 		output: [{
 			file: 'dist/vis-network.esm.min.js',
 			format: 'esm',
-			banner: genHeader('network'),
+			banner,
 			sourcemap: true
 		}, {
 			file: 'dist/vis-network.min.js',
@@ -93,7 +95,7 @@ export default [
 			exports: 'named',
 			name: 'vis',
 			extend: true,
-			banner: genHeader('network'),
+			banner,
 			sourcemap: true
 		}],
 		plugins: [
