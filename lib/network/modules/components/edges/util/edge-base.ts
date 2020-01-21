@@ -529,7 +529,14 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
     // draw a circle
     ctx.beginPath();
-    ctx.arc(x, y, radius, this.options.selfReference.startAngle, this.options.selfReference.endAngle, false);
+    ctx.arc(
+      x,
+      y,
+      radius,
+      this.options.selfReference.startAngle,
+      this.options.selfReference.endAngle,
+      false
+    );
     ctx.stroke();
 
     // disable shadows for other elements.
