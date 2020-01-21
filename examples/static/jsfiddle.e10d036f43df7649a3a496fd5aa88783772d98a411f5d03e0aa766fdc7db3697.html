@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Edge Styles | Self Reference</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 800px;
+  height: 600px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// create an array with nodes
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label:
+      "I&apos;m an alligator,\nI&apos;m a mama-papa coming for you.\nI&apos;m the space invader,\nI&apos;ll be a rock &apos;n&apos; rollin&apos; bitch for you",
+    x: 0,
+    y: 0
+  },
+  {
+    id: 2,
+    label: "Test shape",
+    widthConstraint: { minimum: 100 },
+    heightConstraint: { minimum: 100 },
+    x: 200,
+    y: 200
+  }
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 1, label: "Moonage Daydream" },
+  {
+    from: 2,
+    to: 2,
+    label: "Testing",
+    arrows: "to, middle, from",
+    selfReference: { size: 40, angle: Math.PI / 6 }
+  }
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+var options = {};
+var network = new vis.Network(container, data, options);
+
+(async () =&gt; {
+  let angle = -100;
+
+  for (;;) {
+    await new Promise(resolve =&gt; setTimeout(resolve, 100));
+
+    ++angle;
+    console.log("set self reference angle to", angle / 10);
+    network.setOptions({
+      edges: {
+        arrows: { to: true, from: true, middle: true },
+        selfReference: {
+          size: 20,
+          angle: angle / 10
+        }
+      }
+    });
+  }
+})();
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Edge Styles | Self Reference"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

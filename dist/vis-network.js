@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-20T18:50:17.153Z
+ * @date    2020-01-21T10:08:37.588Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28130,6 +28130,56 @@
 	      // Note that this is quite strict: types that *might* be converted to string are disallowed
 	      return typeof text === 'string' && text !== '';
 	    }
+	    /**
+	     * Returns x, y of self reference circle based on provided angle
+	     *
+	     * @param {Object} ctx
+	     * @param {number} angle 
+	     * @param {number} radius 
+	     * @return {Object} node
+	     * @returns {Object} x and y coordinates
+	     */
+
+	  }, {
+	    key: "getSelfRefCoordinates",
+	    value: function getSelfRefCoordinates(ctx, angle, radius, node) {
+	      var x = node.x;
+	      var y = node.y;
+
+	      if (ctx && typeof node.distanceToBorder === "function") {
+	        //calculating opposite and adjacent
+	        //distaneToBorder becomes Hypotenuse. 
+	        //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
+	        var toBorderDist = node.distanceToBorder(ctx, angle);
+	        var yFromNodeCenter = Math.sin(angle) * toBorderDist;
+	        var xFromNodeCenter = Math.cos(angle) * toBorderDist; //xFromNodeCenter is basically x and if xFromNodeCenter equals to the distance to border then it means
+	        //that y does not need calculation because it is equal node.height / 2 or node.y
+	        //same thing with yFromNodeCenter and if yFromNodeCenter equals to the distance to border then it means
+	        //that x is equal node.width / 2 or node.x
+
+	        if (xFromNodeCenter === toBorderDist) {
+	          x += toBorderDist;
+	          y = node.y;
+	        } else if (yFromNodeCenter === toBorderDist) {
+	          x = node.x;
+	          y -= toBorderDist;
+	        } else {
+	          x += xFromNodeCenter;
+	          y -= yFromNodeCenter;
+	        }
+	      } else if (node.shape.width > node.shape.height) {
+	        x = node.x + node.shape.width * 0.5;
+	        y = node.y - radius;
+	      } else {
+	        x = node.x + radius;
+	        y = node.y - node.shape.height * 0.5;
+	      }
+
+	      return {
+	        x: x,
+	        y: y
+	      };
+	    }
 	  }]);
 
 	  return ComponentUtil;
@@ -34993,27 +35043,17 @@
 	  }, {
 	    key: "_getCircleData",
 	    value: function _getCircleData(ctx) {
-	      var x;
-	      var y;
-	      var node = this.from;
-	      var radius = this.options.selfReferenceSize;
+	      var radius = this.options.selfReference.size;
 
 	      if (ctx !== undefined) {
-	        if (node.shape.width === undefined) {
-	          node.shape.resize(ctx);
+	        if (this.from.shape.width === undefined) {
+	          this.from.shape.resize(ctx);
 	        }
 	      } // get circle coordinates
 
 
-	      if (node.shape.width > node.shape.height) {
-	        x = node.x + node.shape.width * 0.5;
-	        y = node.y - radius;
-	      } else {
-	        x = node.x + radius;
-	        y = node.y - node.shape.height * 0.5;
-	      }
-
-	      return [x, y, radius];
+	      var coordinates = ComponentUtil.getSelfRefCoordinates(ctx, this.options.selfReference.angle, radius, this.from);
+	      return [coordinates.x, coordinates.y, radius];
 	    }
 	    /**
 	     * Get a point on a circle.
@@ -35057,7 +35097,7 @@
 	      var high = options.high;
 	      var direction = options.direction;
 	      var maxIterations = 10;
-	      var radius = this.options.selfReferenceSize;
+	      var radius = this.options.selfReference.size;
 	      var threshold = 0.05;
 	      var pos;
 	      var middle = (low + high) * 0.5;
@@ -35319,30 +35359,38 @@
 	            radius = _this$_getCircleData10[2];
 
 	        if (position === "from") {
+	          var low = this.options.selfReference.angle - 2 * Math.PI;
+	          var high = this.options.selfReference.angle;
+
 	          var _pointT = this._findBorderPositionCircle(this.from, ctx, {
 	            x: x,
 	            y: y,
-	            low: 0.25,
-	            high: 0.6,
+	            low: low,
+	            high: high,
 	            direction: -1
 	          });
 
 	          angle = _pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
 	          arrowPoint = _pointT;
 	        } else if (position === "to") {
+	          var _low = this.options.selfReference.angle - 2 * Math.PI;
+
+	          var _high = this.options.selfReference.angle;
+
 	          var _pointT2 = this._findBorderPositionCircle(this.from, ctx, {
 	            x: x,
 	            y: y,
-	            low: 0.6,
-	            high: 1.0,
+	            low: _low,
+	            high: _high,
 	            direction: 1
 	          });
 
 	          angle = _pointT2.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
 	          arrowPoint = _pointT2;
 	        } else {
-	          arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
-	          angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+	          var pos = this.options.selfReference.angle / (2 * Math.PI);
+	          arrowPoint = this._pointOnCircle(x, y, radius, pos);
+	          angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
 	        }
 	      }
 
@@ -36945,19 +36993,10 @@
 	          ctx.restore();
 	        } else {
 	          // Ignore the orientations.
-	          this.labelModule.pointToSelf = true;
-	          var x, y;
-	          var radius = this.options.selfReferenceSize;
+	          this.labelModule.pointToSelf = true; // get circle coordinates
 
-	          if (node1.shape.width > node1.shape.height) {
-	            x = node1.x + node1.shape.width * 0.5;
-	            y = node1.y - radius;
-	          } else {
-	            x = node1.x + radius;
-	            y = node1.y - node1.shape.height * 0.5;
-	          }
-
-	          point = this._pointOnCircle(x, y, radius, 0.125);
+	          var coordinates = ComponentUtil.getSelfRefCoordinates(ctx, this.options.selfReference.angle, this.options.selfReference.size, node1);
+	          point = this._pointOnCircle(coordinates.x, coordinates.y, this.options.selfReference.size, this.options.selfReference.angle);
 	          this.labelModule.draw(ctx, point.x, point.y, this.selected, this.hover);
 	        }
 	      }
@@ -37071,15 +37110,14 @@
 	     * @param {number} x
 	     * @param {number} y
 	     * @param {number} radius
-	     * @param {number} percentage Value between 0 (line start) and 1 (line end)
+	     * @param {number} angle 
 	     * @return {Object} point
 	     * @private
 	     */
 
 	  }, {
 	    key: "_pointOnCircle",
-	    value: function _pointOnCircle(x, y, radius, percentage) {
-	      var angle = percentage * 2 * Math.PI;
+	    value: function _pointOnCircle(x, y, radius, angle) {
 	      return {
 	        x: x + radius * Math.cos(angle),
 	        y: y - radius * Math.sin(angle)
@@ -37140,7 +37178,7 @@
 	      var allowDeletion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 	      var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 	      var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-	      var fields = ['arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
+	      var fields = ['arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'selfReference', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
 
 	      selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
 
@@ -37264,6 +37302,14 @@
 
 	      if (allowDeletion === true && newOptions.font === null) {
 	        parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
+	      }
+
+	      if (newOptions.hasOwnProperty("selfReferenceSize")) {
+	        console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
+	        parentOptions.selfReference = {
+	          size: newOptions.selfReferenceSize,
+	          angle: parentOptions.selfReference.angle
+	        };
 	      }
 	    }
 	  }]);
@@ -37389,7 +37435,10 @@
 	        }
 	      },
 	      selectionWidth: 1.5,
-	      selfReferenceSize: 20,
+	      selfReference: {
+	        size: 20,
+	        angle: Math.PI / 4
+	      },
 	      shadow: {
 	        enabled: false,
 	        color: 'rgba(0,0,0,0.5)',
@@ -53061,6 +53110,17 @@
 	    selfReferenceSize: {
 	      number: number
 	    },
+	    selfReference: {
+	      size: {
+	        number: number
+	      },
+	      angle: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object
+	      }
+	    },
 	    shadow: {
 	      enabled: {
 	        boolean: bool
@@ -54034,6 +54094,10 @@
 	    },
 	    selectionWidth: [1.5, 0, 5, 0.1],
 	    selfReferenceSize: [20, 0, 200, 1],
+	    selfReference: {
+	      size: [20, 0, 200, 1],
+	      angle: [Math.PI / 2, Math.PI * 2, 3 * Math.PI / 2, Math.PI]
+	    },
 	    shadow: {
 	      enabled: false,
 	      color: 'rgba(0,0,0,0.5)',
