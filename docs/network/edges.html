@@ -206,7 +206,9 @@ var options = {
     selfReferenceSize: 20,
     selfReference:{
         size: 20,
-        angle: Math.PI / 4
+        angle: Math.PI / 4,
+        startAngle: 0,
+        endAngle: Math.PI * 2
     },
     shadow:{
       enabled: false,
@@ -923,6 +925,20 @@ var options: {
             <td><code>π / 4</code></td>
             <td> This is the angle (Provided in radians) to indicate position for the circle. If position is not provided then it will 
                 be top-right (π / 4) corner.
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">endAngle</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td> This is the start angle of self reference circle to indicate how big circle should be (full circle, half circle and etc).
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">endAngle</td>
+            <td>Number</td>
+            <td><code>π * 2</code></td>
+            <td> This is the end angle of self reference circle to indicate how big circle should be (full circle, half circle and etc).
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shadow', this);">

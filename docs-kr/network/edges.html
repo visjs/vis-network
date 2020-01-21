@@ -206,7 +206,9 @@ var options = {
     selfReferenceSize:20,
     selfReference:{
         size: 20,
-        angle: Math.PI / 4
+        angle: Math.PI / 4,
+        startAngle: 0,
+        endAngle: Math.PI * 2
     },
     shadow:{
       enabled: false,
@@ -908,6 +910,20 @@ var options: {
             <td class="indent">angle</td>
             <td>Number</td>
             <td><code>π / 4</code></td>
+            <td>TODO
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">startAngle</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>TODO
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">endAngle</td>
+            <td>Number</td>
+            <td><code>π * 2</code></td>
             <td>TODO
             </td>
         </tr>

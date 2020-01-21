@@ -37,13 +37,36 @@
                 widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
                 x:200,
                 y:200
+            },
+            {
+                id: 3,
+                label:
+                    "Test shape",
+                widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
+                color: {
+                    background:"transparent"
+                },
+                x:400,
+                y:400
             }
         ]);
 
         // create an array with edges
         var edges = new vis.DataSet([
             { from: 1, to: 1, label: "Moonage Daydream" },
-            { from: 2, to: 2, label: "Testing", arrows: 'to, middle, from', selfReference: { size: 40, angle: Math.PI / 6 } }
+            { from: 2, to: 2, label: "Testing", arrows: 'to, middle, from', 
+                selfReference: { 
+                    size: 40, 
+                    angle: Math.PI / 6 } 
+                },
+            { from: 3, to: 3, label: "Diablo", 
+                selfReference: { 
+                    size: 40, 
+                    angle: Math.PI / 6, 
+                    startAngle: Math.PI * 5 / 4, 
+                    endAngle: Math.PI / 2.5
+                }  
+            },
         ]);
 
         // create a network
