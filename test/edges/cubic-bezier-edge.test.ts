@@ -150,7 +150,7 @@ describe('CubicBezierEdge', function(): void {
             size: 42,
             angle: Math.PI / 2,
             startAngle: 0,
-            endAngle: Math.PI * 2
+            endAngle: Math.PI * 2,
           },
         },
         body as any,
