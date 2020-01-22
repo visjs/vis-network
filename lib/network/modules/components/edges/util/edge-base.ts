@@ -527,14 +527,42 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     // draw shadow if enabled
     this.enableShadow(ctx, values);
 
+    //full circle
+    let angleFrom = 0;
+    let angleTo = Math.PI * 2;
+
+    if (!this.options.selfReference.fullRender){
+      //render only parts which are not overlaping with parent node
+      //need to find x,y of from point and x,y to point
+      //calculating radiangs
+      const low = this.options.selfReference.angle - 2 * Math.PI;
+      const high = this.options.selfReference.angle;
+      const pointTFrom = this._findBorderPositionCircle(this.from, ctx, {
+        x,
+        y,
+        low,
+        high,
+        direction: -1
+      });
+      const pointTTo = this._findBorderPositionCircle(this.from, ctx, {
+        x,
+        y,
+        low,
+        high,
+        direction: 1
+      });
+      angleFrom = Math.atan2(pointTFrom.y - y, pointTFrom.x - x);
+      angleTo = Math.atan2(pointTTo.y - y, pointTTo.x - x);
+    }
+    
     // draw a circle
     ctx.beginPath();
     ctx.arc(
       x,
       y,
       radius,
-      this.options.selfReference.startAngle,
-      this.options.selfReference.endAngle,
+      angleFrom,
+      angleTo,
       false
     );
     ctx.stroke();
