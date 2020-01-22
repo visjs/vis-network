@@ -531,7 +531,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let angleFrom = 0;
     let angleTo = Math.PI * 2;
 
-    if (!this.options.selfReference.fullRender){
+    if (!this.options.selfReference.fullRender) {
       //render only parts which are not overlaping with parent node
       //need to find x,y of from point and x,y to point
       //calculating radiangs
@@ -554,17 +554,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       angleFrom = Math.atan2(pointTFrom.y - y, pointTFrom.x - x);
       angleTo = Math.atan2(pointTTo.y - y, pointTTo.x - x);
     }
-    
+
     // draw a circle
     ctx.beginPath();
-    ctx.arc(
-      x,
-      y,
-      radius,
-      angleFrom,
-      angleTo,
-      false
-    );
+    ctx.arc(x, y, radius, angleFrom, angleTo, false);
     ctx.stroke();
 
     // disable shadows for other elements.

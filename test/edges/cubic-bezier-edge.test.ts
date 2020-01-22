@@ -149,7 +149,7 @@ describe('CubicBezierEdge', function(): void {
           selfReference: {
             size: 42,
             angle: Math.PI / 2,
-            fullRender: true
+            fullRender: true,
           },
         },
         body as any,
