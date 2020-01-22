@@ -242,7 +242,7 @@ describe('BezierEdgeDynamic', function(): void {
           selfReference: {
             size: 2,
             angle: Math.PI / 2,
-            fullRender: true
+            fullRender: true,
           },
         },
         body,
