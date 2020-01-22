@@ -927,17 +927,10 @@ var options: {
             </td>
         </tr>
         <tr parent="selfReference" class="hidden">
-            <td class="indent">selfReference.endAngle</td>
-            <td>Number</td>
-            <td><code>0</code></td>
-            <td> This is the start angle of self reference circle to indicate how big circle should be (full circle, half circle and etc).
-            </td>
-        </tr>
-        <tr parent="selfReference" class="hidden">
-            <td class="indent">selfReference.endAngle</td>
-            <td>Number</td>
-            <td><code>π * 2</code></td>
-            <td> This is the end angle of self reference circle to indicate how big circle should be (full circle, half circle and etc).
+            <td class="indent">selfReference.fullRender</td>
+            <td>Boolean</td>
+            <td><code>true</code></td>
+            <td> This is the flag to indicate if self reference circle should be drawn as a full circle or rather should not overlap with parent node.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shadow', this);">
