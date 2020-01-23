@@ -982,7 +982,6 @@ export interface EdgeOptions {
     roundness: number,
     length?: number,
     reverse?: boolean,
-  },
   };
 
   title?: string;
