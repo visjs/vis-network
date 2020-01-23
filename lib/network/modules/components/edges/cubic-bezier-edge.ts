@@ -67,15 +67,28 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
         this.options.smooth.forceDirection === "horizontal") &&
       this.options.smooth.forceDirection !== "vertical"
     ) {
-      y1 = this.from.y;
-      y2 = this.to.y;
+
+      if (this.options.smooth.reverse) {
+        y1 = this.from.y - this.options.smooth.length;
+        y2 = this.to.y - this.options.smooth.length;
+      } else {
+        y1 = this.from.y + this.options.smooth.length;
+        y2 = this.to.y + this.options.smooth.length;
+      }
       x1 = this.from.x - roundness * dx;
       x2 = this.to.x + roundness * dx;
+
     } else {
       y1 = this.from.y - roundness * dy;
       y2 = this.to.y + roundness * dy;
-      x1 = this.from.x;
-      x2 = this.to.x;
+      if (this.options.smooth.reverse){
+        x1 = this.from.x - this.options.smooth.length;
+        x2 = this.to.x - this.options.smooth.length;
+      }else{
+        x1 = this.from.x + this.options.smooth.length;
+        x2 = this.to.x + this.options.smooth.length;
+      }
+
     }
 
     return [

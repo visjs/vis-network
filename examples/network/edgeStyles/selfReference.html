@@ -34,16 +34,22 @@
                 id: 2,
                 label:
                     "Test shape",
-                widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
-                x:200,
+                x:0,
                 y:200
             }
         ]);
 
         // create an array with edges
         var edges = new vis.DataSet([
-            { from: 1, to: 1, label: "Moonage Daydream" },
-            { from: 2, to: 2, label: "Testing", arrows: 'to, middle, from', selfReference: { size: 40, angle: Math.PI / 6 } }
+            { from: 1, to: 2, 
+                label: "Testing", 
+                arrows: 'to, middle, from', 
+                selfReference: { size: 40, angle: Math.PI / 6 } ,
+                smooth:{
+                    length: 350,
+                    reverse: false
+                }
+            }
         ]);
 
         // create a network
@@ -52,28 +58,19 @@
             nodes: nodes,
             edges: edges
         };
-        var options = {};
+        var options = {
+            edges:{
+                smooth:{
+                    type: "horizontal"
+                }
+            },
+            physics:{
+                enabled: false
+            }
+        };
         var network = new vis.Network(container, data, options);
 
-        (async () => {
-            let angle = -100;
-
-            for (; ;) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-
-                ++angle;
-                console.log("set self reference angle to", angle / 10);
-                network.setOptions({
-                    edges: {
-                        arrows: { to: true, from: true, middle: true },
-                        selfReference: {
-                            size: 20,
-                            angle: angle / 10
-                        }
-                    }
-                });
-            }
-        })();
+   
 
 
     </script>
