@@ -187,8 +187,7 @@ describe('CubicBezierEdge', function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2,
-            length: 0
+            roundness: 2
           },
         },
         body as any,
@@ -219,7 +218,6 @@ describe('CubicBezierEdge', function(): void {
           smooth: {
             forceDirection: 'horizontal',
             roundness: 2,
-            length: 0
           },
         },
         body as any,
@@ -250,7 +248,6 @@ describe('CubicBezierEdge', function(): void {
         to: 3,
         smooth: {
           roundness: 2,
-          length: 0
         },
       },
       body as any,
@@ -274,7 +271,6 @@ describe('CubicBezierEdge', function(): void {
           to: 3,
           smooth: {
             roundness: 2,
-            length: 0
           },
         },
         body,
@@ -297,7 +293,6 @@ describe('CubicBezierEdge', function(): void {
           to: 3,
           smooth: {
             roundness: 2,
-            length: 0
           },
         },
         body,
@@ -320,7 +315,6 @@ describe('CubicBezierEdge', function(): void {
           to: 3,
           smooth: {
             roundness: 2,
-            length: 0
           },
         },
         body,
@@ -342,7 +336,6 @@ describe('CubicBezierEdge', function(): void {
         to: 3,
         smooth: {
           roundness: 2,
-          length: 0
         },
       },
       body as any,
@@ -544,7 +537,6 @@ describe('CubicBezierEdge', function(): void {
             to,
             smooth: {
               roundness: 2,
-              length: 0
             },
             selfReference: {
               size: 42,
@@ -753,8 +745,7 @@ describe('CubicBezierEdge', function(): void {
               to,
               smooth: {
                 enabled: smooth,
-                roundness: 2,
-                length: 0
+                roundness: 2
               },
               selfReference: {
                 size: 13,

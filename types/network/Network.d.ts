@@ -980,8 +980,7 @@ export interface EdgeOptions {
     type: string,
     forceDirection?: string | boolean,
     roundness: number,
-    length?: number,
-    reverse?: boolean,
+    radius?: number
   };
 
   title?: string;

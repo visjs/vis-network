@@ -112,6 +112,17 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
         x: this.to.x + stepX,
         y: this.to.y + stepY
       };
+    } else if (type === "arc") {
+      dx = this.to.x - this.from.x;
+      dy = this.from.y - this.to.y;
+      const radius = this.options.smooth.radius;
+      //need to calculate angle
+      const angle = 2 * Math.PI;
+   
+      return {
+        x: dx / 2 + radius * Math.cos(angle),
+        y: dy / 2 + radius * Math.sin(angle)
+      };
     } else if (type === "horizontal") {
       let stepX = (1 - factor) * dx;
       if (this.from.x < this.to.x) {
