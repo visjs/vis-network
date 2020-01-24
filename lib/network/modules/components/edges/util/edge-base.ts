@@ -531,7 +531,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let angleFrom = 0;
     let angleTo = Math.PI * 2;
 
-    if (!this.options.selfReference.fullRender) {
+    if (!this.options.selfReference.renderBehindTheNode) {
       //render only parts which are not overlaping with parent node
       //need to find x,y of from point and x,y to point
       //calculating radiangs

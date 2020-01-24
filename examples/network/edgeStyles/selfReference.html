@@ -26,100 +26,30 @@
             {
                 id: 1,
                 label:
-                    "I'm an alligator,\nI'm a mama-papa coming for you.\nI'm the space invader,\nI'll be a rock 'n' rollin' bitch for you",
+                    "Node has selfReference edge,\nwhich angle (position) is provided.\nProperty renderBehindTheNode allows to draw parts,\nwhich are not overlaping with the node",
                 x: 0,
-                y: 400
+                y: 0,
+                 color: {
+                    background: "transparent"
+                }
             },
             {
                 id: 2,
-                label: "Test shape",
-                widthConstraint: { minimum: 100 },
-                heightConstraint: { minimum: 100 },
-                x: 400,
-                y: 400
-            },
-            {
-                id: 3,
-                label: "This is another test shape.",
-                widthConstraint: { minimum: 100 },
-                heightConstraint: { minimum: 100 },
-                color: {
+                label:
+                    "I'm an alligator,\nI'm a mama-papa coming for you.\nI'm the space invader,\nI'll be a rock 'n' rollin' bitch for you",
+                widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
+                x: 200,
+                y: 200,
+                 color: {
                     background: "transparent"
-                },
-                x: 800,
-                y: 800
-            },
-            {
-                id: 4,
-                label: "This is one more test shape.",
-                widthConstraint: { minimum: 100 },
-                heightConstraint: { minimum: 100 },
-                color: {
-                    background: "transparent"
-                },
-                x: 800,
-                y: 400
-            },
-            {
-                id: 5,
-                label: "This is the last test shape.",
-                widthConstraint: { minimum: 100 },
-                heightConstraint: { minimum: 100 },
-                color: {
-                    background: "transparent"
-                },
-                x: 400,
-                y: 800
+                }
             }
         ]);
 
         // create an array with edges
         var edges = new vis.DataSet([
-            { id: 1, from: 1, to: 1, label: "Moonage Daydream" },
-            {
-                id: 2,
-                from: 2,
-                to: 2,
-                label: "Testing",
-                arrows: "to, middle, from",
-                selfReference: {
-                    size: 40,
-                    angle: Math.PI / 6
-                }
-            },
-            {
-                id: 3,
-                from: 3,
-                to: 3,
-                label: "★",
-                selfReference: {
-                    size: 40,
-                    angle: Math.PI / 6,
-                    fullRender: false
-                }
-            },
-            {
-                id: 4,
-                from: 4,
-                to: 4,
-                label: "★",
-                selfReference: {
-                    size: 50,
-                    fullRender: false
-                }
-            },
-            {
-                id: 5,
-                from: 5,
-                to: 5,
-                label: "C()()L!",
-                arrows: { from: false, middle: false },
-                selfReference: {
-                    size: 60,
-                    angle: Math.PI,
-                    fullRender: false
-                }
-            }
+            { from: 1, to: 1, label: "Moonage Daydream" },
+            { from: 2, to: 2, label: "Testing", arrows: 'to, middle, from', selfReference: { size: 40, angle: Math.PI / 6 } }
         ]);
 
         // create a network
@@ -128,7 +58,13 @@
             nodes: nodes,
             edges: edges
         };
-        var options = {};
+        var options = {
+            edges:{
+                selfReference:{
+                    renderBehindTheNode: false
+                }    
+            }
+        };
         var network = new vis.Network(container, data, options);
 
         (async () => {
@@ -148,15 +84,9 @@
                         }
                     }
                 });
-
-                edges.updateOnly({
-                    id: 3,
-                    selfReference: {
-                        fullRender: false
-                    }
-                });
             }
         })();
+
 
     </script>
 
