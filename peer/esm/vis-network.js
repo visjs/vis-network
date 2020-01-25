@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-25T10:58:42.917Z
+ * @date    2020-01-25T13:49:57.498Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -34489,6 +34489,31 @@ var allOptions$1 = {
 };
 allOptions$1.groups.__any__ = allOptions$1.nodes;
 allOptions$1.manipulation.controlNodeStyle = allOptions$1.nodes;
+/**
+ * This provides ranges, initial values, steps and dropdown menu choices for the
+ * configuration.
+ *
+ * @remarks
+ * Checkbox: `boolean`
+ *   The value supllied will be used as the initial value.
+ *
+ * Text field: `string`
+ *   The passed text will be used as the initial value. Any text will be
+ *   accepted afterwards.
+ *
+ * Number range: `[number, number, number, number]`
+ *   The meanings are `[initial value, min, max, step]`.
+ *
+ * Dropdown: `[Exclude<string, "color">, ...(string | number | boolean)[]]`
+ *   Translations for people with poor understanding of TypeScript: the first
+ *   value always has to be a string but never `"color"`, the rest can be any
+ *   combination of strings, numbers and booleans.
+ *
+ * Color picker: `["color", string]`
+ *   The first value says this will be a color picker not a dropdown menu. The
+ *   next value is the initial color.
+ */
+
 var configureOptions = {
   nodes: {
     borderWidth: [1, 0, 10, 1],
@@ -34614,7 +34639,7 @@ var configureOptions = {
     selfReferenceSize: [20, 0, 200, 1],
     selfReference: {
       size: [20, 0, 200, 1],
-      angle: [Math.PI / 2, Math.PI * 2, 3 * Math.PI / 2, Math.PI]
+      angle: [Math.PI / 2, -6 * Math.PI, 6 * Math.PI, Math.PI / 8]
     },
     shadow: {
       enabled: false,
@@ -34673,7 +34698,7 @@ var configureOptions = {
     hoverConnectedEdges: true,
     tooltipDelay: [300, 0, 1000, 25],
     zoomView: true,
-    zoomSpeed: [1, 1, 1, 1]
+    zoomSpeed: [1, 0.1, 2, 0.1]
   },
   manipulation: {
     enabled: false,
