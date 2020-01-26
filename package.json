@@ -116,7 +116,7 @@
     "jsdom": "16.0.1",
     "jsdom-global": "3.0.2",
     "keycharm": "0.3.1",
-    "mocha": "6.2.2",
+    "mocha": "7.0.1",
     "moment": "2.24.0",
     "nyc": "15.0.0",
     "opencollective": "1.0.3",
