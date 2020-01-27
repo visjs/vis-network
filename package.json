@@ -93,7 +93,7 @@
     "@egjs/hammerjs": "2.0.17",
     "@semantic-release/commit-analyzer": "7.0.0",
     "@semantic-release/github": "6.0.2",
-    "@semantic-release/npm": "5.3.5",
+    "@semantic-release/npm": "7.0.0",
     "@semantic-release/release-notes-generator": "7.3.5",
     "@types/chai": "4.2.7",
     "@types/mocha": "5.2.7",
