@@ -91,7 +91,7 @@
     "@babel/register": "7.8.3",
     "@babel/runtime-corejs3": "7.8.0",
     "@egjs/hammerjs": "2.0.17",
-    "@semantic-release/commit-analyzer": "7.0.0",
+    "@semantic-release/commit-analyzer": "8.0.0",
     "@semantic-release/github": "6.0.2",
     "@semantic-release/npm": "5.3.5",
     "@semantic-release/release-notes-generator": "7.3.5",
