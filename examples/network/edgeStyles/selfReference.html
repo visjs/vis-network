@@ -22,34 +22,73 @@
     <script type="text/javascript">
 
         // create an array with nodes
+        const multilineString1 = [
+            "Node has selfReference edge,",
+            "which angle (position) is provided.",
+            "Property renderBehindTheNode allows to draw parts,",
+            "which are not overlaping with the node."
+        ].join("\n");
+
+        const multilineString2 = [
+            "I'm an alligator,",
+            "I'm a mama-papa coming for you.",
+            "I'm the space invader,",
+            "I'll be a rock 'n' rollin' bitch for you."
+        ].join("\n");
+
         var nodes = new vis.DataSet([
             {
                 id: 1,
                 label:
-                    "Node has selfReference edge,\nwhich angle (position) is provided.\nProperty renderBehindTheNode allows to draw parts,\nwhich are not overlaping with the node",
+                    multilineString1,
                 x: 0,
                 y: 0,
-                 color: {
+                color: {
                     background: "transparent"
                 }
             },
             {
                 id: 2,
                 label:
-                    "I'm an alligator,\nI'm a mama-papa coming for you.\nI'm the space invader,\nI'll be a rock 'n' rollin' bitch for you",
+                    multilineString2,
                 widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
                 x: 200,
                 y: 200,
-                 color: {
+                color: {
                     background: "transparent"
                 }
-            }
+            },
+            {
+                id: 3,
+                label:
+                    multilineString2,
+                x: 400,
+                y: 400,
+                color: {
+                    background: "transparent"
+                },
+                shape: "box"
+            },
         ]);
 
         // create an array with edges
         var edges = new vis.DataSet([
             { from: 1, to: 1, label: "Moonage Daydream" },
-            { from: 2, to: 2, label: "Testing", arrows: 'to, middle, from', selfReference: { size: 40, angle: Math.PI / 6 } }
+            {
+                from: 2, to: 2, label: "Testing", arrows: 'to, middle, from',
+                selfReference: {
+                    size: 40,
+                    angle: Math.PI / 6
+                }
+            },
+            {
+                from: 3, to: 3, label: "Testing", arrows: 'to, middle, from',
+                selfReference: {
+                    size: 40,
+                    angle: Math.PI * 5 / 4,
+                    renderBehindTheNode: true
+                }
+            }
         ]);
 
         // create a network
@@ -59,11 +98,7 @@
             edges: edges
         };
         var options = {
-            edges:{
-                selfReference:{
-                    renderBehindTheNode: false
-                }    
-            }
+
         };
         var network = new vis.Network(container, data, options);
 
@@ -80,7 +115,8 @@
                         arrows: { to: true, from: true, middle: true },
                         selfReference: {
                             size: 20,
-                            angle: angle / 10
+                            angle: angle / 10,
+                            renderBehindTheNode: false
                         }
                     }
                 });
