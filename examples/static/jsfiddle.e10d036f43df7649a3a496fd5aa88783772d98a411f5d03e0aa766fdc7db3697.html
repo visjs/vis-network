@@ -90,7 +90,7 @@ var edges = new vis.DataSet([
     arrows: "to, middle, from",
     selfReference: {
       size: 40,
-      angle: Math.PI / 6,
+      angle: (Math.PI * 7) / 6,
       renderBehindTheNode: false
     }
   },
@@ -113,7 +113,22 @@ var data = {
   nodes: nodes,
   edges: edges
 };
-var options = {};
+var options = {
+  edges: {
+    color: {
+      color: "#2B7CE9",
+      highlight: "#2B7CE9",
+      hover: "#2B7CE9"
+    },
+    hoverWidth: function(width) {
+      return width + 2;
+    },
+    shadow: true
+  },
+  interaction: {
+    hover: true
+  }
+};
 var network = new vis.Network(container, data, options);
 
 (async () =&gt; {

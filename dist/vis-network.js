@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-28T17:57:31.077Z
+ * @date    2020-01-28T19:28:05.762Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28146,7 +28146,7 @@
 	      var x = node.x;
 	      var y = node.y;
 
-	      if (ctx && typeof node.distanceToBorder === "function") {
+	      if (typeof node.distanceToBorder === "function") {
 	        //calculating opposite and adjacent
 	        //distaneToBorder becomes Hypotenuse. 
 	        //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
@@ -30368,7 +30368,11 @@
 	    key: "_distanceToBorder",
 	    value: function _distanceToBorder(ctx, angle) {
 	      var borderWidth = this.options.borderWidth;
-	      this.resize(ctx);
+
+	      if (ctx) {
+	        this.resize(ctx);
+	      }
+
 	      return Math.min(Math.abs(this.width / 2 / Math.cos(angle)), Math.abs(this.height / 2 / Math.sin(angle))) + borderWidth;
 	    }
 	    /**
@@ -30720,7 +30724,10 @@
 	  }, {
 	    key: "distanceToBorder",
 	    value: function distanceToBorder(ctx, angle) {
-	      this.resize(ctx);
+	      if (ctx) {
+	        this.resize(ctx);
+	      }
+
 	      var borderWidth = this.options.borderWidth;
 	      return Math.min(Math.abs(this.width / 2 / Math.cos(angle)), Math.abs(this.height / 2 / Math.sin(angle))) + borderWidth;
 	    }
@@ -31083,7 +31090,10 @@
 	    key: "distanceToBorder",
 	    value: function distanceToBorder(ctx, angle) {
 	      // eslint-disable-line no-unused-vars
-	      this.resize(ctx);
+	      if (ctx) {
+	        this.resize(ctx);
+	      }
+
 	      return this.width * 0.5;
 	    }
 	  }]);
@@ -31212,7 +31222,10 @@
 	    key: "distanceToBorder",
 	    value: function distanceToBorder(ctx, angle) {
 	      // eslint-disable-line no-unused-vars
-	      this.resize(ctx);
+	      if (ctx) {
+	        this.resize(ctx);
+	      }
+
 	      return this.width * 0.5;
 	    }
 	  }]);
@@ -31521,7 +31534,10 @@
 	    key: "distanceToBorder",
 	    value: function distanceToBorder(ctx, angle) {
 	      // eslint-disable-line no-unused-vars
-	      this.resize(ctx);
+	      if (ctx) {
+	        this.resize(ctx);
+	      }
+
 	      return this.options.size;
 	    }
 	  }]);
@@ -31603,7 +31619,10 @@
 	  }, {
 	    key: "distanceToBorder",
 	    value: function distanceToBorder(ctx, angle) {
-	      this.resize(ctx);
+	      if (ctx) {
+	        this.resize(ctx);
+	      }
+
 	      var a = this.width * 0.5;
 	      var b = this.height * 0.5;
 	      var w = Math.sin(angle) * a;
