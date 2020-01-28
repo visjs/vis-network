@@ -971,6 +971,7 @@ export interface EdgeOptions {
   selfReference?: {
     size?: number,
     angle?: number,
+    renderBehindTheNode?: boolean
   };
 
   shadow?: boolean | OptionsShadow;
