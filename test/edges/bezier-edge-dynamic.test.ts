@@ -250,8 +250,8 @@ describe('BezierEdgeDynamic', function(): void {
       )
 
       expect(edge.getPoint(0.5)).to.deep.equal({
-        x: 421,
-        y: -404,
+        x: 400,
+        y: -846,
       })
     })
   })
