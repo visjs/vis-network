@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-28T09:04:40.385Z
+ * @date    2020-01-28T12:13:15.218Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15770,10 +15770,41 @@ function () {
     key: "_circle",
     value: function _circle(ctx, values, x, y, radius) {
       // draw shadow if enabled
-      this.enableShadow(ctx, values); // draw a circle
+      this.enableShadow(ctx, values); //full circle
+
+      var angleFrom = 0;
+      var angleTo = Math.PI * 2;
+
+      if (!this.options.selfReference.renderBehindTheNode) {
+        //render only parts which are not overlaping with parent node
+        //need to find x,y of from point and x,y to point
+        //calculating radiangs
+        var low = this.options.selfReference.angle - 2 * Math.PI;
+        var high = this.options.selfReference.angle;
+
+        var pointTFrom = this._findBorderPositionCircle(this.from, ctx, {
+          x: x,
+          y: y,
+          low: low,
+          high: high,
+          direction: -1
+        });
+
+        var pointTTo = this._findBorderPositionCircle(this.from, ctx, {
+          x: x,
+          y: y,
+          low: low,
+          high: high,
+          direction: 1
+        });
+
+        angleFrom = Math.atan2(pointTFrom.y - y, pointTFrom.x - x);
+        angleTo = Math.atan2(pointTTo.y - y, pointTTo.x - x);
+      } // draw a circle
+
 
       ctx.beginPath();
-      ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+      ctx.arc(x, y, radius, angleFrom, angleTo, false);
       ctx.stroke(); // disable shadows for other elements.
 
       this.disableShadow(ctx, values);
@@ -17861,10 +17892,7 @@ function () {
 
       if (newOptions.hasOwnProperty("selfReferenceSize")) {
         console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
-        parentOptions.selfReference = {
-          size: newOptions.selfReferenceSize,
-          angle: parentOptions.selfReference.angle
-        };
+        parentOptions.selfReference.size = newOptions.selfReferenceSize;
       }
     }
   }]);
@@ -17992,7 +18020,8 @@ function () {
       selectionWidth: 1.5,
       selfReference: {
         size: 20,
-        angle: Math.PI / 4
+        angle: Math.PI / 4,
+        renderBehindTheNode: true
       },
       shadow: {
         enabled: false,
@@ -33635,6 +33664,9 @@ var allOptions$1 = {
       angle: {
         number: number
       },
+      renderBehindTheNode: {
+        boolean: bool
+      },
       __type__: {
         object: object
       }
@@ -34639,7 +34671,8 @@ var configureOptions = {
     selfReferenceSize: [20, 0, 200, 1],
     selfReference: {
       size: [20, 0, 200, 1],
-      angle: [Math.PI / 2, -6 * Math.PI, 6 * Math.PI, Math.PI / 8]
+      angle: [Math.PI / 2, -6 * Math.PI, 6 * Math.PI, Math.PI / 8],
+      renderBehindTheNode: true
     },
     shadow: {
       enabled: false,
