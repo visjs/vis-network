@@ -206,7 +206,8 @@ var options = {
     selfReferenceSize: 20,
     selfReference:{
         size: 20,
-        angle: Math.PI / 4
+        angle: Math.PI / 4,
+        renderBehindTheNode: true
     },
     shadow:{
       enabled: false,
@@ -924,6 +925,13 @@ var options: {
             <td> This is the angle (Provided in radians) to indicate position for the circle. If position is not provided then it will 
                 be top-right (π / 4) corner.
             </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">selfReference.renderBehindTheNode</td>
+            <td>Boolean</td>
+            <td><code>true</code></td>
+            <td> This is a flag that indicates whether self reference circle should be drawn as a full circle or rather should not overlap with parent node.
+            </td>parentOptions.selfReference 
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shadow', this);">
             <td><span parent="shadow" class="right-caret"></span> shadow</td>
