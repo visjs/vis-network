@@ -22,25 +22,17 @@
     <script type="text/javascript">
 
         // create an array with nodes
-        const multilineString1 = [
-            "Node has selfReference edge,",
-            "which angle (position) is provided.",
-            "Property renderBehindTheNode allows to draw parts,",
-            "which are not overlaping with the node."
-        ].join("\n");
-
-        const multilineString2 = [
-            "I'm an alligator,",
-            "I'm a mama-papa coming for you.",
-            "I'm the space invader,",
-            "I'll be a rock 'n' rollin' bitch for you."
-        ].join("\n");
 
         var nodes = new vis.DataSet([
             {
                 id: 1,
                 label:
-                    multilineString1,
+                    [
+                        "I'm an alligator,",
+                        "I'm a mama-papa coming for you.",
+                        "I'm the space invader,",
+                        "I'll be a rock 'n' rollin' bitch for you."
+                    ].join("\n"),
                 x: 0,
                 y: 0,
                 color: {
@@ -50,7 +42,12 @@
             {
                 id: 2,
                 label:
-                    multilineString2,
+                    [
+                        "An edge connected to the same node on both end renders a circle.",
+                        "Both from and to arrows point to the same node.",
+                        "The radius of the edge can be adjusted using selfReference.size.",
+                        "The edge can be positioned using selfReference.angle.",
+                        "The part of the edge behind the node can be hidden using selfReference.renderBehindTheNode."].join("\n"),
                 widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
                 x: 200,
                 y: 200,
@@ -61,7 +58,9 @@
             {
                 id: 3,
                 label:
-                    multilineString2,
+                    ["Bottom left corner",
+                        "with parts rendered behind node"].join("\n"),
+                widthConstraint: { minimum: 100 }, heightConstraint: { minimum: 100 },
                 x: 400,
                 y: 400,
                 color: {
@@ -78,14 +77,15 @@
                 from: 2, to: 2, label: "Testing", arrows: 'to, middle, from',
                 selfReference: {
                     size: 40,
-                    angle: Math.PI / 6
+                    angle: Math.PI / 6,
+                    renderBehindTheNode: false
                 }
             },
             {
                 from: 3, to: 3, label: "Testing", arrows: 'to, middle, from',
                 selfReference: {
                     size: 40,
-                    angle: Math.PI * 5 / 4,
+                    angle: Math.PI * 7 / 6,
                     renderBehindTheNode: true
                 }
             }
