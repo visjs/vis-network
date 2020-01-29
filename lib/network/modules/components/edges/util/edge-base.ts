@@ -16,6 +16,7 @@ import {
   VNode
 } from "./types";
 import { drawDashedLine } from "./shapes";
+import * as ComponentUtil from "./../../shared/ComponentUtil";
 
 export interface FindBorderPositionOptions<Via> {
   via: Via;
@@ -106,6 +107,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public setOptions(options: EdgeOptions): void {
     this.options = options;
+
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
     this.id = this.options.id;
@@ -318,26 +320,23 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   protected _getCircleData(
     ctx?: CanvasRenderingContext2D
   ): [number, number, number] {
-    let x: number;
-    let y: number;
-    const node = this.from;
-    const radius = this.options.selfReferenceSize;
+    const radius = this.options.selfReference.size;
 
     if (ctx !== undefined) {
-      if (node.shape.width === undefined) {
-        node.shape.resize(ctx);
+      if (this.from.shape.width === undefined) {
+        this.from.shape.resize(ctx);
       }
     }
 
     // get circle coordinates
-    if (node.shape.width > node.shape.height) {
-      x = node.x + node.shape.width * 0.5;
-      y = node.y - radius;
-    } else {
-      x = node.x + radius;
-      y = node.y - node.shape.height * 0.5;
-    }
-    return [x, y, radius];
+    const coordinates = ComponentUtil.default.getSelfRefCoordinates(
+      ctx,
+      this.options.selfReference.angle,
+      radius,
+      this.from
+    );
+
+    return [coordinates.x, coordinates.y, radius];
   }
 
   /**
@@ -387,9 +386,10 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     const direction = options.direction;
 
     const maxIterations = 10;
-    const radius = this.options.selfReferenceSize;
+    const radius = this.options.selfReference.size;
     const threshold = 0.05;
     let pos: Point;
+
     let middle = (low + high) * 0.5;
 
     let iteration = 0;
@@ -527,9 +527,37 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     // draw shadow if enabled
     this.enableShadow(ctx, values);
 
+    //full circle
+    let angleFrom = 0;
+    let angleTo = Math.PI * 2;
+
+    if (!this.options.selfReference.renderBehindTheNode) {
+      //render only parts which are not overlaping with parent node
+      //need to find x,y of from point and x,y to point
+      //calculating radiangs
+      const low = this.options.selfReference.angle - 2 * Math.PI;
+      const high = this.options.selfReference.angle;
+      const pointTFrom = this._findBorderPositionCircle(this.from, ctx, {
+        x,
+        y,
+        low,
+        high,
+        direction: -1
+      });
+      const pointTTo = this._findBorderPositionCircle(this.from, ctx, {
+        x,
+        y,
+        low,
+        high,
+        direction: 1
+      });
+      angleFrom = Math.atan2(pointTFrom.y - y, pointTFrom.x - x);
+      angleTo = Math.atan2(pointTTo.y - y, pointTTo.x - x);
+    }
+
     // draw a circle
     ctx.beginPath();
-    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.arc(x, y, radius, angleFrom, angleTo, false);
     ctx.stroke();
 
     // disable shadows for other elements.
@@ -746,28 +774,35 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       const [x, y, radius] = this._getCircleData(ctx);
 
       if (position === "from") {
+        const low = this.options.selfReference.angle - 2 * Math.PI;
+        const high = this.options.selfReference.angle;
+
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
-          low: 0.25,
-          high: 0.6,
+          low,
+          high,
           direction: -1
         });
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         arrowPoint = pointT;
       } else if (position === "to") {
+        const low = this.options.selfReference.angle - 2 * Math.PI;
+        const high = this.options.selfReference.angle;
+
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
-          low: 0.6,
-          high: 1.0,
+          low,
+          high,
           direction: 1
         });
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
         arrowPoint = pointT;
       } else {
-        arrowPoint = this._pointOnCircle(x, y, radius, 0.175);
-        angle = 3.9269908169872414; // === 0.175 * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
+        const pos = this.options.selfReference.angle / (2 * Math.PI);
+        arrowPoint = this._pointOnCircle(x, y, radius, pos);
+        angle = pos * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
       }
     }
 

@@ -204,6 +204,11 @@ var options = {
     },
     selectionWidth: 1,
     selfReferenceSize:20,
+    selfReference:{
+        size: 20,
+        angle: Math.PI / 4,
+        renderBehindTheNode: true
+    },
     shadow:{
       enabled: false,
       color: 'rgba(0,0,0,0.5)',
@@ -885,6 +890,34 @@ var options: {
             <td>Number</td>
             <td><code>false</code></td>
             <td>to Node와 from Node가 동일한 경우, 원이 그려집니다. 이것은 그 원의 반지름입니다.</td>
+        </tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','selfReference', this);">
+            <td><span parent="arrows" class="right-caret"></span> selfReference</td>
+            <td>Object</td>
+            <td><code>Object</code></td>
+            <td>TODO
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">selfReference.size</td>
+            <td>Number</td>
+            <td><code>20</code></td>
+            <td>TODO
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">selfReference.angle</td>
+            <td>Number</td>
+            <td><code>π / 4</code></td>
+            <td>TODO
+            </td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+            <td class="indent">selfReference.renderBehindTheNode</td>
+            <td>Boolean</td>
+            <td><code>true</code></td>
+            <td>TODO
+            </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shadow', this);">
             <td><span parent="shadow" class="right-caret"></span> shadow</td>

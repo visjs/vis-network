@@ -239,15 +239,19 @@ describe('BezierEdgeDynamic', function(): void {
           smooth: {
             roundness: 2,
           },
-          selfReferenceSize: 2,
+          selfReference: {
+            size: 2,
+            angle: Math.PI / 2,
+            renderBehindTheNode: true,
+          },
         },
         body,
         {} as any
       )
 
       expect(edge.getPoint(0.5)).to.deep.equal({
-        x: 421,
-        y: -404,
+        x: 400,
+        y: -846,
       })
     })
   })

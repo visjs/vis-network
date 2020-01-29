@@ -146,7 +146,11 @@ describe('CubicBezierEdge', function(): void {
           smooth: {
             roundness: 2,
           },
-          selfReferenceSize: 42,
+          selfReference: {
+            size: 42,
+            angle: Math.PI / 2,
+            renderBehindTheNode: true,
+          },
         },
         body as any,
         {} as any
@@ -511,14 +515,14 @@ describe('CubicBezierEdge', function(): void {
         to: 4,
         expected: {
           from: {
-            t: 0.250341796875,
-            x: 420.9098019990056,
-            y: -483.99990314656236,
+            t: 0.5077148437499999,
+            x: 358.049334219333,
+            y: -841.9648978996685,
           },
           to: {
             t: 0.7998046875,
-            x: 433.92968488174444,
-            y: -402.0397291193016,
+            x: 412.92968488174444,
+            y: -804.0397291193017,
           },
         },
       },
@@ -535,7 +539,11 @@ describe('CubicBezierEdge', function(): void {
             smooth: {
               roundness: 2,
             },
-            selfReferenceSize: 42,
+            selfReference: {
+              size: 42,
+              angle: Math.PI / 2,
+              renderBehindTheNode: true,
+            },
           },
           body,
           {} as any
@@ -559,16 +567,16 @@ describe('CubicBezierEdge', function(): void {
         },
         position: 'from',
         expected: {
-          angle: 3.4536043458457324,
+          angle: 1.9037437282114893,
           core: {
-            x: 447.9532857144876,
-            y: -417.2972622260487,
+            x: 396.26792442306333,
+            y: -871.0373387250717,
           },
           length: 31.5,
           point: {
-            t: 0.250341796875,
-            x: 420.9720815711208,
-            y: -425.999970021555,
+            t: 0.4970097752749478,
+            x: 387.0022943938739,
+            y: -844.2442313994518,
           },
           type: 'arrow',
         },
@@ -584,15 +592,15 @@ describe('CubicBezierEdge', function(): void {
         },
         position: 'middle',
         expected: {
-          angle: 3.9269908169872414,
+          angle: 3.4557519189487724,
           core: {
-            x: 447.9029478978546,
-            y: -403.58201341320836,
+            x: 428.24637853396604,
+            y: -847.8221952670641,
           },
           length: 33,
           point: {
-            x: 426.90187649661414,
-            y: -424.5830848144488,
+            x: 400,
+            y: -857,
           },
           type: 'bar',
         },
@@ -608,16 +616,16 @@ describe('CubicBezierEdge', function(): void {
         },
         position: 'to',
         expected: {
-          angle: -5.024093876483052,
+          angle: 13.863514558139903,
           core: {
-            x: 424.06346980869967,
-            y: -443.80680503833094,
+            x: 404.23324559789233,
+            y: -874.6679591046823,
           },
           length: 36,
           point: {
-            t: 0.999609375,
-            x: 433.99996084448463,
-            y: -412.96809323164604,
+            t: -2.006446870554419,
+            x: 412.9893362093595,
+            y: -843.4735545230305,
           },
           type: 'circle',
         },
@@ -741,7 +749,11 @@ describe('CubicBezierEdge', function(): void {
                 enabled: smooth,
                 roundness: 2,
               },
-              selfReferenceSize: 13,
+              selfReference: {
+                size: 13,
+                angle: Math.PI / 2,
+                renderBehindTheNode: true,
+              },
             },
             body,
             {} as any
