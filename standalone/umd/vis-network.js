@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-01-30T07:21:02.597Z
+ * @date    2020-01-31T16:41:54.758Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -35168,9 +35168,9 @@
 	      if (!this.options.selfReference.renderBehindTheNode) {
 	        //render only parts which are not overlaping with parent node
 	        //need to find x,y of from point and x,y to point
-	        //calculating radiangs
-	        var low = this.options.selfReference.angle - 2 * Math.PI;
-	        var high = this.options.selfReference.angle;
+	        //calculating radians
+	        var low = this.options.selfReference.angle;
+	        var high = this.options.selfReference.angle + Math.PI;
 
 	        var pointTFrom = this._findBorderPositionCircle(this.from, ctx, {
 	          x: x,
@@ -35335,8 +35335,8 @@
 	            radius = _this$_getCircleData10[2];
 
 	        if (position === "from") {
-	          var low = this.options.selfReference.angle - 2 * Math.PI;
-	          var high = this.options.selfReference.angle;
+	          var low = this.options.selfReference.angle;
+	          var high = this.options.selfReference.angle + Math.PI;
 
 	          var _pointT = this._findBorderPositionCircle(this.from, ctx, {
 	            x: x,
@@ -35349,9 +35349,9 @@
 	          angle = _pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
 	          arrowPoint = _pointT;
 	        } else if (position === "to") {
-	          var _low = this.options.selfReference.angle - 2 * Math.PI;
+	          var _low = this.options.selfReference.angle;
 
-	          var _high = this.options.selfReference.angle;
+	          var _high = this.options.selfReference.angle + Math.PI;
 
 	          var _pointT2 = this._findBorderPositionCircle(this.from, ctx, {
 	            x: x,
