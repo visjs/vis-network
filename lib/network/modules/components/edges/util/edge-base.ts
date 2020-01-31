@@ -535,8 +535,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       //render only parts which are not overlaping with parent node
       //need to find x,y of from point and x,y to point
       //calculating radians
-      let low = this.options.selfReference.angle;
-      let high = this.options.selfReference.angle + Math.PI;
+      const low = this.options.selfReference.angle;
+      const high = this.options.selfReference.angle + Math.PI;
       const pointTFrom = this._findBorderPositionCircle(this.from, ctx, {
         x,
         y,
