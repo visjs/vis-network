@@ -534,9 +534,9 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     if (!this.options.selfReference.renderBehindTheNode) {
       //render only parts which are not overlaping with parent node
       //need to find x,y of from point and x,y to point
-      //calculating radiangs
-      const low = this.options.selfReference.angle - 2 * Math.PI;
-      const high = this.options.selfReference.angle;
+      //calculating radians
+      const low = this.options.selfReference.angle;
+      const high = this.options.selfReference.angle + Math.PI;
       const pointTFrom = this._findBorderPositionCircle(this.from, ctx, {
         x,
         y,
@@ -774,8 +774,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       const [x, y, radius] = this._getCircleData(ctx);
 
       if (position === "from") {
-        const low = this.options.selfReference.angle - 2 * Math.PI;
-        const high = this.options.selfReference.angle;
+        const low = this.options.selfReference.angle;
+        const high = this.options.selfReference.angle + Math.PI;
 
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
@@ -787,8 +787,8 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         arrowPoint = pointT;
       } else if (position === "to") {
-        const low = this.options.selfReference.angle - 2 * Math.PI;
-        const high = this.options.selfReference.angle;
+        const low = this.options.selfReference.angle;
+        const high = this.options.selfReference.angle + Math.PI;
 
         const pointT = this._findBorderPositionCircle(this.from, ctx, {
           x,
