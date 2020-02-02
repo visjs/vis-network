@@ -794,6 +794,13 @@ export interface Image {
   selected?: string;
 }
 
+export interface ImagePadding {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+}
+
 export interface Color {
   border?: string;
 
@@ -853,6 +860,8 @@ export interface NodeOptions {
   };
 
   image?: string | Image;
+  
+  imagePadding?: number | ImagePadding;
 
   label?: string;
 
