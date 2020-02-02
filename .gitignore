@@ -31,6 +31,7 @@ coverage/
 /cypress/videos/
 /declarations/
 /dist/
+/esnext/
 /examples/examples.css
 /examples/index.html
 /examples/static/
