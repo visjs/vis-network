@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-02-02T16:55:33.827Z
+ * @date    2020-02-06T18:56:03.468Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -11965,19 +11965,19 @@
 	  exports['uk_UA'] = exports['uk']; // French
 
 	  exports['fr'] = {
-	    edit: 'Editer',
-	    del: 'Effacer la selection',
+	    edit: 'Éditer',
+	    del: 'Effacer la sélection',
 	    back: 'Retour',
-	    addNode: 'Ajouter un noeud',
+	    addNode: 'Ajouter un nœud',
 	    addEdge: 'Ajouter un lien',
-	    editNode: 'Editer le noeud',
-	    editEdge: 'Editer le lien',
-	    addDescription: 'Cliquez dans un endroit vide pour placer un noeud.',
-	    edgeDescription: 'Cliquez sur un noeud et glissez le lien vers un autre noeud pour les connecter.',
-	    editEdgeDescription: 'Cliquez sur les points de contrôle et glissez-les pour connecter un noeud.',
+	    editNode: 'Éditer le nœud',
+	    editEdge: 'Éditer le lien',
+	    addDescription: 'Cliquez dans un endroit vide pour placer un nœud.',
+	    edgeDescription: 'Cliquez sur un nœud et glissez le lien vers un autre nœud pour les connecter.',
+	    editEdgeDescription: 'Cliquez sur les points de contrôle et glissez-les pour connecter un nœud.',
 	    createEdgeError: 'Impossible de créer un lien vers un cluster.',
-	    deleteClusterError: 'Les clusters ne peuvent pas être éffacés.',
-	    editClusterError: 'Les clusters ne peuvent pas être édites.'
+	    deleteClusterError: 'Les clusters ne peuvent pas être effacés.',
+	    editClusterError: 'Les clusters ne peuvent pas être édités.'
 	  };
 	  exports['fr_FR'] = exports['fr']; // Czech
 
