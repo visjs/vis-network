@@ -91,6 +91,7 @@ var options = {
   physics:{
     enabled: true,
     barnesHut: {
+      theta: 0.5,
       gravitationalConstant: -2000,
       centralGravity: 0.3,
       springLength: 95,
@@ -99,6 +100,7 @@ var options = {
       avoidOverlap: 0
     },
     forceAtlas2Based: {
+      theta: 0.5,
       gravitationalConstant: -50,
       centralGravity: 0.01,
       springConstant: 0.08,
@@ -153,6 +155,7 @@ network.setOptions(options);
         <tr><th>이름</th><th>Type</th><th>Default</th><th>설명</th></tr>
         <tr><td>enabled</td>                    <td>Boolean</td>                <td><code>true</code></td>     <td>physics 시스템을 켜거나 끄는 옵션입니다. 이 옵션은 필수가 아닙니다. 아래 옵션들을 정의하고 실행된 옵션이 없는 경우 이 옵션은 true로 설정됩니다.</td></tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','barnesHut', this);"><td><span parent="barnesHut" class="right-caret"></span> barnesHut</td>                       <td>Object</td>         <td><code>Object</code></td>    <td>BarnesHut은 queadtree 기준으로 중력 모델입니다. 이것은 가장 빠르며, Default와 non-hierarchical 레이아웃에 solver를 추천합니다. </td></tr>
+        <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.theta</td>        <td>Number</td>         <td><code>0.5</code></td>     <td>TODO</td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.gravitationalConstant</td>        <td>Number</td>         <td><code>-2000</code></td>     <td>중력의 값을 설정하는 옵셥입니다. 중력을 강하게 하려면 값을 줄이면 됩니다. (-10000, -50000)</td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.centralGravity</td>               <td>Number</td>         <td><code>0.3</code></td>       <td>전체 Network를 중앙으로 다시 끌어 당기는 중앙 중력 장치에 대한 옵션입니다.</td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.springLength</td>                 <td>Number</td>         <td><code>95</code></td>        <td>Edge는 스프링으로 모델링됩니다. 스프링의 길이는 스프링의 남은 길이입니다.</td></tr>
@@ -161,6 +164,7 @@ network.setOptions(options);
 
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.avoidOverlap</td>                 <td>Number</td>         <td><code>0</code></td>         <td>값의 범위: <code>[0 .. 1]</code>. 0보다 크면, Node의 크기가 고려됩니다. 거리는 두 중력 모델에 대한 Node의 원 반지름에서 계산합니다.</td></tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','forceAtlas2Based', this);"><td><span parent="forceAtlas2Based" class="right-caret"></span> forceAtlas2Based</td>    <td>Object</td>         <td><code>Object</code></td>    <td>Force Atlas 2는  <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679" target="_blank">Jacomi <i>et al</i> (2014)</a>께서 Gephi의 사용을 위해 개발하셨습니다. forceAtlas2Based는 방정식 중 일부를 사용해 vis barnesHut 구현에 사용됩니다. 주요 차이점은 거리에 대한 중심 중력 모델이라는 점입니다. 또한 2D가 아닌 직선입니다. 마지막으로, 모든 Node의 weight는 연결된 Edge 개수의 1을 더한 값의 배수입니다.</td></tr>
+        <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.theta</td>        <td>Number</td>         <td><code>0.5</code></td>     <td>TODO</td></tr>
         <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.gravitationalConstant</td> <td>Number</td>         <td><code>-50</code></td> <td>barnesHut과 비슷합니다. 연결성 또한 한 요소의 질량을 통해 고려됩니다. 저항을 더 강하게 하려면 값을 줄이십시오. (-1000, -2000)</td></tr>
         <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.centralGravity</td>        <td>Number</td>         <td><code>0.01</code></td> <td>전체 Network를 중앙으로 다시 끌어 당기는 중앙 중력장치가 있습니다. 이것은 거리에 따라 달라지지 않습니다.</td></tr>
         <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.springLength</td>          <td>Number</td>         <td><code>100</code></td>  <td>Edge들은 스프링으로 모델링됩니다. 이 스프링의 길이는 나머지 길이입니다. </td></tr>
