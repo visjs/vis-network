@@ -134,7 +134,7 @@
     "semantic-release": "17.0.2",
     "serve": "11.2.0",
     "sinon": "8.1.0",
-    "snap-shot-it": "^7.9.1",
+    "snap-shot-it": "7.9.1",
     "start-server-and-test": "1.10.6",
     "timsort": "0.3.0",
     "typescript": "3.7.2",
