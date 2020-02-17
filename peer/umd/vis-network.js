@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-02-17T18:31:33.769Z
+ * @date    2020-02-17T21:29:16.534Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -34373,6 +34373,9 @@
 	      boolean: bool
 	    },
 	    barnesHut: {
+	      theta: {
+	        number: number
+	      },
 	      gravitationalConstant: {
 	        number: number
 	      },
@@ -34396,6 +34399,9 @@
 	      }
 	    },
 	    forceAtlas2Based: {
+	      theta: {
+	        number: number
+	      },
 	      gravitationalConstant: {
 	        number: number
 	      },
@@ -34764,7 +34770,7 @@
 	  physics: {
 	    enabled: true,
 	    barnesHut: {
-	      //theta: [0.5, 0.1, 1, 0.05],
+	      theta: [0.5, 0.1, 1, 0.05],
 	      gravitationalConstant: [-2000, -30000, 0, 50],
 	      centralGravity: [0.3, 0, 10, 0.05],
 	      springLength: [95, 0, 500, 5],
@@ -34773,7 +34779,7 @@
 	      avoidOverlap: [0, 0, 1, 0.01]
 	    },
 	    forceAtlas2Based: {
-	      //theta: [0.5, 0.1, 1, 0.05],
+	      theta: [0.5, 0.1, 1, 0.05],
 	      gravitationalConstant: [-50, -500, 0, 1],
 	      centralGravity: [0.01, 0, 1, 0.005],
 	      springLength: [95, 0, 500, 5],

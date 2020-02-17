@@ -91,6 +91,7 @@ var options = {
   physics:{
     enabled: true,
     barnesHut: {
+      theta: 0.5,
       gravitationalConstant: -2000,
       centralGravity: 0.3,
       springLength: 95,
@@ -99,6 +100,7 @@ var options = {
       avoidOverlap: 0
     },
     forceAtlas2Based: {
+      theta: 0.5,
       gravitationalConstant: -50,
       centralGravity: 0.01,
       springConstant: 0.08,
@@ -154,6 +156,7 @@ network.setOptions(options);
         <tr><th>Name</th><th>Type</th><th>Default</th><th>Description</th></tr>
         <tr><td>enabled</td>                    <td>Boolean</td>                <td><code>true</code></td>     <td>Toggle the physics system on or off. This property is optional. If you define any of the options below and enabled is undefined, this will be set to true.</td></tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','barnesHut', this);"><td><span parent="barnesHut" class="right-caret"></span> barnesHut</td>                       <td>Object</td>         <td><code>Object</code></td>    <td>BarnesHut is a quadtree based gravity model. This is the fastest, default and recommended solver for non-hierarchical layouts.</td></tr>
+        <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.theta</td>        <td>Number</td>         <td><code>0.5</code></td>     <td>This parameter determines the boundary between consolidated long range forces and individual short range forces. To oversimplify higher values are faster but generate more errors, lower values are slower but with less errors.</td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.gravitationalConstant</td>        <td>Number</td>         <td><code>-2000</code></td>     <td>Gravity attracts. We like repulsion. So the value is negative. If you want the repulsion to be stronger, decrease the value (so -10000, -50000).</td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.centralGravity</td>               <td>Number</td>         <td><code>0.3</code></td>       <td>There is a central gravity attractor to pull the entire network back to the center.</td></tr>
         <tr parent="barnesHut" class="hidden"><td class="indent">barnesHut.springLength</td>                 <td>Number</td>         <td><code>95</code></td>        <td>The edges are modelled as springs. This springLength here is the rest length of the spring.</td></tr>
@@ -165,6 +168,7 @@ network.setOptions(options);
             by them and makes use of the barnesHut implementation in vis. The main differences are the central gravity model,
             which is here distance independent, and the repulsion being linear instead of quadratic. Finally, all node masses have a
             multiplier based on the amount of connected edges plus one.</td></tr>
+        <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.theta</td>        <td>Number</td>         <td><code>0.5</code></td>     <td>This parameter determines the boundary between consolidated long range forces and individual short range forces. To oversimplify higher values are faster but generate more errors, lower values are slower but with less errors.</td></tr>
         <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.gravitationalConstant</td> <td>Number</td>         <td><code>-50</code></td> <td>This is similar to the barnesHut method except that the falloff is linear instead of quadratic. The connectivity is also taken into account as a factor of the mass. If you want the repulsion to be stronger, decrease the value (so -1000, -2000).</td></tr>
         <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.centralGravity</td>        <td>Number</td>         <td><code>0.01</code></td> <td>There is a central gravity attractor to pull the entire network back to the center. This is not dependent on distance.</td></tr>
         <tr parent="forceAtlas2Based" class="hidden"><td class="indent">forceAtlas2Based.springLength</td>          <td>Number</td>         <td><code>100</code></td>  <td>The edges are modelled as springs. This springLength here is the rest length of the spring.</td></tr>
