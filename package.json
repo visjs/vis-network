@@ -133,7 +133,7 @@
     "rollup-plugin-typescript2": "0.25.3",
     "semantic-release": "17.0.3",
     "serve": "11.2.0",
-    "sinon": "8.1.0",
+    "sinon": "9.0.0",
     "snap-shot-it": "7.9.2",
     "start-server-and-test": "1.10.6",
     "timsort": "0.3.0",
