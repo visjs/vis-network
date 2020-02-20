@@ -135,7 +135,7 @@
     "serve": "11.2.0",
     "sinon": "9.0.0",
     "snap-shot-it": "7.9.2",
-    "start-server-and-test": "1.10.6",
+    "start-server-and-test": "1.10.8",
     "timsort": "0.3.0",
     "typescript": "3.7.2",
     "vis-data": "6.3.4",
