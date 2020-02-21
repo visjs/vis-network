@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-02-21T18:58:39.145Z
+ * @date    2020-02-21T21:12:00.312Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5741,7 +5741,7 @@ var shared$1 = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore$1[key] || (sharedStore$1[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.6.3',
+    version: '3.6.4',
     mode:  'pure' ,
     copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
   });
@@ -6502,33 +6502,28 @@ var arrayMethodIsStrict = function (METHOD_NAME, argument) {
 };
 
 var defineProperty$9 = Object.defineProperty;
+var cache = {};
 
 var thrower = function (it) {
   throw it;
 };
 
 var arrayMethodUsesToLength = function (METHOD_NAME, options) {
+  if (has(cache, METHOD_NAME)) return cache[METHOD_NAME];
   if (!options) options = {};
   var method = [][METHOD_NAME];
   var ACCESSORS = has(options, 'ACCESSORS') ? options.ACCESSORS : false;
   var argument0 = has(options, 0) ? options[0] : thrower;
   var argument1 = has(options, 1) ? options[1] : undefined;
-  return !!method && !fails(function () {
+  return cache[METHOD_NAME] = !!method && !fails(function () {
     if (ACCESSORS && !descriptors) return true;
     var O = {
       length: -1
     };
-
-    var addTrap = function (key) {
-      if (ACCESSORS) defineProperty$9(O, key, {
-        enumerable: true,
-        get: thrower
-      });else O[key] = 1;
-    };
-
-    addTrap(1);
-    addTrap(2147483646);
-    addTrap(4294967294);
+    if (ACCESSORS) defineProperty$9(O, 1, {
+      enumerable: true,
+      get: thrower
+    });else O[1] = 1;
     method.call(O, argument0, argument1);
   });
 };
@@ -27990,6 +27985,8 @@ var symbol$6 = symbol$5;
 
 var _typeof_1$2 = createCommonjsModule(function (module) {
   function _typeof(obj) {
+    "@babel/helpers - typeof";
+
     if (typeof symbol$6 === "function" && typeof iterator$8 === "symbol") {
       module.exports = _typeof = function _typeof(obj) {
         return typeof obj;
