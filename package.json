@@ -130,7 +130,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-postcss": "2.0.3",
     "rollup-plugin-terser": "5.1.3",
-    "rollup-plugin-typescript2": "0.25.3",
+    "rollup-plugin-typescript2": "0.26.0",
     "semantic-release": "17.0.3",
     "serve": "11.3.0",
     "sinon": "9.0.0",
