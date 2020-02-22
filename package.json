@@ -80,7 +80,7 @@
     "keycharm": "^0.2.0",
     "moment": "^2.24.0",
     "vis-data": "^6.2.1",
-    "vis-util": "^1.1.8"
+    "vis-util": "^1.1.8 || ^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",
@@ -140,7 +140,7 @@
     "typescript": "3.8.2",
     "vis-data": "6.3.4",
     "vis-dev-utils": "2.1.0",
-    "vis-util": "2.1.0"
+    "vis-util": "3.0.0"
   },
   "collective": {
     "type": "opencollective",
