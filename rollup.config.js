@@ -14,6 +14,7 @@ const banner = generateHeader();
 
 const plugins = {
 	nodeResolve: nodeResolve({
+		browser: true,
 		extensions: ['.ts', '.js', '.json']
 	}),
 	typescript: typescript({

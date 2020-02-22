@@ -124,6 +124,7 @@ export default [].concat.apply(
                 ]
               }),
               nodeResolve({
+                browser: true,
                 extensions: [".ts", ".js", ".json"]
               }),
               typescript({
