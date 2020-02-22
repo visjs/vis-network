@@ -79,8 +79,9 @@
   "peerDependencies": {
     "keycharm": "^0.2.0",
     "moment": "^2.24.0",
+    "uuid": "^3.4.0",
     "vis-data": "^6.2.1",
-    "vis-util": "^1.1.8"
+    "vis-util": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.8.4",
@@ -99,6 +100,7 @@
     "@types/mocha": "7.0.1",
     "@types/sinon": "7.5.1",
     "@types/timsort": "0.3.0",
+    "@types/uuid": "^3.4.7",
     "@typescript-eslint/eslint-plugin": "2.20.0",
     "@typescript-eslint/parser": "2.20.0",
     "babel-plugin-css-modules-transform": "1.6.2",
@@ -138,9 +140,10 @@
     "start-server-and-test": "1.10.8",
     "timsort": "0.3.0",
     "typescript": "3.8.2",
+    "uuid": "3.4.0",
     "vis-data": "6.3.4",
     "vis-dev-utils": "2.1.0",
-    "vis-util": "2.1.0"
+    "vis-util": "3.0.0"
   },
   "collective": {
     "type": "opencollective",
