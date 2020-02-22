@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-02-22T12:44:01.051Z
+ * @date    2020-02-22T16:31:53.151Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -8423,11 +8423,13 @@ function styleInject(css, ref) {
 }
 
 var css = ".vis-overlay {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFjdGl2YXRvci5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBa0I7RUFDbEIsUUFBUTtFQUNSLFVBQVU7RUFDVixXQUFXO0VBQ1gsU0FBUzs7RUFFVCxnRUFBZ0U7RUFDaEUsV0FBVztBQUNiOztBQUVBO0VBQ0UsNEJBQTRCO0FBQzlCIiwiZmlsZSI6IkFjdGl2YXRvci5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudmlzLW92ZXJsYXkge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMHB4O1xuICByaWdodDogMHB4O1xuICBib3R0b206IDBweDtcbiAgbGVmdDogMHB4O1xuXG4gIC8qIE11c3QgYmUgZGlzcGxheWVkIGFib3ZlIGZvciBleGFtcGxlIHNlbGVjdGVkIFRpbWVsaW5lIGl0ZW1zICovXG4gIHotaW5kZXg6IDEwO1xufVxuXG4udmlzLWFjdGl2ZSB7XG4gIGJveC1zaGFkb3c6IDAgMCAxMHB4ICM4NmQ1Zjg7XG59XG4iXX0= */";
+const stylesheet=".vis-overlay {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFjdGl2YXRvci5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxrQkFBa0I7RUFDbEIsUUFBUTtFQUNSLFVBQVU7RUFDVixXQUFXO0VBQ1gsU0FBUzs7RUFFVCxnRUFBZ0U7RUFDaEUsV0FBVztBQUNiOztBQUVBO0VBQ0UsNEJBQTRCO0FBQzlCIiwiZmlsZSI6IkFjdGl2YXRvci5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIudmlzLW92ZXJsYXkge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMHB4O1xuICByaWdodDogMHB4O1xuICBib3R0b206IDBweDtcbiAgbGVmdDogMHB4O1xuXG4gIC8qIE11c3QgYmUgZGlzcGxheWVkIGFib3ZlIGZvciBleGFtcGxlIHNlbGVjdGVkIFRpbWVsaW5lIGl0ZW1zICovXG4gIHotaW5kZXg6IDEwO1xufVxuXG4udmlzLWFjdGl2ZSB7XG4gIGJveC1zaGFkb3c6IDAgMCAxMHB4ICM4NmQ1Zjg7XG59XG4iXX0= */";
 styleInject(css);
 
 var Activator = /*#__PURE__*/Object.freeze({
 	__proto__: null,
-	'default': css
+	'default': css,
+	stylesheet: stylesheet
 });
 
 var keycharm = createCommonjsModule(function (module, exports) {
