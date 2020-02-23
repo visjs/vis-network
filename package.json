@@ -77,7 +77,7 @@
     }
   },
   "peerDependencies": {
-    "keycharm": "^0.2.0",
+    "keycharm": "^0.2.0 || ^0.3.0",
     "moment": "^2.24.0",
     "uuid": "^3.4.0",
     "vis-data": "^6.2.1",
