@@ -141,7 +141,7 @@
     "timsort": "0.3.0",
     "typescript": "3.8.2",
     "uuid": "3.4.0",
-    "vis-data": "6.3.4",
+    "vis-data": "6.4.1",
     "vis-dev-utils": "2.1.0",
     "vis-util": "3.0.0"
   },
