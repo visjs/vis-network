@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-02-29T12:07:42.310Z
+ * @date    2020-02-29T12:10:30.627Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5509,9 +5509,7 @@
 	  return candidate;
 	}
 
-	var util =
-	/*#__PURE__*/
-	Object.freeze({
+	var util = /*#__PURE__*/Object.freeze({
 	  __proto__: null,
 	  isNumber: isNumber,
 	  recursiveDOMDelete: recursiveDOMDelete,
@@ -8954,9 +8952,7 @@
 	 */
 
 
-	var TouchAction =
-	/*#__PURE__*/
-	function () {
+	var TouchAction = /*#__PURE__*/function () {
 	  function TouchAction(manager, value) {
 	    this.manager = manager;
 	    this.set(value);
@@ -9459,9 +9455,7 @@
 	 */
 
 
-	var Input =
-	/*#__PURE__*/
-	function () {
+	var Input = /*#__PURE__*/function () {
 	  function Input(manager, callback) {
 	    var self = this;
 	    this.manager = manager;
@@ -9572,9 +9566,7 @@
 	 */
 
 
-	var PointerEventInput =
-	/*#__PURE__*/
-	function (_Input) {
+	var PointerEventInput = /*#__PURE__*/function (_Input) {
 	  _inheritsLoose(PointerEventInput, _Input);
 
 	  function PointerEventInput() {
@@ -9701,9 +9693,7 @@
 	 * @extends Input
 	 */
 
-	var TouchInput =
-	/*#__PURE__*/
-	function (_Input) {
+	var TouchInput = /*#__PURE__*/function (_Input) {
 	  _inheritsLoose(TouchInput, _Input);
 
 	  function TouchInput() {
@@ -9803,9 +9793,7 @@
 	 * @extends Input
 	 */
 
-	var MouseInput =
-	/*#__PURE__*/
-	function (_Input) {
+	var MouseInput = /*#__PURE__*/function (_Input) {
 	  _inheritsLoose(MouseInput, _Input);
 
 	  function MouseInput() {
@@ -9923,12 +9911,8 @@
 	  return false;
 	}
 
-	var TouchMouseInput =
-	/*#__PURE__*/
-	function () {
-	  var TouchMouseInput =
-	  /*#__PURE__*/
-	  function (_Input) {
+	var TouchMouseInput = /*#__PURE__*/function () {
+	  var TouchMouseInput = /*#__PURE__*/function (_Input) {
 	    _inheritsLoose(TouchMouseInput, _Input);
 
 	    function TouchMouseInput(_manager, callback) {
@@ -10129,9 +10113,7 @@
 	 */
 
 
-	var Recognizer =
-	/*#__PURE__*/
-	function () {
+	var Recognizer = /*#__PURE__*/function () {
 	  function Recognizer(options) {
 	    if (options === void 0) {
 	      options = {};
@@ -10418,9 +10400,7 @@
 	 */
 
 
-	var TapRecognizer =
-	/*#__PURE__*/
-	function (_Recognizer) {
+	var TapRecognizer = /*#__PURE__*/function (_Recognizer) {
 	  _inheritsLoose(TapRecognizer, _Recognizer);
 
 	  function TapRecognizer(options) {
@@ -10543,9 +10523,7 @@
 	 */
 
 
-	var AttrRecognizer =
-	/*#__PURE__*/
-	function (_Recognizer) {
+	var AttrRecognizer = /*#__PURE__*/function (_Recognizer) {
 	  _inheritsLoose(AttrRecognizer, _Recognizer);
 
 	  function AttrRecognizer(options) {
@@ -10634,9 +10612,7 @@
 	 */
 
 
-	var PanRecognizer =
-	/*#__PURE__*/
-	function (_AttrRecognizer) {
+	var PanRecognizer = /*#__PURE__*/function (_AttrRecognizer) {
 	  _inheritsLoose(PanRecognizer, _AttrRecognizer);
 
 	  function PanRecognizer(options) {
@@ -10726,9 +10702,7 @@
 	 */
 
 
-	var SwipeRecognizer =
-	/*#__PURE__*/
-	function (_AttrRecognizer) {
+	var SwipeRecognizer = /*#__PURE__*/function (_AttrRecognizer) {
 	  _inheritsLoose(SwipeRecognizer, _AttrRecognizer);
 
 	  function SwipeRecognizer(options) {
@@ -10787,9 +10761,7 @@
 	 */
 
 
-	var PinchRecognizer =
-	/*#__PURE__*/
-	function (_AttrRecognizer) {
+	var PinchRecognizer = /*#__PURE__*/function (_AttrRecognizer) {
 	  _inheritsLoose(PinchRecognizer, _AttrRecognizer);
 
 	  function PinchRecognizer(options) {
@@ -10834,9 +10806,7 @@
 	 */
 
 
-	var RotateRecognizer =
-	/*#__PURE__*/
-	function (_AttrRecognizer) {
+	var RotateRecognizer = /*#__PURE__*/function (_AttrRecognizer) {
 	  _inheritsLoose(RotateRecognizer, _AttrRecognizer);
 
 	  function RotateRecognizer(options) {
@@ -10872,9 +10842,7 @@
 	 */
 
 
-	var PressRecognizer =
-	/*#__PURE__*/
-	function (_Recognizer) {
+	var PressRecognizer = /*#__PURE__*/function (_Recognizer) {
 	  _inheritsLoose(PressRecognizer, _Recognizer);
 
 	  function PressRecognizer(options) {
@@ -11126,9 +11094,7 @@
 	 */
 
 
-	var Manager =
-	/*#__PURE__*/
-	function () {
+	var Manager = /*#__PURE__*/function () {
 	  function Manager(element, options) {
 	    var _this = this;
 
@@ -11432,9 +11398,7 @@
 	 * @extends Input
 	 */
 
-	var SingleTouchInput =
-	/*#__PURE__*/
-	function (_Input) {
+	var SingleTouchInput = /*#__PURE__*/function (_Input) {
 	  _inheritsLoose(SingleTouchInput, _Input);
 
 	  function SingleTouchInput() {
@@ -11591,9 +11555,7 @@
 	 */
 
 
-	var Hammer =
-	/*#__PURE__*/
-	function () {
+	var Hammer = /*#__PURE__*/function () {
 	  var Hammer =
 	  /**
 	    * @private
@@ -12127,9 +12089,7 @@
 	 *
 	 * @param {Image} image
 	 */
-	var CachedImage =
-	/*#__PURE__*/
-	function () {
+	var CachedImage = /*#__PURE__*/function () {
 	  /**
 	   * @ignore
 	   */
@@ -12276,9 +12236,7 @@
 	 * @param {ImageCallback} callback
 	 */
 
-	var Images =
-	/*#__PURE__*/
-	function () {
+	var Images = /*#__PURE__*/function () {
 	  /**
 	   * @param {ImageCallback} callback
 	   */
@@ -12396,9 +12354,7 @@
 	 * This class can store groups and options specific for groups.
 	 */
 
-	var Groups =
-	/*#__PURE__*/
-	function () {
+	var Groups = /*#__PURE__*/function () {
 	  /**
 	   * @ignore
 	   */
@@ -13835,9 +13791,7 @@
 	 */
 
 
-	var SimpleDataPipe =
-	/*#__PURE__*/
-	function () {
+	var SimpleDataPipe = /*#__PURE__*/function () {
 	  /**
 	   * Create a new data pipe.
 	   *
@@ -13976,9 +13930,7 @@
 	 */
 
 
-	var DataPipeUnderConstruction =
-	/*#__PURE__*/
-	function () {
+	var DataPipeUnderConstruction = /*#__PURE__*/function () {
 	  /**
 	   * Create a new data pipe factory. This is an internal constructor that
 	   * should never be called from outside of this file.
@@ -24435,9 +24387,7 @@
 	 * @typeParam T - The type of method names to be replaced by queued versions.
 	 */
 
-	var Queue =
-	/*#__PURE__*/
-	function () {
+	var Queue = /*#__PURE__*/function () {
 	  /**
 	   * Construct a new Queue.
 	   *
@@ -24650,9 +24600,7 @@
 	 */
 
 
-	var DataSetPart =
-	/*#__PURE__*/
-	function () {
+	var DataSetPart = /*#__PURE__*/function () {
 	  function DataSetPart() {
 	    classCallCheck$1(this, DataSetPart);
 	    this._subscribers = {
@@ -24805,9 +24753,7 @@
 	 * @typeparam Item - The item type this stream is going to work with.
 	 */
 
-	var DataStream =
-	/*#__PURE__*/
-	function () {
+	var DataStream = /*#__PURE__*/function () {
 	  /**
 	   * Create a new data stream.
 	   *
@@ -24824,9 +24770,7 @@
 
 	  createClass$1(DataStream, [{
 	    key: iterator$2$1,
-	    value:
-	    /*#__PURE__*/
-	    regenerator.mark(function value() {
+	    value: /*#__PURE__*/regenerator.mark(function value() {
 	      var _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _step$value, id, item;
 
 	      return regenerator.wrap(function value$(_context) {
@@ -24901,9 +24845,7 @@
 
 	  }, {
 	    key: "entries",
-	    value:
-	    /*#__PURE__*/
-	    regenerator.mark(function entries() {
+	    value: /*#__PURE__*/regenerator.mark(function entries() {
 	      var _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _step2$value, id, item;
 
 	      return regenerator.wrap(function entries$(_context2) {
@@ -24978,9 +24920,7 @@
 
 	  }, {
 	    key: "keys",
-	    value:
-	    /*#__PURE__*/
-	    regenerator.mark(function keys() {
+	    value: /*#__PURE__*/regenerator.mark(function keys() {
 	      var _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _step3$value, id;
 
 	      return regenerator.wrap(function keys$(_context3) {
@@ -25055,9 +24995,7 @@
 
 	  }, {
 	    key: "values",
-	    value:
-	    /*#__PURE__*/
-	    regenerator.mark(function values() {
+	    value: /*#__PURE__*/regenerator.mark(function values() {
 	      var _iteratorNormalCompletion4, _didIteratorError4, _iteratorError4, _iterator4, _step4, _step4$value, item;
 
 	      return regenerator.wrap(function values$(_context4) {
@@ -25335,9 +25273,7 @@
 	    key: "filter",
 	    value: function filter(callback) {
 	      var pairs = this._pairs;
-	      return new DataStream(defineProperty$7$1({}, iterator$2$1,
-	      /*#__PURE__*/
-	      regenerator.mark(function _callee() {
+	      return new DataStream(defineProperty$7$1({}, iterator$2$1, /*#__PURE__*/regenerator.mark(function _callee() {
 	        var _iteratorNormalCompletion7, _didIteratorError7, _iteratorError7, _iterator7, _step7, _step7$value, id, item;
 
 	        return regenerator.wrap(function _callee$(_context7) {
@@ -25463,9 +25399,7 @@
 	    key: "map",
 	    value: function map(callback) {
 	      var pairs = this._pairs;
-	      return new DataStream(defineProperty$7$1({}, iterator$2$1,
-	      /*#__PURE__*/
-	      regenerator.mark(function _callee2() {
+	      return new DataStream(defineProperty$7$1({}, iterator$2$1, /*#__PURE__*/regenerator.mark(function _callee2() {
 	        var _iteratorNormalCompletion9, _didIteratorError9, _iteratorError9, _iterator9, _step9, _step9$value, id, item;
 
 	        return regenerator.wrap(function _callee2$(_context8) {
@@ -25780,9 +25714,7 @@
 	 */
 
 
-	var DataSet =
-	/*#__PURE__*/
-	function (_DataSetPart) {
+	var DataSet = /*#__PURE__*/function (_DataSetPart) {
 	  inherits(DataSet, _DataSetPart);
 	  /**
 	   * Construct a new DataSet.
@@ -26854,9 +26786,7 @@
 	    value: function stream(ids) {
 	      if (ids) {
 	        var data = this._data;
-	        return new DataStream(defineProperty$7$1({}, iterator$2$1,
-	        /*#__PURE__*/
-	        regenerator.mark(function _callee() {
+	        return new DataStream(defineProperty$7$1({}, iterator$2$1, /*#__PURE__*/regenerator.mark(function _callee() {
 	          var _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, id, item;
 
 	          return regenerator.wrap(function _callee$(_context7) {
@@ -26988,9 +26918,7 @@
 	 */
 
 
-	var DataView =
-	/*#__PURE__*/
-	function (_DataSetPart) {
+	var DataView = /*#__PURE__*/function (_DataSetPart) {
 	  inherits(DataView, _DataSetPart);
 	  /**
 	   * Create a DataView.
@@ -28286,9 +28214,7 @@
 	 * @class
 	 */
 
-	var ComponentUtil =
-	/*#__PURE__*/
-	function () {
+	var ComponentUtil = /*#__PURE__*/function () {
 	  function ComponentUtil() {
 	    classCallCheck(this, ComponentUtil);
 	  }
@@ -28617,9 +28543,7 @@
 	 *
 	 * @private
 	 */
-	var LabelAccumulator =
-	/*#__PURE__*/
-	function () {
+	var LabelAccumulator = /*#__PURE__*/function () {
 	  /**
 	   * @param {MeasureText} measureText
 	   */
@@ -28885,9 +28809,7 @@
 	 *       Scan usage of `this.spacing` within method
 	 */
 
-	var MarkupAccumulator =
-	/*#__PURE__*/
-	function () {
+	var MarkupAccumulator = /*#__PURE__*/function () {
 	  /**
 	   * Create an instance
 	   *
@@ -29169,9 +29091,7 @@
 	 */
 
 
-	var LabelSplitter =
-	/*#__PURE__*/
-	function () {
+	var LabelSplitter = /*#__PURE__*/function () {
 	  /**
 	   * @param {CanvasRenderingContext2D} ctx Canvas rendering context
 	   * @param {Label} parent reference to the Label instance using current instance
@@ -29571,9 +29491,7 @@
 	 * A Label to be used for Nodes or Edges.
 	 */
 
-	var Label =
-	/*#__PURE__*/
-	function () {
+	var Label = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Object} options
@@ -30559,9 +30477,7 @@
 	/**
 	 * The Base class for all Nodes.
 	 */
-	var NodeBase =
-	/*#__PURE__*/
-	function () {
+	var NodeBase = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} options
 	   * @param {Object} body
@@ -30901,9 +30817,7 @@
 	 * @extends NodeBase
 	 */
 
-	var Box =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var Box = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(Box, _NodeBase);
 
 	  /**
@@ -31021,9 +30935,7 @@
 	 * @extends NodeBase
 	 */
 
-	var CircleImageBase =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(CircleImageBase, _NodeBase);
 
 	  /**
@@ -31267,9 +31179,7 @@
 	 * @extends CircleImageBase
 	 */
 
-	var Circle =
-	/*#__PURE__*/
-	function (_CircleImageBase) {
+	var Circle = /*#__PURE__*/function (_CircleImageBase) {
 	  inherits$1(Circle, _CircleImageBase);
 
 	  /**
@@ -31376,9 +31286,7 @@
 	 * @extends CircleImageBase
 	 */
 
-	var CircularImage =
-	/*#__PURE__*/
-	function (_CircleImageBase) {
+	var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
 	  inherits$1(CircularImage, _CircleImageBase);
 
 	  /**
@@ -31508,9 +31416,7 @@
 	 * @extends NodeBase
 	 */
 
-	var Database =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var Database = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(Database, _NodeBase);
 
 	  /**
@@ -31593,9 +31499,7 @@
 	 * @extends NodeBase
 	 */
 
-	var ShapeBase =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var ShapeBase = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(ShapeBase, _NodeBase);
 
 	  /**
@@ -31707,9 +31611,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var Diamond =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var Diamond = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(Diamond, _ShapeBase);
 
 	  /**
@@ -31761,9 +31663,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var Dot =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var Dot = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(Dot, _ShapeBase);
 
 	  /**
@@ -31820,9 +31720,7 @@
 	 * @extends NodeBase
 	 */
 
-	var Ellipse =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var Ellipse = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(Ellipse, _NodeBase);
 
 	  /**
@@ -31909,9 +31807,7 @@
 	 * @extends NodeBase
 	 */
 
-	var Icon =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var Icon = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(Icon, _NodeBase);
 
 	  /**
@@ -32054,9 +31950,7 @@
 	 * @extends CircleImageBase
 	 */
 
-	var Image$1 =
-	/*#__PURE__*/
-	function (_CircleImageBase) {
+	var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
 	  inherits$1(Image, _CircleImageBase);
 
 	  /**
@@ -32188,9 +32082,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var Square =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var Square = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(Square, _ShapeBase);
 
 	  /**
@@ -32242,9 +32134,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var Hexagon =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var Hexagon = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(Hexagon, _ShapeBase);
 
 	  /**
@@ -32296,9 +32186,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var Star =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var Star = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(Star, _ShapeBase);
 
 	  /**
@@ -32350,9 +32238,7 @@
 	 * @extends NodeBase
 	 */
 
-	var Text =
-	/*#__PURE__*/
-	function (_NodeBase) {
+	var Text = /*#__PURE__*/function (_NodeBase) {
 	  inherits$1(Text, _NodeBase);
 
 	  /**
@@ -32435,9 +32321,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var Triangle =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var Triangle = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(Triangle, _ShapeBase);
 
 	  /**
@@ -32489,9 +32373,7 @@
 	 * @extends ShapeBase
 	 */
 
-	var TriangleDown =
-	/*#__PURE__*/
-	function (_ShapeBase) {
+	var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
 	  inherits$1(TriangleDown, _ShapeBase);
 
 	  /**
@@ -32591,9 +32473,7 @@
 	 *  Used to validate options.
 	 */
 
-	var Validator =
-	/*#__PURE__*/
-	function () {
+	var Validator = /*#__PURE__*/function () {
 	  /**
 	   * @ignore
 	   */
@@ -32974,9 +32854,7 @@
 	 * A node. A node can be connected to other nodes via one or multiple edges.
 	 */
 
-	var Node =
-	/*#__PURE__*/
-	function () {
+	var Node = /*#__PURE__*/function () {
 	  /**
 	   *
 	   * @param {object} options An object containing options for the node. All
@@ -33679,9 +33557,7 @@
 	 * Handler for Nodes
 	 */
 
-	var NodesHandler =
-	/*#__PURE__*/
-	function () {
+	var NodesHandler = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Images} images
@@ -34409,9 +34285,7 @@
 	 * @class
 	 */
 
-	var EndPoint =
-	/*#__PURE__*/
-	function () {
+	var EndPoint = /*#__PURE__*/function () {
 	  function EndPoint() {
 	    classCallCheck(this, EndPoint);
 	  }
@@ -34476,9 +34350,7 @@
 	 */
 
 
-	var Image$2 =
-	/*#__PURE__*/
-	function (_EndPoint) {
+	var Image$2 = /*#__PURE__*/function (_EndPoint) {
 	  inherits$1(Image, _EndPoint);
 
 	  function Image() {
@@ -34523,9 +34395,7 @@
 	 */
 
 
-	var Arrow =
-	/*#__PURE__*/
-	function (_EndPoint2) {
+	var Arrow = /*#__PURE__*/function (_EndPoint2) {
 	  inherits$1(Arrow, _EndPoint2);
 
 	  function Arrow() {
@@ -34574,9 +34444,7 @@
 	 */
 
 
-	var Crow =
-	/*#__PURE__*/
-	function () {
+	var Crow = /*#__PURE__*/function () {
 	  function Crow() {
 	    classCallCheck(this, Crow);
 	  }
@@ -34621,9 +34489,7 @@
 	 */
 
 
-	var Curve =
-	/*#__PURE__*/
-	function () {
+	var Curve = /*#__PURE__*/function () {
 	  function Curve() {
 	    classCallCheck(this, Curve);
 	  }
@@ -34668,9 +34534,7 @@
 	 */
 
 
-	var InvertedCurve =
-	/*#__PURE__*/
-	function () {
+	var InvertedCurve = /*#__PURE__*/function () {
 	  function InvertedCurve() {
 	    classCallCheck(this, InvertedCurve);
 	  }
@@ -34715,9 +34579,7 @@
 	 */
 
 
-	var Triangle$1 =
-	/*#__PURE__*/
-	function () {
+	var Triangle$1 = /*#__PURE__*/function () {
 	  function Triangle() {
 	    classCallCheck(this, Triangle);
 	  }
@@ -34759,9 +34621,7 @@
 	 */
 
 
-	var InvertedTriangle =
-	/*#__PURE__*/
-	function () {
+	var InvertedTriangle = /*#__PURE__*/function () {
 	  function InvertedTriangle() {
 	    classCallCheck(this, InvertedTriangle);
 	  }
@@ -34803,9 +34663,7 @@
 	 */
 
 
-	var Circle$1 =
-	/*#__PURE__*/
-	function () {
+	var Circle$1 = /*#__PURE__*/function () {
 	  function Circle() {
 	    classCallCheck(this, Circle);
 	  }
@@ -34839,9 +34697,7 @@
 	 */
 
 
-	var Bar =
-	/*#__PURE__*/
-	function () {
+	var Bar = /*#__PURE__*/function () {
 	  function Bar() {
 	    classCallCheck(this, Bar);
 	  }
@@ -34895,9 +34751,7 @@
 	 */
 
 
-	var Box$1 =
-	/*#__PURE__*/
-	function () {
+	var Box$1 = /*#__PURE__*/function () {
 	  function Box() {
 	    classCallCheck(this, Box);
 	  }
@@ -34940,9 +34794,7 @@
 	 */
 
 
-	var Diamond$1 =
-	/*#__PURE__*/
-	function () {
+	var Diamond$1 = /*#__PURE__*/function () {
 	  function Diamond() {
 	    classCallCheck(this, Diamond);
 	  }
@@ -34985,9 +34837,7 @@
 	 */
 
 
-	var Vee =
-	/*#__PURE__*/
-	function () {
+	var Vee = /*#__PURE__*/function () {
 	  function Vee() {
 	    classCallCheck(this, Vee);
 	  }
@@ -35032,9 +34882,7 @@
 	 */
 
 
-	var EndPoints =
-	/*#__PURE__*/
-	function () {
+	var EndPoints = /*#__PURE__*/function () {
 	  function EndPoints() {
 	    classCallCheck(this, EndPoints);
 	  }
@@ -35109,9 +34957,7 @@
 	 * The Base Class for all edges.
 	 */
 
-	var EdgeBase =
-	/*#__PURE__*/
-	function () {
+	var EdgeBase = /*#__PURE__*/function () {
 	  /**
 	   * Create a new instance.
 	   *
@@ -35848,9 +35694,7 @@
 	 * Bezier curves are used to model smooth gradual curves in paths between nodes.
 	 */
 
-	var BezierEdgeBase =
-	/*#__PURE__*/
-	function (_EdgeBase) {
+	var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
 	  inherits$1(BezierEdgeBase, _EdgeBase);
 
 	  /**
@@ -36031,9 +35875,7 @@
 	 * @extends BezierEdgeBase
 	 */
 
-	var BezierEdgeDynamic =
-	/*#__PURE__*/
-	function (_BezierEdgeBase) {
+	var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
 	  inherits$1(BezierEdgeDynamic, _BezierEdgeBase);
 
 	  /**
@@ -36248,9 +36090,7 @@
 	 * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
 	 */
 
-	var BezierEdgeStatic =
-	/*#__PURE__*/
-	function (_BezierEdgeBase) {
+	var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
 	  inherits$1(BezierEdgeStatic, _BezierEdgeBase);
 
 	  /**
@@ -36492,9 +36332,7 @@
 	 * @extends BezierEdgeBase
 	 */
 
-	var CubicBezierEdgeBase =
-	/*#__PURE__*/
-	function (_BezierEdgeBase) {
+	var CubicBezierEdgeBase = /*#__PURE__*/function (_BezierEdgeBase) {
 	  inherits$1(CubicBezierEdgeBase, _BezierEdgeBase);
 
 	  /**
@@ -36568,9 +36406,7 @@
 	 * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
 	 */
 
-	var CubicBezierEdge =
-	/*#__PURE__*/
-	function (_CubicBezierEdgeBase) {
+	var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
 	  inherits$1(CubicBezierEdge, _CubicBezierEdgeBase);
 
 	  /**
@@ -36689,9 +36525,7 @@
 	 * A Straight Edge.
 	 */
 
-	var StraightEdge =
-	/*#__PURE__*/
-	function (_EdgeBase) {
+	var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
 	  inherits$1(StraightEdge, _EdgeBase);
 
 	  /**
@@ -36780,9 +36614,7 @@
 	 * An edge connects two nodes and has a specific direction.
 	 */
 
-	var Edge =
-	/*#__PURE__*/
-	function () {
+	var Edge = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} options        values specific to this edge, must contain at least 'from' and 'to'
 	   * @param {Object} body           shared state from Network instance
@@ -37637,9 +37469,7 @@
 	 * Handler for Edges
 	 */
 
-	var EdgesHandler =
-	/*#__PURE__*/
-	function () {
+	var EdgesHandler = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Array.<Image>} images
@@ -38241,9 +38071,7 @@
 	 * Barnes Hut Solver
 	 */
 
-	var BarnesHutSolver =
-	/*#__PURE__*/
-	function () {
+	var BarnesHutSolver = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
@@ -38777,9 +38605,7 @@
 	 * Repulsion Solver
 	 */
 
-	var RepulsionSolver =
-	/*#__PURE__*/
-	function () {
+	var RepulsionSolver = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
@@ -38871,9 +38697,7 @@
 	/**
 	 * Hierarchical Repulsion Solver
 	 */
-	var HierarchicalRepulsionSolver =
-	/*#__PURE__*/
-	function () {
+	var HierarchicalRepulsionSolver = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
@@ -38960,9 +38784,7 @@
 	/**
 	 * Spring Solver
 	 */
-	var SpringSolver =
-	/*#__PURE__*/
-	function () {
+	var SpringSolver = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
@@ -39064,9 +38886,7 @@
 	/**
 	 * Hierarchical Spring Solver
 	 */
-	var HierarchicalSpringSolver =
-	/*#__PURE__*/
-	function () {
+	var HierarchicalSpringSolver = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
@@ -39191,9 +39011,7 @@
 	/**
 	 * Central Gravity Solver
 	 */
-	var CentralGravitySolver =
-	/*#__PURE__*/
-	function () {
+	var CentralGravitySolver = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
@@ -39265,9 +39083,7 @@
 	 * @extends BarnesHutSolver
 	 */
 
-	var ForceAtlas2BasedRepulsionSolver =
-	/*#__PURE__*/
-	function (_BarnesHutSolver) {
+	var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
 	  inherits$1(ForceAtlas2BasedRepulsionSolver, _BarnesHutSolver);
 
 	  /**
@@ -39326,9 +39142,7 @@
 	 * @extends CentralGravitySolver
 	 */
 
-	var ForceAtlas2BasedCentralGravitySolver =
-	/*#__PURE__*/
-	function (_CentralGravitySolver) {
+	var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravitySolver) {
 	  inherits$1(ForceAtlas2BasedCentralGravitySolver, _CentralGravitySolver);
 
 	  /**
@@ -39372,9 +39186,7 @@
 	 * The physics engine
 	 */
 
-	var PhysicsEngine =
-	/*#__PURE__*/
-	function () {
+	var PhysicsEngine = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   */
@@ -40370,9 +40182,7 @@
 	 * Utility Class
 	 */
 
-	var NetworkUtil =
-	/*#__PURE__*/
-	function () {
+	var NetworkUtil = /*#__PURE__*/function () {
 	  /**
 	   * @ignore
 	   */
@@ -40538,9 +40348,7 @@
 	 * @extends Node
 	 */
 
-	var Cluster =
-	/*#__PURE__*/
-	function (_Node) {
+	var Cluster = /*#__PURE__*/function (_Node) {
 	  inherits$1(Cluster, _Node);
 
 	  /**
@@ -40630,9 +40438,7 @@
 	 * The clustering engine
 	 */
 
-	var ClusterEngine =
-	/*#__PURE__*/
-	function () {
+	var ClusterEngine = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   */
@@ -42172,9 +41978,7 @@
 	 * The canvas renderer
 	 */
 
-	var CanvasRenderer =
-	/*#__PURE__*/
-	function () {
+	var CanvasRenderer = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Canvas} canvas
@@ -42685,9 +42489,7 @@
 	 * nodes.
 	 */
 
-	var Canvas =
-	/*#__PURE__*/
-	function () {
+	var Canvas = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   */
@@ -43249,9 +43051,7 @@
 	 * The view
 	 */
 
-	var View =
-	/*#__PURE__*/
-	function () {
+	var View = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Canvas} canvas
@@ -43692,9 +43492,7 @@
 	 * Navigation Handler
 	 */
 
-	var NavigationHandler =
-	/*#__PURE__*/
-	function () {
+	var NavigationHandler = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Canvas} canvas
@@ -44125,9 +43923,7 @@
 	 * Popup is a class to create a popup window with some text
 	 */
 
-	var Popup =
-	/*#__PURE__*/
-	function () {
+	var Popup = /*#__PURE__*/function () {
 	  /**
 	   * @param {Element} container       The container object.
 	   * @param {string}  overflowMethod  How the popup should act to overflowing ('flip' or 'cap')
@@ -44276,9 +44072,7 @@
 	 * Handler for interactions
 	 */
 
-	var InteractionHandler =
-	/*#__PURE__*/
-	function () {
+	var InteractionHandler = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Canvas} canvas
@@ -45050,9 +44844,7 @@
 	 * The handler for selections
 	 */
 
-	var SelectionHandler =
-	/*#__PURE__*/
-	function () {
+	var SelectionHandler = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Canvas} canvas
@@ -47412,9 +47204,7 @@
 	 * @private
 	 */
 
-	var DirectionInterface =
-	/*#__PURE__*/
-	function () {
+	var DirectionInterface = /*#__PURE__*/function () {
 	  function DirectionInterface() {
 	    classCallCheck(this, DirectionInterface);
 	  }
@@ -47557,9 +47347,7 @@
 	 */
 
 
-	var VerticalStrategy =
-	/*#__PURE__*/
-	function (_DirectionInterface) {
+	var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
 	  inherits$1(VerticalStrategy, _DirectionInterface);
 
 	  /**
@@ -47653,9 +47441,7 @@
 	 */
 
 
-	var HorizontalStrategy =
-	/*#__PURE__*/
-	function (_DirectionInterface2) {
+	var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
 	  inherits$1(HorizontalStrategy, _DirectionInterface2);
 
 	  /**
@@ -48035,9 +47821,7 @@
 	 * @private
 	 */
 
-	var HierarchicalStatus =
-	/*#__PURE__*/
-	function () {
+	var HierarchicalStatus = /*#__PURE__*/function () {
 	  /**
 	   * @ignore
 	   */
@@ -48355,9 +48139,7 @@
 	 */
 
 
-	var LayoutEngine =
-	/*#__PURE__*/
-	function () {
+	var LayoutEngine = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   */
@@ -49958,9 +49740,7 @@
 	 * @private
 	 */
 
-	var ManipulationSystem =
-	/*#__PURE__*/
-	function () {
+	var ManipulationSystem = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {Canvas} canvas
@@ -51608,9 +51388,7 @@
 	 * @param {number} [pixelRatio=1]
 	 */
 
-	var ColorPicker =
-	/*#__PURE__*/
-	function () {
+	var ColorPicker = /*#__PURE__*/function () {
 	  /**
 	   * @param {number} [pixelRatio=1]
 	   */
@@ -52249,9 +52027,7 @@
 	 * The options are matched with their counterparts in each of the modules and the values used in the configuration are
 	 */
 
-	var Configurator =
-	/*#__PURE__*/
-	function () {
+	var Configurator = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} parentModule        | the location where parentModule.setOptions() can be called
 	   * @param {Object} defaultContainer    | the default container of the module
@@ -54650,9 +54426,7 @@
 	 *  a weighted graph with positive or negative edge weights (but with no negative
 	 *  cycles). - https://en.wikipedia.org/wiki/Floyd–Warshall_algorithm
 	 */
-	var FloydWarshall =
-	/*#__PURE__*/
-	function () {
+	var FloydWarshall = /*#__PURE__*/function () {
 	  /**
 	   * @ignore
 	   */
@@ -54730,9 +54504,7 @@
 	 * Possible optimizations in the distance calculation can be implemented.
 	 */
 
-	var KamadaKawai =
-	/*#__PURE__*/
-	function () {
+	var KamadaKawai = /*#__PURE__*/function () {
 	  /**
 	   * @param {Object} body
 	   * @param {number} edgeLength
