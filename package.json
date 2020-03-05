@@ -84,13 +84,13 @@
     "vis-util": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.8.6",
+    "@babel/core": "7.8.7",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-transform-runtime": "7.8.3",
-    "@babel/preset-env": "7.8.6",
+    "@babel/preset-env": "7.8.7",
     "@babel/preset-typescript": "7.8.3",
     "@babel/register": "7.8.6",
-    "@babel/runtime-corejs3": "7.8.4",
+    "@babel/runtime-corejs3": "7.8.7",
     "@egjs/hammerjs": "2.0.17",
     "@semantic-release/commit-analyzer": "8.0.1",
     "@semantic-release/github": "7.0.4",
