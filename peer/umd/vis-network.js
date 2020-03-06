@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-05T20:24:06.372Z
+ * @date    2020-03-06T18:42:17.692Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -31,7 +31,7 @@
 }(this, (function (exports, util, keycharm, visData) { 'use strict';
 
 	var util__default = 'default' in util ? util['default'] : util;
-	keycharm = keycharm && keycharm.hasOwnProperty('default') ? keycharm['default'] : keycharm;
+	keycharm = keycharm && Object.prototype.hasOwnProperty.call(keycharm, 'default') ? keycharm['default'] : keycharm;
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
