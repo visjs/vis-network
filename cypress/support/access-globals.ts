@@ -2,7 +2,7 @@ import {
   DataSetEdges,
   DataSetNodes,
   Network
-} from "../../declarations/index-standalone";
+} from "../../declarations/entry-standalone";
 
 interface RunCodeProps {
   edges: DataSetEdges;

@@ -1,4 +1,4 @@
-import { IdType } from "../../declarations/index-standalone";
+import { IdType } from "../../declarations/entry-standalone";
 
 export * from "./access-globals";
 
