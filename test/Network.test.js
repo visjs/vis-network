@@ -12,7 +12,7 @@
  */
 import fs from 'fs';
 import assert from 'assert';
-import { DataSet } from 'vis-data';
+import { DataSet } from 'vis-data/esnext';
 import Network from '../lib/network/Network';
 import canvasMockify from './canvas-mock';
 import { allOptions, configureOptions } from './../lib/network/options.js';

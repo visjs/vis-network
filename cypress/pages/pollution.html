@@ -100,7 +100,7 @@
 
         const library = document.createElement("script");
         library.type = "text/javascript";
-        library.src = "../../standalone/umd/vis-network.min.js";
+        library.src = "../../standalone/umd/vis-network.js";
         library.onload = async () => {
           // check for pollution
           await new Promise(resolve => setTimeout(resolve, waitTime));

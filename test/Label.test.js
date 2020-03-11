@@ -10,8 +10,8 @@
  *   All other combinations should either be rejected as error or handled gracefully.
  */
 import assert from 'assert';
-import util from 'vis-util';
-import { DataSet } from 'vis-data';
+import * as util from 'vis-util/esnext';
+import { DataSet } from 'vis-data/esnext';
 
 import canvasMockify from './canvas-mock';
 

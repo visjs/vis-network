@@ -1,4 +1,4 @@
-import { overrideOpacity } from "vis-util";
+import { overrideOpacity } from "vis-util/esnext";
 import { EndPoints } from "./end-points";
 import {
   ArrowData,
