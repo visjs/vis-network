@@ -8,4 +8,4 @@ export { parseGephi as parseGephiNetwork } from "./network/gephiParser";
 export { gephiParser as networkGephiParser };
 import * as allOptions from "./network/options";
 export { allOptions as networkOptions };
-//# sourceMappingURL=index-peer.d.ts.map
+//# sourceMappingURL=entry-esnext.d.ts.map

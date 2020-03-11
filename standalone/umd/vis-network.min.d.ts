@@ -1,1 +1,1 @@
-export * from '../../declarations/index-standalone'
+export * from "../../declarations/entry-esnext";
