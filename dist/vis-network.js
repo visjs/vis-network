@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-14T13:43:04.828Z
+ * @date    2020-03-14T15:55:49.575Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
