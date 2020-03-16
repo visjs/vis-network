@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-14T16:03:22.985Z
+ * @date    2020-03-16T12:52:51.339Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -34904,40 +34904,21 @@
 
 	var reverse$2 = reverse$1;
 
-	var rngBrowser$1 = createCommonjsModule(function (module) {
-	  // Unique ID creation requires a high quality random # generator.  In the
-	  // browser this is a little complicated due to unknown quality of Math.random()
-	  // and inconsistent support for the `crypto` API.  We do the best we can via
-	  // feature-detection
-	  // getRandomValues needs to be invoked in a context where "this" is a Crypto
-	  // implementation. Also, find the complete implementation of crypto on IE11.
-	  var getRandomValues = typeof crypto != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto);
+	// Unique ID creation requires a high quality random # generator. In the browser we therefore
+	// require the crypto API and do not support built-in fallback to lower quality random number
+	// generators (like Math.random()).
+	// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+	// find the complete implementation of crypto (msCrypto) on IE11.
+	var getRandomValues = typeof crypto != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto != 'undefined' && typeof msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto);
+	var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
 
-	  if (getRandomValues) {
-	    // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-	    var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-	    module.exports = function whatwgRNG() {
-	      getRandomValues(rnds8);
-	      return rnds8;
-	    };
-	  } else {
-	    // Math.random()-based (RNG)
-	    //
-	    // If all else fails, use Math.random().  It's fast, but is of unspecified
-	    // quality.
-	    var rnds = new Array(16);
-
-	    module.exports = function mathRNG() {
-	      for (var i = 0, r; i < 16; i++) {
-	        if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-	        rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-	      }
-
-	      return rnds;
-	    };
+	function rng() {
+	  if (!getRandomValues) {
+	    throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
 	  }
-	});
+
+	  return getRandomValues(rnds8);
+	}
 
 	/**
 	 * Convert array of 16 byte values to UUID string format of the form:
@@ -34956,8 +34937,6 @@
 	  return [bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]]].join('');
 	}
 
-	var bytesToUuid_1$1 = bytesToUuid$1;
-
 	function v4$1(options, buf, offset) {
 	  var i = buf && offset || 0;
 
@@ -34967,7 +34946,7 @@
 	  }
 
 	  options = options || {};
-	  var rnds = options.random || (options.rng || rngBrowser$1)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+	  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
 
 	  rnds[6] = rnds[6] & 0x0f | 0x40;
 	  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
@@ -34978,10 +34957,8 @@
 	    }
 	  }
 
-	  return buf || bytesToUuid_1$1(rnds);
+	  return buf || bytesToUuid$1(rnds);
 	}
-
-	var v4_1$1 = v4$1;
 
 	/**
 	 * Utility Class
@@ -35797,7 +35774,7 @@
 
 
 	      if (clusterNodeProperties.id === undefined) {
-	        clusterNodeProperties.id = 'cluster:' + v4_1$1();
+	        clusterNodeProperties.id = 'cluster:' + v4$1();
 	      }
 
 	      var clusterId = clusterNodeProperties.id;
@@ -36372,7 +36349,7 @@
 
 	      clonedOptions.from = fromId;
 	      clonedOptions.to = toId;
-	      clonedOptions.id = 'clusterEdge:' + v4_1$1(); // apply the edge specific options to it if specified
+	      clonedOptions.id = 'clusterEdge:' + v4$1(); // apply the edge specific options to it if specified
 
 	      if (extraOptions !== undefined) {
 	        deepExtend(clonedOptions, extraOptions);
@@ -44652,7 +44629,7 @@
 	    key: "_getNewTargetNode",
 	    value: function _getNewTargetNode(x, y) {
 	      var controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
-	      controlNodeStyle.id = 'targetNode' + v4_1$1();
+	      controlNodeStyle.id = 'targetNode' + v4$1();
 	      controlNodeStyle.hidden = false;
 	      controlNodeStyle.physics = false;
 	      controlNodeStyle.x = x;
@@ -45213,7 +45190,7 @@
 	            this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
 	            var connectionEdge = this.body.functions.createEdge({
-	              id: 'connectionEdge' + v4_1$1(),
+	              id: 'connectionEdge' + v4$1(),
 	              from: node.id,
 	              to: targetNode.id,
 	              physics: false,
@@ -45372,7 +45349,7 @@
 	      var _this4 = this;
 
 	      var defaultData = {
-	        id: v4_1$1(),
+	        id: v4$1(),
 	        x: clickData.pointer.canvas.x,
 	        y: clickData.pointer.canvas.y,
 	        label: 'new'
