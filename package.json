@@ -85,7 +85,7 @@
     "keycharm": "^0.2.0 || ^0.3.0",
     "moment": "^2.24.0",
     "timsort": "^0.3.0",
-    "uuid": "^3.4.0",
+    "uuid": "^3.4.0 || ^7.0.0",
     "vis-data": "^6.2.1",
     "vis-util": "^3.0.0 || ^4.0.0"
   },
@@ -111,7 +111,7 @@
     "@types/mocha": "7.0.2",
     "@types/sinon": "7.5.2",
     "@types/timsort": "0.3.0",
-    "@types/uuid": "3.4.8",
+    "@types/uuid": "7.0.0",
     "@typescript-eslint/eslint-plugin": "2.23.0",
     "@typescript-eslint/parser": "2.23.0",
     "babel-plugin-css-modules-transform": "1.6.2",
@@ -153,7 +153,7 @@
     "start-server-and-test": "1.10.10",
     "timsort": "0.3.0",
     "typescript": "3.8.3",
-    "uuid": "3.4.0",
+    "uuid": "7.0.2",
     "vis-data": "6.5.0",
     "vis-dev-utils": "2.2.3",
     "vis-util": "4.0.0"
