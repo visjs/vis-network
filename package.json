@@ -130,7 +130,7 @@
     "jsdom": "16.2.1",
     "jsdom-global": "3.0.2",
     "keycharm": "0.3.1",
-    "mocha": "7.1.0",
+    "mocha": "7.1.1",
     "moment": "2.24.0",
     "nyc": "15.0.0",
     "opencollective": "1.0.3",
