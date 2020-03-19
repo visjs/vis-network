@@ -7,7 +7,6 @@ export function setColorOptionsWithOpacity (values: any) {
     values.borderColor = setColorOpacity(values.borderColor, opacity);
   }
   if (values.shadowColor) {
-    console.log(values.shadowColor);
     values.shadowColor = setColorOpacity(values.shadowColor, opacity);
   }
 
