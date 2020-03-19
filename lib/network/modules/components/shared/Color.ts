@@ -7,6 +7,7 @@ export function setColorOptionsWithOpacity (values: any) {
     values.borderColor = setColorOpacity(values.borderColor, opacity);
   }
   if (values.shadowColor) {
+    console.log(values.shadowColor);
     values.shadowColor = setColorOpacity(values.shadowColor, opacity);
   }
 
@@ -32,7 +33,7 @@ export function setColorOpacity (color: string, opacity: number) {
 }
 
 function setRgbaOpacity(rgba: string, opacity: number) {
-  return rgba.replace(/\d*.\d/, opacity + '');
+  return rgba.replace(/\d*.\d\)/, opacity + ')');
 }
 
 function setHexOpacity(hex: string, opacity: number) {
