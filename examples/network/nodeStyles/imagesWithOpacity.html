@@ -33,8 +33,10 @@
       nodes.push({id: 1, label: 'Main', image: DIR + 'Network-Pipe-icon.png', shape: 'image', opacity: 0.6});
       nodes.push({id: 2, label: 'Office', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
       nodes.push({id: 3, label: 'Wireless', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
+      nodes.push({id: 22, label: 'Normal'});
       edges.push({from: 1, to: 2, length: EDGE_LENGTH_MAIN});
       edges.push({from: 1, to: 3, length: EDGE_LENGTH_MAIN});
+      edges.push({from: 1, to: 22, length: EDGE_LENGTH_MAIN});
 
       for (var i = 4; i <= 7; i++) {
         nodes.push({id: i, label: 'Computer', image: DIR + 'Hardware-My-Computer-3-icon.png', shape: 'image'});
@@ -66,7 +68,7 @@
       };
       var options = {
         nodes: {
-          opacity: 0.2
+          opacity: 0.5
         }
       };
       network = new vis.Network(container, data, options);
