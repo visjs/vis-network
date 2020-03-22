@@ -30,7 +30,7 @@
       // Create a data table with links.
       edges = [];
 
-      nodes.push({id: 1, label: 'Main', image: DIR + 'Network-Pipe-icon.png', shape: 'image', opacity: 1});
+      nodes.push({id: 1, label: 'Main', image: DIR + 'Network-Pipe-icon.png', shape: 'image', opacity: 0.2});
       nodes.push({id: 2, label: 'Office', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
       nodes.push({id: 3, label: 'Wireless', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
       nodes.push({id: 22, label: 'Normal'});
@@ -72,7 +72,7 @@
         },
         groups: {
           computer: {
-            opacity: 1
+            opacity: .7
           }
         }
       };
@@ -84,7 +84,7 @@
 <body onload="draw()">
 
 <p>
-  Display nodes as images.
+  Display nodes with global opacity, individual opacity, and opacity in a group.
 </p>
 <div id="mynetwork"></div>
 
