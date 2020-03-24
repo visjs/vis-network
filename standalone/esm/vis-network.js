@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-24T18:50:37.254Z
+ * @date    2020-03-24T21:01:56.112Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5327,8 +5327,6 @@ function topMost(pile, accessors) {
 
   return candidate;
 }
-
-
 
 var index = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -23233,8 +23231,6 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
 
   return DataView;
 }(DataSetPart);
-
-
 
 var index$2 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
