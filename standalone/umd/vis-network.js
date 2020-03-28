@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-27T15:54:36.409Z
+ * @date    2020-03-28T17:42:07.601Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15349,6 +15349,62 @@
 
 	var reduce$2 = reduce$1;
 
+	// Unique ID creation requires a high quality random # generator. In the browser we therefore
+	// require the crypto API and do not support built-in fallback to lower quality random number
+	// generators (like Math.random()).
+	// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+	// find the complete implementation of crypto (msCrypto) on IE11.
+	var getRandomValues = typeof crypto != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto != 'undefined' && typeof msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto);
+	var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
+
+	function rng() {
+	  if (!getRandomValues) {
+	    throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+	  }
+
+	  return getRandomValues(rnds8);
+	}
+
+	/**
+	 * Convert array of 16 byte values to UUID string format of the form:
+	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+	 */
+	var byteToHex = [];
+
+	for (var i = 0; i < 256; ++i) {
+	  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	}
+
+	function bytesToUuid(buf, offset) {
+	  var i = offset || 0;
+	  var bth = byteToHex; // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
+
+	  return [bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]]].join('');
+	}
+
+	function v4(options, buf, offset) {
+	  var i = buf && offset || 0;
+
+	  if (typeof options == 'string') {
+	    buf = options === 'binary' ? new Array(16) : null;
+	    options = null;
+	  }
+
+	  options = options || {};
+	  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+	  rnds[6] = rnds[6] & 0x0f | 0x40;
+	  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+	  if (buf) {
+	    for (var ii = 0; ii < 16; ++ii) {
+	      buf[i + ii] = rnds[ii];
+	    }
+	  }
+
+	  return buf || bytesToUuid(rnds);
+	}
+
 	var moment = createCommonjsModule(function (module, exports) {
 
 	  (function (global, factory) {
@@ -19934,7 +19990,7 @@
 
 	function ownKeys$2(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context30; forEach$2(_context30 = ownKeys$2(Object(source), true)).call(_context30, function (key) { defineProperty$6(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context31; forEach$2(_context31 = ownKeys$2(Object(source))).call(_context31, function (key) { defineProperty$3(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context28; forEach$2(_context28 = ownKeys$2(Object(source), true)).call(_context28, function (key) { defineProperty$6(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context29; forEach$2(_context29 = ownKeys$2(Object(source))).call(_context29, function (key) { defineProperty$3(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
 
 	function _createSuper(Derived) { return function () { var Super = getPrototypeOf$5(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
@@ -19942,7 +19998,7 @@
 
 	function _createForOfIteratorHelper$1(o) { if (typeof symbol$2 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (o = _unsupportedIterableToArray$2(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$2(o, minLen) { var _context21; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context21 = Object.prototype.toString.call(o)).call(_context21, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
+	function _unsupportedIterableToArray$2(o, minLen) { var _context19; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context19 = Object.prototype.toString.call(o)).call(_context19, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 
 	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/* eslint @typescript-eslint/member-ordering: ["error", { "classes": ["field", "constructor", "method"] }] */
@@ -20233,97 +20289,11 @@
 	  }]);
 
 	  return DataPipeUnderConstruction;
-	}();
-
-	function createCommonjsModule$1(fn, module) {
-	  return module = {
-	    exports: {}
-	  }, fn(module, module.exports), module.exports;
-	}
-
-	var rngBrowser = createCommonjsModule$1(function (module) {
-	  var _context5, _context6;
-
-	  // Unique ID creation requires a high quality random # generator.  In the
-	  // browser this is a little complicated due to unknown quality of Math.random()
-	  // and inconsistent support for the `crypto` API.  We do the best we can via
-	  // feature-detection
-	  // getRandomValues needs to be invoked in a context where "this" is a Crypto
-	  // implementation. Also, find the complete implementation of crypto on IE11.
-	  var getRandomValues = typeof crypto != 'undefined' && crypto.getRandomValues && bind$2(_context5 = crypto.getRandomValues).call(_context5, crypto) || typeof msCrypto != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && bind$2(_context6 = msCrypto.getRandomValues).call(_context6, msCrypto);
-
-	  if (getRandomValues) {
-	    // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-	    var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-	    module.exports = function whatwgRNG() {
-	      getRandomValues(rnds8);
-	      return rnds8;
-	    };
-	  } else {
-	    // Math.random()-based (RNG)
-	    //
-	    // If all else fails, use Math.random().  It's fast, but is of unspecified
-	    // quality.
-	    var rnds = new Array(16);
-
-	    module.exports = function mathRNG() {
-	      for (var i = 0, r; i < 16; i++) {
-	        if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-	        rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
-	      }
-
-	      return rnds;
-	    };
-	  }
-	});
-	/**
-	 * Convert array of 16 byte values to UUID string format of the form:
-	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-	 */
-
-	var byteToHex = [];
-
-	for (var i = 0; i < 256; ++i) {
-	  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-	}
-
-	function bytesToUuid(buf, offset) {
-	  var i = offset || 0;
-	  var bth = byteToHex; // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-
-	  return [bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]]].join('');
-	}
-
-	var bytesToUuid_1 = bytesToUuid;
-
-	function v4(options, buf, offset) {
-	  var i = buf && offset || 0;
-
-	  if (typeof options == 'string') {
-	    buf = options === 'binary' ? new Array(16) : null;
-	    options = null;
-	  }
-
-	  options = options || {};
-	  var rnds = options.random || (options.rng || rngBrowser)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-
-	  rnds[6] = rnds[6] & 0x0f | 0x40;
-	  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
-
-	  if (buf) {
-	    for (var ii = 0; ii < 16; ++ii) {
-	      buf[i + ii] = rnds[ii];
-	    }
-	  }
-
-	  return buf || bytesToUuid_1(rnds);
-	}
-
-	var v4_1 = v4; // utility functions
+	}(); // utility functions
 	// parse ASP.Net Date pattern,
 	// for example '/Date(1198908717056)/' or '/Date(1198908717056-0700)/'
 	// code from http://momentjs.com/
+
 
 	var ASPDateRegex$1 = /^\/?Date\((-?\d+)/i;
 	/**
@@ -20563,8 +20533,8 @@
 	        var object = this._extended.object;
 	        var methods = this._extended.methods;
 
-	        for (var _i = 0; _i < methods.length; _i++) {
-	          var method = methods[_i];
+	        for (var i = 0; i < methods.length; i++) {
+	          var method = methods[i];
 
 	          if (method.original) {
 	            // @TODO: better solution?
@@ -20661,9 +20631,9 @@
 	  }, {
 	    key: "flush",
 	    value: function flush() {
-	      var _context7, _context8;
+	      var _context5, _context6;
 
-	      forEach$2(_context7 = splice$2(_context8 = this._queue).call(_context8, 0)).call(_context7, function (entry) {
+	      forEach$2(_context5 = splice$2(_context6 = this._queue).call(_context6, 0)).call(_context5, function (entry) {
 	        entry.fn.apply(entry.context || entry.fn, entry.args || []);
 	      });
 	    }
@@ -20686,8 +20656,8 @@
 	      }];
 
 	      if (options && options.replace) {
-	        for (var _i2 = 0; _i2 < options.replace.length; _i2++) {
-	          var name = options.replace[_i2];
+	        for (var i = 0; i < options.replace.length; i++) {
+	          var name = options.replace[i];
 	          methods.push({
 	            name: name,
 	            // @TODO: better solution?
@@ -20751,13 +20721,13 @@
 	  createClass(DataSetPart, [{
 	    key: "_trigger",
 	    value: function _trigger(event, payload, senderId) {
-	      var _context9, _context10;
+	      var _context7, _context8;
 
 	      if (event === "*") {
 	        throw new Error("Cannot trigger event *");
 	      }
 
-	      forEach$2(_context9 = concat$2(_context10 = []).call(_context10, toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers["*"]))).call(_context9, function (subscriber) {
+	      forEach$2(_context7 = concat$2(_context8 = []).call(_context8, toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers["*"]))).call(_context7, function (subscriber) {
 	        subscriber(event, payload, senderId != null ? senderId : null);
 	      });
 	    }
@@ -20790,9 +20760,9 @@
 	  }, {
 	    key: "off",
 	    value: function off(event, callback) {
-	      var _context11;
+	      var _context9;
 
-	      this._subscribers[event] = filter$2(_context11 = this._subscribers[event]).call(_context11, function (subscriber) {
+	      this._subscribers[event] = filter$2(_context9 = this._subscribers[event]).call(_context9, function (subscriber) {
 	        return subscriber !== callback;
 	      });
 	    }
@@ -20833,49 +20803,49 @@
 	    value: /*#__PURE__*/regenerator.mark(function value() {
 	      var _iterator, _step, _step$value, id, item;
 
-	      return regenerator.wrap(function value$(_context12) {
+	      return regenerator.wrap(function value$(_context10) {
 	        while (1) {
-	          switch (_context12.prev = _context12.next) {
+	          switch (_context10.prev = _context10.next) {
 	            case 0:
 	              _iterator = _createForOfIteratorHelper$1(this._pairs);
-	              _context12.prev = 1;
+	              _context10.prev = 1;
 
 	              _iterator.s();
 
 	            case 3:
 	              if ((_step = _iterator.n()).done) {
-	                _context12.next = 9;
+	                _context10.next = 9;
 	                break;
 	              }
 
 	              _step$value = slicedToArray(_step.value, 2), id = _step$value[0], item = _step$value[1];
-	              _context12.next = 7;
+	              _context10.next = 7;
 	              return [id, item];
 
 	            case 7:
-	              _context12.next = 3;
+	              _context10.next = 3;
 	              break;
 
 	            case 9:
-	              _context12.next = 14;
+	              _context10.next = 14;
 	              break;
 
 	            case 11:
-	              _context12.prev = 11;
-	              _context12.t0 = _context12["catch"](1);
+	              _context10.prev = 11;
+	              _context10.t0 = _context10["catch"](1);
 
-	              _iterator.e(_context12.t0);
+	              _iterator.e(_context10.t0);
 
 	            case 14:
-	              _context12.prev = 14;
+	              _context10.prev = 14;
 
 	              _iterator.f();
 
-	              return _context12.finish(14);
+	              return _context10.finish(14);
 
 	            case 17:
 	            case "end":
-	              return _context12.stop();
+	              return _context10.stop();
 	          }
 	        }
 	      }, value, this, [[1, 11, 14, 17]]);
@@ -20889,49 +20859,49 @@
 	    value: /*#__PURE__*/regenerator.mark(function entries() {
 	      var _iterator2, _step2, _step2$value, id, item;
 
-	      return regenerator.wrap(function entries$(_context13) {
+	      return regenerator.wrap(function entries$(_context11) {
 	        while (1) {
-	          switch (_context13.prev = _context13.next) {
+	          switch (_context11.prev = _context11.next) {
 	            case 0:
 	              _iterator2 = _createForOfIteratorHelper$1(this._pairs);
-	              _context13.prev = 1;
+	              _context11.prev = 1;
 
 	              _iterator2.s();
 
 	            case 3:
 	              if ((_step2 = _iterator2.n()).done) {
-	                _context13.next = 9;
+	                _context11.next = 9;
 	                break;
 	              }
 
 	              _step2$value = slicedToArray(_step2.value, 2), id = _step2$value[0], item = _step2$value[1];
-	              _context13.next = 7;
+	              _context11.next = 7;
 	              return [id, item];
 
 	            case 7:
-	              _context13.next = 3;
+	              _context11.next = 3;
 	              break;
 
 	            case 9:
-	              _context13.next = 14;
+	              _context11.next = 14;
 	              break;
 
 	            case 11:
-	              _context13.prev = 11;
-	              _context13.t0 = _context13["catch"](1);
+	              _context11.prev = 11;
+	              _context11.t0 = _context11["catch"](1);
 
-	              _iterator2.e(_context13.t0);
+	              _iterator2.e(_context11.t0);
 
 	            case 14:
-	              _context13.prev = 14;
+	              _context11.prev = 14;
 
 	              _iterator2.f();
 
-	              return _context13.finish(14);
+	              return _context11.finish(14);
 
 	            case 17:
 	            case "end":
-	              return _context13.stop();
+	              return _context11.stop();
 	          }
 	        }
 	      }, entries, this, [[1, 11, 14, 17]]);
@@ -20945,49 +20915,49 @@
 	    value: /*#__PURE__*/regenerator.mark(function keys() {
 	      var _iterator3, _step3, _step3$value, id;
 
-	      return regenerator.wrap(function keys$(_context14) {
+	      return regenerator.wrap(function keys$(_context12) {
 	        while (1) {
-	          switch (_context14.prev = _context14.next) {
+	          switch (_context12.prev = _context12.next) {
 	            case 0:
 	              _iterator3 = _createForOfIteratorHelper$1(this._pairs);
-	              _context14.prev = 1;
+	              _context12.prev = 1;
 
 	              _iterator3.s();
 
 	            case 3:
 	              if ((_step3 = _iterator3.n()).done) {
-	                _context14.next = 9;
+	                _context12.next = 9;
 	                break;
 	              }
 
 	              _step3$value = slicedToArray(_step3.value, 1), id = _step3$value[0];
-	              _context14.next = 7;
+	              _context12.next = 7;
 	              return id;
 
 	            case 7:
-	              _context14.next = 3;
+	              _context12.next = 3;
 	              break;
 
 	            case 9:
-	              _context14.next = 14;
+	              _context12.next = 14;
 	              break;
 
 	            case 11:
-	              _context14.prev = 11;
-	              _context14.t0 = _context14["catch"](1);
+	              _context12.prev = 11;
+	              _context12.t0 = _context12["catch"](1);
 
-	              _iterator3.e(_context14.t0);
+	              _iterator3.e(_context12.t0);
 
 	            case 14:
-	              _context14.prev = 14;
+	              _context12.prev = 14;
 
 	              _iterator3.f();
 
-	              return _context14.finish(14);
+	              return _context12.finish(14);
 
 	            case 17:
 	            case "end":
-	              return _context14.stop();
+	              return _context12.stop();
 	          }
 	        }
 	      }, keys, this, [[1, 11, 14, 17]]);
@@ -21001,49 +20971,49 @@
 	    value: /*#__PURE__*/regenerator.mark(function values() {
 	      var _iterator4, _step4, _step4$value, item;
 
-	      return regenerator.wrap(function values$(_context15) {
+	      return regenerator.wrap(function values$(_context13) {
 	        while (1) {
-	          switch (_context15.prev = _context15.next) {
+	          switch (_context13.prev = _context13.next) {
 	            case 0:
 	              _iterator4 = _createForOfIteratorHelper$1(this._pairs);
-	              _context15.prev = 1;
+	              _context13.prev = 1;
 
 	              _iterator4.s();
 
 	            case 3:
 	              if ((_step4 = _iterator4.n()).done) {
-	                _context15.next = 9;
+	                _context13.next = 9;
 	                break;
 	              }
 
 	              _step4$value = slicedToArray(_step4.value, 2), item = _step4$value[1];
-	              _context15.next = 7;
+	              _context13.next = 7;
 	              return item;
 
 	            case 7:
-	              _context15.next = 3;
+	              _context13.next = 3;
 	              break;
 
 	            case 9:
-	              _context15.next = 14;
+	              _context13.next = 14;
 	              break;
 
 	            case 11:
-	              _context15.prev = 11;
-	              _context15.t0 = _context15["catch"](1);
+	              _context13.prev = 11;
+	              _context13.t0 = _context13["catch"](1);
 
-	              _iterator4.e(_context15.t0);
+	              _iterator4.e(_context13.t0);
 
 	            case 14:
-	              _context15.prev = 14;
+	              _context13.prev = 14;
 
 	              _iterator4.f();
 
-	              return _context15.finish(14);
+	              return _context13.finish(14);
 
 	            case 17:
 	            case "end":
-	              return _context15.stop();
+	              return _context13.stop();
 	          }
 	        }
 	      }, values, this, [[1, 11, 14, 17]]);
@@ -21060,9 +21030,9 @@
 	  }, {
 	    key: "toIdArray",
 	    value: function toIdArray() {
-	      var _context16;
+	      var _context14;
 
-	      return map$2(_context16 = toConsumableArray(this._pairs)).call(_context16, function (pair) {
+	      return map$2(_context14 = toConsumableArray(this._pairs)).call(_context14, function (pair) {
 	        return pair[0];
 	      });
 	    }
@@ -21078,9 +21048,9 @@
 	  }, {
 	    key: "toItemArray",
 	    value: function toItemArray() {
-	      var _context17;
+	      var _context15;
 
-	      return map$2(_context17 = toConsumableArray(this._pairs)).call(_context17, function (pair) {
+	      return map$2(_context15 = toConsumableArray(this._pairs)).call(_context15, function (pair) {
 	        return pair[1];
 	      });
 	    }
@@ -21242,55 +21212,55 @@
 	      return new DataStream(defineProperty$6({}, iterator$4, /*#__PURE__*/regenerator.mark(function _callee() {
 	        var _iterator7, _step7, _step7$value, id, item;
 
-	        return regenerator.wrap(function _callee$(_context18) {
+	        return regenerator.wrap(function _callee$(_context16) {
 	          while (1) {
-	            switch (_context18.prev = _context18.next) {
+	            switch (_context16.prev = _context16.next) {
 	              case 0:
 	                _iterator7 = _createForOfIteratorHelper$1(pairs);
-	                _context18.prev = 1;
+	                _context16.prev = 1;
 
 	                _iterator7.s();
 
 	              case 3:
 	                if ((_step7 = _iterator7.n()).done) {
-	                  _context18.next = 10;
+	                  _context16.next = 10;
 	                  break;
 	                }
 
 	                _step7$value = slicedToArray(_step7.value, 2), id = _step7$value[0], item = _step7$value[1];
 
 	                if (!callback(item, id)) {
-	                  _context18.next = 8;
+	                  _context16.next = 8;
 	                  break;
 	                }
 
-	                _context18.next = 8;
+	                _context16.next = 8;
 	                return [id, item];
 
 	              case 8:
-	                _context18.next = 3;
+	                _context16.next = 3;
 	                break;
 
 	              case 10:
-	                _context18.next = 15;
+	                _context16.next = 15;
 	                break;
 
 	              case 12:
-	                _context18.prev = 12;
-	                _context18.t0 = _context18["catch"](1);
+	                _context16.prev = 12;
+	                _context16.t0 = _context16["catch"](1);
 
-	                _iterator7.e(_context18.t0);
+	                _iterator7.e(_context16.t0);
 
 	              case 15:
-	                _context18.prev = 15;
+	                _context16.prev = 15;
 
 	                _iterator7.f();
 
-	                return _context18.finish(15);
+	                return _context16.finish(15);
 
 	              case 18:
 	              case "end":
-	                return _context18.stop();
+	                return _context16.stop();
 	            }
 	          }
 	        }, _callee, null, [[1, 12, 15, 18]]);
@@ -21339,49 +21309,49 @@
 	      return new DataStream(defineProperty$6({}, iterator$4, /*#__PURE__*/regenerator.mark(function _callee2() {
 	        var _iterator9, _step9, _step9$value, id, item;
 
-	        return regenerator.wrap(function _callee2$(_context19) {
+	        return regenerator.wrap(function _callee2$(_context17) {
 	          while (1) {
-	            switch (_context19.prev = _context19.next) {
+	            switch (_context17.prev = _context17.next) {
 	              case 0:
 	                _iterator9 = _createForOfIteratorHelper$1(pairs);
-	                _context19.prev = 1;
+	                _context17.prev = 1;
 
 	                _iterator9.s();
 
 	              case 3:
 	                if ((_step9 = _iterator9.n()).done) {
-	                  _context19.next = 9;
+	                  _context17.next = 9;
 	                  break;
 	                }
 
 	                _step9$value = slicedToArray(_step9.value, 2), id = _step9$value[0], item = _step9$value[1];
-	                _context19.next = 7;
+	                _context17.next = 7;
 	                return [id, callback(item, id)];
 
 	              case 7:
-	                _context19.next = 3;
+	                _context17.next = 3;
 	                break;
 
 	              case 9:
-	                _context19.next = 14;
+	                _context17.next = 14;
 	                break;
 
 	              case 11:
-	                _context19.prev = 11;
-	                _context19.t0 = _context19["catch"](1);
+	                _context17.prev = 11;
+	                _context17.t0 = _context17["catch"](1);
 
-	                _iterator9.e(_context19.t0);
+	                _iterator9.e(_context17.t0);
 
 	              case 14:
-	                _context19.prev = 14;
+	                _context17.prev = 14;
 
 	                _iterator9.f();
 
-	                return _context19.finish(14);
+	                return _context17.finish(14);
 
 	              case 17:
 	              case "end":
-	                return _context19.stop();
+	                return _context17.stop();
 	            }
 	          }
 	        }, _callee2, null, [[1, 11, 14, 17]]);
@@ -21508,9 +21478,9 @@
 	      var _this2 = this;
 
 	      return new DataStream(defineProperty$6({}, iterator$4, function () {
-	        var _context20;
+	        var _context18;
 
-	        return getIterator$1(sort$2(_context20 = toConsumableArray(_this2._pairs)).call(_context20, function (_ref, _ref2) {
+	        return getIterator$1(sort$2(_context18 = toConsumableArray(_this2._pairs)).call(_context18, function (_ref, _ref2) {
 	          var _ref3 = slicedToArray(_ref, 2),
 	              idA = _ref3[0],
 	              itemA = _ref3[1];
@@ -21628,8 +21598,8 @@
 
 	      var fields = keys$3(_this3._options.type);
 
-	      for (var _i3 = 0, len = fields.length; _i3 < len; _i3++) {
-	        var field = fields[_i3];
+	      for (var i = 0, len = fields.length; i < len; i++) {
+	        var field = fields[i];
 	        var _value3 = _this3._options.type[field];
 
 	        if (_value3 == "Date" || _value3 == "ISODate" || _value3 == "ASPDate") {
@@ -21730,8 +21700,8 @@
 	          throw new Error("A duplicate id was found in the parameter array.");
 	        }
 
-	        for (var _i4 = 0, len = data.length; _i4 < len; _i4++) {
-	          id = this._addItem(data[_i4]);
+	        for (var i = 0, len = data.length; i < len; i++) {
+	          id = this._addItem(data[i]);
 	          addedIds.push(id);
 	        }
 	      } else if (data && _typeof_1(data) === "object") {
@@ -21823,11 +21793,11 @@
 
 	      if (isArray$5(data)) {
 	        // Array
-	        for (var _i5 = 0, len = data.length; _i5 < len; _i5++) {
-	          if (data[_i5] && _typeof_1(data[_i5]) === "object") {
-	            addOrUpdate(data[_i5]);
+	        for (var i = 0, len = data.length; i < len; i++) {
+	          if (data[i] && _typeof_1(data[i]) === "object") {
+	            addOrUpdate(data[i]);
 	          } else {
-	            console.warn("Ignoring input item, which is not an object at index " + _i5);
+	            console.warn("Ignoring input item, which is not an object at index " + i);
 	          }
 	        }
 	      } else if (data && _typeof_1(data) === "object") {
@@ -21902,14 +21872,14 @@
 	  }, {
 	    key: "updateOnly",
 	    value: function updateOnly(data, senderId) {
-	      var _context22,
+	      var _context20,
 	          _this6 = this;
 
 	      if (!isArray$5(data)) {
 	        data = [data];
 	      }
 
-	      var updateEventData = map$2(_context22 = map$2(data).call(data, function (update) {
+	      var updateEventData = map$2(_context20 = map$2(data).call(data, function (update) {
 	        var oldData = _this6._data.get(update[_this6._idProp]);
 
 	        if (oldData == null) {
@@ -21920,7 +21890,7 @@
 	          oldData: oldData,
 	          update: update
 	        };
-	      })).call(_context22, function (_ref5) {
+	      })).call(_context20, function (_ref5) {
 	        var oldData = _ref5.oldData,
 	            update = _ref5.update;
 	        var id = oldData[_this6._idProp];
@@ -22017,21 +21987,21 @@
 	        }
 	      } else if (ids != null) {
 	        // return a subset of items
-	        for (var _i6 = 0, len = ids.length; _i6 < len; _i6++) {
-	          item = this._getItem(ids[_i6], type);
+	        for (var i = 0, len = ids.length; i < len; i++) {
+	          item = this._getItem(ids[i], type);
 
 	          if (item != null && (!filter || filter(item))) {
 	            items.push(item);
 	          }
 	        }
 	      } else {
-	        var _context23;
+	        var _context21;
 
 	        // return all items
-	        itemIds = toConsumableArray(keys$6(_context23 = this._data).call(_context23));
+	        itemIds = toConsumableArray(keys$6(_context21 = this._data).call(_context21));
 
-	        for (var _i7 = 0, _len2 = itemIds.length; _i7 < _len2; _i7++) {
-	          itemId = itemIds[_i7];
+	        for (var _i = 0, _len2 = itemIds.length; _i < _len2; _i++) {
+	          itemId = itemIds[_i];
 	          item = this._getItem(itemId, type);
 
 	          if (item != null && (!filter || filter(item))) {
@@ -22052,8 +22022,8 @@
 	        if (id != undefined && item != null) {
 	          item = this._filterFields(item, fields);
 	        } else {
-	          for (var _i8 = 0, _len3 = items.length; _i8 < _len3; _i8++) {
-	            items[_i8] = this._filterFields(items[_i8], fields);
+	          for (var _i2 = 0, _len3 = items.length; _i2 < _len3; _i2++) {
+	            items[_i2] = this._filterFields(items[_i2], fields);
 	          }
 	        }
 	      } // return the results
@@ -22062,8 +22032,8 @@
 	      if (returnType == "Object") {
 	        var result = {};
 
-	        for (var _i9 = 0, _len4 = items.length; _i9 < _len4; _i9++) {
-	          var resultant = items[_i9]; // @TODO: Shoudn't this be this._fieldId?
+	        for (var _i3 = 0, _len4 = items.length; _i3 < _len4; _i3++) {
+	          var resultant = items[_i3]; // @TODO: Shoudn't this be this._fieldId?
 	          // result[resultant.id] = resultant
 
 	          var _id2 = resultant[this._idProp];
@@ -22105,8 +22075,8 @@
 	          // create ordered list
 	          items = [];
 
-	          for (var _i10 = 0, len = itemIds.length; _i10 < len; _i10++) {
-	            var id = itemIds[_i10];
+	          for (var i = 0, len = itemIds.length; i < len; i++) {
+	            var id = itemIds[i];
 	            item = this._getItem(id, type);
 
 	            if (filter(item)) {
@@ -22116,13 +22086,13 @@
 
 	          this._sort(items, order);
 
-	          for (var _i11 = 0, _len5 = items.length; _i11 < _len5; _i11++) {
-	            ids.push(items[_i11][this._idProp]);
+	          for (var _i4 = 0, _len5 = items.length; _i4 < _len5; _i4++) {
+	            ids.push(items[_i4][this._idProp]);
 	          }
 	        } else {
 	          // create unordered list
-	          for (var _i12 = 0, _len6 = itemIds.length; _i12 < _len6; _i12++) {
-	            var _id3 = itemIds[_i12];
+	          for (var _i5 = 0, _len6 = itemIds.length; _i5 < _len6; _i5++) {
+	            var _id3 = itemIds[_i5];
 	            item = this._getItem(_id3, type);
 
 	            if (filter(item)) {
@@ -22136,20 +22106,20 @@
 	          // create an ordered list
 	          items = [];
 
-	          for (var _i13 = 0, _len7 = itemIds.length; _i13 < _len7; _i13++) {
-	            var _id4 = itemIds[_i13];
+	          for (var _i6 = 0, _len7 = itemIds.length; _i6 < _len7; _i6++) {
+	            var _id4 = itemIds[_i6];
 	            items.push(data.get(_id4));
 	          }
 
 	          this._sort(items, order);
 
-	          for (var _i14 = 0, _len8 = items.length; _i14 < _len8; _i14++) {
-	            ids.push(items[_i14][this._idProp]);
+	          for (var _i7 = 0, _len8 = items.length; _i7 < _len8; _i7++) {
+	            ids.push(items[_i7][this._idProp]);
 	          }
 	        } else {
 	          // create unordered list
-	          for (var _i15 = 0, _len9 = itemIds.length; _i15 < _len9; _i15++) {
-	            var _id5 = itemIds[_i15];
+	          for (var _i8 = 0, _len9 = itemIds.length; _i8 < _len9; _i8++) {
+	            var _id5 = itemIds[_i8];
 	            item = data.get(_id5);
 	            ids.push(item[this._idProp]);
 	          }
@@ -22181,15 +22151,15 @@
 	        // execute forEach on ordered list
 	        var items = this.get(options);
 
-	        for (var _i16 = 0, len = items.length; _i16 < len; _i16++) {
-	          var item = items[_i16];
+	        for (var i = 0, len = items.length; i < len; i++) {
+	          var item = items[i];
 	          var id = item[this._idProp];
 	          callback(item, id);
 	        }
 	      } else {
 	        // unordered
-	        for (var _i17 = 0, _len10 = itemIds.length; _i17 < _len10; _i17++) {
-	          var _id6 = itemIds[_i17];
+	        for (var _i9 = 0, _len10 = itemIds.length; _i9 < _len10; _i9++) {
+	          var _id6 = itemIds[_i9];
 
 	          var _item = this._getItem(_id6, type);
 
@@ -22213,8 +22183,8 @@
 	      var itemIds = toConsumableArray(keys$6(data).call(data)); // convert and filter items
 
 
-	      for (var _i18 = 0, len = itemIds.length; _i18 < len; _i18++) {
-	        var id = itemIds[_i18];
+	      for (var i = 0, len = itemIds.length; i < len; i++) {
+	        var id = itemIds[i];
 
 	        var item = this._getItem(id, type);
 
@@ -22244,16 +22214,16 @@
 	  }, {
 	    key: "_filterFields",
 	    value: function _filterFields(item, fields) {
-	      var _context24;
+	      var _context22;
 
 	      if (!item) {
 	        // item is null
 	        return item;
 	      }
 
-	      return reduce$2(_context24 = isArray$5(fields) ? // Use the supplied array
+	      return reduce$2(_context22 = isArray$5(fields) ? // Use the supplied array
 	      fields : // Use the keys of the supplied object
-	      keys$3(fields)).call(_context24, function (filteredItem, field) {
+	      keys$3(fields)).call(_context22, function (filteredItem, field) {
 	        filteredItem[field] = item[field];
 	        return filteredItem;
 	      }, {});
@@ -22325,8 +22295,8 @@
 
 	      var ids = isArray$5(id) ? id : [id];
 
-	      for (var _i19 = 0, len = ids.length; _i19 < len; _i19++) {
-	        var item = this._remove(ids[_i19]);
+	      for (var i = 0, len = ids.length; i < len; i++) {
+	        var item = this._remove(ids[i]);
 
 	        if (item) {
 	          var itemId = item[this._idProp];
@@ -22393,14 +22363,14 @@
 	  }, {
 	    key: "clear",
 	    value: function clear(senderId) {
-	      var _context25;
+	      var _context23;
 
-	      var ids = toConsumableArray(keys$6(_context25 = this._data).call(_context25));
+	      var ids = toConsumableArray(keys$6(_context23 = this._data).call(_context23));
 
 	      var items = [];
 
-	      for (var _i20 = 0, len = ids.length; _i20 < len; _i20++) {
-	        items.push(this._data.get(ids[_i20]));
+	      for (var i = 0, len = ids.length; i < len; i++) {
+	        items.push(this._data.get(ids[i]));
 	      }
 
 	      this._data.clear();
@@ -22425,12 +22395,12 @@
 	  }, {
 	    key: "max",
 	    value: function max(field) {
-	      var _context26;
+	      var _context24;
 
 	      var max = null;
 	      var maxField = null;
 
-	      var _iterator11 = _createForOfIteratorHelper$1(values$5(_context26 = this._data).call(_context26)),
+	      var _iterator11 = _createForOfIteratorHelper$1(values$5(_context24 = this._data).call(_context24)),
 	          _step11;
 
 	      try {
@@ -22462,12 +22432,12 @@
 	  }, {
 	    key: "min",
 	    value: function min(field) {
-	      var _context27;
+	      var _context25;
 
 	      var min = null;
 	      var minField = null;
 
-	      var _iterator12 = _createForOfIteratorHelper$1(values$5(_context27 = this._data).call(_context27)),
+	      var _iterator12 = _createForOfIteratorHelper$1(values$5(_context25 = this._data).call(_context25)),
 	          _step12;
 
 	      try {
@@ -22507,8 +22477,8 @@
 	      var fieldType = this._options.type && this._options.type[prop] || null;
 	      var count = 0;
 
-	      for (var _i21 = 0, len = itemIds.length; _i21 < len; _i21++) {
-	        var id = itemIds[_i21];
+	      for (var i = 0, len = itemIds.length; i < len; i++) {
+	        var id = itemIds[i];
 	        var item = data.get(id);
 	        var _value4 = item[prop];
 	        var exists = false;
@@ -22527,8 +22497,8 @@
 	      }
 
 	      if (fieldType) {
-	        for (var _i22 = 0, _len11 = values.length; _i22 < _len11; _i22++) {
-	          values[_i22] = convert(values[_i22], fieldType);
+	        for (var _i10 = 0, _len11 = values.length; _i10 < _len11; _i10++) {
+	          values[_i10] = convert(values[_i10], fieldType);
 	        }
 	      }
 
@@ -22555,7 +22525,7 @@
 	        }
 	      } else {
 	        // generate an id
-	        id = v4_1();
+	        id = v4();
 	        item[this._idProp] = id;
 	      }
 
@@ -22563,8 +22533,8 @@
 
 	      var fields = keys$3(item);
 
-	      for (var _i23 = 0, len = fields.length; _i23 < len; _i23++) {
-	        var field = fields[_i23];
+	      for (var i = 0, len = fields.length; i < len; i++) {
+	        var field = fields[i];
 	        var fieldType = this._type[field]; // type may be undefined
 
 	        d[field] = convert(item[field], fieldType);
@@ -22604,8 +22574,8 @@
 	        warnTypeCorectionDeprecation();
 	        converted = {};
 
-	        for (var _i24 = 0, len = fields.length; _i24 < len; _i24++) {
-	          var field = fields[_i24];
+	        for (var i = 0, len = fields.length; i < len; i++) {
+	          var field = fields[i];
 	          var _value5 = raw[field];
 	          converted[field] = convert(_value5, types[field]);
 	        }
@@ -22648,8 +22618,8 @@
 
 	      var fields = keys$3(item);
 
-	      for (var _i25 = 0, len = fields.length; _i25 < len; _i25++) {
-	        var field = fields[_i25];
+	      for (var i = 0, len = fields.length; i < len; i++) {
+	        var field = fields[i];
 	        var fieldType = this._type[field]; // type may be undefined
 
 	        d[field] = convert(item[field], fieldType);
@@ -22667,18 +22637,18 @@
 	        return new DataStream(defineProperty$6({}, iterator$4, /*#__PURE__*/regenerator.mark(function _callee3() {
 	          var _iterator13, _step13, id, item;
 
-	          return regenerator.wrap(function _callee3$(_context28) {
+	          return regenerator.wrap(function _callee3$(_context26) {
 	            while (1) {
-	              switch (_context28.prev = _context28.next) {
+	              switch (_context26.prev = _context26.next) {
 	                case 0:
 	                  _iterator13 = _createForOfIteratorHelper$1(ids);
-	                  _context28.prev = 1;
+	                  _context26.prev = 1;
 
 	                  _iterator13.s();
 
 	                case 3:
 	                  if ((_step13 = _iterator13.n()).done) {
-	                    _context28.next = 11;
+	                    _context26.next = 11;
 	                    break;
 	                  }
 
@@ -22686,45 +22656,45 @@
 	                  item = data.get(id);
 
 	                  if (!(item != null)) {
-	                    _context28.next = 9;
+	                    _context26.next = 9;
 	                    break;
 	                  }
 
-	                  _context28.next = 9;
+	                  _context26.next = 9;
 	                  return [id, item];
 
 	                case 9:
-	                  _context28.next = 3;
+	                  _context26.next = 3;
 	                  break;
 
 	                case 11:
-	                  _context28.next = 16;
+	                  _context26.next = 16;
 	                  break;
 
 	                case 13:
-	                  _context28.prev = 13;
-	                  _context28.t0 = _context28["catch"](1);
+	                  _context26.prev = 13;
+	                  _context26.t0 = _context26["catch"](1);
 
-	                  _iterator13.e(_context28.t0);
+	                  _iterator13.e(_context26.t0);
 
 	                case 16:
-	                  _context28.prev = 16;
+	                  _context26.prev = 16;
 
 	                  _iterator13.f();
 
-	                  return _context28.finish(16);
+	                  return _context26.finish(16);
 
 	                case 19:
 	                case "end":
-	                  return _context28.stop();
+	                  return _context26.stop();
 	              }
 	            }
 	          }, _callee3, null, [[1, 13, 16, 19]]);
 	        })));
 	      } else {
-	        var _context29;
+	        var _context27;
 
-	        return new DataStream(defineProperty$6({}, iterator$4, bind$2(_context29 = entries$2(this._data)).call(_context29, this._data)));
+	        return new DataStream(defineProperty$6({}, iterator$4, bind$2(_context27 = entries$2(this._data)).call(_context27, this._data)));
 	      }
 	    }
 	  }]);
@@ -22790,7 +22760,7 @@
 	   * @param options - Options to configure this data view.
 	   */
 	  function DataView(data, options) {
-	    var _context32;
+	    var _context30;
 
 	    var _this7;
 
@@ -22803,7 +22773,7 @@
 	    _this7._ids = new set$3(); // ids of the items currently in memory (just contains a boolean true)
 
 	    _this7._options = options || {};
-	    _this7._listener = bind$2(_context32 = _this7._onEvent).call(_context32, assertThisInitialized(_this7));
+	    _this7._listener = bind$2(_context30 = _this7._onEvent).call(_context30, assertThisInitialized(_this7));
 
 	    _this7.setData(data);
 
@@ -22857,8 +22827,8 @@
 	          filter: filter$2(this._options)
 	        });
 
-	        for (var _i26 = 0, len = _ids.length; _i26 < len; _i26++) {
-	          var id = _ids[_i26];
+	        for (var i = 0, len = _ids.length; i < len; i++) {
+	          var id = _ids[i];
 
 	          this._ids.add(id);
 	        }
@@ -22896,8 +22866,8 @@
 	      var removedIds = [];
 	      var removedItems = []; // check for additions
 
-	      for (var _i27 = 0, len = ids.length; _i27 < len; _i27++) {
-	        var id = ids[_i27];
+	      for (var i = 0, len = ids.length; i < len; i++) {
+	        var id = ids[i];
 	        newIds[id] = true;
 
 	        if (!this._ids.has(id)) {
@@ -22908,8 +22878,8 @@
 	      } // check for removals
 
 
-	      for (var _i28 = 0, _len12 = oldIds.length; _i28 < _len12; _i28++) {
-	        var _id7 = oldIds[_i28];
+	      for (var _i11 = 0, _len12 = oldIds.length; _i11 < _len12; _i11++) {
+	        var _id7 = oldIds[_i11];
 
 	        var item = this._data.get(_id7);
 
@@ -23019,7 +22989,7 @@
 	    key: "forEach",
 	    value: function forEach(callback, options) {
 	      if (this._data) {
-	        var _context33;
+	        var _context31;
 
 	        var defaultFilter = filter$2(this._options);
 
@@ -23039,7 +23009,7 @@
 	          filter = defaultFilter;
 	        }
 
-	        forEach$2(_context33 = this._data).call(_context33, callback, {
+	        forEach$2(_context31 = this._data).call(_context31, callback, {
 	          filter: filter,
 	          order: options && options.order
 	        });
@@ -23051,7 +23021,7 @@
 	    key: "map",
 	    value: function map(callback, options) {
 	      if (this._data) {
-	        var _context34;
+	        var _context32;
 
 	        var defaultFilter = filter$2(this._options);
 
@@ -23071,7 +23041,7 @@
 	          filter = defaultFilter;
 	        }
 
-	        return map$2(_context34 = this._data).call(_context34, callback, {
+	        return map$2(_context32 = this._data).call(_context32, callback, {
 	          filter: filter,
 	          order: options && options.order
 	        });
@@ -23091,9 +23061,9 @@
 	  }, {
 	    key: "stream",
 	    value: function stream(ids) {
-	      var _context35;
+	      var _context33;
 
-	      return this._data.stream(ids || defineProperty$6({}, iterator$4, bind$2(_context35 = keys$6(this._ids)).call(_context35, this._ids)));
+	      return this._data.stream(ids || defineProperty$6({}, iterator$4, bind$2(_context33 = keys$6(this._ids)).call(_context33, this._ids)));
 	    }
 	    /**
 	     * Render the instance unusable prior to garbage collection.
@@ -23151,8 +23121,8 @@
 	      switch (event) {
 	        case "add":
 	          // filter the ids of the added items
-	          for (var _i29 = 0, len = ids.length; _i29 < len; _i29++) {
-	            var id = ids[_i29];
+	          for (var i = 0, len = ids.length; i < len; i++) {
+	            var id = ids[i];
 	            var item = this.get(id);
 
 	            if (item) {
@@ -23167,16 +23137,16 @@
 	        case "update":
 	          // determine the event from the views viewpoint: an updated
 	          // item can be added, updated, or removed from this view.
-	          for (var _i30 = 0, _len13 = ids.length; _i30 < _len13; _i30++) {
-	            var _id8 = ids[_i30];
+	          for (var _i12 = 0, _len13 = ids.length; _i12 < _len13; _i12++) {
+	            var _id8 = ids[_i12];
 
 	            var _item2 = this.get(_id8);
 
 	            if (_item2) {
 	              if (this._ids.has(_id8)) {
 	                updatedIds.push(_id8);
-	                updatedItems.push(params.data[_i30]);
-	                oldItems.push(params.oldData[_i30]);
+	                updatedItems.push(params.data[_i12]);
+	                oldItems.push(params.oldData[_i12]);
 	              } else {
 	                this._ids.add(_id8);
 
@@ -23187,7 +23157,7 @@
 	                this._ids.delete(_id8);
 
 	                removedIds.push(_id8);
-	                removedItems.push(params.oldData[_i30]);
+	                removedItems.push(params.oldData[_i12]);
 	              }
 	            }
 	          }
@@ -23196,14 +23166,14 @@
 
 	        case "remove":
 	          // filter the ids of the removed items
-	          for (var _i31 = 0, _len14 = ids.length; _i31 < _len14; _i31++) {
-	            var _id9 = ids[_i31];
+	          for (var _i13 = 0, _len14 = ids.length; _i13 < _len14; _i13++) {
+	            var _id9 = ids[_i13];
 
 	            if (this._ids.has(_id9)) {
 	              this._ids.delete(_id9);
 
 	              removedIds.push(_id9);
-	              removedItems.push(params.oldData[_i31]);
+	              removedItems.push(params.oldData[_i13]);
 	            }
 	          }
 
@@ -34976,62 +34946,6 @@
 
 	var reverse$2 = reverse$1;
 
-	// Unique ID creation requires a high quality random # generator. In the browser we therefore
-	// require the crypto API and do not support built-in fallback to lower quality random number
-	// generators (like Math.random()).
-	// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
-	// find the complete implementation of crypto (msCrypto) on IE11.
-	var getRandomValues = typeof crypto != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto != 'undefined' && typeof msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto);
-	var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
-	function rng() {
-	  if (!getRandomValues) {
-	    throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
-	  }
-
-	  return getRandomValues(rnds8);
-	}
-
-	/**
-	 * Convert array of 16 byte values to UUID string format of the form:
-	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-	 */
-	var byteToHex$1 = [];
-
-	for (var i$1 = 0; i$1 < 256; ++i$1) {
-	  byteToHex$1[i$1] = (i$1 + 0x100).toString(16).substr(1);
-	}
-
-	function bytesToUuid$1(buf, offset) {
-	  var i = offset || 0;
-	  var bth = byteToHex$1; // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-
-	  return [bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]]].join('');
-	}
-
-	function v4$1(options, buf, offset) {
-	  var i = buf && offset || 0;
-
-	  if (typeof options == 'string') {
-	    buf = options === 'binary' ? new Array(16) : null;
-	    options = null;
-	  }
-
-	  options = options || {};
-	  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-
-	  rnds[6] = rnds[6] & 0x0f | 0x40;
-	  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
-
-	  if (buf) {
-	    for (var ii = 0; ii < 16; ++ii) {
-	      buf[i + ii] = rnds[ii];
-	    }
-	  }
-
-	  return buf || bytesToUuid$1(rnds);
-	}
-
 	/**
 	 * Utility Class
 	 */
@@ -35851,7 +35765,7 @@
 
 
 	      if (clusterNodeProperties.id === undefined) {
-	        clusterNodeProperties.id = 'cluster:' + v4$1();
+	        clusterNodeProperties.id = 'cluster:' + v4();
 	      }
 
 	      var clusterId = clusterNodeProperties.id;
@@ -36426,7 +36340,7 @@
 
 	      clonedOptions.from = fromId;
 	      clonedOptions.to = toId;
-	      clonedOptions.id = 'clusterEdge:' + v4$1(); // apply the edge specific options to it if specified
+	      clonedOptions.id = 'clusterEdge:' + v4(); // apply the edge specific options to it if specified
 
 	      if (extraOptions !== undefined) {
 	        deepExtend(clonedOptions, extraOptions);
@@ -44719,7 +44633,7 @@
 	    key: "_getNewTargetNode",
 	    value: function _getNewTargetNode(x, y) {
 	      var controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
-	      controlNodeStyle.id = 'targetNode' + v4$1();
+	      controlNodeStyle.id = 'targetNode' + v4();
 	      controlNodeStyle.hidden = false;
 	      controlNodeStyle.physics = false;
 	      controlNodeStyle.x = x;
@@ -45280,7 +45194,7 @@
 	            this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
 	            var connectionEdge = this.body.functions.createEdge({
-	              id: 'connectionEdge' + v4$1(),
+	              id: 'connectionEdge' + v4(),
 	              from: node.id,
 	              to: targetNode.id,
 	              physics: false,
@@ -45439,7 +45353,7 @@
 	      var _this4 = this;
 
 	      var defaultData = {
-	        id: v4$1(),
+	        id: v4(),
 	        x: clickData.pointer.canvas.x,
 	        y: clickData.pointer.canvas.y,
 	        label: 'new'
