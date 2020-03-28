@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-28T17:43:46.085Z
+ * @date    2020-03-28T18:39:17.649Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -33503,12 +33503,6 @@
 	  return RepulsionSolver;
 	}();
 
-	function _readOnlyError(name) {
-	  throw new Error("\"" + name + "\" is read-only");
-	}
-
-	var readOnlyError = _readOnlyError;
-
 	/**
 	 * Hierarchical Repulsion Solver
 	 */
@@ -33575,9 +33569,7 @@
 	            } // normalize force with
 
 
-	            if (distance === 0) {
-	              distance = (readOnlyError("distance"), 0.01);
-	            } else {
+	            if (distance !== 0) {
 	              repulsingForce = repulsingForce / distance;
 	            }
 
