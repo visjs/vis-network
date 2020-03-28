@@ -154,7 +154,7 @@
     "timsort": "0.3.0",
     "typescript": "3.8.3",
     "uuid": "7.0.2",
-    "vis-data": "6.5.0",
+    "vis-data": "6.5.1",
     "vis-dev-utils": "2.2.3",
     "vis-util": "4.0.0"
   },
