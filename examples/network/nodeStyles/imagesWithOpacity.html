@@ -33,7 +33,7 @@
       nodes.push({id: 1, label: 'Main', image: DIR + 'Network-Pipe-icon.png', shape: 'image', opacity: .7});
       nodes.push({id: 2, label: 'Office', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
       nodes.push({id: 3, label: 'Wireless', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
-      nodes.push({id: 22, label: 'Normal'});
+      nodes.push({id: 22, label: 'Normal', opacity: 1})
       edges.push({from: 1, to: 2, length: EDGE_LENGTH_MAIN});
       edges.push({from: 1, to: 3, length: EDGE_LENGTH_MAIN});
       edges.push({from: 1, to: 22, length: EDGE_LENGTH_MAIN});
@@ -67,9 +67,9 @@
         edges: edges
       };
       var options = {
-        nodes: {
-          opacity: .5
-        },
+        // nodes: {
+        //   opacity: .5
+        // },
         groups: {
           computer: {
             opacity: .3
