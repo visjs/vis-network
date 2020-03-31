@@ -110,6 +110,7 @@ var options = {
         background: '#D2E5FF'
       }
     },
+    opacity: 1,
     fixed: {
       x:false,
       y:false
@@ -416,6 +417,12 @@ network.setOptions(options);
             <td>The color of the background of the node when the mouse hovers over it <i>(assuming hover is enabled in
                 the interaction module)</i>.
             </td>
+        </tr>
+        <tr>
+            <td>opacity</td>
+            <td>Number</td>
+            <td><code>undefined</code></td>
+            <td>Overall opacity of a node <i>(overrides any opacity on border, background, image, and shadow)</i></td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','fixed', this);">
             <td><span parent="fixed" class="right-caret"></span> fixed</td>
