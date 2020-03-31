@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-31T13:33:09.425Z
+ * @date    2020-03-31T14:44:40.084Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -13095,6 +13095,30 @@
 
 	var isNan$2 = isNan$1;
 
+	var nativeGetOwnPropertyNames$2 = objectGetOwnPropertyNamesExternal.f;
+	var FAILS_ON_PRIMITIVES$3 = fails(function () {
+	  return !Object.getOwnPropertyNames(1);
+	}); // `Object.getOwnPropertyNames` method
+	// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+
+	_export({
+	  target: 'Object',
+	  stat: true,
+	  forced: FAILS_ON_PRIMITIVES$3
+	}, {
+	  getOwnPropertyNames: nativeGetOwnPropertyNames$2
+	});
+
+	var Object$2 = path.Object;
+
+	var getOwnPropertyNames = function getOwnPropertyNames(it) {
+	  return Object$2.getOwnPropertyNames(it);
+	};
+
+	var getOwnPropertyNames$1 = getOwnPropertyNames;
+
+	var getOwnPropertyNames$2 = getOwnPropertyNames$1;
+
 	var trim$2 = stringTrim.trim;
 	var $parseFloat = global_1.parseFloat;
 	var FORCED$3 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
@@ -17782,7 +17806,7 @@
 
 	function ownKeys$1(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context4; forEach$2(_context4 = ownKeys$1(Object(source), true)).call(_context4, function (key) { defineProperty$6(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context5; forEach$2(_context5 = ownKeys$1(Object(source))).call(_context5, function (key) { defineProperty$3(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; forEach$2(_context5 = ownKeys$1(Object(source), true)).call(_context5, function (key) { defineProperty$6(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context6; forEach$2(_context6 = ownKeys$1(Object(source))).call(_context6, function (key) { defineProperty$3(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
 	/**
 	 * A node. A node can be connected to other nodes via one or multiple edges.
 	 */
@@ -18412,6 +18436,8 @@
 	  }, {
 	    key: "updateGroupOptions",
 	    value: function updateGroupOptions(parentOptions, newOptions, groupList) {
+	      var _context4;
+
 	      if (groupList === undefined) return; // No groups, nothing to do
 
 	      var group = parentOptions.group; // paranoia: the selected group is already merged into node options, check.
@@ -18430,14 +18456,15 @@
 	          console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + groupObj.opacity);
 	          groupObj.opacity = undefined;
 	        }
-	      } // Skip merging of group font options into parent; these are required to be distinct for labels
-	      // Also skip mergin of color IF it is already defined in the node itself. This is to avoid the color of the
-	      // group overriding the color set at the node level
-	      // TODO: It might not be a good idea either to merge the rest of the options, investigate this.
+	      } // Skip any new option to avoid them being overridden by the group options.
 
 
-	      var skipProperties = ['font'];
-	      if (newOptions !== undefined && newOptions.color !== undefined && newOptions.color != null) skipProperties.push('color');
+	      var skipProperties = filter$2(_context4 = getOwnPropertyNames$2(newOptions)).call(_context4, function (p) {
+	        return newOptions[p] != null;
+	      }); // Always skip merging group font options into parent; these are required to be distinct for labels
+
+
+	      skipProperties.push('font');
 	      selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
 	      // Since groups can partially overwrite the colors, we parse it again, just in case.
 
