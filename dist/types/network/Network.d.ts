@@ -826,6 +826,8 @@ export interface NodeOptions {
 
   color?: string | Color;
 
+  opacity?: number;
+
   fixed?: boolean | {
     x?: boolean,
     y?: boolean,

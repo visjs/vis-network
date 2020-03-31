@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-03-30T13:42:14.326Z
+ * @date    2020-03-31T12:46:09.925Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -13770,6 +13770,46 @@ var some$1 = some_1;
 
 var some$2 = some$1;
 
+var globalIsFinite = global_1.isFinite; // `Number.isFinite` method
+// https://tc39.github.io/ecma262/#sec-number.isfinite
+
+var numberIsFinite = Number.isFinite || function isFinite(it) {
+  return typeof it == 'number' && globalIsFinite(it);
+};
+
+// https://tc39.github.io/ecma262/#sec-number.isfinite
+
+_export({
+  target: 'Number',
+  stat: true
+}, {
+  isFinite: numberIsFinite
+});
+
+var _isFinite = path.Number.isFinite;
+
+var _isFinite$1 = _isFinite;
+
+var _isFinite$2 = _isFinite$1;
+
+// https://tc39.github.io/ecma262/#sec-number.isnan
+
+_export({
+  target: 'Number',
+  stat: true
+}, {
+  isNaN: function isNaN(number) {
+    // eslint-disable-next-line no-self-compare
+    return number != number;
+  }
+});
+
+var isNan = path.Number.isNaN;
+
+var isNan$1 = isNan;
+
+var isNan$2 = isNan$1;
+
 function _assertThisInitialized$1(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -25479,13 +25519,16 @@ var NodeBase = /*#__PURE__*/function () {
   }, {
     key: "performFill",
     value: function performFill(ctx, values) {
-      // draw shadow if enabled
+      ctx.save();
+      ctx.fillStyle = values.color; // draw shadow if enabled
+
       this.enableShadow(ctx, values); // draw the background
 
       fill$2(ctx).call(ctx); // disable shadows for other elements.
 
 
       this.disableShadow(ctx, values);
+      ctx.restore();
       this.performStroke(ctx, values);
     }
     /**
@@ -25901,7 +25944,7 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
     value: function _drawImageAtPosition(ctx, values) {
       if (this.imageObj.width != 0) {
         // draw the image
-        ctx.globalAlpha = 1.0; // draw shadow if enabled
+        ctx.globalAlpha = values.opacity !== undefined ? values.opacity : 1; // draw shadow if enabled
 
         this.enableShadow(ctx, values);
         var factor = 1;
@@ -26841,6 +26884,7 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
   }, {
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
+      ctx.save();
       this.switchImages(selected);
       this.resize();
       this.left = x - this.width / 2;
@@ -26851,11 +26895,19 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
         var selectionLineWidth = this.options.borderWidthSelected || 2 * this.options.borderWidth;
         var borderWidth = (selected ? selectionLineWidth : neutralborderWidth) / this.body.view.scale;
         ctx.lineWidth = Math.min(this.width, borderWidth);
-        ctx.beginPath(); // setup the line properties.
+        ctx.beginPath();
+        var strokeStyle = selected ? this.options.color.highlight.border : hover ? this.options.color.hover.border : this.options.color.border;
+        var fillStyle = selected ? this.options.color.highlight.background : hover ? this.options.color.hover.background : this.options.color.background;
 
-        ctx.strokeStyle = selected ? this.options.color.highlight.border : hover ? this.options.color.hover.border : this.options.color.border; // set a fillstyle
+        if (values.opacity !== undefined) {
+          strokeStyle = overrideOpacity(strokeStyle, values.opacity);
+          fillStyle = overrideOpacity(fillStyle, values.opacity);
+        } // setup the line properties.
 
-        ctx.fillStyle = selected ? this.options.color.highlight.background : hover ? this.options.color.hover.background : this.options.color.background; // draw a rectangle to form the border around. This rectangle is filled so the opacity of a picture (in future vis releases?) can be used to tint the image
+
+        ctx.strokeStyle = strokeStyle; // set a fillstyle
+
+        ctx.fillStyle = fillStyle; // draw a rectangle to form the border around. This rectangle is filled so the opacity of a picture (in future vis releases?) can be used to tint the image
 
         ctx.rect(this.left - 0.5 * ctx.lineWidth, this.top - 0.5 * ctx.lineWidth, this.width + ctx.lineWidth, this.height + ctx.lineWidth);
 
@@ -26870,6 +26922,7 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
       this._drawImageLabel(ctx, x, y, selected, hover);
 
       this.updateBoundingBox(x, y);
+      ctx.restore();
     }
     /**
      *
@@ -27821,7 +27874,12 @@ var Node = /*#__PURE__*/function () {
 
       this._load_images();
 
-      this.updateLabelModule(options);
+      this.updateLabelModule(options); // Need to set local opacity after `this.updateLabelModule(options);` because `this.updateLabelModule(options);` overrites local opacity with group opacity
+
+      if (options.opacity !== undefined && Node.checkOpacity(options.opacity)) {
+        this.options.opacity = options.opacity;
+      }
+
       this.updateShape(currentShape);
       return options.hidden !== undefined || options.physics !== undefined;
     }
@@ -27868,16 +27926,10 @@ var Node = /*#__PURE__*/function () {
       }
     }
     /**
-     * Copy group option values into the node options.
-     *
-     * The group options override the global node options, so the copy of group options
-     *  must happen *after* the global node options have been set.
-     *
-     * This method must also be called also if the global node options have changed and the group options did not.
-     *
-     * @param {Object} parentOptions
-     * @param {Object} newOptions  new values for the options, currently only passed in for check
-     * @param {Object} groupList
+     * Check that opacity is only between 0 and 1
+     * 
+     * @param {Number} opacity 
+     * @returns {boolean}
      */
 
   }, {
@@ -27890,6 +27942,7 @@ var Node = /*#__PURE__*/function () {
     value: function getFormattingValues() {
       var values = {
         color: this.options.color.background,
+        opacity: this.options.opacity,
         borderWidth: this.options.borderWidth,
         borderColor: this.options.color.border,
         size: this.options.size,
@@ -27925,6 +27978,13 @@ var Node = /*#__PURE__*/function () {
         }
       } else {
         values.shadow = this.options.shadow.enabled;
+      }
+
+      if (this.options.opacity !== undefined) {
+        var opacity = this.options.opacity;
+        values.borderColor = overrideOpacity(values.borderColor, opacity);
+        values.color = overrideOpacity(values.color, opacity);
+        values.shadowColor = overrideOpacity(values.shadowColor, opacity);
       }
 
       return values;
@@ -28266,6 +28326,24 @@ var Node = /*#__PURE__*/function () {
     */
 
   }], [{
+    key: "checkOpacity",
+    value: function checkOpacity(opacity) {
+      return 0 <= opacity && opacity <= 1;
+    }
+    /**
+     * Copy group option values into the node options.
+     *
+     * The group options override the global node options, so the copy of group options
+     *  must happen *after* the global node options have been set.
+     *
+     * This method must also be called also if the global node options have changed and the group options did not.
+     *
+     * @param {Object} parentOptions
+     * @param {Object} newOptions  new values for the options, currently only passed in for check
+     * @param {Object} groupList
+     */
+
+  }, {
     key: "updateGroupOptions",
     value: function updateGroupOptions(parentOptions, newOptions, groupList) {
       if (groupList === undefined) return; // No groups, nothing to do
@@ -28279,10 +28357,18 @@ var Node = /*#__PURE__*/function () {
       var hasGroup = typeof group === 'number' || typeof group === 'string' && group != '';
       if (!hasGroup) return; // current node has no group, no need to merge
 
-      var groupObj = groupList.get(group); // Skip merging of group font options into parent; these are required to be distinct for labels
+      var groupObj = groupList.get(group);
+
+      if (groupObj.opacity !== undefined && newOptions.opacity === undefined) {
+        if (!Node.checkOpacity(groupObj.opacity)) {
+          console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + groupObj.opacity);
+          groupObj.opacity = undefined;
+        }
+      } // Skip merging of group font options into parent; these are required to be distinct for labels
       // Also skip mergin of color IF it is already defined in the node itself. This is to avoid the color of the
       // group overriding the color set at the node level
       // TODO: It might not be a good idea either to merge the rest of the options, investigate this.
+
 
       var skipProperties = ['font'];
       if (newOptions !== undefined && newOptions.color !== undefined && newOptions.color != null) skipProperties.push('color');
@@ -28311,7 +28397,22 @@ var Node = /*#__PURE__*/function () {
       var groupList = arguments.length > 4 ? arguments[4] : undefined;
       var fields = ['color', 'fixed', 'shadow'];
       selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
-      Node.checkMass(newOptions); // merge the shadow options into the parent.
+      Node.checkMass(newOptions);
+
+      if (parentOptions.opacity !== undefined) {
+        if (!Node.checkOpacity(parentOptions.opacity)) {
+          console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + parentOptions.opacity);
+          parentOptions.opacity = undefined;
+        }
+      }
+
+      if (newOptions.opacity !== undefined) {
+        if (!Node.checkOpacity(newOptions.opacity)) {
+          console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + newOptions.opacity);
+          newOptions.opacity = undefined;
+        }
+      } // merge the shadow options into the parent.
+
 
       mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
 
@@ -28422,6 +28523,8 @@ var NodesHandler = /*#__PURE__*/function () {
           background: '#D2E5FF'
         }
       },
+      opacity: undefined,
+      // number between 0 and 1
       fixed: {
         x: false,
         y: false
@@ -28575,7 +28678,17 @@ var NodesHandler = /*#__PURE__*/function () {
     key: "setOptions",
     value: function setOptions(options) {
       if (options !== undefined) {
-        Node.parseOptions(this.options, options); // update the shape in all nodes
+        Node.parseOptions(this.options, options); // Need to set opacity here because Node.parseOptions is also used for groups,
+        // if you set opacity in Node.parseOptions it overwrites group opacity.
+
+        if (options.opacity !== undefined) {
+          if (isNan$2(options.opacity) || !_isFinite$2(options.opacity) || options.opacity < 0 || options.opacity > 1) {
+            console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + options.opacity);
+          } else {
+            this.options.opacity = options.opacity;
+          }
+        } // update the shape in all nodes
+
 
         if (options.shape !== undefined) {
           for (var nodeId in this.body.nodes) {
@@ -32880,24 +32993,6 @@ var EdgesHandler = /*#__PURE__*/function () {
   return EdgesHandler;
 }();
 
-// https://tc39.github.io/ecma262/#sec-number.isnan
-
-_export({
-  target: 'Number',
-  stat: true
-}, {
-  isNaN: function isNaN(number) {
-    // eslint-disable-next-line no-self-compare
-    return number != number;
-  }
-});
-
-var isNan = path.Number.isNaN;
-
-var isNan$1 = isNan;
-
-var isNan$2 = isNan$1;
-
 /**
  * Barnes Hut Solver
  */
@@ -37070,6 +37165,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
       var nodeIndices = this.body.nodeIndices;
       var node;
       var selected = [];
+      var hovered = [];
       var margin = 20;
       var topLeft = this.canvas.DOMtoCanvas({
         x: -margin,
@@ -37086,11 +37182,13 @@ var CanvasRenderer = /*#__PURE__*/function () {
         right: bottomRight.x
       }; // draw unselected nodes;
 
-      for (var i = 0; i < nodeIndices.length; i++) {
-        node = nodes[nodeIndices[i]]; // set selected nodes aside
+      for (var _i = 0; _i < nodeIndices.length; _i++) {
+        node = nodes[nodeIndices[_i]]; // set selected and hovered nodes aside
 
-        if (node.isSelected()) {
-          selected.push(nodeIndices[i]);
+        if (node.hover) {
+          hovered.push(nodeIndices[_i]);
+        } else if (node.isSelected()) {
+          selected.push(nodeIndices[_i]);
         } else {
           if (alwaysShow === true) {
             node.draw(ctx);
@@ -37100,11 +37198,20 @@ var CanvasRenderer = /*#__PURE__*/function () {
             node.updateBoundingBox(ctx, node.selected);
           }
         }
-      } // draw the selected nodes on top
+      }
+
+      var i;
+      var selectedLength = selected.length;
+      var hoveredLength = hovered.length; // draw the selected nodes on top
+
+      for (i = 0; i < selectedLength; i++) {
+        node = nodes[selected[i]];
+        node.draw(ctx);
+      } // draw hovered nodes above everything else: fixes https://github.com/visjs/vis-network/issues/226
 
 
-      for (var _i = 0; _i < selected.length; _i++) {
-        node = nodes[selected[_i]];
+      for (i = 0; i < hoveredLength; i++) {
+        node = nodes[hovered[i]];
         node.draw(ctx);
       }
     }
@@ -37783,28 +37890,6 @@ var Canvas = /*#__PURE__*/function () {
 
   return Canvas;
 }();
-
-var globalIsFinite = global_1.isFinite; // `Number.isFinite` method
-// https://tc39.github.io/ecma262/#sec-number.isfinite
-
-var numberIsFinite = Number.isFinite || function isFinite(it) {
-  return typeof it == 'number' && globalIsFinite(it);
-};
-
-// https://tc39.github.io/ecma262/#sec-number.isfinite
-
-_export({
-  target: 'Number',
-  stat: true
-}, {
-  isFinite: numberIsFinite
-});
-
-var _isFinite = path.Number.isFinite;
-
-var _isFinite$1 = _isFinite;
-
-var _isFinite$2 = _isFinite$1;
 
 /**
  * The view
@@ -47825,6 +47910,10 @@ var allOptions$1 = {
         string: string
       }
     },
+    opacity: {
+      number: number,
+      'undefined': 'undefined'
+    },
     fixed: {
       x: {
         boolean: bool
@@ -48417,6 +48506,7 @@ var configureOptions = {
         background: ['color', '#D2E5FF']
       }
     },
+    opacity: [0, 0, 1, 0.1],
     fixed: {
       x: false,
       y: false
