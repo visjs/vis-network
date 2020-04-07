@@ -96,8 +96,7 @@ body,
   to prevent unexpected potentionally breaking updates.
   For example vis-data@1.0.0 instead of vis-data@latest.
 --&amp;gt;
-&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-util@latest&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-data@latest&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; type=&amp;quot;text/css&amp;quot; href=&amp;quot;https://unpkg.com/vis-network/styles/vis-network.min.css&amp;quot; /&amp;gt;
 &amp;lt;!-- You may include other packages like Vis Timeline or Vis Graph3D here. --&amp;gt;
@@ -135,8 +134,8 @@ body,
 
   &lt;h5&gt;Bundled ESM&lt;/h5&gt;
   &lt;pre&gt;&lt;code&gt;
-import { DataSet } from &amp;quot;vis-data&amp;quot;;
-import { Network } from &amp;quot;vis-network/peer/esm/vis-network&amp;quot;;
+import { DataSet } from &amp;quot;vis-data/peer&amp;quot;;
+import { Network } from &amp;quot;vis-network/peer&amp;quot;;
 import &amp;quot;vis-network/styles/vis-network.css&amp;quot;;
 
 // create an array with nodes
@@ -211,7 +210,7 @@ var network = new vis.Network(container, data, options);
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/styles/vis-network.min.css,https://unpkg.com/vis-util@latest,https://unpkg.com/vis-data@latest,https://visjs.github.io/vis-network/peer/umd/vis-network.js"
+        value="https://visjs.github.io/vis-network/styles/vis-network.min.css,https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js,https://visjs.github.io/vis-network/peer/umd/vis-network.min.js"
       />
       <input
         type="hidden"
