@@ -38,15 +38,11 @@
 
     <script
       type="text/javascript"
-      src="https://unpkg.com/vis-util@latest"
+      src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"
     ></script>
     <script
       type="text/javascript"
-      src="https://unpkg.com/vis-data@latest"
-    ></script>
-    <script
-      type="text/javascript"
-      src="../../../peer/umd/vis-network.js"
+      src="../../../peer/umd/vis-network.min.js"
     ></script>
     <link
       rel="stylesheet"
@@ -108,8 +104,7 @@
   to prevent unexpected potentionally breaking updates.
   For example vis-data&commat;1.0.0 instead of vis-data&commat;latest.
 --&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-util&commat;latest&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-data&commat;latest&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-data&commat;latest/peer/umd/vis-data.min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-network&commat;latest/peer/umd/vis-network.min.js&quot;&gt;&lt;/script&gt;
 &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://unpkg.com/vis-network/styles/vis-network.min.css&quot; /&gt;
 &lt;!-- You may include other packages like Vis Timeline or Vis Graph3D here. --&gt;
@@ -147,8 +142,8 @@
 
       <h5>Bundled ESM</h5>
       <pre><code>
-import { DataSet } from "vis-data";
-import { Network } from "vis-network/peer/esm/vis-network";
+import { DataSet } from "vis-data/peer";
+import { Network } from "vis-network/peer";
 import "vis-network/styles/vis-network.css";
 
 // create an array with nodes
