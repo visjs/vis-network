@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import Layout  from './components/Layout';
+import Layout from './components/Layout';
 import { BasicGraph } from './components/BasicGraph';
 
 export default function App() {
