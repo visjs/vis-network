@@ -148,7 +148,7 @@
     "rollup-plugin-typescript2": "0.27.0",
     "semantic-release": "17.0.4",
     "serve": "11.3.0",
-    "sinon": "9.0.1",
+    "sinon": "9.0.2",
     "snap-shot-it": "7.9.3",
     "start-server-and-test": "1.10.11",
     "timsort": "0.3.0",
