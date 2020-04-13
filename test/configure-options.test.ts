@@ -78,7 +78,11 @@ function traverseCO(root: any, rootPath: string[] = []): void {
                 typeof v === "boolean"
             )
           );
-        } else if (typeof value === "boolean" || typeof value === "string" || typeof value === "number") {
+        } else if (
+          typeof value === "boolean" ||
+          typeof value === "string" ||
+          typeof value === "number"
+        ) {
           // No problems here.
         } else {
           expect.fail(`Unrecognized format: ${JSON.stringify(value)}`);
