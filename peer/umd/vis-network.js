@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-04-14T14:10:17.760Z
+ * @date    2020-04-14T15:47:36.355Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15209,29 +15209,9 @@
 
 	var construct$3 = construct$2;
 
-	function _assertThisInitialized$1(self) {
-	  if (self === void 0) {
-	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	  }
+	var create$3 = create;
 
-	  return self;
-	}
-
-	var assertThisInitialized = _assertThisInitialized$1;
-
-	function _possibleConstructorReturn(self, call) {
-	  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
-	    return call;
-	  }
-
-	  return assertThisInitialized(self);
-	}
-
-	var possibleConstructorReturn = _possibleConstructorReturn;
-
-	var getPrototypeOf$3 = getPrototypeOf;
-
-	var getPrototypeOf$4 = getPrototypeOf$3;
+	var create$4 = create$3;
 
 	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
 
@@ -15247,21 +15227,6 @@
 	var setPrototypeOf$1 = setPrototypeOf;
 
 	var setPrototypeOf$2 = setPrototypeOf$1;
-
-	var getPrototypeOf$5 = createCommonjsModule(function (module) {
-	  function _getPrototypeOf(o) {
-	    module.exports = _getPrototypeOf = setPrototypeOf$2 ? getPrototypeOf$4 : function _getPrototypeOf(o) {
-	      return o.__proto__ || getPrototypeOf$4(o);
-	    };
-	    return _getPrototypeOf(o);
-	  }
-
-	  module.exports = _getPrototypeOf;
-	});
-
-	var create$3 = create;
-
-	var create$4 = create$3;
 
 	var setPrototypeOf$3 = createCommonjsModule(function (module) {
 	  function _setPrototypeOf(o, p) {
@@ -15292,6 +15257,41 @@
 	}
 
 	var inherits = _inherits;
+
+	function _assertThisInitialized$1(self) {
+	  if (self === void 0) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }
+
+	  return self;
+	}
+
+	var assertThisInitialized = _assertThisInitialized$1;
+
+	function _possibleConstructorReturn(self, call) {
+	  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+	    return call;
+	  }
+
+	  return assertThisInitialized(self);
+	}
+
+	var possibleConstructorReturn = _possibleConstructorReturn;
+
+	var getPrototypeOf$3 = getPrototypeOf;
+
+	var getPrototypeOf$4 = getPrototypeOf$3;
+
+	var getPrototypeOf$5 = createCommonjsModule(function (module) {
+	  function _getPrototypeOf(o) {
+	    module.exports = _getPrototypeOf = setPrototypeOf$2 ? getPrototypeOf$4 : function _getPrototypeOf(o) {
+	      return o.__proto__ || getPrototypeOf$4(o);
+	    };
+	    return _getPrototypeOf(o);
+	  }
+
+	  module.exports = _getPrototypeOf;
+	});
 
 	// https://tc39.github.io/ecma262/#sec-array.prototype.fill
 
