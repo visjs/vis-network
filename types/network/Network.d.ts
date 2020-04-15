@@ -350,11 +350,11 @@ export class Network {
    * When a String is supplied, the position of the node corresponding to the ID is returned.
    * When nothing is supplied, the positions of all nodes are returned.
    */
-  getPositions(nodeIds?: IdType[] | string): { [nodeId: string]: Position };
+  getPositions(nodeIds?: IdType[] | IdType): { [nodeId: string]: Position };
   
   /**
    * Retrieves the x y position of a specific id.
-   * @param {string} id The id to retrieve.
+   * @param {IdType} id The id to retrieve.
    * @throws {TypeError} If no id is included.
    * @throws {ReferenceError} If an invalid id is provided.
    */
