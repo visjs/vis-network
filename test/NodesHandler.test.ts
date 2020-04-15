@@ -49,6 +49,39 @@ describe('NodesHandler', function(): void {
       options: {},
     }
   }
+  
+  describe('.getPosition', function() {
+    const mockThis = deepFreeze({
+      body: {
+        nodes: {
+          0: { x: 2400, y: 2500 },
+          1: { x: 2401, y: 2501 },
+          2: { x: 2402, y: 2502 },
+          3: { x: 2403, y: 2503 },
+        },
+      },
+    });
+    
+    it('should be able to locate a position for a node that exists', function() {
+      expect(NodesHandler.prototype.getPosition.call(mockThis, 3)).to.deep.equal(mockThis.body.nodes[3]);
+    });
+    
+    it('should throw an error if no id is given', () => {
+      try {
+        NodesHandler.prototype.getPosition.call(mockThis);
+      } catch (e) {
+        expect(e.message).to.equal('No id was specified for getPosition method.');
+      }
+    });
+    
+    it('should throw an error if a non-existent id is given', () => {
+      try {
+        NodesHandler.prototype.getPosition.call(mockThis, 'not here');
+      } catch (e) {
+        expect(e.message).to.equal("There was no node with the id 'not here' found in the data set.");
+      }
+    });
+  });
 
   describe('.getPositions', function(): void {
     const mockThis = deepFreeze({
