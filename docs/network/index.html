@@ -855,7 +855,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','getPositions', this);">
                 <td colspan="2"><span parent="getPositions" class="right-caret" id="method_getPositions"></span>
-                    getPositions(<code><i>[Array of nodeIds]</i></code>, <code><i>[nodeId]</i></code>)
+                    getPositions(<code><i>[Array of nodeIds or nodeId]</i></code>)
                 </td>
             </tr>
             <tr class="hidden" parent="getPositions">
@@ -887,8 +887,8 @@ network.getPositions('a123');
     }
                     
                     </pre>
-                    Alternative inputs are a String containing a nodeId or nothing. When a String is supplied, the
-                    position of the node corresponding to the ID is returned in the same format.
+                    Alternative inputs are a string containing a nodeId or nothing. When a string is supplied, the
+                    position of the node corresponding to the id is returned in the same format.
                     When nothing is supplied, the positions of all nodes are returned.
                     <br />
                     <strong>Note: If a non-existent id is supplied, the method will fail silently. </strong>
@@ -909,7 +909,7 @@ network.getPosition('a123');
 
                     If <em>no id</em> is provided, the method will throw a <code>TypeError</code>
                     <br />
-                    If a <em>non-existent id</em> is provided, the method will throw a <code>ReferenceError</code>.
+                    If an <em>id</em> is provided that does not correspond to a node in the network, the method will throw a <code>ReferenceError</code>.
                 </td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','storePositions', this);">

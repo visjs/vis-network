@@ -83,7 +83,7 @@ describe('NodesHandler', function(): void {
         NodesHandler.prototype.getPosition.call(mockThis, 'not here')
       } catch (e) {
         expect(e.message).to.equal(
-          "There was no node with the id 'not here' found in the data set."
+          "NodeId provided for getPosition does not exist. Provided: not here"
         )
       }
     })
