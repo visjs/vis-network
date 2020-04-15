@@ -854,25 +854,62 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
                 <td colspan="2">Methods to get information on nodes and edges.</td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','getPositions', this);">
-                <td colspan="2"><span parent="getPositions" class="right-caret" id="method_getPositions"></span> getPositions(<code><i>[Array of
-                    nodeIds]</i></code>)
+                <td colspan="2"><span parent="getPositions" class="right-caret" id="method_getPositions"></span>
+                    getPositions(<code><i>[Array of nodeIds]</i></code>, <code><i>[nodeId]</i></code>)
                 </td>
             </tr>
             <tr class="hidden" parent="getPositions">
                 <td class="midMethods">Returns: Object</td>
-                <td>Returns the x y positions in canvas space of the nodes with the supplied nodeIds as an object:
-<pre class="code">
-{
-  nodeId1: {x: xValue, y:yValue},
-  nodeId2: {x: xValue, y:yValue},
-  ...
-}
-</pre>
+                <td>
+                    Returns the x y positions in canvas space of the nodes or node with the supplied nodeIds or nodeId as an object:
+                    <pre class="code">
+// All nodes in the network.
+network.getPositions();
+>   {
+        a123: { x: 5, y: 12 },
+        b456: { x: 3, y: 4 },
+        c789: { x: 7, y: 10 }
+    }
+
+
+// Specific nodes.
+network.getPositions(['a123', 'b456']);
+>   {
+        a123: { x: 5, y: 12 },
+        b456: { x: 3, y: 4 },
+    }
+
+
+// A single node.
+network.getPositions('a123');
+>   {
+        a123: { x: 5, y: 12 }
+    }
+                    
+                    </pre>
                     Alternative inputs are a String containing a nodeId or nothing. When a String is supplied, the
-                    position
-                    of the node corresponding to the ID is returned. When nothing is supplied, the positions of all
-                    nodes
-                    are returned.
+                    position of the node corresponding to the ID is returned in the same format.
+                    When nothing is supplied, the positions of all nodes are returned.
+                    <br />
+                    <strong>Note: If a non-existent id is supplied, the method will fail silently. </strong>
+                </td>
+            </tr>
+            <tr class="collapsible toggle" onclick="toggleTable('methodTable','getPosition', this);">
+                <td colspan="2"><span parent="getPosition" class="right-caret" id="method_getPosition"></span> getPosition(<code><i>nodeId</i></code>)
+                </td>
+            </tr>
+            <tr class="hidden" parent="getPosition">
+                <td class="midMethods">Returns: <code>Object</code>, Throws: <code>TypeError, ReferenceError</code></td>
+                <td>
+                    Returns the x y positions in canvas space of a specific node.
+                    <pre class="code">
+network.getPosition('a123');
+>   { x: 5, y: 12 }
+                    </pre>
+
+                    If <em>no id</em> is provided, the method will throw a <code>TypeError</code>
+                    <br />
+                    If a <em>non-existent id</em> is provided, the method will throw a <code>ReferenceError</code>.
                 </td>
             </tr>
             <tr class="collapsible toggle" onclick="toggleTable('methodTable','storePositions', this);">
