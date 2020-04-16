@@ -1,1 +1,1 @@
-export * from "../../declarations/entry-esnext";
+export * from "../../declarations/entry-peer";
