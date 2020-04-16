@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-04-16T06:10:29.152Z
+ * @date    2020-04-16T20:02:51.240Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -19044,6 +19044,27 @@
 	      }
 
 	      return dataArray;
+	    }
+	    /**
+	     * Retrieves the x y position of a specific id.
+	     * @param {string} id The id to retrieve.
+	     * @throws {TypeError} If no id is included.
+	     * @throws {ReferenceError} If an invalid id is provided.
+	     */
+
+	  }, {
+	    key: "getPosition",
+	    value: function getPosition(id) {
+	      if (id == undefined) {
+	        throw new TypeError("No id was specified for getPosition method.");
+	      } else if (this.body.nodes[id] == undefined) {
+	        throw new ReferenceError("NodeId provided for getPosition does not exist. Provided: ".concat(id));
+	      } else {
+	        return {
+	          x: Math.round(this.body.nodes[id].x),
+	          y: Math.round(this.body.nodes[id].y)
+	        };
+	      }
 	    }
 	    /**
 	     * Load the XY positions of the nodes into the dataset.
@@ -40413,6 +40434,10 @@
 
 	Network.prototype.getPositions = function () {
 	  return this.nodesHandler.getPositions.apply(this.nodesHandler, arguments);
+	};
+
+	Network.prototype.getPosition = function () {
+	  return this.nodesHandler.getPosition.apply(this.nodesHandler, arguments);
 	};
 
 	Network.prototype.storePositions = function () {
