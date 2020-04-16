@@ -344,14 +344,31 @@ export class Network {
   deleteSelected(): void;
 
   /**
-   * Returns the x y positions in canvas space of the nodes with the supplied nodeIds as an object.
+   * Returns the x y positions in canvas space of a requested node or array of nodes.
+   * 
+   * @remarks
+   * - If `nodeIds` is supplied as a single id that does not correspond
+   * to a node in the network, this function will return an empty object.
+   * - If `nodeIds` is supplied as an array of ids, but one or more do not correspond to a node in the network, the
+   * returned object will *not* include entries for the non-existent node positions.
    *
-   * Alternative inputs are a String containing a nodeId or nothing.
-   * When a String is supplied, the position of the node corresponding to the ID is returned.
-   * When nothing is supplied, the positions of all nodes are returned.
+   * @param nodeIds - Either an array of node ids or a single node id. If not supplied, all node ids in the network will be used.
+   * @returns A an object containing the x y positions in canvas space of the nodes in the network, keyed by id.
    */
-  getPositions(nodeIds?: IdType[]): { [nodeId: string]: Position };
-  getPositions(nodeId: IdType): Position;
+  getPositions(nodeIds?: IdType[] | IdType): { [nodeId: string]: Position };
+  
+  /**
+   * Retrieves the x y position of a specific id.
+   * 
+   * @param id - a node id
+   * @returns the x y position in canvas space of the requested node.
+   * 
+   * @throws {@link TypeError} 
+   *  Thrown if an undefined or null id is provided as a parameter.
+   * @throws {@link ReferenceError} 
+   *  Thrown if the id provided as a parameter does not correspond to a node in the network.
+   */
+  getPosition(nodeId: IdType): Position;
 
   /**
    * 	When using the vis.DataSet to load your nodes into the network,
