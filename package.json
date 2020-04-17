@@ -150,12 +150,12 @@
     "serve": "11.3.0",
     "sinon": "9.0.2",
     "snap-shot-it": "7.9.3",
-    "start-server-and-test": "1.10.11",
+    "start-server-and-test": "1.11.0",
     "timsort": "0.3.0",
     "typescript": "3.8.3",
     "uuid": "7.0.3",
     "vis-data": "6.5.1",
-    "vis-dev-utils": "2.2.4",
+    "vis-dev-utils": "2.2.6",
     "vis-util": "4.0.0"
   },
   "collective": {
