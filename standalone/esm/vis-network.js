@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-04-22T20:39:41.336Z
+ * @date    2020-04-23T06:40:13.198Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -42691,10 +42691,12 @@ var LayoutEngine = /*#__PURE__*/function () {
 
 
             this.optionsBackup.edges = {
-              smooth: smooth.enabled === undefined ? true : smooth.enabled,
-              type: smooth.type === undefined ? 'dynamic' : smooth.type,
-              roundness: smooth.roundness === undefined ? 0.5 : smooth.roundness,
-              forceDirection: smooth.forceDirection === undefined ? false : smooth.forceDirection
+              smooth: {
+                enabled: smooth.enabled === undefined ? true : smooth.enabled,
+                type: smooth.type === undefined ? 'dynamic' : smooth.type,
+                roundness: smooth.roundness === undefined ? 0.5 : smooth.roundness,
+                forceDirection: smooth.forceDirection === undefined ? false : smooth.forceDirection
+              }
             }; // NOTE: Copying an object to self; this is basically setting defaults for undefined variables
 
             allOptions.edges.smooth = {
