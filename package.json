@@ -90,13 +90,13 @@
     "vis-util": "^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/core": "7.9.6",
     "@babel/plugin-proposal-class-properties": "7.8.3",
-    "@babel/plugin-transform-runtime": "7.9.0",
-    "@babel/preset-env": "7.9.5",
+    "@babel/plugin-transform-runtime": "7.9.6",
+    "@babel/preset-env": "7.9.6",
     "@babel/preset-typescript": "7.9.0",
     "@babel/register": "7.9.0",
-    "@babel/runtime-corejs3": "7.9.2",
+    "@babel/runtime-corejs3": "7.9.6",
     "@egjs/hammerjs": "2.0.17",
     "@rollup/plugin-commonjs": "11.1.0",
     "@rollup/plugin-image": "2.0.4",
