@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-07T17:23:04.101Z
+ * @date    2020-05-08T13:39:55.752Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -35947,6 +35947,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.lastTouch = this.body.functions.getPointer(event.center);
         this.lastTouch.translation = extend({}, this.body.view.translation); // copy the object
 
+        this.interactionHandler.drag.pointer = this.lastTouch; // Drag pointer is not updated when adding edges
+
+        this.interactionHandler.drag.translation = this.lastTouch.translation;
         var pointer = this.lastTouch;
         var node = this.selectionHandler.getNodeAt(pointer);
 
