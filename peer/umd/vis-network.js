@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-16T13:30:26.045Z
+ * @date    2020-05-17T09:27:54.063Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28,8 +28,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vis-data/peer')) :
 	typeof define === 'function' && define.amd ? define(['exports', 'vis-data/peer'], factory) :
 	(global = global || self, factory(global.vis = global.vis || {}, global.vis));
-}(this, (function (exports, esnext) { 'use strict';
-
+}(this, (function (exports, esnext) {
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 	function unwrapExports (x) {
