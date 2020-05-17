@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-17T09:29:29.314Z
+ * @date    2020-05-17T10:56:41.396Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7113,9 +7113,11 @@ var gephiParser = /*#__PURE__*/Object.freeze({
 	parseGephi: parseGephi
 });
 
+var undefined$1 = undefined;
+
 var Activator = /*#__PURE__*/Object.freeze({
 	__proto__: null,
-	'default': undefined
+	'default': undefined$1
 });
 
 var keycharm = createCommonjsModule(function (module, exports) {
