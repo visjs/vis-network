@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-17T16:06:33.429Z
+ * @date    2020-05-17T17:29:10.852Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -24,7 +24,7 @@
  * vis.js may be distributed under either license.
  */
 
-import { DataSet, DataView } from 'vis-data/peer';
+import { DataSet, DataView } from 'vis-data/peer/esm/vis-data.js';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
