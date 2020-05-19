@@ -297,7 +297,7 @@ export class Network {
    *
    * @returns the current seed of the network.
    */
-  getSeed(): number;
+  getSeed(): number | string;
 
   /**
    * 	Programatically enable the edit mode.
