@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-19T13:21:38.266Z
+ * @date    2020-05-19T21:12:59.475Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -38538,7 +38538,8 @@
 	  layout: {
 	    randomSeed: {
 	      'undefined': 'undefined',
-	      number: number
+	      number: number,
+	      string: string
 	    },
 	    improvedLayout: {
 	      boolean: bool
