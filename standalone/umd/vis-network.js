@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-20T17:56:21.103Z
+ * @date    2020-05-20T19:45:59.493Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -12952,199 +12952,247 @@
 
 	var Activator_1 = Activator$1;
 
-	var locales = createCommonjsModule(function (module, exports) {
-	  // English
-	  exports['en'] = {
-	    edit: 'Edit',
-	    del: 'Delete selected',
-	    back: 'Back',
-	    addNode: 'Add Node',
-	    addEdge: 'Add Edge',
-	    editNode: 'Edit Node',
-	    editEdge: 'Edit Edge',
-	    addDescription: 'Click in an empty space to place a new node.',
-	    edgeDescription: 'Click on a node and drag the edge to another node to connect them.',
-	    editEdgeDescription: 'Click on the control points and drag them to a node to connect to it.',
-	    createEdgeError: 'Cannot link edges to a cluster.',
-	    deleteClusterError: 'Clusters cannot be deleted.',
-	    editClusterError: 'Clusters cannot be edited.'
-	  };
-	  exports['en_EN'] = exports['en'];
-	  exports['en_US'] = exports['en']; // German
+	// English
+	var en = {
+	  addDescription: "Click in an empty space to place a new node.",
+	  addEdge: "Add Edge",
+	  addNode: "Add Node",
+	  back: "Back",
+	  createEdgeError: "Cannot link edges to a cluster.",
+	  del: "Delete selected",
+	  deleteClusterError: "Clusters cannot be deleted.",
+	  edgeDescription: "Click on a node and drag the edge to another node to connect them.",
+	  edit: "Edit",
+	  editClusterError: "Clusters cannot be edited.",
+	  editEdge: "Edit Edge",
+	  editEdgeDescription: "Click on the control points and drag them to a node to connect to it.",
+	  editNode: "Edit Node"
+	}; // German
 
-	  exports['de'] = {
-	    edit: 'Editieren',
-	    del: "L\xF6sche Auswahl",
-	    back: "Zur\xFCck",
-	    addNode: "Knoten hinzuf\xFCgen",
-	    addEdge: "Kante hinzuf\xFCgen",
-	    editNode: 'Knoten editieren',
-	    editEdge: 'Kante editieren',
-	    addDescription: 'Klicke auf eine freie Stelle, um einen neuen Knoten zu plazieren.',
-	    edgeDescription: 'Klicke auf einen Knoten und ziehe die Kante zu einem anderen Knoten, um diese zu verbinden.',
-	    editEdgeDescription: 'Klicke auf die Verbindungspunkte und ziehe diese auf einen Knoten, um sie zu verbinden.',
-	    createEdgeError: "Es ist nicht m\xF6glich, Kanten mit Clustern zu verbinden.",
-	    deleteClusterError: "Cluster k\xF6nnen nicht gel\xF6scht werden.",
-	    editClusterError: "Cluster k\xF6nnen nicht editiert werden."
-	  };
-	  exports['de_DE'] = exports['de']; // Spanish
+	var de = {
+	  addDescription: "Klicke auf eine freie Stelle, um einen neuen Knoten zu plazieren.",
+	  addEdge: "Kante hinzuf\xFCgen",
+	  addNode: "Knoten hinzuf\xFCgen",
+	  back: "Zur\xFCck",
+	  createEdgeError: "Es ist nicht m\xF6glich, Kanten mit Clustern zu verbinden.",
+	  del: "L\xF6sche Auswahl",
+	  deleteClusterError: "Cluster k\xF6nnen nicht gel\xF6scht werden.",
+	  edgeDescription: "Klicke auf einen Knoten und ziehe die Kante zu einem anderen Knoten, um diese zu verbinden.",
+	  edit: "Editieren",
+	  editClusterError: "Cluster k\xF6nnen nicht editiert werden.",
+	  editEdge: "Kante editieren",
+	  editEdgeDescription: "Klicke auf die Verbindungspunkte und ziehe diese auf einen Knoten, um sie zu verbinden.",
+	  editNode: "Knoten editieren"
+	}; // Spanish
 
-	  exports['es'] = {
-	    edit: 'Editar',
-	    del: "Eliminar selecci\xF3n",
-	    back: "Atr\xE1s",
-	    addNode: "A\xF1adir nodo",
-	    addEdge: "A\xF1adir arista",
-	    editNode: 'Editar nodo',
-	    editEdge: 'Editar arista',
-	    addDescription: "Haga clic en un lugar vac\xEDo para colocar un nuevo nodo.",
-	    edgeDescription: 'Haga clic en un nodo y arrastre la arista hacia otro nodo para conectarlos.',
-	    editEdgeDescription: 'Haga clic en un punto de control y arrastrelo a un nodo para conectarlo.',
-	    createEdgeError: 'No se puede conectar una arista a un grupo.',
-	    deleteClusterError: 'No es posible eliminar grupos.',
-	    editClusterError: 'No es posible editar grupos.'
-	  };
-	  exports['es_ES'] = exports['es']; //Italiano
+	var es = {
+	  addDescription: "Haga clic en un lugar vac\xEDo para colocar un nuevo nodo.",
+	  addEdge: "A\xF1adir arista",
+	  addNode: "A\xF1adir nodo",
+	  back: "Atr\xE1s",
+	  createEdgeError: "No se puede conectar una arista a un grupo.",
+	  del: "Eliminar selecci\xF3n",
+	  deleteClusterError: "No es posible eliminar grupos.",
+	  edgeDescription: "Haga clic en un nodo y arrastre la arista hacia otro nodo para conectarlos.",
+	  edit: "Editar",
+	  editClusterError: "No es posible editar grupos.",
+	  editEdge: "Editar arista",
+	  editEdgeDescription: "Haga clic en un punto de control y arrastrelo a un nodo para conectarlo.",
+	  editNode: "Editar nodo"
+	}; //Italiano
 
-	  exports['it'] = {
-	    edit: 'Modifica',
-	    del: 'Cancella la selezione',
-	    back: 'Indietro',
-	    addNode: 'Aggiungi un nodo',
-	    addEdge: 'Aggiungi un vertice',
-	    editNode: 'Modifica il nodo',
-	    editEdge: 'Modifica il vertice',
-	    addDescription: 'Clicca per aggiungere un nuovo nodo',
-	    edgeDescription: 'Clicca su un nodo e trascinalo ad un altro nodo per connetterli.',
-	    editEdgeDescription: 'Clicca sui Punti di controllo e trascinali ad un nodo per connetterli.',
-	    createEdgeError: 'Non si possono collegare vertici ad un cluster',
-	    deleteClusterError: 'I cluster non possono essere cancellati',
-	    editClusterError: 'I clusters non possono essere modificati.'
-	  };
-	  exports['it_IT'] = exports['it']; // Dutch
+	var it = {
+	  addDescription: "Clicca per aggiungere un nuovo nodo",
+	  addEdge: "Aggiungi un vertice",
+	  addNode: "Aggiungi un nodo",
+	  back: "Indietro",
+	  createEdgeError: "Non si possono collegare vertici ad un cluster",
+	  del: "Cancella la selezione",
+	  deleteClusterError: "I cluster non possono essere cancellati",
+	  edgeDescription: "Clicca su un nodo e trascinalo ad un altro nodo per connetterli.",
+	  edit: "Modifica",
+	  editClusterError: "I clusters non possono essere modificati.",
+	  editEdge: "Modifica il vertice",
+	  editEdgeDescription: "Clicca sui Punti di controllo e trascinali ad un nodo per connetterli.",
+	  editNode: "Modifica il nodo"
+	}; // Dutch
 
-	  exports['nl'] = {
-	    edit: 'Wijzigen',
-	    del: 'Selectie verwijderen',
-	    back: 'Terug',
-	    addNode: 'Node toevoegen',
-	    addEdge: 'Link toevoegen',
-	    editNode: 'Node wijzigen',
-	    editEdge: 'Link wijzigen',
-	    addDescription: 'Klik op een leeg gebied om een nieuwe node te maken.',
-	    edgeDescription: 'Klik op een node en sleep de link naar een andere node om ze te verbinden.',
-	    editEdgeDescription: 'Klik op de verbindingspunten en sleep ze naar een node om daarmee te verbinden.',
-	    createEdgeError: 'Kan geen link maken naar een cluster.',
-	    deleteClusterError: 'Clusters kunnen niet worden verwijderd.',
-	    editClusterError: 'Clusters kunnen niet worden aangepast.'
-	  };
-	  exports['nl_NL'] = exports['nl'];
-	  exports['nl_BE'] = exports['nl']; // Portuguese Brazil
+	var nl = {
+	  addDescription: "Klik op een leeg gebied om een nieuwe node te maken.",
+	  addEdge: "Link toevoegen",
+	  addNode: "Node toevoegen",
+	  back: "Terug",
+	  createEdgeError: "Kan geen link maken naar een cluster.",
+	  del: "Selectie verwijderen",
+	  deleteClusterError: "Clusters kunnen niet worden verwijderd.",
+	  edgeDescription: "Klik op een node en sleep de link naar een andere node om ze te verbinden.",
+	  edit: "Wijzigen",
+	  editClusterError: "Clusters kunnen niet worden aangepast.",
+	  editEdge: "Link wijzigen",
+	  editEdgeDescription: "Klik op de verbindingspunten en sleep ze naar een node om daarmee te verbinden.",
+	  editNode: "Node wijzigen"
+	}; // Portuguese Brazil
 
-	  exports['pt-br'] = {
-	    edit: 'Editar',
-	    del: 'Remover selecionado',
-	    back: 'Voltar',
-	    addNode: 'Adicionar nó',
-	    addEdge: 'Adicionar aresta',
-	    editNode: 'Editar nó',
-	    editEdge: 'Editar aresta',
-	    addDescription: 'Clique em um espaço em branco para adicionar um novo nó',
-	    edgeDescription: 'Clique em um nó e arraste a aresta até outro nó para conectá-los',
-	    editEdgeDescription: 'Clique nos pontos de controle e os arraste para um nó para conectá-los',
-	    createEdgeError: 'Não foi possível linkar arestas a um cluster.',
-	    deleteClusterError: 'Clusters não puderam ser removidos.',
-	    editClusterError: 'Clusters não puderam ser editados.'
-	  };
-	  exports['pt-BR'] = exports['pt-br'];
-	  exports['pt_BR'] = exports['pt-br'];
-	  exports['pt_br'] = exports['pt-br']; // Russian
+	var pt = {
+	  addDescription: "Clique em um espaço em branco para adicionar um novo nó",
+	  addEdge: "Adicionar aresta",
+	  addNode: "Adicionar nó",
+	  back: "Voltar",
+	  createEdgeError: "Não foi possível linkar arestas a um cluster.",
+	  del: "Remover selecionado",
+	  deleteClusterError: "Clusters não puderam ser removidos.",
+	  edgeDescription: "Clique em um nó e arraste a aresta até outro nó para conectá-los",
+	  edit: "Editar",
+	  editClusterError: "Clusters não puderam ser editados.",
+	  editEdge: "Editar aresta",
+	  editEdgeDescription: "Clique nos pontos de controle e os arraste para um nó para conectá-los",
+	  editNode: "Editar nó"
+	}; // Russian
 
-	  exports['ru'] = {
-	    edit: 'Редактировать',
-	    del: 'Удалить выбранное',
-	    back: 'Назад',
-	    addNode: 'Добавить узел',
-	    addEdge: 'Добавить ребро',
-	    editNode: 'Редактировать узел',
-	    editEdge: 'Редактировать ребро',
-	    addDescription: 'Кликните в свободное место, чтобы добавить новый узел.',
-	    edgeDescription: 'Кликните на узел и протяните ребро к другому узлу, чтобы соединить их.',
-	    editEdgeDescription: 'Кликните на контрольные точки и перетащите их в узел, чтобы подключиться к нему.',
-	    createEdgeError: 'Невозможно соединить ребра в кластер.',
-	    deleteClusterError: 'Кластеры не могут быть удалены',
-	    editClusterError: 'Кластеры недоступны для редактирования.'
-	  };
-	  exports['ru_RU'] = exports['ru']; // Chinese
+	var ru = {
+	  addDescription: "Кликните в свободное место, чтобы добавить новый узел.",
+	  addEdge: "Добавить ребро",
+	  addNode: "Добавить узел",
+	  back: "Назад",
+	  createEdgeError: "Невозможно соединить ребра в кластер.",
+	  del: "Удалить выбранное",
+	  deleteClusterError: "Кластеры не могут быть удалены",
+	  edgeDescription: "Кликните на узел и протяните ребро к другому узлу, чтобы соединить их.",
+	  edit: "Редактировать",
+	  editClusterError: "Кластеры недоступны для редактирования.",
+	  editEdge: "Редактировать ребро",
+	  editEdgeDescription: "Кликните на контрольные точки и перетащите их в узел, чтобы подключиться к нему.",
+	  editNode: "Редактировать узел"
+	}; // Chinese
 
-	  exports['cn'] = {
-	    edit: '编辑',
-	    del: '删除选定',
-	    back: '返回',
-	    addNode: '添加节点',
-	    addEdge: '添加连接线',
-	    editNode: '编辑节点',
-	    editEdge: '编辑连接线',
-	    addDescription: '单击空白处放置新节点。',
-	    edgeDescription: '单击某个节点并将该连接线拖动到另一个节点以连接它们。',
-	    editEdgeDescription: '单击控制节点并将它们拖到节点上连接。',
-	    createEdgeError: '无法将连接线连接到群集。',
-	    deleteClusterError: '无法删除群集。',
-	    editClusterError: '无法编辑群集。'
-	  };
-	  exports['zh_CN'] = exports['cn']; // Ukrainian
+	var cn = {
+	  addDescription: "单击空白处放置新节点。",
+	  addEdge: "添加连接线",
+	  addNode: "添加节点",
+	  back: "返回",
+	  createEdgeError: "无法将连接线连接到群集。",
+	  del: "删除选定",
+	  deleteClusterError: "无法删除群集。",
+	  edgeDescription: "单击某个节点并将该连接线拖动到另一个节点以连接它们。",
+	  edit: "编辑",
+	  editClusterError: "无法编辑群集。",
+	  editEdge: "编辑连接线",
+	  editEdgeDescription: "单击控制节点并将它们拖到节点上连接。",
+	  editNode: "编辑节点"
+	}; // Ukrainian
 
-	  exports['uk'] = {
-	    edit: 'Редагувати',
-	    del: 'Видалити обране',
-	    back: 'Назад',
-	    addNode: 'Додати вузол',
-	    addEdge: 'Додати край',
-	    editNode: 'Редагувати вузол',
-	    editEdge: 'Редагувати край',
-	    addDescription: 'Kлікніть на вільне місце, щоб додати новий вузол.',
-	    edgeDescription: 'Клікніть на вузол і перетягніть край до іншого вузла, щоб їх з\'єднати.',
-	    editEdgeDescription: 'Клікніть на контрольні точки і перетягніть їх у вузол, щоб підключитися до нього.',
-	    createEdgeError: 'Не можливо об\'єднати краї в групу.',
-	    deleteClusterError: 'Групи не можуть бути видалені.',
-	    editClusterError: 'Групи недоступні для редагування.'
-	  };
-	  exports['uk_UA'] = exports['uk']; // French
+	var uk = {
+	  addDescription: "Kлікніть на вільне місце, щоб додати новий вузол.",
+	  addEdge: "Додати край",
+	  addNode: "Додати вузол",
+	  back: "Назад",
+	  createEdgeError: "Не можливо об'єднати краї в групу.",
+	  del: "Видалити обране",
+	  deleteClusterError: "Групи не можуть бути видалені.",
+	  edgeDescription: "Клікніть на вузол і перетягніть край до іншого вузла, щоб їх з'єднати.",
+	  edit: "Редагувати",
+	  editClusterError: "Групи недоступні для редагування.",
+	  editEdge: "Редагувати край",
+	  editEdgeDescription: "Клікніть на контрольні точки і перетягніть їх у вузол, щоб підключитися до нього.",
+	  editNode: "Редагувати вузол"
+	}; // French
 
-	  exports['fr'] = {
-	    edit: 'Éditer',
-	    del: 'Effacer la sélection',
-	    back: 'Retour',
-	    addNode: 'Ajouter un nœud',
-	    addEdge: 'Ajouter un lien',
-	    editNode: 'Éditer le nœud',
-	    editEdge: 'Éditer le lien',
-	    addDescription: 'Cliquez dans un endroit vide pour placer un nœud.',
-	    edgeDescription: 'Cliquez sur un nœud et glissez le lien vers un autre nœud pour les connecter.',
-	    editEdgeDescription: 'Cliquez sur les points de contrôle et glissez-les pour connecter un nœud.',
-	    createEdgeError: 'Impossible de créer un lien vers un cluster.',
-	    deleteClusterError: 'Les clusters ne peuvent pas être effacés.',
-	    editClusterError: 'Les clusters ne peuvent pas être édités.'
-	  };
-	  exports['fr_FR'] = exports['fr']; // Czech
+	var fr = {
+	  addDescription: "Cliquez dans un endroit vide pour placer un nœud.",
+	  addEdge: "Ajouter un lien",
+	  addNode: "Ajouter un nœud",
+	  back: "Retour",
+	  createEdgeError: "Impossible de créer un lien vers un cluster.",
+	  del: "Effacer la sélection",
+	  deleteClusterError: "Les clusters ne peuvent pas être effacés.",
+	  edgeDescription: "Cliquez sur un nœud et glissez le lien vers un autre nœud pour les connecter.",
+	  edit: "Éditer",
+	  editClusterError: "Les clusters ne peuvent pas être édités.",
+	  editEdge: "Éditer le lien",
+	  editEdgeDescription: "Cliquez sur les points de contrôle et glissez-les pour connecter un nœud.",
+	  editNode: "Éditer le nœud"
+	}; // Czech
 
-	  exports['cs'] = {
-	    edit: 'Upravit',
-	    del: 'Smazat výběr',
-	    back: 'Zpět',
-	    addNode: 'Přidat vrchol',
-	    addEdge: 'Přidat hranu',
-	    editNode: 'Upravit vrchol',
-	    editEdge: 'Upravit hranu',
-	    addDescription: 'Kluknutím do prázdného prostoru můžete přidat nový vrchol.',
-	    edgeDescription: 'Přetažením z jednoho vrcholu do druhého můžete spojit tyto vrcholy novou hranou.',
-	    editEdgeDescription: 'Přetažením kontrolního vrcholu hrany ji můžete připojit k jinému vrcholu.',
-	    createEdgeError: 'Nelze připojit hranu ke shluku.',
-	    deleteClusterError: 'Nelze mazat shluky.',
-	    editClusterError: 'Nelze upravovat shluky.'
-	  };
-	  exports['cs_CZ'] = exports['cs'];
+	var cs = {
+	  addDescription: "Kluknutím do prázdného prostoru můžete přidat nový vrchol.",
+	  addEdge: "Přidat hranu",
+	  addNode: "Přidat vrchol",
+	  back: "Zpět",
+	  createEdgeError: "Nelze připojit hranu ke shluku.",
+	  del: "Smazat výběr",
+	  deleteClusterError: "Nelze mazat shluky.",
+	  edgeDescription: "Přetažením z jednoho vrcholu do druhého můžete spojit tyto vrcholy novou hranou.",
+	  edit: "Upravit",
+	  editClusterError: "Nelze upravovat shluky.",
+	  editEdge: "Upravit hranu",
+	  editEdgeDescription: "Přetažením kontrolního vrcholu hrany ji můžete připojit k jinému vrcholu.",
+	  editNode: "Upravit vrchol"
+	};
+
+	var locales = /*#__PURE__*/Object.freeze({
+		__proto__: null,
+		en: en,
+		de: de,
+		es: es,
+		it: it,
+		nl: nl,
+		pt: pt,
+		ru: ru,
+		cn: cn,
+		uk: uk,
+		fr: fr,
+		cs: cs
 	});
+
+	/**
+	 * Normalizes language code into the format used internally.
+	 *
+	 * @param locales - All the available locales.
+	 * @param rawCode - The original code as supplied by the user.
+	 *
+	 * @returns Language code in the format language-COUNTRY or language, eventually
+	 * fallbacks to en.
+	 */
+	function normalizeLanguageCode(locales, rawCode) {
+	  try {
+	    var _rawCode$split = rawCode.split(/[-_ \/]/, 2),
+	        _rawCode$split2 = slicedToArray(_rawCode$split, 2),
+	        rawLanguage = _rawCode$split2[0],
+	        rawCountry = _rawCode$split2[1];
+
+	    var language = rawLanguage != null ? rawLanguage.toLowerCase() : null;
+	    var country = rawCountry != null ? rawCountry.toUpperCase() : null;
+
+	    if (language && country) {
+	      var code = language + "-" + country;
+
+	      if (Object.prototype.hasOwnProperty.call(locales, code)) {
+	        return code;
+	      } else {
+	        var _context;
+
+	        console.warn(concat$2(_context = "Unknown variant ".concat(country, " of language ")).call(_context, language, "."));
+	      }
+	    }
+
+	    if (language) {
+	      var _code = language;
+
+	      if (Object.prototype.hasOwnProperty.call(locales, _code)) {
+	        return _code;
+	      } else {
+	        console.warn("Unknown language ".concat(language));
+	      }
+	    }
+
+	    console.warn("Unknown locale ".concat(rawCode, ", falling back to English."));
+	    return "en";
+	  } catch (error) {
+	    console.error(error);
+	    console.warn("Unexpected error while normalizing locale ".concat(rawCode, ", falling back to English."));
+	    return "en";
+	  }
+	}
 
 	function _classCallCheck(instance, Constructor) {
 	  if (!(instance instanceof Constructor)) {
@@ -49976,7 +50024,12 @@
 
 
 	    var fields = ['locale', 'locales', 'clickToUse'];
-	    selectiveDeepExtend(fields, this.options, options); // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
+	    selectiveDeepExtend(fields, this.options, options); // normalize the locale or use English
+
+	    if (options.locale !== undefined) {
+	      options.locale = normalizeLanguageCode(options.locales || this.options.locales, options.locale);
+	    } // the hierarchical system can adapt the edges and the physics to it's own options because not all combinations work with the hierarichical system.
+
 
 	    options = this.layoutEngine.setOptions(options.layout, options);
 	    this.canvas.setOptions(options); // options for canvas are in globals
