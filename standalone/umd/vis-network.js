@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-22T20:09:25.540Z
+ * @date    2020-05-22T20:44:22.508Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18069,8 +18069,7 @@
 
 	      for (i = 0; i < tokens.length; i++) {
 	        token = tokens[i];
-	        parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0]; // console.log('token', token, 'parsedInput', parsedInput,
-	        //         'regex', getParseRegexForToken(token, config));
+	        parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
 
 	        if (parsedInput) {
 	          skipped = string.substr(0, string.indexOf(parsedInput));
@@ -20628,7 +20627,7 @@
 	      config._d = new Date(toInt(input));
 	    }); //! moment.js
 
-	    hooks.version = '2.25.3';
+	    hooks.version = '2.26.0';
 	    setHookCallback(createLocal);
 	    hooks.fn = proto;
 	    hooks.min = min;
