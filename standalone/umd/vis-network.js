@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-22T20:44:22.508Z
+ * @date    2020-05-22T21:41:41.239Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15531,9 +15531,8 @@
 	// generators (like Math.random()).
 	// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
 	// find the complete implementation of crypto (msCrypto) on IE11.
-	var getRandomValues = typeof crypto != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto != 'undefined' && typeof msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto);
-	var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
-
+	var getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+	var rnds8 = new Uint8Array(16);
 	function rng() {
 	  if (!getRandomValues) {
 	    throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
@@ -15549,21 +15548,20 @@
 	var byteToHex = [];
 
 	for (var i = 0; i < 256; ++i) {
-	  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	  byteToHex.push((i + 0x100).toString(16).substr(1));
 	}
 
 	function bytesToUuid(buf, offset) {
 	  var i = offset || 0;
-	  var bth = byteToHex; // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
+	  var bth = byteToHex; // Note: Be careful editing this code!  It's been tuned for performance
+	  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
 
-	  return [bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], '-', bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]], bth[buf[i++]]].join('');
+	  return (bth[buf[i + 0]] + bth[buf[i + 1]] + bth[buf[i + 2]] + bth[buf[i + 3]] + '-' + bth[buf[i + 4]] + bth[buf[i + 5]] + '-' + bth[buf[i + 6]] + bth[buf[i + 7]] + '-' + bth[buf[i + 8]] + bth[buf[i + 9]] + '-' + bth[buf[i + 10]] + bth[buf[i + 11]] + bth[buf[i + 12]] + bth[buf[i + 13]] + bth[buf[i + 14]] + bth[buf[i + 15]]).toLowerCase();
 	}
 
 	function v4(options, buf, offset) {
-	  var i = buf && offset || 0;
-
-	  if (typeof options == 'string') {
-	    buf = options === 'binary' ? new Array(16) : null;
+	  if (typeof options === 'string') {
+	    buf = options === 'binary' ? new Uint8Array(16) : null;
 	    options = null;
 	  }
 
@@ -15574,12 +15572,16 @@
 	  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
 
 	  if (buf) {
-	    for (var ii = 0; ii < 16; ++ii) {
-	      buf[i + ii] = rnds[ii];
+	    var start = offset || 0;
+
+	    for (var i = 0; i < 16; ++i) {
+	      buf[start + i] = rnds[i];
 	    }
+
+	    return buf;
 	  }
 
-	  return buf || bytesToUuid(rnds);
+	  return bytesToUuid(rnds);
 	}
 
 	var moment = createCommonjsModule(function (module, exports) {
