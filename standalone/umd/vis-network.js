@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-05-21T06:46:58.351Z
+ * @date    2020-05-22T06:56:30.694Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -35,8 +35,14 @@
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 	}
 
-	function createCommonjsModule(fn, module) {
-		return module = { exports: {} }, fn(module, module.exports), module.exports;
+	function createCommonjsModule(fn, basedir, module) {
+		return module = {
+		  path: basedir,
+		  exports: {},
+		  require: function (path, base) {
+	      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+	    }
+		}, fn(module, module.exports), module.exports;
 	}
 
 	function getCjsExportFromNamespace (n) {
@@ -6974,13 +6980,12 @@
 	  DOTToGraph: DOTToGraph_1
 	};
 
-	var dotparser$1 = /*#__PURE__*/Object.freeze({
-		__proto__: null,
+	var dotparser$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.assign(/*#__PURE__*/Object.create(null), dotparser, {
 		'default': dotparser,
 		__moduleExports: dotparser,
 		parseDOT: parseDOT_1,
 		DOTToGraph: DOTToGraph_1
-	});
+	}));
 
 	/**
 	 * Convert Gephi to Vis.
@@ -42195,7 +42200,6 @@
 	unwrapExports(timsort);
 
 	var timsort$1 = timsort;
-	var timsort_1 = timsort$1.sort;
 
 	function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function () { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
@@ -42426,8 +42430,8 @@
 
 	  }, {
 	    key: "sort",
-	    value: function sort(nodeArray) {
-	      timsort_1(nodeArray, function (a, b) {
+	    value: function sort$1(nodeArray) {
+	      timsort$1.sort(nodeArray, function (a, b) {
 	        return a.x - b.x;
 	      });
 	    }
@@ -42522,8 +42526,8 @@
 
 	  }, {
 	    key: "sort",
-	    value: function sort(nodeArray) {
-	      timsort_1(nodeArray, function (a, b) {
+	    value: function sort$1(nodeArray) {
+	      timsort$1.sort(nodeArray, function (a, b) {
 	        return a.y - b.y;
 	      });
 	    }
