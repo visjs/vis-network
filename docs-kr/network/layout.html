@@ -126,7 +126,7 @@ network.setOptions(options);
     <p>hierarchical layout을 사용하도록 설정한다면, 다른 옵션 중 일부를 재정의합니다. physics는 hierarchical repulsion solver로 설정되고 동적 곡선 Edge는 정적 곡선 Edge로 변환됩니다.</p>
     <table class="options" id="optionTable">
         <tr><th>이름</th><th>Type</th><th>Default</th><td>설명</td></tr>
-        <tr><td>randomSeed</td><td>Number</td><td><code>undefined</code></td>               <td>hierarchical layout을 사용하지 않는 경우, Node들은 처음에 랜덤하게 배치됩니다. 매번 결과가 다르다는 의미입니다. 랜덤 시드를 수동으로 제공하는 경우 layout이 매번 동일합니다. 정의되지 않은 시드로 시도하고 layout이 마음에 들면 <code>getSeed()</code>를 이용해 시드를 확인하는 것이 좋습니다.</td></tr>
+        <tr><td>randomSeed</td><td>Number or String</td><td><code>undefined</code></td>               <td>hierarchical layout을 사용하지 않는 경우, Node들은 처음에 랜덤하게 배치됩니다. 매번 결과가 다르다는 의미입니다. 랜덤 시드를 수동으로 제공하는 경우 layout이 매번 동일합니다. 정의되지 않은 시드로 시도하고 layout이 마음에 들면 <code>getSeed()</code>를 이용해 시드를 확인하는 것이 좋습니다.</td></tr>
         <tr id="layout"><td>improvedLayout</td><td>Boolean</td><td><code>true</code></td>   <td>활성화가 되면 Network는 초기 layout에 Kamada Kawai 알고리즘을 사용합니다. Node가 100개 이상인 Network의 경우 Node를 줄이기 위해 클러스터링이 자동으로 수행됩니다. (리프 Node가 적거나 없음), 이것이 작동하지 않을 수 있으며 이전 메소드로 돌아갑니다. 이는 개선될 것입니다.</td></tr>
         <tr><td>clusterThreshold</td><td>Number</td><td><code>150</code></td>               <td><code>improvedLayout</code>이 적용되는 클러스터 임계값입니다.</td></tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','hierarchical', this);"><td><span parent="repulsion" class="right-caret"></span> hierarchical</td><td>Object or Boolean</td><td><code>Object</code></td>      <td>True이면, layout 엔진은 기본 설정을 사용하여 Node를 hierarchical 방식으로 배치합니다. 사용자 설정을 위해 object를 제공할 수 있습니다.</td></tr>
@@ -153,7 +153,7 @@ network.setOptions(options);
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
