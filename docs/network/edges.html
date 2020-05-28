@@ -127,6 +127,7 @@ var options = {
         type: "arrow"
       }
     },
+    endpointsAdjustedPosition: 0,
     arrowStrikethrough: true,
     chosen: true,
     color: {
@@ -323,6 +324,12 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
             <td>Exactly the same as the to object but with an arrowhead at the from node of the edge.</td>
+        </tr>
+        <tr>
+            <td class="indent">endpointsAdjustedPosition</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>Set a number to adjust the endpoints. It can be useful if you want to have the endpoints placed on the nodes border. Negative numbers move the endpoints nearer the nodes midpoint, and positive numbers does the opposite. It's only possible when the arrowStrikethrough is true.</td>
         </tr>
         <tr>
             <td class="indent">arrowStrikethrough</td>
