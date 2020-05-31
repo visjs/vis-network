@@ -58,12 +58,14 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
     let node = this.to;
     let pos: Point;
     let middle: number;
-    let endPointOffset = this.options.endPointOffset.to;
+
+    let endPointOffset = this.options.endPointOffset ? this.options.endPointOffset.to : 0;
 
     if (nearNode.id === this.from.id) {
       node = this.from;
       from = true;
-      endPointOffset = this.options.endPointOffset.from;
+
+      endPointOffset = this.options.endPointOffset ? this.options.endPointOffset.from : 0;
     }
 
     endPointOffset = this.options.arrowStrikethrough === true ? endPointOffset : 0;
