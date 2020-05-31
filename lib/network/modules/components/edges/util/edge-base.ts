@@ -392,13 +392,22 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
     let middle = (low + high) * 0.5;
 
+    let endPointOffset = 0;
+    if (this.options.arrowStrikethrough === true) {
+      if (direction === -1) {
+        endPointOffset = this.options.endPointOffset.from;
+      } else if (direction === 1) {
+        endPointOffset = this.options.endPointOffset.to;
+      }
+    }
+
     let iteration = 0;
     do {
       middle = (low + high) * 0.5;
 
       pos = this._pointOnCircle(x, y, radius, middle);
       const angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
-      const distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+      const distanceToBorder = nearNode.distanceToBorder(ctx, angle) + endPointOffset;
       const distanceToPoint = Math.sqrt(
         Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2)
       );

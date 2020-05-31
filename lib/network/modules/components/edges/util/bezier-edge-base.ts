@@ -58,10 +58,15 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
     let node = this.to;
     let pos: Point;
     let middle: number;
+    let endPointOffset = this.options.endPointOffset.to;
+
     if (nearNode.id === this.from.id) {
       node = this.from;
       from = true;
+      endPointOffset = this.options.endPointOffset.from;
     }
+
+    endPointOffset = this.options.arrowStrikethrough === true ? endPointOffset : 0;
 
     let iteration = 0;
     do {
@@ -69,7 +74,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
 
       pos = this.getPoint(middle, viaNode);
       const angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-      const distanceToBorder = node.distanceToBorder(ctx, angle);
+      const distanceToBorder = node.distanceToBorder(ctx, angle) + endPointOffset;
       const distanceToPoint = Math.sqrt(
         Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2)
       );
