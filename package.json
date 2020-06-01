@@ -131,7 +131,7 @@
     "keycharm": "0.3.1",
     "mocha": "7.2.0",
     "moment": "2.26.0",
-    "nyc": "15.0.1",
+    "nyc": "15.1.0",
     "opencollective": "1.0.3",
     "postcss-assets": "5.0.0",
     "prettier": "1.19.1",
