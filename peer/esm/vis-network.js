@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-01T05:38:31.579Z
+ * @date    2020-06-03T16:04:32.300Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -29544,7 +29544,13 @@ var InteractionHandler = /*#__PURE__*/function () {
   }, {
     key: "onDragStart",
     value: function onDragStart(event) {
-      //in case the touch event was triggered on an external div, do the initial touch now.
+      // if already dragging, do not start
+      // this can happen on touch screens with multiple fingers
+      if (this.drag.dragging) {
+        return;
+      } //in case the touch event was triggered on an external div, do the initial touch now.
+
+
       if (this.drag.pointer === undefined) {
         this.onTouch(event);
       } // note: drag.pointer is set in onTouch to get the initial touch location
