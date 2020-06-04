@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-04T05:23:12.386Z
+ * @date    2020-06-04T17:52:05.311Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7148,7 +7148,7 @@ function styleInject(css, ref) {
 }
 
 var css_248z = ".vis-overlay {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n";
-const stylesheet=".vis-overlay {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n";
+var stylesheet=".vis-overlay {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n\n  /* Must be displayed above for example selected Timeline items */\n  z-index: 10;\n}\n\n.vis-active {\n  box-shadow: 0 0 10px #86d5f8;\n}\n";
 styleInject(css_248z);
 
 var Activator = /*#__PURE__*/Object.freeze({
