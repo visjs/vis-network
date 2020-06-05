@@ -180,17 +180,11 @@ export function visPlaceNode(x: number, y: number): void {
   visCheckIds(
     (): void => {},
     (): void => {
-      // Open manipulation GUI.
-      cy.get(".vis-edit-mode .vis-button.vis-edit-mode").click();
-
       // Enter node adding mode.
       cy.get(".vis-manipulation .vis-button.vis-add").click();
 
       // Place the node.
       cy.get("#mynetwork").click(x, y);
-
-      // Close manipulation GUI.
-      cy.get(".vis-close").click();
     },
     ({ addedNodeIds, removedNodeIds }): void => {
       // Check that exactly one new node was added.
@@ -223,9 +217,6 @@ export function visConnectNodes(from: Point, to: Point): void {
   visCheckIds(
     (): void => {},
     (): void => {
-      // Open manipulation GUI.
-      cy.get(".vis-edit-mode .vis-button.vis-edit-mode").click();
-
       // Enter node adding mode.
       cy.get(".vis-manipulation .vis-button.vis-connect").click();
 
@@ -239,9 +230,6 @@ export function visConnectNodes(from: Point, to: Point): void {
       cy.get("#mynetwork").trigger("pointerup", to.x, to.y, {
         button: 0
       });
-
-      // Close manipulation GUI.
-      cy.get(".vis-close").click();
     },
     ({ addedEdgeIds, removedEdgeIds }): void => {
       // Check that exactly one new edge was added.
@@ -269,27 +257,15 @@ Cypress.Commands.add("visConnectNodes", visConnectNodes);
 
 // eslint-disable-next-line require-jsdoc
 export function visEditSelected(): void {
-  // Open manipulation GUI.
-  cy.get(".vis-edit-mode .vis-button.vis-edit-mode").click();
-
   // Enter edit mode
   cy.get(".vis-manipulation .vis-button.vis-edit").click();
-
-  // Close manipulation GUI.
-  cy.get(".vis-close").click();
 }
 Cypress.Commands.add("visEditSelected", visEditSelected);
 
 // eslint-disable-next-line require-jsdoc
 export function visDeleteSelected(): void {
-  // Open manipulation GUI.
-  cy.get(".vis-edit-mode .vis-button.vis-edit-mode").click();
-
   // Delete selected nodes and edges.
   cy.get(".vis-button.vis-delete").click();
-
-  // Close manipulation GUI.
-  cy.get(".vis-close").click();
 }
 Cypress.Commands.add("visDeleteSelected", visDeleteSelected);
 

@@ -68,6 +68,7 @@
       const data = { nodes, edges };
       const options = {
         manipulation: {
+          initiallyActive:true,
           editNode: (nodeData, callback) => {
             callback({
               ...nodeData,
