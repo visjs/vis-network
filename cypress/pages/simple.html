@@ -57,13 +57,32 @@
 
     <div id="mynetwork"></div>
     <script type="text/javascript">
+      let editNumber = 0;
+
       /*
        * create a network
        */
       const container = document.getElementById("mynetwork");
-      const data = { nodes: [], edges: [] };
+      const nodes = new vis.DataSet();
+      const edges = new vis.DataSet();
+      const data = { nodes, edges };
       const options = {
-        manipulation: true,
+        manipulation: {
+          editNode: (nodeData, callback) => {
+            callback({
+              ...nodeData,
+              label: "Edit: " + ++editNumber
+            });
+          },
+          editEdge: {
+            editWithoutDrag: (edgeData, callback) => {
+              callback({
+                ...edgeData,
+                label: "Edit: " + ++editNumber
+              });
+            }
+          }
+        },
         physics: false
       };
       const network = new vis.Network(container, data, options);
@@ -85,6 +104,7 @@
       ["click"].forEach(eventName => {
         network.on(eventName, function(params) {
           console.log({ eventName, params });
+          window.visLastEvents[eventName] = params;
 
           const oldElem = root.querySelector(`#events > .${eventName}`);
           if (oldElem) {
@@ -109,6 +129,11 @@
           root.appendChild(el);
         });
       });
+
+      window.visLastEvents = {};
+      window.visNodes = nodes;
+      window.visEdges = edges;
+      window.visNetwork = network;
     </script>
   </body>
 </html>
