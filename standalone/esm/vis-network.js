@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-05T16:50:31.016Z
+ * @date    2020-06-05T17:40:05.902Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,10 +25,6 @@
  */
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
 
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
@@ -12792,7 +12788,6 @@ var visUtil_min = createCommonjsModule(function (module, exports) {
     });
   });
 });
-unwrapExports(visUtil_min);
 
 getCjsExportFromNamespace(Activator);
 
@@ -14311,10 +14306,6 @@ var internalMetadata = createCommonjsModule(function (module) {
   };
   hiddenKeys[METADATA] = true;
 });
-var internalMetadata_1 = internalMetadata.REQUIRED;
-var internalMetadata_2 = internalMetadata.fastKey;
-var internalMetadata_3 = internalMetadata.getWeakData;
-var internalMetadata_4 = internalMetadata.onFreeze;
 
 var iterate_1 = createCommonjsModule(function (module) {
   var Result = function (stopped, result) {
@@ -38046,11 +38037,6 @@ var hammerUtil = createCommonjsModule(function (module, exports) {
     return pinchRecognizer;
   };
 });
-var hammerUtil_1 = hammerUtil.onTouch;
-var hammerUtil_2 = hammerUtil.onRelease;
-var hammerUtil_3 = hammerUtil.offTouch;
-var hammerUtil_4 = hammerUtil.offRelease;
-var hammerUtil_5 = hammerUtil.disablePreventDefaultVertically;
 
 /**
  * Create the main frame for the Network.
@@ -42199,7 +42185,6 @@ var timsort = createCommonjsModule(function (module, exports) {
     }
   });
 });
-unwrapExports(timsort);
 
 var timsort$1 = timsort;
 
