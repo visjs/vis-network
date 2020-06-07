@@ -90,7 +90,10 @@
               from: { enabled: true },
               to: { enabled: true }
             },
-            endPointOffset: {from: -10 + i, to: 0 - i} // define endPointOffset
+            endPointOffset: {
+              from: -10 + i, 
+              to: 0 - i
+            }
           },
           {
             from: 10 * i + 3,
@@ -99,7 +102,9 @@
             arrows: {
               from: { enabled: true }
             },
-            endPointOffset: {from: -10 + i} // define endPointOffset
+            endPointOffset: {
+              from: -10 + i
+            }
           }
         ]);
       });
