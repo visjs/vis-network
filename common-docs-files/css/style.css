@@ -263,24 +263,25 @@ pre.hidden {
   text-align: center;
 }
 .flag {
+  background-color: rgba(0, 0, 0, 0);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   border: 1px solid #000000;
   box-sizing: content-box;
   display: inline-block;
   height: 1em;
   margin: 0em;
+  vertical-align: middle;
 }
 .flag.en {
-  background-color: rgba(0, 0, 0, 0);
   background-image: url("../img/flags/en.svg");
-  background-repeat: no-repeat;
-  background-size: 2em 1em;
   width: 2em;
 }
 .flag.kr {
-  background-color: rgba(0, 0, 0, 0);
   background-image: url("../img/flags/kr.svg");
-  background-repeat: no-repeat;
-  background-size: 1.5em 1em;
-  margin: 0em 0.25em;
   width: 1.5em;
+}
+.flag.zh {
+  background-image: url("../img/flags/zh.svg");
+  width: 3em;
 }
