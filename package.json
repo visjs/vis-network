@@ -136,7 +136,7 @@
     "postcss-assets": "5.0.0",
     "prettier": "1.19.1",
     "rimraf": "3.0.2",
-    "rollup": "2.15.0",
+    "rollup": "2.16.0",
     "rollup-plugin-analyzer": "3.2.3",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
