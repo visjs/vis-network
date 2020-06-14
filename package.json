@@ -156,7 +156,7 @@
     "uuid": "8.1.0",
     "vis-data": "6.5.3",
     "vis-dev-utils": "2.3.2",
-    "vis-util": "4.2.0"
+    "vis-util": "4.3.0"
   },
   "collective": {
     "type": "opencollective",
