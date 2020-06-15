@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-15T01:49:17.017Z
+ * @date    2020-06-15T03:34:34.855Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -22842,7 +22842,7 @@
 	        var oldData = _ref5.oldData,
 	            update = _ref5.update;
 	        var id = oldData[_this6._idProp];
-	        var updatedData = deepExtend(deepExtend({}, oldData), update);
+	        var updatedData = pureDeepObjectAssign(oldData, update);
 
 	        _this6._data.set(id, updatedData);
 
@@ -24158,6 +24158,7 @@
 
 	var index$2 = /*#__PURE__*/Object.freeze({
 		__proto__: null,
+		DELETE: DELETE,
 		DataSet: DataSet,
 		DataStream: DataStream,
 		DataView: DataView,
