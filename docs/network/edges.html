@@ -127,6 +127,10 @@ var options = {
         type: "arrow"
       }
     },
+    endPointOffset: {
+      from: 0,
+      to: 0
+    },
     arrowStrikethrough: true,
     chosen: true,
     color: {
@@ -323,6 +327,28 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
             <td>Exactly the same as the to object but with an arrowhead at the from node of the edge.</td>
+        </tr>
+        <tr class='toggle collapsible' onclick="toggleTable('optionTable','endPointOffset', this);">
+            <td><span parent="endPointOffset" class="right-caret"></span> endPointOffset </td>
+            <td>Object</td>
+            <td><code>undefined</code></td>
+            <td>Adjust the endpoints. It can be useful if you want to have the endpoints placed on the nodes borders.
+                <br/>This feature is only possible when the arrowStrikethrough is true.
+            </td>
+        </tr>
+        <tr parent="endPointOffset" class="hidden">
+            <td class="indent">endPointOffset.from</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>A negative number move the endpoint nearer the node's midpoint, and a positive number does the opposite.
+            </td>
+        </tr>
+        <tr parent="endPointOffset" class="hidden">
+            <td class="indent">endPointOffset.to</td>
+            <td>Number</td>
+            <td><code>0</code></td>
+            <td>A negative number move the endpoint nearer the node's midpoint, and a positive number does the opposite.
+            </td>
         </tr>
         <tr>
             <td class="indent">arrowStrikethrough</td>
