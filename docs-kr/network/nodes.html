@@ -205,8 +205,8 @@ var options = {
       borderRadius: 6,     // only for box shape
       interpolation: false,  // only for image and circularImage shapes
       useImageSize: false,  // only for image and circularImage shapes
-      useBorderWithImage: false  // only for image shape
-      useImageCoords: false  / only for image shape
+      useBorderWithImage: false,  // only for image shape
+      useImageCoords: false  // only for image shape
     }
     size: 25,
     title: undefined,
@@ -1034,10 +1034,7 @@ mySize = minSize + diff * scale;
             <td class="indent">shapeProperties.useImageCoords</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>This property only applies to the <code>image</code> shape.
-                When true, the image's (0,0) coords are used for drawing.
-                Note that label positioning may break with this option.
-            </td>
+            <td>이 속성은 <code> image </ code> 및 <code> circularImage </ code> 모양에만 적용됩니다. 참이면 이미지의 (0,0) 좌표가 그리기에 사용됩니다.</td>
         </tr>
         <tr>
             <td>size</td>
