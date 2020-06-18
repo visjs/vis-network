@@ -206,6 +206,7 @@ var options = {
       interpolation: false,  // only for image and circularImage shapes
       useImageSize: false,  // only for image and circularImage shapes
       useBorderWithImage: false  // only for image shape
+      useImageCoords: false  / only for image shape
     }
     size: 25,
     title: undefined,
@@ -269,7 +270,7 @@ network.setOptions(options);
             <td>
               참일때, Node를 선택하거나 또는 Node에서 맴도는 것은 Node 또는 Node 라벨의 특성을 default에 따라 바꿔줍니다.
               거짓일때, Node를 선택할 때 Node 또는 해당 label에 변화가 발생하지 않습니다.
-              object가 제공된 경우에는 Node를 선택할 때 Node 및 label의 특성을 보다 세부적으로 조정 할 수 있습니다.             
+              object가 제공된 경우에는 Node를 선택할 때 Node 및 label의 특성을 보다 세부적으로 조정 할 수 있습니다.
             </td>
         </tr>
         <tr parent="chosen" class="hidden">
@@ -281,7 +282,7 @@ network.setOptions(options);
             거짓일때, Node를 선택할 때 Node 또는 해당 label에 변화가 발생하지 않습니다.
             <p>
              function이 제공되어진다면, Node가 선택될 때 호출되어집니다.
-              
+
                 <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
@@ -360,7 +361,7 @@ network.setOptions(options);
             <td>String</td>
             <td><code>'#2B7CE9'</code></td>
             <td>
-            선택하지 않거나 또는 맴돌지 않는 Node의 테두리의 색상 <i>(상호작용 모듈에 hover가 사용가능하다고 가정한다면)<i>.              
+            선택하지 않거나 또는 맴돌지 않는 Node의 테두리의 색상 <i>(상호작용 모듈에 hover가 사용가능하다고 가정한다면)<i>.
             </td>
         </tr>
         <tr parent="color" class="hidden">
@@ -411,7 +412,7 @@ network.setOptions(options);
             <td>String</td>
             <td><code>'#D2E5FF'</code></td>
             <td> 마우스로 이리저리 이동하는 Node의 배경의 색상 <i>(상호작용 모듈안에서 호버가 활성화 되어있다고 가정)</i>.</td>
-            
+
         </tr>
         <tr>
             <td>opacity</td>
@@ -426,7 +427,7 @@ network.setOptions(options);
             <td>Object or Boolean</td>
             <td><code>Object</code></td>
             <td>
-            참일 때, Node는 움직이지 않고 물리 시뮬레이션의 일부입니다. 하나의 오브젝트로 정의된다면, X 또는 Y 방향으로 움직이는것이 불가능 합니다. 
+            참일 때, Node는 움직이지 않고 물리 시뮬레이션의 일부입니다. 하나의 오브젝트로 정의된다면, X 또는 Y 방향으로 움직이는것이 불가능 합니다.
             </td>
         </tr>
         <tr parent="fixed" class="hidden">
@@ -672,7 +673,7 @@ network.setOptions(options);
             <td class="indent">heightConstraint.minimum</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td> 특정 한 수가 있다면, 그 값은 Node의 최소 높이로써 사용되어 집니다. Node의 높이는 그 값보다 작다면 최소치로 설정 될 것입니다. 
+            <td> 특정 한 수가 있다면, 그 값은 Node의 최소 높이로써 사용되어 집니다. Node의 높이는 그 값보다 작다면 최소치로 설정 될 것입니다.
           </td>
         </tr>
         <tr parent="heightConstraint" class="hidden">
@@ -739,7 +740,7 @@ network.setOptions(options);
             <td>Object or String</td>
             <td><code>undefined</code></td>
             <td>
-            모양이 <code>image</code> 또는 <code>circularImage</code>으로 설정된 경우, 이 옵션은 이미지에 대한 URL입니다. 이미지를 찾을 수 없는 경우, brokenImage 옵션이 사용될 수 있습니다. 
+            모양이 <code>image</code> 또는 <code>circularImage</code>으로 설정된 경우, 이 옵션은 이미지에 대한 URL입니다. 이미지를 찾을 수 없는 경우, brokenImage 옵션이 사용될 수 있습니다.
             <br><i>참고: Firefox에는 <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=700533">SVG 그리기 버그</a>가 있으며, 한가지 <a href="https://stackoverflow.com/a/28692538/469898"> 해결방안 </a> - width/height 특성들을 루트 &lt;svg&gt; SVG의 요소인 추가하는 것</a></i>.</td>
         </tr>
         <tr parent="image" class="hidden">
@@ -854,7 +855,7 @@ network.setOptions(options);
             <td><code>Object</code></td>
             <td>
               <code>value</code> 옵션을 분명히 한다면, Node의 크기는 이 객체의 속성에 따라서 조정될 것입니다. 모든 Node의 모양은 바뀔수 있지만, 몇몇의 Node는 label의 크기에 따른 크기가 활성화 됐을 때만 크기를 조정할 수 있습니다.
-              오직 label의 조정이 활성화 된 경우: 
+              오직 label의 조정이 활성화 된 경우:
                 <code>ellipse</code>, <code>circle</code>, <code>database</code>, <code>box</code>, <code>text</code>.
                항상 조정 가능한 경우:
                 <code>image</code>, <code>circularImage</code>, <code>diamond</code>, <code>dot</code>, <code>star</code>, <code>triangle</code>, <code>triangleDown</code>, <code>hexagon</code>, <code>square</code>, <code>icon</code>.
@@ -910,7 +911,7 @@ network.setOptions(options);
             <td class="indent2">scaling.label.drawThreshold</td>
             <td>Number</td>
             <td><code>5</code></td>
-            <td> 축소할 떄, 글꼴을 작게 그려질 것입니다. 글꼴을 그릴 때, 하한을 정의합니다. 글꼴 조정을 사용할 떄,중요한 Node의 label을 먼저 가장 크게 보여주는 기능과 함께 이것을 사용할 수 있습니다. 
+            <td> 축소할 떄, 글꼴을 작게 그려질 것입니다. 글꼴을 그릴 때, 하한을 정의합니다. 글꼴 조정을 사용할 떄,중요한 Node의 label을 먼저 가장 크게 보여주는 기능과 함께 이것을 사용할 수 있습니다.
             </td>
         </tr>
         <tr parent="scaling" class="hidden">
@@ -929,7 +930,7 @@ function (min,max,total,value) {
   }
 }
 </pre>
-                function은 집합의 최솟값과 최댓값, 모든 값의 총합, 그리고 최종적으로 Node와 엣지가 작동한 값을 받습니다. <b> 0과 1의 값이 반환 되어야만 합니다.</b> Node와 엣지는 다음 과정에 따라 계산됩니다: 
+                function은 집합의 최솟값과 최댓값, 모든 값의 총합, 그리고 최종적으로 Node와 엣지가 작동한 값을 받습니다. <b> 0과 1의 값이 반환 되어야만 합니다.</b> Node와 엣지는 다음 과정에 따라 계산됩니다:
 <pre>
 var scale = customScalingFunction(min,max,total,value);
 var diff = maxSize - minSize;
@@ -948,7 +949,7 @@ mySize = minSize + diff * scale;
             <td class="indent">shadow.enabled</td>
             <td>Boolean</td>
             <td><code>false</code></td>
-            <td>shadow 던지기로 전환합니다. 이러한 옵션이 정의되지 않는다면, 이 object의 어떤 속성들이 정의되어 있다면 true로 설정됩니다. 
+            <td>shadow 던지기로 전환합니다. 이러한 옵션이 정의되지 않는다면, 이 object의 어떤 속성들이 정의되어 있다면 true로 설정됩니다.
             </td>
         </tr>
         <tr parent="shadow" class="hidden">
@@ -979,8 +980,8 @@ mySize = minSize + diff * scale;
             <td>shape</td>
             <td>String</td>
             <td><code>'ellipse'</code></td>
-            <td> shape는 Node가 어떻게 보여지는지를 정의합니다. Node에는 두가지 유형이 있습니다. 하나는 label을 안쪽에 가지고 있고, 다른 하나는 label을 아래쪽에 지니고 있습니다. 
-            label을 Node 안쪽에 갖고 있는 유형은 다음과 같습니다: 
+            <td> shape는 Node가 어떻게 보여지는지를 정의합니다. Node에는 두가지 유형이 있습니다. 하나는 label을 안쪽에 가지고 있고, 다른 하나는 label을 아래쪽에 지니고 있습니다.
+            label을 Node 안쪽에 갖고 있는 유형은 다음과 같습니다:
                 <code>ellipse</code>, <code>circle</code>, <code>database</code>, <code>box</code>, <code>text</code>.
             label을 Node 바깥쪽에 갖고 있는 유형은 다음과 같습니다:
                 <code>image</code>, <code>circularImage</code>,
@@ -1027,6 +1028,15 @@ mySize = minSize + diff * scale;
             <td>Boolean</td>
             <td><code>false</code></td>
             <td>이 속성은 <code> image </ code> 모양에만 적용됩니다. 참이면 색상 개체가 사용됩니다. 배경색이있는 사각형은 그것 뒤에 그려지며, 테두리를 가지게 됩니다. 이는 모든 테두리 옵션들이 고려되고 있음을 의미하고 있습니다.
+            </td>
+        </tr>
+        <tr parent="shapeProperties" class="hidden">
+            <td class="indent">shapeProperties.useImageCoords</td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>This property only applies to the <code>image</code> shape.
+                When true, the image's (0,0) coords are used for drawing.
+                Note that label positioning may break with this option.
             </td>
         </tr>
         <tr>
