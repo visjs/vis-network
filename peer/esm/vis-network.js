@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-15T03:32:11.435Z
+ * @date    2020-06-19T07:02:43.778Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3370,8 +3370,8 @@ function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) le
  *
  * utilitie collection for visjs
  *
- * @version 4.3.0
- * @date    2020-06-14T16:42:10.465Z
+ * @version 4.3.2
+ * @date    2020-06-15T14:15:22.151Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -9759,8 +9759,8 @@ var visUtil_min = createCommonjsModule(function (module, exports) {
    *
    * utilitie collection for visjs
    *
-   * @version 4.3.0
-   * @date    2020-06-14T16:42:10.465Z
+   * @version 4.3.2
+   * @date    2020-06-15T14:15:22.151Z
    *
    * @copyright (c) 2011-2017 Almende B.V, http://almende.com
    * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -20562,13 +20562,23 @@ var EdgeBase = /*#__PURE__*/function () {
       var threshold = 0.05;
       var pos;
       var middle = (low + high) * 0.5;
+      var endPointOffset = 0;
+
+      if (this.options.arrowStrikethrough === true) {
+        if (direction === -1) {
+          endPointOffset = this.options.endPointOffset.from;
+        } else if (direction === 1) {
+          endPointOffset = this.options.endPointOffset.to;
+        }
+      }
+
       var iteration = 0;
 
       do {
         middle = (low + high) * 0.5;
         pos = this._pointOnCircle(x, y, radius, middle);
         var angle = Math.atan2(nearNode.y - pos.y, nearNode.x - pos.x);
-        var distanceToBorder = nearNode.distanceToBorder(ctx, angle);
+        var distanceToBorder = nearNode.distanceToBorder(ctx, angle) + endPointOffset;
         var distanceToPoint = Math.sqrt(Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2));
         var difference = distanceToBorder - distanceToPoint;
 
@@ -21068,10 +21078,16 @@ var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
       var node = this.to;
       var pos;
       var middle;
+      var endPointOffset = this.options.endPointOffset ? this.options.endPointOffset.to : 0;
 
       if (nearNode.id === this.from.id) {
         node = this.from;
         from = true;
+        endPointOffset = this.options.endPointOffset ? this.options.endPointOffset.from : 0;
+      }
+
+      if (this.options.arrowStrikethrough === false) {
+        endPointOffset = 0;
       }
 
       var iteration = 0;
@@ -21080,7 +21096,7 @@ var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
         middle = (low + high) * 0.5;
         pos = this.getPoint(middle, viaNode);
         var angle = Math.atan2(node.y - pos.y, node.x - pos.x);
-        var distanceToBorder = node.distanceToBorder(ctx, angle);
+        var distanceToBorder = node.distanceToBorder(ctx, angle) + endPointOffset;
         var distanceToPoint = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
         var difference = distanceToBorder - distanceToPoint;
 
@@ -22374,6 +22390,28 @@ var Edge = /*#__PURE__*/function () {
       } // get the via node from the edge type
 
 
+      var viaNode = this.edgeType.getViaNode(); // draw line and label
+
+      this.edgeType.drawLine(ctx, values, this.selected, this.hover, viaNode);
+      this.drawLabel(ctx, viaNode);
+    }
+    /**
+    * Redraw arrows
+    * Draw this arrows in the given canvas
+    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+    * @param {CanvasRenderingContext2D}   ctx
+    */
+
+  }, {
+    key: "drawArrows",
+    value: function drawArrows(ctx) {
+      var values = this.getFormattingValues();
+
+      if (values.hidden) {
+        return;
+      } // get the via node from the edge type
+
+
       var viaNode = this.edgeType.getViaNode();
       var arrowData = {}; // restore edge targets to defaults
 
@@ -22429,23 +22467,8 @@ var Edge = /*#__PURE__*/function () {
         if (values.middleArrowImageHeight) {
           arrowData.middle.imageHeight = values.middleArrowImageHeight;
         }
-      } // draw everything
+      }
 
-
-      this.edgeType.drawLine(ctx, values, this.selected, this.hover, viaNode);
-      this.drawArrows(ctx, arrowData, values);
-      this.drawLabel(ctx, viaNode);
-    }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {Object} arrowData
-     * @param {ArrowOptions} values
-     */
-
-  }, {
-    key: "drawArrows",
-    value: function drawArrows(ctx, arrowData, values) {
       if (values.fromArrow) {
         this.edgeType.drawArrowHead(ctx, values, this.selected, this.hover, arrowData.from);
       }
@@ -22687,9 +22710,28 @@ var Edge = /*#__PURE__*/function () {
       var allowDeletion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
       var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-      var fields = ['arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'selfReference', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
+      var fields = ['endPointOffset', 'arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'selfReference', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
 
-      selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only copy label if it's a legal value.
+      selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only use endPointOffset values (from and to) if it's valid values
+
+      if (newOptions.endPointOffset !== undefined && newOptions.endPointOffset.from !== undefined) {
+        if (_isFinite$2(newOptions.endPointOffset.from)) {
+          parentOptions.endPointOffset.from = newOptions.endPointOffset.from;
+        } else {
+          parentOptions.endPointOffset.from = globalOptions.endPointOffset.from !== undefined ? globalOptions.endPointOffset.from : 0;
+          console.error('endPointOffset.from is not a valid number');
+        }
+      }
+
+      if (newOptions.endPointOffset !== undefined && newOptions.endPointOffset.to !== undefined) {
+        if (_isFinite$2(newOptions.endPointOffset.to)) {
+          parentOptions.endPointOffset.to = newOptions.endPointOffset.to;
+        } else {
+          parentOptions.endPointOffset.to = globalOptions.endPointOffset.to !== undefined ? globalOptions.endPointOffset.to : 0;
+          console.error('endPointOffset.to is not a valid number');
+        }
+      } // Only copy label if it's a legal value.
+
 
       if (ComponentUtil.isValidLabel(newOptions.label)) {
         parentOptions.label = newOptions.label;
@@ -22874,6 +22916,10 @@ var EdgesHandler = /*#__PURE__*/function () {
           scaleFactor: 1,
           type: 'arrow'
         }
+      },
+      endPointOffset: {
+        from: 0,
+        to: 0
       },
       arrowStrikethrough: true,
       color: {
@@ -27561,6 +27607,13 @@ var CanvasRenderer = /*#__PURE__*/function () {
 
         if (this.dragging === false || this.dragging === true && this.options.hideNodesOnDrag === false) {
           this._drawNodes(ctx, hidden);
+        } // draw the arrows last so they will be at the top
+
+
+        if (hidden === false) {
+          if ((this.dragging === false || this.dragging === true && this.options.hideEdgesOnDrag === false) && (this.zooming === false || this.zooming === true && this.options.hideEdgesOnZoom === false)) {
+            this._drawArrows(ctx);
+          }
         }
 
         ctx.beginPath();
@@ -27681,13 +27734,32 @@ var CanvasRenderer = /*#__PURE__*/function () {
     value: function _drawEdges(ctx) {
       var edges = this.body.edges;
       var edgeIndices = this.body.edgeIndices;
-      var edge;
 
       for (var i = 0; i < edgeIndices.length; i++) {
-        edge = edges[edgeIndices[i]];
+        var edge = edges[edgeIndices[i]];
 
         if (edge.connected === true) {
           edge.draw(ctx);
+        }
+      }
+    }
+    /**
+     * Redraw all arrows
+     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
+     * @private
+     */
+
+  }, {
+    key: "_drawArrows",
+    value: function _drawArrows(ctx) {
+      var edges = this.body.edges;
+      var edgeIndices = this.body.edgeIndices;
+
+      for (var i = 0; i < edgeIndices.length; i++) {
+        var edge = edges[edgeIndices[i]];
+
+        if (edge.connected === true) {
+          edge.drawArrows(ctx);
         }
       }
     }
@@ -38319,6 +38391,18 @@ var allOptions$1 = {
         object: object
       }
     },
+    endPointOffset: {
+      from: {
+        number: number
+      },
+      to: {
+        number: number
+      },
+      __type__: {
+        object: object,
+        number: number
+      }
+    },
     arrowStrikethrough: {
       boolean: bool
     },
@@ -39554,6 +39638,10 @@ var configureOptions = {
         scaleFactor: [1, 0, 3, 0.05],
         type: 'arrow'
       }
+    },
+    endPointOffset: {
+      from: [0, -10, 10, 1],
+      to: [0, -10, 10, 1]
     },
     arrowStrikethrough: true,
     color: {
