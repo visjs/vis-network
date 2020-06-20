@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-19T17:58:17.678Z
+ * @date    2020-06-20T12:52:02.268Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -42575,8 +42575,8 @@
 
 	  }, {
 	    key: "fake_use",
-	    value: function fake_use() {} // Do nothing special
-
+	    value: function fake_use() {// Do nothing special
+	    }
 	    /**
 	     * Type to use to translate dynamic curves to, in the case of hierarchical layout.
 	     * Dynamic curves do not work for these.
