@@ -69,7 +69,11 @@ jobs:
             libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 \
             libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release wget \
             xdg-utils
-      - run: npm run generate-examples-index
+      - run:
+          command: npm run generate-examples-index
+          # One of the examples sports really massive network that takes long to
+          # render and would regularly exceed the default timeout of 10 minues.
+          no_output_timeout: 20m
 
       - persist_to_workspace:
           root: ..
