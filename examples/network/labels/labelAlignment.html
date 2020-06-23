@@ -20,10 +20,9 @@
 
 <body>
 
-<p>Labels of edges can be aligned to edges in various ways.</p>
-<p>Text-alignment within node labels can be 'left' or 'center', other font alignments not implemented.</p>
-<p>Label alignment (placement of label &quot;box&quot;) for nodes (top, bottom, left, right, inside) is
-planned but not in vis yet.</p>
+<p>Labels of edges can be aligned to edges either: <b>horizontal</b>, middle, top, or bottom.</p>
+<p>Text-alignment within node labels can be aligned: <b>center</b>, left, or right.</p>
+<p>For dot-like nodes, labels can be positioned at: <b>bottom</b>, inside, top, left, or right.</p>
 <p>The click event is captured and displayed to illustrate how the clicking on labels works.
 You can drag the nodes over each other to see how this influences the click event values.
 </p>
@@ -34,20 +33,28 @@ You can drag the nodes over each other to see how this influences the click even
 <script type="text/javascript">
   // create an array with nodes
   var nodes = [
-    {id: 1, label: 'Node 1'},
-    {id: 2, label: 'Node 2'},
-    {id: 3, label: 'Node 3:\nLeft-Aligned', font: {'face': 'Monospace', align: 'left'}},
-    {id: 4, label: 'Node 4'},
-    {id: 5, label: 'Node 5\nLeft-Aligned box', shape: 'box',
-     font: {'face': 'Monospace', align: 'left'}}
+    {id: 1, label: 'Node 1:\nCenter-Aligned\n(default)'},
+    {id: 2, label: 'Node 2:\nLeft-Aligned', font: {align: 'left'}},
+    {id: 3, label: 'Node 3:\nLeft-Aligned Box', shape: 'box', font: {align: 'left'}},
+    {id: 4, label: 'Node 4:\nRight-Aligned Box', shape: 'box', font: {align: 'right'}},
+    {id: 5, label: 'Node 5:\nBottom Label\n(default)', shape: 'dot'},
+    {id: 6, label: 'Node 6:\nTop Label', shape: 'dot', labelPosition:'top', color:"yellow"},
+    {id: 7, label: 'Node 7:\nInside Label', shape: 'dot', labelPosition:'inside', color:"yellow"},
+    {id: 8, label: 'Node 8:\nLeft Label', shape: 'dot', labelPosition:'left', color:"orange"},
+    {id: 9, label: 'Node 9:\nRight Label', shape: 'dot', labelPosition:'right', color:"orange"},
   ];
 
   // create an array with edges
   var edges = [
     {from: 1, to: 2, label: 'middle',     font: {align: 'middle'}},
-    {from: 1, to: 3, label: 'top',        font: {align: 'top'}},
-    {from: 2, to: 4, label: 'horizontal', font: {align: 'horizontal'}},
-    {from: 2, to: 5, label: 'bottom',     font: {align: 'bottom'}}
+    {from: 2, to: 3, label: 'top',        font: {align: 'top'}},
+    {from: 3, to: 4, label: 'horizontal', font: {align: 'horizontal'}},
+    {from: 4, to: 1, label: 'bottom',     font: {align: 'bottom'}},
+    {from: 1, to: 5},
+    {from: 5, to: 6},
+    {from: 5, to: 7},
+    {from: 5, to: 8},
+    {from: 8, to: 9},
   ];
 
   // create a network
