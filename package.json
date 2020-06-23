@@ -146,7 +146,7 @@
     "rollup-plugin-terser": "6.1.0",
     "rollup-plugin-typescript2": "0.27.1",
     "sazerac": "2.0.0",
-    "semantic-release": "17.0.8",
+    "semantic-release": "17.1.0",
     "serve": "11.3.2",
     "sinon": "9.0.2",
     "snap-shot-it": "7.9.3",
