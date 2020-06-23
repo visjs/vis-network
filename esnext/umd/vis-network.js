@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-23T08:08:23.421Z
+ * @date    2020-06-23T08:22:33.940Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28,8 +28,8 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('keycharm'), require('@egjs/hammerjs'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('timsort')) :
   typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'keycharm', '@egjs/hammerjs', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'timsort'], factory) :
   (global = global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.keycharm, global.Hammer, global.vis, global.uuid, global.timsort));
-}(this, (function (exports, componentEmitter, util, keycharm, hammerjs, esnext, uuid, TimSort) {
-  componentEmitter = componentEmitter && Object.prototype.hasOwnProperty.call(componentEmitter, 'default') ? componentEmitter['default'] : componentEmitter;
+}(this, (function (exports, Emitter, esnext, keycharm, hammerjs, esnext$1, uuid, TimSort) {
+  Emitter = Emitter && Object.prototype.hasOwnProperty.call(Emitter, 'default') ? Emitter['default'] : Emitter;
   keycharm = keycharm && Object.prototype.hasOwnProperty.call(keycharm, 'default') ? keycharm['default'] : keycharm;
   hammerjs = hammerjs && Object.prototype.hasOwnProperty.call(hammerjs, 'default') ? hammerjs['default'] : hammerjs;
   var TimSort__default = 'default' in TimSort ? TimSort['default'] : TimSort;
@@ -1600,21 +1600,11 @@
     return graphData;
   }
 
-  // exports
-  var parseDOT_1   = parseDOT;
-  var DOTToGraph_1 = DOTToGraph;
-
-  var dotparser = {
-  	parseDOT: parseDOT_1,
-  	DOTToGraph: DOTToGraph_1
-  };
-
-  var dotparser$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.assign(/*#__PURE__*/Object.create(null), dotparser, {
-    'default': dotparser,
-    __moduleExports: dotparser,
-    parseDOT: parseDOT_1,
-    DOTToGraph: DOTToGraph_1
-  }));
+  var dotparser = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    parseDOT: parseDOT,
+    DOTToGraph: DOTToGraph
+  });
 
   /**
    * Convert Gephi to Vis.
@@ -1726,15 +1716,6 @@
     parseGephi: parseGephi
   });
 
-  var undefined$1 = undefined;
-
-  var Activator = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': undefined$1
-  });
-
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
   function createCommonjsModule(fn, basedir, module) {
   	return module = {
   	  path: basedir,
@@ -1743,10 +1724,6 @@
         return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
       }
   	}, fn(module, module.exports), module.exports;
-  }
-
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
   }
 
   function commonjsRequire () {
@@ -1791,38 +1768,6 @@
   }
   });
 
-  var visUtil_min = createCommonjsModule(function (module, exports) {
-  /**
-   * vis-util
-   * https://github.com/visjs/vis-util
-   *
-   * utilitie collection for visjs
-   *
-   * @version 4.3.2
-   * @date    2020-06-15T14:15:22.151Z
-   *
-   * @copyright (c) 2011-2017 Almende B.V, http://almende.com
-   * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
-   *
-   * @license
-   * vis.js is dual licensed under both
-   *
-   *   1. The Apache 2.0 License
-   *      http://www.apache.org/licenses/LICENSE-2.0
-   *
-   *   and
-   *
-   *   2. The MIT License
-   *      http://opensource.org/licenses/MIT
-   *
-   * vis.js may be distributed under either license.
-   */
-  !function(t,r){r(exports);}(commonjsGlobal,(function(t){var r=function(t){try{return !!t()}catch(t){return !0}},e={}.toString,n=function(t){return e.call(t).slice(8,-1)},o="".split,i=r((function(){return !Object("z").propertyIsEnumerable(0)}))?function(t){return "String"==n(t)?o.call(t,""):Object(t)}:Object,a=function(t){if(null==t)throw TypeError("Can't call method on "+t);return t},u=function(t){return i(a(t))},c={},f="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof commonjsGlobal?commonjsGlobal:"undefined"!=typeof self?self:{};function l(t,r,e){return t(e={path:r,exports:{},require:function(t,r){return function(){throw new Error("Dynamic requires are not currently supported by @rollup/plugin-commonjs")}(null==r&&e.path)}},e.exports),e.exports}function s(t){return t&&t.default||t}var p=function(t){return t&&t.Math==Math&&t},v=p("object"==typeof globalThis&&globalThis)||p("object"==typeof window&&window)||p("object"==typeof self&&self)||p("object"==typeof f&&f)||Function("return this")(),h=!r((function(){return 7!=Object.defineProperty({},1,{get:function(){return 7}})[1]})),d=function(t){return "object"==typeof t?null!==t:"function"==typeof t},y=v.document,g=d(y)&&d(y.createElement),b=function(t){return g?y.createElement(t):{}},m=!h&&!r((function(){return 7!=Object.defineProperty(b("div"),"a",{get:function(){return 7}}).a})),O=function(t){if(!d(t))throw TypeError(String(t)+" is not an object");return t},w=function(t,r){if(!d(t))return t;var e,n;if(r&&"function"==typeof(e=t.toString)&&!d(n=e.call(t)))return n;if("function"==typeof(e=t.valueOf)&&!d(n=e.call(t)))return n;if(!r&&"function"==typeof(e=t.toString)&&!d(n=e.call(t)))return n;throw TypeError("Can't convert object to primitive value")},j=Object.defineProperty,S={f:h?j:function(t,r,e){if(O(t),r=w(r,!0),O(e),m)try{return j(t,r,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported");return "value"in e&&(t[r]=e.value),t}},A=function(t,r){return {enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:r}},E=h?function(t,r,e){return S.f(t,r,A(1,e))}:function(t,r,e){return t[r]=e,t},x=v["__core-js_shared__"]||function(t,r){try{E(v,t,r);}catch(e){v[t]=r;}return r}("__core-js_shared__",{}),P=Function.toString;"function"!=typeof x.inspectSource&&(x.inspectSource=function(t){return P.call(t)});var T,k,M,I=x.inspectSource,C=v.WeakMap,L="function"==typeof C&&/native code/.test(I(C)),D={}.hasOwnProperty,N=function(t,r){return D.call(t,r)},_=l((function(t){(t.exports=function(t,r){return x[t]||(x[t]=void 0!==r?r:{})})("versions",[]).push({version:"3.6.4",mode:"pure",copyright:"© 2020 Denis Pushkarev (zloirock.ru)"});})),R=0,F=Math.random(),B=function(t){return "Symbol("+String(void 0===t?"":t)+")_"+(++R+F).toString(36)},G=_("keys"),V=function(t){return G[t]||(G[t]=B(t))},H={},Q=v.WeakMap;if(L){var $=new Q,W=$.get,q=$.has,z=$.set;T=function(t,r){return z.call($,t,r),r},k=function(t){return W.call($,t)||{}},M=function(t){return q.call($,t)};}else {var U=V("state");H[U]=!0,T=function(t,r){return E(t,U,r),r},k=function(t){return N(t,U)?t[U]:{}},M=function(t){return N(t,U)};}var J,K,Y,X={set:T,get:k,has:M,enforce:function(t){return M(t)?k(t):T(t,{})},getterFor:function(t){return function(r){var e;if(!d(r)||(e=k(r)).type!==t)throw TypeError("Incompatible receiver, "+t+" required");return e}}},Z={}.propertyIsEnumerable,tt=Object.getOwnPropertyDescriptor,rt={f:tt&&!Z.call({1:2},1)?function(t){var r=tt(this,t);return !!r&&r.enumerable}:Z},et=Object.getOwnPropertyDescriptor,nt={f:h?et:function(t,r){if(t=u(t),r=w(r,!0),m)try{return et(t,r)}catch(t){}if(N(t,r))return A(!rt.f.call(t,r),t[r])}},ot=/#|\.prototype\./,it=function(t,e){var n=ut[at(t)];return n==ft||n!=ct&&("function"==typeof e?r(e):!!e)},at=it.normalize=function(t){return String(t).replace(ot,".").toLowerCase()},ut=it.data={},ct=it.NATIVE="N",ft=it.POLYFILL="P",lt=it,st={},pt=function(t,r,e){if(function(t){if("function"!=typeof t)throw TypeError(String(t)+" is not a function")}(t),void 0===r)return t;switch(e){case 0:return function(){return t.call(r)};case 1:return function(e){return t.call(r,e)};case 2:return function(e,n){return t.call(r,e,n)};case 3:return function(e,n,o){return t.call(r,e,n,o)}}return function(){return t.apply(r,arguments)}},vt=nt.f,ht=function(t){var r=function(r,e,n){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(r);case 2:return new t(r,e)}return new t(r,e,n)}return t.apply(this,arguments)};return r.prototype=t.prototype,r},dt=function(t,r){var e,n,o,i,a,u,c,f,l=t.target,s=t.global,p=t.stat,h=t.proto,d=s?v:p?v[l]:(v[l]||{}).prototype,y=s?st:st[l]||(st[l]={}),g=y.prototype;for(o in r)e=!lt(s?o:l+(p?".":"#")+o,t.forced)&&d&&N(d,o),a=y[o],e&&(u=t.noTargetGet?(f=vt(d,o))&&f.value:d[o]),i=e&&u?u:r[o],e&&typeof a==typeof i||(c=t.bind&&e?pt(i,v):t.wrap&&e?ht(i):h&&"function"==typeof i?pt(Function.call,i):i,(t.sham||i&&i.sham||a&&a.sham)&&E(c,"sham",!0),y[o]=c,h&&(N(st,n=l+"Prototype")||E(st,n,{}),st[n][o]=i,t.real&&g&&!g[o]&&E(g,o,i)));},yt=function(t){return Object(a(t))},gt=!r((function(){function t(){}return t.prototype.constructor=null,Object.getPrototypeOf(new t)!==t.prototype})),bt=V("IE_PROTO"),mt=Object.prototype,Ot=gt?Object.getPrototypeOf:function(t){return t=yt(t),N(t,bt)?t[bt]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?mt:null},wt=!!Object.getOwnPropertySymbols&&!r((function(){return !String(Symbol())})),jt=wt&&!Symbol.sham&&"symbol"==typeof Symbol.iterator,St=_("wks"),At=v.Symbol,Et=jt?At:At&&At.withoutSetter||B,xt=function(t){return N(St,t)||(wt&&N(At,t)?St[t]=At[t]:St[t]=Et("Symbol."+t)),St[t]},Pt=(xt("iterator"),!1);[].keys&&("next"in(Y=[].keys())?(K=Ot(Ot(Y)))!==Object.prototype&&(J=K):Pt=!0),null==J&&(J={});var Tt,kt={IteratorPrototype:J,BUGGY_SAFARI_ITERATORS:Pt},Mt=Math.ceil,It=Math.floor,Ct=function(t){return isNaN(t=+t)?0:(t>0?It:Mt)(t)},Lt=Math.min,Dt=function(t){return t>0?Lt(Ct(t),9007199254740991):0},Nt=Math.max,_t=Math.min,Rt=function(t,r){var e=Ct(t);return e<0?Nt(e+r,0):_t(e,r)},Ft=function(t){return function(r,e,n){var o,i=u(r),a=Dt(i.length),c=Rt(n,a);if(t&&e!=e){for(;a>c;)if((o=i[c++])!=o)return !0}else for(;a>c;c++)if((t||c in i)&&i[c]===e)return t||c||0;return !t&&-1}},Bt={includes:Ft(!0),indexOf:Ft(!1)},Gt=Bt.indexOf,Vt=function(t,r){var e,n=u(t),o=0,i=[];for(e in n)!N(H,e)&&N(n,e)&&i.push(e);for(;r.length>o;)N(n,e=r[o++])&&(~Gt(i,e)||i.push(e));return i},Ht=["constructor","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","toLocaleString","toString","valueOf"],Qt=Object.keys||function(t){return Vt(t,Ht)},$t=h?Object.defineProperties:function(t,r){O(t);for(var e,n=Qt(r),o=n.length,i=0;o>i;)S.f(t,e=n[i++],r[e]);return t},Wt=function(t){return "function"==typeof t?t:void 0},qt=function(t,r){return arguments.length<2?Wt(st[t])||Wt(v[t]):st[t]&&st[t][r]||v[t]&&v[t][r]},zt=qt("document","documentElement"),Ut=V("IE_PROTO"),Jt=function(){},Kt=function(t){return "<script>"+t+"<\/script>"},Yt=function(){try{Tt=document.domain&&new ActiveXObject("htmlfile");}catch(t){}var t,r;Yt=Tt?function(t){t.write(Kt("")),t.close();var r=t.parentWindow.Object;return t=null,r}(Tt):((r=b("iframe")).style.display="none",zt.appendChild(r),r.src=String("javascript:"),(t=r.contentWindow.document).open(),t.write(Kt("document.F=Object")),t.close(),t.F);for(var e=Ht.length;e--;)delete Yt.prototype[Ht[e]];return Yt()};H[Ut]=!0;var Xt=Object.create||function(t,r){var e;return null!==t?(Jt.prototype=O(t),e=new Jt,Jt.prototype=null,e[Ut]=t):e=Yt(),void 0===r?e:$t(e,r)},Zt={};Zt[xt("toStringTag")]="z";var tr="[object z]"===String(Zt),rr=xt("toStringTag"),er="Arguments"==n(function(){return arguments}()),nr=tr?n:function(t){var r,e,o;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(e=function(t,r){try{return t[r]}catch(t){}}(r=Object(t),rr))?e:er?n(r):"Object"==(o=n(r))&&"function"==typeof r.callee?"Arguments":o},or=tr?{}.toString:function(){return "[object "+nr(this)+"]"},ir=S.f,ar=xt("toStringTag"),ur=function(t,r,e,n){if(t){var o=e?t:t.prototype;N(o,ar)||ir(o,ar,{configurable:!0,value:r}),n&&!tr&&E(o,"toString",or);}},cr=kt.IteratorPrototype,fr=function(){return this},lr=(Object.setPrototypeOf||"__proto__"in{}&&function(){var t,r=!1,e={};try{(t=Object.getOwnPropertyDescriptor(Object.prototype,"__proto__").set).call(e,[]),r=e instanceof Array;}catch(t){}}(),function(t,r,e,n){n&&n.enumerable?t[r]=e:E(t,r,e);}),sr=kt.IteratorPrototype,pr=kt.BUGGY_SAFARI_ITERATORS,vr=xt("iterator"),hr=function(){return this},dr=function(t,r,e,n,o,i,a){!function(t,r,e){var n=r+" Iterator";t.prototype=Xt(cr,{next:A(1,e)}),ur(t,n,!1,!0),c[n]=fr;}(e,r,n);var u,f,l,s=function(t){if(t===o&&y)return y;if(!pr&&t in h)return h[t];switch(t){case"keys":case"values":case"entries":return function(){return new e(this,t)}}return function(){return new e(this)}},p=r+" Iterator",v=!1,h=t.prototype,d=h[vr]||h["@@iterator"]||o&&h[o],y=!pr&&d||s(o),g="Array"==r&&h.entries||d;if(g&&(u=Ot(g.call(new t)),sr!==Object.prototype&&u.next&&(ur(u,p,!0,!0),c[p]=hr)),"values"==o&&d&&"values"!==d.name&&(v=!0,y=function(){return d.call(this)}),a&&h[vr]!==y&&E(h,vr,y),c[r]=y,o)if(f={values:s("values"),keys:i?y:s("keys"),entries:s("entries")},a)for(l in f)(pr||v||!(l in h))&&lr(h,l,f[l]);else dt({target:r,proto:!0,forced:pr||v},f);return f},yr=X.set,gr=X.getterFor("Array Iterator");dr(Array,"Array",(function(t,r){yr(this,{type:"Array Iterator",target:u(t),index:0,kind:r});}),(function(){var t=gr(this),r=t.target,e=t.kind,n=t.index++;return !r||n>=r.length?(t.target=void 0,{value:void 0,done:!0}):"keys"==e?{value:n,done:!1}:"values"==e?{value:r[n],done:!1}:{value:[n,r[n]],done:!1}}),"values");c.Arguments=c.Array;var br=xt("toStringTag");for(var mr in {CSSRuleList:0,CSSStyleDeclaration:0,CSSValueList:0,ClientRectList:0,DOMRectList:0,DOMStringList:0,DOMTokenList:1,DataTransferItemList:0,FileList:0,HTMLAllCollection:0,HTMLCollection:0,HTMLFormElement:0,HTMLSelectElement:0,MediaList:0,MimeTypeArray:0,NamedNodeMap:0,NodeList:1,PaintRequestList:0,Plugin:0,PluginArray:0,SVGLengthList:0,SVGNumberList:0,SVGPathSegList:0,SVGPointList:0,SVGStringList:0,SVGTransformList:0,SourceBufferList:0,StyleSheetList:0,TextTrackCueList:0,TextTrackList:0,TouchList:0}){var Or=v[mr],wr=Or&&Or.prototype;wr&&nr(wr)!==br&&E(wr,br,mr),c[mr]=c.Array;}var jr=function(t){return function(r,e){var n,o,i=String(a(r)),u=Ct(e),c=i.length;return u<0||u>=c?t?"":void 0:(n=i.charCodeAt(u))<55296||n>56319||u+1===c||(o=i.charCodeAt(u+1))<56320||o>57343?t?i.charAt(u):n:t?i.slice(u,u+2):o-56320+(n-55296<<10)+65536}},Sr={codeAt:jr(!1),charAt:jr(!0)}.charAt,Ar=X.set,Er=X.getterFor("String Iterator");dr(String,"String",(function(t){Ar(this,{type:"String Iterator",string:String(t),index:0});}),(function(){var t,r=Er(this),e=r.string,n=r.index;return n>=e.length?{value:void 0,done:!0}:(t=Sr(e,n),r.index+=t.length,{value:t,done:!1})}));var xr=xt("iterator"),Pr=function(t){if(null!=t)return t[xr]||t["@@iterator"]||c[nr(t)]},Tr=function(t){var r=Pr(t);if("function"!=typeof r)throw TypeError(String(t)+" is not iterable");return O(r.call(t))},kr=Pr,Mr=function(t,r,e,n){try{return n?r(O(e)[0],e[1]):r(e)}catch(r){var o=t.return;throw void 0!==o&&O(o.call(t)),r}},Ir=xt("iterator"),Cr=Array.prototype,Lr=function(t){return void 0!==t&&(c.Array===t||Cr[Ir]===t)},Dr=function(t,r,e){var n=w(r);n in t?S.f(t,n,A(0,e)):t[n]=e;},Nr=xt("iterator"),_r=!1;try{var Rr=0,Fr={next:function(){return {done:!!Rr++}},return:function(){_r=!0;}};Fr[Nr]=function(){return this},Array.from(Fr,(function(){throw 2}));}catch(t){}var Br=!function(t,r){if(!r&&!_r)return !1;var e=!1;try{var n={};n[Nr]=function(){return {next:function(){return {done:e=!0}}}},t(n);}catch(t){}return e}((function(t){Array.from(t);}));dt({target:"Array",stat:!0,forced:Br},{from:function(t){var r,e,n,o,i,a,u=yt(t),c="function"==typeof this?this:Array,f=arguments.length,l=f>1?arguments[1]:void 0,s=void 0!==l,p=Pr(u),v=0;if(s&&(l=pt(l,f>2?arguments[2]:void 0,2)),null==p||c==Array&&Lr(p))for(e=new c(r=Dt(u.length));r>v;v++)a=s?l(u[v],v):u[v],Dr(e,v,a);else for(i=(o=p.call(u)).next,e=new c;!(n=i.call(o)).done;v++)a=s?Mr(o,l,[n.value,v],!0):n.value,Dr(e,v,a);return e.length=v,e}});var Gr=st.Array.from,Vr=Gr,Hr=r((function(){Qt(1);}));dt({target:"Object",stat:!0,forced:Hr},{keys:function(t){return Qt(yt(t))}});var Qr,$r,Wr=st.Object.keys,qr=Array.isArray||function(t){return "Array"==n(t)},zr=xt("species"),Ur=function(t,r){var e;return qr(t)&&("function"!=typeof(e=t.constructor)||e!==Array&&!qr(e.prototype)?d(e)&&null===(e=e[zr])&&(e=void 0):e=void 0),new(void 0===e?Array:e)(0===r?0:r)},Jr=[].push,Kr=function(t){var r=1==t,e=2==t,n=3==t,o=4==t,a=6==t,u=5==t||a;return function(c,f,l,s){for(var p,v,h=yt(c),d=i(h),y=pt(f,l,3),g=Dt(d.length),b=0,m=s||Ur,O=r?m(c,g):e?m(c,0):void 0;g>b;b++)if((u||b in d)&&(v=y(p=d[b],b,h),t))if(r)O[b]=v;else if(v)switch(t){case 3:return !0;case 5:return p;case 6:return b;case 2:Jr.call(O,p);}else if(o)return !1;return a?-1:n||o?o:O}},Yr={forEach:Kr(0),map:Kr(1),filter:Kr(2),some:Kr(3),every:Kr(4),find:Kr(5),findIndex:Kr(6)},Xr=qt("navigator","userAgent")||"",Zr=v.process,te=Zr&&Zr.versions,re=te&&te.v8;re?$r=(Qr=re.split("."))[0]+Qr[1]:Xr&&(!(Qr=Xr.match(/Edge\/(\d+)/))||Qr[1]>=74)&&(Qr=Xr.match(/Chrome\/(\d+)/))&&($r=Qr[1]);var ee=$r&&+$r,ne=xt("species"),oe=function(t){return ee>=51||!r((function(){var r=[];return (r.constructor={})[ne]=function(){return {foo:1}},1!==r[t](Boolean).foo}))},ie=Object.defineProperty,ae={},ue=function(t){throw t},ce=function(t,e){if(N(ae,t))return ae[t];e||(e={});var n=[][t],o=!!N(e,"ACCESSORS")&&e.ACCESSORS,i=N(e,0)?e[0]:ue,a=N(e,1)?e[1]:void 0;return ae[t]=!!n&&!r((function(){if(o&&!h)return !0;var t={length:-1};o?ie(t,1,{enumerable:!0,get:ue}):t[1]=1,n.call(t,i,a);}))},fe=Yr.map,le=oe("map"),se=ce("map");dt({target:"Array",proto:!0,forced:!le||!se},{map:function(t){return fe(this,t,arguments.length>1?arguments[1]:void 0)}});var pe=function(t){return st[t+"Prototype"]},ve=pe("Array").map,he=Array.prototype,de=function(t){var r=t.map;return t===he||t instanceof Array&&r===he.map?ve:r};dt({target:"Array",stat:!0},{isArray:qr});var ye=st.Array.isArray,ge=ye,be={f:xt},me=S.f,Oe=function(t){var r=st.Symbol||(st.Symbol={});N(r,t)||me(r,t,{value:be.f(t)});};Oe("iterator");var we=be.f("iterator"),je=xt("isConcatSpreadable"),Se=ee>=51||!r((function(){var t=[];return t[je]=!1,t.concat()[0]!==t})),Ae=oe("concat"),Ee=function(t){if(!d(t))return !1;var r=t[je];return void 0!==r?!!r:qr(t)};dt({target:"Array",proto:!0,forced:!Se||!Ae},{concat:function(t){var r,e,n,o,i,a=yt(this),u=Ur(a,0),c=0;for(r=-1,n=arguments.length;r<n;r++)if(Ee(i=-1===r?a:arguments[r])){if(c+(o=Dt(i.length))>9007199254740991)throw TypeError("Maximum allowed index exceeded");for(e=0;e<o;e++,c++)e in i&&Dr(u,c,i[e]);}else {if(c>=9007199254740991)throw TypeError("Maximum allowed index exceeded");Dr(u,c++,i);}return u.length=c,u}});var xe=Object.freeze({__proto__:null}),Pe=Ht.concat("length","prototype"),Te={f:Object.getOwnPropertyNames||function(t){return Vt(t,Pe)}},ke=Te.f,Me={}.toString,Ie="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],Ce={f:function(t){return Ie&&"[object Window]"==Me.call(t)?function(t){try{return ke(t)}catch(t){return Ie.slice()}}(t):ke(u(t))}},Le={f:Object.getOwnPropertySymbols},De=Yr.forEach,Ne=V("hidden"),_e=xt("toPrimitive"),Re=X.set,Fe=X.getterFor("Symbol"),Be=Object.prototype,Ge=v.Symbol,Ve=qt("JSON","stringify"),He=nt.f,Qe=S.f,$e=Ce.f,We=rt.f,qe=_("symbols"),ze=_("op-symbols"),Ue=_("string-to-symbol-registry"),Je=_("symbol-to-string-registry"),Ke=_("wks"),Ye=v.QObject,Xe=!Ye||!Ye.prototype||!Ye.prototype.findChild,Ze=h&&r((function(){return 7!=Xt(Qe({},"a",{get:function(){return Qe(this,"a",{value:7}).a}})).a}))?function(t,r,e){var n=He(Be,r);n&&delete Be[r],Qe(t,r,e),n&&t!==Be&&Qe(Be,r,n);}:Qe,tn=function(t,r){var e=qe[t]=Xt(Ge.prototype);return Re(e,{type:"Symbol",tag:t,description:r}),h||(e.description=r),e},rn=jt?function(t){return "symbol"==typeof t}:function(t){return Object(t)instanceof Ge},en=function(t,r,e){t===Be&&en(ze,r,e),O(t);var n=w(r,!0);return O(e),N(qe,n)?(e.enumerable?(N(t,Ne)&&t[Ne][n]&&(t[Ne][n]=!1),e=Xt(e,{enumerable:A(0,!1)})):(N(t,Ne)||Qe(t,Ne,A(1,{})),t[Ne][n]=!0),Ze(t,n,e)):Qe(t,n,e)},nn=function(t,r){O(t);var e=u(r),n=Qt(e).concat(cn(e));return De(n,(function(r){h&&!on.call(e,r)||en(t,r,e[r]);})),t},on=function(t){var r=w(t,!0),e=We.call(this,r);return !(this===Be&&N(qe,r)&&!N(ze,r))&&(!(e||!N(this,r)||!N(qe,r)||N(this,Ne)&&this[Ne][r])||e)},an=function(t,r){var e=u(t),n=w(r,!0);if(e!==Be||!N(qe,n)||N(ze,n)){var o=He(e,n);return !o||!N(qe,n)||N(e,Ne)&&e[Ne][n]||(o.enumerable=!0),o}},un=function(t){var r=$e(u(t)),e=[];return De(r,(function(t){N(qe,t)||N(H,t)||e.push(t);})),e},cn=function(t){var r=t===Be,e=$e(r?ze:u(t)),n=[];return De(e,(function(t){!N(qe,t)||r&&!N(Be,t)||n.push(qe[t]);})),n};if(wt||(lr((Ge=function(){if(this instanceof Ge)throw TypeError("Symbol is not a constructor");var t=arguments.length&&void 0!==arguments[0]?String(arguments[0]):void 0,r=B(t),e=function(t){this===Be&&e.call(ze,t),N(this,Ne)&&N(this[Ne],r)&&(this[Ne][r]=!1),Ze(this,r,A(1,t));};return h&&Xe&&Ze(Be,r,{configurable:!0,set:e}),tn(r,t)}).prototype,"toString",(function(){return Fe(this).tag})),lr(Ge,"withoutSetter",(function(t){return tn(B(t),t)})),rt.f=on,S.f=en,nt.f=an,Te.f=Ce.f=un,Le.f=cn,be.f=function(t){return tn(xt(t),t)},h&&Qe(Ge.prototype,"description",{configurable:!0,get:function(){return Fe(this).description}})),dt({global:!0,wrap:!0,forced:!wt,sham:!wt},{Symbol:Ge}),De(Qt(Ke),(function(t){Oe(t);})),dt({target:"Symbol",stat:!0,forced:!wt},{for:function(t){var r=String(t);if(N(Ue,r))return Ue[r];var e=Ge(r);return Ue[r]=e,Je[e]=r,e},keyFor:function(t){if(!rn(t))throw TypeError(t+" is not a symbol");if(N(Je,t))return Je[t]},useSetter:function(){Xe=!0;},useSimple:function(){Xe=!1;}}),dt({target:"Object",stat:!0,forced:!wt,sham:!h},{create:function(t,r){return void 0===r?Xt(t):nn(Xt(t),r)},defineProperty:en,defineProperties:nn,getOwnPropertyDescriptor:an}),dt({target:"Object",stat:!0,forced:!wt},{getOwnPropertyNames:un,getOwnPropertySymbols:cn}),dt({target:"Object",stat:!0,forced:r((function(){Le.f(1);}))},{getOwnPropertySymbols:function(t){return Le.f(yt(t))}}),Ve){var fn=!wt||r((function(){var t=Ge();return "[null]"!=Ve([t])||"{}"!=Ve({a:t})||"{}"!=Ve(Object(t))}));dt({target:"JSON",stat:!0,forced:fn},{stringify:function(t,r,e){for(var n,o=[t],i=1;arguments.length>i;)o.push(arguments[i++]);if(n=r,(d(r)||void 0!==t)&&!rn(t))return qr(r)||(r=function(t,r){if("function"==typeof n&&(r=n.call(this,t,r)),!rn(r))return r}),o[1]=r,Ve.apply(null,o)}});}Ge.prototype[_e]||E(Ge.prototype,_e,Ge.prototype.valueOf),ur(Ge,"Symbol"),H[Ne]=!0,Oe("asyncIterator");var ln=Object.freeze({__proto__:null});Oe("hasInstance"),Oe("isConcatSpreadable"),Oe("match"),Oe("matchAll"),Oe("replace"),Oe("search"),Oe("species"),Oe("split"),Oe("toPrimitive"),Oe("toStringTag"),Oe("unscopables"),ur(Math,"Math",!0),ur(v.JSON,"JSON",!0),s(xe),s(ln);var sn=st.Symbol;Oe("asyncDispose"),Oe("dispose"),Oe("observable"),Oe("patternMatch"),Oe("replaceAll");var pn=sn,vn=l((function(t){function r(e){return t.exports=r="function"==typeof pn&&"symbol"==typeof we?function(t){return typeof t}:function(t){return t&&"function"==typeof pn&&t.constructor===pn&&t!==pn.prototype?"symbol":typeof t},r(e)}t.exports=r;})),hn=qt("Reflect","ownKeys")||function(t){var r=Te.f(O(t)),e=Le.f;return e?r.concat(e(t)):r};dt({target:"Reflect",stat:!0},{ownKeys:hn});var dn=st.Reflect.ownKeys,yn=oe("slice"),gn=ce("slice",{ACCESSORS:!0,0:0,1:2}),bn=xt("species"),mn=[].slice,On=Math.max;dt({target:"Array",proto:!0,forced:!yn||!gn},{slice:function(t,r){var e,n,o,i=u(this),a=Dt(i.length),c=Rt(t,a),f=Rt(void 0===r?a:r,a);if(qr(i)&&("function"!=typeof(e=i.constructor)||e!==Array&&!qr(e.prototype)?d(e)&&null===(e=e[bn])&&(e=void 0):e=void 0,e===Array||void 0===e))return mn.call(i,c,f);for(n=new(void 0===e?Array:e)(On(f-c,0)),o=0;c<f;c++,o++)c in i&&Dr(n,o,i[c]);return n.length=o,n}});var wn=pe("Array").slice,jn=Array.prototype,Sn=function(t){var r=t.slice;return t===jn||t instanceof Array&&r===jn.slice?wn:r},An=Sn,En=ye;var xn=function(t,r){(null==r||r>t.length)&&(r=t.length);for(var e=0,n=new Array(r);e<r;e++)n[e]=t[e];return n};var Pn=function(t){if(En(t))return xn(t)},Tn=Gr,kn=xt("iterator"),Mn=function(t){var r=Object(t);return void 0!==r[kn]||"@@iterator"in r||c.hasOwnProperty(nr(r))};var In=function(t){if(void 0!==pn&&Mn(Object(t)))return Tn(t)},Cn=Sn;var Ln=function(t,r){var e;if(t){if("string"==typeof t)return xn(t,r);var n=Cn(e=Object.prototype.toString.call(t)).call(e,8,-1);return "Object"===n&&t.constructor&&(n=t.constructor.name),"Map"===n||"Set"===n?Tn(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?xn(t,r):void 0}};var Dn=function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")};var Nn=function(t){return Pn(t)||In(t)||Ln(t)||Dn()},_n=pe("Array").concat,Rn=Array.prototype,Fn=function(t){var r=t.concat;return t===Rn||t instanceof Array&&r===Rn.concat?_n:r},Bn=sn;function Gn(t,r){var e;if(void 0===Bn||null==kr(t)){if(ge(t)||(e=function(t,r){var e;if(!t)return;if("string"==typeof t)return Vn(t,r);var n=An(e=Object.prototype.toString.call(t)).call(e,8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Vr(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return Vn(t,r)}(t))||r&&t&&"number"==typeof t.length){e&&(t=e);var n=0,o=function(){};return {s:o,n:function(){return n>=t.length?{done:!0}:{done:!1,value:t[n++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,a=!0,u=!1;return {s:function(){e=Tr(t);},n:function(){var t=e.next();return a=t.done,t},e:function(t){u=!0,i=t;},f:function(){try{a||null==e.return||e.return();}finally{if(u)throw i}}}}function Vn(t,r){(null==r||r>t.length)&&(r=t.length);for(var e=0,n=new Array(r);e<r;e++)n[e]=t[e];return n}var Hn=Bn("DELETE");function Qn(){var t=$n.apply(void 0,arguments);return qn(t),console.log(t),t}function $n(){for(var t=arguments.length,r=new Array(t),e=0;e<t;e++)r[e]=arguments[e];if(r.length<2)return r[0];var n;if(r.length>2)return $n.apply(void 0,Fn(n=[Qn(r[0],r[1])]).call(n,Nn(An(r).call(r,2))));var o,i=r[0],a=r[1],u=Gn(dn(a));try{for(u.s();!(o=u.n()).done;){var c=o.value;Object.prototype.propertyIsEnumerable.call(a,a[c])||(a[c]===Hn?delete i[c]:null===i[c]||null===a[c]||"object"!==vn(i[c])||"object"!==vn(a[c])||ge(i[c])||ge(a[c])?i[c]=Wn(a[c]):i[c]=$n(i[c],a[c]));}}catch(t){u.e(t);}finally{u.f();}return i}function Wn(t){return ge(t)?de(t).call(t,(function(t){return Wn(t)})):"object"===vn(t)&&null!==t?$n({},t):t}function qn(t){for(var r=0,e=Wr(t);r<e.length;r++){var n=e[r];t[n]===Hn?delete t[n]:"object"===vn(t[n])&&null!==t[n]&&qn(t[n]);}}var zn=function(t){if(En(t))return t};var Un=function(t,r){if(void 0!==pn&&Mn(Object(t))){var e=[],n=!0,o=!1,i=void 0;try{for(var a,u=Tr(t);!(n=(a=u.next()).done)&&(e.push(a.value),!r||e.length!==r);n=!0);}catch(t){o=!0,i=t;}finally{try{n||null==u.return||u.return();}finally{if(o)throw i}}return e}};var Jn=function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")};var Kn=function(t,r){return zn(t)||Un(t,r)||Ln(t,r)||Jn()};dt({target:"Date",stat:!0},{now:function(){return (new Date).getTime()}});var Yn=st.Date.now;function Xn(t){var r=function(){for(var t=Zn(),r=t(" "),e=t(" "),n=t(" "),o=0;o<arguments.length;o++)(r-=t(o<0||arguments.length<=o?void 0:arguments[o]))<0&&(r+=1),(e-=t(o<0||arguments.length<=o?void 0:arguments[o]))<0&&(e+=1),(n-=t(o<0||arguments.length<=o?void 0:arguments[o]))<0&&(n+=1);return [r,e,n]}(t),e=Kn(r,3),n=e[0],o=e[1],i=e[2],a=1,u=function(){var t=2091639*n+2.3283064365386963e-10*a;return n=o,o=i,i=t-(a=0|t)};return u.uint32=function(){return 4294967296*u()},u.fract53=function(){return u()+11102230246251565e-32*(2097152*u()|0)},u.algorithm="Alea",u.seed=t,u.version="0.9",u}function Zn(){var t=4022871197;return function(r){for(var e=r.toString(),n=0;n<e.length;n++){var o=.02519603282416938*(t+=e.charCodeAt(n));o-=t=o>>>0,t=(o*=t)>>>0,t+=4294967296*(o-=t);}return 2.3283064365386963e-10*(t>>>0)}}dt({target:"Object",stat:!0,forced:!h,sham:!h},{defineProperty:S.f});var to=l((function(t){var r=st.Object,e=t.exports=function(t,e,n){return r.defineProperty(t,e,n)};r.defineProperty.sham&&(e.sham=!0);})),ro=to;dt({target:"Object",stat:!0,forced:!h,sham:!h},{defineProperties:$t});var eo=l((function(t){var r=st.Object,e=t.exports=function(t,e){return r.defineProperties(t,e)};r.defineProperties.sham&&(e.sham=!0);}));dt({target:"Object",stat:!0,sham:!h},{getOwnPropertyDescriptors:function(t){for(var r,e,n=u(t),o=nt.f,i=hn(n),a={},c=0;i.length>c;)void 0!==(e=o(n,r=i[c++]))&&Dr(a,r,e);return a}});var no=st.Object.getOwnPropertyDescriptors,oo=nt.f,io=r((function(){oo(1);}));dt({target:"Object",stat:!0,forced:!h||io,sham:!h},{getOwnPropertyDescriptor:function(t,r){return oo(u(t),r)}});var ao=l((function(t){var r=st.Object,e=t.exports=function(t,e){return r.getOwnPropertyDescriptor(t,e)};r.getOwnPropertyDescriptor.sham&&(e.sham=!0);})),uo=st.Object.getOwnPropertySymbols;dt({target:"Object",stat:!0,sham:!h},{create:Xt});var co=st.Object,fo=function(t,r){return co.create(t,r)},lo=to;var so,po=function(t,r,e){return r in t?lo(t,r,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[r]=e,t},vo="\t\n\v\f\r                　\u2028\u2029\ufeff",ho="["+vo+"]",yo=RegExp("^"+ho+ho+"*"),go=RegExp(ho+ho+"*$"),bo=function(t){return function(r){var e=String(a(r));return 1&t&&(e=e.replace(yo,"")),2&t&&(e=e.replace(go,"")),e}},mo={start:bo(1),end:bo(2),trim:bo(3)},Oo=mo.trim;dt({target:"String",proto:!0,forced:(so="trim",r((function(){return !!vo[so]()||"​᠎"!="​᠎"[so]()||vo[so].name!==so})))},{trim:function(){return Oo(this)}});var wo=pe("String").trim,jo=String.prototype,So=function(t){var r=t.trim;return "string"==typeof t||t===jo||t instanceof String&&r===jo.trim?wo:r},Ao=function(t,e){var n=[][t];return !!n&&r((function(){n.call(null,e||function(){throw 1},1);}))},Eo=Yr.forEach,xo=Ao("forEach"),Po=ce("forEach"),To=xo&&Po?[].forEach:function(t){return Eo(this,t,arguments.length>1?arguments[1]:void 0)};dt({target:"Array",proto:!0,forced:[].forEach!=To},{forEach:To});var ko=pe("Array").forEach,Mo=Array.prototype,Io={DOMTokenList:!0,NodeList:!0},Co=function(t){var r=t.forEach;return t===Mo||t instanceof Array&&r===Mo.forEach||Io.hasOwnProperty(nr(t))?ko:r},Lo=mo.trim,Do=v.parseInt,No=/^[+-]?0[Xx]/,_o=8!==Do(vo+"08")||22!==Do(vo+"0x16")?function(t,r){var e=Lo(String(t));return Do(e,r>>>0||(No.test(e)?16:10))}:Do;dt({global:!0,forced:parseInt!=_o},{parseInt:_o});var Ro=st.parseInt,Fo=rt.f,Bo=function(t){return function(r){for(var e,n=u(r),o=Qt(n),i=o.length,a=0,c=[];i>a;)e=o[a++],h&&!Fo.call(n,e)||c.push(t?[e,n[e]]:n[e]);return c}},Go={entries:Bo(!0),values:Bo(!1)}.values;dt({target:"Object",stat:!0},{values:function(t){return Go(t)}});var Vo=st.Object.values,Ho=Yr.filter,Qo=oe("filter"),$o=ce("filter");dt({target:"Array",proto:!0,forced:!Qo||!$o},{filter:function(t){return Ho(this,t,arguments.length>1?arguments[1]:void 0)}});var Wo=pe("Array").filter,qo=Array.prototype,zo=function(t){var r=t.filter;return t===qo||t instanceof Array&&r===qo.filter?Wo:r},Uo=r((function(){Ot(1);}));dt({target:"Object",stat:!0,forced:Uo,sham:!gt},{getPrototypeOf:function(t){return Ot(yt(t))}});var Jo=st.Object.getPrototypeOf,Ko=Bt.indexOf,Yo=[].indexOf,Xo=!!Yo&&1/[1].indexOf(1,-0)<0,Zo=Ao("indexOf"),ti=ce("indexOf",{ACCESSORS:!0,1:0});dt({target:"Array",proto:!0,forced:Xo||!Zo||!ti},{indexOf:function(t){return Xo?Yo.apply(this,arguments)||0:Ko(this,t,arguments.length>1?arguments[1]:void 0)}});var ri=pe("Array").indexOf,ei=Array.prototype,ni=function(t){var r=t.indexOf;return t===ei||t instanceof Array&&r===ei.indexOf?ri:r},oi=Object.assign,ii=Object.defineProperty,ai=!oi||r((function(){if(h&&1!==oi({b:1},oi(ii({},"a",{enumerable:!0,get:function(){ii(this,"b",{value:3,enumerable:!1});}}),{b:2})).b)return !0;var t={},r={},e=Symbol();return t[e]=7,"abcdefghijklmnopqrst".split("").forEach((function(t){r[t]=t;})),7!=oi({},t)[e]||"abcdefghijklmnopqrst"!=Qt(oi({},r)).join("")}))?function(t,r){for(var e=yt(t),n=arguments.length,o=1,a=Le.f,u=rt.f;n>o;)for(var c,f=i(arguments[o++]),l=a?Qt(f).concat(a(f)):Qt(f),s=l.length,p=0;s>p;)c=l[p++],h&&!u.call(f,c)||(e[c]=f[c]);return e}:oi;dt({target:"Object",stat:!0,forced:Object.assign!==ai},{assign:ai});var ui=st.Object.assign;function ci(t,r){var e;if(void 0===Bn||null==kr(t)){if(ge(t)||(e=function(t,r){var e;if(!t)return;if("string"==typeof t)return fi(t,r);var n=An(e=Object.prototype.toString.call(t)).call(e,8,-1);"Object"===n&&t.constructor&&(n=t.constructor.name);if("Map"===n||"Set"===n)return Vr(t);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return fi(t,r)}(t))||r&&t&&"number"==typeof t.length){e&&(t=e);var n=0,o=function(){};return {s:o,n:function(){return n>=t.length?{done:!0}:{done:!1,value:t[n++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,a=!0,u=!1;return {s:function(){e=Tr(t);},n:function(){var t=e.next();return a=t.done,t},e:function(t){u=!0,i=t;},f:function(){try{a||null==e.return||e.return();}finally{if(u)throw i}}}}function fi(t,r){(null==r||r>t.length)&&(r=t.length);for(var e=0,n=new Array(r);e<r;e++)n[e]=t[e];return n}function li(t,r){var e=Wr(t);if(uo){var n=uo(t);r&&(n=zo(n).call(n,(function(r){return ao(t,r).enumerable}))),e.push.apply(e,n);}return e}function si(t){for(var r=1;r<arguments.length;r++){var e,n=null!=arguments[r]?arguments[r]:{};if(r%2)Co(e=li(Object(n),!0)).call(e,(function(r){po(t,r,n[r]);}));else if(no)eo(t,no(n));else {var o;Co(o=li(Object(n))).call(o,(function(r){ro(t,r,ao(n,r));}));}}return t}var pi=/^\/?Date\((-?\d+)/i,vi=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i,hi=/^#?([a-f\d])([a-f\d])([a-f\d])$/i,di=/^rgb\( *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *\)$/i,yi=/^rgba\( *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *(1?\d{1,2}|2[0-4]\d|25[0-5]) *, *([01]|0?\.\d+) *\)$/i;function gi(t){return t instanceof Number||"number"==typeof t}function bi(t){return t instanceof String||"string"==typeof t}function mi(t){return "object"===vn(t)&&null!==t}function Oi(t,r,e,n){var o=!1;!0===n&&(o=null===r[e]&&void 0!==t[e]),o?delete t[e]:t[e]=r[e];}var wi=ui;function ji(t,r){var e=arguments.length>2&&void 0!==arguments[2]&&arguments[2],n=arguments.length>3&&void 0!==arguments[3]&&arguments[3];for(var o in r)if(Object.prototype.hasOwnProperty.call(r,o)||!0===e)if("object"===vn(r[o])&&null!==r[o]&&Jo(r[o])===Object.prototype)void 0===t[o]?t[o]=ji({},r[o],e):"object"===vn(t[o])&&null!==t[o]&&Jo(t[o])===Object.prototype?ji(t[o],r[o],e):Oi(t,r,o,n);else if(ge(r[o])){var i;t[o]=An(i=r[o]).call(i);}else Oi(t,r,o,n);return t}var Si=Vo;var Ai={asBoolean:function(t,r){return "function"==typeof t&&(t=t()),null!=t?0!=t:r||null},asNumber:function(t,r){return "function"==typeof t&&(t=t()),null!=t?Number(t)||r||null:r||null},asString:function(t,r){return "function"==typeof t&&(t=t()),null!=t?String(t):r||null},asSize:function(t,r){return "function"==typeof t&&(t=t()),bi(t)?t:gi(t)?t+"px":r||null},asElement:function(t,r){return "function"==typeof t&&(t=t()),t||r||null}};function Ei(t){var r;switch(t.length){case 3:case 4:return (r=hi.exec(t))?{r:Ro(r[1]+r[1],16),g:Ro(r[2]+r[2],16),b:Ro(r[3]+r[3],16)}:null;case 6:case 7:return (r=vi.exec(t))?{r:Ro(r[1],16),g:Ro(r[2],16),b:Ro(r[3],16)}:null;default:return null}}function xi(t,r,e){var n;return "#"+An(n=((1<<24)+(t<<16)+(r<<8)+e).toString(16)).call(n,1)}function Pi(t,r,e){t/=255,r/=255,e/=255;var n=Math.min(t,Math.min(r,e)),o=Math.max(t,Math.max(r,e));return n===o?{h:0,s:0,v:n}:{h:60*((t===n?3:e===n?1:5)-(t===n?r-e:e===n?t-r:e-t)/(o-n))/360,s:(o-n)/o,v:o}}var Ti=function(t){var r,e={};return Co(r=t.split(";")).call(r,(function(t){if(""!=So(t).call(t)){var r,n,o=t.split(":"),i=So(r=o[0]).call(r),a=So(n=o[1]).call(n);e[i]=a;}})),e},ki=function(t){var r;return de(r=Wr(t)).call(r,(function(r){return r+": "+t[r]})).join("; ")};function Mi(t,r,e){var n,o,i,a=Math.floor(6*t),u=6*t-a,c=e*(1-r),f=e*(1-u*r),l=e*(1-(1-u)*r);switch(a%6){case 0:n=e,o=l,i=c;break;case 1:n=f,o=e,i=c;break;case 2:n=c,o=e,i=l;break;case 3:n=c,o=f,i=e;break;case 4:n=l,o=c,i=e;break;case 5:n=e,o=c,i=f;}return {r:Math.floor(255*n),g:Math.floor(255*o),b:Math.floor(255*i)}}function Ii(t,r,e){var n=Mi(t,r,e);return xi(n.r,n.g,n.b)}function Ci(t){var r=Ei(t);if(!r)throw new TypeError("'".concat(t,"' is not a valid color."));return Pi(r.r,r.g,r.b)}function Li(t){return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(t)}function Di(t){return di.test(t)}function Ni(t){if(null===t||"object"!==vn(t))return null;if(t instanceof Element)return t;var r=fo(t);for(var e in t)Object.prototype.hasOwnProperty.call(t,e)&&"object"==vn(t[e])&&(r[e]=Ni(t[e]));return r}t.Alea=function(){for(var t=arguments.length,r=new Array(t),e=0;e<t;e++)r[e]=arguments[e];return Xn(r.length?r:[Yn()])},t.DELETE=Hn,t.HSVToHex=Ii,t.HSVToRGB=Mi,t.RGBToHSV=Pi,t.RGBToHex=xi,t.addClassName=function(t,r){var e=t.className.split(" "),n=r.split(" ");e=Fn(e).call(e,zo(n).call(n,(function(t){return ni(e).call(e,t)<0}))),t.className=e.join(" ");},t.addCssText=function(t,r){var e=Ti(t.style.cssText),n=Ti(r),o=si(si({},e),n);t.style.cssText=ki(o);},t.addEventListener=function(t,r,e,n){var o;t.addEventListener?(void 0===n&&(n=!1),"mousewheel"===r&&ni(o=navigator.userAgent).call(o,"Firefox")>=0&&(r="DOMMouseScroll"),t.addEventListener(r,e,n)):t.attachEvent("on"+r,e);},t.binarySearchCustom=function(t,r,e,n){for(var o=0,i=0,a=t.length-1;i<=a&&o<1e4;){var u=Math.floor((i+a)/2),c=t[u],f=r(void 0===n?c[e]:c[e][n]);if(0==f)return u;-1==f?i=u+1:a=u-1,o++;}return -1},t.binarySearchValue=function(t,r,e,n,o){var i,a,u,c,f=0,l=0,s=t.length-1;for(o=null!=o?o:function(t,r){return t==r?0:t<r?-1:1};l<=s&&f<1e4;){if(c=Math.floor(.5*(s+l)),i=t[Math.max(0,c-1)][e],a=t[c][e],u=t[Math.min(t.length-1,c+1)][e],0==o(a,r))return c;if(o(i,r)<0&&o(a,r)>0)return "before"==n?Math.max(0,c-1):c;if(o(a,r)<0&&o(u,r)>0)return "before"==n?c:Math.min(t.length-1,c+1);o(a,r)<0?l=c+1:s=c-1,f++;}return -1},t.bridgeObject=Ni,t.copyAndExtendArray=function(t,r){var e;return Fn(e=[]).call(e,Nn(t),[r])},t.copyArray=function(t){return An(t).call(t)},t.deepExtend=ji,t.deepObjectAssign=Qn,t.easingFunctions={linear:function(t){return t},easeInQuad:function(t){return t*t},easeOutQuad:function(t){return t*(2-t)},easeInOutQuad:function(t){return t<.5?2*t*t:(4-2*t)*t-1},easeInCubic:function(t){return t*t*t},easeOutCubic:function(t){return --t*t*t+1},easeInOutCubic:function(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1},easeInQuart:function(t){return t*t*t*t},easeOutQuart:function(t){return 1- --t*t*t*t},easeInOutQuart:function(t){return t<.5?8*t*t*t*t:1-8*--t*t*t*t},easeInQuint:function(t){return t*t*t*t*t},easeOutQuint:function(t){return 1+--t*t*t*t*t},easeInOutQuint:function(t){return t<.5?16*t*t*t*t*t:1+16*--t*t*t*t*t}},t.equalArray=function(t,r){if(t.length!==r.length)return !1;for(var e=0,n=t.length;e<n;e++)if(t[e]!=r[e])return !1;return !0},t.extend=wi,t.fillIfDefined=function t(r,e){var n=arguments.length>2&&void 0!==arguments[2]&&arguments[2];for(var o in r)if(void 0!==e[o])if(null===e[o]||"object"!==vn(e[o]))Oi(r,e,o,n);else {var i=r[o],a=e[o];mi(i)&&mi(a)&&t(i,a,n);}},t.forEach=function(t,r){if(ge(t))for(var e=t.length,n=0;n<e;n++)r(t[n],n,t);else for(var o in t)Object.prototype.hasOwnProperty.call(t,o)&&r(t[o],o,t);},t.getAbsoluteLeft=function(t){return t.getBoundingClientRect().left},t.getAbsoluteRight=function(t){return t.getBoundingClientRect().right},t.getAbsoluteTop=function(t){return t.getBoundingClientRect().top},t.getScrollBarWidth=function(){var t=document.createElement("p");t.style.width="100%",t.style.height="200px";var r=document.createElement("div");r.style.position="absolute",r.style.top="0px",r.style.left="0px",r.style.visibility="hidden",r.style.width="200px",r.style.height="150px",r.style.overflow="hidden",r.appendChild(t),document.body.appendChild(r);var e=t.offsetWidth;r.style.overflow="scroll";var n=t.offsetWidth;return e==n&&(n=r.clientWidth),document.body.removeChild(r),e-n},t.getTarget=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.event,r=null;return t&&(t.target?r=t.target:t.srcElement&&(r=t.srcElement)),r instanceof Element&&(null==r.nodeType||3!=r.nodeType||(r=r.parentNode)instanceof Element)?r:null},t.getType=function(t){var r=vn(t);return "object"===r?null===t?"null":t instanceof Boolean?"Boolean":t instanceof Number?"Number":t instanceof String?"String":ge(t)?"Array":t instanceof Date?"Date":"Object":"number"===r?"Number":"boolean"===r?"Boolean":"string"===r?"String":void 0===r?"undefined":r},t.hasParent=function(t,r){for(var e=t;e;){if(e===r)return !0;if(!e.parentNode)return !1;e=e.parentNode;}return !1},t.hexToHSV=Ci,t.hexToRGB=Ei,t.insertSort=function(t,r){for(var e=0;e<t.length;e++){var n=t[e],o=void 0;for(o=e;o>0&&r(n,t[o-1])<0;o--)t[o]=t[o-1];t[o]=n;}return t},t.isDate=function(t){if(t instanceof Date)return !0;if(bi(t)){if(pi.exec(t))return !0;if(!isNaN(Date.parse(t)))return !0}return !1},t.isNumber=gi,t.isObject=mi,t.isString=bi,t.isValidHex=Li,t.isValidRGB=Di,t.isValidRGBA=function(t){return yi.test(t)},t.mergeOptions=function(t,r,e){var n=arguments.length>3&&void 0!==arguments[3]?arguments[3]:{},o=function(t){return null!=t},i=function(t){return null!==t&&"object"===vn(t)},a=function(t){for(var r in t)if(Object.prototype.hasOwnProperty.call(t,r))return !1;return !0};if(!i(t))throw new Error("Parameter mergeTarget must be an object");if(!i(r))throw new Error("Parameter options must be an object");if(!o(e))throw new Error("Parameter option must have a value");if(!i(n))throw new Error("Parameter globalOptions must be an object");var u=function(t,r,e){i(t[e])||(t[e]={});var n=r[e],o=t[e];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(o[a]=n[a]);},c=r[e],f=i(n)&&!a(n),l=f?n[e]:void 0,s=l?l.enabled:void 0;if(void 0!==c){if("boolean"==typeof c)return i(t[e])||(t[e]={}),void(t[e].enabled=c);if(null===c&&!i(t[e])){if(!o(l))return;t[e]=fo(l);}if(i(c)){var p=!0;void 0!==c.enabled?p=c.enabled:void 0!==s&&(p=l.enabled),u(t,r,e),t[e].enabled=p;}}},t.option=Ai,t.overrideOpacity=function(t,r){if(-1!==ni(t).call(t,"rgba"))return t;if(-1!==ni(t).call(t,"rgb")){var e=t.substr(ni(t).call(t,"(")+1).replace(")","").split(",");return "rgba("+e[0]+","+e[1]+","+e[2]+","+r+")"}var n=Ei(t);return null==n?t:"rgba("+n.r+","+n.g+","+n.b+","+r+")"},t.parseColor=function(t,r){if(bi(t)){var e=t;if(Di(e)){var n,o=de(n=e.substr(4).substr(0,e.length-5).split(",")).call(n,(function(t){return Ro(t)}));e=xi(o[0],o[1],o[2]);}if(!0===Li(e)){var i=Ci(e),a={h:i.h,s:.8*i.s,v:Math.min(1,1.02*i.v)},u={h:i.h,s:Math.min(1,1.25*i.s),v:.8*i.v},c=Ii(u.h,u.s,u.v),f=Ii(a.h,a.s,a.v);return {background:e,border:c,highlight:{background:f,border:c},hover:{background:f,border:c}}}return {background:e,border:e,highlight:{background:e,border:e},hover:{background:e,border:e}}}return r?{background:t.background||r.background,border:t.border||r.border,highlight:bi(t.highlight)?{border:t.highlight,background:t.highlight}:{background:t.highlight&&t.highlight.background||r.highlight.background,border:t.highlight&&t.highlight.border||r.highlight.border},hover:bi(t.hover)?{border:t.hover,background:t.hover}:{border:t.hover&&t.hover.border||r.hover.border,background:t.hover&&t.hover.background||r.hover.background}}:{background:t.background||void 0,border:t.border||void 0,highlight:bi(t.highlight)?{border:t.highlight,background:t.highlight}:{background:t.highlight&&t.highlight.background||void 0,border:t.highlight&&t.highlight.border||void 0},hover:bi(t.hover)?{border:t.hover,background:t.hover}:{border:t.hover&&t.hover.border||void 0,background:t.hover&&t.hover.background||void 0}}},t.preventDefault=function(t){t||(t=window.event),t&&(t.preventDefault?t.preventDefault():t.returnValue=!1);},t.pureDeepObjectAssign=function(t){for(var r,e=arguments.length,n=new Array(e>1?e-1:0),o=1;o<e;o++)n[o-1]=arguments[o];return Qn.apply(void 0,Fn(r=[{},t]).call(r,n))},t.recursiveDOMDelete=function t(r){if(r)for(;!0===r.hasChildNodes();){var e=r.firstChild;e&&(t(e),r.removeChild(e));}},t.removeClassName=function(t,r){var e=t.className.split(" "),n=r.split(" ");e=zo(e).call(e,(function(t){return ni(n).call(n,t)<0})),t.className=e.join(" ");},t.removeCssText=function(t,r){var e=Ti(t.style.cssText),n=Ti(r);for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&delete e[o];t.style.cssText=ki(e);},t.removeEventListener=function(t,r,e,n){var o;t.removeEventListener?(void 0===n&&(n=!1),"mousewheel"===r&&ni(o=navigator.userAgent).call(o,"Firefox")>=0&&(r="DOMMouseScroll"),t.removeEventListener(r,e,n)):t.detachEvent("on"+r,e);},t.selectiveBridgeObject=function(t,r){if(null!==r&&"object"===vn(r)){for(var e=fo(r),n=0;n<t.length;n++)Object.prototype.hasOwnProperty.call(r,t[n])&&"object"==vn(r[t[n]])&&(e[t[n]]=Ni(r[t[n]]));return e}return null},t.selectiveDeepExtend=function(t,r,e){var n=arguments.length>3&&void 0!==arguments[3]&&arguments[3];if(ge(e))throw new TypeError("Arrays are not supported by deepExtend");for(var o=0;o<t.length;o++){var i=t[o];if(Object.prototype.hasOwnProperty.call(e,i))if(e[i]&&e[i].constructor===Object)void 0===r[i]&&(r[i]={}),r[i].constructor===Object?ji(r[i],e[i],!1,n):Oi(r,e,i,n);else {if(ge(e[i]))throw new TypeError("Arrays are not supported by deepExtend");Oi(r,e,i,n);}}return r},t.selectiveExtend=function(t,r){if(!ge(t))throw new Error("Array with property names expected as first argument");for(var e=arguments.length,n=new Array(e>2?e-2:0),o=2;o<e;o++)n[o-2]=arguments[o];for(var i=0,a=n;i<a.length;i++)for(var u=a[i],c=0;c<t.length;c++){var f=t[c];u&&Object.prototype.hasOwnProperty.call(u,f)&&(r[f]=u[f]);}return r},t.selectiveNotDeepExtend=function(t,r,e){var n=arguments.length>3&&void 0!==arguments[3]&&arguments[3];if(ge(e))throw new TypeError("Arrays are not supported by deepExtend");for(var o in e)if(Object.prototype.hasOwnProperty.call(e,o)&&-1===ni(t).call(t,o))if(e[o]&&e[o].constructor===Object)void 0===r[o]&&(r[o]={}),r[o].constructor===Object?ji(r[o],e[o]):Oi(r,e,o,n);else if(ge(e[o])){r[o]=[];for(var i=0;i<e[o].length;i++)r[o].push(e[o][i]);}else Oi(r,e,o,n);return r},t.throttle=function(t){var r=!1;return function(){r||(r=!0,requestAnimationFrame((function(){r=!1,t();})));}},t.toArray=Si,t.topMost=function(t,r){var e;ge(r)||(r=[r]);var n,o=ci(t);try{for(o.s();!(n=o.n()).done;){var i=n.value;if(i){e=i[r[0]];for(var a=1;a<r.length;a++)e&&(e=e[r[a]]);if(void 0!==e)break}}}catch(t){o.e(t);}finally{o.f();}return e},t.updateProperty=function(t,r,e){return t[r]!==e&&(t[r]=e,!0)},Object.defineProperty(t,"__esModule",{value:!0});}));
-
-  });
-
-  getCjsExportFromNamespace(Activator);
-
   /**
    * Turn an element into an clickToUse element.
    * When not active, the element has a transparent overlay. When the overlay is
@@ -1833,7 +1778,7 @@
    * @param {Element} container
    * @constructor Activator
    */
-  function Activator$1(container) {
+  function Activator(container) {
     this.active = false;
 
     this.dom = {
@@ -1880,15 +1825,15 @@
   }
 
   // turn into an event emitter
-  componentEmitter(Activator$1.prototype);
+  Emitter(Activator.prototype);
 
   // The currently active activator
-  Activator$1.current = null;
+  Activator.current = null;
 
   /**
    * Destroy the activator. Cleans up all created DOM and event listeners
    */
-  Activator$1.prototype.destroy = function () {
+  Activator.prototype.destroy = function () {
     this.deactivate();
 
     // remove dom
@@ -1913,16 +1858,16 @@
    * Activate the element
    * Overlay is hidden, element is decorated with a blue shadow border
    */
-  Activator$1.prototype.activate = function () {
+  Activator.prototype.activate = function () {
     // we allow only one active activator at a time
-    if (Activator$1.current) {
-      Activator$1.current.deactivate();
+    if (Activator.current) {
+      Activator.current.deactivate();
     }
-    Activator$1.current = this;
+    Activator.current = this;
 
     this.active = true;
     this.dom.overlay.style.display = 'none';
-    visUtil_min.addClassName(this.dom.container, 'vis-active');
+    esnext.addClassName(this.dom.container, 'vis-active');
 
     this.emit('change');
     this.emit('activate');
@@ -1936,10 +1881,10 @@
    * Deactivate the element
    * Overlay is displayed on top of the element
    */
-  Activator$1.prototype.deactivate = function () {
+  Activator.prototype.deactivate = function () {
     this.active = false;
     this.dom.overlay.style.display = 'block';
-    visUtil_min.removeClassName(this.dom.container, 'vis-active');
+    esnext.removeClassName(this.dom.container, 'vis-active');
     this.keycharm.unbind('esc', this.escListener);
 
     this.emit('change');
@@ -1951,7 +1896,7 @@
    * @param {Event}  event   The event
    * @private
    */
-  Activator$1.prototype._onTapOverlay = function (event) {
+  Activator.prototype._onTapOverlay = function (event) {
     // activate the container
     this.activate();
     event.srcEvent.stopPropagation();
@@ -1975,8 +1920,6 @@
     }
     return false;
   }
-
-  var Activator_1 = Activator$1;
 
   // English
   const en = {
@@ -2524,7 +2467,7 @@
       this.defaultOptions = {
         useDefaultGroups: true
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
     }
 
     /**
@@ -2604,9 +2547,8 @@
 
   /**
    * Helper functions for components
-   * @class
    */
-  class ComponentUtil {
+
     /**
      * Determine values to use for (sub)options of 'chosen'.
      *
@@ -2629,12 +2571,12 @@
      * 
      * @return {boolean|function}  value for passed subOption of 'chosen' to use
      */
-    static choosify(subOption, pile) {
+    function choosify(subOption, pile) {
       // allowed values for subOption
       let allowed = [ 'node', 'edge', 'label'];
       let value = true;
 
-      let chosen = util.topMost(pile, 'chosen');
+      let chosen = esnext.topMost(pile, 'chosen');
       if (typeof chosen === 'boolean') {
         value = chosen;
       } else if (typeof chosen === 'object') {
@@ -2643,7 +2585,7 @@
             + "'" + allowed.join("', '") +  "'");
         }
 
-        let chosenEdge = util.topMost(pile, ['chosen', subOption]);
+        let chosenEdge = esnext.topMost(pile, ['chosen', subOption]);
         if ((typeof chosenEdge === 'boolean') || (typeof chosenEdge === 'function')) {
           value = chosenEdge;
         }
@@ -2660,9 +2602,8 @@
      * @param {point} point
      * @param {rotationPoint} [rotationPoint] if specified, the rotation that applies to the rectangle.
      * @returns {boolean}  true if point within rectangle, false otherwise
-     * @static
      */
-    static pointInRect(rect, point, rotationPoint) {
+    function pointInRect(rect, point, rotationPoint) {
       if (rect.width <= 0 || rect.height <= 0) {
         return false;  // early out
       }
@@ -2712,7 +2653,7 @@
      * @param {*} text value to check; can be anything at this point
      * @returns {boolean} true if valid label value, false otherwise
      */
-    static isValidLabel(text) {
+    function isValidLabel(text) {
       // Note that this is quite strict: types that *might* be converted to string are disallowed
       return  (typeof text === 'string' && text !== '');
     }
@@ -2726,7 +2667,7 @@
      * @return {Object} node
      * @returns {Object} x and y coordinates
      */
-    static getSelfRefCoordinates(ctx, angle, radius, node){
+    function getSelfRefCoordinates(ctx, angle, radius, node){
       let x = node.x;
       let y = node.y;
       
@@ -2763,8 +2704,6 @@
       
       return {x,y};
     }
-
-  }
 
   /**
    * Callback to determine text dimensions, using the parent label settings.
@@ -3340,7 +3279,7 @@
      * @returns {Array<line>}
      */
     process(text) {
-      if (!ComponentUtil.isValidLabel(text)) {
+      if (!isValidLabel(text)) {
         return this.lines.finalize();
       }
 
@@ -3699,7 +3638,7 @@
 
       this.initFontOptions(options.font);
 
-      if (ComponentUtil.isValidLabel(options.label)) {
+      if (isValidLabel(options.label)) {
         this.labelDirty = true;
       } else {
         // Bad label! Change the option value to prevent bad stuff happening
@@ -3733,7 +3672,7 @@
     initFontOptions(newFontOptions) {
       // Prepare the multi-font option objects.
       // These will be filled in propagateFonts(), if required
-      util.forEach(multiFontStyle, (style) => {
+      esnext.forEach(multiFontStyle, (style) => {
         this.fontOptions[style] = {};
       });
 
@@ -3744,7 +3683,7 @@
       }
 
       // Copy over the non-multifont options, if specified
-      util.forEach(newFontOptions, (prop, n) => {
+      esnext.forEach(newFontOptions, (prop, n) => {
         if (prop !== undefined && prop !== null && typeof prop !== 'object') {
           this.fontOptions[n] = prop;
         }
@@ -3796,31 +3735,31 @@
         valign: 'middle',
       };
 
-      let widthConstraint = util.topMost(pile, 'widthConstraint');
+      let widthConstraint = esnext.topMost(pile, 'widthConstraint');
       if (typeof widthConstraint === 'number') {
         fontOptions.maxWdt = Number(widthConstraint);
         fontOptions.minWdt = Number(widthConstraint);
       } else if (typeof widthConstraint === 'object') {
-        let widthConstraintMaximum = util.topMost(pile, ['widthConstraint', 'maximum']);
+        let widthConstraintMaximum = esnext.topMost(pile, ['widthConstraint', 'maximum']);
         if (typeof widthConstraintMaximum === 'number') {
           fontOptions.maxWdt = Number(widthConstraintMaximum);
         }
-        let widthConstraintMinimum = util.topMost(pile, ['widthConstraint', 'minimum']);
+        let widthConstraintMinimum = esnext.topMost(pile, ['widthConstraint', 'minimum']);
         if (typeof widthConstraintMinimum === 'number') {
           fontOptions.minWdt = Number(widthConstraintMinimum);
         }
       }
 
 
-      let heightConstraint = util.topMost(pile, 'heightConstraint');
+      let heightConstraint = esnext.topMost(pile, 'heightConstraint');
       if (typeof heightConstraint === 'number') {
         fontOptions.minHgt = Number(heightConstraint);
       } else if (typeof heightConstraint === 'object') {
-        let heightConstraintMinimum = util.topMost(pile, ['heightConstraint', 'minimum']);
+        let heightConstraintMinimum = esnext.topMost(pile, ['heightConstraint', 'minimum']);
         if (typeof heightConstraintMinimum === 'number') {
           fontOptions.minHgt = Number(heightConstraintMinimum);
         }
-        let heightConstraintValign = util.topMost(pile, ['heightConstraint', 'valign']);
+        let heightConstraintValign = esnext.topMost(pile, ['heightConstraint', 'valign']);
         if (typeof heightConstraintValign === 'string') {
           if ((heightConstraintValign === 'top')|| (heightConstraintValign === 'bottom')) {
             fontOptions.valign = heightConstraintValign;
@@ -3841,8 +3780,8 @@
     update(options, pile) {
       this.setOptions(options, true);
       this.propagateFonts(pile);
-      util.deepExtend(this.fontOptions, this.constrain(pile));
-      this.fontOptions.chooser = ComponentUtil.choosify('label', pile);
+      esnext.deepExtend(this.fontOptions, this.constrain(pile));
+      this.fontOptions.chooser = choosify('label', pile);
     }
 
 
@@ -3921,7 +3860,7 @@
           fontOptions = tmpShorthand;
         }
 
-        util.forEach(fontOptions, (opt, name) => {
+        esnext.forEach(fontOptions, (opt, name) => {
           if (opt === undefined) return;        // multi-font option need not be present 
           if (ret.hasOwnProperty(name)) return; // Keep first value we encounter
 
@@ -4048,7 +3987,7 @@
         let tmpMultiFontOptions = this.getFontOptions(fontPile, mod);
 
         // Copy over found values
-        util.forEach(tmpMultiFontOptions, (option, n) => {
+        esnext.forEach(tmpMultiFontOptions, (option, n) => {
           modOptions[n] = option;
         });
 
@@ -4209,8 +4148,8 @@
       let strokeColor = initialStrokeColor || '#ffffff';
       if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
         let opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
-        fontColor = util.overrideOpacity(fontColor, opacity);
-        strokeColor = util.overrideOpacity(strokeColor, opacity);
+        fontColor = esnext.overrideOpacity(fontColor, opacity);
+        strokeColor = esnext.overrideOpacity(strokeColor, opacity);
       }
       return [fontColor, strokeColor];
     }
@@ -5746,8 +5685,8 @@
         let fillStyle = selected ? this.options.color.highlight.background : hover ? this.options.color.hover.background : this.options.color.background;
 
         if (values.opacity !== undefined) {
-          strokeStyle = util.overrideOpacity(strokeStyle, values.opacity);
-          fillStyle = util.overrideOpacity(fillStyle, values.opacity);
+          strokeStyle = esnext.overrideOpacity(strokeStyle, values.opacity);
+          fillStyle = esnext.overrideOpacity(fillStyle, values.opacity);
         }
         // setup the line properties.
         ctx.strokeStyle = strokeStyle;
@@ -6178,7 +6117,7 @@
           errorFound = true;
         }
         else if (optionType === 'object' && referenceOption !== "__any__") {
-          path = util.copyAndExtendArray(path, option);
+          path = esnext.copyAndExtendArray(path, option);
           Validator.parse(options[option], referenceOptions[referenceOption], path);
         }
       }
@@ -6296,7 +6235,7 @@
       for (let op in options) {  // eslint-disable-line guard-for-in
         let distance;
         if (options[op].__type__ !== undefined && recursive === true) {
-          let result = Validator.findInOptions(option, options[op], util.copyAndExtendArray(path,op));
+          let result = Validator.findInOptions(option, options[op], esnext.copyAndExtendArray(path,op));
           if (min > result.distance) {
             closestMatch = result.closestMatch;
             closestMatchPath = result.path;
@@ -6311,7 +6250,7 @@
           distance = Validator.levenshteinDistance(option, op);
           if (min > distance) {
             closestMatch = op;
-            closestMatchPath = util.copyArray(path);
+            closestMatchPath = esnext.copyArray(path);
             min = distance;
           }
         }
@@ -6434,7 +6373,7 @@
      *                                    for parameter `globalOptions`.
      */
     constructor(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
-      this.options = util.bridgeObject(globalOptions);
+      this.options = esnext.bridgeObject(globalOptions);
       this.globalOptions = globalOptions;
       this.defaultOptions = defaultOptions;
       this.body = body;
@@ -6531,7 +6470,7 @@
       Node.parseOptions(this.options, options, true, this.globalOptions, this.grouplist);
       
       let pile = [options, this.options, this.defaultOptions];
-      this.chooser = ComponentUtil.choosify('node', pile);
+      this.chooser = choosify('node', pile);
 
       
 
@@ -6640,11 +6579,11 @@
       const skipProperties = Object.getOwnPropertyNames(newOptions).filter(p => newOptions[p] != null);
       // Always skip merging group font options into parent; these are required to be distinct for labels
       skipProperties.push('font');
-      util.selectiveNotDeepExtend(skipProperties, parentOptions, groupObj);
+      esnext.selectiveNotDeepExtend(skipProperties, parentOptions, groupObj);
 
       // the color object needs to be completely defined.
       // Since groups can partially overwrite the colors, we parse it again, just in case.
-      parentOptions.color = util.parseColor(parentOptions.color);
+      parentOptions.color = esnext.parseColor(parentOptions.color);
     }
 
 
@@ -6665,7 +6604,7 @@
         'fixed',
         'shadow'
       ];
-      util.selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
+      esnext.selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
 
       Node.checkMass(newOptions);
 
@@ -6685,15 +6624,15 @@
       }
 
       // merge the shadow options into the parent.
-      util.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
+      esnext.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
 
       // individual shape newOptions
       if (newOptions.color !== undefined && newOptions.color !== null) {
-        let parsedColor = util.parseColor(newOptions.color);
-        util.fillIfDefined(parentOptions.color, parsedColor);
+        let parsedColor = esnext.parseColor(newOptions.color);
+        esnext.fillIfDefined(parentOptions.color, parsedColor);
       }
       else if (allowDeletion === true && newOptions.color === null) {
-        parentOptions.color = util.bridgeObject(globalOptions.color); // set the object back to the global options
+        parentOptions.color = esnext.bridgeObject(globalOptions.color); // set the object back to the global options
       }
 
       // handle the fixed options
@@ -6713,14 +6652,14 @@
       }
 
       if (allowDeletion === true && newOptions.font === null) {
-        parentOptions.font =  util.bridgeObject(globalOptions.font); // set the object back to the global options
+        parentOptions.font =  esnext.bridgeObject(globalOptions.font); // set the object back to the global options
       }
 
       Node.updateGroupOptions(parentOptions, newOptions, groupList);
 
       // handle the scaling options, specifically the label part
       if (newOptions.scaling !== undefined) {
-        util.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+        esnext.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
       }
     }
 
@@ -6772,9 +6711,9 @@
       }
       if (this.options.opacity !== undefined) {
         const opacity = this.options.opacity;
-        values.borderColor = util.overrideOpacity(values.borderColor, opacity);
-        values.color = util.overrideOpacity(values.color, opacity);
-        values.shadowColor = util.overrideOpacity(values.shadowColor, opacity);
+        values.borderColor = esnext.overrideOpacity(values.borderColor, opacity);
+        values.color = esnext.overrideOpacity(values.color, opacity);
+        values.shadowColor = esnext.overrideOpacity(values.shadowColor, opacity);
       }
       return values;
     }
@@ -7042,12 +6981,12 @@
       var ret = [];
 
       if (this.labelModule.visible()) {
-        if (ComponentUtil.pointInRect(this.labelModule.getSize(), point)) {
+        if (pointInRect(this.labelModule.getSize(), point)) {
           ret.push({nodeId:this.id, labelId:0});
         }
       }
 
-      if (ComponentUtil.pointInRect(this.shape.boundingBox, point)) {
+      if (pointInRect(this.shape.boundingBox, point)) {
         ret.push({nodeId:this.id});
       }
 
@@ -7252,7 +7191,7 @@
         throw 'Internal error: mass in defaultOptions of NodesHandler may not be zero or negative';
       }
 
-      this.options = util.bridgeObject(this.defaultOptions);
+      this.options = esnext.bridgeObject(this.defaultOptions);
 
       this.bindEventListeners();
     }
@@ -7265,7 +7204,7 @@
       this.body.emitter.on('refreshNodes', this.refresh.bind(this));
       this.body.emitter.on('refresh', this.refresh.bind(this));
       this.body.emitter.on('destroy', () => {
-        util.forEach(this.nodesListeners, (callback, event) => {
+        esnext.forEach(this.nodesListeners, (callback, event) => {
           if (this.body.data.nodes)
             this.body.data.nodes.off(event, callback);
         });
@@ -7342,15 +7281,15 @@
     setData(nodes, doNotEmit = false) {
       let oldNodesData = this.body.data.nodes;
 
-      if (nodes instanceof esnext.DataSet || nodes instanceof esnext.DataView) {
+      if (nodes instanceof esnext$1.DataSet || nodes instanceof esnext$1.DataView) {
         this.body.data.nodes = nodes;
       }
       else if (Array.isArray(nodes)) {
-        this.body.data.nodes = new esnext.DataSet();
+        this.body.data.nodes = new esnext$1.DataSet();
         this.body.data.nodes.add(nodes);
       }
       else if (!nodes) {
-        this.body.data.nodes = new esnext.DataSet();
+        this.body.data.nodes = new esnext$1.DataSet();
       }
       else {
         throw new TypeError('Array or DataSet expected');
@@ -7358,7 +7297,7 @@
 
       if (oldNodesData) {
         // unsubscribe from old dataset
-        util.forEach(this.nodesListeners, function (callback, event) {
+        esnext.forEach(this.nodesListeners, function (callback, event) {
           oldNodesData.off(event, callback);
         });
       }
@@ -7369,7 +7308,7 @@
       if (this.body.data.nodes) {
         // subscribe to new dataset
         let me = this;
-        util.forEach(this.nodesListeners, function (callback, event) {
+        esnext.forEach(this.nodesListeners, function (callback, event) {
           me.body.data.nodes.on(event, callback);
         });
 
@@ -7487,7 +7426,7 @@
      * @param {boolean} [clearPositions=false]
      */
     refresh(clearPositions = false) {
-      util.forEach(this.body.nodes, (node, nodeId) => {
+      esnext.forEach(this.body.nodes, (node, nodeId) => {
         let data = this.body.data.nodes.get(nodeId);
         if (data !== undefined) {
           if (clearPositions === true) {
@@ -8279,7 +8218,7 @@
               }
           }
           // get circle coordinates
-          const coordinates = ComponentUtil.getSelfRefCoordinates(ctx, this.options.selfReference.angle, radius, this.from);
+          const coordinates = getSelfRefCoordinates(ctx, this.options.selfReference.angle, radius, this.from);
           return [coordinates.x, coordinates.y, radius];
       }
       /**
@@ -8403,8 +8342,8 @@
                   let fromColor = this.from.options.color.highlight.border;
                   let toColor = this.to.options.color.highlight.border;
                   if (this.from.selected === false && this.to.selected === false) {
-                      fromColor = util.overrideOpacity(this.from.options.color.border, values.opacity);
-                      toColor = util.overrideOpacity(this.to.options.color.border, values.opacity);
+                      fromColor = esnext.overrideOpacity(this.from.options.color.border, values.opacity);
+                      toColor = esnext.overrideOpacity(this.to.options.color.border, values.opacity);
                   }
                   else if (this.from.selected === true && this.to.selected === false) {
                       toColor = this.to.options.color.border;
@@ -8418,15 +8357,15 @@
                   return grd;
               }
               if (values.inheritsColor === "to") {
-                  return util.overrideOpacity(this.to.options.color.border, values.opacity);
+                  return esnext.overrideOpacity(this.to.options.color.border, values.opacity);
               }
               else {
                   // "from"
-                  return util.overrideOpacity(this.from.options.color.border, values.opacity);
+                  return esnext.overrideOpacity(this.from.options.color.border, values.opacity);
               }
           }
           else {
-              return util.overrideOpacity(values.color, values.opacity);
+              return esnext.overrideOpacity(values.color, values.opacity);
           }
       }
       /**
@@ -9465,7 +9404,7 @@
       // Since globalOptions is constant in values as well as reference,
       // Following needs to be done only once.
 
-      this.options = util.bridgeObject(globalOptions);
+      this.options = esnext.bridgeObject(globalOptions);
       this.globalOptions = globalOptions;
       this.defaultOptions = defaultOptions;
       this.body = body;
@@ -9532,7 +9471,7 @@
       }
 
       let pile = [options, this.options, this.defaultOptions];
-      this.chooser = ComponentUtil.choosify('edge', pile);
+      this.chooser = choosify('edge', pile);
 
       // update label Module
       this.updateLabelModule(options);
@@ -9585,7 +9524,7 @@
       ];
 
       // only deep extend the items in the field array. These do not have shorthand.
-      util.selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion);
+      esnext.selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion);
 
       // Only use endPointOffset values (from and to) if it's valid values
       if (newOptions.endPointOffset !== undefined && newOptions.endPointOffset.from !== undefined) {
@@ -9607,15 +9546,15 @@
       }
 
       // Only copy label if it's a legal value.
-      if (ComponentUtil.isValidLabel(newOptions.label)) {
+      if (isValidLabel(newOptions.label)) {
         parentOptions.label = newOptions.label;
-      } else if (!ComponentUtil.isValidLabel(parentOptions.label)) {
+      } else if (!isValidLabel(parentOptions.label)) {
         parentOptions.label = undefined;
       }
 
-      util.mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
-      util.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
-      util.mergeOptions(parentOptions, newOptions, 'background', globalOptions);
+      esnext.mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
+      esnext.mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
+      esnext.mergeOptions(parentOptions, newOptions, 'background', globalOptions);
 
       if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
         parentOptions.dashes = newOptions.dashes;
@@ -9628,7 +9567,7 @@
       if (newOptions.scaling !== undefined && newOptions.scaling !== null) {
         if (newOptions.scaling.min !== undefined) {parentOptions.scaling.min = newOptions.scaling.min;}
         if (newOptions.scaling.max !== undefined) {parentOptions.scaling.max = newOptions.scaling.max;}
-        util.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+        esnext.mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
       }
       else if (allowDeletion === true && newOptions.scaling === null) {
         parentOptions.scaling = Object.create(globalOptions.scaling); // this sets the pointer of the option back to the global option.
@@ -9643,9 +9582,9 @@
           parentOptions.arrows.from.enabled   = arrows.indexOf("from")   != -1;
         }
         else if (typeof newOptions.arrows === 'object') {
-          util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to',     globalOptions.arrows);
-          util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
-          util.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from',   globalOptions.arrows);
+          esnext.mergeOptions(parentOptions.arrows, newOptions.arrows, 'to',     globalOptions.arrows);
+          esnext.mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
+          esnext.mergeOptions(parentOptions.arrows, newOptions.arrows, 'from',   globalOptions.arrows);
         }
         else {
           throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + JSON.stringify(newOptions.arrows));
@@ -9657,7 +9596,7 @@
 
       // handle multiple input cases for color
       if (newOptions.color !== undefined && newOptions.color !== null) {
-        const fromColor = util.isString(newOptions.color)
+        const fromColor = esnext.isString(newOptions.color)
           ? {
             color: newOptions.color,
             highlight: newOptions.color,
@@ -9670,7 +9609,7 @@
 
         // If passed, fill in values from default options - required in the case of no prototype bridging
         if (copyFromGlobals) {
-          util.deepExtend(toColor, globalOptions.color, false, allowDeletion);
+          esnext.deepExtend(toColor, globalOptions.color, false, allowDeletion);
         } else {
           // Clear local properties - need to do it like this in order to retain prototype bridges
           for (var i in toColor) {
@@ -9680,7 +9619,7 @@
           }
         }
 
-        if (util.isString(toColor)) {
+        if (esnext.isString(toColor)) {
           toColor.color     = toColor;
           toColor.highlight = toColor;
           toColor.hover     = toColor;
@@ -9707,11 +9646,11 @@
         }
       }
       else if (allowDeletion === true && newOptions.color === null) {
-        parentOptions.color = util.bridgeObject(globalOptions.color); // set the object back to the global options
+        parentOptions.color = esnext.bridgeObject(globalOptions.color); // set the object back to the global options
       }
 
       if (allowDeletion === true && newOptions.font === null) {
-        parentOptions.font = util.bridgeObject(globalOptions.font); // set the object back to the global options
+        parentOptions.font = esnext.bridgeObject(globalOptions.font); // set the object back to the global options
       }
 
       if(newOptions.hasOwnProperty("selfReferenceSize")){
@@ -10157,7 +10096,7 @@
           this.labelModule.pointToSelf = true;
 
           // get circle coordinates
-          const coordinates = ComponentUtil.getSelfRefCoordinates(
+          const coordinates = getSelfRefCoordinates(
             ctx,
             this.options.selfReference.angle,
             this.options.selfReference.size,
@@ -10189,7 +10128,7 @@
 
       if (this.labelModule.visible()) {
         let rotationPoint = this._getRotation();
-        if (ComponentUtil.pointInRect(this.labelModule.getSize(), point, rotationPoint)) {
+        if (pointInRect(this.labelModule.getSize(), point, rotationPoint)) {
           ret.push({edgeId:this.id, labelId:0});
         }
       }
@@ -10460,7 +10399,7 @@
         value: undefined
       };
 
-      util.deepExtend(this.options, this.defaultOptions);
+      esnext.deepExtend(this.options, this.defaultOptions);
 
       this.bindEventListeners();
     }
@@ -10519,7 +10458,7 @@
       this.body.emitter.on("refreshEdges", this.refresh.bind(this));
       this.body.emitter.on("refresh",      this.refresh.bind(this));
       this.body.emitter.on("destroy",      () => {
-        util.forEach(this.edgesListeners, (callback, event) => {
+        esnext.forEach(this.edgesListeners, (callback, event) => {
           if (this.body.data.edges)
             this.body.data.edges.off(event, callback);
         });
@@ -10577,15 +10516,15 @@
     setData(edges, doNotEmit = false) {
       var oldEdgesData = this.body.data.edges;
 
-      if (edges instanceof esnext.DataSet || edges instanceof esnext.DataView) {
+      if (edges instanceof esnext$1.DataSet || edges instanceof esnext$1.DataView) {
         this.body.data.edges = edges;
       }
       else if (Array.isArray(edges)) {
-        this.body.data.edges = new esnext.DataSet();
+        this.body.data.edges = new esnext$1.DataSet();
         this.body.data.edges.add(edges);
       }
       else if (!edges) {
-        this.body.data.edges = new esnext.DataSet();
+        this.body.data.edges = new esnext$1.DataSet();
       }
       else {
         throw new TypeError('Array or DataSet expected');
@@ -10594,7 +10533,7 @@
       // TODO: is this null or undefined or false?
       if (oldEdgesData) {
         // unsubscribe from old dataset
-        util.forEach(this.edgesListeners, (callback, event) => {oldEdgesData.off(event, callback);});
+        esnext.forEach(this.edgesListeners, (callback, event) => {oldEdgesData.off(event, callback);});
       }
 
       // remove drawn edges
@@ -10603,7 +10542,7 @@
       // TODO: is this null or undefined or false?
       if (this.body.data.edges) {
         // subscribe to new dataset
-        util.forEach(this.edgesListeners, (callback, event) =>  {this.body.data.edges.on(event, callback);});
+        esnext.forEach(this.edgesListeners, (callback, event) =>  {this.body.data.edges.on(event, callback);});
 
         // draw all new nodes
         var ids = this.body.data.edges.getIds();
@@ -10694,7 +10633,7 @@
       if (ids.length === 0) return;  // early out
 
       var edges = this.body.edges;
-      util.forEach(ids, (id) => {
+      esnext.forEach(ids, (id) => {
         var edge = edges[id];
         if (edge !== undefined) {
           edge.remove();
@@ -10710,7 +10649,7 @@
      * Refreshes Edge Handler
      */
     refresh() {
-      util.forEach(this.body.edges, (edge, edgeId) => {
+      esnext.forEach(this.body.edges, (edge, edgeId) => {
         const data = this.body.data.edges.get(edgeId);
         if (data !== undefined) {
           edge.setOptions(data);
@@ -10790,7 +10729,7 @@
       
       let edgesToDelete = [];
 
-      util.forEach(this.body.edges, (edge, id) => {
+      esnext.forEach(this.body.edges, (edge, id) => {
         let toNode = this.body.nodes[edge.toId];
         let fromNode = this.body.nodes[edge.fromId];
 
@@ -10846,7 +10785,7 @@
       this.physicsBody = physicsBody;
       this.barnesHutTree;
       this.setOptions(options);
-      this._rng = util.Alea("BARNES HUT SOLVER");
+      this._rng = esnext.Alea("BARNES HUT SOLVER");
 
       // debug: show grid
       // this.body.emitter.on("afterDrawing", (ctx) => {this._debug(ctx,'#ff0000')})
@@ -11324,7 +11263,7 @@
      * @param {Object} options
      */
     constructor(body, physicsBody, options) {
-      this._rng = util.Alea("REPULSION SOLVER");
+      this._rng = esnext.Alea("REPULSION SOLVER");
 
       this.body = body;
       this.physicsBody = physicsBody;
@@ -11764,7 +11703,7 @@
     constructor(body, physicsBody, options) {
       super(body, physicsBody, options);
 
-      this._rng = util.Alea("FORCE ATLAS 2 BASED REPULSION SOLVER");
+      this._rng = esnext.Alea("FORCE ATLAS 2 BASED REPULSION SOLVER");
     }
 
     /**
@@ -11914,7 +11853,7 @@
         adaptiveTimestep: true,
         wind: { x: 0, y: 0 }
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
       this.timestep = 0.5;
       this.layoutFailed = false;
 
@@ -11973,8 +11912,8 @@
         }
         else {
           this.physicsEnabled = true;
-          util.selectiveNotDeepExtend(['stabilization'], this.options, options);
-          util.mergeOptions(this.options, options, 'stabilization');
+          esnext.selectiveNotDeepExtend(['stabilization'], this.options, options);
+          esnext.mergeOptions(this.options, options, 'stabilization');
 
           if (options.enabled === undefined) {
             this.options.enabled = true;
@@ -12608,7 +12547,7 @@
         let size = Math.min(Math.max(5,forceSize),15);
         let arrowSize = 3*size;
 
-        let color = util.HSVToHex((180 - Math.min(1,Math.max(0,colorFactor*forceSize))*180) / 360,1,1);
+        let color = esnext.HSVToHex((180 - Math.min(1,Math.max(0,colorFactor*forceSize))*180) / 360,1,1);
 
         let point = {
           x: node.x + factor*force.x,
@@ -12730,13 +12669,13 @@
     static cloneOptions(item, type) {
       let clonedOptions = {};
       if (type === undefined || type === 'node') {
-        util.deepExtend(clonedOptions, item.options, true);
+        esnext.deepExtend(clonedOptions, item.options, true);
         clonedOptions.x = item.x;
         clonedOptions.y = item.y;
         clonedOptions.amountOfConnections = item.edges.length;
       }
       else {
-        util.deepExtend(clonedOptions, item.options, true);
+        esnext.deepExtend(clonedOptions, item.options, true);
       }
       return clonedOptions;
     }
@@ -12785,30 +12724,30 @@
 
       // Disconnect child cluster from current cluster
       delete this.containedNodes[childClusterId];
-      util.forEach(childCluster.edges, (edge) => {
+      esnext.forEach(childCluster.edges, (edge) => {
         delete this.containedEdges[edge.id];
       });
 
       // Transfer nodes and edges
-      util.forEach(childCluster.containedNodes, (node, nodeId) => {
+      esnext.forEach(childCluster.containedNodes, (node, nodeId) => {
         this.containedNodes[nodeId] = node;
       });
       childCluster.containedNodes = {};
 
-      util.forEach(childCluster.containedEdges, (edge, edgeId) => {
+      esnext.forEach(childCluster.containedEdges, (edge, edgeId) => {
         this.containedEdges[edgeId] = edge;
       });
       childCluster.containedEdges = {};
 
       // Transfer edges within cluster edges which are clustered
-      util.forEach(childCluster.edges, (clusterEdge) => {
-        util.forEach(this.edges, (parentClusterEdge) => {
+      esnext.forEach(childCluster.edges, (clusterEdge) => {
+        esnext.forEach(this.edges, (parentClusterEdge) => {
           // Assumption: a clustered edge can only be present in a single clustering edge
           // Not tested here
           let index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(clusterEdge.id);
           if (index === -1) return;
 
-          util.forEach(clusterEdge.clusteringEdgeReplacingIds, (srcId) => {
+          esnext.forEach(clusterEdge.clusteringEdgeReplacingIds, (srcId) => {
             parentClusterEdge.clusteringEdgeReplacingIds.push(srcId);
 
             // Maintain correct bookkeeping for transferred edge
@@ -12930,7 +12869,7 @@
 
       this.options = {};
       this.defaultOptions = {};
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
 
       this.body.emitter.on('_resetData', () => {this.clusteredNodes = {}; this.clusteredEdges = {};});
     }
@@ -12980,12 +12919,12 @@
       let childEdgesObj = {};
 
       // collect the nodes that will be in the cluster
-      util.forEach(this.body.nodes, (node, nodeId) => {
+      esnext.forEach(this.body.nodes, (node, nodeId) => {
         if (node.options && options.joinCondition(node.options) === true) {
           childNodesObj[nodeId] = node;
 
           // collect the edges that will be in the cluster
-          util.forEach(node.edges, (edge) => {
+          esnext.forEach(node.edges, (edge) => {
             if (this.clusteredEdges[edge.id] === undefined) {
               childEdgesObj[edge.id] = edge;
             }
@@ -13363,7 +13302,7 @@
       // allow clusters of 1 if options allow
       if (Object.keys(childNodesObj).length == 1 && options.clusterNodeProperties.allowSingleNodeCluster != true) {return;}
 
-      let clusterNodeProperties = util.deepExtend({},options.clusterNodeProperties);
+      let clusterNodeProperties = esnext.deepExtend({},options.clusterNodeProperties);
 
       // construct the clusterNodeProperties
       if (options.processProperties !== undefined) {
@@ -13576,7 +13515,7 @@
       }
       else {
         // copy the position from the cluster
-        util.forEach(containedNodes, function(containedNode) {
+        esnext.forEach(containedNodes, function(containedNode) {
           // inherit position
           if (containedNode.options.fixed.x === false) {containedNode.x = clusterNode.x;}
           if (containedNode.options.fixed.y === false) {containedNode.y = clusterNode.y;}
@@ -13898,7 +13837,7 @@
       // copy the options of the edge we will replace
       let clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge');
       // make sure the properties of clusterEdges are superimposed on it
-      util.deepExtend(clonedOptions, clusterEdgeProperties);
+      esnext.deepExtend(clonedOptions, clusterEdgeProperties);
 
       // set up the edge
       clonedOptions.from = fromId;
@@ -13907,7 +13846,7 @@
 
       // apply the edge specific options to it if specified
       if (extraOptions !== undefined) {
-        util.deepExtend(clonedOptions, extraOptions);
+        esnext.deepExtend(clonedOptions, extraOptions);
       }
 
       let newEdge = this.body.functions.createEdge(clonedOptions);
@@ -14018,7 +13957,7 @@
     _filter(arr, callback) {
       let ret = [];
 
-      util.forEach(arr, (item) => {
+      esnext.forEach(arr, (item) => {
         if (callback(item)) {
           ret.push(item);
         }
@@ -14048,7 +13987,7 @@
        * @param {Function} callback  function to call for each cluster node
        */
       let eachClusterNode = (callback) => {
-        util.forEach(this.body.nodes, (node) => {
+        esnext.forEach(this.body.nodes, (node) => {
           if (node.isCluster === true) {
             callback(node);
           }
@@ -14088,7 +14027,7 @@
       //
 
       // Add the deleted clustered edges to the list
-      util.forEach(this.clusteredEdges, (edgeId) => {
+      esnext.forEach(this.clusteredEdges, (edgeId) => {
         let edge = this.body.edges[edgeId];
         if (edge === undefined || !edge.endPointsValid()) {
           deletedEdgeIds[edgeId] = edgeId;
@@ -14099,7 +14038,7 @@
       // i.e. nodes 1-2 within cluster with an edge in between.
       // So the cluster nodes also need to be scanned for invalid edges
       eachClusterNode(function(clusterNode) {
-        util.forEach(clusterNode.containedEdges, (edge, edgeId) => {
+        esnext.forEach(clusterNode.containedEdges, (edge, edgeId) => {
           if (!edge.endPointsValid() && !deletedEdgeIds[edgeId]) {
             deletedEdgeIds[edgeId] = edgeId;
           }
@@ -14108,14 +14047,14 @@
 
       // Also scan for cluster edges which need to be removed in the active list.
       // Regular edges have been removed beforehand, so this only picks up the cluster edges.
-      util.forEach(this.body.edges, (edge, edgeId) => {
+      esnext.forEach(this.body.edges, (edge, edgeId) => {
         // Explicitly scan the contained edges for validity
         let isValid = true;
         let replacedIds = edge.clusteringEdgeReplacingIds;
         if (replacedIds !== undefined) {
           let numValid = 0;
 
-          util.forEach(replacedIds, (containedEdgeId) => {
+          esnext.forEach(replacedIds, (containedEdgeId) => {
             let containedEdge   = this.body.edges[containedEdgeId];
 
             if (containedEdge !== undefined && containedEdge.endPointsValid()) {
@@ -14133,10 +14072,10 @@
 
       // Remove edges from cluster nodes
       eachClusterNode((clusterNode) => {
-        util.forEach(deletedEdgeIds, (deletedEdgeId) => {
+        esnext.forEach(deletedEdgeIds, (deletedEdgeId) => {
           delete clusterNode.containedEdges[deletedEdgeId];
 
-          util.forEach(clusterNode.edges, (edge, m) => {
+          esnext.forEach(clusterNode.edges, (edge, m) => {
             if (edge.id === deletedEdgeId) {
               clusterNode.edges[m] = null;  // Don't want to directly delete here, because in the loop
               return;
@@ -14154,14 +14093,14 @@
 
 
       // Remove from cluster list
-      util.forEach(deletedEdgeIds, (edgeId) => {
+      esnext.forEach(deletedEdgeIds, (edgeId) => {
         delete this.clusteredEdges[edgeId];
       });
 
       // Remove cluster edges from active list (this.body.edges).
       // deletedEdgeIds still contains id of regular edges, but these should all
       // be gone when you reach here.
-      util.forEach(deletedEdgeIds, (edgeId) => {
+      esnext.forEach(deletedEdgeIds, (edgeId) => {
         delete this.body.edges[edgeId];
       });
 
@@ -14172,7 +14111,7 @@
 
       // Iterating over keys here, because edges may be removed in the loop
       let ids = Object.keys(this.body.edges);
-      util.forEach(ids, (edgeId) => {
+      esnext.forEach(ids, (edgeId) => {
         let edge = this.body.edges[edgeId];
 
         let shouldBeClustered = this._isClusteredNode(edge.fromId) || this._isClusteredNode(edge.toId);
@@ -14334,7 +14273,7 @@
         hideEdgesOnZoom: false,
         hideNodesOnDrag: false,
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
 
       this._determineBrowserMethod();
       this.bindEventListeners();
@@ -14396,7 +14335,7 @@
     setOptions(options) {
       if (options !== undefined) {
         let fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
-        util.selectiveDeepExtend(fields,this.options, options);
+        esnext.selectiveDeepExtend(fields,this.options, options);
       }
     }
 
@@ -14726,13 +14665,12 @@
     }
   }
 
-  var hammerUtil = createCommonjsModule(function (module, exports) {
   /**
    * Register a touch event, taking place before a gesture
    * @param {Hammer} hammer       A hammer instance
    * @param {function} callback   Callback, called as callback(event)
    */
-  exports.onTouch = function (hammer, callback) {
+  function onTouch (hammer, callback) {
     callback.inputHandler = function (event) {
       if (event.isFirst) {
         callback(event);
@@ -14740,7 +14678,7 @@
     };
 
     hammer.on('hammer.input', callback.inputHandler);
-  };
+  }
 
   /**
    * Register a release event, taking place after a gesture
@@ -14748,7 +14686,7 @@
    * @param {function} callback   Callback, called as callback(event)
    * @returns {*}
    */
-  exports.onRelease = function (hammer, callback) {
+  function onRelease (hammer, callback) {
     callback.inputHandler = function (event) {
       if (event.isFinal) {
         callback(event);
@@ -14756,45 +14694,7 @@
     };
 
     return hammer.on('hammer.input', callback.inputHandler);
-  };
-
-
-  /**
-   * Unregister a touch event, taking place before a gesture
-   * @param {Hammer} hammer       A hammer instance
-   * @param {function} callback   Callback, called as callback(event)
-   */
-  exports.offTouch = function (hammer, callback) {
-    hammer.off('hammer.input', callback.inputHandler);
-  };
-
-  /**
-   * Unregister a release event, taking place before a gesture
-   * @param {Hammer} hammer       A hammer instance
-   * @param {function} callback   Callback, called as callback(event)
-   */
-  exports.offRelease = exports.offTouch;
-
-  /**
-   * Hack the PinchRecognizer such that it doesn't prevent default behavior
-   * for vertical panning.
-   *
-   * Yeah ... this is quite a hack ... see https://github.com/hammerjs/hammer.js/issues/932
-   *
-   * @param {Hammer.Pinch} pinchRecognizer
-   * @return {Hammer.Pinch} returns the pinchRecognizer
-   */
-  exports.disablePreventDefaultVertically = function (pinchRecognizer) {
-    var TOUCH_ACTION_PAN_Y = 'pan-y';
-
-    pinchRecognizer.getTouchAction = function() {
-      // default method returns [TOUCH_ACTION_NONE]
-      return [TOUCH_ACTION_PAN_Y];
-    };
-
-    return pinchRecognizer;
-  };
-  });
+  }
 
   /**
    * Create the main frame for the Network.
@@ -14821,7 +14721,7 @@
         height: '100%',
         width: '100%'
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
 
       this.bindEventListeners();
     }
@@ -14853,7 +14753,7 @@
     setOptions(options) {
       if (options !== undefined) {
         let fields = ['width','height','autoResize'];
-        util.selectiveDeepExtend(fields,this.options, options);
+        esnext.selectiveDeepExtend(fields,this.options, options);
       }
 
       if (this.options.autoResize === true) {
@@ -14866,7 +14766,7 @@
           }
         }, 1000);
         this.resizeFunction = this._onResize.bind(this);
-        util.addEventListener(window,'resize',this.resizeFunction);
+        esnext.addEventListener(window,'resize',this.resizeFunction);
       }
     }
 
@@ -14878,7 +14778,7 @@
       if (this.resizeTimer !== undefined) {
         clearInterval(this.resizeTimer);
       }
-      util.removeEventListener(window,'resize',this.resizeFunction);
+      esnext.removeEventListener(window,'resize',this.resizeFunction);
       this.resizeFunction = undefined;
     }
 
@@ -15035,7 +14935,7 @@
       // enable to get better response, todo: test on mobile.
       this.hammer.get('pan').set({threshold:5, direction: hammer.DIRECTION_ALL});
 
-      hammerUtil.onTouch(this.hammer, (event) => {this.body.eventListeners.onTouch(event);});
+      onTouch(this.hammer, (event) => {this.body.eventListeners.onTouch(event);});
       this.hammer.on('tap',       (event) => {this.body.eventListeners.onTap(event);});
       this.hammer.on('doubletap', (event) => {this.body.eventListeners.onDoubleTap(event);});
       this.hammer.on('press',     (event) => {this.body.eventListeners.onHold(event);});
@@ -15051,7 +14951,7 @@
       this.frame.canvas.addEventListener('contextmenu', (event) => {this.body.eventListeners.onContext(event);});
 
       this.hammerFrame = new hammer(this.frame);
-      hammerUtil.onRelease(this.hammerFrame, (event) => {this.body.eventListeners.onRelease(event);});
+      onRelease(this.hammerFrame, (event) => {this.body.eventListeners.onRelease(event);});
     }
 
 
@@ -15595,7 +15495,7 @@
       this.easingTime += this.animationSpeed;
       this.easingTime = finished === true ? 1.0 : this.easingTime;
 
-      let progress = util.easingFunctions[this.animationEasingFunction](this.easingTime);
+      let progress = esnext.easingFunctions[this.animationEasingFunction](this.easingTime);
 
       this.body.view.scale = this.sourceScale + (this.targetScale - this.sourceScale) * progress;
       this.body.view.translation = {
@@ -15734,10 +15634,10 @@
 
         var hammer$1 = new hammer(this.navigationDOM[navigationDivs[i]]);
         if (navigationDivActions[i] === "_fit") {
-          hammerUtil.onTouch(hammer$1, this._fit.bind(this));
+          onTouch(hammer$1, this._fit.bind(this));
         }
         else {
-          hammerUtil.onTouch(hammer$1, this.bindToRedraw.bind(this,navigationDivActions[i]));
+          onTouch(hammer$1, this.bindToRedraw.bind(this,navigationDivActions[i]));
         }
 
         this.navigationHammers.push(hammer$1);
@@ -15746,7 +15646,7 @@
       // use a hammer for the release so we do not require the one used in the rest of the network
       // the one the rest uses can be overloaded by the manipulation system.
       var hammerFrame = new hammer(this.canvas.frame);
-      hammerUtil.onRelease(hammerFrame, () => {this._stopMovement();});
+      onRelease(hammerFrame, () => {this._stopMovement();});
       this.navigationHammers.push(hammerFrame);
 
       this.iconsCreated = true;
@@ -16091,7 +15991,7 @@
         zoomView: true,
         zoomSpeed: 1
       };
-      util.extend(this.options,this.defaultOptions);
+      Object.assign(this.options,this.defaultOptions);
 
       this.bindEventListeners();
     }
@@ -16114,15 +16014,15 @@
       if (options !== undefined) {
         // extend all but the values in fields
         let fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag','keyboard','multiselect','selectable','selectConnectedEdges'];
-        util.selectiveNotDeepExtend(fields, this.options, options);
+        esnext.selectiveNotDeepExtend(fields, this.options, options);
 
         // merge the keyboard options in.
-        util.mergeOptions(this.options, options, 'keyboard');
+        esnext.mergeOptions(this.options, options, 'keyboard');
 
         if (options.tooltip) {
-          util.extend(this.options.tooltip, options.tooltip);
+          Object.assign(this.options.tooltip, options.tooltip);
           if (options.tooltip.color) {
-            this.options.tooltip.color = util.parseColor(options.tooltip.color);
+            this.options.tooltip.color = esnext.parseColor(options.tooltip.color);
           }
         }
       }
@@ -16139,8 +16039,8 @@
      */
     getPointer(touch) {
       return {
-        x: touch.x - util.getAbsoluteLeft(this.canvas.frame.canvas),
-        y: touch.y - util.getAbsoluteTop(this.canvas.frame.canvas)
+        x: touch.x - esnext.getAbsoluteLeft(this.canvas.frame.canvas),
+        y: touch.y - esnext.getAbsoluteTop(this.canvas.frame.canvas)
       };
     }
 
@@ -16338,7 +16238,7 @@
 
       this.drag.dragging = true;
       this.drag.selection = [];
-      this.drag.translation = util.extend({},this.body.view.translation); // copy the object
+      this.drag.translation = Object.assign({},this.body.view.translation); // copy the object
       this.drag.nodeId = undefined;
 
       if (node !== undefined && this.options.dragNodes === true) {
@@ -16769,7 +16669,7 @@
         selectConnectedEdges: true,
         hoverConnectedEdges: true
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
 
       this.body.emitter.on("_dataChanged", () => {
         this.updateSelection();
@@ -16784,7 +16684,7 @@
     setOptions(options) {
       if (options !== undefined) {
         let fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
-        util.selectiveDeepExtend(fields, this.options, options);
+        esnext.selectiveDeepExtend(fields, this.options, options);
       }
     }
 
@@ -18345,7 +18245,7 @@
           sortMethod: 'hubsize' // hubsize, directed
         }
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
       this.bindEventListeners();
     }
 
@@ -18384,8 +18284,8 @@
       if (options !== undefined) {
         let hierarchical = this.options.hierarchical;
         let prevHierarchicalState = hierarchical.enabled;
-        util.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"],this.options, options);
-        util.mergeOptions(this.options, options, 'hierarchical');
+        esnext.selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"],this.options, options);
+        esnext.mergeOptions(this.options, options, 'hierarchical');
 
         if (options.randomSeed !== undefined) {
           this._resetRNG(options.randomSeed);
@@ -18420,7 +18320,7 @@
           if (prevHierarchicalState === true) {
             // refresh the overridden options for nodes and edges.
             this.body.emitter.emit('refresh');
-            return util.deepExtend(allOptions,this.optionsBackup);
+            return esnext.deepExtend(allOptions,this.optionsBackup);
           }
         }
       }
@@ -18434,7 +18334,7 @@
      */
     _resetRNG(seed) {
       this.initialRandomSeed = seed;
-      this._rng = util.Alea(this.initialRandomSeed);
+      this._rng = esnext.Alea(this.initialRandomSeed);
     }
 
     /**
@@ -19393,7 +19293,7 @@
     _getActiveEdges(node) {
       let result = [];
 
-      util.forEach(node.edges, (edge) => { 
+      esnext.forEach(node.edges, (edge) => { 
         if (this.body.edgeIndices.indexOf(edge.id) !== -1) {
           result.push(edge);
         }
@@ -19413,7 +19313,7 @@
       let hubSizes = {};
       let nodeIds = this.body.nodeIndices;
 
-      util.forEach(nodeIds, (nodeId) => { 
+      esnext.forEach(nodeIds, (nodeId) => { 
         let node = this.body.nodes[nodeId];
         let hubSize = this._getActiveEdges(node).length;
         hubSizes[hubSize] = true;
@@ -19421,7 +19321,7 @@
 
       // Make an array of the size sorted descending
       let result = [];
-      util.forEach(hubSizes, (size) => { 
+      esnext.forEach(hubSizes, (size) => { 
         result.push(Number(size));
       });
 
@@ -19449,7 +19349,7 @@
         let hubSize = hubSizes[i];
         if (hubSize === 0) break;
 
-        util.forEach(this.body.nodeIndices, (nodeId) => { 
+        esnext.forEach(this.body.nodeIndices, (nodeId) => { 
           let node = this.body.nodes[nodeId];
 
           if (hubSize === this._getActiveEdges(node).length) {
@@ -19764,7 +19664,7 @@
           borderWidthSelected: 2
         }
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
 
       this.body.emitter.on('destroy',     () => {this._clean();});
       this.body.emitter.on('_dataChanged',this._restore.bind(this));
@@ -19806,7 +19706,7 @@
         }
         else {
           this.options.enabled = true;
-          util.deepExtend(this.options, options);
+          esnext.deepExtend(this.options, options);
         }
         if (this.options.initiallyActive === true) {
           this.editMode = true;
@@ -19989,7 +19889,7 @@
         this.inMode = 'editNode';
         if (typeof this.options.editNode === 'function') {
           if (node.isCluster !== true) {
-            let data = util.deepExtend({}, node.options, false);
+            let data = esnext.deepExtend({}, node.options, false);
             data.x = node.x;
             data.y = node.y;
 
@@ -20274,7 +20174,7 @@
      * @private
      */
     _getNewTargetNode(x,y) {
-      let controlNodeStyle = util.deepExtend({}, this.options.controlNodeStyle);
+      let controlNodeStyle = esnext.deepExtend({}, this.options.controlNodeStyle);
 
       controlNodeStyle.id = 'targetNode' + uuid.v4();
       controlNodeStyle.hidden = false;
@@ -20301,7 +20201,7 @@
       this.manipulationDOM = {};
 
       // empty the editModeDiv
-      util.recursiveDOMDelete(this.editModeDiv);
+      esnext.recursiveDOMDelete(this.editModeDiv);
 
 
       // create the contents for the editMode button
@@ -20324,8 +20224,8 @@
 
       // _clean the divs
       if (this.guiEnabled === true) {
-        util.recursiveDOMDelete(this.editModeDiv);
-        util.recursiveDOMDelete(this.manipulationDiv);
+        esnext.recursiveDOMDelete(this.editModeDiv);
+        esnext.recursiveDOMDelete(this.manipulationDiv);
 
         // removes all the bindings and overloads
         this._cleanManipulatorHammers();
@@ -20369,9 +20269,9 @@
       this._clean();
 
       // empty the manipulation divs
-      util.recursiveDOMDelete(this.manipulationDiv);
-      util.recursiveDOMDelete(this.editModeDiv);
-      util.recursiveDOMDelete(this.closeDiv);
+      esnext.recursiveDOMDelete(this.manipulationDiv);
+      esnext.recursiveDOMDelete(this.editModeDiv);
+      esnext.recursiveDOMDelete(this.closeDiv);
 
       // remove the manipulation divs
       if (this.manipulationDiv) {this.canvas.frame.removeChild(this.manipulationDiv);}
@@ -20566,7 +20466,7 @@
      */
     _bindHammerToDiv(domElement, boundFunction) {
       let hammer$1 = new hammer(domElement, {});
-      hammerUtil.onTouch(hammer$1, boundFunction);
+      onTouch(hammer$1, boundFunction);
       this.manipulationHammers.push(hammer$1);
     }
 
@@ -20604,7 +20504,7 @@
     _controlNodeTouch(event) {
       this.selectionHandler.unselectAll();
       this.lastTouch = this.body.functions.getPointer(event.center);
-      this.lastTouch.translation = util.extend({},this.body.view.translation); // copy the object
+      this.lastTouch.translation = Object.assign({},this.body.view.translation); // copy the object
     }
 
 
@@ -20724,7 +20624,7 @@
       // check to avoid double fireing of this function.
       if (new Date().valueOf() - this.touchTime > 100) {
         this.lastTouch = this.body.functions.getPointer(event.center);
-        this.lastTouch.translation = util.extend({},this.body.view.translation); // copy the object
+        this.lastTouch.translation = Object.assign({},this.body.view.translation); // copy the object
 
         this.interactionHandler.drag.pointer = this.lastTouch; // Drag pointer is not updated when adding edges
         this.interactionHandler.drag.translation = this.lastTouch.translation;
@@ -21093,17 +20993,17 @@
       }
 
       // check format
-      if (util.isString(color) === true) {
-        if (util.isValidRGB(color) === true) {
+      if (esnext.isString(color) === true) {
+        if (esnext.isValidRGB(color) === true) {
           let rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
           rgba = {r:rgbaArray[0], g:rgbaArray[1], b:rgbaArray[2], a:1.0};
         }
-        else if (util.isValidRGBA(color) === true) {
+        else if (esnext.isValidRGBA(color) === true) {
           let rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
           rgba = {r:rgbaArray[0], g:rgbaArray[1], b:rgbaArray[2], a:rgbaArray[3]};
         }
-        else if (util.isValidHex(color) === true) {
-          let rgbObj = util.hexToRGB(color);
+        else if (esnext.isValidHex(color) === true) {
+          let rgbObj = esnext.hexToRGB(color);
           rgba = {r:rgbObj.r, g:rgbObj.g, b:rgbObj.b, a:1.0};
         }
       }
@@ -21152,7 +21052,7 @@
     _hide(storePrevious = true) {
       // store the previous color for next time;
       if (storePrevious === true) {
-        this.previousColor = util.extend({}, this.color);
+        this.previousColor = Object.assign({}, this.color);
       }
 
       if (this.applied === true) {
@@ -21217,11 +21117,11 @@
     _setColor(rgba, setInitial = true) {
       // store the initial color
       if (setInitial === true) {
-        this.initialColor = util.extend({}, rgba);
+        this.initialColor = Object.assign({}, rgba);
       }
 
       this.color = rgba;
-      let hsv = util.RGBToHSV(rgba.r, rgba.g, rgba.b);
+      let hsv = esnext.RGBToHSV(rgba.r, rgba.g, rgba.b);
 
       let angleConvert = 2 * Math.PI;
       let radius = this.r * hsv.s;
@@ -21252,9 +21152,9 @@
      * @private
      */
     _setBrightness(value) {
-      let hsv = util.RGBToHSV(this.color.r, this.color.g, this.color.b);
+      let hsv = esnext.RGBToHSV(this.color.r, this.color.g, this.color.b);
       hsv.v = value / 100;
-      let rgba = util.HSVToRGB(hsv.h, hsv.s, hsv.v);
+      let rgba = esnext.HSVToRGB(hsv.h, hsv.s, hsv.v);
       rgba['a'] = this.color.a;
       this.color = rgba;
       this._updatePicker();
@@ -21267,7 +21167,7 @@
      * @private
      */
     _updatePicker(rgba = this.color) {
-      let hsv = util.RGBToHSV(rgba.r, rgba.g, rgba.b);
+      let hsv = esnext.RGBToHSV(rgba.r, rgba.g, rgba.b);
       let ctx = this.colorPickerCanvas.getContext('2d');
       if (this.pixelRation === undefined) {
         this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio ||
@@ -21448,7 +21348,7 @@
       this.hammer = new hammer(this.colorPickerCanvas);
       this.hammer.get('pinch').set({enable: true});
 
-      hammerUtil.onTouch(this.hammer, (event) => {this._moveSelector(event);});
+      onTouch(this.hammer, (event) => {this._moveSelector(event);});
       this.hammer.on('tap',       (event) => {this._moveSelector(event);});
       this.hammer.on('panstart',  (event) => {this._moveSelector(event);});
       this.hammer.on('panmove',   (event) => {this._moveSelector(event);});
@@ -21490,7 +21390,7 @@
           for (sat = 0; sat < this.r; sat++) {
             x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
             y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
-            rgb = util.HSVToRGB(hue * hfac, sat * sfac, 1);
+            rgb = esnext.HSVToRGB(hue * hfac, sat * sfac, 1);
             ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
             ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
           }
@@ -21535,10 +21435,10 @@
       let h = angle / (2 * Math.PI);
       h = h < 0 ? h + 1 : h;
       let s = radius / this.r;
-      let hsv = util.RGBToHSV(this.color.r, this.color.g, this.color.b);
+      let hsv = esnext.RGBToHSV(this.color.r, this.color.g, this.color.b);
       hsv.h = h;
       hsv.s = s;
-      let rgba = util.HSVToRGB(hsv.h, hsv.s, hsv.v);
+      let rgba = esnext.HSVToRGB(hsv.h, hsv.s, hsv.v);
       rgba['a'] = this.color.a;
       this.color = rgba;
 
@@ -21579,7 +21479,7 @@
         container: undefined,
         showButton: true
       };
-      util.extend(this.options, this.defaultOptions);
+      Object.assign(this.options, this.defaultOptions);
 
       this.configureOptions = configureOptions;
       this.moduleOptions = {};
@@ -22127,7 +22027,7 @@
         if (obj.hasOwnProperty(subObj)) {
           show = true;
           let item = obj[subObj];
-          let newPath = util.copyAndExtendArray(path, subObj);
+          let newPath = esnext.copyAndExtendArray(path, subObj);
           if (typeof filter === 'function') {
             show = filter(subObj,path);
 
@@ -22166,7 +22066,7 @@
               if (draw === true) {
                 // initially collapse options with an disabled enabled option.
                 if (item.enabled !== undefined) {
-                  let enabledPath = util.copyAndExtendArray(newPath, 'enabled');
+                  let enabledPath = esnext.copyAndExtendArray(newPath, 'enabled');
                   let enabledValue = this._getValue(enabledPath);
                   if (enabledValue === true) {
                     let label = this._makeLabel(subObj, newPath, true);
@@ -23418,7 +23318,7 @@
       locales: locales,
       clickToUse: false
     };
-    util.extend(this.options, this.defaultOptions);
+    Object.assign(this.options, this.defaultOptions);
 
     /**
      * Containers for nodes and edges.
@@ -23513,7 +23413,7 @@
   }
 
   // Extend Network with an Emitter mixin
-  componentEmitter(Network.prototype);
+  Emitter(Network.prototype);
 
 
   /**
@@ -23533,7 +23433,7 @@
 
       // copy the global fields over
       let fields = ['locale','locales','clickToUse'];
-      util.selectiveDeepExtend(fields,this.options, options);
+      esnext.selectiveDeepExtend(fields,this.options, options);
 
       // normalize the locale or use English
       if (options.locale !== undefined) {
@@ -23578,20 +23478,20 @@
       // if the configuration system is enabled, copy all options and put them into the config system
       if (this.configurator && this.configurator.options.enabled === true) {
         let networkOptions = {nodes:{},edges:{},layout:{},interaction:{},manipulation:{},physics:{},global:{}};
-        util.deepExtend(networkOptions.nodes,        this.nodesHandler.options);
-        util.deepExtend(networkOptions.edges,        this.edgesHandler.options);
-        util.deepExtend(networkOptions.layout,       this.layoutEngine.options);
+        esnext.deepExtend(networkOptions.nodes,        this.nodesHandler.options);
+        esnext.deepExtend(networkOptions.edges,        this.edgesHandler.options);
+        esnext.deepExtend(networkOptions.layout,       this.layoutEngine.options);
         // load the selectionHandler and render default options in to the interaction group
-        util.deepExtend(networkOptions.interaction,  this.selectionHandler.options);
-        util.deepExtend(networkOptions.interaction,  this.renderer.options);
+        esnext.deepExtend(networkOptions.interaction,  this.selectionHandler.options);
+        esnext.deepExtend(networkOptions.interaction,  this.renderer.options);
 
-        util.deepExtend(networkOptions.interaction,  this.interactionHandler.options);
-        util.deepExtend(networkOptions.manipulation, this.manipulation.options);
-        util.deepExtend(networkOptions.physics,      this.physics.options);
+        esnext.deepExtend(networkOptions.interaction,  this.interactionHandler.options);
+        esnext.deepExtend(networkOptions.manipulation, this.manipulation.options);
+        esnext.deepExtend(networkOptions.physics,      this.physics.options);
 
         // load globals into the global object
-        util.deepExtend(networkOptions.global,       this.canvas.options);
-        util.deepExtend(networkOptions.global,       this.options);
+        esnext.deepExtend(networkOptions.global,       this.canvas.options);
+        esnext.deepExtend(networkOptions.global,       this.options);
 
         this.configurator.setModuleOptions(networkOptions);
       }
@@ -23600,7 +23500,7 @@
       if (options.clickToUse !== undefined) {
         if (options.clickToUse === true) {
           if (this.activator === undefined) {
-            this.activator = new Activator_1(this.canvas.frame);
+            this.activator = new Activator(this.canvas.frame);
             this.activator.on('change', () => {this.body.emitter.emit("activate");});
           }
         }
@@ -23726,7 +23626,7 @@
     if (data && data.dot) {
       console.log('The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);');
       // parse DOT file
-      var dotData = dotparser.DOTToGraph(data.dot);
+      var dotData = DOTToGraph(data.dot);
       this.setData(dotData);
       return;
     }
@@ -23792,7 +23692,7 @@
     }
 
     // remove the container and everything inside it recursively
-    util.recursiveDOMDelete(this.body.container);
+    esnext.recursiveDOMDelete(this.body.container);
   };
 
 
@@ -23952,14 +23852,14 @@
     return options;
   };
 
-  const parseDOTNetwork = DOTToGraph_1;
+  const parseDOTNetwork = DOTToGraph;
   // DataSet, utils etc. can't be reexported here because that would cause stack
   // overflow in UMD builds. They all export vis namespace therefore reexporting
   // leads to loading vis to load vis to load vis…
 
   exports.Network = Network;
   exports.NetworkImages = Images;
-  exports.networkDOTParser = dotparser$1;
+  exports.networkDOTParser = dotparser;
   exports.networkGephiParser = gephiParser;
   exports.networkOptions = options;
   exports.parseDOTNetwork = parseDOTNetwork;
