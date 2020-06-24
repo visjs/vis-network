@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-23T20:26:20.274Z
+ * @date    2020-06-24T00:30:10.401Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -23008,20 +23008,14 @@
 	  byteToHex.push((i + 0x100).toString(16).substr(1));
 	}
 
-	function bytesToUuid(buf, offset) {
-	  var i = offset || 0;
-	  var bth = byteToHex; // Note: Be careful editing this code!  It's been tuned for performance
+	function bytesToUuid(buf, offset_) {
+	  var offset = offset_ || 0; // Note: Be careful editing this code!  It's been tuned for performance
 	  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
 
-	  return (bth[buf[i + 0]] + bth[buf[i + 1]] + bth[buf[i + 2]] + bth[buf[i + 3]] + '-' + bth[buf[i + 4]] + bth[buf[i + 5]] + '-' + bth[buf[i + 6]] + bth[buf[i + 7]] + '-' + bth[buf[i + 8]] + bth[buf[i + 9]] + '-' + bth[buf[i + 10]] + bth[buf[i + 11]] + bth[buf[i + 12]] + bth[buf[i + 13]] + bth[buf[i + 14]] + bth[buf[i + 15]]).toLowerCase();
+	  return (byteToHex[buf[offset + 0]] + byteToHex[buf[offset + 1]] + byteToHex[buf[offset + 2]] + byteToHex[buf[offset + 3]] + '-' + byteToHex[buf[offset + 4]] + byteToHex[buf[offset + 5]] + '-' + byteToHex[buf[offset + 6]] + byteToHex[buf[offset + 7]] + '-' + byteToHex[buf[offset + 8]] + byteToHex[buf[offset + 9]] + '-' + byteToHex[buf[offset + 10]] + byteToHex[buf[offset + 11]] + byteToHex[buf[offset + 12]] + byteToHex[buf[offset + 13]] + byteToHex[buf[offset + 14]] + byteToHex[buf[offset + 15]]).toLowerCase();
 	}
 
 	function v4(options, buf, offset) {
-	  if (typeof options === 'string') {
-	    buf = options === 'binary' ? new Uint8Array(16) : null;
-	    options = null;
-	  }
-
 	  options = options || {};
 	  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
 
@@ -23029,10 +23023,10 @@
 	  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
 
 	  if (buf) {
-	    var start = offset || 0;
+	    offset = offset || 0;
 
 	    for (var i = 0; i < 16; ++i) {
-	      buf[start + i] = rnds[i];
+	      buf[offset + i] = rnds[i];
 	    }
 
 	    return buf;
