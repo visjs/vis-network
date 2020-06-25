@@ -21,6 +21,34 @@
 
     function draw() {
       nodes = [
+        {id: 0, label: 'custom', shape: 'custom', ctxRenderer: (ctx, x, y, w, h, r = 10) => {
+          const r2d = Math.PI / 180;
+          if (w - 2 * r < 0) {
+            r = w / 2;
+          } //ensure that the radius isn't too large for x
+          if (h - 2 * r < 0) {
+            r = h / 2;
+          } //ensure that the radius isn't too large for y
+          ctx.beginPath();
+          ctx.moveTo(x + r, y);
+          ctx.lineTo(x + w - r, y);
+          ctx.arc(x + w - r, y + r, r, r2d * 270, r2d * 360, false);
+          ctx.lineTo(x + w, y + h - r);
+          ctx.arc(x + w - r, y + h - r, r, 0, r2d * 90, false);
+          ctx.lineTo(x + r, y + h);
+          ctx.arc(x + r, y + h - r, r, r2d * 90, r2d * 180, false);
+          ctx.lineTo(x, y + r);
+          ctx.arc(x + r, y + r, r, r2d * 180, r2d * 270, false);
+          ctx.closePath();
+          ctx.save();
+          ctx.fillStyle = '#FF0000';
+
+          // draw the background
+          ctx.fill();
+        
+          ctx.restore();
+          ctx.stroke();
+        }},
         {id: 1,  label: 'circle',  shape: 'circle' },
         {id: 2,  label: 'ellipse', shape: 'ellipse'},
         {id: 3,  label: 'database',shape: 'database'},
