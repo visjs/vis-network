@@ -18,7 +18,7 @@ import canvasMockify from './canvas-mock';
 import Label from '../lib/network/modules/components/shared/Label';
 import NodesHandler from '../lib/network/modules/NodesHandler';
 import Network from '../lib/network/Network';
-import ComponentUtil from '../lib/network/modules/components/shared/ComponentUtil';
+import { isValidLabel } from '../lib/network/modules/components/shared/ComponentUtil';
 
 /**************************************************************
  * Dummy class definitions for minimal required functionality.
@@ -1626,7 +1626,7 @@ describe('Shorthand Font Options', function() {
     it('correctly determines label is not visible when label is invalid', function(done) {
       var invalidLabel = ''
       assert(
-        !ComponentUtil.isValidLabel(invalidLabel),
+        !isValidLabel(invalidLabel),
         'An empty string should be identified as an invalid label'
       )
 
