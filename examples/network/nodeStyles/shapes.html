@@ -21,16 +21,6 @@
 
     function draw() {
       nodes = [
-        {id: 0, label: 'custom', shape: 'custom', ctxRenderer: (ctx, x, y, r) => {
-          ctx.beginPath();
-          const sides = 8;
-          const a = (Math.PI * 2) / sides;
-          ctx.moveTo(x + r, y);
-          for (let i = 1; i < sides; i++) {
-            ctx.lineTo(x + r * Math.cos(a * i), y + r * Math.sin(a * i));
-          }
-          ctx.closePath();
-        }},
         {id: 1,  label: 'circle',  shape: 'circle' },
         {id: 2,  label: 'ellipse', shape: 'ellipse'},
         {id: 3,  label: 'database',shape: 'database'},
@@ -57,7 +47,33 @@
         {id: 32, font:{size:30}, size:40, label: 'big star',    shape: 'star'},
         {id: 33, font:{size:30}, size:40, label: 'big hexagon', shape: 'hexagon'},
         {id: 34, font:{size:30},          label: 'icon square', shape: 'square', icon: {code:'\uf164'} },
-        {id: 35, font:{size:30},          label: 'icon dot',    shape: 'dot',    icon: {code:'\uf165'} },        
+        {id: 35, font:{size:30},          label: 'icon dot',    shape: 'dot',    icon: {code:'\uf165'} },   
+        {
+          id: 36, 
+          label: 'custom', 
+          shape: 'custom', 
+          ctxRenderer: (ctx, x, y, values) => {
+            const r = values.size;
+
+            ctx.beginPath();
+            const sides = 6;
+            const a = (Math.PI * 2) / sides;
+            ctx.moveTo(x , y + r);
+            for (let i = 1; i < sides; i++) {
+              ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
+            }
+            ctx.closePath();
+            ctx.save();
+            ctx.fillStyle = 'red';
+            ctx.fill(); 
+            ctx.stroke();
+            ctx.restore();
+            
+            ctx.font = "normal 12px sans-serif";
+            ctx.fillStyle = 'black';
+            ctx.fillText('custom shape', x - r + 10, y, 2 * r - 20);
+          }
+        },     
       ];
 
       edges = [
