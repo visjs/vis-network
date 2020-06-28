@@ -136,7 +136,7 @@
     "postcss-assets": "5.0.0",
     "prettier": "1.19.1",
     "rimraf": "3.0.2",
-    "rollup": "2.18.0",
+    "rollup": "2.18.1",
     "rollup-plugin-analyzer": "3.2.3",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
@@ -146,7 +146,7 @@
     "rollup-plugin-terser": "6.1.0",
     "rollup-plugin-typescript2": "0.27.1",
     "sazerac": "2.0.0",
-    "semantic-release": "17.1.0",
+    "semantic-release": "17.1.1",
     "serve": "11.3.2",
     "sinon": "9.0.2",
     "snap-shot-it": "7.9.3",
@@ -155,7 +155,7 @@
     "typescript": "3.9.5",
     "uuid": "8.2.0",
     "vis-data": "6.6.1",
-    "vis-dev-utils": "2.3.2",
+    "vis-dev-utils": "2.3.3",
     "vis-util": "4.3.2"
   },
   "collective": {
