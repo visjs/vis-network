@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-06-27T20:41:02.607Z
+ * @date    2020-06-28T11:42:36.935Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25125,6 +25125,10 @@ var CanvasRenderer = /*#__PURE__*/function () {
           }
         }
 
+        if (hidden === false) {
+          this._drawSelectionBox(ctx);
+        }
+
         ctx.beginPath();
         this.body.emitter.emit("afterDrawing", ctx);
         ctx.closePath(); // restore original scaling and translation
@@ -25296,6 +25300,28 @@ var CanvasRenderer = /*#__PURE__*/function () {
         }
       } else {
         this.requiresTimeout = true;
+      }
+    }
+    /**
+    * Redraw selection box
+    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
+    * @private
+    */
+
+  }, {
+    key: "_drawSelectionBox",
+    value: function _drawSelectionBox(ctx) {
+      if (this.body.selectionBox.show) {
+        ctx.beginPath();
+        var width = this.body.selectionBox.position.end.x - this.body.selectionBox.position.start.x;
+        var height = this.body.selectionBox.position.end.y - this.body.selectionBox.position.start.y;
+        ctx.rect(this.body.selectionBox.position.start.x, this.body.selectionBox.position.start.y, width, height);
+        ctx.fillStyle = "rgba(151, 194, 252, 0.2)";
+        ctx.fillRect(this.body.selectionBox.position.start.x, this.body.selectionBox.position.start.y, width, height);
+        ctx.strokeStyle = "rgba(151, 194, 252, 1)";
+        ctx.stroke();
+      } else {
+        ctx.closePath();
       }
     }
   }]);
@@ -27245,6 +27271,19 @@ var InteractionHandler = /*#__PURE__*/function () {
 
       this.drag.nodeId = undefined;
 
+      if (event.srcEvent.shiftKey) {
+        this.body.selectionBox.show = true;
+        var pointer = this.getPointer(event.center);
+        this.body.selectionBox.position.start = {
+          x: this.canvas._XconvertDOMtoCanvas(pointer.x),
+          y: this.canvas._YconvertDOMtoCanvas(pointer.y)
+        };
+        this.body.selectionBox.position.end = {
+          x: this.canvas._XconvertDOMtoCanvas(pointer.x),
+          y: this.canvas._YconvertDOMtoCanvas(pointer.y)
+        };
+      }
+
       if (node !== undefined && this.options.dragNodes === true) {
         this.drag.nodeId = node.id; // select the clicked node if not yet selected
 
@@ -27323,8 +27362,25 @@ var InteractionHandler = /*#__PURE__*/function () {
 
         this.body.emitter.emit('startSimulation');
       } else {
-        // move the network
-        if (this.options.dragView === true) {
+        // create selection box
+        if (event.srcEvent.shiftKey) {
+          this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
+
+
+          if (this.drag.pointer === undefined) {
+            this.onDragStart(event);
+            return;
+          }
+
+          this.body.selectionBox.position.end = {
+            x: this.canvas._XconvertDOMtoCanvas(pointer.x),
+            y: this.canvas._YconvertDOMtoCanvas(pointer.y)
+          };
+          this.body.emitter.emit('_requestRedraw');
+        } // move the network
+
+
+        if (this.options.dragView === true && !event.srcEvent.shiftKey) {
           this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
 
@@ -27352,23 +27408,52 @@ var InteractionHandler = /*#__PURE__*/function () {
   }, {
     key: "onDragEnd",
     value: function onDragEnd(event) {
-      this.drag.dragging = false;
-      var selection = this.drag.selection;
+      var _this3 = this;
 
-      if (selection && selection.length) {
-        forEach$2(selection).call(selection, function (s) {
-          // restore original xFixed and yFixed
-          s.node.options.fixed.x = s.xFixed;
-          s.node.options.fixed.y = s.yFixed;
+      this.drag.dragging = false;
+
+      if (this.body.selectionBox.show) {
+        var _context14;
+
+        this.body.selectionBox.show = false;
+        var selectionBoxPosition = this.body.selectionBox.position;
+        var selectionBoxPositionMinMax = {
+          minX: Math.min(selectionBoxPosition.start.x, selectionBoxPosition.end.x),
+          minY: Math.min(selectionBoxPosition.start.y, selectionBoxPosition.end.y),
+          maxX: Math.max(selectionBoxPosition.start.x, selectionBoxPosition.end.x),
+          maxY: Math.max(selectionBoxPosition.start.y, selectionBoxPosition.end.y)
+        };
+
+        var toBeSelectedNodes = filter$2(_context14 = this.body.nodeIndices).call(_context14, function (nodeId) {
+          var node = _this3.body.nodes[nodeId];
+          return node.x >= selectionBoxPositionMinMax.minX && node.x <= selectionBoxPositionMinMax.maxX && node.y >= selectionBoxPositionMinMax.minY && node.y <= selectionBoxPositionMinMax.maxY;
         });
 
-        this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center));
+        forEach$2(toBeSelectedNodes).call(toBeSelectedNodes, function (nodeId) {
+          return _this3.selectionHandler.selectObject(_this3.body.nodes[nodeId]);
+        });
 
-        this.body.emitter.emit('startSimulation');
-      } else {
         this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
 
         this.body.emitter.emit('_requestRedraw');
+      } else {
+        var selection = this.drag.selection;
+
+        if (selection && selection.length) {
+          forEach$2(selection).call(selection, function (s) {
+            // restore original xFixed and yFixed
+            s.node.options.fixed.x = s.xFixed;
+            s.node.options.fixed.y = s.yFixed;
+          });
+
+          this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center));
+
+          this.body.emitter.emit('startSimulation');
+        } else {
+          this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
+
+          this.body.emitter.emit('_requestRedraw');
+        }
       }
     }
     /**
@@ -27495,7 +27580,7 @@ var InteractionHandler = /*#__PURE__*/function () {
   }, {
     key: "onMouseMove",
     value: function onMouseMove(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       var pointer = this.getPointer({
         x: event.clientX,
@@ -27531,7 +27616,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
         if (!this.drag.dragging) {
           this.popupTimer = setTimeout$2(function () {
-            return _this3._checkShowPopup(pointer);
+            return _this4._checkShowPopup(pointer);
           }, this.options.tooltipDelay);
         }
       } // adding hover highlights
@@ -37795,6 +37880,19 @@ function Network(container, data, options) {
       translation: {
         x: 0,
         y: 0
+      }
+    },
+    selectionBox: {
+      show: false,
+      position: {
+        start: {
+          x: 0,
+          y: 0
+        },
+        end: {
+          x: 0,
+          y: 0
+        }
       }
     }
   }; // bind the event listeners
