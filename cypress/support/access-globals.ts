@@ -58,6 +58,11 @@ export function visStabilizeFitAndRunCode(
   callback: (props: RunCodeProps) => void
 ): void {
   cy.window().then(
+    {
+      // Stabilization can take really long time depenging on the CPU power
+      // available and the amount of nodes and edges used.
+      timeout: 30000
+    },
     async ({ edges, network, nodes }: any): Promise<void> => {
       if (edges && network && nodes) {
         /*

@@ -16,7 +16,7 @@ import {
   VNode
 } from "./types";
 import { drawDashedLine } from "./shapes";
-import * as ComponentUtil from "./../../shared/ComponentUtil";
+import { getSelfRefCoordinates } from "../../shared/ComponentUtil";
 
 export interface FindBorderPositionOptions<Via> {
   via: Via;
@@ -329,7 +329,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
 
     // get circle coordinates
-    const coordinates = ComponentUtil.default.getSelfRefCoordinates(
+    const coordinates = getSelfRefCoordinates(
       ctx,
       this.options.selfReference.angle,
       radius,
