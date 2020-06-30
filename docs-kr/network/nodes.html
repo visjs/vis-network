@@ -206,7 +206,7 @@ var options = {
       interpolation: false,  // only for image and circularImage shapes
       useImageSize: false,  // only for image and circularImage shapes
       useBorderWithImage: false,  // only for image shape
-      useImageCoords: false  // only for image shape
+      coordinateOrigin: 'center'  // only for image and circularImage shapes
     }
     size: 25,
     title: undefined,
@@ -1031,10 +1031,10 @@ mySize = minSize + diff * scale;
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
-            <td class="indent">shapeProperties.useImageCoords</td>
-            <td>Boolean</td>
-            <td><code>false</code></td>
-            <td>이 속성은 <code> image </ code> 및 <code> circularImage </ code> 모양에만 적용됩니다. 참이면 이미지의 (0,0) 좌표가 그리기에 사용됩니다.</td>
+            <td class="indent">shapeProperties.coordinateOrigin</td>
+            <td>String</td>
+            <td><code>'center'</code></td>
+            <td>이 속성은 <code> image </ code> 및 <code> circularImage </ code> 모양에만 적용됩니다. Decides if the (x, y) of the node will be the <code>center</ code> of the image, or the <code>top-left</ code> corner.</td>
         </tr>
         <tr>
             <td>size</td>

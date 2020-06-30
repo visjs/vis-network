@@ -210,7 +210,7 @@ var options = {
       interpolation: false,  // only for image and circularImage shapes
       useImageSize: false,  // only for image and circularImage shapes
       useBorderWithImage: false,  // only for image shape
-      useImageCoords: false  // only for image shape
+      coordinateOrigin: 'center'  // only for image and circularImage shapes
     }
     size: 25,
     title: undefined,
@@ -1073,11 +1073,12 @@ mySize = minSize + diff * scale;
             </td>
         </tr>
         <tr parent="shapeProperties" class="hidden">
-            <td class="indent">shapeProperties.useImageCoords</td>
-            <td>Boolean</td>
-            <td><code>false</code></td>
+            <td class="indent">shapeProperties.coordinateOrigin</td>
+            <td>String</td>
+            <td><code>'center'</code></td>
             <td>This property only applies to the <code>image</code> and <code>circularImage</code> shapes.
-                When true, the image's (0,0) coords are used for drawing.
+                Decides if the (x, y) of the node will be the <code>center</code> of the image,
+                or the <code>top-left</code> corner.
             </td>
         </tr>
         <tr>
