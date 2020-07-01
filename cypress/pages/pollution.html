@@ -48,7 +48,10 @@
           "window.vis",
           // This is Cypress stuff. We don't care about that as it doesn't
           // occur outside of E2E tests.
-          "window.parent.__mobxGlobals"
+          "window.Cypress",
+          "window.parent.Cypress",
+          "window.parent.__mobxGlobals",
+          "window.parent.runnerWs"
         ];
 
         const pollutionDetector = new PollutionDetector();
@@ -87,6 +90,8 @@
             table.appendChild(tr);
           });
           root.appendChild(table);
+
+          root.classList.add("done");
         }
 
         // save current state

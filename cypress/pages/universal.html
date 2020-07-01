@@ -4,14 +4,62 @@
     <title>Vis Network | Cypress | Universal</title>
 
     <style type="text/css">
-      html,
-      body,
+      html {
+        background: lightyellow;
+      }
+
+      body {
+        margin: 100px;
+        overflow: scroll;
+        padding: 0px;
+      }
+      body > * {
+        margin: 0px auto;
+      }
+
       #mynetwork {
         background: white;
-        height: 100%;
-        margin: 0px;
-        padding: 0px;
+        border: none;
+        height: 1000px;
+        position: relative;
+        width: 1000px;
+      }
+
+      #info-container {
+        display: flex;
+        flex-wrap: wrap;
         width: 100%;
+      }
+      #info-container > * {
+        flex: 1 0 50%;
+      }
+
+      #selection .node:before {
+        content: "node: ";
+      }
+      #selection .edge:before {
+        content: "edge: ";
+      }
+
+      #events > * > * {
+        margin-left: 2em;
+      }
+
+      #events .click:before {
+        content: "click: ";
+      }
+
+      #events .click .pointer.DOM.x:before {
+        content: "DOM X: ";
+      }
+      #events .click .pointer.DOM.y:before {
+        content: "DOM Y: ";
+      }
+      #events .click .pointer.canvas.x:before {
+        content: "canvas X: ";
+      }
+      #events .click .pointer.canvas.y:before {
+        content: "canvas Y: ";
       }
     </style>
 
@@ -23,25 +71,19 @@
 
   <body>
     <div id="mynetwork"></div>
-    <script type="text/javascript">
-      /*
-       * Create a network
-       */
-      const container = document.getElementById("mynetwork");
-      const nodes = new vis.DataSet();
-      const edges = new vis.DataSet();
-      const data = { nodes, edges };
-      const options = {
-        physics: false
-      };
-      const network = new vis.Network(container, data, options);
 
-      /*
-       * Expose the variables for test specs.
-       */
-      window.edges = edges;
-      window.nodes = nodes;
-      window.network = network;
-    </script>
+    <div id="info-container">
+      <div>
+        <h1>Selection</h1>
+        <div id="selection"></div>
+      </div>
+
+      <div>
+        <h1>Events</h1>
+        <div id="events"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="./standard-cytest-script.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { VisEvent } from "./helpers";
+import { Point, VisEvent } from "./helpers";
 
 /**
  * Create drag events according to given path.
@@ -22,21 +22,20 @@ function drag(
     events.push({ name, event });
   };
 
-  cy.visRunCode(({ network }): void => {
+  cy.visRunWithWindow(({ network }): void => {
     network.on("dragStart", eventListener("dragStart"));
     network.on("dragging", eventListener("dragging"));
     network.on("dragEnd", eventListener("dragEnd"));
   });
 
   for (const { name, x, y } of coords) {
-    console.log({ name, x, y });
     cy.get("html").trigger(name, x, y, { button: 0 });
   }
 
   return events;
 }
 
-context("Drags", () => {
+context("Drags", (): void => {
   /*
    * The canvas starts at 200x200 and ends at 400x400.
    */
@@ -63,7 +62,6 @@ context("Drags", () => {
       expect(events)
         .to.be.an("array")
         .that.has.lengthOf(6);
-      console.log(events);
     });
 
     it("Types", function(): void {
@@ -114,7 +112,6 @@ context("Drags", () => {
       expect(events)
         .to.be.an("array")
         .that.has.lengthOf(6);
-      console.log(events);
     });
 
     it("Types", function(): void {
@@ -200,7 +197,6 @@ context("Drags", () => {
         expect(events)
           .to.be.an("array")
           .that.has.lengthOf(0);
-        console.log(events);
       });
     });
   });
