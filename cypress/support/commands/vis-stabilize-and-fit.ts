@@ -61,6 +61,7 @@ export function visStabilizeAndFit({
   // It seems that waiting for the animation to finish is not enough and ends up
   // in a race condition. This is not a good solution but it makes problems very
   // unlikely.
-  cy.wait(2000);
+  // TODO: Find a better solution!
+  cy.wait(4000);
 }
 Cypress.Commands.add("visStabilizeAndFit", visStabilizeAndFit);
