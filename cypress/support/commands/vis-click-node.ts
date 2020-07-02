@@ -21,15 +21,10 @@ export function visClickNode(id: IdType): void {
     const { x, y } = network.canvasToDOM(network.getPositions([id])[id]);
     cy.get("#mynetwork canvas").click(x, y);
     cy.visRun(({ network }): void => {
-      try {
-        expect(
-          network.getSelectedNodes(),
-          "The node should be selected after it was clicked."
-        ).to.deep.equal([id]);
-      } catch (error) {
-        cy.pause();
-        throw error;
-      }
+      expect(
+        network.getSelectedNodes(),
+        "The node should be selected after it was clicked."
+      ).to.deep.equal([id]);
     });
   });
 }
