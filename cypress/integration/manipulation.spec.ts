@@ -1,4 +1,4 @@
-import { IdType } from "../../declarations/entry-standalone";
+import { IdType, Point } from "./helpers";
 
 // eslint-disable-next-line require-jsdoc
 function selectEditAndCheck(
@@ -11,7 +11,7 @@ function selectEditAndCheck(
     let id: IdType;
 
     cy.visClickBetweenPoints(a, b);
-    cy.visGlobals(({ edges, lastEvents: { click } }): void => {
+    cy.visRun(({ edges, lastEvents: { click } }): void => {
       expect(click.edges)
         .to.be.an("array")
         .and.have.length(1);
@@ -28,7 +28,7 @@ function selectEditAndCheck(
     });
 
     cy.visEditSelected();
-    cy.visGlobals(({ edges }): void => {
+    cy.visRun(({ edges }): void => {
       if (after === 0) {
         expect(edges.get(id)).to.not.have.own.property("label");
       } else {
@@ -41,7 +41,7 @@ function selectEditAndCheck(
     let id: IdType;
 
     cy.visClickPoint(a);
-    cy.visGlobals(({ nodes, lastEvents: { click } }): void => {
+    cy.visRun(({ nodes, lastEvents: { click } }): void => {
       expect(click.nodes)
         .to.be.an("array")
         .and.have.length(1);
@@ -60,7 +60,7 @@ function selectEditAndCheck(
     });
 
     cy.visEditSelected();
-    cy.visGlobals(({ nodes }): void => {
+    cy.visRun(({ nodes }): void => {
       if (after === 0) {
         expect(nodes.get(id)).to.not.have.own.property("label");
       } else {
@@ -74,7 +74,10 @@ function selectEditAndCheck(
 
 context("Manipulation GUI", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:58253/cypress/pages/simple.html");
+    cy.visit(
+      "http://localhost:58253/cypress/pages/universal.html#" +
+        encodeURIComponent(JSON.stringify({ manipulation: true }))
+    );
   });
 
   it("Add a node", () => {
@@ -141,13 +144,13 @@ context("Manipulation GUI", () => {
     cy.visConnectNodes(c, bl);
     cy.visConnectNodes(c, tl);
 
-    cy.visGlobals(({ nodes, edges }): void => {
+    cy.visRun(({ nodes, edges }): void => {
       expect(nodes.getIds()).to.have.length(5);
       expect(edges.getIds()).to.have.length(4);
     });
     cy.visClickPoint(c);
     cy.visDeleteSelected();
-    cy.visGlobals(({ nodes, edges }): void => {
+    cy.visRun(({ nodes, edges }): void => {
       expect(nodes.getIds()).to.have.length(4);
       expect(edges.getIds()).to.have.length(0);
     });

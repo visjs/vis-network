@@ -1,4 +1,4 @@
-export * from "../../../standalone";
+export * from "../../support/commands/types";
 
 import { Edge, Node } from "../../../standalone";
 

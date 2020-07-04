@@ -1,6 +1,6 @@
 import { VisEvent } from "./helpers";
 
-context("Clicks", () => {
+context("Clicks", (): void => {
   /*
    * The canvas starts at 200x200 and ends at 400x400.
    */
@@ -96,11 +96,11 @@ context("Clicks", () => {
   const allEvents: VisEvent[] = [];
   const namedEvents = new Map<string, VisEvent>();
 
-  it("Preparation", () => {
+  it("Preparation", (): void => {
     cy.visit("http://localhost:58253/cypress/pages/events-target.html");
 
-    cy.visRunCode(({ network }): void => {
-      network.on("click", (event): void => {
+    cy.visRunWithWindow(({ network }): void => {
+      network.on("click", (event: any): void => {
         allEvents.push(event);
       });
     });
@@ -111,18 +111,18 @@ context("Clicks", () => {
       describe(`At ${x}x${y} ${name || ""}`, function(): void {
         const events: VisEvent[] = [];
 
-        it("Triggering and capturing", () => {
+        it("Triggering and capturing", (): void => {
           const clickListener = (event: VisEvent): void => {
             events.push(event);
           };
 
-          cy.visRunCode(({ network }): void => {
+          cy.visRunWithWindow(({ network }): void => {
             network.on("click", clickListener);
           });
 
           cy.get("html").click(x, y);
 
-          cy.visRunCode(({ network }): void => {
+          cy.visRunWithWindow(({ network }): void => {
             network.off("click", clickListener);
           });
         });

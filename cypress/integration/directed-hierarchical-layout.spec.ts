@@ -1,4 +1,10 @@
-import { IdType, TestData, addMoreEdges, generateMaryTree } from "./helpers";
+import {
+  IdType,
+  Point,
+  TestData,
+  addMoreEdges,
+  generateMaryTree
+} from "./helpers";
 
 /**
  * Generate a consecutive list of ids starting with first and ending with last
@@ -177,7 +183,7 @@ describe("Directed hierarchical layout", (): void => {
       it("Preparation", (): void => {
         cy.visit("http://localhost:58253/cypress/pages/universal.html");
 
-        cy.visRunCode(({ network, nodes, edges }): void => {
+        cy.visRun(({ network, nodes, edges }): void => {
           network.setOptions({
             edges: {
               arrows: {
@@ -204,7 +210,7 @@ describe("Directed hierarchical layout", (): void => {
         describe(clusterDescribeName, (): void => {
           if (cid > 0) {
             it("Cluster", (): void => {
-              cy.visRunCode(({ network }): void => {
+              cy.visRun(({ network }): void => {
                 network.cluster({
                   clusterNodeProperties: {
                     label: `Cluster #${cid}`
@@ -229,7 +235,7 @@ describe("Directed hierarchical layout", (): void => {
              * well be tested.
              */
             it("Hierarchical order of nodes", (): void => {
-              cy.visRunCode(({ network }): void => {
+              cy.visRun(({ network }): void => {
                 const visibleNodeIds = new Set(
                   Object.keys(network.getPositions())
                 );
@@ -273,7 +279,7 @@ describe("Directed hierarchical layout", (): void => {
              * Test that all levels are evenly spaced without gaps.
              */
             it("Spacing between levels", (): void => {
-              cy.visRunCode(({ network }): void => {
+              cy.visRun(({ network }): void => {
                 const levels = Array.from(
                   new Set(
                     Object.values(network.getPositions()).map(
@@ -305,16 +311,16 @@ describe("Directed hierarchical layout", (): void => {
            *   - Each node is selected after being clicked.
            */
           it("Click through the network", (): void => {
-            cy.visStabilizeFitAndRunCode(({ network }): void => {
+            cy.visStabilizeFitAndRun(({ network }): void => {
               network.unselectAll();
               expect(network.getSelectedNodes()).to.deep.equal([]);
 
               const visibleNodeIds = new Set(
-                Object.keys(network.getPositions())
+                Object.keys(network.getPositions()).sort()
               );
-              visibleNodeIds.forEach((id): void => {
+              for (const id of visibleNodeIds) {
                 cy.visClickNode(id);
-              });
+              }
             });
           });
         });

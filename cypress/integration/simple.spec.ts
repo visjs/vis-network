@@ -1,9 +1,9 @@
-context("Simple", () => {
-  beforeEach(() => {
-    cy.visit("http://localhost:58253/cypress/pages/simple.html");
+context("Simple", (): void => {
+  beforeEach((): void => {
+    cy.visit("http://localhost:58253/cypress/pages/universal.html");
   });
 
-  it("Click the canvas", () => {
+  it("Click the canvas", (): void => {
     const x = 101;
     const y = 102;
 
