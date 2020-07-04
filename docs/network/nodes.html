@@ -419,6 +419,41 @@ network.setOptions(options);
             </td>
         </tr>
         <tr>
+            <td>ctxRenderer</td>
+            <td>Function</td>
+            <td><code>undefined</code></td>
+            <td>
+                <p>The function contains these props:</p>
+                <pre class="code">function({ ctx, x, y, selected, hover, values }) {...}</pre>
+                <p>
+                    This function allows to draw any canvas shapes and lines (see guide to how to draw shapes <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes">here</a>)
+                    This property is used only when the property <code>shape: 'custom'</code>. 
+                </p>
+                example: 
+                <pre class="code">
+function({ ctx, x, y, selected, hover, values }) {
+    const r = values.size;
+    ctx.beginPath();
+    const sides = 6;
+    const a = (Math.PI * 2) / sides;
+    ctx.moveTo(x , y + r);
+    for (let i = 1; i < sides; i++) {
+        ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
+    }
+    ctx.closePath();
+    ctx.save();
+    ctx.fillStyle = 'red';
+    ctx.fill(); 
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.font = "normal 12px sans-serif";
+    ctx.fillStyle = 'black';
+}
+                </pre>
+            </td>
+        </tr>
+        <tr>
             <td>opacity</td>
             <td>Number</td>
             <td><code>undefined</code></td>
@@ -1022,6 +1057,8 @@ mySize = minSize + diff * scale;
                 The ones with the label outside of it are: <code>image</code>, <code>circularImage</code>,
                 <code>diamond</code>, <code>dot</code>, <code>star</code>, <code>triangle</code>,
                 <code>triangleDown</code>, <code>hexagon</code>, <code>square</code> and <code>icon</code>.
+                If none of these shapes suffice, you can use the <code>custom</code> shape which will allow you to create
+                your own shape rendered via <code>ctxRenderer</code> option.
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shapeProperties', this);">
