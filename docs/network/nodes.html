@@ -427,7 +427,7 @@ network.setOptions(options);
                 <pre class="code">function({ ctx, x, y, selected, hover, values }) {...}</pre>
                 <p>
                     This function allows to draw any canvas shapes and lines (see guide to how to draw shapes <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes">here</a>)
-                    This property is used only when the property <code>shape: 'custom'</code>. 
+                    This property is used only when the property <code>shape</code> is <code>'custom'</code>. 
                 </p>
                 example: 
                 <pre class="code">
@@ -1051,14 +1051,25 @@ mySize = minSize + diff * scale;
             <td>shape</td>
             <td>String</td>
             <td><code>'ellipse'</code></td>
-            <td>The shape defines what the node looks like. There are two types of nodes. One type has the label inside
-                of it and the other type has the label underneath it. The types with the label inside of it are:
-                <code>ellipse</code>, <code>circle</code>, <code>database</code>, <code>box</code>, <code>text</code>.
-                The ones with the label outside of it are: <code>image</code>, <code>circularImage</code>,
-                <code>diamond</code>, <code>dot</code>, <code>star</code>, <code>triangle</code>,
-                <code>triangleDown</code>, <code>hexagon</code>, <code>square</code> and <code>icon</code>.
-                If none of these shapes suffice, you can use the <code>custom</code> shape which will allow you to create
-                your own shape rendered via <code>ctxRenderer</code> option.
+            <td>
+                <p>
+                    The shape defines what the node looks like. There are three types of nodes. One type has the label inside
+                    of it and the other type has the label underneath it. The third type is a custom shape you can draw whatever 
+                    you want to represent the node.
+                </p>
+                <p>
+                    The types with the label inside of it are:
+                    <code>ellipse</code>, <code>circle</code>, <code>database</code>, <code>box</code>, <code>text</code>.
+                </p>
+                <p>
+                    The ones with the label outside of it are: <code>image</code>, <code>circularImage</code>,
+                    <code>diamond</code>, <code>dot</code>, <code>star</code>, <code>triangle</code>,
+                    <code>triangleDown</code>, <code>hexagon</code>, <code>square</code> and <code>icon</code>.
+                </p>
+                <p>
+                    If none of these shapes suffice, you can use the <code>custom</code> shape which will allow you to create
+                    your own shape rendered via <code>ctxRenderer</code> option.
+                </p>
             </td>
         </tr>
         <tr class='toggle collapsible' onclick="toggleTable('optionTable','shapeProperties', this);">
