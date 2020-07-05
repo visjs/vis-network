@@ -9,6 +9,7 @@ npm-debug.log
 .project
 .settings/
 .directory
+.vscode
 
 # temporary files
 .*.sw[op]
