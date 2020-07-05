@@ -37,14 +37,25 @@
       edges.push({from: 1, to: 3, length: EDGE_LENGTH_MAIN});
 
       for (var i = 4; i <= 7; i++) {
-        nodes.push({id: i, label: 'Computer', image: DIR + 'Hardware-My-Computer-3-icon.png', shape: 'circularImage'});
+        nodes.push({id: i, label: 'Computer (top-left)', image: DIR + 'Hardware-My-Computer-3-icon.png', shape: 'circularImage'});
         edges.push({from: 2, to: i, length: EDGE_LENGTH_SUB});
       }
 
       nodes.push({id: 101, label: 'Printer', image: DIR + 'Hardware-Printer-Blue-icon.png', shape: 'circularImage'});
       edges.push({from: 2, to: 101, length: EDGE_LENGTH_SUB});
 
-      nodes.push({id: 102, label: 'Laptop', image: DIR + 'Hardware-Laptop-1-icon.png', shape: 'circularImage'});
+      nodes.push({
+        id: 102, 
+        label: 'Laptop (center)', 
+        image: DIR + 'Hardware-Laptop-1-icon.png', 
+        shape: 'circularImage',
+        shapeProperties: {
+            useImageSize: true,
+            useBorderWithImage: false,
+            interpolation: false,
+            coordinateOrigin: 'center'
+          }
+      });
       edges.push({from: 3, to: 102, length: EDGE_LENGTH_SUB});
 
       nodes.push({id: 103, label: 'network drive', image: DIR + 'Network-Drive-icon.png', shape: 'circularImage'});
@@ -54,7 +65,18 @@
       edges.push({from: 1, to: 104, length: EDGE_LENGTH_SUB});
 
       for (var i = 200; i <= 201; i++ ) {
-        nodes.push({id: i, label: 'Smartphone', image: DIR + 'Hardware-My-PDA-02-icon.png', shape: 'circularImage'});
+        nodes.push({
+          id: i, 
+          label: 'Smartphone (center)', 
+          image: DIR + 'Hardware-My-PDA-02-icon.png', 
+          shape: 'circularImage',
+          shapeProperties: {
+            useImageSize: true,
+            useBorderWithImage: false,
+            interpolation: false,
+            coordinateOrigin: 'center'
+          }
+        });
         edges.push({from: 3, to: i, length: EDGE_LENGTH_SUB});
       }
 
