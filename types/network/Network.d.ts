@@ -910,7 +910,8 @@ export interface NodeOptions {
     borderRadius?: number,     // only for box shape
     interpolation?: boolean,  // only for image and circularImage shapes
     useImageSize?: boolean,  // only for image and circularImage shapes
-    useBorderWithImage?: boolean  // only for image shape
+    useBorderWithImage?: boolean,  // only for image shape
+    coordinateOrigin?: string  // only for image and circularImage shapes
   };
 
   size?: number;
