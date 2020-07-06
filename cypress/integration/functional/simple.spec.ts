@@ -1,6 +1,6 @@
 context("Simple", (): void => {
   beforeEach((): void => {
-    cy.visit("http://localhost:58253/cypress/pages/universal.html");
+    cy.visVisitUniversal();
   });
 
   it("Click the canvas", (): void => {

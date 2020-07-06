@@ -1,11 +1,12 @@
 import {
   DataSetEdges,
   DataSetNodes,
-  Network
+  Network,
+  Options
 } from "../../../declarations/entry-standalone";
 
 // TODO: Convert this to type only export when ESLint and Prettier support the
-// suntax. This way all the code is available even though it's never used.
+// syntax. This way all the code is available even though it's never used.
 export * from "../../../standalone";
 
 export interface VisGlobals {
@@ -27,4 +28,16 @@ export interface DragPath {
   button?: number;
 
   shiftKey?: boolean;
+}
+
+export interface UniversalNetworkConfig {
+  edges?: any[];
+  nodes?: any[];
+  options?: Options;
+
+  manipulation?: boolean;
+  physics?: boolean;
+}
+export interface UniversalConfig extends UniversalNetworkConfig {
+  version: null | "latest";
 }

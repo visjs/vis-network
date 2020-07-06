@@ -1,4 +1,4 @@
-import { IdType, Point } from "./helpers";
+import { IdType, Point } from "../helpers";
 
 // eslint-disable-next-line require-jsdoc
 function selectEditAndCheck(
@@ -74,10 +74,7 @@ function selectEditAndCheck(
 
 context("Manipulation GUI", () => {
   beforeEach(() => {
-    cy.visit(
-      "http://localhost:58253/cypress/pages/universal.html#" +
-        encodeURIComponent(JSON.stringify({ manipulation: true }))
-    );
+    cy.visVisitUniversal({ manipulation: true });
   });
 
   it("Add a node", () => {

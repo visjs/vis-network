@@ -1,4 +1,4 @@
-import { Point, VisEvent } from "./helpers";
+import { Point, VisEvent } from "../helpers";
 
 /**
  * Create drag events according to given path.
