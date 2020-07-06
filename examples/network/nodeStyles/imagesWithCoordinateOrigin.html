@@ -30,9 +30,9 @@
       // Create a data table with links.
       edges = [];
 
-      nodes.push({id: 1, label: 'Main', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
-      nodes.push({id: 2, label: 'Office', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
-      nodes.push({id: 3, label: 'Wireless', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
+      nodes.push({id: 1, label: 'Main (top-left)', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
+      nodes.push({id: 2, label: 'Office (top-left)', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
+      nodes.push({id: 3, label: 'Wireless (top-left)', image: DIR + 'Network-Pipe-icon.png', shape: 'image'});
       edges.push({from: 1, to: 2, length: EDGE_LENGTH_MAIN});
       edges.push({from: 1, to: 3, length: EDGE_LENGTH_MAIN});
 
@@ -41,7 +41,7 @@
         edges.push({from: 2, to: i, length: EDGE_LENGTH_SUB});
       }
 
-      nodes.push({id: 101, label: 'Printer', image: DIR + 'Hardware-Printer-Blue-icon.png', shape: 'circularImage'});
+      nodes.push({id: 101, label: 'Printer (top-left)', image: DIR + 'Hardware-Printer-Blue-icon.png', shape: 'circularImage'});
       edges.push({from: 2, to: 101, length: EDGE_LENGTH_SUB});
 
       nodes.push({
@@ -58,10 +58,10 @@
       });
       edges.push({from: 3, to: 102, length: EDGE_LENGTH_SUB});
 
-      nodes.push({id: 103, label: 'network drive', image: DIR + 'Network-Drive-icon.png', shape: 'circularImage'});
+      nodes.push({id: 103, label: 'Network drive (top-left)', image: DIR + 'Network-Drive-icon.png', shape: 'circularImage'});
       edges.push({from: 1, to: 103, length: EDGE_LENGTH_SUB});
 
-      nodes.push({id: 104, label: 'Internet', image: DIR + 'System-Firewall-2-icon.png', shape: 'circularImage'});
+      nodes.push({id: 104, label: 'Internet (top-left)', image: DIR + 'System-Firewall-2-icon.png', shape: 'circularImage'});
       edges.push({from: 1, to: 104, length: EDGE_LENGTH_SUB});
 
       for (var i = 200; i <= 201; i++ ) {
