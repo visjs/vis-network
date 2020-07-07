@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-06T22:23:51.247Z
+ * @date    2020-07-07T09:45:01.757Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -24598,10 +24598,21 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
     value: function draw(ctx, x, y, selected, hover, values) {
       this.switchImages(selected);
       this.resize();
-      this.left = x - this.width / 2;
-      this.top = y - this.height / 2; // draw the background circle. IMPORTANT: the stroke in this method is used by the clip method below.
+      var labelX = x,
+          labelY = y;
 
-      this._drawRawCircle(ctx, x, y, values); // now we draw in the circle, we save so we can revert the clip operation after drawing.
+      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+        this.left = x;
+        this.top = y;
+        labelX += this.width / 2;
+        labelY += this.height / 2;
+      } else {
+        this.left = x - this.width / 2;
+        this.top = y - this.height / 2;
+      } // draw the background circle. IMPORTANT: the stroke in this method is used by the clip method below.
+
+
+      this._drawRawCircle(ctx, labelX, labelY, values); // now we draw in the circle, we save so we can revert the clip operation after drawing.
 
 
       ctx.save(); // clip is used to use the stroke in drawRawCircle as an area that we can draw in.
@@ -24613,7 +24624,7 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
 
       ctx.restore();
 
-      this._drawImageLabel(ctx, x, y, selected, hover);
+      this._drawImageLabel(ctx, labelX, labelY, selected, hover);
 
       this.updateBoundingBox(x, y);
     } // TODO: compare with Circle.updateBoundingBox(), consolidate? More stuff is happening here
@@ -24627,10 +24638,18 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
   }, {
     key: "updateBoundingBox",
     value: function updateBoundingBox(x, y) {
-      this.boundingBox.top = y - this.options.size;
-      this.boundingBox.left = x - this.options.size;
-      this.boundingBox.right = x + this.options.size;
-      this.boundingBox.bottom = y + this.options.size; // TODO: compare with Image.updateBoundingBox(), consolidate?
+      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+        this.boundingBox.top = y;
+        this.boundingBox.left = x;
+        this.boundingBox.right = x + this.options.size * 2;
+        this.boundingBox.bottom = y + this.options.size * 2;
+      } else {
+        this.boundingBox.top = y - this.options.size;
+        this.boundingBox.left = x - this.options.size;
+        this.boundingBox.right = x + this.options.size;
+        this.boundingBox.bottom = y + this.options.size;
+      } // TODO: compare with Image.updateBoundingBox(), consolidate?
+
 
       this.boundingBox.left = Math.min(this.boundingBox.left, this.labelModule.size.left);
       this.boundingBox.right = Math.max(this.boundingBox.right, this.labelModule.size.left + this.labelModule.size.width);
@@ -25296,8 +25315,18 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
       ctx.save();
       this.switchImages(selected);
       this.resize();
-      this.left = x - this.width / 2;
-      this.top = y - this.height / 2;
+      var labelX = x,
+          labelY = y;
+
+      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+        this.left = x;
+        this.top = y;
+        labelX += this.width / 2;
+        labelY += this.height / 2;
+      } else {
+        this.left = x - this.width / 2;
+        this.top = y - this.height / 2;
+      }
 
       if (this.options.shapeProperties.useBorderWithImage === true) {
         var neutralborderWidth = this.options.borderWidth;
@@ -25328,7 +25357,7 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
 
       this._drawImageAtPosition(ctx, values);
 
-      this._drawImageLabel(ctx, x, y, selected, hover);
+      this._drawImageLabel(ctx, labelX, labelY, selected, hover);
 
       this.updateBoundingBox(x, y);
       ctx.restore();
@@ -25344,7 +25373,18 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
     value: function updateBoundingBox(x, y) {
       this.resize();
 
-      this._updateBoundingBox(x, y);
+      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+        this.left = x;
+        this.top = y;
+      } else {
+        this.left = x - this.width / 2;
+        this.top = y - this.height / 2;
+      }
+
+      this.boundingBox.left = this.left;
+      this.boundingBox.top = this.top;
+      this.boundingBox.bottom = this.top + this.height;
+      this.boundingBox.right = this.left + this.width;
 
       if (this.options.label !== undefined && this.labelModule.size.width > 0) {
         this.boundingBox.left = Math.min(this.boundingBox.left, this.labelModule.size.left);
@@ -26740,6 +26780,18 @@ var Node = /*#__PURE__*/function () {
       return 0 <= opacity && opacity <= 1;
     }
     /**
+     * Check that origin is 'center' or 'top-left'
+     * 
+     * @param {String} origin 
+     * @returns {boolean}
+     */
+
+  }, {
+    key: "checkCoordinateOrigin",
+    value: function checkCoordinateOrigin(origin) {
+      return origin === undefined || origin === 'center' || origin === 'top-left';
+    }
+    /**
      * Copy group option values into the node options.
      *
      * The group options override the global node options, so the copy of group options
@@ -26823,6 +26875,10 @@ var Node = /*#__PURE__*/function () {
           console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + newOptions.opacity);
           newOptions.opacity = undefined;
         }
+      }
+
+      if (newOptions.shapeProperties && !Node.checkCoordinateOrigin(newOptions.shapeProperties.coordinateOrigin)) {
+        console.error("Invalid option for node coordinateOrigin, found: " + newOptions.shapeProperties.coordinateOrigin);
       } // merge the shadow options into the parent.
 
 
@@ -27038,7 +27094,9 @@ var NodesHandler = /*#__PURE__*/function () {
         // only for image and circularImage shapes
         useImageSize: false,
         // only for image and circularImage shapes
-        useBorderWithImage: false // only for image shape
+        useBorderWithImage: false,
+        // only for image shape
+        coordinateOrigin: 'center' // only for image and circularImage shapes
 
       },
       size: 25,
@@ -46814,6 +46872,9 @@ var allOptions$1 = {
       },
       useBorderWithImage: {
         boolean: bool
+      },
+      coordinateOrigin: {
+        string: ['center', 'top-left']
       },
       __type__: {
         object: object

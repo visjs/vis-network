@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Node Styles | Images with alternative coordinate origin
+    </title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;p&gt;\n  Display nodes as images, but with the image drawn from the top-left\n  coordinate.\n&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var nodes = null;\nvar edges = null;\nvar network = null;\n\nvar DIR = \"../img/refresh-cl/\";\nvar EDGE_LENGTH_MAIN = 150;\nvar EDGE_LENGTH_SUB = 50;\n\n// Called when the Visualization API is loaded.\nfunction draw() {\n  // Create a data table with nodes.\n  nodes = [];\n\n  // Create a data table with links.\n  edges = [];\n\n  nodes.push({\n    id: 1,\n    label: \"Main (top-left)\",\n    image: DIR + \"Network-Pipe-icon.png\",\n    shape: \"image\"\n  });\n  nodes.push({\n    id: 2,\n    label: \"Office (top-left)\",\n    image: DIR + \"Network-Pipe-icon.png\",\n    shape: \"image\"\n  });\n  nodes.push({\n    id: 3,\n    label: \"Wireless (top-left)\",\n    image: DIR + \"Network-Pipe-icon.png\",\n    shape: \"image\"\n  });\n  edges.push({ from: 1, to: 2, length: EDGE_LENGTH_MAIN });\n  edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN });\n\n  for (var i = 4; i &lt;= 7; i++) {\n    nodes.push({\n      id: i,\n      label: \"Computer (top-left)\",\n      image: DIR + \"Hardware-My-Computer-3-icon.png\",\n      shape: \"circularImage\"\n    });\n    edges.push({ from: 2, to: i, length: EDGE_LENGTH_SUB });\n  }\n\n  nodes.push({\n    id: 101,\n    label: \"Printer (top-left)\",\n    image: DIR + \"Hardware-Printer-Blue-icon.png\",\n    shape: \"circularImage\"\n  });\n  edges.push({ from: 2, to: 101, length: EDGE_LENGTH_SUB });\n\n  nodes.push({\n    id: 102,\n    label: \"Laptop (center)\",\n    image: DIR + \"Hardware-Laptop-1-icon.png\",\n    shape: \"circularImage\",\n    shapeProperties: {\n      useImageSize: true,\n      useBorderWithImage: false,\n      interpolation: false,\n      coordinateOrigin: \"center\"\n    }\n  });\n  edges.push({ from: 3, to: 102, length: EDGE_LENGTH_SUB });\n\n  nodes.push({\n    id: 103,\n    label: \"Network drive (top-left)\",\n    image: DIR + \"Network-Drive-icon.png\",\n    shape: \"circularImage\"\n  });\n  edges.push({ from: 1, to: 103, length: EDGE_LENGTH_SUB });\n\n  nodes.push({\n    id: 104,\n    label: \"Internet (top-left)\",\n    image: DIR + \"System-Firewall-2-icon.png\",\n    shape: \"circularImage\"\n  });\n  edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB });\n\n  for (var i = 200; i &lt;= 201; i++) {\n    nodes.push({\n      id: i,\n      label: \"Smartphone (center)\",\n      image: DIR + \"Hardware-My-PDA-02-icon.png\",\n      shape: \"circularImage\",\n      shapeProperties: {\n        useImageSize: true,\n        useBorderWithImage: false,\n        interpolation: false,\n        coordinateOrigin: \"center\"\n      }\n    });\n    edges.push({ from: 3, to: i, length: EDGE_LENGTH_SUB });\n  }\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges\n  };\n  var options = {\n    nodes: {\n      size: 30,\n      shapeProperties: {\n        useImageSize: true,\n        useBorderWithImage: false,\n        interpolation: false,\n        coordinateOrigin: \"top-left\"\n      }\n    }\n  };\n  network = new vis.Network(container, data, options);\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Images with alternative coordinate origin"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>
