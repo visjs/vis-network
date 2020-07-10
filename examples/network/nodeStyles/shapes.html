@@ -52,8 +52,8 @@
           id: 36, 
           label: 'custom', 
           shape: 'custom', 
-          ctxRenderer: ({ ctx, x, y, selected, hover, values }) => {
-            const r = values.size;
+          ctxRenderer: ({ ctx, x, y, state: { selected, hover }, style }) => {
+            const r = style.size;
 
             ctx.beginPath();
             const sides = 6;
