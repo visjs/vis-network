@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-11T10:34:41.542Z
+ * @date    2020-07-11T11:22:14.081Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -14102,209 +14102,9 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
   return CircularImage;
 }(CircleImageBase);
 
-function ownKeys$2(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys$2(Object(source), true)).call(_context, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context2; forEach$2(_context2 = ownKeys$2(Object(source))).call(_context2, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
-
 function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
-/**
- * Base class for constructing Node/Cluster Shapes.
- *
- * @extends NodeBase
- */
-
-var ShapeBase = /*#__PURE__*/function (_NodeBase) {
-  inherits(ShapeBase, _NodeBase);
-
-  var _super = _createSuper$4(ShapeBase);
-
-  /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
-   */
-  function ShapeBase(options, body, labelModule) {
-    classCallCheck(this, ShapeBase);
-
-    return _super.call(this, options, body, labelModule);
-  }
-  /**
-   *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {boolean} [selected]
-   * @param {boolean} [hover]
-   * @param {Object} [values={size: this.options.size}]
-   */
-
-
-  createClass(ShapeBase, [{
-    key: "resize",
-    value: function resize(ctx) {
-      var selected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.selected;
-      var hover = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.hover;
-      var values = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {
-        size: this.options.size
-      };
-
-      if (this.needsRefresh(selected, hover)) {
-        this.labelModule.getTextSize(ctx, selected, hover);
-        var size = 2 * values.size;
-        this.width = size;
-        this.height = size;
-        this.radius = 0.5 * this.width;
-      }
-    }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {string} shape
-     * @param {number} sizeMultiplier - Unused! TODO: Remove next major release
-     * @param {number} x
-     * @param {number} y
-     * @param {boolean} selected
-     * @param {boolean} hover
-     * @param {ArrowOptions} values
-     * @param {function} customRenderer - a custom shape renderer similar to getShape(shape) functions
-     * @private
-     */
-
-  }, {
-    key: "_drawShape",
-    value: function _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values, customRenderer) {
-      this.resize(ctx, selected, hover, values);
-      this.left = x - this.width / 2;
-      this.top = y - this.height / 2;
-
-      if (shape === 'custom') {
-        ctx.save();
-        customRenderer({
-          ctx: ctx,
-          x: x,
-          y: y,
-          state: {
-            selected: selected,
-            hover: hover
-          },
-          style: _objectSpread({}, values)
-        });
-        ctx.restore();
-      } else {
-        this.initContextForDraw(ctx, values);
-        getShape(shape)(ctx, x, y, values.size);
-        this.performFill(ctx, values);
-      }
-
-      if (this.options.icon !== undefined) {
-        if (this.options.icon.code !== undefined) {
-          ctx.font = (selected ? "bold " : "") + this.height / 2 + "px " + (this.options.icon.face || 'FontAwesome');
-          ctx.fillStyle = this.options.icon.color || "black";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(this.options.icon.code, x, y);
-        }
-      }
-
-      if (this.options.label !== undefined) {
-        // Need to call following here in order to ensure value for `this.labelModule.size.height`
-        this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
-        var yLabel = y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
-        this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
-      }
-
-      this.updateBoundingBox(x, y);
-    }
-    /**
-     *
-     * @param {number} x
-     * @param {number} y
-     */
-
-  }, {
-    key: "updateBoundingBox",
-    value: function updateBoundingBox(x, y) {
-      this.boundingBox.top = y - this.options.size;
-      this.boundingBox.left = x - this.options.size;
-      this.boundingBox.right = x + this.options.size;
-      this.boundingBox.bottom = y + this.options.size;
-
-      if (this.options.label !== undefined && this.labelModule.size.width > 0) {
-        this.boundingBox.left = Math.min(this.boundingBox.left, this.labelModule.size.left);
-        this.boundingBox.right = Math.max(this.boundingBox.right, this.labelModule.size.left + this.labelModule.size.width);
-        this.boundingBox.bottom = Math.max(this.boundingBox.bottom, this.boundingBox.bottom + this.labelModule.size.height);
-      }
-    }
-  }]);
-
-  return ShapeBase;
-}(NodeBase);
-
-function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
-/**
- * A CustomShape Node/Cluster shape.
- *
- * @extends ShapeBase
- */
-
-var CustomShape = /*#__PURE__*/function (_ShapeBase) {
-  inherits(CustomShape, _ShapeBase);
-
-  var _super = _createSuper$5(CustomShape);
-
-  /**
-   * @param {Object} options
-   * @param {Object} body
-   * @param {Label} labelModule
-   * @param {function} ctxRenderer
-    */
-  function CustomShape(options, body, labelModule, ctxRenderer) {
-    var _this;
-
-    classCallCheck(this, CustomShape);
-
-    _this = _super.call(this, options, body, labelModule, ctxRenderer);
-    _this.ctxRenderer = ctxRenderer;
-    return _this;
-  }
-  /**
-   *
-   * @param {CanvasRenderingContext2D} ctx
-   * @param {number} x width
-   * @param {number} y height
-   * @param {boolean} selected
-   * @param {boolean} hover
-   * @param {ArrowOptions} values
-   */
-
-
-  createClass(CustomShape, [{
-    key: "draw",
-    value: function draw(ctx, x, y, selected, hover, values) {
-      this._drawShape(ctx, 'custom', 4, x, y, selected, hover, values, this.ctxRenderer);
-    }
-    /**
-     *
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {number} angle
-     * @returns {number}
-     */
-
-  }, {
-    key: "distanceToBorder",
-    value: function distanceToBorder(ctx, angle) {
-      return this._distanceToBorder(ctx, angle);
-    }
-  }]);
-
-  return CustomShape;
-}(ShapeBase);
-
-function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Database Node/Cluster shape.
  *
@@ -14314,7 +14114,7 @@ function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !
 var Database = /*#__PURE__*/function (_NodeBase) {
   inherits(Database, _NodeBase);
 
-  var _super = _createSuper$6(Database);
+  var _super = _createSuper$4(Database);
 
   /**
    * @param {Object} options
@@ -14390,9 +14190,126 @@ var Database = /*#__PURE__*/function (_NodeBase) {
   return Database;
 }(NodeBase);
 
-function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+/**
+ * Base class for constructing Node/Cluster Shapes.
+ *
+ * @extends NodeBase
+ */
+
+var ShapeBase = /*#__PURE__*/function (_NodeBase) {
+  inherits(ShapeBase, _NodeBase);
+
+  var _super = _createSuper$5(ShapeBase);
+
+  /**
+   * @param {Object} options
+   * @param {Object} body
+   * @param {Label} labelModule
+   */
+  function ShapeBase(options, body, labelModule) {
+    classCallCheck(this, ShapeBase);
+
+    return _super.call(this, options, body, labelModule);
+  }
+  /**
+   *
+   * @param {CanvasRenderingContext2D} ctx
+   * @param {boolean} [selected]
+   * @param {boolean} [hover]
+   * @param {Object} [values={size: this.options.size}]
+   */
+
+
+  createClass(ShapeBase, [{
+    key: "resize",
+    value: function resize(ctx) {
+      var selected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.selected;
+      var hover = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.hover;
+      var values = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {
+        size: this.options.size
+      };
+
+      if (this.needsRefresh(selected, hover)) {
+        this.labelModule.getTextSize(ctx, selected, hover);
+        var size = 2 * values.size;
+        this.width = size;
+        this.height = size;
+        this.radius = 0.5 * this.width;
+      }
+    }
+    /**
+     *
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {string} shape
+     * @param {number} sizeMultiplier - Unused! TODO: Remove next major release
+     * @param {number} x
+     * @param {number} y
+     * @param {boolean} selected
+     * @param {boolean} hover
+     * @param {ArrowOptions} values
+     * @private
+     */
+
+  }, {
+    key: "_drawShape",
+    value: function _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values) {
+      this.resize(ctx, selected, hover, values);
+      this.left = x - this.width / 2;
+      this.top = y - this.height / 2;
+      this.initContextForDraw(ctx, values);
+      getShape(shape)(ctx, x, y, values.size);
+      this.performFill(ctx, values);
+
+      if (this.options.icon !== undefined) {
+        if (this.options.icon.code !== undefined) {
+          ctx.font = (selected ? "bold " : "") + this.height / 2 + "px " + (this.options.icon.face || 'FontAwesome');
+          ctx.fillStyle = this.options.icon.color || "black";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(this.options.icon.code, x, y);
+        }
+      }
+
+      if (this.options.label !== undefined) {
+        // Need to call following here in order to ensure value for `this.labelModule.size.height`
+        this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
+        var yLabel = y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
+        this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+      }
+
+      this.updateBoundingBox(x, y);
+    }
+    /**
+     *
+     * @param {number} x
+     * @param {number} y
+     */
+
+  }, {
+    key: "updateBoundingBox",
+    value: function updateBoundingBox(x, y) {
+      this.boundingBox.top = y - this.options.size;
+      this.boundingBox.left = x - this.options.size;
+      this.boundingBox.right = x + this.options.size;
+      this.boundingBox.bottom = y + this.options.size;
+
+      if (this.options.label !== undefined && this.labelModule.size.width > 0) {
+        this.boundingBox.left = Math.min(this.boundingBox.left, this.labelModule.size.left);
+        this.boundingBox.right = Math.max(this.boundingBox.right, this.labelModule.size.left + this.labelModule.size.width);
+        this.boundingBox.bottom = Math.max(this.boundingBox.bottom, this.boundingBox.bottom + this.labelModule.size.height);
+      }
+    }
+  }]);
+
+  return ShapeBase;
+}(NodeBase);
+
+function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Diamond Node/Cluster shape.
  *
@@ -14402,7 +14319,7 @@ function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !
 var Diamond = /*#__PURE__*/function (_ShapeBase) {
   inherits(Diamond, _ShapeBase);
 
-  var _super = _createSuper$7(Diamond);
+  var _super = _createSuper$6(Diamond);
 
   /**
    * @param {Object} options
@@ -14447,9 +14364,9 @@ var Diamond = /*#__PURE__*/function (_ShapeBase) {
   return Diamond;
 }(ShapeBase);
 
-function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Dot Node/Cluster shape.
  *
@@ -14459,7 +14376,7 @@ function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !
 var Dot = /*#__PURE__*/function (_ShapeBase) {
   inherits(Dot, _ShapeBase);
 
-  var _super = _createSuper$8(Dot);
+  var _super = _createSuper$7(Dot);
 
   /**
    * @param {Object} options
@@ -14509,9 +14426,9 @@ var Dot = /*#__PURE__*/function (_ShapeBase) {
   return Dot;
 }(ShapeBase);
 
-function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Am Ellipse Node/Cluster shape.
  *
@@ -14521,7 +14438,7 @@ function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !
 var Ellipse = /*#__PURE__*/function (_NodeBase) {
   inherits(Ellipse, _NodeBase);
 
-  var _super = _createSuper$9(Ellipse);
+  var _super = _createSuper$8(Ellipse);
 
   /**
    * @param {Object} options
@@ -14601,9 +14518,9 @@ var Ellipse = /*#__PURE__*/function (_NodeBase) {
   return Ellipse;
 }(NodeBase);
 
-function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * An icon replacement for the default Node shape.
  *
@@ -14613,7 +14530,7 @@ function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !
 var Icon = /*#__PURE__*/function (_NodeBase) {
   inherits(Icon, _NodeBase);
 
-  var _super = _createSuper$a(Icon);
+  var _super = _createSuper$9(Icon);
 
   /**
    * @param {Object} options
@@ -14749,9 +14666,9 @@ var Icon = /*#__PURE__*/function (_NodeBase) {
   return Icon;
 }(NodeBase);
 
-function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * An image-based replacement for the default Node shape.
  *
@@ -14761,7 +14678,7 @@ function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !
 var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
   inherits(Image, _CircleImageBase);
 
-  var _super = _createSuper$b(Image);
+  var _super = _createSuper$a(Image);
 
   /**
    * @param {Object} options
@@ -14917,9 +14834,9 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
   return Image;
 }(CircleImageBase);
 
-function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Square Node/Cluster shape.
  *
@@ -14929,7 +14846,7 @@ function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !
 var Square = /*#__PURE__*/function (_ShapeBase) {
   inherits(Square, _ShapeBase);
 
-  var _super = _createSuper$c(Square);
+  var _super = _createSuper$b(Square);
 
   /**
    * @param {Object} options
@@ -14974,9 +14891,9 @@ var Square = /*#__PURE__*/function (_ShapeBase) {
   return Square;
 }(ShapeBase);
 
-function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Hexagon Node/Cluster shape.
  *
@@ -14986,7 +14903,7 @@ function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !
 var Hexagon = /*#__PURE__*/function (_ShapeBase) {
   inherits(Hexagon, _ShapeBase);
 
-  var _super = _createSuper$d(Hexagon);
+  var _super = _createSuper$c(Hexagon);
 
   /**
    * @param {Object} options
@@ -15031,9 +14948,9 @@ var Hexagon = /*#__PURE__*/function (_ShapeBase) {
   return Hexagon;
 }(ShapeBase);
 
-function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Star Node/Cluster shape.
  *
@@ -15043,7 +14960,7 @@ function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !
 var Star = /*#__PURE__*/function (_ShapeBase) {
   inherits(Star, _ShapeBase);
 
-  var _super = _createSuper$e(Star);
+  var _super = _createSuper$d(Star);
 
   /**
    * @param {Object} options
@@ -15088,9 +15005,9 @@ var Star = /*#__PURE__*/function (_ShapeBase) {
   return Star;
 }(ShapeBase);
 
-function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A text-based replacement for the default Node shape.
  *
@@ -15100,7 +15017,7 @@ function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !
 var Text = /*#__PURE__*/function (_NodeBase) {
   inherits(Text, _NodeBase);
 
-  var _super = _createSuper$f(Text);
+  var _super = _createSuper$e(Text);
 
   /**
    * @param {Object} options
@@ -15176,9 +15093,9 @@ var Text = /*#__PURE__*/function (_NodeBase) {
   return Text;
 }(NodeBase);
 
-function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Triangle Node/Cluster shape.
  *
@@ -15188,7 +15105,7 @@ function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !
 var Triangle = /*#__PURE__*/function (_ShapeBase) {
   inherits(Triangle, _ShapeBase);
 
-  var _super = _createSuper$g(Triangle);
+  var _super = _createSuper$f(Triangle);
 
   /**
    * @param {Object} options
@@ -15233,9 +15150,9 @@ var Triangle = /*#__PURE__*/function (_ShapeBase) {
   return Triangle;
 }(ShapeBase);
 
-function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A downward facing Triangle Node/Cluster shape.
  *
@@ -15245,7 +15162,7 @@ function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !
 var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
   inherits(TriangleDown, _ShapeBase);
 
-  var _super = _createSuper$h(TriangleDown);
+  var _super = _createSuper$g(TriangleDown);
 
   /**
    * @param {Object} options
@@ -15718,9 +15635,9 @@ var Validator = /*#__PURE__*/function () {
   return Validator;
 }();
 
-function ownKeys$3(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; forEach$2(_context5 = ownKeys$3(Object(source), true)).call(_context5, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context6; forEach$2(_context6 = ownKeys$3(Object(source))).call(_context6, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; forEach$2(_context5 = ownKeys$2(Object(source), true)).call(_context5, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context6; forEach$2(_context6 = ownKeys$2(Object(source))).call(_context6, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
 /**
  * A node. A node can be connected to other nodes via one or multiple edges.
  */
@@ -16005,7 +15922,7 @@ var Node = /*#__PURE__*/function () {
         this.options.label = '';
       }
 
-      Node.updateGroupOptions(this.options, _objectSpread$1(_objectSpread$1({}, options), {}, {
+      Node.updateGroupOptions(this.options, _objectSpread(_objectSpread({}, options), {}, {
         color: options && options.color || this._localColor || undefined
       }), this.grouplist); //
       // Note:The prototype chain for this.options is:
@@ -16054,10 +15971,6 @@ var Node = /*#__PURE__*/function () {
 
           case 'circularImage':
             this.shape = new CircularImage(this.options, this.body, this.labelModule, this.imageObj, this.imageObjAlt);
-            break;
-
-          case 'custom':
-            this.shape = new CustomShape(this.options, this.body, this.labelModule, this.options.ctxRenderer);
             break;
 
           case 'database':
@@ -17252,9 +17165,9 @@ var hypot$1 = hypot;
 
 var hypot$2 = hypot$1;
 
-function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Common methods for endpoints
  *
@@ -17329,7 +17242,7 @@ var EndPoint = /*#__PURE__*/function () {
 var Image$2 = /*#__PURE__*/function (_EndPoint) {
   inherits(Image, _EndPoint);
 
-  var _super = _createSuper$i(Image);
+  var _super = _createSuper$h(Image);
 
   function Image() {
     classCallCheck(this, Image);
@@ -17376,7 +17289,7 @@ var Image$2 = /*#__PURE__*/function (_EndPoint) {
 var Arrow = /*#__PURE__*/function (_EndPoint2) {
   inherits(Arrow, _EndPoint2);
 
-  var _super2 = _createSuper$i(Arrow);
+  var _super2 = _createSuper$h(Arrow);
 
   function Arrow() {
     classCallCheck(this, Arrow);
@@ -17930,9 +17843,9 @@ var EndPoints = /*#__PURE__*/function () {
   return EndPoints;
 }();
 
-function ownKeys$4(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$3(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; forEach$2(_context2 = ownKeys$4(Object(source), true)).call(_context2, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context3; forEach$2(_context3 = ownKeys$4(Object(source))).call(_context3, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; forEach$2(_context2 = ownKeys$3(Object(source), true)).call(_context2, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context3; forEach$2(_context3 = ownKeys$3(Object(source))).call(_context3, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
 /**
  * The Base Class for all edges.
  */
@@ -18255,7 +18168,7 @@ var EdgeBase = /*#__PURE__*/function () {
         ++iteration;
       } while (low <= high && iteration < maxIterations);
 
-      return _objectSpread$2(_objectSpread$2({}, pos), {}, {
+      return _objectSpread$1(_objectSpread$1({}, pos), {}, {
         t: middle
       });
     }
@@ -18676,13 +18589,13 @@ var EdgeBase = /*#__PURE__*/function () {
   return EdgeBase;
 }();
 
-function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$4(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys$5(Object(source), true)).call(_context, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context2; forEach$2(_context2 = ownKeys$5(Object(source))).call(_context2, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys$4(Object(source), true)).call(_context, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context2; forEach$2(_context2 = ownKeys$4(Object(source))).call(_context2, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
 
-function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * The Base Class for all Bezier edges.
  * Bezier curves are used to model smooth gradual curves in paths between nodes.
@@ -18691,7 +18604,7 @@ function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !
 var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
   inherits(BezierEdgeBase, _EdgeBase);
 
-  var _super = _createSuper$j(BezierEdgeBase);
+  var _super = _createSuper$i(BezierEdgeBase);
 
   /**
    * Create a new instance.
@@ -18773,7 +18686,7 @@ var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
         ++iteration;
       } while (low <= high && iteration < maxIterations);
 
-      return _objectSpread$3(_objectSpread$3({}, pos), {}, {
+      return _objectSpread$2(_objectSpread$2({}, pos), {}, {
         t: middle
       });
     }
@@ -18869,9 +18782,9 @@ var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
   return BezierEdgeBase;
 }(EdgeBase);
 
-function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
  * curves in paths between nodes. The Dynamic piece refers to how the curve
@@ -18883,7 +18796,7 @@ function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !
 var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
   inherits(BezierEdgeDynamic, _BezierEdgeBase);
 
-  var _super = _createSuper$k(BezierEdgeDynamic);
+  var _super = _createSuper$j(BezierEdgeDynamic);
 
   /**
    * Create a new instance.
@@ -19093,9 +19006,9 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
   return BezierEdgeDynamic;
 }(BezierEdgeBase);
 
-function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
@@ -19103,7 +19016,7 @@ function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !
 var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
   inherits(BezierEdgeStatic, _BezierEdgeBase);
 
-  var _super = _createSuper$l(BezierEdgeStatic);
+  var _super = _createSuper$k(BezierEdgeStatic);
 
   /**
    * Create a new instance.
@@ -19337,9 +19250,9 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
   return BezierEdgeStatic;
 }(BezierEdgeBase);
 
-function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
  * smooth gradual curves in paths between nodes.
@@ -19350,7 +19263,7 @@ function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !
 var CubicBezierEdgeBase = /*#__PURE__*/function (_BezierEdgeBase) {
   inherits(CubicBezierEdgeBase, _BezierEdgeBase);
 
-  var _super = _createSuper$m(CubicBezierEdgeBase);
+  var _super = _createSuper$l(CubicBezierEdgeBase);
 
   /**
    * Create a new instance.
@@ -19419,9 +19332,9 @@ var CubicBezierEdgeBase = /*#__PURE__*/function (_BezierEdgeBase) {
   return CubicBezierEdgeBase;
 }(BezierEdgeBase);
 
-function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
@@ -19429,7 +19342,7 @@ function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !
 var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
   inherits(CubicBezierEdge, _CubicBezierEdgeBase);
 
-  var _super = _createSuper$n(CubicBezierEdge);
+  var _super = _createSuper$m(CubicBezierEdge);
 
   /**
    * Create a new instance.
@@ -19543,9 +19456,9 @@ var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
   return CubicBezierEdge;
 }(CubicBezierEdgeBase);
 
-function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Straight Edge.
  */
@@ -19553,7 +19466,7 @@ function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !
 var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
   inherits(StraightEdge, _EdgeBase);
 
-  var _super = _createSuper$o(StraightEdge);
+  var _super = _createSuper$n(StraightEdge);
 
   /**
    * Create a new instance.
@@ -22093,9 +22006,9 @@ var CentralGravitySolver = /*#__PURE__*/function () {
   return CentralGravitySolver;
 }();
 
-function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * @extends BarnesHutSolver
  */
@@ -22103,7 +22016,7 @@ function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !
 var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
   inherits(ForceAtlas2BasedRepulsionSolver, _BarnesHutSolver);
 
-  var _super = _createSuper$p(ForceAtlas2BasedRepulsionSolver);
+  var _super = _createSuper$o(ForceAtlas2BasedRepulsionSolver);
 
   /**
    * @param {Object} body
@@ -22157,9 +22070,9 @@ var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
   return ForceAtlas2BasedRepulsionSolver;
 }(BarnesHutSolver);
 
-function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * @extends CentralGravitySolver
  */
@@ -22167,7 +22080,7 @@ function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !
 var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravitySolver) {
   inherits(ForceAtlas2BasedCentralGravitySolver, _CentralGravitySolver);
 
-  var _super = _createSuper$q(ForceAtlas2BasedCentralGravitySolver);
+  var _super = _createSuper$p(ForceAtlas2BasedCentralGravitySolver);
 
   /**
    * @param {Object} body
@@ -23340,9 +23253,9 @@ var NetworkUtil = /*#__PURE__*/function () {
   return NetworkUtil;
 }();
 
-function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Cluster is a special Node that allows a group of Nodes positioned closely together
  * to be represented by a single Cluster Node.
@@ -23353,7 +23266,7 @@ function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !
 var Cluster = /*#__PURE__*/function (_Node) {
   inherits(Cluster, _Node);
 
-  var _super = _createSuper$r(Cluster);
+  var _super = _createSuper$q(Cluster);
 
   /**
    * @param {Object} options
@@ -30236,9 +30149,9 @@ var timsort = createCommonjsModule(function (module, exports) {
 
 var timsort$1 = timsort;
 
-function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
+function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Interface definition for direction strategy classes.
  *
@@ -30406,7 +30319,7 @@ var DirectionInterface = /*#__PURE__*/function () {
 var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
   inherits(VerticalStrategy, _DirectionInterface);
 
-  var _super = _createSuper$s(VerticalStrategy);
+  var _super = _createSuper$r(VerticalStrategy);
 
   /**
    * Constructor
@@ -30502,7 +30415,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
 var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
   inherits(HorizontalStrategy, _DirectionInterface2);
 
-  var _super2 = _createSuper$s(HorizontalStrategy);
+  var _super2 = _createSuper$r(HorizontalStrategy);
 
   /**
    * Constructor

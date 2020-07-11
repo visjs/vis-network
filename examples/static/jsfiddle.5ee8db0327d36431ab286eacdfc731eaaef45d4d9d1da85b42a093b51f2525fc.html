@@ -115,32 +115,6 @@ function draw() {
       label: "icon dot",
       shape: "dot",
       icon: { code: "\uf165" }
-    },
-    {
-      id: 36,
-      label: "custom",
-      shape: "custom",
-      ctxRenderer: ({ ctx, x, y, state: { selected, hover }, style }) =&gt; {
-        const r = style.size;
-
-        ctx.beginPath();
-        const sides = 6;
-        const a = (Math.PI * 2) / sides;
-        ctx.moveTo(x, y + r);
-        for (let i = 1; i &lt; sides; i++) {
-          ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
-        }
-        ctx.closePath();
-        ctx.save();
-        ctx.fillStyle = "red";
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-
-        ctx.font = "normal 12px sans-serif";
-        ctx.fillStyle = "black";
-        ctx.fillText("custom shape", x - r + 10, y, 2 * r - 20);
-      }
     }
   ];
 
