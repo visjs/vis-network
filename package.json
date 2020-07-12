@@ -97,7 +97,7 @@
     "@babel/register": "7.10.4",
     "@babel/runtime-corejs3": "7.10.4",
     "@egjs/hammerjs": "2.0.17",
-    "@rollup/plugin-commonjs": "13.0.0",
+    "@rollup/plugin-commonjs": "13.0.1",
     "@rollup/plugin-image": "2.0.5",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "8.1.0",
