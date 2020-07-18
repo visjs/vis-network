@@ -8,6 +8,20 @@ type VisNetworkStandalone = typeof visNetworkStandalone;
 type VisUtil = typeof visUtil;
 
 (async (): Promise<void> => {
+  // Wait for all the assets to load.
+  await new Promise((resolve): void => {
+    if (document.readyState === "complete") {
+      // Already loaded.
+      resolve();
+    } else {
+      // Not loaded yet.
+      window.addEventListener("load", resolve);
+    }
+  });
+
+  // Wait for the icon font to load (no TS support yet).
+  await (document as any).fonts.load('24px "Material Design Icons"');
+
   const $mynetwork = document.getElementById("mynetwork");
   if ($mynetwork == null) {
     throw new Error("Element #mynetwork was not found in the DOM.");
