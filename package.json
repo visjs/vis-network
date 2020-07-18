@@ -140,7 +140,7 @@
     "postcss-assets": "5.0.0",
     "prettier": "1.19.1",
     "rimraf": "3.0.2",
-    "rollup": "2.21.0",
+    "rollup": "2.22.0",
     "rollup-plugin-analyzer": "3.3.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
@@ -159,7 +159,7 @@
     "typescript": "3.9.7",
     "uuid": "8.2.0",
     "vis-data": "6.6.1",
-    "vis-dev-utils": "2.3.4",
+    "vis-dev-utils": "2.3.5",
     "vis-util": "4.3.2"
   },
   "collective": {
