@@ -30,7 +30,7 @@
         name="html"
         value='&lt;h2&gt;Static smooth curves - World Cup Network&lt;/h2&gt;
 
-&lt;div style="width:700px; font-size:14px;"&gt;
+&lt;div style="width: 700px; font-size: 14px;"&gt;
   The static smooth curves are based only on the positions of the connected
   nodes. There are multiple ways to determine the way this curve is drawn. This
   example shows the effect of the different types on a large network.
@@ -58,26 +58,26 @@ function redrawAll() {
       shape: "dot",
       scaling: {
         min: 10,
-        max: 30
+        max: 30,
       },
       font: {
         size: 12,
-        face: "Tahoma"
-      }
+        face: "Tahoma",
+      },
     },
     edges: {
       color: { inherit: true },
       width: 0.15,
       smooth: {
-        type: "continuous"
-      }
+        type: "continuous",
+      },
     },
     interaction: {
       hideEdgesOnDrag: true,
-      tooltipDelay: 200
+      tooltipDelay: 200,
     },
     configure: {
-      filter: function(option, path) {
+      filter: function (option, path) {
         if (option === "inherit") {
           return true;
         }
@@ -96,9 +96,9 @@ function redrawAll() {
         return false;
       },
       container: document.getElementById("optionsContainer"),
-      showButton: false
+      showButton: false,
     },
-    physics: false
+    physics: false,
   };
 
   var data = { nodes: nodes, edges: edges };

@@ -75,13 +75,13 @@ function draw() {
 
   var options = {
     physics: {
-      stabilization: false
+      stabilization: false,
     },
-    configure: true
+    configure: true,
   };
   network = new vis.Network(container, data, options);
 
-  network.on("configChange", function() {
+  network.on("configChange", function () {
     // this will immediately fix the height of the configuration
     // wrapper to prevent unecessary scrolls in chrome.
     // see https://github.com/almende/vis/issues/1568

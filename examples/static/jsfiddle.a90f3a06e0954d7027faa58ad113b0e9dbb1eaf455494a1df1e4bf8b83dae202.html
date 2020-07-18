@@ -179,7 +179,7 @@ function addNode() {
   try {
     nodes.add({
       id: document.getElementById("node-id").value,
-      label: document.getElementById("node-label").value
+      label: document.getElementById("node-label").value,
     });
   } catch (err) {
     alert(err);
@@ -190,7 +190,7 @@ function updateNode() {
   try {
     nodes.update({
       id: document.getElementById("node-id").value,
-      label: document.getElementById("node-label").value
+      label: document.getElementById("node-label").value,
     });
   } catch (err) {
     alert(err);
@@ -209,7 +209,7 @@ function addEdge() {
     edges.add({
       id: document.getElementById("edge-id").value,
       from: document.getElementById("edge-from").value,
-      to: document.getElementById("edge-to").value
+      to: document.getElementById("edge-to").value,
     });
   } catch (err) {
     alert(err);
@@ -220,7 +220,7 @@ function updateEdge() {
     edges.update({
       id: document.getElementById("edge-id").value,
       from: document.getElementById("edge-from").value,
-      to: document.getElementById("edge-to").value
+      to: document.getElementById("edge-to").value,
     });
   } catch (err) {
     alert(err);
@@ -237,7 +237,7 @@ function removeEdge() {
 function draw() {
   // create an array with nodes
   nodes = new vis.DataSet();
-  nodes.on("*", function() {
+  nodes.on("*", function () {
     document.getElementById("nodes").innerHTML = JSON.stringify(
       nodes.get(),
       null,
@@ -249,12 +249,12 @@ function draw() {
     { id: "2", label: "Node 2" },
     { id: "3", label: "Node 3" },
     { id: "4", label: "Node 4" },
-    { id: "5", label: "Node 5" }
+    { id: "5", label: "Node 5" },
   ]);
 
   // create an array with edges
   edges = new vis.DataSet();
-  edges.on("*", function() {
+  edges.on("*", function () {
     document.getElementById("edges").innerHTML = JSON.stringify(
       edges.get(),
       null,
@@ -265,14 +265,14 @@ function draw() {
     { id: "1", from: "1", to: "2" },
     { id: "2", from: "1", to: "3" },
     { id: "3", from: "2", to: "4" },
-    { id: "4", from: "2", to: "5" }
+    { id: "4", from: "2", to: "5" },
   ]);
 
   // create a network
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {};
   network = new vis.Network(container, data, options);

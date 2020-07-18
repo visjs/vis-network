@@ -45,47 +45,47 @@ nodes = [];
 edges = [];
 nodes.push({
   id: 1,
-  label: "node 1"
+  label: "node 1",
 });
 nodes.push({
   id: 2,
-  label: "node 2"
+  label: "node 2",
 });
 nodes.push({
   id: 3,
-  label: "node 3"
+  label: "node 3",
 });
 edges.push({
   from: 1,
   to: 1,
   label: "Edge label 1",
-  hidden: true
+  hidden: true,
 });
 edges.push({
   from: 2,
   to: 3,
   label: "Edge label 2",
-  hidden: false
+  hidden: false,
 });
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: {
     scaling: {
       min: 16,
-      max: 32
-    }
+      max: 32,
+    },
   },
 
   width: "100%",
   height: "100%",
   interaction: {
-    hover: true
+    hover: true,
   },
   layout: {
     hierarchical: {
@@ -94,31 +94,31 @@ var options = {
       nodeSpacing: 10,
       blockShifting: true,
       edgeMinimization: true,
-      sortMethod: "directed"
-    }
+      sortMethod: "directed",
+    },
   },
   edges: {
-    smooth: false
-  }
+    smooth: false,
+  },
 };
 
 network = new vis.Network(container, data, options);
 
-network.on("hoverEdge", function(e) {
+network.on("hoverEdge", function (e) {
   this.body.data.edges.update({
     id: e.edge,
     font: {
-      size: 14
-    }
+      size: 14,
+    },
   });
 });
 
-network.on("blurEdge", function(e) {
+network.on("blurEdge", function (e) {
   this.body.data.edges.update({
     id: e.edge,
     font: {
-      size: 0
-    }
+      size: 0,
+    },
   });
 });
 '

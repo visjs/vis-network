@@ -85,7 +85,7 @@ Play with the settings below the network and see how the layout changes!
         name="js"
         value='var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 // create a network
 var container = document.getElementById("mynetwork");
@@ -93,22 +93,22 @@ var options = {
   layout: {
     hierarchical: {
       direction: "UD",
-      sortMethod: "directed"
-    }
+      sortMethod: "directed",
+    },
   },
   interaction: { dragNodes: false },
   physics: {
-    enabled: false
+    enabled: false,
   },
   configure: {
-    filter: function(option, path) {
+    filter: function (option, path) {
       if (path.indexOf("hierarchical") !== -1) {
         return true;
       }
       return false;
     },
-    showButton: false
-  }
+    showButton: false,
+  },
 };
 var network = new vis.Network(container, data, options);
 '

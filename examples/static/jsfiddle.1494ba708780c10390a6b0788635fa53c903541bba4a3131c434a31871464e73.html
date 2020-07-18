@@ -34,7 +34,7 @@
         type="hidden"
         name="html"
         value='&lt;h2&gt;Playing with Physics&lt;/h2&gt;
-&lt;div style="width: 700px; font-size:14px; text-align: justify;"&gt;
+&lt;div style="width: 700px; font-size: 14px; text-align: justify;"&gt;
   Every dataset is different. Nodes can have different sizes based on content,
   interconnectivity can be high or low etc. Because of this, the network
   configurator can be used to explore which settings may be good for him or her.
@@ -68,10 +68,10 @@ function draw() {
   var options = {
     physics: {
       stabilization: false,
-      wind: { x: 0, y: 0 }
+      wind: { x: 0, y: 0 },
     },
     configure: {
-      filter: function(option, path) {
+      filter: function (option, path) {
         if (path.indexOf("physics") !== -1) {
           return true;
         }
@@ -80,8 +80,8 @@ function draw() {
         }
         return false;
       },
-      container: document.getElementById("config")
-    }
+      container: document.getElementById("config"),
+    },
   };
   network = new vis.Network(container, data, options);
 }

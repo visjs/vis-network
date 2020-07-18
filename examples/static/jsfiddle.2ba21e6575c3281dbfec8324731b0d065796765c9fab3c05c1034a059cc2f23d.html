@@ -58,10 +58,10 @@ body {
     "horizontal",
     "straightCross",
     "vertical",
-    "curvedCCW"
-  ].map(type =&gt; [
+    "curvedCCW",
+  ].map((type) =&gt; [
     { type, scaleFactor: 1 },
-    { type, scaleFactor: -1 }
+    { type, scaleFactor: -1 },
   ])
 );
 
@@ -77,26 +77,26 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       id: 10 * i + 1,
       label: type,
       x: 0,
-      y: i * 60
+      y: i * 60,
     },
     {
       id: 10 * i + 2,
       label: type,
       x: 800,
-      y: i * 60
+      y: i * 60,
     },
     {
       id: 10 * i + 3,
       label: type,
       x: 1000,
-      y: i * 60
+      y: i * 60,
     },
     {
       id: 10 * i + 4,
       label: type,
       x: 1200 + (i % 5) * 250,
-      y: 200 + Math.floor(i / 5) * 5 * 50
-    }
+      y: 200 + Math.floor(i / 5) * 5 * 50,
+    },
   ]);
   edges.add([
     {
@@ -106,8 +106,8 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       arrows: {
         from: { enabled: true, scaleFactor },
         middle: { enabled: true, scaleFactor },
-        to: { enabled: true, scaleFactor }
-      }
+        to: { enabled: true, scaleFactor },
+      },
     },
     {
       from: 10 * i + 3,
@@ -116,8 +116,8 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       arrows: {
         from: { enabled: true, scaleFactor },
         middle: { enabled: true, scaleFactor },
-        to: { enabled: true, scaleFactor }
-      }
+        to: { enabled: true, scaleFactor },
+      },
     },
     {
       from: 10 * i + 4,
@@ -127,9 +127,9 @@ types.forEach(({ type, scaleFactor }, i) =&gt; {
       arrows: {
         from: { enabled: true, scaleFactor },
         middle: { enabled: true, scaleFactor },
-        to: { enabled: true, scaleFactor }
-      }
-    }
+        to: { enabled: true, scaleFactor },
+      },
+    },
   ]);
 });
 
@@ -139,12 +139,12 @@ var container = document.getElementById("mynetwork");
 // provide the data in the vis format
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   physics: {
-    enabled: false
-  }
+    enabled: false,
+  },
 };
 
 // initialize your network!

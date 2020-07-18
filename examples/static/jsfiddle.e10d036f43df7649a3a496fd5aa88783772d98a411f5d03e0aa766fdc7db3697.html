@@ -38,13 +38,13 @@ var nodes = new vis.DataSet([
       "I&apos;m an alligator,",
       "I&apos;m a mama-papa coming for you.",
       "I&apos;m the space invader,",
-      "I&apos;ll be a rock &apos;n&apos; rollin&apos; bitch for you."
+      "I&apos;ll be a rock &apos;n&apos; rollin&apos; bitch for you.",
     ].join("\n"),
     x: 0,
     y: 0,
     color: {
-      background: "transparent"
-    }
+      background: "transparent",
+    },
   },
   {
     id: 2,
@@ -53,31 +53,31 @@ var nodes = new vis.DataSet([
       "Both from and to arrows point to the same node.",
       "The radius of the edge can be adjusted using selfReference.size.",
       "The edge can be positioned using selfReference.angle.",
-      "The part of the edge behind the node can be hidden using selfReference.renderBehindTheNode."
+      "The part of the edge behind the node can be hidden using selfReference.renderBehindTheNode.",
     ].join("\n"),
     widthConstraint: { minimum: 100 },
     heightConstraint: { minimum: 100 },
     x: 200,
     y: 200,
     color: {
-      background: "transparent"
-    }
+      background: "transparent",
+    },
   },
   {
     id: 3,
     label: [
       "Self reference edge is in the bottom left corner",
-      "with parts rendered behind node"
+      "with parts rendered behind node",
     ].join("\n"),
     widthConstraint: { minimum: 100 },
     heightConstraint: { minimum: 100 },
     x: 400,
     y: 400,
     color: {
-      background: "transparent"
+      background: "transparent",
     },
-    shape: "box"
-  }
+    shape: "box",
+  },
 ]);
 
 // create an array with edges
@@ -91,8 +91,8 @@ var edges = new vis.DataSet([
     selfReference: {
       size: 40,
       angle: (Math.PI * 7) / 6,
-      renderBehindTheNode: false
-    }
+      renderBehindTheNode: false,
+    },
   },
   {
     from: 3,
@@ -102,32 +102,32 @@ var edges = new vis.DataSet([
     selfReference: {
       size: 40,
       angle: (Math.PI * 7) / 6,
-      renderBehindTheNode: true
-    }
-  }
+      renderBehindTheNode: true,
+    },
+  },
 ]);
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   edges: {
     color: {
       color: "#2B7CE9",
       highlight: "#2B7CE9",
-      hover: "#2B7CE9"
+      hover: "#2B7CE9",
     },
-    hoverWidth: function(width) {
+    hoverWidth: function (width) {
       return width + 2;
     },
-    shadow: true
+    shadow: true,
   },
   interaction: {
-    hover: true
-  }
+    hover: true,
+  },
 };
 var network = new vis.Network(container, data, options);
 
@@ -135,7 +135,7 @@ var network = new vis.Network(container, data, options);
   let angle = -100;
 
   for (;;) {
-    await new Promise(resolve =&gt; setTimeout(resolve, 100));
+    await new Promise((resolve) =&gt; setTimeout(resolve, 100));
 
     ++angle;
     console.log("set self reference angle to", angle / 10);
@@ -145,9 +145,9 @@ var network = new vis.Network(container, data, options);
         selfReference: {
           size: 20,
           angle: angle / 10,
-          renderBehindTheNode: false
-        }
-      }
+          renderBehindTheNode: false,
+        },
+      },
     });
   }
 })();

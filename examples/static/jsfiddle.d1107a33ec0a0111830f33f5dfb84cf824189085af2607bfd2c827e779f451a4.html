@@ -62,7 +62,7 @@ fontAwesome is loaded.
   { id: 20, label: "diamonds", group: "diamonds" },
   { id: 21, label: "diamonds", group: "diamonds" },
   { id: 22, label: "diamonds", group: "diamonds" },
-  { id: 23, label: "diamonds", group: "diamonds" }
+  { id: 23, label: "diamonds", group: "diamonds" },
 ];
 var edges = [
   { from: 1, to: 0 },
@@ -87,14 +87,14 @@ var edges = [
   { from: 19, to: 4 },
   { from: 22, to: 21 },
   { from: 23, to: 22 },
-  { from: 23, to: 0 }
+  { from: 23, to: 0 },
 ];
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: {
@@ -102,22 +102,22 @@ var options = {
     size: 20,
     font: {
       size: 15,
-      color: "#ffffff"
+      color: "#ffffff",
     },
-    borderWidth: 2
+    borderWidth: 2,
   },
   edges: {
-    width: 2
+    width: 2,
   },
   groups: {
     diamonds: {
       color: { background: "red", border: "white" },
-      shape: "diamond"
+      shape: "diamond",
     },
     dotsWithLabel: {
       label: "I&apos;m a dot!",
       shape: "dot",
-      color: "cyan"
+      color: "cyan",
     },
     mints: { color: "rgb(0,255,140)" },
     icons: {
@@ -126,13 +126,13 @@ var options = {
         face: "FontAwesome",
         code: "\uf0c0",
         size: 50,
-        color: "orange"
-      }
+        color: "orange",
+      },
     },
     source: {
-      color: { border: "white" }
-    }
-  }
+      color: { border: "white" },
+    },
+  },
 };
 var network = new vis.Network(container, data, options);
 '

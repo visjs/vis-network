@@ -99,7 +99,7 @@ function startNetwork() {
     { id: 2, label: "Node 2" },
     { id: 3, label: "Node 3" },
     { id: 4, label: "Node 4" },
-    { id: 5, label: "Node 5" }
+    { id: 5, label: "Node 5" },
   ];
   nodes = new vis.DataSet(nodesArray);
 
@@ -108,7 +108,7 @@ function startNetwork() {
     { from: 1, to: 3 },
     { from: 1, to: 2 },
     { from: 2, to: 4 },
-    { from: 2, to: 5 }
+    { from: 2, to: 5 },
   ];
   edges = new vis.DataSet(edgesArray);
 
@@ -116,7 +116,7 @@ function startNetwork() {
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {};
   network = new vis.Network(container, data, options);
@@ -145,7 +145,7 @@ function changeOptions() {
   shadowState = !shadowState;
   network.setOptions({
     nodes: { shadow: shadowState },
-    edges: { shadow: shadowState }
+    edges: { shadow: shadowState },
   });
 }
 

@@ -76,7 +76,7 @@ function draw() {
   var container = document.getElementById("mynetwork");
   var data = getScaleFreeNetwork(nodeCount);
   var options = {
-    physics: { stabilization: false }
+    physics: { stabilization: false },
   };
   network = new vis.Network(container, data, options);
 }

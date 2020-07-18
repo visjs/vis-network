@@ -83,7 +83,7 @@ div.table_description {
         type="hidden"
         name="html"
         value='&lt;h2&gt;Editing the nodes and edges-without-drag (localized)&lt;/h2&gt;
-&lt;p style="width: 700px; font-size:14px; text-align: justify;"&gt;
+&lt;p style="width: 700px; font-size: 14px; text-align: justify;"&gt;
   The localization is only relevant to the manipulation buttons.
 &lt;/p&gt;
 
@@ -106,7 +106,7 @@ div.table_description {
 
 &lt;div id="node-popUp"&gt;
   &lt;span id="node-operation"&gt;node&lt;/span&gt; &lt;br /&gt;
-  &lt;table style="margin:auto;"&gt;
+  &lt;table style="margin: auto;"&gt;
     &lt;tbody&gt;
       &lt;tr&gt;
         &lt;td&gt;id&lt;/td&gt;
@@ -124,7 +124,7 @@ div.table_description {
 
 &lt;div id="edge-popUp"&gt;
   &lt;span id="edge-operation"&gt;edge&lt;/span&gt; &lt;br /&gt;
-  &lt;table style="margin:auto;"&gt;
+  &lt;table style="margin: auto;"&gt;
     &lt;tbody&gt;
       &lt;tr&gt;
         &lt;td&gt;label&lt;/td&gt;
@@ -180,17 +180,17 @@ function draw() {
     layout: { randomSeed: seed }, // just to make sure the layout is the same when the locale is changed
     locale: document.getElementById("locale").value,
     manipulation: {
-      addNode: function(data, callback) {
+      addNode: function (data, callback) {
         // filling in the popup DOM elements
         document.getElementById("node-operation").innerHTML = "Add Node";
         editNode(data, clearNodePopUp, callback);
       },
-      editNode: function(data, callback) {
+      editNode: function (data, callback) {
         // filling in the popup DOM elements
         document.getElementById("node-operation").innerHTML = "Edit Node";
         editNode(data, cancelNodeEdit, callback);
       },
-      addEdge: function(data, callback) {
+      addEdge: function (data, callback) {
         if (data.from == data.to) {
           var r = confirm("Do you want to connect the node to itself?");
           if (r != true) {
@@ -202,12 +202,12 @@ function draw() {
         editEdgeWithoutDrag(data, callback);
       },
       editEdge: {
-        editWithoutDrag: function(data, callback) {
+        editWithoutDrag: function (data, callback) {
           document.getElementById("edge-operation").innerHTML = "Edit Edge";
           editEdgeWithoutDrag(data, callback);
-        }
-      }
-    }
+        },
+      },
+    },
   };
   network = new vis.Network(container, data, options);
 }

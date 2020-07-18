@@ -60,7 +60,7 @@ pre {
         name="html"
         value='&lt;h2&gt;Dynamic Data - Importing from Gephi (JSON)&lt;/h2&gt;
 
-&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
+&lt;div style="width: 700px; font-size: 14px; text-align: justify;"&gt;
   This example shows how to import a JSON file exported by Gephi. The two
   options available for the import are available through the checkboxes. You can
   download the Gephi JSON exporter here:
@@ -105,44 +105,44 @@ parseColorCheckbox.onchange = redrawAll;
 
 var nodeContent = document.getElementById("nodeContent");
 
-loadJSON("../datasources/WorldCup2014.json", redrawAll, function(err) {
+loadJSON("../datasources/WorldCup2014.json", redrawAll, function (err) {
   console.log("error");
 });
 
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: {
     shape: "dot",
     font: {
-      face: "Tahoma"
-    }
+      face: "Tahoma",
+    },
   },
   edges: {
     width: 0.15,
     smooth: {
-      type: "continuous"
-    }
+      type: "continuous",
+    },
   },
   interaction: {
     tooltipDelay: 200,
-    hideEdgesOnDrag: true
+    hideEdgesOnDrag: true,
   },
   physics: {
     stabilization: false,
     barnesHut: {
       gravitationalConstant: -10000,
       springConstant: 0.002,
-      springLength: 150
-    }
-  }
+      springLength: 150,
+    },
+  },
 };
 
 network = new vis.Network(container, data, options);
-network.on("click", function(params) {
+network.on("click", function (params) {
   if (params.nodes.length &gt; 0) {
     var data = nodes.get(params.nodes[0]); // get the data from selected node
     nodeContent.innerHTML = JSON.stringify(data, undefined, 3); // show the data in the div
@@ -167,7 +167,7 @@ function redrawAll(gephiJSON) {
 
   var parsed = vis.parseGephiNetwork(gephiJSON, {
     fixed: fixed,
-    parseColor: parseColor
+    parseColor: parseColor,
   });
 
   // add the parsed data to the DataSets.

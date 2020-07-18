@@ -43,7 +43,7 @@ var nodes = [
   {
     id: 4,
     label: "Node 4",
-    font: { size: 12, color: "red", face: "sans", background: "white" }
+    font: { size: 12, color: "red", face: "sans", background: "white" },
   },
   {
     id: 5,
@@ -53,9 +53,9 @@ var nodes = [
       color: "red",
       face: "courier",
       strokeWidth: 3,
-      strokeColor: "#ffffff"
-    }
-  }
+      strokeColor: "#ffffff",
+    },
+  },
 ];
 
 // create an array with edges
@@ -63,20 +63,20 @@ var edges = [
   { from: 1, to: 2 },
   { from: 1, to: 3 },
   { from: 2, to: 4 },
-  { from: 2, to: 5 }
+  { from: 2, to: 5 },
 ];
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: {
     shape: "dot",
-    size: 10
-  }
+    size: 10,
+  },
 };
 var network = new vis.Network(container, data, options);
 '

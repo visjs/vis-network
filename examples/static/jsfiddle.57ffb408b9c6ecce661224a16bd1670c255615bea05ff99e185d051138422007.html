@@ -69,11 +69,11 @@ var nodes = [
     label: "cid = 1",
     cid: 1,
     color: "DarkViolet",
-    font: { color: "white" }
+    font: { color: "white" },
   },
   { id: 8, label: "cid = 1", cid: 1, color: "lime" },
   { id: 9, label: "cid = 1", cid: 1, color: "orange" },
-  { id: 10, label: "cid = 1", cid: 1, color: "lime" }
+  { id: 10, label: "cid = 1", cid: 1, color: "lime" },
 ];
 
 // create an array with edges
@@ -86,36 +86,40 @@ var edges = [
   { from: 7, to: 5 },
   { from: 8, to: 6 },
   { from: 9, to: 7 },
-  { from: 10, to: 9 }
+  { from: 10, to: 9 },
 ];
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = { layout: { randomSeed: 8 } };
 var network = new vis.Network(container, data, options);
 var clusterOptionsByData = {
-  joinCondition: function(childOptions) {
+  joinCondition: function (childOptions) {
     return childOptions.cid == 1;
   },
-  clusterNodeProperties: { id: "cidCluster", borderWidth: 3, shape: "database" }
+  clusterNodeProperties: {
+    id: "cidCluster",
+    borderWidth: 3,
+    shape: "database",
+  },
 };
 network.cluster(clusterOptionsByData);
 
-network.on("selectNode", function(params) {
+network.on("selectNode", function (params) {
   if (params.nodes.length == 1) {
     if (network.isCluster(params.nodes[0]) == true) {
       network.clustering.updateClusteredNode(params.nodes[0], {
-        shape: "star"
+        shape: "star",
       });
     }
   }
 });
 
-network.on("selectEdge", function(params) {
+network.on("selectEdge", function (params) {
   if (params.edges.length == 1) {
     // Single edge selected
     var obj = {};

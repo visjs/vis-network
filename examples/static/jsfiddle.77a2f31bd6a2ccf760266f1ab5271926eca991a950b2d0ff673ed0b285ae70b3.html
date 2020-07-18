@@ -52,7 +52,7 @@ var nodes = new vis.DataSet([
   { id: 5, label: "node\nfive", shape: "ellipse", color: "#6E6EFD" },
   { id: 6, label: "node\nsix", shape: "star", color: "#C2FABC" },
   { id: 7, label: "node\nseven", shape: "triangle", color: "#FFA807" },
-  { id: 8, label: "node\neight", shape: "triangleDown", color: "#6E6EFD" }
+  { id: 8, label: "node\neight", shape: "triangleDown", color: "#6E6EFD" },
 ]);
 
 // create an array with edges
@@ -64,19 +64,19 @@ var edges = new vis.DataSet([
   { from: 2, to: 5, color: { inherit: "from" } },
   { from: 5, to: 6, color: { inherit: "both" } },
   { from: 6, to: 7, color: { color: "#ff0000", opacity: 0.3 } },
-  { from: 6, to: 8, color: { opacity: 0.3 } }
+  { from: 6, to: 8, color: { opacity: 0.3 } },
 ]);
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: {
-    shape: "circle"
-  }
+    shape: "circle",
+  },
 };
 var network = new vis.Network(container, data, options);
 '

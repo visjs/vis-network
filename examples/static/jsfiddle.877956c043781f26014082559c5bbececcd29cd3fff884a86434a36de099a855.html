@@ -205,9 +205,9 @@ var options = {
   physics: {
     stabilization: false,
     barnesHut: {
-      springLength: 200
-    }
-  }
+      springLength: 200,
+    },
+  },
 };
 var data = {};
 var network = new vis.Network(container, data, options);
@@ -218,7 +218,7 @@ $("#reset").click(reset);
 $(window).resize(resize);
 $(window).load(draw);
 
-$("#data").keydown(function(event) {
+$("#data").keydown(function (event) {
   if (event.ctrlKey &amp;&amp; event.keyCode === 13) {
     // Ctrl+Enter
     draw();
@@ -262,7 +262,7 @@ function reset() {
   draw();
 }
 
-window.onload = function() {
+window.onload = function () {
   reset();
 };
 '

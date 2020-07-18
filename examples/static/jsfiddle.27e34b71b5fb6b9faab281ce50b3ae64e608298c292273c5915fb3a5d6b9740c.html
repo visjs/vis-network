@@ -52,7 +52,7 @@ function draw() {
       shape: "image",
       image: DIR + "1.png",
       label: "useImageSize",
-      shapeProperties: { useImageSize: true }
+      shapeProperties: { useImageSize: true },
     },
     { id: 2, shape: "image", image: DIR + "2.png" },
     {
@@ -66,14 +66,14 @@ function draw() {
         border: "green",
         background: "yellow",
         highlight: { border: "yellow", background: "green" },
-        hover: { border: "orange", background: "grey" }
-      }
+        hover: { border: "orange", background: "grey" },
+      },
     },
     {
       id: 4,
       shape: "image",
       image: DIR + "4.png",
-      label: "pictures by this guy!"
+      label: "pictures by this guy!",
     },
     { id: 5, shape: "image", image: DIR + "5.png" },
     { id: 6, shape: "image", image: DIR + "6.png" },
@@ -90,8 +90,8 @@ function draw() {
         border: "blue",
         background: "orange",
         highlight: { border: "orange", background: "blue" },
-        hover: { border: "orange", background: "grey" }
-      }
+        hover: { border: "orange", background: "grey" },
+      },
     },
     { id: 10, shape: "image", image: DIR + "10.png" },
     { id: 11, shape: "image", image: DIR + "11.png" },
@@ -103,15 +103,15 @@ function draw() {
       shape: "image",
       image: DIR + "missing.png",
       brokenImage: DIR + "missingBrokenImage.png",
-      label: "when images\nfail\nto load"
+      label: "when images\nfail\nto load",
     },
     {
       id: 16,
       shape: "image",
       image: DIR + "anotherMissing.png",
       brokenImage: DIR + "9.png",
-      label: "fallback image in action"
-    }
+      label: "fallback image in action",
+    },
   ];
 
   // create connections between people
@@ -131,14 +131,14 @@ function draw() {
     { from: 11, to: 12 },
     { from: 12, to: 13 },
     { from: 13, to: 14 },
-    { from: 9, to: 16 }
+    { from: 9, to: 16 },
   ];
 
   // create a network
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {
     nodes: {
@@ -150,21 +150,21 @@ function draw() {
         background: "black",
         highlight: {
           border: "black",
-          background: "white"
+          background: "white",
         },
         hover: {
           border: "orange",
-          background: "grey"
-        }
+          background: "grey",
+        },
       },
       font: { color: "#eeeeee" },
       shapeProperties: {
-        useBorderWithImage: true
-      }
+        useBorderWithImage: true,
+      },
     },
     edges: {
-      color: "lightgray"
-    }
+      color: "lightgray",
+    },
   };
   network = new vis.Network(container, data, options);
 }

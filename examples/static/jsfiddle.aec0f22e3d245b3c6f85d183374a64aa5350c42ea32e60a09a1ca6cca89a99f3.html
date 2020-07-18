@@ -50,7 +50,7 @@ var nodes = new vis.DataSet([
   {
     id: 5,
     label: "colorObject",
-    color: { background: "pink", border: "purple" }
+    color: { background: "pink", border: "purple" },
   },
   {
     id: 6,
@@ -58,8 +58,8 @@ var nodes = new vis.DataSet([
     color: {
       background: "#F03967",
       border: "#713E7F",
-      highlight: { background: "red", border: "black" }
-    }
+      highlight: { background: "red", border: "black" },
+    },
   },
   {
     id: 7,
@@ -68,9 +68,9 @@ var nodes = new vis.DataSet([
       background: "cyan",
       border: "blue",
       highlight: { background: "red", border: "blue" },
-      hover: { background: "white", border: "red" }
-    }
-  }
+      hover: { background: "white", border: "red" },
+    },
+  },
 ]);
 
 // create an array with edges
@@ -80,18 +80,18 @@ var edges = new vis.DataSet([
   { from: 2, to: 4 },
   { from: 2, to: 5 },
   { from: 2, to: 6 },
-  { from: 4, to: 7 }
+  { from: 4, to: 7 },
 ]);
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: { borderWidth: 2 },
-  interaction: { hover: true }
+  interaction: { hover: true },
 };
 var network = new vis.Network(container, data, options);
 '

@@ -110,7 +110,7 @@ function draw() {
   var data = getScaleFreeNetwork(5);
 
   network = new vis.Network(container, data, {
-    manipulation: { enabled: true }
+    manipulation: { enabled: true },
   });
 
   clearOutputArea();
@@ -137,7 +137,7 @@ function importNetwork() {
 
   var data = {
     nodes: getNodeData(inputData),
-    edges: getEdgeData(inputData)
+    edges: getEdgeData(inputData),
   };
 
   network = new vis.Network(container, data, {});
@@ -148,7 +148,7 @@ function importNetwork() {
 function getNodeData(data) {
   var networkNodes = [];
 
-  data.forEach(function(elem, index, array) {
+  data.forEach(function (elem, index, array) {
     networkNodes.push({ id: elem.id, label: elem.id, x: elem.x, y: elem.y });
   });
 
@@ -169,16 +169,16 @@ function getNodeById(data, id) {
 function getEdgeData(data) {
   var networkEdges = [];
 
-  data.forEach(function(node) {
+  data.forEach(function (node) {
     // add the connection
-    node.connections.forEach(function(connId, cIndex, conns) {
+    node.connections.forEach(function (connId, cIndex, conns) {
       networkEdges.push({ from: node.id, to: connId });
       let cNode = getNodeById(data, connId);
 
       var elementConnections = cNode.connections;
 
       // remove the connection from the other node to prevent duplicate connections
-      var duplicateIndex = elementConnections.findIndex(function(connection) {
+      var duplicateIndex = elementConnections.findIndex(function (connection) {
         return connection == node.id; // double equals since id can be numeric or string
       });
 
@@ -192,7 +192,7 @@ function getEdgeData(data) {
 }
 
 function objectToArray(obj) {
-  return Object.keys(obj).map(function(key) {
+  return Object.keys(obj).map(function (key) {
     obj[key].id = key;
     return obj[key];
   });

@@ -213,7 +213,7 @@ body,
       <input
         type="hidden"
         name="js"
-        value='window.addEventListener("load", function() {
+        value='window.addEventListener("load", function () {
   var conf = document.getElementById("conf");
 
   function handleConfChange() {
@@ -251,7 +251,7 @@ function draw(formData) {
     { id: 15, label: "15" },
     { id: 16, label: "16" },
     { id: 17, label: "17" },
-    { id: 18, label: "18" }
+    { id: 18, label: "18" },
   ];
   var edges = [
     { from: 0, to: 1 },
@@ -270,33 +270,33 @@ function draw(formData) {
     { from: 1, to: 12 },
     { from: 16, to: 15 },
     { from: 15, to: 17 },
-    { from: 18, to: 17 }
+    { from: 18, to: 17 },
   ];
 
   // create the network
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {
     layout: {
       hierarchical: {
         sortMethod: formData.get("layout-method"),
-        shakeTowards: formData.get("shake-towards")
-      }
+        shakeTowards: formData.get("shake-towards"),
+      },
     },
     edges: {
       smooth: true,
-      arrows: { to: true }
-    }
+      arrows: { to: true },
+    },
   };
   network = new vis.Network(container, data, options);
 
   network.cluster({
     joinCondition(nodeOptions) {
       return !!formData.get(`cluster-node-${nodeOptions.id}`);
-    }
+    },
   });
 }
 '

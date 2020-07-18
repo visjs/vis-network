@@ -58,8 +58,8 @@ body {
     "horizontal",
     "straightCross",
     "vertical",
-    "curvedCCW"
-  ].map(type =&gt; [{ type }])
+    "curvedCCW",
+  ].map((type) =&gt; [{ type }])
 );
 
 // create an array with nodes
@@ -74,20 +74,20 @@ types.forEach(({ type }, i) =&gt; {
       id: 10 * i + 1,
       label: type,
       x: 0,
-      y: i * 60
+      y: i * 60,
     },
     {
       id: 10 * i + 2,
       label: type,
       x: 800,
-      y: i * 60
+      y: i * 60,
     },
     {
       id: 10 * i + 3,
       label: type,
       x: 1000,
-      y: i * 60
-    }
+      y: i * 60,
+    },
   ]);
   edges.add([
     {
@@ -96,24 +96,24 @@ types.forEach(({ type }, i) =&gt; {
       smooth: { type },
       arrows: {
         from: { enabled: true },
-        to: { enabled: true }
+        to: { enabled: true },
       },
       endPointOffset: {
         from: -10 + i,
-        to: 0 - i
-      }
+        to: 0 - i,
+      },
     },
     {
       from: 10 * i + 3,
       to: 10 * i + 3,
       smooth: { type },
       arrows: {
-        from: { enabled: true }
+        from: { enabled: true },
       },
       endPointOffset: {
-        from: -10 + i
-      }
-    }
+        from: -10 + i,
+      },
+    },
   ]);
 });
 
@@ -123,12 +123,12 @@ var container = document.getElementById("mynetwork");
 // provide the data in the vis format
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   physics: {
-    enabled: false
-  }
+    enabled: false,
+  },
 };
 
 // initialize your network!

@@ -79,36 +79,36 @@ var edges = [
   { from: 14, to: 28 },
   { from: 14, to: 29 },
   { from: 15, to: 30 },
-  { from: 15, to: 31 }
+  { from: 15, to: 31 },
 ];
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: new vis.DataSet(nodes),
-  edges: new vis.DataSet(edges)
+  edges: new vis.DataSet(edges),
 };
 var options = {
   layout: {
     hierarchical: {
       direction: "UD",
-      sortMethod: "directed"
-    }
+      sortMethod: "directed",
+    },
   },
   edges: {
-    arrows: "to"
-  }
+    arrows: "to",
+  },
 };
 network = new vis.Network(container, data, options);
 
 // periodically change the layout
 let i = 0;
 setInterval(() =&gt; {
-  var leaves = data.nodes.get().filter(node =&gt;
+  var leaves = data.nodes.get().filter((node) =&gt;
     network
       .getConnectedEdges(node.id)
-      .map(edgeId =&gt; data.edges.get(edgeId))
-      .every(edge =&gt; edge.to === node.id)
+      .map((edgeId) =&gt; data.edges.get(edgeId))
+      .every((edge) =&gt; edge.to === node.id)
   );
   var leaf = leaves[i++ % leaves.length];
 
@@ -126,7 +126,7 @@ setInterval(() =&gt; {
 
   data.edges.update({
     id: edge.id,
-    from: newParent.id
+    from: newParent.id,
   });
 
   console.info(

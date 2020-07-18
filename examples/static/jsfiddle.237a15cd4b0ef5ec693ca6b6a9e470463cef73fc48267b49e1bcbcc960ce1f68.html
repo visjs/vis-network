@@ -54,7 +54,7 @@ function draw() {
     { id: 7, value: 6, label: "Lee" },
     { id: 8, value: 5, label: "Merlin" },
     { id: 9, value: 30, label: "Mick" },
-    { id: 10, value: 18, label: "Tod" }
+    { id: 10, value: 18, label: "Tod" },
   ];
 
   // create connections between people
@@ -70,14 +70,14 @@ function draw() {
     { from: 2, to: 3, value: 6, title: "6 emails per week" },
     { from: 3, to: 9, value: 4, title: "4 emails per week" },
     { from: 5, to: 3, value: 1, title: "1 emails per week" },
-    { from: 2, to: 7, value: 4, title: "4 emails per week" }
+    { from: 2, to: 7, value: 4, title: "4 emails per week" },
   ];
 
   // Instantiate our network object.
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {
     nodes: {
@@ -85,10 +85,10 @@ function draw() {
       scaling: {
         label: {
           min: 8,
-          max: 20
-        }
-      }
-    }
+          max: 20,
+        },
+      },
+    },
   };
   network = new vis.Network(container, data, options);
 }

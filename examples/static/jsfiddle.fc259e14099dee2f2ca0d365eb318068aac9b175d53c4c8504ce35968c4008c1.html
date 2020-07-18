@@ -77,11 +77,11 @@ function draw() {
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {
     physics: { stabilization: false },
-    edges: { smooth: false }
+    edges: { smooth: false },
   };
   network = new vis.Network(container, data, options);
 }

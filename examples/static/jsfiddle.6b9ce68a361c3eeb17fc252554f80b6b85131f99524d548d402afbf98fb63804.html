@@ -40,7 +40,7 @@ var nodes = new vis.DataSet([
   { id: 3, label: "Node 3" },
   { id: 4, label: "Node 4" },
   { id: 5, label: "Node 5" },
-  { id: 6, label: "Node 6" }
+  { id: 6, label: "Node 6" },
 ]);
 
 // create an array with edges
@@ -57,16 +57,16 @@ var edges = new vis.DataSet([
       enabled: true,
       color: "rgba(111,111,111,0.5)",
       size: 10,
-      dashes: [20, 10]
-    }
-  }
+      dashes: [20, 10],
+    },
+  },
 ]);
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   edges: {
@@ -74,9 +74,9 @@ var options = {
     smooth: true,
     background: {
       enabled: true,
-      color: "#ff0000"
-    }
-  }
+      color: "#ff0000",
+    },
+  },
 };
 
 var network = new vis.Network(container, data, options);

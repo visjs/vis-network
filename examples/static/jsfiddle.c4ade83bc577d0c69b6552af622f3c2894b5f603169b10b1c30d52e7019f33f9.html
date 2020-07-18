@@ -52,19 +52,19 @@ function draw() {
     id: 1,
     label: "Main",
     image: DIR + "Network-Pipe-icon.png",
-    shape: "image"
+    shape: "image",
   });
   nodes.push({
     id: 2,
     label: "Office",
     image: DIR + "Network-Pipe-icon.png",
-    shape: "image"
+    shape: "image",
   });
   nodes.push({
     id: 3,
     label: "Wireless",
     image: DIR + "Network-Pipe-icon.png",
-    shape: "image"
+    shape: "image",
   });
   edges.push({ from: 1, to: 2, length: EDGE_LENGTH_MAIN });
   edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN });
@@ -74,7 +74,7 @@ function draw() {
       id: i,
       label: "Computer",
       image: DIR + "Hardware-My-Computer-3-icon.png",
-      shape: "image"
+      shape: "image",
     });
     edges.push({ from: 2, to: i, length: EDGE_LENGTH_SUB });
   }
@@ -83,7 +83,7 @@ function draw() {
     id: 101,
     label: "Printer",
     image: DIR + "Hardware-Printer-Blue-icon.png",
-    shape: "image"
+    shape: "image",
   });
   edges.push({ from: 2, to: 101, length: EDGE_LENGTH_SUB });
 
@@ -91,7 +91,7 @@ function draw() {
     id: 102,
     label: "Laptop",
     image: DIR + "Hardware-Laptop-1-icon.png",
-    shape: "image"
+    shape: "image",
   });
   edges.push({ from: 3, to: 102, length: EDGE_LENGTH_SUB });
 
@@ -99,7 +99,7 @@ function draw() {
     id: 103,
     label: "network drive",
     image: DIR + "Network-Drive-icon.png",
-    shape: "image"
+    shape: "image",
   });
   edges.push({ from: 1, to: 103, length: EDGE_LENGTH_SUB });
 
@@ -107,7 +107,7 @@ function draw() {
     id: 104,
     label: "Internet",
     image: DIR + "System-Firewall-2-icon.png",
-    shape: "image"
+    shape: "image",
   });
   edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB });
 
@@ -116,7 +116,7 @@ function draw() {
       id: i,
       label: "Smartphone",
       image: DIR + "Hardware-My-PDA-02-icon.png",
-      shape: "image"
+      shape: "image",
     });
     edges.push({ from: 3, to: i, length: EDGE_LENGTH_SUB });
   }
@@ -125,7 +125,7 @@ function draw() {
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {};
   network = new vis.Network(container, data, options);

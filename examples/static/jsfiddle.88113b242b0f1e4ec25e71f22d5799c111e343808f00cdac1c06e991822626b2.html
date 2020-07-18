@@ -140,26 +140,26 @@ var edges = [
   { from: 14, to: 28, label: "14 &#x2192; 28" },
   { from: 14, to: 29, label: "14 &#x2192; 29" },
   { from: 15, to: 30, label: "15 &#x2192; 30" },
-  { from: 15, to: 31, label: "15 &#x2192; 31" }
+  { from: 15, to: 31, label: "15 &#x2192; 31" },
 ];
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: new vis.DataSet(nodes),
-  edges: new vis.DataSet(edges)
+  edges: new vis.DataSet(edges),
 };
 var options = {
   manipulation: {
     editEdge: {
-      editWithoutDrag: function(data, callback) {
+      editWithoutDrag: function (data, callback) {
         console.info(data);
         alert("The callback data has been logged to the console.");
         // you can do something with the data here
         callback(data);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 var network = new vis.Network(container, data, options);
 '

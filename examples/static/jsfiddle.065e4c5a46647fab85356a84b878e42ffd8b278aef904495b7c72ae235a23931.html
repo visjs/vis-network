@@ -36,17 +36,17 @@
       id: 1,
       label: "Node in\nthe center",
       shape: "text",
-      font: { strokeWidth: 4 }
+      font: { strokeWidth: 4 },
     },
     { id: 2, label: "Node\nwith\nmultiple\nlines", shape: "circle" },
     {
       id: 3,
       label:
         "This is a lot of text\nbut luckily we can spread\nover multiple lines",
-      shape: "database"
+      shape: "database",
     },
     { id: 4, label: "This is text\non multiple lines", shape: "box" },
-    { id: 5, label: "Little text", shape: "ellipse" }
+    { id: 5, label: "Little text", shape: "ellipse" },
   ];
 
   // create some edges
@@ -60,15 +60,15 @@
       arrows: "to",
       width: 3,
       length: 200,
-      label: "arrows\nare cool"
-    }
+      label: "arrows\nare cool",
+    },
   ];
 
   // create a network
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {};
   var network = new vis.Network(container, data, options);

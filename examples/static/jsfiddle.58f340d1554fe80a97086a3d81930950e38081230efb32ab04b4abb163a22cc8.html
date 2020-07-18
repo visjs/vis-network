@@ -39,7 +39,7 @@ var nodes = new vis.DataSet([
     shape: "image",
     size: 20,
     label: "No select image",
-    image: "./unselected.svg"
+    image: "./unselected.svg",
   },
   {
     id: 2,
@@ -48,8 +48,8 @@ var nodes = new vis.DataSet([
     label: "Select image broken",
     image: {
       unselected: "./unselected.svg",
-      selected: "./BROKEN_LINK/selected.svg"
-    }
+      selected: "./BROKEN_LINK/selected.svg",
+    },
   },
   {
     id: 3,
@@ -58,19 +58,19 @@ var nodes = new vis.DataSet([
     label: "Select works!",
     image: {
       unselected: "./unselected.svg",
-      selected: "./selected.svg"
+      selected: "./selected.svg",
     },
     shapeProperties: {
       borderDashes: [15, 5],
-      interpolation: false
-    }
-  }
+      interpolation: false,
+    },
+  },
 ]);
 
 // create an array with edges
 var edges = new vis.DataSet([
   { from: 1, to: 2 },
-  { from: 2, to: 3 }
+  { from: 2, to: 3 },
 ]);
 
 // create a network
@@ -79,16 +79,16 @@ var container = document.getElementById("mynetwork");
 // provide the data in the vis format
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 
 var options = {
   layout: {
-    randomSeed: 5
+    randomSeed: 5,
   },
   nodes: {
-    brokenImage: "./broken-image.png"
-  }
+    brokenImage: "./broken-image.png",
+  },
 };
 // initialize!
 var network = new vis.Network(container, data, options);

@@ -69,7 +69,7 @@ var nodes = [
   { id: 26, label: "26", group: 8 },
   { id: 27, label: "27", group: 9 },
   { id: 28, label: "28", group: 9 },
-  { id: 29, label: "29", group: 9 }
+  { id: 29, label: "29", group: 9 },
 ];
 var edges = [
   { from: 1, to: 0 },
@@ -100,14 +100,14 @@ var edges = [
   { from: 25, to: 7 },
   { from: 28, to: 27 },
   { from: 29, to: 28 },
-  { from: 28, to: 0 }
+  { from: 28, to: 0 },
 ];
 
 // create a network
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   nodes: {
@@ -115,13 +115,13 @@ var options = {
     size: 30,
     font: {
       size: 32,
-      color: "#ffffff"
+      color: "#ffffff",
     },
-    borderWidth: 2
+    borderWidth: 2,
   },
   edges: {
-    width: 2
-  }
+    width: 2,
+  },
 };
 network = new vis.Network(container, data, options);
 '

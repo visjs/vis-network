@@ -44,7 +44,7 @@ var node_color = ["orange", "green", "red", "yellow", "cyan"];
 var node_shape = ["star", "database", "diamond", "square", "triangle"];
 var nodes = new vis.DataSet([
   { id: "x", label: "Node X" },
-  { id: "y", label: "Node Y" }
+  { id: "y", label: "Node Y" },
 ]);
 var network_options = {};
 var edges = new vis.DataSet([{ from: "x", to: "y" }]);
@@ -56,11 +56,11 @@ function draw() {
     document.getElementById("mynetwork"),
     {
       nodes: nodes,
-      edges: edges
+      edges: edges,
     },
     network_options
   );
-  network.on("click", function(params) {
+  network.on("click", function (params) {
     if (params.nodes.length == 1) {
       if (network.isCluster(params.nodes[0]) == true) {
         network.openCluster(params.nodes[0]);
@@ -74,7 +74,7 @@ function draw() {
 
 function cluster() {
   var clusterOptions = {
-    joinCondition: function(childOptions) {
+    joinCondition: function (childOptions) {
       console.log(childOptions);
       return true;
     },
@@ -83,8 +83,8 @@ function cluster() {
       label: "Cluster " + cluster_id,
       color: node_color[cluster_id - 1],
       shape: node_shape[cluster_id - 1],
-      allowSingleNodeCluster: true
-    }
+      allowSingleNodeCluster: true,
+    },
   };
   cluster_id++;
   network.cluster(clusterOptions);

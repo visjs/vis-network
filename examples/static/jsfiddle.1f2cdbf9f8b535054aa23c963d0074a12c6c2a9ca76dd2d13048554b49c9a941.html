@@ -55,19 +55,19 @@ function draw() {
     id: 1,
     label: "Main (top-left)",
     image: DIR + "Network-Pipe-icon.png",
-    shape: "image"
+    shape: "image",
   });
   nodes.push({
     id: 2,
     label: "Office (top-left)",
     image: DIR + "Network-Pipe-icon.png",
-    shape: "image"
+    shape: "image",
   });
   nodes.push({
     id: 3,
     label: "Wireless (top-left)",
     image: DIR + "Network-Pipe-icon.png",
-    shape: "image"
+    shape: "image",
   });
   edges.push({ from: 1, to: 2, length: EDGE_LENGTH_MAIN });
   edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN });
@@ -77,7 +77,7 @@ function draw() {
       id: i,
       label: "Computer (top-left)",
       image: DIR + "Hardware-My-Computer-3-icon.png",
-      shape: "circularImage"
+      shape: "circularImage",
     });
     edges.push({ from: 2, to: i, length: EDGE_LENGTH_SUB });
   }
@@ -86,7 +86,7 @@ function draw() {
     id: 101,
     label: "Printer (top-left)",
     image: DIR + "Hardware-Printer-Blue-icon.png",
-    shape: "circularImage"
+    shape: "circularImage",
   });
   edges.push({ from: 2, to: 101, length: EDGE_LENGTH_SUB });
 
@@ -99,8 +99,8 @@ function draw() {
       useImageSize: true,
       useBorderWithImage: false,
       interpolation: false,
-      coordinateOrigin: "center"
-    }
+      coordinateOrigin: "center",
+    },
   });
   edges.push({ from: 3, to: 102, length: EDGE_LENGTH_SUB });
 
@@ -108,7 +108,7 @@ function draw() {
     id: 103,
     label: "Network drive (top-left)",
     image: DIR + "Network-Drive-icon.png",
-    shape: "circularImage"
+    shape: "circularImage",
   });
   edges.push({ from: 1, to: 103, length: EDGE_LENGTH_SUB });
 
@@ -116,7 +116,7 @@ function draw() {
     id: 104,
     label: "Internet (top-left)",
     image: DIR + "System-Firewall-2-icon.png",
-    shape: "circularImage"
+    shape: "circularImage",
   });
   edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB });
 
@@ -130,8 +130,8 @@ function draw() {
         useImageSize: true,
         useBorderWithImage: false,
         interpolation: false,
-        coordinateOrigin: "center"
-      }
+        coordinateOrigin: "center",
+      },
     });
     edges.push({ from: 3, to: i, length: EDGE_LENGTH_SUB });
   }
@@ -140,7 +140,7 @@ function draw() {
   var container = document.getElementById("mynetwork");
   var data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
   var options = {
     nodes: {
@@ -149,9 +149,9 @@ function draw() {
         useImageSize: true,
         useBorderWithImage: false,
         interpolation: false,
-        coordinateOrigin: "top-left"
-      }
-    }
+        coordinateOrigin: "top-left",
+      },
+    },
   };
   network = new vis.Network(container, data, options);
 }

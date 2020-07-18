@@ -24,7 +24,7 @@
         type="hidden"
         name="html"
         value='&lt;h2&gt;Smooth curves&lt;/h2&gt;
-&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
+&lt;div style="width: 700px; font-size: 14px; text-align: justify;"&gt;
   All the smooth curves in the examples so far have been using dynamic smooth
   curves. This means that each curve has a support node which takes part in the
   physics simulation. For large networks or dense clusters, this may not be the
@@ -55,7 +55,7 @@
 var nodes = [
   { id: 1, label: "Fixed node", x: 0, y: 0, fixed: true },
   { id: 2, label: "Drag me", x: 150, y: 130, physics: false },
-  { id: 3, label: "Obstacle", x: 80, y: -80, fixed: true, mass: 10 }
+  { id: 3, label: "Obstacle", x: 80, y: -80, fixed: true, mass: 10 },
 ];
 
 // create an array with edges
@@ -65,11 +65,11 @@ var edges = [{ from: 1, to: 2, arrows: "to" }];
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   physics: true,
-  configure: function(option, path) {
+  configure: function (option, path) {
     if (path.indexOf("smooth") !== -1 || option === "smooth") {
       return true;
     }
@@ -77,9 +77,9 @@ var options = {
   },
   edges: {
     smooth: {
-      type: "continuous"
-    }
-  }
+      type: "continuous",
+    },
+  },
 };
 var network = new vis.Network(container, data, options);
 '

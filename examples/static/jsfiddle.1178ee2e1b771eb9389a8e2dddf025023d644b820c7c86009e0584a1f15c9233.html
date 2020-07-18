@@ -60,19 +60,19 @@ code {
   &lt;div&gt;
     &lt;label&gt;
       &lt;input type="checkbox" name="edgesFilter" value="parent" checked /&gt;
-      Is &lt;span style="color:green"&gt;parent&lt;/span&gt; of
+      Is &lt;span style="color: green;"&gt;parent&lt;/span&gt; of
     &lt;/label&gt;
   &lt;/div&gt;
   &lt;div&gt;
     &lt;label&gt;
       &lt;input type="checkbox" name="edgesFilter" value="teacher" checked /&gt;
-      Is &lt;span style="color:blue"&gt;teacher&lt;/span&gt; of
+      Is &lt;span style="color: blue;"&gt;teacher&lt;/span&gt; of
     &lt;/label&gt;
   &lt;/div&gt;
   &lt;div&gt;
     &lt;label&gt;
       &lt;input type="checkbox" name="edgesFilter" value="friend" checked /&gt;
-      Is &lt;span style="color:red"&gt;friend&lt;/span&gt; of
+      Is &lt;span style="color: red;"&gt;friend&lt;/span&gt; of
     &lt;/label&gt;
   &lt;/div&gt;
 &lt;/label&gt;
@@ -100,7 +100,7 @@ const nodes = new vis.DataSet([
   { id: 2, label: "Stan Marsh", age: "kid", gender: "male" },
   { id: 3, label: "Wendy Testaburger", age: "kid", gender: "female" },
   { id: 4, label: "Mr Mackey", age: "adult", gender: "male" },
-  { id: 5, label: "Sharon Marsh", age: "adult", gender: "female" }
+  { id: 5, label: "Sharon Marsh", age: "adult", gender: "female" },
 ]);
 
 const edges = new vis.DataSet([
@@ -109,50 +109,50 @@ const edges = new vis.DataSet([
     to: 2,
     relation: "friend",
     arrows: "to, from",
-    color: { color: "red" }
+    color: { color: "red" },
   },
   {
     from: 1,
     to: 3,
     relation: "friend",
     arrows: "to, from",
-    color: { color: "red" }
+    color: { color: "red" },
   },
   {
     from: 2,
     to: 3,
     relation: "friend",
     arrows: "to, from",
-    color: { color: "red" }
+    color: { color: "red" },
   },
   {
     from: 5,
     to: 2,
     relation: "parent",
     arrows: "to",
-    color: { color: "green" }
+    color: { color: "green" },
   },
   {
     from: 4,
     to: 1,
     relation: "teacher",
     arrows: "to",
-    color: { color: "blue" }
+    color: { color: "blue" },
   },
   {
     from: 4,
     to: 2,
     relation: "teacher",
     arrows: "to",
-    color: { color: "blue" }
+    color: { color: "blue" },
   },
   {
     from: 4,
     to: 3,
     relation: "teacher",
     arrows: "to",
-    color: { color: "blue" }
-  }
+    color: { color: "blue" },
+  },
 ]);
 
 /**
@@ -163,14 +163,14 @@ let nodeFilterValue = "";
 const edgesFilterValues = {
   friend: true,
   teacher: true,
-  parent: true
+  parent: true,
 };
 
 /*
       filter function should return true or false
       based on whether item in DataView satisfies a given condition.
     */
-const nodesFilter = node =&gt; {
+const nodesFilter = (node) =&gt; {
   if (nodeFilterValue === "") {
     return true;
   }
@@ -188,14 +188,14 @@ const nodesFilter = node =&gt; {
   }
 };
 
-const edgesFilter = edge =&gt; {
+const edgesFilter = (edge) =&gt; {
   return edgesFilterValues[edge.relation];
 };
 
 const nodesView = new vis.DataView(nodes, { filter: nodesFilter });
 const edgesView = new vis.DataView(edges, { filter: edgesFilter });
 
-nodeFilterSelector.addEventListener("change", e =&gt; {
+nodeFilterSelector.addEventListener("change", (e) =&gt; {
   // set new value to filter variable
   nodeFilterValue = e.target.value;
   /*
@@ -205,8 +205,8 @@ nodeFilterSelector.addEventListener("change", e =&gt; {
   nodesView.refresh();
 });
 
-edgeFilters.forEach(filter =&gt;
-  filter.addEventListener("change", e =&gt; {
+edgeFilters.forEach((filter) =&gt;
+  filter.addEventListener("change", (e) =&gt; {
     const { value, checked } = e.target;
     edgesFilterValues[value] = checked;
     edgesView.refresh();

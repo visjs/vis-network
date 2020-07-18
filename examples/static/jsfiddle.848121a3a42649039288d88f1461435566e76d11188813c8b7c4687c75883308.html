@@ -68,7 +68,7 @@ div.table_description {
         type="hidden"
         name="html"
         value='&lt;h2&gt;Editing the nodes and edges (localized)&lt;/h2&gt;
-&lt;p style="width: 700px; font-size:14px; text-align: justify;"&gt;
+&lt;p style="width: 700px; font-size: 14px; text-align: justify;"&gt;
   The localization is only relevant to the manipulation buttons.
 &lt;/p&gt;
 
@@ -91,7 +91,7 @@ div.table_description {
 
 &lt;div id="network-popUp"&gt;
   &lt;span id="operation"&gt;node&lt;/span&gt; &lt;br /&gt;
-  &lt;table style="margin:auto;"&gt;
+  &lt;table style="margin: auto;"&gt;
     &lt;tbody&gt;
       &lt;tr&gt;
         &lt;td&gt;id&lt;/td&gt;
@@ -150,7 +150,7 @@ function draw() {
     layout: { randomSeed: seed }, // just to make sure the layout is the same when the locale is changed
     locale: document.getElementById("locale").value,
     manipulation: {
-      addNode: function(data, callback) {
+      addNode: function (data, callback) {
         // filling in the popup DOM elements
         document.getElementById("operation").innerHTML = "Add Node";
         document.getElementById("node-id").value = data.id;
@@ -163,7 +163,7 @@ function draw() {
         document.getElementById("cancelButton").onclick = clearPopUp.bind();
         document.getElementById("network-popUp").style.display = "block";
       },
-      editNode: function(data, callback) {
+      editNode: function (data, callback) {
         // filling in the popup DOM elements
         document.getElementById("operation").innerHTML = "Edit Node";
         document.getElementById("node-id").value = data.id;
@@ -179,7 +179,7 @@ function draw() {
         );
         document.getElementById("network-popUp").style.display = "block";
       },
-      addEdge: function(data, callback) {
+      addEdge: function (data, callback) {
         if (data.from == data.to) {
           var r = confirm("Do you want to connect the node to itself?");
           if (r == true) {
@@ -188,8 +188,8 @@ function draw() {
         } else {
           callback(data);
         }
-      }
-    }
+      },
+    },
   };
   network = new vis.Network(container, data, options);
 }

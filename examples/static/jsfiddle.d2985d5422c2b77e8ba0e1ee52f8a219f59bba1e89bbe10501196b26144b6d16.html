@@ -180,23 +180,23 @@ var options = {
   physics: {
     stabilization: false,
     barnesHut: {
-      springLength: 200
-    }
-  }
+      springLength: 200,
+    },
+  },
 };
 var data = {};
 var network = new vis.Network(container, data, options);
 
 $("#draw").click(draw);
 
-$("a.example").click(function(event) {
+$("a.example").click(function (event) {
   var url = $(event.target).data("url");
   $.get(url)
-    .done(function(dotData) {
+    .done(function (dotData) {
       $("#data").val(dotData);
       draw();
     })
-    .fail(function() {
+    .fail(function () {
       $("#error").html(
         "Error: Cannot fetch the example data because of security restrictions in JavaScript. Run the example from a server instead of as a local file to resolve this problem. Alternatively, you can copy/paste the data of DOT graphs manually in the textarea below."
       );
@@ -207,7 +207,7 @@ $("a.example").click(function(event) {
 $(window).resize(resize);
 $(window).load(draw);
 
-$("#data").keydown(function(event) {
+$("#data").keydown(function (event) {
   if (event.ctrlKey &amp;&amp; event.keyCode === 13) {
     // Ctrl+Enter
     draw();

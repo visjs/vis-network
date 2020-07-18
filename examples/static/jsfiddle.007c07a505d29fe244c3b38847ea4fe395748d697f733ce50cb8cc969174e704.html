@@ -29,7 +29,7 @@
         name="html"
         value='&lt;h2&gt;Hierarchical Layout - Scale-Free-Network&lt;/h2&gt;
 
-&lt;div style="width:700px; font-size:14px; text-align: justify;"&gt;
+&lt;div style="width: 700px; font-size: 14px; text-align: justify;"&gt;
   This example shows the randomly generated &lt;b&gt;scale-free-network&lt;/b&gt; set of
   nodes and connected edges from example 2. In this example, hierarchical layout
   has been enabled and the vertical levels are determined automatically.
@@ -82,14 +82,14 @@ function draw() {
   var options = {
     layout: {
       hierarchical: {
-        direction: directionInput
-      }
-    }
+        direction: directionInput,
+      },
+    },
   };
   network = new vis.Network(container, data, options);
 
   // add event listeners
-  network.on("select", function(params) {
+  network.on("select", function (params) {
     document.getElementById("selection").innerHTML =
       "Selection: " + params.nodes;
   });
@@ -97,22 +97,22 @@ function draw() {
 
 var directionInput = document.getElementById("direction");
 var btnUD = document.getElementById("btn-UD");
-btnUD.onclick = function() {
+btnUD.onclick = function () {
   directionInput.value = "UD";
   draw();
 };
 var btnDU = document.getElementById("btn-DU");
-btnDU.onclick = function() {
+btnDU.onclick = function () {
   directionInput.value = "DU";
   draw();
 };
 var btnLR = document.getElementById("btn-LR");
-btnLR.onclick = function() {
+btnLR.onclick = function () {
   directionInput.value = "LR";
   draw();
 };
 var btnRL = document.getElementById("btn-RL");
-btnRL.onclick = function() {
+btnRL.onclick = function () {
   directionInput.value = "RL";
   draw();
 };

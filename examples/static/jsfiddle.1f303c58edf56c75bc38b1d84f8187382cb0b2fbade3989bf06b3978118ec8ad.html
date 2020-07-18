@@ -140,7 +140,7 @@ td {
     label:
       "&lt;b&gt;This&lt;/b&gt; is a\n&lt;i&gt;default&lt;/i&gt; &lt;b&gt;&lt;i&gt;multi-&lt;/i&gt;font&lt;/b&gt; &lt;code&gt;label&lt;/code&gt;",
     x: -40,
-    y: -40
+    y: -40,
   },
   {
     id: 3,
@@ -148,45 +148,45 @@ td {
     label:
       "&lt;b&gt;This&lt;/b&gt; is an\n&lt;i&gt;html&lt;/i&gt; &lt;b&gt;&lt;i&gt;multi-&lt;/i&gt;font&lt;/b&gt; &lt;code&gt;label&lt;/code&gt;",
     x: 40,
-    y: 40
+    y: 40,
   },
   {
     id: 4,
     font: { multi: "md", face: "georgia" },
     label: "*This* is a\n_markdown_ *_multi-_ font* `label`",
     x: 120,
-    y: 120
-  }
+    y: 120,
+  },
 ];
 
 var edges = [
   { from: 1, to: 2, label: "single to default" },
   { from: 2, to: 3, font: { multi: true }, label: "default to &lt;b&gt;html&lt;/b&gt;" },
-  { from: 3, to: 4, font: { multi: "md" }, label: "*html* to _md_" }
+  { from: 3, to: 4, font: { multi: "md" }, label: "*html* to _md_" },
 ];
 
 var container = document.getElementById("mynetwork");
 var data = {
   nodes: nodes,
-  edges: edges
+  edges: edges,
 };
 var options = {
   edges: {
     font: {
-      size: 12
-    }
+      size: 12,
+    },
   },
   nodes: {
     shape: "box",
     font: {
       bold: {
-        color: "#0077aa"
-      }
-    }
+        color: "#0077aa",
+      },
+    },
   },
   physics: {
-    enabled: false
-  }
+    enabled: false,
+  },
 };
 var network = new vis.Network(container, data, options);
 '
