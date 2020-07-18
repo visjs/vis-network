@@ -50,6 +50,7 @@ type VisUtil = typeof visUtil;
   const config: UniversalConfig = JSON.parse(
     decodeURIComponent(location.hash.slice(1)) || "{}"
   );
+  console.info("config", config);
 
   const baseURL =
     config.version == null
@@ -131,6 +132,8 @@ type VisUtil = typeof visUtil;
     // Raw options to override anything set above.
     config.options ?? {}
   );
+
+  console.info("new Network", [$mynetwork, data, options]);
   const network = new Network($mynetwork, data, options);
 
   const add = (
