@@ -834,6 +834,47 @@ export interface Color {
   };
 }
 
+export interface ChosenLabelValues {
+  color: string;
+  face: string;
+  mod: string;
+  size: number;
+  strokeColor: string;
+  strokeWidth: number;
+  vadjust: number;
+}
+export type NodeChosenLabelFunction = (
+  values: ChosenLabelValues,
+  id: IdType,
+  selected: boolean,
+  hovered: boolean
+) => void;
+
+export interface ChosenNodeValues {
+  borderColor: string;
+  borderDashes: boolean | number[];
+  borderRadius: number;
+  borderWidth: number;
+  color: string;
+  shadow: boolean;
+  shadowColor: string;
+  shadowSize: number;
+  shadowX: number;
+  shadowY: number;
+  size: number;
+}
+export type NodeChosenNodeFunction = (
+  values: ChosenNodeValues,
+  id: IdType,
+  selected: boolean,
+  hovered: boolean
+) => void;
+
+export interface NodeChosen {
+  node: boolean | NodeChosenNodeFunction;
+  label: boolean | NodeChosenLabelFunction;
+}
+
 export interface NodeOptions {
   borderWidth?: number;
 
@@ -843,6 +884,8 @@ export interface NodeOptions {
 
   color?: string | Color;
 
+  chosen?: boolean | NodeChosen;
+  
   opacity?: number;
 
   fixed?: boolean | {
