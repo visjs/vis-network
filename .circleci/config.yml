@@ -119,6 +119,12 @@ jobs:
 
       - install_chromium_deps
 
+      - run:
+          command: npm run generate-examples-index
+          # One of the examples sports really massive network that takes long to
+          # render and would regularly exceed the default timeout of 10 minues.
+          no_output_timeout: 20m
+
       - persist_to_workspace:
           root: ..
           paths:
