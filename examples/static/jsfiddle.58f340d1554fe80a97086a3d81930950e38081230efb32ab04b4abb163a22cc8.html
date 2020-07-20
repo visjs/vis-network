@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Node Styles | Selected/Unselected Image</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body {
+  font: 10pt arial;
+}
+#mynetwork {
+  width: 600px;
+  height: 600px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// create an array with nodes
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    shape: "image",
+    size: 20,
+    label: "No select image",
+    image: "./unselected.svg",
+  },
+  {
+    id: 2,
+    shape: "image",
+    size: 20,
+    label: "Select image broken",
+    image: {
+      unselected: "./unselected.svg",
+      selected: "./BROKEN_LINK/selected.svg",
+    },
+  },
+  {
+    id: 3,
+    shape: "image",
+    size: 20,
+    label: "Select works!",
+    image: {
+      unselected: "./unselected.svg",
+      selected: "./selected.svg",
+    },
+    shapeProperties: {
+      borderDashes: [15, 5],
+      interpolation: false,
+    },
+  },
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 2 },
+  { from: 2, to: 3 },
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+
+// provide the data in the vis format
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+
+var options = {
+  layout: {
+    randomSeed: 5,
+  },
+  nodes: {
+    brokenImage: "./broken-image.png",
+  },
+};
+// initialize!
+var network = new vis.Network(container, data, options);
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Node Styles | Selected/Unselected Image"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Tests | Hidden Edge Test</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 1200px;
+  height: 800px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="explanation"&gt;
+  &lt;h4&gt;
+    Click on node 3. Drag it to the right. Release the mouse. Then hover over
+    it. The graph will reset (it shouldn&amp;apos;t). This addresses visjs-network
+    issue #67
+  &lt;/h4&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var nodes = null;
+var edges = null;
+var network = null;
+//
+nodes = [];
+edges = [];
+nodes.push({
+  id: 1,
+  label: "node 1",
+});
+nodes.push({
+  id: 2,
+  label: "node 2",
+});
+nodes.push({
+  id: 3,
+  label: "node 3",
+});
+edges.push({
+  from: 1,
+  to: 1,
+  label: "Edge label 1",
+  hidden: true,
+});
+edges.push({
+  from: 2,
+  to: 3,
+  label: "Edge label 2",
+  hidden: false,
+});
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+var options = {
+  nodes: {
+    scaling: {
+      min: 16,
+      max: 32,
+    },
+  },
+
+  width: "100%",
+  height: "100%",
+  interaction: {
+    hover: true,
+  },
+  layout: {
+    hierarchical: {
+      enabled: true,
+      levelSeparation: 160,
+      nodeSpacing: 10,
+      blockShifting: true,
+      edgeMinimization: true,
+      sortMethod: "directed",
+    },
+  },
+  edges: {
+    smooth: false,
+  },
+};
+
+network = new vis.Network(container, data, options);
+
+network.on("hoverEdge", function (e) {
+  this.body.data.edges.update({
+    id: e.edge,
+    font: {
+      size: 14,
+    },
+  });
+});
+
+network.on("blurEdge", function (e) {
+  this.body.data.edges.update({
+    id: e.edge,
+    font: {
+      size: 0,
+    },
+  });
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Tests | Hidden Edge Test"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

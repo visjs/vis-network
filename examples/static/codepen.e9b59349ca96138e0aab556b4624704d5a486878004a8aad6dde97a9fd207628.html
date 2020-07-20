@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Node Styles | Images with Borders</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"body {\n  font: 10pt arial;\n}\n#mynetwork {\n  width: 800px;\n  height: 800px;\n  border: 1px solid lightgray;\n  background-color: #333333;\n}\n","css_external":"","html":"&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var DIR = \"img/soft-scraps-icons/\";\n\nvar nodes = null;\nvar edges = null;\nvar network = null;\n\n// Called when the Visualization API is loaded.\nfunction draw() {\n  // create people.\n  // value corresponds with the age of the person\n  var DIR = \"../img/indonesia/\";\n  nodes = [\n    { id: 1, shape: \"image\", image: DIR + \"1.png\" },\n    { id: 2, shape: \"image\", image: DIR + \"2.png\" },\n    { id: 3, shape: \"image\", image: DIR + \"3.png\" },\n    {\n      id: 4,\n      shape: \"image\",\n      image: DIR + \"4.png\",\n      label: \"pictures by this guy!\",\n    },\n    { id: 5, shape: \"image\", image: DIR + \"5.png\" },\n    { id: 6, shape: \"image\", image: DIR + \"6.png\" },\n    { id: 7, shape: \"image\", image: DIR + \"7.png\" },\n    { id: 8, shape: \"image\", image: DIR + \"8.png\" },\n    { id: 9, shape: \"image\", image: DIR + \"9.png\" },\n    { id: 10, shape: \"image\", image: DIR + \"10.png\" },\n    { id: 11, shape: \"image\", image: DIR + \"11.png\" },\n    { id: 12, shape: \"image\", image: DIR + \"12.png\" },\n    { id: 13, shape: \"image\", image: DIR + \"13.png\" },\n    { id: 14, shape: \"image\", image: DIR + \"14.png\" },\n    {\n      id: 15,\n      shape: \"image\",\n      image: DIR + \"missing.png\",\n      brokenImage: DIR + \"missingBrokenImage.png\",\n      label: \"when images\\nfail\\nto load\",\n    },\n    {\n      id: 16,\n      shape: \"image\",\n      image: DIR + \"anotherMissing.png\",\n      brokenImage: DIR + \"9.png\",\n      label: \"fallback image in action\",\n    },\n  ];\n\n  // create connections between people\n  // value corresponds with the amount of contact between two people\n  edges = [\n    { from: 1, to: 2 },\n    { from: 2, to: 3 },\n    { from: 2, to: 4 },\n    { from: 4, to: 5 },\n    { from: 4, to: 10 },\n    { from: 4, to: 6 },\n    { from: 6, to: 7 },\n    { from: 7, to: 8 },\n    { from: 8, to: 9 },\n    { from: 8, to: 10 },\n    { from: 10, to: 11 },\n    { from: 11, to: 12 },\n    { from: 12, to: 13 },\n    { from: 13, to: 14 },\n    { from: 9, to: 16 },\n  ];\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges,\n  };\n  var options = {\n    nodes: {\n      borderWidth: 4,\n      size: 30,\n      color: {\n        border: \"#406897\",\n        background: \"#6AAFFF\",\n      },\n      font: { color: \"#eeeeee\" },\n      shapeProperties: {\n        useBorderWithImage: true,\n      },\n    },\n    edges: {\n      color: \"lightgray\",\n    },\n  };\n  network = new vis.Network(container, data, options);\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Images with Borders"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Layouts | Hierarchical Layout Overlap Avoidance</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"html,\nbody,\n#mynetwork {\n  margin: 0px;\n  padding: 0px;\n}\n\n#mynetwork {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  bottom: 0px;\n  right: 50%;\n  min-height: 100vh;\n  border-right: 1px solid lightgray;\n  background: white;\n}\n\n#text {\n  position: absolute;\n  left: 50%;\n  padding: 1em;\n}\n\n#title {\n  margin-bottom: 5em;\n}\n","css_external":"https://visjs.github.io/vis-network/dist/vis-network.min.css","html":"&lt;div id=\"text\"&gt;\n  &lt;div id=\"title\"&gt;\n    &lt;h1&gt;Vis Network&lt;/h1&gt;\n    &lt;h2&gt;Layouts&lt;/h2&gt;\n    &lt;h3&gt;Hierarchical Layout Overlap Avoidance&lt;/h3&gt;\n  &lt;/div&gt;\n\n  &lt;p&gt;\n    Overlap avoidance increases the space between nodes depending on their size\n    in order to prevent big nodes from overlapping. The value can be set from 0\n    which is the default and means no overlap avoidance at all to 1 which puts\n    the most space around nodes. Any value in between is also valid.\n  &lt;/p&gt;\n\n  Avoid ovelap:\n  &lt;input\n    type=\"number\"\n    value=\"1\"\n    min=\"0\"\n    max=\"1\"\n    step=\"0.01\"\n    id=\"avoid-overlap\"\n  /&gt;\n&lt;/div&gt;\n\n&lt;!-- Redraw the network when avoid overlap is changed. --&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var avoidOverlapInput = document.getElementById(\"avoid-overlap\");\navoidOverlapInput.onchange = function () {\n  draw();\n};\n\nvar nodes = [\n  { id: 0 },\n  { id: 1 },\n  { id: 2 },\n  { id: 3 },\n  { id: 4 },\n  { id: 5 },\n  { id: 6 },\n  { id: 7 },\n  { id: 8 },\n  { id: 9 },\n  { id: 10 },\n  { id: 11 },\n  { id: 12 },\n  { id: 13 },\n  { id: 14 },\n  { id: 15 },\n  { id: 16 },\n  { id: 17 },\n  { id: 18 },\n  { id: 19 },\n  { id: 20 },\n  { id: 21 },\n  { id: 22 },\n  { id: 23 },\n  { id: 24 },\n  { id: 25 },\n  { id: 26 },\n  { id: 27 },\n  { id: 28 },\n  { id: 29 },\n  { id: 30 },\n  { id: 31 },\n  { id: 32 },\n  { id: 33 },\n  { id: 34 },\n  { id: 35 },\n  { id: 36 },\n  { id: 37 },\n  { id: 38 },\n  { id: 39 },\n  { id: 40 },\n  { id: 41 },\n  { id: 42 },\n  { id: 43 },\n  { id: 44 },\n  { id: 45 },\n  { id: 46 },\n].map(\n  // Make the nodes wide, the higher the id the wider, except for every third.\n  (node) =&gt; (\n    (node.label =\n      node.id % 3 === 0\n        ? `${node.id}`\n        : `| ${\"-\".repeat(node.id)} ${node.id} ${\"-\".repeat(node.id)} |`),\n    node\n  )\n);\nvar edges = [\n  { from: 0, to: 1 },\n  { from: 0, to: 2 },\n  { from: 1, to: 3 },\n  { from: 1, to: 4 },\n  { from: 2, to: 5 },\n  { from: 2, to: 6 },\n  { from: 3, to: 7 },\n  { from: 3, to: 8 },\n  { from: 4, to: 9 },\n  { from: 4, to: 10 },\n  { from: 5, to: 11 },\n  { from: 5, to: 12 },\n  { from: 6, to: 13 },\n  { from: 6, to: 14 },\n  { from: 7, to: 15 },\n  { from: 7, to: 16 },\n  { from: 8, to: 17 },\n  { from: 8, to: 18 },\n  { from: 9, to: 19 },\n  { from: 9, to: 20 },\n  { from: 10, to: 21 },\n  { from: 10, to: 22 },\n  { from: 11, to: 23 },\n  { from: 11, to: 24 },\n  { from: 12, to: 25 },\n  { from: 12, to: 26 },\n  { from: 13, to: 27 },\n  { from: 13, to: 28 },\n  { from: 14, to: 29 },\n  { from: 14, to: 30 },\n  { from: 15, to: 31 },\n  { from: 16, to: 32 },\n  { from: 17, to: 33 },\n  { from: 18, to: 34 },\n  { from: 19, to: 35 },\n  { from: 20, to: 36 },\n  { from: 21, to: 37 },\n  { from: 22, to: 38 },\n  { from: 23, to: 39 },\n  { from: 24, to: 40 },\n  { from: 25, to: 41 },\n  { from: 26, to: 42 },\n  { from: 27, to: 43 },\n  { from: 28, to: 44 },\n  { from: 29, to: 45 },\n  { from: 30, to: 46 },\n];\nvar network = null;\n\nfunction draw() {\n  // clean up old network\n  if (network != null) {\n    network.destroy();\n    network = null;\n  }\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = { nodes, edges };\n  var options = {\n    layout: {\n      hierarchical: {\n        direction: \"UD\",\n        sortMethod: \"directed\",\n      },\n    },\n    physics: {\n      hierarchicalRepulsion: {\n        avoidOverlap: +document.getElementById(\"avoid-overlap\").value,\n      },\n    },\n  };\n  network = new vis.Network(container, data, options);\n\n  // add event listeners\n  network.on(\"select\", function (params) {\n    document.getElementById(\"selection\").innerHTML =\n      \"Selection: \" + params.nodes;\n  });\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/dist/vis-network.min.js","title":"Vis Network | Layouts | Hierarchical Layout Overlap Avoidance"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

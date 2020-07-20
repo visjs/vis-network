@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Node Styles | Shapes with Dashed Borders</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 1000px;\n  height: 800px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;p&gt;\n  Nodes can have all sorts of shapes. Note the exception where the nodes with\n  text inside and the text type&amp;apos;s size are determined by the font size, not\n  the node size.\n&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n\n&lt;div id=\"info\"&gt;&lt;/div&gt;\n","js":"var nodes = null;\nvar edges = null;\nvar network = null;\n\nfunction draw() {\n  nodes = [\n    {\n      id: 1,\n      font: { size: 30 },\n      label: \"circle\",\n      shape: \"circle\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 2,\n      font: { size: 30 },\n      label: \"ellipse\",\n      shape: \"ellipse\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 3,\n      font: { size: 30 },\n      label: \"database\",\n      shape: \"database\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 4,\n      font: { size: 30 },\n      label: \"box\",\n      shape: \"box\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 5,\n      font: { size: 30 },\n      size: 40,\n      label: \"diamond\",\n      shape: \"diamond\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 6,\n      font: { size: 30 },\n      size: 40,\n      label: \"dot\",\n      shape: \"dot\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 7,\n      font: { size: 30 },\n      size: 40,\n      label: \"square\",\n      shape: \"square\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 8,\n      font: { size: 30 },\n      size: 40,\n      label: \"triangle\",\n      shape: \"triangle\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 9,\n      font: { size: 30 },\n      size: 40,\n      label: \"triangleDown\",\n      shape: \"triangleDown\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n    {\n      id: 10,\n      font: { size: 30 },\n      size: 40,\n      label: \"star\",\n      shape: \"star\",\n      shapeProperties: { borderDashes: true },\n    },\n    {\n      id: 11,\n      font: { size: 30 },\n      size: 40,\n      label: \"circularImage\",\n      shape: \"circularImage\",\n      image: \"../img/indonesia/4.png\",\n      shapeProperties: { borderDashes: [15, 5] },\n    },\n    {\n      id: 12,\n      font: { size: 30 },\n      size: 40,\n      label: \"hexagon\",\n      shape: \"hexagon\",\n      shapeProperties: { borderDashes: [5, 5] },\n    },\n  ];\n\n  edges = [];\n\n  // create a network\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges,\n  };\n  var options = { physics: { barnesHut: { gravitationalConstant: -4000 } } };\n  network = new vis.Network(container, data, options);\n}\n\nwindow.addEventListener(\"load\", () =&gt; {\n  draw();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Shapes with Dashed Borders"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

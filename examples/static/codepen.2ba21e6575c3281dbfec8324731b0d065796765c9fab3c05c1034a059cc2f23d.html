@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Edge Styles | Arrow Alignment</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"html,\nbody {\n  height: 100%;\n  width: 100%;\n  margin: 0px;\n  padding: 0px;\n}\n\n.mycontainer {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n#mynetwork {\n  position: absolute;\n  top: 0px;\n  right: 0px;\n  bottom: 0px;\n  left: 0px;\n}\n","css_external":"","html":"&lt;div class=\".mycontainer\"&gt;\n  &lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;/div&gt;\n","js":"var types = [].concat.apply(\n  [],\n  [\n    \"curvedCW\",\n    \"diagonalCross\",\n    \"continuous\",\n    \"cubicBezier\",\n    \"discrete\",\n    \"dynamic\",\n    \"horizontal\",\n    \"straightCross\",\n    \"vertical\",\n    \"curvedCCW\",\n  ].map((type) =&gt; [\n    { type, scaleFactor: 1 },\n    { type, scaleFactor: -1 },\n  ])\n);\n\n// create an array with nodes\nvar nodes = new vis.DataSet();\n\n// create an array with edges\nvar edges = new vis.DataSet();\n\ntypes.forEach(({ type, scaleFactor }, i) =&gt; {\n  nodes.add([\n    {\n      id: 10 * i + 1,\n      label: type,\n      x: 0,\n      y: i * 60,\n    },\n    {\n      id: 10 * i + 2,\n      label: type,\n      x: 800,\n      y: i * 60,\n    },\n    {\n      id: 10 * i + 3,\n      label: type,\n      x: 1000,\n      y: i * 60,\n    },\n    {\n      id: 10 * i + 4,\n      label: type,\n      x: 1200 + (i % 5) * 250,\n      y: 200 + Math.floor(i / 5) * 5 * 50,\n    },\n  ]);\n  edges.add([\n    {\n      from: 10 * i + 1,\n      to: 10 * i + 2,\n      smooth: { type },\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor },\n      },\n    },\n    {\n      from: 10 * i + 3,\n      to: 10 * i + 3,\n      smooth: { type },\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor },\n      },\n    },\n    {\n      from: 10 * i + 4,\n      to: 10 * i + 4,\n      smooth: { type },\n      selfReferenceSize: 100,\n      arrows: {\n        from: { enabled: true, scaleFactor },\n        middle: { enabled: true, scaleFactor },\n        to: { enabled: true, scaleFactor },\n      },\n    },\n  ]);\n});\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\n\n// provide the data in the vis format\nvar data = {\n  nodes: nodes,\n  edges: edges,\n};\nvar options = {\n  physics: {\n    enabled: false,\n  },\n};\n\n// initialize your network!\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Edge Styles | Arrow Alignment"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

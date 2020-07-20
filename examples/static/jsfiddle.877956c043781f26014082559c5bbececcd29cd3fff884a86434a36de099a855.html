@@ -1,0 +1,290 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Data | DOT edge styles</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body,
+html {
+  font: 10pt sans;
+  line-height: 1.5em;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color: #4d4d4d;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#header {
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#contents {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#left,
+#right {
+  position: absolute;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+#left {
+  width: 40%;
+  height: 80%;
+  top: 0;
+  left: 0;
+}
+
+#right {
+  width: 60%;
+  height: 100%;
+  top: 0;
+  right: 0;
+}
+
+#error {
+  color: red;
+}
+
+#data {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d3d3d3;
+  box-sizing: border-box;
+  resize: none;
+}
+
+#draw,
+#reset {
+  padding: 5px 15px;
+}
+
+#mynetwork {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d3d3d3;
+  box-sizing: border-box;
+}
+
+a:hover {
+  color: red;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="header"&gt;
+  &lt;h1&gt;DOT edge styles&lt;/h1&gt;
+
+  &lt;div&gt;
+    &lt;p&gt;
+      Example of edge styles support.
+    &lt;/p&gt;
+
+    &lt;table border="1"&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Attributes&lt;/th&gt;
+          &lt;th&gt;Desriptions&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td align="center"&gt;label&lt;/td&gt;
+          &lt;td&gt;Text displayed on the edge&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td align="center"&gt;color&lt;/td&gt;
+          &lt;td&gt;Edge color&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td align="center"&gt;style&lt;/td&gt;
+          &lt;td&gt;
+            Edge style (&amp;quot;solid&amp;quot;, &amp;quot;dashed&amp;quot;,
+            &amp;quot;dotted&amp;quot;)
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td align="center"&gt;dir&lt;/td&gt;
+          &lt;td&gt;
+            Arrow direction (&amp;quot;forward&amp;quot;, &amp;quot;both&amp;quot;,
+            &amp;quot;back&amp;quot;, &amp;quot;none&amp;quot;), default is &amp;quot;forward&amp;quot;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td align="center"&gt;arrowhead, arrowtail&lt;/td&gt;
+          &lt;td&gt;
+            Arrow style (&amp;quot;dot&amp;quot;, &amp;quot;box&amp;quot;, &amp;quot;crow&amp;quot;,
+            &amp;quot;curve&amp;quot;, &amp;quot;icurve&amp;quot;, &amp;quot;normal&amp;quot;,
+            &amp;quot;inv&amp;quot;, &amp;quot;diamond&amp;quot;, &amp;quot;tee&amp;quot;,
+            &amp;quot;vee&amp;quot;)
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td align="center"&gt;width or penwidth&lt;/td&gt;
+          &lt;td&gt;Edge width&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id="contents"&gt;
+  &lt;div id="left"&gt;
+    &lt;textarea id="data"&gt; &lt;/textarea&gt;
+    &lt;div&gt;
+      &lt;button id="draw" title="Draw the DOT graph (Ctrl+Enter)"&gt;Draw&lt;/button&gt;
+      &lt;button id="reset" title="Reset the DOT graph"&gt;Reset&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;span id="error"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id="right"&gt;
+    &lt;div id="mynetwork"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var dotDefault =
+  "digraph {\n" +
+  " // Parent nodes\n" +
+  &apos; lines[label="LINES"]; \n&apos; +
+  &apos; ahs[label="ARROW HEADS"]; \n&apos; +
+  "\n" +
+  " // Children nodes\n" +
+  &apos; dot[label="both dot"]; \n&apos; +
+  &apos; vee[label="back vee"]; \n&apos; +
+  &apos; diamond[label="diamond and box"]; \n&apos; +
+  "\n" +
+  " // Line styles\n" +
+  &apos; lines -- solid[label="solid pink", color="pink"]; \n&apos; +
+  &apos; lines -- penwidth[label="penwidth=5", penwidth=5]; \n&apos; +
+  &apos; lines -- dashed[label="dashed green", style="dashed", color="green"]; \n&apos; +
+  &apos; lines -- dotted[label="dotted purple", style="dotted", color="purple"]; \n&apos; +
+  "\n" +
+  " // Arrowhead styles\n" +
+  &apos; ahs -&gt; box[label="box", arrowhead=box]; \n&apos; +
+  &apos; ahs -&gt; crow[label="crow", arrowhead=crow]; \n&apos; +
+  &apos; ahs -&gt; curve[label="curve", arrowhead=curve]; \n&apos; +
+  &apos; ahs -&gt; icurve[label="icurve", arrowhead=icurve]; \n&apos; +
+  &apos; ahs -&gt; normal[label="normal", arrowhead=normal]; \n&apos; +
+  &apos; ahs -&gt; inv[label="inv", arrowhead=inv]; \n&apos; +
+  &apos; ahs -&gt; diamond[label="diamond and box", dir=both, arrowhead=diamond, arrowtail=box]; \n&apos; +
+  &apos; ahs -&gt; dot[label="both dot", dir=both, arrowhead=dot, arrowtail=dot]; \n&apos; +
+  &apos; ahs -&gt; tee[label="tee", arrowhead=tee]; \n&apos; +
+  &apos; ahs -&gt; vee[label="back vee", dir=back, arrowtail=vee]; \n&apos; +
+  "}";
+
+// create a network
+var container = document.getElementById("mynetwork");
+var options = {
+  physics: {
+    stabilization: false,
+    barnesHut: {
+      springLength: 200,
+    },
+  },
+};
+var data = {};
+var network = new vis.Network(container, data, options);
+
+$("#draw").click(draw);
+$("#reset").click(reset);
+
+$(window).resize(resize);
+$(window).load(draw);
+
+$("#data").keydown(function (event) {
+  if (event.ctrlKey &amp;&amp; event.keyCode === 13) {
+    // Ctrl+Enter
+    draw();
+    event.stopPropagation();
+    event.preventDefault();
+  }
+});
+
+function resize() {
+  $("#contents").height($("body").height() - $("#header").height() - 30);
+}
+
+function draw() {
+  try {
+    resize();
+    $("#error").html("");
+
+    // Provide a string with data in DOT language
+    data = vis.parseDOTNetwork($("#data").val());
+
+    network.setData(data);
+  } catch (err) {
+    // set the cursor at the position where the error occurred
+    var match = /\(char (.*)\)/.exec(err);
+    if (match) {
+      var pos = Number(match[1]);
+      var textarea = $("#data")[0];
+      if (textarea.setSelectionRange) {
+        textarea.focus();
+        textarea.setSelectionRange(pos, pos);
+      }
+    }
+
+    // show an error message
+    $("#error").html(err.toString());
+  }
+}
+
+function reset() {
+  $("#data").val(dotDefault);
+  draw();
+}
+
+window.onload = function () {
+  reset();
+};
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js,https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Data | DOT edge styles"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

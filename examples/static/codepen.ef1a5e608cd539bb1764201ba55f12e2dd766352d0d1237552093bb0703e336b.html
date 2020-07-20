@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Events | Rendering Events</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 600px;\n  height: 400px;\n  border: 1px solid lightgray;\n}\n\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;\n  You can draw on the canvas using normal HTML5 canvas functions. The before\n  drawing will be behind the network, the after drawing will be in front of the\n  network.\n&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n&lt;pre id=\"eventSpan\"&gt;&lt;/pre&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  { id: 1, label: \"Node 1\" },\n  { id: 2, label: \"Node 2\" },\n  { id: 3, label: \"Node 3\" },\n  { id: 4, label: \"Node 4\" },\n  { id: 5, label: \"Node 5\" },\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 3 },\n  { from: 1, to: 2 },\n  { from: 2, to: 4 },\n  { from: 2, to: 5 },\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges,\n};\nvar options = {};\nvar network = new vis.Network(container, data, options);\n\nnetwork.on(\"initRedraw\", function () {\n  // do something like move some custom elements?\n});\nnetwork.on(\"beforeDrawing\", function (ctx) {\n  var nodeId = 1;\n  var nodePosition = network.getPositions([nodeId]);\n  ctx.strokeStyle = \"#A6D5F7\";\n  ctx.fillStyle = \"#294475\";\n\n  ctx.beginPath();\n  ctx.arc(\n    nodePosition[nodeId].x,\n    nodePosition[nodeId].y,\n    50,\n    0,\n    2 * Math.PI,\n    false\n  );\n  ctx.closePath();\n\n  ctx.fill();\n  ctx.stroke();\n});\nnetwork.on(\"afterDrawing\", function (ctx) {\n  var nodeId = 1;\n  var nodePosition = network.getPositions([nodeId]);\n  ctx.strokeStyle = \"#294475\";\n  ctx.lineWidth = 4;\n  ctx.fillStyle = \"#A6D5F7\";\n\n  ctx.beginPath();\n  ctx.arc(\n    nodePosition[nodeId].x,\n    nodePosition[nodeId].y,\n    20,\n    0,\n    2 * Math.PI,\n    false\n  );\n  ctx.closePath();\n\n  ctx.fill();\n  ctx.stroke();\n});\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Events | Rendering Events"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

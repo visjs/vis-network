@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | On Load Animation</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"#mynetwork {\n  width: 600px;\n  height: 400px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;h2&gt;Vis.js network onLoad animation&lt;/h2&gt;\n&lt;p&gt;easeIn functions accelerate from zero velocity.&lt;/p&gt;\n&lt;p&gt;easeOut functions decelerate to zero velocity.&lt;/p&gt;\n&lt;p&gt;\n  easeInOut functions accelerate from zero till halfway then after the halfway\n  point they decrease until zero.\n&lt;/p&gt;\n&lt;div&gt;\n  Onload Animation Easing Function -\n  &lt;select id=\"easingFunction\"&gt;\n    &lt;option value=\"linear\"&gt;linear&lt;/option&gt;\n    &lt;option value=\"easeInQuad\"&gt;easeInQuad&lt;/option&gt;\n    &lt;option value=\"easeOutQuad\"&gt;easeOutQuad&lt;/option&gt;\n    &lt;option value=\"easeInOutQuad\"&gt;easeInOutQuad&lt;/option&gt;\n    &lt;option value=\"easeInCubic\"&gt;easeInCubic&lt;/option&gt;\n    &lt;option value=\"easeOutCubic\"&gt;easeOutCubic&lt;/option&gt;\n    &lt;option value=\"easeInOutCubic\"&gt;easeInOutCubic&lt;/option&gt;\n    &lt;option value=\"easeInQuart\"&gt;easeInQuart&lt;/option&gt;\n    &lt;option value=\"easeOutQuart\"&gt;easeOutQuart&lt;/option&gt;\n    &lt;option value=\"easeInOutQuart\"&gt;easeInOutQuart&lt;/option&gt;\n    &lt;option value=\"easeInQuint\"&gt;easeInQuint&lt;/option&gt;\n    &lt;option value=\"easeOutQuint\"&gt;easeOutQuint&lt;/option&gt;\n    &lt;option value=\"easeInOutQuint\"&gt;easeInOutQuint&lt;/option&gt;\n  &lt;/select&gt;\n  &lt;button\n    onclick=\"createNetwork(document.getElementById(&apos;easingFunction&apos;).value);\"\n  &gt;\n    Demo Easing Function\n  &lt;/button&gt;\n&lt;/div&gt;\n&lt;p&gt;\n  For more information on easing functions check out\n  &lt;a href=\"http://easings.net/\"&gt;easings.net&lt;/a&gt;\n&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"document.getElementById(\"easingFunction\").selectedIndex = 0;\nfunction createNetwork(easingType) {\n  var nodes = new vis.DataSet([\n    { id: 1, label: \"Node 1\" },\n    { id: 2, label: \"Node 2\" },\n    { id: 3, label: \"Node 3\" },\n    { id: 4, label: \"Node 4\" },\n    { id: 5, label: \"Node 5\" },\n  ]);\n\n  var edges = new vis.DataSet([\n    { from: 1, to: 3 },\n    { from: 1, to: 2 },\n    { from: 2, to: 4 },\n    { from: 2, to: 5 },\n  ]);\n\n  var container = document.getElementById(\"mynetwork\");\n  var data = {\n    nodes: nodes,\n    edges: edges,\n  };\n  var options = {};\n  var network = new vis.Network(container, data, options);\n  network.once(\"beforeDrawing\", function () {\n    network.focus(2, {\n      scale: 12,\n    });\n  });\n  network.once(\"afterDrawing\", function () {\n    network.fit({\n      animation: {\n        duration: 3000,\n        easingFunction: easingType,\n      },\n    });\n  });\n}\ncreateNetwork(\"linear\");\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Other | On Load Animation"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

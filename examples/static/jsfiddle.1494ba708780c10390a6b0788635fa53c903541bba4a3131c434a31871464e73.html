@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Physics | Playing with Physics</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body {
+  font: 10pt sans;
+}
+#mynetwork {
+  float: left;
+  width: 600px;
+  height: 600px;
+  margin: 5px;
+  border: 1px solid lightgray;
+}
+#config {
+  float: left;
+  width: 400px;
+  height: 600px;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Playing with Physics&lt;/h2&gt;
+&lt;div style="width: 700px; font-size: 14px; text-align: justify;"&gt;
+  Every dataset is different. Nodes can have different sizes based on content,
+  interconnectivity can be high or low etc. Because of this, the network
+  configurator can be used to explore which settings may be good for him or her.
+  This is ment to be used during the development phase when you are implementing
+  vis.js. Once you have found settings you are happy with, you can supply them
+  to network using the documented physics options.
+&lt;/div&gt;
+&lt;br /&gt;
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+&lt;div id="config"&gt;&lt;/div&gt;
+
+&lt;p id="selection"&gt;&lt;/p&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var nodes = null;
+var edges = null;
+var network = null;
+
+function draw() {
+  nodes = [];
+  edges = [];
+  // randomly create some nodes and edges
+  var data = getScaleFreeNetwork(60);
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+
+  var options = {
+    physics: {
+      stabilization: false,
+      wind: { x: 0, y: 0 },
+    },
+    configure: {
+      filter: function (option, path) {
+        if (path.indexOf("physics") !== -1) {
+          return true;
+        }
+        if (path.indexOf("smooth") !== -1 || option === "smooth") {
+          return true;
+        }
+        return false;
+      },
+      container: document.getElementById("config"),
+    },
+  };
+  network = new vis.Network(container, data, options);
+}
+
+window.addEventListener("load", () =&gt; {
+  draw();
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Physics | Playing with Physics"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

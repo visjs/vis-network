@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Layouts | User Defined Hierarchical Layout (Big)
+    </title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"body {\n  font: 10pt sans;\n}\n\n#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;h2&gt;Hierarchical Layout&lt;/h2&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var network = null;\n\nfunction p(data) {\n  var container = document.getElementById(\"mynetwork\");\n  var options = {\n    layout: {\n      hierarchical: {},\n    },\n  };\n  console.log(\"starting layout\");\n  network = new vis.Network(container, data, options);\n  console.log(\"layout complete\");\n}\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js;https://visjs.github.io/vis-network/examples/network/layout/demo.jsonp","title":"Vis Network | Layouts | User Defined Hierarchical Layout (Big)"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

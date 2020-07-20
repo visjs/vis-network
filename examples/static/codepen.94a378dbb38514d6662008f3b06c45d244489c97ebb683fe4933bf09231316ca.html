@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Basic Usage | ESNext Build</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"html,\nbody,\n#mynetwork {\n  margin: 0px;\n  padding: 0px;\n}\n\n#mynetwork {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  bottom: 0px;\n  right: 50%;\n  min-height: 100vh;\n  border-right: 1px solid lightgray;\n  background: white;\n}\n\n#text {\n  position: absolute;\n  left: 50%;\n  padding: 1em;\n}\n\n#title {\n  margin-bottom: 5em;\n}\n","css_external":"","html":"&lt;div id=\"text\"&gt;\n  &lt;div id=\"title\"&gt;\n    &lt;h1&gt;Vis Network&lt;/h1&gt;\n    &lt;h2&gt;Basic Usage&lt;/h2&gt;\n    &lt;h3&gt;ESNext Build&lt;/h3&gt;\n  &lt;/div&gt;\n\n  &lt;p&gt;\n    Create a simple network with some nodes and edges.\n  &lt;/p&gt;\n\n  &lt;p&gt;\n    ESNext build is designed to be used in combination with bundlers and\n    transpillers. It doesn&amp;apos;t bundle any dependencies or polyfills, you have\n    to provide them yourself. This is handy if you already have polyfills and\n    potentionally also the same dependencies in your app, you can use them for\n    Vis projects too instead of having multiple copies of the same polyfills in\n    your bundle from different packages.\n  &lt;/p&gt;\n\n  &lt;p&gt;\n    Otherwise it can be used the same way as the peer build.\n  &lt;/p&gt;\n\n  &lt;h4&gt;When to use&lt;/h4&gt;\n  &lt;p&gt;\n    When you need to optimize bundle size or finer control over what gets\n    loaded.\n  &lt;/p&gt;\n\n  &lt;h4&gt;Content&lt;/h4&gt;\n  &lt;ul&gt;\n    &lt;li&gt;\n      Vis Network\n      &lt;ul&gt;\n        &lt;li&gt;Network&amp;quot;&lt;/li&gt;\n        &lt;li&gt;NetworkDOTParser&amp;quot;&lt;/li&gt;\n        &lt;li&gt;NetworkImages&amp;quot;&lt;/li&gt;\n        &lt;li&gt;NetworkOptions&amp;quot;&lt;/li&gt;\n        &lt;li&gt;networkGephiParser&amp;quot;&lt;/li&gt;\n        &lt;li&gt;parseDOTNetwork&amp;quot;&lt;/li&gt;\n        &lt;li&gt;parseGephiNetwork&amp;quot;&lt;/li&gt;\n      &lt;/ul&gt;\n    &lt;/li&gt;\n  &lt;/ul&gt;\n\n  &lt;h4&gt;How to use&lt;/h4&gt;\n\n  &lt;h5&gt;Browser UMD&lt;/h5&gt;\n  &lt;p&gt;\n    Even though UMD builds are a part of the package, this is very unlikely to\n    work. You generally need some polyfills and transpilation even in the most\n    modern browsers.\n  &lt;/p&gt;\n\n  &lt;h5&gt;Bundled ESM&lt;/h5&gt;\n  &lt;pre&gt;&lt;code&gt;\n// all peer dependencies have to be installed\n// even if you don&amp;apos;t import them yourself\nimport { DataSet } from &amp;quot;vis-data/esnext&amp;quot;;\nimport { Network } from &amp;quot;vis-network/esnext&amp;quot;;\nimport &amp;quot;vis-network/styles/vis-network.css&amp;quot;;\n\n// create an array with nodes\nconst nodes = new DataSet([\n  { id: 1, label: &amp;quot;Node 1&amp;quot; },\n  { id: 2, label: &amp;quot;Node 2&amp;quot; },\n  { id: 3, label: &amp;quot;Node 3&amp;quot; },\n  { id: 4, label: &amp;quot;Node 4&amp;quot; },\n  { id: 5, label: &amp;quot;Node 5&amp;quot; }\n]);\n\n// create an array with edges\nconst edges = new DataSet([\n  { from: 1, to: 3 },\n  { from: 1, to: 2 },\n  { from: 2, to: 4 },\n  { from: 2, to: 5 },\n  { from: 3, to: 3 }\n]);\n\n// create a network\nconst container = document.getElementById(&amp;quot;mynetwork&amp;quot;);\nconst data = {\n  nodes: nodes,\n  edges: edges\n};\nconst options = {};\nconst network = new Network(container, data, options);\n      &lt;/code&gt;&lt;/pre&gt;\n\n  The code above has to be injected into a page which contains an element with\n  &lt;code&gt;mynetwork&lt;/code&gt; id. Like for example:\n  &lt;pre&gt;&lt;code&gt;\n&amp;lt;div id=&amp;quot;mynetwork&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;\n      &lt;/code&gt;&lt;/pre&gt;\n&lt;/div&gt;\n\n&lt;div id=\"mynetwork\"&gt;N/A&lt;/div&gt;\n","js":"","js_external":"","title":"Vis Network | Basic Usage | ESNext Build"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

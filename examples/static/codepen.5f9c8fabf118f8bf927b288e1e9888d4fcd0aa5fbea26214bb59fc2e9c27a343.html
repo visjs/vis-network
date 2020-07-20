@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Data | DOT Language</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"","css_external":"","html":"&lt;p&gt;\n  Network supports the DOT language.\n&lt;/p&gt;\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var container = document.getElementById(\"mynetwork\");\nvar dot =\n  \"dinetwork {node[shape=circle]; 1 -&gt; 1 -&gt; 2; 2 -&gt; 3; 2 -- 4; 2 -&gt; 1 }\";\nvar data = vis.parseDOTNetwork(dot);\nvar network = new vis.Network(container, data);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Data | DOT Language"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

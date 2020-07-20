@@ -1,0 +1,178 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Cursor Change</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 600px;
+  height: 400px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;p&gt;
+  Here is a simple network with nodes and edges that demonstrates how to change
+  the cursor on hover for nodes and edges.
+&lt;/p&gt;
+&lt;p&gt;
+  Use the dropdowns and button below to change the cursor type bound to an
+  event.
+&lt;/p&gt;
+&lt;div&gt;
+  Event Type -
+  &lt;select id="eventType"&gt;
+    &lt;option value="hoverNode"&gt;hoverNode&lt;/option&gt;
+    &lt;option value="blurNode"&gt;blurNode&lt;/option&gt;
+    &lt;option value="hoverEdge"&gt;hoverEdge&lt;/option&gt;
+    &lt;option value="blurEdge"&gt;blurEdge&lt;/option&gt;
+    &lt;option value="dragStart"&gt;dragStart&lt;/option&gt;
+    &lt;option value="dragging"&gt;dragging&lt;/option&gt;
+    &lt;option value="dragEnd"&gt;dragEnd&lt;/option&gt;
+  &lt;/select&gt;
+  &amp;#xA0; Cursor Type -
+  &lt;select id="cursorType"&gt;
+    &lt;option value="auto"&gt;auto&lt;/option&gt;
+    &lt;option value="default"&gt;default&lt;/option&gt;
+    &lt;option value="context-menu"&gt;context-menu&lt;/option&gt;
+    &lt;option value="help"&gt;help&lt;/option&gt;
+    &lt;option value="pointer"&gt;pointer&lt;/option&gt;
+    &lt;option value="progress"&gt;progress&lt;/option&gt;
+    &lt;option value="wait"&gt;wait&lt;/option&gt;
+    &lt;option value="cell"&gt;cell&lt;/option&gt;
+    &lt;option value="crosshair"&gt;crosshair&lt;/option&gt;
+    &lt;option value="text"&gt;text&lt;/option&gt;
+    &lt;option value="vertical-text"&gt;vertical-text&lt;/option&gt;
+    &lt;option value="alias"&gt;alias&lt;/option&gt;
+    &lt;option value="copy"&gt;copy&lt;/option&gt;
+    &lt;option value="move"&gt;move&lt;/option&gt;
+    &lt;option value="no-drop"&gt;no-drop&lt;/option&gt;
+    &lt;option value="not-allowed"&gt;not-allowed&lt;/option&gt;
+    &lt;option value="all-scroll"&gt;all-scroll&lt;/option&gt;
+    &lt;option value="col-resize"&gt;col-resize&lt;/option&gt;
+    &lt;option value="row-resize"&gt;row-resize&lt;/option&gt;
+    &lt;option value="n-resize"&gt;n-resize&lt;/option&gt;
+    &lt;option value="e-resize"&gt;e-resize&lt;/option&gt;
+    &lt;option value="w-resize"&gt;w-resize&lt;/option&gt;
+    &lt;option value="s-resize"&gt;s-resize&lt;/option&gt;
+    &lt;option value="ne-resize"&gt;ne-resize&lt;/option&gt;
+    &lt;option value="nw-resize"&gt;nw-resize&lt;/option&gt;
+    &lt;option value="se-resize"&gt;se-resize&lt;/option&gt;
+    &lt;option value="sw-resize"&gt;sw-resize&lt;/option&gt;
+    &lt;option value="ew-resize"&gt;ew-resize&lt;/option&gt;
+    &lt;option value="ns-resize"&gt;ns-resize&lt;/option&gt;
+    &lt;option value="nesw-resize"&gt;nesw-resize&lt;/option&gt;
+    &lt;option value="nwse-resize"&gt;nwse-resize&lt;/option&gt;
+    &lt;option value="zoom-in"&gt;zoom-in&lt;/option&gt;
+    &lt;option value="zoom-out"&gt;zoom-out&lt;/option&gt;
+    &lt;option value="grab"&gt;grab&lt;/option&gt;
+    &lt;option value="grabbing"&gt;grabbing&lt;/option&gt;
+  &lt;/select&gt;
+  &amp;#xA0;
+
+  &lt;button
+    onclick="changeEventCursor(document.getElementById(&apos;eventType&apos;).value,document.getElementById(&apos;cursorType&apos;).value);"
+  &gt;
+    Change Cursor for Event
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// create an array with nodes
+var nodes = new vis.DataSet([
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" },
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+var options = { interaction: { hover: true } };
+var network = new vis.Network(container, data, options);
+
+//Get the canvas HTML element
+var networkCanvas = document
+  .getElementById("mynetwork")
+  .getElementsByTagName("canvas")[0];
+function changeCursor(newCursorStyle) {
+  networkCanvas.style.cursor = newCursorStyle;
+}
+function changeEventCursor(eventName, cursorType) {
+  network.on(eventName, function () {
+    changeCursor(cursorType);
+  });
+}
+network.on("hoverNode", function () {
+  changeCursor("grab");
+});
+network.on("blurNode", function () {
+  changeCursor("default");
+});
+network.on("hoverEdge", function () {
+  changeCursor("grab");
+});
+network.on("blurEdge", function () {
+  changeCursor("default");
+});
+network.on("dragStart", function () {
+  changeCursor("grabbing");
+});
+network.on("dragging", function () {
+  changeCursor("grabbing");
+});
+network.on("dragEnd", function () {
+  changeCursor("grab");
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Other | Cursor Change"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Node Styles | Images with alternative coordinate origin
+    </title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 600px;
+  height: 600px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;p&gt;
+  Display nodes as images, but with the image drawn from the top-left
+  coordinate.
+&lt;/p&gt;
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var nodes = null;
+var edges = null;
+var network = null;
+
+var DIR = "../img/refresh-cl/";
+var EDGE_LENGTH_MAIN = 150;
+var EDGE_LENGTH_SUB = 50;
+
+// Called when the Visualization API is loaded.
+function draw() {
+  // Create a data table with nodes.
+  nodes = [];
+
+  // Create a data table with links.
+  edges = [];
+
+  nodes.push({
+    id: 1,
+    label: "Main (top-left)",
+    image: DIR + "Network-Pipe-icon.png",
+    shape: "image",
+  });
+  nodes.push({
+    id: 2,
+    label: "Office (top-left)",
+    image: DIR + "Network-Pipe-icon.png",
+    shape: "image",
+  });
+  nodes.push({
+    id: 3,
+    label: "Wireless (top-left)",
+    image: DIR + "Network-Pipe-icon.png",
+    shape: "image",
+  });
+  edges.push({ from: 1, to: 2, length: EDGE_LENGTH_MAIN });
+  edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN });
+
+  for (var i = 4; i &lt;= 7; i++) {
+    nodes.push({
+      id: i,
+      label: "Computer (top-left)",
+      image: DIR + "Hardware-My-Computer-3-icon.png",
+      shape: "circularImage",
+    });
+    edges.push({ from: 2, to: i, length: EDGE_LENGTH_SUB });
+  }
+
+  nodes.push({
+    id: 101,
+    label: "Printer (top-left)",
+    image: DIR + "Hardware-Printer-Blue-icon.png",
+    shape: "circularImage",
+  });
+  edges.push({ from: 2, to: 101, length: EDGE_LENGTH_SUB });
+
+  nodes.push({
+    id: 102,
+    label: "Laptop (center)",
+    image: DIR + "Hardware-Laptop-1-icon.png",
+    shape: "circularImage",
+    shapeProperties: {
+      useImageSize: true,
+      useBorderWithImage: false,
+      interpolation: false,
+      coordinateOrigin: "center",
+    },
+  });
+  edges.push({ from: 3, to: 102, length: EDGE_LENGTH_SUB });
+
+  nodes.push({
+    id: 103,
+    label: "Network drive (top-left)",
+    image: DIR + "Network-Drive-icon.png",
+    shape: "circularImage",
+  });
+  edges.push({ from: 1, to: 103, length: EDGE_LENGTH_SUB });
+
+  nodes.push({
+    id: 104,
+    label: "Internet (top-left)",
+    image: DIR + "System-Firewall-2-icon.png",
+    shape: "circularImage",
+  });
+  edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB });
+
+  for (var i = 200; i &lt;= 201; i++) {
+    nodes.push({
+      id: i,
+      label: "Smartphone (center)",
+      image: DIR + "Hardware-My-PDA-02-icon.png",
+      shape: "circularImage",
+      shapeProperties: {
+        useImageSize: true,
+        useBorderWithImage: false,
+        interpolation: false,
+        coordinateOrigin: "center",
+      },
+    });
+    edges.push({ from: 3, to: i, length: EDGE_LENGTH_SUB });
+  }
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes,
+    edges: edges,
+  };
+  var options = {
+    nodes: {
+      size: 30,
+      shapeProperties: {
+        useImageSize: true,
+        useBorderWithImage: false,
+        interpolation: false,
+        coordinateOrigin: "top-left",
+      },
+    },
+  };
+  network = new vis.Network(container, data, options);
+}
+
+window.addEventListener("load", () =&gt; {
+  draw();
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Node Styles | Images with alternative coordinate origin"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

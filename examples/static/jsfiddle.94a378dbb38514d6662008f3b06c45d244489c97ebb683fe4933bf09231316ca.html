@@ -1,0 +1,166 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Basic Usage | ESNext Build</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Basic Usage&lt;/h2&gt;
+    &lt;h3&gt;ESNext Build&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    Create a simple network with some nodes and edges.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    ESNext build is designed to be used in combination with bundlers and
+    transpillers. It doesn&amp;apos;t bundle any dependencies or polyfills, you have
+    to provide them yourself. This is handy if you already have polyfills and
+    potentionally also the same dependencies in your app, you can use them for
+    Vis projects too instead of having multiple copies of the same polyfills in
+    your bundle from different packages.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Otherwise it can be used the same way as the peer build.
+  &lt;/p&gt;
+
+  &lt;h4&gt;When to use&lt;/h4&gt;
+  &lt;p&gt;
+    When you need to optimize bundle size or finer control over what gets
+    loaded.
+  &lt;/p&gt;
+
+  &lt;h4&gt;Content&lt;/h4&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      Vis Network
+      &lt;ul&gt;
+        &lt;li&gt;Network&amp;quot;&lt;/li&gt;
+        &lt;li&gt;NetworkDOTParser&amp;quot;&lt;/li&gt;
+        &lt;li&gt;NetworkImages&amp;quot;&lt;/li&gt;
+        &lt;li&gt;NetworkOptions&amp;quot;&lt;/li&gt;
+        &lt;li&gt;networkGephiParser&amp;quot;&lt;/li&gt;
+        &lt;li&gt;parseDOTNetwork&amp;quot;&lt;/li&gt;
+        &lt;li&gt;parseGephiNetwork&amp;quot;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;h4&gt;How to use&lt;/h4&gt;
+
+  &lt;h5&gt;Browser UMD&lt;/h5&gt;
+  &lt;p&gt;
+    Even though UMD builds are a part of the package, this is very unlikely to
+    work. You generally need some polyfills and transpilation even in the most
+    modern browsers.
+  &lt;/p&gt;
+
+  &lt;h5&gt;Bundled ESM&lt;/h5&gt;
+  &lt;pre&gt;&lt;code&gt;
+// all peer dependencies have to be installed
+// even if you don&amp;apos;t import them yourself
+import { DataSet } from &amp;quot;vis-data/esnext&amp;quot;;
+import { Network } from &amp;quot;vis-network/esnext&amp;quot;;
+import &amp;quot;vis-network/styles/vis-network.css&amp;quot;;
+
+// create an array with nodes
+const nodes = new DataSet([
+  { id: 1, label: &amp;quot;Node 1&amp;quot; },
+  { id: 2, label: &amp;quot;Node 2&amp;quot; },
+  { id: 3, label: &amp;quot;Node 3&amp;quot; },
+  { id: 4, label: &amp;quot;Node 4&amp;quot; },
+  { id: 5, label: &amp;quot;Node 5&amp;quot; }
+]);
+
+// create an array with edges
+const edges = new DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+const container = document.getElementById(&amp;quot;mynetwork&amp;quot;);
+const data = {
+  nodes: nodes,
+  edges: edges
+};
+const options = {};
+const network = new Network(container, data, options);
+      &lt;/code&gt;&lt;/pre&gt;
+
+  The code above has to be injected into a page which contains an element with
+  &lt;code&gt;mynetwork&lt;/code&gt; id. Like for example:
+  &lt;pre&gt;&lt;code&gt;
+&amp;lt;div id=&amp;quot;mynetwork&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+      &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;N/A&lt;/div&gt;
+'
+      />
+      <input type="hidden" name="js" value />
+      <input type="hidden" name="resources" value />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Basic Usage | ESNext Build"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

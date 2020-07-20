@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Edge Styles | Static smooth curves</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="#mynetwork {
+  width: 500px;
+  height: 500px;
+  border: 1px solid lightgray;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Smooth curves&lt;/h2&gt;
+&lt;div style="width: 700px; font-size: 14px; text-align: justify;"&gt;
+  All the smooth curves in the examples so far have been using dynamic smooth
+  curves. This means that each curve has a support node which takes part in the
+  physics simulation. For large networks or dense clusters, this may not be the
+  ideal solution. To solve this, static smooth curves have been added. The
+  static smooth curves are based only on the positions of the connected nodes.
+  There are multiple ways to determine the way this curve is drawn. This example
+  shows the effect of the different types. &lt;br /&gt;
+  &lt;br /&gt;
+  Drag the node around to see how the smooth curves are drawn for each setting.
+  For animated system, we recommend only the continuous mode. In the next
+  example you can see the effect of these methods on a large network. Keep in
+  mind that the direction (the from and to) of the curve matters.
+  &lt;br /&gt;
+  &lt;br /&gt;
+  When you select the dynamic type, you can see the interaction with the fixed
+  node and the edge, any other type will not interact with other nodes.
+  &lt;br /&gt;
+  &lt;br /&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// create an array with nodes
+var nodes = [
+  { id: 1, label: "Fixed node", x: 0, y: 0, fixed: true },
+  { id: 2, label: "Drag me", x: 150, y: 130, physics: false },
+  { id: 3, label: "Obstacle", x: 80, y: -80, fixed: true, mass: 10 },
+];
+
+// create an array with edges
+var edges = [{ from: 1, to: 2, arrows: "to" }];
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+var options = {
+  physics: true,
+  configure: function (option, path) {
+    if (path.indexOf("smooth") !== -1 || option === "smooth") {
+      return true;
+    }
+    return false;
+  },
+  edges: {
+    smooth: {
+      type: "continuous",
+    },
+  },
+};
+var network = new vis.Network(container, data, options);
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Edge Styles | Static smooth curves"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

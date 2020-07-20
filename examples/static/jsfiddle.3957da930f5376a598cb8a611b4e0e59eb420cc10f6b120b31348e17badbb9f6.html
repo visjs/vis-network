@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Navigation</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="body {
+  font: 10pt sans;
+}
+#mynetwork {
+  width: 600px;
+  height: 600px;
+  border: 1px solid lightgray;
+}
+table.legend_table {
+  border-collapse: collapse;
+}
+table.legend_table td,
+table.legend_table th {
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+}
+
+table.legend_table td {
+  text-align: center;
+  width: 110px;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;h2&gt;Navigation controls and keyboard navigation&lt;/h2&gt;
+&lt;div style="width: 800px; font-size: 14px; text-align: justify;"&gt;
+  This example is the same as example 2, except for the navigation controls that
+  have been activated. The navigation controls are described below. &lt;br /&gt;&lt;br /&gt;
+  &lt;table class="legend_table"&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Icons:&lt;/th&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/upArrow.png" /&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/downArrow.png" /&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/leftArrow.png" /&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/rightArrow.png" /&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/plus.png" /&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/minus.png" /&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src="../../../dist/img/network/zoomExtends.png" /&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Keyboard shortcuts:&lt;/th&gt;
+        &lt;td&gt;&lt;div&gt;Up arrow&lt;/div&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;div&gt;Down arrow&lt;/div&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;div&gt;Left arrow&lt;/div&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;div&gt;Right arrow&lt;/div&gt;&lt;/td&gt;
+        &lt;td&gt;
+          &lt;div&gt;=&lt;br /&gt;[&lt;br /&gt;Page up&lt;/div&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+          &lt;div&gt;-&lt;br /&gt;]&lt;br /&gt;Page down&lt;/div&gt;
+        &lt;/td&gt;
+        &lt;td&gt;&lt;div&gt;None&lt;/div&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Description:&lt;/th&gt;
+        &lt;td&gt;Move up&lt;/td&gt;
+        &lt;td&gt;Move down&lt;/td&gt;
+        &lt;td&gt;Move left&lt;/td&gt;
+        &lt;td&gt;Move right&lt;/td&gt;
+        &lt;td&gt;Zoom in&lt;/td&gt;
+        &lt;td&gt;Zoom out&lt;/td&gt;
+        &lt;td&gt;Zoom extent&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;br /&gt;
+  Apart from clicking the icons, you can also navigate using the keyboard. The
+  buttons are in table above. Zoom Extends changes the zoom and position of the
+  camera to encompass all visible nodes.
+  &lt;u&gt;
+    Styles have to be loaded to correctly display the icons. Standalone build
+    includes necessary styles and automatically injects them into the page but
+    for peer and legacy builds it&amp;apos;s necessry to manually load
+    &lt;b&gt;vis-network.css&lt;/b&gt;.
+  &lt;/u&gt;
+  The user is free to alter or overload the CSS classes but without them the
+  navigation icons are not visible.
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+
+&lt;p id="selection"&gt;&lt;/p&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='var nodes = null;
+var edges = null;
+var network = null;
+
+function destroy() {
+  if (network !== null) {
+    network.destroy();
+    network = null;
+  }
+}
+
+function draw() {
+  destroy();
+
+  // create an array with nodes
+  var nodes = [
+    { id: 1, label: "Node 1" },
+    { id: 2, label: "Node 2" },
+    { id: 3, label: "Node 3" },
+    { id: 4, label: "Node 4" },
+    { id: 5, label: "Node 5" },
+  ];
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+    { from: 1, to: 3 },
+    { from: 1, to: 2 },
+    { from: 2, to: 4 },
+    { from: 2, to: 5 },
+  ]);
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes,
+    edges: edges,
+  };
+  var options = {
+    interaction: {
+      navigationButtons: true,
+      keyboard: true,
+    },
+  };
+  network = new vis.Network(container, data, options);
+
+  // add event listeners
+  network.on("select", function (params) {
+    document.getElementById("selection").innerHTML =
+      "Selection: " + params.nodes;
+  });
+}
+
+window.addEventListener("load", () =&gt; {
+  draw();
+});
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Other | Navigation"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open JSFiddle
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

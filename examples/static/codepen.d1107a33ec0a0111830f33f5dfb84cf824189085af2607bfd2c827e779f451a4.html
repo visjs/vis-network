@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Node Styles | Custom Groups</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"body {\n  color: #d3d3d3;\n  font: 12pt arial;\n  background-color: #222222;\n}\n\n#mynetwork {\n  width: 800px;\n  height: 800px;\n  border: 1px solid #444444;\n  background-color: #222222;\n}\n","css_external":"http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css","html":"&lt;i class=\"fa fa-flag\"&gt;&lt;/i&gt; We use an icon once in the DOM so the CSS for\nfontAwesome is loaded.\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"var nodes = [\n  { id: 0, label: \"0\", group: \"source\" },\n  { id: 1, label: \"1\", group: \"icons\" },\n  { id: 2, label: \"2\", group: \"icons\" },\n  { id: 3, label: \"3\", group: \"icons\" },\n  { id: 4, label: \"4\", group: \"icons\" },\n  { id: 5, label: \"5\", group: \"icons\" },\n  { id: 6, label: \"6\", group: \"icons\" },\n  { id: 7, label: \"7\", group: \"icons\" },\n  { id: 8, label: \"8\", group: \"icons\" },\n  { id: 9, label: \"9\", group: \"icons\" },\n  { id: 10, label: \"10\", group: \"mints\" },\n  { id: 11, label: \"11\", group: \"mints\" },\n  { id: 12, label: \"12\", group: \"mints\" },\n  { id: 13, label: \"13\", group: \"mints\" },\n  { id: 14, label: \"14\", group: \"mints\" },\n  { id: 15, group: \"dotsWithLabel\" },\n  { id: 16, group: \"dotsWithLabel\" },\n  { id: 17, group: \"dotsWithLabel\" },\n  { id: 18, group: \"dotsWithLabel\" },\n  { id: 19, group: \"dotsWithLabel\" },\n  { id: 20, label: \"diamonds\", group: \"diamonds\" },\n  { id: 21, label: \"diamonds\", group: \"diamonds\" },\n  { id: 22, label: \"diamonds\", group: \"diamonds\" },\n  { id: 23, label: \"diamonds\", group: \"diamonds\" },\n];\nvar edges = [\n  { from: 1, to: 0 },\n  { from: 2, to: 0 },\n  { from: 4, to: 3 },\n  { from: 5, to: 4 },\n  { from: 4, to: 0 },\n  { from: 7, to: 6 },\n  { from: 8, to: 7 },\n  { from: 7, to: 0 },\n  { from: 10, to: 9 },\n  { from: 11, to: 10 },\n  { from: 10, to: 4 },\n  { from: 13, to: 12 },\n  { from: 14, to: 13 },\n  { from: 13, to: 0 },\n  { from: 16, to: 15 },\n  { from: 17, to: 15 },\n  { from: 15, to: 10 },\n  { from: 19, to: 18 },\n  { from: 20, to: 19 },\n  { from: 19, to: 4 },\n  { from: 22, to: 21 },\n  { from: 23, to: 22 },\n  { from: 23, to: 0 },\n];\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges,\n};\nvar options = {\n  nodes: {\n    shape: \"dot\",\n    size: 20,\n    font: {\n      size: 15,\n      color: \"#ffffff\",\n    },\n    borderWidth: 2,\n  },\n  edges: {\n    width: 2,\n  },\n  groups: {\n    diamonds: {\n      color: { background: \"red\", border: \"white\" },\n      shape: \"diamond\",\n    },\n    dotsWithLabel: {\n      label: \"I&apos;m a dot!\",\n      shape: \"dot\",\n      color: \"cyan\",\n    },\n    mints: { color: \"rgb(0,255,140)\" },\n    icons: {\n      shape: \"icon\",\n      icon: {\n        face: \"FontAwesome\",\n        code: \"\\uf0c0\",\n        size: 50,\n        color: \"orange\",\n      },\n    },\n    source: {\n      color: { border: \"white\" },\n    },\n  },\n};\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Custom Groups"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">
+        Open CodePen
+      </button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>
