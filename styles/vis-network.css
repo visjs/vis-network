@@ -1,18 +1,3 @@
-.vis-overlay {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-
-  /* Must be displayed above for example selected Timeline items */
-  z-index: 10;
-}
-
-.vis-active {
-  box-shadow: 0 0 10px #86d5f8;
-}
-
 div.vis-configuration {
     position:relative;
     display:block;
@@ -301,6 +286,21 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
     border-width: 12px;
     margin-top: -12px;
 }
+.vis-overlay {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  /* Must be displayed above for example selected Timeline items */
+  z-index: 10;
+}
+
+.vis-active {
+  box-shadow: 0 0 10px #86d5f8;
+}
+
 div.vis-network div.vis-manipulation {
   box-sizing: content-box;
 
