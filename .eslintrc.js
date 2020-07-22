@@ -152,9 +152,20 @@ module.exports = {
         ],
 
         // Class related.
-        "@typescript-eslint/member-naming": [
+        "@typescript-eslint/naming-convention": [
           "error",
-          { private: "^_", protected: "^_", public: "^[^_]" }
+          {
+            selector: "memberLike",
+            modifiers: ["private", "protected"],
+            format: null,
+            leadingUnderscore: "require"
+          },
+          {
+            selector: "memberLike",
+            modifiers: ["public"],
+            format: null,
+            leadingUnderscore: "forbid"
+          }
         ],
         "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-useless-constructor": "error",
