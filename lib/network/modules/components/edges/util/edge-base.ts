@@ -724,7 +724,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     let reversed: boolean;
     let scaleFactor: number;
     let type: ArrowType;
-    let lineWidth: number = values.width;
+    const lineWidth: number = values.width;
 
     if (position === "from") {
       node1 = this.from;

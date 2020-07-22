@@ -1,4 +1,7 @@
-var options = {
+// These variables will be injected into a page that will use them.
+/* eslint no-unused-vars: "off" */
+
+const options = {
   manipulation: false,
   height: '90%',
   layout: {
@@ -14,7 +17,7 @@ var options = {
   }
 };
 
-var nodes = [
+const nodes = [
  {'id': 'cfg_0x00405a2e', 'size': 150, 'label': "0x00405a2e:\nmov    DWORD PTR ss:[esp + 0x000000b0], 0x00000002\nmov    DWORD PTR ss:[ebp + 0x00], esi\ntest   bl, 0x02\nje     0x00405a49<<Insn>>\n", 'color': "#FFCFCF", 'shape': 'box', 'font': {'face': 'monospace', 'align': 'left'}},
  {'id': 'cfg_0x00405a49', 'size': 150, 'label': "0x00405a49:\ntest   bl, 0x01\nje     0x00405a62<<Insn>>\n", 'color': "#FFCFCF", 'shape': 'box', 'font': {'face': 'monospace', 'align': 'left'}},
  {'id': 'cfg_0x00405a55', 'size': 150, 'label': "0x00405a55:\nmov    ecx, DWORD PTR ss:[esp + 0x1c]\npush   ecx\ncall   0x004095c6<<Func>>\n", 'color': "#FFCFCF", 'shape': 'box', 'font': {'face': 'monospace', 'align': 'left'}},
@@ -35,7 +38,7 @@ var nodes = [
 //
 // The edges with these id's will not load into the Network instance.
 //
-var edges = [
+const edges = [
 {'from': "cfg_0x00405a2e", 'to': "cfg_0x00405a39", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
 {'from': "cfg_0x00405a2e", 'to': "cfg_0x00405a49", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},
 {'from': "cfg_0x00405a49", 'to': "cfg_0x00405a4e", 'arrows': 'to', 'physics': false, 'smooth': {'type': 'cubicBezier'}},

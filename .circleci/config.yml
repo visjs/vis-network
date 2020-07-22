@@ -130,23 +130,14 @@ jobs:
           paths:
             - "repo/examples"
 
-  lint_js:
+  lint:
     executor: node
 
     steps:
       - attach_workspace:
           at: ..
 
-      - run: npm run lint:js
-
-  lint_ts:
-    executor: node
-
-    steps:
-      - attach_workspace:
-          at: ..
-
-      - run: npm run lint:ts
+      - run: npm run lint
 
   test_unit:
     executor: node
@@ -234,11 +225,7 @@ workflows:
             - prepare
             - build
 
-      # - lint_js:
-      #     requires:
-      #       - prepare
-
-      - lint_ts:
+      - lint:
           requires:
             - prepare
 
@@ -259,10 +246,9 @@ workflows:
 
       - gh_pages:
           requires:
-            # - lint_js
             - build
             - examples
-            - lint_ts
+            - lint
             - prepare
             - test_e2e_functional
             - test_e2e_visual
@@ -274,11 +260,10 @@ workflows:
 
       - release:
           requires:
-            # - lint_js
             - build
             - examples
             - gh_pages
-            - lint_ts
+            - lint
             - prepare
             - test_e2e_functional
             - test_e2e_visual

@@ -1,3 +1,8 @@
+// These variables will be injected into a function that will use them.
+/* eslint no-unused-vars: "off" */
+// Const won't work here, only var.
+/* eslint no-var: "off" */
+
 // Network from `basicUsage` example
 
   // create an array with nodes

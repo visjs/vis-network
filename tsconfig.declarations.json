@@ -7,5 +7,5 @@
         "emitDeclarationOnly": true,
         "noImplicitAny": false
     },
-    "exclude": ["cypress", "test"]
+    "include": ["lib"]
 }
