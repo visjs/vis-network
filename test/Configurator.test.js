@@ -1,19 +1,18 @@
 var assert = require('assert');
-var jsdom_global = require('jsdom-global');
 
 var canvasMockify = require('./canvas-mock');
 var Configurator = require('../lib/shared/Configurator').default;
 var Network = require('../lib/network/Network');
-var { allOptions, configureOptions } = require('../lib/network/options.js');
+var { configureOptions } = require('../lib/network/options.js');
 
 describe('Configurator', function () {
   beforeEach(function() {
-    this.jsdom_global = canvasMockify("<div id='mynetwork'></div><div id='other'></div>");
+    this.jsdomGlobalCleanup = canvasMockify("<div id='mynetwork'></div><div id='other'></div>");
     this.container = document.getElementById('mynetwork');
   });
 
   afterEach(function() {
-    this.jsdom_global();
+    this.jsdomGlobalCleanup();
     this.container.remove();
     this.container = undefined;
   });
@@ -131,7 +130,7 @@ describe('Configurator', function () {
 
     xit('creates no new dom elements if enabled is false', function () {
       var config = new Configurator(Network, this.container, configureOptions);
-      var options = config.getOptions();
+      config.getOptions();
     });
   });
 });

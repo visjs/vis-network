@@ -1,3 +1,13 @@
+// These globals will be injected into a page that will use them.
+/* eslint no-unused-vars: "off" */
+
+// This is quite old and I don't want to waste too much time here. We probably
+// should stop using this altogether as the examples should be easy and
+// straightforward to understand and this only obscures it.
+/* eslint require-jsdoc: "off" */
+
+/* global Alea:false */
+
 /**
  * Created by Alex on 5/20/2015.
  *
@@ -38,8 +48,8 @@ function getScaleFreeNetwork(nodeCount) {
 
     // create edges in a scale-free-network way
     if (i == 1) {
-      var from = i;
-      var to = 0;
+      const from = i;
+      const to = 0;
       edges.push({
         from: from,
         to: to
@@ -58,8 +68,8 @@ function getScaleFreeNetwork(nodeCount) {
       }
 
 
-      var from = i;
-      var to = j;
+      const from = i;
+      const to = j;
       edges.push({
         from: from,
         to: to
@@ -74,10 +84,7 @@ function getScaleFreeNetwork(nodeCount) {
 
 var seededRandom = Alea('SEED')
 
-function getScaleFreeNetworkSeeded(nodeCount, seed) {
-  if (seed) {
-    randomSeed = Number(seed);
-  }
+function getScaleFreeNetworkSeeded(nodeCount) {
   var nodes = [];
   var edges = [];
   var connectionCount = [];
@@ -95,8 +102,8 @@ function getScaleFreeNetworkSeeded(nodeCount, seed) {
 
     // create edges in a scale-free-network way
     if (i == 1) {
-      var from = i;
-      var to = 0;
+      const from = i;
+      const to = 0;
       edges.push({
         id: edgesId++,
         from: from,
@@ -116,8 +123,8 @@ function getScaleFreeNetworkSeeded(nodeCount, seed) {
       }
 
 
-      var from = i;
-      var to = j;
+      const from = i;
+      const to = j;
       edges.push({
         id: edgesId++,
         from: from,

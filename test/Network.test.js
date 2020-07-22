@@ -1,3 +1,7 @@
+/* eslint-disable require-jsdoc */
+/* eslint-disable valid-jsdoc */
+/* eslint-disable guard-for-in */
+
 /**
  *
  * Useful during debugging
@@ -33,7 +37,7 @@ function merge (a, b) {
 
   if (b) {
     for (var name in b) {
-      if (b.hasOwnProperty(name)) {
+      if (Object.prototype.hasOwnProperty.call(b, name)) {
         if (typeof b[name] === 'object') {
           a[name] = merge(a[name], b[name]);
         } else {
@@ -145,6 +149,7 @@ function createCluster(network) {
 /**
  * Display node/edge state, useful during debugging
  */
+// eslint-disable-next-line no-unused-vars
 function log(network) {
   console.log(Object.keys(network.body.nodes));
   console.log(network.body.nodeIndices);
@@ -216,9 +221,9 @@ function checkFontProperties(fontItem, checkStrict = true) {
   ];
 
   // All properties in fontItem should be known
-  for (var prop in fontItem) {
+  for (const prop in fontItem) {
     if (prop === '__type__') continue;  // Skip special field in options definition
-    if (!fontItem.hasOwnProperty(prop)) continue;
+    if (!Object.prototype.hasOwnProperty.call(fontItem, prop)) continue;
     assert(knownProperties.indexOf(prop) !== -1, "Unknown font option '" + prop + "'");
   }
 
@@ -227,7 +232,7 @@ function checkFontProperties(fontItem, checkStrict = true) {
   // All known properties should be present
   var keys = Object.keys(fontItem);
   for (var n in knownProperties) {
-    var prop = knownProperties[n];
+    const prop = knownProperties[n];
     assert(keys.indexOf(prop) !== -1, "Missing known font option '" + prop + "'");
   }
 }
@@ -254,7 +259,8 @@ describe('Network', function () {
    * Simplify network creation for local tests
    */
   function createNetwork(options) {
-    var [network, data, numNodes, numEdges] = createSampleNetwork(options);
+    // eslint-disable-next-line no-unused-vars
+    var [network] = createSampleNetwork(options);
 
     return network;
   }
@@ -324,13 +330,13 @@ describe('Network', function () {
    * The real deterrent is eslint rule 'guard-for-in`.
    */
   it('can deal with added fields in Array.prototype', function (done) {
-    var canvas = window.document.createElement('canvas');
+    window.document.createElement('canvas');
     Array.prototype.foo = 1;  // Just add anything to the prototype
     Object.prototype.bar = 2; // Let's screw up hashes as well
 
     // The network should just run without throwing errors
     try {
-      var [network, data, numNodes, numEdges] = createSampleNetwork({});
+      var [network, data] = createSampleNetwork({});
 
       // Do some stuff to trigger more errors
       clusterTo(network, 'c1', [1,2,3]);
@@ -359,13 +365,13 @@ describe('Network', function () {
    * TODO: extend test for all API calls with options, see #3548
    */
   it('does not change the options object passed to fit()', function() {
-    var [network, data, numNodes, numEdges] = createSampleNetwork({});
+    var [network] = createSampleNetwork({});
     var options = {};
     network.fit(options);
 
     // options should still be empty
     for (var prop in options) {
-      assert(!options.hasOwnProperty(prop), 'No properties should be present in options, detected property: ' + prop);
+      assert(!Object.prototype.hasOwnProperty.call(options, prop), 'No properties should be present in options, detected property: ' + prop);
     }
   });
 
@@ -405,7 +411,7 @@ describe('Network', function () {
     var container = document.getElementById('mynetwork');
 
     for (var n = 0; n < awkwardData.length; ++n) {
-      var network = new Network(container, awkwardData[n], {});  // Should not throw
+      new Network(container, awkwardData[n], {});  // Should not throw
     }
   });
 
@@ -445,13 +451,13 @@ describe('Node', function () {
 
     options = {nodes: {chosen: {
       node:true,
-      label: function(value, id, selected, hovering) {}
+      label: function() {}
     }}};
     network = createNetwork(options);
     checkChooserValues(firstNode(network), true, 'function');
 
     options = {nodes: {chosen: {
-      node: function(value, id, selected, hovering) {},
+      node: function() {},
       label:false,
     }}};
     network = createNetwork(options);
@@ -495,13 +501,13 @@ describe('Edge', function () {
 
     options = {edges: {chosen: {
       edge:true,
-      label: function(value, id, selected, hovering) {}
+      label: function() {}
     }}};
     network = createNetwork(options);
     checkChooserValues(firstEdge(network), true, 'function');
 
     options = {edges: {chosen: {
-      edge: function(value, id, selected, hovering) {},
+      edge: function() {},
       label:false,
     }}};
     network = createNetwork(options);
@@ -1000,11 +1006,8 @@ describe('Clustering', function () {
     };
 
 
-    // Should cluster 3,4,5:
-    var joinAll_   = function(n) { return true ; }
-
     // Should cluster none:
-    var joinNone_  = function(n) { return false ; }
+    var joinNone_  = function() { return false ; }
 
     // Should cluster 4 & 5:
     var joinLevel_ = function(n) { return n.level > 3 ; }
@@ -1229,12 +1232,12 @@ describe('Clustering', function () {
     numEdges -= 1;
     assertNumNodes(network, numNodes, numNodes - 5);
     assertNumEdges(network, numEdges, numEdges - 5);
-    assertEdgeLabels(network, data.edges, "c2 clustered cluster opened")
+    assertEdgeLabels(network, data.edges, "c2 clustered cluster opened");
 
     //
     // Same, with one external connection to cluster
     //
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    ([network, data, numNodes, numEdges] = createSampleNetwork());
 		data.edges.update({from: 1, to: 11, label: "1 to 11"});
 		data.edges.update({from: 2, to: 12, label: "2 to 12"});
     numEdges += 2;
@@ -1313,7 +1316,7 @@ describe('on node.js', function () {
     assert(this.container !== null, 'Container div not found');
 
     // The following should now just plain succeed
-    var [network, data] = createSampleNetwork();
+    var [network] = createSampleNetwork();
 
     assert.equal(Object.keys(network.body.nodes).length, 8);
     assert.equal(Object.keys(network.body.edges).length, 6);
@@ -1328,13 +1331,16 @@ describe('runs example ', function () {
 
     // create a network
     var data = {
+      /* eslint-disable no-undef */
       nodes: new DataSet(nodes),
+      /* eslint-disable no-undef */
       edges: new DataSet(edges)
     };
 
     if (noPhysics) {
       // Avoid excessive processor time due to load.
       // We're just interested that the load itself is good
+      /* eslint-disable no-undef */
       options.physics = false;
     }
 

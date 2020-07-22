@@ -1,3 +1,6 @@
+/* eslint require-jsdoc: "off" */
+/* eslint valid-jsdoc: "off" */
+
 /**
  * TODO - add tests for:
  * ====
@@ -106,7 +109,7 @@ describe('Network Label', function() {
   function checkProcessedLabels(label, text, expected) {   
     var ctx = new DummyContext();
 
-    for (var i in text) {
+    for (const i of Object.keys(text)) {
       var ret = label._processLabelText(ctx, false, false, text[i]);
       //console.log(JSON.stringify(ret, null, 2));
       checkBlocks(ret, expected[i]);
@@ -511,7 +514,7 @@ describe('Node Labels', function() {
    * - using multi-font option 'color' for test, the rest should work analogously
    */
   it('respects the font option precedence', function (done) {
-    var [network, data, options] = createNodeNetwork();
+    var [network] = createNodeNetwork();
     var h = new HelperNode(network);
 
     assert.equal(h.modBold(0).color, '#343434');  // Default value
@@ -525,7 +528,7 @@ describe('Node Labels', function() {
 
 
   it('handles dynamic data and option updates', function (done) {
-    var [network, data, options] = createNodeNetwork();
+    var [network, data] = createNodeNetwork();
     var h = new HelperNode(network);
 
     //
@@ -604,7 +607,7 @@ describe('Node Labels', function() {
         }
       },
     };
-    var [network, data, options] = createNodeNetwork(newOptions);
+    var [network] = createNodeNetwork(newOptions);
     var h = new HelperNode(network);
 
     assert.equal(h.modBold(0).color, 'purple');   // Nodes value
@@ -633,7 +636,7 @@ describe('Node Labels', function() {
       }
     };
 
-    var [network, data, options] = createNodeNetwork(newOptions);
+    var [network, , options] = createNodeNetwork(newOptions);
     var h = new HelperNode(network);
     assert(options.nodes.font.multi);
 
@@ -720,7 +723,7 @@ describe('Edge Labels', function() {
    * - edges have no groups
    */
   it('respects the font option precedence', function (done) {
-    var [network, data, options] = createEdgeNetwork();
+    var [network] = createEdgeNetwork();
     var h = new HelperEdge(network);
 
     assert.equal(h.modBold(1).color, '#343434');  // Default value
@@ -732,7 +735,7 @@ describe('Edge Labels', function() {
 
 
   it('handles dynamic data and option updates', function (done) {
-    var [network, data, options] = createEdgeNetwork();
+    var [network, data] = createEdgeNetwork();
     var h = new HelperEdge(network);
 
     data.edges.update([
@@ -771,7 +774,7 @@ describe('Edge Labels', function() {
         }
       },
     };
-    var [network, data, options] = createEdgeNetwork(newOptions);
+    var [network] = createEdgeNetwork(newOptions);
     var h = new HelperEdge(network);
 
     assert.equal(h.modBold(1).color, 'purple');   // Nodes value
@@ -851,7 +854,7 @@ describe('Shorthand Font Options', function() {
 
 
   it('handles shorthand options correctly', function (done) {
-    var [network, data] = createNetwork();
+    var [network] = createNetwork();
     var h = new HelperNode(network);
 
     // NOTE: 'mono' has its own global default font and size, which will
@@ -920,7 +923,7 @@ describe('Shorthand Font Options', function() {
   }
 
 
-  function dynamicAdd2(network, data) {
+  function dynamicAdd2(network) {
     network.setOptions({
       nodes: {
         font: '7 Font7 #070707'  // Note: this kills the font.multi, bold and ital settings!
@@ -1231,7 +1234,7 @@ describe('Shorthand Font Options', function() {
     // multifont disabled width maxwidth: spaces are preserved
     //
     options.font.maxWdt = 300;
-    var label = new Label({}, options);
+    label = new Label({}, options);
 
     var expected_maxwidth = [{
       lines: [{
@@ -1267,7 +1270,7 @@ describe('Shorthand Font Options', function() {
     //
     options = getOptions(options);
     options.font.multi = true;
-    var label = new Label({}, options);
+    label = new Label({}, options);
 
     var expected_multifont = [{
       lines: [{
@@ -1296,7 +1299,7 @@ describe('Shorthand Font Options', function() {
     // multifont enabled with max width: spaces are compressed
     //
     options.font.maxWdt = 300;
-    var label = new Label({}, options);
+    label = new Label({}, options);
 
     var expected_multifont_maxwidth = [{
       lines: [{
@@ -1401,7 +1404,7 @@ describe('Shorthand Font Options', function() {
     // Multi font enabled. For current case, output should be identical to no multi font
     //
     options.font.multi = true;
-    var label = new Label({}, options);
+    label = new Label({}, options);
     checkProcessedLabels(label, text, expected);
 
     done();
@@ -1616,8 +1619,8 @@ describe('Shorthand Font Options', function() {
       edges: new DataSet(edges)
     };
 
-    var options = {};
-    var network = new Network(container, data, options);
+    options = {};
+    new Network(container, data, options);
 
     done()
   })
