@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-22T20:06:20.462Z
+ * @date    2020-07-22T20:46:55.683Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5704,6 +5704,14 @@ var includes$2 = function (it) {
 var includes$3 = includes$2;
 
 var includes$4 = includes$3;
+
+/* eslint-disable max-statements */
+
+/* eslint-disable no-prototype-builtins */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable no-var */
 
 /**
  * Parse a text source containing data in DOT language into a JSON object.
@@ -11520,7 +11528,7 @@ var Groups = /*#__PURE__*/function () {
 
       if (options !== undefined) {
         for (var groupName in options) {
-          if (options.hasOwnProperty(groupName)) {
+          if (Object.prototype.hasOwnProperty.call(options, groupName)) {
             if (indexOf$3(optionFields).call(optionFields, groupName) === -1) {
               var group = options[groupName];
               this.add(groupName, group);
@@ -21813,7 +21821,8 @@ function isValidLabel(text) {
  * @param {Object} ctx
  * @param {number} angle 
  * @param {number} radius 
- * @return {Object} node
+ * @param {VisNode} node 
+ *
  * @returns {Object} x and y coordinates
  */
 
@@ -23082,7 +23091,7 @@ var Label = /*#__PURE__*/function () {
         forEach$3(fontOptions, function (opt, name) {
           if (opt === undefined) return; // multi-font option need not be present 
 
-          if (ret.hasOwnProperty(name)) return; // Keep first value we encounter
+          if (Object.prototype.hasOwnProperty.call(ret, name)) return; // Keep first value we encounter
 
           if (indexOf$3(multiFontStyle).call(multiFontStyle, name) !== -1) {
             // Skip multi-font properties but we do need the structure
@@ -23131,7 +23140,7 @@ var Label = /*#__PURE__*/function () {
       for (var n = 0; n < pile.length; ++n) {
         var fontOptions = pile[n];
 
-        if (fontOptions.hasOwnProperty(multiName)) {
+        if (Object.prototype.hasOwnProperty.call(fontOptions, multiName)) {
           multiFont = fontOptions[multiName];
           if (multiFont === undefined || multiFont === null) continue; // Convert shorthand if necessary
           // TODO: inefficient to do this conversion every time; find a better way.
@@ -23142,7 +23151,7 @@ var Label = /*#__PURE__*/function () {
             multiFont = tmpShorthand;
           }
 
-          if (multiFont.hasOwnProperty(option)) {
+          if (Object.prototype.hasOwnProperty.call(multiFont, option)) {
             return multiFont[option];
           }
         }
@@ -23150,7 +23159,7 @@ var Label = /*#__PURE__*/function () {
       // These have already been converted with getBasicOptions(), so use the converted values.
 
 
-      if (this.fontOptions.hasOwnProperty(option)) {
+      if (Object.prototype.hasOwnProperty.call(this.fontOptions, option)) {
         return this.fontOptions[option];
       } // A value **must** be found; you should never get here.
 
@@ -24385,7 +24394,6 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
   }, {
     key: "_drawImageLabel",
     value: function _drawImageLabel(ctx, x, y, selected, hover) {
-      var yLabel;
       var offset = 0;
 
       if (this.height !== undefined) {
@@ -24397,7 +24405,7 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
         }
       }
 
-      yLabel = y + offset;
+      var yLabel = y + offset;
 
       if (this.options.label) {
         this.labelOffset = offset;
@@ -25914,7 +25922,7 @@ var Validator = /*#__PURE__*/function () {
     key: "parse",
     value: function parse(options, referenceOptions, path) {
       for (var option in options) {
-        if (options.hasOwnProperty(option)) {
+        if (Object.prototype.hasOwnProperty.call(options, option)) {
           Validator.check(option, options, referenceOptions, path);
         }
       }
@@ -27248,7 +27256,7 @@ var NodesHandler = /*#__PURE__*/function () {
 
         if (options.shape !== undefined) {
           for (var nodeId in this.body.nodes) {
-            if (this.body.nodes.hasOwnProperty(nodeId)) {
+            if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
               this.body.nodes[nodeId].updateShape();
             }
           }
@@ -27268,7 +27276,7 @@ var NodesHandler = /*#__PURE__*/function () {
 
         if (options.size !== undefined) {
           for (var _nodeId2 in this.body.nodes) {
-            if (this.body.nodes.hasOwnProperty(_nodeId2)) {
+            if (Object.prototype.hasOwnProperty.call(this.body.nodes, _nodeId2)) {
               this.body.nodes[_nodeId2].needsRefresh();
             }
           }
@@ -27510,9 +27518,13 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Retrieves the x y position of a specific id.
+     *
      * @param {string} id The id to retrieve.
+     *
      * @throws {TypeError} If no id is included.
      * @throws {ReferenceError} If an invalid id is provided.
+     *
+     * @returns {{ x: number, y: number }} Returns X, Y canvas position of the node with given id.
      */
 
   }, {
@@ -30679,9 +30691,11 @@ var Edge = /*#__PURE__*/function () {
           this.labelModule.getTextSize(ctx, this.selected, this.hover);
         }
 
+        var point;
+
         if (node1.id != node2.id) {
           this.labelModule.pointToSelf = false;
-          var point = this.edgeType.getPoint(0.5, viaNode);
+          point = this.edgeType.getPoint(0.5, viaNode);
           ctx.save();
 
           var rotationPoint = this._getRotation(ctx);
@@ -30978,7 +30992,7 @@ var Edge = /*#__PURE__*/function () {
         } else {
           // Clear local properties - need to do it like this in order to retain prototype bridges
           for (var i in toColor) {
-            if (toColor.hasOwnProperty(i)) {
+            if (Object.prototype.hasOwnProperty.call(toColor, i)) {
               delete toColor[i];
             }
           }
@@ -31035,7 +31049,7 @@ var Edge = /*#__PURE__*/function () {
         parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
       }
 
-      if (newOptions.hasOwnProperty("selfReferenceSize")) {
+      if (Object.prototype.hasOwnProperty.call(newOptions, "selfReferenceSize")) {
         console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
         parentOptions.selfReference.size = newOptions.selfReferenceSize;
       }
@@ -31219,7 +31233,7 @@ var EdgesHandler = /*#__PURE__*/function () {
         var dataChanged = false;
 
         for (var edgeId in _this2.body.edges) {
-          if (_this2.body.edges.hasOwnProperty(edgeId)) {
+          if (Object.prototype.hasOwnProperty.call(_this2.body.edges, edgeId)) {
             var edge = _this2.body.edges[edgeId];
 
             var edgeData = _this2.body.data.edges.get(edgeId); // only forcibly remove the smooth curve if the data has been set of the edge has the smooth curves defined.
@@ -31295,7 +31309,7 @@ var EdgesHandler = /*#__PURE__*/function () {
 
         if (options.smooth !== undefined) {
           for (var edgeId in this.body.edges) {
-            if (this.body.edges.hasOwnProperty(edgeId)) {
+            if (Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
               dataChanged = this.body.edges[edgeId].updateEdgeType() || dataChanged;
             }
           }
@@ -31304,7 +31318,7 @@ var EdgesHandler = /*#__PURE__*/function () {
 
         if (options.font !== undefined) {
           for (var _edgeId in this.body.edges) {
-            if (this.body.edges.hasOwnProperty(_edgeId)) {
+            if (Object.prototype.hasOwnProperty.call(this.body.edges, _edgeId)) {
               this.body.edges[_edgeId].updateLabelModule();
             }
           }
@@ -31508,13 +31522,13 @@ var EdgesHandler = /*#__PURE__*/function () {
       var edges = this.body.edges;
 
       for (id in nodes) {
-        if (nodes.hasOwnProperty(id)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, id)) {
           nodes[id].edges = [];
         }
       }
 
       for (id in edges) {
-        if (edges.hasOwnProperty(id)) {
+        if (Object.prototype.hasOwnProperty.call(edges, id)) {
           var edge = edges[id];
           edge.from = null;
           edge.to = null;
@@ -31712,11 +31726,10 @@ var BarnesHutSolver = /*#__PURE__*/function () {
     value: function _getForceContribution(parentBranch, node) {
       // we get no force contribution from an empty region
       if (parentBranch.childrenCount > 0) {
-        var dx, dy, distance; // get the distance from the center of mass to the node.
-
-        dx = parentBranch.centerOfMass.x - node.x;
-        dy = parentBranch.centerOfMass.y - node.y;
-        distance = Math.sqrt(dx * dx + dy * dy); // BarnesHutSolver condition
+        // get the distance from the center of mass to the node.
+        var dx = parentBranch.centerOfMass.x - node.x;
+        var dy = parentBranch.centerOfMass.y - node.y;
+        var distance = Math.sqrt(dx * dx + dy * dy); // BarnesHutSolver condition
         // original condition : s/d < theta = passed  ===  d/s > 1/theta = passed
         // calcSize = 1/s --> d * 1/s > 1/theta = passed
 
@@ -33190,7 +33203,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       var edges = this.body.edges; // get node indices for physics
 
       for (var nodeId in nodes) {
-        if (nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
           if (nodes[nodeId].options.physics === true) {
             this.physicsBody.physicsNodeIndices.push(nodes[nodeId].id);
           }
@@ -33199,7 +33212,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
 
 
       for (var edgeId in edges) {
-        if (edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(edges, edgeId)) {
           if (edges[edgeId].options.physics === true) {
             this.physicsBody.physicsEdgeIndices.push(edges[edgeId].id);
           }
@@ -33279,7 +33292,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       var posThreshold = 0.3;
 
       for (var nodeId in this.referenceState) {
-        if (this.referenceState.hasOwnProperty(nodeId) && nodes[nodeId] !== undefined) {
+        if (Object.prototype.hasOwnProperty.call(this.referenceState, nodeId) && nodes[nodeId] !== undefined) {
           dx = nodes[nodeId].x - reference[nodeId].positions.x;
           dy = nodes[nodeId].y - reference[nodeId].positions.y;
           dpos = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
@@ -33406,7 +33419,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       var nodes = this.body.nodes;
 
       for (var id in nodes) {
-        if (nodes.hasOwnProperty(id)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, id)) {
           if (nodes[id].x && nodes[id].y) {
             var fixed = nodes[id].options.fixed;
             this.freezeCache[id] = {
@@ -33431,7 +33444,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       var nodes = this.body.nodes;
 
       for (var id in nodes) {
-        if (nodes.hasOwnProperty(id)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, id)) {
           if (this.freezeCache[id] !== undefined) {
             nodes[id].options.fixed.x = this.freezeCache[id].x;
             nodes[id].options.fixed.y = this.freezeCache[id].y;
@@ -34053,7 +34066,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
           if (relevantEdgeCount === edgeCount) {
-            checkJoinCondition = function checkJoinCondition(node) {
+            var checkJoinCondition = function checkJoinCondition(node) {
               if (options.joinCondition === undefined || options.joinCondition === null) {
                 return true;
               }
@@ -34088,7 +34101,7 @@ var ClusterEngine = /*#__PURE__*/function () {
                * Search for cluster data that contains any of the node id's
                * @returns {Boolean} true if no joinCondition, otherwise return value of joinCondition
                */
-              findClusterData = function findClusterData() {
+              var findClusterData = function findClusterData() {
                 for (var n = 0; n < clusters.length; ++n) {
                   // Search for a cluster containing any of the node id's
                   for (var m in childNodesObj) {
@@ -34103,7 +34116,7 @@ var ClusterEngine = /*#__PURE__*/function () {
               // add the current values to that cluster
 
 
-              foundCluster = findClusterData();
+              var foundCluster = findClusterData();
 
               if (foundCluster !== undefined) {
                 // Add nodes to found cluster if not present
@@ -34132,10 +34145,6 @@ var ClusterEngine = /*#__PURE__*/function () {
       };
 
       for (var i = 0; i < this.body.nodeIndices.length; i++) {
-        var checkJoinCondition;
-        var findClusterData;
-        var foundCluster;
-
         _loop(i);
       }
 
@@ -34250,9 +34259,9 @@ var ClusterEngine = /*#__PURE__*/function () {
         return childNodesObj[childNode].id;
       });
 
-      for (childNode in childNodesObj) {
-        if (!childNodesObj.hasOwnProperty(childNode)) continue;
-        var childNode = childNodesObj[childNode];
+      for (var childNodeKey in childNodesObj) {
+        if (!Object.prototype.hasOwnProperty.call(childNodesObj, childNodeKey)) continue;
+        var childNode = childNodesObj[childNodeKey];
 
         for (var y = 0; y < childNode.edges.length; y++) {
           var childEdge = childNode.edges[y];
@@ -34416,7 +34425,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       var tmpNodesToRemove = [];
 
       for (var nodeId in childNodesObj) {
-        if (childNodesObj.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(childNodesObj, nodeId)) {
           if (this.clusteredNodes[nodeId] !== undefined) {
             tmpNodesToRemove.push(nodeId);
           }
@@ -34444,7 +34453,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         var childNodesOptions = [];
 
         for (var _nodeId in childNodesObj) {
-          if (childNodesObj.hasOwnProperty(_nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(childNodesObj, _nodeId)) {
             var clonedOptions = NetworkUtil.cloneOptions(childNodesObj[_nodeId]);
             childNodesOptions.push(clonedOptions);
           }
@@ -34454,7 +34463,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         var childEdgesOptions = [];
 
         for (var edgeId in childEdgesObj) {
-          if (childEdgesObj.hasOwnProperty(edgeId)) {
+          if (Object.prototype.hasOwnProperty.call(childEdgesObj, edgeId)) {
             // these cluster edges will be removed on creation of the cluster.
             if (edgeId.substr(0, 12) !== "clusterEdge:") {
               var _clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], 'edge');
@@ -34659,7 +34668,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         };
 
         for (var nodeId in containedNodes) {
-          if (containedNodes.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(containedNodes, nodeId)) {
             var containedNode = this.body.nodes[nodeId];
             positions[nodeId] = {
               x: containedNode.x,
@@ -34671,7 +34680,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         var newPositions = options.releaseFunction(clusterPosition, positions);
 
         for (var _nodeId2 in containedNodes) {
-          if (containedNodes.hasOwnProperty(_nodeId2)) {
+          if (Object.prototype.hasOwnProperty.call(containedNodes, _nodeId2)) {
             var _containedNode = this.body.nodes[_nodeId2];
 
             if (newPositions[_nodeId2] !== undefined) {
@@ -34696,7 +34705,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       for (var _nodeId3 in containedNodes) {
-        if (containedNodes.hasOwnProperty(_nodeId3)) {
+        if (Object.prototype.hasOwnProperty.call(containedNodes, _nodeId3)) {
           var _containedNode2 = this.body.nodes[_nodeId3]; // inherit speed
 
           _containedNode2.vx = clusterNode.vx;
@@ -34761,7 +34770,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       for (var edgeId in containedEdges) {
-        if (containedEdges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(containedEdges, edgeId)) {
           this._restoreEdge(containedEdges[edgeId]);
         }
       } // remove clusterNode
@@ -34788,7 +34797,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         var containedNodes = this.body.nodes[clusterId].containedNodes;
 
         for (var nodeId in containedNodes) {
-          if (containedNodes.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(containedNodes, nodeId)) {
             nodesArray.push(this.body.nodes[nodeId].id);
           }
         }
@@ -35103,7 +35112,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       for (var edgeId in childEdges) {
-        if (childEdges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(childEdges, edgeId)) {
           if (this.body.edges[edgeId] !== undefined) {
             var _edge2 = this.body.edges[edgeId]; // cache the options before changing
 
@@ -35119,7 +35128,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       for (var nodeId in childNodes) {
-        if (childNodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(childNodes, nodeId)) {
           this.clusteredNodes[nodeId] = {
             clusterId: clusterNode.id,
             node: this.body.nodes[nodeId]
@@ -35212,7 +35221,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       for (nodeId in this.clusteredNodes) {
-        if (!this.clusteredNodes.hasOwnProperty(nodeId)) continue;
+        if (!Object.prototype.hasOwnProperty.call(this.clusteredNodes, nodeId)) continue;
         var node = this.body.nodes[nodeId];
 
         if (node === undefined) {
@@ -35780,7 +35789,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
       var node; // resize all nodes
 
       for (var nodeId in nodes) {
-        if (nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
           node = nodes[nodeId];
           node.resize(ctx);
           node.updateBoundingBox(ctx, node.selected);
@@ -36613,7 +36622,7 @@ var View = /*#__PURE__*/function () {
         var positionDefined = 0;
 
         for (var nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
             var node = this.body.nodes[nodeId];
 
             if (node.predefinedPosition === true) {
@@ -37169,7 +37178,7 @@ var NavigationHandler = /*#__PURE__*/function () {
     key: "_stopMovement",
     value: function _stopMovement() {
       for (var boundAction in this.boundFunctions) {
-        if (this.boundFunctions.hasOwnProperty(boundAction)) {
+        if (Object.prototype.hasOwnProperty.call(this.boundFunctions, boundAction)) {
           this.body.emitter.off("initRedraw", this.boundFunctions[boundAction]);
           this.body.emitter.emit("_stopRendering");
         }
@@ -37918,7 +37927,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         var selection = this.selectionHandler.selectionObj.nodes; // create an array with the selected nodes and their original location and status
 
         for (var nodeId in selection) {
-          if (selection.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(selection, nodeId)) {
             var object = selection[nodeId];
             var s = {
               id: object.id,
@@ -38818,13 +38827,13 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "unselectAll",
     value: function unselectAll() {
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           this.selectionObj.nodes[nodeId].unselect();
         }
       }
 
       for (var edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
           this.selectionObj.edges[edgeId].unselect();
         }
       }
@@ -38847,7 +38856,7 @@ var SelectionHandler = /*#__PURE__*/function () {
       var count = 0;
 
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           count += 1;
         }
       }
@@ -38865,7 +38874,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "_getSelectedNode",
     value: function _getSelectedNode() {
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           return this.selectionObj.nodes[nodeId];
         }
       }
@@ -38883,7 +38892,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "_getSelectedEdge",
     value: function _getSelectedEdge() {
       for (var edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
           return this.selectionObj.edges[edgeId];
         }
       }
@@ -38903,7 +38912,7 @@ var SelectionHandler = /*#__PURE__*/function () {
       var count = 0;
 
       for (var edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
           count += 1;
         }
       }
@@ -38923,13 +38932,13 @@ var SelectionHandler = /*#__PURE__*/function () {
       var count = 0;
 
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           count += 1;
         }
       }
 
       for (var edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
           count += 1;
         }
       }
@@ -38947,13 +38956,13 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "_selectionIsEmpty",
     value: function _selectionIsEmpty() {
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           return false;
         }
       }
 
       for (var edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
           return false;
         }
       }
@@ -38971,7 +38980,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "_clusterInSelection",
     value: function _clusterInSelection() {
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           if (this.selectionObj.nodes[nodeId].clusterSize > 1) {
             return true;
           }
@@ -39111,7 +39120,7 @@ var SelectionHandler = /*#__PURE__*/function () {
       var hoverChanged = false; // remove all node hover highlights
 
       for (var nodeId in this.hoverObj.nodes) {
-        if (this.hoverObj.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.hoverObj.nodes, nodeId)) {
           if (object === undefined || object instanceof Node && object.id != nodeId || object instanceof Edge) {
             this.emitBlurEvent(event, pointer, this.hoverObj.nodes[nodeId]);
             delete this.hoverObj.nodes[nodeId];
@@ -39122,7 +39131,7 @@ var SelectionHandler = /*#__PURE__*/function () {
 
 
       for (var edgeId in this.hoverObj.edges) {
-        if (this.hoverObj.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.hoverObj.edges, edgeId)) {
           // if the hover has been changed here it means that the node has been hovered over or off
           // we then do not use the emitBlurEvent method here.
           if (hoverChanged === true) {
@@ -39189,7 +39198,7 @@ var SelectionHandler = /*#__PURE__*/function () {
 
       if (this.options.selectable === true) {
         for (var nodeId in this.selectionObj.nodes) {
-          if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
             idArray.push(this.selectionObj.nodes[nodeId].id);
           }
         }
@@ -39211,7 +39220,7 @@ var SelectionHandler = /*#__PURE__*/function () {
 
       if (this.options.selectable === true) {
         for (var edgeId in this.selectionObj.edges) {
-          if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+          if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
             idArray.push(this.selectionObj.edges[edgeId].id);
           }
         }
@@ -39306,16 +39315,16 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "updateSelection",
     value: function updateSelection() {
       for (var nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
-          if (!this.body.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
+          if (!Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
             delete this.selectionObj.nodes[nodeId];
           }
         }
       }
 
       for (var edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
-          if (!this.body.edges.hasOwnProperty(edgeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
+          if (!Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
             delete this.selectionObj.edges[edgeId];
           }
         }
@@ -40998,7 +41007,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
       var minLevel = 1e9; // get the minimum level
 
       for (var nodeId in nodes) {
-        if (nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
           if (this.levels[nodeId] !== undefined) {
             minLevel = Math.min(this.levels[nodeId], minLevel);
           }
@@ -41007,7 +41016,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
 
 
       for (var _nodeId in nodes) {
-        if (nodes.hasOwnProperty(_nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(nodes, _nodeId)) {
           if (this.levels[_nodeId] !== undefined) {
             this.levels[_nodeId] -= minLevel;
           }
@@ -41031,7 +41040,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
       var max_y = -1e9;
 
       for (var nodeId in this.trees) {
-        if (this.trees.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.trees, nodeId)) {
           if (this.trees[nodeId] === index) {
             var node = nodes[nodeId];
             min_x = Math.min(node.x, min_x);
@@ -41601,7 +41610,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         this.hierarchical = new HierarchicalStatus();
 
         for (nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
             node = this.body.nodes[nodeId];
 
             if (node.options.level !== undefined) {
@@ -41632,7 +41641,7 @@ var LayoutEngine = /*#__PURE__*/function () {
 
 
           for (var _nodeId2 in this.body.nodes) {
-            if (this.body.nodes.hasOwnProperty(_nodeId2)) {
+            if (Object.prototype.hasOwnProperty.call(this.body.nodes, _nodeId2)) {
               this.hierarchical.ensureLevel(_nodeId2);
             }
           } // check the distribution of the nodes per level.
@@ -41684,7 +41693,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         var trees = _this3.hierarchical.trees;
 
         for (var nodeId in trees) {
-          if (trees.hasOwnProperty(nodeId)) {
+          if (Object.prototype.hasOwnProperty.call(trees, nodeId)) {
             if (trees[nodeId] === index) {
               _this3.direction.shift(nodeId, offset);
             }
@@ -41732,7 +41741,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         var max = -1e9;
 
         for (var branchNode in branchMap) {
-          if (branchMap.hasOwnProperty(branchNode)) {
+          if (Object.prototype.hasOwnProperty.call(branchMap, branchNode)) {
             var node = _this3.body.nodes[branchNode];
             var level = _this3.hierarchical.levels[node.id];
 
@@ -42030,7 +42039,7 @@ var LayoutEngine = /*#__PURE__*/function () {
 
       var centerAllParents = function centerAllParents() {
         for (var nodeId in _this3.body.nodes) {
-          if (_this3.body.nodes.hasOwnProperty(nodeId)) _this3._centerParent(_this3.body.nodes[nodeId]);
+          if (Object.prototype.hasOwnProperty.call(_this3.body.nodes, nodeId)) _this3._centerParent(_this3.body.nodes[nodeId]);
         }
       }; // center all parents
 
@@ -42167,7 +42176,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       this.positionedNodes = {}; // start placing all the level 0 nodes first. Then recursively position their branches.
 
       for (var level in distribution) {
-        if (distribution.hasOwnProperty(level)) {
+        if (Object.prototype.hasOwnProperty.call(distribution, level)) {
           var _context;
 
           // sort nodes in level by position:
@@ -42329,7 +42338,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       // the fix of X is removed after the x value has been set.
 
       for (nodeId in this.body.nodes) {
-        if (this.body.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
           node = this.body.nodes[nodeId];
           var level = this.hierarchical.levels[nodeId] === undefined ? 0 : this.hierarchical.levels[nodeId];
           this.direction.fix(node, level);
@@ -42750,6 +42759,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
    * @param {Object} body
    * @param {Canvas} canvas
    * @param {SelectionHandler} selectionHandler
+   * @param {InteractionHandler} interactionHandler
    */
   function ManipulationSystem(body, canvas, selectionHandler, interactionHandler) {
     var _this = this,
@@ -43730,7 +43740,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_unbindTemporaryUIs",
     value: function _unbindTemporaryUIs() {
       for (var functionName in this.temporaryUIFunctions) {
-        if (this.temporaryUIFunctions.hasOwnProperty(functionName)) {
+        if (Object.prototype.hasOwnProperty.call(this.temporaryUIFunctions, functionName)) {
           this.body.eventListeners[functionName] = this.temporaryUIFunctions[functionName];
           delete this.temporaryUIFunctions[functionName];
         }
@@ -45172,7 +45182,7 @@ var Configurator = /*#__PURE__*/function () {
       var show = false;
 
       for (var option in this.configureOptions) {
-        if (this.configureOptions.hasOwnProperty(option)) {
+        if (Object.prototype.hasOwnProperty.call(this.configureOptions, option)) {
           this.allowCreation = false;
           show = false;
 
@@ -45729,7 +45739,7 @@ var Configurator = /*#__PURE__*/function () {
       var visibleInSet = false;
 
       for (var subObj in obj) {
-        if (obj.hasOwnProperty(subObj)) {
+        if (Object.prototype.hasOwnProperty.call(obj, subObj)) {
           show = true;
           var item = obj[subObj];
           var newPath = copyAndExtendArray(path, subObj);
@@ -48161,7 +48171,7 @@ Network.prototype._updateVisibleIndices = function () {
   this.body.edgeIndices = [];
 
   for (var nodeId in nodes) {
-    if (nodes.hasOwnProperty(nodeId)) {
+    if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
       if (!this.clustering._isClusteredNode(nodeId) && nodes[nodeId].options.hidden === false) {
         this.body.nodeIndices.push(nodes[nodeId].id);
       }
@@ -48169,7 +48179,7 @@ Network.prototype._updateVisibleIndices = function () {
   }
 
   for (var edgeId in edges) {
-    if (edges.hasOwnProperty(edgeId)) {
+    if (Object.prototype.hasOwnProperty.call(edges, edgeId)) {
       var edge = edges[edgeId]; // It can happen that this is executed *after* a node edge has been removed,
       // but *before* the edge itself has been removed. Taking this into account.
 
@@ -48297,12 +48307,12 @@ Network.prototype.destroy = function () {
   delete this.images;
 
   for (var nodeId in this.body.nodes) {
-    if (!this.body.nodes.hasOwnProperty(nodeId)) continue;
+    if (!Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) continue;
     delete this.body.nodes[nodeId];
   }
 
   for (var edgeId in this.body.edges) {
-    if (!this.body.edges.hasOwnProperty(edgeId)) continue;
+    if (!Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) continue;
     delete this.body.edges[edgeId];
   } // remove the container and everything inside it recursively
 
@@ -48327,7 +48337,7 @@ Network.prototype._updateValueRange = function (obj) {
   var valueTotal = 0;
 
   for (id in obj) {
-    if (obj.hasOwnProperty(id)) {
+    if (Object.prototype.hasOwnProperty.call(obj, id)) {
       var value = obj[id].getValue();
 
       if (value !== undefined) {
@@ -48341,7 +48351,7 @@ Network.prototype._updateValueRange = function (obj) {
 
   if (valueMin !== undefined && valueMax !== undefined) {
     for (id in obj) {
-      if (obj.hasOwnProperty(id)) {
+      if (Object.prototype.hasOwnProperty.call(obj, id)) {
         obj[id].setValueRange(valueMin, valueMax, valueTotal);
       }
     }
@@ -48624,7 +48634,7 @@ Network.prototype.getOptionsFromConfigurator = function () {
 function prepareElements(JSONcontainer) {
   // cleanup the redundant svgElements;
   for (var elementType in JSONcontainer) {
-    if (JSONcontainer.hasOwnProperty(elementType)) {
+    if (Object.prototype.hasOwnProperty.call(JSONcontainer, elementType)) {
       JSONcontainer[elementType].redundant = JSONcontainer[elementType].used;
       JSONcontainer[elementType].used = [];
     }
@@ -48641,7 +48651,7 @@ function prepareElements(JSONcontainer) {
 function cleanupElements(JSONcontainer) {
   // cleanup the redundant svgElements;
   for (var elementType in JSONcontainer) {
-    if (JSONcontainer.hasOwnProperty(elementType)) {
+    if (Object.prototype.hasOwnProperty.call(JSONcontainer, elementType)) {
       if (JSONcontainer[elementType].redundant) {
         for (var i = 0; i < JSONcontainer[elementType].redundant.length; i++) {
           JSONcontainer[elementType].redundant[i].parentNode.removeChild(JSONcontainer[elementType].redundant[i]);
@@ -48676,7 +48686,7 @@ function resetElements(JSONcontainer) {
 function getSVGElement(elementType, JSONcontainer, svgContainer) {
   var element; // allocate SVG element, if it doesnt yet exist, create one.
 
-  if (JSONcontainer.hasOwnProperty(elementType)) {
+  if (Object.prototype.hasOwnProperty.call(JSONcontainer, elementType)) {
     // this element has been created before
     // check if there is an redundant element
     if (JSONcontainer[elementType].redundant.length > 0) {
@@ -48714,7 +48724,7 @@ function getSVGElement(elementType, JSONcontainer, svgContainer) {
 function getDOMElement(elementType, JSONcontainer, DOMContainer, insertBefore) {
   var element; // allocate DOM element, if it doesnt yet exist, create one.
 
-  if (JSONcontainer.hasOwnProperty(elementType)) {
+  if (Object.prototype.hasOwnProperty.call(JSONcontainer, elementType)) {
     // this element has been created before
     // check if there is an redundant element
     if (JSONcontainer[elementType].redundant.length > 0) {

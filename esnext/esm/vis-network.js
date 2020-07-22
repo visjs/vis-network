@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-22T20:04:37.049Z
+ * @date    2020-07-22T20:45:12.301Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -345,6 +345,11 @@ function getShape(name) {
         };
     }
 }
+
+/* eslint-disable max-statements */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-var */
 
 /**
  * Parse a text source containing data in DOT language into a JSON object.
@@ -1755,7 +1760,7 @@ function hammerMock() {
 
 
 if (typeof window !== 'undefined') {
-  var Hammer = window['Hammer'] || hammerjs;
+  const Hammer = window['Hammer'] || hammerjs;
   module.exports = Hammer;
 }
 else {
@@ -1792,7 +1797,7 @@ function Activator(container) {
   this.hammer.on('tap', this._onTapOverlay.bind(this));
 
   // block all touch events (except tap)
-  var events = [
+  const events = [
     'tap', 'doubletap', 'press',
     'pinch',
     'pan', 'panstart', 'panmove', 'panend'
@@ -2183,22 +2188,22 @@ class CachedImage {
     if (this.initialized()) return;
 
     this.src = this.image.src;  // For same interface with Image
-    var w = this.image.width;
-    var h = this.image.height;
+    const w = this.image.width;
+    const h = this.image.height;
 
     // Ease external access
     this.width  = w;
     this.height = h;
 
-    var h2 = Math.floor(h/2);
-    var h4 = Math.floor(h/4);
-    var h8 = Math.floor(h/8);
-    var h16 = Math.floor(h/16);
+    const h2 = Math.floor(h/2);
+    const h4 = Math.floor(h/4);
+    const h8 = Math.floor(h/8);
+    const h16 = Math.floor(h/16);
 
-    var w2 = Math.floor(w/2);
-    var w4 = Math.floor(w/4);
-    var w8 = Math.floor(w/8);
-    var w16 = Math.floor(w/16);
+    const w2 = Math.floor(w/2);
+    const w4 = Math.floor(w/4);
+    const w8 = Math.floor(w/8);
+    const w16 = Math.floor(w/16);
 
     // Make canvas as small as possible
     this.canvas.width  = 3*w4;
@@ -2244,16 +2249,16 @@ class CachedImage {
    * @private
    */
   _fillMipMap() {
-    var ctx = this.canvas.getContext('2d');
+    const ctx = this.canvas.getContext('2d');
 
     // First zoom-level comes from the image
-    var to  = this.coordinates[0];
+    const to  = this.coordinates[0];
     ctx.drawImage(this.image, to[0], to[1], to[2], to[3]);
 
     // The rest are copy actions internal to the canvas/context
     for (let iterations = 1; iterations < this.NUM_ITERATIONS; iterations++) {
-      let from = this.coordinates[iterations - 1];
-      let to   = this.coordinates[iterations];
+      const from = this.coordinates[iterations - 1];
+      const to   = this.coordinates[iterations];
 
       ctx.drawImage(this.canvas,
         from[0], from[1], from[2], from[3],
@@ -2297,7 +2302,7 @@ class CachedImage {
       }
       //console.log("iterations: " + iterations);
 
-      let from = this.coordinates[iterations];
+      const from = this.coordinates[iterations];
       ctx.drawImage(this.canvas,
         from[0], from[1], from[2], from[3],
            left,     top,   width,  height
@@ -2372,11 +2377,11 @@ class Images {
      */     
     load (url, brokenUrl) {
         //Try and get the image from the cache, if successful then return the cached image   
-        var cachedImage = this.images[url]; 
+        const cachedImage = this.images[url]; 
         if (cachedImage) return cachedImage;
         
         //Create a new image
-        var img = new CachedImage();
+        const img = new CachedImage();
 
         // Need to add to cache here, otherwise final return will spawn different copies of the same image,
         // Also, there will be multiple loads of the same image.
@@ -2473,13 +2478,13 @@ class Groups {
    * @param {Object} options
    */
   setOptions(options) {
-    let optionFields = ['useDefaultGroups'];
+    const optionFields = ['useDefaultGroups'];
 
     if (options !== undefined) {
-      for (let groupName in options) {
-        if (options.hasOwnProperty(groupName)) {
+      for (const groupName in options) {
+        if (Object.prototype.hasOwnProperty.call(options, groupName)) {
           if (optionFields.indexOf(groupName) === -1) {
-            let group = options[groupName];
+            const group = options[groupName];
             this.add(groupName, group);
           }
         }
@@ -2510,7 +2515,7 @@ class Groups {
     if (group === undefined && shouldCreate) {
       if (this.options.useDefaultGroups === false && this.groupsArray.length > 0) {
         // create new group
-        let index = this.groupIndex % this.groupsArray.length;
+        const index = this.groupIndex % this.groupsArray.length;
         this.groupIndex++;
         group = {};
         group.color = this.groups[this.groupsArray[index]];
@@ -2518,7 +2523,7 @@ class Groups {
       }
       else {
         // create new group
-        let index = this.defaultIndex % this.defaultGroups.length;
+        const index = this.defaultIndex % this.defaultGroups.length;
         this.defaultIndex++;
         group = {};
         group.color = this.defaultGroups[index];
@@ -2571,10 +2576,10 @@ class Groups {
    */
   function choosify(subOption, pile) {
     // allowed values for subOption
-    let allowed = [ 'node', 'edge', 'label'];
+    const allowed = [ 'node', 'edge', 'label'];
     let value = true;
 
-    let chosen = topMost(pile, 'chosen');
+    const chosen = topMost(pile, 'chosen');
     if (typeof chosen === 'boolean') {
       value = chosen;
     } else if (typeof chosen === 'object') {
@@ -2583,7 +2588,7 @@ class Groups {
           + "'" + allowed.join("', '") +  "'");
       }
 
-      let chosenEdge = topMost(pile, ['chosen', subOption]);
+      const chosenEdge = topMost(pile, ['chosen', subOption]);
       if ((typeof chosenEdge === 'boolean') || (typeof chosenEdge === 'function')) {
         value = chosenEdge;
       }
@@ -2608,7 +2613,7 @@ class Groups {
 
     if (rotationPoint !== undefined) {
       // Rotate the point the same amount as the rectangle
-      var tmp = {
+      const tmp = {
         x: point.x - rotationPoint.x,
         y: point.y - rotationPoint.y
       };
@@ -2616,9 +2621,9 @@ class Groups {
       if (rotationPoint.angle !== 0) {
         // In order to get the coordinates the same, you need to 
         // rotate in the reverse direction
-        var angle = -rotationPoint.angle;
+        const angle = -rotationPoint.angle;
 
-        var tmp2 = {
+        const tmp2 = {
           x: Math.cos(angle)*tmp.x - Math.sin(angle)*tmp.y,
           y: Math.sin(angle)*tmp.x + Math.cos(angle)*tmp.y
         };
@@ -2633,8 +2638,8 @@ class Groups {
       // back in this case.
     }
 
-    var right  = rect.x + rect.width;
-    var bottom = rect.y + rect.width;
+    const right  = rect.x + rect.width;
+    const bottom = rect.y + rect.width;
 
     return (
       rect.left < point.x &&
@@ -2662,7 +2667,8 @@ class Groups {
    * @param {Object} ctx
    * @param {number} angle 
    * @param {number} radius 
-   * @return {Object} node
+   * @param {VisNode} node 
+   *
    * @returns {Object} x and y coordinates
    */
   function getSelfRefCoordinates(ctx, angle, radius, node){
@@ -2759,8 +2765,8 @@ class LabelAccumulator {
     if (text === undefined || text === "") tmpText = " ";
 
     // Determine width and get the font properties
-    let result = this.measureText(tmpText, mod);
-    let block = Object.assign({}, result.values);
+    const result = this.measureText(tmpText, mod);
+    const block = Object.assign({}, result.values);
     block.text  = text;
     block.width = result.width;
     block.mod   = mod;
@@ -2782,7 +2788,7 @@ class LabelAccumulator {
    * @returns {number}
    */
   curWidth() {
-    let line = this.lines[this.current];
+    const line = this.lines[this.current];
     if (line === undefined) return 0;
 
     return line.width;
@@ -2821,14 +2827,14 @@ class LabelAccumulator {
    */
   determineLineHeights() {
     for (let k = 0; k < this.lines.length; k++) {
-      let line   = this.lines[k];
+      const line   = this.lines[k];
 
       // Looking for max height of blocks in line
       let height = 0;
 
       if (line.blocks !== undefined) {  // Can happen if text contains e.g. '\n '
         for (let l = 0; l < line.blocks.length; l++) {
-          let block =  line.blocks[l];
+          const block =  line.blocks[l];
 
           if (height < block.height) {
             height = block.height;
@@ -2850,7 +2856,7 @@ class LabelAccumulator {
     let width  = 0;
     let height = 0;
     for (let k = 0; k < this.lines.length; k++) {
-      let line   = this.lines[k];
+      const line   = this.lines[k];
 
       if (line.width > width) {
         width = line.width;
@@ -2873,9 +2879,9 @@ class LabelAccumulator {
    * @private
    */
   removeEmptyBlocks() {
-    let tmpLines = [];
+    const tmpLines = [];
     for (let k = 0; k < this.lines.length; k++) {
-      let line   = this.lines[k];
+      const line   = this.lines[k];
 
       // Note: an empty line in between text has width zero but is still relevant to layout.
       // So we can't use width for testing empty line here
@@ -2886,14 +2892,14 @@ class LabelAccumulator {
         if (line.width === 0) continue;
       }
 
-      let tmpLine = {};
+      const tmpLine = {};
       Object.assign(tmpLine, line);
       tmpLine.blocks = [];
 
       let firstEmptyBlock;
-      let tmpBlocks = [];
+      const tmpBlocks = [];
       for (let l = 0; l < line.blocks.length; l++) {
-        let block = line.blocks[l];
+        const block = line.blocks[l];
         if (block.width !== 0) {
           tmpBlocks.push(block);
         } else {
@@ -2927,7 +2933,7 @@ class LabelAccumulator {
 
     this.determineLineHeights();
     this.determineLabelSize();
-    let tmpLines = this.removeEmptyBlocks();
+    const tmpLines = this.removeEmptyBlocks();
 
 
     // Return a simple hash object for further processing.
@@ -2940,7 +2946,7 @@ class LabelAccumulator {
 }
 
 // Hash of prepared regexp's for tags
-var tagPattern = {
+const tagPattern = {
   // HTML
   '<b>': /<b>/,
   '<i>': /<i>/,
@@ -3119,8 +3125,8 @@ class MarkupAccumulator {
    * @private
    */
   match(tag, advance = true) {
-    let [regExp, length] = this.prepareRegExp(tag);
-    let matched = regExp.test(this.text.substr(this.position, length));
+    const [regExp, length] = this.prepareRegExp(tag);
+    const matched = regExp.test(this.text.substr(this.position, length));
 
     if (matched && advance) {
       this.position += length - 1;
@@ -3197,7 +3203,7 @@ class MarkupAccumulator {
       length = 1;   // ASSUMPTION: regexp only tests one character
     } else {
       // use prepared regexp if present
-      var prepared = tagPattern[tag];
+      const prepared = tagPattern[tag];
       if (prepared !== undefined) {
         regExp = prepared;
       } else {
@@ -3238,16 +3244,16 @@ class LabelSplitter {
      * @param  {String} mod  font type to use for this text
      * @return {Object} { width, values} width in pixels and font attributes
      */
-    let textWidth = (text, mod) => {
+    const textWidth = (text, mod) => {
       if (text === undefined) return 0;
 
       // TODO: This can be done more efficiently with caching
       // This will set the ctx.font correctly, depending on selected/hover and mod - so that ctx.measureText() will be accurate.
-      let values = this.parent.getFormattingValues(ctx, selected, hover, mod);
+      const values = this.parent.getFormattingValues(ctx, selected, hover, mod);
 
       let width = 0;
       if (text !== '') {
-        let measure = this.ctx.measureText(text);
+        const measure = this.ctx.measureText(text);
         width = measure.width;
       }
 
@@ -3281,7 +3287,7 @@ class LabelSplitter {
       return this.lines.finalize();
     }
 
-    var font = this.parent.fontOptions;
+    const font = this.parent.fontOptions;
 
     // Normalize the end-of-line's to a single representation - order important
     text = text.replace(/\r\n/g, '\n');  // Dos EOL's
@@ -3290,13 +3296,13 @@ class LabelSplitter {
     // Note that at this point, there can be no \r's in the text.
     // This is used later on splitStringIntoLines() to split multifont texts.
 
-    let nlLines = String(text).split('\n');
-    let lineCount = nlLines.length;
+    const nlLines = String(text).split('\n');
+    const lineCount = nlLines.length;
 
     if (font.multi) {
       // Multi-font case: styling tags active
       for (let i = 0; i < lineCount; i++) {
-        let blocks = this.splitBlocks(nlLines[i], font.multi);
+        const blocks = this.splitBlocks(nlLines[i], font.multi);
         // Post: Sequences of tabs and spaces are reduced to single space
 
         if (blocks === undefined) continue;
@@ -3310,15 +3316,15 @@ class LabelSplitter {
           // widthConstraint.maximum defined
           //console.log('Running widthConstraint multi, max: ' + this.fontOptions.maxWdt);
           for (let j = 0; j < blocks.length; j++) {
-            let mod  = blocks[j].mod;
-            let text = blocks[j].text;
+            const mod  = blocks[j].mod;
+            const text = blocks[j].text;
             this.splitStringIntoLines(text, mod, true);
           }
         } else {
           // widthConstraint.maximum NOT defined
           for (let j = 0; j < blocks.length; j++) {
-            let mod  = blocks[j].mod;
-            let text = blocks[j].text;
+            const mod  = blocks[j].mod;
+            const text = blocks[j].text;
             this.lines.append(text, mod); 
           }
         }
@@ -3368,11 +3374,11 @@ class LabelSplitter {
    * @returns {Array}
    */
   splitHtmlBlocks(text) {
-    let s = new MarkupAccumulator(text);
+    const s = new MarkupAccumulator(text);
 
-    let parseEntities = (ch) => {
+    const parseEntities = (ch) => {
       if (/&/.test(ch)) {
-        let parsed = s.replace(s.text, '&lt;', '<')
+        const parsed = s.replace(s.text, '&lt;', '<')
           || s.replace(s.text, '&amp;', '&');
 
         if (!parsed) {
@@ -3386,9 +3392,9 @@ class LabelSplitter {
     };
 
     while (s.position < s.text.length) {
-      let ch = s.text.charAt(s.position);
+      const ch = s.text.charAt(s.position);
 
-      let parsed = s.parseWS(ch)
+      const parsed = s.parseWS(ch)
         || (/</.test(ch) && ( 
              s.parseStartTag('bold', '<b>')
           || s.parseStartTag('ital', '<i>')
@@ -3414,10 +3420,10 @@ class LabelSplitter {
    * @returns {Array}
    */
   splitMarkdownBlocks(text) {
-    let s = new MarkupAccumulator(text); 
+    const s = new MarkupAccumulator(text); 
     let beginable = true;
 
-    let parseOverride = (ch) => {
+    const parseOverride = (ch) => {
       if (/\\/.test(ch)) {
         if (s.position < this.text.length + 1) {
           s.position++;
@@ -3437,9 +3443,9 @@ class LabelSplitter {
     };
 
     while (s.position < s.text.length) {
-      let ch = s.text.charAt(s.position);
+      const ch = s.text.charAt(s.position);
 
-      let parsed = s.parseWS(ch)
+      const parsed = s.parseWS(ch)
         || parseOverride(ch)
         || ((beginable || s.spacing) && (
              s.parseStartTag('bold', '*')
@@ -3469,7 +3475,7 @@ class LabelSplitter {
    * @private
    */
   splitBlocks(text, markupSystem) {
-    let system = this.decodeMarkupSystem(markupSystem);
+    const system = this.decodeMarkupSystem(markupSystem);
     if (system === 'none') {
       return [{
         text: text,
@@ -3489,7 +3495,7 @@ class LabelSplitter {
    * @private
    */
   overMaxWidth(text) {
-    let width = this.ctx.measureText(text).width;
+    const width = this.ctx.measureText(text).width;
     return (this.lines.curWidth() + width > this.parent.fontOptions.maxWdt);
   }
 
@@ -3507,8 +3513,8 @@ class LabelSplitter {
     let w = 0;
 
     while (w < words.length) {
-      let pre = (text === '') ? '' : ' ';
-      let newText = text + pre + words[w];
+      const pre = (text === '') ? '' : ' ';
+      const newText = text + pre + words[w];
 
       if (this.overMaxWidth(newText)) break;
       text = newText;
@@ -3568,10 +3574,10 @@ class LabelSplitter {
 
       if (w === 0) {
         // Special case: the first word is already larger than the max width.
-        let word = words[0];
+        const word = words[0];
 
         // Break the word to the largest part that fits the line
-        let x = this.getLongestFitWord(word);
+        const x = this.getLongestFitWord(word);
         this.lines.newLine(word.slice(0, x), mod);
 
         // Adjust the word, so that the rest will be done next iteration
@@ -3585,7 +3591,7 @@ class LabelSplitter {
           newW++;
         }
 
-        let text = words.slice(0, w).join("");
+        const text = words.slice(0, w).join("");
 
         if (w == words.length && appendLast) {
           this.lines.append(text, mod); 
@@ -3648,7 +3654,7 @@ class Label {
         this.baseSize = this.fontOptions.size;
       }
       else if (typeof options.font === 'object') {
-        let size = options.font.size;
+        const size = options.font.size;
  
         if (size !== undefined) {
           this.baseSize = size;
@@ -3703,7 +3709,7 @@ class Label {
   static parseFontString(outOptions, inOptions) {
     if (!inOptions || typeof inOptions !== 'string') return false;
 
-    let newOptionsArray = inOptions.split(" ");
+    const newOptionsArray = inOptions.split(" ");
 
     outOptions.size  = +newOptionsArray[0].replace("px",'');
     outOptions.face  = newOptionsArray[1];
@@ -3724,7 +3730,7 @@ class Label {
     // NOTE: constrainWidth and  constrainHeight never set!
     // NOTE: for edge labels, only 'maxWdt' set
     // Node labels can set all the fields
-    let fontOptions = {
+    const fontOptions = {
       constrainWidth: false,
       maxWdt: -1,
       minWdt: -1,
@@ -3733,31 +3739,31 @@ class Label {
       valign: 'middle',
     };
 
-    let widthConstraint = topMost(pile, 'widthConstraint');
+    const widthConstraint = topMost(pile, 'widthConstraint');
     if (typeof widthConstraint === 'number') {
       fontOptions.maxWdt = Number(widthConstraint);
       fontOptions.minWdt = Number(widthConstraint);
     } else if (typeof widthConstraint === 'object') {
-      let widthConstraintMaximum = topMost(pile, ['widthConstraint', 'maximum']);
+      const widthConstraintMaximum = topMost(pile, ['widthConstraint', 'maximum']);
       if (typeof widthConstraintMaximum === 'number') {
         fontOptions.maxWdt = Number(widthConstraintMaximum);
       }
-      let widthConstraintMinimum = topMost(pile, ['widthConstraint', 'minimum']);
+      const widthConstraintMinimum = topMost(pile, ['widthConstraint', 'minimum']);
       if (typeof widthConstraintMinimum === 'number') {
         fontOptions.minWdt = Number(widthConstraintMinimum);
       }
     }
 
 
-    let heightConstraint = topMost(pile, 'heightConstraint');
+    const heightConstraint = topMost(pile, 'heightConstraint');
     if (typeof heightConstraint === 'number') {
       fontOptions.minHgt = Number(heightConstraint);
     } else if (typeof heightConstraint === 'object') {
-      let heightConstraintMinimum = topMost(pile, ['heightConstraint', 'minimum']);
+      const heightConstraintMinimum = topMost(pile, ['heightConstraint', 'minimum']);
       if (typeof heightConstraintMinimum === 'number') {
         fontOptions.minHgt = Number(heightConstraintMinimum);
       }
-      let heightConstraintValign = topMost(pile, ['heightConstraint', 'valign']);
+      const heightConstraintValign = topMost(pile, ['heightConstraint', 'valign']);
       if (typeof heightConstraintValign === 'string') {
         if ((heightConstraintValign === 'top')|| (heightConstraintValign === 'bottom')) {
           fontOptions.valign = heightConstraintValign;
@@ -3790,12 +3796,12 @@ class Label {
    * @param {{top: number, right: number, bottom: number, left: number}} margins
    */
   adjustSizes(margins) {
-    let widthBias =  (margins) ? (margins.right + margins.left) : 0;
+    const widthBias =  (margins) ? (margins.right + margins.left) : 0;
     if (this.fontOptions.constrainWidth) {
       this.fontOptions.maxWdt -= widthBias;
       this.fontOptions.minWdt -= widthBias;
     }
-    let heightBias = (margins) ? (margins.top + margins.bottom)  : 0;
+    const heightBias = (margins) ? (margins.top + margins.bottom)  : 0;
     if (this.fontOptions.constrainHeight) {
       this.fontOptions.minHgt -= heightBias;
     }
@@ -3833,7 +3839,7 @@ class Label {
     if (options === undefined) return;
     if (options.font === undefined || options.font === null) return;
 
-    let item = options.font;
+    const item = options.font;
     pile.push(item);
   }
 
@@ -3846,21 +3852,21 @@ class Label {
    * @private
    */
   getBasicOptions(pile) {
-    let ret = {};
+    const ret = {};
 
     // Scans the whole pile to get all options present
     for (let n = 0; n < pile.length; ++n) {
       let fontOptions = pile[n];
 
       // Convert shorthand if necessary
-      let tmpShorthand = {};
+      const tmpShorthand = {};
       if (Label.parseFontString(tmpShorthand, fontOptions)) {
         fontOptions = tmpShorthand;
       }
 
       forEach(fontOptions, (opt, name) => {
         if (opt === undefined) return;        // multi-font option need not be present 
-        if (ret.hasOwnProperty(name)) return; // Keep first value we encounter
+        if (Object.prototype.hasOwnProperty.call(ret, name)) return; // Keep first value we encounter
 
         if (multiFontStyle.indexOf(name) !== -1) {
           // Skip multi-font properties but we do need the structure
@@ -3907,20 +3913,20 @@ class Label {
 
     // Search multi font in local properties
     for (let n = 0; n < pile.length; ++n) {
-      let fontOptions = pile[n];
+      const fontOptions = pile[n];
 
-      if (fontOptions.hasOwnProperty(multiName)) {
+      if (Object.prototype.hasOwnProperty.call(fontOptions, multiName)) {
         multiFont = fontOptions[multiName];
         if (multiFont === undefined || multiFont === null) continue;
 
         // Convert shorthand if necessary
         // TODO: inefficient to do this conversion every time; find a better way.
-        let tmpShorthand = {};
+        const tmpShorthand = {};
         if (Label.parseFontString(tmpShorthand, multiFont)) {
           multiFont = tmpShorthand;
         }
 
-        if (multiFont.hasOwnProperty(option)) {
+        if (Object.prototype.hasOwnProperty.call(multiFont, option)) {
           return multiFont[option];
         }
       }
@@ -3928,7 +3934,7 @@ class Label {
 
     // Option is not mentioned in the multi font options; take it from the parent font options.
     // These have already been converted with getBasicOptions(), so use the converted values.
-    if (this.fontOptions.hasOwnProperty(option)) {
+    if (Object.prototype.hasOwnProperty.call(this.fontOptions, option)) {
       return this.fontOptions[option];
     }
 
@@ -3948,11 +3954,11 @@ class Label {
    * @private
    */
   getFontOptions(pile, multiName) {
-    let result = {};
-    let optionNames = ['color', 'size', 'face', 'mod', 'vadjust'];  // List of allowed options per multi-font
+    const result = {};
+    const optionNames = ['color', 'size', 'face', 'mod', 'vadjust'];  // List of allowed options per multi-font
 
     for (let i = 0; i < optionNames.length; ++i) {
-      let mod = optionNames[i];
+      const mod = optionNames[i];
       result[mod] = this.getFontOption(pile, multiName, mod);
     }
 
@@ -3972,7 +3978,7 @@ class Label {
    *                     First item in list assumed to be the newly set options.
    */
   propagateFonts(pile) {
-    let fontPile = [];   // sequence of font objects to consider, order important
+    const fontPile = [];   // sequence of font objects to consider, order important
 
     // Note that this.elementOptions is not used here.
     this.addFontOptionsToPile(fontPile, pile);
@@ -3980,9 +3986,9 @@ class Label {
 
     // We set multifont values even if multi === false, for consistency (things break otherwise)
     for (let i = 0; i < multiFontStyle.length; ++i) {
-      let mod = multiFontStyle[i];
-      let modOptions  = this.fontOptions[mod];
-      let tmpMultiFontOptions = this.getFontOptions(fontPile, mod);
+      const mod = multiFontStyle[i];
+      const modOptions  = this.fontOptions[mod];
+      const tmpMultiFontOptions = this.getFontOptions(fontPile, mod);
 
       // Copy over found values
       forEach(tmpMultiFontOptions, (option, n) => {
@@ -4035,7 +4041,7 @@ class Label {
   _drawBackground(ctx) {
     if (this.fontOptions.background !== undefined && this.fontOptions.background !== "none") {
       ctx.fillStyle = this.fontOptions.background;
-      let size = this.getSize();
+      const size = this.getSize();
       ctx.fillRect(size.left, size.top, size.width, size.height);
     }
   }
@@ -4066,7 +4072,7 @@ class Label {
 
     // draw the text
     for (let i = 0; i < this.lineCount; i++) {
-      let line = this.lines[i];
+      const line = this.lines[i];
       if (line && line.blocks) {
         let width = 0;
         if (this.isEdgeLabel || this.fontOptions.align === 'center') {
@@ -4075,9 +4081,9 @@ class Label {
           width += (this.size.width - line.width);
         }
         for (let j = 0; j < line.blocks.length; j++) {
-          let block = line.blocks[j];
+          const block = line.blocks[j];
           ctx.font = block.font;
-          let [fontColor, strokeColor] = this._getColor(block.color, viewFontSize, block.strokeColor);
+          const [fontColor, strokeColor] = this._getColor(block.color, viewFontSize, block.strokeColor);
           if (block.strokeWidth > 0) {
             ctx.lineWidth = block.strokeWidth;
             ctx.strokeStyle = strokeColor;
@@ -4112,7 +4118,7 @@ class Label {
       x = 0;
       y = 0;
 
-      let lineMargin = 2;
+      const lineMargin = 2;
       if (this.fontOptions.align === 'top') {
         ctx.textBaseline = 'alphabetic';
         y -= 2 * lineMargin; // distance from edge, required because we use alphabetic. Alphabetic has less difference between browsers
@@ -4145,7 +4151,7 @@ class Label {
     let fontColor = color || '#000000';
     let strokeColor = initialStrokeColor || '#ffffff';
     if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
-      let opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
+      const opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
       fontColor = overrideOpacity(fontColor, opacity);
       strokeColor = overrideOpacity(strokeColor, opacity);
     }
@@ -4175,7 +4181,7 @@ class Label {
    * @return {rect}
    */
   getSize() {
-    let lineMargin = 2;
+    const lineMargin = 2;
     let x = this.size.left;                 // default values which might be overridden below
     let y = this.size.top - 0.5*lineMargin; // idem
 
@@ -4198,7 +4204,7 @@ class Label {
       }
     }
 
-    var ret = {
+    const ret = {
       left  : x,
       top   : y,
       width : this.size.width,
@@ -4240,7 +4246,7 @@ class Label {
    * @returns {{color, size, face, mod, vadjust, strokeWidth: *, strokeColor: (*|string|allOptions.edges.font.strokeColor|{string}|allOptions.nodes.font.strokeColor|Array)}}
    */
   getFormattingValues(ctx, selected, hover, mod) {
-    let getValue = function(fontOptions, mod, option) {
+    const getValue = function(fontOptions, mod, option) {
       if (mod === "normal") {
         if (option === 'mod' ) return "";
         return fontOptions[option];
@@ -4254,7 +4260,7 @@ class Label {
       }
     };
 
-    let values = {
+    const values = {
       color  : getValue(this.fontOptions, mod, 'color'  ),
       size   : getValue(this.fontOptions, mod, 'size'   ),
       face   : getValue(this.fontOptions, mod, 'face'   ),
@@ -4308,7 +4314,7 @@ class Label {
    * @private
    */
   _processLabelText(ctx, selected, hover, inText) {
-    let splitter = new LabelSplitter(ctx, this, selected, hover);
+    const splitter = new LabelSplitter(ctx, this, selected, hover);
     return splitter.process(inText);
   }
 
@@ -4325,7 +4331,7 @@ class Label {
     if(this.labelDirty === false && !this.differentState(selected,hover))
       return;
     
-    let state = this._processLabelText(ctx, selected, hover, this.elementOptions.label);
+    const state = this._processLabelText(ctx, selected, hover, this.elementOptions.label);
 
     if ((this.fontOptions.minWdt > 0) && (state.width < this.fontOptions.minWdt)) {
       state.width = this.fontOptions.minWdt;
@@ -4358,7 +4364,7 @@ class Label {
       return false;  // nothing to display
     }
 
-    let viewFontSize = this.fontOptions.size * this.body.view.scale;
+    const viewFontSize = this.fontOptions.size * this.body.view.scale;
     if (viewFontSize < this.elementOptions.scaling.label.drawThreshold - 1) {
       return false;  // Too small or too far away to show
     }
@@ -4429,7 +4435,7 @@ class NodeBase {
    * @private
    */
   _distanceToBorder(ctx,angle) {
-    var borderWidth = this.options.borderWidth;
+    const borderWidth = this.options.borderWidth;
     if (ctx){
       this.resize(ctx);
     }
@@ -4531,7 +4537,7 @@ class NodeBase {
    * @param {ArrowOptions} values
    */
   initContextForDraw(ctx, values) {
-    var borderWidth = values.borderWidth / this.body.view.scale;
+    const borderWidth = values.borderWidth / this.body.view.scale;
 
     ctx.lineWidth = Math.min(this.width, borderWidth);
     ctx.strokeStyle = values.borderColor;
@@ -4544,7 +4550,7 @@ class NodeBase {
    * @param {ArrowOptions} values
    */
   performStroke(ctx, values) {
-    var borderWidth = values.borderWidth / this.body.view.scale;
+    const borderWidth = values.borderWidth / this.body.view.scale;
 
     //draw dashed border if enabled, save and restore is required for firefox not to crash on unix.
     ctx.save();
@@ -4652,8 +4658,8 @@ class NodeBase {
     // NOTE: previously 'textSize' was not put in 'this' for Ellipse
     // TODO: examine the consequences.
     this.textSize = this.labelModule.getTextSize(ctx, selected, hover);
-    var width  = this.textSize.width;
-    var height = this.textSize.height;
+    let width  = this.textSize.width;
+    let height = this.textSize.height;
 
     const DEFAULT_SIZE = 14;
     if (width === 0) {
@@ -4690,7 +4696,7 @@ class Box extends NodeBase {
    */
   resize(ctx, selected = this.selected, hover = this.hover) {
     if (this.needsRefresh(selected, hover)) {
-      var dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
+      const dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
 
       this.width  = dimensions.width + this.margin.right + this.margin.left;
       this.height = dimensions.height + this.margin.top + this.margin.bottom;
@@ -4732,7 +4738,7 @@ class Box extends NodeBase {
   updateBoundingBox(x, y, ctx, selected, hover) {
     this._updateBoundingBox(x, y, ctx, selected, hover);
 
-    let borderRadius = this.options.shapeProperties.borderRadius; // only effective for box
+    const borderRadius = this.options.shapeProperties.borderRadius; // only effective for box
     this._addBoundingBoxMargin(borderRadius);
   }
 
@@ -4746,7 +4752,7 @@ class Box extends NodeBase {
     if (ctx) {
       this.resize(ctx);
     }
-    let borderWidth = this.options.borderWidth;
+    const borderWidth = this.options.borderWidth;
 
     return Math.min(
         Math.abs((this.width) / 2 / Math.cos(angle)),
@@ -4826,11 +4832,11 @@ class CircleImageBase extends NodeBase {
    * @param {boolean} selected value of new selected state for current node
    */
   switchImages(selected) {
-    var selection_changed = ((selected && !this.selected) || (!selected && this.selected));
+    const selection_changed = ((selected && !this.selected) || (!selected && this.selected));
     this.selected = selected;    // Remember new selection
 
     if (this.imageObjAlt !== undefined && selection_changed) {
-      let imageTmp = this.imageObj;
+      const imageTmp = this.imageObj;
       this.imageObj = this.imageObjAlt;
       this.imageObjAlt = imageTmp;
     }
@@ -4843,9 +4849,9 @@ class CircleImageBase extends NodeBase {
    * @private
    */
   _getImagePadding() {
-    var imgPadding = { top: 0, right: 0, bottom: 0, left: 0};
+    const imgPadding = { top: 0, right: 0, bottom: 0, left: 0};
       if (this.options.imagePadding) {          
-        var optImgPadding = this.options.imagePadding;
+        const optImgPadding = this.options.imagePadding;
         if (typeof optImgPadding == 'object') {
           imgPadding.top = optImgPadding.top;
           imgPadding.right = optImgPadding.right;
@@ -4868,12 +4874,12 @@ class CircleImageBase extends NodeBase {
    * Pre: this.imageObj is valid
    */
   _resizeImage() {
-    var width, height;
+    let width, height;
 
     if (this.options.shapeProperties.useImageSize === false) {
       // Use the size property
-      var ratio_width  = 1;
-      var ratio_height = 1;
+      let ratio_width  = 1;
+      let ratio_height = 1;
 
       // Only calculate the proper ratio if both width and height not zero
       if (this.imageObj.width && this.imageObj.height) {
@@ -4890,7 +4896,7 @@ class CircleImageBase extends NodeBase {
     }
     else {
       // Use the image size with image padding
-      var imgPadding = this._getImagePadding();
+      const imgPadding = this._getImagePadding();
       width = this.imageObj.width + imgPadding.left + imgPadding.right;
       height = this.imageObj.height + imgPadding.top + imgPadding.bottom;
     }
@@ -4933,12 +4939,12 @@ class CircleImageBase extends NodeBase {
         factor = (this.imageObj.width / this.width) / this.body.view.scale;
       }
 
-      var imgPadding = this._getImagePadding();
+      const imgPadding = this._getImagePadding();
 
-      var imgPosLeft =  this.left + imgPadding.left;
-      var imgPosTop = this.top + imgPadding.top;
-      var imgWidth = this.width - imgPadding.left - imgPadding.right;
-      var imgHeight = this.height - imgPadding.top - imgPadding.bottom;
+      const imgPosLeft =  this.left + imgPadding.left;
+      const imgPosTop = this.top + imgPadding.top;
+      const imgWidth = this.width - imgPadding.left - imgPadding.right;
+      const imgHeight = this.height - imgPadding.top - imgPadding.bottom;
       this.imageObj.drawImageAtPosition(ctx, factor, imgPosLeft, imgPosTop, imgWidth, imgHeight);
 
       // disable shadows for other elements.
@@ -4956,18 +4962,17 @@ class CircleImageBase extends NodeBase {
    * @private
    */
   _drawImageLabel(ctx, x, y, selected, hover) {
-    var yLabel;
-    var offset = 0;
+    let offset = 0;
 
     if (this.height !== undefined) {
       offset = this.height * 0.5;
-      var labelDimensions = this.labelModule.getTextSize(ctx, selected, hover);
+      const labelDimensions = this.labelModule.getTextSize(ctx, selected, hover);
       if (labelDimensions.lineCount >= 1) {
         offset += labelDimensions.height / 2;
       }
     }
 
-    yLabel = y + offset;
+    const yLabel = y + offset;
 
     if (this.options.label) {
       this.labelOffset = offset;
@@ -5000,9 +5005,9 @@ class Circle extends CircleImageBase {
    */
   resize(ctx, selected = this.selected, hover = this.hover) {
     if (this.needsRefresh(selected, hover)) {
-      var dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
+      const dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
 
-      var diameter = Math.max(dimensions.width  + this.margin.right + this.margin.left,
+      const diameter = Math.max(dimensions.width  + this.margin.right + this.margin.left,
                               dimensions.height + this.margin.top   + this.margin.bottom);
 
       this.options.size = diameter / 2; // NOTE: this size field only set here, not in Ellipse, Database, Box
@@ -5085,12 +5090,12 @@ class CircularImage extends CircleImageBase {
    * @param {boolean} [hover]
    */
   resize(ctx, selected = this.selected, hover = this.hover) {
-    var imageAbsent = (this.imageObj.src === undefined) ||
+    const imageAbsent = (this.imageObj.src === undefined) ||
         (this.imageObj.width === undefined) ||
         (this.imageObj.height === undefined);
 
     if (imageAbsent) {
-      var diameter = this.options.size * 2;
+      const diameter = this.options.size * 2;
       this.width = diameter;
       this.height = diameter;
       this.radius = 0.5*this.width;
@@ -5211,7 +5216,7 @@ class ShapeBase extends NodeBase {
   resize(ctx, selected = this.selected, hover = this.hover, values = { size: this.options.size }) {
     if (this.needsRefresh(selected, hover)) {
       this.labelModule.getTextSize(ctx, selected, hover);
-      var size = 2 * values.size;
+      const size = 2 * values.size;
       this.width = size;
       this.height = size;
       this.radius = 0.5*this.width;
@@ -5261,7 +5266,7 @@ class ShapeBase extends NodeBase {
     if (this.options.label !== undefined) {
       // Need to call following here in order to ensure value for `this.labelModule.size.height`
       this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
-      let yLabel = y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
+      const yLabel = y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
       this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
     }
 
@@ -5353,8 +5358,8 @@ class Database extends NodeBase {
    */
   resize(ctx, selected, hover) {
     if (this.needsRefresh(selected, hover)) {
-      var dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
-      var size = dimensions.width + this.margin.right + this.margin.left;
+      const dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
+      const size = dimensions.width + this.margin.right + this.margin.left;
 
       this.width  = size;
       this.height = size;
@@ -5499,7 +5504,7 @@ class Ellipse extends NodeBase {
    */
   resize(ctx, selected = this.selected, hover = this.hover) {
     if (this.needsRefresh(selected, hover)) {
-      var dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
+      const dimensions = this.getDimensionsFromLabel(ctx, selected, hover);
 
       this.height = dimensions.height * 2;
       this.width  = dimensions.width + dimensions.height;
@@ -5539,10 +5544,10 @@ class Ellipse extends NodeBase {
     if (ctx) {
       this.resize(ctx);
     }
-    var a = this.width * 0.5;
-    var b = this.height * 0.5;
-    var w = (Math.sin(angle) * a);
-    var h = (Math.cos(angle) * b);
+    const a = this.width * 0.5;
+    const b = this.height * 0.5;
+    const w = (Math.sin(angle) * a);
+    const h = (Math.cos(angle) * b);
     return a * b / Math.sqrt(w * w + h * h);
   }
 }
@@ -5599,7 +5604,7 @@ class Icon extends NodeBase {
     this._icon(ctx, x, y, selected, hover, values);
 
     if (this.options.label !== undefined) {
-      var iconTextSpacing = 5;
+      const iconTextSpacing = 5;
       this.labelModule.draw(ctx, this.left + this.iconSize.width / 2 + this.margin.left,
                                  y + this.height / 2 + iconTextSpacing, selected);
     }
@@ -5619,7 +5624,7 @@ class Icon extends NodeBase {
     this.boundingBox.bottom = y + this.options.icon.size * 0.5;
 
     if (this.options.label !== undefined && this.labelModule.size.width > 0) {
-      var iconTextSpacing = 5;
+      const iconTextSpacing = 5;
       this.boundingBox.left = Math.min(this.boundingBox.left, this.labelModule.size.left);
       this.boundingBox.right = Math.max(this.boundingBox.right, this.labelModule.size.left + this.labelModule.size.width);
       this.boundingBox.bottom = Math.max(this.boundingBox.bottom, this.boundingBox.bottom + this.labelModule.size.height + iconTextSpacing);
@@ -5636,7 +5641,7 @@ class Icon extends NodeBase {
    * @param {ArrowOptions} values
    */
   _icon(ctx, x, y, selected, hover, values) {
-    let iconSize = Number(this.options.icon.size);
+    const iconSize = Number(this.options.icon.size);
 
     if (this.options.icon.code !== undefined) {
       ctx.font = [
@@ -5707,12 +5712,12 @@ class Image$1 extends CircleImageBase {
    * @param {boolean} [hover]
    */
   resize(ctx, selected = this.selected, hover = this.hover) {
-    var imageAbsent = (this.imageObj.src === undefined) ||
+    const imageAbsent = (this.imageObj.src === undefined) ||
         (this.imageObj.width === undefined) ||
         (this.imageObj.height === undefined);
 
     if (imageAbsent) {
-      var side = this.options.size * 2;
+      const side = this.options.size * 2;
       this.width = side;
       this.height = side;
       return;
@@ -5751,9 +5756,9 @@ class Image$1 extends CircleImageBase {
     }
 
     if (this.options.shapeProperties.useBorderWithImage === true) {
-      var neutralborderWidth = this.options.borderWidth;
-      var selectionLineWidth = this.options.borderWidthSelected || 2 * this.options.borderWidth;
-      var borderWidth = (selected ? selectionLineWidth : neutralborderWidth) / this.body.view.scale;
+      const neutralborderWidth = this.options.borderWidth;
+      const selectionLineWidth = this.options.borderWidthSelected || 2 * this.options.borderWidth;
+      const borderWidth = (selected ? selectionLineWidth : neutralborderWidth) / this.body.view.scale;
       ctx.lineWidth = Math.min(this.width, borderWidth);
 
       ctx.beginPath();
@@ -6093,7 +6098,7 @@ class TriangleDown extends ShapeBase {
 
 let errorFound = false;
 let allOptions;
-let printStyle = 'background: #FFeeee; color: #dd0000';
+const printStyle = 'background: #FFeeee; color: #dd0000';
 /**
  *  Used to validate options.
  */
@@ -6132,8 +6137,8 @@ class Validator {
    * @static
    */
   static parse(options, referenceOptions, path) {
-    for (let option in options) {
-      if (options.hasOwnProperty(option)) {
+    for (const option in options) {
+      if (Object.prototype.hasOwnProperty.call(options, option)) {
         Validator.check(option, options, referenceOptions, path);
       }
     }
@@ -6189,12 +6194,12 @@ class Validator {
    * @static
    */
   static checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path) {
-    let log = function(message) {
+    const log = function(message) {
       console.log('%c' + message + Validator.printLocation(path, option), printStyle);
     };
 
-    let optionType = Validator.getType(options[option]);
-    let refOptionType = refOptionObj[optionType];
+    const optionType = Validator.getType(options[option]);
+    const refOptionType = refOptionObj[optionType];
 
     if (refOptionType !== undefined) {
       // if the type is correct, we check if it is supposed to be one of a few select values
@@ -6225,7 +6230,7 @@ class Validator {
    * @static
    */
   static getType(object) {
-    var type = typeof object;
+    const type = typeof object;
 
     if (type === 'object') {
       if (object === null) {
@@ -6276,11 +6281,11 @@ class Validator {
    * @static
    */
   static getSuggestion(option, options, path) {
-    let localSearch = Validator.findInOptions(option,options,path,false);
-    let globalSearch = Validator.findInOptions(option,allOptions,[],true);
+    const localSearch = Validator.findInOptions(option,options,path,false);
+    const globalSearch = Validator.findInOptions(option,allOptions,[],true);
 
-    let localSearchThreshold = 8;
-    let globalSearchThreshold = 4;
+    const localSearchThreshold = 8;
+    const globalSearchThreshold = 4;
 
     let msg;
     if (localSearch.indexMatch !== undefined) {
@@ -6318,12 +6323,12 @@ class Validator {
     let min = 1e9;
     let closestMatch = '';
     let closestMatchPath = [];
-    let lowerCaseOption = option.toLowerCase();
+    const lowerCaseOption = option.toLowerCase();
     let indexMatch = undefined;
-    for (let op in options) {  // eslint-disable-line guard-for-in
+    for (const op in options) {  // eslint-disable-line guard-for-in
       let distance;
       if (options[op].__type__ !== undefined && recursive === true) {
-        let result = Validator.findInOptions(option, options[op], copyAndExtendArray(path,op));
+        const result = Validator.findInOptions(option, options[op], copyAndExtendArray(path,op));
         if (min > result.distance) {
           closestMatch = result.closestMatch;
           closestMatchPath = result.path;
@@ -6405,16 +6410,16 @@ class Validator {
     if (a.length === 0) return b.length;
     if (b.length === 0) return a.length;
 
-    var matrix = [];
+    const matrix = [];
 
     // increment along the first column of each row
-    var i;
+    let i;
     for (i = 0; i <= b.length; i++) {
       matrix[i] = [i];
     }
 
     // increment each column in the first row
-    var j;
+    let j;
     for (j = 0; j <= a.length; j++) {
       matrix[0][j] = j;
     }
@@ -6504,7 +6509,7 @@ class Node {
    * @param {Edge} edge
    */
   detachEdge(edge) {
-    var index = this.edges.indexOf(edge);
+    const index = this.edges.indexOf(edge);
     if (index != -1) {
       this.edges.splice(index, 1);
     }
@@ -6518,7 +6523,7 @@ class Node {
    * @returns {null|boolean}
    */
   setOptions(options) {
-    let currentShape = this.options.shape;
+    const currentShape = this.options.shape;
     
     if (!options) {
       return;  // Note that the return value will be 'undefined'! This is OK.
@@ -6557,7 +6562,7 @@ class Node {
     // this transforms all shorthands into fully defined options
     Node.parseOptions(this.options, options, true, this.globalOptions, this.grouplist);
     
-    let pile = [options, this.options, this.defaultOptions];
+    const pile = [options, this.options, this.defaultOptions];
     this.chooser = choosify('node', pile);
 
     
@@ -6651,7 +6656,7 @@ class Node {
   static updateGroupOptions(parentOptions, newOptions, groupList) {
     if (groupList === undefined) return;  // No groups, nothing to do
 
-    var group = parentOptions.group;
+    const group = parentOptions.group;
 
     // paranoia: the selected group is already merged into node options, check.
     if (newOptions !== undefined && newOptions.group !== undefined && group !== newOptions.group) {
@@ -6659,11 +6664,11 @@ class Node {
     }
 
     
-    var hasGroup = (typeof group === 'number' || (typeof group === 'string' && group != ''));
+    const hasGroup = (typeof group === 'number' || (typeof group === 'string' && group != ''));
     if (!hasGroup) return;  // current node has no group, no need to merge
     
     
-    var groupObj = groupList.get(group);
+    const groupObj = groupList.get(group);
 
     if (groupObj.opacity !== undefined && newOptions.opacity === undefined) {
       if (!Node.checkOpacity(groupObj.opacity)) {
@@ -6696,7 +6701,7 @@ class Node {
    * @static
    */
   static parseOptions(parentOptions, newOptions, allowDeletion = false, globalOptions = {}, groupList) {
-    var fields = [
+    const fields = [
       'color',
       'fixed',
       'shadow'
@@ -6729,7 +6734,7 @@ class Node {
 
     // individual shape newOptions
     if (newOptions.color !== undefined && newOptions.color !== null) {
-      let parsedColor = parseColor(newOptions.color);
+      const parsedColor = parseColor(newOptions.color);
       fillIfDefined(parentOptions.color, parsedColor);
     }
     else if (allowDeletion === true && newOptions.color === null) {
@@ -6770,7 +6775,7 @@ class Node {
    * @returns {{color: *, borderWidth: *, borderColor: *, size: *, borderDashes: (boolean|Array|allOptions.nodes.shapeProperties.borderDashes|{boolean, array}), borderRadius: (number|allOptions.nodes.shapeProperties.borderRadius|{number}|Array), shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *}}
    */
   getFormattingValues() {
-    let values = {
+    const values = {
       color: this.options.color.background,
       opacity: this.options.opacity,
       borderWidth: this.options.borderWidth,
@@ -6848,8 +6853,8 @@ class Node {
     // WE DON'T WANT THE ORDER OF THE PROTOTYPES!!!! At least, not for font handling of labels.
     // This is a good indication that the prototype usage of options is deficient.
     //
-    var currentGroup = this.grouplist.get(this.options.group, false);
-    let pile = [
+    const currentGroup = this.grouplist.get(this.options.group, false);
+    const pile = [
       options,             // new options
       this.options,        // current node options, see comment above for prototype
       currentGroup,        // group options, if any
@@ -7026,10 +7031,10 @@ class Node {
    */
   setValueRange(min, max, total) {
     if (this.options.value !== undefined) {
-      var scale = this.options.scaling.customScalingFunction(min, max, total, this.options.value);
-      var sizeDiff = this.options.scaling.max - this.options.scaling.min;
+      const scale = this.options.scaling.customScalingFunction(min, max, total, this.options.value);
+      const sizeDiff = this.options.scaling.max - this.options.scaling.min;
       if (this.options.scaling.label.enabled === true) {
-        var fontDiff = this.options.scaling.label.max - this.options.scaling.label.min;
+        const fontDiff = this.options.scaling.label.max - this.options.scaling.label.min;
         this.options.font.size = this.options.scaling.label.min + scale * fontDiff;
       }
       this.options.size = this.options.scaling.min + scale * sizeDiff;
@@ -7049,7 +7054,7 @@ class Node {
    * @param {CanvasRenderingContext2D}   ctx
    */
   draw(ctx) {
-    let values = this.getFormattingValues();
+    const values = this.getFormattingValues();
     this.shape.draw(ctx, this.x, this.y, this.selected, this.hover, values);
   }
 
@@ -7069,7 +7074,7 @@ class Node {
    * @param {CanvasRenderingContext2D}   ctx
    */
   resize(ctx) {
-    let values = this.getFormattingValues();
+    const values = this.getFormattingValues();
     this.shape.resize(ctx, this.selected, this.hover, values);
   }
 
@@ -7082,7 +7087,7 @@ class Node {
    * @returns {Array.<nodeClickItem|nodeLabelClickItem>} list with the items which are on the point
    */
   getItemsOnPoint(point) {
-    var ret = [];
+    const ret = [];
 
     if (this.labelModule.visible()) {
       if (pointInRect(this.labelModule.getSize(), point)) {
@@ -7263,7 +7268,7 @@ class NodesHandler {
             return 0.5;
           }
           else {
-            let scale = 1 / (max - min);
+            const scale = 1 / (max - min);
             return Math.max(0, (value - min) * scale);
           }
         }
@@ -7342,8 +7347,8 @@ class NodesHandler {
 
       // update the shape in all nodes
       if (options.shape !== undefined) {
-        for (let nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
+        for (const nodeId in this.body.nodes) {
+          if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
             this.body.nodes[nodeId].updateShape();
           }
         }
@@ -7355,7 +7360,7 @@ class NodesHandler {
         typeof options.widthConstraint !== "undefined" ||
         typeof options.heightConstraint !== "undefined"
       ) {
-        for (let nodeId of Object.keys(this.body.nodes)) {
+        for (const nodeId of Object.keys(this.body.nodes)) {
           this.body.nodes[nodeId].updateLabelModule();
           this.body.nodes[nodeId].needsRefresh();
         }
@@ -7363,8 +7368,8 @@ class NodesHandler {
 
       // update the shape size in all nodes
       if (options.size !== undefined) {
-        for (let nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
+        for (const nodeId in this.body.nodes) {
+          if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
             this.body.nodes[nodeId].needsRefresh();
           }
         }
@@ -7384,7 +7389,7 @@ class NodesHandler {
    * @private
    */
   setData(nodes, doNotEmit = false) {
-    let oldNodesData = this.body.data.nodes;
+    const oldNodesData = this.body.data.nodes;
 
     if (nodes instanceof DataSet || nodes instanceof DataView) {
       this.body.data.nodes = nodes;
@@ -7412,13 +7417,13 @@ class NodesHandler {
 
     if (this.body.data.nodes) {
       // subscribe to new dataset
-      let me = this;
+      const me = this;
       forEach(this.nodesListeners, function (callback, event) {
         me.body.data.nodes.on(event, callback);
       });
 
       // draw all new nodes
-      let ids = this.body.data.nodes.getIds();
+      const ids = this.body.data.nodes.getIds();
       this.add(ids, true);
     }
 
@@ -7436,11 +7441,11 @@ class NodesHandler {
    */
   add(ids, doNotEmit = false) {
     let id;
-    let newNodes = [];
+    const newNodes = [];
     for (let i = 0; i < ids.length; i++) {
       id = ids[i];
-      let properties = this.body.data.nodes.get(id);
-      let node = this.create(properties);
+      const properties = this.body.data.nodes.get(id);
+      const node = this.create(properties);
       newNodes.push(node);
       this.body.nodes[id] = node; // note: this may replace an existing node
     }
@@ -7460,12 +7465,12 @@ class NodesHandler {
    * @private
    */
   update(ids, changedData, oldData) {
-    let nodes = this.body.nodes;
+    const nodes = this.body.nodes;
     let dataChanged = false;
     for (let i = 0; i < ids.length; i++) {
-      let id = ids[i];
+      const id = ids[i];
       let node = nodes[id];
-      let data = changedData[i];
+      const data = changedData[i];
       if (node !== undefined) {
         // update node
         if (node.setOptions(data)) {
@@ -7485,7 +7490,7 @@ class NodesHandler {
       // For now, this is just 'level' for hierarchical layout
       // Assumption: old and new data arranged in same order; at time of writing, this holds.
       dataChanged = changedData.some(function(newValue, index) {
-        let oldValue = oldData[index];
+        const oldValue = oldData[index];
         return (oldValue && oldValue.level !== newValue.level);
       });
     }
@@ -7504,10 +7509,10 @@ class NodesHandler {
    * @private
    */
   remove(ids) {
-    let nodes = this.body.nodes;
+    const nodes = this.body.nodes;
 
     for (let i = 0; i < ids.length; i++) {
-      let id = ids[i];
+      const id = ids[i];
       delete nodes[id];
     }
 
@@ -7532,7 +7537,7 @@ class NodesHandler {
    */
   refresh(clearPositions = false) {
     forEach(this.body.nodes, (node, nodeId) => {
-      let data = this.body.data.nodes.get(nodeId);
+      const data = this.body.data.nodes.get(nodeId);
       if (data !== undefined) {
         if (clearPositions === true) {
           node.setOptions({x:null, y:null});
@@ -7550,26 +7555,26 @@ class NodesHandler {
    * @returns {{}}
    */
   getPositions(ids) {
-    let dataArray = {};
+    const dataArray = {};
     if (ids !== undefined) {
       if (Array.isArray(ids) === true) {
         for (let i = 0; i < ids.length; i++) {
           if (this.body.nodes[ids[i]] !== undefined) {
-            let node = this.body.nodes[ids[i]];
+            const node = this.body.nodes[ids[i]];
             dataArray[ids[i]] = { x: Math.round(node.x), y: Math.round(node.y) };
           }
         }
       }
       else {
         if (this.body.nodes[ids] !== undefined) {
-          let node = this.body.nodes[ids];
+          const node = this.body.nodes[ids];
           dataArray[ids] = { x: Math.round(node.x), y: Math.round(node.y) };
         }
       }
     }
     else {
       for (let i = 0; i < this.body.nodeIndices.length; i++) {
-        let node = this.body.nodes[this.body.nodeIndices[i]];
+        const node = this.body.nodes[this.body.nodeIndices[i]];
         dataArray[this.body.nodeIndices[i]] = { x: Math.round(node.x), y: Math.round(node.y) };
       }
     }
@@ -7578,9 +7583,13 @@ class NodesHandler {
   
   /**
    * Retrieves the x y position of a specific id.
+   *
    * @param {string} id The id to retrieve.
+   *
    * @throws {TypeError} If no id is included.
    * @throws {ReferenceError} If an invalid id is provided.
+   *
+   * @returns {{ x: number, y: number }} Returns X, Y canvas position of the node with given id.
    */
   getPosition(id) {
     if (id == undefined) {
@@ -7635,12 +7644,12 @@ class NodesHandler {
    * @returns {Array}
    */
   getConnectedNodes(nodeId, direction) {
-    let nodeList = [];
+    const nodeList = [];
     if (this.body.nodes[nodeId] !== undefined) {
-      let node = this.body.nodes[nodeId];
-      let nodeObj = {}; // used to quickly check if node already exists
+      const node = this.body.nodes[nodeId];
+      const nodeObj = {}; // used to quickly check if node already exists
       for (let i = 0; i < node.edges.length; i++) {
-        let edge = node.edges[i];
+        const edge = node.edges[i];
         if (direction !== 'to' && edge.toId == node.id) { // these are double equals since ids can be numeric or string
           if (nodeObj[edge.fromId] === undefined) {
             nodeList.push(edge.fromId);
@@ -7664,9 +7673,9 @@ class NodesHandler {
    * @returns {*}
    */
   getConnectedEdges(nodeId) {
-    let edgeList = [];
+    const edgeList = [];
     if (this.body.nodes[nodeId] !== undefined) {
-      let node = this.body.nodes[nodeId];
+      const node = this.body.nodes[nodeId];
       for (let i = 0; i < node.edges.length; i++) {
         edgeList.push(node.edges[i].id);
       }
@@ -8579,7 +8588,7 @@ class EdgeBase {
         let reversed;
         let scaleFactor;
         let type;
-        let lineWidth = values.width;
+        const lineWidth = values.width;
         if (position === "from") {
             node1 = this.from;
             node2 = this.to;
@@ -9355,8 +9364,8 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
     /** @inheritdoc */
     _line(ctx, values, viaNodes) {
         // get the coordinates of the support points.
-        let via1 = viaNodes[0];
-        let via2 = viaNodes[1];
+        const via1 = viaNodes[0];
+        const via2 = viaNodes[1];
         this._bezierCurve(ctx, values, via1, via2);
     }
     /**
@@ -9575,7 +9584,7 @@ class Edge {
       options.value = parseFloat(options.value);
     }
 
-    let pile = [options, this.options, this.defaultOptions];
+    const pile = [options, this.options, this.defaultOptions];
     this.chooser = choosify('edge', pile);
 
     // update label Module
@@ -9603,7 +9612,7 @@ class Edge {
    * @param {boolean} [copyFromGlobals=false]
    */
   static parseOptions(parentOptions, newOptions, allowDeletion = false, globalOptions = {}, copyFromGlobals = false) {
-    var fields = [
+    const fields = [
       'endPointOffset',
       'arrowStrikethrough',
       'id',
@@ -9681,7 +9690,7 @@ class Edge {
     // handle multiple input cases for arrows
     if (newOptions.arrows !== undefined && newOptions.arrows !== null) {
       if (typeof newOptions.arrows === 'string') {
-        let arrows = newOptions.arrows.toLowerCase();
+        const arrows = newOptions.arrows.toLowerCase();
         parentOptions.arrows.to.enabled     = arrows.indexOf("to")     != -1;
         parentOptions.arrows.middle.enabled = arrows.indexOf("middle") != -1;
         parentOptions.arrows.from.enabled   = arrows.indexOf("from")   != -1;
@@ -9710,15 +9719,15 @@ class Edge {
           opacity: 1
         }
         : newOptions.color;
-      let toColor   = parentOptions.color;
+      const toColor   = parentOptions.color;
 
       // If passed, fill in values from default options - required in the case of no prototype bridging
       if (copyFromGlobals) {
         deepExtend(toColor, globalOptions.color, false, allowDeletion);
       } else {
         // Clear local properties - need to do it like this in order to retain prototype bridges
-        for (var i in toColor) {
-          if (toColor.hasOwnProperty(i)) {
+        for (const i in toColor) {
+          if (Object.prototype.hasOwnProperty.call(toColor, i)) {
             delete toColor[i];
           }
         }
@@ -9758,7 +9767,7 @@ class Edge {
       parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
     }
 
-    if(newOptions.hasOwnProperty("selfReferenceSize")){
+    if(Object.prototype.hasOwnProperty.call(newOptions, "selfReferenceSize")){
       console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
       parentOptions.selfReference.size = newOptions.selfReferenceSize;
     }
@@ -9771,11 +9780,11 @@ class Edge {
    * @returns {ArrowOptions}
    */
   getFormattingValues() {
-    let toArrow = (this.options.arrows.to === true) || (this.options.arrows.to.enabled === true);
-    let fromArrow = (this.options.arrows.from === true) || (this.options.arrows.from.enabled === true);
-    let middleArrow = (this.options.arrows.middle === true) || (this.options.arrows.middle.enabled === true);
-    let inheritsColor = this.options.color.inherit;
-    let values = {
+    const toArrow = (this.options.arrows.to === true) || (this.options.arrows.to.enabled === true);
+    const fromArrow = (this.options.arrows.from === true) || (this.options.arrows.from.enabled === true);
+    const middleArrow = (this.options.arrows.middle === true) || (this.options.arrows.middle.enabled === true);
+    const inheritsColor = this.options.color.inherit;
+    const values = {
       toArrow: toArrow,
       toArrowScale: this.options.arrows.to.scaleFactor,
       toArrowType: this.options.arrows.to.type,
@@ -9815,7 +9824,7 @@ class Edge {
     if (this.selected || this.hover) {
       if (this.chooser === true) {
         if (this.selected) {
-          let selectedWidth = this.options.selectionWidth;
+          const selectedWidth = this.options.selectionWidth;
           if (typeof selectedWidth === 'function') {
             values.width = selectedWidth(values.width);
           } else if (typeof selectedWidth === 'number') {
@@ -9825,7 +9834,7 @@ class Edge {
           values.color = this.options.color.highlight;
           values.shadow = this.options.shadow.enabled;
         } else if (this.hover) {
-          let hoverWidth = this.options.hoverWidth;
+          const hoverWidth = this.options.hoverWidth;
           if (typeof hoverWidth === 'function') {
             values.width = hoverWidth(values.width);
           } else if (typeof hoverWidth === 'number') {
@@ -9862,7 +9871,7 @@ class Edge {
    * @param {Object} options
    */
   updateLabelModule(options) {
-    let pile = [
+    const pile = [
       options,
       this.options,
       this.globalOptions,  // Currently set global edge options
@@ -9881,7 +9890,7 @@ class Edge {
    * @returns {boolean}
    */
   updateEdgeType() {
-    let smooth = this.options.smooth;
+    const smooth = this.options.smooth;
     let dataChanged = false;
     let changeInType = true;
     if (this.edgeType !== undefined) {
@@ -10003,10 +10012,10 @@ class Edge {
    */
   setValueRange(min, max, total) {
     if (this.options.value !== undefined) {
-      var scale = this.options.scaling.customScalingFunction(min, max, total, this.options.value);
-      var widthDiff = this.options.scaling.max - this.options.scaling.min;
+      const scale = this.options.scaling.customScalingFunction(min, max, total, this.options.value);
+      const widthDiff = this.options.scaling.max - this.options.scaling.min;
       if (this.options.scaling.label.enabled === true) {
-        var fontDiff = this.options.scaling.label.max - this.options.scaling.label.min;
+        const fontDiff = this.options.scaling.label.max - this.options.scaling.label.min;
         this.options.font.size = this.options.scaling.label.min + scale * fontDiff;
       }
       this.options.width = this.options.scaling.min + scale * widthDiff;
@@ -10164,19 +10173,20 @@ class Edge {
   drawLabel(ctx, viaNode) {
     if (this.options.label !== undefined) {
       // set style
-      var node1 = this.from;
-      var node2 = this.to;
+      const node1 = this.from;
+      const node2 = this.to;
 
       if (this.labelModule.differentState(this.selected, this.hover)) {
         this.labelModule.getTextSize(ctx, this.selected, this.hover);
       }
 
+      let point;
       if (node1.id != node2.id) {
         this.labelModule.pointToSelf = false;
-        var point = this.edgeType.getPoint(0.5, viaNode);
+        point = this.edgeType.getPoint(0.5, viaNode);
         ctx.save();
 
-        let rotationPoint = this._getRotation(ctx);
+        const rotationPoint = this._getRotation(ctx);
         if (rotationPoint.angle != 0) {
           ctx.translate(rotationPoint.x, rotationPoint.y);
           ctx.rotate(rotationPoint.angle);
@@ -10229,16 +10239,16 @@ class Edge {
    * @returns {Array.<edgeClickItem|edgeLabelClickItem>} list with the items which are on the point
    */
   getItemsOnPoint(point) {
-    var ret = [];
+    const ret = [];
 
     if (this.labelModule.visible()) {
-      let rotationPoint = this._getRotation();
+      const rotationPoint = this._getRotation();
       if (pointInRect(this.labelModule.getSize(), point, rotationPoint)) {
         ret.push({edgeId:this.id, labelId:0});
       }
     }
 
-    let obj = {
+    const obj = {
       left: point.x,
       top: point.y
     };
@@ -10258,15 +10268,15 @@ class Edge {
    */
   isOverlappingWith(obj) {
     if (this.connected) {
-      var distMax = 10;
-      var xFrom = this.from.x;
-      var yFrom = this.from.y;
-      var xTo = this.to.x;
-      var yTo = this.to.y;
-      var xObj = obj.left;
-      var yObj = obj.top;
+      const distMax = 10;
+      const xFrom = this.from.x;
+      const yFrom = this.from.y;
+      const xTo = this.to.x;
+      const yTo = this.to.y;
+      const xObj = obj.left;
+      const yObj = obj.top;
 
-      var dist = this.edgeType.getDistanceToEdge(xFrom, yFrom, xTo, yTo, xObj, yObj);
+      const dist = this.edgeType.getDistanceToEdge(xFrom, yFrom, xTo, yTo, xObj, yObj);
 
       return (dist < distMax);
     }
@@ -10284,14 +10294,14 @@ class Edge {
    * @private
    */
   _getRotation(ctx) {
-    let viaNode = this.edgeType.getViaNode();
-    let point = this.edgeType.getPoint(0.5, viaNode);
+    const viaNode = this.edgeType.getViaNode();
+    const point = this.edgeType.getPoint(0.5, viaNode);
 
     if (ctx !== undefined) {
       this.labelModule.calculateLabelSize(ctx, this.selected, this.hover, point.x, point.y);
     }
 
-    let ret = {
+    const ret = {
       x: point.x,
       y: this.labelModule.size.yLine,
       angle: 0
@@ -10305,9 +10315,9 @@ class Edge {
       return ret;  // No need to calculate angle
     }
 
-    var dy = this.from.y - this.to.y;
-    var dx = this.from.x - this.to.x;
-    var angle = Math.atan2(dy, dx);  // radians
+    const dy = this.from.y - this.to.y;
+    const dx = this.from.x - this.to.x;
+    let angle = Math.atan2(dy, dx);  // radians
 
     // rotate so that label is readable
     if ((angle < -1 && dx < 0) || (angle > 0 && dx < 0)) {
@@ -10469,7 +10479,7 @@ class EdgesHandler {
             return 0.5;
           }
           else {
-            var scale = 1 / (max - min);
+            const scale = 1 / (max - min);
             return Math.max(0,(value - min)*scale);
           }
         }
@@ -10519,15 +10529,15 @@ class EdgesHandler {
         type = 'continuous';
       }
       let dataChanged = false;
-      for (let edgeId in this.body.edges) {
-        if (this.body.edges.hasOwnProperty(edgeId)) {
-          let edge = this.body.edges[edgeId];
+      for (const edgeId in this.body.edges) {
+        if (Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
+          const edge = this.body.edges[edgeId];
           const edgeData = this.body.data.edges.get(edgeId);
 
           // only forcibly remove the smooth curve if the data has been set of the edge has the smooth curves defined.
           // this is because a change in the global would not affect these curves.
           if (edgeData != null) {
-            let smoothOptions = edgeData.smooth;
+            const smoothOptions = edgeData.smooth;
             if (smoothOptions !== undefined) {
               if (smoothOptions.enabled === true && smoothOptions.type === 'dynamic') {
                 if (type === undefined) {
@@ -10588,8 +10598,8 @@ class EdgesHandler {
       // update smooth settings in all edges
       let dataChanged = false;
       if (options.smooth !== undefined) {
-        for (let edgeId in this.body.edges) {
-          if (this.body.edges.hasOwnProperty(edgeId)) {
+        for (const edgeId in this.body.edges) {
+          if (Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
             dataChanged = this.body.edges[edgeId].updateEdgeType() || dataChanged;
           }
         }
@@ -10597,8 +10607,8 @@ class EdgesHandler {
 
       // update fonts in all edges
       if (options.font !== undefined) {
-        for (let edgeId in this.body.edges) {
-          if (this.body.edges.hasOwnProperty(edgeId)) {
+        for (const edgeId in this.body.edges) {
+          if (Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
             this.body.edges[edgeId].updateLabelModule();
           }
         }
@@ -10619,7 +10629,7 @@ class EdgesHandler {
    * @private
    */
   setData(edges, doNotEmit = false) {
-    var oldEdgesData = this.body.data.edges;
+    const oldEdgesData = this.body.data.edges;
 
     if (edges instanceof DataSet || edges instanceof DataView) {
       this.body.data.edges = edges;
@@ -10650,7 +10660,7 @@ class EdgesHandler {
       forEach(this.edgesListeners, (callback, event) =>  {this.body.data.edges.on(event, callback);});
 
       // draw all new nodes
-      var ids = this.body.data.edges.getIds();
+      const ids = this.body.data.edges.getIds();
       this.add(ids, true);
     }
 
@@ -10668,18 +10678,18 @@ class EdgesHandler {
    * @private
    */
   add(ids, doNotEmit = false) {
-    var edges = this.body.edges;
-    var edgesData = this.body.data.edges;
+    const edges = this.body.edges;
+    const edgesData = this.body.data.edges;
 
     for (let i = 0; i < ids.length; i++) {
-      var id = ids[i];
+      const id = ids[i];
 
-      var oldEdge = edges[id];
+      const oldEdge = edges[id];
       if (oldEdge) {
         oldEdge.disconnect();
       }
 
-      var data = edgesData.get(id, {"showInternalIds" : true});
+      const data = edgesData.get(id, {"showInternalIds" : true});
       edges[id] = this.create(data);
     }
 
@@ -10698,13 +10708,13 @@ class EdgesHandler {
    * @private
    */
   update(ids) {
-    var edges = this.body.edges;
-    var edgesData = this.body.data.edges;
-    var dataChanged = false;
-    for (var i = 0; i < ids.length; i++) {
-      var id = ids[i];
-      var data = edgesData.get(id);
-      var edge = edges[id];
+    const edges = this.body.edges;
+    const edgesData = this.body.data.edges;
+    let dataChanged = false;
+    for (let i = 0; i < ids.length; i++) {
+      const id = ids[i];
+      const data = edgesData.get(id);
+      const edge = edges[id];
       if (edge !== undefined) {
         // update edge
         edge.disconnect();
@@ -10737,9 +10747,9 @@ class EdgesHandler {
   remove(ids, emit = true) {
     if (ids.length === 0) return;  // early out
 
-    var edges = this.body.edges;
+    const edges = this.body.edges;
     forEach(ids, (id) => {
-      var edge = edges[id];
+      const edge = edges[id];
       if (edge !== undefined) {
         edge.remove();
       }
@@ -10782,19 +10792,19 @@ class EdgesHandler {
    * @private
    */
   reconnectEdges() {
-    var id;
-    var nodes = this.body.nodes;
-    var edges = this.body.edges;
+    let id;
+    const nodes = this.body.nodes;
+    const edges = this.body.edges;
 
     for (id in nodes) {
-      if (nodes.hasOwnProperty(id)) {
+      if (Object.prototype.hasOwnProperty.call(nodes, id)) {
         nodes[id].edges = [];
       }
     }
 
     for (id in edges) {
-      if (edges.hasOwnProperty(id)) {
-        var edge = edges[id];
+      if (Object.prototype.hasOwnProperty.call(edges, id)) {
+        const edge = edges[id];
         edge.from = null;
         edge.to = null;
         edge.connect();
@@ -10808,9 +10818,9 @@ class EdgesHandler {
    * @returns {Array}
    */
   getConnectedNodes(edgeId) {
-    let nodeList = [];
+    const nodeList = [];
     if (this.body.edges[edgeId] !== undefined) {
-      let edge = this.body.edges[edgeId];
+      const edge = this.body.edges[edgeId];
       if (edge.fromId !== undefined) {nodeList.push(edge.fromId);}
       if (edge.toId !== undefined)   {nodeList.push(edge.toId);}
     }
@@ -10832,11 +10842,11 @@ class EdgesHandler {
    */
   _removeInvalidEdges() {
     
-    let edgesToDelete = [];
+    const edgesToDelete = [];
 
     forEach(this.body.edges, (edge, id) => {
-      let toNode = this.body.nodes[edge.toId];
-      let fromNode = this.body.nodes[edge.fromId];
+      const toNode = this.body.nodes[edge.toId];
+      const fromNode = this.body.nodes[edge.fromId];
 
       // Skip clustering edges here, let the Clustering module handle those
       if ((toNode   !== undefined && toNode.isCluster   === true)
@@ -10857,16 +10867,16 @@ class EdgesHandler {
    * @private
    */ 
   _addMissingEdges() {
-     let edgesData = this.body.data.edges;
+     const edgesData = this.body.data.edges;
      if (edgesData === undefined || edgesData === null) {
        return;  // No edges DataSet yet; can happen on startup 
      }
 
-     let edges = this.body.edges;
-     let addIds = [];
+     const edges = this.body.edges;
+     const addIds = [];
 
      edgesData.forEach((edgeData, edgeId) => {
-         let edge = edges[edgeId];
+         const edge = edges[edgeId];
          if(edge===undefined) {
            addIds.push(edgeId);
          }
@@ -10917,12 +10927,12 @@ class BarnesHutSolver {
   solve() {
     if (this.options.gravitationalConstant !== 0 && this.physicsBody.physicsNodeIndices.length > 0) {
       let node;
-      let nodes = this.body.nodes;
-      let nodeIndices = this.physicsBody.physicsNodeIndices;
-      let nodeCount = nodeIndices.length;
+      const nodes = this.body.nodes;
+      const nodeIndices = this.physicsBody.physicsNodeIndices;
+      const nodeCount = nodeIndices.length;
 
       // create the tree
-      let barnesHutTree = this._formBarnesHutTree(nodes, nodeIndices);
+      const barnesHutTree = this._formBarnesHutTree(nodes, nodeIndices);
 
       // for debugging
       this.barnesHutTree = barnesHutTree;
@@ -10963,12 +10973,10 @@ class BarnesHutSolver {
   _getForceContribution(parentBranch, node) {
     // we get no force contribution from an empty region
     if (parentBranch.childrenCount > 0) {
-      let dx, dy, distance;
-
       // get the distance from the center of mass to the node.
-      dx = parentBranch.centerOfMass.x - node.x;
-      dy = parentBranch.centerOfMass.y - node.y;
-      distance = Math.sqrt(dx * dx + dy * dy);
+      const dx = parentBranch.centerOfMass.x - node.x;
+      const dy = parentBranch.centerOfMass.y - node.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
       // BarnesHutSolver condition
       // original condition : s/d < theta = passed  ===  d/s > 1/theta = passed
@@ -11013,9 +11021,9 @@ class BarnesHutSolver {
 
     // the dividing by the distance cubed instead of squared allows us to get the fx and fy components without sines and cosines
     // it is shorthand for gravityforce with distance squared and fx = dx/distance * gravityForce
-    let gravityForce = this.options.gravitationalConstant * parentBranch.mass * node.options.mass / Math.pow(distance,3);
-    let fx = dx * gravityForce;
-    let fy = dy * gravityForce;
+    const gravityForce = this.options.gravitationalConstant * parentBranch.mass * node.options.mass / Math.pow(distance,3);
+    const fx = dx * gravityForce;
+    const fy = dy * gravityForce;
 
     this.physicsBody.forces[node.id].x += fx;
     this.physicsBody.forces[node.id].y += fy;
@@ -11032,7 +11040,7 @@ class BarnesHutSolver {
    */
   _formBarnesHutTree(nodes, nodeIndices) {
     let node;
-    let nodeCount = nodeIndices.length;
+    const nodeCount = nodeIndices.length;
 
     let minX = nodes[nodeIndices[0]].x;
     let minY = nodes[nodeIndices[0]].y;
@@ -11041,9 +11049,9 @@ class BarnesHutSolver {
 
     // get the range of the nodes
     for (let i = 1; i < nodeCount; i++) {
-      let node = nodes[nodeIndices[i]];
-      let x = node.x;
-      let y = node.y;
+      const node = nodes[nodeIndices[i]];
+      const x = node.x;
+      const y = node.y;
       if (node.options.mass > 0) {
         if (x < minX) {
           minX = x;
@@ -11060,7 +11068,7 @@ class BarnesHutSolver {
       }
     }
     // make the range a square
-    let sizeDiff = Math.abs(maxX - minX) - Math.abs(maxY - minY); // difference between X and Y
+    const sizeDiff = Math.abs(maxX - minX) - Math.abs(maxY - minY); // difference between X and Y
     if (sizeDiff > 0) {
       minY -= 0.5 * sizeDiff;
       maxY += 0.5 * sizeDiff;
@@ -11071,13 +11079,13 @@ class BarnesHutSolver {
     } // xSize < ySize
 
 
-    let minimumTreeSize = 1e-5;
-    let rootSize = Math.max(minimumTreeSize, Math.abs(maxX - minX));
-    let halfRootSize = 0.5 * rootSize;
-    let centerX = 0.5 * (minX + maxX), centerY = 0.5 * (minY + maxY);
+    const minimumTreeSize = 1e-5;
+    const rootSize = Math.max(minimumTreeSize, Math.abs(maxX - minX));
+    const halfRootSize = 0.5 * rootSize;
+    const centerX = 0.5 * (minX + maxX), centerY = 0.5 * (minY + maxY);
 
     // construct the barnesHutTree
-    let barnesHutTree = {
+    const barnesHutTree = {
       root: {
         centerOfMass: {x: 0, y: 0},
         mass: 0,
@@ -11116,9 +11124,9 @@ class BarnesHutSolver {
    * @private
    */
   _updateBranchMass(parentBranch, node) {
-    let centerOfMass = parentBranch.centerOfMass;
-    let totalMass = parentBranch.mass + node.options.mass;
-    let totalMassInv = 1 / totalMass;
+    const centerOfMass = parentBranch.centerOfMass;
+    const totalMass = parentBranch.mass + node.options.mass;
+    const totalMassInv = 1 / totalMass;
 
     centerOfMass.x = centerOfMass.x * parentBranch.mass + node.x * node.options.mass;
     centerOfMass.x *= totalMassInv;
@@ -11127,7 +11135,7 @@ class BarnesHutSolver {
     centerOfMass.y *= totalMassInv;
 
     parentBranch.mass = totalMass;
-    let biggestSize = Math.max(Math.max(node.height, node.radius), node.width);
+    const biggestSize = Math.max(Math.max(node.height, node.radius), node.width);
     parentBranch.maxWidth = (parentBranch.maxWidth < biggestSize) ? biggestSize : parentBranch.maxWidth;
 
   }
@@ -11147,7 +11155,7 @@ class BarnesHutSolver {
       this._updateBranchMass(parentBranch, node);
     }
 
-    let range = parentBranch.children.NW.range;
+    const range = parentBranch.children.NW.range;
     let region;
     if (range.maxX > node.x) { // in NW or SW
       if (range.maxY > node.y) {
@@ -11179,7 +11187,7 @@ class BarnesHutSolver {
    * @private
    */
   _placeInRegion(parentBranch, node, region) {
-    let children = parentBranch.children[region];
+    const children = parentBranch.children[region];
 
     switch (children.childrenCount) {
       case 0: // place node here
@@ -11246,7 +11254,7 @@ class BarnesHutSolver {
    */
   _insertRegion(parentBranch, region) {
     let minX, maxX, minY, maxY;
-    let childSize = 0.5 * parentBranch.size;
+    const childSize = 0.5 * parentBranch.size;
     switch (region) {
       case "NW":
         minX = parentBranch.range.minX;
@@ -11390,18 +11398,18 @@ class RepulsionSolver {
    * @private
    */
   solve() {
-    var dx, dy, distance, fx, fy, repulsingForce, node1, node2;
+    let dx, dy, distance, fx, fy, repulsingForce, node1, node2;
 
-    var nodes = this.body.nodes;
-    var nodeIndices = this.physicsBody.physicsNodeIndices;
-    var forces = this.physicsBody.forces;
+    const nodes = this.body.nodes;
+    const nodeIndices = this.physicsBody.physicsNodeIndices;
+    const forces = this.physicsBody.forces;
 
     // repulsing forces between nodes
-    var nodeDistance = this.options.nodeDistance;
+    const nodeDistance = this.options.nodeDistance;
 
     // approximation constants
-    var a = (-2 / 3) / nodeDistance;
-    var b = 4 / 3;
+    const a = (-2 / 3) / nodeDistance;
+    const b = 4 / 3;
 
     // we loop from i over all but the last entree in the array
     // j loops from i+1 to the last. This way we do not double count any of the indices, nor i === j
@@ -11476,12 +11484,12 @@ class HierarchicalRepulsionSolver {
    * @private
    */
   solve() {
-    var nodes = this.body.nodes;
-    var nodeIndices = this.physicsBody.physicsNodeIndices;
-    var forces = this.physicsBody.forces;
+    const nodes = this.body.nodes;
+    const nodeIndices = this.physicsBody.physicsNodeIndices;
+    const forces = this.physicsBody.forces;
 
     // repulsing forces between nodes
-    var nodeDistance = this.options.nodeDistance;
+    const nodeDistance = this.options.nodeDistance;
 
     // we loop from i over all but the last entree in the array
     // j loops from i+1 to the last. This way we do not double count any of the indices, nor i === j
@@ -11557,8 +11565,8 @@ class SpringSolver {
    */
   solve() {
     let edgeLength, edge;
-    let edgeIndices = this.physicsBody.physicsEdgeIndices;
-    let edges = this.body.edges;
+    const edgeIndices = this.physicsBody.physicsEdgeIndices;
+    const edges = this.body.edges;
     let node1, node2, node3;
 
     // forces caused by the edges, modelled as springs
@@ -11597,15 +11605,15 @@ class SpringSolver {
    * @private
    */
   _calculateSpringForce(node1, node2, edgeLength) {
-    let dx = (node1.x - node2.x);
-    let dy = (node1.y - node2.y);
-    let distance = Math.max(Math.sqrt(dx * dx + dy * dy),0.01);
+    const dx = (node1.x - node2.x);
+    const dy = (node1.y - node2.y);
+    const distance = Math.max(Math.sqrt(dx * dx + dy * dy),0.01);
 
     // the 1/distance is so the fx and fy can be calculated without sine or cosine.
-    let springForce = this.options.springConstant * (edgeLength - distance) / distance;
+    const springForce = this.options.springConstant * (edgeLength - distance) / distance;
 
-    let fx = dx * springForce;
-    let fy = dy * springForce;
+    const fx = dx * springForce;
+    const fy = dy * springForce;
 
     // handle the case where one node is not part of the physcis
     if (this.physicsBody.forces[node1.id] !== undefined) {
@@ -11649,18 +11657,18 @@ class HierarchicalSpringSolver {
    * @private
    */
   solve() {
-    var edgeLength, edge;
-    var dx, dy, fx, fy, springForce, distance;
-    var edges = this.body.edges;
-    var factor = 0.5;
+    let edgeLength, edge;
+    let dx, dy, fx, fy, springForce, distance;
+    const edges = this.body.edges;
+    const factor = 0.5;
 
-    var edgeIndices = this.physicsBody.physicsEdgeIndices;
-    var nodeIndices = this.physicsBody.physicsNodeIndices;
-    var forces = this.physicsBody.forces;
+    const edgeIndices = this.physicsBody.physicsEdgeIndices;
+    const nodeIndices = this.physicsBody.physicsNodeIndices;
+    const forces = this.physicsBody.forces;
 
     // initialize the spring force counters
     for (let i = 0; i < nodeIndices.length; i++) {
-      let nodeId = nodeIndices[i];
+      const nodeId = nodeIndices[i];
       forces[nodeId].springFx = 0;
       forces[nodeId].springFy = 0;
     }
@@ -11708,9 +11716,9 @@ class HierarchicalSpringSolver {
 
     // normalize spring forces
     springForce = 1;
-    var springFx, springFy;
+    let springFx, springFy;
     for (let i = 0; i < nodeIndices.length; i++) {
-      let nodeId = nodeIndices[i];
+      const nodeId = nodeIndices[i];
       springFx = Math.min(springForce,Math.max(-springForce,forces[nodeId].springFx));
       springFy = Math.min(springForce,Math.max(-springForce,forces[nodeId].springFy));
 
@@ -11719,18 +11727,18 @@ class HierarchicalSpringSolver {
     }
 
     // retain energy balance
-    var totalFx = 0;
-    var totalFy = 0;
+    let totalFx = 0;
+    let totalFy = 0;
     for (let i = 0; i < nodeIndices.length; i++) {
-      let nodeId = nodeIndices[i];
+      const nodeId = nodeIndices[i];
       totalFx += forces[nodeId].x;
       totalFy += forces[nodeId].y;
     }
-    var correctionFx = totalFx / nodeIndices.length;
-    var correctionFy = totalFy / nodeIndices.length;
+    const correctionFx = totalFx / nodeIndices.length;
+    const correctionFy = totalFy / nodeIndices.length;
 
     for (let i = 0; i < nodeIndices.length; i++) {
-      let nodeId = nodeIndices[i];
+      const nodeId = nodeIndices[i];
       forces[nodeId].x -= correctionFx;
       forces[nodeId].y -= correctionFy;
     }
@@ -11765,12 +11773,12 @@ class CentralGravitySolver {
    */
   solve() {
     let dx, dy, distance, node;
-    let nodes = this.body.nodes;
-    let nodeIndices = this.physicsBody.physicsNodeIndices;
-    let forces = this.physicsBody.forces;
+    const nodes = this.body.nodes;
+    const nodeIndices = this.physicsBody.physicsNodeIndices;
+    const forces = this.physicsBody.forces;
 
     for (let i = 0; i < nodeIndices.length; i++) {
-      let nodeId = nodeIndices[i];
+      const nodeId = nodeIndices[i];
       node = nodes[nodeId];
       dx = -node.x;
       dy = -node.y;
@@ -11790,7 +11798,7 @@ class CentralGravitySolver {
    * @private
    */
   _calculateForces(distance, dx, dy, forces, node) {
-    let gravityForce = (distance === 0) ? 0 : (this.options.centralGravity / distance);
+    const gravityForce = (distance === 0) ? 0 : (this.options.centralGravity / distance);
     forces[node.id].x = dx * gravityForce;
     forces[node.id].y = dy * gravityForce;
   }
@@ -11831,12 +11839,12 @@ class ForceAtlas2BasedRepulsionSolver extends BarnesHutSolver {
       distance = Math.max(0.1 + (this.overlapAvoidanceFactor * node.shape.radius), distance - node.shape.radius);
     }
 
-    let degree = (node.edges.length + 1);
+    const degree = (node.edges.length + 1);
     // the dividing by the distance cubed instead of squared allows us to get the fx and fy components without sines and cosines
     // it is shorthand for gravityforce with distance squared and fx = dx/distance * gravityForce
-    let gravityForce = this.options.gravitationalConstant * parentBranch.mass * node.options.mass * degree / Math.pow(distance,2);
-    let fx = dx * gravityForce;
-    let fy = dy * gravityForce;
+    const gravityForce = this.options.gravitationalConstant * parentBranch.mass * node.options.mass * degree / Math.pow(distance,2);
+    const fx = dx * gravityForce;
+    const fy = dy * gravityForce;
 
     this.physicsBody.forces[node.id].x += fx;
     this.physicsBody.forces[node.id].y += fy;
@@ -11869,8 +11877,8 @@ class ForceAtlas2BasedCentralGravitySolver extends CentralGravitySolver {
    */
   _calculateForces(distance, dx, dy, forces, node) {
     if (distance > 0) {
-      let degree = (node.edges.length + 1);
-      let gravityForce = this.options.centralGravity * degree * node.options.mass;
+      const degree = (node.edges.length + 1);
+      const gravityForce = this.options.centralGravity * degree * node.options.mass;
       forces[node.id].x = dx * gravityForce;
       forces[node.id].y = dy * gravityForce;
     }
@@ -12051,7 +12059,7 @@ class PhysicsEngine {
    * configure the engine.
    */
   init() {
-    var options;
+    let options;
     if (this.options.solver === 'forceAtlas2Based') {
       options = this.options.forceAtlas2Based;
       this.nodesSolver = new ForceAtlas2BasedRepulsionSolver(this.body, this.physicsBody, options);
@@ -12151,9 +12159,9 @@ class PhysicsEngine {
    */
   simulationStep() {
     // check if the physics have settled
-    var startTime = Date.now();
+    const startTime = Date.now();
     this.physicsTick();
-    var physicsTime = Date.now() - startTime;
+    const physicsTime = Date.now() - startTime;
 
     // run double speed if it is a little graph
     if ((physicsTime < 0.4 * this.simulationInterval || this.runDoubleSpeed === true) && this.stabilized === false) {
@@ -12240,7 +12248,7 @@ class PhysicsEngine {
     // adaptivity means the timestep adapts to the situation, only applicable for stabilization
     if (this.adaptiveTimestep === true && this.adaptiveTimestepEnabled === true) {
       // timestep remains stable for "interval" iterations.
-      let doAdaptive = (this.adaptiveCounter % this.adaptiveInterval === 0);
+      const doAdaptive = (this.adaptiveCounter % this.adaptiveInterval === 0);
 
       if (doAdaptive) {
         // first the big step and revert.
@@ -12283,12 +12291,12 @@ class PhysicsEngine {
     this.physicsBody.forces = {};
     this.physicsBody.physicsNodeIndices = [];
     this.physicsBody.physicsEdgeIndices = [];
-    let nodes = this.body.nodes;
-    let edges = this.body.edges;
+    const nodes = this.body.nodes;
+    const edges = this.body.edges;
 
     // get node indices for physics
-    for (let nodeId in nodes) {
-      if (nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in nodes) {
+      if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
         if (nodes[nodeId].options.physics === true) {
           this.physicsBody.physicsNodeIndices.push(nodes[nodeId].id);
         }
@@ -12296,8 +12304,8 @@ class PhysicsEngine {
     }
 
     // get edge indices for physics
-    for (let edgeId in edges) {
-      if (edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in edges) {
+      if (Object.prototype.hasOwnProperty.call(edges, edgeId)) {
         if (edges[edgeId].options.physics === true) {
           this.physicsBody.physicsEdgeIndices.push(edges[edgeId].id);
         }
@@ -12306,7 +12314,7 @@ class PhysicsEngine {
 
     // get the velocity and the forces vector
     for (let i = 0; i < this.physicsBody.physicsNodeIndices.length; i++) {
-      let nodeId = this.physicsBody.physicsNodeIndices[i];
+      const nodeId = this.physicsBody.physicsNodeIndices[i];
       this.physicsBody.forces[nodeId] = {x:0,y:0};
 
       // forces can be reset because they are recalculated. Velocities have to persist.
@@ -12316,7 +12324,7 @@ class PhysicsEngine {
     }
 
     // clean deleted nodes from the velocity vector
-    for (let nodeId in this.physicsBody.velocities) {
+    for (const nodeId in this.physicsBody.velocities) {
       if (nodes[nodeId] === undefined) {
         delete this.physicsBody.velocities[nodeId];
       }
@@ -12328,13 +12336,13 @@ class PhysicsEngine {
    * Revert the simulation one step. This is done so after stabilization, every new start of the simulation will also say stabilized.
    */
   revert() {
-    var nodeIds = Object.keys(this.previousStates);
-    var nodes = this.body.nodes;
-    var velocities = this.physicsBody.velocities;
+    const nodeIds = Object.keys(this.previousStates);
+    const nodes = this.body.nodes;
+    const velocities = this.physicsBody.velocities;
     this.referenceState = {};
 
     for (let i = 0; i < nodeIds.length; i++) {
-      let nodeId = nodeIds[i];
+      const nodeId = nodeIds[i];
       if (nodes[nodeId] !== undefined) {
         if (nodes[nodeId].options.physics === true) {
           this.referenceState[nodeId] = {
@@ -12360,12 +12368,12 @@ class PhysicsEngine {
    */
   _evaluateStepQuality() {
     let dx, dy, dpos;
-    let nodes = this.body.nodes;
-    let reference = this.referenceState;
-    let posThreshold = 0.3;
+    const nodes = this.body.nodes;
+    const reference = this.referenceState;
+    const posThreshold = 0.3;
 
-    for (let nodeId in this.referenceState) {
-      if (this.referenceState.hasOwnProperty(nodeId) && nodes[nodeId] !== undefined) {
+    for (const nodeId in this.referenceState) {
+      if (Object.prototype.hasOwnProperty.call(this.referenceState, nodeId) && nodes[nodeId] !== undefined) {
         dx = nodes[nodeId].x - reference[nodeId].positions.x;
         dy = nodes[nodeId].y - reference[nodeId].positions.y;
 
@@ -12383,16 +12391,16 @@ class PhysicsEngine {
    * move the nodes one timestep and check if they are stabilized
    */
   moveNodes() {
-    var nodeIndices = this.physicsBody.physicsNodeIndices;
-    var maxNodeVelocity = 0;
-    var averageNodeVelocity = 0;
+    const nodeIndices = this.physicsBody.physicsNodeIndices;
+    let maxNodeVelocity = 0;
+    let averageNodeVelocity = 0;
 
     // the velocity threshold (energy in the system) for the adaptivity toggle
-    var velocityAdaptiveThreshold = 5;
+    const velocityAdaptiveThreshold = 5;
 
     for (let i = 0; i < nodeIndices.length; i++) {
-      let nodeId = nodeIndices[i];
-      let nodeVelocity = this._performStep(nodeId);
+      const nodeId = nodeIndices[i];
+      const nodeVelocity = this._performStep(nodeId);
       // stabilized is true if stabilized is true and velocity is smaller than vmin --> all nodes must be stabilized
       maxNodeVelocity = Math.max(maxNodeVelocity, nodeVelocity);
       averageNodeVelocity += nodeVelocity;
@@ -12414,13 +12422,13 @@ class PhysicsEngine {
    * @private
    */
   calculateComponentVelocity(v,f, m) {
-    let df = this.modelOptions.damping * v;   // damping force
-    let a  = (f - df) / m;    // acceleration
+    const df = this.modelOptions.damping * v;   // damping force
+    const a  = (f - df) / m;    // acceleration
 
     v += a * this.timestep;
 
     // Put a limit on the velocities if it is really high
-    let maxV = this.options.maxVelocity || 1e9;
+    const maxV = this.options.maxVelocity || 1e9;
     if (Math.abs(v) > maxV) {
       v = ((v > 0) ? maxV: -maxV);
     }
@@ -12437,15 +12445,15 @@ class PhysicsEngine {
    * @private
    */
   _performStep(nodeId) {
-    let node = this.body.nodes[nodeId];
-    let force = this.physicsBody.forces[nodeId];
+    const node = this.body.nodes[nodeId];
+    const force = this.physicsBody.forces[nodeId];
 
     if (this.options.wind) {
       force.x += this.options.wind.x;
       force.y += this.options.wind.y;
     }
 
-    let velocity = this.physicsBody.velocities[nodeId];
+    const velocity = this.physicsBody.velocities[nodeId];
 
     // store the state so we can revert
     this.previousStates[nodeId] = {x:node.x, y:node.y, vx:velocity.x, vy:velocity.y};
@@ -12468,7 +12476,7 @@ class PhysicsEngine {
       velocity.y = 0;
     }
 
-    let totalVelocity = Math.sqrt(Math.pow(velocity.x,2) + Math.pow(velocity.y,2));
+    const totalVelocity = Math.sqrt(Math.pow(velocity.x,2) + Math.pow(velocity.y,2));
     return totalVelocity;
   }
 
@@ -12480,11 +12488,11 @@ class PhysicsEngine {
    * @private
    */
   _freezeNodes() {
-    var nodes = this.body.nodes;
-    for (var id in nodes) {
-      if (nodes.hasOwnProperty(id)) {
+    const nodes = this.body.nodes;
+    for (const id in nodes) {
+      if (Object.prototype.hasOwnProperty.call(nodes, id)) {
         if (nodes[id].x && nodes[id].y) {
-          let fixed = nodes[id].options.fixed;
+          const fixed = nodes[id].options.fixed;
           this.freezeCache[id] = {x:fixed.x, y:fixed.y};
           fixed.x = true;
           fixed.y = true;
@@ -12500,9 +12508,9 @@ class PhysicsEngine {
    * @private
    */
   _restoreFrozenNodes() {
-    var nodes = this.body.nodes;
-    for (var id in nodes) {
-      if (nodes.hasOwnProperty(id)) {
+    const nodes = this.body.nodes;
+    for (const id in nodes) {
+      if (Object.prototype.hasOwnProperty.call(nodes, id)) {
         if (this.freezeCache[id] !== undefined) {
           nodes[id].options.fixed.x = this.freezeCache[id].x;
           nodes[id].options.fixed.y = this.freezeCache[id].y;
@@ -12571,9 +12579,9 @@ class PhysicsEngine {
    * @private
    */
   _stabilizationBatch() {
-    var running = () => (this.stabilized === false && this.stabilizationIterations < this.targetIterations);
+    const running = () => (this.stabilized === false && this.stabilizationIterations < this.targetIterations);
 
-    var sendProgress = () => {
+    const sendProgress = () => {
       this.body.emitter.emit('stabilizationProgress', {
         iterations: this.stabilizationIterations,
         total: this.targetIterations
@@ -12584,7 +12592,7 @@ class PhysicsEngine {
       sendProgress();  // Ensure that there is at least one start event.
     }
 
-    var count = 0;
+    let count = 0;
     while (running() && count < this.options.stabilization.updateInterval) {
       this.physicsTick();
       count++;
@@ -12641,20 +12649,20 @@ class PhysicsEngine {
    * @private
    */
   _drawForces(ctx) {
-    for (var i = 0; i < this.physicsBody.physicsNodeIndices.length; i++) {
-      let index = this.physicsBody.physicsNodeIndices[i];
-      let node = this.body.nodes[index];
-      let force = this.physicsBody.forces[index];
-      let factor = 20;
-      let colorFactor = 0.03;
-      let forceSize = Math.sqrt(Math.pow(force.x,2) + Math.pow(force.x,2));
+    for (let i = 0; i < this.physicsBody.physicsNodeIndices.length; i++) {
+      const index = this.physicsBody.physicsNodeIndices[i];
+      const node = this.body.nodes[index];
+      const force = this.physicsBody.forces[index];
+      const factor = 20;
+      const colorFactor = 0.03;
+      const forceSize = Math.sqrt(Math.pow(force.x,2) + Math.pow(force.x,2));
 
-      let size = Math.min(Math.max(5,forceSize),15);
-      let arrowSize = 3*size;
+      const size = Math.min(Math.max(5,forceSize),15);
+      const arrowSize = 3*size;
 
-      let color = HSVToHex((180 - Math.min(1,Math.max(0,colorFactor*forceSize))*180) / 360,1,1);
+      const color = HSVToHex((180 - Math.min(1,Math.max(0,colorFactor*forceSize))*180) / 360,1,1);
 
-      let point = {
+      const point = {
         x: node.x + factor*force.x,
         y: node.y + factor*force.y
       };
@@ -12666,7 +12674,7 @@ class PhysicsEngine {
       ctx.lineTo(point.x, point.y);
       ctx.stroke();
 
-      let angle = Math.atan2(force.y, force.x);
+      const angle = Math.atan2(force.y, force.x);
       ctx.fillStyle = color;
       EndPoints.draw(ctx, {type: 'arrow', point: point, angle: angle, length: arrowSize});
       ctx.fill();
@@ -12693,9 +12701,9 @@ class NetworkUtil {
    * @static
    */
   static getRange(allNodes, specificNodes = []) {
-    var minY = 1e9, maxY = -1e9, minX = 1e9, maxX = -1e9, node;
+    let minY = 1e9, maxY = -1e9, minX = 1e9, maxX = -1e9, node;
     if (specificNodes.length > 0) {
-      for (var i = 0; i < specificNodes.length; i++) {
+      for (let i = 0; i < specificNodes.length; i++) {
         node = allNodes[specificNodes[i]];
         if (minX > node.shape.boundingBox.left) {
           minX = node.shape.boundingBox.left;
@@ -12727,9 +12735,9 @@ class NetworkUtil {
    * @static
    */
   static getRangeCore(allNodes, specificNodes = []) {
-    var minY = 1e9, maxY = -1e9, minX = 1e9, maxX = -1e9, node;
+    let minY = 1e9, maxY = -1e9, minX = 1e9, maxX = -1e9, node;
     if (specificNodes.length > 0) {
-      for (var i = 0; i < specificNodes.length; i++) {
+      for (let i = 0; i < specificNodes.length; i++) {
         node = allNodes[specificNodes[i]];
         if (minX > node.x) {
           minX = node.x;
@@ -12772,7 +12780,7 @@ class NetworkUtil {
    * @static
    */
   static cloneOptions(item, type) {
-    let clonedOptions = {};
+    const clonedOptions = {};
     if (type === undefined || type === 'node') {
       deepExtend(clonedOptions, item.options, true);
       clonedOptions.x = item.x;
@@ -12819,7 +12827,7 @@ class Cluster extends Node {
    * @param {string|number} childClusterId  id of child cluster to open
    */
   _openChildCluster(childClusterId) {
-    let childCluster = this.body.nodes[childClusterId];
+    const childCluster = this.body.nodes[childClusterId];
     if (this.containedNodes[childClusterId] === undefined) {
       throw new Error('node with id: ' + childClusterId + ' not in current cluster');
     }
@@ -12849,7 +12857,7 @@ class Cluster extends Node {
       forEach(this.edges, (parentClusterEdge) => {
         // Assumption: a clustered edge can only be present in a single clustering edge
         // Not tested here
-        let index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(clusterEdge.id);
+        const index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(clusterEdge.id);
         if (index === -1) return;
 
         forEach(clusterEdge.clusteringEdgeReplacingIds, (srcId) => {
@@ -12993,9 +13001,9 @@ class ClusterEngine {
       hubsize = this._getHubSize();
     }
 
-    let nodesToCluster = [];
+    const nodesToCluster = [];
     for (let i = 0; i < this.body.nodeIndices.length; i++) {
-      let node = this.body.nodes[this.body.nodeIndices[i]];
+      const node = this.body.nodes[this.body.nodeIndices[i]];
       if (node.edges.length >= hubsize) {
         nodesToCluster.push(node.id);
       }
@@ -13020,8 +13028,8 @@ class ClusterEngine {
     // check if the options object is fine, append if needed
     options = this._checkOptions(options);
 
-    let childNodesObj = {};
-    let childEdgesObj = {};
+    const childNodesObj = {};
+    const childEdgesObj = {};
 
     // collect the nodes that will be in the cluster
     forEach(this.body.nodes, (node, nodeId) => {
@@ -13049,15 +13057,15 @@ class ClusterEngine {
    */
   clusterByEdgeCount(edgeCount, options, refreshData = true) {
     options = this._checkOptions(options);
-    let clusters = [];
-    let usedNodes = {};
+    const clusters = [];
+    const usedNodes = {};
     let edge, edges, relevantEdgeCount;
     // collect the nodes that will be in the cluster
     for (let i = 0; i < this.body.nodeIndices.length; i++) {
-      let childNodesObj = {};
-      let childEdgesObj = {};
-      let nodeId = this.body.nodeIndices[i];
-      let node = this.body.nodes[nodeId];
+      const childNodesObj = {};
+      const childEdgesObj = {};
+      const nodeId = this.body.nodeIndices[i];
+      const node = this.body.nodes[nodeId];
 
       // if this node is already used in another cluster this session, we do not have to re-evaluate it.
       if (usedNodes[nodeId] === undefined) {
@@ -13075,19 +13083,19 @@ class ClusterEngine {
 
         // this node qualifies, we collect its neighbours to start the clustering process.
         if (relevantEdgeCount === edgeCount) {
-          var checkJoinCondition = function(node) {
+          const checkJoinCondition = function(node) {
             if (options.joinCondition === undefined || options.joinCondition === null) {
               return true;
             }
 
-            let clonedOptions = NetworkUtil.cloneOptions(node);
+            const clonedOptions = NetworkUtil.cloneOptions(node);
             return options.joinCondition(clonedOptions);
           };
 
           let gatheringSuccessful = true;
           for (let j = 0; j < edges.length; j++) {
             edge = edges[j];
-            let childNodeId = this._getConnectedId(edge, nodeId);
+            const childNodeId = this._getConnectedId(edge, nodeId);
             // add the nodes to the list by the join condition.
             if (checkJoinCondition(node)) {
               childEdgesObj[edge.id] = edge;
@@ -13107,10 +13115,10 @@ class ClusterEngine {
              * Search for cluster data that contains any of the node id's
              * @returns {Boolean} true if no joinCondition, otherwise return value of joinCondition
              */
-            var findClusterData = function() {
+            const findClusterData = function() {
               for (let n = 0; n < clusters.length; ++n) {
                 // Search for a cluster containing any of the node id's
-                for (var m in childNodesObj) {
+                for (const m in childNodesObj) {
                   if (clusters[n].nodes[m] !== undefined) {
                     return clusters[n];
                   }
@@ -13123,17 +13131,17 @@ class ClusterEngine {
 
             // If any of the found nodes is part of a cluster found in this method,
             // add the current values to that cluster
-            var foundCluster = findClusterData();
+            const foundCluster = findClusterData();
             if (foundCluster !== undefined) {
               // Add nodes to found cluster if not present
-              for (let m in childNodesObj) {
+              for (const m in childNodesObj) {
                 if (foundCluster.nodes[m] === undefined) {
                   foundCluster.nodes[m] = childNodesObj[m];
                 }
               }
 
               // Add edges to found cluster, if not present
-              for (let m in childEdgesObj) {
+              for (const m in childEdgesObj) {
                 if (foundCluster.edges[m] === undefined) {
                   foundCluster.edges[m] = childEdgesObj[m];
                 }
@@ -13187,7 +13195,7 @@ class ClusterEngine {
     if (nodeId === undefined)             {throw new Error("No nodeId supplied to clusterByConnection!");}
     if (this.body.nodes[nodeId] === undefined) {throw new Error("The nodeId given to clusterByConnection does not exist!");}
 
-    let node = this.body.nodes[nodeId];
+    const node = this.body.nodes[nodeId];
     options = this._checkOptions(options, node);
     if (options.clusterNodeProperties.x === undefined) {options.clusterNodeProperties.x = node.x;}
     if (options.clusterNodeProperties.y === undefined) {options.clusterNodeProperties.y = node.y;}
@@ -13198,17 +13206,17 @@ class ClusterEngine {
     }
 
 
-    let childNodesObj = {};
-    let childEdgesObj = {};
-    let parentNodeId = node.id;
-    let parentClonedOptions = NetworkUtil.cloneOptions(node);
+    const childNodesObj = {};
+    const childEdgesObj = {};
+    const parentNodeId = node.id;
+    const parentClonedOptions = NetworkUtil.cloneOptions(node);
     childNodesObj[parentNodeId] = node;
 
     // collect the nodes that will be in the cluster
     for (let i = 0; i < node.edges.length; i++) {
-      let edge = node.edges[i];
+      const edge = node.edges[i];
       if (this.clusteredEdges[edge.id] === undefined) {
-        let childNodeId = this._getConnectedId(edge, parentNodeId);
+        const childNodeId = this._getConnectedId(edge, parentNodeId);
 
         // if the child node is not in a cluster
         if (this.clusteredNodes[childNodeId] === undefined) {
@@ -13219,7 +13227,7 @@ class ClusterEngine {
             }
             else {
               // clone the options and insert some additional parameters that could be interesting.
-              let childClonedOptions = NetworkUtil.cloneOptions(this.body.nodes[childNodeId]);
+              const childClonedOptions = NetworkUtil.cloneOptions(this.body.nodes[childNodeId]);
               if (options.joinCondition(parentClonedOptions, childClonedOptions) === true) {
                 childEdgesObj[edge.id] = edge;
                 childNodesObj[childNodeId] = this.body.nodes[childNodeId];
@@ -13233,16 +13241,16 @@ class ClusterEngine {
         }
       }
     }
-    var childNodeIDs = Object.keys(childNodesObj).map(function(childNode){
+    const childNodeIDs = Object.keys(childNodesObj).map(function(childNode){
       return childNodesObj[childNode].id;
     });
 
-    for (childNode in childNodesObj) {
-      if (!childNodesObj.hasOwnProperty(childNode)) continue;
+    for (const childNodeKey in childNodesObj) {
+      if (!Object.prototype.hasOwnProperty.call(childNodesObj, childNodeKey)) continue;
 
-      var childNode = childNodesObj[childNode];
-      for (var y=0; y < childNode.edges.length; y++){
-        var childEdge = childNode.edges[y];
+      const childNode = childNodesObj[childNodeKey];
+      for (let y=0; y < childNode.edges.length; y++){
+        const childEdge = childNode.edges[y];
         if (childNodeIDs.indexOf(this._getConnectedId(childEdge,childNode.id)) > -1){
           childEdgesObj[childEdge.id] = childEdge;
         }
@@ -13267,8 +13275,8 @@ class ClusterEngine {
 
     // loop over all child nodes and their edges to find edges going out of the cluster
     // these edges will be replaced by clusterEdges.
-    let childKeys = Object.keys(childNodesObj);
-    let createEdges = [];
+    const childKeys = Object.keys(childNodesObj);
+    const createEdges = [];
     for (let i = 0; i < childKeys.length; i++) {
       childNodeId = childKeys[i];
       childNode = childNodesObj[childNodeId];
@@ -13313,20 +13321,20 @@ class ClusterEngine {
     //
     // NOTE: a clustered edge can have multiple base edges!
     //
-    var newEdges = [];
+    const newEdges = [];
 
     /**
      * Find a cluster edge which matches the given created edge.
      * @param {vis.Edge} createdEdge
      * @returns {vis.Edge}
      */
-    var getNewEdge = function(createdEdge) {
+    const getNewEdge = function(createdEdge) {
       for (let j = 0; j < newEdges.length; j++) {
-        let newEdge = newEdges[j];
+        const newEdge = newEdges[j];
 
         // We replace both to and from edges with a single cluster edge
-        let matchToDirection   = (createdEdge.fromId === newEdge.fromId && createdEdge.toId === newEdge.toId);
-        let matchFromDirection = (createdEdge.fromId === newEdge.toId && createdEdge.toId === newEdge.fromId);
+        const matchToDirection   = (createdEdge.fromId === newEdge.fromId && createdEdge.toId === newEdge.toId);
+        const matchFromDirection = (createdEdge.fromId === newEdge.toId && createdEdge.toId === newEdge.fromId);
 
         if (matchToDirection || matchFromDirection ) {
           return newEdge;
@@ -13338,8 +13346,8 @@ class ClusterEngine {
 
 
     for (let j = 0; j < createEdges.length; j++) {
-      let createdEdge = createEdges[j];
-      let edge        = createdEdge.edge;
+      const createdEdge = createEdges[j];
+      const edge        = createdEdge.edge;
       let newEdge     = getNewEdge(createdEdge);
 
       if (newEdge === null) {
@@ -13388,16 +13396,16 @@ class ClusterEngine {
   */
   _cluster(childNodesObj, childEdgesObj, options, refreshData = true) {
     // Remove nodes which are already clustered
-    var tmpNodesToRemove = [];
-    for (let nodeId in childNodesObj) {
-      if (childNodesObj.hasOwnProperty(nodeId)) {
+    const tmpNodesToRemove = [];
+    for (const nodeId in childNodesObj) {
+      if (Object.prototype.hasOwnProperty.call(childNodesObj, nodeId)) {
         if (this.clusteredNodes[nodeId] !== undefined) {
           tmpNodesToRemove.push(nodeId);
         }
       }
     }
 
-    for (var n = 0; n < tmpNodesToRemove.length; ++n) {
+    for (let n = 0; n < tmpNodesToRemove.length; ++n) {
       delete childNodesObj[tmpNodesToRemove[n]];
     }
 
@@ -13412,21 +13420,21 @@ class ClusterEngine {
     // construct the clusterNodeProperties
     if (options.processProperties !== undefined) {
       // get the childNode options
-      let childNodesOptions = [];
-      for (let nodeId in childNodesObj) {
-        if (childNodesObj.hasOwnProperty(nodeId)) {
-          let clonedOptions = NetworkUtil.cloneOptions(childNodesObj[nodeId]);
+      const childNodesOptions = [];
+      for (const nodeId in childNodesObj) {
+        if (Object.prototype.hasOwnProperty.call(childNodesObj, nodeId)) {
+          const clonedOptions = NetworkUtil.cloneOptions(childNodesObj[nodeId]);
           childNodesOptions.push(clonedOptions);
         }
       }
 
       // get cluster properties based on childNodes
-      let childEdgesOptions = [];
-      for (let edgeId in childEdgesObj) {
-        if (childEdgesObj.hasOwnProperty(edgeId)) {
+      const childEdgesOptions = [];
+      for (const edgeId in childEdgesObj) {
+        if (Object.prototype.hasOwnProperty.call(childEdgesObj, edgeId)) {
           // these cluster edges will be removed on creation of the cluster.
           if (edgeId.substr(0, 12) !== "clusterEdge:") {
-            let clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], 'edge');
+            const clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], 'edge');
             childEdgesOptions.push(clonedOptions);
           }
         }
@@ -13440,7 +13448,7 @@ class ClusterEngine {
 
     // check if we have an unique id;
     if (clusterNodeProperties.id === undefined) {clusterNodeProperties.id = 'cluster:' + v4();}
-    let clusterId = clusterNodeProperties.id;
+    const clusterId = clusterNodeProperties.id;
 
     if (clusterNodeProperties.label === undefined) {
       clusterNodeProperties.label = 'cluster';
@@ -13463,7 +13471,7 @@ class ClusterEngine {
 
     // create the cluster Node
     // Note that allowSingleNodeCluster, if present, is stored in the options as well
-    let clusterNode = this.body.functions.createNode(clusterNodeProperties, Cluster);
+    const clusterNode = this.body.functions.createNode(clusterNodeProperties, Cluster);
     clusterNode.containedNodes = childNodesObj;
     clusterNode.containedEdges = childEdgesObj;
     // cache a copy from the cluster edge properties if we have to reconnect others later on
@@ -13500,7 +13508,7 @@ class ClusterEngine {
    * @private
    */
   _restoreEdge(edge) {
-    let originalOptions = this.clusteredEdges[edge.id];
+    const originalOptions = this.clusteredEdges[edge.id];
     if (originalOptions !== undefined) {
       edge.setOptions({physics: originalOptions.physics});
       delete this.clusteredEdges[edge.id];
@@ -13530,7 +13538,7 @@ class ClusterEngine {
   * @private
   */
   _getClusterPosition(childNodesObj) {
-    let childKeys = Object.keys(childNodesObj);
+    const childKeys = Object.keys(childNodesObj);
     let minX = childNodesObj[childKeys[0]].x;
     let maxX = childNodesObj[childKeys[0]].x;
     let minY = childNodesObj[childKeys[0]].y;
@@ -13561,7 +13569,7 @@ class ClusterEngine {
       throw new Error("No clusterNodeId supplied to openCluster.");
     }
 
-    let clusterNode = this.body.nodes[clusterNodeId];
+    const clusterNode = this.body.nodes[clusterNodeId];
 
     if (clusterNode === undefined) {
       throw new Error("The clusterNodeId supplied to openCluster does not exist.");
@@ -13573,12 +13581,12 @@ class ClusterEngine {
     }
 
     // Check if current cluster is clustered itself
-    let stack = this.findNode(clusterNodeId);
-    let parentIndex = stack.indexOf(clusterNodeId) - 1;
+    const stack = this.findNode(clusterNodeId);
+    const parentIndex = stack.indexOf(clusterNodeId) - 1;
     if (parentIndex >= 0) {
       // Current cluster is clustered; transfer contained nodes and edges to parent
-      let parentClusterNodeId = stack[parentIndex];
-      let parentClusterNode   = this.body.nodes[parentClusterNodeId];
+      const parentClusterNodeId = stack[parentIndex];
+      const parentClusterNode   = this.body.nodes[parentClusterNodeId];
 
       // clustering.clusteredNodes and clustering.clusteredEdges remain unchanged
       parentClusterNode._openChildCluster(clusterNodeId);
@@ -13593,24 +13601,24 @@ class ClusterEngine {
     }
 
     // main body 
-    let containedNodes = clusterNode.containedNodes;
-    let containedEdges = clusterNode.containedEdges;
+    const containedNodes = clusterNode.containedNodes;
+    const containedEdges = clusterNode.containedEdges;
 
     // allow the user to position the nodes after release.
     if (options !== undefined && options.releaseFunction !== undefined && typeof options.releaseFunction === 'function') {
-      let positions = {};
-      let clusterPosition = {x:clusterNode.x, y:clusterNode.y};
-      for (let nodeId in containedNodes) {
-        if (containedNodes.hasOwnProperty(nodeId)) {
-          let containedNode = this.body.nodes[nodeId];
+      const positions = {};
+      const clusterPosition = {x:clusterNode.x, y:clusterNode.y};
+      for (const nodeId in containedNodes) {
+        if (Object.prototype.hasOwnProperty.call(containedNodes, nodeId)) {
+          const containedNode = this.body.nodes[nodeId];
           positions[nodeId] = {x: containedNode.x, y: containedNode.y};
         }
       }
-      let newPositions = options.releaseFunction(clusterPosition, positions);
+      const newPositions = options.releaseFunction(clusterPosition, positions);
 
-      for (let nodeId in containedNodes) {
-        if (containedNodes.hasOwnProperty(nodeId)) {
-          let containedNode = this.body.nodes[nodeId];
+      for (const nodeId in containedNodes) {
+        if (Object.prototype.hasOwnProperty.call(containedNodes, nodeId)) {
+          const containedNode = this.body.nodes[nodeId];
           if (newPositions[nodeId] !== undefined) {
             containedNode.x = (newPositions[nodeId].x === undefined ? clusterNode.x : newPositions[nodeId].x);
             containedNode.y = (newPositions[nodeId].y === undefined ? clusterNode.y : newPositions[nodeId].y);
@@ -13628,9 +13636,9 @@ class ClusterEngine {
     }
 
     // release nodes
-    for (let nodeId in containedNodes) {
-      if (containedNodes.hasOwnProperty(nodeId)) {
-        let containedNode = this.body.nodes[nodeId];
+    for (const nodeId in containedNodes) {
+      if (Object.prototype.hasOwnProperty.call(containedNodes, nodeId)) {
+        const containedNode = this.body.nodes[nodeId];
 
         // inherit speed
         containedNode.vx = clusterNode.vx;
@@ -13643,26 +13651,26 @@ class ClusterEngine {
     }
 
     // copy the clusterNode edges because we cannot iterate over an object that we add or remove from.
-    let edgesToBeDeleted = [];
+    const edgesToBeDeleted = [];
     for (let i = 0; i < clusterNode.edges.length; i++) {
       edgesToBeDeleted.push(clusterNode.edges[i]);
     }
 
     // actually handling the deleting.
     for (let i = 0; i < edgesToBeDeleted.length; i++) {
-      let edge         = edgesToBeDeleted[i];
-      let otherNodeId  = this._getConnectedId(edge, clusterNodeId);
-      let otherNode    = this.clusteredNodes[otherNodeId];
+      const edge         = edgesToBeDeleted[i];
+      const otherNodeId  = this._getConnectedId(edge, clusterNodeId);
+      const otherNode    = this.clusteredNodes[otherNodeId];
 
       for (let j = 0; j < edge.clusteringEdgeReplacingIds.length; j++) {
-        let transferId = edge.clusteringEdgeReplacingIds[j];
-        let transferEdge = this.body.edges[transferId];
+        const transferId = edge.clusteringEdgeReplacingIds[j];
+        const transferEdge = this.body.edges[transferId];
         if (transferEdge === undefined) continue; 
 
         // if the other node is in another cluster, we transfer ownership of this edge to the other cluster
         if (otherNode !== undefined) {
           // transfer ownership:
-          let otherCluster = this.body.nodes[otherNode.clusterId];
+          const otherCluster = this.body.nodes[otherNode.clusterId];
           otherCluster.containedEdges[transferEdge.id] = transferEdge;
 
           // delete local reference
@@ -13695,8 +13703,8 @@ class ClusterEngine {
     }
 
     // handle the releasing of the edges
-    for (let edgeId in containedEdges) {
-      if (containedEdges.hasOwnProperty(edgeId)) {
+    for (const edgeId in containedEdges) {
+      if (Object.prototype.hasOwnProperty.call(containedEdges, edgeId)) {
         this._restoreEdge(containedEdges[edgeId]);
       }
     }
@@ -13715,11 +13723,11 @@ class ClusterEngine {
    * @returns {Array.<Node.id>}
    */
   getNodesInCluster(clusterId) {
-    let nodesArray = [];
+    const nodesArray = [];
     if (this.isCluster(clusterId) === true) {
-      let containedNodes = this.body.nodes[clusterId].containedNodes;
-      for (let nodeId in containedNodes) {
-        if (containedNodes.hasOwnProperty(nodeId)) {
+      const containedNodes = this.body.nodes[clusterId].containedNodes;
+      for (const nodeId in containedNodes) {
+        if (Object.prototype.hasOwnProperty.call(containedNodes, nodeId)) {
           nodesArray.push(this.body.nodes[nodeId].id);
         }
       }
@@ -13737,8 +13745,8 @@ class ClusterEngine {
   * @returns {Array}
   */
   findNode(nodeId) {
-    let stack = [];
-    let max = 100;
+    const stack = [];
+    const max = 100;
     let counter = 0;
     let node;
 
@@ -13783,9 +13791,9 @@ class ClusterEngine {
     if (newOptions === undefined) {throw new Error("No newOptions supplied to updateEdge.");}
     if (this.body.edges[startEdgeId] === undefined)   {throw new Error("The startEdgeId supplied to updateEdge does not exist.");}
 
-    let allEdgeIds = this.getClusteredEdges(startEdgeId);
+    const allEdgeIds = this.getClusteredEdges(startEdgeId);
     for (let i = 0; i < allEdgeIds.length; i++) {
-      var edge = this.body.edges[allEdgeIds[i]];
+      const edge = this.body.edges[allEdgeIds[i]];
       edge.setOptions(newOptions);
     }
     this.body.emitter.emit('_dataChanged');
@@ -13797,8 +13805,8 @@ class ClusterEngine {
   * @returns {Array.<vis.Edge.id>}
   */
   getClusteredEdges(edgeId) {
-    let stack = [];
-    let max = 100;
+    const stack = [];
+    const max = 100;
     let counter = 0;
 
     while (edgeId !== undefined && this.body.edges[edgeId] !== undefined && counter < max) {
@@ -13830,27 +13838,27 @@ class ClusterEngine {
    * @returns {Array.<vis.Edge.id>} all baseEdgeId's under this clustered edge
    */
   getBaseEdges(clusteredEdgeId) {
-    let IdsToHandle = [clusteredEdgeId];
-    let doneIds     = [];
-    let foundIds    = [];
-    let max     = 100;
+    const IdsToHandle = [clusteredEdgeId];
+    const doneIds     = [];
+    const foundIds    = [];
+    const max     = 100;
     let counter = 0;
 
     while (IdsToHandle.length > 0 && counter < max) {
-      let nextId = IdsToHandle.pop();
+      const nextId = IdsToHandle.pop();
       if (nextId === undefined) continue;     // Paranoia here and onwards
-      let nextEdge = this.body.edges[nextId];
+      const nextEdge = this.body.edges[nextId];
       if (nextEdge === undefined) continue;
       counter++;
 
-      let replacingIds = nextEdge.clusteringEdgeReplacingIds;
+      const replacingIds = nextEdge.clusteringEdgeReplacingIds;
       if (replacingIds === undefined) {
         // nextId is a base id
         foundIds.push(nextId);
       } else {
         // Another cluster edge, unravel this one as well
         for (let i = 0; i < replacingIds.length; ++i) {
-          let replacingId = replacingIds[i];
+          const replacingId = replacingIds[i];
 
           // Don't add if already handled
           // TODO: never triggers; find a test-case which does
@@ -13902,7 +13910,7 @@ class ClusterEngine {
     let largestHub = 0;
 
     for (let i = 0; i < this.body.nodeIndices.length; i++) {
-      let node = this.body.nodes[this.body.nodeIndices[i]];
+      const node = this.body.nodes[this.body.nodeIndices[i]];
       if (node.edges.length > largestHub) {
         largestHub = node.edges.length;
       }
@@ -13913,8 +13921,8 @@ class ClusterEngine {
     average = average / hubCounter;
     averageSquared = averageSquared / hubCounter;
 
-    let variance = averageSquared - Math.pow(average,2);
-    let standardDeviation = Math.sqrt(variance);
+    const variance = averageSquared - Math.pow(average,2);
+    const standardDeviation = Math.sqrt(variance);
 
     let hubThreshold = Math.floor(average + 2*standardDeviation);
 
@@ -13940,7 +13948,7 @@ class ClusterEngine {
    */
   _createClusteredEdge(fromId, toId, baseEdge, clusterEdgeProperties, extraOptions) {
     // copy the options of the edge we will replace
-    let clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge');
+    const clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge');
     // make sure the properties of clusterEdges are superimposed on it
     deepExtend(clonedOptions, clusterEdgeProperties);
 
@@ -13954,7 +13962,7 @@ class ClusterEngine {
       deepExtend(clonedOptions, extraOptions);
     }
 
-    let newEdge = this.body.functions.createEdge(clonedOptions);
+    const newEdge = this.body.functions.createEdge(clonedOptions);
     newEdge.clusteringEdgeReplacingIds = [baseEdge.id];
     newEdge.connect();
 
@@ -13976,15 +13984,15 @@ class ClusterEngine {
    */
   _clusterEdges(childNodes, childEdges, clusterNode, clusterEdgeProperties) {
     if (childEdges instanceof Edge) {
-      let edge = childEdges;
-      let obj = {};
+      const edge = childEdges;
+      const obj = {};
       obj[edge.id] = edge;
       childEdges = obj;
     }
 
     if (childNodes instanceof Node) {
-      let node = childNodes;
-      let obj = {};
+      const node = childNodes;
+      const obj = {};
       obj[node.id] = node;
       childNodes = obj;
     }
@@ -14003,10 +14011,10 @@ class ClusterEngine {
     this._createClusterEdges(childNodes, childEdges, clusterNode, clusterEdgeProperties);
 
     // disable the childEdges
-    for (let edgeId in childEdges) {
-      if (childEdges.hasOwnProperty(edgeId)) {
+    for (const edgeId in childEdges) {
+      if (Object.prototype.hasOwnProperty.call(childEdges, edgeId)) {
         if (this.body.edges[edgeId] !== undefined) {
-          let edge = this.body.edges[edgeId];
+          const edge = this.body.edges[edgeId];
           // cache the options before changing
           this._backupEdgeOptions(edge);
           // disable physics and hide the edge
@@ -14016,8 +14024,8 @@ class ClusterEngine {
     }
 
     // disable the childNodes
-    for (let nodeId in childNodes) {
-      if (childNodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in childNodes) {
+      if (Object.prototype.hasOwnProperty.call(childNodes, nodeId)) {
         this.clusteredNodes[nodeId] = {clusterId:clusterNode.id, node: this.body.nodes[nodeId]};
         this.body.nodes[nodeId].setOptions({physics:false});
       }
@@ -14038,11 +14046,11 @@ class ClusterEngine {
    */
   _getClusterNodeForNode(nodeId) {
     if (nodeId === undefined) return undefined;
-    let clusteredNode = this.clusteredNodes[nodeId];
+    const clusteredNode = this.clusteredNodes[nodeId];
 
     // NOTE: If no cluster info found, it should actually be an error
     if (clusteredNode === undefined) return undefined;
-    let clusterId = clusteredNode.clusterId;
+    const clusterId = clusteredNode.clusterId;
     if (clusterId === undefined) return undefined;
 
     return this.body.nodes[clusterId];
@@ -14060,7 +14068,7 @@ class ClusterEngine {
    * @private
    */
   _filter(arr, callback) {
-    let ret = [];
+    const ret = [];
 
     forEach(arr, (item) => {
       if (callback(item)) {
@@ -14083,15 +14091,15 @@ class ClusterEngine {
    */
   _updateState() {
     let nodeId;
-    let deletedNodeIds = [];
-    let deletedEdgeIds = {};
+    const deletedNodeIds = [];
+    const deletedEdgeIds = {};
 
     /**
      * Utility function to iterate over clustering nodes only
      *
      * @param {Function} callback  function to call for each cluster node
      */
-    let eachClusterNode = (callback) => {
+    const eachClusterNode = (callback) => {
       forEach(this.body.nodes, (node) => {
         if (node.isCluster === true) {
           callback(node);
@@ -14106,8 +14114,8 @@ class ClusterEngine {
 
     // Determine the deleted nodes
     for (nodeId in this.clusteredNodes) {
-      if (!this.clusteredNodes.hasOwnProperty(nodeId)) continue;
-      let node = this.body.nodes[nodeId];
+      if (!Object.prototype.hasOwnProperty.call(this.clusteredNodes, nodeId)) continue;
+      const node = this.body.nodes[nodeId];
 
       if (node === undefined) {
         deletedNodeIds.push(nodeId);
@@ -14133,7 +14141,7 @@ class ClusterEngine {
 
     // Add the deleted clustered edges to the list
     forEach(this.clusteredEdges, (edgeId) => {
-      let edge = this.body.edges[edgeId];
+      const edge = this.body.edges[edgeId];
       if (edge === undefined || !edge.endPointsValid()) {
         deletedEdgeIds[edgeId] = edgeId;
       }
@@ -14155,12 +14163,12 @@ class ClusterEngine {
     forEach(this.body.edges, (edge, edgeId) => {
       // Explicitly scan the contained edges for validity
       let isValid = true;
-      let replacedIds = edge.clusteringEdgeReplacingIds;
+      const replacedIds = edge.clusteringEdgeReplacingIds;
       if (replacedIds !== undefined) {
         let numValid = 0;
 
         forEach(replacedIds, (containedEdgeId) => {
-          let containedEdge   = this.body.edges[containedEdgeId];
+          const containedEdge   = this.body.edges[containedEdgeId];
 
           if (containedEdge !== undefined && containedEdge.endPointsValid()) {
             numValid += 1;
@@ -14215,23 +14223,23 @@ class ClusterEngine {
     //
 
     // Iterating over keys here, because edges may be removed in the loop
-    let ids = Object.keys(this.body.edges);
+    const ids = Object.keys(this.body.edges);
     forEach(ids, (edgeId) => {
-      let edge = this.body.edges[edgeId];
+      const edge = this.body.edges[edgeId];
 
-      let shouldBeClustered = this._isClusteredNode(edge.fromId) || this._isClusteredNode(edge.toId);
+      const shouldBeClustered = this._isClusteredNode(edge.fromId) || this._isClusteredNode(edge.toId);
       if (shouldBeClustered === this._isClusteredEdge(edge.id)) {
         return;  // all is well
       }
 
       if (shouldBeClustered) {
         // add edge to clustering
-        let clusterFrom = this._getClusterNodeForNode(edge.fromId);
+        const clusterFrom = this._getClusterNodeForNode(edge.fromId);
         if (clusterFrom !== undefined) {
           this._clusterEdges(this.body.nodes[edge.fromId], edge, clusterFrom);
         }
 
-        let clusterTo = this._getClusterNodeForNode(edge.toId);
+        const clusterTo = this._getClusterNodeForNode(edge.toId);
         if (clusterTo !== undefined) {
           this._clusterEdges(this.body.nodes[edge.toId], edge, clusterTo);
         }
@@ -14252,15 +14260,15 @@ class ClusterEngine {
 
 
     // Clusters may be nested to any level. Keep on opening until nothing to open
-    var changed = false;
-    var continueLoop = true;
+    let changed = false;
+    let continueLoop = true;
     while (continueLoop) {
-      let clustersToOpen = [];
+      const clustersToOpen = [];
 
       // Determine the id's of clusters that need opening
       eachClusterNode(function(clusterNode) {
-        let numNodes = Object.keys(clusterNode.containedNodes).length;
-        let allowSingle = (clusterNode.options.allowSingleNodeCluster === true);
+        const numNodes = Object.keys(clusterNode.containedNodes).length;
+        const allowSingle = (clusterNode.options.allowSingleNodeCluster === true);
         if ((allowSingle && numNodes < 1) || (!allowSingle && numNodes < 2)) {
           clustersToOpen.push(clusterNode.id);
         }
@@ -14329,7 +14337,7 @@ class ClusterEngine {
  * @private
  */
 function _initRequestAnimationFrame() {
-  var func;
+  let func;
 
   if (window !== undefined) {
     func = window.requestAnimationFrame
@@ -14439,7 +14447,7 @@ class CanvasRenderer {
    */
   setOptions(options) {
     if (options !== undefined) {
-      let fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
+      const fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
       selectiveDeepExtend(fields,this.options, options);
     }
   }
@@ -14471,7 +14479,7 @@ class CanvasRenderer {
 
     let timer;
 
-    var myWindow = window;  // Grab a reference to reduce the possibility that 'window' is reset
+    const myWindow = window;  // Grab a reference to reduce the possibility that 'window' is reset
                             // while running this method.
 
     if (this.requiresTimeout === true) {
@@ -14560,11 +14568,11 @@ class CanvasRenderer {
 
       this.canvas.setTransform();
 
-      let ctx = this.canvas.getContext();
+      const ctx = this.canvas.getContext();
 
       // clear the canvas
-      let w = this.canvas.frame.canvas.clientWidth;
-      let h = this.canvas.frame.canvas.clientHeight;
+      const w = this.canvas.frame.canvas.clientWidth;
+      const h = this.canvas.frame.canvas.clientHeight;
       ctx.clearRect(0, 0, w, h);
 
       // if the div is hidden, we stop the redraw here for performance.
@@ -14632,17 +14640,17 @@ class CanvasRenderer {
    */
   _resizeNodes() {
     this.canvas.setTransform();
-    let ctx = this.canvas.getContext();
+    const ctx = this.canvas.getContext();
     ctx.save();
     ctx.translate(this.body.view.translation.x, this.body.view.translation.y);
     ctx.scale(this.body.view.scale, this.body.view.scale);
 
-    let nodes = this.body.nodes;
+    const nodes = this.body.nodes;
     let node;
 
     // resize all nodes
-    for (let nodeId in nodes) {
-      if (nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in nodes) {
+      if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
         node = nodes[nodeId];
         node.resize(ctx);
         node.updateBoundingBox(ctx, node.selected);
@@ -14661,18 +14669,18 @@ class CanvasRenderer {
    * @private
    */
   _drawNodes(ctx, alwaysShow = false) {
-    let nodes = this.body.nodes;
-    let nodeIndices = this.body.nodeIndices;
+    const nodes = this.body.nodes;
+    const nodeIndices = this.body.nodeIndices;
     let node;
-    let selected = [];
-    let hovered = [];
-    let margin = 20;
-    let topLeft = this.canvas.DOMtoCanvas({x:-margin,y:-margin});
-    let bottomRight = this.canvas.DOMtoCanvas({
+    const selected = [];
+    const hovered = [];
+    const margin = 20;
+    const topLeft = this.canvas.DOMtoCanvas({x:-margin,y:-margin});
+    const bottomRight = this.canvas.DOMtoCanvas({
       x: this.canvas.frame.canvas.clientWidth+margin,
       y: this.canvas.frame.canvas.clientHeight+margin
     });
-    let viewableArea = {top:topLeft.y,left:topLeft.x,bottom:bottomRight.y,right:bottomRight.x};
+    const viewableArea = {top:topLeft.y,left:topLeft.x,bottom:bottomRight.y,right:bottomRight.x};
 
     // draw unselected nodes;
     for (let i = 0; i < nodeIndices.length; i++) {
@@ -14721,8 +14729,8 @@ class CanvasRenderer {
    * @private
    */
   _drawEdges(ctx) {
-    let edges = this.body.edges;
-    let edgeIndices = this.body.edgeIndices;
+    const edges = this.body.edges;
+    const edgeIndices = this.body.edgeIndices;
 
     for (let i = 0; i < edgeIndices.length; i++) {
       const edge = edges[edgeIndices[i]];
@@ -14738,8 +14746,8 @@ class CanvasRenderer {
    * @private
    */
   _drawArrows(ctx) {
-    let edges = this.body.edges;
-    let edgeIndices = this.body.edgeIndices;
+    const edges = this.body.edges;
+    const edgeIndices = this.body.edgeIndices;
 
     for (let i = 0; i < edgeIndices.length; i++) {
       const edge = edges[edgeIndices[i]];
@@ -14756,7 +14764,7 @@ class CanvasRenderer {
    */
   _determineBrowserMethod() {
     if (typeof window !== 'undefined') {
-      let browserType = navigator.userAgent.toLowerCase();
+      const browserType = navigator.userAgent.toLowerCase();
       this.requiresTimeout = false;
       if (browserType.indexOf('msie 9.0') != -1) { // IE 9
         this.requiresTimeout = true;
@@ -14880,7 +14888,7 @@ class Canvas {
    */
   setOptions(options) {
     if (options !== undefined) {
-      let fields = ['width','height','autoResize'];
+      const fields = ['width','height','autoResize'];
       selectiveDeepExtend(fields,this.options, options);
     }
 
@@ -14888,7 +14896,7 @@ class Canvas {
       // automatically adapt to a changing size of the browser.
       this._cleanUp();
       this.resizeTimer = setInterval(() => {
-        let changed = this.setSize();
+        const changed = this.setSize();
         if (changed === true) {
           this.body.emitter.emit("_requestRedraw");
         }
@@ -14950,8 +14958,8 @@ class Canvas {
       this.cameraState.previousHeight > 0
     ) {
 
-      let widthRatio = (this.frame.canvas.width / this.pixelRatio) / this.cameraState.previousWidth;
-      let heightRatio = (this.frame.canvas.height / this.pixelRatio) / this.cameraState.previousHeight;
+      const widthRatio = (this.frame.canvas.width / this.pixelRatio) / this.cameraState.previousWidth;
+      const heightRatio = (this.frame.canvas.height / this.pixelRatio) / this.cameraState.previousHeight;
       let newScale = this.cameraState.scale;
 
       if (widthRatio != 1 && heightRatio != 1) {
@@ -14966,12 +14974,12 @@ class Canvas {
 
       this.body.view.scale = newScale;
       // this comes from the view module.
-      var currentViewCenter = this.DOMtoCanvas({
+      const currentViewCenter = this.DOMtoCanvas({
         x: 0.5 * this.frame.canvas.clientWidth,
         y: 0.5 * this.frame.canvas.clientHeight
       });
 
-      var distanceFromCenter = { // offset from view, distance view has to change by these x and y to center the node
+      const distanceFromCenter = { // offset from view, distance view has to change by these x and y to center the node
         x: currentViewCenter.x - this.cameraState.position.x,
         y: currentViewCenter.y - this.cameraState.position.y
       };
@@ -15024,7 +15032,7 @@ class Canvas {
     this.frame.appendChild(this.frame.canvas);
 
     if (!this.frame.canvas.getContext) {
-      let noCanvas = document.createElement( 'DIV' );
+      const noCanvas = document.createElement( 'DIV' );
       noCanvas.style.color = 'red';
       noCanvas.style.fontWeight =  'bold' ;
       noCanvas.style.padding =  '10px';
@@ -15096,8 +15104,8 @@ class Canvas {
     height= this._prepareValue(height);
 
     let emitEvent = false;
-    let oldWidth = this.frame.canvas.width;
-    let oldHeight = this.frame.canvas.height;
+    const oldWidth = this.frame.canvas.width;
+    const oldHeight = this.frame.canvas.height;
 
     // update the pixel ratio
     //
@@ -15111,7 +15119,7 @@ class Canvas {
     //
     //       For the time being, I will humor the assumption here, and in the rest of the code assume it is
     //       constant.
-    let previousRatio = this.pixelRatio; // we cache this because the camera state storage needs the old value
+    const previousRatio = this.pixelRatio; // we cache this because the camera state storage needs the old value
     this._setPixelRatio();
 
     if (width != this.options.width || height != this.options.height || this.frame.style.width != width || this.frame.style.height != height) {
@@ -15140,8 +15148,8 @@ class Canvas {
       // this would adapt the width of the canvas to the width from 100% if and only if
       // there is a change.
 
-      let newWidth  = Math.round(this.frame.canvas.clientWidth  * this.pixelRatio);
-      let newHeight = Math.round(this.frame.canvas.clientHeight * this.pixelRatio);
+      const newWidth  = Math.round(this.frame.canvas.clientWidth  * this.pixelRatio);
+      const newHeight = Math.round(this.frame.canvas.clientHeight * this.pixelRatio);
 
       // store the camera if there is a change in size.
       if (this.frame.canvas.width !== newWidth || this.frame.canvas.height !== newHeight) {
@@ -15191,18 +15199,18 @@ class Canvas {
    * @private
    */
   _determinePixelRatio() {
-    let ctx = this.getContext();
+    const ctx = this.getContext();
     if (ctx === undefined) {
      throw new Error("Could not get canvax context");
     }
 
-    var numerator = 1;
+    let numerator = 1;
     if(typeof window !== 'undefined') {  // (window !== undefined) doesn't work here!
       // Protection during unit tests, where 'window' can be missing
       numerator = (window.devicePixelRatio || 1);
     }
 
-    var denominator = (ctx.webkitBackingStorePixelRatio ||
+    const denominator = (ctx.webkitBackingStorePixelRatio ||
       ctx.mozBackingStorePixelRatio ||
       ctx.msBackingStorePixelRatio  ||
       ctx.oBackingStorePixelRatio   ||
@@ -15224,7 +15232,7 @@ class Canvas {
    * Set the transform in the contained context, based on its pixelRatio
    */
   setTransform() {
-    let ctx = this.getContext();
+    const ctx = this.getContext();
     if (ctx === undefined) {
      throw new Error("Could not get canvax context");
     }
@@ -15364,9 +15372,9 @@ class View {
     } else if (initialZoom === true) {
       // check if more than half of the nodes have a predefined position. If so, we use the range, not the approximation.
       let positionDefined = 0;
-      for (let nodeId in this.body.nodes) {
-        if (this.body.nodes.hasOwnProperty(nodeId)) {
-          let node = this.body.nodes[nodeId];
+      for (const nodeId in this.body.nodes) {
+        if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
+          const node = this.body.nodes[nodeId];
           if (node.predefinedPosition === true) {
             positionDefined += 1;
           }
@@ -15379,7 +15387,7 @@ class View {
 
       range = NetworkUtil.getRange(this.body.nodes, options.nodes);
 
-      let numberOfNodes = this.body.nodeIndices.length;
+      const numberOfNodes = this.body.nodeIndices.length;
       zoomLevel = 12.662 / (numberOfNodes + 7.4147) + 0.0964822; // this is obtained from fitting a dataset from 5 points with scale levels that looked good.
 
       // correct for larger canvasses.
@@ -15390,8 +15398,8 @@ class View {
       this.body.emitter.emit("_resizeNodes");
       range = NetworkUtil.getRange(this.body.nodes, options.nodes);
 
-      let xDistance = Math.abs(range.maxX - range.minX) * 1.1;
-      let yDistance = Math.abs(range.maxY - range.minY) * 1.1;
+      const xDistance = Math.abs(range.maxX - range.minX) * 1.1;
+      const yDistance = Math.abs(range.maxY - range.minY) * 1.1;
 
       const xZoomLevel = canvasWidth  / xDistance;
       const yZoomLevel = canvasHeight / yDistance;
@@ -15406,8 +15414,8 @@ class View {
       zoomLevel = 1.0;
     }
 
-    let center = NetworkUtil.findCenter(range);
-    let animationOptions = {position: center, scale: zoomLevel, animation: options.animation};
+    const center = NetworkUtil.findCenter(range);
+    const animationOptions = {position: center, scale: zoomLevel, animation: options.animation};
     this.moveTo(animationOptions);
   }
   
@@ -15421,7 +15429,7 @@ class View {
    */
   focus(nodeId, options = {}) {
     if (this.body.nodes[nodeId] !== undefined) {
-      let nodePosition = {x: this.body.nodes[nodeId].x, y: this.body.nodes[nodeId].y};
+      const nodePosition = {x: this.body.nodes[nodeId].x, y: this.body.nodes[nodeId].y};
       options.position = nodePosition;
       options.lockedOnNode = nodeId;
 
@@ -15550,9 +15558,9 @@ class View {
     // set the scale so the viewCenter is based on the correct zoom level. This is overridden in the transitionRedraw
     // but at least then we'll have the target transition
     this.body.view.scale = this.targetScale;
-    let viewCenter = this.canvas.DOMtoCanvas({x: 0.5 * this.canvas.frame.canvas.clientWidth, y: 0.5 * this.canvas.frame.canvas.clientHeight});
+    const viewCenter = this.canvas.DOMtoCanvas({x: 0.5 * this.canvas.frame.canvas.clientWidth, y: 0.5 * this.canvas.frame.canvas.clientHeight});
 
-    let distanceFromCenter = { // offset from view, distance view has to change by these x and y to center the node
+    const distanceFromCenter = { // offset from view, distance view has to change by these x and y to center the node
       x: viewCenter.x - options.position.x,
       y: viewCenter.y - options.position.y
     };
@@ -15589,14 +15597,14 @@ class View {
    * @private
    */
   _lockedRedraw() {
-    let nodePosition = {x: this.body.nodes[this.lockedOnNodeId].x, y: this.body.nodes[this.lockedOnNodeId].y};
-    let viewCenter = this.canvas.DOMtoCanvas({x: 0.5 * this.canvas.frame.canvas.clientWidth, y: 0.5 * this.canvas.frame.canvas.clientHeight});
-    let distanceFromCenter = { // offset from view, distance view has to change by these x and y to center the node
+    const nodePosition = {x: this.body.nodes[this.lockedOnNodeId].x, y: this.body.nodes[this.lockedOnNodeId].y};
+    const viewCenter = this.canvas.DOMtoCanvas({x: 0.5 * this.canvas.frame.canvas.clientWidth, y: 0.5 * this.canvas.frame.canvas.clientHeight});
+    const distanceFromCenter = { // offset from view, distance view has to change by these x and y to center the node
       x: viewCenter.x - nodePosition.x,
       y: viewCenter.y - nodePosition.y
     };
-    let sourceTranslation = this.body.view.translation;
-    let targetTranslation = {
+    const sourceTranslation = this.body.view.translation;
+    const targetTranslation = {
       x: sourceTranslation.x + distanceFromCenter.x * this.body.view.scale + this.lockedOnNodeOffset.x,
       y: sourceTranslation.y + distanceFromCenter.y * this.body.view.scale + this.lockedOnNodeOffset.y
     };
@@ -15623,7 +15631,7 @@ class View {
     this.easingTime += this.animationSpeed;
     this.easingTime = finished === true ? 1.0 : this.easingTime;
 
-    let progress = easingFunctions[this.animationEasingFunction](this.easingTime);
+    const progress = easingFunctions[this.animationEasingFunction](this.easingTime);
 
     this.body.view.scale = this.sourceScale + (this.targetScale - this.sourceScale) * progress;
     this.body.view.translation = {
@@ -15722,7 +15730,7 @@ class NavigationHandler {
   cleanNavigation() {
     // clean hammer bindings
     if (this.navigationHammers.length != 0) {
-      for (var i = 0; i < this.navigationHammers.length; i++) {
+      for (let i = 0; i < this.navigationHammers.length; i++) {
         this.navigationHammers[i].destroy();
       }
       this.navigationHammers = [];
@@ -15748,19 +15756,19 @@ class NavigationHandler {
     this.cleanNavigation();
 
     this.navigationDOM = {};
-    var navigationDivs = ['up','down','left','right','zoomIn','zoomOut','zoomExtends'];
-    var navigationDivActions = ['_moveUp','_moveDown','_moveLeft','_moveRight','_zoomIn','_zoomOut','_fit'];
+    const navigationDivs = ['up','down','left','right','zoomIn','zoomOut','zoomExtends'];
+    const navigationDivActions = ['_moveUp','_moveDown','_moveLeft','_moveRight','_zoomIn','_zoomOut','_fit'];
 
     this.navigationDOM['wrapper'] = document.createElement('div');
     this.navigationDOM['wrapper'].className = 'vis-navigation';
     this.canvas.frame.appendChild(this.navigationDOM['wrapper']);
 
-    for (var i = 0; i < navigationDivs.length; i++) {
+    for (let i = 0; i < navigationDivs.length; i++) {
       this.navigationDOM[navigationDivs[i]] = document.createElement('div');
       this.navigationDOM[navigationDivs[i]].className = 'vis-button vis-' + navigationDivs[i];
       this.navigationDOM['wrapper'].appendChild(this.navigationDOM[navigationDivs[i]]);
 
-      var hammer$1 = new hammer(this.navigationDOM[navigationDivs[i]]);
+      const hammer$1 = new hammer(this.navigationDOM[navigationDivs[i]]);
       if (navigationDivActions[i] === "_fit") {
         onTouch(hammer$1, this._fit.bind(this));
       }
@@ -15773,7 +15781,7 @@ class NavigationHandler {
 
     // use a hammer for the release so we do not require the one used in the rest of the network
     // the one the rest uses can be overloaded by the manipulation system.
-    var hammerFrame = new hammer(this.canvas.frame);
+    const hammerFrame = new hammer(this.canvas.frame);
     onRelease(hammerFrame, () => {this._stopMovement();});
     this.navigationHammers.push(hammerFrame);
 
@@ -15822,8 +15830,8 @@ class NavigationHandler {
    * @private
    */
   _stopMovement() {
-    for (let boundAction in this.boundFunctions) {
-      if (this.boundFunctions.hasOwnProperty(boundAction)) {
+    for (const boundAction in this.boundFunctions) {
+      if (Object.prototype.hasOwnProperty.call(this.boundFunctions, boundAction)) {
         this.body.emitter.off("initRedraw", this.boundFunctions[boundAction]);
         this.body.emitter.emit("_stopRendering");
       }
@@ -15855,12 +15863,12 @@ class NavigationHandler {
    * @private
    */
   _zoomIn() {
-    var scaleOld = this.body.view.scale;
-    var scale = this.body.view.scale * (1 + this.options.keyboard.speed.zoom);
-    var translation = this.body.view.translation;
-    var scaleFrac = scale / scaleOld;
-    var tx = (1 - scaleFrac) * this.canvas.canvasViewCenter.x + translation.x * scaleFrac;
-    var ty = (1 - scaleFrac) * this.canvas.canvasViewCenter.y + translation.y * scaleFrac;
+    const scaleOld = this.body.view.scale;
+    const scale = this.body.view.scale * (1 + this.options.keyboard.speed.zoom);
+    const translation = this.body.view.translation;
+    const scaleFrac = scale / scaleOld;
+    const tx = (1 - scaleFrac) * this.canvas.canvasViewCenter.x + translation.x * scaleFrac;
+    const ty = (1 - scaleFrac) * this.canvas.canvasViewCenter.y + translation.y * scaleFrac;
 
     this.body.view.scale = scale;
     this.body.view.translation = { x: tx, y: ty };
@@ -15873,12 +15881,12 @@ class NavigationHandler {
    * @private
    */
   _zoomOut()  {
-    var scaleOld = this.body.view.scale;
-    var scale = this.body.view.scale / (1 + this.options.keyboard.speed.zoom);
-    var translation = this.body.view.translation;
-    var scaleFrac = scale / scaleOld;
-    var tx = (1 - scaleFrac) * this.canvas.canvasViewCenter.x + translation.x * scaleFrac;
-    var ty = (1 - scaleFrac) * this.canvas.canvasViewCenter.y + translation.y * scaleFrac;
+    const scaleOld = this.body.view.scale;
+    const scale = this.body.view.scale / (1 + this.options.keyboard.speed.zoom);
+    const translation = this.body.view.translation;
+    const scaleFrac = scale / scaleOld;
+    const tx = (1 - scaleFrac) * this.canvas.canvasViewCenter.x + translation.x * scaleFrac;
+    const ty = (1 - scaleFrac) * this.canvas.canvasViewCenter.y + translation.y * scaleFrac;
 
     this.body.view.scale = scale;
     this.body.view.translation = { x: tx, y: ty };
@@ -15991,15 +15999,15 @@ class Popup {
     }
 
     if (doShow === true) {
-      var height = this.frame.clientHeight;
-      var width = this.frame.clientWidth;
-      var maxHeight = this.frame.parentNode.clientHeight;
-      var maxWidth = this.frame.parentNode.clientWidth;
+      const height = this.frame.clientHeight;
+      const width = this.frame.clientWidth;
+      const maxHeight = this.frame.parentNode.clientHeight;
+      const maxWidth = this.frame.parentNode.clientWidth;
 
-      var left = 0, top = 0;
+      let left = 0, top = 0;
 
       if (this.overflowMethod == 'flip') {
-        var isLeft = false, isTop = true; // Where around the position it's located
+        let isLeft = false, isTop = true; // Where around the position it's located
 
         if (this.y - height < this.padding) {
           isTop = false;
@@ -16141,7 +16149,7 @@ class InteractionHandler {
   setOptions(options) {
     if (options !== undefined) {
       // extend all but the values in fields
-      let fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag','keyboard','multiselect','selectable','selectConnectedEdges'];
+      const fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag','keyboard','multiselect','selectable','selectConnectedEdges'];
       selectiveNotDeepExtend(fields, this.options, options);
 
       // merge the keyboard options in.
@@ -16195,8 +16203,8 @@ class InteractionHandler {
    * @private
    */
   onTap(event) {
-    let pointer = this.getPointer(event.center);
-    let multiselect = this.selectionHandler.options.multiselect &&
+    const pointer = this.getPointer(event.center);
+    const multiselect = this.selectionHandler.options.multiselect &&
         (event.changedPointers[0].ctrlKey || event.changedPointers[0].metaKey);
 
     this.checkSelectionChanges(pointer, event, multiselect);
@@ -16210,7 +16218,7 @@ class InteractionHandler {
    * @private
    */
   onDoubleTap(event) {
-    let pointer = this.getPointer(event.center);
+    const pointer = this.getPointer(event.center);
     this.selectionHandler._generateClickEvent('doubleClick', event, pointer);
   }
 
@@ -16221,8 +16229,8 @@ class InteractionHandler {
    * @private
    */
   onHold(event) {
-    let pointer = this.getPointer(event.center);
-    let multiselect = this.selectionHandler.options.multiselect;
+    const pointer = this.getPointer(event.center);
+    const multiselect = this.selectionHandler.options.multiselect;
 
     this.checkSelectionChanges(pointer, event, multiselect);
 
@@ -16239,7 +16247,7 @@ class InteractionHandler {
    */
   onRelease(event) {
     if (new Date().valueOf() - this.touchTime > 10) {
-      let pointer = this.getPointer(event.center);
+      const pointer = this.getPointer(event.center);
       this.selectionHandler._generateClickEvent('release', event, pointer);
       // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
       this.touchTime = new Date().valueOf();
@@ -16251,7 +16259,7 @@ class InteractionHandler {
    * @param {Event} event
    */
   onContext(event) {
-    let pointer = this.getPointer({x:event.clientX, y:event.clientY});
+    const pointer = this.getPointer({x:event.clientX, y:event.clientY});
     this.selectionHandler._generateClickEvent('oncontext', event, pointer);
   }
 
@@ -16272,7 +16280,7 @@ class InteractionHandler {
    * @param {boolean} [add=false]
    */
   checkSelectionChanges(pointer, event, add = false) {
-    let previousSelection = this.selectionHandler.getSelection();
+    const previousSelection = this.selectionHandler.getSelection();
     let selected = false;
     if (add === true) {
       selected = this.selectionHandler.selectAdditionalOnPoint(pointer);
@@ -16280,11 +16288,11 @@ class InteractionHandler {
     else {
       selected = this.selectionHandler.selectOnPoint(pointer);
     }
-    let currentSelection = this.selectionHandler.getSelection();
+    const currentSelection = this.selectionHandler.getSelection();
 
     // See NOTE in method comment for the reason to do it like this
-    let deselectedItems = this._determineDifference(previousSelection, currentSelection);
-    let selectedItems   = this._determineDifference(currentSelection , previousSelection);
+    const deselectedItems = this._determineDifference(previousSelection, currentSelection);
+    const selectedItems   = this._determineDifference(currentSelection , previousSelection);
 
     if (deselectedItems.edges.length > 0) {
       this.selectionHandler._generateClickEvent('deselectEdge', event, pointer, previousSelection);
@@ -16322,11 +16330,11 @@ class InteractionHandler {
    * @private
    */
   _determineDifference(firstSet, secondSet) {
-    let arrayDiff = function(firstArr, secondArr) {
-      let result = [];
+    const arrayDiff = function(firstArr, secondArr) {
+      const result = [];
 
       for (let i = 0; i < firstArr.length; i++) {
-        let value = firstArr[i];
+        const value = firstArr[i];
         if (secondArr.indexOf(value) === -1) {
           result.push(value);
         }
@@ -16362,7 +16370,7 @@ class InteractionHandler {
     }
 
     // note: drag.pointer is set in onTouch to get the initial touch location
-    let node = this.selectionHandler.getNodeAt(this.drag.pointer);
+    const node = this.selectionHandler.getNodeAt(this.drag.pointer);
 
     this.drag.dragging = true;
     this.drag.selection = [];
@@ -16371,7 +16379,7 @@ class InteractionHandler {
     
     if (event.srcEvent.shiftKey) {
       this.body.selectionBox.show = true;
-      let pointer = this.getPointer(event.center);
+      const pointer = this.getPointer(event.center);
 
       this.body.selectionBox.position.start = { x: this.canvas._XconvertDOMtoCanvas(pointer.x), y: this.canvas._YconvertDOMtoCanvas(pointer.y) };
       this.body.selectionBox.position.end =  { x: this.canvas._XconvertDOMtoCanvas(pointer.x), y: this.canvas._YconvertDOMtoCanvas(pointer.y) };
@@ -16388,12 +16396,12 @@ class InteractionHandler {
       // after select to contain the node
       this.selectionHandler._generateClickEvent('dragStart', event, this.drag.pointer);
 
-      let selection = this.selectionHandler.selectionObj.nodes;
+      const selection = this.selectionHandler.selectionObj.nodes;
       // create an array with the selected nodes and their original location and status
-      for (let nodeId in selection) {
-        if (selection.hasOwnProperty(nodeId)) {
-          let object = selection[nodeId];
-          let s = {
+      for (const nodeId in selection) {
+        if (Object.prototype.hasOwnProperty.call(selection, nodeId)) {
+          const object = selection[nodeId];
+          const s = {
             id: object.id,
             node: object,
 
@@ -16431,19 +16439,19 @@ class InteractionHandler {
     // remove the focus on node if it is focussed on by the focusOnNode
     this.body.emitter.emit('unlockNode');
 
-    let pointer = this.getPointer(event.center);
+    const pointer = this.getPointer(event.center);
 
-    let selection = this.drag.selection;
+    const selection = this.drag.selection;
     if (selection && selection.length && this.options.dragNodes === true) {
       this.selectionHandler._generateClickEvent('dragging', event, pointer);
 
       // calculate delta's and new location
-      let deltaX = pointer.x - this.drag.pointer.x;
-      let deltaY = pointer.y - this.drag.pointer.y;
+      const deltaX = pointer.x - this.drag.pointer.x;
+      const deltaY = pointer.y - this.drag.pointer.y;
 
       // update position of all selected nodes
       selection.forEach((selection) => {
-        let node = selection.node;
+        const node = selection.node;
         // only move the node if it was not fixed initially
         if (selection.xFixed === false) {
           node.x = this.canvas._XconvertDOMtoCanvas(this.canvas._XconvertCanvasToDOM(selection.x) + deltaX);
@@ -16482,8 +16490,8 @@ class InteractionHandler {
           return;
         }
 
-        let diffX = pointer.x - this.drag.pointer.x;
-        let diffY = pointer.y - this.drag.pointer.y;
+        const diffX = pointer.x - this.drag.pointer.x;
+        const diffY = pointer.y - this.drag.pointer.y;
 
         this.body.view.translation = {x:this.drag.translation.x + diffX, y:this.drag.translation.y + diffY};
         this.body.emitter.emit('_requestRedraw');
@@ -16522,7 +16530,7 @@ class InteractionHandler {
       this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
       this.body.emitter.emit('_requestRedraw');
     } else {
-      let selection = this.drag.selection;
+      const selection = this.drag.selection;
       if (selection && selection.length) {
         selection.forEach(function (s) {
           // restore original xFixed and yFixed
@@ -16547,7 +16555,7 @@ class InteractionHandler {
    * @private
    */
   onPinch(event) {
-    let pointer = this.getPointer(event.center);
+    const pointer = this.getPointer(event.center);
 
     this.drag.pinched = true;
     if (this.pinch['scale'] === undefined) {
@@ -16555,7 +16563,7 @@ class InteractionHandler {
     }
 
     // TODO: enabled moving while pinching?
-    let scale = this.pinch.scale * event.scale;
+    const scale = this.pinch.scale * event.scale;
     this.zoom(scale, pointer);
   }
 
@@ -16568,7 +16576,7 @@ class InteractionHandler {
    */
   zoom(scale, pointer) {
     if (this.options.zoomView === true) {
-      let scaleOld = this.body.view.scale;
+      const scaleOld = this.body.view.scale;
       if (scale < 0.00001) {
         scale = 0.00001;
       }
@@ -16583,17 +16591,17 @@ class InteractionHandler {
         }
       }
       // + this.canvas.frame.canvas.clientHeight / 2
-      let translation = this.body.view.translation;
+      const translation = this.body.view.translation;
 
-      let scaleFrac = scale / scaleOld;
-      let tx = (1 - scaleFrac) * pointer.x + translation.x * scaleFrac;
-      let ty = (1 - scaleFrac) * pointer.y + translation.y * scaleFrac;
+      const scaleFrac = scale / scaleOld;
+      const tx = (1 - scaleFrac) * pointer.x + translation.x * scaleFrac;
+      const ty = (1 - scaleFrac) * pointer.y + translation.y * scaleFrac;
 
       this.body.view.scale = scale;
       this.body.view.translation = {x:tx, y:ty};
 
       if (preScaleDragPointer != undefined) {
-        let postScaleDragPointer = this.canvas.canvasToDOM(preScaleDragPointer);
+        const postScaleDragPointer = this.canvas.canvasToDOM(preScaleDragPointer);
         this.drag.pointer.x = postScaleDragPointer.x;
         this.drag.pointer.y = postScaleDragPointer.y;
       }
@@ -16629,7 +16637,7 @@ class InteractionHandler {
         scale *= 1 + (event.deltaY < 0 ? 1 : -1) * (this.options.zoomSpeed * 0.1);
 
         // calculate the pointer location
-        let pointer = this.getPointer({x: event.clientX, y: event.clientY});
+        const pointer = this.getPointer({x: event.clientX, y: event.clientY});
 
         // apply the new scale
         this.zoom(scale, pointer);
@@ -16647,7 +16655,7 @@ class InteractionHandler {
    * @private
    */
   onMouseMove(event) {
-    let pointer = this.getPointer({x:event.clientX, y:event.clientY});
+    const pointer = this.getPointer({x:event.clientX, y:event.clientY});
     let popupVisible = false;
 
     // check if the previously selected node is still selected
@@ -16697,26 +16705,26 @@ class InteractionHandler {
    * @private
    */
  _checkShowPopup(pointer) {
-    let x = this.canvas._XconvertDOMtoCanvas(pointer.x);
-    let y = this.canvas._YconvertDOMtoCanvas(pointer.y);
-    let pointerObj = {
+    const x = this.canvas._XconvertDOMtoCanvas(pointer.x);
+    const y = this.canvas._YconvertDOMtoCanvas(pointer.y);
+    const pointerObj = {
       left:   x,
       top:    y,
       right:  x,
       bottom: y
     };
 
-    let previousPopupObjId = this.popupObj === undefined ? undefined : this.popupObj.id;
+    const previousPopupObjId = this.popupObj === undefined ? undefined : this.popupObj.id;
     let nodeUnderCursor = false;
     let popupType = 'node';
 
     // check if a node is under the cursor.
     if (this.popupObj === undefined) {
       // search the nodes for overlap, select the top one in case of multiple nodes
-      let nodeIndices = this.body.nodeIndices;
-      let nodes = this.body.nodes;
+      const nodeIndices = this.body.nodeIndices;
+      const nodes = this.body.nodes;
       let node;
-      let overlappingNodes = [];
+      const overlappingNodes = [];
       for (let i = 0; i < nodeIndices.length; i++) {
         node = nodes[nodeIndices[i]];
         if (node.isOverlappingWith(pointerObj) === true) {
@@ -16737,10 +16745,10 @@ class InteractionHandler {
 
     if (this.popupObj === undefined && nodeUnderCursor === false) {
       // search the edges for overlap
-      let edgeIndices = this.body.edgeIndices;
-      let edges = this.body.edges;
+      const edgeIndices = this.body.edgeIndices;
+      const edges = this.body.edges;
       let edge;
-      let overlappingEdges = [];
+      const overlappingEdges = [];
       for (let i = 0; i < edgeIndices.length; i++) {
         edge = edges[edgeIndices[i]];
         if (edge.isOverlappingWith(pointerObj) === true) {
@@ -16791,7 +16799,7 @@ class InteractionHandler {
    * @private
    */
  _checkHidePopup(pointer) {
-    let pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
+    const pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
 
     let stillOnObj = false;
     if (this.popup.popupTargetType === 'node') {
@@ -16801,7 +16809,7 @@ class InteractionHandler {
         // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
         // we initially only check stillOnObj because this is much faster.
         if (stillOnObj === true) {
-          let overNode = this.selectionHandler.getNodeAt(pointer);
+          const overNode = this.selectionHandler.getNodeAt(pointer);
           stillOnObj = overNode === undefined ? false : overNode.id === this.popup.popupTargetId;
         }
       }
@@ -16858,7 +16866,7 @@ class SelectionHandler {
    */
   setOptions(options) {
     if (options !== undefined) {
-      let fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
+      const fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
       selectiveDeepExtend(fields, this.options, options);
     }
   }
@@ -16873,7 +16881,7 @@ class SelectionHandler {
   selectOnPoint(pointer) {
     let selected = false;
     if (this.options.selectable === true) {
-      let obj = this.getNodeAt(pointer) || this.getEdgeAt(pointer);
+      const obj = this.getNodeAt(pointer) || this.getEdgeAt(pointer);
 
       // unselect after getting the objects in order to restore width and height.
       this.unselectAll();
@@ -16894,7 +16902,7 @@ class SelectionHandler {
   selectAdditionalOnPoint(pointer) {
     let selectionChanged = false;
     if (this.options.selectable === true) {
-      let obj = this.getNodeAt(pointer) || this.getEdgeAt(pointer);
+      const obj = this.getNodeAt(pointer) || this.getEdgeAt(pointer);
 
       if (obj !== undefined) {
         selectionChanged = true;
@@ -16921,7 +16929,7 @@ class SelectionHandler {
    * @private
    */
   _initBaseEvent(event, pointer) {
-    let properties = {};
+    const properties = {};
 
     properties['pointer'] = {
       DOM: { x: pointer.x, y: pointer.y },
@@ -16946,14 +16954,14 @@ class SelectionHandler {
    * @param {boolean|undefined} [emptySelection=false]  Indicate if selection data should be passed
    */
   _generateClickEvent(eventType, event, pointer, oldSelection, emptySelection = false) {
-    let properties = this._initBaseEvent(event, pointer);
+    const properties = this._initBaseEvent(event, pointer);
 
     if (emptySelection === true) {
       properties.nodes = [];
       properties.edges = [];
     }
     else {
-      let tmp = this.getSelection();
+      const tmp = this.getSelection();
       properties.nodes = tmp.nodes;
       properties.edges = tmp.edges;
     }
@@ -17015,10 +17023,10 @@ class SelectionHandler {
    * @private
    */
   _getAllNodesOverlappingWith(object) {
-    let overlappingNodes = [];
-    let nodes = this.body.nodes;
+    const overlappingNodes = [];
+    const nodes = this.body.nodes;
     for (let i = 0; i < this.body.nodeIndices.length; i++) {
-      let nodeId = this.body.nodeIndices[i];
+      const nodeId = this.body.nodeIndices[i];
       if (nodes[nodeId].isOverlappingWith(object)) {
         overlappingNodes.push(nodeId);
       }
@@ -17035,7 +17043,7 @@ class SelectionHandler {
    * @private
    */
   _pointerToPositionObject(pointer) {
-    let canvasPos = this.canvas.DOMtoCanvas(pointer);
+    const canvasPos = this.canvas.DOMtoCanvas(pointer);
     return {
       left: canvasPos.x - 1,
       top: canvasPos.y + 1,
@@ -17054,8 +17062,8 @@ class SelectionHandler {
    */
   getNodeAt(pointer, returnNode = true) {
     // we first check if this is an navigation controls element
-    let positionObject = this._pointerToPositionObject(pointer);
-    let overlappingNodes = this._getAllNodesOverlappingWith(positionObject);
+    const positionObject = this._pointerToPositionObject(pointer);
+    const overlappingNodes = this._getAllNodesOverlappingWith(positionObject);
     // if there are overlapping nodes, select the last one, this is the
     // one which is drawn on top of the others
     if (overlappingNodes.length > 0) {
@@ -17079,9 +17087,9 @@ class SelectionHandler {
    * @private
    */
   _getEdgesOverlappingWith(object, overlappingEdges) {
-    let edges = this.body.edges;
+    const edges = this.body.edges;
     for (let i = 0; i < this.body.edgeIndices.length; i++) {
-      let edgeId = this.body.edgeIndices[i];
+      const edgeId = this.body.edgeIndices[i];
       if (edges[edgeId].isOverlappingWith(object)) {
         overlappingEdges.push(edgeId);
       }
@@ -17096,7 +17104,7 @@ class SelectionHandler {
    * @private
    */
   _getAllEdgesOverlappingWith(object) {
-    let overlappingEdges = [];
+    const overlappingEdges = [];
     this._getEdgesOverlappingWith(object, overlappingEdges);
     return overlappingEdges;
   }
@@ -17111,19 +17119,19 @@ class SelectionHandler {
    */
   getEdgeAt(pointer, returnEdge = true) {
     // Iterate over edges, pick closest within 10
-    var canvasPos = this.canvas.DOMtoCanvas(pointer);
-    var mindist = 10;
-    var overlappingEdge = null;
-    var edges = this.body.edges;
-    for (var i = 0; i < this.body.edgeIndices.length; i++) {
-      var edgeId = this.body.edgeIndices[i];
-      var edge = edges[edgeId];
+    const canvasPos = this.canvas.DOMtoCanvas(pointer);
+    let mindist = 10;
+    let overlappingEdge = null;
+    const edges = this.body.edges;
+    for (let i = 0; i < this.body.edgeIndices.length; i++) {
+      const edgeId = this.body.edgeIndices[i];
+      const edge = edges[edgeId];
       if (edge.connected) {
-        var xFrom = edge.from.x;
-        var yFrom = edge.from.y;
-        var xTo = edge.to.x;
-        var yTo = edge.to.y;
-        var dist = edge.edgeType.getDistanceToEdge(xFrom, yFrom, xTo, yTo, canvasPos.x, canvasPos.y);
+        const xFrom = edge.from.x;
+        const yFrom = edge.from.y;
+        const xTo = edge.to.x;
+        const yTo = edge.to.y;
+        const dist = edge.edgeType.getDistanceToEdge(xFrom, yFrom, xTo, yTo, canvasPos.x, canvasPos.y);
         if (dist < mindist) {
           overlappingEdge = edgeId;
           mindist = dist;
@@ -17195,13 +17203,13 @@ class SelectionHandler {
    * Unselect all. The selectionObj is useful for this.
    */
   unselectAll() {
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
         this.selectionObj.nodes[nodeId].unselect();
       }
     }
-    for (let edgeId in this.selectionObj.edges) {
-      if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.selectionObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
         this.selectionObj.edges[edgeId].unselect();
       }
     }
@@ -17218,8 +17226,8 @@ class SelectionHandler {
    */
   _getSelectedNodeCount() {
     let count = 0;
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
         count += 1;
       }
     }
@@ -17233,8 +17241,8 @@ class SelectionHandler {
    * @private
    */
   _getSelectedNode() {
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
         return this.selectionObj.nodes[nodeId];
       }
     }
@@ -17248,8 +17256,8 @@ class SelectionHandler {
    * @private
    */
   _getSelectedEdge() {
-    for (let edgeId in this.selectionObj.edges) {
-      if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.selectionObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
         return this.selectionObj.edges[edgeId];
       }
     }
@@ -17265,8 +17273,8 @@ class SelectionHandler {
    */
   _getSelectedEdgeCount() {
     let count = 0;
-    for (let edgeId in this.selectionObj.edges) {
-      if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.selectionObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
         count += 1;
       }
     }
@@ -17282,13 +17290,13 @@ class SelectionHandler {
    */
   _getSelectedObjectCount() {
     let count = 0;
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
         count += 1;
       }
     }
-    for (let edgeId in this.selectionObj.edges) {
-      if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.selectionObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
         count += 1;
       }
     }
@@ -17302,13 +17310,13 @@ class SelectionHandler {
    * @private
    */
   _selectionIsEmpty() {
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
         return false;
       }
     }
-    for (let edgeId in this.selectionObj.edges) {
-      if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.selectionObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
         return false;
       }
     }
@@ -17323,8 +17331,8 @@ class SelectionHandler {
    * @private
    */
   _clusterInSelection() {
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
         if (this.selectionObj.nodes[nodeId].clusterSize > 1) {
           return true;
         }
@@ -17341,7 +17349,7 @@ class SelectionHandler {
    */
   _selectConnectedEdges(node) {
     for (let i = 0; i < node.edges.length; i++) {
-      let edge = node.edges[i];
+      const edge = node.edges[i];
       edge.select();
       this._addToSelection(edge);
     }
@@ -17355,7 +17363,7 @@ class SelectionHandler {
    */
   _hoverConnectedEdges(node) {
     for (let i = 0; i < node.edges.length; i++) {
-      let edge = node.edges[i];
+      const edge = node.edges[i];
       edge.hover = true;
       this._addToHover(edge);
     }
@@ -17370,7 +17378,7 @@ class SelectionHandler {
    */
   _unselectConnectedEdges(node) {
     for (let i = 0; i < node.edges.length; i++) {
-      let edge = node.edges[i];
+      const edge = node.edges[i];
       edge.unselect();
       this._removeFromSelection(edge);
     }
@@ -17386,7 +17394,7 @@ class SelectionHandler {
    * @private
    */
   emitBlurEvent(event, pointer, object) {
-    let properties = this._initBaseEvent(event, pointer);
+    const properties = this._initBaseEvent(event, pointer);
 
     if (object.hover === true) {
       object.hover = false;
@@ -17412,7 +17420,7 @@ class SelectionHandler {
    * @private
    */
   emitHoverEvent(event, pointer, object) {
-    let properties = this._initBaseEvent(event, pointer);
+    const properties = this._initBaseEvent(event, pointer);
     let hoverChanged = false;
 
     if (object.hover === false) {
@@ -17447,8 +17455,8 @@ class SelectionHandler {
 
     let hoverChanged = false;
     // remove all node hover highlights
-    for (let nodeId in this.hoverObj.nodes) {
-      if (this.hoverObj.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.hoverObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.hoverObj.nodes, nodeId)) {
         if (object === undefined || (object instanceof Node && object.id != nodeId) || object instanceof Edge) {
           this.emitBlurEvent(event, pointer, this.hoverObj.nodes[nodeId]);
           delete this.hoverObj.nodes[nodeId];
@@ -17458,8 +17466,8 @@ class SelectionHandler {
     }
 
     // removing all edge hover highlights
-    for (let edgeId in this.hoverObj.edges) {
-      if (this.hoverObj.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.hoverObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.hoverObj.edges, edgeId)) {
         // if the hover has been changed here it means that the node has been hovered over or off
         // we then do not use the emitBlurEvent method here.
         if (hoverChanged === true) {
@@ -17505,8 +17513,8 @@ class SelectionHandler {
    * @return {{nodes: Array.<string>, edges: Array.<string>}} selection
    */
   getSelection() {
-    let nodeIds = this.getSelectedNodes();
-    let edgeIds = this.getSelectedEdges();
+    const nodeIds = this.getSelectedNodes();
+    const edgeIds = this.getSelectedEdges();
     return { nodes: nodeIds, edges: edgeIds };
   }
 
@@ -17517,10 +17525,10 @@ class SelectionHandler {
    *                                            selected nodes.
    */
   getSelectedNodes() {
-    let idArray = [];
+    const idArray = [];
     if (this.options.selectable === true) {
-      for (let nodeId in this.selectionObj.nodes) {
-        if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
+      for (const nodeId in this.selectionObj.nodes) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
           idArray.push(this.selectionObj.nodes[nodeId].id);
         }
       }
@@ -17535,10 +17543,10 @@ class SelectionHandler {
    *                                            selected nodes.
    */
   getSelectedEdges() {
-    let idArray = [];
+    const idArray = [];
     if (this.options.selectable === true) {
-      for (let edgeId in this.selectionObj.edges) {
-        if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
+      for (const edgeId in this.selectionObj.edges) {
+        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
           idArray.push(this.selectionObj.edges[edgeId].id);
         }
       }
@@ -17564,7 +17572,7 @@ class SelectionHandler {
       for (i = 0; i < selection.nodes.length; i++) {
         id = selection.nodes[i];
 
-        let node = this.body.nodes[id];
+        const node = this.body.nodes[id];
         if (!node) {
           throw new RangeError('Node with id "' + id + '" not found');
         }
@@ -17577,7 +17585,7 @@ class SelectionHandler {
       for (i = 0; i < selection.edges.length; i++) {
         id = selection.edges[i];
 
-        let edge = this.body.edges[id];
+        const edge = this.body.edges[id];
         if (!edge) {
           throw new RangeError('Edge with id "' + id + '" not found');
         }
@@ -17619,16 +17627,16 @@ class SelectionHandler {
    * @private
    */
   updateSelection() {
-    for (let nodeId in this.selectionObj.nodes) {
-      if (this.selectionObj.nodes.hasOwnProperty(nodeId)) {
-        if (!this.body.nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.selectionObj.nodes) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
+        if (!Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
           delete this.selectionObj.nodes[nodeId];
         }
       }
     }
-    for (let edgeId in this.selectionObj.edges) {
-      if (this.selectionObj.edges.hasOwnProperty(edgeId)) {
-        if (!this.body.edges.hasOwnProperty(edgeId)) {
+    for (const edgeId in this.selectionObj.edges) {
+      if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
+        if (!Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
           delete this.selectionObj.edges[edgeId];
         }
       }
@@ -17662,24 +17670,24 @@ class SelectionHandler {
    * @private
    */
   getClickedItems(pointer) {
-    let point = this.canvas.DOMtoCanvas(pointer);
-    var items = [];
+    const point = this.canvas.DOMtoCanvas(pointer);
+    const items = [];
 
     // Note reverse order; we want the topmost clicked items to be first in the array
     // Also note that selected nodes are disregarded here; these normally display on top
-    let nodeIndices = this.body.nodeIndices;
-    let nodes = this.body.nodes;
+    const nodeIndices = this.body.nodeIndices;
+    const nodes = this.body.nodes;
     for (let i = nodeIndices.length - 1; i >= 0; i--) {
-      let node = nodes[nodeIndices[i]];
-      let ret = node.getItemsOnPoint(point);
+      const node = nodes[nodeIndices[i]];
+      const ret = node.getItemsOnPoint(point);
       items.push.apply(items, ret); // Append the return value to the running list.
     }
 
-    let edgeIndices = this.body.edgeIndices;
-    let edges = this.body.edges;
+    const edgeIndices = this.body.edgeIndices;
+    const edges = this.body.edges;
     for (let i = edgeIndices.length - 1; i >= 0; i--) {
-      let edge = edges[edgeIndices[i]];
-      let ret = edge.getItemsOnPoint(point);
+      const edge = edges[edgeIndices[i]];
+      const ret = edge.getItemsOnPoint(point);
       items.push.apply(items, ret); // Append the return value to the running list.
     }
 
@@ -17848,7 +17856,7 @@ class VerticalStrategy extends DirectionInterface {
 
   /** @inheritdoc */
   getTreeSize(index) {
-    let res = this.layout.hierarchical.getTreeSize(this.layout.body.nodes, index);
+    const res = this.layout.hierarchical.getTreeSize(this.layout.body.nodes, index);
     return {min: res.min_x, max: res.max_x};
   }
 
@@ -17911,7 +17919,7 @@ class HorizontalStrategy extends DirectionInterface {
 
   /** @inheritdoc */
   getTreeSize(index) {
-    let res = this.layout.hierarchical.getTreeSize(this.layout.body.nodes, index);
+    const res = this.layout.hierarchical.getTreeSize(this.layout.body.nodes, index);
     return {min: res.min_y, max: res.max_y};
   }
 
@@ -18153,7 +18161,7 @@ class HierarchicalStatus {
    * Pre: parentReference init'ed properly for current network
    */
   checkIfTree() {
-    for (let i in this.parentReference) {
+    for (const i in this.parentReference) {
       if (this.parentReference[i].length > 1) {
         this.isTree = false;
         return;
@@ -18210,15 +18218,15 @@ class HierarchicalStatus {
    * @returns {number}
    */
   getMaxLevel(nodeId) {
-    let accumulator = {};
+    const accumulator = {};
 
-    let _getMaxLevel = (nodeId) => {
+    const _getMaxLevel = (nodeId) => {
       if (accumulator[nodeId] !== undefined) {
         return accumulator[nodeId];
       }
       let level = this.levels[nodeId];
       if (this.childrenReference[nodeId]) {
-        let children = this.childrenReference[nodeId];
+        const children = this.childrenReference[nodeId];
         if (children.length > 0) {
           for (let i = 0; i < children.length; i++) {
             level = Math.max(level,_getMaxLevel(children[i]));
@@ -18258,8 +18266,8 @@ class HierarchicalStatus {
   setMinLevelToZero(nodes) {
     let minLevel = 1e9;
     // get the minimum level
-    for (let nodeId in nodes) {
-      if (nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in nodes) {
+      if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
         if (this.levels[nodeId] !== undefined) {
           minLevel = Math.min(this.levels[nodeId], minLevel);
         }
@@ -18267,8 +18275,8 @@ class HierarchicalStatus {
     }
 
     // subtract the minimum from the set so we have a range starting from 0
-    for (let nodeId in nodes) {
-      if (nodes.hasOwnProperty(nodeId)) {
+    for (const nodeId in nodes) {
+      if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
         if (this.levels[nodeId] !== undefined) {
           this.levels[nodeId] -= minLevel;
         }
@@ -18290,10 +18298,10 @@ class HierarchicalStatus {
     let min_y = 1e9;
     let max_y = -1e9;
 
-    for (let nodeId in this.trees) {
-      if (this.trees.hasOwnProperty(nodeId)) {
+    for (const nodeId in this.trees) {
+      if (Object.prototype.hasOwnProperty.call(this.trees, nodeId)) {
         if (this.trees[nodeId] === index) {
-          let node = nodes[nodeId];
+          const node = nodes[nodeId];
           min_x = Math.min(node.x, min_x);
           max_x = Math.max(node.x, max_x);
           min_y = Math.min(node.y, min_y);
@@ -18319,8 +18327,8 @@ class HierarchicalStatus {
    * @return {boolean} true if the two nodes have a same ancestor node, false otherwise
    */
   hasSameParent(node1, node2) {
-    let parents1 = this.parentReference[node1.id];
-    let parents2 = this.parentReference[node2.id];
+    const parents1 = this.parentReference[node1.id];
+    const parents2 = this.parentReference[node2.id];
     if (parents1 === undefined || parents2 === undefined) {
       return false;
     }
@@ -18369,9 +18377,9 @@ class HierarchicalStatus {
       this.distributionOrdering[level] = [];
     }
 
-    var isPresent = false;
-    var curLevel = this.distributionOrdering[level];
-    for (var n in curLevel) {
+    let isPresent = false;
+    const curLevel = this.distributionOrdering[level];
+    for (const n in curLevel) {
       //if (curLevel[n].id === node.id) {
       if (curLevel[n] === node) {
         isPresent = true;
@@ -18442,7 +18450,7 @@ class LayoutEngine {
         return;
       }
       // get the type of static smooth curve in case it is required
-      let type = this.direction.curveType();
+      const type = this.direction.curveType();
 
       // force all edges into static smooth curves.
       this.body.emitter.emit('_forceDisableDynamicCurves', type, false);
@@ -18457,8 +18465,8 @@ class LayoutEngine {
    */
   setOptions(options, allOptions) {
     if (options !== undefined) {
-      let hierarchical = this.options.hierarchical;
-      let prevHierarchicalState = hierarchical.enabled;
+      const hierarchical = this.options.hierarchical;
+      const prevHierarchicalState = hierarchical.enabled;
       selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"],this.options, options);
       mergeOptions(this.options, options, 'hierarchical');
 
@@ -18519,7 +18527,7 @@ class LayoutEngine {
    */
   adaptAllOptionsForHierarchicalLayout(allOptions) {
     if (this.options.hierarchical.enabled === true) {
-      let backupPhysics = this.optionsBackup.physics;
+      const backupPhysics = this.optionsBackup.physics;
 
       // set the physics
       if (allOptions.physics === undefined || allOptions.physics === true) {
@@ -18559,7 +18567,7 @@ class LayoutEngine {
           allOptions.edges.smooth = {enabled: allOptions.edges.smooth, type:type};
         }
         else {
-          let smooth =  allOptions.edges.smooth;
+          const smooth =  allOptions.edges.smooth;
 
           // allow custom types except for dynamic
           if (smooth.type !== undefined && smooth.type !== 'dynamic') {
@@ -18602,10 +18610,10 @@ class LayoutEngine {
   positionInitially(nodesArray) {
     if (this.options.hierarchical.enabled !== true) {
       this._resetRNG(this.initialRandomSeed);
-      let radius = nodesArray.length + 50;
+      const radius = nodesArray.length + 50;
       for (let i = 0; i < nodesArray.length; i++) {
-        let node = nodesArray[i];
-        let angle = 2 * Math.PI * this._rng();
+        const node = nodesArray[i];
+        const angle = 2 * Math.PI * this._rng();
         if (node.x === undefined) {
           node.x = radius * Math.cos(angle);
         }
@@ -18623,13 +18631,13 @@ class LayoutEngine {
    */
   layoutNetwork() {
     if (this.options.hierarchical.enabled !== true && this.options.improvedLayout === true) {
-      let indices = this.body.nodeIndices;
+      const indices = this.body.nodeIndices;
 
       // first check if we should Kamada Kawai to layout. The threshold is if less than half of the visible
       // nodes have predefined positions we use this.
       let positionDefined = 0;
       for (let i = 0; i < indices.length; i++) {
-        let node = this.body.nodes[indices[i]];
+        const node = this.body.nodes[indices[i]];
         if (node.predefinedPosition === true) {
           positionDefined += 1;
         }
@@ -18637,9 +18645,9 @@ class LayoutEngine {
 
       // if less than half of the nodes have a predefined position we continue
       if (positionDefined < 0.5 * indices.length) {
-        let MAX_LEVELS = 10;
+        const MAX_LEVELS = 10;
         let level = 0;
-        let clusterThreshold = this.options.clusterThreshold;
+        const clusterThreshold = this.options.clusterThreshold;
 
         //
         // Define the options for the hidden cluster nodes
@@ -18653,7 +18661,7 @@ class LayoutEngine {
         //
         // All settings here are performance related, except when noted otherwise.
         //
-        let clusterOptions = {
+        const clusterOptions = {
           clusterNodeProperties:{
             shape: 'ellipse',       // Bugfix: avoid type 'image', no images supplied
             label: '',              // avoid label handling
@@ -18674,11 +18682,11 @@ class LayoutEngine {
         //       be easily clusterable.
         // TODO: examine why this is so
         if (indices.length > clusterThreshold) {
-          let startLength = indices.length;
+          const startLength = indices.length;
           while (indices.length > clusterThreshold && level <= MAX_LEVELS) {
             //console.time("clustering")
             level += 1;
-            let before = indices.length;
+            const before = indices.length;
             // if there are many nodes we do a hubsize cluster
             if (level % 3 === 0) {
               this.body.modules.clustering.clusterBridges(clusterOptions);
@@ -18686,7 +18694,7 @@ class LayoutEngine {
             else {
               this.body.modules.clustering.clusterOutliers(clusterOptions);
             }
-            let after = indices.length;
+            const after = indices.length;
             if (before == after && level % 3 !== 0) {
               this._declusterAll();
               this.body.emitter.emit("_layoutFailed");
@@ -18712,10 +18720,10 @@ class LayoutEngine {
         this._shiftToCenter();
 
         // perturb the nodes a little bit to force the physics to kick in
-        let offset = 70;
+        const offset = 70;
         for (let i = 0; i < indices.length; i++) {
           // Only perturb the nodes that aren't fixed
-          let node = this.body.nodes[indices[i]];
+          const node = this.body.nodes[indices[i]];
           if (node.predefinedPosition === false) {
             node.x += (0.5 - this._rng())*offset;
             node.y += (0.5 - this._rng())*offset;
@@ -18736,10 +18744,10 @@ class LayoutEngine {
    * @private
    */
   _shiftToCenter() {
-    let range = NetworkUtil.getRangeCore(this.body.nodes, this.body.nodeIndices);
-    let center = NetworkUtil.findCenter(range);
+    const range = NetworkUtil.getRangeCore(this.body.nodes, this.body.nodeIndices);
+    const center = NetworkUtil.findCenter(range);
     for (let i = 0; i < this.body.nodeIndices.length; i++) {
-      let node = this.body.nodes[this.body.nodeIndices[i]];
+      const node = this.body.nodes[this.body.nodeIndices[i]];
       node.x -= center.x;
       node.y -= center.y;
     }
@@ -18789,7 +18797,7 @@ class LayoutEngine {
       this.hierarchical = new HierarchicalStatus();
 
       for (nodeId in this.body.nodes) {
-        if (this.body.nodes.hasOwnProperty(nodeId)) {
+        if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
           node = this.body.nodes[nodeId];
           if (node.options.level !== undefined) {
             definedLevel = true;
@@ -18809,7 +18817,7 @@ class LayoutEngine {
       else {
         // define levels if undefined by the users. Based on hubsize.
         if (undefinedLevel === true) {
-          let sortMethod = this.options.hierarchical.sortMethod;
+          const sortMethod = this.options.hierarchical.sortMethod;
           if (sortMethod === 'hubsize') {
             this._determineLevelsByHubsize();
           }
@@ -18823,13 +18831,13 @@ class LayoutEngine {
 
 
         // fallback for cases where there are nodes but no edges
-        for (let nodeId in this.body.nodes) {
-          if (this.body.nodes.hasOwnProperty(nodeId)) {
+        for (const nodeId in this.body.nodes) {
+          if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
             this.hierarchical.ensureLevel(nodeId);
           }
         }
         // check the distribution of the nodes per level.
-        let distribution = this._getDistribution();
+        const distribution = this._getDistribution();
 
         // get the parent children relations.
         this._generateMap();
@@ -18852,25 +18860,25 @@ class LayoutEngine {
   _condenseHierarchy() {
     // Global var in this scope to define when the movement has stopped.
     let stillShifting = false;
-    let branches = {};
+    const branches = {};
     // first we have some methods to help shifting trees around.
     // the main method to shift the trees
-    let shiftTrees = () => {
-      let treeSizes = getTreeSizes();
+    const shiftTrees = () => {
+      const treeSizes = getTreeSizes();
       let shiftBy = 0;
       for (let i = 0; i < treeSizes.length - 1; i++) {
-        let diff = treeSizes[i].max - treeSizes[i+1].min;
+        const diff = treeSizes[i].max - treeSizes[i+1].min;
         shiftBy += diff + this.options.hierarchical.treeSpacing;
         shiftTree(i + 1, shiftBy);
       }
     };
 
     // shift a single tree by an offset
-    let shiftTree = (index, offset) => {
-      let trees = this.hierarchical.trees;
+    const shiftTree = (index, offset) => {
+      const trees = this.hierarchical.trees;
 
-      for (let nodeId in trees) {
-        if (trees.hasOwnProperty(nodeId)) {
+      for (const nodeId in trees) {
+        if (Object.prototype.hasOwnProperty.call(trees, nodeId)) {
           if (trees[nodeId] === index) {
             this.direction.shift(nodeId, offset);
           }
@@ -18879,8 +18887,8 @@ class LayoutEngine {
     };
 
     // get the width of all trees
-    let getTreeSizes = () => {
-      let treeWidths = [];
+    const getTreeSizes = () => {
+      const treeWidths = [];
       for (let i = 0; i < this.hierarchical.numTrees(); i++) {
         treeWidths.push(this.direction.getTreeSize(i));
       }
@@ -18889,13 +18897,13 @@ class LayoutEngine {
 
 
     // get a map of all nodes in this branch
-    let getBranchNodes = (source, map) => {
+    const getBranchNodes = (source, map) => {
       if (map[source.id]) {
         return;
       }
       map[source.id] = true;
       if (this.hierarchical.childrenReference[source.id]) {
-        let children = this.hierarchical.childrenReference[source.id];
+        const children = this.hierarchical.childrenReference[source.id];
         if (children.length > 0) {
           for (let i = 0; i < children.length; i++) {
             getBranchNodes(this.body.nodes[children[i]], map);
@@ -18906,19 +18914,19 @@ class LayoutEngine {
 
     // get a min max width as well as the maximum movement space it has on either sides
     // we use min max terminology because width and height can interchange depending on the direction of the layout
-    let getBranchBoundary = (branchMap, maxLevel = 1e9) => {
+    const getBranchBoundary = (branchMap, maxLevel = 1e9) => {
       let minSpace = 1e9;
       let maxSpace = 1e9;
       let min = 1e9;
       let max = -1e9;
-      for (let branchNode in branchMap) {
-        if (branchMap.hasOwnProperty(branchNode)) {
-          let node = this.body.nodes[branchNode];
-          let level = this.hierarchical.levels[node.id];
-          let position = this.direction.getPosition(node);
+      for (const branchNode in branchMap) {
+        if (Object.prototype.hasOwnProperty.call(branchMap, branchNode)) {
+          const node = this.body.nodes[branchNode];
+          const level = this.hierarchical.levels[node.id];
+          const position = this.direction.getPosition(node);
 
           // get the space around the node.
-          let [minSpaceNode, maxSpaceNode] = this._getSpaceAroundNode(node,branchMap);
+          const [minSpaceNode, maxSpaceNode] = this._getSpaceAroundNode(node,branchMap);
           minSpace = Math.min(minSpaceNode, minSpace);
           maxSpace = Math.min(maxSpaceNode, maxSpace);
 
@@ -18935,9 +18943,9 @@ class LayoutEngine {
 
 
     // check what the maximum level is these nodes have in common.
-    let getCollisionLevel = (node1, node2) => {
-      let maxLevel1 = this.hierarchical.getMaxLevel(node1.id);
-      let maxLevel2 = this.hierarchical.getMaxLevel(node2.id);
+    const getCollisionLevel = (node1, node2) => {
+      const maxLevel1 = this.hierarchical.getMaxLevel(node1.id);
+      const maxLevel2 = this.hierarchical.getMaxLevel(node2.id);
       return Math.min(maxLevel1, maxLevel2);
     };
 
@@ -18949,16 +18957,16 @@ class LayoutEngine {
      * @param {Array.<number>} levels
      * @param {*} centerParents
      */
-    let shiftElementsCloser = (callback, levels, centerParents) => {
-      let hier = this.hierarchical;
+    const shiftElementsCloser = (callback, levels, centerParents) => {
+      const hier = this.hierarchical;
 
       for (let i = 0; i < levels.length; i++) {
-        let level = levels[i];
-        let levelNodes = hier.distributionOrdering[level];
+        const level = levels[i];
+        const levelNodes = hier.distributionOrdering[level];
         if (levelNodes.length > 1) {
           for (let j = 0; j < levelNodes.length - 1; j++) {
-            let node1 = levelNodes[j];
-            let node2 = levelNodes[j+1];
+            const node1 = levelNodes[j];
+            const node2 = levelNodes[j+1];
 
             // NOTE: logic maintained as it was; if nodes have same ancestor,
             //       then of course they are in the same sub-network.
@@ -18972,31 +18980,31 @@ class LayoutEngine {
 
 
     // callback for shifting branches
-    let branchShiftCallback = (node1, node2, centerParent = false) => {
+    const branchShiftCallback = (node1, node2, centerParent = false) => {
       //window.CALLBACKS.push(() => {
-        let pos1 = this.direction.getPosition(node1);
-        let pos2 = this.direction.getPosition(node2);
-        let diffAbs = Math.abs(pos2 - pos1);
-        let nodeSpacing =  this.options.hierarchical.nodeSpacing;
+        const pos1 = this.direction.getPosition(node1);
+        const pos2 = this.direction.getPosition(node2);
+        const diffAbs = Math.abs(pos2 - pos1);
+        const nodeSpacing =  this.options.hierarchical.nodeSpacing;
         //console.log("NOW CHECKING:", node1.id, node2.id, diffAbs);
         if (diffAbs > nodeSpacing) {
-          let branchNodes1 = {};
-          let branchNodes2 = {};
+          const branchNodes1 = {};
+          const branchNodes2 = {};
 
           getBranchNodes(node1, branchNodes1);
           getBranchNodes(node2, branchNodes2);
 
           // check the largest distance between the branches
-          let maxLevel = getCollisionLevel(node1, node2);
-          let branchNodeBoundary1 = getBranchBoundary(branchNodes1, maxLevel);
-          let branchNodeBoundary2 = getBranchBoundary(branchNodes2, maxLevel);
-          let max1 = branchNodeBoundary1[1];
-          let min2 = branchNodeBoundary2[0];
-          let minSpace2 = branchNodeBoundary2[2];
+          const maxLevel = getCollisionLevel(node1, node2);
+          const branchNodeBoundary1 = getBranchBoundary(branchNodes1, maxLevel);
+          const branchNodeBoundary2 = getBranchBoundary(branchNodes2, maxLevel);
+          const max1 = branchNodeBoundary1[1];
+          const min2 = branchNodeBoundary2[0];
+          const minSpace2 = branchNodeBoundary2[2];
 
           //console.log(node1.id, getBranchBoundary(branchNodes1, maxLevel), node2.id,
           //            getBranchBoundary(branchNodes2, maxLevel), maxLevel);
-          let diffBranch = Math.abs(max1 - min2);
+          const diffBranch = Math.abs(max1 - min2);
           if (diffBranch > nodeSpacing) {
             let offset = max1 - min2 + nodeSpacing;
             if (offset < -minSpace2 + nodeSpacing) {
@@ -19017,21 +19025,21 @@ class LayoutEngine {
         //this.body.emitter.emit("_redraw");})
     };
 
-    let minimizeEdgeLength = (iterations, node) => {
+    const minimizeEdgeLength = (iterations, node) => {
       //window.CALLBACKS.push(() => {
       //  console.log("ts",node.id);
-        let nodeId = node.id;
-        let allEdges = node.edges;
-        let nodeLevel = this.hierarchical.levels[node.id];
+        const nodeId = node.id;
+        const allEdges = node.edges;
+        const nodeLevel = this.hierarchical.levels[node.id];
 
         // gather constants
-        let C2 = this.options.hierarchical.levelSeparation * this.options.hierarchical.levelSeparation;
-        let referenceNodes = {};
-        let aboveEdges = [];
+        const C2 = this.options.hierarchical.levelSeparation * this.options.hierarchical.levelSeparation;
+        const referenceNodes = {};
+        const aboveEdges = [];
         for (let i = 0; i < allEdges.length; i++) {
-          let edge = allEdges[i];
+          const edge = allEdges[i];
           if (edge.toId != edge.fromId) {
-            let otherNode = edge.toId == nodeId ? edge.from : edge.to;
+            const otherNode = edge.toId == nodeId ? edge.from : edge.to;
             referenceNodes[allEdges[i].id] = otherNode;
             if (this.hierarchical.levels[otherNode.id] < nodeLevel) {
               aboveEdges.push(edge);
@@ -19040,11 +19048,11 @@ class LayoutEngine {
         }
 
         // differentiated sum of lengths based on only moving one node over one axis
-        let getFx = (point, edges) => {
+        const getFx = (point, edges) => {
           let sum = 0;
           for (let i = 0; i < edges.length; i++) {
             if (referenceNodes[edges[i].id] !== undefined) {
-              let a = this.direction.getPosition(referenceNodes[edges[i].id]) - point;
+              const a = this.direction.getPosition(referenceNodes[edges[i].id]) - point;
               sum += a / Math.sqrt(a * a + C2);
             }
           }
@@ -19052,28 +19060,28 @@ class LayoutEngine {
         };
 
         // doubly differentiated sum of lengths based on only moving one node over one axis
-        let getDFx = (point, edges) => {
+        const getDFx = (point, edges) => {
           let sum = 0;
           for (let i = 0; i < edges.length; i++) {
             if (referenceNodes[edges[i].id] !== undefined) {
-              let a = this.direction.getPosition(referenceNodes[edges[i].id]) - point;
+              const a = this.direction.getPosition(referenceNodes[edges[i].id]) - point;
               sum -= (C2 * Math.pow(a * a + C2, -1.5));
             }
           }
           return sum;
         };
 
-        let getGuess = (iterations, edges) => {
+        const getGuess = (iterations, edges) => {
           let guess = this.direction.getPosition(node);
           // Newton's method for optimization
-          let guessMap = {};
+          const guessMap = {};
           for (let i = 0; i < iterations; i++) {
-            let fx = getFx(guess, edges);
-            let dfx = getDFx(guess, edges);
+            const fx = getFx(guess, edges);
+            const dfx = getDFx(guess, edges);
 
             // we limit the movement to avoid instability.
-            let limit = 40;
-            let ratio = Math.max(-limit, Math.min(limit, Math.round(fx/dfx)));
+            const limit = 40;
+            const ratio = Math.max(-limit, Math.min(limit, Math.round(fx/dfx)));
             guess = guess - ratio;
             // reduce duplicates
             if (guessMap[guess] !== undefined) {
@@ -19084,21 +19092,21 @@ class LayoutEngine {
           return guess;
         };
 
-        let moveBranch = (guess) => {
+        const moveBranch = (guess) => {
           // position node if there is space
-          let nodePosition = this.direction.getPosition(node);
+          const nodePosition = this.direction.getPosition(node);
 
           // check movable area of the branch
           if (branches[node.id] === undefined) {
-            let branchNodes = {};
+            const branchNodes = {};
             getBranchNodes(node, branchNodes);
             branches[node.id] = branchNodes;
           }
-          let branchBoundary = getBranchBoundary(branches[node.id]);
-          let minSpaceBranch = branchBoundary[2];
-          let maxSpaceBranch = branchBoundary[3];
+          const branchBoundary = getBranchBoundary(branches[node.id]);
+          const minSpaceBranch = branchBoundary[2];
+          const maxSpaceBranch = branchBoundary[3];
 
-          let diff = guess - nodePosition;
+          const diff = guess - nodePosition;
 
           // check if we are allowed to move the node:
           let branchOffset = 0;
@@ -19117,12 +19125,12 @@ class LayoutEngine {
           }
         };
 
-        let moveNode = (guess) => {
-          let nodePosition = this.direction.getPosition(node);
+        const moveNode = (guess) => {
+          const nodePosition = this.direction.getPosition(node);
 
           // position node if there is space
-          let [minSpace, maxSpace] = this._getSpaceAroundNode(node);
-          let diff = guess - nodePosition;
+          const [minSpace, maxSpace] = this._getSpaceAroundNode(node);
+          const diff = guess - nodePosition;
           // check if we are allowed to move the node:
           let newPosition = nodePosition;
           if (diff > 0) {
@@ -19148,14 +19156,14 @@ class LayoutEngine {
     };
 
     // method to remove whitespace between branches. Because we do bottom up, we can center the parents.
-    let minimizeEdgeLengthBottomUp = (iterations) => {
+    const minimizeEdgeLengthBottomUp = (iterations) => {
       let levels = this.hierarchical.getLevels();
       levels = levels.reverse();
       for (let i = 0; i < iterations; i++) {
         stillShifting = false;
         for (let j = 0; j < levels.length; j++) {
-          let level = levels[j];
-          let levelNodes = this.hierarchical.distributionOrdering[level];
+          const level = levels[j];
+          const levelNodes = this.hierarchical.distributionOrdering[level];
           for (let k = 0; k < levelNodes.length; k++) {
             minimizeEdgeLength(1000, levelNodes[k]);
           }
@@ -19168,7 +19176,7 @@ class LayoutEngine {
     };
 
     // method to remove whitespace between branches. Because we do bottom up, we can center the parents.
-    let shiftBranchesCloserBottomUp = (iterations) => {
+    const shiftBranchesCloserBottomUp = (iterations) => {
       let levels = this.hierarchical.getLevels();
       levels = levels.reverse();
       for (let i = 0; i < iterations; i++) {
@@ -19182,20 +19190,20 @@ class LayoutEngine {
     };
 
     // center all parents
-    let centerAllParents = () => {
-      for (let nodeId in this.body.nodes) {
-        if (this.body.nodes.hasOwnProperty(nodeId))
+    const centerAllParents = () => {
+      for (const nodeId in this.body.nodes) {
+        if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId))
           this._centerParent(this.body.nodes[nodeId]);
       }
     };
 
     // center all parents
-    let centerAllParentsBottomUp = () => {
+    const centerAllParentsBottomUp = () => {
       let levels = this.hierarchical.getLevels();
       levels = levels.reverse();
       for (let i = 0; i < levels.length; i++) {
-        let level = levels[i];
-        let levelNodes = this.hierarchical.distributionOrdering[level];
+        const level = levels[i];
+        const levelNodes = this.hierarchical.distributionOrdering[level];
         for (let j = 0; j < levelNodes.length; j++) {
           this._centerParent(levelNodes[j]);
         }
@@ -19233,25 +19241,25 @@ class LayoutEngine {
     if (map === undefined) {
       useMap = false;
     }
-    let level = this.hierarchical.levels[node.id];
+    const level = this.hierarchical.levels[node.id];
     if (level !== undefined) {
-      let index = this.hierarchical.distributionIndex[node.id];
-      let position = this.direction.getPosition(node);
-      let ordering = this.hierarchical.distributionOrdering[level];
+      const index = this.hierarchical.distributionIndex[node.id];
+      const position = this.direction.getPosition(node);
+      const ordering = this.hierarchical.distributionOrdering[level];
       let minSpace = 1e9;
       let maxSpace = 1e9;
       if (index !== 0) {
-        let prevNode = ordering[index - 1];
+        const prevNode = ordering[index - 1];
         if ((useMap === true && map[prevNode.id] === undefined) || useMap === false) {
-          let prevPos = this.direction.getPosition(prevNode);
+          const prevPos = this.direction.getPosition(prevNode);
           minSpace = position - prevPos;
         }
       }
 
       if (index != ordering.length - 1) {
-        let nextNode = ordering[index + 1];
+        const nextNode = ordering[index + 1];
         if ((useMap === true && map[nextNode.id] === undefined) || useMap === false) {
-          let nextPos = this.direction.getPosition(nextNode);
+          const nextPos = this.direction.getPosition(nextNode);
           maxSpace = Math.min(maxSpace, nextPos - position);
         }
       }
@@ -19271,19 +19279,19 @@ class LayoutEngine {
    */
   _centerParent(node) {
     if (this.hierarchical.parentReference[node.id]) {
-      let parents = this.hierarchical.parentReference[node.id];
-      for (var i = 0; i < parents.length; i++) {
-        let parentId = parents[i];
-        let parentNode = this.body.nodes[parentId];
-        let children = this.hierarchical.childrenReference[parentId];
+      const parents = this.hierarchical.parentReference[node.id];
+      for (let i = 0; i < parents.length; i++) {
+        const parentId = parents[i];
+        const parentNode = this.body.nodes[parentId];
+        const children = this.hierarchical.childrenReference[parentId];
 
         if (children !== undefined) {
           // get the range of the children
-          let newPosition = this._getCenterPosition(children);
+          const newPosition = this._getCenterPosition(children);
 
-          let position = this.direction.getPosition(parentNode);
-          let [minSpace, maxSpace] = this._getSpaceAroundNode(parentNode);
-          let diff = position - newPosition;
+          const position = this.direction.getPosition(parentNode);
+          const [minSpace, maxSpace] = this._getSpaceAroundNode(parentNode);
+          const diff = position - newPosition;
           if ((diff < 0 && Math.abs(diff) < maxSpace - this.options.hierarchical.nodeSpacing) ||
               (diff > 0 && Math.abs(diff) < minSpace - this.options.hierarchical.nodeSpacing)) {
             this.direction.setPosition(parentNode, newPosition);
@@ -19303,8 +19311,8 @@ class LayoutEngine {
   _placeNodesByHierarchy(distribution) {
     this.positionedNodes = {};
     // start placing all the level 0 nodes first. Then recursively position their branches.
-    for (let level in distribution) {
-      if (distribution.hasOwnProperty(level)) {
+    for (const level in distribution) {
+      if (Object.prototype.hasOwnProperty.call(distribution, level)) {
         // sort nodes in level by position:
         let nodeArray = Object.keys(distribution[level]);
         nodeArray = this._indexArrayToNodes(nodeArray);
@@ -19312,9 +19320,9 @@ class LayoutEngine {
         let handledNodeCount = 0;
 
         for (let i = 0; i < nodeArray.length; i++) {
-          let node = nodeArray[i];
+          const node = nodeArray[i];
           if (this.positionedNodes[node.id] === undefined) {
-            let spacing = this.options.hierarchical.nodeSpacing;
+            const spacing = this.options.hierarchical.nodeSpacing;
             let pos = spacing * handledNodeCount;
             // We get the X or Y values we need and store them in pos and previousPos.
             // The get and set make sure we get X or Y
@@ -19341,7 +19349,7 @@ class LayoutEngine {
    * @private
    */
   _placeBranchNodes(parentId, parentLevel) {
-    let childRef = this.hierarchical.childrenReference[parentId];
+    const childRef = this.hierarchical.childrenReference[parentId];
 
     // if this is not a parent, cancel the placing. This can happen with multiple parents to one child.
     if (childRef === undefined) {
@@ -19349,7 +19357,7 @@ class LayoutEngine {
     }
 
     // get a list of childNodes
-    let childNodes = [];
+    const childNodes = [];
     for (let i = 0; i < childRef.length; i++) {
       childNodes.push(this.body.nodes[childRef[i]]);
     }
@@ -19359,12 +19367,12 @@ class LayoutEngine {
 
     // position the childNodes
     for (let i = 0; i < childNodes.length; i++) {
-      let childNode = childNodes[i];
-      let childNodeLevel = this.hierarchical.levels[childNode.id];
+      const childNode = childNodes[i];
+      const childNodeLevel = this.hierarchical.levels[childNode.id];
       // check if the child node is below the parent node and if it has already been positioned.
       if (childNodeLevel > parentLevel && this.positionedNodes[childNode.id] === undefined) {
         // get the amount of space required for this node. If parent the width is based on the amount of children.
-        let spacing = this.options.hierarchical.nodeSpacing;
+        const spacing = this.options.hierarchical.nodeSpacing;
         let pos;
 
         // we get the X or Y values we need and store them in pos and previousPos.
@@ -19383,7 +19391,7 @@ class LayoutEngine {
     }
 
     // center the parent nodes.
-    let center = this._getCenterPosition(childNodes);
+    const center = this._getCenterPosition(childNodes);
     this.direction.setPosition(this.body.nodes[parentId], center, parentLevel);
   }
 
@@ -19403,10 +19411,10 @@ class LayoutEngine {
 
     // if overlap has been detected, we shift the branch
     if (this.lastNodeOnLevel[level] !== undefined) {
-      let previousPos = this.direction.getPosition(this.body.nodes[this.lastNodeOnLevel[level]]);
+      const previousPos = this.direction.getPosition(this.body.nodes[this.lastNodeOnLevel[level]]);
       if (pos - previousPos < this.options.hierarchical.nodeSpacing) {
-        let diff = (previousPos + this.options.hierarchical.nodeSpacing) - pos;
-        let sharedParent = this._findCommonParent(this.lastNodeOnLevel[level], node.id);
+        const diff = (previousPos + this.options.hierarchical.nodeSpacing) - pos;
+        const sharedParent = this._findCommonParent(this.lastNodeOnLevel[level], node.id);
         this._shiftBlock(sharedParent.withChild, diff);
       }
     }
@@ -19423,7 +19431,7 @@ class LayoutEngine {
    * @returns {Array.<Node>}
    */
   _indexArrayToNodes(idArray) {
-    let array = [];
+    const array = [];
     for (let i = 0; i < idArray.length; i++) {
       array.push(this.body.nodes[idArray[i]]);
     }
@@ -19437,16 +19445,16 @@ class LayoutEngine {
    * @private
    */
   _getDistribution() {
-    let distribution = {};
+    const distribution = {};
     let nodeId, node;
 
     // we fix Y because the hierarchy is vertical,
     // we fix X so we do not give a node an x position for a second time.
     // the fix of X is removed after the x value has been set.
     for (nodeId in this.body.nodes) {
-      if (this.body.nodes.hasOwnProperty(nodeId)) {
+      if (Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
         node = this.body.nodes[nodeId];
-        let level = this.hierarchical.levels[nodeId] === undefined ? 0 : this.hierarchical.levels[nodeId];
+        const level = this.hierarchical.levels[nodeId] === undefined ? 0 : this.hierarchical.levels[nodeId];
         this.direction.fix(node, level);
         if (distribution[level] === undefined) {
           distribution[level] = {};
@@ -19466,7 +19474,7 @@ class LayoutEngine {
    * @private
    */
   _getActiveEdges(node) {
-    let result = [];
+    const result = [];
 
     forEach(node.edges, (edge) => { 
       if (this.body.edgeIndices.indexOf(edge.id) !== -1) {
@@ -19485,17 +19493,17 @@ class LayoutEngine {
    * @private
    */
   _getHubSizes() {
-    let hubSizes = {};
-    let nodeIds = this.body.nodeIndices;
+    const hubSizes = {};
+    const nodeIds = this.body.nodeIndices;
 
     forEach(nodeIds, (nodeId) => { 
-      let node = this.body.nodes[nodeId];
-      let hubSize = this._getActiveEdges(node).length;
+      const node = this.body.nodes[nodeId];
+      const hubSize = this._getActiveEdges(node).length;
       hubSizes[hubSize] = true;
     });
 
     // Make an array of the size sorted descending
-    let result = [];
+    const result = [];
     forEach(hubSizes, (size) => { 
       result.push(Number(size));
     });
@@ -19514,18 +19522,18 @@ class LayoutEngine {
    * @private
    */
   _determineLevelsByHubsize() {
-    let levelDownstream = (nodeA, nodeB) => {
+    const levelDownstream = (nodeA, nodeB) => {
       this.hierarchical.levelDownstream(nodeA, nodeB);
     };
 
-    let hubSizes = this._getHubSizes();
+    const hubSizes = this._getHubSizes();
 
     for (let i = 0; i < hubSizes.length; ++i ) {
-      let hubSize = hubSizes[i];
+      const hubSize = hubSizes[i];
       if (hubSize === 0) break;
 
       forEach(this.body.nodeIndices, (nodeId) => { 
-        let node = this.body.nodes[nodeId];
+        const node = this.body.nodes[nodeId];
 
         if (hubSize === this._getActiveEdges(node).length) {
           this._crawlNetwork(levelDownstream, nodeId);
@@ -19542,21 +19550,21 @@ class LayoutEngine {
    * @private
    */
   _determineLevelsCustomCallback() {
-    let minLevel = 100000;
+    const minLevel = 100000;
 
     // TODO: this should come from options.
-    let customCallback = function(nodeA, nodeB, edge) {  // eslint-disable-line no-unused-vars
+    const customCallback = function(nodeA, nodeB, edge) {  // eslint-disable-line no-unused-vars
 
     };
 
     // TODO: perhaps move to HierarchicalStatus.
     //       But I currently don't see the point, this method is not used.
-    let levelByDirection = (nodeA, nodeB, edge) => {
+    const levelByDirection = (nodeA, nodeB, edge) => {
       let levelA = this.hierarchical.levels[nodeA.id];
       // set initial level
       if (levelA === undefined) { levelA = this.hierarchical.levels[nodeA.id] = minLevel;}
 
-      let diff = customCallback(
+      const diff = customCallback(
         NetworkUtil.cloneOptions(nodeA,'node'),
         NetworkUtil.cloneOptions(nodeB,'node'),
         NetworkUtil.cloneOptions(edge,'edge')
@@ -19596,7 +19604,7 @@ class LayoutEngine {
    * @private
    */
   _generateMap() {
-    let fillInRelations = (parentNode, childNode) => {
+    const fillInRelations = (parentNode, childNode) => {
       if (this.hierarchical.levels[childNode.id] > this.hierarchical.levels[parentNode.id]) {
         this.hierarchical.addRelation(parentNode.id, childNode.id);
       }
@@ -19614,17 +19622,17 @@ class LayoutEngine {
    * @private
    */
   _crawlNetwork(callback = function() {}, startingNodeId) {
-    let progress = {};
+    const progress = {};
 
-    let crawler = (node, tree) => {
+    const crawler = (node, tree) => {
       if (progress[node.id] === undefined) {
         this.hierarchical.setTreeIndex(node, tree);
 
         progress[node.id] = true;
         let childNode;
-        let edges = this._getActiveEdges(node);
+        const edges = this._getActiveEdges(node);
         for (let i = 0; i < edges.length; i++) {
-          let edge = edges[i];
+          const edge = edges[i];
           if (edge.connected === true) {
             if (edge.toId == node.id) {         // Not '===' because id's can be string and numeric
               childNode = edge.from;
@@ -19648,10 +19656,10 @@ class LayoutEngine {
       let treeIndex = 0;      // Serves to pass a unique id for the current distinct tree
 
       for (let i = 0; i < this.body.nodeIndices.length; i++) {
-        let nodeId = this.body.nodeIndices[i];
+        const nodeId = this.body.nodeIndices[i];
 
         if (progress[nodeId] === undefined) {
-          let node = this.body.nodes[nodeId];
+          const node = this.body.nodes[nodeId];
           crawler(node, treeIndex);
           treeIndex += 1;
         }
@@ -19659,7 +19667,7 @@ class LayoutEngine {
     }
     else {
       // Crawl from the given starting node
-      let node = this.body.nodes[startingNodeId];
+      const node = this.body.nodes[startingNodeId];
       if (node === undefined) {
         console.error("Node not found:", startingNodeId);
         return;
@@ -19676,15 +19684,15 @@ class LayoutEngine {
    * @private
    */
   _shiftBlock(parentId, diff) {
-    let progress = {};
-    let shifter = (parentId) => {
+    const progress = {};
+    const shifter = (parentId) => {
       if (progress[parentId]) {
         return;
       }
       progress[parentId] = true;
       this.direction.shift(parentId, diff);
 
-      let childRef = this.hierarchical.childrenReference[parentId];
+      const childRef = this.hierarchical.childrenReference[parentId];
       if (childRef !== undefined) {
         for (let i = 0; i < childRef.length; i++) {
           shifter(childRef[i]);
@@ -19703,26 +19711,26 @@ class LayoutEngine {
    * @private
    */
   _findCommonParent(childA,childB) {
-    let parents = {};
-    let iterateParents = (parents,child) => {
-      let parentRef =  this.hierarchical.parentReference[child];
+    const parents = {};
+    const iterateParents = (parents,child) => {
+      const parentRef =  this.hierarchical.parentReference[child];
       if (parentRef !== undefined) {
         for (let i = 0; i < parentRef.length; i++) {
-          let parent = parentRef[i];
+          const parent = parentRef[i];
           parents[parent] = true;
           iterateParents(parents, parent);
         }
       }
     };
-    let findParent = (parents, child) => {
-      let parentRef =  this.hierarchical.parentReference[child];
+    const findParent = (parents, child) => {
+      const parentRef =  this.hierarchical.parentReference[child];
       if (parentRef !== undefined) {
         for (let i = 0; i < parentRef.length; i++) {
-          let parent = parentRef[i];
+          const parent = parentRef[i];
           if (parents[parent] !== undefined) {
             return {foundParent:parent, withChild:child};
           }
-          let branch = findParent(parents, parent);
+          const branch = findParent(parents, parent);
           if (branch.foundParent !== null) {
             return branch;
           }
@@ -19748,7 +19756,7 @@ class LayoutEngine {
    * @private
    */
   setDirectionStrategy() {
-    var isVertical = (this.options.hierarchical.direction === 'UD'
+    const isVertical = (this.options.hierarchical.direction === 'UD'
                    || this.options.hierarchical.direction === 'DU');
 
     if(isVertical) {
@@ -19776,11 +19784,11 @@ class LayoutEngine {
       if (childNodes[i].id !== undefined) {
         childNode = childNodes[i];
       } else {
-        let childNodeId = childNodes[i];
+        const childNodeId = childNodes[i];
         childNode = this.body.nodes[childNodeId];
       }
 
-      let position = this.direction.getPosition(childNode);
+      const position = this.direction.getPosition(childNode);
       minPos = Math.min(minPos, position);
       maxPos = Math.max(maxPos, position);
     }
@@ -19799,6 +19807,7 @@ class ManipulationSystem {
    * @param {Object} body
    * @param {Canvas} canvas
    * @param {SelectionHandler} selectionHandler
+   * @param {InteractionHandler} interactionHandler
    */
   constructor(body, canvas, selectionHandler, interactionHandler) {
     this.body = body;
@@ -19955,10 +19964,10 @@ class ManipulationSystem {
       this.manipulationDiv.style.display = 'block';
       this.closeDiv.style.display = 'block';
 
-      let selectedNodeCount  = this.selectionHandler._getSelectedNodeCount();
-      let selectedEdgeCount  = this.selectionHandler._getSelectedEdgeCount();
-      let selectedTotalCount = selectedNodeCount + selectedEdgeCount;
-      let locale = this.options.locales[this.options.locale];
+      const selectedNodeCount  = this.selectionHandler._getSelectedNodeCount();
+      const selectedEdgeCount  = this.selectionHandler._getSelectedEdgeCount();
+      const selectedTotalCount = selectedNodeCount + selectedEdgeCount;
+      const locale = this.options.locales[this.options.locale];
       let needSeperator = false;
 
 
@@ -20035,7 +20044,7 @@ class ManipulationSystem {
 
     this.inMode = 'addNode';
     if (this.guiEnabled === true) {
-      let locale = this.options.locales[this.options.locale];
+      const locale = this.options.locales[this.options.locale];
       this.manipulationDOM = {};
       this._createBackButton(locale);
       this._createSeperator();
@@ -20059,12 +20068,12 @@ class ManipulationSystem {
 
     // restore the state of any bound functions or events, remove control nodes, restore physics
     this._clean();
-    let node = this.selectionHandler._getSelectedNode();
+    const node = this.selectionHandler._getSelectedNode();
     if (node !== undefined) {
       this.inMode = 'editNode';
       if (typeof this.options.editNode === 'function') {
         if (node.isCluster !== true) {
-          let data = deepExtend({}, node.options, false);
+          const data = deepExtend({}, node.options, false);
           data.x = node.x;
           data.y = node.y;
 
@@ -20108,7 +20117,7 @@ class ManipulationSystem {
 
     this.inMode = 'addEdge';
     if (this.guiEnabled === true) {
-      let locale = this.options.locales[this.options.locale];
+      const locale = this.options.locales[this.options.locale];
       this.manipulationDOM = {};
       this._createBackButton(locale);
       this._createSeperator();
@@ -20143,13 +20152,13 @@ class ManipulationSystem {
     if (typeof this.options.editEdge === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
       this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
       if (this.edgeBeingEditedId !== undefined) {
-        var edge = this.body.edges[this.edgeBeingEditedId];
+        const edge = this.body.edges[this.edgeBeingEditedId];
         this._performEditEdge(edge.from.id, edge.to.id);
         return;
       }
     }
     if (this.guiEnabled === true) {
-      let locale = this.options.locales[this.options.locale];
+      const locale = this.options.locales[this.options.locale];
       this.manipulationDOM = {};
       this._createBackButton(locale);
       this._createSeperator();
@@ -20161,11 +20170,11 @@ class ManipulationSystem {
 
     this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
     if (this.edgeBeingEditedId !== undefined) {
-      let edge = this.body.edges[this.edgeBeingEditedId];
+      const edge = this.body.edges[this.edgeBeingEditedId];
 
       // create control nodes
-      let controlNodeFrom = this._getNewTargetNode(edge.from.x, edge.from.y);
-      let controlNodeTo = this._getNewTargetNode(edge.to.x, edge.to.y);
+      const controlNodeFrom = this._getNewTargetNode(edge.from.x, edge.from.y);
+      const controlNodeTo = this._getNewTargetNode(edge.to.x, edge.to.y);
 
       this.temporaryIds.nodes.push(controlNodeFrom.id);
       this.temporaryIds.nodes.push(controlNodeTo.id);
@@ -20187,7 +20196,7 @@ class ManipulationSystem {
       // create function to position control nodes correctly on movement
       // automatically cleaned up because we use the temporary bind
       this._temporaryBindEvent('beforeDrawing', (ctx) => {
-        let positions = edge.edgeType.findBorderPositions(ctx);
+        const positions = edge.edgeType.findBorderPositions(ctx);
         if (controlNodeFrom.selected === false) {
           controlNodeFrom.x = positions.from.x;
           controlNodeFrom.y = positions.from.y;
@@ -20218,8 +20227,8 @@ class ManipulationSystem {
     this._clean();
 
     this.inMode = 'delete';
-    let selectedNodes = this.selectionHandler.getSelectedNodes();
-    let selectedEdges = this.selectionHandler.getSelectedEdges();
+    const selectedNodes = this.selectionHandler.getSelectedNodes();
+    const selectedEdges = this.selectionHandler.getSelectedEdges();
     let deleteFunction = undefined;
     if (selectedNodes.length > 0) {
       for (let i = 0; i < selectedNodes.length; i++) {
@@ -20240,7 +20249,7 @@ class ManipulationSystem {
     }
 
     if (typeof deleteFunction === 'function') {
-      let data = {nodes: selectedNodes, edges: selectedEdges};
+      const data = {nodes: selectedNodes, edges: selectedEdges};
       if (deleteFunction.length === 2) {
         deleteFunction(data, (finalizedData) => {
           if (finalizedData !== null && finalizedData !== undefined && this.inMode === 'delete') { // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
@@ -20349,7 +20358,7 @@ class ManipulationSystem {
    * @private
    */
   _getNewTargetNode(x,y) {
-    let controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
+    const controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
 
     controlNodeStyle.id = 'targetNode' + v4();
     controlNodeStyle.hidden = false;
@@ -20358,7 +20367,7 @@ class ManipulationSystem {
     controlNodeStyle.y = y;
 
     // we have to define the bounding box in order for the nodes to be drawn immediately
-    let node = this.body.functions.createNode(controlNodeStyle);
+    const node = this.body.functions.createNode(controlNodeStyle);
     node.shape.boundingBox = {left: x, right:x, top:y, bottom:y};
 
     return node;
@@ -20380,8 +20389,8 @@ class ManipulationSystem {
 
 
     // create the contents for the editMode button
-    let locale = this.options.locales[this.options.locale];
-    let button = this._createButton('editMode', 'vis-button vis-edit vis-edit-mode', locale['edit'] || this.options.locales['en']['edit']);
+    const locale = this.options.locales[this.options.locale];
+    const button = this._createButton('editMode', 'vis-button vis-edit vis-edit-mode', locale['edit'] || this.options.locales['en']['edit']);
     this.editModeDiv.appendChild(button);
 
     // bind a hammer listener to the button, calling the function toggleEditMode.
@@ -20479,7 +20488,7 @@ class ManipulationSystem {
    * @private
    */
   _createAddNodeButton(locale) {
-    let button = this._createButton('addNode', 'vis-button vis-add', locale['addNode'] || this.options.locales['en']['addNode']);
+    const button = this._createButton('addNode', 'vis-button vis-add', locale['addNode'] || this.options.locales['en']['addNode']);
     this.manipulationDiv.appendChild(button);
     this._bindHammerToDiv(button, this.addNodeMode.bind(this));
   }
@@ -20490,7 +20499,7 @@ class ManipulationSystem {
    * @private
    */
   _createAddEdgeButton(locale) {
-    let button = this._createButton('addEdge', 'vis-button vis-connect',  locale['addEdge'] || this.options.locales['en']['addEdge']);
+    const button = this._createButton('addEdge', 'vis-button vis-connect',  locale['addEdge'] || this.options.locales['en']['addEdge']);
     this.manipulationDiv.appendChild(button);
     this._bindHammerToDiv(button, this.addEdgeMode.bind(this));
   }
@@ -20501,7 +20510,7 @@ class ManipulationSystem {
    * @private
    */
   _createEditNodeButton(locale) {
-    let button = this._createButton('editNode', 'vis-button vis-edit', locale['editNode'] || this.options.locales['en']['editNode']);
+    const button = this._createButton('editNode', 'vis-button vis-edit', locale['editNode'] || this.options.locales['en']['editNode']);
     this.manipulationDiv.appendChild(button);
     this._bindHammerToDiv(button, this.editNode.bind(this));
   }
@@ -20512,7 +20521,7 @@ class ManipulationSystem {
    * @private
    */
   _createEditEdgeButton(locale) {
-    let button = this._createButton('editEdge', 'vis-button vis-edit',  locale['editEdge'] || this.options.locales['en']['editEdge']);
+    const button = this._createButton('editEdge', 'vis-button vis-edit',  locale['editEdge'] || this.options.locales['en']['editEdge']);
     this.manipulationDiv.appendChild(button);
     this._bindHammerToDiv(button, this.editEdgeMode.bind(this));
   }
@@ -20523,13 +20532,13 @@ class ManipulationSystem {
    * @private
    */
   _createDeleteButton(locale) {
-    var deleteBtnClass;
+    let deleteBtnClass;
     if (this.options.rtl) {
       deleteBtnClass = 'vis-button vis-delete-rtl';
     } else {
       deleteBtnClass = 'vis-button vis-delete';
     }
-    let button = this._createButton('delete', deleteBtnClass, locale['del'] || this.options.locales['en']['del']);
+    const button = this._createButton('delete', deleteBtnClass, locale['del'] || this.options.locales['en']['del']);
     this.manipulationDiv.appendChild(button);
     this._bindHammerToDiv(button, this.deleteSelected.bind(this));
   }
@@ -20540,7 +20549,7 @@ class ManipulationSystem {
    * @private
    */
   _createBackButton(locale) {
-    let button = this._createButton('back', 'vis-button vis-back', locale['back'] || this.options.locales['en']['back']);
+    const button = this._createButton('back', 'vis-button vis-back', locale['back'] || this.options.locales['en']['back']);
     this.manipulationDiv.appendChild(button);
     this._bindHammerToDiv(button, this.showManipulatorToolbar.bind(this));
   }
@@ -20611,8 +20620,8 @@ class ManipulationSystem {
    * @private
    */
   _unbindTemporaryUIs() {
-    for (let functionName in this.temporaryUIFunctions) {
-      if (this.temporaryUIFunctions.hasOwnProperty(functionName)) {
+    for (const functionName in this.temporaryUIFunctions) {
+      if (Object.prototype.hasOwnProperty.call(this.temporaryUIFunctions, functionName)) {
         this.body.eventListeners[functionName] = this.temporaryUIFunctions[functionName];
         delete this.temporaryUIFunctions[functionName];
       }
@@ -20626,8 +20635,8 @@ class ManipulationSystem {
    */
   _unbindTemporaryEvents() {
     for (let i = 0; i < this.temporaryEventFunctions.length; i++) {
-      let eventName = this.temporaryEventFunctions[i].event;
-      let boundFunction = this.temporaryEventFunctions[i].boundFunction;
+      const eventName = this.temporaryEventFunctions[i].event;
+      const boundFunction = this.temporaryEventFunctions[i].boundFunction;
       this.body.emitter.off(eventName, boundFunction);
     }
     this.temporaryEventFunctions = [];
@@ -20640,7 +20649,7 @@ class ManipulationSystem {
    * @param {function} boundFunction
    */
   _bindHammerToDiv(domElement, boundFunction) {
-    let hammer$1 = new hammer(domElement, {});
+    const hammer$1 = new hammer(domElement, {});
     onTouch(hammer$1, boundFunction);
     this.manipulationHammers.push(hammer$1);
   }
@@ -20655,14 +20664,14 @@ class ManipulationSystem {
     for (let i = 0; i < this.temporaryIds.edges.length; i++) {
       this.body.edges[this.temporaryIds.edges[i]].disconnect();
       delete this.body.edges[this.temporaryIds.edges[i]];
-      let indexTempEdge = this.body.edgeIndices.indexOf(this.temporaryIds.edges[i]);
+      const indexTempEdge = this.body.edgeIndices.indexOf(this.temporaryIds.edges[i]);
       if (indexTempEdge !== -1) {this.body.edgeIndices.splice(indexTempEdge,1);}
     }
 
     // _clean temporary nodes
     for (let i = 0; i < this.temporaryIds.nodes.length; i++) {
       delete this.body.nodes[this.temporaryIds.nodes[i]];
-      let indexTempNode = this.body.nodeIndices.indexOf(this.temporaryIds.nodes[i]);
+      const indexTempNode = this.body.nodeIndices.indexOf(this.temporaryIds.nodes[i]);
       if (indexTempNode !== -1) {this.body.nodeIndices.splice(indexTempNode,1);}
     }
 
@@ -20689,15 +20698,15 @@ class ManipulationSystem {
    * @private
    */
   _controlNodeDragStart(event) {  // eslint-disable-line no-unused-vars
-    let pointer = this.lastTouch;
-    let pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
-    let from = this.body.nodes[this.temporaryIds.nodes[0]];
-    let to   = this.body.nodes[this.temporaryIds.nodes[1]];
-    let edge = this.body.edges[this.edgeBeingEditedId];
+    const pointer = this.lastTouch;
+    const pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
+    const from = this.body.nodes[this.temporaryIds.nodes[0]];
+    const to   = this.body.nodes[this.temporaryIds.nodes[1]];
+    const edge = this.body.edges[this.edgeBeingEditedId];
     this.selectedControlNode = undefined;
 
-    let fromSelect = from.isOverlappingWith(pointerObj);
-    let toSelect = to.isOverlappingWith(pointerObj);
+    const fromSelect = from.isOverlappingWith(pointerObj);
+    const toSelect = to.isOverlappingWith(pointerObj);
 
     if (fromSelect === true) {
       this.selectedControlNode = from;
@@ -20723,8 +20732,8 @@ class ManipulationSystem {
    */
   _controlNodeDrag(event) {
     this.body.emitter.emit('disablePhysics');
-    let pointer = this.body.functions.getPointer(event.center);
-    let pos = this.canvas.DOMtoCanvas(pointer);
+    const pointer = this.body.functions.getPointer(event.center);
+    const pos = this.canvas.DOMtoCanvas(pointer);
     if (this.selectedControlNode !== undefined) {
       this.selectedControlNode.x = pos.x;
       this.selectedControlNode.y = pos.y;
@@ -20742,9 +20751,9 @@ class ManipulationSystem {
    * @private
    */
   _controlNodeDragEnd(event) {
-    let pointer = this.body.functions.getPointer(event.center);
-    let pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
-    let edge = this.body.edges[this.edgeBeingEditedId];
+    const pointer = this.body.functions.getPointer(event.center);
+    const pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
+    const edge = this.body.edges[this.edgeBeingEditedId];
     // if the node that was dragged is not a control node, return
     if (this.selectedControlNode === undefined) {
       return;
@@ -20752,7 +20761,7 @@ class ManipulationSystem {
 
     // we use the selection to find the node that is being dragged. We explicitly DEselect the control node here.
     this.selectionHandler.unselectAll();
-    let overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
+    const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length-1; i >= 0; i--) {
       if (overlappingNodeIds[i] !== this.selectedControlNode.id) {
@@ -20766,7 +20775,7 @@ class ManipulationSystem {
         alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
       }
       else {
-        let from = this.body.nodes[this.temporaryIds.nodes[0]];
+        const from = this.body.nodes[this.temporaryIds.nodes[0]];
         if (this.selectedControlNode.id === from.id) {
           this._performEditEdge(node.id, edge.to.id);
         }
@@ -20804,8 +20813,8 @@ class ManipulationSystem {
       this.interactionHandler.drag.pointer = this.lastTouch; // Drag pointer is not updated when adding edges
       this.interactionHandler.drag.translation = this.lastTouch.translation;
       
-      let pointer = this.lastTouch;
-      let node = this.selectionHandler.getNodeAt(pointer);
+      const pointer = this.lastTouch;
+      const node = this.selectionHandler.getNodeAt(pointer);
 
       if (node !== undefined) {
         if (node.isCluster === true) {
@@ -20813,12 +20822,12 @@ class ManipulationSystem {
         }
         else {
           // create a node the temporary line can look at
-          let targetNode = this._getNewTargetNode(node.x,node.y);
+          const targetNode = this._getNewTargetNode(node.x,node.y);
           this.body.nodes[targetNode.id] = targetNode;
           this.body.nodeIndices.push(targetNode.id);
 
           // create a temporary edge
-          let connectionEdge = this.body.functions.createEdge({
+          const connectionEdge = this.body.functions.createEdge({
             id: 'connectionEdge' + v4(),
             from: node.id,
             to: targetNode.id,
@@ -20846,19 +20855,19 @@ class ManipulationSystem {
    * @private
    */
   _dragControlNode(event) {
-    let pointer = this.body.functions.getPointer(event.center);
+    const pointer = this.body.functions.getPointer(event.center);
 
-    var pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
+    const pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
     // remember the edge id
-    var connectFromId = undefined;
+    let connectFromId = undefined;
     if (this.temporaryIds.edges[0] !== undefined) {
       connectFromId = this.body.edges[this.temporaryIds.edges[0]].fromId;
     }
 
     // get the overlapping node but NOT the temporary node;
-    var overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
-    var node = undefined;
-    for (var i = overlappingNodeIds.length - 1; i >= 0; i--) {
+    const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
+    let node = undefined;
+    for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
       // if the node id is NOT a temporary node, accept the node.
       if (this.temporaryIds.nodes.indexOf(overlappingNodeIds[i]) === -1) {
         node = this.body.nodes[overlappingNodeIds[i]];
@@ -20870,7 +20879,7 @@ class ManipulationSystem {
     this.selectionHandler._generateClickEvent('controlNodeDragging', event, pointer);
 
     if (this.temporaryIds.nodes[0] !== undefined) {
-      let targetNode = this.body.nodes[this.temporaryIds.nodes[0]]; // there is only one temp node in the add edge mode.
+      const targetNode = this.body.nodes[this.temporaryIds.nodes[0]]; // there is only one temp node in the add edge mode.
       targetNode.x = this.canvas._XconvertDOMtoCanvas(pointer.x);
       targetNode.y = this.canvas._YconvertDOMtoCanvas(pointer.y);
       this.body.emitter.emit('_redraw');
@@ -20888,8 +20897,8 @@ class ManipulationSystem {
    * @private
    */
   _finishConnect(event) {
-    let pointer = this.body.functions.getPointer(event.center);
-    let pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
+    const pointer = this.body.functions.getPointer(event.center);
+    const pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
 
     // remember the edge id
     let connectFromId = undefined;
@@ -20898,7 +20907,7 @@ class ManipulationSystem {
     }
 
     // get the overlapping node but NOT the temporary node;
-    let overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
+    const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length-1; i >= 0; i--) {
       // if the node id is NOT a temporary node, accept the node.
@@ -20937,7 +20946,7 @@ class ManipulationSystem {
    * @private
    */
   _dragStartEdge(event) {
-    let pointer = this.lastTouch;
+    const pointer = this.lastTouch;
     this.selectionHandler._generateClickEvent('dragStart', event, pointer, undefined, true);
   }
 
@@ -20953,7 +20962,7 @@ class ManipulationSystem {
    * @private
    */
   _performAddNode(clickData) {
-    let defaultData = {
+    const defaultData = {
       id: v4(),
       x: clickData.pointer.canvas.x,
       y: clickData.pointer.canvas.y,
@@ -20989,7 +20998,7 @@ class ManipulationSystem {
    * @private
    */
   _performAddEdge(sourceNodeId, targetNodeId) {
-    let defaultData = {from: sourceNodeId, to: targetNodeId};
+    const defaultData = {from: sourceNodeId, to: targetNodeId};
     if (typeof this.options.addEdge === 'function') {
       if (this.options.addEdge.length === 2) {
         this.options.addEdge(defaultData, (finalizedData) => {
@@ -21058,7 +21067,7 @@ class ManipulationSystem {
 
 }
 
-var htmlColors = {black: '#000000', navy: '#000080', darkblue: '#00008B', mediumblue: '#0000CD', blue: '#0000FF', darkgreen: '#006400', green: '#008000', teal: '#008080', darkcyan: '#008B8B', deepskyblue: '#00BFFF', darkturquoise: '#00CED1', mediumspringgreen: '#00FA9A', lime: '#00FF00', springgreen: '#00FF7F', aqua: '#00FFFF', cyan: '#00FFFF', midnightblue: '#191970', dodgerblue: '#1E90FF', lightseagreen: '#20B2AA', forestgreen: '#228B22', seagreen: '#2E8B57', darkslategray: '#2F4F4F', limegreen: '#32CD32', mediumseagreen: '#3CB371', turquoise: '#40E0D0', royalblue: '#4169E1', steelblue: '#4682B4', darkslateblue: '#483D8B', mediumturquoise: '#48D1CC', indigo: '#4B0082', darkolivegreen: '#556B2F', cadetblue: '#5F9EA0', cornflowerblue: '#6495ED', mediumaquamarine: '#66CDAA', dimgray: '#696969', slateblue: '#6A5ACD', olivedrab: '#6B8E23', slategray: '#708090', lightslategray: '#778899', mediumslateblue: '#7B68EE', lawngreen: '#7CFC00', chartreuse: '#7FFF00', aquamarine: '#7FFFD4', maroon: '#800000', purple: '#800080', olive: '#808000', gray: '#808080', skyblue: '#87CEEB', lightskyblue: '#87CEFA', blueviolet: '#8A2BE2', darkred: '#8B0000', darkmagenta: '#8B008B', saddlebrown: '#8B4513', darkseagreen: '#8FBC8F', lightgreen: '#90EE90', mediumpurple: '#9370D8', darkviolet: '#9400D3', palegreen: '#98FB98', darkorchid: '#9932CC', yellowgreen: '#9ACD32', sienna: '#A0522D', brown: '#A52A2A', darkgray: '#A9A9A9', lightblue: '#ADD8E6', greenyellow: '#ADFF2F', paleturquoise: '#AFEEEE', lightsteelblue: '#B0C4DE', powderblue: '#B0E0E6', firebrick: '#B22222', darkgoldenrod: '#B8860B', mediumorchid: '#BA55D3', rosybrown: '#BC8F8F', darkkhaki: '#BDB76B', silver: '#C0C0C0', mediumvioletred: '#C71585', indianred: '#CD5C5C', peru: '#CD853F', chocolate: '#D2691E', tan: '#D2B48C', lightgrey: '#D3D3D3', palevioletred: '#D87093', thistle: '#D8BFD8', orchid: '#DA70D6', goldenrod: '#DAA520', crimson: '#DC143C', gainsboro: '#DCDCDC', plum: '#DDA0DD', burlywood: '#DEB887', lightcyan: '#E0FFFF', lavender: '#E6E6FA', darksalmon: '#E9967A', violet: '#EE82EE', palegoldenrod: '#EEE8AA', lightcoral: '#F08080', khaki: '#F0E68C', aliceblue: '#F0F8FF', honeydew: '#F0FFF0', azure: '#F0FFFF', sandybrown: '#F4A460', wheat: '#F5DEB3', beige: '#F5F5DC', whitesmoke: '#F5F5F5', mintcream: '#F5FFFA', ghostwhite: '#F8F8FF', salmon: '#FA8072', antiquewhite: '#FAEBD7', linen: '#FAF0E6', lightgoldenrodyellow: '#FAFAD2', oldlace: '#FDF5E6', red: '#FF0000', fuchsia: '#FF00FF', magenta: '#FF00FF', deeppink: '#FF1493', orangered: '#FF4500', tomato: '#FF6347', hotpink: '#FF69B4', coral: '#FF7F50', darkorange: '#FF8C00', lightsalmon: '#FFA07A', orange: '#FFA500', lightpink: '#FFB6C1', pink: '#FFC0CB', gold: '#FFD700', peachpuff: '#FFDAB9', navajowhite: '#FFDEAD', moccasin: '#FFE4B5', bisque: '#FFE4C4', mistyrose: '#FFE4E1', blanchedalmond: '#FFEBCD', papayawhip: '#FFEFD5', lavenderblush: '#FFF0F5', seashell: '#FFF5EE', cornsilk: '#FFF8DC', lemonchiffon: '#FFFACD', floralwhite: '#FFFAF0', snow: '#FFFAFA', yellow: '#FFFF00', lightyellow: '#FFFFE0', ivory: '#FFFFF0', white: '#FFFFFF'};
+const htmlColors = {black: '#000000', navy: '#000080', darkblue: '#00008B', mediumblue: '#0000CD', blue: '#0000FF', darkgreen: '#006400', green: '#008000', teal: '#008080', darkcyan: '#008B8B', deepskyblue: '#00BFFF', darkturquoise: '#00CED1', mediumspringgreen: '#00FA9A', lime: '#00FF00', springgreen: '#00FF7F', aqua: '#00FFFF', cyan: '#00FFFF', midnightblue: '#191970', dodgerblue: '#1E90FF', lightseagreen: '#20B2AA', forestgreen: '#228B22', seagreen: '#2E8B57', darkslategray: '#2F4F4F', limegreen: '#32CD32', mediumseagreen: '#3CB371', turquoise: '#40E0D0', royalblue: '#4169E1', steelblue: '#4682B4', darkslateblue: '#483D8B', mediumturquoise: '#48D1CC', indigo: '#4B0082', darkolivegreen: '#556B2F', cadetblue: '#5F9EA0', cornflowerblue: '#6495ED', mediumaquamarine: '#66CDAA', dimgray: '#696969', slateblue: '#6A5ACD', olivedrab: '#6B8E23', slategray: '#708090', lightslategray: '#778899', mediumslateblue: '#7B68EE', lawngreen: '#7CFC00', chartreuse: '#7FFF00', aquamarine: '#7FFFD4', maroon: '#800000', purple: '#800080', olive: '#808000', gray: '#808080', skyblue: '#87CEEB', lightskyblue: '#87CEFA', blueviolet: '#8A2BE2', darkred: '#8B0000', darkmagenta: '#8B008B', saddlebrown: '#8B4513', darkseagreen: '#8FBC8F', lightgreen: '#90EE90', mediumpurple: '#9370D8', darkviolet: '#9400D3', palegreen: '#98FB98', darkorchid: '#9932CC', yellowgreen: '#9ACD32', sienna: '#A0522D', brown: '#A52A2A', darkgray: '#A9A9A9', lightblue: '#ADD8E6', greenyellow: '#ADFF2F', paleturquoise: '#AFEEEE', lightsteelblue: '#B0C4DE', powderblue: '#B0E0E6', firebrick: '#B22222', darkgoldenrod: '#B8860B', mediumorchid: '#BA55D3', rosybrown: '#BC8F8F', darkkhaki: '#BDB76B', silver: '#C0C0C0', mediumvioletred: '#C71585', indianred: '#CD5C5C', peru: '#CD853F', chocolate: '#D2691E', tan: '#D2B48C', lightgrey: '#D3D3D3', palevioletred: '#D87093', thistle: '#D8BFD8', orchid: '#DA70D6', goldenrod: '#DAA520', crimson: '#DC143C', gainsboro: '#DCDCDC', plum: '#DDA0DD', burlywood: '#DEB887', lightcyan: '#E0FFFF', lavender: '#E6E6FA', darksalmon: '#E9967A', violet: '#EE82EE', palegoldenrod: '#EEE8AA', lightcoral: '#F08080', khaki: '#F0E68C', aliceblue: '#F0F8FF', honeydew: '#F0FFF0', azure: '#F0FFFF', sandybrown: '#F4A460', wheat: '#F5DEB3', beige: '#F5F5DC', whitesmoke: '#F5F5F5', mintcream: '#F5FFFA', ghostwhite: '#F8F8FF', salmon: '#FA8072', antiquewhite: '#FAEBD7', linen: '#FAF0E6', lightgoldenrodyellow: '#FAFAD2', oldlace: '#FDF5E6', red: '#FF0000', fuchsia: '#FF00FF', magenta: '#FF00FF', deeppink: '#FF1493', orangered: '#FF4500', tomato: '#FF6347', hotpink: '#FF69B4', coral: '#FF7F50', darkorange: '#FF8C00', lightsalmon: '#FFA07A', orange: '#FFA500', lightpink: '#FFB6C1', pink: '#FFC0CB', gold: '#FFD700', peachpuff: '#FFDAB9', navajowhite: '#FFDEAD', moccasin: '#FFE4B5', bisque: '#FFE4C4', mistyrose: '#FFE4E1', blanchedalmond: '#FFEBCD', papayawhip: '#FFEFD5', lavenderblush: '#FFF0F5', seashell: '#FFF5EE', cornsilk: '#FFF8DC', lemonchiffon: '#FFFACD', floralwhite: '#FFFAF0', snow: '#FFFAFA', yellow: '#FFFF00', lightyellow: '#FFFFE0', ivory: '#FFFFF0', white: '#FFFFFF'};
 
 /**
  * @param {number} [pixelRatio=1]
@@ -21162,7 +21171,7 @@ class ColorPicker {
     let rgba;
 
     // if a html color shorthand is used, convert to hex
-    var htmlColor = this._isColorString(color);
+    const htmlColor = this._isColorString(color);
     if (htmlColor !== undefined) {
       color = htmlColor;
     }
@@ -21170,22 +21179,22 @@ class ColorPicker {
     // check format
     if (isString(color) === true) {
       if (isValidRGB(color) === true) {
-        let rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
+        const rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
         rgba = {r:rgbaArray[0], g:rgbaArray[1], b:rgbaArray[2], a:1.0};
       }
       else if (isValidRGBA(color) === true) {
-        let rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
+        const rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
         rgba = {r:rgbaArray[0], g:rgbaArray[1], b:rgbaArray[2], a:rgbaArray[3]};
       }
       else if (isValidHex(color) === true) {
-        let rgbObj = hexToRGB(color);
+        const rgbObj = hexToRGB(color);
         rgba = {r:rgbObj.r, g:rgbObj.g, b:rgbObj.b, a:1.0};
       }
     }
     else {
       if (color instanceof Object) {
         if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
-          let alpha = color.a !== undefined ? color.a : '1.0';
+          const alpha = color.a !== undefined ? color.a : '1.0';
           rgba = {r:color.r, g:color.g, b:color.b, a:alpha};
         }
       }
@@ -21296,12 +21305,12 @@ class ColorPicker {
     }
 
     this.color = rgba;
-    let hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
+    const hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
 
-    let angleConvert = 2 * Math.PI;
-    let radius = this.r * hsv.s;
-    let x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
-    let y = this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
+    const angleConvert = 2 * Math.PI;
+    const radius = this.r * hsv.s;
+    const x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
+    const y = this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
 
     this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + 'px';
     this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + 'px';
@@ -21327,9 +21336,9 @@ class ColorPicker {
    * @private
    */
   _setBrightness(value) {
-    let hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
+    const hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
     hsv.v = value / 100;
-    let rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
+    const rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
     rgba['a'] = this.color.a;
     this.color = rgba;
     this._updatePicker();
@@ -21342,8 +21351,8 @@ class ColorPicker {
    * @private
    */
   _updatePicker(rgba = this.color) {
-    let hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
-    let ctx = this.colorPickerCanvas.getContext('2d');
+    const hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
+    const ctx = this.colorPickerCanvas.getContext('2d');
     if (this.pixelRation === undefined) {
       this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio ||
       ctx.mozBackingStorePixelRatio ||
@@ -21354,8 +21363,8 @@ class ColorPicker {
     ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
 
     // clear the canvas
-    let w = this.colorPickerCanvas.clientWidth;
-    let h = this.colorPickerCanvas.clientHeight;
+    const w = this.colorPickerCanvas.clientWidth;
+    const h = this.colorPickerCanvas.clientHeight;
     ctx.clearRect(0, 0, w, h);
 
     ctx.putImageData(this.hueCircle, 0,0);
@@ -21402,7 +21411,7 @@ class ColorPicker {
     this.colorPickerDiv.appendChild(this.colorPickerCanvas);
 
     if (!this.colorPickerCanvas.getContext) {
-      let noCanvas = document.createElement( 'DIV' );
+      const noCanvas = document.createElement( 'DIV' );
       noCanvas.style.color = 'red';
       noCanvas.style.fontWeight =  'bold' ;
       noCanvas.style.padding =  '10px';
@@ -21410,7 +21419,7 @@ class ColorPicker {
       this.colorPickerCanvas.appendChild(noCanvas);
     }
     else {
-      let ctx = this.colorPickerCanvas.getContext("2d");
+      const ctx = this.colorPickerCanvas.getContext("2d");
       this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio ||
       ctx.mozBackingStorePixelRatio ||
       ctx.msBackingStorePixelRatio ||
@@ -21455,7 +21464,7 @@ class ColorPicker {
     this.opacityDiv.appendChild(this.opacityRange);
     this.brightnessDiv.appendChild(this.brightnessRange);
 
-    var me = this;
+    const me = this;
     this.opacityRange.onchange = function () {me._setOpacity(this.value);};
     this.opacityRange.oninput  = function () {me._setOpacity(this.value);};
     this.brightnessRange.onchange = function () {me._setBrightness(this.value);};
@@ -21537,7 +21546,7 @@ class ColorPicker {
    */
   _generateHueCircle() {
     if (this.generated === false) {
-      let ctx = this.colorPickerCanvas.getContext('2d');
+      const ctx = this.colorPickerCanvas.getContext('2d');
       if (this.pixelRation === undefined) {
         this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio ||
         ctx.mozBackingStorePixelRatio ||
@@ -21548,8 +21557,8 @@ class ColorPicker {
       ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
 
       // clear the canvas
-      let w = this.colorPickerCanvas.clientWidth;
-      let h = this.colorPickerCanvas.clientHeight;
+      const w = this.colorPickerCanvas.clientWidth;
+      const h = this.colorPickerCanvas.clientHeight;
       ctx.clearRect(0, 0, w, h);
 
 
@@ -21557,9 +21566,9 @@ class ColorPicker {
       let x, y, hue, sat;
       this.centerCoordinates = {x: w * 0.5, y: h * 0.5};
       this.r = 0.49 * w;
-      let angleConvert = (2 * Math.PI) / 360;
-      let hfac = 1 / 360;
-      let sfac = 1 / this.r;
+      const angleConvert = (2 * Math.PI) / 360;
+      const hfac = 1 / 360;
+      const sfac = 1 / this.r;
       let rgb;
       for (hue = 0; hue < 360; hue++) {
         for (sat = 0; sat < this.r; sat++) {
@@ -21587,21 +21596,21 @@ class ColorPicker {
    * @private
    */
   _moveSelector(event) {
-    let rect = this.colorPickerDiv.getBoundingClientRect();
-    let left = event.center.x - rect.left;
-    let top = event.center.y - rect.top;
+    const rect = this.colorPickerDiv.getBoundingClientRect();
+    const left = event.center.x - rect.left;
+    const top = event.center.y - rect.top;
 
-    let centerY = 0.5 * this.colorPickerDiv.clientHeight;
-    let centerX = 0.5 * this.colorPickerDiv.clientWidth;
+    const centerY = 0.5 * this.colorPickerDiv.clientHeight;
+    const centerX = 0.5 * this.colorPickerDiv.clientWidth;
 
-    let x = left - centerX;
-    let y = top - centerY;
+    const x = left - centerX;
+    const y = top - centerY;
 
-    let angle = Math.atan2(x,y);
-    let radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
+    const angle = Math.atan2(x,y);
+    const radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
 
-    let newTop = Math.cos(angle) * radius + centerY;
-    let newLeft = Math.sin(angle) * radius + centerX;
+    const newTop = Math.cos(angle) * radius + centerY;
+    const newLeft = Math.sin(angle) * radius + centerX;
 
     this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + 'px';
     this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + 'px';
@@ -21609,11 +21618,11 @@ class ColorPicker {
     // set color
     let h = angle / (2 * Math.PI);
     h = h < 0 ? h + 1 : h;
-    let s = radius / this.r;
-    let hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
+    const s = radius / this.r;
+    const hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
     hsv.h = h;
     hsv.s = s;
-    let rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
+    const rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
     rgba['a'] = this.color.a;
     this.color = rgba;
 
@@ -21743,11 +21752,11 @@ class Configurator {
     this._clean();
     this.changedOptions = [];
 
-    let filter = this.options.filter;
+    const filter = this.options.filter;
     let counter = 0;
     let show = false;
-    for (let option in this.configureOptions) {
-      if (this.configureOptions.hasOwnProperty(option)) {
+    for (const option in this.configureOptions) {
+      if (Object.prototype.hasOwnProperty.call(this.configureOptions, option)) {
         this.allowCreation = false;
         show = false;
         if (typeof filter === 'function') {
@@ -21788,7 +21797,7 @@ class Configurator {
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'vis-configuration-wrapper';
     this.container.appendChild(this.wrapper);
-    for (var i = 0; i < this.domElements.length; i++) {
+    for (let i = 0; i < this.domElements.length; i++) {
       this.wrapper.appendChild(this.domElements[i]);
     }
 
@@ -21801,7 +21810,7 @@ class Configurator {
    * @private
    */
   _clean() {
-    for (var i = 0; i < this.domElements.length; i++) {
+    for (let i = 0; i < this.domElements.length; i++) {
       this.wrapper.removeChild(this.domElements[i]);
     }
 
@@ -21845,7 +21854,7 @@ class Configurator {
    */
   _makeItem(path, ...domElements) {
     if (this.allowCreation === true) {
-      let item = document.createElement('div');
+      const item = document.createElement('div');
       item.className = 'vis-configuration vis-config-item vis-config-s' + path.length;
       domElements.forEach((element) => {
         item.appendChild(element);
@@ -21863,7 +21872,7 @@ class Configurator {
    * @private
    */
   _makeHeader(name) {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.className = 'vis-configuration vis-config-header';
     div.innerHTML = name;
     this._makeItem([],div);
@@ -21879,7 +21888,7 @@ class Configurator {
    * @private
    */
   _makeLabel(name, path, objectLabel = false) {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.className = 'vis-configuration vis-config-label vis-config-s' + path.length;
     if (objectLabel === true) {
       div.innerHTML = '<i><b>' + name + ':</b></i>';
@@ -21899,7 +21908,7 @@ class Configurator {
    * @private
    */
   _makeDropdown(arr, value, path) {
-    let select = document.createElement('select');
+    const select = document.createElement('select');
     select.className = 'vis-configuration vis-config-select';
     let selectedValue = 0;
     if (value !== undefined) {
@@ -21909,7 +21918,7 @@ class Configurator {
     }
 
     for (let i = 0; i < arr.length; i++) {
-      let option = document.createElement('option');
+      const option = document.createElement('option');
       option.value = arr[i];
       if (i === selectedValue) {
         option.selected = 'selected';
@@ -21918,10 +21927,10 @@ class Configurator {
       select.appendChild(option);
     }
 
-    let me = this;
+    const me = this;
     select.onchange = function () {me._update(this.value, path);};
 
-    let label = this._makeLabel(path[path.length-1], path);
+    const label = this._makeLabel(path[path.length-1], path);
     this._makeItem(path, label, select);
   }
 
@@ -21934,11 +21943,11 @@ class Configurator {
    * @private
    */
   _makeRange(arr, value, path) {
-    let defaultValue = arr[0];
-    let min = arr[1];
-    let max = arr[2];
-    let step = arr[3];
-    let range = document.createElement('input');
+    const defaultValue = arr[0];
+    const min = arr[1];
+    const max = arr[2];
+    const step = arr[3];
+    const range = document.createElement('input');
     range.className = 'vis-configuration vis-config-range';
     try {
       range.type = 'range'; // not supported on IE9
@@ -21954,7 +21963,7 @@ class Configurator {
     let popupValue = 0;
 
     if (value !== undefined) {
-      let factor = 1.20;
+      const factor = 1.20;
       if (value < 0 && value * factor < min) {
         range.min = Math.ceil(value * factor);
         popupValue = range.min;
@@ -21976,16 +21985,16 @@ class Configurator {
       range.value = defaultValue;
     }
 
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.className = 'vis-configuration vis-config-rangeinput';
     input.value = range.value;
 
-    var me = this;
+    const me = this;
     range.onchange = function () {input.value = this.value; me._update(Number(this.value), path);};
     range.oninput  = function () {input.value = this.value; };
 
-    let label = this._makeLabel(path[path.length-1], path);
-    let itemIndex = this._makeItem(path, label, range, input);
+    const label = this._makeLabel(path[path.length-1], path);
+    const itemIndex = this._makeItem(path, label, range, input);
 
     // if a popup is needed AND it has not been shown for this value, show it.
     if (popupString !== '' && this.popupHistory[itemIndex] !== popupValue) {
@@ -22000,7 +22009,7 @@ class Configurator {
    */
   _makeButton() {
     if (this.options.showButton === true) {
-      let generateButton = document.createElement('div');
+      const generateButton = document.createElement('div');
       generateButton.className = 'vis-configuration vis-config-button';
       generateButton.innerHTML = 'generate options';
       generateButton.onclick =     () => {this._printOptions();};
@@ -22024,7 +22033,7 @@ class Configurator {
    */
   _setupPopup(string, index) {
     if (this.initialized === true && this.allowCreation === true && this.popupCounter < this.popupLimit) {
-      let div = document.createElement("div");
+      const div = document.createElement("div");
       div.id = "vis-configuration-popup";
       div.className = "vis-configuration-popup";
       div.innerHTML = string;
@@ -22055,8 +22064,8 @@ class Configurator {
    */
   _showPopupIfNeeded() {
     if (this.popupDiv.html !== undefined) {
-      let correspondingElement = this.domElements[this.popupDiv.index];
-      let rect = correspondingElement.getBoundingClientRect();
+      const correspondingElement = this.domElements[this.popupDiv.index];
+      const rect = correspondingElement.getBoundingClientRect();
       this.popupDiv.html.style.left = rect.left + "px";
       this.popupDiv.html.style.top = rect.top - 30 + "px"; // 30 is the height;
       document.body.appendChild(this.popupDiv.html);
@@ -22077,7 +22086,7 @@ class Configurator {
    * @private
    */
   _makeCheckbox(defaultValue, value, path) {
-    var checkbox = document.createElement('input');
+    const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.className = 'vis-configuration vis-config-checkbox';
     checkbox.checked = defaultValue;
@@ -22095,10 +22104,10 @@ class Configurator {
       }
     }
 
-    let me = this;
+    const me = this;
     checkbox.onchange = function() {me._update(this.checked, path);};
 
-    let label = this._makeLabel(path[path.length-1], path);
+    const label = this._makeLabel(path[path.length-1], path);
     this._makeItem(path, label, checkbox);
   }
 
@@ -22110,7 +22119,7 @@ class Configurator {
    * @private
    */
   _makeTextInput(defaultValue, value, path) {
-    var checkbox = document.createElement('input');
+    const checkbox = document.createElement('input');
     checkbox.type = 'text';
     checkbox.className = 'vis-configuration vis-config-text';
     checkbox.value = value;
@@ -22118,10 +22127,10 @@ class Configurator {
       this.changedOptions.push({path:path, value:value});
     }
 
-    let me = this;
+    const me = this;
     checkbox.onchange = function() {me._update(this.value, path);};
 
-    let label = this._makeLabel(path[path.length-1], path);
+    const label = this._makeLabel(path[path.length-1], path);
     this._makeItem(path, label, checkbox);
   }
 
@@ -22134,8 +22143,8 @@ class Configurator {
    * @private
    */
   _makeColorField(arr, value, path) {
-    let defaultColor = arr[1];
-    let div = document.createElement('div');
+    const defaultColor = arr[1];
+    const div = document.createElement('div');
     value = value === undefined ? defaultColor : value;
 
     if (value !== 'none') {
@@ -22151,7 +22160,7 @@ class Configurator {
       this._showColorPicker(value,div,path);
     };
 
-    let label = this._makeLabel(path[path.length-1], path);
+    const label = this._makeLabel(path[path.length-1], path);
     this._makeItem(path,label, div);
   }
 
@@ -22172,7 +22181,7 @@ class Configurator {
 
     this.colorPicker.setColor(value);
     this.colorPicker.setUpdateCallback((color) => {
-      let colorString = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
+      const colorString = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
       div.style.backgroundColor = colorString;
       this._update(colorString,path);
     });
@@ -22196,13 +22205,13 @@ class Configurator {
    */
   _handleObject(obj, path = [], checkOnly = false) {
     let show = false;
-    let filter = this.options.filter;
+    const filter = this.options.filter;
     let visibleInSet = false;
-    for (let subObj in obj) {
-      if (obj.hasOwnProperty(subObj)) {
+    for (const subObj in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, subObj)) {
         show = true;
-        let item = obj[subObj];
-        let newPath = copyAndExtendArray(path, subObj);
+        const item = obj[subObj];
+        const newPath = copyAndExtendArray(path, subObj);
         if (typeof filter === 'function') {
           show = filter(subObj,path);
 
@@ -22218,7 +22227,7 @@ class Configurator {
 
         if (show !== false) {
           visibleInSet = true;
-          let value = this._getValue(newPath);
+          const value = this._getValue(newPath);
 
           if (item instanceof Array) {
             this._handleArray(item, value, newPath);
@@ -22241,10 +22250,10 @@ class Configurator {
             if (draw === true) {
               // initially collapse options with an disabled enabled option.
               if (item.enabled !== undefined) {
-                let enabledPath = copyAndExtendArray(newPath, 'enabled');
-                let enabledValue = this._getValue(enabledPath);
+                const enabledPath = copyAndExtendArray(newPath, 'enabled');
+                const enabledValue = this._getValue(enabledPath);
                 if (enabledValue === true) {
-                  let label = this._makeLabel(subObj, newPath, true);
+                  const label = this._makeLabel(subObj, newPath, true);
                   this._makeItem(newPath, label);
                   visibleInSet = this._handleObject(item, newPath) || visibleInSet;
                 }
@@ -22253,7 +22262,7 @@ class Configurator {
                 }
               }
               else {
-                let label = this._makeLabel(subObj, newPath, true);
+                const label = this._makeLabel(subObj, newPath, true);
                 this._makeItem(newPath, label);
                 visibleInSet = this._handleObject(item, newPath) || visibleInSet;
               }
@@ -22300,7 +22309,7 @@ class Configurator {
    * @private
    */
   _update(value, path) {
-    let options = this._constructOptions(value,path);
+    const options = this._constructOptions(value,path);
 
     if (this.parent.body && this.parent.body.emitter && this.parent.body.emitter.emit) {
       this.parent.body.emitter.emit("configChange", options);
@@ -22345,7 +22354,7 @@ class Configurator {
    * @private
    */
   _printOptions() {
-    let options = this.getOptions();
+    const options = this.getOptions();
     this.optionsContainer.innerHTML = '<pre>var options = ' + JSON.stringify(options, null, 2) + '</pre>';
   }
 
@@ -22354,8 +22363,8 @@ class Configurator {
    * @returns {{}} options
    */
   getOptions() {
-    let options = {};
-    for (var i = 0; i < this.changedOptions.length; i++) {
+    const options = {};
+    for (let i = 0; i < this.changedOptions.length; i++) {
       this._constructOptions(this.changedOptions[i].value, this.changedOptions[i].path, options);
     }
     return options;
@@ -22369,16 +22378,16 @@ class Configurator {
  * __any__ means that the name of the property does not matter.
  * __type__ is a required field for all objects and contains the allowed types of all objects
  */
-let string = 'string';
-let bool = 'boolean';
-let number = 'number';
-let array = 'array';
-let object = 'object'; // should only be in a __type__ property
-let dom = 'dom';
-let any = 'any';
+const string = 'string';
+const bool = 'boolean';
+const number = 'number';
+const array = 'array';
+const object = 'object'; // should only be in a __type__ property
+const dom = 'dom';
+const any = 'any';
 
 // List of endpoints
-let endPoints = [
+const endPoints = [
   "arrow",
   "bar",
   "box",
@@ -22393,7 +22402,7 @@ let endPoints = [
   "vee"
 ];
 
-let allOptions$1 = {
+const allOptions$1 = {
   configure: {
     enabled: { boolean: bool },
     filter: { boolean: bool, string, array, 'function': 'function' },
@@ -22882,7 +22891,7 @@ allOptions$1.manipulation.controlNodeStyle = allOptions$1.nodes;
  *   The first value says this will be a color picker not a dropdown menu. The
  *   next value is the initial color.
  */
-let configureOptions = {
+const configureOptions = {
   nodes: {
     borderWidth: [1, 0, 10, 1],
     borderWidthSelected: [2, 0, 10, 1],
@@ -23128,13 +23137,13 @@ class FloydWarshall {
    * @returns {{}}
    */
   getDistances(body, nodesArray, edgesArray) {
-    let D_matrix = {};
-    let edges = body.edges;
+    const D_matrix = {};
+    const edges = body.edges;
 
     // prepare matrix with large numbers
     for (let i = 0; i < nodesArray.length; i++) {
-      let node = nodesArray[i];
-      let cell = {};
+      const node = nodesArray[i];
+      const cell = {};
       D_matrix[node] = cell;
       for (let j = 0; j < nodesArray.length; j++) {
         cell[nodesArray[j]] = (i == j ? 0 : 1e9);
@@ -23143,7 +23152,7 @@ class FloydWarshall {
 
     // put the weights for the edges in. This assumes unidirectionality.
     for (let i = 0; i < edgesArray.length; i++) {
-      let edge = edges[edgesArray[i]];
+      const edge = edges[edgesArray[i]];
       // edge has to be connected if it counts to the distances. If it is connected to inner clusters it will crash so we also check if it is in the D_matrix
       if (edge.connected === true && D_matrix[edge.fromId] !== undefined && D_matrix[edge.toId] !== undefined) {
         D_matrix[edge.fromId][edge.toId] = 1;
@@ -23151,20 +23160,20 @@ class FloydWarshall {
       }
     }
 
-    let nodeCount = nodesArray.length;
+    const nodeCount = nodesArray.length;
 
     // Adapted FloydWarshall based on unidirectionality to greatly reduce complexity.
     for (let k = 0; k < nodeCount; k++) {
-      let knode = nodesArray[k];
-      let kcolm = D_matrix[knode];
+      const knode = nodesArray[k];
+      const kcolm = D_matrix[knode];
       for (let i = 0; i < nodeCount - 1; i++) {
-        let inode = nodesArray[i];
-        let icolm = D_matrix[inode];
+        const inode = nodesArray[i];
+        const icolm = D_matrix[inode];
         for (let j = i + 1; j < nodeCount; j++) {
-          let jnode = nodesArray[j];
-          let jcolm = D_matrix[jnode];
+          const jnode = nodesArray[j];
+          const jcolm = D_matrix[jnode];
 
-          let val = Math.min(icolm[jnode], icolm[knode] + kcolm[jnode]);
+          const val = Math.min(icolm[jnode], icolm[knode] + kcolm[jnode]);
           icolm[jnode] = val;
           jcolm[inode] = val;
         }
@@ -23223,7 +23232,7 @@ class KamadaKawai {
    */
   solve(nodesArray, edgesArray, ignoreClusters = false) {
     // get distance matrix
-    let D_matrix = this.distanceSolver.getDistances(this.body, nodesArray, edgesArray); // distance matrix
+    const D_matrix = this.distanceSolver.getDistances(this.body, nodesArray, edgesArray); // distance matrix
 
     // get the L Matrix
     this._createL_matrix(D_matrix);
@@ -23235,11 +23244,11 @@ class KamadaKawai {
     this._createE_matrix();
 
     // calculate positions
-    let threshold = 0.01;
-    let innerThreshold = 1;
+    const threshold = 0.01;
+    const innerThreshold = 1;
     let iterations = 0;
-    let maxIterations = Math.max(1000, Math.min(10 * this.body.nodeIndices.length, 6000));
-    let maxInnerIterations = 5;
+    const maxIterations = Math.max(1000, Math.min(10 * this.body.nodeIndices.length, 6000));
+    const maxInnerIterations = 5;
 
     let maxEnergy = 1e9;
     let highE_nodeId = 0, dE_dx = 0, dE_dy = 0, delta_m = 0, subIterations = 0;
@@ -23264,17 +23273,17 @@ class KamadaKawai {
    * @private
    */
   _getHighestEnergyNode(ignoreClusters) {
-    let nodesArray = this.body.nodeIndices;
-    let nodes = this.body.nodes;
+    const nodesArray = this.body.nodeIndices;
+    const nodes = this.body.nodes;
     let maxEnergy = 0;
     let maxEnergyNodeId = nodesArray[0];
     let dE_dx_max = 0, dE_dy_max = 0;
 
     for (let nodeIdx = 0; nodeIdx < nodesArray.length; nodeIdx++) {
-      let m = nodesArray[nodeIdx];
+      const m = nodesArray[nodeIdx];
       // by not evaluating nodes with predefined positions we should only move nodes that have no positions.
       if ((nodes[m].predefinedPosition === false || nodes[m].isCluster === true && ignoreClusters === true) || nodes[m].options.fixed.x === true || nodes[m].options.fixed.y === true) {
-        let [delta_m,dE_dx,dE_dy] = this._getEnergy(m);
+        const [delta_m,dE_dx,dE_dy] = this._getEnergy(m);
         if (maxEnergy < delta_m) {
           maxEnergy = delta_m;
           maxEnergyNodeId = m;
@@ -23294,8 +23303,8 @@ class KamadaKawai {
    * @private
    */
   _getEnergy(m) {
-    let [dE_dx,dE_dy] = this.E_sums[m];
-    let delta_m = Math.sqrt((dE_dx ** 2) + (dE_dy ** 2));
+    const [dE_dx,dE_dy] = this.E_sums[m];
+    const delta_m = Math.sqrt((dE_dx ** 2) + (dE_dy ** 2));
     return [delta_m, dE_dx, dE_dy];
   }
 
@@ -23308,36 +23317,36 @@ class KamadaKawai {
    * @private
    */
   _moveNode(m, dE_dx, dE_dy) {
-    let nodesArray = this.body.nodeIndices;
-    let nodes = this.body.nodes;
+    const nodesArray = this.body.nodeIndices;
+    const nodes = this.body.nodes;
     let d2E_dx2 = 0;
     let d2E_dxdy = 0;
     let d2E_dy2 = 0;
 
-    let x_m = nodes[m].x;
-    let y_m = nodes[m].y;
-    let km = this.K_matrix[m];
-    let lm = this.L_matrix[m];
+    const x_m = nodes[m].x;
+    const y_m = nodes[m].y;
+    const km = this.K_matrix[m];
+    const lm = this.L_matrix[m];
 
     for (let iIdx = 0; iIdx < nodesArray.length; iIdx++) {
-      let i = nodesArray[iIdx];
+      const i = nodesArray[iIdx];
       if (i !== m) {
-        let x_i = nodes[i].x;
-        let y_i = nodes[i].y;
-        let kmat = km[i];
-        let lmat = lm[i];
-        let denominator = 1.0 / ((((x_m - x_i) ** 2) + ((y_m - y_i) ** 2)) ** 1.5);
+        const x_i = nodes[i].x;
+        const y_i = nodes[i].y;
+        const kmat = km[i];
+        const lmat = lm[i];
+        const denominator = 1.0 / ((((x_m - x_i) ** 2) + ((y_m - y_i) ** 2)) ** 1.5);
         d2E_dx2 += kmat * (1 - lmat * ((y_m - y_i) ** 2) * denominator);
         d2E_dxdy += kmat * (lmat * (x_m - x_i) * (y_m - y_i) * denominator);
         d2E_dy2 += kmat * (1 - lmat * ((x_m - x_i) ** 2) * denominator);
       }
     }
     // make the variable names easier to make the solving of the linear system easier to read
-    let A = d2E_dx2, B = d2E_dxdy, C = dE_dx, D = d2E_dy2, E = dE_dy;
+    const A = d2E_dx2, B = d2E_dxdy, C = dE_dx, D = d2E_dy2, E = dE_dy;
 
     // solve the linear system for dx and dy
-    let dy = (C / A + E / B) / (B / A - D / B);
-    let dx = -(B * dy + C) / A;
+    const dy = (C / A + E / B) / (B / A - D / B);
+    const dx = -(B * dy + C) / A;
 
     // move the node
     nodes[m].x += dx;
@@ -23354,8 +23363,8 @@ class KamadaKawai {
    * @private
    */
   _createL_matrix(D_matrix) {
-    let nodesArray = this.body.nodeIndices;
-    let edgeLength = this.springLength;
+    const nodesArray = this.body.nodeIndices;
+    const edgeLength = this.springLength;
 
     this.L_matrix = [];
     for (let i = 0; i < nodesArray.length; i++) {
@@ -23373,8 +23382,8 @@ class KamadaKawai {
    * @private
    */
   _createK_matrix(D_matrix) {
-    let nodesArray = this.body.nodeIndices;
-    let edgeStrength = this.springConstant;
+    const nodesArray = this.body.nodeIndices;
+    const edgeStrength = this.springConstant;
 
     this.K_matrix = [];
     for (let i = 0; i < nodesArray.length; i++) {
@@ -23390,25 +23399,25 @@ class KamadaKawai {
    *  @private
    */
   _createE_matrix() {
-    let nodesArray = this.body.nodeIndices;
-    let nodes = this.body.nodes;
+    const nodesArray = this.body.nodeIndices;
+    const nodes = this.body.nodes;
     this.E_matrix = {};
     this.E_sums = {};
     for (let mIdx = 0; mIdx < nodesArray.length; mIdx++) {
       this.E_matrix[nodesArray[mIdx]] = [];
     }
     for (let mIdx = 0; mIdx < nodesArray.length; mIdx++) {
-      let m = nodesArray[mIdx];
-      let x_m = nodes[m].x;
-      let y_m = nodes[m].y;
+      const m = nodesArray[mIdx];
+      const x_m = nodes[m].x;
+      const y_m = nodes[m].y;
       let dE_dx = 0;
       let dE_dy = 0;
       for (let iIdx = mIdx; iIdx < nodesArray.length; iIdx++) {
-        let i = nodesArray[iIdx];
+        const i = nodesArray[iIdx];
         if (i !== m) {
-          let x_i = nodes[i].x;
-          let y_i = nodes[i].y;
-          let denominator = 1.0 / Math.sqrt(((x_m - x_i) ** 2) + ((y_m - y_i) ** 2));
+          const x_i = nodes[i].x;
+          const y_i = nodes[i].y;
+          const denominator = 1.0 / Math.sqrt(((x_m - x_i) ** 2) + ((y_m - y_i) ** 2));
           this.E_matrix[m][iIdx] = [
             this.K_matrix[m][i] * ((x_m - x_i) - this.L_matrix[m][i] * (x_m - x_i) * denominator),
             this.K_matrix[m][i] * ((y_m - y_i) - this.L_matrix[m][i] * (y_m - y_i) * denominator)
@@ -23430,35 +23439,35 @@ class KamadaKawai {
    * @private
    */
   _updateE_matrix(m) {
-    let nodesArray = this.body.nodeIndices;
-    let nodes = this.body.nodes;
-    let colm = this.E_matrix[m];
-    let kcolm = this.K_matrix[m];
-    let lcolm = this.L_matrix[m];
-    let x_m = nodes[m].x;
-    let y_m = nodes[m].y;
+    const nodesArray = this.body.nodeIndices;
+    const nodes = this.body.nodes;
+    const colm = this.E_matrix[m];
+    const kcolm = this.K_matrix[m];
+    const lcolm = this.L_matrix[m];
+    const x_m = nodes[m].x;
+    const y_m = nodes[m].y;
     let dE_dx = 0;
     let dE_dy = 0;
     for (let iIdx = 0; iIdx < nodesArray.length; iIdx++) {
-      let i = nodesArray[iIdx];
+      const i = nodesArray[iIdx];
       if (i !== m) {
         //Keep old energy value for sum modification below
-        let cell = colm[iIdx];
-        let oldDx = cell[0];
-        let oldDy = cell[1];
+        const cell = colm[iIdx];
+        const oldDx = cell[0];
+        const oldDy = cell[1];
 
         //Calc new energy:
-        let x_i = nodes[i].x;
-        let y_i = nodes[i].y;
-        let denominator = 1.0 / Math.sqrt(((x_m - x_i) ** 2) + ((y_m - y_i) ** 2));
-        let dx = kcolm[i] * ((x_m - x_i) - lcolm[i] * (x_m - x_i) * denominator);
-        let dy = kcolm[i] * ((y_m - y_i) - lcolm[i] * (y_m - y_i) * denominator);
+        const x_i = nodes[i].x;
+        const y_i = nodes[i].y;
+        const denominator = 1.0 / Math.sqrt(((x_m - x_i) ** 2) + ((y_m - y_i) ** 2));
+        const dx = kcolm[i] * ((x_m - x_i) - lcolm[i] * (x_m - x_i) * denominator);
+        const dy = kcolm[i] * ((y_m - y_i) - lcolm[i] * (y_m - y_i) * denominator);
         colm[iIdx] = [dx, dy];
         dE_dx += dx;
         dE_dy += dy;
 
         //add new energy to sum of each column
-        let sum = this.E_sums[i];
+        const sum = this.E_sums[i];
         sum[0] += (dx-oldDx);
         sum[1] += (dy-oldDy);
       }
@@ -23609,13 +23618,13 @@ Network.prototype.setOptions = function (options) {
   }
 
   if (options !== undefined) {
-    let errorFound = Validator.validate(options, allOptions$1);
+    const errorFound = Validator.validate(options, allOptions$1);
     if (errorFound === true) {
       console.log('%cErrors have been found in the supplied options object.', printStyle);
     }
 
     // copy the global fields over
-    let fields = ['locale','locales','clickToUse'];
+    const fields = ['locale','locales','clickToUse'];
     selectiveDeepExtend(fields,this.options, options);
 
     // normalize the locale or use English
@@ -23660,7 +23669,7 @@ Network.prototype.setOptions = function (options) {
 
     // if the configuration system is enabled, copy all options and put them into the config system
     if (this.configurator && this.configurator.options.enabled === true) {
-      let networkOptions = {nodes:{},edges:{},layout:{},interaction:{},manipulation:{},physics:{},global:{}};
+      const networkOptions = {nodes:{},edges:{},layout:{},interaction:{},manipulation:{},physics:{},global:{}};
       deepExtend(networkOptions.nodes,        this.nodesHandler.options);
       deepExtend(networkOptions.edges,        this.edgesHandler.options);
       deepExtend(networkOptions.layout,       this.layoutEngine.options);
@@ -23716,30 +23725,30 @@ Network.prototype.setOptions = function (options) {
  * @private
  */
 Network.prototype._updateVisibleIndices = function () {
-  let nodes = this.body.nodes;
-  let edges = this.body.edges;
+  const nodes = this.body.nodes;
+  const edges = this.body.edges;
   this.body.nodeIndices = [];
   this.body.edgeIndices = [];
 
-  for (let nodeId in nodes) {
-    if (nodes.hasOwnProperty(nodeId)) {
+  for (const nodeId in nodes) {
+    if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
       if (!this.clustering._isClusteredNode(nodeId) && nodes[nodeId].options.hidden === false) {
         this.body.nodeIndices.push(nodes[nodeId].id);
       }
     }
   }
 
-  for (let edgeId in edges) {
-    if (edges.hasOwnProperty(edgeId)) {
-      let edge = edges[edgeId];
+  for (const edgeId in edges) {
+    if (Object.prototype.hasOwnProperty.call(edges, edgeId)) {
+      const edge = edges[edgeId];
 
       // It can happen that this is executed *after* a node edge has been removed,
       // but *before* the edge itself has been removed. Taking this into account.
-      let fromNode = nodes[edge.fromId];
-      let toNode   = nodes[edge.toId];
-      let edgeNodesPresent = (fromNode !== undefined) && (toNode !== undefined);
+      const fromNode = nodes[edge.fromId];
+      const toNode   = nodes[edge.toId];
+      const edgeNodesPresent = (fromNode !== undefined) && (toNode !== undefined);
 
-      let isVisible =
+      const isVisible =
           !this.clustering._isClusteredEdge(edgeId)
         && edge.options.hidden === false
         && edgeNodesPresent
@@ -23809,14 +23818,14 @@ Network.prototype.setData = function (data) {
   if (data && data.dot) {
     console.log('The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);');
     // parse DOT file
-    var dotData = DOTToGraph(data.dot);
+    const dotData = DOTToGraph(data.dot);
     this.setData(dotData);
     return;
   }
   else if (data && data.gephi) {
     // parse DOT file
     console.log('The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);');
-    var gephiData = parseGephi(data.gephi);
+    const gephiData = parseGephi(data.gephi);
     this.setData(gephiData);
     return;
   }
@@ -23864,13 +23873,13 @@ Network.prototype.destroy = function () {
   delete this.configurator;
   delete this.images;
 
-  for (var nodeId in this.body.nodes) {
-    if (!this.body.nodes.hasOwnProperty(nodeId)) continue;
+  for (const nodeId in this.body.nodes) {
+    if (!Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) continue;
     delete this.body.nodes[nodeId];
   }
 
-  for (var edgeId in this.body.edges) {
-    if (!this.body.edges.hasOwnProperty(edgeId)) continue;
+  for (const edgeId in this.body.edges) {
+    if (!Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) continue;
     delete this.body.edges[edgeId];
   }
 
@@ -23888,15 +23897,15 @@ Network.prototype.destroy = function () {
  * @private
  */
 Network.prototype._updateValueRange = function (obj) {
-  var id;
+  let id;
 
   // determine the range of the objects
-  var valueMin = undefined;
-  var valueMax = undefined;
-  var valueTotal = 0;
+  let valueMin = undefined;
+  let valueMax = undefined;
+  let valueTotal = 0;
   for (id in obj) {
-    if (obj.hasOwnProperty(id)) {
-      var value = obj[id].getValue();
+    if (Object.prototype.hasOwnProperty.call(obj, id)) {
+      const value = obj[id].getValue();
       if (value !== undefined) {
         valueMin = (valueMin === undefined) ? value : Math.min(value, valueMin);
         valueMax = (valueMax === undefined) ? value : Math.max(value, valueMax);
@@ -23908,7 +23917,7 @@ Network.prototype._updateValueRange = function (obj) {
   // adjust the range of all objects
   if (valueMin !== undefined && valueMax !== undefined) {
     for (id in obj) {
-      if (obj.hasOwnProperty(id)) {
+      if (Object.prototype.hasOwnProperty.call(obj, id)) {
         obj[id].setValueRange(valueMin, valueMax, valueTotal);
       }
     }
@@ -24001,14 +24010,14 @@ Network.prototype.setSelection        = function() {return this.selectionHandler
 Network.prototype.getSelectedNodes    = function() {return this.selectionHandler.getSelectedNodes.apply(this.selectionHandler,arguments);};
 Network.prototype.getSelectedEdges    = function() {return this.selectionHandler.getSelectedEdges.apply(this.selectionHandler,arguments);};
 Network.prototype.getNodeAt           = function() {
-  var node = this.selectionHandler.getNodeAt.apply(this.selectionHandler,arguments);
+  const node = this.selectionHandler.getNodeAt.apply(this.selectionHandler,arguments);
   if (node !== undefined && node.id !== undefined) {
     return node.id;
   }
   return node;
 };
 Network.prototype.getEdgeAt           = function() {
-    var edge = this.selectionHandler.getEdgeAt.apply(this.selectionHandler,arguments);
+    const edge = this.selectionHandler.getEdgeAt.apply(this.selectionHandler,arguments);
     if (edge !== undefined && edge.id !== undefined) {
       return edge.id;
     }
