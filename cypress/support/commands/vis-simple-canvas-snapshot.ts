@@ -1,4 +1,5 @@
-import { UniversalNetworkConfig } from "./types";
+import { UniversalNetworkConfig, MoveToOptions } from "./types";
+import { deepObjectAssign } from "vis-util";
 import { VisVisitPageOptions } from "./vis-visit-universal";
 
 declare global {
@@ -9,32 +10,46 @@ declare global {
        * Open universal page with given configuration and take a screenshot of
        * the canvas.
        *
-       * @param label - Snapshot file label.
+       * @param label - Snapshot file label. Numbers will be padded by zeros.
        * @param config - Passed to cy.visVisitUniversal.
        * @param options - Passed to cy.visVisitUniversal.
        */
       visSimpleCanvasSnapshot(
-        label: string,
+        label: number | string,
         config?: UniversalNetworkConfig,
-        options?: VisVisitPageOptions
+        options?: VisSimpleCanvasSnapshotOptions
       ): Chainable<Subject>;
     }
   }
 }
 
+export interface VisSimpleCanvasSnapshotOptions extends VisVisitPageOptions {
+  moveTo?: {
+    position?: { x?: number; y?: number };
+    scale?: number;
+  };
+}
+
 // eslint-disable-next-line require-jsdoc
 export function visSimpleCanvasSnapshot(
-  label: string,
+  label: number | string,
   config: UniversalNetworkConfig = {},
-  options: VisVisitPageOptions = {}
+  options: VisSimpleCanvasSnapshotOptions = {}
 ): void {
   cy.visVisitUniversal(config, options);
   cy.visRun(({ network }): void => {
-    network.moveTo({
-      position: { x: 0, y: 0 },
-      scale: 1
-    });
+    network.moveTo(
+      deepObjectAssign<MoveToOptions>(
+        {
+          position: { x: 0, y: 0 },
+          scale: 1
+        },
+        options.moveTo ?? {}
+      )
+    );
   });
-  cy.get("#mynetwork canvas").compareSnapshot(label);
+  cy.get("#mynetwork canvas").compareSnapshot(
+    typeof label === "string" ? label : ("" + label).padStart(3, "0")
+  );
 }
 Cypress.Commands.add("visSimpleCanvasSnapshot", visSimpleCanvasSnapshot);
