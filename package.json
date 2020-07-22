@@ -68,9 +68,7 @@
     "build:watch": "rollup --watch --config rollup.build.js",
     "prepublishOnly": "npm run build",
     "generate-examples-index": "generate-examples-index --config generate-examples-index.json",
-    "lint": "npm run lint:js && npm run lint:ts",
-    "lint:js": "eslint '{lib,test}/**/*.js'",
-    "lint:ts": "eslint '{cypress,lib,test}/**/*.ts'",
+    "lint": "eslint --ext js,json,ts cypress examples lib test",
     "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/thumbnails\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
     "postinstall": "opencollective postinstall || exit 0"
   },

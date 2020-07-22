@@ -13,6 +13,5 @@
         "strict": true,
         "target": "esnext"
     },
-    "exclude": ["node_modules", "**/__tests__/*"],
-    "include": ["cypress", "lib", "test"]
+    "exclude": ["node_modules", "**/__tests__/*"]
 }
