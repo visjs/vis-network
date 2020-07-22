@@ -716,7 +716,9 @@ describe('Edge', function () {
 describe('Clustering', function () {
 
   it('properly handles options allowSingleNodeCluster', function() {
-    let [network, data, numNodes, numEdges] = createSampleNetwork();
+    const sampleNetwork = createSampleNetwork();
+    const [network, data] = sampleNetwork;
+    let [, , numNodes, numEdges] = sampleNetwork;
 		data.edges.update({from: 1, to: 11,});
     numEdges += 1;
     assertNumNodes(network, numNodes);
@@ -761,7 +763,9 @@ describe('Clustering', function () {
 
 
   it('removes nested clusters with allowSingleNodeCluster === true', function() {
-    let [network, data, numNodes, numEdges] = createSampleNetwork();
+    const sampleNetwork = createSampleNetwork();
+    const [network, data] = sampleNetwork;
+    let [, , numNodes, numEdges] = sampleNetwork;
     // Create a chain of nested clusters, three deep
 		clusterTo(network, 'c1', [4], true);	
 		clusterTo(network, 'c2', ['c1'], true);	
@@ -790,7 +794,9 @@ describe('Clustering', function () {
    * Check on fix for #1218
    */
   it('connects a new edge to a clustering node instead of the clustered node', function () {
-    let [network, data, numNodes, numEdges] = createSampleNetwork();
+    const sampleNetwork = createSampleNetwork();
+    const [network, data] = sampleNetwork;
+    let [, , numNodes, numEdges] = sampleNetwork;
 
     createCluster(network);
     numNodes += 1;                                    // A clustering node is now hiding two nodes
@@ -819,7 +825,9 @@ describe('Clustering', function () {
    */
   it('can uncluster a clustered node when a node is removed that has an edge to that cluster', function () {
     // NOTE: this block is same as previous test
-    let [network, data, numNodes, numEdges] = createSampleNetwork();
+    const sampleNetwork = createSampleNetwork();
+    const [network, data] = sampleNetwork;
+    let [, , numNodes, numEdges] = sampleNetwork;
 
     createCluster(network);
     numNodes += 1;                                    // A clustering node is now hiding two nodes
@@ -857,7 +865,9 @@ describe('Clustering', function () {
    * Check on fix for #1291
    */
   it('can remove a node inside a cluster and then open that cluster', function () {
-    let [network, data, numNodes, numEdges] = createSampleNetwork();
+    const sampleNetwork = createSampleNetwork();
+    const [network, data] = sampleNetwork;
+    let [, , numNodes, numEdges] = sampleNetwork;
 
     const clusterOptionsByData = {
       joinCondition: function(node) {
@@ -1027,7 +1037,9 @@ describe('Clustering', function () {
    * Helper function, created nested clusters, three deep
    */
   function createNetwork1() {
-    let [network, data, numNodes, numEdges] = createSampleNetwork();
+    const sampleNetwork = createSampleNetwork();
+    const [network, data] = sampleNetwork;
+    let [, , numNodes, numEdges] = sampleNetwork;
 
     clusterTo(network, 'c1', [3,4]);  
     numNodes += 1;                                    // new cluster node

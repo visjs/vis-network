@@ -348,7 +348,7 @@ describe('Network Label', function() {
 
 
   it('parses html labels', function (done) {
-    var options = getOptions(options);
+    const options = getOptions();
     options.font.multi = true;   // TODO: also test 'html', also test illegal value here
 
     const label = new Label({}, options);
@@ -362,7 +362,7 @@ describe('Network Label', function() {
 
 
   it('parses markdown labels', function (done) {
-    var options = getOptions(options);
+    const options = getOptions();
     options.font.multi = 'markdown';   // TODO: also test 'md', also test illegal value here
 
     const label = new Label({}, options);
@@ -376,7 +376,7 @@ describe('Network Label', function() {
 
 
   it('handles normal text with widthConstraint.maximum', function (done) {
-    var options = getOptions(options);
+    const options = getOptions();
 
     //
     // What the user would set:
@@ -405,7 +405,7 @@ describe('Network Label', function() {
 
 
   it('handles html tags with widthConstraint.maximum', function (done) {
-    var options = getOptions(options);
+    const options = getOptions();
     options.font.multi = true;
     options.font.maxWdt = 300;
 
@@ -425,7 +425,7 @@ describe('Network Label', function() {
 
 
   it('handles markdown tags with widthConstraint.maximum', function (done) {
-    var options = getOptions(options);
+    const options = getOptions();
     options.font.multi = 'markdown';
     options.font.maxWdt = 300;
 
@@ -1146,7 +1146,7 @@ describe('Shorthand Font Options', function() {
       },
     };
   
-    var network = new Network(container, data, options);
+    const network = new Network(container, data, options);
 
     assert.equal(modBold(1).color, 'red');  // Group value
     assert(fontOption(1).multi);            // Group value
@@ -1193,7 +1193,7 @@ describe('Shorthand Font Options', function() {
 
 
   it('compresses spaces for Multi-Font', function (done) {
-    var options = getOptions(options);
+    let options = getOptions();
 
     const text = [
       "Too  many    spaces     here!",
@@ -1333,7 +1333,7 @@ describe('Shorthand Font Options', function() {
 
 
   it('parses single huge word on line with preceding whitespace when max width set', function (done) {
-    var options = getOptions(options);
+    const options = getOptions();
     options.font.maxWdt = 300;
     assert.equal(options.font.multi, false);
 

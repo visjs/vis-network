@@ -6,7 +6,7 @@
 // straightforward to understand and this only obscures it.
 /* eslint require-jsdoc: "off" */
 
-/* global Alea:false */
+/* global Alea:false seededRandom:true */
 
 /**
  * Created by Alex on 5/20/2015.
@@ -16,7 +16,7 @@
  */
 
 function loadJSON(path, success, error) {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
@@ -33,12 +33,12 @@ function loadJSON(path, success, error) {
 
 
 function getScaleFreeNetwork(nodeCount) {
-  var nodes = [];
-  var edges = [];
-  var connectionCount = [];
+  const nodes = [];
+  const edges = [];
+  const connectionCount = [];
 
   // randomly create some nodes and edges
-  for (var i = 0; i < nodeCount; i++) {
+  for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       id: i,
       label: String(i)
@@ -58,10 +58,10 @@ function getScaleFreeNetwork(nodeCount) {
       connectionCount[to]++;
     }
     else if (i > 1) {
-      var conn = edges.length * 2;
-      var rand = Math.floor(seededRandom() * conn);
-      var cum = 0;
-      var j = 0;
+      const conn = edges.length * 2;
+      const rand = Math.floor(seededRandom() * conn);
+      let cum = 0;
+      let j = 0;
       while (j < connectionCount.length && cum < rand) {
         cum += connectionCount[j];
         j++;
@@ -82,17 +82,17 @@ function getScaleFreeNetwork(nodeCount) {
   return {nodes:nodes, edges:edges};
 }
 
-var seededRandom = Alea('SEED')
+seededRandom = Alea('SEED')
 
 function getScaleFreeNetworkSeeded(nodeCount) {
-  var nodes = [];
-  var edges = [];
-  var connectionCount = [];
-  var edgesId = 0;
+  const nodes = [];
+  const edges = [];
+  const connectionCount = [];
+  let edgesId = 0;
 
 
   // randomly create some nodes and edges
-  for (var i = 0; i < nodeCount; i++) {
+  for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       id: i,
       label: String(i)
@@ -113,10 +113,10 @@ function getScaleFreeNetworkSeeded(nodeCount) {
       connectionCount[to]++;
     }
     else if (i > 1) {
-      var conn = edges.length * 2;
-      var rand = Math.floor(seededRandom() * conn);
-      var cum = 0;
-      var j = 0;
+      const conn = edges.length * 2;
+      const rand = Math.floor(seededRandom() * conn);
+      let cum = 0;
+      let j = 0;
       while (j < connectionCount.length && cum < rand) {
         cum += connectionCount[j];
         j++;

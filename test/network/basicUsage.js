@@ -1,10 +1,12 @@
 // These variables will be injected into a function that will use them.
 /* eslint no-unused-vars: "off" */
+// Const won't work here, only var.
+/* eslint no-var: "off" */
 
 // Network from `basicUsage` example
 
   // create an array with nodes
-  const nodes = [
+  var nodes = [
     {id: 1, label: 'Node 1'},
     {id: 2, label: 'Node 2'},
     {id: 3, label: 'Node 3'},
@@ -13,7 +15,7 @@
   ];
 
   // create an array with edges
-  const edges = [
+  var edges = [
     {from: 1, to: 3},
     {from: 1, to: 2},
     {from: 2, to: 4},
@@ -21,4 +23,4 @@
     {from: 3, to: 3}
   ];
 
-  const options = {};
+  var options = {};
