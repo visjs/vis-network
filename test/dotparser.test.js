@@ -1,4 +1,4 @@
-var assert = require('assert'),
+const assert = require('assert'),
     fs = require('fs'),
     dot = require('../lib/network/dotparser.js');
 
@@ -8,7 +8,7 @@ describe('dotparser', function () {
     fs.readFile('test/dot.txt', function (err, data) {
       data = String(data);
 
-      var graph = dot.parseDOT(data);
+      const graph = dot.parseDOT(data);
 
       assert.deepEqual(graph, {
         "type": "digraph",
@@ -188,11 +188,11 @@ describe('dotparser', function () {
    * DOT-format examples taken from #3015
    */
   it('properly handles newline escape sequences in strings', function (done) {
-		var data = 'dinetwork {1 [label="new\\nline"];}';
+		let data = 'dinetwork {1 [label="new\\nline"];}';
 
     data = String(data);
 
-    var graph = dot.parseDOT(data);
+    const graph = dot.parseDOT(data);
 
     assert.deepEqual(graph, {
       "id": "dinetwork",
@@ -208,7 +208,7 @@ describe('dotparser', function () {
 
 
     // Note the double backslashes
-		var data2 = 'digraph {' + "\n" +
+		let data2 = 'digraph {' + "\n" +
 '	3 [color="#0d2b7c", label="query:1230:add_q\\n0.005283\\n6.83%\\n(0.0001)\\n(0.13%)\\n17×"];' + "\n" +
 '	3 -> 7 [color="#0d2a7b", fontcolor="#0d2a7b", label="0.005128\\n6.63%\\n17×"];' + "\n" +
 '	5 [color="#0d1976", label="urlresolvers:537:reverse\\n0.00219\\n2.83%\\n(0.000193)\\n(0.25%)\\n29×"];' + "\n" +
@@ -216,7 +216,7 @@ describe('dotparser', function () {
 
     data2 = String(data2);
 
-    var graph2 = dot.parseDOT(data2);
+    const graph2 = dot.parseDOT(data2);
     //console.log(JSON.stringify(graph, null, 2));
 
     assert.deepEqual(graph2, {

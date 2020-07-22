@@ -10,8 +10,9 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: "module",
-    ecmaVersion: 2019,
-    project: 'tsconfig.json',
+    ecmaVersion: 2020,
+    project: 'tsconfig.lint.json',
+    extraFileExtensions: [".json"],
   },
 
   plugins: ["prettier", "@typescript-eslint", "cypress"],
@@ -22,12 +23,12 @@ module.exports = {
   rules: {
     'prettier/prettier': ['off'],
 
-    complexity: [2, 55],
-    "max-statements": [2, 115],
-    "no-unreachable": 1,
-    "no-useless-escape": 0,
+    complexity: ['error', 55],
+    "max-statements": ['error', 115],
+    "no-unreachable": 'warn',
+    "no-useless-escape": 'off',
 
-    "no-console": 0,
+    "no-console": 'off',
     // To flag presence of console.log without breaking linting:
     //"no-console": ["warn", { allow: ["warn", "error"] }],
 
@@ -39,13 +40,16 @@ module.exports = {
           ArrowFunctionExpression: false
         }
     }],
-    "valid-jsdoc": [2, {
+    "valid-jsdoc": ['error', {
       requireReturnDescription: false,
       requireReturn: false,
       requireParamDescription: false,
       requireReturnType: true
     }],
-    "guard-for-in": 1,
+    "guard-for-in": 'warn',
+
+    "no-var": "error",
+    "prefer-const": "error",
   },
   overrides: [
     {

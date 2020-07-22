@@ -3,5 +3,5 @@
     "compilerOptions": {
         "noImplicitAny": false
     },
-    "exclude": ["test"]
+    "include": ["lib"]
 }

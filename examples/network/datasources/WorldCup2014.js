@@ -1,3 +1,8 @@
+// These variables will be injected into a page that will use them.
+/* eslint no-unused-vars: "off" */
+// Const won't work here, only var.
+/* eslint no-var: "off" */
+
 var nodes = [
   {id: 1, label: 'Abdelmoumene Djabou', title: 'Country: ' + 'Algeria' + '<br>' + 'Team: ' + 'Club Africain', value: 22, group: 24, x: -1392.5499, y: 1124.1614},
   {id: 2, label: 'Abel Aguilar', title: 'Country: ' + 'Colombia' + '<br>' + 'Team: ' + 'Toulouse', value: 24, group: 11, x: -660.82574, y: 1009.18976},
