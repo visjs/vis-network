@@ -47,6 +47,9 @@ module.exports = {
       requireReturnType: true
     }],
     "guard-for-in": 'warn',
+
+    "no-var": "error",
+    "prefer-const": "error",
   },
   overrides: [
     {
