@@ -36,7 +36,7 @@ function merge (a, b) {
   }
 
   if (b) {
-    for (var name in b) {
+    for (const name in b) {
       if (Object.prototype.hasOwnProperty.call(b, name)) {
         if (typeof b[name] === 'object') {
           a[name] = merge(a[name], b[name]);
@@ -58,9 +58,9 @@ function include(list, context) {
     list = [list];
   }
 
-  for (var n in list) {
-    var path = list[n];
-    var arr = [fs.readFileSync(path) + ''];
+  for (const n in list) {
+    const path = list[n];
+    const arr = [fs.readFileSync(path) + ''];
     eval.apply(context, arr);
   }
 }
@@ -75,10 +75,10 @@ function include(list, context) {
  * For reference, this is the sample network of issue #1218
  */
 function createSampleNetwork(options) {
-  var NumInitialNodes = 8;
-  var NumInitialEdges = 6;
+  const NumInitialNodes = 8;
+  const NumInitialEdges = 6;
 
-  var nodes = new DataSet([
+  const nodes = new DataSet([
       {id: 1, label: '1'},
       {id: 2, label: '2'},
       {id: 3, label: '3'},
@@ -88,7 +88,7 @@ function createSampleNetwork(options) {
       {id: 13, label: '13'},
       {id: 14, label: '14'},
   ]);
-  var edges = new DataSet([
+  const edges = new DataSet([
     { from: 1, to: 2, label: '1 to 2' },
     { from: 2, to: 3, label: '2 to 3' },
     { from: 3, to: 4, label: '3 to 4' },
@@ -98,13 +98,13 @@ function createSampleNetwork(options) {
   ]);
 
   // create a network
-  var container = document.getElementById('mynetwork');
-  var data = {
+  const container = document.getElementById('mynetwork');
+  const data = {
       nodes: nodes,
       edges: edges
   };
 
-  var defaultOptions = {
+  const defaultOptions = {
     layout: {
       randomSeed: 8
     },
@@ -117,7 +117,7 @@ function createSampleNetwork(options) {
 
   options = merge(defaultOptions, options);
 
-  var network = new Network(container, data, options);
+  const network = new Network(container, data, options);
 
   assertNumNodes(network, NumInitialNodes);
   assertNumEdges(network, NumInitialEdges);
@@ -135,7 +135,7 @@ function createSampleNetwork(options) {
  * a cluster is made of two nodes, each from one of the sub-networks.
  */
 function createCluster(network) {
-  var clusterOptionsByData = {
+  const clusterOptionsByData = {
     joinCondition: function(node) {
       if (node.id == 1 || node.id == 11) return true;
       return false;
@@ -181,12 +181,12 @@ function assertNumEdges(network, expectedPresent, expectedVisible) {
 };
 
 function assertEdgeLabels(network, originalEdgesDataSet, assertMessagePrefix) {
-  let originalIds =  originalEdgesDataSet.getIds()
+  const originalIds =  originalEdgesDataSet.getIds()
 
   for (let index = 0; index < originalIds.length; index++) {
-    let id = originalIds[index]
-    let expectedOriginalEdge = originalEdgesDataSet.get(id)
-    let currentNetworkEdge = network.body.edges[id]
+    const id = originalIds[index]
+    const expectedOriginalEdge = originalEdgesDataSet.get(id)
+    const currentNetworkEdge = network.body.edges[id]
 
     assert.equal(
       currentNetworkEdge.options.label,
@@ -204,7 +204,7 @@ function assertEdgeLabels(network, originalEdgesDataSet, assertMessagePrefix) {
  * If any assertion fails here, all code in Network handling fonts should be checked.
  */
 function checkFontProperties(fontItem, checkStrict = true) {
-  var knownProperties = [
+  const knownProperties = [
     'color',
     'size',
     'face',
@@ -230,8 +230,8 @@ function checkFontProperties(fontItem, checkStrict = true) {
   if (!checkStrict) return;
 
   // All known properties should be present
-  var keys = Object.keys(fontItem);
-  for (var n in knownProperties) {
+  const keys = Object.keys(fontItem);
+  for (const n in knownProperties) {
     const prop = knownProperties[n];
     assert(keys.indexOf(prop) !== -1, "Missing known font option '" + prop + "'");
   }
@@ -260,14 +260,14 @@ describe('Network', function () {
    */
   function createNetwork(options) {
     // eslint-disable-next-line no-unused-vars
-    var [network] = createSampleNetwork(options);
+    const [network] = createSampleNetwork(options);
 
     return network;
   }
 
 
   function firstNode(network) {
-    for (var id in network.body.nodes) {
+    for (const id in network.body.nodes) {
       return network.body.nodes[id];
     }
 
@@ -275,7 +275,7 @@ describe('Network', function () {
   }
 
   function firstEdge(network) {
-    for (var id in network.body.edges) {
+    for (const id in network.body.edges) {
       return network.body.edges[id];
     }
 
@@ -307,7 +307,7 @@ describe('Network', function () {
    * Helper function for clustering
    */
   function clusterTo(network, clusterId, nodeList, allowSingle) {  
-    var options = {
+    const options = {
       joinCondition: function(node) {
         return nodeList.indexOf(node.id) !== -1;
       },
@@ -336,7 +336,7 @@ describe('Network', function () {
 
     // The network should just run without throwing errors
     try {
-      var [network, data] = createSampleNetwork({});
+      const [network, data] = createSampleNetwork({});
 
       // Do some stuff to trigger more errors
       clusterTo(network, 'c1', [1,2,3]);
@@ -365,12 +365,12 @@ describe('Network', function () {
    * TODO: extend test for all API calls with options, see #3548
    */
   it('does not change the options object passed to fit()', function() {
-    var [network] = createSampleNetwork({});
-    var options = {};
+    const [network] = createSampleNetwork({});
+    const options = {};
     network.fit(options);
 
     // options should still be empty
-    for (var prop in options) {
+    for (const prop in options) {
       assert(!Object.prototype.hasOwnProperty.call(options, prop), 'No properties should be present in options, detected property: ' + prop);
     }
   });
@@ -378,7 +378,7 @@ describe('Network', function () {
 
   it('does not crash when dataChanged is triggered when setting options on first initialization ', function() {
     // The init should succeed without an error thrown.
-    var options = {
+    let options = {
       nodes: {
         physics: false   // any value here triggered the error 
       }
@@ -401,16 +401,16 @@ describe('Network', function () {
   it('can deal with null data', function() {
     // While we're at it, try out other silly values as well
     // All the following are wrong, but none should lead to a crash
-    var awkwardData = [
+    const awkwardData = [
       null,
       [1,2,3],
       42,
       'meow'
     ];
 
-    var container = document.getElementById('mynetwork');
+    const container = document.getElementById('mynetwork');
 
-    for (var n = 0; n < awkwardData.length; ++n) {
+    for (let n = 0; n < awkwardData.length; ++n) {
       new Network(container, awkwardData[n], {});  // Should not throw
     }
   });
@@ -419,7 +419,7 @@ describe('Network', function () {
 describe('Node', function () {
 
   it('has known font options', function () {
-    var network = createNetwork({});
+    const network = createNetwork({});
     checkFontProperties(network.nodesHandler.defaultOptions.font);
     checkFontProperties(allOptions.nodes.font);
     checkFontProperties(configureOptions.nodes.font, false);
@@ -432,8 +432,8 @@ describe('Node', function () {
    */
   it('properly handles choosify input', function () {
     // check defaults
-    var options = {};
-    var network = createNetwork(options);
+    let options = {};
+    let network = createNetwork(options);
     checkChooserValues(firstNode(network), true, true);
 
     // There's no point in checking invalid values here; these are detected by the options parser
@@ -469,7 +469,7 @@ describe('Node', function () {
 describe('Edge', function () {
 
   it('has known font options', function () {
-    var network = createNetwork({});
+    const network = createNetwork({});
     checkFontProperties(network.edgesHandler.defaultOptions.font);
     checkFontProperties(allOptions.edges.font);
     checkFontProperties(configureOptions.edges.font, false);
@@ -482,8 +482,8 @@ describe('Edge', function () {
    */
   it('properly handles choosify input', function () {
     // check defaults
-    var options = {};
-    var network = createNetwork(options);
+    let options = {};
+    let network = createNetwork(options);
     checkChooserValues(firstEdge(network), true, true);
 
     // There's no point in checking invalid values here; these are detected by the options parser
@@ -519,14 +519,14 @@ describe('Edge', function () {
    * Support routine for next unit test
    */
   function createDataforColorChange() {
-    var nodes = new DataSet([
+    const nodes = new DataSet([
       {id: 1, label: 'Node 1' }, // group:'Group1'},
       {id: 2, label: 'Node 2', group:'Group2'},
       {id: 3, label: 'Node 3'},
     ]);
 
     // create an array with edges
-    var edges = new DataSet([
+    const edges = new DataSet([
       {id: 1, from: 1, to: 2},
       {id: 2, from: 1, to: 3, color: { inherit: 'to'}},
       {id: 3, from: 3, to: 3, color: { color: '#00FF00'}},
@@ -534,7 +534,7 @@ describe('Edge', function () {
     ]);
 
 
-    var data = {
+    const data = {
       nodes: nodes,
       edges: edges
     };
@@ -550,16 +550,16 @@ describe('Edge', function () {
    * We test the updates the color options in the general edges options here.
    */
   it('sets inherit color option for edges on call to Network.setOptions()', function () {
-    var container = document.getElementById('mynetwork');
-    var data =  createDataforColorChange();
+    const container = document.getElementById('mynetwork');
+    const data =  createDataforColorChange();
 
-    var options = {
+    const options = {
       "edges" : { "color" : { "inherit" : "to" } },
     };
 
     // Test passing options on init.
-    var network = new Network(container, data, options);
-    var edges = network.body.edges;
+    let network = new Network(container, data, options);
+    let edges = network.body.edges;
     assert.equal(edges[1].options.color.inherit, 'to');   // new default
     assert.equal(edges[2].options.color.inherit, 'to');   // set in edge
     assert.equal(edges[3].options.color.inherit, false);  // has explicit color
@@ -603,12 +603,12 @@ describe('Edge', function () {
 
 
   it('sets inherit color option for specific edge', function () {
-    var container = document.getElementById('mynetwork');
-    var data =  createDataforColorChange();
+    const container = document.getElementById('mynetwork');
+    const data =  createDataforColorChange();
 
     // Check no options
-    var network = new Network(container, data, {});
-    var edges = network.body.edges;
+    const network = new Network(container, data, {});
+    const edges = network.body.edges;
     assert.equal(edges[1].options.color.inherit, 'from');  // default
     assert.equal(edges[2].options.color.inherit, 'to');    // set in edge
     assert.equal(edges[3].options.color.inherit, false);   // has explicit color
@@ -627,19 +627,19 @@ describe('Edge', function () {
    * Perhaps TODO: add unit test for passing string value for color option
    */
   it('sets color value for edges on call to Network.setOptions()', function () {
-    var container = document.getElementById('mynetwork');
-    var data =  createDataforColorChange();
+    const container = document.getElementById('mynetwork');
+    const data =  createDataforColorChange();
 
-    var defaultColor = '#848484';  // From defaults
-    var color = '#FF0000';
+    const defaultColor = '#848484';  // From defaults
+    const color = '#FF0000';
 
-    var options = {
+    const options = {
       "edges" : { "color" : { "color" : color } },
     };
 
     // Test passing options on init.
-    var network = new Network(container, data, options);
-    var edges = network.body.edges;
+    let network = new Network(container, data, options);
+    let edges = network.body.edges;
     assert.equal(edges[1].options.color.color, color);
     assert.equal(edges[1].options.color.inherit, false);  // Explicit color, so no inherit
     assert.equal(edges[2].options.color.color, color);
@@ -680,25 +680,25 @@ describe('Edge', function () {
    * Checking to make sure edges that become unconnected due to node removal get reconnected
   */  
   it.skip('has reconnected edges (problems since mocha 4)', function (done) {
-    var node1 = {id:1, label:"test1"};
-    var node2 = {id:2, label:"test2"};
-    var nodes = new DataSet([node1, node2]);
+    const node1 = {id:1, label:"test1"};
+    const node2 = {id:2, label:"test2"};
+    const nodes = new DataSet([node1, node2]);
   
-    var edge = {id:1, from: 1, to:2};
-    var edges = new DataSet([edge]);
+    const edge = {id:1, from: 1, to:2};
+    const edges = new DataSet([edge]);
 
-    var data = {
+    const data = {
         nodes: nodes,
         edges: edges
     };    
 
-    var container = document.getElementById('mynetwork');
-    var network = new Network(container, data);
+    const container = document.getElementById('mynetwork');
+    const network = new Network(container, data);
 
     //remove node causing edge to become disconnected
     nodes.remove(node2.id);
     
-    var foundEdge = network.body.edges[edge.id];
+    let foundEdge = network.body.edges[edge.id];
 
     assert.ok(foundEdge===undefined, "edge is still in state cache");
 
@@ -716,7 +716,7 @@ describe('Edge', function () {
 describe('Clustering', function () {
 
   it('properly handles options allowSingleNodeCluster', function() {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 		data.edges.update({from: 1, to: 11,});
     numEdges += 1;
     assertNumNodes(network, numNodes);
@@ -761,7 +761,7 @@ describe('Clustering', function () {
 
 
   it('removes nested clusters with allowSingleNodeCluster === true', function() {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
     // Create a chain of nested clusters, three deep
 		clusterTo(network, 'c1', [4], true);	
 		clusterTo(network, 'c2', ['c1'], true);	
@@ -790,7 +790,7 @@ describe('Clustering', function () {
    * Check on fix for #1218
    */
   it('connects a new edge to a clustering node instead of the clustered node', function () {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 
     createCluster(network);
     numNodes += 1;                                    // A clustering node is now hiding two nodes
@@ -819,7 +819,7 @@ describe('Clustering', function () {
    */
   it('can uncluster a clustered node when a node is removed that has an edge to that cluster', function () {
     // NOTE: this block is same as previous test
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 
     createCluster(network);
     numNodes += 1;                                    // A clustering node is now hiding two nodes
@@ -857,9 +857,9 @@ describe('Clustering', function () {
    * Check on fix for #1291
    */
   it('can remove a node inside a cluster and then open that cluster', function () {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 
-    var clusterOptionsByData = {
+    const clusterOptionsByData = {
       joinCondition: function(node) {
         if (node.id == 1 || node.id == 2 || node.id == 3) return true;
         return false;
@@ -896,7 +896,7 @@ describe('Clustering', function () {
    */
   function createOutlierGraph() {
     // create an array with nodes
-    var nodes = new DataSet([
+    const nodes = new DataSet([
       {id: 1, label: '1', group:'Group1'},
       {id: 2, label: '2', group:'Group2'},
       {id: 3, label: '3', group:'Group3'},
@@ -905,7 +905,7 @@ describe('Clustering', function () {
     ]);
 
     // create an array with edges
-    var edges = new DataSet([
+    const edges = new DataSet([
       {from: 1, to: 3},
       {from: 1, to: 2},
       {from: 2, to: 4},
@@ -913,12 +913,12 @@ describe('Clustering', function () {
     ]);
 
     // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
       nodes: nodes,
       edges: edges
     };
-    var options = {
+    const options = {
       "groups" : {
         "Group1" : { level:1 },
         "Group2" : { level:2 },
@@ -927,7 +927,7 @@ describe('Clustering', function () {
       }
     };
 
-    var network = new Network (container, data, options);
+    const network = new Network (container, data, options);
 
     return network;
   }
@@ -947,15 +947,15 @@ describe('Clustering', function () {
      * within nodes.clustering; strictly, speaking, the array and its items
      * are collections, so order should not matter. 
      */
-    var collectClusters = function(network) {
-      var clusters = [];
-      for(var n in network.body.nodes) {
-        var node = network.body.nodes[n];
+    const collectClusters = function(network) {
+      const clusters = [];
+      for(const n in network.body.nodes) {
+        const node = network.body.nodes[n];
         if (node.containedNodes === undefined) continue; // clusters only
 
         // Collect id's of nodes in the cluster
-        var nodes = [];
-        for(var m in node.containedNodes) {
+        const nodes = [];
+        for(const m in node.containedNodes) {
           nodes.push(m);
         }
         clusters.push(nodes);
@@ -977,15 +977,15 @@ describe('Clustering', function () {
      * This comparison depends on the ordering; better
      * would be to treat the items and values as collections.
      */
-    var compareClusterInfo = function(recieved, expected) {
+    const compareClusterInfo = function(recieved, expected) {
       if (recieved.length !== expected.length) return false;
 
-      for (var n = 0; n < recieved.length; ++n) {
-        var itema = recieved[n];
-        var itemb = expected[n];
+      for (let n = 0; n < recieved.length; ++n) {
+        const itema = recieved[n];
+        const itemb = expected[n];
         if (itema.length !== itemb.length) return false;
 
-        for (var m = 0; m < itema.length; ++m) {
+        for (let m = 0; m < itema.length; ++m) {
           if (itema[m] != itemb[m]) return false;  // != because values can be string or number
         }
       }
@@ -994,10 +994,10 @@ describe('Clustering', function () {
     }
 
 
-    var assertJoinCondition = function(joinCondition, expected) {
-      var network = createOutlierGraph();
+    const assertJoinCondition = function(joinCondition, expected) {
+      const network = createOutlierGraph();
       network.clusterOutliers({joinCondition: joinCondition});
-      var recieved = collectClusters(network);
+      const recieved = collectClusters(network);
       //console.log(recieved);
 
       assert(compareClusterInfo(recieved, expected),
@@ -1007,10 +1007,10 @@ describe('Clustering', function () {
 
 
     // Should cluster none:
-    var joinNone_  = function() { return false ; }
+    const joinNone_  = function() { return false ; }
 
     // Should cluster 4 & 5:
-    var joinLevel_ = function(n) { return n.level > 3 ; }
+    const joinLevel_ = function(n) { return n.level > 3 ; }
 
     assertJoinCondition(undefined  , [[1,3],[2,4,5]]);
     assertJoinCondition(null       , [[1,3],[2,4,5]]);
@@ -1027,7 +1027,7 @@ describe('Clustering', function () {
    * Helper function, created nested clusters, three deep
    */
   function createNetwork1() {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 
     clusterTo(network, 'c1', [3,4]);  
     numNodes += 1;                                    // new cluster node
@@ -1057,7 +1057,7 @@ describe('Clustering', function () {
 
 
   it('opens clusters automatically when nodes deleted', function () {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 
     // Simple case: cluster of two nodes, delete one node
     clusterTo(network, 'c1', [3,4]);  
@@ -1119,7 +1119,7 @@ describe('Clustering', function () {
    * This is the 'simple' case.
    */
   it('properly opens 1-level clusters', function () {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
 
     assertEdgeLabels(network, data.edges, "New sample network");
     // Pedantic: make a cluster of everything
@@ -1204,7 +1204,7 @@ describe('Clustering', function () {
    * The test uses clustering three levels deep and opens the middle one.
    */
   it('properly opens clustered clusters', function () {
-    var [network, data, numNodes, numEdges] = createSampleNetwork();
+    let [network, data, numNodes, numEdges] = createSampleNetwork();
     assertEdgeLabels(network, data.edges, "New sample network");
 
     data.edges.update({ from: 1, to: 11, label: "1 to 11" })
@@ -1316,7 +1316,7 @@ describe('on node.js', function () {
     assert(this.container !== null, 'Container div not found');
 
     // The following should now just plain succeed
-    var [network] = createSampleNetwork();
+    const [network] = createSampleNetwork();
 
     assert.equal(Object.keys(network.body.nodes).length, 8);
     assert.equal(Object.keys(network.body.edges).length, 6);
@@ -1327,10 +1327,10 @@ describe('runs example ', function () {
 
   function loadExample(path, noPhysics) {
     include(path, this);
-    var container = document.getElementById('mynetwork');
+    const container = document.getElementById('mynetwork');
 
     // create a network
-    var data = {
+    const data = {
       /* eslint-disable no-undef */
       nodes: new DataSet(nodes),
       /* eslint-disable no-undef */
@@ -1344,13 +1344,13 @@ describe('runs example ', function () {
       options.physics = false;
     }
 
-    var network = new Network(container, data, options);
+    const network = new Network(container, data, options);
     return network;
   };
 
 
   it('basicUsage', function () {
-    var network = loadExample('./test/network/basicUsage.js');
+    const network = loadExample('./test/network/basicUsage.js');
     //console.log(Object.keys(network.body.edges));
 
     // Count in following also contains the helper nodes for dynamic edges
@@ -1363,7 +1363,7 @@ describe('runs example ', function () {
     // This is a huge example (which is why it's tested here!), so it takes a long time to load.
     this.timeout(15000);
 
-    var network = loadExample('./examples/network/datasources/WorldCup2014.js', true);
+    const network = loadExample('./examples/network/datasources/WorldCup2014.js', true);
 
     // Count in following also contains the helper nodes for dynamic edges
     assert.equal(Object.keys(network.body.nodes).length, 9964);
@@ -1374,7 +1374,7 @@ describe('runs example ', function () {
 
   // This actually failed to load, added for this reason
   it.skip('disassemblerExample (problems since mocha 4)', function () {
-    var network = loadExample('./examples/network/exampleApplications/disassemblerExample.js');
+    const network = loadExample('./examples/network/exampleApplications/disassemblerExample.js');
     // console.log(Object.keys(network.body.nodes));
     // console.log(Object.keys(network.body.edges));
 

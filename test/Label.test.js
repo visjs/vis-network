@@ -54,14 +54,14 @@ describe('Network Label', function() {
    * NOTE: these are options at the node-level
    */
   function getOptions(options = {}) {
-    var body = {
+    const body = {
       functions: {},
       emitter: {
         on: function() {}
       }
     };
 
-    var nodesHandler = new NodesHandler(body, {}, options, new DummyLayoutEngine() );
+    const nodesHandler = new NodesHandler(body, {}, options, new DummyLayoutEngine() );
     //console.log(JSON.stringify(nodesHandler.options, null, 2));
 
     return nodesHandler.options;
@@ -75,7 +75,7 @@ describe('Network Label', function() {
    * Within blocks, only the text is compared
    */
   function checkBlocks(returned, expected) {
-    let showBlocks = () => {
+    const showBlocks = () => {
       return '\nreturned: ' + JSON.stringify(returned, null, 2) + '\n' +
                'expected: ' + JSON.stringify(expected, null, 2);
     }
@@ -83,13 +83,13 @@ describe('Network Label', function() {
     assert.equal(expected.lines.length, returned.lines.length, 'Number of lines does not match, ' + showBlocks());
 
     for (let i = 0; i < returned.lines.length; ++i) {
-      let retLine = returned.lines[i];
-      let expLine = expected.lines[i];
+      const retLine = returned.lines[i];
+      const expLine = expected.lines[i];
 
       assert(retLine.blocks.length === expLine.blocks.length, 'Number of blocks does not match, ' + showBlocks());
       for (let j = 0; j < retLine.blocks.length; ++j) {
-        let retBlock = retLine.blocks[j];
-        let expBlock = expLine.blocks[j];
+        const retBlock = retLine.blocks[j];
+        const expBlock = expLine.blocks[j];
 
         assert(retBlock.text === expBlock.text, 'Text does not match, ' + showBlocks());
 
@@ -107,10 +107,10 @@ describe('Network Label', function() {
 
 
   function checkProcessedLabels(label, text, expected) {   
-    var ctx = new DummyContext();
+    const ctx = new DummyContext();
 
     for (const i of Object.keys(text)) {
-      var ret = label._processLabelText(ctx, false, false, text[i]);
+      const ret = label._processLabelText(ctx, false, false, text[i]);
       //console.log(JSON.stringify(ret, null, 2));
       checkBlocks(ret, expected[i]);
     }
@@ -121,7 +121,7 @@ describe('Network Label', function() {
  * Test data
  **************************************************************/
 
-  var normal_text = [
+  const normal_text = [
     "label text",
     "label\nwith\nnewlines",
     "OnereallylongwordthatshouldgooverwidthConstraint.maximumifdefined",
@@ -129,12 +129,12 @@ describe('Network Label', function() {
     "Reallyoneenormouslylargelabel withtwobigwordsgoingoverwayovermax"
   ]
 
-  var html_text = [
+  const html_text = [
     "label <b>with</b> <code>some</code> <i>multi <b>tags</b></i>",
     "label <b>with</b> <code>some</code> \n <i>multi <b>tags</b></i>\n and newlines" // NB spaces around \n's
   ];
 
-  var markdown_text = [
+  const markdown_text = [
     "label *with* `some` _multi *tags*_",
     "label *with* `some` \n _multi *tags*_\n and newlines" // NB spaces around \n's
   ];
@@ -144,7 +144,7 @@ describe('Network Label', function() {
  * Expected Results
  **************************************************************/
 
-  var normal_expected = [{
+  const normal_expected = [{
     // In first item, width/height kept in for reference
     width: 120,
     height: 14,
@@ -182,7 +182,7 @@ describe('Network Label', function() {
 
   const indexWidthConstrained = 2;  // index of first item that will be different with max width set
 
-  var normal_widthConstraint_expected = normal_expected.slice(0, indexWidthConstrained);
+  const normal_widthConstraint_expected = normal_expected.slice(0, indexWidthConstrained);
   Array.prototype.push.apply(normal_widthConstraint_expected, [{
     lines: [{
       blocks: [{text: "Onereallylongwordthatshoul"}]
@@ -216,7 +216,7 @@ describe('Network Label', function() {
   }]);
 
 
-  var html_unchanged_expected = [{
+  const html_unchanged_expected = [{
     lines: [{
       blocks: [{text: "label <b>with</b> <code>some</code> <i>multi <b>tags</b></i>"}]
     }]
@@ -230,7 +230,7 @@ describe('Network Label', function() {
     }]
   }];
 
-  var html_widthConstraint_unchanged = [{
+  const html_widthConstraint_unchanged = [{
     lines: [{
       blocks: [{text: "label <b>with</b>"}]
     }, {
@@ -255,7 +255,7 @@ describe('Network Label', function() {
   }];
 
 
-  var markdown_unchanged_expected = [{
+  const markdown_unchanged_expected = [{
     lines: [{
       blocks: [{text: "label *with* `some` _multi *tags*_"}]
     }]
@@ -270,7 +270,7 @@ describe('Network Label', function() {
   }];
 
 
-  var markdown_widthConstraint_expected= [{
+  const markdown_widthConstraint_expected= [{
     lines: [{
       blocks: [{text: "label *with* `some`"}]
     }, {
@@ -287,7 +287,7 @@ describe('Network Label', function() {
   }];
 
 
-  var multi_expected = [{
+  const multi_expected = [{
     lines: [{
       blocks: [
         {text: "label "},
@@ -337,7 +337,7 @@ describe('Network Label', function() {
 
 
   it('parses normal text labels', function (done) {
-    var label = new Label({}, getOptions());
+    const label = new Label({}, getOptions());
 
     checkProcessedLabels(label, normal_text  , normal_expected);
     checkProcessedLabels(label, html_text    , html_unchanged_expected);     // html unchanged
@@ -351,7 +351,7 @@ describe('Network Label', function() {
     var options = getOptions(options);
     options.font.multi = true;   // TODO: also test 'html', also test illegal value here
 
-    var label = new Label({}, options);
+    const label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_expected);             // normal as usual
     checkProcessedLabels(label, html_text    , multi_expected);
@@ -365,7 +365,7 @@ describe('Network Label', function() {
     var options = getOptions(options);
     options.font.multi = 'markdown';   // TODO: also test 'md', also test illegal value here
 
-    var label = new Label({}, options);
+    const label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_expected);             // normal as usual
     checkProcessedLabels(label, html_text    , html_unchanged_expected);     // html unchanged
@@ -389,7 +389,7 @@ describe('Network Label', function() {
     //
     options.font.maxWdt = 300;
 
-    var label = new Label({}, options);
+    let label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_widthConstraint_expected);
     checkProcessedLabels(label, html_text    , html_widthConstraint_unchanged);    // html unchanged
@@ -409,7 +409,7 @@ describe('Network Label', function() {
     options.font.multi = true;
     options.font.maxWdt = 300;
 
-    var label = new Label({}, options);
+    let label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_widthConstraint_expected);
     checkProcessedLabels(label, html_text    , multi_expected); 
@@ -429,7 +429,7 @@ describe('Network Label', function() {
     options.font.multi = 'markdown';
     options.font.maxWdt = 300;
 
-    var label = new Label({}, options);
+    const label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_widthConstraint_expected);
     checkProcessedLabels(label, html_text    , html_widthConstraint_unchanged); 
@@ -459,7 +459,7 @@ describe('Multi-Fonts', function() {
 describe('Node Labels', function() {
 
   function createNodeNetwork(newOptions) {
-    var dataNodes = [
+    const dataNodes = [
       {id: 0, label: '<b>0</b>'},
       {id: 1, label: '<b>1</b>'},
       {id: 2, label: '<b>2</b>', group: 'group1'},
@@ -476,13 +476,13 @@ describe('Node Labels', function() {
     ];
   
     // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
         nodes: new DataSet(dataNodes),
         edges: []
     };
   
-    var options = {
+    const options = {
       nodes: {
         font: {
           multi: true
@@ -502,7 +502,7 @@ describe('Node Labels', function() {
       util.deepExtend(options, newOptions);
     }
   
-    var network = new Network(container, data, options);
+    const network = new Network(container, data, options);
     return [network, data, options];
   }
 
@@ -514,8 +514,8 @@ describe('Node Labels', function() {
    * - using multi-font option 'color' for test, the rest should work analogously
    */
   it('respects the font option precedence', function (done) {
-    var [network] = createNodeNetwork();
-    var h = new HelperNode(network);
+    const [network] = createNodeNetwork();
+    const h = new HelperNode(network);
 
     assert.equal(h.modBold(0).color, '#343434');  // Default value
     assert.equal(h.modBold(1).color, '#343434');  // Default value
@@ -528,8 +528,8 @@ describe('Node Labels', function() {
 
 
   it('handles dynamic data and option updates', function (done) {
-    var [network, data] = createNodeNetwork();
-    var h = new HelperNode(network);
+    const [network, data] = createNodeNetwork();
+    const h = new HelperNode(network);
 
     //
     // Change some node values dynamically
@@ -600,15 +600,15 @@ describe('Node Labels', function() {
 
 
   it('handles normal font values in default options', function (done) {
-    var newOptions = {
+    const newOptions = {
       nodes: {
         font: {
           color: 'purple'  // Override the default value
         }
       },
     };
-    var [network] = createNodeNetwork(newOptions);
-    var h = new HelperNode(network);
+    const [network] = createNodeNetwork(newOptions);
+    const h = new HelperNode(network);
 
     assert.equal(h.modBold(0).color, 'purple');   // Nodes value
     assert.equal(h.modBold(1).color, 'purple');   // Nodes value
@@ -621,7 +621,7 @@ describe('Node Labels', function() {
 
 
   it('handles multi-font values in default options/groups', function (done) {
-    var newOptions = {
+    const newOptions = {
       nodes: {
         font: {
           color: 'purple'  // This set value should be overridden
@@ -636,8 +636,8 @@ describe('Node Labels', function() {
       }
     };
 
-    var [network, , options] = createNodeNetwork(newOptions);
-    var h = new HelperNode(network);
+    const [network, , options] = createNodeNetwork(newOptions);
+    const h = new HelperNode(network);
     assert(options.nodes.font.multi);
 
     assert.equal(h.modBold(0).color, 'yellow');   // bold value
@@ -655,14 +655,14 @@ describe('Node Labels', function() {
 describe('Edge Labels', function() {
 
   function createEdgeNetwork(newOptions) {
-    var dataNodes = [
+    const dataNodes = [
       {id: 1, label: '1'},
       {id: 2, label: '2'},
       {id: 3, label: '3'},
       {id: 4, label: '4'},
     ];
 
-    var dataEdges = [
+    const dataEdges = [
       {id: 1, from: 1, to: 2, label: '<b>1</b>'},
       {id: 2, from: 1, to: 4, label: '<b>2</b>',
         font: {
@@ -677,13 +677,13 @@ describe('Edge Labels', function() {
     ];
   
     // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
         nodes: new DataSet(dataNodes),
         edges: new DataSet(dataEdges),
     };
   
-    var options = {
+    const options = {
       edges: {
         font: {
           multi: true
@@ -695,7 +695,7 @@ describe('Edge Labels', function() {
       util.deepExtend(options, newOptions);
     }
   
-    var network = new Network(container, data, options);
+    const network = new Network(container, data, options);
     return [network, data, options];
   }
 
@@ -723,8 +723,8 @@ describe('Edge Labels', function() {
    * - edges have no groups
    */
   it('respects the font option precedence', function (done) {
-    var [network] = createEdgeNetwork();
-    var h = new HelperEdge(network);
+    const [network] = createEdgeNetwork();
+    const h = new HelperEdge(network);
 
     assert.equal(h.modBold(1).color, '#343434');  // Default value
     assert.equal(h.modBold(2).color, 'green');    // Local value overrides default
@@ -735,8 +735,8 @@ describe('Edge Labels', function() {
 
 
   it('handles dynamic data and option updates', function (done) {
-    var [network, data] = createEdgeNetwork();
-    var h = new HelperEdge(network);
+    const [network, data] = createEdgeNetwork();
+    const h = new HelperEdge(network);
 
     data.edges.update([
       {id: 3, font: { bold: { color: 'orange'}}},
@@ -767,15 +767,15 @@ describe('Edge Labels', function() {
 
 
   it('handles font values in default options', function (done) {
-    var newOptions = {
+    const newOptions = {
       edges: {
         font: {
           color: 'purple'  // Override the default value
         }
       },
     };
-    var [network] = createEdgeNetwork(newOptions);
-    var h = new HelperEdge(network);
+    const [network] = createEdgeNetwork(newOptions);
+    const h = new HelperEdge(network);
 
     assert.equal(h.modBold(1).color, 'purple');   // Nodes value
     assert.equal(h.modBold(2).color, 'green');    // Local value overrides all
@@ -789,7 +789,7 @@ describe('Edge Labels', function() {
 
 describe('Shorthand Font Options', function() {
 
-  var testFonts = {
+  const testFonts = {
     'default': {color: '#343434', face: 'arial'    , size: 14},
     'monodef': {color: '#343434', face: 'monospace', size: 15},
     'font1'  : {color: '#010101', face: 'Font1'    , size:  1},
@@ -803,7 +803,7 @@ describe('Shorthand Font Options', function() {
 
 
   function checkFont(opt, expectedLabel) {
-    var expected = testFonts[expectedLabel];
+    const expected = testFonts[expectedLabel];
  
     util.forEach(expected, (item, key) => {
       assert.equal(opt[key], item);
@@ -812,23 +812,23 @@ describe('Shorthand Font Options', function() {
 
 
   function createNetwork() {
-    var dataNodes = [
+    const dataNodes = [
       {id: 1, label: '1'},
       {id: 2, label: '2', group: 'group1'},
       {id: 3, label: '3', group: 'group2'},
       {id: 4, label: '4', font: '5px Font5 #050505'},
     ];
 
-    var dataEdges = [];
+    const dataEdges = [];
 
     // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
         nodes: new DataSet(dataNodes),
         edges: new DataSet(dataEdges),
     };
 
-    var options = {
+    const options = {
       nodes: {
         font: {
           multi: true,
@@ -848,19 +848,19 @@ describe('Shorthand Font Options', function() {
       }
     };
   
-    var network = new Network(container, data, options);
+    const network = new Network(container, data, options);
     return [network, data];
   }
 
 
   it('handles shorthand options correctly', function (done) {
-    var [network] = createNetwork();
-    var h = new HelperNode(network);
+    const [network] = createNetwork();
+    const h = new HelperNode(network);
 
     // NOTE: 'mono' has its own global default font and size, which will
     //       trump any other font values set.
 
-    var opt = h.fontOption(1); 
+    let opt = h.fontOption(1); 
     checkFont(opt, 'default');
     checkFont(opt.bold, 'font1');
     checkFont(opt.ital, 'font2');
@@ -933,11 +933,11 @@ describe('Shorthand Font Options', function() {
 
 
   it('deals with dynamic data and option updates for shorthand', function (done) {
-    var [network, data] = createNetwork();
-    var h = new HelperNode(network);
+    const [network, data] = createNetwork();
+    const h = new HelperNode(network);
     dynamicAdd1(network, data);
 
-    var opt = h.fontOption(1); 
+    let opt = h.fontOption(1); 
     checkFont(opt, 'font5');                  // New base font
     checkFont(opt.bold, 'font1');
     checkFont(opt.ital, 'font4');             // New global node default
@@ -971,12 +971,12 @@ describe('Shorthand Font Options', function() {
 
      
   it('deals with dynamic change of global node default', function (done) {
-    var [network, data] = createNetwork();
-    var h = new HelperNode(network);
+    const [network, data] = createNetwork();
+    const h = new HelperNode(network);
     dynamicAdd1(network, data);  // Accumulate data of dynamic add
     dynamicAdd2(network, data);
 
-    var opt = h.fontOption(1); 
+    let opt = h.fontOption(1); 
     checkFont(opt, 'font5');                  // Node instance value
     checkFont(opt.bold, 'font5');             // bold def removed from global default node 
     checkFont(opt.ital, 'font5');             // idem
@@ -1013,8 +1013,8 @@ describe('Shorthand Font Options', function() {
 
      
   it('deals with dynamic delete of shorthand options', function (done) {
-    var [network, data] = createNetwork();
-    var h = new HelperNode(network);
+    const [network, data] = createNetwork();
+    const h = new HelperNode(network);
     dynamicAdd1(network, data);  // Accumulate data of previous dynamic steps
     dynamicAdd2(network, data);  // idem 
 
@@ -1023,7 +1023,7 @@ describe('Shorthand Font Options', function() {
       {id: 4, font: { bold: null}},
     ]);
 
-    var opt;
+    let opt;
 
 /*
     // Interesting: following flagged as error in options parsing, avoiding it for that reason
@@ -1081,8 +1081,8 @@ describe('Shorthand Font Options', function() {
     /**
      * Helper function for easily accessing font options in a node
      */
-    var fontOption = (index) => {
-      var nodes = network.body.nodes;
+    const fontOption = (index) => {
+      const nodes = network.body.nodes;
       return nodes[index].labelModule.fontOptions;
     };
 
@@ -1090,12 +1090,12 @@ describe('Shorthand Font Options', function() {
     /**
      * Helper function for easily accessing bold options in a node
      */
-    var modBold = (index) => {
+    const modBold = (index) => {
       return fontOption(index).bold;
     };
 
 
-    var dataNodes = [
+    const dataNodes = [
       {id: 1, label: '<b>1</b>', group: 'group1'},
       {
         // From example 1 in #3408
@@ -1113,13 +1113,13 @@ describe('Shorthand Font Options', function() {
     ];
   
     // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
         nodes: new DataSet(dataNodes),
         edges: []
     };
   
-    var options = {
+    const options = {
       groups: {
         group1: {
           font: {
@@ -1195,7 +1195,7 @@ describe('Shorthand Font Options', function() {
   it('compresses spaces for Multi-Font', function (done) {
     var options = getOptions(options);
 
-    var text = [
+    const text = [
       "Too  many    spaces     here!",
       "one two  three   four    five     six      .",
       "This thing:\n  - could be\n  - a kind\n  - of list",  // multifont: 2 spaces at start line reduced to 1
@@ -1205,9 +1205,9 @@ describe('Shorthand Font Options', function() {
     //
     // multifont disabled: spaces are preserved
     //
-    var label = new Label({}, options);
+    let label = new Label({}, options);
 
-    var expected = [{
+    const expected = [{
       lines: [{
         blocks: [{text: "Too  many    spaces     here!"}],
       }]
@@ -1236,7 +1236,7 @@ describe('Shorthand Font Options', function() {
     options.font.maxWdt = 300;
     label = new Label({}, options);
 
-    var expected_maxwidth = [{
+    const expected_maxwidth = [{
       lines: [{
           blocks: [{text: "Too  many    spaces"}],
         }, {
@@ -1272,7 +1272,7 @@ describe('Shorthand Font Options', function() {
     options.font.multi = true;
     label = new Label({}, options);
 
-    var expected_multifont = [{
+    const expected_multifont = [{
       lines: [{
         blocks: [{text: "Too many spaces here!"}],
       }]
@@ -1301,7 +1301,7 @@ describe('Shorthand Font Options', function() {
     options.font.maxWdt = 300;
     label = new Label({}, options);
 
-    var expected_multifont_maxwidth = [{
+    const expected_multifont_maxwidth = [{
       lines: [{
         blocks: [{text: "Too many spaces"}],
       }, {
@@ -1342,7 +1342,7 @@ describe('Shorthand Font Options', function() {
      *
      * Allows negative indexing, counting from back (ruby style)
      */
-    let splitAt = (text, pos, getFirst) => {
+    const splitAt = (text, pos, getFirst) => {
       if (pos < 0) pos = text.length + pos;
 
       if (getFirst) {
@@ -1352,16 +1352,16 @@ describe('Shorthand Font Options', function() {
       }
     };
 
-    var label = new Label({}, options);
-    var longWord = "asd;lkfja;lfkdj;alkjfd;alskfj";
+    let label = new Label({}, options);
+    const longWord = "asd;lkfja;lfkdj;alkjfd;alskfj";
 
-    var text = [
+    const text = [
       "Mind the space!\n " + longWord,
       "Mind the empty line!\n\n" + longWord,
       "Mind the dos empty line!\r\n\r\n" + longWord
     ];
 
-    var expected = [{
+    const expected = [{
       lines: [{
         blocks: [{text: "Mind the space!"}]
       }, {
@@ -1419,7 +1419,7 @@ describe('Shorthand Font Options', function() {
    * NOTE: boolean shorthand values for widthConstraint and heightConstraint do nothing.
    */
   it('Sets the width/height constraints in the font label options', function (done) {
-    var nodes = [
+    const nodes = [
       { id: 100, label: 'node 100'},
       { id: 210, group: 'group1', label: 'node 210'},
       { id: 211, widthConstraint: { minimum: 120 }, label: 'node 211'},
@@ -1436,19 +1436,19 @@ describe('Shorthand Font Options', function() {
       { id: 402, heightConstraint: { minimum: 100, valign: 'bottom' }, label: 'node 402'}
     ];
   
-    var edges = [
+    const edges = [
       { id: 1, from: 100, to: 210, label: "edge 1"},
       { id: 2, widthConstraint: 80, from: 210, to: 211, label: "edge 2"},
       { id: 3, heightConstraint: 90, from: 100, to: 220, label: "edge 3"},
       { id: 4, from: 401, to: 402, widthConstraint: { maximum: 150 }, label: "edge 12"},
     ];
   
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
       nodes: nodes,
       edges: edges
     };
-    var options = {
+    const options = {
       edges: {
         font: {
           size: 12
@@ -1488,9 +1488,9 @@ describe('Shorthand Font Options', function() {
         enabled: false
       }
     };
-    var network = new Network(container, data, options);
+    const network = new Network(container, data, options);
 
-    var nodes_expected = [
+    const nodes_expected = [
       { nodeId: 100, minWdt:  -1, maxWdt: 200, minHgt:  -1, valign: 'middle'},
       { nodeId: 210, minWdt:  -1, maxWdt: 130, minHgt:  -1, valign: 'middle'},
       { nodeId: 211, minWdt: 120, maxWdt: 200, minHgt:  -1, valign: 'middle'},
@@ -1513,7 +1513,7 @@ describe('Shorthand Font Options', function() {
     //
     // There is a lot of repetitiveness here. Perhaps using a direct copy of the
     // example should be let go.
-    var edges_expected = [
+    const edges_expected = [
       { id: 1, minWdt: -1, maxWdt:  90, minHgt: -1, valign: 'middle'},
       { id: 2, minWdt: 80, maxWdt:  80, minHgt: -1, valign: 'middle'},
       { id: 3, minWdt: -1, maxWdt:  90, minHgt: 90, valign: 'middle'},
@@ -1521,7 +1521,7 @@ describe('Shorthand Font Options', function() {
     ];
 
 
-    let assertConstraints = (expected, fontOptions, label) => {
+    const assertConstraints = (expected, fontOptions, label) => {
       assert.equal(expected.minWdt, fontOptions.minWdt, 'Incorrect min width' + label);
       assert.equal(expected.maxWdt, fontOptions.maxWdt, 'Incorrect max width' + label);
       assert.equal(expected.minHgt, fontOptions.minHgt, 'Incorrect min height' + label);
@@ -1531,23 +1531,23 @@ describe('Shorthand Font Options', function() {
 
     // Check nodes
     util.forEach(nodes_expected, function(expected) {
-      let networkNode = network.body.nodes[expected.nodeId];
+      const networkNode = network.body.nodes[expected.nodeId];
       assert(networkNode !== undefined && networkNode !== null, 'node not found for id: ' + expected.nodeId);
-      let fontOptions = networkNode.labelModule.fontOptions;
+      const fontOptions = networkNode.labelModule.fontOptions;
 
-      var label = ' for node id: ' + expected.nodeId;
+      const label = ' for node id: ' + expected.nodeId;
       assertConstraints(expected, fontOptions, label);
     });
 
 
     // Check edges
     util.forEach(edges_expected, function(expected) {
-      let networkEdge = network.body.edges[expected.id];
+      const networkEdge = network.body.edges[expected.id];
 
-      var label = ' for edge id: ' + expected.id;
+      const label = ' for edge id: ' + expected.id;
       assert(networkEdge !== undefined, 'Edge not found' + label);
 
-      let fontOptions = networkEdge.labelModule.fontOptions;
+      const fontOptions = networkEdge.labelModule.fontOptions;
       assertConstraints(expected, fontOptions, label);
     });
 
@@ -1556,21 +1556,21 @@ describe('Shorthand Font Options', function() {
 
 
   it('deals with null labels and other awkward values', function (done) {
-    var ctx = new DummyContext();
-    var options = getOptions({});
+    const ctx = new DummyContext();
+    let options = getOptions({});
 
-    var checkHandling = (label, index, text) => {
+    const checkHandling = (label, index, text) => {
       assert.doesNotThrow(() => {label.getTextSize(ctx, false, false)}, "Unexpected throw for " + text + " " + index);
       //label.getTextSize(ctx, false, false);  // Use this to determine the error thrown
 
       // There should not be a label for any of the cases
       // 
-      let labelVal = label.elementOptions.label;
-      let validLabel = (typeof labelVal === 'string' && labelVal !== '');
+      const labelVal = label.elementOptions.label;
+      const validLabel = (typeof labelVal === 'string' && labelVal !== '');
       assert(!validLabel, "Unexpected label value '" + labelVal+ "' for " + text +" " + index);
     };
 
-    var nodes = [
+    const nodes = [
       {id: 1},
       {id: 2, label: null},
       {id: 3, label: undefined},
@@ -1580,7 +1580,7 @@ describe('Shorthand Font Options', function() {
       {id: 7, label: 3.419},
     ];
 
-    var edges = [
+    const edges = [
       {from: 1, to: 2, label: null},
       {from: 1, to: 3, label: undefined},
       {from: 1, to: 4, label: {a: 42}},
@@ -1595,14 +1595,14 @@ describe('Shorthand Font Options', function() {
 
     // Node labels
     for (let i = 0; i < nodes.length; ++i) {
-      let label = new Label(null, nodes[i], false);
+      const label = new Label(null, nodes[i], false);
       checkHandling(label, i, 'node');
     }
 
 
     // Edge labels
     for (let i = 0; i < edges.length; ++i) {
-      let label = new Label(null, edges[i], true);
+      const label = new Label(null, edges[i], true);
       checkHandling(label, i, 'edge');
     }
 
@@ -1613,8 +1613,8 @@ describe('Shorthand Font Options', function() {
     // In the example, only `label:null` was present. The weird thing is that it fails
     // in the example, but succeeds in the unit tests.
     // Kept in for regression testing.
-    var container = document.getElementById('mynetwork');
-    var data = {
+    const container = document.getElementById('mynetwork');
+    const data = {
       nodes: new DataSet(nodes),
       edges: new DataSet(edges)
     };
@@ -1627,19 +1627,19 @@ describe('Shorthand Font Options', function() {
 
   describe('visible function', function() {
     it('correctly determines label is not visible when label is invalid', function(done) {
-      var invalidLabel = ''
+      const invalidLabel = ''
       assert(
         !isValidLabel(invalidLabel),
         'An empty string should be identified as an invalid label'
       )
 
-      var body = {
+      const body = {
         view: {
           scale: 1
         }
       }
 
-      var options = {
+      const options = {
         label: invalidLabel,
         font: {
           size: 12
@@ -1651,7 +1651,7 @@ describe('Shorthand Font Options', function() {
         }
       }
 
-      var label = new Label(body, options)
+      const label = new Label(body, options)
       label.size.width = 1
       label.size.height = 1
 

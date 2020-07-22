@@ -1,7 +1,7 @@
 // These variables will be injected into a page that will use them.
 /* eslint no-unused-vars: "off" */
 
-var nodes = [
+const nodes = [
   {id: 1, label: 'Abdelmoumene Djabou', title: 'Country: ' + 'Algeria' + '<br>' + 'Team: ' + 'Club Africain', value: 22, group: 24, x: -1392.5499, y: 1124.1614},
   {id: 2, label: 'Abel Aguilar', title: 'Country: ' + 'Colombia' + '<br>' + 'Team: ' + 'Toulouse', value: 24, group: 11, x: -660.82574, y: 1009.18976},
   {id: 3, label: 'Abel Hernández', title: 'Country: ' + 'Uruguay' + '<br>' + 'Team: ' + 'Palermo', value: 22, group: 6, x: -85.6025, y: -6.6782646},
@@ -741,7 +741,7 @@ var nodes = [
 
 ];
 // create an array with edges
-var edges = [
+const edges = [
   {from: 1, to: 15},
   {from: 1, to: 97},
   {from: 1, to: 108},
