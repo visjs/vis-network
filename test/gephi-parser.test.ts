@@ -1,618 +1,618 @@
-import { expect } from 'chai'
-import { ColorObject, VisData, parseGephi } from '../lib/network/gephiParser'
+import { expect } from "chai";
+import { ColorObject, VisData, parseGephi } from "../lib/network/gephiParser";
 
-describe('Gephi parser', function(): void {
-  it('Empty dataset', function(): void {
+describe("Gephi parser", function(): void {
+  it("Empty dataset", function(): void {
     const visData: VisData = parseGephi({
       nodes: [],
-      edges: [],
-    })
+      edges: []
+    });
 
     expect(
       visData,
-      'Object with empty arrays should be returned'
+      "Object with empty arrays should be returned"
     ).to.deep.equal({
       nodes: [],
-      edges: [],
-    })
-  })
+      edges: []
+    });
+  });
 
-  it('1 node with id', function(): void {
+  it("1 node with id", function(): void {
     const visData: VisData = parseGephi({
       nodes: [
         {
-          id: 77,
-        },
+          id: 77
+        }
       ],
-      edges: [],
-    })
+      edges: []
+    });
 
     expect(
       visData,
-      'All properties should be present but no more than that'
+      "All properties should be present but no more than that"
     ).to.deep.equal({
       nodes: [
         {
           id: 77,
-          fixed: false,
-        },
+          fixed: false
+        }
       ],
-      edges: [],
-    })
-  })
+      edges: []
+    });
+  });
 
-  it('2 nodes with ids and 1 edge with id, from, to', function(): void {
+  it("2 nodes with ids and 1 edge with id, from, to", function(): void {
     const visData: VisData = parseGephi({
       nodes: [
         {
-          id: 'from',
+          id: "from"
         },
         {
-          id: 'to',
-        },
+          id: "to"
+        }
       ],
       edges: [
         {
           id: 77,
-          source: 'from',
-          target: 'to',
-        },
-      ],
-    })
+          source: "from",
+          target: "to"
+        }
+      ]
+    });
 
     expect(
       visData,
-      'All properties should be present but no more than that'
+      "All properties should be present but no more than that"
     ).to.deep.equal({
       nodes: [
         {
-          id: 'from',
-          fixed: false,
+          id: "from",
+          fixed: false
         },
         {
-          id: 'to',
-          fixed: false,
-        },
+          id: "to",
+          fixed: false
+        }
       ],
       edges: [
         {
           id: 77,
-          from: 'from',
-          to: 'to',
-        },
-      ],
-    })
-  })
+          from: "from",
+          to: "to"
+        }
+      ]
+    });
+  });
 
-  it('2 nodes with ids, attributes and 2 edges with id, from, to, attributes', function(): void {
+  it("2 nodes with ids, attributes and 2 edges with id, from, to, attributes", function(): void {
     const fromAttrs = {
-      title: 'from title',
-      dummy: 'from dummy',
-    }
+      title: "from title",
+      dummy: "from dummy"
+    };
     const toAttrs = {
-      dummy: 'to dummy',
-    }
+      dummy: "to dummy"
+    };
 
     const visData: VisData = parseGephi({
       nodes: [
         {
-          id: 'from',
-          attributes: fromAttrs,
+          id: "from",
+          attributes: fromAttrs
         },
         {
-          id: 'to',
-          attributes: toAttrs as any,
-        },
+          id: "to",
+          attributes: toAttrs as any
+        }
       ],
       edges: [
         {
           id: 77,
-          source: 'from',
-          target: 'to',
-          attributes: fromAttrs as any,
+          source: "from",
+          target: "to",
+          attributes: fromAttrs as any
         },
         {
-          id: '79',
-          source: 'from',
-          target: 'to',
-          attributes: toAttrs as any,
-        },
-      ],
-    })
+          id: "79",
+          source: "from",
+          target: "to",
+          attributes: toAttrs as any
+        }
+      ]
+    });
 
     expect(
       visData,
-      'All properties should be present but no more than that'
+      "All properties should be present but no more than that"
     ).to.deep.equal({
       nodes: [
         {
-          id: 'from',
+          id: "from",
           fixed: false,
-          title: 'from title',
-          attributes: fromAttrs,
+          title: "from title",
+          attributes: fromAttrs
         },
         {
-          id: 'to',
+          id: "to",
           fixed: false,
-          attributes: toAttrs,
-        },
+          attributes: toAttrs
+        }
       ],
       edges: [
         {
           id: 77,
-          from: 'from',
-          to: 'to',
-          title: 'from title',
-          attributes: fromAttrs,
+          from: "from",
+          to: "to",
+          title: "from title",
+          attributes: fromAttrs
         },
         {
-          id: '79',
-          from: 'from',
-          to: 'to',
-          attributes: toAttrs,
-        },
-      ],
-    })
+          id: "79",
+          from: "from",
+          to: "to",
+          attributes: toAttrs
+        }
+      ]
+    });
 
     expect(
       visData.nodes[0].attributes,
-      'Attributes object should be copyied as is'
-    ).to.equal(fromAttrs)
+      "Attributes object should be copyied as is"
+    ).to.equal(fromAttrs);
     expect(
       visData.nodes[1].attributes,
-      'Attributes object should be copyied as is'
-    ).to.equal(toAttrs)
+      "Attributes object should be copyied as is"
+    ).to.equal(toAttrs);
     expect(
       visData.edges[0].attributes,
-      'Attributes object should be copyied as is'
-    ).to.equal(fromAttrs)
+      "Attributes object should be copyied as is"
+    ).to.equal(fromAttrs);
     expect(
       visData.edges[1].attributes,
-      'Attributes object should be copyied as is'
-    ).to.equal(toAttrs)
-  })
+      "Attributes object should be copyied as is"
+    ).to.equal(toAttrs);
+  });
 
-  it('1 node with id, label, size, title, x, y', function(): void {
+  it("1 node with id, label, size, title, x, y", function(): void {
     const visData: VisData = parseGephi({
       nodes: [
         {
           id: 0,
-          label: 'label',
+          label: "label",
           size: 37,
-          title: 'title',
+          title: "title",
           x: 24,
-          y: 25,
-        },
+          y: 25
+        }
       ],
-      edges: [],
-    })
+      edges: []
+    });
 
     expect(
       visData,
-      'All properties should be present but no more than that'
+      "All properties should be present but no more than that"
     ).to.deep.equal({
       nodes: [
         {
           fixed: false,
           id: 0,
-          label: 'label',
+          label: "label",
           size: 37,
-          title: 'title',
+          title: "title",
           x: 24,
-          y: 25,
-        },
+          y: 25
+        }
       ],
-      edges: [],
-    })
-  })
+      edges: []
+    });
+  });
 
-  it('1 edge with id, label, source, target, type', function(): void {
+  it("1 edge with id, label, source, target, type", function(): void {
     const visData: VisData = parseGephi({
       nodes: [],
       edges: [
         {
-          id: 'edge',
-          label: 'label',
-          source: 'noneS',
-          target: 'noneT',
-          type: 'Directed',
-        },
-      ],
-    })
+          id: "edge",
+          label: "label",
+          source: "noneS",
+          target: "noneT",
+          type: "Directed"
+        }
+      ]
+    });
 
     expect(
       visData,
-      'All properties should be present but no more than that'
+      "All properties should be present but no more than that"
     ).to.deep.equal({
       nodes: [],
       edges: [
         {
-          arrows: 'to',
-          from: 'noneS',
-          id: 'edge',
-          label: 'label',
-          to: 'noneT',
-        },
-      ],
-    })
-  })
+          arrows: "to",
+          from: "noneS",
+          id: "edge",
+          label: "label",
+          to: "noneT"
+        }
+      ]
+    });
+  });
 
-  describe('Node fixed', function(): void {
-    it('Defaults', function(): void {
+  describe("Node fixed", function(): void {
+    it("Defaults", function(): void {
       const visData: VisData = parseGephi({
         nodes: [
           {
-            id: 0,
-          },
+            id: 0
+          }
         ],
-        edges: [],
-      })
+        edges: []
+      });
 
-      expect(visData, 'Explicitly not fixed by default').to.deep.equal({
+      expect(visData, "Explicitly not fixed by default").to.deep.equal({
         nodes: [
           {
             fixed: false,
-            id: 0,
-          },
+            id: 0
+          }
         ],
-        edges: [],
-      })
-    })
+        edges: []
+      });
+    });
 
-    it('False', function(): void {
+    it("False", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: 0,
-            },
+              id: 0
+            }
           ],
-          edges: [],
+          edges: []
         },
         { fixed: false }
-      )
+      );
 
-      expect(visData, 'False if false').to.deep.equal({
+      expect(visData, "False if false").to.deep.equal({
         nodes: [
           {
             fixed: false,
-            id: 0,
-          },
+            id: 0
+          }
         ],
-        edges: [],
-      })
-    })
+        edges: []
+      });
+    });
 
-    it('True without complete position', function(): void {
+    it("True without complete position", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: 0,
+              id: 0
             },
             {
               id: 1,
-              x: 24,
+              x: 24
             },
             {
               id: 2,
-              y: 25,
-            },
+              y: 25
+            }
           ],
-          edges: [],
+          edges: []
         },
         { fixed: true }
-      )
+      );
 
       expect(
         visData,
-        'False if no or incomplete position is available'
+        "False if no or incomplete position is available"
       ).to.deep.equal({
         nodes: [
           {
             fixed: false,
-            id: 0,
+            id: 0
           },
           {
             fixed: false,
             id: 1,
-            x: 24,
+            x: 24
           },
           {
             fixed: false,
             id: 2,
-            y: 25,
-          },
+            y: 25
+          }
         ],
-        edges: [],
-      })
-    })
+        edges: []
+      });
+    });
 
-    it('True with complete position', function(): void {
+    it("True with complete position", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
               id: 0,
               x: 24,
-              y: 25,
-            },
+              y: 25
+            }
           ],
-          edges: [],
+          edges: []
         },
         { fixed: true }
-      )
+      );
 
-      expect(visData, 'True if complete position is available').to.deep.equal({
+      expect(visData, "True if complete position is available").to.deep.equal({
         nodes: [
           {
             fixed: true,
             id: 0,
             x: 24,
-            y: 25,
-          },
+            y: 25
+          }
         ],
-        edges: [],
-      })
-    })
-  })
+        edges: []
+      });
+    });
+  });
 
-  describe('Node color parsing', function(): void {
-    const colorString = '#012345'
+  describe("Node color parsing", function(): void {
+    const colorString = "#012345";
     const colorObject: ColorObject = {
       background: colorString,
       border: colorString,
       highlight: {
         background: colorString,
-        border: colorString,
+        border: colorString
       },
       hover: {
         background: colorString,
-        border: colorString,
-      },
-    }
+        border: colorString
+      }
+    };
 
-    it('Defaults', function(): void {
+    it("Defaults", function(): void {
       const visData: VisData = parseGephi({
         nodes: [
           {
             id: 0,
-            color: colorString,
-          },
+            color: colorString
+          }
         ],
-        edges: [],
-      })
+        edges: []
+      });
 
-      expect(visData, 'Expanded to an object by default').to.deep.equal({
+      expect(visData, "Expanded to an object by default").to.deep.equal({
         nodes: [
           {
             color: colorObject,
             fixed: false,
-            id: 0,
-          },
+            id: 0
+          }
         ],
-        edges: [],
-      })
-    })
+        edges: []
+      });
+    });
 
-    it('False', function(): void {
+    it("False", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
               id: 0,
-              color: colorString,
-            },
+              color: colorString
+            }
           ],
-          edges: [],
+          edges: []
         },
         { parseColor: false }
-      )
+      );
 
       expect(
         visData,
-        'Expanded to an object if parseColor is false'
+        "Expanded to an object if parseColor is false"
       ).to.deep.equal({
         nodes: [
           {
             color: colorObject,
             fixed: false,
-            id: 0,
-          },
+            id: 0
+          }
         ],
-        edges: [],
-      })
-    })
+        edges: []
+      });
+    });
 
-    it('True', function(): void {
+    it("True", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
               id: 0,
-              color: colorString,
-            },
+              color: colorString
+            }
           ],
-          edges: [],
+          edges: []
         },
         { parseColor: true }
-      )
+      );
 
-      expect(visData, 'Left as a string if parseColor is true').to.deep.equal({
+      expect(visData, "Left as a string if parseColor is true").to.deep.equal({
         nodes: [
           {
             color: colorString,
             fixed: false,
-            id: 0,
-          },
+            id: 0
+          }
         ],
-        edges: [],
-      })
-    })
-  })
+        edges: []
+      });
+    });
+  });
 
-  describe('Edge inherit color', function(): void {
-    it('Defaults', function(): void {
+  describe("Edge inherit color", function(): void {
+    it("Defaults", function(): void {
       const visData: VisData = parseGephi({
         nodes: [
           {
-            id: 'from',
+            id: "from"
           },
           {
-            id: 'to',
-          },
+            id: "to"
+          }
         ],
         edges: [
           {
             id: 77,
-            source: 'from',
-            target: 'to',
+            source: "from",
+            target: "to"
           },
           {
-            color: '#00FFFF',
+            color: "#00FFFF",
             id: 78,
-            source: 'from',
-            target: 'to',
-          },
-        ],
-      })
+            source: "from",
+            target: "to"
+          }
+        ]
+      });
 
-      expect(visData, 'Color should be used if present').to.deep.equal({
+      expect(visData, "Color should be used if present").to.deep.equal({
         nodes: [
           {
-            id: 'from',
-            fixed: false,
+            id: "from",
+            fixed: false
           },
           {
-            id: 'to',
-            fixed: false,
-          },
+            id: "to",
+            fixed: false
+          }
         ],
         edges: [
           {
             id: 77,
-            from: 'from',
-            to: 'to',
+            from: "from",
+            to: "to"
           },
           {
-            color: '#00FFFF',
+            color: "#00FFFF",
             id: 78,
-            from: 'from',
-            to: 'to',
-          },
-        ],
-      })
-    })
+            from: "from",
+            to: "to"
+          }
+        ]
+      });
+    });
 
-    it('False', function(): void {
+    it("False", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: 'from',
+              id: "from"
             },
             {
-              id: 'to',
-            },
+              id: "to"
+            }
           ],
           edges: [
             {
               id: 77,
-              source: 'from',
-              target: 'to',
+              source: "from",
+              target: "to"
             },
             {
-              color: '#00FFFF',
+              color: "#00FFFF",
               id: 78,
-              source: 'from',
-              target: 'to',
-            },
-          ],
+              source: "from",
+              target: "to"
+            }
+          ]
         },
         { inheritColor: false }
-      )
+      );
 
-      expect(visData, 'Color should be used if present').to.deep.equal({
+      expect(visData, "Color should be used if present").to.deep.equal({
         nodes: [
           {
-            id: 'from',
-            fixed: false,
+            id: "from",
+            fixed: false
           },
           {
-            id: 'to',
-            fixed: false,
-          },
+            id: "to",
+            fixed: false
+          }
         ],
         edges: [
           {
             id: 77,
-            from: 'from',
-            to: 'to',
+            from: "from",
+            to: "to"
           },
           {
-            color: '#00FFFF',
+            color: "#00FFFF",
             id: 78,
-            from: 'from',
-            to: 'to',
-          },
-        ],
-      })
-    })
+            from: "from",
+            to: "to"
+          }
+        ]
+      });
+    });
 
-    it('True', function(): void {
+    it("True", function(): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: 'from',
+              id: "from"
             },
             {
-              id: 'to',
-            },
+              id: "to"
+            }
           ],
           edges: [
             {
               id: 77,
-              source: 'from',
-              target: 'to',
+              source: "from",
+              target: "to"
             },
             {
-              color: '#00FFFF',
+              color: "#00FFFF",
               id: 78,
-              source: 'from',
-              target: 'to',
-            },
-          ],
+              source: "from",
+              target: "to"
+            }
+          ]
         },
         { inheritColor: true }
-      )
+      );
 
-      expect(visData, 'Color should be ignored event if present').to.deep.equal(
+      expect(visData, "Color should be ignored event if present").to.deep.equal(
         {
           nodes: [
             {
-              id: 'from',
-              fixed: false,
+              id: "from",
+              fixed: false
             },
             {
-              id: 'to',
-              fixed: false,
-            },
+              id: "to",
+              fixed: false
+            }
           ],
           edges: [
             {
               id: 77,
-              from: 'from',
-              to: 'to',
+              from: "from",
+              to: "to"
             },
             {
               id: 78,
-              from: 'from',
-              to: 'to',
-            },
-          ],
+              from: "from",
+              to: "to"
+            }
+          ]
         }
-      )
-    })
-  })
-})
+      );
+    });
+  });
+});
