@@ -1,287 +1,470 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vis Network | Node Styles | Icons</title>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Vis Network | Node Styles | Icons</title>
+    <meta name="example-screenshot-selector" content="#mynetwork-ionicons" />
 
-  <meta name="example-screenshot-selector" content="#mynetworkIO" />
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
 
-  <script type="text/javascript" src="../../../standalone/umd/vis-network.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.11.1/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    />
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.1/css/all.css">
-  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <style type="text/css">
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
 
-  <style>
-    #mynetworkFA4,
-    #mynetworkFA5,
-    #mynetworkIO {
-      height: 300px;
-      width: 700px;
-      border:1px solid lightgrey;
-    }
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        padding: 1em;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
 
-    p {
-      max-width:700px;
-    }
-  </style>
+      #mynetwork-font-awesome-4,
+      #mynetwork-font-awesome-5,
+      #mynetwork-ionicons {
+        height: 25vh;
+      }
 
-  <script language="JavaScript">
-    function draw() {
-      /*
-       * Example for FontAwesome 4
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Node Styles</h2>
+        <h3>Icons</h3>
+      </div>
+
+      <p>
+        Icons can be used for nodes as well. This example shows icons from Font
+        Awesome and Ionicons but it should work with similar packages as well.
+        It uses Unicode and CSS to define the icons. It's also possible to use
+        multiple different icon fonts within the same network (e.g. the
+        <code>icon.face</code> property can be <code>"'Ionicons'"</code> for one
+        node but <code>"'FontAwesome'"</code>).
+      </p>
+
+      <h4>Typing icons in code</h4>
+      <p>
+        It's possible to either use Unicode escapes (<code>"\uXXXX"</code>) or
+        directly input the characters into the source code. Each method has it's
+        pros and cons briefly described bellow.
+      </p>
+
+      <h5>Escapes</h5>
+      <p>
+        Unicode characters (icons in this case) can be written using escapes in
+        pure ASCII. There is no chance of encoding issues and they'll generally
+        be easier to read and write in code. However escaping may be a bit
+        tricky at times, you may need pairs of escape sequences or multiple
+        layers of escaping depending on what icons use use and how you process
+        the text respectively.
+      </p>
+      <ul>
+        <li>
+          For basic plane characters simply prefix them with <code>\u</code>:
+          Unicode <code>F274</code> ⇔ <code>"\uF274"</code>.
+        </li>
+        <li>
+          For supplementary plane characters use two escapes (surrogate pair):
+          Unicode <code>F0785</code> ⇔ <code>"\uDB81\uDF85"</code>.
+        </li>
+      </ul>
+
+      <h5>UTF</h5>
+      <p>
+        It's also possible to type the icon characters directly into the source
+        code (using <code>control+shift+u</code>, copy-pasting, symbol tables or
+        other Unicode character input methods available on your system). You'll
+        avoid issues with escaping. If the encoding is declared properly, then
+        encoding issues are unlikely nowadays but still possible. Though this
+        doesn't make issues any more likely if you're already using UTF for
+        accented letters etc. It's unlikely though that your editor will render
+        these characters in a readable way.
+      </p>
+
+      <h4>Troubleshooting</h4>
+      <p>
+        If a node is shown as a rectangle, it means the CSS or the font is not
+        loaded (or not yet loaded). A redraw after the font and it's CSS was
+        loaded will fix that.
+      </p>
+
+      <p>
+        Some fonts require specific font weight to be set. You can see this
+        being set for Font Awesome 5 in this example. Check the CSS that came
+        with your icon font or just experiment with font weight.
+      </p>
+
+      <p>
+        Single icon may use multiple characters (1 or 2 in case of UTF, at least
+        6 with escapes). This makes methods such as
+        <code>.slice()</code> unreliable and quite dangerous. Carelessness can
+        lead to issues with broken icons etc. (you split the escape sequence or
+        surrogate pair). If you process the icon characters in any way, you just
+        have to be very careful.
+      </p>
+    </div>
+
+    <div id="mynetwork">
+      <h2><i class="fa fa-flag"></i> Font Awesome 4</h2>
+      <div id="mynetwork-font-awesome-4"></div>
+
+      <h2><i class="fas fa-flag"></i> Font Awesome 5</h2>
+      <div id="mynetwork-font-awesome-5"></div>
+
+      <h2><i class="ion ion-ionic"></i> Ionicons</h2>
+      <div id="mynetwork-ionicons"></div>
+    </div>
+
+    <script language="JavaScript">
+      /**
+       * Example for Font Awesome 4
        */
-      var optionsFA4 = {
-        groups: {
-          usergroups: {
-            shape: 'icon',
-            icon: {
-              face: 'FontAwesome',
-              code: '\uf0c0',
-              size: 50,
-              color: '#57169a'
-            }
-          },
-          users: {
-            shape: 'icon',
-            icon: {
-              face: 'FontAwesome',
-              code: '\uf007',
-              size: 50,
-              color: '#aa00ff'
+      (function drawFontAwesome4() {
+        const options = {
+          groups: {
+            usergroups: {
+              shape: "icon",
+              icon: {
+                face: "'FontAwesome'",
+                code: "\uf0c0",
+                size: 50,
+                color: "#57169a"
+              }
+            },
+            users: {
+              shape: "icon",
+              icon: {
+                face: "'FontAwesome'",
+                code: "\uf007",
+                size: 50,
+                color: "#aa00ff"
+              }
             }
           }
+        };
+
+        // create an array with nodes
+        const nodes = [
+          {
+            id: 1,
+            label: "User 1",
+            group: "users"
+          },
+          {
+            id: 2,
+            label: "User 2",
+            group: "users"
+          },
+          {
+            id: 3,
+            label: "Usergroup 1",
+            group: "usergroups"
+          },
+          {
+            id: 4,
+            label: "Usergroup 2",
+            group: "usergroups"
+          },
+          {
+            id: 5,
+            label: "Organisation 1",
+            shape: "icon",
+            icon: {
+              face: "'FontAwesome'",
+              code: "\uf1ad",
+              size: 50,
+              color: "#f0a30a"
+            }
+          }
+        ];
+
+        // create an array with edges
+        const edges = [
+          { from: 1, to: 3 },
+          { from: 1, to: 4 },
+          { from: 2, to: 4 },
+          { from: 3, to: 5 },
+          { from: 4, to: 5 }
+        ];
+
+        // prepare the arguments
+        const container = document.getElementById("mynetwork-font-awesome-4");
+        const data = { nodes, edges };
+
+        if (document.fonts) {
+          // Decent browsers: Make sure the fonts are loaded.
+          document.fonts
+            .load('normal normal 400 24px/1 "FontAwesome"')
+            .catch(
+              console.error.bind(console, "Failed to load Font Awesome 4.")
+            )
+            .then(function() {
+              // create a network
+              const network = new vis.Network(container, data, options);
+            })
+            .catch(
+              console.error.bind(
+                console,
+                "Failed to render the network with Font Awesome 4."
+              )
+            );
+        } else {
+          // IE: Let's just hope the fonts are loaded (they're probably not,
+          // hence the timeout).
+          window.addEventListener("load", function() {
+            setTimeout(function() {
+              // create a network
+              const network = new vis.Network(container, data, options);
+            }, 500);
+          });
         }
-      };
+      })();
 
-      // create an array with nodes
-      var nodesFA4 = [{
-        id: 1,
-        label: 'User 1',
-        group: 'users'
-      }, {
-        id: 2,
-        label: 'User 2',
-        group: 'users'
-      }, {
-        id: 3,
-        label: 'Usergroup 1',
-        group: 'usergroups'
-      }, {
-        id: 4,
-        label: 'Usergroup 2',
-        group: 'usergroups'
-      }, {
-        id: 5,
-        label: 'Organisation 1',
-        shape: 'icon',
-        icon: {
-          face: 'FontAwesome',
-          code: '\uf1ad',
-          size: 50,
-          color: '#f0a30a'
-        }
-      }];
-
-      // create an array with edges
-      var edges = [{
-        from: 1,
-        to: 3
-      }, {
-        from: 1,
-        to: 4
-      }, {
-        from: 2,
-        to: 4
-      }, {
-        from: 3,
-        to: 5
-      }, {
-        from: 4,
-        to: 5
-      }];
-
-      // create a network
-      var containerFA4 = document.getElementById('mynetworkFA4');
-      var dataFA4 = {
-        nodes: nodesFA4,
-        edges: edges
-      };
-
-      var networkFA4 = new vis.Network(containerFA4, dataFA4, optionsFA4);
-
-      /*
-       * Example for FontAwesome 5
+      /**
+       * Example for Font Awesome 5
        */
-      var optionsFA5 = {
-        groups: {
-          usergroups: {
-            shape: 'icon',
+      (function drawFontAwesome5() {
+        const options = {
+          groups: {
+            usergroups: {
+              shape: "icon",
+              icon: {
+                face: "'Font Awesome 5 Free'",
+                weight: "900", // Font Awesome 5 doesn't work properly unless bold.
+                code: "\uf0c0",
+                size: 50,
+                color: "#57169a"
+              }
+            },
+            users: {
+              shape: "icon",
+              icon: {
+                face: "'Font Awesome 5 Free'",
+                weight: "900", // Font Awesome 5 doesn't work properly unless bold.
+                code: "\uf007",
+                size: 50,
+                color: "#aa00ff"
+              }
+            }
+          }
+        };
+
+        // create an array with nodes
+        const nodes = [
+          {
+            id: 1,
+            label: "User 1",
+            group: "users"
+          },
+          {
+            id: 2,
+            label: "User 2",
+            group: "users"
+          },
+          {
+            id: 3,
+            label: "Usergroup 1",
+            group: "usergroups"
+          },
+          {
+            id: 4,
+            label: "Usergroup 2",
+            group: "usergroups"
+          },
+          {
+            id: 5,
+            label: "Organisation 1",
+            shape: "icon",
             icon: {
               face: "'Font Awesome 5 Free'",
               weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
-              code: '\uf0c0',
+              code: "\uf1ad",
               size: 50,
-              color: '#57169a'
-            }
-          },
-          users: {
-            shape: 'icon',
-            icon: {
-              face: "'Font Awesome 5 Free'",
-              weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
-              code: '\uf007',
-              size: 50,
-              color: '#aa00ff'
+              color: "#f0a30a"
             }
           }
+        ];
+
+        // create an array with edges
+        const edges = [
+          { from: 1, to: 3 },
+          { from: 1, to: 4 },
+          { from: 2, to: 4 },
+          { from: 3, to: 5 },
+          { from: 4, to: 5 }
+        ];
+
+        // prepare the arguments
+        const container = document.getElementById("mynetwork-font-awesome-5");
+        const data = { nodes, edges };
+
+        if (document.fonts) {
+          // Decent browsers: Make sure the fonts are loaded.
+          document.fonts
+            .load('normal normal 900 24px/1 "Font Awesome 5 Free"')
+            .catch(
+              console.error.bind(console, "Failed to load Font Awesome 5.")
+            )
+            .then(function() {
+              // create a network
+              const network = new vis.Network(container, data, options);
+            })
+            .catch(
+              console.error.bind(
+                console,
+                "Failed to render the network with Font Awesome 5."
+              )
+            );
+        } else {
+          // IE: Let's just hope the fonts are loaded (they're probably not,
+          // hence the timeout).
+          window.addEventListener("load", function() {
+            setTimeout(function() {
+              // create a network
+              const network = new vis.Network(container, data, options);
+            }, 500);
+          });
         }
-      };
+      })();
 
-      // create an array with nodes
-      var nodesFA5 = [{
-        id: 1,
-        label: 'User 1',
-        group: 'users'
-      }, {
-        id: 2,
-        label: 'User 2',
-        group: 'users'
-      }, {
-        id: 3,
-        label: 'Usergroup 1',
-        group: 'usergroups'
-      }, {
-        id: 4,
-        label: 'Usergroup 2',
-        group: 'usergroups'
-      }, {
-        id: 5,
-        label: 'Organisation 1',
-        shape: 'icon',
-        icon: {
-          face: "'Font Awesome 5 Free'",
-          weight: "bold", // Font Awesome 5 doesn't work properly unless bold.
-          code: '\uf1ad',
-          size: 50,
-          color: '#f0a30a'
-        }
-      }];
-
-      // create an array with edges
-      var edges = [{
-        from: 1,
-        to: 3
-      }, {
-        from: 1,
-        to: 4
-      }, {
-        from: 2,
-        to: 4
-      }, {
-        from: 3,
-        to: 5
-      }, {
-        from: 4,
-        to: 5
-      }];
-
-      // create a network
-      var containerFA5 = document.getElementById('mynetworkFA5');
-      var dataFA5 = {
-        nodes: nodesFA5,
-        edges: edges
-      };
-
-      var networkFA5 = new vis.Network(containerFA5, dataFA5, optionsFA5);
-
-      /*
+      /**
        * Example for Ionicons
        */
-      var optionsIO = {
-        groups: {
-          usergroups: {
-            shape: 'icon',
-            icon: {
-              face: 'Ionicons',
-              code: '\uf47c',
-              size: 50,
-              color: '#57169a'
-            }
-          },
-          users: {
-            shape: 'icon',
-            icon: {
-              face: 'Ionicons',
-              code: '\uf47e',
-              size: 50,
-              color: '#aa00ff'
+      (function drawIonicons() {
+        const options = {
+          groups: {
+            usergroups: {
+              shape: "icon",
+              icon: {
+                face: "'Ionicons'",
+                code: "\uf47c",
+                size: 50,
+                color: "#57169a"
+              }
+            },
+            users: {
+              shape: "icon",
+              icon: {
+                face: "'Ionicons'",
+                code: "\uf47e",
+                size: 50,
+                color: "#aa00ff"
+              }
             }
           }
+        };
+
+        // create an array with nodes
+        const nodes = [
+          {
+            id: 1,
+            label: "User 1",
+            group: "users"
+          },
+          {
+            id: 2,
+            label: "User 2",
+            group: "users"
+          },
+          {
+            id: 3,
+            label: "Usergroup 1",
+            group: "usergroups"
+          },
+          {
+            id: 4,
+            label: "Usergroup 2",
+            group: "usergroups"
+          },
+          {
+            id: 5,
+            label: "Organisation 1",
+            shape: "icon",
+            icon: {
+              face: "'Ionicons'",
+              code: "\uf276",
+              size: 50,
+              color: "#f0a30a"
+            }
+          }
+        ];
+
+        // create an array with edges
+        const edges = [
+          { from: 1, to: 3 },
+          { from: 1, to: 4 },
+          { from: 2, to: 4 },
+          { from: 3, to: 5 },
+          { from: 4, to: 5 }
+        ];
+
+        // prepare the arguments
+        const container = document.getElementById("mynetwork-ionicons");
+        const data = { nodes, edges };
+
+        if (document.fonts) {
+          // Decent browsers: Make sure the fonts are loaded.
+          document.fonts
+            .load('normal normal 400 24px/1 "FontAwesome"')
+            .catch(
+              console.error.bind(console, "Failed to load Font Awesome 4.")
+            )
+            .then(function() {
+              // create a network
+              const network = new vis.Network(container, data, options);
+            })
+            .catch(
+              console.error.bind(
+                console,
+                "Failed to render the network with Font Awesome 4."
+              )
+            );
+        } else {
+          // IE: Let's just hope the fonts are loaded (they're probably not,
+          // hence the timeout).
+          window.addEventListener("load", function() {
+            setTimeout(function() {
+              // create a network
+              const network = new vis.Network(container, data, options);
+            }, 500);
+          });
         }
-      };
-
-      // create an array with nodes
-      var nodesIO = [{
-        id: 1,
-        label: 'User 1',
-        group: 'users'
-      }, {
-        id: 2,
-        label: 'User 2',
-        group: 'users'
-      }, {
-        id: 3,
-        label: 'Usergroup 1',
-        group: 'usergroups'
-      }, {
-        id: 4,
-        label: 'Usergroup 2',
-        group: 'usergroups'
-      }, {
-        id: 5,
-        label: 'Organisation 1',
-        shape: 'icon',
-        icon: {
-          face: 'Ionicons',
-          code: '\uf276',
-          size: 50,
-          color: '#f0a30a'
-        }
-      }];
-
-
-      // create a network
-      var containerIO = document.getElementById('mynetworkIO');
-      var dataIO = {
-        nodes: nodesIO,
-        edges: edges
-      };
-
-      var networkIO = new vis.Network(containerIO, dataIO, optionsIO);
-    }
-  </script>
-  
-</head>
-<body onload="draw()">
-<p>
-Icons can be used for nodes as well. This example shows Icons from fontAwesome and Ionicons but it should work with similar packages as well.
-  It uses unicode and css to define the icons.<br><br> <b>Remember! Unicode in javascript is done like this: \uf274 for the unicode f274.</b>
-  <br> If a node is shown as a rectangle, it means the css is not loaded (or not yet loaded). A redraw will fix that.
-
-</p>
-
-<h2>
-  <i class="fa fa-flag"></i> Use FontAwesome-icons 4 for nodes</h2>
-<div id="mynetworkFA4"></div>
-<h2>
-  <i class="fa fa-flag"></i> Use FontAwesome-icons 5 for nodes</h2>
-<div id="mynetworkFA5"></div>
-<h2>
-  <i class="ion ion-ionic"></i> Use Ionicons-icons for nodes</h2>
-<div id="mynetworkIO"></div>
-
-</body>
-
+      })();
+    </script>
+  </body>
 </html>
