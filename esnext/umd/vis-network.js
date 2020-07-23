@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-23T19:06:10.614Z
+ * @date    2020-07-23T19:47:15.431Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -27,7 +27,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('keycharm'), require('@egjs/hammerjs'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('timsort')) :
   typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'keycharm', '@egjs/hammerjs', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'timsort'], factory) :
-  (global = global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.keycharm, global.Hammer, global.vis, global.uuid, global.timsort));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.keycharm, global.Hammer, global.vis, global.uuid, global.timsort));
 }(this, (function (exports, Emitter, esnext, keycharm, hammerjs, esnext$1, uuid, TimSort) {
   Emitter = Emitter && Object.prototype.hasOwnProperty.call(Emitter, 'default') ? Emitter['default'] : Emitter;
   keycharm = keycharm && Object.prototype.hasOwnProperty.call(keycharm, 'default') ? keycharm['default'] : keycharm;
