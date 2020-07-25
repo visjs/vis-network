@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-23T19:47:15.431Z
+ * @date    2020-07-25T15:22:14.811Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -6497,8 +6497,8 @@ function parseGephi(gephiJSON, optionsObj) {
       vEdge.title = gEdge.attributes.title;
     }
 
-    if (gEdge.type === 'Directed') {
-      vEdge.arrows = 'to';
+    if (gEdge.type === "Directed") {
+      vEdge.arrows = "to";
     } // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
     // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
 

@@ -62,7 +62,7 @@ export interface VisEdge {
     id: Id;
     from: Id;
     to: Id;
-    arrows?: 'to';
+    arrows?: "to";
     color?: string;
     label?: string;
     title?: string;

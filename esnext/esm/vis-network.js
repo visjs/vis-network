@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-23T19:47:15.431Z
+ * @date    2020-07-25T15:22:14.811Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1620,12 +1620,12 @@ var dotparser = /*#__PURE__*/Object.freeze({
 function parseGephi(gephiJSON, optionsObj) {
     const options = {
         edges: {
-            inheritColor: false,
+            inheritColor: false
         },
         nodes: {
             fixed: false,
-            parseColor: false,
-        },
+            parseColor: false
+        }
     };
     if (optionsObj != null) {
         if (optionsObj.fixed != null) {
@@ -1643,7 +1643,7 @@ function parseGephi(gephiJSON, optionsObj) {
         const vEdge = {
             from: gEdge.source,
             id: gEdge.id,
-            to: gEdge.target,
+            to: gEdge.target
         };
         if (gEdge.attributes != null) {
             vEdge.attributes = gEdge.attributes;
@@ -1654,8 +1654,8 @@ function parseGephi(gephiJSON, optionsObj) {
         if (gEdge.attributes != null && gEdge.attributes.title != null) {
             vEdge.title = gEdge.attributes.title;
         }
-        if (gEdge.type === 'Directed') {
-            vEdge.arrows = 'to';
+        if (gEdge.type === "Directed") {
+            vEdge.arrows = "to";
         }
         // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
         // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
@@ -1667,7 +1667,7 @@ function parseGephi(gephiJSON, optionsObj) {
     const vNodes = gephiJSON.nodes.map((gNode) => {
         const vNode = {
             id: gNode.id,
-            fixed: options.nodes.fixed && gNode.x != null && gNode.y != null,
+            fixed: options.nodes.fixed && gNode.x != null && gNode.y != null
         };
         if (gNode.attributes != null) {
             vNode.attributes = gNode.attributes;
@@ -1700,12 +1700,12 @@ function parseGephi(gephiJSON, optionsObj) {
                     border: gNode.color,
                     highlight: {
                         background: gNode.color,
-                        border: gNode.color,
+                        border: gNode.color
                     },
                     hover: {
                         background: gNode.color,
-                        border: gNode.color,
-                    },
+                        border: gNode.color
+                    }
                 };
             }
         }
