@@ -4,7 +4,7 @@ import {
   TestData,
   addMoreEdges,
   generateMaryTree
-} from "./helpers";
+} from "../helpers";
 
 /**
  * Generate a consecutive list of ids starting with first and ending with last
@@ -181,7 +181,7 @@ describe("Directed hierarchical layout", (): void => {
 
     describe(name, (): void => {
       it("Preparation", (): void => {
-        cy.visit("http://localhost:58253/cypress/pages/universal.html");
+        cy.visVisitUniversal();
 
         cy.visRun(({ network, nodes, edges }): void => {
           network.setOptions({

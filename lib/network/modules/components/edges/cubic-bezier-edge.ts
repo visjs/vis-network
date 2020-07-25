@@ -40,8 +40,8 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
     viaNodes: [Point, Point]
   ): void {
     // get the coordinates of the support points.
-    let via1 = viaNodes[0];
-    let via2 = viaNodes[1];
+    const via1 = viaNodes[0];
+    const via2 = viaNodes[1];
     this._bezierCurve(ctx, values, via1, via2);
   }
 

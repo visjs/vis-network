@@ -3,12 +3,17 @@
  *
  * Adapted from: https://github.com/Cristy94/canvas-mock
  */
-var jsdom = require('jsdom');
-var jsdom_global = require('jsdom-global');
+const jsdom = require('jsdom');
+const jsdom_global = require('jsdom-global');
 
-var canvasMock;  // Use one canvas instance for all calls to createElement('canvas');
+let canvasMock;  // Use one canvas instance for all calls to createElement('canvas');
 
 
+/**
+ * Replace element's getContext method with a do nothing mock.
+ *
+ * @param {HTMLElement} el - The element whose getContext will be mocked.
+ */
 function replaceCanvasContext (el) {
   el.getContext = function() {
     return {
@@ -68,12 +73,12 @@ function replaceCanvasContext (el) {
  * @private
  */
 function overrideCreateElement(window) {
-  var d = window.document;
-  var f = window.document.createElement;
+  const d = window.document;
+  const f = window.document.createElement;
 
   // Check if 2D context already present. That happens either when running in a browser,
   // or this is node.js with 'canvas' installed. 
-  var ctx = d.createElement('canvas').getContext('2d');
+  const ctx = d.createElement('canvas').getContext('2d');
   if (ctx !== null && ctx !== undefined) {
     //console.log('2D context is present, no need to override');
     return;
@@ -102,12 +107,12 @@ function overrideCreateElement(window) {
  * @private
  */
 function overrideCreateElementNS(window) {
-  var d = window.document;
-  var f = window.document.createElementNS;
+  const d = window.document;
+  const f = window.document.createElementNS;
 
   window.document.createElementNS = function(namespaceURI, qualifiedName) {
     if (namespaceURI === 'http://www.w3.org/2000/svg') {
-      var result = f.call(d, namespaceURI, qualifiedName);
+      const result = f.call(d, namespaceURI, qualifiedName);
       if (result.style == undefined) {
         result.style = {};
         return result;
@@ -127,20 +132,20 @@ function overrideCreateElementNS(window) {
  */
 function mockify(html = '') {
   // Start of message that we want to suppress.
-  let msg = 'Error: Not implemented: HTMLCanvasElement.prototype.getContext'
+  const consoleErrorMessageToSuppress = 'Error: Not implemented: HTMLCanvasElement.prototype.getContext'
     + ' (without installing the canvas npm package)';
 
   // Override default virtual console of jsdom
   const virtualConsole = new jsdom.VirtualConsole();
 
   // Set up a simple 'mock' console output. Only 'error' needs to be overridden
-  let myConsole = {
-    error: (msg) => {
-      if (msg.indexOf(msg) === 0) {
+  const myConsole = {
+    error: (message) => {
+      if (message.indexOf(consoleErrorMessageToSuppress) === 0) {
         //console.error('all is well');
       } else {
         // All other messages pass through
-        console.error(msg);
+        console.error(consoleErrorMessageToSuppress);
       }
     }
   };
@@ -148,7 +153,7 @@ function mockify(html = '') {
   // Using the global catch instead of specific event handler, because I couldn't get them to work
 	virtualConsole.sendTo(myConsole);
 
-  let cleanupFunction = jsdom_global(
+  const cleanupFunction = jsdom_global(
     html,
     { skipWindowCheck: true, virtualConsole: virtualConsole}
   );
