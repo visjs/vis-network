@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-25T15:22:14.811Z
+ * @date    2020-07-25T19:34:50.079Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -24116,9 +24116,11 @@
 	            selected: selected,
 	            hover: hover
 	          },
-	          style: _objectSpread$1({}, values)
+	          style: _objectSpread$1({}, values),
+	          label: this.options.label
 	        });
 	        ctx.restore();
+	        return;
 	      } else {
 	        this.initContextForDraw(ctx, values);
 	        getShape(shape)(ctx, x, y, values.size);
@@ -46310,7 +46312,10 @@
 	      }
 	    },
 	    shape: {
-	      string: ['ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon']
+	      string: ['custom', 'ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon']
+	    },
+	    customRenderer: {
+	      'function': 'function'
 	    },
 	    shapeProperties: {
 	      borderDashes: {

@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-25T15:22:14.811Z
+ * @date    2020-07-25T19:34:50.079Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5243,8 +5243,9 @@ class ShapeBase extends NodeBase {
 
     if (shape === 'custom') {
       ctx.save();
-      customRenderer({ ctx, x, y, state: { selected, hover }, style: { ...values } });
+      customRenderer({ ctx, x, y, state: { selected, hover }, style: { ...values }, label: this.options.label });
       ctx.restore();
+      return
     } else {
       this.initContextForDraw(ctx, values);
       getShape(shape)(ctx, x, y, values.size);
@@ -22769,7 +22770,8 @@ const allOptions$1 = {
       y: { number },
       __type__: { object, boolean: bool }
     },
-    shape: { string: ['ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon'] },
+    shape: { string: ['custom', 'ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon'] },
+    customRenderer: { 'function': 'function' },
     shapeProperties: {
       borderDashes: { boolean: bool, array },
       borderRadius: { number },
