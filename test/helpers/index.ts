@@ -16,7 +16,7 @@ export function deepFreeze<T extends object>(
   object: T,
   freeze: (object: any) => any = (object: any[]): any => Object.freeze(object)
 ): T {
-  const alreadyFrozen = new Set<any>()
+  const alreadyFrozen = new Set<any>();
 
   /**
    * Recursivelly freezes objects using alreadyFrozen to prevent infinite cycles.
@@ -29,25 +29,25 @@ export function deepFreeze<T extends object>(
     // Prevent double freezing (could lead to stack overflow due to an infinite cycle)
     // Object.isFrozen is not used here because frozen objects can have unfrozen objects in their properties.
     if (alreadyFrozen.has(object)) {
-      return object
+      return object;
     }
-    alreadyFrozen.add(object)
+    alreadyFrozen.add(object);
 
     // Retrieve the property names defined on object
-    const names = Object.getOwnPropertyNames(object)
+    const names = Object.getOwnPropertyNames(object);
 
     // Freeze properties before freezing the object
     for (const name of names) {
-      const prop = object[name]
-      if (prop && typeof prop === 'object') {
-        recursivelyFreeze(prop)
+      const prop = object[name];
+      if (prop && typeof prop === "object") {
+        recursivelyFreeze(prop);
       } else {
-        freeze(prop)
+        freeze(prop);
       }
     }
 
-    return freeze(object)
+    return freeze(object);
   }
 
-  return recursivelyFreeze(object)
+  return recursivelyFreeze(object);
 }
