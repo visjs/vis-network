@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-26T15:42:42.633Z
+ * @date    2020-07-27T21:33:32.341Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -23158,21 +23158,38 @@
 	  return getRandomValues(rnds8);
 	}
 
+	var REGEX = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+
+	function validate(uuid) {
+	  return typeof uuid === 'string' && REGEX.test(uuid);
+	}
+
 	/**
 	 * Convert array of 16 byte values to UUID string format of the form:
 	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 	 */
+
 	var byteToHex = [];
 
 	for (var i = 0; i < 256; ++i) {
 	  byteToHex.push((i + 0x100).toString(16).substr(1));
 	}
 
-	function bytesToUuid(buf, offset_) {
-	  var offset = offset_ || 0; // Note: Be careful editing this code!  It's been tuned for performance
+	function stringify$3(arr) {
+	  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0; // Note: Be careful editing this code!  It's been tuned for performance
 	  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
 
-	  return (byteToHex[buf[offset + 0]] + byteToHex[buf[offset + 1]] + byteToHex[buf[offset + 2]] + byteToHex[buf[offset + 3]] + '-' + byteToHex[buf[offset + 4]] + byteToHex[buf[offset + 5]] + '-' + byteToHex[buf[offset + 6]] + byteToHex[buf[offset + 7]] + '-' + byteToHex[buf[offset + 8]] + byteToHex[buf[offset + 9]] + '-' + byteToHex[buf[offset + 10]] + byteToHex[buf[offset + 11]] + byteToHex[buf[offset + 12]] + byteToHex[buf[offset + 13]] + byteToHex[buf[offset + 14]] + byteToHex[buf[offset + 15]]).toLowerCase();
+	  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+	  // of the following:
+	  // - One or more input array values don't map to a hex octet (leading to
+	  // "undefined" in the uuid)
+	  // - Invalid input values for the RFC `version` or `variant` fields
+
+	  if (!validate(uuid)) {
+	    throw TypeError('Stringified UUID is invalid');
+	  }
+
+	  return uuid;
 	}
 
 	function v4(options, buf, offset) {
@@ -23192,7 +23209,7 @@
 	    return buf;
 	  }
 
-	  return bytesToUuid(rnds);
+	  return stringify$3(rnds);
 	}
 
 	/**
