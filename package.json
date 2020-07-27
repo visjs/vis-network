@@ -156,7 +156,7 @@
     "start-server-and-test": "1.11.2",
     "timsort": "0.3.0",
     "typescript": "3.9.7",
-    "uuid": "8.2.0",
+    "uuid": "8.3.0",
     "vis-data": "6.6.1",
     "vis-dev-utils": "2.3.6",
     "vis-util": "4.3.3"
