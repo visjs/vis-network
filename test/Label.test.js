@@ -7,7 +7,7 @@
  *
  * - html entities
  * - html unclosed or unopened tags
- * - html tag combinations with no font defined (e.g. bold within mono) 
+ * - html tag combinations with no font defined (e.g. bold within mono)
  * - Unit tests for bad font shorthands.
  *   Currently, only "size[px] name color" is valid, always 3 items with this exact spacing.
  *   All other combinations should either be rejected as error or handled gracefully.
@@ -106,7 +106,7 @@ describe('Network Label', function() {
   }
 
 
-  function checkProcessedLabels(label, text, expected) {   
+  function checkProcessedLabels(label, text, expected) {
     const ctx = new DummyContext();
 
     for (const i of Object.keys(text)) {
@@ -412,7 +412,7 @@ describe('Network Label', function() {
     let label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_widthConstraint_expected);
-    checkProcessedLabels(label, html_text    , multi_expected); 
+    checkProcessedLabels(label, html_text    , multi_expected);
 
     // Following is an unlucky selection, because the first line broken on the final character (space)
     // So we cheat a bit here
@@ -432,7 +432,7 @@ describe('Network Label', function() {
     const label = new Label({}, options);
 
     checkProcessedLabels(label, normal_text  , normal_widthConstraint_expected);
-    checkProcessedLabels(label, html_text    , html_widthConstraint_unchanged); 
+    checkProcessedLabels(label, html_text    , html_widthConstraint_unchanged);
     checkProcessedLabels(label, markdown_text, multi_expected);
 
     done();
@@ -474,14 +474,14 @@ describe('Node Labels', function() {
         }
       },
     ];
-  
+
     // create a network
     const container = document.getElementById('mynetwork');
     const data = {
         nodes: new DataSet(dataNodes),
         edges: []
     };
-  
+
     const options = {
       nodes: {
         font: {
@@ -501,7 +501,7 @@ describe('Node Labels', function() {
     if (newOptions !== undefined) {
       util.deepExtend(options, newOptions);
     }
-  
+
     const network = new Network(container, data, options);
     return [network, data, options];
   }
@@ -675,14 +675,14 @@ describe('Edge Labels', function() {
         }
       },
     ];
-  
+
     // create a network
     const container = document.getElementById('mynetwork');
     const data = {
         nodes: new DataSet(dataNodes),
         edges: new DataSet(dataEdges),
     };
-  
+
     const options = {
       edges: {
         font: {
@@ -694,7 +694,7 @@ describe('Edge Labels', function() {
     if (newOptions !== undefined) {
       util.deepExtend(options, newOptions);
     }
-  
+
     const network = new Network(container, data, options);
     return [network, data, options];
   }
@@ -804,7 +804,7 @@ describe('Shorthand Font Options', function() {
 
   function checkFont(opt, expectedLabel) {
     const expected = testFonts[expectedLabel];
- 
+
     util.forEach(expected, (item, key) => {
       assert.equal(opt[key], item);
     });
@@ -847,7 +847,7 @@ describe('Shorthand Font Options', function() {
         }
       }
     };
-  
+
     const network = new Network(container, data, options);
     return [network, data];
   }
@@ -860,14 +860,14 @@ describe('Shorthand Font Options', function() {
     // NOTE: 'mono' has its own global default font and size, which will
     //       trump any other font values set.
 
-    let opt = h.fontOption(1); 
+    let opt = h.fontOption(1);
     checkFont(opt, 'default');
     checkFont(opt.bold, 'font1');
     checkFont(opt.ital, 'font2');
     checkFont(opt.mono, 'monodef');           // Mono should have defaults
 
     // Node 2 should be using group1 options
-    opt = h.fontOption(2); 
+    opt = h.fontOption(2);
     checkFont(opt, 'font3');
     checkFont(opt.bold, 'font1');             // bold retains nodes default options
     checkFont(opt.ital, 'font2');             // ital retains nodes default options
@@ -876,14 +876,14 @@ describe('Shorthand Font Options', function() {
     assert.equal(opt.mono.size, 15);          // Own global default size
 
     // Node 3 should be using group2 options
-    opt = h.fontOption(3); 
+    opt = h.fontOption(3);
     checkFont(opt, 'default');
     checkFont(opt.bold, 'font4');
     checkFont(opt.ital, 'font2');
     checkFont(opt.mono, 'monodef'); // Mono should have defaults
 
     // Node 4 has its own base font definition
-    opt = h.fontOption(4); 
+    opt = h.fontOption(4);
     checkFont(opt, 'font5');
     checkFont(opt.bold, 'font1');
     checkFont(opt.ital, 'font2');
@@ -937,7 +937,7 @@ describe('Shorthand Font Options', function() {
     const h = new HelperNode(network);
     dynamicAdd1(network, data);
 
-    let opt = h.fontOption(1); 
+    let opt = h.fontOption(1);
     checkFont(opt, 'font5');                  // New base font
     checkFont(opt.bold, 'font1');
     checkFont(opt.ital, 'font4');             // New global node default
@@ -945,13 +945,13 @@ describe('Shorthand Font Options', function() {
     assert.equal(opt.mono.face, 'monospace');
     assert.equal(opt.mono.size, 15);
 
-    opt = h.fontOption(2); 
+    opt = h.fontOption(2);
     checkFont(opt, 'default');
     checkFont(opt.bold, 'font7');
     checkFont(opt.ital, 'font4');             // New global node default
     checkFont(opt.mono, 'monodef');           // Mono should have defaults again
 
-    opt = h.fontOption(3); 
+    opt = h.fontOption(3);
     checkFont(opt, 'font6');                  // New base font
     checkFont(opt.bold, 'font1');             // group bold option removed, using global default node
     checkFont(opt.ital, 'font4');             // New global node default
@@ -959,7 +959,7 @@ describe('Shorthand Font Options', function() {
     assert.equal(opt.mono.face, 'monospace');
     assert.equal(opt.mono.size, 15);
 
-    opt = h.fontOption(4); 
+    opt = h.fontOption(4);
     checkFont(opt, 'default');
     checkFont(opt.bold, 'font6');
     checkFont(opt.ital, 'font4');
@@ -969,22 +969,22 @@ describe('Shorthand Font Options', function() {
     done();
   });
 
-     
+
   it('deals with dynamic change of global node default', function (done) {
     const [network, data] = createNetwork();
     const h = new HelperNode(network);
     dynamicAdd1(network, data);  // Accumulate data of dynamic add
     dynamicAdd2(network, data);
 
-    let opt = h.fontOption(1); 
+    let opt = h.fontOption(1);
     checkFont(opt, 'font5');                  // Node instance value
-    checkFont(opt.bold, 'font5');             // bold def removed from global default node 
+    checkFont(opt.bold, 'font5');             // bold def removed from global default node
     checkFont(opt.ital, 'font5');             // idem
     assert.equal(opt.mono.color, '#050505');  // New color
     assert.equal(opt.mono.face, 'monospace');
     assert.equal(opt.mono.size, 15);
 
-    opt = h.fontOption(2); 
+    opt = h.fontOption(2);
     checkFont(opt, 'font7');                  // global node default applies for all settings
     checkFont(opt.bold, 'font7');
     checkFont(opt.ital, 'font7');
@@ -992,7 +992,7 @@ describe('Shorthand Font Options', function() {
     assert.equal(opt.mono.face, 'monospace');
     assert.equal(opt.mono.size, 15);
 
-    opt = h.fontOption(3); 
+    opt = h.fontOption(3);
     checkFont(opt, 'font6');                  // Group base font
     checkFont(opt.bold, 'font6');             // idem
     checkFont(opt.ital, 'font6');             // idem
@@ -1000,7 +1000,7 @@ describe('Shorthand Font Options', function() {
     assert.equal(opt.mono.face, 'monospace');
     assert.equal(opt.mono.size, 15);
 
-    opt = h.fontOption(4); 
+    opt = h.fontOption(4);
     checkFont(opt, 'font7');                  // global node default
     checkFont(opt.bold, 'font6');             // node instance bold
     checkFont(opt.ital, 'font7');             // global node default
@@ -1011,12 +1011,12 @@ describe('Shorthand Font Options', function() {
     done();
   });
 
-     
+
   it('deals with dynamic delete of shorthand options', function (done) {
     const [network, data] = createNetwork();
     const h = new HelperNode(network);
     dynamicAdd1(network, data);  // Accumulate data of previous dynamic steps
-    dynamicAdd2(network, data);  // idem 
+    dynamicAdd2(network, data);  // idem
 
     data.nodes.update([
       {id: 1, font: null},
@@ -1051,8 +1051,8 @@ describe('Shorthand Font Options', function() {
     });
 
     // global defaults for all
-    for (let n = 1; n <= 4; ++ n) { 
-      opt = h.fontOption(n); 
+    for (let n = 1; n <= 4; ++ n) {
+      opt = h.fontOption(n);
       checkFont(opt, 'font7');
       checkFont(opt.bold, 'font7');
       checkFont(opt.ital, 'font7');
@@ -1099,7 +1099,7 @@ describe('Shorthand Font Options', function() {
       {id: 1, label: '<b>1</b>', group: 'group1'},
       {
         // From example 1 in #3408
-        id: 6, 
+        id: 6,
         label: '<i>\uf286</i> <b>\uf2cd</b> colored glyph icon',
         shape: 'icon',
         group: 'colored',
@@ -1111,14 +1111,14 @@ describe('Shorthand Font Options', function() {
         }
       },
     ];
-  
+
     // create a network
     const container = document.getElementById('mynetwork');
     const data = {
         nodes: new DataSet(dataNodes),
         edges: []
     };
-  
+
     const options = {
       groups: {
         group1: {
@@ -1145,7 +1145,7 @@ describe('Shorthand Font Options', function() {
         },
       },
     };
-  
+
     const network = new Network(container, data, options);
 
     assert.equal(modBold(1).color, 'red');  // Group value
@@ -1183,8 +1183,8 @@ describe('Shorthand Font Options', function() {
     // console.log("===============");
     // console.log(fontOption(1));
 
-    assert.equal(modBold(1).color, '#343434');  // Reverts to default 
-    assert(!fontOption(1).multi);               // idem 
+    assert.equal(modBold(1).color, '#343434');  // Reverts to default
+    assert(!fontOption(1).multi);               // idem
     assert.equal(modBold(6).color, 'blue');     // unchanged
     assert(fontOption(6).multi);                // unchanged
 
@@ -1211,11 +1211,11 @@ describe('Shorthand Font Options', function() {
       lines: [{
         blocks: [{text: "Too  many    spaces     here!"}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "one two  three   four    five     six      ."}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "This thing:"}],
       }, {
@@ -1242,7 +1242,7 @@ describe('Shorthand Font Options', function() {
         }, {
           blocks: [{text: "     here!"}],
       }]
-    }, { 
+    }, {
       lines: [{
           blocks: [{text: "one two  three   "}],
         }, {
@@ -1250,7 +1250,7 @@ describe('Shorthand Font Options', function() {
         }, {
           blocks: [{text: "      ."}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "This thing:"}],
       }, {
@@ -1276,11 +1276,11 @@ describe('Shorthand Font Options', function() {
       lines: [{
         blocks: [{text: "Too many spaces here!"}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "one two three four five six ."}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "This thing:"}],
       }, {
@@ -1307,13 +1307,13 @@ describe('Shorthand Font Options', function() {
       }, {
         blocks: [{text: "here!"}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "one two three four"}],
       }, {
         blocks: [{text: "five six ."}],
       }]
-    }, { 
+    }, {
       lines: [{
         blocks: [{text: "This thing:"}],
       }, {
@@ -1412,7 +1412,7 @@ describe('Shorthand Font Options', function() {
 
 
   /**
-   * 
+   *
    * The test network is derived from example `network/nodeStyles/widthHeight.html`,
    * where the associated issue (i.e. widthConstraint values not copied) was most poignant.
    *
@@ -1435,14 +1435,14 @@ describe('Shorthand Font Options', function() {
       { id: 401, heightConstraint: { minimum: 100, valign: 'middle' }, label: 'node 401'},
       { id: 402, heightConstraint: { minimum: 100, valign: 'bottom' }, label: 'node 402'}
     ];
-  
+
     const edges = [
       { id: 1, from: 100, to: 210, label: "edge 1"},
       { id: 2, widthConstraint: 80, from: 210, to: 211, label: "edge 2"},
       { id: 3, heightConstraint: 90, from: 100, to: 220, label: "edge 3"},
       { id: 4, from: 401, to: 402, widthConstraint: { maximum: 150 }, label: "edge 12"},
     ];
-  
+
     const container = document.getElementById('mynetwork');
     const data = {
       nodes: nodes,
@@ -1564,7 +1564,7 @@ describe('Shorthand Font Options', function() {
       //label.getTextSize(ctx, false, false);  // Use this to determine the error thrown
 
       // There should not be a label for any of the cases
-      // 
+      //
       const labelVal = label.elementOptions.label;
       const validLabel = (typeof labelVal === 'string' && labelVal !== '');
       assert(!validLabel, "Unexpected label value '" + labelVal+ "' for " + text +" " + index);
@@ -1609,7 +1609,7 @@ describe('Shorthand Font Options', function() {
 
     //
     // Following extracted from example 'nodeLegend', where the problem was detected.
-    // 
+    //
     // In the example, only `label:null` was present. The weird thing is that it fails
     // in the example, but succeeds in the unit tests.
     // Kept in for regression testing.
