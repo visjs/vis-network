@@ -22,6 +22,7 @@ module.exports = {
   // For the full list of rules, see: http://eslint.org/docs/rules/
   rules: {
     'prettier/prettier': ['off'],
+    'no-trailing-spaces': 'error',
 
     complexity: ['error', 55],
     "max-statements": ['error', 115],
