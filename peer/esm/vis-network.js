@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-07-30T21:43:31.903Z
+ * @date    2020-07-31T00:12:44.804Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -30839,26 +30839,16 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
       while (node = stack.pop()) {
         var _ret2 = _loop2();
 
-        switch (_ret2) {
-          case "continue":
-            continue;
-
-          default:
-            if (_typeof_1(_ret2) === "object") return _ret2.v;
-        }
+        if (_ret2 === "continue") continue;
+        if (_typeof_1(_ret2) === "object") return _ret2.v;
       }
     };
 
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var _ret = _loop();
 
-      switch (_ret) {
-        case "continue":
-          continue;
-
-        default:
-          if (_typeof_1(_ret) === "object") return _ret.v;
-      }
+      if (_ret === "continue") continue;
+      if (_typeof_1(_ret) === "object") return _ret.v;
     }
   } catch (err) {
     _iterator.e(err);
