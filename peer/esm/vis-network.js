@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-01T16:18:29.976Z
+ * @date    2020-08-01T16:16:31.614Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3370,8 +3370,8 @@ function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) le
  *
  * utilitie collection for visjs
  *
- * @version 4.3.3
- * @date    2020-07-18T16:20:10.745Z
+ * @version 4.3.4
+ * @date    2020-08-01T15:11:53.524Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs

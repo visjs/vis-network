@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-01T16:20:01.891Z
+ * @date    2020-08-01T16:18:35.539Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3369,8 +3369,8 @@ function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) le
  *
  * utilitie collection for visjs
  *
- * @version 4.3.3
- * @date    2020-07-18T16:20:10.745Z
+ * @version 4.3.4
+ * @date    2020-08-01T15:11:53.524Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3460,7 +3460,7 @@ function deepObjectAssignNonentry() {
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var prop = _step.value;
-      if (Object.prototype.propertyIsEnumerable.call(b, b[prop])) ;else if (b[prop] === DELETE) {
+      if (!Object.prototype.propertyIsEnumerable.call(b, prop)) ;else if (b[prop] === DELETE) {
         delete a[prop];
       } else if (a[prop] !== null && b[prop] !== null && _typeof_1(a[prop]) === "object" && _typeof_1(b[prop]) === "object" && !isArray$5(a[prop]) && !isArray$5(b[prop])) {
         a[prop] = deepObjectAssignNonentry(a[prop], b[prop]);
