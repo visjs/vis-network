@@ -131,7 +131,7 @@ function createSampleNetwork(options) {
  *
  * Works on the network created by createSampleNetwork().
  *
- * This is actually a pathological case; there are two separate sub-networks and 
+ * This is actually a pathological case; there are two separate sub-networks and
  * a cluster is made of two nodes, each from one of the sub-networks.
  */
 function createCluster(network) {
@@ -306,7 +306,7 @@ describe('Network', function () {
   /**
    * Helper function for clustering
    */
-  function clusterTo(network, clusterId, nodeList, allowSingle) {  
+  function clusterTo(network, clusterId, nodeList, allowSingle) {
     const options = {
       joinCondition: function(node) {
         return nodeList.indexOf(node.id) !== -1;
@@ -342,11 +342,11 @@ describe('Network', function () {
       clusterTo(network, 'c1', [1,2,3]);
       data.nodes.remove(1);
       network.openCluster('c1');
-		  clusterTo(network, 'c1', [4], true);	
-		  clusterTo(network, 'c2', ['c1'], true);	
-		  clusterTo(network, 'c3', ['c2'], true);	
+		  clusterTo(network, 'c1', [4], true);
+		  clusterTo(network, 'c2', ['c1'], true);
+		  clusterTo(network, 'c3', ['c2'], true);
       data.nodes.remove(4);
-      
+
     } catch(e) {
       delete Array.prototype.foo;  // Remove it again so as not to confuse other tests.
       delete Object.prototype.bar;
@@ -380,7 +380,7 @@ describe('Network', function () {
     // The init should succeed without an error thrown.
     let options = {
       nodes: {
-        physics: false   // any value here triggered the error 
+        physics: false   // any value here triggered the error
       }
     };
     createSampleNetwork(options);
@@ -678,35 +678,35 @@ describe('Edge', function () {
   /**
    * Unit test for fix of #3500
    * Checking to make sure edges that become unconnected due to node removal get reconnected
-  */  
+  */
   it.skip('has reconnected edges (problems since mocha 4)', function (done) {
     const node1 = {id:1, label:"test1"};
     const node2 = {id:2, label:"test2"};
     const nodes = new DataSet([node1, node2]);
-  
+
     const edge = {id:1, from: 1, to:2};
     const edges = new DataSet([edge]);
 
     const data = {
         nodes: nodes,
         edges: edges
-    };    
+    };
 
     const container = document.getElementById('mynetwork');
     const network = new Network(container, data);
 
     //remove node causing edge to become disconnected
     nodes.remove(node2.id);
-    
+
     let foundEdge = network.body.edges[edge.id];
 
     assert.ok(foundEdge===undefined, "edge is still in state cache");
 
     //add node back reconnecting edge
     nodes.add(node2);
-    
+
     foundEdge = network.body.edges[edge.id];
-    
+
     assert.ok(foundEdge!==undefined, "edge is missing from state cache");
     done();
   });
@@ -724,20 +724,20 @@ describe('Clustering', function () {
     assertNumNodes(network, numNodes);
     assertNumEdges(network, numEdges);
 
-    clusterTo(network, 'c1', [3,4]);  
+    clusterTo(network, 'c1', [3,4]);
     numNodes += 1;                                    // A clustering node is now hiding two nodes
     numEdges += 1;                                    // One clustering edges now hiding two edges
     assertNumNodes(network, numNodes, numNodes - 2);
     assertNumEdges(network, numEdges, numEdges - 2);
 
     // Cluster of single node should fail, because by default allowSingleNodeCluster == false
-    clusterTo(network, 'c2', [14]);  
+    clusterTo(network, 'c2', [14]);
     assertNumNodes(network, numNodes, numNodes - 2);  // Nothing changed
     assertNumEdges(network, numEdges, numEdges - 2);
     assert(network.body.nodes['c2'] === undefined);  // Cluster not created
 
     // Redo with allowSingleNodeCluster == true
-    clusterTo(network, 'c2', [14], true);  
+    clusterTo(network, 'c2', [14], true);
     numNodes += 1;
     numEdges += 1;
     assertNumNodes(network, numNodes, numNodes - 3);
@@ -747,7 +747,7 @@ describe('Clustering', function () {
 
     // allowSingleNodeCluster: true with two nodes
     // removing one clustered node should retain cluster
-    clusterTo(network, 'c3', [11, 12], true);  
+    clusterTo(network, 'c3', [11, 12], true);
     numNodes += 1;                                   // Added cluster
     numEdges += 2;
     assertNumNodes(network, numNodes, 6);
@@ -755,7 +755,7 @@ describe('Clustering', function () {
 
     data.nodes.remove(12);
     assert(network.body.nodes['c3'] !== undefined);  // Cluster should still be present
-    numNodes -= 1;                                   // removed node 
+    numNodes -= 1;                                   // removed node
     numEdges -= 3;                                   // cluster edge C3-13 should be removed
     assertNumNodes(network, numNodes, 6);
     assertNumEdges(network, numEdges, 4);
@@ -767,9 +767,9 @@ describe('Clustering', function () {
     const [network, data] = sampleNetwork;
     let [, , numNodes, numEdges] = sampleNetwork;
     // Create a chain of nested clusters, three deep
-		clusterTo(network, 'c1', [4], true);	
-		clusterTo(network, 'c2', ['c1'], true);	
-		clusterTo(network, 'c3', ['c2'], true);	
+		clusterTo(network, 'c1', [4], true);
+		clusterTo(network, 'c2', ['c1'], true);
+		clusterTo(network, 'c3', ['c2'], true);
     numNodes += 3;
     numEdges += 3;
     assertNumNodes(network, numNodes, numNodes - 3);
@@ -955,7 +955,7 @@ describe('Clustering', function () {
      *
      * Ordering of output depends on the order in which they are defined
      * within nodes.clustering; strictly, speaking, the array and its items
-     * are collections, so order should not matter. 
+     * are collections, so order should not matter.
      */
     const collectClusters = function(network) {
       const clusters = [];
@@ -1041,19 +1041,19 @@ describe('Clustering', function () {
     const [network, data] = sampleNetwork;
     let [, , numNodes, numEdges] = sampleNetwork;
 
-    clusterTo(network, 'c1', [3,4]);  
+    clusterTo(network, 'c1', [3,4]);
     numNodes += 1;                                    // new cluster node
     numEdges += 1;                                    // 1 cluster edge expected
     assertNumNodes(network, numNodes, numNodes - 2);  // 2 clustered nodes
     assertNumEdges(network, numEdges, numEdges - 2);  // 2 edges hidden
 
-    clusterTo(network, 'c2', [2,'c1']);  
+    clusterTo(network, 'c2', [2,'c1']);
     numNodes += 1;                                    // new cluster node
     numEdges += 1;                                    // 2 cluster edges expected
     assertNumNodes(network, numNodes, numNodes - 4);  // 4 clustered nodes, including c1
     assertNumEdges(network, numEdges, numEdges - 4);  // 4 edges hidden, including edge for c1
 
-    clusterTo(network, 'c3', [1,'c2']);  
+    clusterTo(network, 'c3', [1,'c2']);
     // Attempt at visualization: parentheses belong to the cluster one level above
     //                   c3
     //             (       -c2    )
@@ -1072,7 +1072,7 @@ describe('Clustering', function () {
     let [network, data, numNodes, numEdges] = createSampleNetwork();
 
     // Simple case: cluster of two nodes, delete one node
-    clusterTo(network, 'c1', [3,4]);  
+    clusterTo(network, 'c1', [3,4]);
     numNodes += 1;                                    // new cluster node
     numEdges += 1;                                    // 1 cluster edge expected
     assertNumNodes(network, numNodes, numNodes - 2);  // 2 clustered nodes
@@ -1150,21 +1150,21 @@ describe('Clustering', function () {
     // One external connection
     [network, data, numNodes, numEdges] = createSampleNetwork();
     // 14-13-12-11 1-2-3-4
-    clusterTo(network, 'c1', [3,4]);  
+    clusterTo(network, 'c1', [3,4]);
     network.clustering.openCluster('c1', {});
     assertNumNodes(network, numNodes, numNodes); // Expecting same as original
     assertNumEdges(network, numEdges, numEdges);
 
     // Two external connections
-    clusterTo(network, 'c1', [2,3]);  
+    clusterTo(network, 'c1', [2,3]);
     network.clustering.openCluster('c1', {});
     assertNumNodes(network, numNodes, numNodes); // Expecting same as original
     assertNumEdges(network, numEdges, numEdges);
     assertEdgeLabels(network, data.edges, "c1(3-4) cluster opened");
 
     // One external connection to cluster
-    clusterTo(network, 'c1', [1,2]);  
-    clusterTo(network, 'c2', [3,4]);  
+    clusterTo(network, 'c1', [1,2]);
+    clusterTo(network, 'c2', [3,4]);
     // 14-13-12-11 c1(1-2-)-c2(-3-4)
     network.clustering.openCluster('c1', {});
     // 14-13-12-11 1-2-c2(-3-4)
@@ -1185,16 +1185,16 @@ describe('Clustering', function () {
     assertNumEdges(network, numEdges, numEdges);
     assertEdgeLabels(network, data.edges, "c1(1-2) c2(3-4) c1 cluster opened");
 
-    clusterTo(network, 'c1', [1,2]);  
+    clusterTo(network, 'c1', [1,2]);
     // 14-13-12-11-c1(-1-2-)-3-4
     numNodes += 1;
     numEdges += 2;
-    clusterTo(network, 'c2', [3,4]);  
+    clusterTo(network, 'c2', [3,4]);
     // 14-13-12-11-c1(-1-2-)-c2(-3-4)
     // NOTE: clustering edges are hidden by clustering here!
     numNodes += 1;
     numEdges += 1;
-    clusterTo(network, 'c3', [11,12]);  
+    clusterTo(network, 'c3', [11,12]);
     // 14-13-c3(-12-11-)-c1(-1-2-)-c2(-3-4)
     numNodes += 1;
     numEdges += 2;
@@ -1221,8 +1221,8 @@ describe('Clustering', function () {
 
     data.edges.update({ from: 1, to: 11, label: "1 to 11" })
     numEdges += 1;
-		clusterTo(network, 'c1', [3,4]);	
-		clusterTo(network, 'c2', [2,'c1']);	
+		clusterTo(network, 'c1', [3,4]);
+		clusterTo(network, 'c2', [2,'c1']);
 		clusterTo(network, 'c3', [1,'c2']);
     // Attempt at visualization: parentheses belong to the cluster one level above
     //                  -c3
@@ -1259,9 +1259,9 @@ describe('Clustering', function () {
     assertNumEdges(network, numEdges);
 
 
-		clusterTo(network, 'c0', [11,12]);	
-		clusterTo(network, 'c1', [3,4]);	
-		clusterTo(network, 'c2', [2,'c1']);	
+		clusterTo(network, 'c0', [11,12]);
+		clusterTo(network, 'c1', [3,4]);
+		clusterTo(network, 'c2', [2,'c1']);
 		clusterTo(network, 'c3', [1,'c2']);
     //                 +----------------+
     //                 |     c3         |
@@ -1304,13 +1304,13 @@ describe('Clustering', function () {
 
     // Open the top cluster
     network.clustering.openCluster('c3', {});
-    //                             
+    //
     //       +-------+     +----+
     //       |   c0  |     | c1 |
     // 14-13-|-12-11-|-1-2-|-3-4|
     //       |  |    |   | +----+
-    //       +-------+   |       
-    //          |        |       
+    //       +-------+   |
+    //          |        |
     //          |--------|
     //              (II)
     numNodes -= 1;

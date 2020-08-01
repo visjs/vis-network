@@ -62,7 +62,7 @@ function replaceCanvasContext (el) {
 /**
  * Overrides document.createElement(), in order to supply a custom canvas element.
  *
- * In the canvas element, getContext() is overridden in order to supply a simple 
+ * In the canvas element, getContext() is overridden in order to supply a simple
  * mock object for the 2D context. For all other elements, the call functions unchanged.
  *
  * The override is only done if there is no 2D context already present.
@@ -77,7 +77,7 @@ function overrideCreateElement(window) {
   const f = window.document.createElement;
 
   // Check if 2D context already present. That happens either when running in a browser,
-  // or this is node.js with 'canvas' installed. 
+  // or this is node.js with 'canvas' installed.
   const ctx = d.createElement('canvas').getContext('2d');
   if (ctx !== null && ctx !== undefined) {
     //console.log('2D context is present, no need to override');
