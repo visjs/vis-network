@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-01T01:35:17.724Z
+ * @date    2020-08-01T15:16:44.638Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -371,8 +371,8 @@
    * ====
    *
    * For label handling, this is an incomplete implementation. From docs (quote #3015):
-   * 
-   * > the escape sequences "\n", "\l" and "\r" divide the label into lines, centered, 
+   *
+   * > the escape sequences "\n", "\l" and "\r" divide the label into lines, centered,
    * > left-justified, and right-justified, respectively.
    *
    * Source: http://www.graphviz.org/content/attrs#kescString
@@ -2174,7 +2174,7 @@
   class CachedImage {
     /**
      * @ignore
-     */  
+     */
     constructor() {  // eslint-disable-line no-unused-vars
       this.NUM_ITERATIONS = 4;  // Number of items in the coordinates array
 
@@ -2337,12 +2337,12 @@
           this.imageBroken = {};
           this.callback = callback;
       }
-      
+
       /**
        * @param {string} url                      The original Url that failed to load, if the broken image is successfully loaded it will be added to the cache using this Url as the key so that subsequent requests for this Url will return the broken image
        * @param {string} brokenUrl                Url the broken image to try and load
        * @param {Image} imageToLoadBrokenUrlOn   The image object
-       */    
+       */
       _tryloadBrokenUrl (url, brokenUrl, imageToLoadBrokenUrlOn) {
           //If these parameters aren't specified then exit the function because nothing constructive can be done
           if (url === undefined || imageToLoadBrokenUrlOn === undefined)  return;
@@ -2350,17 +2350,17 @@
             console.warn("No broken url image defined");
             return;
           }
-      
+
           //Clear the old subscription to the error event and put a new in place that only handle errors in loading the brokenImageUrl
           imageToLoadBrokenUrlOn.image.onerror = () => {
               console.error("Could not load brokenImage:", brokenUrl);
               // cache item will contain empty image, this should be OK for default
           };
-          
+
           //Set the source of the image to the brokenUrl, this is actually what kicks off the loading of the broken image
           imageToLoadBrokenUrlOn.image.src = brokenUrl;
       }
-      
+
     /**
      *
      * @param {vis.Image} imageToRedrawWith
@@ -2371,42 +2371,42 @@
               this.callback(imageToRedrawWith);
           }
       }
-      
+
       /**
        * @param {string} url          Url of the image
        * @param {string} brokenUrl    Url of an image to use if the url image is not found
        * @return {Image} img          The image object
-       */     
+       */
       load (url, brokenUrl) {
-          //Try and get the image from the cache, if successful then return the cached image   
-          const cachedImage = this.images[url]; 
+          //Try and get the image from the cache, if successful then return the cached image
+          const cachedImage = this.images[url];
           if (cachedImage) return cachedImage;
-          
+
           //Create a new image
           const img = new CachedImage();
 
           // Need to add to cache here, otherwise final return will spawn different copies of the same image,
           // Also, there will be multiple loads of the same image.
-          this.images[url] = img; 
-          
-          //Subscribe to the event that is raised if the image loads successfully 
+          this.images[url] = img;
+
+          //Subscribe to the event that is raised if the image loads successfully
           img.image.onload = () => {
               // Properly init the cached item and then request a redraw
               this._fixImageCoordinates(img.image);
               img.init();
               this._redrawWithImage(img);
           };
-          
+
           //Subscribe to the event that is raised if the image fails to load
           img.image.onerror = () => {
               console.error("Could not load image:", url);
               //Try and load the image specified by the brokenUrl using
               this._tryloadBrokenUrl(url, brokenUrl, img);
           };
-          
+
           //Set the source of the image to the url, this is what actually kicks off the loading of the image
           img.image.src = url;
-          
+
           //Return the new image
           return img;
       }
@@ -2494,7 +2494,7 @@
       }
     }
 
-    
+
     /**
      * Clear all groups
      */
@@ -2502,7 +2502,7 @@
       this.groups = {};
       this.groupsArray = [];
     }
-    
+
     /**
      * Get group options of a groupname.
      * If groupname is not found, a new group may be created.
@@ -2532,10 +2532,10 @@
           this.groups[groupname] = group;
         }
       }
-    
+
       return group;
     }
-    
+
     /**
      * Add a custom group style
      * @param {string} groupName
@@ -2573,7 +2573,7 @@
      *
      * @param {string}  subOption  option within object 'chosen' to consider; either 'node', 'edge' or 'label'
      * @param {Object}  pile       array of options objects to consider
-     * 
+     *
      * @return {boolean|function}  value for passed subOption of 'chosen' to use
      */
     function choosify(subOption, pile) {
@@ -2621,7 +2621,7 @@
         };
 
         if (rotationPoint.angle !== 0) {
-          // In order to get the coordinates the same, you need to 
+          // In order to get the coordinates the same, you need to
           // rotate in the reverse direction
           const angle = -rotationPoint.angle;
 
@@ -2667,19 +2667,19 @@
      * Returns x, y of self reference circle based on provided angle
      *
      * @param {Object} ctx
-     * @param {number} angle 
-     * @param {number} radius 
-     * @param {VisNode} node 
+     * @param {number} angle
+     * @param {number} radius
+     * @param {VisNode} node
      *
      * @returns {Object} x and y coordinates
      */
     function getSelfRefCoordinates(ctx, angle, radius, node){
       let x = node.x;
       let y = node.y;
-      
+
       if(typeof node.distanceToBorder === "function"){
           //calculating opposite and adjacent
-          //distaneToBorder becomes Hypotenuse. 
+          //distaneToBorder becomes Hypotenuse.
           //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
           const toBorderDist = node.distanceToBorder(ctx, angle);
           const yFromNodeCenter = Math.sin(angle)*toBorderDist;
@@ -2698,7 +2698,7 @@
             x += xFromNodeCenter;
             y -= yFromNodeCenter;
           }
-        
+
 
       } else if (node.shape.width > node.shape.height) {
         x = node.x + node.shape.width * 0.5;
@@ -2707,7 +2707,7 @@
         x = node.x + radius;
         y = node.y - node.shape.height * 0.5;
       }
-      
+
       return {x,y};
     }
 
@@ -2747,7 +2747,7 @@
      * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod='normal']
      * @private
      */
-    _add(l, text, mod = 'normal') { 
+    _add(l, text, mod = 'normal') {
 
       if (this.lines[l] === undefined) {
         this.lines[l] = {
@@ -2803,7 +2803,7 @@
       * @param {string} text
       * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod='normal']
       */
-     append(text, mod = 'normal') { 
+     append(text, mod = 'normal') {
        this._add(this.current, text, mod);
      }
 
@@ -2824,7 +2824,7 @@
      * Determine and set the heights of all the lines currently contained in this instance
      *
      * Note that width has already been set.
-     * 
+     *
      * @private
      */
     determineLineHeights() {
@@ -2843,7 +2843,7 @@
             }
           }
         }
-    
+
         line.height = height;
       }
     }
@@ -2851,7 +2851,7 @@
 
     /**
      * Determine the full size of the label text, as determined by current lines and blocks
-     * 
+     *
      * @private
      */
     determineLabelSize() {
@@ -2873,7 +2873,7 @@
 
     /**
      * Remove all empty blocks and empty lines we don't need
-     * 
+     *
      * This must be done after the width/height determination,
      * so that these are set properly for processing here.
      *
@@ -2996,7 +2996,7 @@
     /**
      * Return the mod label currently on the top of the stack
      *
-     * @returns {string}  label of topmost mod 
+     * @returns {string}  label of topmost mod
      * @private
      */
     mod() {
@@ -3006,8 +3006,8 @@
 
     /**
      * Return the mod label currently active
-     * 
-     * @returns {string}  label of active mod 
+     *
+     * @returns {string}  label of active mod
      * @private
      */
     modName() {
@@ -3141,7 +3141,7 @@
     /**
      * @param {string} tagName label for block type we are currently processing
      * @param {string|RegExp} tag string to match in text
-     * @param {RegExp} [nextTag] regular expression to match for characters *following* the current tag 
+     * @param {RegExp} [nextTag] regular expression to match for characters *following* the current tag
      * @returns {boolean} true if the tag was processed, false otherwise
      */
     parseEndTag(tagName, tag, nextTag) {
@@ -3230,7 +3230,7 @@
     /**
      * @param {CanvasRenderingContext2D} ctx Canvas rendering context
      * @param {Label} parent reference to the Label instance using current instance
-     * @param {boolean} selected 
+     * @param {boolean} selected
      * @param {boolean} hover
      */
     constructor(ctx, parent, selected, hover) {
@@ -3279,7 +3279,7 @@
      *
      * This might not be the best way to do it, but this is as it has been working till now.
      * In order not to break existing functionality, for the time being this behaviour will
-     * be retained in any code changes. 
+     * be retained in any code changes.
      *
      * @param {string} text  text to split
      * @returns {Array<line>}
@@ -3327,7 +3327,7 @@
             for (let j = 0; j < blocks.length; j++) {
               const mod  = blocks[j].mod;
               const text = blocks[j].text;
-              this.lines.append(text, mod); 
+              this.lines.append(text, mod);
             }
           }
 
@@ -3344,11 +3344,11 @@
         } else {
           // widthConstraint.maximum NOT defined
           for (let i = 0; i < lineCount; i++) {
-            this.lines.newLine(nlLines[i]); 
+            this.lines.newLine(nlLines[i]);
           }
         }
       }
-     
+
       return this.lines.finalize();
     }
 
@@ -3397,7 +3397,7 @@
         const ch = s.text.charAt(s.position);
 
         const parsed = s.parseWS(ch)
-          || (/</.test(ch) && ( 
+          || (/</.test(ch) && (
                s.parseStartTag('bold', '<b>')
             || s.parseStartTag('ital', '<i>')
             || s.parseStartTag('mono', '<code>')
@@ -3422,7 +3422,7 @@
      * @returns {Array}
      */
     splitMarkdownBlocks(text) {
-      const s = new MarkupAccumulator(text); 
+      const s = new MarkupAccumulator(text);
       let beginable = true;
 
       const parseOverride = (ch) => {
@@ -3503,9 +3503,9 @@
 
 
     /**
-     * Determine the longest part of the sentence which still fits in the 
+     * Determine the longest part of the sentence which still fits in the
      * current max width.
-     * 
+     *
      * @param {Array} words  Array of strings signifying a text lines
      * @return {number}      index of first item in string making string go over max
      * @private
@@ -3530,7 +3530,7 @@
     /**
      * Determine the longest part of the string which still fits in the
      * current max width.
-     * 
+     *
      * @param {Array} words Array of strings signifying a text lines
      * @return {number} index of first item in string making string go over max
      */
@@ -3548,13 +3548,13 @@
 
     /**
      * Split the passed text into lines, according to width constraint (if any).
-     * 
+     *
      * The method assumes that the input string is a single line, i.e. without lines break.
      *
      * This method retains spaces, if still present (case `font.multi: false`).
      * A space which falls on an internal line break, will be replaced by a newline.
      * There is no special handling of tabs; these go along with the flow.
-     * 
+     *
      * @param {string} str
      * @param {string} [mod='normal']
      * @param {boolean} [appendLast=false]
@@ -3596,9 +3596,9 @@
           const text = words.slice(0, w).join("");
 
           if (w == words.length && appendLast) {
-            this.lines.append(text, mod); 
+            this.lines.append(text, mod);
           } else {
-            this.lines.newLine(text, mod); 
+            this.lines.newLine(text, mod);
           }
 
           // Adjust the word, so that the rest will be done next iteration
@@ -3640,7 +3640,7 @@
      * @param {Object} options the options of the parent Node-instance
      */
     setOptions(options) {
-      this.elementOptions = options;  // Reference to the options of the parent Node-instance 
+      this.elementOptions = options;  // Reference to the options of the parent Node-instance
 
       this.initFontOptions(options.font);
 
@@ -3657,7 +3657,7 @@
         }
         else if (typeof options.font === 'object') {
           const size = options.font.size;
-   
+
           if (size !== undefined) {
             this.baseSize = size;
           }
@@ -3818,7 +3818,7 @@
     /**
      * Add the font members of the passed list of option objects to the pile.
      *
-     * @param {Pile} dstPile  pile of option objects add to 
+     * @param {Pile} dstPile  pile of option objects add to
      * @param {Pile} srcPile  pile of option objects to take font options from
      * @private
      */
@@ -3867,7 +3867,7 @@
         }
 
         esnext.forEach(fontOptions, (opt, name) => {
-          if (opt === undefined) return;        // multi-font option need not be present 
+          if (opt === undefined) return;        // multi-font option need not be present
           if (Object.prototype.hasOwnProperty.call(ret, name)) return; // Keep first value we encounter
 
           if (multiFontStyle.indexOf(name) !== -1) {
@@ -4055,7 +4055,7 @@
      * @param {number} x
      * @param {number} y
      * @param {string} [baseline='middle']
-     * @param {number} viewFontSize 
+     * @param {number} viewFontSize
      * @private
      */
     _drawText(ctx, x, y, baseline = 'middle', viewFontSize) {
@@ -4254,7 +4254,7 @@
           return fontOptions[option];
         }
 
-        if (fontOptions[mod][option] !== undefined) {  // Grumbl leaving out test on undefined equals false for "" 
+        if (fontOptions[mod][option] !== undefined) {  // Grumbl leaving out test on undefined equals false for ""
           return fontOptions[mod][option];
         } else {
           // Take from parent font option
@@ -4303,7 +4303,7 @@
     differentState(selected, hover) {
       return ((selected !== this.selectedState) || (hover !== this.hoverState));
     }
-     
+
 
     /**
      * This explodes the passed text into lines and determines the width, height and number of lines.
@@ -4332,7 +4332,7 @@
 
       if(this.labelDirty === false && !this.differentState(selected,hover))
         return;
-      
+
       const state = this._processLabelText(ctx, selected, hover, this.elementOptions.label);
 
       if ((this.fontOptions.minWdt > 0) && (state.width < this.fontOptions.minWdt)) {
@@ -4581,7 +4581,7 @@
       ctx.fill();
       // disable shadows for other elements.
       this.disableShadow(ctx, values);
-      
+
       ctx.restore();
       this.performStroke(ctx, values);
     }
@@ -4808,7 +4808,7 @@
      * Set the images for this node.
      *
      * The images can be updated after the initial setting of options;
-     * therefore, this method needs to be reentrant. 
+     * therefore, this method needs to be reentrant.
      *
      * For correct working in error cases, it is necessary to properly set
      * field 'nodes.brokenImage' in the options.
@@ -4852,7 +4852,7 @@
      */
     _getImagePadding() {
       const imgPadding = { top: 0, right: 0, bottom: 0, left: 0};
-        if (this.options.imagePadding) {          
+        if (this.options.imagePadding) {
           const optImgPadding = this.options.imagePadding;
           if (typeof optImgPadding == 'object') {
             imgPadding.top = optImgPadding.top;
@@ -4867,7 +4867,7 @@
           }
         }
 
-        return imgPadding  
+        return imgPadding
     }
 
     /**
@@ -4892,7 +4892,7 @@
             ratio_height = this.imageObj.height / this.imageObj.width;
           }
         }
-  	  
+
   	  width = this.options.size * 2 * ratio_width;
         height = this.options.size * 2 * ratio_height;
       }
@@ -5253,7 +5253,7 @@
         getShape(shape)(ctx, x, y, values.size);
         this.performFill(ctx, values);
       }
-      
+
       if (this.options.icon !== undefined) {
         if (this.options.icon.code !== undefined) {
           ctx.font = (selected ? "bold " : "")
@@ -5786,7 +5786,7 @@
         ctx.fill();
 
        this.performStroke(ctx, values);
-   
+
         ctx.closePath();
       }
 
@@ -6527,7 +6527,7 @@
      */
     setOptions(options) {
       const currentShape = this.options.shape;
-      
+
       if (!options) {
         return;  // Note that the return value will be 'undefined'! This is OK.
       }
@@ -6564,11 +6564,11 @@
 
       // this transforms all shorthands into fully defined options
       Node.parseOptions(this.options, options, true, this.globalOptions, this.grouplist);
-      
+
       const pile = [options, this.options, this.defaultOptions];
       this.chooser = choosify('node', pile);
 
-      
+
 
       this._load_images();
       this.updateLabelModule(options);
@@ -6623,11 +6623,11 @@
         }
       }
     }
-    
+
     /**
      * Check that opacity is only between 0 and 1
-     * 
-     * @param {Number} opacity 
+     *
+     * @param {Number} opacity
      * @returns {boolean}
      */
     static checkOpacity (opacity) {
@@ -6636,12 +6636,12 @@
 
     /**
      * Check that origin is 'center' or 'top-left'
-     * 
-     * @param {String} origin 
+     *
+     * @param {String} origin
      * @returns {boolean}
      */
     static checkCoordinateOrigin (origin) {
-      return origin === undefined || origin === 'center' || origin === 'top-left'; 
+      return origin === undefined || origin === 'center' || origin === 'top-left';
     }
 
     /**
@@ -6666,11 +6666,11 @@
         throw new Error("updateGroupOptions: group values in options don't match.");
       }
 
-      
+
       const hasGroup = (typeof group === 'number' || (typeof group === 'string' && group != ''));
       if (!hasGroup) return;  // current node has no group, no need to merge
-      
-      
+
+
       const groupObj = groupList.get(group);
 
       if (groupObj.opacity !== undefined && newOptions.opacity === undefined) {
@@ -6713,7 +6713,7 @@
 
       Node.checkMass(newOptions);
 
-      
+
       if (parentOptions.opacity !== undefined) {
         if (!Node.checkOpacity(parentOptions.opacity)) {
           console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + parentOptions.opacity);
@@ -7336,7 +7336,7 @@
     setOptions(options) {
       if (options !== undefined) {
         Node.parseOptions(this.options, options);
-        
+
         // Need to set opacity here because Node.parseOptions is also used for groups,
         // if you set opacity in Node.parseOptions it overwrites group opacity.
         if (options.opacity !== undefined) {
@@ -7583,7 +7583,7 @@
       }
       return dataArray;
     }
-    
+
     /**
      * Retrieves the x y position of a specific id.
      *
@@ -9654,7 +9654,7 @@
       }
 
       if (newOptions.endPointOffset !== undefined && newOptions.endPointOffset.to !== undefined) {
-        if (Number.isFinite(newOptions.endPointOffset.to)) { 
+        if (Number.isFinite(newOptions.endPointOffset.to)) {
           parentOptions.endPointOffset.to = newOptions.endPointOffset.to;
         } else {
           parentOptions.endPointOffset.to = globalOptions.endPointOffset.to !== undefined ? globalOptions.endPointOffset.to : 0;
@@ -9774,7 +9774,7 @@
         console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
         parentOptions.selfReference.size = newOptions.selfReferenceSize;
       }
-    
+
     }
 
 
@@ -10064,7 +10064,7 @@
 
       // get the via node from the edge type
       const viaNode = this.edgeType.getViaNode();
-      
+
       // draw line and label
       this.edgeType.drawLine(ctx, values, this.selected, this.hover, viaNode);
       this.drawLabel(ctx, viaNode);
@@ -10155,7 +10155,7 @@
           arrowData.middle.imageHeight = values.middleArrowImageHeight;
         }
       }
-      
+
       if (values.fromArrow) {
         this.edgeType.drawArrowHead(ctx, values, this.selected, this.hover, arrowData.from);
       }
@@ -10165,7 +10165,7 @@
       if (values.toArrow) {
         this.edgeType.drawArrowHead(ctx, values, this.selected, this.hover, arrowData.to);
       }
-      
+
     }
 
     /**
@@ -10227,7 +10227,7 @@
             this.options.selfReference.size,
             this.options.selfReference.angle
           );
-          
+
           this.labelModule.draw(ctx, point.x, point.y, this.selected, this.hover);
         }
       }
@@ -10289,7 +10289,7 @@
     }
 
 
-    /** 
+    /**
      * Determine the rotation point, if any.
      *
      * @param {CanvasRenderingContext2D} [ctx] if passed, do a recalculation of the label size
@@ -10337,7 +10337,7 @@
      * @param {number} x
      * @param {number} y
      * @param {number} radius
-     * @param {number} angle 
+     * @param {number} angle
      * @return {Object} point
      * @private
      */
@@ -10423,7 +10423,7 @@
           from:   {enabled: false, scaleFactor:1, type: 'arrow'}
         },
         endPointOffset: {
-          from: 0, 
+          from: 0,
           to: 0
         },
         arrowStrikethrough: true,
@@ -10488,7 +10488,7 @@
           }
         },
         selectionWidth: 1.5,
-        selfReference: { 
+        selfReference: {
           size: 20,
           angle: Math.PI / 4,
           renderBehindTheNode: true
@@ -10844,7 +10844,7 @@
      * @private
      */
     _removeInvalidEdges() {
-      
+
       const edgesToDelete = [];
 
       esnext.forEach(this.body.edges, (edge, id) => {
@@ -10868,11 +10868,11 @@
     /**
      * add all edges from dataset that are not in the cached state
      * @private
-     */ 
+     */
     _addMissingEdges() {
        const edgesData = this.body.data.edges;
        if (edgesData === undefined || edgesData === null) {
-         return;  // No edges DataSet yet; can happen on startup 
+         return;  // No edges DataSet yet; can happen on startup
        }
 
        const edges = this.body.edges;
@@ -10884,9 +10884,9 @@
              addIds.push(edgeId);
            }
        });
-       
+
        this.add(addIds,true);
-     }  
+     }
   }
 
   /**
@@ -12930,7 +12930,7 @@
   Due to nesting of clusters, these members can contain cluster nodes and edges as well.
 
   The important thing to note here, is that the clustered nodes and edges also
-  appear in the members of the cluster nodes. For data update, it is therefore 
+  appear in the members of the cluster nodes. For data update, it is therefore
   important to scan these lists as well as the cluster nodes.
 
 
@@ -12941,7 +12941,7 @@
   - `isCluster : true` - indication that this is a cluster node
   - `containedNodes`   - hash of nodes contained in this cluster
   - `containedEdges`   - same for edges
-  - `edges`            - array of cluster edges for this node 
+  - `edges`            - array of cluster edges for this node
 
 
   **NOTE:**
@@ -13603,7 +13603,7 @@
         return;
       }
 
-      // main body 
+      // main body
       const containedNodes = clusterNode.containedNodes;
       const containedEdges = clusterNode.containedEdges;
 
@@ -13668,7 +13668,7 @@
         for (let j = 0; j < edge.clusteringEdgeReplacingIds.length; j++) {
           const transferId = edge.clusteringEdgeReplacingIds[j];
           const transferEdge = this.body.edges[transferId];
-          if (transferEdge === undefined) continue; 
+          if (transferEdge === undefined) continue;
 
           // if the other node is in another cluster, we transfer ownership of this edge to the other cluster
           if (otherNode !== undefined) {
@@ -14150,7 +14150,7 @@
         }
       });
 
-      // Cluster nodes can also contain edges which are not clustered, 
+      // Cluster nodes can also contain edges which are not clustered,
       // i.e. nodes 1-2 within cluster with an edge in between.
       // So the cluster nodes also need to be scanned for invalid edges
       eachClusterNode(function(clusterNode) {
@@ -14254,7 +14254,7 @@
           this._restoreEdge(edge);
           // This should not be happening, the state should
           // be properly updated at this point.
-          // 
+          //
           // If it *is* reached during normal operation, then we have to implement
           // undo clustering for this edge here.
           // throw new Error('remove edge from clustering not implemented!')
@@ -14404,10 +14404,10 @@
       this.body.emitter.on("zoom", () => {
         this.zooming = true;
         window.clearTimeout(this.zoomTimeoutId);
-        this.zoomTimeoutId = window.setTimeout(() => { 
+        this.zoomTimeoutId = window.setTimeout(() => {
           this.zooming = false;
           this._requestRedraw.bind(this)();
-        }, 250); 
+        }, 250);
       });
       this.body.emitter.on("_resizeNodes", () => { this._resizeNodes(); });
       this.body.emitter.on("_redraw", () => {
@@ -14466,7 +14466,7 @@
      * @returns {function|undefined}
      * @private
      */
-    _requestNextFrame(callback, delay) { 
+    _requestNextFrame(callback, delay) {
       // During unit testing, it happens that the mock window object is reset while
       // the next frame is still pending. Then, either 'window' is not present, or
       // 'requestAnimationFrame()' is not present because it is not defined on the
@@ -14594,7 +14594,7 @@
 
         if (hidden === false) {
           if (
-            (this.dragging === false || (this.dragging === true && this.options.hideEdgesOnDrag === false)) && 
+            (this.dragging === false || (this.dragging === true && this.options.hideEdgesOnDrag === false)) &&
             (this.zooming === false || (this.zooming === true && this.options.hideEdgesOnZoom === false))
           ) {
             this._drawEdges(ctx);
@@ -14608,7 +14608,7 @@
         // draw the arrows last so they will be at the top
         if (hidden === false) {
           if (
-            (this.dragging === false || (this.dragging === true && this.options.hideEdgesOnDrag === false)) && 
+            (this.dragging === false || (this.dragging === true && this.options.hideEdgesOnDrag === false)) &&
             (this.zooming === false || (this.zooming === true && this.options.hideEdgesOnZoom === false))
           ) {
             this._drawArrows(ctx);
@@ -15421,7 +15421,7 @@
       const animationOptions = {position: center, scale: zoomLevel, animation: options.animation};
       this.moveTo(animationOptions);
     }
-    
+
     // animation
 
     /**
@@ -16379,7 +16379,7 @@
       this.drag.selection = [];
       this.drag.translation = Object.assign({},this.body.view.translation); // copy the object
       this.drag.nodeId = undefined;
-      
+
       if (event.srcEvent.shiftKey) {
         this.body.selectionBox.show = true;
         const pointer = this.getPointer(event.center);
@@ -16472,7 +16472,7 @@
         // create selection box
         if (event.srcEvent.shiftKey) {
           this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true);
-    
+
           // if the drag was not started properly because the click started outside the network div, start it now.
           if (this.drag.pointer === undefined) {
             this.onDragStart(event);
@@ -16482,11 +16482,11 @@
           this.body.selectionBox.position.end =  { x: this.canvas._XconvertDOMtoCanvas(pointer.x), y: this.canvas._YconvertDOMtoCanvas(pointer.y) };
           this.body.emitter.emit('_requestRedraw');
         }
-        
+
         // move the network
         if (this.options.dragView === true && !event.srcEvent.shiftKey) {
           this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true);
-    
+
           // if the drag was not started properly because the click started outside the network div, start it now.
           if (this.drag.pointer === undefined) {
             this.onDragStart(event);
@@ -16510,10 +16510,10 @@
      */
     onDragEnd(event) {
       this.drag.dragging = false;
-      
+
       if (this.body.selectionBox.show) {
         this.body.selectionBox.show = false;
-        const selectionBoxPosition = this.body.selectionBox.position; 
+        const selectionBoxPosition = this.body.selectionBox.position;
         const selectionBoxPositionMinMax = {
           minX: Math.min(selectionBoxPosition.start.x, selectionBoxPosition.end.x),
           minY: Math.min(selectionBoxPosition.start.y, selectionBoxPosition.end.y),
@@ -16525,7 +16525,7 @@
           const node = this.body.nodes[nodeId];
           return (
             node.x >= selectionBoxPositionMinMax.minX && node.x <= selectionBoxPositionMinMax.maxX &&
-            node.y >= selectionBoxPositionMinMax.minY && node.y <= selectionBoxPositionMinMax.maxY 
+            node.y >= selectionBoxPositionMinMax.minY && node.y <= selectionBoxPositionMinMax.maxY
           )
           });
 
@@ -17811,7 +17811,7 @@
 
 
     /**
-     * Add an offset to the unfixed coordinate of the given node. 
+     * Add an offset to the unfixed coordinate of the given node.
      *
      * @param {NodeId} nodeId Id of the node to adjust
      * @param {number} diff Offset to add to the unfixed coordinate
@@ -18133,7 +18133,7 @@
       this.levels = {};                // hierarchy level per node id
       this.distributionIndex = {};     // The position of the node in the level sorting order, per node id.
 
-      this.isTree = false;             // True if current network is a formal tree 
+      this.isTree = false;             // True if current network is a formal tree
       this.treeIndex = -1;             // Highest tree id in current network.
     }
 
@@ -19479,7 +19479,7 @@
     _getActiveEdges(node) {
       const result = [];
 
-      esnext.forEach(node.edges, (edge) => { 
+      esnext.forEach(node.edges, (edge) => {
         if (this.body.edgeIndices.indexOf(edge.id) !== -1) {
           result.push(edge);
         }
@@ -19499,7 +19499,7 @@
       const hubSizes = {};
       const nodeIds = this.body.nodeIndices;
 
-      esnext.forEach(nodeIds, (nodeId) => { 
+      esnext.forEach(nodeIds, (nodeId) => {
         const node = this.body.nodes[nodeId];
         const hubSize = this._getActiveEdges(node).length;
         hubSizes[hubSize] = true;
@@ -19507,7 +19507,7 @@
 
       // Make an array of the size sorted descending
       const result = [];
-      esnext.forEach(hubSizes, (size) => { 
+      esnext.forEach(hubSizes, (size) => {
         result.push(Number(size));
       });
 
@@ -19535,7 +19535,7 @@
         const hubSize = hubSizes[i];
         if (hubSize === 0) break;
 
-        esnext.forEach(this.body.nodeIndices, (nodeId) => { 
+        esnext.forEach(this.body.nodeIndices, (nodeId) => {
           const node = this.body.nodes[nodeId];
 
           if (hubSize === this._getActiveEdges(node).length) {
@@ -19763,9 +19763,9 @@
                      || this.options.hierarchical.direction === 'DU');
 
       if(isVertical) {
-        this.direction = new VerticalStrategy(this); 
+        this.direction = new VerticalStrategy(this);
       } else {
-        this.direction = new HorizontalStrategy(this); 
+        this.direction = new HorizontalStrategy(this);
       }
     }
 
@@ -20815,7 +20815,7 @@
 
         this.interactionHandler.drag.pointer = this.lastTouch; // Drag pointer is not updated when adding edges
         this.interactionHandler.drag.translation = this.lastTouch.translation;
-        
+
         const pointer = this.lastTouch;
         const node = this.selectionHandler.getNodeAt(pointer);
 
@@ -20877,7 +20877,7 @@
           break;
         }
       }
-      
+
       event.controlEdge = { from: connectFromId, to: node ? node.id : undefined };
       this.selectionHandler._generateClickEvent('controlNodeDragging', event, pointer);
 
@@ -22544,7 +22544,7 @@
       },
       selectionWidth: { 'function': 'function', number },
       selfReferenceSize: { number },
-      selfReference: { 
+      selfReference: {
         size: { number },
         angle: { number },
         renderBehindTheNode: { boolean: bool },
@@ -23007,7 +23007,7 @@
       },
       selectionWidth: [1.5, 0, 5, 0.1],
       selfReferenceSize: [20, 0, 200, 1],
-      selfReference: { 
+      selfReference: {
         size: [20, 0, 200, 1],
         angle: [Math.PI / 2, -6 * Math.PI, 6 * Math.PI, Math.PI / 8],
         renderBehindTheNode: true,

@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-01T01:36:56.995Z
+ * @date    2020-08-01T15:18:21.988Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5737,8 +5737,8 @@
 	 * ====
 	 *
 	 * For label handling, this is an incomplete implementation. From docs (quote #3015):
-	 * 
-	 * > the escape sequences "\n", "\l" and "\r" divide the label into lines, centered, 
+	 *
+	 * > the escape sequences "\n", "\l" and "\r" divide the label into lines, centered,
 	 * > left-justified, and right-justified, respectively.
 	 *
 	 * Source: http://www.graphviz.org/content/attrs#kescString
@@ -11206,14 +11206,14 @@
 	    value: function load(url, brokenUrl) {
 	      var _this = this;
 
-	      //Try and get the image from the cache, if successful then return the cached image   
+	      //Try and get the image from the cache, if successful then return the cached image
 	      var cachedImage = this.images[url];
 	      if (cachedImage) return cachedImage; //Create a new image
 
 	      var img = new CachedImage(); // Need to add to cache here, otherwise final return will spawn different copies of the same image,
 	      // Also, there will be multiple loads of the same image.
 
-	      this.images[url] = img; //Subscribe to the event that is raised if the image loads successfully 
+	      this.images[url] = img; //Subscribe to the event that is raised if the image loads successfully
 
 	      img.image.onload = function () {
 	        // Properly init the cached item and then request a redraw
@@ -21774,7 +21774,7 @@
 	 *
 	 * @param {string}  subOption  option within object 'chosen' to consider; either 'node', 'edge' or 'label'
 	 * @param {Object}  pile       array of options objects to consider
-	 * 
+	 *
 	 * @return {boolean|function}  value for passed subOption of 'chosen' to use
 	 */
 
@@ -21822,7 +21822,7 @@
 	    };
 
 	    if (rotationPoint.angle !== 0) {
-	      // In order to get the coordinates the same, you need to 
+	      // In order to get the coordinates the same, you need to
 	      // rotate in the reverse direction
 	      var angle = -rotationPoint.angle;
 	      var tmp2 = {
@@ -21858,9 +21858,9 @@
 	 * Returns x, y of self reference circle based on provided angle
 	 *
 	 * @param {Object} ctx
-	 * @param {number} angle 
-	 * @param {number} radius 
-	 * @param {VisNode} node 
+	 * @param {number} angle
+	 * @param {number} radius
+	 * @param {VisNode} node
 	 *
 	 * @returns {Object} x and y coordinates
 	 */
@@ -21871,7 +21871,7 @@
 
 	  if (typeof node.distanceToBorder === "function") {
 	    //calculating opposite and adjacent
-	    //distaneToBorder becomes Hypotenuse. 
+	    //distaneToBorder becomes Hypotenuse.
 	    //Formulas sin(a) = Opposite / Hypotenuse and cos(a) = Adjacent / Hypotenuse
 	    var toBorderDist = node.distanceToBorder(ctx, angle);
 	    var yFromNodeCenter = Math.sin(angle) * toBorderDist;
@@ -22025,7 +22025,7 @@
 	     * Determine and set the heights of all the lines currently contained in this instance
 	     *
 	     * Note that width has already been set.
-	     * 
+	     *
 	     * @private
 	     */
 
@@ -22053,7 +22053,7 @@
 	    }
 	    /**
 	     * Determine the full size of the label text, as determined by current lines and blocks
-	     * 
+	     *
 	     * @private
 	     */
 
@@ -22078,7 +22078,7 @@
 	    }
 	    /**
 	     * Remove all empty blocks and empty lines we don't need
-	     * 
+	     *
 	     * This must be done after the width/height determination,
 	     * so that these are set properly for processing here.
 	     *
@@ -22205,7 +22205,7 @@
 	  /**
 	   * Return the mod label currently on the top of the stack
 	   *
-	   * @returns {string}  label of topmost mod 
+	   * @returns {string}  label of topmost mod
 	   * @private
 	   */
 
@@ -22217,8 +22217,8 @@
 	    }
 	    /**
 	     * Return the mod label currently active
-	     * 
-	     * @returns {string}  label of active mod 
+	     *
+	     * @returns {string}  label of active mod
 	     * @private
 	     */
 
@@ -22369,7 +22369,7 @@
 	    /**
 	     * @param {string} tagName label for block type we are currently processing
 	     * @param {string|RegExp} tag string to match in text
-	     * @param {RegExp} [nextTag] regular expression to match for characters *following* the current tag 
+	     * @param {RegExp} [nextTag] regular expression to match for characters *following* the current tag
 	     * @returns {boolean} true if the tag was processed, false otherwise
 	     */
 
@@ -22469,7 +22469,7 @@
 	  /**
 	   * @param {CanvasRenderingContext2D} ctx Canvas rendering context
 	   * @param {Label} parent reference to the Label instance using current instance
-	   * @param {boolean} selected 
+	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   */
 	  function LabelSplitter(ctx, parent, selected, hover) {
@@ -22523,7 +22523,7 @@
 	   *
 	   * This might not be the best way to do it, but this is as it has been working till now.
 	   * In order not to break existing functionality, for the time being this behaviour will
-	   * be retained in any code changes. 
+	   * be retained in any code changes.
 	   *
 	   * @param {string} text  text to split
 	   * @returns {Array<line>}
@@ -22743,9 +22743,9 @@
 	      return this.lines.curWidth() + width > this.parent.fontOptions.maxWdt;
 	    }
 	    /**
-	     * Determine the longest part of the sentence which still fits in the 
+	     * Determine the longest part of the sentence which still fits in the
 	     * current max width.
-	     * 
+	     *
 	     * @param {Array} words  Array of strings signifying a text lines
 	     * @return {number}      index of first item in string making string go over max
 	     * @private
@@ -22770,7 +22770,7 @@
 	    /**
 	     * Determine the longest part of the string which still fits in the
 	     * current max width.
-	     * 
+	     *
 	     * @param {Array} words Array of strings signifying a text lines
 	     * @return {number} index of first item in string making string go over max
 	     */
@@ -22789,13 +22789,13 @@
 	    }
 	    /**
 	     * Split the passed text into lines, according to width constraint (if any).
-	     * 
+	     *
 	     * The method assumes that the input string is a single line, i.e. without lines break.
 	     *
 	     * This method retains spaces, if still present (case `font.multi: false`).
 	     * A space which falls on an internal line break, will be replaced by a newline.
 	     * There is no special handling of tabs; these go along with the flow.
-	     * 
+	     *
 	     * @param {string} str
 	     * @param {string} [mod='normal']
 	     * @param {boolean} [appendLast=false]
@@ -22899,7 +22899,7 @@
 	  createClass(Label, [{
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      this.elementOptions = options; // Reference to the options of the parent Node-instance 
+	      this.elementOptions = options; // Reference to the options of the parent Node-instance
 
 	      this.initFontOptions(options.font);
 
@@ -23076,7 +23076,7 @@
 	    /**
 	     * Add the font members of the passed list of option objects to the pile.
 	     *
-	     * @param {Pile} dstPile  pile of option objects add to 
+	     * @param {Pile} dstPile  pile of option objects add to
 	     * @param {Pile} srcPile  pile of option objects to take font options from
 	     * @private
 	     */
@@ -23128,7 +23128,7 @@
 	        }
 
 	        forEach$3(fontOptions, function (opt, name) {
-	          if (opt === undefined) return; // multi-font option need not be present 
+	          if (opt === undefined) return; // multi-font option need not be present
 
 	          if (Object.prototype.hasOwnProperty.call(ret, name)) return; // Keep first value we encounter
 
@@ -23322,7 +23322,7 @@
 	     * @param {number} x
 	     * @param {number} y
 	     * @param {string} [baseline='middle']
-	     * @param {number} viewFontSize 
+	     * @param {number} viewFontSize
 	     * @private
 	     */
 
@@ -23567,7 +23567,7 @@
 	        }
 
 	        if (fontOptions[mod][option] !== undefined) {
-	          // Grumbl leaving out test on undefined equals false for "" 
+	          // Grumbl leaving out test on undefined equals false for ""
 	          return fontOptions[mod][option];
 	        } else {
 	          // Take from parent font option
@@ -24259,7 +24259,7 @@
 	     * Set the images for this node.
 	     *
 	     * The images can be updated after the initial setting of options;
-	     * therefore, this method needs to be reentrant. 
+	     * therefore, this method needs to be reentrant.
 	     *
 	     * For correct working in error cases, it is necessary to properly set
 	     * field 'nodes.brokenImage' in the options.
@@ -26507,8 +26507,8 @@
 	    }
 	    /**
 	     * Check that opacity is only between 0 and 1
-	     * 
-	     * @param {Number} opacity 
+	     *
+	     * @param {Number} opacity
 	     * @returns {boolean}
 	     */
 
@@ -26916,8 +26916,8 @@
 	    }
 	    /**
 	     * Check that origin is 'center' or 'top-left'
-	     * 
-	     * @param {String} origin 
+	     *
+	     * @param {String} origin
 	     * @returns {boolean}
 	     */
 
@@ -30828,7 +30828,7 @@
 	        return false;
 	      }
 	    }
-	    /** 
+	    /**
 	     * Determine the rotation point, if any.
 	     *
 	     * @param {CanvasRenderingContext2D} [ctx] if passed, do a recalculation of the label size
@@ -30877,7 +30877,7 @@
 	     * @param {number} x
 	     * @param {number} y
 	     * @param {number} radius
-	     * @param {number} angle 
+	     * @param {number} angle
 	     * @return {Object} point
 	     * @private
 	     */
@@ -31650,7 +31650,7 @@
 	      var edgesData = this.body.data.edges;
 
 	      if (edgesData === undefined || edgesData === null) {
-	        return; // No edges DataSet yet; can happen on startup 
+	        return; // No edges DataSet yet; can happen on startup
 	      }
 
 	      var edges = this.body.edges;
@@ -34695,7 +34695,7 @@
 	        }
 
 	        return;
-	      } // main body 
+	      } // main body
 
 
 	      var containedNodes = clusterNode.containedNodes;
@@ -35291,7 +35291,7 @@
 	        if (edge === undefined || !edge.endPointsValid()) {
 	          deletedEdgeIds[edgeId] = edgeId;
 	        }
-	      }); // Cluster nodes can also contain edges which are not clustered, 
+	      }); // Cluster nodes can also contain edges which are not clustered,
 	      // i.e. nodes 1-2 within cluster with an edge in between.
 	      // So the cluster nodes also need to be scanned for invalid edges
 
@@ -35391,7 +35391,7 @@
 
 	          _this4._restoreEdge(edge); // This should not be happening, the state should
 	          // be properly updated at this point.
-	          // 
+	          //
 	          // If it *is* reached during normal operation, then we have to implement
 	          // undo clustering for this edge here.
 	          // throw new Error('remove edge from clustering not implemented!')
@@ -40386,7 +40386,7 @@
 	      this.abstract();
 	    }
 	    /**
-	     * Add an offset to the unfixed coordinate of the given node. 
+	     * Add an offset to the unfixed coordinate of the given node.
 	     *
 	     * @param {NodeId} nodeId Id of the node to adjust
 	     * @param {number} diff Offset to add to the unfixed coordinate
@@ -40881,7 +40881,7 @@
 
 	    this.distributionIndex = {}; // The position of the node in the level sorting order, per node id.
 
-	    this.isTree = false; // True if current network is a formal tree 
+	    this.isTree = false; // True if current network is a formal tree
 
 	    this.treeIndex = -1; // Highest tree id in current network.
 	  }
