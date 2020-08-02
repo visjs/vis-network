@@ -85,7 +85,7 @@
     "moment": "^2.24.0",
     "timsort": "^0.3.0",
     "uuid": "^3.4.0 || ^7.0.0 || ^8.0.0",
-    "vis-data": "^6.2.1",
+    "vis-data": "^6.2.1 || ^7.0.0",
     "vis-util": "^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
@@ -160,7 +160,7 @@
     "timsort": "0.3.0",
     "typescript": "3.9.7",
     "uuid": "8.3.0",
-    "vis-data": "6.6.1",
+    "vis-data": "7.0.0",
     "vis-dev-utils": "2.4.0",
     "vis-util": "4.3.4"
   },
