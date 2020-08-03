@@ -15,8 +15,6 @@ export { util };
 import * as data from "vis-data/esnext";
 export { data };
 export { DataSet, DataView, Queue } from "vis-data/esnext";
-import * as moment from "./module/moment";
-export { moment };
 import * as Hammer from "./module/hammer";
 export { Hammer };
 import * as keycharm from "keycharm";
