@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-05T17:09:50.071Z
+ * @date    2020-08-07T13:05:25.986Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -40929,7 +40929,7 @@ var allOptions$1 = {
     shape: {
       string: ['custom', 'ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon']
     },
-    customRenderer: {
+    ctxRenderer: {
       'function': 'function'
     },
     shapeProperties: {
