@@ -42,7 +42,7 @@ export function visSimpleCanvasSnapshot(
       deepObjectAssign<MoveToOptions>(
         {
           position: { x: 0, y: 0 },
-          scale: 1
+          scale: 1,
         },
         options.moveTo ?? {}
       )
