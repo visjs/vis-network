@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-07T21:42:59.187Z
+ * @date    2020-08-08T18:55:42.316Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18727,11 +18727,15 @@
 	     * @param {ArrowOptions} values
 	     * @param {function} customRenderer - a custom shape renderer similar to getShape(shape) functions
 	     * @private
+	     *
+	     * @returns {Object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
 	    key: "_drawShape",
 	    value: function _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values, customRenderer) {
+	      var _this = this;
+
 	      this.resize(ctx, selected, hover, values);
 	      this.left = x - this.width / 2;
 	      this.top = y - this.height / 2;
@@ -18767,14 +18771,21 @@
 	        }
 	      }
 
-	      if (this.options.label !== undefined) {
-	        // Need to call following here in order to ensure value for `this.labelModule.size.height`
-	        this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
-	        var yLabel = y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
-	        this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
-	      }
+	      return {
+	        drawExternalLabel: function drawExternalLabel() {
+	          if (_this.options.label !== undefined) {
+	            // Need to call following here in order to ensure value for
+	            // `this.labelModule.size.height`.
+	            _this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
 
-	      this.updateBoundingBox(x, y);
+	            var yLabel = y + 0.5 * _this.height + 0.5 * _this.labelModule.size.height;
+
+	            _this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+	          }
+
+	          _this.updateBoundingBox(x, y);
+	        }
+	      };
 	    }
 	    /**
 	     *
@@ -18983,13 +18994,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Diamond, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'diamond', 4, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'diamond', 4, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19040,13 +19053,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Dot, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'circle', 2, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'circle', 2, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19221,11 +19236,15 @@
 	     * @param {boolean} selected
 	     * @param {boolean} hover
 	     * @param {ArrowOptions} values
+	     *
+	     * @returns {Object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
+	      var _this2 = this;
+
 	      this.resize(ctx, selected, hover);
 	      this.options.icon.size = this.options.icon.size || 50;
 	      this.left = x - this.width / 2;
@@ -19233,12 +19252,17 @@
 
 	      this._icon(ctx, x, y, selected, hover, values);
 
-	      if (this.options.label !== undefined) {
-	        var iconTextSpacing = 5;
-	        this.labelModule.draw(ctx, this.left + this.iconSize.width / 2 + this.margin.left, y + this.height / 2 + iconTextSpacing, selected);
-	      }
+	      return {
+	        drawExternalLabel: function drawExternalLabel() {
+	          if (_this2.options.label !== undefined) {
+	            var iconTextSpacing = 5;
 
-	      this.updateBoundingBox(x, y);
+	            _this2.labelModule.draw(ctx, _this2.left + _this2.iconSize.width / 2 + _this2.margin.left, y + _this2.height / 2 + iconTextSpacing, selected);
+	          }
+
+	          _this2.updateBoundingBox(x, y);
+	        }
+	      };
 	    }
 	    /**
 	     *
@@ -19510,13 +19534,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Square, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'square', 2, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'square', 2, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19567,13 +19593,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Hexagon, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'hexagon', 4, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'hexagon', 4, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19624,13 +19652,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Star, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'star', 4, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'star', 4, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19769,13 +19799,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Triangle, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'triangle', 3, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'triangle', 3, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19826,13 +19858,15 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
+	   *
+	   * @returns {Object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(TriangleDown, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      this._drawShape(ctx, 'triangleDown', 3, x, y, selected, hover, values);
+	      return this._drawShape(ctx, 'triangleDown', 3, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -20755,13 +20789,15 @@
 	     * Draw this node in the given canvas
 	     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
 	     * @param {CanvasRenderingContext2D}   ctx
+	     *
+	     * @returns {Object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
 	    key: "draw",
 	    value: function draw(ctx) {
 	      var values = this.getFormattingValues();
-	      this.shape.draw(ctx, this.x, this.y, this.selected, this.hover, values);
+	      return this.shape.draw(ctx, this.x, this.y, this.selected, this.hover, values) || {};
 	    }
 	    /**
 	     * Update the bounding box of the shape
@@ -29405,6 +29441,11 @@
 	  return ClusterEngine;
 	}();
 
+	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+	function _unsupportedIterableToArray$4(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
+
+	function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * Initializes window.requestAnimationFrame() to a usable form.
 	 *
@@ -29691,7 +29732,10 @@
 
 	      if (this.allowRedraw === true) {
 	        this.body.emitter.emit("initRedraw");
-	        this.redrawRequested = false; // when the container div was hidden, this fixes it back up!
+	        this.redrawRequested = false;
+	        var drawLater = {
+	          drawExternalLabels: null
+	        }; // when the container div was hidden, this fixes it back up!
 
 	        if (this.canvas.frame.canvas.width === 0 || this.canvas.frame.canvas.height === 0) {
 	          this.canvas.setSize();
@@ -29723,7 +29767,10 @@
 	        }
 
 	        if (this.dragging === false || this.dragging === true && this.options.hideNodesOnDrag === false) {
-	          this._drawNodes(ctx, hidden);
+	          var _this$_drawNodes = this._drawNodes(ctx, hidden),
+	              drawExternalLabels = _this$_drawNodes.drawExternalLabels;
+
+	          drawLater.drawExternalLabels = drawExternalLabels;
 	        } // draw the arrows last so they will be at the top
 
 
@@ -29731,6 +29778,10 @@
 	          if ((this.dragging === false || this.dragging === true && this.options.hideEdgesOnDrag === false) && (this.zooming === false || this.zooming === true && this.options.hideEdgesOnZoom === false)) {
 	            this._drawArrows(ctx);
 	          }
+	        }
+
+	        if (drawLater.drawExternalLabels != null) {
+	          drawLater.drawExternalLabels();
 	        }
 
 	        if (hidden === false) {
@@ -29784,6 +29835,8 @@
 	     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
 	     * @param {boolean} [alwaysShow]
 	     * @private
+	     *
+	     * @returns {Object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
@@ -29809,7 +29862,8 @@
 	        left: topLeft.x,
 	        bottom: bottomRight.y,
 	        right: bottomRight.x
-	      }; // draw unselected nodes;
+	      };
+	      var _drawExternalLabels = []; // draw unselected nodes;
 
 	      for (var _i = 0; _i < nodeIndices.length; _i++) {
 	        node = nodes[nodeIndices[_i]]; // set selected and hovered nodes aside
@@ -29820,9 +29874,17 @@
 	          selected.push(nodeIndices[_i]);
 	        } else {
 	          if (alwaysShow === true) {
-	            node.draw(ctx);
+	            var drawLater = node.draw(ctx);
+
+	            if (drawLater.drawExternalLabel != null) {
+	              _drawExternalLabels.push(drawLater.drawExternalLabel);
+	            }
 	          } else if (node.isBoundingBoxOverlappingWith(viewableArea) === true) {
-	            node.draw(ctx);
+	            var _drawLater = node.draw(ctx);
+
+	            if (_drawLater.drawExternalLabel != null) {
+	              _drawExternalLabels.push(_drawLater.drawExternalLabel);
+	            }
 	          } else {
 	            node.updateBoundingBox(ctx, node.selected);
 	          }
@@ -29835,14 +29897,42 @@
 
 	      for (i = 0; i < selectedLength; i++) {
 	        node = nodes[selected[i]];
-	        node.draw(ctx);
+
+	        var _drawLater2 = node.draw(ctx);
+
+	        if (_drawLater2.drawExternalLabel != null) {
+	          _drawExternalLabels.push(_drawLater2.drawExternalLabel);
+	        }
 	      } // draw hovered nodes above everything else: fixes https://github.com/visjs/vis-network/issues/226
 
 
 	      for (i = 0; i < hoveredLength; i++) {
 	        node = nodes[hovered[i]];
-	        node.draw(ctx);
+
+	        var _drawLater3 = node.draw(ctx);
+
+	        if (_drawLater3.drawExternalLabel != null) {
+	          _drawExternalLabels.push(_drawLater3.drawExternalLabel);
+	        }
 	      }
+
+	      return {
+	        drawExternalLabels: function drawExternalLabels() {
+	          var _iterator = _createForOfIteratorHelper$3(_drawExternalLabels),
+	              _step;
+
+	          try {
+	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	              var draw = _step.value;
+	              draw();
+	            }
+	          } catch (err) {
+	            _iterator.e(err);
+	          } finally {
+	            _iterator.f();
+	          }
+	        }
+	      };
 	    }
 	    /**
 	     * Redraw all edges
@@ -34567,11 +34657,11 @@
 
 	var every$2 = every$1;
 
-	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$4(o, minLen) { var _context8; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context8 = Object.prototype.toString.call(o)).call(_context8, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
+	function _unsupportedIterableToArray$5(o, minLen) { var _context8; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context8 = Object.prototype.toString.call(o)).call(_context8, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
 
-	function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 	/**
 	 * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
@@ -34683,7 +34773,7 @@
 	  var edgeIdProp = direction + "Id";
 	  var newLevelDiff = direction === "to" ? 1 : -1;
 
-	  var _iterator = _createForOfIteratorHelper$3(nodes),
+	  var _iterator = _createForOfIteratorHelper$4(nodes),
 	      _step;
 
 	  try {

@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-07T21:42:59.187Z
+ * @date    2020-08-08T18:55:42.316Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5235,6 +5235,8 @@ class ShapeBase extends NodeBase {
    * @param {ArrowOptions} values
    * @param {function} customRenderer - a custom shape renderer similar to getShape(shape) functions
    * @private
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values, customRenderer) {
     this.resize(ctx, selected, hover, values);
@@ -5264,14 +5266,27 @@ class ShapeBase extends NodeBase {
       }
     }
 
-    if (this.options.label !== undefined) {
-      // Need to call following here in order to ensure value for `this.labelModule.size.height`
-      this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
-      const yLabel = y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
-      this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
-    }
+    return {
+      drawExternalLabel: () => {
+        if (this.options.label !== undefined) {
+          // Need to call following here in order to ensure value for
+          // `this.labelModule.size.height`.
+          this.labelModule.calculateLabelSize(
+            ctx,
+            selected,
+            hover,
+            x,
+            y,
+            'hanging'
+          );
+          const yLabel =
+            y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
+          this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+        }
 
-    this.updateBoundingBox(x,y);
+        this.updateBoundingBox(x,y);
+      },
+    };
   }
 
   /**
@@ -5424,9 +5439,11 @@ class Diamond extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'diamond', 4, x, y, selected, hover, values);
+    return this._drawShape(ctx, 'diamond', 4, x, y, selected, hover, values);
   }
 
   /**
@@ -5463,9 +5480,11 @@ class Dot extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'circle', 2, x, y, selected, hover, values);
+    return this._drawShape(ctx, 'circle', 2, x, y, selected, hover, values);
   }
 
   /**
@@ -5595,6 +5614,8 @@ class Icon extends NodeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
     this.resize(ctx, selected, hover);
@@ -5604,13 +5625,21 @@ class Icon extends NodeBase {
     this.top  = y - this.height / 2;
     this._icon(ctx, x, y, selected, hover, values);
 
-    if (this.options.label !== undefined) {
-      const iconTextSpacing = 5;
-      this.labelModule.draw(ctx, this.left + this.iconSize.width / 2 + this.margin.left,
-                                 y + this.height / 2 + iconTextSpacing, selected);
-    }
+    return {
+      drawExternalLabel: () => {
+        if (this.options.label !== undefined) {
+          const iconTextSpacing = 5;
+          this.labelModule.draw(
+            ctx,
+            this.left + this.iconSize.width / 2 + this.margin.left,
+            y + this.height / 2 + iconTextSpacing,
+            selected
+          );
+        }
 
-    this.updateBoundingBox(x, y);
+        this.updateBoundingBox(x, y);
+      }
+    };
   }
 
   /**
@@ -5858,9 +5887,11 @@ class Square extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'square', 2, x, y, selected, hover, values);
+    return this._drawShape(ctx, 'square', 2, x, y, selected, hover, values);
   }
 
   /**
@@ -5897,9 +5928,11 @@ class Hexagon extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'hexagon', 4, x, y, selected, hover, values);
+    return this._drawShape(ctx, 'hexagon', 4, x, y, selected, hover, values);
   }
 
   /**
@@ -5936,9 +5969,11 @@ class Star extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'star', 4, x, y, selected, hover, values);
+    return this._drawShape(ctx, 'star', 4, x, y, selected, hover, values);
   }
 
   /**
@@ -6042,9 +6077,11 @@ class Triangle extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'triangle', 3, x, y, selected, hover, values);
+    return this._drawShape(ctx, 'triangle', 3, x, y, selected, hover, values);
   }
 
   /**
@@ -6081,9 +6118,20 @@ class TriangleDown extends ShapeBase {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx, x, y, selected, hover, values) {
-    this._drawShape(ctx, 'triangleDown', 3, x, y, selected, hover, values);
+    return this._drawShape(
+      ctx,
+      'triangleDown',
+      3,
+      x,
+      y,
+      selected,
+      hover,
+      values
+    );
   }
 
   /**
@@ -7053,10 +7101,19 @@ class Node {
    * Draw this node in the given canvas
    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
    * @param {CanvasRenderingContext2D}   ctx
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   draw(ctx) {
     const values = this.getFormattingValues();
-    this.shape.draw(ctx, this.x, this.y, this.selected, this.hover, values);
+    return this.shape.draw(
+      ctx,
+      this.x,
+      this.y,
+      this.selected,
+      this.hover,
+      values
+    ) || {};
   }
 
 
@@ -14562,6 +14619,10 @@ class CanvasRenderer {
 
       this.redrawRequested = false;
 
+      const drawLater = {
+        drawExternalLabels: null,
+      };
+
       // when the container div was hidden, this fixes it back up!
       if (this.canvas.frame.canvas.width === 0 || this.canvas.frame.canvas.height === 0) {
         this.canvas.setSize();
@@ -14600,7 +14661,8 @@ class CanvasRenderer {
       }
 
       if (this.dragging === false || (this.dragging === true && this.options.hideNodesOnDrag === false)) {
-        this._drawNodes(ctx, hidden);
+        const { drawExternalLabels } = this._drawNodes(ctx, hidden);
+        drawLater.drawExternalLabels = drawExternalLabels;
       }
 
       // draw the arrows last so they will be at the top
@@ -14611,6 +14673,10 @@ class CanvasRenderer {
         ) {
           this._drawArrows(ctx);
         }
+      }
+
+      if (drawLater.drawExternalLabels != null) {
+        drawLater.drawExternalLabels();
       }
 
       if (hidden === false) {
@@ -14668,6 +14734,8 @@ class CanvasRenderer {
    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
    * @param {boolean} [alwaysShow]
    * @private
+   *
+   * @returns {Object} Callbacks to draw later on higher layers.
    */
   _drawNodes(ctx, alwaysShow = false) {
     const nodes = this.body.nodes;
@@ -14683,6 +14751,8 @@ class CanvasRenderer {
     });
     const viewableArea = {top:topLeft.y,left:topLeft.x,bottom:bottomRight.y,right:bottomRight.x};
 
+    const drawExternalLabels = [];
+
     // draw unselected nodes;
     for (let i = 0; i < nodeIndices.length; i++) {
       node = nodes[nodeIndices[i]];
@@ -14694,10 +14764,16 @@ class CanvasRenderer {
       }
       else {
         if (alwaysShow === true) {
-          node.draw(ctx);
+          const drawLater = node.draw(ctx);
+          if (drawLater.drawExternalLabel != null) {
+            drawExternalLabels.push(drawLater.drawExternalLabel);
+          }
         }
         else if (node.isBoundingBoxOverlappingWith(viewableArea) === true) {
-          node.draw(ctx);
+          const drawLater = node.draw(ctx);
+          if (drawLater.drawExternalLabel != null) {
+            drawExternalLabels.push(drawLater.drawExternalLabel);
+          }
         }
         else {
           node.updateBoundingBox(ctx, node.selected);
@@ -14712,15 +14788,28 @@ class CanvasRenderer {
     // draw the selected nodes on top
     for (i = 0; i < selectedLength; i++) {
       node = nodes[selected[i]];
-      node.draw(ctx);
+      const drawLater = node.draw(ctx);
+      if (drawLater.drawExternalLabel != null) {
+        drawExternalLabels.push(drawLater.drawExternalLabel);
+      }
     }
 
     // draw hovered nodes above everything else: fixes https://github.com/visjs/vis-network/issues/226
     for (i = 0; i < hoveredLength; i++) {
       node = nodes[hovered[i]];
-      node.draw(ctx);
+      const drawLater = node.draw(ctx);
+      if (drawLater.drawExternalLabel != null) {
+        drawExternalLabels.push(drawLater.drawExternalLabel);
+      }
     }
 
+    return {
+      drawExternalLabels: () => {
+        for (const draw of drawExternalLabels) {
+          draw();
+        }
+      },
+    };
   }
 
 
