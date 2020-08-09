@@ -52,6 +52,20 @@ type VisUtil = typeof visUtil;
   );
   console.info("config", config);
 
+  // Turn stringified fuctions into actual executable function.
+  for (const node of config?.nodes ?? []) {
+    if (node?.ctxRenderer != null) {
+      node.ctxRenderer = new Function(
+        "payload",
+        [
+          '"use strict";',
+          "",
+          "return (" + node.ctxRenderer + ")(payload);",
+        ].join("\n")
+      );
+    }
+  }
+
   const baseURL =
     config.version == null
       ? "../.."

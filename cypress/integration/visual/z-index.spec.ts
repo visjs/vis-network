@@ -1,4 +1,5 @@
 const EXTERNAL_LABEL_SHAPES = new Set<string>([
+  "custom",
   "diamond",
   "dot",
   "hexagon",
@@ -53,6 +54,24 @@ context("Z-index", (): void => {
                   color: "green",
                   size: 40,
                 },
+                ctxRenderer:
+                  "" +
+                  (({ ctx, x, y }: any): any => {
+                    const size = 300;
+                    const left = x - size / 2;
+                    const top = y - size / 2;
+                    return {
+                      drawNode() {
+                        ctx.fillStyle = "purple";
+                        ctx.fillRect(left, top, size, size);
+                      },
+                      drawExternalLabel() {
+                        ctx.font = "200px serif";
+                        ctx.fillStyle = "green";
+                        ctx.fillText("████", left, y + size);
+                      },
+                    };
+                  }),
               },
               {
                 id: 3,
@@ -110,7 +129,7 @@ context("Z-index", (): void => {
               },
             ],
           },
-          { requireNewerVersionThan: "8.0.1" }
+          { requireNewerVersionThan: "8.0.2" }
         );
       });
     }
