@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-08T21:18:39.888Z
+ * @date    2020-08-09T06:00:33.525Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5235,26 +5235,18 @@
      * @param {boolean} selected
      * @param {boolean} hover
      * @param {ArrowOptions} values
-     * @param {function} customRenderer - a custom shape renderer similar to getShape(shape) functions
      * @private
      *
      * @returns {Object} Callbacks to draw later on higher layers.
      */
-    _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values, customRenderer) {
+    _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values) {
       this.resize(ctx, selected, hover, values);
       this.left = x - this.width / 2;
       this.top = y - this.height / 2;
 
-      if (shape === 'custom') {
-        ctx.save();
-        customRenderer({ ctx, x, y, state: { selected, hover }, style: { ...values }, label: this.options.label });
-        ctx.restore();
-        return
-      } else {
-        this.initContextForDraw(ctx, values);
-        getShape(shape)(ctx, x, y, values.size);
-        this.performFill(ctx, values);
-      }
+      this.initContextForDraw(ctx, values);
+      getShape(shape)(ctx, x, y, values.size);
+      this.performFill(ctx, values);
 
       if (this.options.icon !== undefined) {
         if (this.options.icon.code !== undefined) {
@@ -5336,9 +5328,41 @@
      * @param {boolean} selected
      * @param {boolean} hover
      * @param {ArrowOptions} values
+     *
+     * @returns {Object} Callbacks to draw later on different layers.
      */
     draw(ctx, x, y, selected, hover, values) {
-      this._drawShape(ctx, 'custom', 4, x, y, selected, hover, values, this.ctxRenderer);
+      this.resize(ctx, selected, hover, values);
+      this.left = x - this.width / 2;
+      this.top = y - this.height / 2;
+
+      // Guard right away because someone may just draw in the function itself.
+      ctx.save();
+      const drawLater = this.ctxRenderer({
+        ctx,
+        x,
+        y,
+        state: { selected, hover },
+        style: { ...values },
+        label: this.options.label,
+      });
+      // Render the node shape bellow arrows.
+      if (drawLater.drawNode != null) {
+        drawLater.drawNode();
+      }
+      ctx.restore();
+
+      if (drawLater.drawExternalLabel) {
+        // Guard the external label (above arrows) drawing function.
+        const drawExternalLabel = drawLater.drawExternalLabel;
+        drawLater.drawExternalLabel = () => {
+          ctx.save();
+          drawExternalLabel();
+          ctx.restore();
+        };
+      }
+
+      return drawLater;
     }
 
     /**

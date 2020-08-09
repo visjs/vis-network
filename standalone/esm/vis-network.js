@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-08T21:18:39.888Z
+ * @date    2020-08-09T06:00:33.525Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18656,10 +18656,6 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
   return CircularImage;
 }(CircleImageBase);
 
-function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys$5(Object(source), true)).call(_context, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context2; forEach$2(_context2 = ownKeys$5(Object(source))).call(_context2, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
-
 function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
@@ -18720,7 +18716,6 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
      * @param {boolean} selected
      * @param {boolean} hover
      * @param {ArrowOptions} values
-     * @param {function} customRenderer - a custom shape renderer similar to getShape(shape) functions
      * @private
      *
      * @returns {Object} Callbacks to draw later on higher layers.
@@ -18728,33 +18723,15 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
 
   }, {
     key: "_drawShape",
-    value: function _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values, customRenderer) {
+    value: function _drawShape(ctx, shape, sizeMultiplier, x, y, selected, hover, values) {
       var _this = this;
 
       this.resize(ctx, selected, hover, values);
       this.left = x - this.width / 2;
       this.top = y - this.height / 2;
-
-      if (shape === 'custom') {
-        ctx.save();
-        customRenderer({
-          ctx: ctx,
-          x: x,
-          y: y,
-          state: {
-            selected: selected,
-            hover: hover
-          },
-          style: _objectSpread$1({}, values),
-          label: this.options.label
-        });
-        ctx.restore();
-        return;
-      } else {
-        this.initContextForDraw(ctx, values);
-        getShape(shape)(ctx, x, y, values.size);
-        this.performFill(ctx, values);
-      }
+      this.initContextForDraw(ctx, values);
+      getShape(shape)(ctx, x, y, values.size);
+      this.performFill(ctx, values);
 
       if (this.options.icon !== undefined) {
         if (this.options.icon.code !== undefined) {
@@ -18807,6 +18784,10 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
   return ShapeBase;
 }(NodeBase);
 
+function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys$5(Object(source), true)).call(_context, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context2; forEach$2(_context2 = ownKeys$5(Object(source))).call(_context2, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
+
 function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = getPrototypeOf$5(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = getPrototypeOf$5(this).constructor; result = construct$3(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn(this, result); }; }
 
 function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
@@ -18844,13 +18825,49 @@ var CustomShape = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} selected
    * @param {boolean} hover
    * @param {ArrowOptions} values
+   *
+   * @returns {Object} Callbacks to draw later on different layers.
    */
 
 
   createClass(CustomShape, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      this._drawShape(ctx, 'custom', 4, x, y, selected, hover, values, this.ctxRenderer);
+      this.resize(ctx, selected, hover, values);
+      this.left = x - this.width / 2;
+      this.top = y - this.height / 2; // Guard right away because someone may just draw in the function itself.
+
+      ctx.save();
+      var drawLater = this.ctxRenderer({
+        ctx: ctx,
+        x: x,
+        y: y,
+        state: {
+          selected: selected,
+          hover: hover
+        },
+        style: _objectSpread$1({}, values),
+        label: this.options.label
+      }); // Render the node shape bellow arrows.
+
+      if (drawLater.drawNode != null) {
+        drawLater.drawNode();
+      }
+
+      ctx.restore();
+
+      if (drawLater.drawExternalLabel) {
+        // Guard the external label (above arrows) drawing function.
+        var drawExternalLabel = drawLater.drawExternalLabel;
+
+        drawLater.drawExternalLabel = function () {
+          ctx.save();
+          drawExternalLabel();
+          ctx.restore();
+        };
+      }
+
+      return drawLater;
     }
     /**
      *
