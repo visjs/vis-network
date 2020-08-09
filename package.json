@@ -153,7 +153,7 @@
     "serve": "11.3.2",
     "sinon": "9.0.2",
     "snap-shot-it": "7.9.3",
-    "start-server-and-test": "1.11.2",
+    "start-server-and-test": "1.11.3",
     "timsort": "0.3.0",
     "typescript": "3.9.7",
     "uuid": "8.3.0",
