@@ -151,7 +151,7 @@
     "sazerac": "2.0.0",
     "semantic-release": "17.1.1",
     "serve": "11.3.2",
-    "sinon": "9.0.2",
+    "sinon": "9.0.3",
     "snap-shot-it": "7.9.3",
     "start-server-and-test": "1.11.3",
     "timsort": "0.3.0",
