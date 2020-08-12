@@ -440,9 +440,7 @@ function ctxRenderer({ ctx, x, y, state: { selected, hover }, style, label }) {
       ctx.drawSomeTextOutsideOfTheNode();
     },
     // node dimensions defined by node drawing
-    nodeDimensions() {
-      return { width, height };
-    },
+    nodeDimensions: { width, height },
   };
 }
                 </pre>
