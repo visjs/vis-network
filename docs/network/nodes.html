@@ -429,6 +429,7 @@ network.setOptions(options);
                 <p>
                     This function allows to draw any canvas shapes and lines (see guide to how to draw shapes <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes">here</a>)
                     This property is used only when the property <code>shape</code> is <code>'custom'</code>. 
+                    The function should return a <code>{ width, height }</code> object so that the node can render the sizing properly. 
                 </p>
                 example: 
                 <pre class="code">
