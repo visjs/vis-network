@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-12T22:42:25.504Z
+ * @date    2020-08-13T20:48:19.412Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18699,10 +18699,12 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
       };
 
       if (this.needsRefresh(selected, hover)) {
+        var _this$customSizeWidth, _this$customSizeHeigh;
+
         this.labelModule.getTextSize(ctx, selected, hover);
         var size = 2 * values.size;
-        this.width = size;
-        this.height = size;
+        this.width = (_this$customSizeWidth = this.customSizeWidth) !== null && _this$customSizeWidth !== void 0 ? _this$customSizeWidth : size;
+        this.height = (_this$customSizeHeigh = this.customSizeHeight) !== null && _this$customSizeHeigh !== void 0 ? _this$customSizeHeigh : size;
         this.radius = 0.5 * this.width;
       }
     }
@@ -18735,7 +18737,7 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
 
       if (this.options.icon !== undefined) {
         if (this.options.icon.code !== undefined) {
-          ctx.font = (selected ? "bold " : "") + this.height / 2 + "px " + (this.options.icon.face || 'FontAwesome');
+          ctx.font = (selected ? "bold " : "") + this.height / 2 + "px " + (this.options.icon.face || "FontAwesome");
           ctx.fillStyle = this.options.icon.color || "black";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
@@ -18865,6 +18867,11 @@ var CustomShape = /*#__PURE__*/function (_ShapeBase) {
           drawExternalLabel();
           ctx.restore();
         };
+      }
+
+      if (drawLater.nodeDimensions) {
+        this.customSizeWidth = drawLater.nodeDimensions.width;
+        this.customSizeHeight = drawLater.nodeDimensions.height;
       }
 
       return drawLater;

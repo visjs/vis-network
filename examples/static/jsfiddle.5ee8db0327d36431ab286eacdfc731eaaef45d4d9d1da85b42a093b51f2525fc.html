@@ -122,29 +122,121 @@ function draw() {
       shape: "custom",
       ctxRenderer: ({ ctx, x, y, state: { selected, hover }, style }) =&gt; {
         const r = style.size;
+        const drawNode = () =&gt; {
+          ctx.beginPath();
+          const sides = 6;
+          const a = (Math.PI * 2) / sides;
+          ctx.moveTo(x, y + r);
+          for (let i = 1; i &lt; sides; i++) {
+            ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
+          }
+          ctx.closePath();
+          ctx.save();
+          ctx.fillStyle = "red";
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
 
-        ctx.beginPath();
-        const sides = 6;
-        const a = (Math.PI * 2) / sides;
-        ctx.moveTo(x, y + r);
-        for (let i = 1; i &lt; sides; i++) {
-          ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
-        }
-        ctx.closePath();
+          ctx.font = "normal 12px sans-serif";
+          ctx.fillStyle = "black";
+          ctx.fillText("custom shape", x - r + 10, y, 2 * r - 20);
+        };
+        return {
+          drawNode,
+          nodeDimensions: { width: 2 * r, height: 2 * r },
+        };
+      },
+    },
+    {
+      id: 37,
+      label: "FIELD---my value",
+      shape: "custom",
+      group: "a",
+      ctxRenderer: ({
+        ctx,
+        x,
+        y,
+        state: { selected, hover },
+        style,
+        label,
+      }) =&gt; {
+        const splittedLabel = label.split("---");
         ctx.save();
-        ctx.fillStyle = "red";
-        ctx.fill();
-        ctx.stroke();
         ctx.restore();
+        const labelText = splittedLabel[0];
+        const valueText = splittedLabel[1];
+        const r = 5;
 
-        ctx.font = "normal 12px sans-serif";
-        ctx.fillStyle = "black";
-        ctx.fillText("custom shape", x - r + 10, y, 2 * r - 20);
+        const labelWidth = ctx.measureText(labelText).width;
+        const valueWidth = ctx.measureText(valueText).width;
+
+        const wPadding = 10;
+        const hPadding = 10;
+
+        const w = 200;
+        const h = 60;
+        const drawNode = () =&gt; {
+          const r2d = Math.PI / 180;
+          if (w - 2 * r &lt; 0) {
+            r = w / 2;
+          } //ensure that the radius isn&apos;t too large for x
+          if (h - 2 * r &lt; 0) {
+            r = h / 2;
+          } //ensure that the radius isn&apos;t too large for y
+
+          const top = y - h / 2;
+          const left = x - w / 2;
+
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(left + r, top);
+          ctx.lineTo(left + w - r, top);
+          ctx.arc(left + w - r, top + r, r, r2d * 270, r2d * 360, false);
+          ctx.lineTo(left + w, top + h - r);
+          ctx.arc(left + w - r, top + h - r, r, 0, r2d * 90, false);
+          ctx.lineTo(left + r, top + h);
+          ctx.arc(left + r, top + h - r, r, r2d * 90, r2d * 180, false);
+          ctx.lineTo(left, top + r);
+          ctx.arc(left + r, top + r, r, r2d * 180, r2d * 270, false);
+          ctx.closePath();
+          ctx.save();
+          ctx.fillStyle = style.color || "#56CCF2";
+          ctx.fill();
+          ctx.strokeStyle = "#FFFFFF";
+          ctx.stroke();
+
+          // label text
+          ctx.font = "normal 12px sans-serif";
+          ctx.fillStyle = "grey";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          const textHeight1 = 12;
+          ctx.fillText(
+            labelText,
+            left + w / 2,
+            top + textHeight1 + hPadding,
+            w
+          );
+
+          // value text
+          ctx.font = "bold 14px sans-serif";
+          ctx.fillStyle = "black";
+          const textHeight2 = 12;
+
+          ctx.fillText(valueText, left + w / 2, top + h / 2 + hPadding, w);
+        };
+
+        ctx.save();
+        ctx.restore();
+        return {
+          drawNode,
+          nodeDimensions: { width: w, height: h },
+        };
       },
     },
   ];
 
-  edges = [];
+  edges = [{ from: 1, to: 37, arrows: { to: { enabled: true } } }];
 
   // create a network
   var container = document.getElementById("mynetwork");

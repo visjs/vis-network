@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-12T22:42:25.504Z
+ * @date    2020-08-13T20:48:19.412Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5219,9 +5219,9 @@
       if (this.needsRefresh(selected, hover)) {
         this.labelModule.getTextSize(ctx, selected, hover);
         const size = 2 * values.size;
-        this.width = size;
-        this.height = size;
-        this.radius = 0.5*this.width;
+        this.width = this.customSizeWidth ?? size;
+        this.height = this.customSizeHeight ?? size;
+        this.radius = 0.5 * this.width;
       }
     }
 
@@ -5250,9 +5250,11 @@
 
       if (this.options.icon !== undefined) {
         if (this.options.icon.code !== undefined) {
-          ctx.font = (selected ? "bold " : "")
-              + (this.height / 2) + "px "
-              + (this.options.icon.face || 'FontAwesome');
+          ctx.font =
+            (selected ? "bold " : "") +
+            this.height / 2 +
+            "px " +
+            (this.options.icon.face || "FontAwesome");
           ctx.fillStyle = this.options.icon.color || "black";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
@@ -5265,14 +5267,7 @@
           if (this.options.label !== undefined) {
             // Need to call following here in order to ensure value for
             // `this.labelModule.size.height`.
-            this.labelModule.calculateLabelSize(
-              ctx,
-              selected,
-              hover,
-              x,
-              y,
-              'hanging'
-            );
+            this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
             const yLabel =
               y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
             this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
@@ -5360,6 +5355,11 @@
           drawExternalLabel();
           ctx.restore();
         };
+      }
+
+      if (drawLater.nodeDimensions) {
+        this.customSizeWidth = drawLater.nodeDimensions.width;
+        this.customSizeHeight = drawLater.nodeDimensions.height;
       }
 
       return drawLater;

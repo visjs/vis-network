@@ -439,6 +439,8 @@ function ctxRenderer({ ctx, x, y, state: { selected, hover }, style, label }) {
     drawExternalLabel() {
       ctx.drawSomeTextOutsideOfTheNode();
     },
+    // node dimensions defined by node drawing
+    nodeDimensions: { width, height },
   };
 }
                 </pre>
