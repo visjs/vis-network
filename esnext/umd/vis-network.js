@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-13T20:48:19.412Z
+ * @date    2020-08-13T23:27:52.618Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -29,10 +29,12 @@
   typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'keycharm', '@egjs/hammerjs', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'timsort'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.keycharm, global.Hammer, global.vis, global.uuid, global.timsort));
 }(this, (function (exports, Emitter, esnext, keycharm, hammerjs, esnext$1, uuid, TimSort) {
-  Emitter = Emitter && Object.prototype.hasOwnProperty.call(Emitter, 'default') ? Emitter['default'] : Emitter;
-  keycharm = keycharm && Object.prototype.hasOwnProperty.call(keycharm, 'default') ? keycharm['default'] : keycharm;
-  hammerjs = hammerjs && Object.prototype.hasOwnProperty.call(hammerjs, 'default') ? hammerjs['default'] : hammerjs;
-  var TimSort__default = 'default' in TimSort ? TimSort['default'] : TimSort;
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+  var Emitter__default = /*#__PURE__*/_interopDefaultLegacy(Emitter);
+  var keycharm__default = /*#__PURE__*/_interopDefaultLegacy(keycharm);
+  var hammerjs__default = /*#__PURE__*/_interopDefaultLegacy(hammerjs);
+  var TimSort__default = /*#__PURE__*/_interopDefaultLegacy(TimSort);
 
   /**
    * Draw a circle.
@@ -1762,7 +1764,7 @@
 
 
   if (typeof window !== 'undefined') {
-    const Hammer = window['Hammer'] || hammerjs;
+    const Hammer = window['Hammer'] || hammerjs__default['default'];
     module.exports = Hammer;
   }
   else {
@@ -1823,14 +1825,14 @@
     if (this.keycharm !== undefined) {
       this.keycharm.destroy();
     }
-    this.keycharm = keycharm();
+    this.keycharm = keycharm__default['default']();
 
     // keycharm listener only bounded when active)
     this.escListener = this.deactivate.bind(this);
   }
 
   // turn into an event emitter
-  Emitter(Activator.prototype);
+  Emitter__default['default'](Activator.prototype);
 
   // The currently active activator
   Activator.current = null;
@@ -16020,10 +16022,10 @@
 
       if (this.options.keyboard.enabled === true) {
         if (this.options.keyboard.bindToWindow === true) {
-          this.keycharm = keycharm({container: window, preventDefault: true});
+          this.keycharm = keycharm__default['default']({container: window, preventDefault: true});
         }
         else {
-          this.keycharm = keycharm({container: this.canvas.frame, preventDefault: true});
+          this.keycharm = keycharm__default['default']({container: this.canvas.frame, preventDefault: true});
         }
 
         this.keycharm.reset();
@@ -19624,7 +19626,7 @@
         result.push(Number(size));
       });
 
-      TimSort__default.sort(result, function(a, b) {
+      TimSort__default['default'].sort(result, function(a, b) {
         return b - a;
       });
 
@@ -23722,7 +23724,7 @@
   }
 
   // Extend Network with an Emitter mixin
-  Emitter(Network.prototype);
+  Emitter__default['default'](Network.prototype);
 
 
   /**
