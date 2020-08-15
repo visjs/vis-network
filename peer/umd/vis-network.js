@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-15T12:45:04.959Z
+ * @date    2020-08-15T13:13:34.636Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -39,10 +39,6 @@
 	      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
 	    }
 		}, fn(module, module.exports), module.exports;
-	}
-
-	function getCjsExportFromNamespace (n) {
-		return n && n['default'] || n;
 	}
 
 	function commonjsRequire () {
@@ -2973,21 +2969,9 @@
 	  }
 	});
 
-	// empty
-
-	var es_object_toString = /*#__PURE__*/Object.freeze({
-		__proto__: null
-	});
-
 	// https://tc39.github.io/ecma262/#sec-symbol.asynciterator
 
 	defineWellKnownSymbol('asyncIterator');
-
-	// empty
-
-	var es_symbol_description = /*#__PURE__*/Object.freeze({
-		__proto__: null
-	});
 
 	// https://tc39.github.io/ecma262/#sec-symbol.hasinstance
 
@@ -3042,10 +3026,6 @@
 	// https://tc39.github.io/ecma262/#sec-json-@@tostringtag
 
 	setToStringTag(global_1.JSON, 'JSON', true);
-
-	getCjsExportFromNamespace(es_object_toString);
-
-	getCjsExportFromNamespace(es_symbol_description);
 
 	var symbol = path.Symbol;
 
