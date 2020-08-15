@@ -122,7 +122,7 @@
     "cpy-cli": "3.1.1",
     "cypress": "4.12.1",
     "cypress-visual-regression": "1.5.0",
-    "eslint": "7.6.0",
+    "eslint": "7.7.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-cypress": "2.11.1",
     "eslint-plugin-prettier": "3.1.4",
