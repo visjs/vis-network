@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-15T06:02:43.567Z
+ * @date    2020-08-15T12:45:04.959Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -9799,41 +9799,35 @@ var Hammer = /*#__PURE__*/function () {
   return Hammer;
 }(); //  style loader but by script tag, not by the loader.
 
-var hammer = createCommonjsModule(function (module) {
-  /**
-   * Setup a mock hammer.js object, for unit testing.
-   *
-   * Inspiration: https://github.com/uber/deck.gl/pull/658
-   *
-   * @returns {{on: noop, off: noop, destroy: noop, emit: noop, get: get}}
-   */
-  function hammerMock() {
-    var noop = function noop() {};
+/**
+ * Setup a mock hammer.js object, for unit testing.
+ *
+ * Inspiration: https://github.com/uber/deck.gl/pull/658
+ *
+ * @returns {{on: noop, off: noop, destroy: noop, emit: noop, get: get}}
+ */
 
-    return {
-      on: noop,
-      off: noop,
-      destroy: noop,
-      emit: noop,
-      get: function get(m) {
-        //eslint-disable-line no-unused-vars
-        return {
-          set: noop
-        };
-      }
-    };
-  }
+function hammerMock() {
+  var noop = function noop() {};
 
-  if (typeof window !== 'undefined') {
-    var Hammer$1 = window['Hammer'] || Hammer;
-    module.exports = Hammer$1;
-  } else {
-    module.exports = function () {
-      // hammer.js is only available in a browser, not in node.js. Replacing it with a mock object.
-      return hammerMock();
-    };
-  }
-});
+  return {
+    on: noop,
+    off: noop,
+    destroy: noop,
+    emit: noop,
+    get: function get(m) {
+      //eslint-disable-line no-unused-vars
+      return {
+        set: noop
+      };
+    }
+  };
+}
+
+var Hammer$1 = typeof window !== "undefined" ? window.Hammer || Hammer : function () {
+  // hammer.js is only available in a browser, not in node.js. Replacing it with a mock object.
+  return hammerMock();
+};
 
 /**
  * Turn an element into an clickToUse element.
@@ -9858,7 +9852,7 @@ function Activator(container) {
   this.dom.overlay = document.createElement('div');
   this.dom.overlay.className = 'vis-overlay';
   this.dom.container.appendChild(this.dom.overlay);
-  this.hammer = hammer(this.dom.overlay);
+  this.hammer = Hammer$1(this.dom.overlay);
   this.hammer.on('tap', bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
 
   var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
@@ -30344,14 +30338,14 @@ var Canvas = /*#__PURE__*/function () {
       this.drag = {};
       this.pinch = {}; // init hammer
 
-      this.hammer = new hammer(this.frame.canvas);
+      this.hammer = new Hammer$1(this.frame.canvas);
       this.hammer.get('pinch').set({
         enable: true
       }); // enable to get better response, todo: test on mobile.
 
       this.hammer.get('pan').set({
         threshold: 5,
-        direction: hammer.DIRECTION_ALL
+        direction: Hammer$1.DIRECTION_ALL
       });
       onTouch(this.hammer, function (event) {
         _this3.body.eventListeners.onTouch(event);
@@ -30387,7 +30381,7 @@ var Canvas = /*#__PURE__*/function () {
       this.frame.canvas.addEventListener('contextmenu', function (event) {
         _this3.body.eventListeners.onContext(event);
       });
-      this.hammerFrame = new hammer(this.frame);
+      this.hammerFrame = new Hammer$1(this.frame);
       onRelease(this.hammerFrame, function (event) {
         _this3.body.eventListeners.onRelease(event);
       });
@@ -31188,24 +31182,24 @@ var NavigationHandler = /*#__PURE__*/function () {
         this.navigationDOM[navigationDivs[i]] = document.createElement('div');
         this.navigationDOM[navigationDivs[i]].className = 'vis-button vis-' + navigationDivs[i];
         this.navigationDOM['wrapper'].appendChild(this.navigationDOM[navigationDivs[i]]);
-        var hammer$1 = new hammer(this.navigationDOM[navigationDivs[i]]);
+        var hammer = new Hammer$1(this.navigationDOM[navigationDivs[i]]);
 
         if (navigationDivActions[i] === "_fit") {
           var _context;
 
-          onTouch(hammer$1, bind$2(_context = this._fit).call(_context, this));
+          onTouch(hammer, bind$2(_context = this._fit).call(_context, this));
         } else {
           var _context2;
 
-          onTouch(hammer$1, bind$2(_context2 = this.bindToRedraw).call(_context2, this, navigationDivActions[i]));
+          onTouch(hammer, bind$2(_context2 = this.bindToRedraw).call(_context2, this, navigationDivActions[i]));
         }
 
-        this.navigationHammers.push(hammer$1);
+        this.navigationHammers.push(hammer);
       } // use a hammer for the release so we do not require the one used in the rest of the network
       // the one the rest uses can be overloaded by the manipulation system.
 
 
-      var hammerFrame = new hammer(this.canvas.frame);
+      var hammerFrame = new Hammer$1(this.canvas.frame);
       onRelease(hammerFrame, function () {
         _this2._stopMovement();
       });
@@ -37859,9 +37853,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_bindHammerToDiv",
     value: function _bindHammerToDiv(domElement, boundFunction) {
-      var hammer$1 = new hammer(domElement, {});
-      onTouch(hammer$1, boundFunction);
-      this.manipulationHammers.push(hammer$1);
+      var hammer = new Hammer$1(domElement, {});
+      onTouch(hammer, boundFunction);
+      this.manipulationHammers.push(hammer);
     }
     /**
      * Neatly clean up temporary edges and nodes
@@ -39016,7 +39010,7 @@ var ColorPicker = /*#__PURE__*/function () {
 
       this.drag = {};
       this.pinch = {};
-      this.hammer = new hammer(this.colorPickerCanvas);
+      this.hammer = new Hammer$1(this.colorPickerCanvas);
       this.hammer.get('pinch').set({
         enable: true
       });
