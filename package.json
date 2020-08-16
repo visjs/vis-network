@@ -136,7 +136,7 @@
     "typescript": "3.9.7",
     "uuid": "8.3.0",
     "vis-data": "7.0.0",
-    "vis-dev-utils": "2.6.1",
+    "vis-dev-utils": "2.6.2",
     "vis-util": "4.3.4"
   },
   "collective": {
