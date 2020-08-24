@@ -120,7 +120,7 @@
     "mocha": "8.1.1",
     "nyc": "15.1.0",
     "opencollective": "1.0.3",
-    "prettier": "2.0.5",
+    "prettier": "2.1.0",
     "rimraf": "3.0.2",
     "rollup": "2.26.5",
     "rollup-plugin-commonjs": "10.1.0",
