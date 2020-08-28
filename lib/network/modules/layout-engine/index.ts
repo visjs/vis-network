@@ -53,14 +53,10 @@ function fillLevelsByDirectionCyclic(
  * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
  *
  * @param nodes - Visible nodes of the graph.
- * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
-export function fillLevelsByDirectionLeaves(
-  nodes: Map<Id, Node>,
-  levels: Levels = Object.create(null)
-): Levels {
+export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
   return fillLevelsByDirection(
     // Pick only leaves (nodes without children).
     (node): boolean =>
@@ -73,8 +69,7 @@ export function fillLevelsByDirectionLeaves(
     (newLevel, oldLevel): boolean => oldLevel > newLevel,
     // Go against the direction of the edges.
     "from",
-    nodes,
-    levels
+    nodes
   );
 }
 
@@ -82,14 +77,10 @@ export function fillLevelsByDirectionLeaves(
  * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
  *
  * @param nodes - Visible nodes of the graph.
- * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
-export function fillLevelsByDirectionRoots(
-  nodes: Map<Id, Node>,
-  levels: Levels = Object.create(null)
-): Levels {
+export function fillLevelsByDirectionRoots(nodes: Map<Id, Node>): Levels {
   return fillLevelsByDirection(
     // Pick only roots (nodes without parents).
     (node): boolean =>
@@ -102,8 +93,7 @@ export function fillLevelsByDirectionRoots(
     (newLevel, oldLevel): boolean => oldLevel < newLevel,
     // Go in the direction of the edges.
     "to",
-    nodes,
-    levels
+    nodes
   );
 }
 
@@ -114,7 +104,6 @@ export function fillLevelsByDirectionRoots(
  * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
  * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
  * @param nodes - Visible nodes of the graph.
- * @param levels - If present levels will be added to it, if not a new object will be created.
  *
  * @returns Populated node levels.
  */
@@ -122,10 +111,21 @@ function fillLevelsByDirection(
   isEntryNode: (node: Node) => boolean,
   shouldLevelBeReplaced: (newLevel: number, oldLevel: number) => boolean,
   direction: "to" | "from",
-  nodes: Map<Id, Node>,
-  levels: Levels
+  nodes: Map<Id, Node>
 ): Levels {
-  const limit = nodes.size;
+  const levels = Object.create(null);
+
+  // If acyclic, the graph can be walked through with (most likely way) fewer
+  // steps than the number bellow. The exact value isn't too important as long
+  // as it's quick to compute (doesn't impact acyclic graphs too much), is
+  // higher than the number of steps actually needed (doesn't cut off before
+  // acyclic graph is walked through) and prevents infinite loops (cuts off for
+  // cyclic graphs).
+  const limit = [...nodes.values()].reduce<number>(
+    (acc, node): number => acc + 1 + node.edges.length,
+    0
+  );
+
   const edgeIdProp: "fromId" | "toId" = (direction + "Id") as "fromId" | "toId";
   const newLevelDiff = direction === "to" ? 1 : -1;
 
