@@ -125,7 +125,7 @@
     "rollup": "2.26.7",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
-    "rollup-plugin-terser": "7.0.0",
+    "rollup-plugin-terser": "7.0.1",
     "sazerac": "2.0.0",
     "semantic-release": "17.1.1",
     "serve": "11.3.2",
