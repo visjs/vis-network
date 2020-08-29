@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-29T02:44:24.745Z
+ * @date    2020-08-29T07:35:36.938Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -30689,7 +30689,7 @@
 
 	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$4(o, minLen) { var _context8; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context8 = Object.prototype.toString.call(o)).call(_context8, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
+	function _unsupportedIterableToArray$4(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
 
 	function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -30733,14 +30733,12 @@
 	 * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
 	 *
 	 * @param nodes - Visible nodes of the graph.
-	 * @param levels - If present levels will be added to it, if not a new object will be created.
 	 *
 	 * @returns Populated node levels.
 	 */
 
 
 	function fillLevelsByDirectionLeaves(nodes) {
-	  var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : create$2(null);
 	  return fillLevelsByDirection( // Pick only leaves (nodes without children).
 	  function (node) {
 	    var _context2, _context3;
@@ -30756,19 +30754,17 @@
 	  function (newLevel, oldLevel) {
 	    return oldLevel > newLevel;
 	  }, // Go against the direction of the edges.
-	  "from", nodes, levels);
+	  "from", nodes);
 	}
 	/**
 	 * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
 	 *
 	 * @param nodes - Visible nodes of the graph.
-	 * @param levels - If present levels will be added to it, if not a new object will be created.
 	 *
 	 * @returns Populated node levels.
 	 */
 
 	function fillLevelsByDirectionRoots(nodes) {
-	  var levels = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : create$2(null);
 	  return fillLevelsByDirection( // Pick only roots (nodes without parents).
 	  function (node) {
 	    var _context4, _context5;
@@ -30784,7 +30780,7 @@
 	  function (newLevel, oldLevel) {
 	    return oldLevel < newLevel;
 	  }, // Go in the direction of the edges.
-	  "to", nodes, levels);
+	  "to", nodes);
 	}
 	/**
 	 * Assign levels to nodes according to their positions in the hierarchy.
@@ -30793,13 +30789,25 @@
 	 * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
 	 * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
 	 * @param nodes - Visible nodes of the graph.
-	 * @param levels - If present levels will be added to it, if not a new object will be created.
 	 *
 	 * @returns Populated node levels.
 	 */
 
-	function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes, levels) {
-	  var limit = nodes.size;
+	function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes) {
+	  var _context6;
+
+	  var levels = create$2(null); // If acyclic, the graph can be walked through with (most likely way) fewer
+	  // steps than the number bellow. The exact value isn't too important as long
+	  // as it's quick to compute (doesn't impact acyclic graphs too much), is
+	  // higher than the number of steps actually needed (doesn't cut off before
+	  // acyclic graph is walked through) and prevents infinite loops (cuts off for
+	  // cyclic graphs).
+
+
+	  var limit = reduce$2(_context6 = toConsumableArray(values$3(nodes).call(nodes))).call(_context6, function (acc, node) {
+	    return acc + 1 + node.edges.length;
+	  }, 0);
+
 	  var edgeIdProp = direction + "Id";
 	  var newLevelDiff = direction === "to" ? 1 : -1;
 
@@ -30825,7 +30833,7 @@
 	      var node = void 0;
 
 	      var _loop2 = function _loop2() {
-	        var _context6, _context7;
+	        var _context7, _context8;
 
 	        if (!nodes.has(entryNodeId)) {
 	          // Skip if the node is not visible.
@@ -30834,7 +30842,7 @@
 
 	        var newLevel = levels[node.id] + newLevelDiff;
 
-	        forEach$2(_context6 = filter$2(_context7 = node.edges).call(_context7, function (edge) {
+	        forEach$2(_context7 = filter$2(_context8 = node.edges).call(_context8, function (edge) {
 	          return (// Ignore disconnected edges.
 	            edge.connected && // Ignore circular edges.
 	            edge.to !== edge.from && // Ignore edges leading to the node that's currently being processed.
@@ -30842,7 +30850,7 @@
 	            nodes.has(edge.toId) && // Ignore edges connecting from an invisible node.
 	            nodes.has(edge.fromId)
 	          );
-	        })).call(_context6, function (edge) {
+	        })).call(_context7, function (edge) {
 	          var targetNodeId = edge[edgeIdProp];
 	          var oldLevel = levels[targetNodeId];
 
@@ -32588,12 +32596,10 @@
 	        return acc;
 	      }, new map$5());
 
-	      var levels = this.hierarchical.levels;
-
 	      if (this.options.hierarchical.shakeTowards === "roots") {
-	        this.hierarchical.levels = fillLevelsByDirectionRoots(nodes, levels);
+	        this.hierarchical.levels = fillLevelsByDirectionRoots(nodes);
 	      } else {
-	        this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes, levels);
+	        this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes);
 	      }
 
 	      this.hierarchical.setMinLevelToZero(this.body.nodes);

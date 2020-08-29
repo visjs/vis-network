@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-29T02:44:24.745Z
+ * @date    2020-08-29T07:35:36.938Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18073,11 +18073,10 @@
    * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
    *
    * @param nodes - Visible nodes of the graph.
-   * @param levels - If present levels will be added to it, if not a new object will be created.
    *
    * @returns Populated node levels.
    */
-  function fillLevelsByDirectionLeaves(nodes, levels = Object.create(null)) {
+  function fillLevelsByDirectionLeaves(nodes) {
       return fillLevelsByDirection(
       // Pick only leaves (nodes without children).
       (node) => node.edges
@@ -18088,17 +18087,16 @@
       // Use the lowest level.
       (newLevel, oldLevel) => oldLevel > newLevel, 
       // Go against the direction of the edges.
-      "from", nodes, levels);
+      "from", nodes);
   }
   /**
    * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
    *
    * @param nodes - Visible nodes of the graph.
-   * @param levels - If present levels will be added to it, if not a new object will be created.
    *
    * @returns Populated node levels.
    */
-  function fillLevelsByDirectionRoots(nodes, levels = Object.create(null)) {
+  function fillLevelsByDirectionRoots(nodes) {
       return fillLevelsByDirection(
       // Pick only roots (nodes without parents).
       (node) => node.edges
@@ -18109,7 +18107,7 @@
       // Use the highest level.
       (newLevel, oldLevel) => oldLevel < newLevel, 
       // Go in the direction of the edges.
-      "to", nodes, levels);
+      "to", nodes);
   }
   /**
    * Assign levels to nodes according to their positions in the hierarchy.
@@ -18118,12 +18116,18 @@
    * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
    * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
    * @param nodes - Visible nodes of the graph.
-   * @param levels - If present levels will be added to it, if not a new object will be created.
    *
    * @returns Populated node levels.
    */
-  function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes, levels) {
-      const limit = nodes.size;
+  function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes) {
+      const levels = Object.create(null);
+      // If acyclic, the graph can be walked through with (most likely way) fewer
+      // steps than the number bellow. The exact value isn't too important as long
+      // as it's quick to compute (doesn't impact acyclic graphs too much), is
+      // higher than the number of steps actually needed (doesn't cut off before
+      // acyclic graph is walked through) and prevents infinite loops (cuts off for
+      // cyclic graphs).
+      const limit = [...nodes.values()].reduce((acc, node) => acc + 1 + node.edges.length, 0);
       const edgeIdProp = (direction + "Id");
       const newLevelDiff = direction === "to" ? 1 : -1;
       for (const [entryNodeId, entryNode] of nodes) {
@@ -19685,12 +19689,11 @@
         acc.set(id, this.body.nodes[id]);
         return acc;
       }, new Map());
-      const levels = this.hierarchical.levels;
 
       if (this.options.hierarchical.shakeTowards === "roots") {
-        this.hierarchical.levels = fillLevelsByDirectionRoots(nodes, levels);
+        this.hierarchical.levels = fillLevelsByDirectionRoots(nodes);
       } else {
-        this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes, levels);
+        this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes);
       }
 
       this.hierarchical.setMinLevelToZero(this.body.nodes);
