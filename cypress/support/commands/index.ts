@@ -13,6 +13,7 @@ export * from "./vis-place-node";
 export * from "./vis-run";
 export * from "./vis-run-with-window";
 export * from "./vis-simple-canvas-snapshot";
+export * from "./vis-snapshot-opened-page";
 export * from "./vis-stabilize-and-fit";
 export * from "./vis-stabilize-fit-and-run";
 export * from "./vis-visit-universal";
