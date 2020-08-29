@@ -69,7 +69,7 @@
     "prepublishOnly": "npm run build",
     "generate-examples-index": "generate-examples-index --config generate-examples-index.json",
     "lint": "eslint --ext js,json,ts cypress examples lib test",
-    "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/thumbnails\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
+    "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/static/*\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
     "postinstall": "opencollective postinstall || exit 0"
   },
   "config": {
