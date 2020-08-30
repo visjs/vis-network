@@ -47,7 +47,7 @@ div.bottom {
         type="hidden"
         name="html"
         value='&lt;h2&gt;Camera animations&lt;/h2&gt;
-&lt;div style="width: 700px; font-size: 14px;"&gt;
+&lt;div style="width: 700px; font-size: 14px"&gt;
   You can move the view around programmatically using the .moveTo(options)
   function. The options supplied to this function can also be (partially)
   supplied to the .fit() and .focusOnNode() methods. These are explained in the
@@ -80,50 +80,50 @@ var moveToOptions = {
       &lt;tr&gt;
         &lt;td&gt;position x&lt;/td&gt;
         &lt;td&gt;
-          &lt;input type="text" value="300" id="positionx" style="width: 170px;" /&gt;
+          &lt;input type="text" value="300" id="positionx" style="width: 170px" /&gt;
         &lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
         &lt;td&gt;position y&lt;/td&gt;
         &lt;td&gt;
-          &lt;input type="text" value="300" id="positiony" style="width: 170px;" /&gt;
+          &lt;input type="text" value="300" id="positiony" style="width: 170px" /&gt;
         &lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
         &lt;td&gt;scale&lt;/td&gt;
         &lt;td&gt;
-          &lt;input type="text" value="1.0" id="scale" style="width: 170px;" /&gt;
+          &lt;input type="text" value="1.0" id="scale" style="width: 170px" /&gt;
         &lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
         &lt;td&gt;offset x&lt;/td&gt;
         &lt;td&gt;
-          &lt;input type="text" value="0" id="offsetx" style="width: 170px;" /&gt; px
+          &lt;input type="text" value="0" id="offsetx" style="width: 170px" /&gt; px
         &lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
         &lt;td&gt;offset y&lt;/td&gt;
         &lt;td&gt;
-          &lt;input type="text" value="0" id="offsety" style="width: 170px;" /&gt; px
+          &lt;input type="text" value="0" id="offsety" style="width: 170px" /&gt; px
         &lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
         &lt;td&gt;duration&lt;/td&gt;
         &lt;td&gt;
-          &lt;input type="text" value="1000" id="duration" style="width: 170px;" /&gt;
+          &lt;input type="text" value="1000" id="duration" style="width: 170px" /&gt;
           ms
         &lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
         &lt;td&gt;easingFunction&lt;/td&gt;
         &lt;td&gt;
-          &lt;select id="easingFunction" style="width: 174px;"&gt;
+          &lt;select id="easingFunction" style="width: 174px"&gt;
             &lt;option value="linear"&gt;linear&lt;/option&gt;
             &lt;option value="easeInQuad"&gt;easeInQuad&lt;/option&gt;
             &lt;option value="easeOutQuad"&gt;easeOutQuad&lt;/option&gt;
-            &lt;option value="easeInOutQuad" selected="selected"
-              &gt;easeInOutQuad&lt;/option
-            &gt;
+            &lt;option value="easeInOutQuad" selected="selected"&gt;
+              easeInOutQuad
+            &lt;/option&gt;
             &lt;option value="easeInCubic"&gt;easeInCubic&lt;/option&gt;
             &lt;option value="easeOutCubic"&gt;easeOutCubic&lt;/option&gt;
             &lt;option value="easeInOutCubic"&gt;easeInOutCubic&lt;/option&gt;
@@ -145,7 +145,7 @@ var moveToOptions = {
       type="button"
       onclick="doAnimation();"
       value="Animate with above settings."
-      style="width: 300px;"
+      style="width: 300px"
       id="btnDo"
     /&gt;
     &lt;br /&gt;
@@ -153,7 +153,7 @@ var moveToOptions = {
       type="button"
       onclick="doDefaultAnimation();"
       value="Animate with default settings."
-      style="width: 300px;"
+      style="width: 300px"
       id="btnDoDefault"
     /&gt;
     &lt;br /&gt;
@@ -161,7 +161,7 @@ var moveToOptions = {
       type="button"
       onclick="fitAnimated();"
       value="Animated fit()."
-      style="width: 300px;"
+      style="width: 300px"
       id="btnZoom"
     /&gt;
     &lt;br /&gt;
@@ -169,14 +169,14 @@ var moveToOptions = {
       type="button"
       onclick="focusRandom();"
       value="Focus on random node."
-      style="width: 300px;"
+      style="width: 300px"
       id="btnFocus"
     /&gt;&lt;br /&gt;
     &lt;input
       type="button"
       onclick="startShow();"
       value="Start a show!"
-      style="width: 300px;"
+      style="width: 300px"
       id="btnShow"
     /&gt;&lt;br /&gt;
   &lt;/div&gt;
@@ -369,9 +369,7 @@ window.addEventListener("load", () =&gt; {
         value="Vis Network | Other | Animations"
       />
       <input type="hidden" name="wrap" value="b" />
-      <button id="open" alt="JSFiddle" title="JSFiddle">
-        Open JSFiddle
-      </button>
+      <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>
 
     <script type="text/javascript">

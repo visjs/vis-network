@@ -15,9 +15,7 @@
         name="data"
         value='{"css":"#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n  background: #d1d1d1;\n}\np {\n  max-width: 600px;\n}\n","css_external":"","html":"&lt;p&gt;The style of the edges can be fully customized.&lt;/p&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = [\n  { id: 1, label: \"Node 1\", font: \"12px arial red\" },\n  { id: 2, label: \"Node 2\", font: { size: 12, color: \"lime\", face: \"arial\" } },\n  { id: 3, label: \"Node 3\", font: \"18px verdana blue\" },\n  {\n    id: 4,\n    label: \"Node 4\",\n    font: { size: 12, color: \"red\", face: \"sans\", background: \"white\" },\n  },\n  {\n    id: 5,\n    label: \"Node 5\",\n    font: {\n      size: 15,\n      color: \"red\",\n      face: \"courier\",\n      strokeWidth: 3,\n      strokeColor: \"#ffffff\",\n    },\n  },\n];\n\n// create an array with edges\nvar edges = [\n  { from: 1, to: 2 },\n  { from: 1, to: 3 },\n  { from: 2, to: 4 },\n  { from: 2, to: 5 },\n];\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges,\n};\nvar options = {\n  nodes: {\n    shape: \"dot\",\n    size: 10,\n  },\n};\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Labels | Label Color and Size"}'
       />
-      <button id="open" alt="JSFiddle" title="JSFiddle">
-        Open CodePen
-      </button>
+      <button id="open" alt="JSFiddle" title="JSFiddle">Open CodePen</button>
     </form>
 
     <script type="text/javascript">

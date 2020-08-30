@@ -15,9 +15,7 @@
         name="data"
         value='{"css":"body {\n  font: 10pt arial;\n}\n#mynetwork {\n  width: 600px;\n  height: 600px;\n  border: 1px solid lightgray;\n}\n","css_external":"","html":"&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// create an array with nodes\nvar nodes = new vis.DataSet([\n  {\n    id: 1,\n    shape: \"image\",\n    size: 20,\n    label: \"No select image\",\n    image: \"./unselected.svg\",\n  },\n  {\n    id: 2,\n    shape: \"image\",\n    size: 20,\n    label: \"Select image broken\",\n    image: {\n      unselected: \"./unselected.svg\",\n      selected: \"./BROKEN_LINK/selected.svg\",\n    },\n  },\n  {\n    id: 3,\n    shape: \"image\",\n    size: 20,\n    label: \"Select works!\",\n    image: {\n      unselected: \"./unselected.svg\",\n      selected: \"./selected.svg\",\n    },\n    shapeProperties: {\n      borderDashes: [15, 5],\n      interpolation: false,\n    },\n  },\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 2 },\n  { from: 2, to: 3 },\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\n\n// provide the data in the vis format\nvar data = {\n  nodes: nodes,\n  edges: edges,\n};\n\nvar options = {\n  layout: {\n    randomSeed: 5,\n  },\n  nodes: {\n    brokenImage: \"./broken-image.png\",\n  },\n};\n// initialize!\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Node Styles | Selected/Unselected Image"}'
       />
-      <button id="open" alt="JSFiddle" title="JSFiddle">
-        Open CodePen
-      </button>
+      <button id="open" alt="JSFiddle" title="JSFiddle">Open CodePen</button>
     </form>
 
     <script type="text/javascript">
