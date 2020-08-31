@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-31T18:06:11.424Z
+ * @date    2020-08-31T20:00:52.052Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -23381,7 +23381,12 @@ class KamadaKawai {
     for (let nodeIdx = 0; nodeIdx < nodesArray.length; nodeIdx++) {
       const m = nodesArray[nodeIdx];
       // by not evaluating nodes with predefined positions we should only move nodes that have no positions.
-      if ((nodes[m].predefinedPosition === false || nodes[m].isCluster === true && ignoreClusters === true) || nodes[m].options.fixed.x === true || nodes[m].options.fixed.y === true) {
+      if (
+        nodes[m].predefinedPosition !== true ||
+        (nodes[m].isCluster === true && ignoreClusters === true) ||
+        nodes[m].options.fixed.x !== true ||
+        nodes[m].options.fixed.y !== true
+      ) {
         const [delta_m,dE_dx,dE_dy] = this._getEnergy(m);
         if (maxEnergy < delta_m) {
           maxEnergy = delta_m;

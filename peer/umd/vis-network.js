@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-31T18:06:11.424Z
+ * @date    2020-08-31T20:00:52.052Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -37772,7 +37772,7 @@
 	      for (var nodeIdx = 0; nodeIdx < nodesArray.length; nodeIdx++) {
 	        var m = nodesArray[nodeIdx]; // by not evaluating nodes with predefined positions we should only move nodes that have no positions.
 
-	        if (nodes[m].predefinedPosition === false || nodes[m].isCluster === true && ignoreClusters === true || nodes[m].options.fixed.x === true || nodes[m].options.fixed.y === true) {
+	        if (nodes[m].predefinedPosition !== true || nodes[m].isCluster === true && ignoreClusters === true || nodes[m].options.fixed.x !== true || nodes[m].options.fixed.y !== true) {
 	          var _this$_getEnergy3 = this._getEnergy(m),
 	              _this$_getEnergy4 = slicedToArray(_this$_getEnergy3, 3),
 	              delta_m = _this$_getEnergy4[0],
