@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-08-31T06:35:58.469Z
+ * @date    2020-08-31T18:06:11.424Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5317,6 +5317,7 @@
       ctx.save();
       const drawLater = this.ctxRenderer({
         ctx,
+        id: this.options.id,
         x,
         y,
         state: { selected, hover },

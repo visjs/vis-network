@@ -120,7 +120,7 @@ function draw() {
       id: 36,
       label: "custom",
       shape: "custom",
-      ctxRenderer: ({ ctx, x, y, state: { selected, hover }, style }) =&gt; {
+      ctxRenderer: ({ ctx, id, x, y, state: { selected, hover }, style }) =&gt; {
         const r = style.size;
         const drawNode = () =&gt; {
           ctx.beginPath();
