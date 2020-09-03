@@ -105,6 +105,7 @@ var options = {
     selectable: true,
     selectConnectedEdges: true,
     tooltipDelay: 300,
+    zoomSpeed: 1,
     zoomView: true
   }
 }
@@ -144,6 +145,7 @@ network.setOptions(options);
         <tr><td>selectable</td>             <td>Boolean</td><td><code>true</code></td><td>true인 경우, 사용자가 노드와 Edge를 선택할 수 있습니다.</td></tr>
         <tr><td>selectConnectedEdges</td>   <td>Boolean</td><td><code>true</code></td><td>true인 경우, Node를 선택할 때, 연결 Edge가 강조 표시됩니다.</td></tr>
         <tr><td>tooltipDelay</td>           <td>Number</td>             <td><code>300</code></td>        <td>Node나 Edge에 정의된 <code>'title'</code> 필드가 있다면, 팝업 툴팁으로 표시될 수 있습니다. 툴팁 자체는 CSS를 사용하여 완전히 스타일을 지정할 수 있는 HTML 요소입니다. 지연 시간은 툴팁이 표시되기까지 걸리는 시간(밀리 초)입니다.</td></tr>
+        <tr><td>zoomSpeed</td>              <td>Number</td>             <td><code>1</code></td>         <td>확대 / 축소가 얼마나 빠르거나 거칠거나 느리고 / 정밀합니다.</td></tr>
         <tr><td>zoomView</td>               <td>Boolean</td>            <td><code>true</code></td>      <td>true인 경우, 사용자가 확대할 수 있습니다.</td></tr>
     </table>
 
