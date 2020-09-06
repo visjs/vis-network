@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-09-04T21:39:02.464Z
+ * @date    2020-09-06T18:29:55.469Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -30093,17 +30093,14 @@
 	   * @param {Object} body
 	   */
 	  function Canvas(body) {
-	    var _context;
-
 	    classCallCheck(this, Canvas);
 
 	    this.body = body;
 	    this.pixelRatio = 1;
-	    this.resizeTimer = undefined;
-	    this.resizeFunction = bind$2(_context = this._onResize).call(_context, this);
 	    this.cameraState = {};
 	    this.initialized = false;
 	    this.canvasViewCenter = {};
+	    this._cleanupCallbacks = [];
 	    this.options = {};
 	    this.defaultOptions = {
 	      autoResize: true,
@@ -30124,7 +30121,7 @@
 	    key: "bindEventListeners",
 	    value: function bindEventListeners() {
 	      var _this = this,
-	          _context2;
+	          _context;
 
 	      // bind the events
 	      this.body.emitter.once("resize", function (obj) {
@@ -30136,7 +30133,7 @@
 	          _this.body.view.translation.y = obj.height * 0.5;
 	        }
 	      });
-	      this.body.emitter.on("setSize", bind$2(_context2 = this.setSize).call(_context2, this));
+	      this.body.emitter.on("setSize", bind$2(_context = this.setSize).call(_context, this));
 	      this.body.emitter.on("destroy", function () {
 	        _this.hammerFrame.destroy();
 
@@ -30157,23 +30154,52 @@
 	      if (options !== undefined) {
 	        var fields = ['width', 'height', 'autoResize'];
 	        selectiveDeepExtend(fields, this.options, options);
-	      }
+	      } // Automatically adapt to changing size of the container element.
+
+
+	      this._cleanUp();
 
 	      if (this.options.autoResize === true) {
-	        var _context3;
+	        var _context2;
 
-	        // automatically adapt to a changing size of the browser.
-	        this._cleanUp();
+	        if (window.ResizeObserver) {
+	          // decent browsers, immediate reactions
+	          var observer = new ResizeObserver(function () {
+	            var changed = _this2.setSize();
 
-	        this.resizeTimer = setInterval$1(function () {
-	          var changed = _this2.setSize();
+	            if (changed === true) {
+	              _this2.body.emitter.emit("_requestRedraw");
+	            }
+	          });
+	          var frame = this.frame;
+	          observer.observe(frame);
 
-	          if (changed === true) {
-	            _this2.body.emitter.emit("_requestRedraw");
-	          }
-	        }, 1000);
-	        this.resizeFunction = bind$2(_context3 = this._onResize).call(_context3, this);
-	        addEventListener(window, 'resize', this.resizeFunction);
+	          this._cleanupCallbacks.push(function () {
+	            observer.unobserve(frame);
+	          });
+	        } else {
+	          // IE11, continous polling
+	          var resizeTimer = setInterval$1(function () {
+	            var changed = _this2.setSize();
+
+	            if (changed === true) {
+	              _this2.body.emitter.emit("_requestRedraw");
+	            }
+	          }, 1000);
+
+	          this._cleanupCallbacks.push(function () {
+	            clearInterval(resizeTimer);
+	          });
+	        } // Automatically adapt to changing size of the browser.
+
+
+	        var resizeFunction = bind$2(_context2 = this._onResize).call(_context2, this);
+
+	        addEventListener(window, "resize", resizeFunction);
+
+	        this._cleanupCallbacks.push(function () {
+	          removeEventListener(window, "resize", resizeFunction);
+	        });
 	      }
 	    }
 	    /**
@@ -30183,13 +30209,15 @@
 	  }, {
 	    key: "_cleanUp",
 	    value: function _cleanUp() {
-	      // automatically adapt to a changing size of the browser.
-	      if (this.resizeTimer !== undefined) {
-	        clearInterval(this.resizeTimer);
-	      }
+	      var _context3, _context4, _context5;
 
-	      removeEventListener(window, 'resize', this.resizeFunction);
-	      this.resizeFunction = undefined;
+	      forEach$2(_context3 = reverse$2(_context4 = splice$2(_context5 = this._cleanupCallbacks).call(_context5, 0)).call(_context4)).call(_context3, function (callback) {
+	        try {
+	          callback();
+	        } catch (error) {
+	          console.error(error);
+	        }
+	      });
 	    }
 	    /**
 	     * @private

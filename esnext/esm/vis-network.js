@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-09-04T21:39:02.464Z
+ * @date    2020-09-06T18:29:55.469Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -14940,11 +14940,10 @@ class Canvas {
   constructor(body) {
     this.body = body;
     this.pixelRatio = 1;
-    this.resizeTimer = undefined;
-    this.resizeFunction = this._onResize.bind(this);
     this.cameraState = {};
     this.initialized = false;
     this.canvasViewCenter = {};
+    this._cleanupCallbacks = [];
 
     this.options = {};
     this.defaultOptions = {
@@ -14987,17 +14986,42 @@ class Canvas {
       selectiveDeepExtend(fields,this.options, options);
     }
 
+    // Automatically adapt to changing size of the container element.
+    this._cleanUp();
     if (this.options.autoResize === true) {
-      // automatically adapt to a changing size of the browser.
-      this._cleanUp();
-      this.resizeTimer = setInterval(() => {
-        const changed = this.setSize();
-        if (changed === true) {
-          this.body.emitter.emit("_requestRedraw");
-        }
-      }, 1000);
-      this.resizeFunction = this._onResize.bind(this);
-      addEventListener(window,'resize',this.resizeFunction);
+      if (window.ResizeObserver) {
+        // decent browsers, immediate reactions
+        const observer = new ResizeObserver(() => {
+          const changed = this.setSize();
+          if (changed === true) {
+            this.body.emitter.emit("_requestRedraw");
+          }
+        });
+        const { frame } = this;
+
+        observer.observe(frame);
+        this._cleanupCallbacks.push(() => {
+          observer.unobserve(frame);
+        });
+      } else {
+        // IE11, continous polling
+        const resizeTimer = setInterval(() => {
+          const changed = this.setSize();
+          if (changed === true) {
+            this.body.emitter.emit("_requestRedraw");
+          }
+        }, 1000);
+        this._cleanupCallbacks.push(() => {
+          clearInterval(resizeTimer);
+        });
+      }
+
+      // Automatically adapt to changing size of the browser.
+      const resizeFunction = this._onResize.bind(this);
+      addEventListener(window, "resize", resizeFunction);
+      this._cleanupCallbacks.push(() => {
+        removeEventListener(window, "resize", resizeFunction);
+      });
     }
   }
 
@@ -15005,12 +15029,16 @@ class Canvas {
    * @private
    */
   _cleanUp() {
-    // automatically adapt to a changing size of the browser.
-    if (this.resizeTimer !== undefined) {
-      clearInterval(this.resizeTimer);
-    }
-    removeEventListener(window,'resize',this.resizeFunction);
-    this.resizeFunction = undefined;
+    this._cleanupCallbacks
+      .splice(0)
+      .reverse()
+      .forEach((callback) => {
+        try {
+          callback();
+        } catch (error) {
+          console.error(error);
+        }
+      });
   }
 
   /**
