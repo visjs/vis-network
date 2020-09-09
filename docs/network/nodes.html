@@ -1193,20 +1193,28 @@ mySize = minSize + diff * scale;
             <td>x</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>This gives a node an initial x position. When using the hierarchical layout, either the x or y position
-                is set by the layout engine depending on the type of view. The other value remains untouched. When using
-                stabilization, the stabilized position may be different from the initial one. To lock the node to that
-                position use the physics or fixed options.
+            <td>
+              This gives a node its initial position on the x axis. When using
+              hierarchical layout, this value has no effect. When using
+              stabilization, the stabilized position may be different from the
+              initial one (the node will start at this position but may move to
+              different location based on the stabilization configuration). To
+              lock the node to this position, turn off physics or set
+              <code>fixed.x</code> node option to true.
             </td>
         </tr>
         <tr>
             <td>y</td>
             <td>Number</td>
             <td><code>undefined</code></td>
-            <td>This gives a node an initial y position. When using the hierarchical layout, either the x or y position
-                is set by the layout engine depending on the type of view. The other value remains untouched. When using
-                stabilization, the stabilized position may be different from the initial one. To lock the node to that
-                position use the physics or fixed options.
+            <td>
+              This gives a node its initial position on the y axis. When using
+              hierarchical layout, this value has no effect. When using
+              stabilization, the stabilized position may be different from the
+              initial one (the node will start at this position but may move to
+              different location based on the stabilization configuration). To
+              lock the node to this position, turn off physics or set
+              <code>fixed.y</code> node option to true.
             </td>
         </tr>
     </table>
