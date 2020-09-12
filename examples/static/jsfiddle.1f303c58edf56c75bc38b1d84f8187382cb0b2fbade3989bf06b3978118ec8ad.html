@@ -66,9 +66,7 @@ td {
     &lt;tr&gt;
       &lt;th&gt;&lt;code&gt;&amp;apos;html&amp;apos;&lt;/code&gt; or &lt;code&gt;true&lt;/code&gt;&lt;/th&gt;
       &lt;th&gt;&lt;code&gt;&amp;apos;markdown&amp;apos;&lt;/code&gt; or &lt;code&gt;&amp;apos;md&amp;apos;&lt;/code&gt;&lt;/th&gt;
-      &lt;th&gt;
-        &lt;code&gt;false&lt;code&gt;&lt;/code&gt;&lt;/code&gt;
-      &lt;/th&gt;
+      &lt;th&gt;&lt;code&gt;false&lt;/code&gt;&lt;/th&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;bold&lt;/th&gt;
@@ -161,7 +159,12 @@ td {
 
 var edges = [
   { from: 1, to: 2, label: "single to default" },
-  { from: 2, to: 3, font: { multi: true }, label: "default to &lt;b&gt;html&lt;/b&gt;" },
+  {
+    from: 2,
+    to: 3,
+    font: { multi: true },
+    label: "default to &lt;b&gt;html&lt;/b&gt;",
+  },
   { from: 3, to: 4, font: { multi: "md" }, label: "*html* to _md_" },
 ];
 

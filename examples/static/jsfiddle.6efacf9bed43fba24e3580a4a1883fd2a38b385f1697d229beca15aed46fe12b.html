@@ -110,7 +110,12 @@ function draw() {
       label: label,
     });
   }
-  nodes.push({ id: 201, label: "192.168.0.201", group: "desktop", value: 1 });
+  nodes.push({
+    id: 201,
+    label: "192.168.0.201",
+    group: "desktop",
+    value: 1,
+  });
   edges.push({
     from: 2,
     to: 201,
@@ -120,7 +125,12 @@ function draw() {
   });
 
   // group around 3
-  nodes.push({ id: 202, label: "192.168.0.202", group: "desktop", value: 4 });
+  nodes.push({
+    id: 202,
+    label: "192.168.0.202",
+    group: "desktop",
+    value: 4,
+  });
   edges.push({
     from: 3,
     to: 202,
@@ -129,7 +139,12 @@ function draw() {
     width: WIDTH_SCALE * 2,
   });
   for (var i = 230; i &lt;= 231; i++) {
-    nodes.push({ id: i, label: "192.168.0." + i, group: "mobile", value: 2 });
+    nodes.push({
+      id: i,
+      label: "192.168.0." + i,
+      group: "mobile",
+      value: 2,
+    });
     edges.push({
       from: 3,
       to: i,
@@ -141,7 +156,12 @@ function draw() {
   }
 
   // group around 1
-  nodes.push({ id: 10, label: "192.168.0.10", group: "server", value: 10 });
+  nodes.push({
+    id: 10,
+    label: "192.168.0.10",
+    group: "server",
+    value: 10,
+  });
   edges.push({
     from: 1,
     to: 10,
@@ -150,7 +170,12 @@ function draw() {
     width: WIDTH_SCALE * 6,
     label: "0.92 mbps",
   });
-  nodes.push({ id: 11, label: "192.168.0.11", group: "server", value: 7 });
+  nodes.push({
+    id: 11,
+    label: "192.168.0.11",
+    group: "server",
+    value: 7,
+  });
   edges.push({
     from: 1,
     to: 11,
@@ -159,7 +184,12 @@ function draw() {
     width: WIDTH_SCALE * 3,
     label: "0.68 mbps",
   });
-  nodes.push({ id: 12, label: "192.168.0.12", group: "server", value: 3 });
+  nodes.push({
+    id: 12,
+    label: "192.168.0.12",
+    group: "server",
+    value: 3,
+  });
   edges.push({
     from: 1,
     to: 12,
@@ -169,7 +199,12 @@ function draw() {
     label: "0.3 mbps",
   });
 
-  nodes.push({ id: 204, label: "Internet", group: "internet", value: 10 });
+  nodes.push({
+    id: 204,
+    label: "Internet",
+    group: "internet",
+    value: 10,
+  });
   edges.push({
     from: 1,
     to: 204,

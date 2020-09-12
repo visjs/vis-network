@@ -15,23 +15,29 @@
  * This depends on Alea from https://unpkg.com/alea@1.0.0/alea.js.
  */
 
+/**
+ * @param path
+ * @param success
+ * @param error
+ */
 function loadJSON(path, success, error) {
   const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         success(JSON.parse(xhr.responseText));
-      }
-      else {
+      } else {
         error(xhr);
       }
     }
   };
-  xhr.open('GET', path, true);
+  xhr.open("GET", path, true);
   xhr.send();
 }
 
-
+/**
+ * @param nodeCount
+ */
 function getScaleFreeNetwork(nodeCount) {
   const nodes = [];
   const edges = [];
@@ -41,7 +47,7 @@ function getScaleFreeNetwork(nodeCount) {
   for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       id: i,
-      label: String(i)
+      label: String(i),
     });
 
     connectionCount[i] = 0;
@@ -52,12 +58,11 @@ function getScaleFreeNetwork(nodeCount) {
       const to = 0;
       edges.push({
         from: from,
-        to: to
+        to: to,
       });
       connectionCount[from]++;
       connectionCount[to]++;
-    }
-    else if (i > 1) {
+    } else if (i > 1) {
       const conn = edges.length * 2;
       const rand = Math.floor(seededRandom() * conn);
       let cum = 0;
@@ -67,35 +72,36 @@ function getScaleFreeNetwork(nodeCount) {
         j++;
       }
 
-
       const from = i;
       const to = j;
       edges.push({
         from: from,
-        to: to
+        to: to,
       });
       connectionCount[from]++;
       connectionCount[to]++;
     }
   }
 
-  return {nodes:nodes, edges:edges};
+  return { nodes: nodes, edges: edges };
 }
 
-seededRandom = Alea('SEED')
+seededRandom = Alea("SEED");
 
+/**
+ * @param nodeCount
+ */
 function getScaleFreeNetworkSeeded(nodeCount) {
   const nodes = [];
   const edges = [];
   const connectionCount = [];
   let edgesId = 0;
 
-
   // randomly create some nodes and edges
   for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       id: i,
-      label: String(i)
+      label: String(i),
     });
 
     connectionCount[i] = 0;
@@ -107,12 +113,11 @@ function getScaleFreeNetworkSeeded(nodeCount) {
       edges.push({
         id: edgesId++,
         from: from,
-        to: to
+        to: to,
       });
       connectionCount[from]++;
       connectionCount[to]++;
-    }
-    else if (i > 1) {
+    } else if (i > 1) {
       const conn = edges.length * 2;
       const rand = Math.floor(seededRandom() * conn);
       let cum = 0;
@@ -122,18 +127,17 @@ function getScaleFreeNetworkSeeded(nodeCount) {
         j++;
       }
 
-
       const from = i;
       const to = j;
       edges.push({
         id: edgesId++,
         from: from,
-        to: to
+        to: to,
       });
       connectionCount[from]++;
       connectionCount[to]++;
     }
   }
 
-  return {nodes:nodes, edges:edges};
+  return { nodes: nodes, edges: edges };
 }

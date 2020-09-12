@@ -149,7 +149,12 @@ function getNodeData(data) {
   var networkNodes = [];
 
   data.forEach(function (elem, index, array) {
-    networkNodes.push({ id: elem.id, label: elem.id, x: elem.x, y: elem.y });
+    networkNodes.push({
+      id: elem.id,
+      label: elem.id,
+      x: elem.x,
+      y: elem.y,
+    });
   });
 
   return new vis.DataSet(networkNodes);

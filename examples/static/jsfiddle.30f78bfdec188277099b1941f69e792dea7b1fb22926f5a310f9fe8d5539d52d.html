@@ -54,7 +54,11 @@ var edges = new vis.DataSet([
   { from: 2, to: 4, arrows: "to, middle" },
   { from: 2, to: 5, arrows: "to, middle, from" },
   { from: 5, to: 6, arrows: { to: { scaleFactor: 2 } } },
-  { from: 6, to: 7, arrows: { middle: { scaleFactor: 0.5 }, from: true } },
+  {
+    from: 6,
+    to: 7,
+    arrows: { middle: { scaleFactor: 0.5 }, from: true },
+  },
 ]);
 
 // create a network
