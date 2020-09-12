@@ -2,7 +2,6 @@ import { UniversalNetworkConfig } from "./types";
 import { VisSnapshotOpenedPageOptions } from "./vis-snapshot-opened-page";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -23,7 +22,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visSimpleCanvasSnapshot(
   label: number | string,
   config: UniversalNetworkConfig = {},

@@ -36,7 +36,7 @@ export function createGridPoints(
 
         return Object.freeze<Point>({
           x: (row / perRowOrCol) * size - offset,
-          y: (col / perRowOrCol) * size - offset
+          y: (col / perRowOrCol) * size - offset,
         });
       }
     )

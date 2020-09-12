@@ -52,19 +52,19 @@
           id: 6,
           label: "Node: 6\nGroup: 2\nCustom background",
           group: 2,
-          color: { background: "#003d3d" }
+          color: { background: "#003d3d" },
         },
         {
           id: 7,
           label: "Node: 7\nGroup: 2\nCustom border",
           group: 2,
-          color: { border: "#00d3d3" }
+          color: { border: "#00d3d3" },
         },
         { id: 8, label: "Node: 8\nGroup: 2", group: 2 },
         { id: 9, label: "Node: 9\nGroup: 3", group: 3 },
         { id: 10, label: "Node: 10\nGroup: 3", group: 3 },
         { id: 11, label: "Node: 11\nGroup: 3", group: 3 },
-        { id: 12, label: "Node: 12\nGroup: 3", group: 3 }
+        { id: 12, label: "Node: 12\nGroup: 3", group: 3 },
       ].map((node, index, arr) => {
         const angle = 2 * Math.PI * (index / arr.length + 0.75);
         node.x = 400 * Math.cos(angle);
@@ -86,14 +86,14 @@
         { from: 9, to: 10 },
         { from: 10, to: 11 },
         { from: 11, to: 12 },
-        { from: 12, to: 1 }
+        { from: 12, to: 1 },
       ];
 
       // create a network
       var container = document.getElementById("mynetwork");
       var data = {
         nodes: nodes,
-        edges: edges
+        edges: edges,
       };
       var options = {
         physics: false,
@@ -102,14 +102,14 @@
           size: 30,
           font: {
             size: 32,
-            color: "#ffffff"
+            color: "#ffffff",
           },
-          borderWidth: 2
+          borderWidth: 2,
         },
         edges: {
           width: 2,
-          arrows: "to"
-        }
+          arrows: "to",
+        },
       };
       network = new vis.Network(container, data, options);
     </script>

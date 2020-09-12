@@ -1,5 +1,4 @@
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -10,7 +9,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visEditSelected(): void {
   // Enter edit mode
   cy.get(".vis-manipulation .vis-button.vis-edit").click();

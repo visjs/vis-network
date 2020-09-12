@@ -112,7 +112,7 @@ type VisUtil = typeof visUtil;
     {
       // Prevent random changes so that screenshots can be taken reliably.
       layout: {
-        randomSeed: 77
+        randomSeed: 77,
       },
 
       // Common configuration helpers.
@@ -125,7 +125,7 @@ type VisUtil = typeof visUtil;
             ): void => {
               callback({
                 ...nodeData,
-                label: "Edit: " + ++editNumber
+                label: "Edit: " + ++editNumber,
               });
             },
             editEdge: {
@@ -135,13 +135,13 @@ type VisUtil = typeof visUtil;
               ): void => {
                 callback({
                   ...edgeData,
-                  label: "Edit: " + ++editNumber
+                  label: "Edit: " + ++editNumber,
                 });
-              }
-            }
+              },
+            },
           }
         : false,
-      physics: config.physics ? true : false
+      physics: config.physics ? true : false,
     },
     // Raw options to override anything set above.
     config.options ?? {}
@@ -197,12 +197,12 @@ type VisUtil = typeof visUtil;
     "deselectNode",
     "select",
     "selectEdge",
-    "selectNode"
+    "selectNode",
   ] as const).forEach((eventName): void => {
     network.on(eventName, (): void => {
       const selection = [
         ["node", network.getSelectedNodes()],
-        ["edge", network.getSelectedEdges()]
+        ["edge", network.getSelectedEdges()],
       ] as const;
 
       // Empty the root element.

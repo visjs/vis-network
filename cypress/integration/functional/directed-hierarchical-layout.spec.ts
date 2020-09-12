@@ -3,7 +3,7 @@ import {
   Point,
   TestData,
   addMoreEdges,
-  generateMaryTree
+  generateMaryTree,
 } from "../helpers";
 
 /**
@@ -51,7 +51,7 @@ describe("Directed hierarchical layout", (): void => {
       name: "Binary tree",
       data: generateMaryTree(63, 2),
       clusterConfigs: [{ nodes: nodeIdRange(3, 6), swallowsEdges: 2 }],
-      cyclic: false
+      cyclic: false,
     },
     {
       name: "5-ary tree",
@@ -61,12 +61,12 @@ describe("Directed hierarchical layout", (): void => {
           nodes: [
             ...nodeIdRange(2, 3),
             ...nodeIdRange(11, 20),
-            ...nodeIdRange(56, 105)
+            ...nodeIdRange(56, 105),
           ],
-          swallowsEdges: 61
-        }
+          swallowsEdges: 61,
+        },
       ],
-      cyclic: false
+      cyclic: false,
     },
     {
       name: "Acyclic graph",
@@ -76,26 +76,26 @@ describe("Directed hierarchical layout", (): void => {
           nodes: [
             ...nodeIdRange(2, 3),
             ...nodeIdRange(11, 20),
-            ...nodeIdRange(56, 62)
+            ...nodeIdRange(56, 62),
           ],
-          swallowsEdges: 31
-        }
+          swallowsEdges: 31,
+        },
       ],
-      cyclic: false
+      cyclic: false,
     },
     {
       name: "Cyclic graph (2 nodes)",
       data: {
         nodes: [
           { id: "node0", label: "Node #0" },
-          { id: "node1", label: "Node #1" }
+          { id: "node1", label: "Node #1" },
         ],
         edges: [
           { id: "edge_node0-node1", from: "node0", to: "node1" },
-          { id: "edge_node1-node0", from: "node1", to: "node0" }
-        ]
+          { id: "edge_node1-node0", from: "node1", to: "node0" },
+        ],
       },
-      cyclic: true
+      cyclic: true,
     },
     {
       name: "Cyclic graph (10 nodes)",
@@ -110,7 +110,7 @@ describe("Directed hierarchical layout", (): void => {
           { id: "node6", label: "Node #6" },
           { id: "node7", label: "Node #7" },
           { id: "node8", label: "Node #8" },
-          { id: "node9", label: "Node #9" }
+          { id: "node9", label: "Node #9" },
         ],
         edges: [
           { id: "edge_node1-node0", from: "node1", to: "node0" },
@@ -122,10 +122,10 @@ describe("Directed hierarchical layout", (): void => {
           { id: "edge_node5-node6", from: "node5", to: "node6" },
           { id: "edge_node6-node7", from: "node6", to: "node7" },
           { id: "edge_node7-node8", from: "node7", to: "node8" },
-          { id: "edge_node8-node9", from: "node8", to: "node9" }
-        ]
+          { id: "edge_node8-node9", from: "node8", to: "node9" },
+        ],
       },
-      cyclic: true
+      cyclic: true,
     },
     {
       name: "Linear",
@@ -140,7 +140,7 @@ describe("Directed hierarchical layout", (): void => {
           { id: "node6", label: "Node #6" },
           { id: "node7", label: "Node #7" },
           { id: "node8", label: "Node #8" },
-          { id: "node9", label: "Node #9" }
+          { id: "node9", label: "Node #9" },
         ],
         edges: [
           { id: "edge_node0-node1", from: "node0", to: "node1" },
@@ -151,22 +151,22 @@ describe("Directed hierarchical layout", (): void => {
           { id: "edge_node5-node6", from: "node5", to: "node6" },
           { id: "edge_node6-node7", from: "node6", to: "node7" },
           { id: "edge_node7-node8", from: "node7", to: "node8" },
-          { id: "edge_node8-node9", from: "node8", to: "node9" }
-        ]
+          { id: "edge_node8-node9", from: "node8", to: "node9" },
+        ],
       },
       clusterConfigs: [
         { nodes: ["node1"], swallowsEdges: 0 },
         { nodes: ["node2", "node3"], swallowsEdges: 1 },
-        { nodes: ["node6", "node7", "node8"], swallowsEdges: 2 }
+        { nodes: ["node6", "node7", "node8"], swallowsEdges: 2 },
       ],
-      cyclic: false
-    }
+      cyclic: false,
+    },
   ];
 
   configs.forEach(({ clusterConfigs, cyclic, data, name }): void => {
     const configs = [
       { nodes: [], swallowsEdges: 0 },
-      ...(clusterConfigs || [])
+      ...(clusterConfigs || []),
     ].map(({ nodes }, i, arr): {
       expectedVisibleEdges: number;
       nodesToCluster: Set<IdType>;
@@ -176,7 +176,7 @@ describe("Directed hierarchical layout", (): void => {
         arr
           .slice(0, i + 1)
           .reduce((acc, { swallowsEdges }): number => acc + swallowsEdges, 0),
-      nodesToCluster: new Set(nodes)
+      nodesToCluster: new Set(nodes),
     }));
 
     describe(name, (): void => {
@@ -187,15 +187,15 @@ describe("Directed hierarchical layout", (): void => {
           network.setOptions({
             edges: {
               arrows: {
-                to: true
-              }
+                to: true,
+              },
             },
             layout: {
               hierarchical: {
                 enabled: true,
-                sortMethod: "directed"
-              }
-            }
+                sortMethod: "directed",
+              },
+            },
           });
 
           nodes.add(data.nodes);
@@ -213,9 +213,9 @@ describe("Directed hierarchical layout", (): void => {
               cy.visRun(({ network }): void => {
                 network.cluster({
                   clusterNodeProperties: {
-                    label: `Cluster #${cid}`
+                    label: `Cluster #${cid}`,
                   },
-                  joinCondition: ({ id }): boolean => nodesToCluster.has(id)
+                  joinCondition: ({ id }): boolean => nodesToCluster.has(id),
                 });
               });
             });
@@ -264,7 +264,7 @@ describe("Directed hierarchical layout", (): void => {
                     fromId,
                     fromPosition: network.getPositions([fromId])[fromId],
                     toId,
-                    toPosition: network.getPositions([toId])[toId]
+                    toPosition: network.getPositions([toId])[toId],
                   }))
                   .filter(({ fromPosition, toPosition }): boolean => {
                     return !(fromPosition.y < toPosition.y);

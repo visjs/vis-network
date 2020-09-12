@@ -16,7 +16,7 @@ Network is a visualization to display networks and networks consisting of nodes 
 
 [![GitHub contributors](https://img.shields.io/github/contributors/visjs/vis-network.svg)](https://github.com/visjs/vis-network/graphs/contributors)
 [![Backers on Open Collective](https://opencollective.com/visjs/backers/badge.svg)](#backers)
-[![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors) 
+[![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors)
 
 ## Install
 
@@ -31,50 +31,53 @@ found in the [examples directory](https://github.com/visjs/vis-network/tree/mast
 of the project.
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Network</title>
-  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-  <style type="text/css">
-    #mynetwork {
-      width: 600px;
-      height: 400px;
-      border: 1px solid lightgray;
-    }
-  </style>
-</head>
-<body>
-<div id="mynetwork"></div>
-<script type="text/javascript">
-  // create an array with nodes
-  var nodes = new vis.DataSet([
-    {id: 1, label: 'Node 1'},
-    {id: 2, label: 'Node 2'},
-    {id: 3, label: 'Node 3'},
-    {id: 4, label: 'Node 4'},
-    {id: 5, label: 'Node 5'}
-  ]);
+  <head>
+    <title>Network</title>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+    <style type="text/css">
+      #mynetwork {
+        width: 600px;
+        height: 400px;
+        border: 1px solid lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+      ]);
 
-  // create an array with edges
-  var edges = new vis.DataSet([
-    {from: 1, to: 3},
-    {from: 1, to: 2},
-    {from: 2, to: 4},
-    {from: 2, to: 5},
-    {from: 3, to: 3}
-  ]);
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 },
+      ]);
 
-  // create a network
-  var container = document.getElementById('mynetwork');
-  var data = {
-    nodes: nodes,
-    edges: edges
-  };
-  var options = {};
-  var network = new vis.Network(container, data, options);
-</script>
-</body>
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {};
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
 </html>
 ```
 
@@ -136,12 +139,12 @@ Copyright (C) 2010-2018 Almende B.V. and Contributors
 
 Vis.js is dual licensed under both
 
-  * The Apache 2.0 License
-    http://www.apache.org/licenses/LICENSE-2.0
+- The Apache 2.0 License
+  http://www.apache.org/licenses/LICENSE-2.0
 
 and
 
-  * The MIT License
-    http://opensource.org/licenses/MIT
+- The MIT License
+  http://opensource.org/licenses/MIT
 
 Vis.js may be distributed under either license.

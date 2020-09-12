@@ -1,6 +1,6 @@
 context("Label rendering", (): void => {
   for (const multi of [false, true, "md", "html"]) {
-    describe(`Multi: ${multi}`, function(): void {
+    describe(`Multi: ${multi}`, function (): void {
       for (const { variantName, color, background, size } of [
         { variantName: "defaults" },
         {
@@ -18,26 +18,26 @@ context("Label rendering", (): void => {
           bold: {
             color: "#FF0000",
             size: 40,
-            vadjust: 20
+            vadjust: 20,
           },
           boldital: {
             color: "#FFFF00",
             size: 30,
-            vadjust: 5
+            vadjust: 5,
           },
           ital: {
             color: "#00FF00",
             size: 20,
-            vadjust: -10
+            vadjust: -10,
           },
           mono: {
             color: "#0000FF",
             size: 10,
-            vadjust: -20
-          }
-        }
+            vadjust: -20,
+          },
+        },
       ]) {
-        describe(`Variant: ${variantName}`, function(): void {
+        describe(`Variant: ${variantName}`, function (): void {
           for (const [labelName, label] of [
             // ASCII, single line
             ["ASCII", "test"],
@@ -58,7 +58,7 @@ context("Label rendering", (): void => {
                 ",\n" +
                 "-*bóld+ítálícs*-" +
                 ", " +
-                "*-ítálícs+bóld-*."
+                "*-ítálícs+bóld-*.",
             ],
             // HTML
             [
@@ -75,8 +75,8 @@ context("Label rendering", (): void => {
                 ",\n" +
                 "<i><b>bóld+ítálícs</b></i>" +
                 ", " +
-                "<b><i>ítálícs+bóld</i></b>."
-            ]
+                "<b><i>ítálícs+bóld</i></b>.",
+            ],
           ]) {
             it(
               JSON.stringify(
@@ -93,7 +93,7 @@ context("Label rendering", (): void => {
                         x: -50,
                         y: -300,
                         shape: "box",
-                        label
+                        label,
                       },
                       {
                         id: 3,
@@ -101,18 +101,18 @@ context("Label rendering", (): void => {
                         x: 50,
                         y: 300,
                         shape: "square",
-                        label
-                      }
+                        label,
+                      },
                     ],
                     edges: [{ id: 2, from: 1, to: 3, label }],
                     options: {
                       nodes: {
-                        font: { background, color, multi, size }
+                        font: { background, color, multi, size },
                       },
                       edges: {
-                        font: { background, color, multi, size }
-                      }
-                    }
+                        font: { background, color, multi, size },
+                      },
+                    },
                   }
                 );
               }

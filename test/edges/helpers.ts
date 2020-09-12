@@ -1,7 +1,7 @@
 import { spy, stub } from "sinon";
 import { deepFreeze } from "../helpers";
 
-const generateColor = function(
+const generateColor = function (
   id: number
 ): {
   background: string;
@@ -21,12 +21,12 @@ const generateColor = function(
     border: v + "1",
     highlight: {
       background: v + "2",
-      border: v + "3"
+      border: v + "3",
     },
     hover: {
       background: v + "4",
-      border: v + "5"
-    }
+      border: v + "5",
+    },
   };
 };
 
@@ -36,57 +36,57 @@ export const body = deepFreeze({
       id: 1,
       x: 100,
       y: -100,
-      options: { color: generateColor(1), label: "1" }
+      options: { color: generateColor(1), label: "1" },
     },
     2: {
       id: 2,
       x: 200,
       y: -200,
-      options: { color: generateColor(2), label: "L 2" }
+      options: { color: generateColor(2), label: "L 2" },
     },
     3: {
       id: 3,
       x: 300,
       y: -300,
-      options: { color: generateColor(3), label: "La 3" }
+      options: { color: generateColor(3), label: "La 3" },
     },
     4: {
       id: 4,
       x: 400,
       y: -400,
       options: { color: generateColor(4), label: "Lab 4" },
-      shape: { width: 42, height: 37 }
+      shape: { width: 42, height: 37 },
     },
     5: {
       id: 5,
       x: 500,
       y: -500,
-      options: { color: generateColor(5), label: "Labe 5" }
+      options: { color: generateColor(5), label: "Labe 5" },
     },
     6: {
       id: 6,
       x: 600,
       y: -600,
-      options: { color: generateColor(6), label: "Label 6" }
+      options: { color: generateColor(6), label: "Label 6" },
     },
     O: {
       id: "O",
       x: 300,
       y: 300,
-      options: { color: generateColor(256 * 256 + 1), label: "Label O" }
+      options: { color: generateColor(256 * 256 + 1), label: "Label O" },
     },
     T: {
       id: "T",
       x: 100,
       y: -400,
-      options: { color: generateColor(256 * 256 + 2), label: "Label T" }
-    }
+      options: { color: generateColor(256 * 256 + 2), label: "Label T" },
+    },
   },
   view: {
-    scale: 2
+    scale: 2,
   },
   functions: {},
-  emitter: {}
+  emitter: {},
 });
 
 /**
@@ -118,7 +118,7 @@ export function mockedBody(): any {
   mockedBody.functions.createNode.returns({
     x: -50,
     y: 50,
-    setOptions: spy()
+    setOptions: spy(),
   });
 
   mockedBody.emitter.on = spy();

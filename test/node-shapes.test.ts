@@ -18,22 +18,22 @@ import Text from "../lib/network/modules/components/nodes/shapes/Text";
 import Triangle from "../lib/network/modules/components/nodes/shapes/Triangle";
 import TriangleDown from "../lib/network/modules/components/nodes/shapes/TriangleDown";
 
-describe("Node Shapes", function(): void {
+describe("Node Shapes", function (): void {
   const generateOptions = (): any => ({
     borderWidth: 7,
     size: 31,
     icon: {
-      size: 29
+      size: 29,
     },
     margin: {
       top: 7,
       right: 8,
       bottom: 9,
-      left: 10
+      left: 10,
     },
     shapeProperties: {
-      borderRadius: 3
-    }
+      borderRadius: 3,
+    },
   });
 
   const generateBody = (): any => ({});
@@ -49,15 +49,15 @@ describe("Node Shapes", function(): void {
         bottom: 37,
         left: 12,
         width: 12,
-        height: 68
-      }
+        height: 68,
+      },
     };
 
     labelModule.differentState.returns(true);
     labelModule.getTextSize.returns({
       width: 231,
       height: 33,
-      lineCount: 3
+      lineCount: 3,
     });
 
     return labelModule;
@@ -67,22 +67,22 @@ describe("Node Shapes", function(): void {
   const img1 = deepFreeze({
     src: "img1.svg",
     width: 192,
-    height: 111
+    height: 111,
   });
   const img2 = deepFreeze({
     src: "img2.png",
     width: 207,
-    height: 293
+    height: 293,
   });
   const img3 = deepFreeze({
     src: "img3.svg",
     width: 393,
-    height: 312
+    height: 312,
   });
   const img4 = deepFreeze({
     src: "img4.png",
     width: 408,
-    height: 494
+    height: 494,
   });
   [
     {
@@ -93,8 +93,8 @@ describe("Node Shapes", function(): void {
         bottom: -924,
         left: -128,
         right: 128,
-        top: -979
-      }
+        top: -979,
+      },
     },
     {
       name: "Circle",
@@ -104,8 +104,8 @@ describe("Node Shapes", function(): void {
         bottom: -827,
         left: -125,
         right: 125,
-        top: -1076
-      }
+        top: -1076,
+      },
     },
     {
       name: "CircularImage (not loaded)",
@@ -116,8 +116,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "CircularImage (don't use image size)",
@@ -133,8 +133,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "CircularImage (use image size)",
@@ -150,8 +150,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "Database",
@@ -161,8 +161,8 @@ describe("Node Shapes", function(): void {
         bottom: -827,
         left: -125,
         right: 125,
-        top: -1076
-      }
+        top: -1076,
+      },
     },
     {
       name: "Diamond",
@@ -172,8 +172,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "Dot",
@@ -183,8 +183,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "Ellipse",
@@ -194,8 +194,8 @@ describe("Node Shapes", function(): void {
         bottom: -918,
         left: -132,
         right: 132,
-        top: -984
-      }
+        top: -984,
+      },
     },
     {
       name: "Hexagon",
@@ -205,8 +205,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "Icon",
@@ -216,8 +216,8 @@ describe("Node Shapes", function(): void {
         bottom: -937,
         left: -15,
         right: 15,
-        top: -966
-      }
+        top: -966,
+      },
     },
     {
       name: "Image (not loaded)",
@@ -228,8 +228,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -31,
         right: 31,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "Image (don't use image size)",
@@ -245,8 +245,8 @@ describe("Node Shapes", function(): void {
         bottom: -920,
         left: -54,
         right: 54,
-        top: -982
-      }
+        top: -982,
+      },
     },
     {
       name: "Image (use image size)",
@@ -262,8 +262,8 @@ describe("Node Shapes", function(): void {
         top: -1007,
         right: 96,
         bottom: -895,
-        left: -96
-      }
+        left: -96,
+      },
     },
     {
       name: "Square",
@@ -273,8 +273,8 @@ describe("Node Shapes", function(): void {
         top: -982,
         right: 31,
         bottom: -920,
-        left: -31
-      }
+        left: -31,
+      },
     },
     {
       name: "Star",
@@ -284,8 +284,8 @@ describe("Node Shapes", function(): void {
         top: -982,
         right: 31,
         bottom: -920,
-        left: -31
-      }
+        left: -31,
+      },
     },
     {
       name: "Text",
@@ -295,8 +295,8 @@ describe("Node Shapes", function(): void {
         top: -976,
         left: -125,
         right: 125,
-        bottom: -927
-      }
+        bottom: -927,
+      },
     },
     {
       name: "Triangle",
@@ -306,8 +306,8 @@ describe("Node Shapes", function(): void {
         top: -982,
         right: 31,
         bottom: -920,
-        left: -31
-      }
+        left: -31,
+      },
     },
     {
       name: "TriangleDown",
@@ -317,9 +317,9 @@ describe("Node Shapes", function(): void {
         top: -982,
         right: 31,
         bottom: -920,
-        left: -31
-      }
-    }
+        left: -31,
+      },
+    },
   ].forEach(
     ({
       name,
@@ -328,9 +328,9 @@ describe("Node Shapes", function(): void {
       img,
       editOptions,
       distanceToBorder,
-      boundingBox
+      boundingBox,
     }): void => {
-      describe(name, function(): void {
+      describe(name, function (): void {
         const generateInstance = (overrideArgs?: unknown[]): typeof Clazz =>
           new Clazz(
             editOptions ? editOptions(generateOptions()) : generateOptions(),
@@ -339,7 +339,7 @@ describe("Node Shapes", function(): void {
             ...(overrideArgs || args || [])
           );
 
-        it("Distance to Border", function(): void {
+        it("Distance to Border", function (): void {
           const instance = generateInstance();
 
           expect(instance.distanceToBorder({}, 0.77)).to.be.approximately(
@@ -348,8 +348,8 @@ describe("Node Shapes", function(): void {
           );
         });
 
-        describe("Shadow", function(): void {
-          it("Enable enabled", function(): void {
+        describe("Shadow", function (): void {
+          it("Enable enabled", function (): void {
             const instance = generateInstance();
             const ctx = {};
 
@@ -358,18 +358,18 @@ describe("Node Shapes", function(): void {
               shadowColor: "#123456",
               shadowSize: 9,
               shadowX: 77,
-              shadowY: 31
+              shadowY: 31,
             });
 
             expect(ctx).to.deep.equal({
               shadowColor: "#123456",
               shadowBlur: 9,
               shadowOffsetX: 77,
-              shadowOffsetY: 31
+              shadowOffsetY: 31,
             });
           });
 
-          it("Enable disabled", function(): void {
+          it("Enable disabled", function (): void {
             const instance = generateInstance();
             const ctx = {};
 
@@ -378,7 +378,7 @@ describe("Node Shapes", function(): void {
               shadowColor: "#123456",
               shadowSize: 9,
               shadowX: 77,
-              shadowY: 31
+              shadowY: 31,
             });
 
             expect(
@@ -387,28 +387,28 @@ describe("Node Shapes", function(): void {
             ).to.deep.equal({});
           });
 
-          it("Disable enabled", function(): void {
+          it("Disable enabled", function (): void {
             const instance = generateInstance();
             const ctx = {};
 
             instance.disableShadow(ctx, {
-              shadow: true
+              shadow: true,
             });
 
             expect(ctx).to.deep.equal({
               shadowColor: "rgba(0,0,0,0)",
               shadowBlur: 0,
               shadowOffsetX: 0,
-              shadowOffsetY: 0
+              shadowOffsetY: 0,
             });
           });
 
-          it("Disable disabled", function(): void {
+          it("Disable disabled", function (): void {
             const instance = generateInstance();
             const ctx = {};
 
             instance.disableShadow(ctx, {
-              shadow: false
+              shadow: false,
             });
 
             expect(
@@ -418,92 +418,92 @@ describe("Node Shapes", function(): void {
           });
         });
 
-        describe("Dashes", function(): void {
-          it("Enable default", function(): void {
+        describe("Dashes", function (): void {
+          it("Enable default", function (): void {
             const instance = generateInstance();
             const ctx = {
-              setLineDash: spy()
+              setLineDash: spy(),
             };
 
             instance.enableBorderDashes(ctx, {
-              borderDashes: true
+              borderDashes: true,
             });
 
             assert.calledOnce(ctx.setLineDash);
             assert.alwaysCalledWithExactly(ctx.setLineDash, [5, 15]);
           });
 
-          it("Enable custom", function(): void {
+          it("Enable custom", function (): void {
             const instance = generateInstance();
             const ctx = {
-              setLineDash: spy()
+              setLineDash: spy(),
             };
 
             instance.enableBorderDashes(ctx, {
-              borderDashes: [1, 2, 3, 4]
+              borderDashes: [1, 2, 3, 4],
             });
 
             assert.calledOnce(ctx.setLineDash);
             assert.alwaysCalledWithExactly(ctx.setLineDash, [1, 2, 3, 4]);
           });
 
-          it("Enable disabled", function(): void {
+          it("Enable disabled", function (): void {
             const instance = generateInstance();
             const ctx = {
-              setLineDash: spy()
+              setLineDash: spy(),
             };
 
             instance.enableBorderDashes(ctx, {
-              borderDashes: false
+              borderDashes: false,
             });
 
             assert.notCalled(ctx.setLineDash);
           });
 
-          it("Disable default", function(): void {
+          it("Disable default", function (): void {
             const instance = generateInstance();
             const ctx = {
-              setLineDash: spy()
+              setLineDash: spy(),
             };
 
             instance.disableBorderDashes(ctx, {
-              borderDashes: true
+              borderDashes: true,
             });
 
             assert.calledOnce(ctx.setLineDash);
             assert.alwaysCalledWithExactly(ctx.setLineDash, [0]);
           });
 
-          it("Disable custom", function(): void {
+          it("Disable custom", function (): void {
             const instance = generateInstance();
             const ctx = {
-              setLineDash: spy()
+              setLineDash: spy(),
             };
 
             instance.disableBorderDashes(ctx, {
-              borderDashes: [1, 2, 3, 4]
+              borderDashes: [1, 2, 3, 4],
             });
 
             assert.calledOnce(ctx.setLineDash);
             assert.alwaysCalledWithExactly(ctx.setLineDash, [0]);
           });
 
-          it("Disable disabled", function(): void {
+          it("Disable disabled", function (): void {
             const instance = generateInstance();
             const ctx = {
-              setLineDash: spy()
+              setLineDash: spy(),
             };
 
             instance.disableBorderDashes(ctx, {
-              borderDashes: false
+              borderDashes: false,
             });
 
             assert.notCalled(ctx.setLineDash);
           });
         });
 
-        describe("Bounding box", function(): void {
-          it("Update", function(): void {
+        describe("Bounding box", function (): void {
+          it("Update", function (): void {
             const instance = generateInstance();
 
             instance.resize({});
@@ -530,8 +530,8 @@ describe("Node Shapes", function(): void {
         });
 
         if (img) {
-          describe("Set images", function(): void {
-            it("Selected", function(): void {
+          describe("Set images", function (): void {
+            it("Selected", function (): void {
               const instance = generateInstance();
               instance.selected = true;
 
@@ -541,7 +541,7 @@ describe("Node Shapes", function(): void {
               expect(instance.imageObjAlt).to.equal(img3);
             });
 
-            it("Not selected", function(): void {
+            it("Not selected", function (): void {
               const instance = generateInstance();
 
               instance.setImages(img3, img4);
@@ -551,8 +551,8 @@ describe("Node Shapes", function(): void {
             });
           });
 
-          describe("Switch images", function(): void {
-            it("Selected → not selected", function(): void {
+          describe("Switch images", function (): void {
+            it("Selected → not selected", function (): void {
               const instance = generateInstance();
               instance.selected = true;
 
@@ -564,7 +564,7 @@ describe("Node Shapes", function(): void {
               expect(instance.selected).to.equal(false);
             });
 
-            it("Not selected → selected", function(): void {
+            it("Not selected → selected", function (): void {
               const instance = generateInstance();
               instance.selected = false;
 
@@ -576,7 +576,7 @@ describe("Node Shapes", function(): void {
               expect(instance.selected).to.equal(true);
             });
 
-            it("Without alternative image", function(): void {
+            it("Without alternative image", function (): void {
               const instance = generateInstance([img1]);
               instance.selected = false;
 

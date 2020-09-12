@@ -1,11 +1,11 @@
 import { expect } from "chai";
 import { ColorObject, VisData, parseGephi } from "../lib/network/gephiParser";
 
-describe("Gephi parser", function(): void {
-  it("Empty dataset", function(): void {
+describe("Gephi parser", function (): void {
+  it("Empty dataset", function (): void {
     const visData: VisData = parseGephi({
       nodes: [],
-      edges: []
+      edges: [],
     });
 
     expect(
@@ -13,18 +13,18 @@ describe("Gephi parser", function(): void {
       "Object with empty arrays should be returned"
     ).to.deep.equal({
       nodes: [],
-      edges: []
+      edges: [],
     });
   });
 
-  it("1 node with id", function(): void {
+  it("1 node with id", function (): void {
     const visData: VisData = parseGephi({
       nodes: [
         {
-          id: 77
-        }
+          id: 77,
+        },
       ],
-      edges: []
+      edges: [],
     });
 
     expect(
@@ -34,30 +34,30 @@ describe("Gephi parser", function(): void {
       nodes: [
         {
           id: 77,
-          fixed: false
-        }
+          fixed: false,
+        },
       ],
-      edges: []
+      edges: [],
     });
   });
 
-  it("2 nodes with ids and 1 edge with id, from, to", function(): void {
+  it("2 nodes with ids and 1 edge with id, from, to", function (): void {
     const visData: VisData = parseGephi({
       nodes: [
         {
-          id: "from"
+          id: "from",
         },
         {
-          id: "to"
-        }
+          id: "to",
+        },
       ],
       edges: [
         {
           id: 77,
           source: "from",
-          target: "to"
-        }
-      ]
+          target: "to",
+        },
+      ],
     });
 
     expect(
@@ -67,57 +67,57 @@ describe("Gephi parser", function(): void {
       nodes: [
         {
           id: "from",
-          fixed: false
+          fixed: false,
         },
         {
           id: "to",
-          fixed: false
-        }
+          fixed: false,
+        },
       ],
       edges: [
         {
           id: 77,
           from: "from",
-          to: "to"
-        }
-      ]
+          to: "to",
+        },
+      ],
     });
   });
 
-  it("2 nodes with ids, attributes and 2 edges with id, from, to, attributes", function(): void {
+  it("2 nodes with ids, attributes and 2 edges with id, from, to, attributes", function (): void {
     const fromAttrs = {
       title: "from title",
-      dummy: "from dummy"
+      dummy: "from dummy",
     };
     const toAttrs = {
-      dummy: "to dummy"
+      dummy: "to dummy",
     };
 
     const visData: VisData = parseGephi({
       nodes: [
         {
           id: "from",
-          attributes: fromAttrs
+          attributes: fromAttrs,
         },
         {
           id: "to",
-          attributes: toAttrs as any
-        }
+          attributes: toAttrs as any,
+        },
       ],
       edges: [
         {
           id: 77,
           source: "from",
           target: "to",
-          attributes: fromAttrs as any
+          attributes: fromAttrs as any,
         },
         {
           id: "79",
           source: "from",
           target: "to",
-          attributes: toAttrs as any
-        }
-      ]
+          attributes: toAttrs as any,
+        },
+      ],
     });
 
     expect(
@@ -129,13 +129,13 @@ describe("Gephi parser", function(): void {
           id: "from",
           fixed: false,
           title: "from title",
-          attributes: fromAttrs
+          attributes: fromAttrs,
         },
         {
           id: "to",
           fixed: false,
-          attributes: toAttrs
-        }
+          attributes: toAttrs,
+        },
       ],
       edges: [
         {
@@ -143,15 +143,15 @@ describe("Gephi parser", function(): void {
           from: "from",
           to: "to",
           title: "from title",
-          attributes: fromAttrs
+          attributes: fromAttrs,
         },
         {
           id: "79",
           from: "from",
           to: "to",
-          attributes: toAttrs
-        }
-      ]
+          attributes: toAttrs,
+        },
+      ],
     });
 
     expect(
@@ -172,7 +172,7 @@ describe("Gephi parser", function(): void {
     ).to.equal(toAttrs);
   });
 
-  it("1 node with id, label, size, title, x, y", function(): void {
+  it("1 node with id, label, size, title, x, y", function (): void {
     const visData: VisData = parseGephi({
       nodes: [
         {
@@ -181,10 +181,10 @@ describe("Gephi parser", function(): void {
           size: 37,
           title: "title",
           x: 24,
-          y: 25
-        }
+          y: 25,
+        },
       ],
-      edges: []
+      edges: [],
     });
 
     expect(
@@ -199,14 +199,14 @@ describe("Gephi parser", function(): void {
           size: 37,
           title: "title",
           x: 24,
-          y: 25
-        }
+          y: 25,
+        },
       ],
-      edges: []
+      edges: [],
     });
   });
 
-  it("1 edge with id, label, source, target, type", function(): void {
+  it("1 edge with id, label, source, target, type", function (): void {
     const visData: VisData = parseGephi({
       nodes: [],
       edges: [
@@ -215,9 +215,9 @@ describe("Gephi parser", function(): void {
           label: "label",
           source: "noneS",
           target: "noneT",
-          type: "Directed"
-        }
-      ]
+          type: "Directed",
+        },
+      ],
     });
 
     expect(
@@ -231,43 +231,43 @@ describe("Gephi parser", function(): void {
           from: "noneS",
           id: "edge",
           label: "label",
-          to: "noneT"
-        }
-      ]
+          to: "noneT",
+        },
+      ],
     });
   });
 
-  describe("Node fixed", function(): void {
-    it("Defaults", function(): void {
+  describe("Node fixed", function (): void {
+    it("Defaults", function (): void {
       const visData: VisData = parseGephi({
         nodes: [
           {
-            id: 0
-          }
+            id: 0,
+          },
         ],
-        edges: []
+        edges: [],
       });
 
       expect(visData, "Explicitly not fixed by default").to.deep.equal({
         nodes: [
           {
             fixed: false,
-            id: 0
-          }
+            id: 0,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
 
-    it("False", function(): void {
+    it("False", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: 0
-            }
+              id: 0,
+            },
           ],
-          edges: []
+          edges: [],
         },
         { fixed: false }
       );
@@ -276,30 +276,30 @@ describe("Gephi parser", function(): void {
         nodes: [
           {
             fixed: false,
-            id: 0
-          }
+            id: 0,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
 
-    it("True without complete position", function(): void {
+    it("True without complete position", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: 0
+              id: 0,
             },
             {
               id: 1,
-              x: 24
+              x: 24,
             },
             {
               id: 2,
-              y: 25
-            }
+              y: 25,
+            },
           ],
-          edges: []
+          edges: [],
         },
         { fixed: true }
       );
@@ -311,34 +311,34 @@ describe("Gephi parser", function(): void {
         nodes: [
           {
             fixed: false,
-            id: 0
+            id: 0,
           },
           {
             fixed: false,
             id: 1,
-            x: 24
+            x: 24,
           },
           {
             fixed: false,
             id: 2,
-            y: 25
-          }
+            y: 25,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
 
-    it("True with complete position", function(): void {
+    it("True with complete position", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
               id: 0,
               x: 24,
-              y: 25
-            }
+              y: 25,
+            },
           ],
-          edges: []
+          edges: [],
         },
         { fixed: true }
       );
@@ -349,38 +349,38 @@ describe("Gephi parser", function(): void {
             fixed: true,
             id: 0,
             x: 24,
-            y: 25
-          }
+            y: 25,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
   });
 
-  describe("Node color parsing", function(): void {
+  describe("Node color parsing", function (): void {
     const colorString = "#012345";
     const colorObject: ColorObject = {
       background: colorString,
       border: colorString,
       highlight: {
         background: colorString,
-        border: colorString
+        border: colorString,
       },
       hover: {
         background: colorString,
-        border: colorString
-      }
+        border: colorString,
+      },
     };
 
-    it("Defaults", function(): void {
+    it("Defaults", function (): void {
       const visData: VisData = parseGephi({
         nodes: [
           {
             id: 0,
-            color: colorString
-          }
+            color: colorString,
+          },
         ],
-        edges: []
+        edges: [],
       });
 
       expect(visData, "Expanded to an object by default").to.deep.equal({
@@ -388,23 +388,23 @@ describe("Gephi parser", function(): void {
           {
             color: colorObject,
             fixed: false,
-            id: 0
-          }
+            id: 0,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
 
-    it("False", function(): void {
+    it("False", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
               id: 0,
-              color: colorString
-            }
+              color: colorString,
+            },
           ],
-          edges: []
+          edges: [],
         },
         { parseColor: false }
       );
@@ -417,23 +417,23 @@ describe("Gephi parser", function(): void {
           {
             color: colorObject,
             fixed: false,
-            id: 0
-          }
+            id: 0,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
 
-    it("True", function(): void {
+    it("True", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
               id: 0,
-              color: colorString
-            }
+              color: colorString,
+            },
           ],
-          edges: []
+          edges: [],
         },
         { parseColor: true }
       );
@@ -443,91 +443,91 @@ describe("Gephi parser", function(): void {
           {
             color: colorString,
             fixed: false,
-            id: 0
-          }
+            id: 0,
+          },
         ],
-        edges: []
+        edges: [],
       });
     });
   });
 
-  describe("Edge inherit color", function(): void {
-    it("Defaults", function(): void {
+  describe("Edge inherit color", function (): void {
+    it("Defaults", function (): void {
       const visData: VisData = parseGephi({
         nodes: [
           {
-            id: "from"
+            id: "from",
           },
           {
-            id: "to"
-          }
+            id: "to",
+          },
         ],
         edges: [
           {
             id: 77,
             source: "from",
-            target: "to"
+            target: "to",
           },
           {
             color: "#00FFFF",
             id: 78,
             source: "from",
-            target: "to"
-          }
-        ]
+            target: "to",
+          },
+        ],
       });
 
       expect(visData, "Color should be used if present").to.deep.equal({
         nodes: [
           {
             id: "from",
-            fixed: false
+            fixed: false,
           },
           {
             id: "to",
-            fixed: false
-          }
+            fixed: false,
+          },
         ],
         edges: [
           {
             id: 77,
             from: "from",
-            to: "to"
+            to: "to",
           },
           {
             color: "#00FFFF",
             id: 78,
             from: "from",
-            to: "to"
-          }
-        ]
+            to: "to",
+          },
+        ],
       });
     });
 
-    it("False", function(): void {
+    it("False", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: "from"
+              id: "from",
             },
             {
-              id: "to"
-            }
+              id: "to",
+            },
           ],
           edges: [
             {
               id: 77,
               source: "from",
-              target: "to"
+              target: "to",
             },
             {
               color: "#00FFFF",
               id: 78,
               source: "from",
-              target: "to"
-            }
-          ]
+              target: "to",
+            },
+          ],
         },
         { inheritColor: false }
       );
@@ -536,53 +536,53 @@ describe("Gephi parser", function(): void {
         nodes: [
           {
             id: "from",
-            fixed: false
+            fixed: false,
           },
           {
             id: "to",
-            fixed: false
-          }
+            fixed: false,
+          },
         ],
         edges: [
           {
             id: 77,
             from: "from",
-            to: "to"
+            to: "to",
           },
           {
             color: "#00FFFF",
             id: 78,
             from: "from",
-            to: "to"
-          }
-        ]
+            to: "to",
+          },
+        ],
       });
     });
 
-    it("True", function(): void {
+    it("True", function (): void {
       const visData: VisData = parseGephi(
         {
           nodes: [
             {
-              id: "from"
+              id: "from",
             },
             {
-              id: "to"
-            }
+              id: "to",
+            },
           ],
           edges: [
             {
               id: 77,
               source: "from",
-              target: "to"
+              target: "to",
             },
             {
               color: "#00FFFF",
               id: 78,
               source: "from",
-              target: "to"
-            }
-          ]
+              target: "to",
+            },
+          ],
         },
         { inheritColor: true }
       );
@@ -592,25 +592,25 @@ describe("Gephi parser", function(): void {
           nodes: [
             {
               id: "from",
-              fixed: false
+              fixed: false,
             },
             {
               id: "to",
-              fixed: false
-            }
+              fixed: false,
+            },
           ],
           edges: [
             {
               id: 77,
               from: "from",
-              to: "to"
+              to: "to",
             },
             {
               id: 78,
               from: "from",
-              to: "to"
-            }
-          ]
+              to: "to",
+            },
+          ],
         }
       );
     });

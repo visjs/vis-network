@@ -5,9 +5,9 @@ import { body, mockedBody } from "./helpers";
 
 import { BezierEdgeDynamic } from "../../lib/network/modules/components/edges";
 
-describe("BezierEdgeDynamic", function(): void {
-  describe("constructor", function(): void {
-    it("existing nodes", function(): void {
+describe("BezierEdgeDynamic", function (): void {
+  describe("constructor", function (): void {
+    it("existing nodes", function (): void {
       const body = mockedBody();
 
       const options = deepFreeze({
@@ -15,27 +15,19 @@ describe("BezierEdgeDynamic", function(): void {
         from: 1,
         to: 3,
         smooth: {
-          roundness: 2
-        }
+          roundness: 2,
+        },
       });
 
       const edge = new BezierEdgeDynamic(options, body, {} as any);
 
-      expect(edge)
-        .to.have.ownProperty("options")
-        .that.equals(options);
-      expect(edge)
-        .to.have.ownProperty("from")
-        .that.equals(body.nodes[1]);
-      expect(edge)
-        .to.have.ownProperty("to")
-        .that.equals(body.nodes[3]);
-      expect(edge)
-        .to.have.ownProperty("id")
-        .that.equals("E");
+      expect(edge).to.have.ownProperty("options").that.equals(options);
+      expect(edge).to.have.ownProperty("from").that.equals(body.nodes[1]);
+      expect(edge).to.have.ownProperty("to").that.equals(body.nodes[3]);
+      expect(edge).to.have.ownProperty("id").that.equals("E");
     });
 
-    it("invalid node", function(): void {
+    it("invalid node", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeDynamic(
@@ -44,8 +36,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: null,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -53,12 +45,12 @@ describe("BezierEdgeDynamic", function(): void {
 
       expect(edge.via).to.deep.include({
         x: 0,
-        y: 0
+        y: 0,
       });
     });
   });
 
-  it("cleanup", function(): void {
+  it("cleanup", function (): void {
     const body = mockedBody();
 
     const options = deepFreeze({
@@ -66,8 +58,8 @@ describe("BezierEdgeDynamic", function(): void {
       from: 1,
       to: 3,
       smooth: {
-        roundness: 2
-      }
+        roundness: 2,
+      },
     });
 
     const edge = new BezierEdgeDynamic(options, body, {} as any);
@@ -82,8 +74,8 @@ describe("BezierEdgeDynamic", function(): void {
     assert.alwaysCalledWith(body.emitter.off, "_repositionBezierNodes");
   });
 
-  describe("drawLine", function(): void {
-    it("solid", function(): void {
+  describe("drawLine", function (): void {
+    it("solid", function (): void {
       const body = mockedBody();
 
       const ctx = {
@@ -91,7 +83,7 @@ describe("BezierEdgeDynamic", function(): void {
         moveTo: spy(),
         quadraticCurveTo: spy(),
         setLineDash: spy(),
-        stroke: spy()
+        stroke: spy(),
       };
 
       const edge = new BezierEdgeDynamic(
@@ -100,8 +92,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -142,14 +134,14 @@ describe("BezierEdgeDynamic", function(): void {
       assert.alwaysCalledWithExactly(ctx.stroke);
     });
 
-    it("dashed", function(): void {
+    it("dashed", function (): void {
       const body = mockedBody();
 
       const ctx = {
         beginPath: spy(),
         lineTo: spy(),
         moveTo: spy(),
-        stroke: spy()
+        stroke: spy(),
       };
 
       const edge = new BezierEdgeDynamic(
@@ -158,8 +150,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -189,7 +181,7 @@ describe("BezierEdgeDynamic", function(): void {
     });
   });
 
-  it("getViaNode", function(): void {
+  it("getViaNode", function (): void {
     const body = mockedBody();
 
     const edge = new BezierEdgeDynamic(
@@ -198,8 +190,8 @@ describe("BezierEdgeDynamic", function(): void {
         from: 1,
         to: 3,
         smooth: {
-          roundness: 2
-        }
+          roundness: 2,
+        },
       },
       body,
       {} as any
@@ -211,8 +203,8 @@ describe("BezierEdgeDynamic", function(): void {
     expect(y, "y").to.be.closeTo(-200, 0.5);
   });
 
-  describe("getPoint", function(): void {
-    it("two points", function(): void {
+  describe("getPoint", function (): void {
+    it("two points", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeDynamic(
@@ -221,8 +213,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -230,11 +222,11 @@ describe("BezierEdgeDynamic", function(): void {
 
       expect(edge.getPoint(0.5)).to.deep.equal({
         x: 200,
-        y: -200
+        y: -200,
       });
     });
 
-    it("single point", function(): void {
+    it("single point", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeDynamic(
@@ -243,13 +235,13 @@ describe("BezierEdgeDynamic", function(): void {
           from: 4,
           to: 4,
           smooth: {
-            roundness: 2
+            roundness: 2,
           },
           selfReference: {
             size: 2,
             angle: Math.PI / 2,
-            renderBehindTheNode: true
-          }
+            renderBehindTheNode: true,
+          },
         },
         body,
         {} as any
@@ -257,13 +249,13 @@ describe("BezierEdgeDynamic", function(): void {
 
       expect(edge.getPoint(0.5)).to.deep.equal({
         x: 400,
-        y: -846
+        y: -846,
       });
     });
   });
 
-  describe("findBorderPosition", function(): void {
-    it("2 nodes", function(): void {
+  describe("findBorderPosition", function (): void {
+    it("2 nodes", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeDynamic(
@@ -272,8 +264,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -285,7 +277,7 @@ describe("BezierEdgeDynamic", function(): void {
       expect(y, "y").to.be.closeTo(-100, 0.5);
     });
 
-    it("from node", function(): void {
+    it("from node", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeDynamic(
@@ -294,8 +286,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -307,7 +299,7 @@ describe("BezierEdgeDynamic", function(): void {
       expect(y, "y").to.be.closeTo(-178.5, 0.5);
     });
 
-    it("to node", function(): void {
+    it("to node", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeDynamic(
@@ -316,8 +308,8 @@ describe("BezierEdgeDynamic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -330,7 +322,7 @@ describe("BezierEdgeDynamic", function(): void {
     });
   });
 
-  it("_getDistanceToEdge", function(): void {
+  it("_getDistanceToEdge", function (): void {
     const body = mockedBody();
 
     const edge = new BezierEdgeDynamic(
@@ -339,8 +331,8 @@ describe("BezierEdgeDynamic", function(): void {
         from: 1,
         to: 3,
         smooth: {
-          roundness: 2
-        }
+          roundness: 2,
+        },
       },
       body,
       {} as any

@@ -5,40 +5,32 @@ import { body, mockedBody } from "./helpers";
 
 import { BezierEdgeStatic } from "../../lib/network/modules/components/edges";
 
-describe("BezierEdgeStatic", function(): void {
-  it("constructor", function(): void {
+describe("BezierEdgeStatic", function (): void {
+  it("constructor", function (): void {
     const options = deepFreeze({
       id: "E",
       from: 1,
       to: 3,
       smooth: {
-        roundness: 2
-      }
+        roundness: 2,
+      },
     });
 
     const edge = new BezierEdgeStatic(options, body as any, {} as any);
 
-    expect(edge)
-      .to.have.ownProperty("options")
-      .that.equals(options);
-    expect(edge)
-      .to.have.ownProperty("from")
-      .that.equals(body.nodes[1]);
-    expect(edge)
-      .to.have.ownProperty("to")
-      .that.equals(body.nodes[3]);
-    expect(edge)
-      .to.have.ownProperty("id")
-      .that.equals("E");
+    expect(edge).to.have.ownProperty("options").that.equals(options);
+    expect(edge).to.have.ownProperty("from").that.equals(body.nodes[1]);
+    expect(edge).to.have.ownProperty("to").that.equals(body.nodes[3]);
+    expect(edge).to.have.ownProperty("id").that.equals("E");
   });
 
-  describe("drawLine", function(): void {
-    it("solid", function(): void {
+  describe("drawLine", function (): void {
+    it("solid", function (): void {
       const ctx = {
         beginPath: spy(),
         moveTo: spy(),
         quadraticCurveTo: spy(),
-        stroke: spy()
+        stroke: spy(),
       };
 
       const edge = new BezierEdgeStatic(
@@ -47,8 +39,8 @@ describe("BezierEdgeStatic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body as any,
         {} as any
@@ -79,12 +71,12 @@ describe("BezierEdgeStatic", function(): void {
       assert.alwaysCalledWithExactly(ctx.stroke);
     });
 
-    it("dashed", function(): void {
+    it("dashed", function (): void {
       const ctx = {
         beginPath: spy(),
         lineTo: spy(),
         moveTo: spy(),
-        stroke: spy()
+        stroke: spy(),
       };
 
       const edge = new BezierEdgeStatic(
@@ -93,8 +85,8 @@ describe("BezierEdgeStatic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body as any,
         {} as any
@@ -124,7 +116,7 @@ describe("BezierEdgeStatic", function(): void {
     });
   });
 
-  describe("getViaNode", function(): void {
+  describe("getViaNode", function (): void {
     [
       { type: "continuous", from: 1, to: 3, node: { x: 300, y: -500 } },
       { type: "continuous", from: 3, to: 1, node: { x: 100, y: 100 } },
@@ -142,9 +134,9 @@ describe("BezierEdgeStatic", function(): void {
       { type: "straightCross", from: 3, to: 1, node: { x: 100, y: 100 } },
       { type: "straightCross", from: 6, to: "T", node: { x: -400, y: -400 } },
       { type: "vertical", from: 1, to: 3, node: { x: 100, y: -500 } },
-      { type: "vertical", from: 3, to: 1, node: { x: 300, y: 100 } }
+      { type: "vertical", from: 3, to: 1, node: { x: 300, y: 100 } },
     ].forEach(({ from, node, to, type }): void => {
-      it(`${type} (${from} → ${to})`, function(): void {
+      it(`${type} (${from} → ${to})`, function (): void {
         const edge = new BezierEdgeStatic(
           {
             id: "E",
@@ -152,8 +144,8 @@ describe("BezierEdgeStatic", function(): void {
             to,
             smooth: {
               roundness: 2,
-              type
-            }
+              type,
+            },
           },
           body as any,
           {} as any
@@ -172,15 +164,15 @@ describe("BezierEdgeStatic", function(): void {
     });
   });
 
-  it("getPoint", function(): void {
+  it("getPoint", function (): void {
     const edge = new BezierEdgeStatic(
       {
         id: "E",
         from: 1,
         to: 3,
         smooth: {
-          roundness: 2
-        }
+          roundness: 2,
+        },
       },
       body as any,
       {} as any
@@ -188,12 +180,12 @@ describe("BezierEdgeStatic", function(): void {
 
     expect(edge.getPoint(0.5)).to.deep.equal({
       x: 250,
-      y: -350
+      y: -350,
     });
   });
 
-  describe("findBorderPosition", function(): void {
-    it("2 nodes", function(): void {
+  describe("findBorderPosition", function (): void {
+    it("2 nodes", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeStatic(
@@ -202,8 +194,8 @@ describe("BezierEdgeStatic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -215,7 +207,7 @@ describe("BezierEdgeStatic", function(): void {
       expect(y, "y").to.be.closeTo(-101, 0.5);
     });
 
-    it("from node", function(): void {
+    it("from node", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeStatic(
@@ -224,8 +216,8 @@ describe("BezierEdgeStatic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -237,7 +229,7 @@ describe("BezierEdgeStatic", function(): void {
       expect(y, "y").to.be.closeTo(-199, 0.5);
     });
 
-    it("to node", function(): void {
+    it("to node", function (): void {
       const body = mockedBody();
 
       const edge = new BezierEdgeStatic(
@@ -246,8 +238,8 @@ describe("BezierEdgeStatic", function(): void {
           from: 1,
           to: 3,
           smooth: {
-            roundness: 2
-          }
+            roundness: 2,
+          },
         },
         body,
         {} as any
@@ -260,15 +252,15 @@ describe("BezierEdgeStatic", function(): void {
     });
   });
 
-  it("_getDistanceToEdge", function(): void {
+  it("_getDistanceToEdge", function (): void {
     const edge = new BezierEdgeStatic(
       {
         id: "E",
         from: 1,
         to: 3,
         smooth: {
-          roundness: 2
-        }
+          roundness: 2,
+        },
       },
       body as any,
       {} as any

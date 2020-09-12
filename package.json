@@ -68,9 +68,23 @@
     "build:watch": "rollup --watch --config rollup.build.js",
     "prepublishOnly": "npm run build",
     "generate-examples-index": "generate-examples-index --config generate-examples-index.json",
-    "lint": "eslint --ext js,json,ts cypress examples lib test",
+    "style": "prettier --check .",
+    "style-fix": "prettier --write .",
+    "lint": "eslint --ext .js,.ts .",
+    "lint-fix": "eslint --fix --ext .js,.ts .",
     "clean": "rimraf \"declarations\" \"dist\" \"examples/index.html\" \"examples/static/*\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
     "postinstall": "opencollective postinstall || exit 0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
+    "*.{js,ts}": "eslint --fix",
+    ".*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
+    ".*.{js,ts}": "eslint --fix"
   },
   "config": {
     "snap-shot-it": {
@@ -99,8 +113,6 @@
     "@types/sinon": "9.0.5",
     "@types/timsort": "0.3.0",
     "@types/uuid": "8.3.0",
-    "@typescript-eslint/eslint-plugin": "3.10.1",
-    "@typescript-eslint/parser": "3.10.1",
     "chai": "4.2.0",
     "compare-versions": "3.6.0",
     "component-emitter": "1.3.0",
@@ -108,9 +120,6 @@
     "cypress": "5.1.0",
     "cypress-visual-regression": "1.5.1",
     "eslint": "7.8.1",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-cypress": "2.11.1",
-    "eslint-plugin-prettier": "3.1.4",
     "gh-pages": "3.1.0",
     "husky": "4.3.0",
     "jsdom": "16.4.0",
@@ -142,14 +151,5 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/visjs"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,ts}": "eslint --fix",
-    ".*.{js,json,ts}": "eslint --fix"
   }
 }

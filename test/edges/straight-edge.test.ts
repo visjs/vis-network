@@ -5,44 +5,36 @@ import { body } from "./helpers";
 
 import { StraightEdge } from "../../lib/network/modules/components/edges";
 
-describe("StraightEdge", function(): void {
-  it("constructor", function(): void {
+describe("StraightEdge", function (): void {
+  it("constructor", function (): void {
     const options = deepFreeze({
       id: "E",
       from: 1,
-      to: 3
+      to: 3,
     });
 
     const edge = new StraightEdge(options, body as any, {} as any);
 
-    expect(edge)
-      .to.have.ownProperty("options")
-      .that.equals(options);
-    expect(edge)
-      .to.have.ownProperty("from")
-      .that.equals(body.nodes[1]);
-    expect(edge)
-      .to.have.ownProperty("to")
-      .that.equals(body.nodes[3]);
-    expect(edge)
-      .to.have.ownProperty("id")
-      .that.equals("E");
+    expect(edge).to.have.ownProperty("options").that.equals(options);
+    expect(edge).to.have.ownProperty("from").that.equals(body.nodes[1]);
+    expect(edge).to.have.ownProperty("to").that.equals(body.nodes[3]);
+    expect(edge).to.have.ownProperty("id").that.equals("E");
   });
 
-  describe("drawLine", function(): void {
-    it("solid", function(): void {
+  describe("drawLine", function (): void {
+    it("solid", function (): void {
       const ctx = {
         beginPath: spy(),
         lineTo: spy(),
         moveTo: spy(),
-        stroke: spy()
+        stroke: spy(),
       };
 
       const edge = new StraightEdge(
         {
           id: "E",
           from: 1,
-          to: 3
+          to: 3,
         },
         body as any,
         {} as any
@@ -67,19 +59,19 @@ describe("StraightEdge", function(): void {
       assert.alwaysCalledWithExactly(ctx.stroke);
     });
 
-    it("dashed", function(): void {
+    it("dashed", function (): void {
       const ctx = {
         beginPath: spy(),
         lineTo: spy(),
         moveTo: spy(),
-        stroke: spy()
+        stroke: spy(),
       };
 
       const edge = new StraightEdge(
         {
           id: "E",
           from: 1,
-          to: 3
+          to: 3,
         },
         body as any,
         {} as any
@@ -102,12 +94,12 @@ describe("StraightEdge", function(): void {
     });
   });
 
-  it("getViaNode", function(): void {
+  it("getViaNode", function (): void {
     const edge = new StraightEdge(
       {
         id: "E",
         from: 1,
-        to: 3
+        to: 3,
       },
       body as any,
       {} as any
@@ -116,12 +108,12 @@ describe("StraightEdge", function(): void {
     expect(edge.getViaNode()).to.be.undefined;
   });
 
-  it("getPoint", function(): void {
+  it("getPoint", function (): void {
     const edge = new StraightEdge(
       {
         id: "E",
         from: 1,
-        to: 3
+        to: 3,
       },
       body as any,
       {} as any
@@ -129,17 +121,17 @@ describe("StraightEdge", function(): void {
 
     expect(edge.getPoint(0.5)).to.deep.equal({
       x: 200,
-      y: -200
+      y: -200,
     });
   });
 
-  describe("findBorderPosition", function(): void {
-    it("2 nodes", function(): void {
+  describe("findBorderPosition", function (): void {
+    it("2 nodes", function (): void {
       const ctx = {};
 
       const node = {
         ...body.nodes[5],
-        distanceToBorder: stub()
+        distanceToBorder: stub(),
       };
       node.distanceToBorder.onFirstCall().returns(Math.PI);
       node.distanceToBorder.throws();
@@ -148,7 +140,7 @@ describe("StraightEdge", function(): void {
         {
           id: "E",
           from: 1,
-          to: 3
+          to: 3,
         },
         body as any,
         {} as any
@@ -160,12 +152,12 @@ describe("StraightEdge", function(): void {
       expect(y, "y").to.be.closeTo(-297.8, 0.5);
     });
 
-    it("from node", function(): void {
+    it("from node", function (): void {
       const ctx = {};
 
       const node = {
         ...body.nodes[1],
-        distanceToBorder: stub()
+        distanceToBorder: stub(),
       };
       node.distanceToBorder.onFirstCall().returns(Math.PI);
       node.distanceToBorder.throws();
@@ -174,7 +166,7 @@ describe("StraightEdge", function(): void {
         {
           id: "E",
           from: 1,
-          to: 3
+          to: 3,
         },
         body as any,
         {} as any
@@ -186,12 +178,12 @@ describe("StraightEdge", function(): void {
       expect(y, "y").to.be.closeTo(-102.2, 0.5);
     });
 
-    it("to node", function(): void {
+    it("to node", function (): void {
       const ctx = {};
 
       const node = {
         ...body.nodes[3],
-        distanceToBorder: stub()
+        distanceToBorder: stub(),
       };
       node.distanceToBorder.onFirstCall().returns(Math.PI);
       node.distanceToBorder.throws();
@@ -200,7 +192,7 @@ describe("StraightEdge", function(): void {
         {
           id: "E",
           from: 1,
-          to: 3
+          to: 3,
         },
         body as any,
         {} as any
@@ -213,12 +205,12 @@ describe("StraightEdge", function(): void {
     });
   });
 
-  it("_getDistanceToEdge", function(): void {
+  it("_getDistanceToEdge", function (): void {
     const edge = new StraightEdge(
       {
         id: "E",
         from: 1,
-        to: 3
+        to: 3,
       },
       body as any,
       {} as any

@@ -4,7 +4,7 @@ import { readFileSync, readdirSync } from "fs";
 
 import { DOTToGraph, parseDOT } from "../../lib/network/dotparser";
 
-describe("DOT", function(): void {
+describe("DOT", function (): void {
   const dotRE = /\.gv\.txt$/i;
 
   readdirSync(`${__dirname}/data`)
@@ -42,18 +42,18 @@ describe("DOT", function(): void {
         name,
         dot: readFileSync(dotPath, "utf8"),
         parseDOTObject: JSON.parse(readFileSync(parseDOTPath, "utf8")),
-        dotToGraphObject: JSON.parse(readFileSync(dotToGraphPath, "utf8"))
+        dotToGraphObject: JSON.parse(readFileSync(dotToGraphPath, "utf8")),
       };
     })
     .forEach(({ name, dot, parseDOTObject, dotToGraphObject }): void => {
-      describe(name, function(): void {
-        it("parseDOT", function(): void {
+      describe(name, function (): void {
+        it("parseDOT", function (): void {
           const parsedObject = parseDOT(dot);
           const cleanObject = JSON.parse(JSON.stringify(parsedObject));
           expect(cleanObject).to.deep.equal(parseDOTObject);
         });
 
-        it("DOTToGraph", function(): void {
+        it("DOTToGraph", function (): void {
           const parsedObject = DOTToGraph(dot);
           const cleanObject = JSON.parse(JSON.stringify(parsedObject));
           expect(cleanObject).to.deep.equal(dotToGraphObject);

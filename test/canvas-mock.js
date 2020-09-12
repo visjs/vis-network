@@ -3,61 +3,61 @@
  *
  * Adapted from: https://github.com/Cristy94/canvas-mock
  */
-const jsdom = require('jsdom');
-const jsdom_global = require('jsdom-global');
+const jsdom = require("jsdom");
+const jsdom_global = require("jsdom-global");
 
-let canvasMock;  // Use one canvas instance for all calls to createElement('canvas');
-
+let canvasMock; // Use one canvas instance for all calls to createElement('canvas');
 
 /**
  * Replace element's getContext method with a do nothing mock.
  *
  * @param {HTMLElement} el - The element whose getContext will be mocked.
  */
-function replaceCanvasContext (el) {
-  el.getContext = function() {
+function replaceCanvasContext(el) {
+  el.getContext = function () {
     return {
-      fillRect: function() {},
-      clearRect: function(){},
-      getImageData: function(x, y, w, h) {
-        return  {
-          data: new Array(w*h*4)
+      fillRect: function () {},
+      clearRect: function () {},
+      getImageData: function (x, y, w, h) {
+        return {
+          data: new Array(w * h * 4),
         };
       },
-      putImageData: function() {},
-      createImageData: function(){ return []},
-      setTransform: function(){},
-      drawImage: function(){},
-      save: function(){},
-      text: function(){},
-      fillText: function(){},
-      restore: function(){},
-      beginPath: function(){},
-      moveTo: function(){},
-      lineTo: function(){},
-      closePath: function(){},
-      stroke: function(){},
-      translate: function(){},
-      scale: function(){},
-      rotate: function(){},
-      circle: function(){},
-      arc: function(){},
-      fill: function(){},
+      putImageData: function () {},
+      createImageData: function () {
+        return [];
+      },
+      setTransform: function () {},
+      drawImage: function () {},
+      save: function () {},
+      text: function () {},
+      fillText: function () {},
+      restore: function () {},
+      beginPath: function () {},
+      moveTo: function () {},
+      lineTo: function () {},
+      closePath: function () {},
+      stroke: function () {},
+      translate: function () {},
+      scale: function () {},
+      rotate: function () {},
+      circle: function () {},
+      arc: function () {},
+      fill: function () {},
 
       //
       // Following added for vis.js unit tests
       //
 
-      measureText: function(text) {
+      measureText: function (text) {
         return {
-          width: 12*text.length,
-          height: 14
+          width: 12 * text.length,
+          height: 14,
         };
-      }
+      },
     };
-  }
+  };
 }
-
 
 /**
  * Overrides document.createElement(), in order to supply a custom canvas element.
@@ -78,16 +78,16 @@ function overrideCreateElement(window) {
 
   // Check if 2D context already present. That happens either when running in a browser,
   // or this is node.js with 'canvas' installed.
-  const ctx = d.createElement('canvas').getContext('2d');
+  const ctx = d.createElement("canvas").getContext("2d");
   if (ctx !== null && ctx !== undefined) {
     //console.log('2D context is present, no need to override');
     return;
   }
 
-  window.document.createElement = function(param) {
-    if (param === 'canvas') {
+  window.document.createElement = function (param) {
+    if (param === "canvas") {
       if (canvasMock === undefined) {
-        canvasMock = f.call(d, 'canvas');
+        canvasMock = f.call(d, "canvas");
         replaceCanvasContext(canvasMock);
       }
       return canvasMock;
@@ -110,8 +110,8 @@ function overrideCreateElementNS(window) {
   const d = window.document;
   const f = window.document.createElementNS;
 
-  window.document.createElementNS = function(namespaceURI, qualifiedName) {
-    if (namespaceURI === 'http://www.w3.org/2000/svg') {
+  window.document.createElementNS = function (namespaceURI, qualifiedName) {
+    if (namespaceURI === "http://www.w3.org/2000/svg") {
       const result = f.call(d, namespaceURI, qualifiedName);
       if (result.style == undefined) {
         result.style = {};
@@ -128,12 +128,13 @@ function overrideCreateElementNS(window) {
  * it, so the message is not relevant.
  *
  * @param {string} [html='']  html definitions which should be added to the jsdom definition
- * @returns {function}  function to call in after(), to clean up for `jsdom_global`
+ * @returns {Function}  function to call in after(), to clean up for `jsdom_global`
  */
-function mockify(html = '') {
+function mockify(html = "") {
   // Start of message that we want to suppress.
-  const consoleErrorMessageToSuppress = 'Error: Not implemented: HTMLCanvasElement.prototype.getContext'
-    + ' (without installing the canvas npm package)';
+  const consoleErrorMessageToSuppress =
+    "Error: Not implemented: HTMLCanvasElement.prototype.getContext" +
+    " (without installing the canvas npm package)";
 
   // Override default virtual console of jsdom
   const virtualConsole = new jsdom.VirtualConsole();
@@ -147,23 +148,22 @@ function mockify(html = '') {
         // All other messages pass through
         console.error(consoleErrorMessageToSuppress);
       }
-    }
+    },
   };
 
   // Using the global catch instead of specific event handler, because I couldn't get them to work
-	virtualConsole.sendTo(myConsole);
+  virtualConsole.sendTo(myConsole);
 
-  const cleanupFunction = jsdom_global(
-    html,
-    { skipWindowCheck: true, virtualConsole: virtualConsole}
-  );
+  const cleanupFunction = jsdom_global(html, {
+    skipWindowCheck: true,
+    virtualConsole: virtualConsole,
+  });
 
-  overrideCreateElement(window);   // The actual initialization of canvas-mock
+  overrideCreateElement(window); // The actual initialization of canvas-mock
 
   overrideCreateElementNS(window);
 
   return cleanupFunction;
 }
-
 
 module.exports = mockify;

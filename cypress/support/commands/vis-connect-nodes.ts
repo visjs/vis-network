@@ -2,7 +2,6 @@ import { Point } from "./types";
 import { visCheckIds } from "./vis-check-ids";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -16,7 +15,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visConnectNodes(from: Point, to: Point): void {
   const middle = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 };
 
@@ -28,13 +26,13 @@ export function visConnectNodes(from: Point, to: Point): void {
 
       // Drag the edge between the nodes.
       cy.get("#mynetwork").trigger("pointerdown", from.x, from.y, {
-        button: 0
+        button: 0,
       });
       cy.get("#mynetwork").trigger("pointermove", middle.x, middle.y, {
-        button: 0
+        button: 0,
       });
       cy.get("#mynetwork").trigger("pointerup", to.x, to.y, {
-        button: 0
+        button: 0,
       });
     },
     ({ addedEdgeIds, removedEdgeIds }): void => {

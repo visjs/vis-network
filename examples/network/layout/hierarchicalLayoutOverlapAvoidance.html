@@ -75,7 +75,7 @@
     <!-- Redraw the network when avoid overlap is changed. -->
     <script language="javascript">
       var avoidOverlapInput = document.getElementById("avoid-overlap");
-      avoidOverlapInput.onchange = function() {
+      avoidOverlapInput.onchange = function () {
         draw();
       };
     </script>
@@ -129,10 +129,10 @@
         { id: 43 },
         { id: 44 },
         { id: 45 },
-        { id: 46 }
+        { id: 46 },
       ].map(
         // Make the nodes wide, the higher the id the wider, except for every third.
-        node => (
+        (node) => (
           (node.label =
             node.id % 3 === 0
               ? `${node.id}`
@@ -186,7 +186,7 @@
         { from: 27, to: 43 },
         { from: 28, to: 44 },
         { from: 29, to: 45 },
-        { from: 30, to: 46 }
+        { from: 30, to: 46 },
       ];
       var network = null;
 
@@ -204,19 +204,19 @@
           layout: {
             hierarchical: {
               direction: "UD",
-              sortMethod: "directed"
-            }
+              sortMethod: "directed",
+            },
           },
           physics: {
             hierarchicalRepulsion: {
-              avoidOverlap: +document.getElementById("avoid-overlap").value
-            }
-          }
+              avoidOverlap: +document.getElementById("avoid-overlap").value,
+            },
+          },
         };
         network = new vis.Network(container, data, options);
 
         // add event listeners
-        network.on("select", function(params) {
+        network.on("select", function (params) {
           document.getElementById("selection").innerHTML =
             "Selection: " + params.nodes;
         });

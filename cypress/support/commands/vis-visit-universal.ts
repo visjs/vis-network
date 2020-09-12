@@ -2,7 +2,6 @@ import { UniversalConfig, UniversalNetworkConfig } from "./types";
 import { compare } from "compare-versions";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -44,11 +43,10 @@ function visitPage(config: UniversalConfig): void {
       encodeURIComponent(JSON.stringify(config))
   );
   cy.get("#status").contains("Ready", {
-    timeout: Cypress.config("pageLoadTimeout")
+    timeout: Cypress.config("pageLoadTimeout"),
   });
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visVisitUniversal(
   config: UniversalNetworkConfig = {},
   { requireNewerVersionThan }: VisVisitPageOptions = {}
@@ -65,9 +63,7 @@ export function visVisitUniversal(
   // case.
   cy.request("GET", `https://unpkg.com/vis-network@${tag}/package.json`).then(
     (response): void => {
-      expect(response.body)
-        .to.have.property("version")
-        .that.is.a("string");
+      expect(response.body).to.have.property("version").that.is.a("string");
 
       const version = response.body.version;
 

@@ -14,22 +14,22 @@ const shapes = [
   "star",
   "text",
   "triangle",
-  "triangleDown"
+  "triangleDown",
 ] as const;
 
 const variantGroups: any[][] = [
   [
     { shapeProperties: { borderDashes: true } },
-    { shapeProperties: { borderDashes: [1, 2, 5, 9, 4, 6, 3, 7, 8] } }
+    { shapeProperties: { borderDashes: [1, 2, 5, 9, 4, 6, 3, 7, 8] } },
   ],
   [
     { shapeProperties: { borderRadius: 0 } },
-    { shapeProperties: { borderRadius: 12 } }
+    { shapeProperties: { borderRadius: 12 } },
   ],
   [{ borderWidth: 1 }, { borderWidth: 7 }],
   [
     { color: "#ACDC00" },
-    { color: { border: "#00AA00", background: "#00AAAA" } }
+    { color: { border: "#00AA00", background: "#00AAAA" } },
   ],
   [{ font: { size: 17 } }, { font: { size: 31 } }],
   [{ icon: { code: "\uDB81\uDF85", face: '"Material Design Icons"' } }],
@@ -37,9 +37,9 @@ const variantGroups: any[][] = [
   [{ opacity: 0.6 }, { opacity: 0.8 }],
   [
     { shadow: true },
-    { shadow: { color: "rgba(0,200,200,0.3)", size: 17, x: 7, y: -11 } }
+    { shadow: { color: "rgba(0,200,200,0.3)", size: 17, x: 7, y: -11 } },
   ],
-  [{ size: 13 }, { size: 43 }]
+  [{ size: 13 }, { size: 43 }],
 ];
 
 const configs: any[] = [];
@@ -77,9 +77,9 @@ context("Node shapes", (): void => {
           shape,
           id,
           fixed: true,
-          ...points[id]
+          ...points[id],
         })),
-        edges: []
+        edges: [],
       });
     });
   });

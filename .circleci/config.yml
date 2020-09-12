@@ -137,6 +137,7 @@ jobs:
       - attach_workspace:
           at: ..
 
+      - run: npm run style
       - run: npm run lint
 
   test_unit:

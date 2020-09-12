@@ -1,176 +1,176 @@
 {
-    "type": "digraph",
-    "id": "finite_state_machine",
-    "rankdir": "LR",
-    "size": "8,5",
-    "nodes": [
-        {
-            "id": "LR_0",
-            "attr": {
-                "shape": "doublecircle"
-            }
-        },
-        {
-            "id": "LR_3",
-            "attr": {
-                "shape": "doublecircle"
-            }
-        },
-        {
-            "id": "LR_4",
-            "attr": {
-                "shape": "doublecircle"
-            }
-        },
-        {
-            "id": "LR_8",
-            "attr": {
-                "shape": "doublecircle"
-            }
-        },
-        {
-            "id": "LR_2",
-            "attr": {
-                "shape": "circle"
-            }
-        },
-        {
-            "id": "LR_1",
-            "attr": {
-                "shape": "circle"
-            }
-        },
-        {
-            "id": "LR_6",
-            "attr": {
-                "shape": "circle"
-            }
-        },
-        {
-            "id": "LR_5",
-            "attr": {
-                "shape": "circle"
-            }
-        },
-        {
-            "id": "LR_7",
-            "attr": {
-                "shape": "circle"
-            }
-        }
-    ],
-    "edges": [
-        {
-            "from": "LR_0",
-            "to": "LR_2",
-            "type": "->",
-            "attr": {
-                "label": "SS(B)"
-            }
-        },
-        {
-            "from": "LR_0",
-            "to": "LR_1",
-            "type": "->",
-            "attr": {
-                "label": "SS(S)"
-            }
-        },
-        {
-            "from": "LR_1",
-            "to": "LR_3",
-            "type": "->",
-            "attr": {
-                "label": "S($end)"
-            }
-        },
-        {
-            "from": "LR_2",
-            "to": "LR_6",
-            "type": "->",
-            "attr": {
-                "label": "SS(b)"
-            }
-        },
-        {
-            "from": "LR_2",
-            "to": "LR_5",
-            "type": "->",
-            "attr": {
-                "label": "SS(a)"
-            }
-        },
-        {
-            "from": "LR_2",
-            "to": "LR_4",
-            "type": "->",
-            "attr": {
-                "label": "S(A)"
-            }
-        },
-        {
-            "from": "LR_5",
-            "to": "LR_7",
-            "type": "->",
-            "attr": {
-                "label": "S(b)"
-            }
-        },
-        {
-            "from": "LR_5",
-            "to": "LR_5",
-            "type": "->",
-            "attr": {
-                "label": "S(a)"
-            }
-        },
-        {
-            "from": "LR_6",
-            "to": "LR_6",
-            "type": "->",
-            "attr": {
-                "label": "S(b)"
-            }
-        },
-        {
-            "from": "LR_6",
-            "to": "LR_5",
-            "type": "->",
-            "attr": {
-                "label": "S(a)"
-            }
-        },
-        {
-            "from": "LR_7",
-            "to": "LR_8",
-            "type": "->",
-            "attr": {
-                "label": "S(b)"
-            }
-        },
-        {
-            "from": "LR_7",
-            "to": "LR_5",
-            "type": "->",
-            "attr": {
-                "label": "S(a)"
-            }
-        },
-        {
-            "from": "LR_8",
-            "to": "LR_6",
-            "type": "->",
-            "attr": {
-                "label": "S(b)"
-            }
-        },
-        {
-            "from": "LR_8",
-            "to": "LR_5",
-            "type": "->",
-            "attr": {
-                "label": "S(a)"
-            }
-        }
-    ]
+  "type": "digraph",
+  "id": "finite_state_machine",
+  "rankdir": "LR",
+  "size": "8,5",
+  "nodes": [
+    {
+      "id": "LR_0",
+      "attr": {
+        "shape": "doublecircle"
+      }
+    },
+    {
+      "id": "LR_3",
+      "attr": {
+        "shape": "doublecircle"
+      }
+    },
+    {
+      "id": "LR_4",
+      "attr": {
+        "shape": "doublecircle"
+      }
+    },
+    {
+      "id": "LR_8",
+      "attr": {
+        "shape": "doublecircle"
+      }
+    },
+    {
+      "id": "LR_2",
+      "attr": {
+        "shape": "circle"
+      }
+    },
+    {
+      "id": "LR_1",
+      "attr": {
+        "shape": "circle"
+      }
+    },
+    {
+      "id": "LR_6",
+      "attr": {
+        "shape": "circle"
+      }
+    },
+    {
+      "id": "LR_5",
+      "attr": {
+        "shape": "circle"
+      }
+    },
+    {
+      "id": "LR_7",
+      "attr": {
+        "shape": "circle"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "LR_0",
+      "to": "LR_2",
+      "type": "->",
+      "attr": {
+        "label": "SS(B)"
+      }
+    },
+    {
+      "from": "LR_0",
+      "to": "LR_1",
+      "type": "->",
+      "attr": {
+        "label": "SS(S)"
+      }
+    },
+    {
+      "from": "LR_1",
+      "to": "LR_3",
+      "type": "->",
+      "attr": {
+        "label": "S($end)"
+      }
+    },
+    {
+      "from": "LR_2",
+      "to": "LR_6",
+      "type": "->",
+      "attr": {
+        "label": "SS(b)"
+      }
+    },
+    {
+      "from": "LR_2",
+      "to": "LR_5",
+      "type": "->",
+      "attr": {
+        "label": "SS(a)"
+      }
+    },
+    {
+      "from": "LR_2",
+      "to": "LR_4",
+      "type": "->",
+      "attr": {
+        "label": "S(A)"
+      }
+    },
+    {
+      "from": "LR_5",
+      "to": "LR_7",
+      "type": "->",
+      "attr": {
+        "label": "S(b)"
+      }
+    },
+    {
+      "from": "LR_5",
+      "to": "LR_5",
+      "type": "->",
+      "attr": {
+        "label": "S(a)"
+      }
+    },
+    {
+      "from": "LR_6",
+      "to": "LR_6",
+      "type": "->",
+      "attr": {
+        "label": "S(b)"
+      }
+    },
+    {
+      "from": "LR_6",
+      "to": "LR_5",
+      "type": "->",
+      "attr": {
+        "label": "S(a)"
+      }
+    },
+    {
+      "from": "LR_7",
+      "to": "LR_8",
+      "type": "->",
+      "attr": {
+        "label": "S(b)"
+      }
+    },
+    {
+      "from": "LR_7",
+      "to": "LR_5",
+      "type": "->",
+      "attr": {
+        "label": "S(a)"
+      }
+    },
+    {
+      "from": "LR_8",
+      "to": "LR_6",
+      "type": "->",
+      "attr": {
+        "label": "S(b)"
+      }
+    },
+    {
+      "from": "LR_8",
+      "to": "LR_5",
+      "type": "->",
+      "attr": {
+        "label": "S(a)"
+      }
+    }
+  ]
 }
