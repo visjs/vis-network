@@ -39,10 +39,10 @@ context("Drags", (): void => {
   /*
    * The canvas starts at 200x200 and ends at 400x400.
    */
-  describe("Inside → Inside → Inside", function(): void {
+  describe("Inside → Inside → Inside", function (): void {
     let events: ReturnType<typeof drag>;
 
-    it("Run", function(): void {
+    it("Run", function (): void {
       cy.visit("http://localhost:58253/cypress/pages/events-target.html");
 
       events = drag([
@@ -54,28 +54,26 @@ context("Drags", (): void => {
         { name: "pointermove", x: 300, y: 320 },
         { name: "pointermove", x: 320, y: 345 },
         { name: "pointermove", x: 340, y: 370 },
-        { name: "pointerup", x: 360, y: 395 }
+        { name: "pointerup", x: 360, y: 395 },
       ]);
     });
 
-    it("Number of events", function(): void {
-      expect(events)
-        .to.be.an("array")
-        .that.has.lengthOf(6);
+    it("Number of events", function (): void {
+      expect(events).to.be.an("array").that.has.lengthOf(6);
     });
 
-    it("Types", function(): void {
+    it("Types", function (): void {
       expect(events.map(({ name }): string => name)).to.deep.equal([
         "dragStart",
         "dragging",
         "dragging",
         "dragging",
         "dragging",
-        "dragEnd"
+        "dragEnd",
       ]);
     });
 
-    it("Coordinates", function(): void {
+    it("Coordinates", function (): void {
       expect(events.map(({ event }): Point => event.pointer.DOM)).to.deep.equal(
         [
           { x: 40, y: 45 },
@@ -83,16 +81,16 @@ context("Drags", (): void => {
           { x: 100, y: 120 },
           { x: 120, y: 145 },
           { x: 140, y: 170 },
-          { x: 160, y: 195 }
+          { x: 160, y: 195 },
         ]
       );
     });
   });
 
-  describe("Inside → Inside → Outside", function(): void {
+  describe("Inside → Inside → Outside", function (): void {
     let events: ReturnType<typeof drag>;
 
-    it("Run", function(): void {
+    it("Run", function (): void {
       cy.visit("http://localhost:58253/cypress/pages/events-target.html");
 
       events = drag([
@@ -104,28 +102,26 @@ context("Drags", (): void => {
         { name: "pointermove", x: 300, y: 400 },
         { name: "pointermove", x: 320, y: 450 },
         { name: "pointermove", x: 340, y: 500 },
-        { name: "pointerup", x: 360, y: 500 }
+        { name: "pointerup", x: 360, y: 500 },
       ]);
     });
 
-    it("Number of events", function(): void {
-      expect(events)
-        .to.be.an("array")
-        .that.has.lengthOf(6);
+    it("Number of events", function (): void {
+      expect(events).to.be.an("array").that.has.lengthOf(6);
     });
 
-    it("Types", function(): void {
+    it("Types", function (): void {
       expect(events.map(({ name }): string => name)).to.deep.equal([
         "dragStart",
         "dragging",
         "dragging",
         "dragging",
         "dragging",
-        "dragEnd"
+        "dragEnd",
       ]);
     });
 
-    it("Coordinates", function(): void {
+    it("Coordinates", function (): void {
       expect(events.map(({ event }): Point => event.pointer.DOM)).to.deep.equal(
         [
           { x: 40, y: 50 },
@@ -133,7 +129,7 @@ context("Drags", (): void => {
           { x: 100, y: 200 },
           { x: 120, y: 250 },
           { x: 140, y: 300 },
-          { x: 160, y: 300 }
+          { x: 160, y: 300 },
         ]
       );
     });
@@ -151,8 +147,8 @@ context("Drags", (): void => {
         { name: "pointermove", x: 100, y: 320 },
         { name: "pointermove", x: 120, y: 345 },
         { name: "pointermove", x: 140, y: 370 },
-        { name: "pointerup", x: 160, y: 395 }
-      ]
+        { name: "pointerup", x: 160, y: 395 },
+      ],
     },
     {
       name: "Outside → Inside → Inside",
@@ -164,8 +160,8 @@ context("Drags", (): void => {
         { name: "pointermove", x: 300, y: 250 },
         { name: "pointermove", x: 300, y: 300 },
         { name: "pointermove", x: 300, y: 350 },
-        { name: "pointerup", x: 300, y: 350 }
-      ]
+        { name: "pointerup", x: 300, y: 350 },
+      ],
     },
     {
       name: "Outside → Inside → Outside",
@@ -178,25 +174,23 @@ context("Drags", (): void => {
         { name: "pointermove", x: 300, y: 350 },
         { name: "pointermove", x: 300, y: 400 },
         { name: "pointermove", x: 300, y: 450 },
-        { name: "pointerup", x: 300, y: 450 }
-      ]
-    }
+        { name: "pointerup", x: 300, y: 450 },
+      ],
+    },
   ];
 
   configs.forEach(({ name, coords }): void => {
-    describe(name, function(): void {
+    describe(name, function (): void {
       let events: ReturnType<typeof drag>;
 
-      it("Run", function(): void {
+      it("Run", function (): void {
         cy.visit("http://localhost:58253/cypress/pages/events-target.html");
 
         events = drag(coords);
       });
 
-      it("No events", function(): void {
-        expect(events)
-          .to.be.an("array")
-          .that.has.lengthOf(0);
+      it("No events", function (): void {
+        expect(events).to.be.an("array").that.has.lengthOf(0);
       });
     });
   });

@@ -84,6 +84,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 ## 2017-10-12, version 4.21.0
 
 ### General
+
 - Added #3394: Adds unit tests for add, setOptions and on/off DataSet
 - FIX #3406: Eliminate possibility of 'window is undefined' during travis test
 - Added #3402: added @macleodbroad-wf to the support team
@@ -98,9 +99,10 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Added #3295: Update the webpack example
 
 ### Network
+
 - FIX #3554: Relax clustering condition for adding already clustered nodes to cluster
 - FIX #3517: Retain constraint values in label font handling
-- REFA #3507: Cleanup and refactoring PhysicsEngine 
+- REFA #3507: Cleanup and refactoring PhysicsEngine
 - FIX #3500: re-adds edges if they are now connected and add does not add invalid edges
 - FIX #3486: Add extra check on null value during label handling
 - FEAT #824: Network detect clicks on labels
@@ -109,9 +111,9 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #3408, #2677: Fix handling of multi-fonts
 - FIX #3425: IE performance improvements
 - FIX #3356 and #3297: IE11 svg image fixes
-- FIX #3474: Make negative scaleFactor reverse middle arrow correctly 
+- FIX #3474: Make negative scaleFactor reverse middle arrow correctly
 - FIX #3464: Fix handling of space before huge word in label text
-- FIX #3467: Adjust for-in loops so they can deal with added properties in Array and Object prototype 
+- FIX #3467: Adjust for-in loops so they can deal with added properties in Array and Object prototype
 - FEAT #3412: Add endpoint 'bar' to Network
 - FIX #3403: Fixes sorting on Layout, refactoring
 - FIX #3421: Added default sizes for nodes without labels
@@ -123,8 +125,8 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FEAT #3348: Add edge styles support for DOT lib
 - FIX #2839: Re-words documentation to reflect symmetrical input/output of get() when passed multiple ids
 - FIX #3316: Updates network documentation to account for edge
-- FIX  #1218, #1291, #1315: Dynamically adjust clustering when data changes
-- FIX #2311: Block recalculation of level in LayoutEngine._determineLevelsDirected()
+- FIX #1218, #1291, #1315: Dynamically adjust clustering when data changes
+- FIX #2311: Block recalculation of level in LayoutEngine.\_determineLevelsDirected()
 - FIX #3280: Cleanup mergeOptions() and fix missing ref on globalOptions in mergeOptions()
 - FEAT #3131: Added dragStart event for adding edges
 - FIX #3171 and #3185: Fix infinite loop on drawing of large labels
@@ -138,9 +140,11 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #2856: Fix manipulation examples for Network
 
 ### Graph2D
+
 - FIX #1852: Correct documentation for graph2d’s moveTo function
 
 ### Graph3D
+
 - FIX #3467: Adjust for-in loops so they can deal with added properties in Array and Object prototypes
 - FEAT #3099: Add option definitions and validation to Graph3d
 - REFA #3159: move Filter into DataGroup
@@ -149,6 +153,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #3255: Fix missing reference to Graph3D instance in DataGroup
 
 ### Timeline
+
 - FEAT #3529: On timeline loaded
 - FEAT #3505: Drag object in to item
 - FEAT #3050: Allow disabling of RangeItem limitSize
@@ -157,7 +162,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #3509: Added describe sections to PointItem unit tests
 - FIX #2851: Vertical focus
 - FEAT #620: Subgroup stacking
-- FIX #3475: Improve Item redraw and initial draw performance 
+- FIX #3475: Improve Item redraw and initial draw performance
 - FIX #3409: Group redraw performance
 - FEAT #3428: Adds locale for Chinese (cn)
 - FIX #3405: fix orientation option
@@ -171,19 +176,20 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #3249: Only draw non-visible items once when they are loaded, instead of continuously every frame
 - FEAT #3162: Bidirectional scrolling in timeline - make horizontalScroll and verticalScroll work together
 
-
 ## 2017-07-01, version 4.20.1
 
 ### General
-- Added Release checklist 
+
+- Added Release checklist
 - Added collapsible items for objects in graph3d doc
 
 ### Network
+
 - FIX #3203: Set dimensions properly of images on initialization
-- FIX #3170: Refactoring of Node Drawing 
+- FIX #3170: Refactoring of Node Drawing
 - FIX #3108: Reverse nodes returned with 'from' and 'to' directions
 - FIX #3122: Refactored line drawing for Bezier edges
-- FIX #3121: Refactoring of `BezierEdgeStatic._getViaCoordinates()` 
+- FIX #3121: Refactoring of `BezierEdgeStatic._getViaCoordinates()`
 - FIX #3088: Consolidate code for determining the pixel ratio
 - FIX #3036: Smooth type 'dynamic' adjusted for node-specific option in hierarchical
 - FIX #1105: Fix usage of clustering with hierarchical networks
@@ -195,13 +201,15 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #2990: Edge labels turn bold on select and hover
 - FIX #2959: Changed order of (de)select events for network
 - FIX #3091: Added param 'direction' to Network.getConnectedNodes()
-- FIX #3085: Add prefix  to cancelAnimationFrame()
+- FIX #3085: Add prefix to cancelAnimationFrame()
 
 ### Graph3D
+
 - FIX #3198: Small fix on ref usage in DataGroup
 - FIX #2804: Add data group class to Graph3d
 
 ### Timeline
+
 - FIX #3172: Fix stacking when setting option
 - FIX #3183: Fixes a race condition that set an item's group to be set to undefined
 - FEAT #3154: Caching to Range getMillisecondsPerPixel function
@@ -269,19 +277,17 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - FEAT: Configurable minimum and maximum sizes for dot-size graphs (#2849)
 
-
 ## 2017-03-19, version 4.19.1
 
 ### General
 
-* FIX: #2685 Fixed babel dependencies (#2875)
+- FIX: #2685 Fixed babel dependencies (#2875)
 
 ### Timeline / Graph2D
 
-* FIX #2809: Fix docs typo in "showNested" (#2879)
-* FIX #2594: Fixes for removing and adding items to subgroups (#2821)
-* FIX: Allow nested groups to be removed (#2852)
-
+- FIX #2809: Fix docs typo in "showNested" (#2879)
+- FIX #2594: Fixes for removing and adding items to subgroups (#2821)
+- FIX: Allow nested groups to be removed (#2852)
 
 ## 2017-03-18, version 4.19.0
 
@@ -341,7 +347,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #2536: 3d bar graph data array unsorted (#2803)
 - FEAT: Added showX(YZ)Axis options to Graph3d (#2686)
 
-
 ## 2017-01-29, version 4.18.1
 
 ### General
@@ -367,8 +372,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX: Minor cleanups in Timeline Range. (#2633)
 - FIX #2458: Allow graph2D options to be undefined (#2634)
 - FIX: Fix typo (#2622)
-- FIX #2585: Fixed React example  (#2587)
-
+- FIX #2585: Fixed React example (#2587)
 
 ## 2017-01-15, version 4.18.0
 
@@ -455,7 +459,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - FIX #2274: Graph3d disappears when setSize is called (#2293)
 - FIX: Fixed typo in index.html of Graph3D (#2286)
 
-
 ## 2016-11-05, version 4.17.0
 
 ### General
@@ -535,14 +538,12 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Improvements for graph3d legend support (#1940)
 - Advanced Tooltips (#1884)
 
-
 ## 2016-04-18, version 4.16.1
 
 ### Timeline
 
 - Fixed #1786: Timeline having zero height on Internet Explorer, regression
   introduced after fixing #1697.
-
 
 ## 2016-04-07, version 4.16.0
 
@@ -556,7 +557,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Created bundles for individual visualizations: `vis-graph3d.min.js`,
   `vis-network.min.js`, and `vis-timeline-graph2d.min.js`.
-
 
 ## 2016-03-08, version 4.15.1
 
@@ -575,7 +575,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed #1695: Item line and dot not correctly reckoning with the line width
   when using left or right align.
 - Fixed #1697: Timeline not drawn when used within the Angular.js directive.
-
 
 ## 2016-02-23, version 4.15.0
 
@@ -605,7 +604,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed #1677: updating groups through manipulation now works as it should.
 - Fixed #1672: Implemented stepped scaling for nice interpolation of images.
 
-
 ## 2016-02-04, version 4.14.0
 
 ### Timeline
@@ -621,7 +619,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 ### Graph3d
 
 - Fixed #1615: implemented new option `dotSizeRatio`.
-
 
 ## 2016-02-01, version 4.13.0
 
@@ -661,7 +658,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed #1541: Timeline and Graph2d did not load synchronously anymore.
 - Fixed a performance regression
 
-
 ## 2016-01-08, version 4.12.0
 
 ### Timeline
@@ -672,7 +668,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 ### Network
 
-- Fixed #1531, #1335:  border distances for arrow positioning
+- Fixed #1531, #1335: border distances for arrow positioning
 - Fixed findNode method. It now does not return internal objects anymore.
 - Fixed #1529, clustering and declustering now respects the original settings of the edges for physics and hidden.
 - Fixed #1406, control nodes are now drawn immediately without a second redraw.
@@ -682,7 +678,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed upscaling when the window size increases.
 - Accepted pull request #1544, thanks @felixhayashi!
 - Fixed documented bug in #1544.
-
 
 ## 2015-12-18, version 4.11.0
 
@@ -710,11 +705,12 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
   - Performance updates and fixes
 
 ### DataSet
+
 - Fixed #1487: DataSet cannot remove an item with id `0` correctly.
 
 ### DataView
-- Added the map() function from DataSet.
 
+- Added the map() function from DataSet.
 
 ## 2015-11-27, version 4.10.0
 
@@ -757,7 +753,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Performance improvements (see #1381). Thanks @phimimms.
 
-
 ## 2015-10-01, version 4.9.0
 
 ### Network
@@ -775,7 +770,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed #1249: option `hiddenDates` not accepting a single hidden date.
 - Fixed a bug when pinching and using hidden dates. Thanks @lauzierj.
 
-
 ## 2015-09-14, version 4.8.2
 
 ### Network
@@ -786,7 +780,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed stabilized event not firing if layout algorithm does very well.
 - Fixed arrows with some shapes when they are selected. #1292
 - Fixed deletion of options by settings them to null.
-
 
 ## 2015-09-07, version 4.8.1
 
@@ -801,7 +794,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Fixed #1215: inconsistent types of properties `start` and `end` in callback
   functions `onMove`, `onMoving`, `onAdd`.
-
 
 ## 2015-08-28, version 4.8.0
 
@@ -833,7 +825,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Implemented configuration option `excludeFromLegend`. Thanks @Bernd0.
 
-
 ## 2015-07-27, version 4.7.0
 
 ### Timeline
@@ -847,7 +838,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Added moveNode method.
 - Added cubic Bezier curves.
-
 
 ## 2015-07-22, version 4.6.0
 
@@ -874,7 +864,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed disabling hierarchical layout.
 - Fixed delete button when using multiple selected items in manipulation system.
 
-
 ## 2015-07-17, version 4.5.0
 
 ### General
@@ -885,7 +874,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Added shapeProperties, thanks @zukomgwili!
 - Added configChange event.
-- Properly fixed the _lockedRedraw method.
+- Properly fixed the \_lockedRedraw method.
 - Fixed node resizing on dragging.
 - Fixed missing edges during clustering.
 - Fixed missing refresh of node data when changing hierarchical layout on the fly.
@@ -907,7 +896,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
   `onMove` handler.
 - Fixed #239: Do not zoom/move the window when the mouse is on the left panel
   with group labels.
-
 
 ## 2015-07-03, version 4.4.0
 
@@ -952,7 +940,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 - Fixed cleaning up of items in subgroups, thanks @ChenMachluf!
 - Improved error notification with groups, thanks @skinkie!
-
 
 ## 2015-06-16, version 4.3.0
 
@@ -1037,7 +1024,6 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 - Fixed #869: Add className with id to custom time bars
 - Fixed #877: Added support for metaKey to select multiple items.
 
-
 ## 2015-05-22, version 4.0.0
 
 ### General
@@ -1079,6 +1065,7 @@ In version 5.0.0 the original [vis library](https://github.com/almende/vis) was 
 
 The network has been completely rewritten. The new modular setup using ES6 classes makes
 it future proof for maintainability, extendability and clarity. A summary of new features:
+
 - New examples, categorized by topic.
 - New docs.
 - New option structure, adhering to the modular setup on the backend.
@@ -1099,13 +1086,11 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - New avoidOverlap option for physics.
 - Many, many bugfixes.
 
-
 ### DataSet
 
 - Dropped support for Google visualization DataTable.
 - Dropped support for appending data returned by `DataSet.get()` to an existing
   Array or DataTable.
-
 
 ## 2015-04-07, version 3.12.0
 
@@ -1123,7 +1108,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
   height of the group label as minimum height now.
 - Fixed #708: detecting wrong group when page is scrolled.
 - Fixed #733: background items being selected on shift+click.
-
 
 ## 2015-03-05, version 3.11.0
 
@@ -1169,8 +1153,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Implemented support for mapping field names. Thanks @spatialillusions.
 - Fixed #670: DataView not passing a data property on update events (see #670)
 
-
-
 ## 2015-02-11, version 3.10.0
 
 ### Network
@@ -1210,7 +1192,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed a bug in the `DataSet` returning an empty object instead of `null` when
   no item was found when using both a filter and specifying fields.
 
-
 ## 2015-01-16, version 3.9.1
 
 ### General
@@ -1225,7 +1206,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed nodes color data being overridden when having a group and a dataset update query.
 - Decoupled animation from physics simulation.
 - Fixed scroll being blocked if zoomable is false.
-
 
 ## 2015-01-16, version 3.9.0
 
@@ -1250,7 +1230,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 ### Timeline
 
 - Added byUser flag to options of the rangechange and rangechanged event.
-
 
 ## 2015-01-09, version 3.8.0
 
@@ -1302,7 +1281,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 
 - Fixed mouse coordinates for tooltips.
 
-
 ## 2014-12-09, version 3.7.2
 
 ### Timeline
@@ -1345,7 +1323,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - dragEnd event now does not give the selected nodes if only the viewport has been dragged #453
 - merged high DPI fix by @crubier, thanks!
 
-
 ## 2014-11-14, version 3.7.0
 
 ### Graph2D
@@ -1358,7 +1335,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 
 - Added pointer properties to the click and the doubleClick events containing the XY coordinates in DOM and canvas space.
 - Removed IDs from navigation so multiple networks can be shown on the same page. (#438)
-
 
 ### Timeline
 
@@ -1398,7 +1374,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - A precision option to manually set the amount of decimals.
 - Two new examples showing the new features.
 
-
 ## 2014-10-28, version 3.6.3
 
 ### Timeline
@@ -1416,11 +1391,9 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Support for queueing of changes, and flushing them at once.
 - Implemented `DataSet.setOptions`. Only applicable for the `queue` options.
 
-
 ## 2014-10-24, version 3.6.2
 
 - Vis.js is now dual licensed under both Apache 2.0 and MIT.
-
 
 ## 2014-10-22, version 3.6.1
 
@@ -1429,7 +1402,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed uneven stepsized with hidden dates.
 - Fixed multiple bugs with regards to hidden dates.
 - Fixed subgroups and added subgroup sorting. Subgroup labels will be in future releases.
-
 
 ## 2014-10-21, version 3.6.0
 
@@ -1469,7 +1441,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Implemented options `xValueLabel`, `yValueLabel` and `zValueLabel` for custom labels along
   the x, y, z axis. Thanks @fabriziofortino.
 
-
 ## 2014-09-16, version 3.5.0
 
 ### Network
@@ -1482,7 +1453,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 
 - Fixed dataAxis not showing large numbers correctly.
 
-
 ## 2014-09-12, version 3.4.2
 
 ### Network
@@ -1492,7 +1462,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Added locked to focusOnNode and releaseNode().
 - Fixed minor bug in positioning of fontFill of nodes with certain shapes.
 - Added startStabilization event.
-
 
 ## 2014-09-11, version 3.4.1
 
@@ -1505,7 +1474,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 ### Timeline
 
 - Fixed a bug in IE freezing when margin.item and margin.axis where both 0.
-
 
 ## 2014-09-10, version 3.4.0
 
@@ -1543,7 +1511,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Renamed internal items from `ItemBox`, `ItemRange`, and `ItemPoint` to
   respectively `BoxItem`, `RangeItem`, and `PointItem`.
 - Fixed an error thrown when calling `destroy()`.
-
 
 ## 2014-08-29, version 3.3.0
 
@@ -1594,7 +1561,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed bugs.
 - Added groups.visibility functionality and an example showing how it works.
 
-
 ## 2014-08-14, version 3.2.0
 
 ### General
@@ -1625,7 +1591,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Removed onclick and onrelease for navigation and switched to Hammer.js (fixing touchscreen interaction with navigation).
 - Fixed error on adding an edge without having created the nodes it should be connected to (in the case of dynamic smooth curves).
 
-
 ## 2014-07-22, version 3.1.0
 
 ### General
@@ -1637,7 +1602,7 @@ it future proof for maintainability, extendability and clarity. A summary of new
 
 - Implemented function `getVisibleItems()`, which returns the items visible
   in the current window.
-- Added options `margin.item.horizontal` and  `margin.item.vertical`, which
+- Added options `margin.item.horizontal` and `margin.item.vertical`, which
   allows to specify different margins horizontally/vertically.
 - Removed check for number of arguments in callbacks `onAdd`, `onUpdate`,
   `onRemove`, and `onMove`.
@@ -1672,8 +1637,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Added .get() returnType option to return as JSON object, Array or Google
   DataTable.
 
-
-
 ## 2014-07-07, version 3.0.0
 
 ### Timeline
@@ -1687,6 +1650,7 @@ it future proof for maintainability, extendability and clarity. A summary of new
         .vis.timeline .item.range .content {
           overflow: visible;
         }
+
 - Fixed the height of background and foreground panels of groups.
 - Fixed ranges in the Timeline sometimes overlapping when dragging the Timeline.
 - Fixed `DataView` not working in Timeline.
@@ -1713,7 +1677,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 
 - Now throws an error when constructing without new keyword.
 
-
 ## 2014-06-19, version 2.0.0
 
 ### Timeline
@@ -1737,7 +1700,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 
 - Renamed option `convert` to `type`.
 
-
 ## 2014-06-06, version 1.1.0
 
 ### Timeline
@@ -1759,7 +1721,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 ### Graph3D
 
 - Ported Graph3D from Chap Links Library.
-
 
 ## 2014-05-28, version 1.0.2
 
@@ -1783,7 +1744,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Changes setOptions to avoid resetting view.
 - Interchanged canvasToDOM and DOMtoCanvas to correspond with the docs.
 
-
 ## 2014-05-09, version 1.0.1
 
 ### Timeline
@@ -1797,7 +1757,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed bug where the graph stopped animation after settling in playing with physics.
 - Fixed bug where hierarchical physics properties were not handled.
 - Added events for change of view and zooming.
-
 
 ## 2014-05-02, version 1.0.0
 
@@ -1834,7 +1793,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - A DataSet can now be constructed with initial data, like
   `new DataSet(data, options)`.
 
-
 ## 2014-04-18, version 0.7.4
 
 ### Graph
@@ -1842,7 +1800,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed IE9 bug.
 - Style fixes.
 - Minor bug fixes.
-
 
 ## 2014-04-16, version 0.7.3
 
@@ -1852,14 +1809,12 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Added pull requests from kannonboy and vierja: tooltip styling, label fill
   color.
 
-
 ## 2014-04-09, version 0.7.2
 
 ### Graph
 
 - Fixed edge select bug.
 - Fixed zoom bug on empty initialization.
-
 
 ## 2014-03-27, version 0.7.1
 
@@ -1874,7 +1829,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Added freezeForStabilization option to improve stabilization with cached
   positions.
 
-
 ## 2014-03-07, version 0.7.0
 
 ### Graph
@@ -1886,7 +1840,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
   required for initializing nodes from hierarchical layouts after
   storePosition().
 - Added color options for the edges.
-
 
 ## 2014-03-06, version 0.6.1
 
@@ -1903,7 +1856,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
   setting them to zero.
 - Some clarifications in the documentation.
 
-
 ## 2014-03-05, version 0.6.0
 
 ### Graph
@@ -1915,11 +1867,9 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Directions for Hierarchical layout.
 - Refactoring and bugfixes.
 
-
 ## 2014-02-20, version 0.5.1
 
 - Fixed broken bower module.
-
 
 ## 2014-02-20, version 0.5.0
 
@@ -1947,7 +1897,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 ### DataSet
 
 - Renamed functions `subscribe` and `unsubscribe` to `on` and `off` respectively.
-
 
 ## 2014-01-31, version 0.4.0
 
@@ -1977,7 +1926,6 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Implemented functions `on` and `off` to create event listeners for event
   `select`.
 
-
 ## 2014-01-14, version 0.3.0
 
 - Moved the generated library to folder `./dist`
@@ -1987,13 +1935,11 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Fixed broken Timeline options `min` and `max`.
 - Fixed not being able to load vis.js in node.js.
 
-
 ## 2013-09-20, version 0.2.0
 
 - Implemented full touch support for Graph.
 - Fixed initial empty range in the Timeline in case of a single item.
 - Fixed field `className` not working for items.
-
 
 ## 2013-06-20, version 0.1.0
 
@@ -2009,30 +1955,25 @@ it future proof for maintainability, extendability and clarity. A summary of new
 - Renamed DataSet option `fieldTypes` to `convert`.
 - Renamed function `vis.util.cast` to `vis.util.convert`.
 
-
 ## 2013-06-07, version 0.0.9
 
 - First working version of the Graph imported from the old library.
 - Documentation added for both Timeline and Graph.
-
 
 ## 2013-05-03, version 0.0.8
 
 - Performance improvements: only visible items are rendered.
 - Minor bug fixes and improvements.
 
-
 ## 2013-04-25, version 0.0.7
 
 - Sanitized the published packages on npm and bower.
-
 
 ## 2013-04-25, version 0.0.6
 
 - Css is now packaged in the javascript file, and automatically loaded.
 - The library uses node style dependency management for modules now, used
   with Browserify.
-
 
 ## 2013-04-16, version 0.0.5
 

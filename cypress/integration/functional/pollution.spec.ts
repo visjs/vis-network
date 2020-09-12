@@ -2,7 +2,7 @@ context("Pollution", (): void => {
   const resultContainerIds = [
     "results-before-loading",
     "results-after-loading",
-    "results-after-rendering"
+    "results-after-rendering",
   ] as const;
 
   it("Visit", (): void => {

@@ -1,171 +1,171 @@
 {
-    "nodes": [
-        {
-            "id": "A",
-            "label": "A",
-            "shape": "circle",
-            "font": {
-                "size": 16,
-                "color": "white"
-            },
-            "color": {
-                "border": "red",
-                "background": "red"
-            }
-        },
-        {
-            "id": "B",
-            "label": "B",
-            "shape": "circle",
-            "font": {
-                "size": 16
-            }
-        },
-        {
-            "id": "C",
-            "label": "C",
-            "shape": "circle",
-            "font": {
-                "size": 16
-            }
-        },
-        {
-            "id": "D",
-            "label": "D",
-            "shape": "circle",
-            "font": {
-                "size": 16
-            }
-        },
-        {
-            "id": "E",
-            "label": "E",
-            "shape": "circle",
-            "font": {
-                "size": 16
-            }
-        },
-        {
-            "id": "F",
-            "label": "F",
-            "shape": "circle",
-            "font": {
-                "size": 16
-            }
-        }
-    ],
-    "edges": [
-        {
-            "from": "A",
-            "to": "A",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "label": 0.5,
-            "arrows": "to"
-        },
-        {
-            "from": "B",
-            "to": "B",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "label": 1.2,
-            "arrows": "to"
-        },
-        {
-            "from": "B",
-            "to": "C",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "label": 0.7,
-            "arrows": "to"
-        },
-        {
-            "from": "C",
-            "to": "A",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            }
-        },
-        {
-            "from": "B",
-            "to": "D",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "arrows": "to"
-        },
-        {
-            "from": "D",
-            "to": "B",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "arrows": "to"
-        },
-        {
-            "from": "D",
-            "to": "C",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "arrows": "to"
-        },
-        {
-            "from": "D",
-            "to": "E",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "label": 0.2,
-            "arrows": "to"
-        },
-        {
-            "from": "F",
-            "to": "F",
-            "length": 100,
-            "color": {
-                "color": "gray"
-            },
-            "font": {
-                "color": "black"
-            },
-            "arrows": "to"
-        }
-    ],
-    "options": {}
+  "nodes": [
+    {
+      "id": "A",
+      "label": "A",
+      "shape": "circle",
+      "font": {
+        "size": 16,
+        "color": "white"
+      },
+      "color": {
+        "border": "red",
+        "background": "red"
+      }
+    },
+    {
+      "id": "B",
+      "label": "B",
+      "shape": "circle",
+      "font": {
+        "size": 16
+      }
+    },
+    {
+      "id": "C",
+      "label": "C",
+      "shape": "circle",
+      "font": {
+        "size": 16
+      }
+    },
+    {
+      "id": "D",
+      "label": "D",
+      "shape": "circle",
+      "font": {
+        "size": 16
+      }
+    },
+    {
+      "id": "E",
+      "label": "E",
+      "shape": "circle",
+      "font": {
+        "size": 16
+      }
+    },
+    {
+      "id": "F",
+      "label": "F",
+      "shape": "circle",
+      "font": {
+        "size": 16
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "A",
+      "to": "A",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "label": 0.5,
+      "arrows": "to"
+    },
+    {
+      "from": "B",
+      "to": "B",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "label": 1.2,
+      "arrows": "to"
+    },
+    {
+      "from": "B",
+      "to": "C",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "label": 0.7,
+      "arrows": "to"
+    },
+    {
+      "from": "C",
+      "to": "A",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      }
+    },
+    {
+      "from": "B",
+      "to": "D",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "arrows": "to"
+    },
+    {
+      "from": "D",
+      "to": "B",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "arrows": "to"
+    },
+    {
+      "from": "D",
+      "to": "C",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "arrows": "to"
+    },
+    {
+      "from": "D",
+      "to": "E",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "label": 0.2,
+      "arrows": "to"
+    },
+    {
+      "from": "F",
+      "to": "F",
+      "length": 100,
+      "color": {
+        "color": "gray"
+      },
+      "font": {
+        "color": "black"
+      },
+      "arrows": "to"
+    }
+  ],
+  "options": {}
 }

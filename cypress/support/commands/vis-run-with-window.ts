@@ -31,7 +31,7 @@ declare global {
 export function visRunWithWindow(
   callback: (props: VisGlobals) => void,
   {
-    timeout = VIS_DEFAULT_RUN_WITH_WINDOW_TIMEOUT
+    timeout = VIS_DEFAULT_RUN_WITH_WINDOW_TIMEOUT,
   }: VisRunWithWindowOptions = {}
 ): void {
   cy.window().then({ timeout }, (window: any): void => {

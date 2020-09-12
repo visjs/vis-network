@@ -3,8 +3,8 @@ import { spy } from "sinon";
 
 import { EndPoints } from "../../lib/network/modules/components/edges";
 
-describe("EndPoints", function(): void {
-  describe("methods called", function(): void {
+describe("EndPoints", function (): void {
+  describe("methods called", function (): void {
     [
       {
         type: "circle",
@@ -18,10 +18,10 @@ describe("EndPoints", function(): void {
               6.4,
               0,
               6.283185307179586,
-              false
-            ]
-          ]
-        }
+              false,
+            ],
+          ],
+        },
       },
       {
         type: "box",
@@ -29,8 +29,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[42.084969240505984, -41.79924788150892]],
-          moveTo: [[41.915030759494016, -32.20075211849108]]
-        }
+          moveTo: [[41.915030759494016, -32.20075211849108]],
+        },
       },
       {
         type: "crow",
@@ -38,8 +38,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[41.915030759494016, -32.20075211849108]],
-          moveTo: [[26.00250706163694, -37.28323080168662]]
-        }
+          moveTo: [[26.00250706163694, -37.28323080168662]],
+        },
       },
       {
         type: "curve",
@@ -51,12 +51,12 @@ describe("EndPoints", function(): void {
               6.4,
               42.4292036732051,
               45.5707963267949,
-              false
-            ]
+              false,
+            ],
           ],
           beginPath: [[]],
-          stroke: [[]]
-        }
+          stroke: [[]],
+        },
       },
       {
         type: "inv_curve",
@@ -68,12 +68,12 @@ describe("EndPoints", function(): void {
               6.4,
               45.5707963267949,
               48.71238898038469,
-              false
-            ]
+              false,
+            ],
           ],
           beginPath: [[]],
-          stroke: [[]]
-        }
+          stroke: [[]],
+        },
       },
       {
         type: "diamond",
@@ -81,8 +81,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[34.08622277132446, -41.940863282352225]],
-          moveTo: [[42, -37]]
-        }
+          moveTo: [[42, -37]],
+        },
       },
       {
         type: "triangle",
@@ -90,8 +90,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[25.917537821130956, -32.4839829201777]],
-          moveTo: [[42.31994985876726, -36.994335383966266]]
-        }
+          moveTo: [[42.31994985876726, -36.994335383966266]],
+        },
       },
       {
         type: "inv_triangle",
@@ -99,8 +99,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[42.084969240505984, -41.79924788150892]],
-          moveTo: [[41.915030759494016, -32.20075211849108]]
-        }
+          moveTo: [[41.915030759494016, -32.20075211849108]],
+        },
       },
       {
         type: "bar",
@@ -108,8 +108,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[42.14161540084331, -44.998746469181526]],
-          moveTo: [[41.85838459915669, -29.00125353081847]]
-        }
+          moveTo: [[41.85838459915669, -29.00125353081847]],
+        },
       },
       {
         type: "vee",
@@ -117,8 +117,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[34.001253530818474, -37.14161540084331]],
-          moveTo: [[25.917537821130956, -32.4839829201777]]
-        }
+          moveTo: [[25.917537821130956, -32.4839829201777]],
+        },
       },
       {
         type: "arrow",
@@ -126,8 +126,8 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[25.917537821130956, -32.4839829201777]],
-          moveTo: [[42, -37]]
-        }
+          moveTo: [[42, -37]],
+        },
       },
       {
         type: undefined,
@@ -135,11 +135,11 @@ describe("EndPoints", function(): void {
           beginPath: [[]],
           closePath: [[]],
           lineTo: [[25.917537821130956, -32.4839829201777]],
-          moveTo: [[42, -37]]
-        }
-      }
+          moveTo: [[42, -37]],
+        },
+      },
     ].forEach(({ methods, type }): void => {
-      describe(`${type}`, function(): void {
+      describe(`${type}`, function (): void {
         const ctx = Object.keys(methods).reduce((acc, method): any => {
           acc[method] = spy();
           return acc;
@@ -149,15 +149,15 @@ describe("EndPoints", function(): void {
           type,
           point: { x: 42, y: -37 },
           angle: 44,
-          length: 16
+          length: 16,
         };
 
-        it("draw", function(): void {
+        it("draw", function (): void {
           EndPoints.draw(ctx, arrowData);
         });
 
         Object.entries(methods).forEach(([method, expected]): void => {
-          it(`${method}`, function(): void {
+          it(`${method}`, function (): void {
             expect(ctx[method].callCount, "call count").to.be.at.least(1);
             expected!.forEach((args, i): void => {
               expect(ctx[method].getCall(i).args).to.deep.equal(args);

@@ -59,9 +59,7 @@
         that is the from and to properties now contain the ids directly.
       </p>
 
-      <p>
-        Old code that no longer works:
-      </p>
+      <p>Old code that no longer works:</p>
 
       <pre>
 const options = {
@@ -77,9 +75,7 @@ const options = {
 }
       </pre>
 
-      <p>
-        New code that achieves the same result:
-      </p>
+      <p>New code that achieves the same result:</p>
 
       <pre>
 const options = {
@@ -130,26 +126,26 @@ const options = {
         { from: 14, to: 28, label: "14 → 28" },
         { from: 14, to: 29, label: "14 → 29" },
         { from: 15, to: 30, label: "15 → 30" },
-        { from: 15, to: 31, label: "15 → 31" }
+        { from: 15, to: 31, label: "15 → 31" },
       ];
 
       // create a network
       var container = document.getElementById("mynetwork");
       var data = {
         nodes: new vis.DataSet(nodes),
-        edges: new vis.DataSet(edges)
+        edges: new vis.DataSet(edges),
       };
       var options = {
         manipulation: {
           editEdge: {
-            editWithoutDrag: function(data, callback) {
+            editWithoutDrag: function (data, callback) {
               console.info(data);
               alert("The callback data has been logged to the console.");
               // you can do something with the data here
               callback(data);
-            }
-          }
-        }
+            },
+          },
+        },
       };
       var network = new vis.Network(container, data, options);
     </script>

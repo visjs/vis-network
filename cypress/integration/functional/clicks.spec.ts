@@ -65,7 +65,7 @@ context("Clicks", (): void => {
     { x: 275, y: 250, shouldTrigger: true, name: "TQ" }, // top, quarter from the left
     { x: 275, y: 275, shouldTrigger: true, name: "QQ" }, // quarter from the top, quarter from the left
     { x: 350, y: 250, shouldTrigger: true, name: "TR" }, // top, right
-    { x: 350, y: 350, shouldTrigger: true, name: "BR" } // bottom, right
+    { x: 350, y: 350, shouldTrigger: true, name: "BR" }, // bottom, right
   ];
 
   /*
@@ -79,18 +79,18 @@ context("Clicks", (): void => {
     [
       { name: "TL", position: { x: 0, y: 0 } },
       { name: "TQ", position: { x: 0.25, y: 0.5 } },
-      { name: "TR", position: { x: 1, y: 1 } }
+      { name: "TR", position: { x: 1, y: 1 } },
     ],
     [
       { name: "TL", position: { x: 0, y: 0 } },
       { name: "QL", position: { x: 0.5, y: 0.25 } },
-      { name: "BL", position: { x: 1, y: 1 } }
+      { name: "BL", position: { x: 1, y: 1 } },
     ],
     [
       { name: "TL", position: { x: 0, y: 0 } },
       { name: "QQ", position: { x: 0.25, y: 0.25 } },
-      { name: "BR", position: { x: 1, y: 1 } }
-    ]
+      { name: "BR", position: { x: 1, y: 1 } },
+    ],
   ];
 
   const allEvents: VisEvent[] = [];
@@ -106,9 +106,9 @@ context("Clicks", (): void => {
     });
   });
 
-  describe("Clicks", function(): void {
+  describe("Clicks", function (): void {
     clicks.forEach(({ name, shouldTrigger, x, y }): void => {
-      describe(`At ${x}x${y} ${name || ""}`, function(): void {
+      describe(`At ${x}x${y} ${name || ""}`, function (): void {
         const events: VisEvent[] = [];
 
         it("Triggering and capturing", (): void => {
@@ -127,7 +127,7 @@ context("Clicks", (): void => {
           });
         });
 
-        it("Correct number of events", function(): void {
+        it("Correct number of events", function (): void {
           if (shouldTrigger) {
             expect(events).to.to.have.lengthOf(1);
           } else {
@@ -136,7 +136,7 @@ context("Clicks", (): void => {
         });
 
         if (shouldTrigger) {
-          it("Correct DOM coordinates", function(): void {
+          it("Correct DOM coordinates", function (): void {
             expect(events[0]).to.have.ownProperty("pointer");
             expect(events[0].pointer).to.have.ownProperty("DOM");
             expect(events[0].pointer.DOM).to.have.ownProperty("x");
@@ -158,13 +158,13 @@ context("Clicks", (): void => {
     });
   });
 
-  describe("Relative event positions in canvas coordinetes", function(): void {
+  describe("Relative event positions in canvas coordinetes", function (): void {
     canvasCoordinatesTests.forEach((config): void => {
       const name = config.map(({ name }): string => name).join(", ");
 
-      describe(name, function(): void {
+      describe(name, function (): void {
         ["x" as const, "y" as const].forEach((axis): void => {
-          it(axis, function(): void {
+          it(axis, function (): void {
             const axis0 = namedEvents.get(
               config.find(({ position }): boolean => position[axis] === 0)!.name
             ).pointer.canvas[axis];

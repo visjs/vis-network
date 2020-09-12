@@ -38,7 +38,7 @@ export function visRun(
       visEdges: edges,
       visLastEvents: lastEvents,
       visNetwork: network,
-      visNodes: nodes
+      visNodes: nodes,
     }: any): void => {
       if (edges && lastEvents && network && nodes) {
         callback({ edges, lastEvents, network, nodes });

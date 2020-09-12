@@ -39,12 +39,12 @@ export function visStabilizeFitAndRun(
   callback: (props: VisGlobals) => void,
   {
     stabilizationTimeout = VIS_DEFAULT_STABILIZE_AND_FIT_TIMEOUT,
-    runTimeout = VIS_DEFAULT_RUN_TIMEOUT
+    runTimeout = VIS_DEFAULT_RUN_TIMEOUT,
   }: VisStabilizeFitAndRunOptions = {}
 ): void {
   cy.visStabilizeAndFit({ timeout: stabilizationTimeout });
   cy.visRun(callback, {
-    timeout: runTimeout
+    timeout: runTimeout,
   });
 }
 Cypress.Commands.add("visStabilizeFitAndRun", visStabilizeFitAndRun);

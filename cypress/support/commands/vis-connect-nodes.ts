@@ -28,13 +28,13 @@ export function visConnectNodes(from: Point, to: Point): void {
 
       // Drag the edge between the nodes.
       cy.get("#mynetwork").trigger("pointerdown", from.x, from.y, {
-        button: 0
+        button: 0,
       });
       cy.get("#mynetwork").trigger("pointermove", middle.x, middle.y, {
-        button: 0
+        button: 0,
       });
       cy.get("#mynetwork").trigger("pointerup", to.x, to.y, {
-        button: 0
+        button: 0,
       });
     },
     ({ addedEdgeIds, removedEdgeIds }): void => {

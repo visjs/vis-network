@@ -2,7 +2,7 @@ import {
   DataSetEdges,
   DataSetNodes,
   Network,
-  Options
+  Options,
 } from "../../../declarations/entry-standalone";
 
 // TODO: Convert this to type only export when ESLint and Prettier support the

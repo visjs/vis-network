@@ -8,10 +8,10 @@ const someLocales = deepFreeze({
   "cs-CZ": {},
   "cs-SK": {},
   cs: {},
-  en: {}
+  en: {},
 });
 
-describe("Locale utils", function() {
+describe("Locale utils", function () {
   test(normalizeLanguageCode, (): void => {
     given(noLocales, "en").expect("en");
     given(noLocales, "en-US").expect("en");

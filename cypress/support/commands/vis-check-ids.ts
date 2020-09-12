@@ -84,7 +84,7 @@ export function visCheckIds(
         oldEdgeIds,
         oldNodeIds,
         removedEdgeIds,
-        removedNodeIds
+        removedNodeIds,
       });
     });
   });

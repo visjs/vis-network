@@ -2,20 +2,20 @@ import { expect } from "chai";
 import Network from "../../lib/network/Network";
 import canvasMockify from "../canvas-mock";
 
-describe("wind", function(): void {
-  beforeEach(function() {
+describe("wind", function (): void {
+  beforeEach(function () {
     this.clearJSDOM = canvasMockify("<div id='mynetwork'></div>");
     this.container = document.getElementById("mynetwork");
   });
 
-  afterEach(function() {
+  afterEach(function () {
     this.clearJSDOM();
 
     delete this.clearJSDOM;
     delete this.container;
   });
 
-  it("All nodes are on the correct side of the fixed node", async function(): Promise<
+  it("All nodes are on the correct side of the fixed node", async function (): Promise<
     void
   > {
     const network = new Network(
@@ -25,13 +25,13 @@ describe("wind", function(): void {
           { id: 1, fixed: true, x: 0, y: 0 },
           { id: 2 },
           { id: 3 },
-          { id: 4 }
+          { id: 4 },
         ],
         edges: [
           { from: 1, to: 2 },
           { from: 2, to: 3 },
-          { from: 3, to: 4 }
-        ]
+          { from: 3, to: 4 },
+        ],
       },
       { physics: { wind: { x: 10, y: 0 }, stabilization: { iterations: 10 } } }
     );

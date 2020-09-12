@@ -22,7 +22,7 @@ declare global {
 
 // eslint-disable-next-line require-jsdoc
 export function visStabilizeAndFit({
-  timeout = VIS_DEFAULT_STABILIZE_AND_FIT_TIMEOUT
+  timeout = VIS_DEFAULT_STABILIZE_AND_FIT_TIMEOUT,
 }: VisStabilizeAndFitOptions = {}): void {
   cy.visRun(
     async ({ network }): Promise<void> => {
@@ -46,15 +46,15 @@ export function visStabilizeAndFit({
         network.fit({
           animation: {
             duration: 100,
-            easingFunction: "linear"
-          }
+            easingFunction: "linear",
+          },
         });
       });
     },
     {
       // Stabilization can take really long time depenging on the CPU power
       // available and the amount of nodes and edges used.
-      timeout
+      timeout,
     }
   );
 

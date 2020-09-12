@@ -44,7 +44,7 @@ function visitPage(config: UniversalConfig): void {
       encodeURIComponent(JSON.stringify(config))
   );
   cy.get("#status").contains("Ready", {
-    timeout: Cypress.config("pageLoadTimeout")
+    timeout: Cypress.config("pageLoadTimeout"),
   });
 }
 
@@ -65,9 +65,7 @@ export function visVisitUniversal(
   // case.
   cy.request("GET", `https://unpkg.com/vis-network@${tag}/package.json`).then(
     (response): void => {
-      expect(response.body)
-        .to.have.property("version")
-        .that.is.a("string");
+      expect(response.body).to.have.property("version").that.is.a("string");
 
       const version = response.body.version;
 

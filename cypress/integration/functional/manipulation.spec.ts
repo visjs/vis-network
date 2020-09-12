@@ -12,9 +12,7 @@ function selectEditAndCheck(
 
     cy.visClickBetweenPoints(a, b);
     cy.visRun(({ edges, lastEvents: { click } }): void => {
-      expect(click.edges)
-        .to.be.an("array")
-        .and.have.length(1);
+      expect(click.edges).to.be.an("array").and.have.length(1);
 
       id = click.edges[0];
 
@@ -42,16 +40,12 @@ function selectEditAndCheck(
 
     cy.visClickPoint(a);
     cy.visRun(({ nodes, lastEvents: { click } }): void => {
-      expect(click.nodes)
-        .to.be.an("array")
-        .and.have.length(1);
+      expect(click.nodes).to.be.an("array").and.have.length(1);
 
       id = click.nodes[0];
 
       if (before === 0) {
-        expect(nodes.get(id))
-          .to.have.own.property("label")
-          .that.equals("new");
+        expect(nodes.get(id)).to.have.own.property("label").that.equals("new");
       } else {
         expect(nodes.get(id))
           .to.have.own.property("label")

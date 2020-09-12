@@ -1,20 +1,20 @@
 {
-    "nodes": [
-        {
-            "id": "Hello",
-            "label": "Hello"
-        },
-        {
-            "id": "World",
-            "label": "World"
-        }
-    ],
-    "edges": [
-        {
-            "from": "Hello",
-            "to": "World",
-            "arrows": "to"
-        }
-    ],
-    "options": {}
+  "nodes": [
+    {
+      "id": "Hello",
+      "label": "Hello"
+    },
+    {
+      "id": "World",
+      "label": "World"
+    }
+  ],
+  "edges": [
+    {
+      "from": "Hello",
+      "to": "World",
+      "arrows": "to"
+    }
+  ],
+  "options": {}
 }

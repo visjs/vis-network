@@ -11,7 +11,7 @@ import { Edge, Node, TestData } from "./common";
  *
  * @returns Nodes and edges that can be directly supplied to Vis Network.
  */
-export function generateMaryTree(amount: number = 63, m: number = 2): TestData {
+export function generateMaryTree(amount = 63, m = 2): TestData {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 
@@ -29,7 +29,7 @@ export function generateMaryTree(amount: number = 63, m: number = 2): TestData {
       id: `edge_${parentId}-${id}`,
       label: `${parentId} - ${id}`,
       from: parentId,
-      to: id
+      to: id,
     });
   }
 
@@ -58,7 +58,7 @@ export function addMoreEdges(data: TestData): TestData {
         id: `edge2_${parentId}-${id}`,
         label: `${parentId} - ${id}`,
         from: parentId,
-        to: id
+        to: id,
       });
     }
   }
