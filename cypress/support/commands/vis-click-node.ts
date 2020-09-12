@@ -1,7 +1,6 @@
 import { IdType } from "./types";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -15,7 +14,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visClickNode(id: IdType): void {
   cy.visRun(({ network }): void => {
     const { x, y } = network.canvasToDOM(network.getPositions([id])[id]);

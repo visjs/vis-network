@@ -2,7 +2,6 @@ import { Point } from "./types";
 import { visCheckIds } from "./vis-check-ids";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -16,7 +15,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visConnectNodes(from: Point, to: Point): void {
   const middle = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 };
 

@@ -2,7 +2,6 @@ import { UniversalConfig, UniversalNetworkConfig } from "./types";
 import { compare } from "compare-versions";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -48,7 +47,6 @@ function visitPage(config: UniversalConfig): void {
   });
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visVisitUniversal(
   config: UniversalNetworkConfig = {},
   { requireNewerVersionThan }: VisVisitPageOptions = {}

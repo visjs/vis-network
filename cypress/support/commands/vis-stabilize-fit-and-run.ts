@@ -15,7 +15,6 @@ import { VIS_DEFAULT_RUN_TIMEOUT } from "./vis-run";
 import { VIS_DEFAULT_STABILIZE_AND_FIT_TIMEOUT } from "./vis-stabilize-and-fit";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -34,7 +33,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visStabilizeFitAndRun(
   callback: (props: VisGlobals) => void,
   {

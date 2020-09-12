@@ -1,6 +1,5 @@
 import { IdType, Point } from "../helpers";
 
-// eslint-disable-next-line require-jsdoc
 function selectEditAndCheck(
   before: number,
   after: number,

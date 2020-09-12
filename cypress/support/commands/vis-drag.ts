@@ -1,7 +1,6 @@
 import { DragPath } from "./types";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -14,7 +13,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visDrag(paths: readonly DragPath[]): void {
   for (const { button, from, shiftKey, to } of paths) {
     cy.get("#mynetwork canvas").trigger("pointerdown", from.x, from.y, {

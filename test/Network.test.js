@@ -1,8 +1,4 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable guard-for-in */
-
-/**
+/*
  *
  * Useful during debugging
  * =======================
@@ -24,8 +20,8 @@ import { allOptions, configureOptions } from "./../lib/network/options.js";
 /**
  * Merge all options of object b into object b
  *
- * @param {object} a
- * @param {object} b
+ * @param {object} a - The object to be modified and returned.
+ * @param {object} b - The source of properties.
  * @returns {object} a
  *
  * Adapted merge() in dotparser.js
@@ -49,11 +45,8 @@ function merge(a, b) {
   return a;
 }
 
-/**
+/*
  * Load legacy-style (i.e. not module) javascript files into the given context.
- *
- * @param list
- * @param context
  */
 function include(list, context) {
   if (!(list instanceof Array)) {
@@ -67,15 +60,13 @@ function include(list, context) {
   }
 }
 
-/**
+/*
  * Defined network consists of two sub-networks:
  *
  * - 1-2-3-4
  * - 11-12-13-14
  *
  * For reference, this is the sample network of issue #1218
- *
- * @param options
  */
 function createSampleNetwork(options) {
   const NumInitialNodes = 8;
@@ -128,15 +119,13 @@ function createSampleNetwork(options) {
   return [network, data, NumInitialNodes, NumInitialEdges];
 }
 
-/**
+/*
  * Create a cluster for the dynamic data change cases.
  *
  * Works on the network created by createSampleNetwork().
  *
  * This is actually a pathological case; there are two separate sub-networks and
  * a cluster is made of two nodes, each from one of the sub-networks.
- *
- * @param network
  */
 function createCluster(network) {
   const clusterOptionsByData = {
@@ -149,26 +138,20 @@ function createCluster(network) {
   network.cluster(clusterOptionsByData);
 }
 
-/**
+/*
  * Display node/edge state, useful during debugging
- *
- * @param network
  */
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars -- This is useful for debugging.
 function log(network) {
-  console.log(Object.keys(network.body.nodes));
-  console.log(network.body.nodeIndices);
-  console.log(Object.keys(network.body.edges));
-  console.log(network.body.edgeIndices);
+  console.debug(Object.keys(network.body.nodes));
+  console.debug(network.body.nodeIndices);
+  console.debug(Object.keys(network.body.edges));
+  console.debug(network.body.edgeIndices);
 }
 
-/**
+/*
  * Note that only the node and edges counts are asserted.
  * This might be done more thoroughly by explicitly checking the id's
- *
- * @param network
- * @param expectedPresent
- * @param expectedVisible
  */
 function assertNumNodes(network, expectedPresent, expectedVisible) {
   if (expectedVisible === undefined) expectedVisible = expectedPresent;
@@ -185,12 +168,8 @@ function assertNumNodes(network, expectedPresent, expectedVisible) {
   );
 }
 
-/**
+/*
  * Comment at assertNumNodes() also applies.
- *
- * @param network
- * @param expectedPresent
- * @param expectedVisible
  */
 function assertNumEdges(network, expectedPresent, expectedVisible) {
   if (expectedVisible === undefined) expectedVisible = expectedPresent;
@@ -224,15 +203,12 @@ function assertEdgeLabels(network, originalEdgesDataSet, assertMessagePrefix) {
   }
 }
 
-/**
+/*
  * Check if the font options haven't changed.
  *
  * This is to guard against future code changes; a lot of the code deals with particular properties of
  * the font options.
  * If any assertion fails here, all code in Network handling fonts should be checked.
- *
- * @param fontItem
- * @param checkStrict
  */
 function checkFontProperties(fontItem, checkStrict = true) {
   const knownProperties = [
@@ -288,13 +264,10 @@ describe("Network", function () {
   // Local helper methods for Edge and Node testing
   /////////////////////////////////////////////////////
 
-  /**
+  /*
    * Simplify network creation for local tests
-   *
-   * @param options
    */
   function createNetwork(options) {
-    // eslint-disable-next-line no-unused-vars
     const [network] = createSampleNetwork(options);
 
     return network;
@@ -334,13 +307,8 @@ describe("Network", function () {
   // End Local helper methods for Edge and Node testing
   /////////////////////////////////////////////////////
 
-  /**
+  /*
    * Helper function for clustering
-   *
-   * @param network
-   * @param clusterId
-   * @param nodeList
-   * @param allowSingle
    */
   function clusterTo(network, clusterId, nodeList, allowSingle) {
     const options = {
@@ -553,7 +521,7 @@ describe("Network", function () {
       checkChooserValues(firstEdge(network), "function", false);
     });
 
-    /**
+    /*
      * Support routine for next unit test
      */
     function createDataforColorChange() {
@@ -929,7 +897,7 @@ describe("Network", function () {
       //log(network);
     });
 
-    /**
+    /*
      * Helper function for setting up a graph for testing clusterByEdgeCount()
      */
     function createOutlierGraph() {
@@ -974,7 +942,7 @@ describe("Network", function () {
      * Check on fix for #3367
      */
     it("correctly handles edge cases of clusterByEdgeCount()", function () {
-      /**
+      /*
        * Collect clustered id's
        *
        * All node id's in clustering nodes are collected into an array;
@@ -983,8 +951,6 @@ describe("Network", function () {
        * Ordering of output depends on the order in which they are defined
        * within nodes.clustering; strictly, speaking, the array and its items
        * are collections, so order should not matter.
-       *
-       * @param network
        */
       const collectClusters = function (network) {
         const clusters = [];
@@ -1003,7 +969,7 @@ describe("Network", function () {
         return clusters;
       };
 
-      /**
+      /*
        * Compare cluster data
        *
        * params are arrays of arrays of id's, e.g:
@@ -1014,9 +980,6 @@ describe("Network", function () {
        *
        * This comparison depends on the ordering; better
        * would be to treat the items and values as collections.
-       *
-       * @param recieved
-       * @param expected
        */
       const compareClusterInfo = function (recieved, expected) {
         if (recieved.length !== expected.length) return false;
@@ -1076,7 +1039,7 @@ describe("Network", function () {
     // Automatic opening of clusters due to dynamic data change
     ///////////////////////////////////////////////////////////////
 
-    /**
+    /*
      * Helper function, created nested clusters, three deep
      */
     function createNetwork1() {
@@ -1397,19 +1360,20 @@ describe("Network", function () {
 
         // create a network
         const data = {
-          /* eslint-disable no-undef */
+          // eslint-disable-next-line no-undef -- Imported via legacy methods.
           nodes: new DataSet(nodes),
-          /* eslint-disable no-undef */
+          // eslint-disable-next-line no-undef -- Imported via legacy methods.
           edges: new DataSet(edges),
         };
 
         if (noPhysics) {
           // Avoid excessive processor time due to load.
           // We're just interested that the load itself is good
-          /* eslint-disable no-undef */
+          // eslint-disable-next-line no-undef -- Imported via legacy methods.
           options.physics = false;
         }
 
+        // eslint-disable-next-line no-undef -- Imported via legacy methods.
         const network = new Network(container, data, options);
         return network;
       }

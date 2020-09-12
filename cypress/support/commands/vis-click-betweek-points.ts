@@ -1,7 +1,6 @@
 import { Point } from "./types";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -15,7 +14,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visClickBetweenPoints(a: Point, b: Point): void {
   const middle = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
 

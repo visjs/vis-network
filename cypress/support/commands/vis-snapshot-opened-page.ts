@@ -3,7 +3,6 @@ import { deepObjectAssign } from "vis-util";
 import { VisVisitPageOptions } from "./vis-visit-universal";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -27,7 +26,6 @@ export interface VisSnapshotOpenedPageOptions extends VisVisitPageOptions {
   };
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visSnapshotOpenedPage(
   label: number | string,
   options: VisSnapshotOpenedPageOptions = {}

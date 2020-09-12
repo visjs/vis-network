@@ -1,7 +1,6 @@
 import { Point } from "./types";
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -14,7 +13,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visClickPoint(a: Point): void {
   cy.get("#mynetwork canvas").click(a.x, a.y);
 }

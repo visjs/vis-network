@@ -9,7 +9,6 @@ export interface VisRunOptions {
 export const VIS_DEFAULT_RUN_TIMEOUT = 4000;
 
 declare global {
-  // eslint-disable-next-line no-redeclare
   namespace Cypress {
     interface Chainable<Subject> {
       /**
@@ -27,7 +26,6 @@ declare global {
   }
 }
 
-// eslint-disable-next-line require-jsdoc
 export function visRun(
   callback: (props: VisGlobals) => void,
   { timeout = VIS_DEFAULT_RUN_TIMEOUT }: VisRunOptions = {}
