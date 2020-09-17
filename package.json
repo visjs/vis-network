@@ -131,7 +131,7 @@
     "opencollective": "1.0.3",
     "prettier": "2.1.2",
     "rimraf": "3.0.2",
-    "rollup": "2.27.0",
+    "rollup": "2.27.1",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "7.0.2",
