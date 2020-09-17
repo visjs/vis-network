@@ -103,7 +103,7 @@
   },
   "devDependencies": {
     "@egjs/hammerjs": "2.0.17",
-    "@mdi/font": "5.5.55",
+    "@mdi/font": "5.6.55",
     "@semantic-release/commit-analyzer": "8.0.1",
     "@semantic-release/github": "7.1.1",
     "@semantic-release/npm": "7.0.6",
