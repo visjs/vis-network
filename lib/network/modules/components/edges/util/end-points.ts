@@ -150,7 +150,7 @@ class Arrow extends EndPoint {
       { x: 0, y: 0 },
       { x: -1, y: 0.3 },
       { x: -0.9, y: 0 },
-      { x: -1, y: -0.3 }
+      { x: -1, y: -0.3 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -182,7 +182,7 @@ class Crow {
       { x: -1, y: 0 },
       { x: 0, y: 0.3 },
       { x: -0.4, y: 0 },
-      { x: 0, y: -0.3 }
+      { x: 0, y: -0.3 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -301,7 +301,7 @@ class Triangle {
     const points = [
       { x: 0.02, y: 0 },
       { x: -1, y: 0.3 },
-      { x: -1, y: -0.3 }
+      { x: -1, y: -0.3 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -332,7 +332,7 @@ class InvertedTriangle {
     const points = [
       { x: 0, y: 0.3 },
       { x: 0, y: -0.3 },
-      { x: -1, y: 0 }
+      { x: -1, y: 0 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -400,7 +400,7 @@ class Bar {
       { x: 0, y: 0.5 },
       { x: 0, y: -0.5 },
       { x: -0.15, y: -0.5 },
-      { x: -0.15, y: 0.5 }
+      { x: -0.15, y: 0.5 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -430,7 +430,7 @@ class Box {
       { x: 0, y: 0.3 },
       { x: 0, y: -0.3 },
       { x: -0.6, y: -0.3 },
-      { x: -0.6, y: 0.3 }
+      { x: -0.6, y: 0.3 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -460,7 +460,7 @@ class Diamond {
       { x: 0, y: 0 },
       { x: -0.5, y: -0.3 },
       { x: -1, y: 0 },
-      { x: -0.5, y: 0.3 }
+      { x: -0.5, y: 0.3 },
     ];
 
     EndPoint.transform(points, arrowData);
@@ -492,7 +492,7 @@ class Vee {
       { x: -1, y: 0.3 },
       { x: -0.5, y: 0 },
       { x: -1, y: -0.3 },
-      { x: 0, y: 0 }
+      { x: 0, y: 0 },
     ];
 
     EndPoint.transform(points, arrowData);

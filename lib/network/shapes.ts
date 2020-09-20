@@ -388,7 +388,7 @@ const shapeMap = {
   square: drawSquare,
   star: drawStar,
   triangle: drawTriangle,
-  triangleDown: drawTriangleDown
+  triangleDown: drawTriangleDown,
 };
 
 /**
@@ -408,7 +408,7 @@ export function getShape(
   if (Object.prototype.hasOwnProperty.call(shapeMap, name)) {
     return (shapeMap as any)[name];
   } else {
-    return function(ctx: CanvasRenderingContext2D, ...args: any[]): void {
+    return function (ctx: CanvasRenderingContext2D, ...args: any[]): void {
       (CanvasRenderingContext2D.prototype as any)[name].call(ctx, args);
     };
   }

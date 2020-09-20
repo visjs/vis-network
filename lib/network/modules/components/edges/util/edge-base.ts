@@ -13,7 +13,7 @@ import {
   PointT,
   SelectiveRequired,
   VBody,
-  VNode
+  VNode,
 } from "./types";
 import { drawDashedLine } from "./shapes";
 import { getSelfRefCoordinates } from "../../shared/ComponentUtil";
@@ -40,11 +40,11 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   public via?: VNode;
 
   public color: unknown = {};
-  public colorDirty: boolean = true;
+  public colorDirty = true;
   public id!: Id; // Initialized in setOptions
   public options!: EdgeOptions; // Initialized in setOptions
-  public hoverWidth: number = 1.5;
-  public selectionWidth: number = 2;
+  public hoverWidth = 1.5;
+  public selectionWidth = 2;
 
   /**
    * Create a new instance.
@@ -86,16 +86,16 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public abstract getViaNode(): Via;
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public abstract getPoint(position: number, viaNode?: Via): Point;
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public connect(): void {
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public cleanup(): boolean {
     return false;
   }
@@ -113,7 +113,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     this.id = this.options.id;
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public drawLine(
     ctx: CanvasRenderingContext2D,
     values: SelectiveRequired<
@@ -276,7 +276,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     }
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public findBorderPositions(
     ctx: CanvasRenderingContext2D
   ): {
@@ -286,7 +286,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     if (this.from != this.to) {
       return {
         from: this._findBorderPosition(this.from, ctx),
-        to: this._findBorderPosition(this.to, ctx)
+        to: this._findBorderPosition(this.to, ctx),
       };
     } else {
       const [x, y] = this._getCircleData(ctx).slice(0, 2);
@@ -297,15 +297,15 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           y,
           low: 0.25,
           high: 0.6,
-          direction: -1
+          direction: -1,
         }),
         to: this._findBorderPositionCircle(this.from, ctx, {
           x,
           y,
           low: 0.6,
           high: 0.8,
-          direction: 1
-        })
+          direction: 1,
+        }),
       };
     }
   }
@@ -358,7 +358,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     const angle = position * 2 * Math.PI;
     return {
       x: x + radius * Math.cos(angle),
-      y: y - radius * Math.sin(angle)
+      y: y - radius * Math.sin(angle),
     };
   }
 
@@ -437,7 +437,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
     return {
       ...pos,
-      t: middle
+      t: middle,
     };
   }
 
@@ -554,14 +554,14 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         y,
         low,
         high,
-        direction: -1
+        direction: -1,
       });
       const pointTTo = this._findBorderPositionCircle(this.from, ctx, {
         x,
         y,
         low,
         high,
-        direction: 1
+        direction: 1,
       });
       angleFrom = Math.atan2(pointTFrom.y - y, pointTFrom.x - x);
       angleTo = Math.atan2(pointTTo.y - y, pointTTo.x - x);
@@ -577,7 +577,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   }
 
   /**
-   * @inheritdoc
+   * @inheritDoc
    *
    * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
@@ -671,7 +671,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getArrowData(
     ctx: CanvasRenderingContext2D,
     position: "middle",
@@ -683,7 +683,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       "middleArrowType" | "middleArrowScale" | "width"
     >
   ): ArrowDataWithCore;
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getArrowData(
     ctx: CanvasRenderingContext2D,
     position: "to",
@@ -695,7 +695,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       "toArrowType" | "toArrowScale" | "width"
     >
   ): ArrowDataWithCore;
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getArrowData(
     ctx: CanvasRenderingContext2D,
     position: "from",
@@ -707,7 +707,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       "fromArrowType" | "fromArrowScale" | "width"
     >
   ): ArrowDataWithCore;
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getArrowData(
     ctx: CanvasRenderingContext2D,
     position: "from" | "to" | "middle",
@@ -794,7 +794,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           y,
           low,
           high,
-          direction: -1
+          direction: -1,
         });
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI + 0.1 * Math.PI;
         arrowPoint = pointT;
@@ -807,7 +807,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           y,
           low,
           high,
-          direction: 1
+          direction: 1,
         });
         angle = pointT.t * -2 * Math.PI + 1.5 * Math.PI - 1.1 * Math.PI;
         arrowPoint = pointT;
@@ -827,11 +827,11 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       core: arrowCore,
       angle: angle,
       length: length,
-      type: type
+      type: type,
     };
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public drawArrowHead(
     ctx: CanvasRenderingContext2D,
     values: SelectiveRequired<
@@ -921,7 +921,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       const origCtxAttr = {
         strokeStyle: ctx.strokeStyle,
         lineWidth: ctx.lineWidth,
-        dashes: (ctx as any).dashes
+        dashes: (ctx as any).dashes,
       };
 
       ctx.strokeStyle = values.backgroundColor;

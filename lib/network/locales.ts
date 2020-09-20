@@ -31,7 +31,7 @@ export const en: Locale = {
   editEdge: "Edit Edge",
   editEdgeDescription:
     "Click on the control points and drag them to a node to connect to it.",
-  editNode: "Edit Node"
+  editNode: "Edit Node",
 };
 
 // German
@@ -52,7 +52,7 @@ export const de: Locale = {
   editEdge: "Kante editieren",
   editEdgeDescription:
     "Klicke auf die Verbindungspunkte und ziehe diese auf einen Knoten, um sie zu verbinden.",
-  editNode: "Knoten editieren"
+  editNode: "Knoten editieren",
 };
 
 // Spanish
@@ -72,7 +72,7 @@ export const es: Locale = {
   editEdge: "Editar arista",
   editEdgeDescription:
     "Haga clic en un punto de control y arrastrelo a un nodo para conectarlo.",
-  editNode: "Editar nodo"
+  editNode: "Editar nodo",
 };
 
 //Italiano
@@ -91,7 +91,7 @@ export const it: Locale = {
   editEdge: "Modifica il vertice",
   editEdgeDescription:
     "Clicca sui Punti di controllo e trascinali ad un nodo per connetterli.",
-  editNode: "Modifica il nodo"
+  editNode: "Modifica il nodo",
 };
 
 // Dutch
@@ -110,7 +110,7 @@ export const nl: Locale = {
   editEdge: "Link wijzigen",
   editEdgeDescription:
     "Klik op de verbindingspunten en sleep ze naar een node om daarmee te verbinden.",
-  editNode: "Node wijzigen"
+  editNode: "Node wijzigen",
 };
 
 // Portuguese Brazil
@@ -129,7 +129,7 @@ export const pt: Locale = {
   editEdge: "Editar aresta",
   editEdgeDescription:
     "Clique nos pontos de controle e os arraste para um nó para conectá-los",
-  editNode: "Editar nó"
+  editNode: "Editar nó",
 };
 
 // Russian
@@ -148,7 +148,7 @@ export const ru: Locale = {
   editEdge: "Редактировать ребро",
   editEdgeDescription:
     "Кликните на контрольные точки и перетащите их в узел, чтобы подключиться к нему.",
-  editNode: "Редактировать узел"
+  editNode: "Редактировать узел",
 };
 
 // Chinese
@@ -165,7 +165,7 @@ export const cn: Locale = {
   editClusterError: "无法编辑群集。",
   editEdge: "编辑连接线",
   editEdgeDescription: "单击控制节点并将它们拖到节点上连接。",
-  editNode: "编辑节点"
+  editNode: "编辑节点",
 };
 
 // Ukrainian
@@ -184,7 +184,7 @@ export const uk: Locale = {
   editEdge: "Редагувати край",
   editEdgeDescription:
     "Клікніть на контрольні точки і перетягніть їх у вузол, щоб підключитися до нього.",
-  editNode: "Редагувати вузол"
+  editNode: "Редагувати вузол",
 };
 
 // French
@@ -203,7 +203,7 @@ export const fr: Locale = {
   editEdge: "Éditer le lien",
   editEdgeDescription:
     "Cliquez sur les points de contrôle et glissez-les pour connecter un nœud.",
-  editNode: "Éditer le nœud"
+  editNode: "Éditer le nœud",
 };
 
 // Czech
@@ -222,5 +222,5 @@ export const cs: Locale = {
   editEdge: "Upravit hranu",
   editEdgeDescription:
     "Přetažením kontrolního vrcholu hrany ji můžete připojit k jinému vrcholu.",
-  editNode: "Upravit vrchol"
+  editNode: "Upravit vrchol",
 };
