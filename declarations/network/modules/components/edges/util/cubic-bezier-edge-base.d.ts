@@ -4,7 +4,7 @@ import { Label, EdgeOptions, Point, VBody } from "./types";
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
  * smooth gradual curves in paths between nodes.
  *
- * @extends BezierEdgeBase
+ * @augments BezierEdgeBase
  */
 export declare abstract class CubicBezierEdgeBase<Via> extends BezierEdgeBase<Via> {
     /**

@@ -12,7 +12,7 @@ export declare class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]>
      * @param labelModule - Label module.
      */
     constructor(options: EdgeOptions, body: VBody, labelModule: Label);
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _line(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY">, viaNodes: [Point, Point]): void;
     /**
      * Compute the additional points the edge passes through.
@@ -20,13 +20,13 @@ export declare class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]>
      * @returns Cartesian coordinates of the points the edge passes through.
      */
     protected _getViaCoordinates(): [Point, Point];
-    /** @inheritdoc */
+    /** @inheritDoc */
     getViaNode(): [Point, Point];
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _findBorderPosition(nearNode: VNode, ctx: CanvasRenderingContext2D): PointT;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, [via1, via2]?: [Point, Point]): number;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getPoint(position: number, [via1, via2]?: [Point, Point]): Point;
 }
 //# sourceMappingURL=cubic-bezier-edge.d.ts.map

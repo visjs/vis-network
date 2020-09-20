@@ -12,15 +12,15 @@ export declare class StraightEdge extends EdgeBase {
      * @param labelModule - Label module.
      */
     constructor(options: EdgeOptions, body: VBody, labelModule: Label);
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _line(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "shadowColor" | "shadowSize" | "shadowX" | "shadowY">): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getViaNode(): undefined;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getPoint(position: number): Point;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _findBorderPosition(nearNode: VNode, ctx: CanvasRenderingContext2D): PointT;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): number;
 }
 //# sourceMappingURL=straight-edge.d.ts.map

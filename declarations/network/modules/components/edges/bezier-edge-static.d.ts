@@ -12,9 +12,9 @@ export declare class BezierEdgeStatic extends BezierEdgeBase<Point> {
      * @param labelModule - Label module.
      */
     constructor(options: EdgeOptions, body: VBody, labelModule: Label);
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _line(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY">, viaNode: Point): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getViaNode(): Point;
     /**
      * Compute the coordinates of the via node.
@@ -25,13 +25,13 @@ export declare class BezierEdgeStatic extends BezierEdgeBase<Point> {
      * @returns Cartesian coordinates of the via node.
      */
     protected _getViaCoordinates(): Point;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _findBorderPosition(nearNode: VNode, ctx: CanvasRenderingContext2D, options?: {
         via?: Point;
     }): PointT;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, viaNode?: Point): number;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getPoint(position: number, viaNode?: Point): Point;
 }
 //# sourceMappingURL=bezier-edge-static.d.ts.map

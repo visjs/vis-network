@@ -114,8 +114,8 @@ export declare function drawDatabase(ctx: CanvasRenderingContext2D, x: number, y
  * @param pattern - List of lengths starting with line and then alternating between space and line.
  *
  * @author David Jordan
- * @date 2012-08-08
  * @remarks
+ * date 2012-08-08
  * http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
  */
 export declare function drawDashedLine(ctx: CanvasRenderingContext2D, x: number, y: number, x2: number, y2: number, pattern: number[]): void;

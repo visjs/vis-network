@@ -5,7 +5,7 @@ import { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequi
  * curves in paths between nodes. The Dynamic piece refers to how the curve
  * reacts to physics changes.
  *
- * @extends BezierEdgeBase
+ * @augments BezierEdgeBase
  */
 export declare class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     via: VNode;
@@ -18,11 +18,11 @@ export declare class BezierEdgeDynamic extends BezierEdgeBase<Point> {
      * @param labelModule - Label module.
      */
     constructor(options: EdgeOptions, body: VBody, labelModule: Label);
-    /** @inheritdoc */
+    /** @inheritDoc */
     setOptions(options: EdgeOptions): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     connect(): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     cleanup(): boolean;
     /**
      * Create and add a support node if not already present.
@@ -39,17 +39,17 @@ export declare class BezierEdgeDynamic extends BezierEdgeBase<Point> {
      * Position bezier node.
      */
     positionBezierNode(): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _line(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY">, viaNode: VNode): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _getViaCoordinates(): Point;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getViaNode(): Point;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getPoint(position: number, viaNode?: Point): Point;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _findBorderPosition(nearNode: VNode, ctx: CanvasRenderingContext2D): PointT;
-    /** @inheritdoc */
+    /** @inheritDoc */
     protected _getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): number;
 }
 //# sourceMappingURL=bezier-edge-dynamic.d.ts.map

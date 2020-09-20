@@ -62,7 +62,7 @@ export declare abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
      * @param viaNode2 - Second control point for curve drawing.
      */
     protected _bezierCurve(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY">, viaNode1?: Point, viaNode2?: Point): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getViaNode(): Via;
 }
 //# sourceMappingURL=bezier-edge-base.d.ts.map

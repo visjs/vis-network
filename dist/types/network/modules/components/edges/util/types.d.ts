@@ -14,8 +14,7 @@ export interface VBody {
         scale: number;
     };
 }
-export interface Label {
-}
+export declare type Label = {};
 export interface Point {
     x: number;
     y: number;

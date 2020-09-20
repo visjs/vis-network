@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-09-20T07:31:14.915Z
+ * @date    2020-09-20T17:59:15.415Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -847,8 +847,8 @@
 	 * @param pattern - List of lengths starting with line and then alternating between space and line.
 	 *
 	 * @author David Jordan
-	 * @date 2012-08-08
 	 * @remarks
+	 * date 2012-08-08
 	 * http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
 	 */
 
@@ -4967,8 +4967,6 @@
 
 	var includes$4 = includes$3;
 
-	/* eslint-disable max-statements */
-
 	/* eslint-disable no-prototype-builtins */
 
 	/* eslint-disable no-unused-vars */
@@ -4984,7 +4982,7 @@
 	 * DOT language attributes: http://graphviz.org/content/attrs
 	 *
 	 * @param {string} data     Text containing a graph in DOT-notation
-	 * @return {Object} graph   An object containing two parameters:
+	 * @returns {object} graph   An object containing two parameters:
 	 *                          {Object[]} nodes
 	 *                          {Object[]} edges
 	 *
@@ -5017,20 +5015,20 @@
 	} // mapping of attributes from DOT (the keys) to vis.js (the values)
 
 	var NODE_ATTR_MAPPING = {
-	  'fontsize': 'font.size',
-	  'fontcolor': 'font.color',
-	  'labelfontcolor': 'font.color',
-	  'fontname': 'font.face',
-	  'color': ['color.border', 'color.background'],
-	  'fillcolor': 'color.background',
-	  'tooltip': 'title',
-	  'labeltooltip': 'title'
+	  fontsize: "font.size",
+	  fontcolor: "font.color",
+	  labelfontcolor: "font.color",
+	  fontname: "font.face",
+	  color: ["color.border", "color.background"],
+	  fillcolor: "color.background",
+	  tooltip: "title",
+	  labeltooltip: "title"
 	};
 
 	var EDGE_ATTR_MAPPING = create$2(NODE_ATTR_MAPPING);
 
-	EDGE_ATTR_MAPPING.color = 'color.color';
-	EDGE_ATTR_MAPPING.style = 'dashes'; // token types enumeration
+	EDGE_ATTR_MAPPING.color = "color.color";
+	EDGE_ATTR_MAPPING.style = "dashes"; // token types enumeration
 
 	var TOKENTYPE = {
 	  NULL: 0,
@@ -5040,23 +5038,23 @@
 	}; // map with all delimiters
 
 	var DELIMITERS = {
-	  '{': true,
-	  '}': true,
-	  '[': true,
-	  ']': true,
-	  ';': true,
-	  '=': true,
-	  ',': true,
-	  '->': true,
-	  '--': true
+	  "{": true,
+	  "}": true,
+	  "[": true,
+	  "]": true,
+	  ";": true,
+	  "=": true,
+	  ",": true,
+	  "->": true,
+	  "--": true
 	};
-	var dot = ''; // current dot file
+	var dot = ""; // current dot file
 
 	var index = 0; // current index in dot file
 
-	var c = ''; // current token character in expr
+	var c = ""; // current token character in expr
 
-	var token = ''; // current token
+	var token = ""; // current token
 
 	var tokenType = TOKENTYPE.NULL; // type of the token
 
@@ -5083,7 +5081,8 @@
 	}
 	/**
 	 * Preview the next character from the dot file.
-	 * @return {string} cNext
+	 *
+	 * @returns {string} cNext
 	 */
 
 
@@ -5094,8 +5093,9 @@
 	var regexAlphaNumeric = /[a-zA-Z_0-9.:#]/;
 	/**
 	 * Test whether given character is alphabetic or numeric
+	 *
 	 * @param {string} c
-	 * @return {Boolean} isAlphaNumeric
+	 * @returns {boolean} isAlphaNumeric
 	 */
 
 	function isAlphaNumeric(c) {
@@ -5103,9 +5103,10 @@
 	}
 	/**
 	 * Merge all options of object b into object b
-	 * @param {Object} a
-	 * @param {Object} b
-	 * @return {Object} a
+	 *
+	 * @param {object} a
+	 * @param {object} b
+	 * @returns {object} a
 	 */
 
 
@@ -5131,7 +5132,7 @@
 	 *     var obj = {a: 2};
 	 *     setValue(obj, 'b.c', 3);     // obj = {a: 2, b: {c: 3}}
 	 *
-	 * @param {Object} obj
+	 * @param {object} obj
 	 * @param {string} path  A parameter name or dot-separated parameter path,
 	 *                      like "color.highlight.border".
 	 * @param {*} value
@@ -5139,7 +5140,7 @@
 
 
 	function setValue(obj, path, value) {
-	  var keys = path.split('.');
+	  var keys = path.split(".");
 	  var o = obj;
 
 	  while (keys.length) {
@@ -5161,8 +5162,9 @@
 	/**
 	 * Add a node to a graph object. If there is already a node with
 	 * the same id, their attributes will be merged.
-	 * @param {Object} graph
-	 * @param {Object} node
+	 *
+	 * @param {object} graph
+	 * @param {object} node
 	 */
 
 
@@ -5223,8 +5225,9 @@
 	}
 	/**
 	 * Add an edge to a graph object
-	 * @param {Object} graph
-	 * @param {Object} edge
+	 *
+	 * @param {object} graph
+	 * @param {object} edge
 	 */
 
 
@@ -5243,12 +5246,13 @@
 	}
 	/**
 	 * Create an edge to a graph object
-	 * @param {Object} graph
-	 * @param {string | number | Object} from
-	 * @param {string | number | Object} to
+	 *
+	 * @param {object} graph
+	 * @param {string | number | object} from
+	 * @param {string | number | object} to
 	 * @param {string} type
-	 * @param {Object | null} attr
-	 * @return {Object} edge
+	 * @param {object | null} attr
+	 * @returns {object} edge
 	 */
 
 
@@ -5268,14 +5272,14 @@
 	  // parseAttributeList().
 
 	  if (attr != null) {
-	    if (attr.hasOwnProperty('arrows') && attr['arrows'] != null) {
-	      edge['arrows'] = {
+	    if (attr.hasOwnProperty("arrows") && attr["arrows"] != null) {
+	      edge["arrows"] = {
 	        to: {
 	          enabled: true,
 	          type: attr.arrows.type
 	        }
 	      };
-	      attr['arrows'] = null;
+	      attr["arrows"] = null;
 	    }
 	  }
 
@@ -5289,9 +5293,9 @@
 
 	function getToken() {
 	  tokenType = TOKENTYPE.NULL;
-	  token = ''; // skip over whitespaces
+	  token = ""; // skip over whitespaces
 
-	  while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
+	  while (c === " " || c === "\t" || c === "\n" || c === "\r") {
 	    // space, tab, enter
 	    next();
 	  }
@@ -5299,17 +5303,17 @@
 	  do {
 	    var isComment = false; // skip comment
 
-	    if (c === '#') {
+	    if (c === "#") {
 	      // find the previous non-space character
 	      var i = index - 1;
 
-	      while (dot.charAt(i) === ' ' || dot.charAt(i) === '\t') {
+	      while (dot.charAt(i) === " " || dot.charAt(i) === "\t") {
 	        i--;
 	      }
 
-	      if (dot.charAt(i) === '\n' || dot.charAt(i) === '') {
+	      if (dot.charAt(i) === "\n" || dot.charAt(i) === "") {
 	        // the # is at the start of a line, this is indeed a line comment
-	        while (c != '' && c != '\n') {
+	        while (c != "" && c != "\n") {
 	          next();
 	        }
 
@@ -5317,19 +5321,19 @@
 	      }
 	    }
 
-	    if (c === '/' && nextPreview() === '/') {
+	    if (c === "/" && nextPreview() === "/") {
 	      // skip line comment
-	      while (c != '' && c != '\n') {
+	      while (c != "" && c != "\n") {
 	        next();
 	      }
 
 	      isComment = true;
 	    }
 
-	    if (c === '/' && nextPreview() === '*') {
+	    if (c === "/" && nextPreview() === "*") {
 	      // skip block comment
-	      while (c != '') {
-	        if (c === '*' && nextPreview() === '/') {
+	      while (c != "") {
+	        if (c === "*" && nextPreview() === "/") {
 	          // end of block comment found. skip these last two characters
 	          next();
 	          next();
@@ -5343,14 +5347,14 @@
 	    } // skip over whitespaces
 
 
-	    while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
+	    while (c === " " || c === "\t" || c === "\n" || c === "\r") {
 	      // space, tab, enter
 	      next();
 	    }
 	  } while (isComment); // check for end of dot file
 
 
-	  if (c === '') {
+	  if (c === "") {
 	    // token is still empty
 	    tokenType = TOKENTYPE.DELIMITER;
 	    return;
@@ -5377,7 +5381,7 @@
 	  // TODO: more precise parsing of numbers/strings (and the port separator ':')
 
 
-	  if (isAlphaNumeric(c) || c === '-') {
+	  if (isAlphaNumeric(c) || c === "-") {
 	    token += c;
 	    next();
 
@@ -5386,9 +5390,9 @@
 	      next();
 	    }
 
-	    if (token === 'false') {
+	    if (token === "false") {
 	      token = false; // convert to boolean
-	    } else if (token === 'true') {
+	    } else if (token === "true") {
 	      token = true; // convert to boolean
 	    } else if (!isNaN(Number(token))) {
 	      token = Number(token); // convert to number
@@ -5402,14 +5406,14 @@
 	  if (c === '"') {
 	    next();
 
-	    while (c != '' && (c != '"' || c === '"' && nextPreview() === '"')) {
+	    while (c != "" && (c != '"' || c === '"' && nextPreview() === '"')) {
 	      if (c === '"') {
 	        // skip the escape character
 	        token += c;
 	        next();
-	      } else if (c === '\\' && nextPreview() === 'n') {
+	      } else if (c === "\\" && nextPreview() === "n") {
 	        // Honor a newline escape sequence
-	        token += '\n';
+	        token += "\n";
 	        next();
 	      } else {
 	        token += c;
@@ -5430,7 +5434,7 @@
 
 	  tokenType = TOKENTYPE.UNKNOWN;
 
-	  while (c != '') {
+	  while (c != "") {
 	    token += c;
 	    next();
 	  }
@@ -5439,7 +5443,8 @@
 	}
 	/**
 	 * Parse a graph.
-	 * @returns {Object} graph
+	 *
+	 * @returns {object} graph
 	 */
 
 
@@ -5448,13 +5453,13 @@
 	  first();
 	  getToken(); // optional strict keyword
 
-	  if (token === 'strict') {
+	  if (token === "strict") {
 	    graph.strict = true;
 	    getToken();
 	  } // graph or digraph keyword
 
 
-	  if (token === 'graph' || token === 'digraph') {
+	  if (token === "graph" || token === "digraph") {
 	    graph.type = token;
 	    getToken();
 	  } // optional graph id
@@ -5466,22 +5471,22 @@
 	  } // open angle bracket
 
 
-	  if (token != '{') {
-	    throw newSyntaxError('Angle bracket { expected');
+	  if (token != "{") {
+	    throw newSyntaxError("Angle bracket { expected");
 	  }
 
 	  getToken(); // statements
 
 	  parseStatements(graph); // close angle bracket
 
-	  if (token != '}') {
-	    throw newSyntaxError('Angle bracket } expected');
+	  if (token != "}") {
+	    throw newSyntaxError("Angle bracket } expected");
 	  }
 
 	  getToken(); // end of file
 
-	  if (token !== '') {
-	    throw newSyntaxError('End of file expected');
+	  if (token !== "") {
+	    throw newSyntaxError("End of file expected");
 	  }
 
 	  getToken(); // remove temporary default options
@@ -5493,15 +5498,16 @@
 	}
 	/**
 	 * Parse a list with statements.
-	 * @param {Object} graph
+	 *
+	 * @param {object} graph
 	 */
 
 
 	function parseStatements(graph) {
-	  while (token !== '' && token != '}') {
+	  while (token !== "" && token != "}") {
 	    parseStatement(graph);
 
-	    if (token === ';') {
+	    if (token === ";") {
 	      getToken();
 	    }
 	  }
@@ -5510,7 +5516,8 @@
 	 * Parse a single statement. Can be a an attribute statement, node
 	 * statement, a series of node statements and edge statements, or a
 	 * parameter.
-	 * @param {Object} graph
+	 *
+	 * @param {object} graph
 	 */
 
 
@@ -5533,19 +5540,19 @@
 
 
 	  if (tokenType != TOKENTYPE.IDENTIFIER) {
-	    throw newSyntaxError('Identifier expected');
+	    throw newSyntaxError("Identifier expected");
 	  }
 
 	  var id = token; // id can be a string or a number
 
 	  getToken();
 
-	  if (token === '=') {
+	  if (token === "=") {
 	    // id statement
 	    getToken();
 
 	    if (tokenType != TOKENTYPE.IDENTIFIER) {
-	      throw newSyntaxError('Identifier expected');
+	      throw newSyntaxError("Identifier expected");
 	    }
 
 	    graph[id] = token;
@@ -5556,17 +5563,18 @@
 	}
 	/**
 	 * Parse a subgraph
-	 * @param {Object} graph    parent graph object
-	 * @return {Object | null} subgraph
+	 *
+	 * @param {object} graph    parent graph object
+	 * @returns {object | null} subgraph
 	 */
 
 
 	function parseSubgraph(graph) {
 	  var subgraph = null; // optional subgraph keyword
 
-	  if (token === 'subgraph') {
+	  if (token === "subgraph") {
 	    subgraph = {};
-	    subgraph.type = 'subgraph';
+	    subgraph.type = "subgraph";
 	    getToken(); // optional graph id
 
 	    if (tokenType === TOKENTYPE.IDENTIFIER) {
@@ -5576,7 +5584,7 @@
 	  } // open angle bracket
 
 
-	  if (token === '{') {
+	  if (token === "{") {
 	    getToken();
 
 	    if (!subgraph) {
@@ -5590,8 +5598,8 @@
 
 	    parseStatements(subgraph); // close angle bracket
 
-	    if (token != '}') {
-	      throw newSyntaxError('Angle bracket } expected');
+	    if (token != "}") {
+	      throw newSyntaxError("Angle bracket } expected");
 	    }
 
 	    getToken(); // remove temporary default options
@@ -5614,8 +5622,9 @@
 	 * parse an attribute statement like "node [shape=circle fontSize=16]".
 	 * Available keywords are 'node', 'edge', 'graph'.
 	 * The previous list with default attributes will be replaced
-	 * @param {Object} graph
-	 * @returns {String | null} keyword Returns the name of the parsed attribute
+	 *
+	 * @param {object} graph
+	 * @returns {string | null} keyword Returns the name of the parsed attribute
 	 *                                  (node, edge, graph), or null if nothing
 	 *                                  is parsed.
 	 */
@@ -5623,28 +5632,29 @@
 
 	function parseAttributeStatement(graph) {
 	  // attribute statements
-	  if (token === 'node') {
+	  if (token === "node") {
 	    getToken(); // node attributes
 
 	    graph.node = parseAttributeList();
-	    return 'node';
-	  } else if (token === 'edge') {
+	    return "node";
+	  } else if (token === "edge") {
 	    getToken(); // edge attributes
 
 	    graph.edge = parseAttributeList();
-	    return 'edge';
-	  } else if (token === 'graph') {
+	    return "edge";
+	  } else if (token === "graph") {
 	    getToken(); // graph attributes
 
 	    graph.graph = parseAttributeList();
-	    return 'graph';
+	    return "graph";
 	  }
 
 	  return null;
 	}
 	/**
 	 * parse a node statement
-	 * @param {Object} graph
+	 *
+	 * @param {object} graph
 	 * @param {string | number} id
 	 */
 
@@ -5666,13 +5676,14 @@
 	}
 	/**
 	 * Parse an edge or a series of edges
-	 * @param {Object} graph
+	 *
+	 * @param {object} graph
 	 * @param {string | number} from        Id of the from node
 	 */
 
 
 	function parseEdge(graph, from) {
-	  while (token === '->' || token === '--') {
+	  while (token === "->" || token === "--") {
 	    var to;
 	    var type = token;
 	    getToken();
@@ -5682,7 +5693,7 @@
 	      to = subgraph;
 	    } else {
 	      if (tokenType != TOKENTYPE.IDENTIFIER) {
-	        throw newSyntaxError('Identifier or subgraph expected');
+	        throw newSyntaxError("Identifier or subgraph expected");
 	      }
 
 	      to = token;
@@ -5703,7 +5714,8 @@
 	/**
 	 * Parse a set with attributes,
 	 * for example [label="1.000", shape=solid]
-	 * @return {Object | null} attr
+	 *
+	 * @returns {object | null} attr
 	 */
 
 
@@ -5712,9 +5724,9 @@
 	  var attr = null; // edge styles of dot and vis
 
 	  var edgeStyles = {
-	    'dashed': true,
-	    'solid': false,
-	    'dotted': [1, 5]
+	    dashed: true,
+	    solid: false,
+	    dotted: [1, 5]
 	  };
 	  /**
 	   * Define arrow types.
@@ -5724,16 +5736,16 @@
 	   */
 
 	  var arrowTypes = {
-	    dot: 'circle',
-	    box: 'box',
-	    crow: 'crow',
-	    curve: 'curve',
-	    icurve: 'inv_curve',
-	    normal: 'triangle',
-	    inv: 'inv_triangle',
-	    diamond: 'diamond',
-	    tee: 'bar',
-	    vee: 'vee'
+	    dot: "circle",
+	    box: "box",
+	    crow: "crow",
+	    curve: "curve",
+	    icurve: "inv_curve",
+	    normal: "triangle",
+	    inv: "inv_triangle",
+	    diamond: "diamond",
+	    tee: "bar",
+	    vee: "vee"
 	  };
 	  /**
 	   * 'attr_list' contains attributes for checking if some of them are affected
@@ -5745,73 +5757,73 @@
 	  var attr_names = new Array(); // used for checking the case.
 	  // parse attributes
 
-	  while (token === '[') {
+	  while (token === "[") {
 	    getToken();
 	    attr = {};
 
-	    while (token !== '' && token != ']') {
+	    while (token !== "" && token != "]") {
 	      if (tokenType != TOKENTYPE.IDENTIFIER) {
-	        throw newSyntaxError('Attribute name expected');
+	        throw newSyntaxError("Attribute name expected");
 	      }
 
 	      var name = token;
 	      getToken();
 
-	      if (token != '=') {
-	        throw newSyntaxError('Equal sign = expected');
+	      if (token != "=") {
+	        throw newSyntaxError("Equal sign = expected");
 	      }
 
 	      getToken();
 
 	      if (tokenType != TOKENTYPE.IDENTIFIER) {
-	        throw newSyntaxError('Attribute value expected');
+	        throw newSyntaxError("Attribute value expected");
 	      }
 
 	      var value = token; // convert from dot style to vis
 
-	      if (name === 'style') {
+	      if (name === "style") {
 	        value = edgeStyles[value];
 	      }
 
 	      var arrowType;
 
-	      if (name === 'arrowhead') {
+	      if (name === "arrowhead") {
 	        arrowType = arrowTypes[value];
-	        name = 'arrows';
+	        name = "arrows";
 	        value = {
-	          'to': {
-	            'enabled': true,
-	            'type': arrowType
+	          to: {
+	            enabled: true,
+	            type: arrowType
 	          }
 	        };
 	      }
 
-	      if (name === 'arrowtail') {
+	      if (name === "arrowtail") {
 	        arrowType = arrowTypes[value];
-	        name = 'arrows';
+	        name = "arrows";
 	        value = {
-	          'from': {
-	            'enabled': true,
-	            'type': arrowType
+	          from: {
+	            enabled: true,
+	            type: arrowType
 	          }
 	        };
 	      }
 
 	      attr_list.push({
-	        'attr': attr,
-	        'name': name,
-	        'value': value
+	        attr: attr,
+	        name: name,
+	        value: value
 	      });
 	      attr_names.push(name);
 	      getToken();
 
-	      if (token == ',') {
+	      if (token == ",") {
 	        getToken();
 	      }
 	    }
 
-	    if (token != ']') {
-	      throw newSyntaxError('Bracket ] expected');
+	    if (token != "]") {
+	      throw newSyntaxError("Bracket ] expected");
 	    }
 
 	    getToken();
@@ -5827,21 +5839,21 @@
 	   */
 
 
-	  if (includes$4(attr_names).call(attr_names, 'dir')) {
+	  if (includes$4(attr_names).call(attr_names, "dir")) {
 	    var idx = {}; // get index of 'arrows' and 'dir'
 
 	    idx.arrows = {};
 
 	    for (i = 0; i < attr_list.length; i++) {
-	      if (attr_list[i].name === 'arrows') {
+	      if (attr_list[i].name === "arrows") {
 	        if (attr_list[i].value.to != null) {
 	          idx.arrows.to = i;
 	        } else if (attr_list[i].value.from != null) {
 	          idx.arrows.from = i;
 	        } else {
-	          throw newSyntaxError('Invalid value of arrows');
+	          throw newSyntaxError("Invalid value of arrows");
 	        }
-	      } else if (attr_list[i].name === 'dir') {
+	      } else if (attr_list[i].name === "dir") {
 	        idx.dir = i;
 	      }
 	    } // first, add default arrow shape if it is not assigned to avoid error
@@ -5849,12 +5861,12 @@
 
 	    var dir_type = attr_list[idx.dir].value;
 
-	    if (!includes$4(attr_names).call(attr_names, 'arrows')) {
-	      if (dir_type === 'both') {
+	    if (!includes$4(attr_names).call(attr_names, "arrows")) {
+	      if (dir_type === "both") {
 	        attr_list.push({
-	          'attr': attr_list[idx.dir].attr,
-	          'name': 'arrows',
-	          'value': {
+	          attr: attr_list[idx.dir].attr,
+	          name: "arrows",
+	          value: {
 	            to: {
 	              enabled: true
 	            }
@@ -5862,42 +5874,42 @@
 	        });
 	        idx.arrows.to = attr_list.length - 1;
 	        attr_list.push({
-	          'attr': attr_list[idx.dir].attr,
-	          'name': 'arrows',
-	          'value': {
+	          attr: attr_list[idx.dir].attr,
+	          name: "arrows",
+	          value: {
 	            from: {
 	              enabled: true
 	            }
 	          }
 	        });
 	        idx.arrows.from = attr_list.length - 1;
-	      } else if (dir_type === 'forward') {
+	      } else if (dir_type === "forward") {
 	        attr_list.push({
-	          'attr': attr_list[idx.dir].attr,
-	          'name': 'arrows',
-	          'value': {
+	          attr: attr_list[idx.dir].attr,
+	          name: "arrows",
+	          value: {
 	            to: {
 	              enabled: true
 	            }
 	          }
 	        });
 	        idx.arrows.to = attr_list.length - 1;
-	      } else if (dir_type === 'back') {
+	      } else if (dir_type === "back") {
 	        attr_list.push({
-	          'attr': attr_list[idx.dir].attr,
-	          'name': 'arrows',
-	          'value': {
+	          attr: attr_list[idx.dir].attr,
+	          name: "arrows",
+	          value: {
 	            from: {
 	              enabled: true
 	            }
 	          }
 	        });
 	        idx.arrows.from = attr_list.length - 1;
-	      } else if (dir_type === 'none') {
+	      } else if (dir_type === "none") {
 	        attr_list.push({
-	          'attr': attr_list[idx.dir].attr,
-	          'name': 'arrows',
-	          'value': ''
+	          attr: attr_list[idx.dir].attr,
+	          name: "arrows",
+	          value: ""
 	        });
 	        idx.arrows.to = attr_list.length - 1;
 	      } else {
@@ -5908,15 +5920,15 @@
 	    var from_type;
 	    var to_type; // update 'arrows' attribute from 'dir'.
 
-	    if (dir_type === 'both') {
+	    if (dir_type === "both") {
 	      // both of shapes of 'from' and 'to' are given
 	      if (idx.arrows.to && idx.arrows.from) {
 	        to_type = attr_list[idx.arrows.to].value.to.type;
 	        from_type = attr_list[idx.arrows.from].value.from.type;
 	        attr_list[idx.arrows.to] = {
-	          'attr': attr_list[idx.arrows.to].attr,
-	          'name': attr_list[idx.arrows.to].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.to].attr,
+	          name: attr_list[idx.arrows.to].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -5932,11 +5944,11 @@
 
 	      } else if (idx.arrows.to) {
 	        to_type = attr_list[idx.arrows.to].value.to.type;
-	        from_type = 'arrow';
+	        from_type = "arrow";
 	        attr_list[idx.arrows.to] = {
-	          'attr': attr_list[idx.arrows.to].attr,
-	          'name': attr_list[idx.arrows.to].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.to].attr,
+	          name: attr_list[idx.arrows.to].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -5948,12 +5960,12 @@
 	          }
 	        }; // only shape of 'from' is assigned and use default for 'to'
 	      } else if (idx.arrows.from) {
-	        to_type = 'arrow';
+	        to_type = "arrow";
 	        from_type = attr_list[idx.arrows.from].value.from.type;
 	        attr_list[idx.arrows.from] = {
-	          'attr': attr_list[idx.arrows.from].attr,
-	          'name': attr_list[idx.arrows.from].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.from].attr,
+	          name: attr_list[idx.arrows.from].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -5965,15 +5977,15 @@
 	          }
 	        };
 	      }
-	    } else if (dir_type === 'back') {
+	    } else if (dir_type === "back") {
 	      // given both of shapes, but use only 'from'
 	      if (idx.arrows.to && idx.arrows.from) {
-	        to_type = '';
+	        to_type = "";
 	        from_type = attr_list[idx.arrows.from].value.from.type;
 	        attr_list[idx.arrows.from] = {
-	          'attr': attr_list[idx.arrows.from].attr,
-	          'name': attr_list[idx.arrows.from].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.from].attr,
+	          name: attr_list[idx.arrows.from].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -5985,13 +5997,13 @@
 	          }
 	        }; // given shape of 'to', but does not use it
 	      } else if (idx.arrows.to) {
-	        to_type = '';
-	        from_type = 'arrow';
+	        to_type = "";
+	        from_type = "arrow";
 	        idx.arrows.from = idx.arrows.to;
 	        attr_list[idx.arrows.from] = {
-	          'attr': attr_list[idx.arrows.from].attr,
-	          'name': attr_list[idx.arrows.from].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.from].attr,
+	          name: attr_list[idx.arrows.from].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -6003,12 +6015,12 @@
 	          }
 	        }; // assign given 'from' shape
 	      } else if (idx.arrows.from) {
-	        to_type = '';
+	        to_type = "";
 	        from_type = attr_list[idx.arrows.from].value.from.type;
 	        attr_list[idx.arrows.to] = {
-	          'attr': attr_list[idx.arrows.from].attr,
-	          'name': attr_list[idx.arrows.from].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.from].attr,
+	          name: attr_list[idx.arrows.from].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -6022,16 +6034,16 @@
 	      }
 
 	      attr_list[idx.arrows.from] = {
-	        'attr': attr_list[idx.arrows.from].attr,
-	        'name': attr_list[idx.arrows.from].name,
-	        'value': {
+	        attr: attr_list[idx.arrows.from].attr,
+	        name: attr_list[idx.arrows.from].name,
+	        value: {
 	          from: {
 	            enabled: true,
 	            type: attr_list[idx.arrows.from].value.from.type
 	          }
 	        }
 	      };
-	    } else if (dir_type === 'none') {
+	    } else if (dir_type === "none") {
 	      var idx_arrow;
 
 	      if (idx.arrows.to) {
@@ -6041,19 +6053,19 @@
 	      }
 
 	      attr_list[idx_arrow] = {
-	        'attr': attr_list[idx_arrow].attr,
-	        'name': attr_list[idx_arrow].name,
-	        'value': ''
+	        attr: attr_list[idx_arrow].attr,
+	        name: attr_list[idx_arrow].name,
+	        value: ""
 	      };
-	    } else if (dir_type === 'forward') {
+	    } else if (dir_type === "forward") {
 	      // given both of shapes, but use only 'to'
 	      if (idx.arrows.to && idx.arrows.from) {
 	        to_type = attr_list[idx.arrows.to].value.to.type;
-	        from_type = '';
+	        from_type = "";
 	        attr_list[idx.arrows.to] = {
-	          'attr': attr_list[idx.arrows.to].attr,
-	          'name': attr_list[idx.arrows.to].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.to].attr,
+	          name: attr_list[idx.arrows.to].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -6066,11 +6078,11 @@
 	        }; // assign given 'to' shape
 	      } else if (idx.arrows.to) {
 	        to_type = attr_list[idx.arrows.to].value.to.type;
-	        from_type = '';
+	        from_type = "";
 	        attr_list[idx.arrows.to] = {
-	          'attr': attr_list[idx.arrows.to].attr,
-	          'name': attr_list[idx.arrows.to].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.to].attr,
+	          name: attr_list[idx.arrows.to].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -6082,13 +6094,13 @@
 	          }
 	        }; // given shape of 'from', but does not use it
 	      } else if (idx.arrows.from) {
-	        to_type = 'arrow';
-	        from_type = '';
+	        to_type = "arrow";
+	        from_type = "";
 	        idx.arrows.to = idx.arrows.from;
 	        attr_list[idx.arrows.to] = {
-	          'attr': attr_list[idx.arrows.to].attr,
-	          'name': attr_list[idx.arrows.to].name,
-	          'value': {
+	          attr: attr_list[idx.arrows.to].attr,
+	          name: attr_list[idx.arrows.to].name,
+	          value: {
 	            to: {
 	              enabled: true,
 	              type: to_type
@@ -6102,9 +6114,9 @@
 	      }
 
 	      attr_list[idx.arrows.to] = {
-	        'attr': attr_list[idx.arrows.to].attr,
-	        'name': attr_list[idx.arrows.to].name,
-	        'value': {
+	        attr: attr_list[idx.arrows.to].attr,
+	        name: attr_list[idx.arrows.to].name,
+	        value: {
 	          to: {
 	            enabled: true,
 	            type: attr_list[idx.arrows.to].value.to.type
@@ -6122,15 +6134,15 @@
 
 	  var nof_attr_list;
 
-	  if (includes$4(attr_names).call(attr_names, 'penwidth')) {
+	  if (includes$4(attr_names).call(attr_names, "penwidth")) {
 	    var tmp_attr_list = [];
 	    nof_attr_list = attr_list.length;
 
 	    for (i = 0; i < nof_attr_list; i++) {
 	      // exclude 'width' from attr_list if 'penwidth' exists
-	      if (attr_list[i].name !== 'width') {
-	        if (attr_list[i].name === 'penwidth') {
-	          attr_list[i].name = 'width';
+	      if (attr_list[i].name !== "width") {
+	        if (attr_list[i].name === "penwidth") {
+	          attr_list[i].name = "width";
 	        }
 
 	        tmp_attr_list.push(attr_list[i]);
@@ -6150,30 +6162,33 @@
 	}
 	/**
 	 * Create a syntax error with extra information on current token and index.
+	 *
 	 * @param {string} message
 	 * @returns {SyntaxError} err
 	 */
 
 
 	function newSyntaxError(message) {
-	  return new SyntaxError(message + ', got "' + chop(token, 30) + '" (char ' + index + ')');
+	  return new SyntaxError(message + ', got "' + chop(token, 30) + '" (char ' + index + ")");
 	}
 	/**
 	 * Chop off text after a maximum length
+	 *
 	 * @param {string} text
 	 * @param {number} maxLength
-	 * @returns {String}
+	 * @returns {string}
 	 */
 
 
 	function chop(text, maxLength) {
-	  return text.length <= maxLength ? text : text.substr(0, 27) + '...';
+	  return text.length <= maxLength ? text : text.substr(0, 27) + "...";
 	}
 	/**
 	 * Execute a function fn for each pair of elements in two arrays
+	 *
 	 * @param {Array | *} array1
 	 * @param {Array | *} array2
-	 * @param {function} fn
+	 * @param {Function} fn
 	 */
 
 
@@ -6202,15 +6217,16 @@
 	 * Set a nested property on an object
 	 * When nested objects are missing, they will be created.
 	 * For example setProp({}, 'font.color', 'red') will return {font: {color: 'red'}}
-	 * @param {Object} object
+	 *
+	 * @param {object} object
 	 * @param {string} path   A dot separated string like 'font.color'
 	 * @param {*} value       Value for the property
-	 * @return {Object} Returns the original object, allows for chaining.
+	 * @returns {object} Returns the original object, allows for chaining.
 	 */
 
 
 	function setProp(object, path, value) {
-	  var names = path.split('.');
+	  var names = path.split(".");
 	  var prop = names.pop(); // traverse over the nested objects
 
 	  var obj = object;
@@ -6231,9 +6247,10 @@
 	}
 	/**
 	 * Convert an object with DOT attributes to their vis.js equivalents.
-	 * @param {Object} attr     Object with DOT attributes
-	 * @param {Object} mapping
-	 * @return {Object}         Returns an object with vis.js attributes
+	 *
+	 * @param {object} attr     Object with DOT attributes
+	 * @param {object} mapping
+	 * @returns {object}         Returns an object with vis.js attributes
 	 */
 
 
@@ -6248,7 +6265,7 @@
 	        forEach$2(visProp).call(visProp, function (visPropI) {
 	          setProp(converted, visPropI, attr[prop]);
 	        });
-	      } else if (typeof visProp === 'string') {
+	      } else if (typeof visProp === "string") {
 	        setProp(converted, visProp, attr[prop]);
 	      } else {
 	        setProp(converted, prop, attr[prop]);
@@ -6261,8 +6278,9 @@
 	/**
 	 * Convert a string containing a graph in DOT language into a map containing
 	 * with nodes and edges in the format of graph.
+	 *
 	 * @param {string} data         Text containing a graph in DOT-notation
-	 * @return {Object} graphData
+	 * @returns {object} graphData
 	 */
 
 
@@ -6286,7 +6304,7 @@
 	      merge(graphNode, convertAttr(dotNode.attr, NODE_ATTR_MAPPING));
 
 	      if (graphNode.image) {
-	        graphNode.shape = 'image';
+	        graphNode.shape = "image";
 	      }
 
 	      graphData.nodes.push(graphNode);
@@ -6299,8 +6317,9 @@
 
 	    /**
 	     * Convert an edge in DOT format to an edge with VisGraph format
-	     * @param {Object} dotEdge
-	     * @returns {Object} graphEdge
+	     *
+	     * @param {object} dotEdge
+	     * @returns {object} graphEdge
 	     */
 	    var convertEdge = function convertEdge(dotEdge) {
 	      var graphEdge = {
@@ -6311,8 +6330,8 @@
 	      // The reason why default style is not added in parseAttributeList() is
 	      // because only default is cleared before here.
 
-	      if (graphEdge.arrows == null && dotEdge.type === '->') {
-	        graphEdge.arrows = 'to';
+	      if (graphEdge.arrows == null && dotEdge.type === "->") {
+	        graphEdge.arrows = "to";
 	      }
 
 	      return graphEdge;
@@ -6370,6 +6389,11 @@
 
 	  return graphData;
 	}
+	/* eslint-enable no-var */
+
+	/* eslint-enable no-unused-vars */
+
+	/* eslint-enable no-prototype-builtins */
 
 	var dotparser = /*#__PURE__*/Object.freeze({
 		__proto__: null,
@@ -9820,8 +9844,7 @@
 	    off: noop,
 	    destroy: noop,
 	    emit: noop,
-	    get: function get(m) {
-	      //eslint-disable-line no-unused-vars
+	    get: function get() {
 	      return {
 	        set: noop
 	      };
@@ -9841,8 +9864,9 @@
 	 * When active, the element is displayed with a blue border around it, and
 	 * the interactive contents of the element can be used. When clicked outside
 	 * the element, the elements mode is changed to inactive.
+	 *
 	 * @param {Element} container
-	 * @constructor Activator
+	 * @class Activator
 	 */
 
 	function Activator(container) {
@@ -9854,13 +9878,13 @@
 	  this.dom = {
 	    container: container
 	  };
-	  this.dom.overlay = document.createElement('div');
-	  this.dom.overlay.className = 'vis-overlay';
+	  this.dom.overlay = document.createElement("div");
+	  this.dom.overlay.className = "vis-overlay";
 	  this.dom.container.appendChild(this.dom.overlay);
 	  this.hammer = Hammer$1(this.dom.overlay);
-	  this.hammer.on('tap', bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
+	  this.hammer.on("tap", bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
 
-	  var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
+	  var events = ["tap", "doubletap", "press", "pinch", "pan", "panstart", "panmove", "panend"];
 
 	  forEach$2(events).call(events, function (event) {
 	    _this.hammer.on(event, function (event) {
@@ -9876,7 +9900,7 @@
 	      }
 	    };
 
-	    document.body.addEventListener('click', this.onClick);
+	    document.body.addEventListener("click", this.onClick);
 	  }
 
 	  if (this.keycharm !== undefined) {
@@ -9902,7 +9926,7 @@
 	  this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
 
 	  if (this.onClick) {
-	    document.body.removeEventListener('click', this.onClick);
+	    document.body.removeEventListener("click", this.onClick);
 	  } // remove keycharm
 
 
@@ -9931,13 +9955,13 @@
 
 	  Activator.current = this;
 	  this.active = true;
-	  this.dom.overlay.style.display = 'none';
-	  addClassName(this.dom.container, 'vis-active');
-	  this.emit('change');
-	  this.emit('activate'); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
+	  this.dom.overlay.style.display = "none";
+	  addClassName(this.dom.container, "vis-active");
+	  this.emit("change");
+	  this.emit("activate"); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
 	  // keyboard events on a 'change' event
 
-	  bind$2(_context3 = this.keycharm).call(_context3, 'esc', this.escListener);
+	  bind$2(_context3 = this.keycharm).call(_context3, "esc", this.escListener);
 	};
 	/**
 	 * Deactivate the element
@@ -9947,14 +9971,15 @@
 
 	Activator.prototype.deactivate = function () {
 	  this.active = false;
-	  this.dom.overlay.style.display = 'block';
-	  removeClassName(this.dom.container, 'vis-active');
-	  this.keycharm.unbind('esc', this.escListener);
-	  this.emit('change');
-	  this.emit('deactivate');
+	  this.dom.overlay.style.display = "block";
+	  removeClassName(this.dom.container, "vis-active");
+	  this.keycharm.unbind("esc", this.escListener);
+	  this.emit("change");
+	  this.emit("deactivate");
 	};
 	/**
 	 * Handle a tap event: activate the container
+	 *
 	 * @param {Event}  event   The event
 	 * @private
 	 */
@@ -9968,6 +9993,7 @@
 	/**
 	 * Test whether the element has the requested parent element somewhere in
 	 * its chain of parent nodes.
+	 *
 	 * @param {HTMLElement} element
 	 * @param {HTMLElement} parent
 	 * @returns {boolean} Returns true when the parent is found somewhere in the
@@ -10191,7 +10217,7 @@
 	 */
 	function normalizeLanguageCode(locales, rawCode) {
 	  try {
-	    var _rawCode$split = rawCode.split(/[-_ \/]/, 2),
+	    var _rawCode$split = rawCode.split(/[-_ /]/, 2),
 	        _rawCode$split2 = slicedToArray(_rawCode$split, 2),
 	        rawLanguage = _rawCode$split2[0],
 	        rawCountry = _rawCode$split2[1];
@@ -10275,11 +10301,10 @@
 	  function CachedImage() {
 	    classCallCheck(this, CachedImage);
 
-	    // eslint-disable-line no-unused-vars
 	    this.NUM_ITERATIONS = 4; // Number of items in the coordinates array
 
 	    this.image = new Image();
-	    this.canvas = document.createElement('canvas');
+	    this.canvas = document.createElement("canvas");
 	  }
 	  /**
 	   * Called when the image has been successfully loaded.
@@ -10315,7 +10340,7 @@
 	      this._fillMipMap();
 	    }
 	    /**
-	     * @return {Boolean} true if init() has been called, false otherwise.
+	     * @returns {boolean} true if init() has been called, false otherwise.
 	     */
 
 	  }, {
@@ -10344,7 +10369,7 @@
 	  }, {
 	    key: "_fillMipMap",
 	    value: function _fillMipMap() {
-	      var ctx = this.canvas.getContext('2d'); // First zoom-level comes from the image
+	      var ctx = this.canvas.getContext("2d"); // First zoom-level comes from the image
 
 	      var to = this.coordinates[0];
 	      ctx.drawImage(this.image, to[0], to[1], to[2], to[3]); // The rest are copy actions internal to the canvas/context
@@ -10405,6 +10430,7 @@
 
 	/**
 	 * This callback is a callback that accepts an Image.
+	 *
 	 * @callback ImageCallback
 	 * @param {Image} image
 	 */
@@ -10468,7 +10494,7 @@
 	    /**
 	     * @param {string} url          Url of the image
 	     * @param {string} brokenUrl    Url of an image to use if the url image is not found
-	     * @return {Image} img          The image object
+	     * @returns {Image} img          The image object
 	     */
 
 	  }, {
@@ -10510,6 +10536,7 @@
 	     * IE11 fix -- thanks dponch!
 	     *
 	     * Local helper function
+	     *
 	     * @param {vis.Image} imageToCache
 	     * @private
 	     */
@@ -10793,14 +10820,14 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
 	  createClass(Groups, [{
 	    key: "setOptions",
 	    value: function setOptions(options) {
-	      var optionFields = ['useDefaultGroups'];
+	      var optionFields = ["useDefaultGroups"];
 
 	      if (options !== undefined) {
 	        for (var groupName in options) {
@@ -10829,7 +10856,7 @@
 	     *
 	     * @param {*}       groupname     Can be a number, string, Date, etc.
 	     * @param {boolean} [shouldCreate=true] If true, create a new group
-	     * @return {Object} The found or created group
+	     * @returns {object} The found or created group
 	     */
 
 	  }, {
@@ -10861,10 +10888,11 @@
 	    }
 	    /**
 	     * Add a custom group style
+	     *
 	     * @param {string} groupName
-	     * @param {Object} style       An object containing borderColor,
+	     * @param {object} style       An object containing borderColor,
 	     *                             backgroundColor, etc.
-	     * @return {Object} group      The created group object
+	     * @returns {object} group      The created group object
 	     */
 
 	  }, {
@@ -15705,27 +15733,27 @@
 	 *       should be able to get rid of this method.
 	 *
 	 * @param {string}  subOption  option within object 'chosen' to consider; either 'node', 'edge' or 'label'
-	 * @param {Object}  pile       array of options objects to consider
+	 * @param {object}  pile       array of options objects to consider
 	 *
-	 * @return {boolean|function}  value for passed subOption of 'chosen' to use
+	 * @returns {boolean | Function}  value for passed subOption of 'chosen' to use
 	 */
 
 	function choosify(subOption, pile) {
 	  // allowed values for subOption
-	  var allowed = ['node', 'edge', 'label'];
+	  var allowed = ["node", "edge", "label"];
 	  var value = true;
-	  var chosen = topMost(pile, 'chosen');
+	  var chosen = topMost(pile, "chosen");
 
-	  if (typeof chosen === 'boolean') {
+	  if (typeof chosen === "boolean") {
 	    value = chosen;
-	  } else if (_typeof_1(chosen) === 'object') {
+	  } else if (_typeof_1(chosen) === "object") {
 	    if (indexOf$3(allowed).call(allowed, subOption) === -1) {
-	      throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
+	      throw new Error("choosify: subOption '" + subOption + "' should be one of " + "'" + allowed.join("', '") + "'");
 	    }
 
-	    var chosenEdge = topMost(pile, ['chosen', subOption]);
+	    var chosenEdge = topMost(pile, ["chosen", subOption]);
 
-	    if (typeof chosenEdge === 'boolean' || typeof chosenEdge === 'function') {
+	    if (typeof chosenEdge === "boolean" || typeof chosenEdge === "function") {
 	      value = chosenEdge;
 	    }
 	  }
@@ -15784,17 +15812,17 @@
 
 	function isValidLabel(text) {
 	  // Note that this is quite strict: types that *might* be converted to string are disallowed
-	  return typeof text === 'string' && text !== '';
+	  return typeof text === "string" && text !== "";
 	}
 	/**
 	 * Returns x, y of self reference circle based on provided angle
 	 *
-	 * @param {Object} ctx
+	 * @param {object} ctx
 	 * @param {number} angle
 	 * @param {number} radius
 	 * @param {VisNode} node
 	 *
-	 * @returns {Object} x and y coordinates
+	 * @returns {object} x and y coordinates
 	 */
 
 	function getSelfRefCoordinates(ctx, angle, radius, node) {
@@ -15838,10 +15866,11 @@
 
 	/**
 	 * Callback to determine text dimensions, using the parent label settings.
+	 *
 	 * @callback MeasureText
 	 * @param {text} text
 	 * @param {text} mod
-	 * @return {Object} { width, values} width in pixels and font attributes
+	 * @returns {object} { width, values} width in pixels and font attributes
 	 */
 
 	/**
@@ -15875,7 +15904,7 @@
 	  createClass(LabelAccumulator, [{
 	    key: "_add",
 	    value: function _add(l, text) {
-	      var mod = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'normal';
+	      var mod = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "normal";
 
 	      if (this.lines[l] === undefined) {
 	        this.lines[l] = {
@@ -15933,7 +15962,7 @@
 	  }, {
 	    key: "append",
 	    value: function append(text) {
-	      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal';
+	      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "normal";
 
 	      this._add(this.current, text, mod);
 	    }
@@ -15947,7 +15976,7 @@
 	  }, {
 	    key: "newLine",
 	    value: function newLine(text) {
-	      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal';
+	      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "normal";
 
 	      this._add(this.current, text, mod);
 
@@ -16091,22 +16120,22 @@
 
 	var tagPattern = {
 	  // HTML
-	  '<b>': /<b>/,
-	  '<i>': /<i>/,
-	  '<code>': /<code>/,
-	  '</b>': /<\/b>/,
-	  '</i>': /<\/i>/,
-	  '</code>': /<\/code>/,
+	  "<b>": /<b>/,
+	  "<i>": /<i>/,
+	  "<code>": /<code>/,
+	  "</b>": /<\/b>/,
+	  "</i>": /<\/i>/,
+	  "</code>": /<\/code>/,
 	  // Markdown
-	  '*': /\*/,
+	  "*": /\*/,
 	  // bold
-	  '_': /\_/,
+	  _: /_/,
 	  // ital
-	  '`': /`/,
+	  "`": /`/,
 	  // mono
-	  'afterBold': /[^\*]/,
-	  'afterItal': /[^_]/,
-	  'afterMono': /[^`]/
+	  afterBold: /[^*]/,
+	  afterItal: /[^_]/,
+	  afterMono: /[^`]/
 	};
 	/**
 	 * Internal helper class for parsing the markup tags for HTML and Markdown.
@@ -16145,7 +16174,7 @@
 	  createClass(MarkupAccumulator, [{
 	    key: "mod",
 	    value: function mod() {
-	      return this.modStack.length === 0 ? 'normal' : this.modStack[0];
+	      return this.modStack.length === 0 ? "normal" : this.modStack[0];
 	    }
 	    /**
 	     * Return the mod label currently active
@@ -16157,13 +16186,13 @@
 	  }, {
 	    key: "modName",
 	    value: function modName() {
-	      if (this.modStack.length === 0) return 'normal';else if (this.modStack[0] === 'mono') return 'mono';else {
+	      if (this.modStack.length === 0) return "normal";else if (this.modStack[0] === "mono") return "mono";else {
 	        if (this.bold && this.ital) {
-	          return 'boldital';
+	          return "boldital";
 	        } else if (this.bold) {
-	          return 'bold';
+	          return "bold";
 	        } else if (this.ital) {
-	          return 'ital';
+	          return "ital";
 	        }
 	      }
 	    }
@@ -16310,7 +16339,7 @@
 	    value: function parseEndTag(tagName, tag, nextTag) {
 	      var checkTag = this.mod() === tagName;
 
-	      if (tagName === 'mono') {
+	      if (tagName === "mono") {
 	        // special handling for 'mono'
 	        checkTag = checkTag && this.mono;
 	      } else {
@@ -16416,9 +16445,9 @@
 	    /**
 	     * Callback to determine text width; passed to LabelAccumulator instance
 	     *
-	     * @param  {String} text string to determine width of
-	     * @param  {String} mod  font type to use for this text
-	     * @return {Object} { width, values} width in pixels and font attributes
+	     * @param  {string} text string to determine width of
+	     * @param  {string} mod  font type to use for this text
+	     * @returns {object} { width, values} width in pixels and font attributes
 	     */
 
 	    var textWidth = function textWidth(text, mod) {
@@ -16429,7 +16458,7 @@
 
 	      var width = 0;
 
-	      if (text !== '') {
+	      if (text !== "") {
 	        var measure = _this.ctx.measureText(text);
 
 	        width = measure.width;
@@ -16471,13 +16500,13 @@
 
 	      var font = this.parent.fontOptions; // Normalize the end-of-line's to a single representation - order important
 
-	      text = text.replace(/\r\n/g, '\n'); // Dos EOL's
+	      text = text.replace(/\r\n/g, "\n"); // Dos EOL's
 
-	      text = text.replace(/\r/g, '\n'); // Mac EOL's
+	      text = text.replace(/\r/g, "\n"); // Mac EOL's
 	      // Note that at this point, there can be no \r's in the text.
 	      // This is used later on splitStringIntoLines() to split multifont texts.
 
-	      var nlLines = String(text).split('\n');
+	      var nlLines = String(text).split("\n");
 	      var lineCount = nlLines.length;
 
 	      if (font.multi) {
@@ -16539,12 +16568,12 @@
 	  }, {
 	    key: "decodeMarkupSystem",
 	    value: function decodeMarkupSystem(markupSystem) {
-	      var system = 'none';
+	      var system = "none";
 
-	      if (markupSystem === 'markdown' || markupSystem === 'md') {
-	        system = 'markdown';
-	      } else if (markupSystem === true || markupSystem === 'html') {
-	        system = 'html';
+	      if (markupSystem === "markdown" || markupSystem === "md") {
+	        system = "markdown";
+	      } else if (markupSystem === true || markupSystem === "html") {
+	        system = "html";
 	      }
 
 	      return system;
@@ -16562,7 +16591,7 @@
 
 	      var parseEntities = function parseEntities(ch) {
 	        if (/&/.test(ch)) {
-	          var parsed = s.replace(s.text, '&lt;', '<') || s.replace(s.text, '&amp;', '&');
+	          var parsed = s.replace(s.text, "&lt;", "<") || s.replace(s.text, "&amp;", "&");
 
 	          if (!parsed) {
 	            s.add("&");
@@ -16576,7 +16605,7 @@
 
 	      while (s.position < s.text.length) {
 	        var ch = s.text.charAt(s.position);
-	        var parsed = s.parseWS(ch) || /</.test(ch) && (s.parseStartTag('bold', '<b>') || s.parseStartTag('ital', '<i>') || s.parseStartTag('mono', '<code>') || s.parseEndTag('bold', '</b>') || s.parseEndTag('ital', '</i>') || s.parseEndTag('mono', '</code>')) || parseEntities(ch);
+	        var parsed = s.parseWS(ch) || /</.test(ch) && (s.parseStartTag("bold", "<b>") || s.parseStartTag("ital", "<i>") || s.parseStartTag("mono", "<code>") || s.parseEndTag("bold", "</b>") || s.parseEndTag("ital", "</i>") || s.parseEndTag("mono", "</code>")) || parseEntities(ch);
 
 	        if (!parsed) {
 	          s.add(ch);
@@ -16624,7 +16653,7 @@
 
 	      while (s.position < s.text.length) {
 	        var ch = s.text.charAt(s.position);
-	        var parsed = s.parseWS(ch) || parseOverride(ch) || (beginable || s.spacing) && (s.parseStartTag('bold', '*') || s.parseStartTag('ital', '_') || s.parseStartTag('mono', '`')) || s.parseEndTag('bold', '*', 'afterBold') || s.parseEndTag('ital', '_', 'afterItal') || s.parseEndTag('mono', '`', 'afterMono');
+	        var parsed = s.parseWS(ch) || parseOverride(ch) || (beginable || s.spacing) && (s.parseStartTag("bold", "*") || s.parseStartTag("ital", "_") || s.parseStartTag("mono", "`")) || s.parseEndTag("bold", "*", "afterBold") || s.parseEndTag("ital", "_", "afterItal") || s.parseEndTag("mono", "`", "afterMono");
 
 	        if (!parsed) {
 	          s.add(ch);
@@ -16651,14 +16680,14 @@
 	    value: function splitBlocks(text, markupSystem) {
 	      var system = this.decodeMarkupSystem(markupSystem);
 
-	      if (system === 'none') {
+	      if (system === "none") {
 	        return [{
 	          text: text,
-	          mod: 'normal'
+	          mod: "normal"
 	        }];
-	      } else if (system === 'markdown') {
+	      } else if (system === "markdown") {
 	        return this.splitMarkdownBlocks(text);
-	      } else if (system === 'html') {
+	      } else if (system === "html") {
 	        return this.splitHtmlBlocks(text);
 	      }
 	    }
@@ -16679,18 +16708,18 @@
 	     * current max width.
 	     *
 	     * @param {Array} words  Array of strings signifying a text lines
-	     * @return {number}      index of first item in string making string go over max
+	     * @returns {number}      index of first item in string making string go over max
 	     * @private
 	     */
 
 	  }, {
 	    key: "getLongestFit",
 	    value: function getLongestFit(words) {
-	      var text = '';
+	      var text = "";
 	      var w = 0;
 
 	      while (w < words.length) {
-	        var pre = text === '' ? '' : ' ';
+	        var pre = text === "" ? "" : " ";
 	        var newText = text + pre + words[w];
 	        if (this.overMaxWidth(newText)) break;
 	        text = newText;
@@ -16704,7 +16733,7 @@
 	     * current max width.
 	     *
 	     * @param {Array} words Array of strings signifying a text lines
-	     * @return {number} index of first item in string making string go over max
+	     * @returns {number} index of first item in string making string go over max
 	     */
 
 	  }, {
@@ -16737,16 +16766,16 @@
 	  }, {
 	    key: "splitStringIntoLines",
 	    value: function splitStringIntoLines(str) {
-	      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal';
+	      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "normal";
 	      var appendLast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 	      // Set the canvas context font, based upon the current selected/hover state
 	      // and the provided mod, so the text measurement performed by getLongestFit
 	      // will be accurate - and not just use the font of whoever last used the canvas.
 	      this.parent.getFormattingValues(this.ctx, this.selected, this.hover, mod); // Still-present spaces are relevant, retain them
 
-	      str = str.replace(/^( +)/g, '$1\r');
-	      str = str.replace(/([^\r][^ ]*)( +)/g, '$1\r$2\r');
-	      var words = str.split('\r');
+	      str = str.replace(/^( +)/g, "$1\r");
+	      str = str.replace(/([^\r][^ ]*)( +)/g, "$1\r$2\r");
+	      var words = str.split("\r");
 
 	      while (words.length > 0) {
 	        var w = this.getLongestFit(words);
@@ -16763,9 +16792,9 @@
 	          // skip any space that is replaced by a newline
 	          var newW = w;
 
-	          if (words[w - 1] === ' ') {
+	          if (words[w - 1] === " ") {
 	            w--;
-	          } else if (words[newW] === ' ') {
+	          } else if (words[newW] === " ") {
 	            newW++;
 	          }
 
@@ -16789,18 +16818,19 @@
 
 	/**
 	 * List of special styles for multi-fonts
+	 *
 	 * @private
 	 */
 
-	var multiFontStyle = ['bold', 'ital', 'boldital', 'mono'];
+	var multiFontStyle = ["bold", "ital", "boldital", "mono"];
 	/**
 	 * A Label to be used for Nodes or Edges.
 	 */
 
 	var Label = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
-	   * @param {Object} options
+	   * @param {object} body
+	   * @param {object} options
 	   * @param {boolean} [edgelabel=false]
 	   */
 	  function Label(body, options) {
@@ -16824,7 +16854,7 @@
 	    this.isEdgeLabel = edgelabel;
 	  }
 	  /**
-	   * @param {Object} options the options of the parent Node-instance
+	   * @param {object} options the options of the parent Node-instance
 	   */
 
 
@@ -16844,9 +16874,9 @@
 
 	      if (options.font !== undefined && options.font !== null) {
 	        // font options can be deleted at various levels
-	        if (typeof options.font === 'string') {
+	        if (typeof options.font === "string") {
 	          this.baseSize = this.fontOptions.size;
-	        } else if (_typeof_1(options.font) === 'object') {
+	        } else if (_typeof_1(options.font) === "object") {
 	          var size = options.font.size;
 
 	          if (size !== undefined) {
@@ -16861,7 +16891,7 @@
 	     * Member fontOptions serves as an accumulator for the current font options.
 	     * As such, it needs to be completely separated from the node options.
 	     *
-	     * @param {Object} newFontOptions the new font options to process
+	     * @param {object} newFontOptions the new font options to process
 	     * @private
 	     */
 
@@ -16883,7 +16913,7 @@
 
 
 	      forEach$3(newFontOptions, function (prop, n) {
-	        if (prop !== undefined && prop !== null && _typeof_1(prop) !== 'object') {
+	        if (prop !== undefined && prop !== null && _typeof_1(prop) !== "object") {
 	          _this.fontOptions[n] = prop;
 	        }
 	      });
@@ -16894,9 +16924,9 @@
 	     * Note that following is not done here and have to be done after the call:
 	     * - Not all font options are set (vadjust, mod)
 	     *
-	     * @param {Object} outOptions  out-parameter, object in which to store the parse results (if any)
-	     * @param {Object} inOptions  font options to parse
-	     * @return {boolean} true if font parsed as string, false otherwise
+	     * @param {object} outOptions  out-parameter, object in which to store the parse results (if any)
+	     * @param {object} inOptions  font options to parse
+	     * @returns {boolean} true if font parsed as string, false otherwise
 	     * @static
 	     */
 
@@ -16920,42 +16950,42 @@
 	        minWdt: -1,
 	        constrainHeight: false,
 	        minHgt: -1,
-	        valign: 'middle'
+	        valign: "middle"
 	      };
-	      var widthConstraint = topMost(pile, 'widthConstraint');
+	      var widthConstraint = topMost(pile, "widthConstraint");
 
-	      if (typeof widthConstraint === 'number') {
+	      if (typeof widthConstraint === "number") {
 	        fontOptions.maxWdt = Number(widthConstraint);
 	        fontOptions.minWdt = Number(widthConstraint);
-	      } else if (_typeof_1(widthConstraint) === 'object') {
-	        var widthConstraintMaximum = topMost(pile, ['widthConstraint', 'maximum']);
+	      } else if (_typeof_1(widthConstraint) === "object") {
+	        var widthConstraintMaximum = topMost(pile, ["widthConstraint", "maximum"]);
 
-	        if (typeof widthConstraintMaximum === 'number') {
+	        if (typeof widthConstraintMaximum === "number") {
 	          fontOptions.maxWdt = Number(widthConstraintMaximum);
 	        }
 
-	        var widthConstraintMinimum = topMost(pile, ['widthConstraint', 'minimum']);
+	        var widthConstraintMinimum = topMost(pile, ["widthConstraint", "minimum"]);
 
-	        if (typeof widthConstraintMinimum === 'number') {
+	        if (typeof widthConstraintMinimum === "number") {
 	          fontOptions.minWdt = Number(widthConstraintMinimum);
 	        }
 	      }
 
-	      var heightConstraint = topMost(pile, 'heightConstraint');
+	      var heightConstraint = topMost(pile, "heightConstraint");
 
-	      if (typeof heightConstraint === 'number') {
+	      if (typeof heightConstraint === "number") {
 	        fontOptions.minHgt = Number(heightConstraint);
-	      } else if (_typeof_1(heightConstraint) === 'object') {
-	        var heightConstraintMinimum = topMost(pile, ['heightConstraint', 'minimum']);
+	      } else if (_typeof_1(heightConstraint) === "object") {
+	        var heightConstraintMinimum = topMost(pile, ["heightConstraint", "minimum"]);
 
-	        if (typeof heightConstraintMinimum === 'number') {
+	        if (typeof heightConstraintMinimum === "number") {
 	          fontOptions.minHgt = Number(heightConstraintMinimum);
 	        }
 
-	        var heightConstraintValign = topMost(pile, ['heightConstraint', 'valign']);
+	        var heightConstraintValign = topMost(pile, ["heightConstraint", "valign"]);
 
-	        if (typeof heightConstraintValign === 'string') {
-	          if (heightConstraintValign === 'top' || heightConstraintValign === 'bottom') {
+	        if (typeof heightConstraintValign === "string") {
+	          if (heightConstraintValign === "top" || heightConstraintValign === "bottom") {
 	            fontOptions.valign = heightConstraintValign;
 	          }
 	        }
@@ -16966,7 +16996,7 @@
 	    /**
 	     * Set options and update internal state
 	     *
-	     * @param {Object} options  options to set
+	     * @param {object} options  options to set
 	     * @param {Array}  pile     array of option objects to consider for option 'chosen'
 	     */
 
@@ -16976,7 +17006,7 @@
 	      this.setOptions(options, true);
 	      this.propagateFonts(pile);
 	      deepExtend(this.fontOptions, this.constrain(pile));
-	      this.fontOptions.chooser = choosify('label', pile);
+	      this.fontOptions.chooser = choosify("label", pile);
 	    }
 	    /**
 	     * When margins are set in an element, adjust sizes is called to remove them
@@ -17152,7 +17182,7 @@
 	    key: "getFontOptions",
 	    value: function getFontOptions(pile, multiName) {
 	      var result = {};
-	      var optionNames = ['color', 'size', 'face', 'mod', 'vadjust']; // List of allowed options per multi-font
+	      var optionNames = ["color", "size", "face", "mod", "vadjust"]; // List of allowed options per multi-font
 
 	      for (var i = 0; i < optionNames.length; ++i) {
 	        var mod = optionNames[i];
@@ -17203,6 +17233,7 @@
 	    }
 	    /**
 	     * Main function. This is called from anything that wants to draw a label.
+	     *
 	     * @param {CanvasRenderingContext2D} ctx
 	     * @param {number} x
 	     * @param {number} y
@@ -17214,7 +17245,7 @@
 	  }, {
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover) {
-	      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 'middle';
+	      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "middle";
 	      // if no label, return
 	      if (this.elementOptions.label === undefined) return; // check if we have to render the label
 
@@ -17235,6 +17266,7 @@
 	    }
 	    /**
 	     * Draws the label background
+	     *
 	     * @param {CanvasRenderingContext2D} ctx
 	     * @private
 	     */
@@ -17261,7 +17293,7 @@
 	  }, {
 	    key: "_drawText",
 	    value: function _drawText(ctx, x, y) {
-	      var baseline = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'middle';
+	      var baseline = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "middle";
 	      var viewFontSize = arguments.length > 4 ? arguments[4] : undefined;
 
 	      var _this$_setAlignment = this._setAlignment(ctx, x, y, baseline);
@@ -17270,15 +17302,15 @@
 
 	      x = _this$_setAlignment2[0];
 	      y = _this$_setAlignment2[1];
-	      ctx.textAlign = 'left';
+	      ctx.textAlign = "left";
 	      x = x - this.size.width / 2; // Shift label 1/2-distance to the left
 
 	      if (this.fontOptions.valign && this.size.height > this.size.labelHeight) {
-	        if (this.fontOptions.valign === 'top') {
+	        if (this.fontOptions.valign === "top") {
 	          y -= (this.size.height - this.size.labelHeight) / 2;
 	        }
 
-	        if (this.fontOptions.valign === 'bottom') {
+	        if (this.fontOptions.valign === "bottom") {
 	          y += (this.size.height - this.size.labelHeight) / 2;
 	        }
 	      } // draw the text
@@ -17290,9 +17322,9 @@
 	        if (line && line.blocks) {
 	          var width = 0;
 
-	          if (this.isEdgeLabel || this.fontOptions.align === 'center') {
+	          if (this.isEdgeLabel || this.fontOptions.align === "center") {
 	            width += (this.size.width - line.width) / 2;
-	          } else if (this.fontOptions.align === 'right') {
+	          } else if (this.fontOptions.align === "right") {
 	            width += this.size.width - line.width;
 	          }
 
@@ -17308,7 +17340,7 @@
 	            if (block.strokeWidth > 0) {
 	              ctx.lineWidth = block.strokeWidth;
 	              ctx.strokeStyle = strokeColor;
-	              ctx.lineJoin = 'round';
+	              ctx.lineJoin = "round";
 	            }
 
 	            ctx.fillStyle = fontColor;
@@ -17340,19 +17372,19 @@
 	    value: function _setAlignment(ctx, x, y, baseline) {
 	      // check for label alignment (for edges)
 	      // TODO: make alignment for nodes
-	      if (this.isEdgeLabel && this.fontOptions.align !== 'horizontal' && this.pointToSelf === false) {
+	      if (this.isEdgeLabel && this.fontOptions.align !== "horizontal" && this.pointToSelf === false) {
 	        x = 0;
 	        y = 0;
 	        var lineMargin = 2;
 
-	        if (this.fontOptions.align === 'top') {
-	          ctx.textBaseline = 'alphabetic';
+	        if (this.fontOptions.align === "top") {
+	          ctx.textBaseline = "alphabetic";
 	          y -= 2 * lineMargin; // distance from edge, required because we use alphabetic. Alphabetic has less difference between browsers
-	        } else if (this.fontOptions.align === 'bottom') {
-	          ctx.textBaseline = 'hanging';
+	        } else if (this.fontOptions.align === "bottom") {
+	          ctx.textBaseline = "hanging";
 	          y += 2 * lineMargin; // distance from edge, required because we use hanging. Hanging has less difference between browsers
 	        } else {
-	          ctx.textBaseline = 'middle';
+	          ctx.textBaseline = "middle";
 	        }
 	      } else {
 	        ctx.textBaseline = baseline;
@@ -17374,8 +17406,8 @@
 	  }, {
 	    key: "_getColor",
 	    value: function _getColor(color, viewFontSize, initialStrokeColor) {
-	      var fontColor = color || '#000000';
-	      var strokeColor = initialStrokeColor || '#ffffff';
+	      var fontColor = color || "#000000";
+	      var strokeColor = initialStrokeColor || "#ffffff";
 
 	      if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
 	        var opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
@@ -17410,7 +17442,7 @@
 	    /**
 	     * Get the current dimensions of the label
 	     *
-	     * @return {rect}
+	     * @returns {rect}
 	     */
 
 	  }, {
@@ -17425,17 +17457,17 @@
 	        var x2 = -this.size.width * 0.5;
 
 	        switch (this.fontOptions.align) {
-	          case 'middle':
+	          case "middle":
 	            x = x2;
 	            y = -this.size.height * 0.5;
 	            break;
 
-	          case 'top':
+	          case "top":
 	            x = x2;
 	            y = -(this.size.height + lineMargin);
 	            break;
 
-	          case 'bottom':
+	          case "bottom":
 	            x = x2;
 	            y = lineMargin;
 	            break;
@@ -17465,7 +17497,7 @@
 	    value: function calculateLabelSize(ctx, selected, hover) {
 	      var x = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
 	      var y = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-	      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 'middle';
+	      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "middle";
 
 	      this._processLabel(ctx, selected, hover);
 
@@ -17494,7 +17526,7 @@
 	    value: function getFormattingValues(ctx, selected, hover, mod) {
 	      var getValue = function getValue(fontOptions, mod, option) {
 	        if (mod === "normal") {
-	          if (option === 'mod') return "";
+	          if (option === "mod") return "";
 	          return fontOptions[option];
 	        }
 
@@ -17508,20 +17540,20 @@
 	      };
 
 	      var values = {
-	        color: getValue(this.fontOptions, mod, 'color'),
-	        size: getValue(this.fontOptions, mod, 'size'),
-	        face: getValue(this.fontOptions, mod, 'face'),
-	        mod: getValue(this.fontOptions, mod, 'mod'),
-	        vadjust: getValue(this.fontOptions, mod, 'vadjust'),
+	        color: getValue(this.fontOptions, mod, "color"),
+	        size: getValue(this.fontOptions, mod, "size"),
+	        face: getValue(this.fontOptions, mod, "face"),
+	        mod: getValue(this.fontOptions, mod, "mod"),
+	        vadjust: getValue(this.fontOptions, mod, "vadjust"),
 	        strokeWidth: this.fontOptions.strokeWidth,
 	        strokeColor: this.fontOptions.strokeColor
 	      };
 
 	      if (selected || hover) {
 	        if (mod === "normal" && this.fontOptions.chooser === true && this.elementOptions.labelHighlightBold) {
-	          values.mod = 'bold';
+	          values.mod = "bold";
 	        } else {
-	          if (typeof this.fontOptions.chooser === 'function') {
+	          if (typeof this.fontOptions.chooser === "function") {
 	            this.fontOptions.chooser(values, this.elementOptions.id, selected, hover);
 	          }
 	        }
@@ -17571,6 +17603,7 @@
 	    }
 	    /**
 	     * This explodes the label string into lines and sets the width, height and number of lines.
+	     *
 	     * @param {CanvasRenderingContext2D} ctx
 	     * @param {boolean} selected
 	     * @param {boolean} hover
@@ -17605,7 +17638,7 @@
 	    /**
 	     * Check if this label is visible
 	     *
-	     * @return {boolean} true if this label will be show, false otherwise
+	     * @returns {boolean} true if this label will be show, false otherwise
 	     */
 
 	  }, {
@@ -17626,9 +17659,9 @@
 	  }], [{
 	    key: "parseFontString",
 	    value: function parseFontString(outOptions, inOptions) {
-	      if (!inOptions || typeof inOptions !== 'string') return false;
+	      if (!inOptions || typeof inOptions !== "string") return false;
 	      var newOptionsArray = inOptions.split(" ");
-	      outOptions.size = +newOptionsArray[0].replace("px", '');
+	      outOptions.size = +newOptionsArray[0].replace("px", "");
 	      outOptions.face = newOptionsArray[1];
 	      outOptions.color = newOptionsArray[2];
 	      return true;
@@ -17683,8 +17716,8 @@
 	 */
 	var NodeBase = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function NodeBase(options, body, labelModule) {
@@ -17709,7 +17742,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -17730,7 +17763,7 @@
 	      this.margin = {};
 
 	      if (this.options.margin) {
-	        if (_typeof_1(this.options.margin) == 'object') {
+	        if (_typeof_1(this.options.margin) == "object") {
 	          this.margin.top = this.options.margin.top;
 	          this.margin.right = this.options.margin.right;
 	          this.margin.bottom = this.options.margin.bottom;
@@ -17790,7 +17823,7 @@
 	    key: "disableShadow",
 	    value: function disableShadow(ctx, values) {
 	      if (values.shadow) {
-	        ctx.shadowColor = 'rgba(0,0,0,0)';
+	        ctx.shadowColor = "rgba(0,0,0,0)";
 	        ctx.shadowBlur = 0;
 	        ctx.shadowOffsetX = 0;
 	        ctx.shadowOffsetY = 0;
@@ -18024,7 +18057,7 @@
 	/**
 	 * A Box Node/Cluster shape.
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var Box = /*#__PURE__*/function (_NodeBase) {
@@ -18033,8 +18066,8 @@
 	  var _super = _createSuper$1(Box);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Box(options, body, labelModule) {
@@ -18147,7 +18180,7 @@
 	 *       Rename this to ImageBase
 	 *       Consolidate common code in Image and CircleImage to base class
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
@@ -18156,8 +18189,8 @@
 	  var _super = _createSuper$2(CircleImageBase);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function CircleImageBase(options, body, labelModule) {
@@ -18172,9 +18205,9 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
-	   * @param {Object} [imageObj]
-	   * @param {Object} [imageObjAlt]
+	   * @param {object} options
+	   * @param {object} [imageObj]
+	   * @param {object} [imageObjAlt]
 	   */
 
 
@@ -18251,7 +18284,7 @@
 	      if (this.options.imagePadding) {
 	        var optImgPadding = this.options.imagePadding;
 
-	        if (_typeof_1(optImgPadding) == 'object') {
+	        if (_typeof_1(optImgPadding) == "object") {
 	          imgPadding.top = optImgPadding.top;
 	          imgPadding.right = optImgPadding.right;
 	          imgPadding.bottom = optImgPadding.bottom;
@@ -18382,7 +18415,7 @@
 	        this.labelOffset = offset;
 	      }
 
-	      this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+	      this.labelModule.draw(ctx, x, yLabel, selected, hover, "hanging");
 	    }
 	  }]);
 
@@ -18395,7 +18428,7 @@
 	/**
 	 * A Circle Node/Cluster shape.
 	 *
-	 * @extends CircleImageBase
+	 * @augments CircleImageBase
 	 */
 
 	var Circle = /*#__PURE__*/function (_CircleImageBase) {
@@ -18404,8 +18437,8 @@
 	  var _super = _createSuper$3(Circle);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Circle(options, body, labelModule) {
@@ -18482,14 +18515,12 @@
 	    /**
 	     *
 	     * @param {CanvasRenderingContext2D} ctx
-	     * @param {number} angle - Unused
 	     * @returns {number}
 	     */
 
 	  }, {
 	    key: "distanceToBorder",
-	    value: function distanceToBorder(ctx, angle) {
-	      // eslint-disable-line no-unused-vars
+	    value: function distanceToBorder(ctx) {
 	      if (ctx) {
 	        this.resize(ctx);
 	      }
@@ -18507,7 +18538,7 @@
 	/**
 	 * A CircularImage Node/Cluster shape.
 	 *
-	 * @extends CircleImageBase
+	 * @augments CircleImageBase
 	 */
 
 	var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
@@ -18516,8 +18547,8 @@
 	  var _super = _createSuper$4(CircularImage);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   * @param {Image} imageObj
 	   * @param {Image} imageObjAlt
@@ -18579,7 +18610,7 @@
 	      var labelX = x,
 	          labelY = y;
 
-	      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+	      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
 	        this.left = x;
 	        this.top = y;
 	        labelX += this.width / 2;
@@ -18616,7 +18647,7 @@
 	  }, {
 	    key: "updateBoundingBox",
 	    value: function updateBoundingBox(x, y) {
-	      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+	      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
 	        this.boundingBox.top = y;
 	        this.boundingBox.left = x;
 	        this.boundingBox.right = x + this.options.size * 2;
@@ -18636,14 +18667,12 @@
 	    /**
 	     *
 	     * @param {CanvasRenderingContext2D} ctx
-	     * @param {number} angle - Unused
 	     * @returns {number}
 	     */
 
 	  }, {
 	    key: "distanceToBorder",
-	    value: function distanceToBorder(ctx, angle) {
-	      // eslint-disable-line no-unused-vars
+	    value: function distanceToBorder(ctx) {
 	      if (ctx) {
 	        this.resize(ctx);
 	      }
@@ -18661,7 +18690,7 @@
 	/**
 	 * Base class for constructing Node/Cluster Shapes.
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var ShapeBase = /*#__PURE__*/function (_NodeBase) {
@@ -18670,8 +18699,8 @@
 	  var _super = _createSuper$5(ShapeBase);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function ShapeBase(options, body, labelModule) {
@@ -18684,7 +18713,7 @@
 	   * @param {CanvasRenderingContext2D} ctx
 	   * @param {boolean} [selected]
 	   * @param {boolean} [hover]
-	   * @param {Object} [values={size: this.options.size}]
+	   * @param {object} [values={size: this.options.size}]
 	   */
 
 
@@ -18719,7 +18748,7 @@
 	     * @param {ArrowOptions} values
 	     * @private
 	     *
-	     * @returns {Object} Callbacks to draw later on higher layers.
+	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
@@ -18749,11 +18778,11 @@
 	          if (_this.options.label !== undefined) {
 	            // Need to call following here in order to ensure value for
 	            // `this.labelModule.size.height`.
-	            _this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
+	            _this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, "hanging");
 
 	            var yLabel = y + 0.5 * _this.height + 0.5 * _this.labelModule.size.height;
 
-	            _this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+	            _this.labelModule.draw(ctx, x, yLabel, selected, hover, "hanging");
 	          }
 
 	          _this.updateBoundingBox(x, y);
@@ -18795,7 +18824,7 @@
 	/**
 	 * A CustomShape Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var CustomShape = /*#__PURE__*/function (_ShapeBase) {
@@ -18804,11 +18833,12 @@
 	  var _super = _createSuper$6(CustomShape);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
-	   * @param {function} ctxRenderer
-	    */
+	   * @param {Function} ctxRenderer
+	   
+	   */
 	  function CustomShape(options, body, labelModule, ctxRenderer) {
 	    var _this;
 
@@ -18827,7 +18857,7 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on different layers.
+	   * @returns {object} Callbacks to draw later on different layers.
 	   */
 
 
@@ -18899,7 +18929,7 @@
 	/**
 	 * A Database Node/Cluster shape.
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var Database = /*#__PURE__*/function (_NodeBase) {
@@ -18908,8 +18938,8 @@
 	  var _super = _createSuper$7(Database);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Database(options, body, labelModule) {
@@ -18987,7 +19017,7 @@
 	/**
 	 * A Diamond Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var Diamond = /*#__PURE__*/function (_ShapeBase) {
@@ -18996,8 +19026,8 @@
 	  var _super = _createSuper$8(Diamond);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Diamond(options, body, labelModule) {
@@ -19014,14 +19044,14 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Diamond, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'diamond', 4, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "diamond", 4, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19046,7 +19076,7 @@
 	/**
 	 * A Dot Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var Dot = /*#__PURE__*/function (_ShapeBase) {
@@ -19055,8 +19085,8 @@
 	  var _super = _createSuper$9(Dot);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Dot(options, body, labelModule) {
@@ -19073,26 +19103,24 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Dot, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'circle', 2, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "circle", 2, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
 	     * @param {CanvasRenderingContext2D} ctx
-	     * @param {number} angle
 	     * @returns {number}
 	     */
 
 	  }, {
 	    key: "distanceToBorder",
-	    value: function distanceToBorder(ctx, angle) {
-	      // eslint-disable-line no-unused-vars
+	    value: function distanceToBorder(ctx) {
 	      if (ctx) {
 	        this.resize(ctx);
 	      }
@@ -19110,7 +19138,7 @@
 	/**
 	 * Am Ellipse Node/Cluster shape.
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var Ellipse = /*#__PURE__*/function (_NodeBase) {
@@ -19119,8 +19147,8 @@
 	  var _super = _createSuper$a(Ellipse);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Ellipse(options, body, labelModule) {
@@ -19202,7 +19230,7 @@
 	/**
 	 * An icon replacement for the default Node shape.
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var Icon = /*#__PURE__*/function (_NodeBase) {
@@ -19211,8 +19239,8 @@
 	  var _super = _createSuper$b(Icon);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Icon(options, body, labelModule) {
@@ -19256,7 +19284,7 @@
 	     * @param {boolean} hover
 	     * @param {ArrowOptions} values
 	     *
-	     * @returns {Object} Callbacks to draw later on higher layers.
+	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
@@ -19333,7 +19361,7 @@
 
 	        this.disableShadow(ctx, values);
 	      } else {
-	        console.error('When using the icon shape, you need to define the code in the icon options object. This can be done per node or globally.');
+	        console.error("When using the icon shape, you need to define the code in the icon options object. This can be done per node or globally.");
 	      }
 	    }
 	    /**
@@ -19359,7 +19387,7 @@
 	/**
 	 * An image-based replacement for the default Node shape.
 	 *
-	 * @extends CircleImageBase
+	 * @augments CircleImageBase
 	 */
 
 	var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
@@ -19368,8 +19396,8 @@
 	  var _super = _createSuper$c(Image);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   * @param {Image} imageObj
 	   * @param {Image} imageObjAlt
@@ -19430,7 +19458,7 @@
 	      var labelX = x,
 	          labelY = y;
 
-	      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+	      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
 	        this.left = x;
 	        this.top = y;
 	        labelX += this.width / 2;
@@ -19485,7 +19513,7 @@
 	    value: function updateBoundingBox(x, y) {
 	      this.resize();
 
-	      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+	      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
 	        this.left = x;
 	        this.top = y;
 	      } else {
@@ -19527,7 +19555,7 @@
 	/**
 	 * A Square Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var Square = /*#__PURE__*/function (_ShapeBase) {
@@ -19536,8 +19564,8 @@
 	  var _super = _createSuper$d(Square);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Square(options, body, labelModule) {
@@ -19554,14 +19582,14 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Square, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'square', 2, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "square", 2, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19586,7 +19614,7 @@
 	/**
 	 * A Hexagon Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var Hexagon = /*#__PURE__*/function (_ShapeBase) {
@@ -19595,8 +19623,8 @@
 	  var _super = _createSuper$e(Hexagon);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Hexagon(options, body, labelModule) {
@@ -19613,14 +19641,14 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Hexagon, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'hexagon', 4, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "hexagon", 4, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19645,7 +19673,7 @@
 	/**
 	 * A Star Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var Star = /*#__PURE__*/function (_ShapeBase) {
@@ -19654,8 +19682,8 @@
 	  var _super = _createSuper$f(Star);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Star(options, body, labelModule) {
@@ -19672,14 +19700,14 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Star, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'star', 4, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "star", 4, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19704,7 +19732,7 @@
 	/**
 	 * A text-based replacement for the default Node shape.
 	 *
-	 * @extends NodeBase
+	 * @augments NodeBase
 	 */
 
 	var Text = /*#__PURE__*/function (_NodeBase) {
@@ -19713,8 +19741,8 @@
 	  var _super = _createSuper$g(Text);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Text(options, body, labelModule) {
@@ -19792,7 +19820,7 @@
 	/**
 	 * A Triangle Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var Triangle = /*#__PURE__*/function (_ShapeBase) {
@@ -19801,8 +19829,8 @@
 	  var _super = _createSuper$h(Triangle);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function Triangle(options, body, labelModule) {
@@ -19819,14 +19847,14 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(Triangle, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'triangle', 3, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "triangle", 3, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19851,7 +19879,7 @@
 	/**
 	 * A downward facing Triangle Node/Cluster shape.
 	 *
-	 * @extends ShapeBase
+	 * @augments ShapeBase
 	 */
 
 	var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
@@ -19860,8 +19888,8 @@
 	  var _super = _createSuper$i(TriangleDown);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Label} labelModule
 	   */
 	  function TriangleDown(options, body, labelModule) {
@@ -19878,14 +19906,14 @@
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
 	   *
-	   * @returns {Object} Callbacks to draw later on higher layers.
+	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
 
 	  createClass(TriangleDown, [{
 	    key: "draw",
 	    value: function draw(ctx, x, y, selected, hover, values) {
-	      return this._drawShape(ctx, 'triangleDown', 3, x, y, selected, hover, values);
+	      return this._drawShape(ctx, "triangleDown", 3, x, y, selected, hover, values);
 	    }
 	    /**
 	     *
@@ -19906,7 +19934,7 @@
 
 	var errorFound = false;
 	var allOptions;
-	var printStyle = 'background: #FFeeee; color: #dd0000';
+	var printStyle = "background: #FFeeee; color: #dd0000";
 	/**
 	 *  Used to validate options.
 	 */
@@ -19920,9 +19948,10 @@
 	  }
 	  /**
 	   * Main function to be called
-	   * @param {Object} options
-	   * @param {Object} referenceOptions
-	   * @param {Object} subObject
+	   *
+	   * @param {object} options
+	   * @param {object} referenceOptions
+	   * @param {object} subObject
 	   * @returns {boolean}
 	   * @static
 	   */
@@ -19944,9 +19973,10 @@
 	    }
 	    /**
 	     * Will traverse an object recursively and check every value
-	     * @param {Object} options
-	     * @param {Object} referenceOptions
-	     * @param {array} path    | where to look for the actual option
+	     *
+	     * @param {object} options
+	     * @param {object} referenceOptions
+	     * @param {Array} path    | where to look for the actual option
 	     * @static
 	     */
 
@@ -19961,10 +19991,11 @@
 	    }
 	    /**
 	     * Check every value. If the value is an object, call the parse function on that object.
+	     *
 	     * @param {string} option
-	     * @param {Object} options
-	     * @param {Object} referenceOptions
-	     * @param {array} path    | where to look for the actual option
+	     * @param {object} options
+	     * @param {object} referenceOptions
+	     * @param {Array} path    | where to look for the actual option
 	     * @static
 	     */
 
@@ -19984,10 +20015,10 @@
 	        //       THAT'S A REALLY BAD PLACE TO ALLOW IT!!!!
 	        // TODO: Examine if needed, remove if possible
 	        // __any__ is a wildcard. Any value is accepted and will be further analysed by reference.
-	        referenceOption = '__any__'; // if the any-subgroup is not a predefined object in the configurator,
+	        referenceOption = "__any__"; // if the any-subgroup is not a predefined object in the configurator,
 	        // we do not look deeper into the object.
 
-	        is_object = Validator.getType(options[option]) === 'object';
+	        is_object = Validator.getType(options[option]) === "object";
 	      }
 
 	      var refOptionObj = referenceOptions[referenceOption];
@@ -20001,8 +20032,8 @@
 	    /**
 	     *
 	     * @param {string}  option           | the option property
-	     * @param {Object}  options          | The supplied options object
-	     * @param {Object}  referenceOptions | The reference options containing all options and their allowed formats
+	     * @param {object}  options          | The supplied options object
+	     * @param {object}  referenceOptions | The reference options containing all options and their allowed formats
 	     * @param {string}  referenceOption  | Usually this is the same as option, except when handling an __any__ tag.
 	     * @param {string}  refOptionObj     | This is the type object from the reference options
 	     * @param {Array}   path             | where in the object is the option
@@ -20013,7 +20044,7 @@
 	    key: "checkFields",
 	    value: function checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path) {
 	      var log = function log(message) {
-	        console.log('%c' + message + Validator.printLocation(path, option), printStyle);
+	        console.error("%c" + message + Validator.printLocation(path, option), printStyle);
 	      };
 
 	      var optionType = Validator.getType(options[option]);
@@ -20021,22 +20052,22 @@
 
 	      if (refOptionType !== undefined) {
 	        // if the type is correct, we check if it is supposed to be one of a few select values
-	        if (Validator.getType(refOptionType) === 'array' && indexOf$3(refOptionType).call(refOptionType, options[option]) === -1) {
-	          log('Invalid option detected in "' + option + '".' + ' Allowed values are:' + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
+	        if (Validator.getType(refOptionType) === "array" && indexOf$3(refOptionType).call(refOptionType, options[option]) === -1) {
+	          log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
 	          errorFound = true;
-	        } else if (optionType === 'object' && referenceOption !== "__any__") {
+	        } else if (optionType === "object" && referenceOption !== "__any__") {
 	          path = copyAndExtendArray(path, option);
 	          Validator.parse(options[option], referenceOptions[referenceOption], path);
 	        }
-	      } else if (refOptionObj['any'] === undefined) {
+	      } else if (refOptionObj["any"] === undefined) {
 	        // type of the field is incorrect and the field cannot be any
-	        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$3(refOptionObj)) + '. Received [' + optionType + '] "' + options[option] + '"');
+	        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$3(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
 	        errorFound = true;
 	      }
 	    }
 	    /**
 	     *
-	     * @param {Object|boolean|number|string|Array.<number>|Date|Node|Moment|undefined|null} object
+	     * @param {object | boolean | number | string | Array.<number> | Date | Node | Moment | undefined | null} object
 	     * @returns {string}
 	     * @static
 	     */
@@ -20046,55 +20077,55 @@
 	    value: function getType(object) {
 	      var type = _typeof_1(object);
 
-	      if (type === 'object') {
+	      if (type === "object") {
 	        if (object === null) {
-	          return 'null';
+	          return "null";
 	        }
 
 	        if (object instanceof Boolean) {
-	          return 'boolean';
+	          return "boolean";
 	        }
 
 	        if (object instanceof Number) {
-	          return 'number';
+	          return "number";
 	        }
 
 	        if (object instanceof String) {
-	          return 'string';
+	          return "string";
 	        }
 
 	        if (isArray$5(object)) {
-	          return 'array';
+	          return "array";
 	        }
 
 	        if (object instanceof Date) {
-	          return 'date';
+	          return "date";
 	        }
 
 	        if (object.nodeType !== undefined) {
-	          return 'dom';
+	          return "dom";
 	        }
 
 	        if (object._isAMomentObject === true) {
-	          return 'moment';
+	          return "moment";
 	        }
 
-	        return 'object';
-	      } else if (type === 'number') {
-	        return 'number';
-	      } else if (type === 'boolean') {
-	        return 'boolean';
-	      } else if (type === 'string') {
-	        return 'string';
+	        return "object";
+	      } else if (type === "number") {
+	        return "number";
+	      } else if (type === "boolean") {
+	        return "boolean";
+	      } else if (type === "string") {
+	        return "string";
 	      } else if (type === undefined) {
-	        return 'undefined';
+	        return "undefined";
 	      }
 
 	      return type;
 	    }
 	    /**
 	     * @param {string} option
-	     * @param {Object} options
+	     * @param {object} options
 	     * @param {Array.<string>} path
 	     * @static
 	     */
@@ -20109,22 +20140,23 @@
 	      var msg;
 
 	      if (localSearch.indexMatch !== undefined) {
-	        msg = ' in ' + Validator.printLocation(localSearch.path, option, '') + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
+	        msg = " in " + Validator.printLocation(localSearch.path, option, "") + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
 	      } else if (globalSearch.distance <= globalSearchThreshold && localSearch.distance > globalSearch.distance) {
-	        msg = ' in ' + Validator.printLocation(localSearch.path, option, '') + 'Perhaps it was misplaced? Matching option found at: ' + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, '');
+	        msg = " in " + Validator.printLocation(localSearch.path, option, "") + "Perhaps it was misplaced? Matching option found at: " + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, "");
 	      } else if (localSearch.distance <= localSearchThreshold) {
 	        msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator.printLocation(localSearch.path, option);
 	      } else {
-	        msg = '. Did you mean one of these: ' + Validator.print(keys$3(options)) + Validator.printLocation(path, option);
+	        msg = ". Did you mean one of these: " + Validator.print(keys$3(options)) + Validator.printLocation(path, option);
 	      }
 
-	      console.log('%cUnknown option detected: "' + option + '"' + msg, printStyle);
+	      console.error('%cUnknown option detected: "' + option + '"' + msg, printStyle);
 	      errorFound = true;
 	    }
 	    /**
 	     * traverse the options in search for a match.
+	     *
 	     * @param {string} option
-	     * @param {Object} options
+	     * @param {object} options
 	     * @param {Array} path    | where to look for the actual option
 	     * @param {boolean} [recursive=false]
 	     * @returns {{closestMatch: string, path: Array, distance: number}}
@@ -20136,13 +20168,12 @@
 	    value: function findInOptions(option, options, path) {
 	      var recursive = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 	      var min = 1e9;
-	      var closestMatch = '';
+	      var closestMatch = "";
 	      var closestMatchPath = [];
 	      var lowerCaseOption = option.toLowerCase();
 	      var indexMatch = undefined;
 
 	      for (var op in options) {
-	        // eslint-disable-line guard-for-in
 	        var distance = void 0;
 
 	        if (options[op].__type__ !== undefined && recursive === true) {
@@ -20180,52 +20211,52 @@
 	    }
 	    /**
 	     * @param {Array.<string>} path
-	     * @param {Object} option
+	     * @param {object} option
 	     * @param {string} prefix
-	     * @returns {String}
+	     * @returns {string}
 	     * @static
 	     */
 
 	  }, {
 	    key: "printLocation",
 	    value: function printLocation(path, option) {
-	      var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Problem value found at: \n';
-	      var str = '\n\n' + prefix + 'options = {\n';
+	      var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Problem value found at: \n";
+	      var str = "\n\n" + prefix + "options = {\n";
 
 	      for (var i = 0; i < path.length; i++) {
 	        for (var j = 0; j < i + 1; j++) {
-	          str += '  ';
+	          str += "  ";
 	        }
 
-	        str += path[i] + ': {\n';
+	        str += path[i] + ": {\n";
 	      }
 
 	      for (var _j = 0; _j < path.length + 1; _j++) {
-	        str += '  ';
+	        str += "  ";
 	      }
 
-	      str += option + '\n';
+	      str += option + "\n";
 
 	      for (var _i = 0; _i < path.length + 1; _i++) {
 	        for (var _j2 = 0; _j2 < path.length - _i; _j2++) {
-	          str += '  ';
+	          str += "  ";
 	        }
 
-	        str += '}\n';
+	        str += "}\n";
 	      }
 
-	      return str + '\n\n';
+	      return str + "\n\n";
 	    }
 	    /**
-	     * @param {Object} options
-	     * @returns {String}
+	     * @param {object} options
+	     * @returns {string}
 	     * @static
 	     */
 
 	  }, {
 	    key: "print",
 	    value: function print(options) {
-	      return stringify$2(options).replace(/(\")|(\[)|(\])|(,"__type__")/g, "").replace(/(\,)/g, ', ');
+	      return stringify$2(options).replace(/(")|(\[)|(\])|(,"__type__")/g, "").replace(/(,)/g, ", ");
 	    }
 	    /**
 	     *  Compute the edit distance between the two given strings
@@ -20306,11 +20337,11 @@
 	   *                              {string} title  A title text, can be HTML
 	   *                              {anytype} group A group name or number
 	   *
-	   * @param {Object} body               Shared state of current network instance
+	   * @param {object} body               Shared state of current network instance
 	   * @param {Network.Images} imagelist  A list with images. Only needed when the node has an image
 	   * @param {Groups} grouplist          A list with groups. Needed for retrieving group options
-	   * @param {Object} globalOptions      Current global node options; these serve as defaults for the node instance
-	   * @param {Object} defaultOptions     Global default options for nodes; note that this is also the prototype
+	   * @param {object} globalOptions      Current global node options; these serve as defaults for the node instance
+	   * @param {object} defaultOptions     Global default options for nodes; note that this is also the prototype
 	   *                                    for parameter `globalOptions`.
 	   */
 	  function Node(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
@@ -20342,6 +20373,7 @@
 	  }
 	  /**
 	   * Attach a edge to the node
+	   *
 	   * @param {Edge} edge
 	   */
 
@@ -20377,7 +20409,7 @@
 	    /**
 	     * Set or overwrite options for the node
 	     *
-	     * @param {Object} options an object with options
+	     * @param {object} options an object with options
 	     * @returns {null|boolean}
 	     */
 
@@ -20394,7 +20426,7 @@
 	      // This is not the only problem with current options handling.
 
 
-	      if (typeof options.color !== 'undefined') {
+	      if (typeof options.color !== "undefined") {
 	        this._localColor = options.color;
 	      } // basic options
 
@@ -20441,7 +20473,7 @@
 
 	      Node.parseOptions(this.options, options, true, this.globalOptions, this.grouplist);
 	      var pile = [options, this.options, this.defaultOptions];
-	      this.chooser = choosify('node', pile);
+	      this.chooser = choosify("node", pile);
 
 	      this._load_images();
 
@@ -20466,7 +20498,7 @@
 	  }, {
 	    key: "_load_images",
 	    value: function _load_images() {
-	      if (this.options.shape === 'circularImage' || this.options.shape === 'image') {
+	      if (this.options.shape === "circularImage" || this.options.shape === "image") {
 	        if (this.options.image === undefined) {
 	          throw new Error("Option image must be defined for node type '" + this.options.shape + "'");
 	        }
@@ -20480,7 +20512,7 @@
 	        throw new Error("Internal Error: No images provided");
 	      }
 
-	      if (typeof this.options.image === 'string') {
+	      if (typeof this.options.image === "string") {
 	        this.imageObj = this.imagelist.load(this.options.image, this.options.brokenImage, this.id);
 	      } else {
 	        if (this.options.image.unselected === undefined) {
@@ -20499,7 +20531,7 @@
 	    /**
 	     * Check that opacity is only between 0 and 1
 	     *
-	     * @param {Number} opacity
+	     * @param {number} opacity
 	     * @returns {boolean}
 	     */
 
@@ -20538,7 +20570,7 @@
 	            values.borderColor = this.options.color.hover.border;
 	            values.shadow = this.options.shadow.enabled;
 	          }
-	        } else if (typeof this.chooser === 'function') {
+	        } else if (typeof this.chooser === "function") {
 	          this.chooser(values, this.options.id, this.selected, this.hover);
 
 	          if (values.shadow === false) {
@@ -20562,14 +20594,14 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
 	    key: "updateLabelModule",
 	    value: function updateLabelModule(options) {
 	      if (this.options.label === undefined || this.options.label === null) {
-	        this.options.label = '';
+	        this.options.label = "";
 	      }
 
 	      Node.updateGroupOptions(this.options, _objectSpread$2(_objectSpread$2({}, options), {}, {
@@ -20611,67 +20643,67 @@
 	      } else {
 	        // choose draw method depending on the shape
 	        switch (this.options.shape) {
-	          case 'box':
+	          case "box":
 	            this.shape = new Box(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'circle':
+	          case "circle":
 	            this.shape = new Circle(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'circularImage':
+	          case "circularImage":
 	            this.shape = new CircularImage(this.options, this.body, this.labelModule, this.imageObj, this.imageObjAlt);
 	            break;
 
-	          case 'custom':
+	          case "custom":
 	            this.shape = new CustomShape(this.options, this.body, this.labelModule, this.options.ctxRenderer);
 	            break;
 
-	          case 'database':
+	          case "database":
 	            this.shape = new Database(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'diamond':
+	          case "diamond":
 	            this.shape = new Diamond(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'dot':
+	          case "dot":
 	            this.shape = new Dot(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'ellipse':
+	          case "ellipse":
 	            this.shape = new Ellipse(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'icon':
+	          case "icon":
 	            this.shape = new Icon(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'image':
+	          case "image":
 	            this.shape = new Image$1(this.options, this.body, this.labelModule, this.imageObj, this.imageObjAlt);
 	            break;
 
-	          case 'square':
+	          case "square":
 	            this.shape = new Square(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'hexagon':
+	          case "hexagon":
 	            this.shape = new Hexagon(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'star':
+	          case "star":
 	            this.shape = new Star(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'text':
+	          case "text":
 	            this.shape = new Text(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'triangle':
+	          case "triangle":
 	            this.shape = new Triangle(this.options, this.body, this.labelModule);
 	            break;
 
-	          case 'triangleDown':
+	          case "triangleDown":
 	            this.shape = new TriangleDown(this.options, this.body, this.labelModule);
 	            break;
 
@@ -20714,7 +20746,8 @@
 	    }
 	    /**
 	     * get the title of this node.
-	     * @return {string} title    The title of the node, or undefined when no title
+	     *
+	     * @returns {string} title    The title of the node, or undefined when no title
 	     *                           has been set.
 	     */
 
@@ -20725,6 +20758,7 @@
 	    }
 	    /**
 	     * Calculate the distance to the border of the Node
+	     *
 	     * @param {CanvasRenderingContext2D}   ctx
 	     * @param {number} angle        Angle in radians
 	     * @returns {number} distance   Distance to the border in pixels
@@ -20737,7 +20771,8 @@
 	    }
 	    /**
 	     * Check if this node has a fixed x and y position
-	     * @return {boolean}      true if fixed, false if not
+	     *
+	     * @returns {boolean}      true if fixed, false if not
 	     */
 
 	  }, {
@@ -20747,7 +20782,8 @@
 	    }
 	    /**
 	     * check if this node is selecte
-	     * @return {boolean} selected   True if node is selected, else false
+	     *
+	     * @returns {boolean} selected   True if node is selected, else false
 	     */
 
 	  }, {
@@ -20757,7 +20793,8 @@
 	    }
 	    /**
 	     * Retrieve the value of the node. Can be undefined
-	     * @return {number} value
+	     *
+	     * @returns {number} value
 	     */
 
 	  }, {
@@ -20768,7 +20805,7 @@
 	    /**
 	     * Get the current dimensions of the label
 	     *
-	     * @return {rect}
+	     * @returns {rect}
 	     */
 
 	  }, {
@@ -20779,6 +20816,7 @@
 	    /**
 	     * Adjust the value range of the node. The node will adjust it's size
 	     * based on its value.
+	     *
 	     * @param {number} min
 	     * @param {number} max
 	     * @param {number} total
@@ -20807,9 +20845,10 @@
 	    /**
 	     * Draw this node in the given canvas
 	     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+	     *
 	     * @param {CanvasRenderingContext2D}   ctx
 	     *
-	     * @returns {Object} Callbacks to draw later on higher layers.
+	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
@@ -20820,6 +20859,7 @@
 	    }
 	    /**
 	     * Update the bounding box of the shape
+	     *
 	     * @param {CanvasRenderingContext2D}   ctx
 	     */
 
@@ -20831,6 +20871,7 @@
 	    /**
 	     * Recalculate the size of this node in the given canvas
 	     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+	     *
 	     * @param {CanvasRenderingContext2D}   ctx
 	     */
 
@@ -20872,8 +20913,9 @@
 	    }
 	    /**
 	     * Check if this object is overlapping with the provided object
-	     * @param {Object} obj   an object with parameters left, top, right, bottom
-	     * @return {boolean}     True if location is located on node
+	     *
+	     * @param {object} obj   an object with parameters left, top, right, bottom
+	     * @returns {boolean}     True if location is located on node
 	     */
 
 	  }, {
@@ -20883,8 +20925,9 @@
 	    }
 	    /**
 	     * Check if this object is overlapping with the provided object
-	     * @param {Object} obj   an object with parameters left, top, right, bottom
-	     * @return {boolean}     True if location is located on node
+	     *
+	     * @param {object} obj   an object with parameters left, top, right, bottom
+	     * @returns {boolean}     True if location is located on node
 	     */
 
 	  }, {
@@ -20893,14 +20936,14 @@
 	      return this.shape.boundingBox.left < obj.right && this.shape.boundingBox.right > obj.left && this.shape.boundingBox.top < obj.bottom && this.shape.boundingBox.bottom > obj.top;
 	    }
 	    /**
-	    * Check valid values for mass
-	    *
-	    * The mass may not be negative or zero. If it is, reset to 1
-	    *
-	    * @param {object} options
-	    * @param {Node.id} id
+	     * Check valid values for mass
+	     *
+	     * The mass may not be negative or zero. If it is, reset to 1
+	     *
+	     * @param {object} options
+	     * @param {Node.id} id
 	     * @static
-	    */
+	     */
 
 	  }], [{
 	    key: "checkOpacity",
@@ -20910,14 +20953,14 @@
 	    /**
 	     * Check that origin is 'center' or 'top-left'
 	     *
-	     * @param {String} origin
+	     * @param {string} origin
 	     * @returns {boolean}
 	     */
 
 	  }, {
 	    key: "checkCoordinateOrigin",
 	    value: function checkCoordinateOrigin(origin) {
-	      return origin === undefined || origin === 'center' || origin === 'top-left';
+	      return origin === undefined || origin === "center" || origin === "top-left";
 	    }
 	    /**
 	     * Copy group option values into the node options.
@@ -20927,9 +20970,9 @@
 	     *
 	     * This method must also be called also if the global node options have changed and the group options did not.
 	     *
-	     * @param {Object} parentOptions
-	     * @param {Object} newOptions  new values for the options, currently only passed in for check
-	     * @param {Object} groupList
+	     * @param {object} parentOptions
+	     * @param {object} newOptions  new values for the options, currently only passed in for check
+	     * @param {object} groupList
 	     */
 
 	  }, {
@@ -20945,7 +20988,7 @@
 	        throw new Error("updateGroupOptions: group values in options don't match.");
 	      }
 
-	      var hasGroup = typeof group === 'number' || typeof group === 'string' && group != '';
+	      var hasGroup = typeof group === "number" || typeof group === "string" && group != "";
 	      if (!hasGroup) return; // current node has no group, no need to merge
 
 	      var groupObj = groupList.get(group);
@@ -20963,7 +21006,7 @@
 	      }); // Always skip merging group font options into parent; these are required to be distinct for labels
 
 
-	      skipProperties.push('font');
+	      skipProperties.push("font");
 	      selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
 	      // Since groups can partially overwrite the colors, we parse it again, just in case.
 
@@ -20973,11 +21016,11 @@
 	     * This process all possible shorthands in the new options and makes sure that the parentOptions are fully defined.
 	     * Static so it can also be used by the handler.
 	     *
-	     * @param {Object} parentOptions
-	     * @param {Object} newOptions
+	     * @param {object} parentOptions
+	     * @param {object} newOptions
 	     * @param {boolean} [allowDeletion=false]
-	     * @param {Object} [globalOptions={}]
-	     * @param {Object} [groupList]
+	     * @param {object} [globalOptions={}]
+	     * @param {object} [groupList]
 	     * @static
 	     */
 
@@ -20987,7 +21030,7 @@
 	      var allowDeletion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 	      var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 	      var groupList = arguments.length > 4 ? arguments[4] : undefined;
-	      var fields = ['color', 'fixed', 'shadow'];
+	      var fields = ["color", "fixed", "shadow"];
 	      selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
 	      Node.checkMass(newOptions);
 
@@ -21010,7 +21053,7 @@
 	      } // merge the shadow options into the parent.
 
 
-	      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
+	      mergeOptions(parentOptions, newOptions, "shadow", globalOptions); // individual shape newOptions
 
 	      if (newOptions.color !== undefined && newOptions.color !== null) {
 	        var parsedColor = parseColor(newOptions.color);
@@ -21021,15 +21064,15 @@
 
 
 	      if (newOptions.fixed !== undefined && newOptions.fixed !== null) {
-	        if (typeof newOptions.fixed === 'boolean') {
+	        if (typeof newOptions.fixed === "boolean") {
 	          parentOptions.fixed.x = newOptions.fixed;
 	          parentOptions.fixed.y = newOptions.fixed;
 	        } else {
-	          if (newOptions.fixed.x !== undefined && typeof newOptions.fixed.x === 'boolean') {
+	          if (newOptions.fixed.x !== undefined && typeof newOptions.fixed.x === "boolean") {
 	            parentOptions.fixed.x = newOptions.fixed.x;
 	          }
 
-	          if (newOptions.fixed.y !== undefined && typeof newOptions.fixed.y === 'boolean') {
+	          if (newOptions.fixed.y !== undefined && typeof newOptions.fixed.y === "boolean") {
 	            parentOptions.fixed.y = newOptions.fixed.y;
 	          }
 	        }
@@ -21042,20 +21085,20 @@
 	      Node.updateGroupOptions(parentOptions, newOptions, groupList); // handle the scaling options, specifically the label part
 
 	      if (newOptions.scaling !== undefined) {
-	        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+	        mergeOptions(parentOptions.scaling, newOptions.scaling, "label", globalOptions.scaling);
 	      }
 	    }
 	  }, {
 	    key: "checkMass",
 	    value: function checkMass(options, id) {
 	      if (options.mass !== undefined && options.mass <= 0) {
-	        var strId = '';
+	        var strId = "";
 
 	        if (id !== undefined) {
-	          strId = ' in node id: ' + id;
+	          strId = " in node id: " + id;
 	        }
 
-	        console.log('%cNegative or zero mass disallowed' + strId + ', setting mass to 1.', printStyle);
+	        console.error("%cNegative or zero mass disallowed" + strId + ", setting mass to 1.", printStyle);
 	        options.mass = 1;
 	      }
 	    }
@@ -21075,7 +21118,7 @@
 
 	var NodesHandler = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Images} images
 	   * @param {Array.<Group>} groups
 	   * @param {LayoutEngine} layoutEngine
@@ -21108,15 +21151,15 @@
 	      borderWidthSelected: 2,
 	      brokenImage: undefined,
 	      color: {
-	        border: '#2B7CE9',
-	        background: '#97C2FC',
+	        border: "#2B7CE9",
+	        background: "#97C2FC",
 	        highlight: {
-	          border: '#2B7CE9',
-	          background: '#D2E5FF'
+	          border: "#2B7CE9",
+	          background: "#D2E5FF"
 	        },
 	        hover: {
-	          border: '#2B7CE9',
-	          background: '#D2E5FF'
+	          border: "#2B7CE9",
+	          background: "#D2E5FF"
 	        }
 	      },
 	      opacity: undefined,
@@ -21126,44 +21169,44 @@
 	        y: false
 	      },
 	      font: {
-	        color: '#343434',
+	        color: "#343434",
 	        size: 14,
 	        // px
-	        face: 'arial',
-	        background: 'none',
+	        face: "arial",
+	        background: "none",
 	        strokeWidth: 0,
 	        // px
-	        strokeColor: '#ffffff',
-	        align: 'center',
+	        strokeColor: "#ffffff",
+	        align: "center",
 	        vadjust: 0,
 	        multi: false,
 	        bold: {
-	          mod: 'bold'
+	          mod: "bold"
 	        },
 	        boldital: {
-	          mod: 'bold italic'
+	          mod: "bold italic"
 	        },
 	        ital: {
-	          mod: 'italic'
+	          mod: "italic"
 	        },
 	        mono: {
-	          mod: '',
+	          mod: "",
 	          size: 15,
 	          // px
-	          face: 'monospace',
+	          face: "monospace",
 	          vadjust: 2
 	        }
 	      },
 	      group: undefined,
 	      hidden: false,
 	      icon: {
-	        face: 'FontAwesome',
+	        face: "FontAwesome",
 	        //'FontAwesome',
 	        code: undefined,
 	        //'\uf007',
 	        size: 50,
 	        //50,
-	        color: '#2B7CE9' //'#aa00ff'
+	        color: "#2B7CE9" //'#aa00ff'
 
 	      },
 	      image: undefined,
@@ -21207,12 +21250,12 @@
 	      },
 	      shadow: {
 	        enabled: false,
-	        color: 'rgba(0,0,0,0.5)',
+	        color: "rgba(0,0,0,0.5)",
 	        size: 10,
 	        x: 5,
 	        y: 5
 	      },
-	      shape: 'ellipse',
+	      shape: "ellipse",
 	      shapeProperties: {
 	        borderDashes: false,
 	        // only for borders
@@ -21224,7 +21267,7 @@
 	        // only for image and circularImage shapes
 	        useBorderWithImage: false,
 	        // only for image shape
-	        coordinateOrigin: 'center' // only for image and circularImage shapes
+	        coordinateOrigin: "center" // only for image and circularImage shapes
 
 	      },
 	      size: 25,
@@ -21235,7 +21278,7 @@
 	    }; // Protect from idiocy
 
 	    if (this.defaultOptions.mass <= 0) {
-	      throw 'Internal error: mass in defaultOptions of NodesHandler may not be zero or negative';
+	      throw "Internal error: mass in defaultOptions of NodesHandler may not be zero or negative";
 	    }
 
 	    this.options = bridgeObject(this.defaultOptions);
@@ -21254,9 +21297,9 @@
 	          _this2 = this;
 
 	      // refresh the nodes. Used when reverting from hierarchical layout
-	      this.body.emitter.on('refreshNodes', bind$2(_context2 = this.refresh).call(_context2, this));
-	      this.body.emitter.on('refresh', bind$2(_context3 = this.refresh).call(_context3, this));
-	      this.body.emitter.on('destroy', function () {
+	      this.body.emitter.on("refreshNodes", bind$2(_context2 = this.refresh).call(_context2, this));
+	      this.body.emitter.on("refresh", bind$2(_context3 = this.refresh).call(_context3, this));
+	      this.body.emitter.on("destroy", function () {
 	        forEach$3(_this2.nodesListeners, function (callback, event) {
 	          if (_this2.body.data.nodes) _this2.body.data.nodes.off(event, callback);
 	        });
@@ -21269,7 +21312,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
@@ -21318,12 +21361,13 @@
 
 
 	        if (options.hidden !== undefined || options.physics !== undefined) {
-	          this.body.emitter.emit('_dataChanged');
+	          this.body.emitter.emit("_dataChanged");
 	        }
 	      }
 	    }
 	    /**
 	     * Set a data set with nodes for the network
+	     *
 	     * @param {Array | DataSet | DataView} nodes         The data containing the nodes.
 	     * @param {boolean} [doNotEmit=false]
 	     * @private
@@ -21343,7 +21387,7 @@
 	      } else if (!nodes) {
 	        this.body.data.nodes = new DataSet();
 	      } else {
-	        throw new TypeError('Array or DataSet expected');
+	        throw new TypeError("Array or DataSet expected");
 	      }
 
 	      if (oldNodesData) {
@@ -21373,6 +21417,7 @@
 	    }
 	    /**
 	     * Add nodes
+	     *
 	     * @param {number[] | string[]} ids
 	     * @param {boolean} [doNotEmit=false]
 	     * @private
@@ -21401,6 +21446,7 @@
 	    }
 	    /**
 	     * Update existing nodes, or create them when not yet existing
+	     *
 	     * @param {number[] | string[]} ids id's of changed nodes
 	     * @param {Array} changedData array with changed data
 	     * @param {Array|undefined} oldData optional; array with previous data
@@ -21449,6 +21495,7 @@
 	    }
 	    /**
 	     * Remove existing nodes. If nodes do not exist, the method will just ignore it.
+	     *
 	     * @param {number[] | string[]} ids
 	     * @private
 	     */
@@ -21467,7 +21514,8 @@
 	    }
 	    /**
 	     * create a node
-	     * @param {Object} properties
+	     *
+	     * @param {object} properties
 	     * @param {class} [constructorClass=Node.default]
 	     * @returns {*}
 	     */
@@ -21509,7 +21557,8 @@
 	    }
 	    /**
 	     * Returns the positions of the nodes.
-	     * @param {Array.<Node.id>|String} [ids]  --> optional, can be array of nodeIds, can be string
+	     *
+	     * @param {Array.<Node.id> | string} [ids]  --> optional, can be array of nodeIds, can be string
 	     * @returns {{}}
 	     */
 
@@ -21615,6 +21664,7 @@
 	    }
 	    /**
 	     * get the bounding box of a node.
+	     *
 	     * @param {Node.id} nodeId
 	     * @returns {j|*}
 	     */
@@ -21628,6 +21678,7 @@
 	    }
 	    /**
 	     * Get the Ids of nodes connected to this node.
+	     *
 	     * @param {Node.id} nodeId
 	     * @param {'to'|'from'|undefined} direction values 'from' and 'to' select respectively parent and child nodes only.
 	     *                                          Any other value returns both parent and child nodes.
@@ -21646,13 +21697,13 @@
 	        for (var i = 0; i < node.edges.length; i++) {
 	          var edge = node.edges[i];
 
-	          if (direction !== 'to' && edge.toId == node.id) {
+	          if (direction !== "to" && edge.toId == node.id) {
 	            // these are double equals since ids can be numeric or string
 	            if (nodeObj[edge.fromId] === undefined) {
 	              nodeList.push(edge.fromId);
 	              nodeObj[edge.fromId] = true;
 	            }
-	          } else if (direction !== 'from' && edge.fromId == node.id) {
+	          } else if (direction !== "from" && edge.fromId == node.id) {
 	            // these are double equals since ids can be numeric or string
 	            if (nodeObj[edge.toId] === undefined) {
 	              nodeList.push(edge.toId);
@@ -21666,6 +21717,7 @@
 	    }
 	    /**
 	     * Get the ids of the edges connected to this node.
+	     *
 	     * @param {Node.id} nodeId
 	     * @returns {*}
 	     */
@@ -21682,7 +21734,7 @@
 	          edgeList.push(node.edges[i].id);
 	        }
 	      } else {
-	        console.log("NodeId provided for getConnectedEdges does not exist. Provided: ", nodeId);
+	        console.error("NodeId provided for getConnectedEdges does not exist. Provided: ", nodeId);
 	      }
 
 	      return edgeList;
@@ -21708,7 +21760,7 @@
 	          _this4.body.emitter.emit("startSimulation");
 	        }, 0);
 	      } else {
-	        console.log("Node id supplied to moveNode does not exist. Provided: ", nodeId);
+	        console.error("Node id supplied to moveNode does not exist. Provided: ", nodeId);
 	      }
 	    }
 	  }]);
@@ -22531,7 +22583,7 @@
 	    this.fromPoint = this.from;
 	    this.toPoint = this.to;
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(EdgeBase, [{
@@ -22540,7 +22592,7 @@
 	      this.from = this._body.nodes[this.options.from];
 	      this.to = this._body.nodes[this.options.to];
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "cleanup",
@@ -22561,7 +22613,7 @@
 	      this.to = this._body.nodes[this.options.to];
 	      this.id = this.options.id;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "drawLine",
@@ -22683,7 +22735,7 @@
 	        return this._findBorderPositionCircle(node, ctx, options);
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "findBorderPositions",
@@ -22952,7 +23004,7 @@
 	      this.disableShadow(ctx, values);
 	    }
 	    /**
-	     * @inheritdoc
+	     * @inheritDoc
 	     *
 	     * @remarks
 	     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
@@ -23013,7 +23065,7 @@
 
 	      return Math.sqrt(dx * dx + dy * dy);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getArrowData",
@@ -23136,7 +23188,7 @@
 	        type: type
 	      };
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "drawArrowHead",
@@ -23430,7 +23482,7 @@
 	      ctx.stroke();
 	      this.disableShadow(ctx, values);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getViaNode",
@@ -23450,7 +23502,7 @@
 	 * curves in paths between nodes. The Dynamic piece refers to how the curve
 	 * reacts to physics changes.
 	 *
-	 * @extends BezierEdgeBase
+	 * @augments BezierEdgeBase
 	 */
 
 	var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
@@ -23483,7 +23535,7 @@
 
 	    return _this;
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(BezierEdgeDynamic, [{
@@ -23514,7 +23566,7 @@
 	        this.positionBezierNode();
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "connect",
@@ -23539,7 +23591,7 @@
 	        }
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "cleanup",
@@ -23599,28 +23651,28 @@
 	        this.via.y = 0;
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_line",
 	    value: function _line(ctx, values, viaNode) {
 	      this._bezierCurve(ctx, values, viaNode);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_getViaCoordinates",
 	    value: function _getViaCoordinates() {
 	      return this.via;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getViaNode",
 	    value: function getViaNode() {
 	      return this.via;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getPoint",
@@ -23646,14 +23698,14 @@
 	        };
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_findBorderPosition",
 	    value: function _findBorderPosition(nearNode, ctx) {
 	      return this._findBorderPositionBezier(nearNode, ctx, this.via);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_getDistanceToEdge",
@@ -23690,7 +23742,7 @@
 
 	    return _super.call(this, options, body, labelModule);
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(BezierEdgeStatic, [{
@@ -23698,7 +23750,7 @@
 	    value: function _line(ctx, values, viaNode) {
 	      this._bezierCurve(ctx, values, viaNode);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getViaNode",
@@ -23874,7 +23926,7 @@
 	        };
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_findBorderPosition",
@@ -23882,7 +23934,7 @@
 	      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	      return this._findBorderPositionBezier(nearNode, ctx, options.via);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_getDistanceToEdge",
@@ -23891,7 +23943,7 @@
 	      // x3,y3 is the point
 	      return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getPoint",
@@ -23917,7 +23969,7 @@
 	 * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
 	 * smooth gradual curves in paths between nodes.
 	 *
-	 * @extends BezierEdgeBase
+	 * @augments BezierEdgeBase
 	 */
 
 	var CubicBezierEdgeBase = /*#__PURE__*/function (_BezierEdgeBase) {
@@ -24016,7 +24068,7 @@
 
 	    return _super.call(this, options, body, labelModule);
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(CubicBezierEdge, [{
@@ -24065,21 +24117,21 @@
 	        y: y2
 	      }];
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getViaNode",
 	    value: function getViaNode() {
 	      return this._getViaCoordinates();
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_findBorderPosition",
 	    value: function _findBorderPosition(nearNode, ctx) {
 	      return this._findBorderPositionBezier(nearNode, ctx);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_getDistanceToEdge",
@@ -24092,7 +24144,7 @@
 	      // x3,y3 is the point
 	      return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getPoint",
@@ -24140,7 +24192,7 @@
 
 	    return _super.call(this, options, body, labelModule);
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(StraightEdge, [{
@@ -24155,14 +24207,14 @@
 	      ctx.stroke();
 	      this.disableShadow(ctx, values);
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getViaNode",
 	    value: function getViaNode() {
 	      return undefined;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getPoint",
@@ -24172,7 +24224,7 @@
 	        y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
 	      };
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_findBorderPosition",
@@ -24197,7 +24249,7 @@
 	        t: 0
 	      };
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "_getDistanceToEdge",
@@ -24216,11 +24268,11 @@
 
 	var Edge = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} options        values specific to this edge, must contain at least 'from' and 'to'
-	   * @param {Object} body           shared state from Network instance
+	   * @param {object} options        values specific to this edge, must contain at least 'from' and 'to'
+	   * @param {object} body           shared state from Network instance
 	   * @param {Network.Images} imagelist  A list with images. Only needed when the edge has image arrows.
-	   * @param {Object} globalOptions  options from the EdgesHandler instance
-	   * @param {Object} defaultOptions default options from the EdgeHandler instance. Value and reference are constant
+	   * @param {object} globalOptions  options from the EdgesHandler instance
+	   * @param {object} defaultOptions default options from the EdgeHandler instance. Value and reference are constant
 	   */
 	  function Edge(options, body, imagelist, globalOptions, defaultOptions) {
 	    classCallCheck(this, Edge);
@@ -24258,7 +24310,8 @@
 	  }
 	  /**
 	   * Set or overwrite options for the edge
-	   * @param {Object} options  an object with options
+	   *
+	   * @param {object} options  an object with options
 	   * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
 	   */
 
@@ -24295,7 +24348,7 @@
 	      }
 
 	      var pile = [options, this.options, this.defaultOptions];
-	      this.chooser = choosify('edge', pile); // update label Module
+	      this.chooser = choosify("edge", pile); // update label Module
 
 	      this.updateLabelModule(options); // Update edge type, this if changed affects the layout.
 
@@ -24309,10 +24362,10 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} parentOptions
-	     * @param {Object} newOptions
+	     * @param {object} parentOptions
+	     * @param {object} newOptions
 	     * @param {boolean} [allowDeletion=false]
-	     * @param {Object} [globalOptions={}]
+	     * @param {object} [globalOptions={}]
 	     * @param {boolean} [copyFromGlobals=false]
 	     */
 
@@ -24371,9 +24424,9 @@
 	          if (this.selected) {
 	            var selectedWidth = this.options.selectionWidth;
 
-	            if (typeof selectedWidth === 'function') {
+	            if (typeof selectedWidth === "function") {
 	              values.width = selectedWidth(values.width);
-	            } else if (typeof selectedWidth === 'number') {
+	            } else if (typeof selectedWidth === "number") {
 	              values.width += selectedWidth;
 	            }
 
@@ -24383,9 +24436,9 @@
 	          } else if (this.hover) {
 	            var hoverWidth = this.options.hoverWidth;
 
-	            if (typeof hoverWidth === 'function') {
+	            if (typeof hoverWidth === "function") {
 	              values.width = hoverWidth(values.width);
-	            } else if (typeof hoverWidth === 'number') {
+	            } else if (typeof hoverWidth === "number") {
 	              values.width += hoverWidth;
 	            }
 
@@ -24393,7 +24446,7 @@
 	            values.color = this.options.color.hover;
 	            values.shadow = this.options.shadow.enabled;
 	          }
-	        } else if (typeof this.chooser === 'function') {
+	        } else if (typeof this.chooser === "function") {
 	          this.chooser(values, this.options.id, this.selected, this.hover);
 
 	          if (values.color !== undefined) {
@@ -24416,7 +24469,7 @@
 	    /**
 	     * update the options in the label module
 	     *
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
@@ -24432,6 +24485,7 @@
 	    }
 	    /**
 	     * update the edge type, set the options
+	     *
 	     * @returns {boolean}
 	     */
 
@@ -24443,7 +24497,7 @@
 	      var changeInType = true;
 
 	      if (this.edgeType !== undefined) {
-	        if (this.edgeType instanceof BezierEdgeDynamic && smooth.enabled === true && smooth.type === 'dynamic' || this.edgeType instanceof CubicBezierEdge && smooth.enabled === true && smooth.type === 'cubicBezier' || this.edgeType instanceof BezierEdgeStatic && smooth.enabled === true && smooth.type !== 'dynamic' && smooth.type !== 'cubicBezier' || this.edgeType instanceof StraightEdge && smooth.type.enabled === false) {
+	        if (this.edgeType instanceof BezierEdgeDynamic && smooth.enabled === true && smooth.type === "dynamic" || this.edgeType instanceof CubicBezierEdge && smooth.enabled === true && smooth.type === "cubicBezier" || this.edgeType instanceof BezierEdgeStatic && smooth.enabled === true && smooth.type !== "dynamic" && smooth.type !== "cubicBezier" || this.edgeType instanceof StraightEdge && smooth.type.enabled === false) {
 	          changeInType = false;
 	        }
 
@@ -24454,10 +24508,10 @@
 
 	      if (changeInType === true) {
 	        if (smooth.enabled === true) {
-	          if (smooth.type === 'dynamic') {
+	          if (smooth.type === "dynamic") {
 	            dataChanged = true;
 	            this.edgeType = new BezierEdgeDynamic(this.options, this.body, this.labelModule);
-	          } else if (smooth.type === 'cubicBezier') {
+	          } else if (smooth.type === "cubicBezier") {
 	            this.edgeType = new CubicBezierEdge(this.options, this.body, this.labelModule);
 	          } else {
 	            this.edgeType = new BezierEdgeStatic(this.options, this.body, this.labelModule);
@@ -24520,7 +24574,8 @@
 	    }
 	    /**
 	     * get the title of this edge.
-	     * @return {string} title    The title of the edge, or undefined when no title
+	     *
+	     * @returns {string} title    The title of the edge, or undefined when no title
 	     *                           has been set.
 	     */
 
@@ -24531,7 +24586,8 @@
 	    }
 	    /**
 	     * check if this node is selecte
-	     * @return {boolean} selected   True if node is selected, else false
+	     *
+	     * @returns {boolean} selected   True if node is selected, else false
 	     */
 
 	  }, {
@@ -24541,7 +24597,8 @@
 	    }
 	    /**
 	     * Retrieve the value of the edge. Can be undefined
-	     * @return {number} value
+	     *
+	     * @returns {number} value
 	     */
 
 	  }, {
@@ -24552,6 +24609,7 @@
 	    /**
 	     * Adjust the value range of the edge. The edge will adjust it's width
 	     * based on its value.
+	     *
 	     * @param {number} min
 	     * @param {number} max
 	     * @param {number} total
@@ -24587,13 +24645,13 @@
 	  }, {
 	    key: "_setInteractionWidths",
 	    value: function _setInteractionWidths() {
-	      if (typeof this.options.hoverWidth === 'function') {
+	      if (typeof this.options.hoverWidth === "function") {
 	        this.edgeType.hoverWidth = this.options.hoverWidth(this.options.width);
 	      } else {
 	        this.edgeType.hoverWidth = this.options.hoverWidth + this.options.width;
 	      }
 
-	      if (typeof this.options.selectionWidth === 'function') {
+	      if (typeof this.options.selectionWidth === "function") {
 	        this.edgeType.selectionWidth = this.options.selectionWidth(this.options.width);
 	      } else {
 	        this.edgeType.selectionWidth = this.options.selectionWidth + this.options.width;
@@ -24603,6 +24661,7 @@
 	     * Redraw a edge
 	     * Draw this edge in the given canvas
 	     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+	     *
 	     * @param {CanvasRenderingContext2D}   ctx
 	     */
 
@@ -24622,11 +24681,12 @@
 	      this.drawLabel(ctx, viaNode);
 	    }
 	    /**
-	    * Redraw arrows
-	    * Draw this arrows in the given canvas
-	    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-	    * @param {CanvasRenderingContext2D}   ctx
-	    */
+	     * Redraw arrows
+	     * Draw this arrows in the given canvas
+	     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+	     *
+	     * @param {CanvasRenderingContext2D}   ctx
+	     */
 
 	  }, {
 	    key: "drawArrows",
@@ -24742,12 +24802,12 @@
 
 	          this.labelModule.draw(ctx, point.x, point.y, this.selected, this.hover);
 	          /*
-	                  // Useful debug code: draw a border around the label
-	                  // This should **not** be enabled in production!
-	                  var size = this.labelModule.getSize();; // ;; intentional so lint catches it
-	                  ctx.strokeStyle = "#ff0000";
-	                  ctx.strokeRect(size.left, size.top, size.width, size.height);
-	                  // End  debug code
+	          // Useful debug code: draw a border around the label
+	          // This should **not** be enabled in production!
+	          var size = this.labelModule.getSize();; // ;; intentional so lint catches it
+	          ctx.strokeStyle = "#ff0000";
+	          ctx.strokeRect(size.left, size.top, size.width, size.height);
+	          // End  debug code
 	          */
 
 	          ctx.restore();
@@ -24800,8 +24860,9 @@
 	    }
 	    /**
 	     * Check if this object is overlapping with the provided object
-	     * @param {Object} obj   an object with parameters left, top
-	     * @return {boolean}     True if location is located on the edge
+	     *
+	     * @param {object} obj   an object with parameters left, top
+	     * @returns {boolean}     True if location is located on the edge
 	     */
 
 	  }, {
@@ -24867,11 +24928,12 @@
 	    }
 	    /**
 	     * Get a point on a circle
+	     *
 	     * @param {number} x
 	     * @param {number} y
 	     * @param {number} radius
 	     * @param {number} angle
-	     * @return {Object} point
+	     * @returns {object} point
 	     * @private
 	     */
 
@@ -24903,6 +24965,7 @@
 	    }
 	    /**
 	     * cleans all required things on delete
+	     *
 	     * @returns {*}
 	     */
 
@@ -24924,6 +24987,7 @@
 	    }
 	    /**
 	     * Check if both connecting nodes exist
+	     *
 	     * @returns {boolean}
 	     */
 
@@ -24938,7 +25002,7 @@
 	      var allowDeletion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 	      var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 	      var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-	      var fields = ['endPointOffset', 'arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'selfReference', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
+	      var fields = ["endPointOffset", "arrowStrikethrough", "id", "from", "hidden", "hoverWidth", "labelHighlightBold", "length", "line", "opacity", "physics", "scaling", "selectionWidth", "selfReferenceSize", "selfReference", "to", "title", "value", "width", "font", "chosen", "widthConstraint"]; // only deep extend the items in the field array. These do not have shorthand.
 
 	      selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only use endPointOffset values (from and to) if it's valid values
 
@@ -24947,7 +25011,7 @@
 	          parentOptions.endPointOffset.from = newOptions.endPointOffset.from;
 	        } else {
 	          parentOptions.endPointOffset.from = globalOptions.endPointOffset.from !== undefined ? globalOptions.endPointOffset.from : 0;
-	          console.error('endPointOffset.from is not a valid number');
+	          console.error("endPointOffset.from is not a valid number");
 	        }
 	      }
 
@@ -24956,7 +25020,7 @@
 	          parentOptions.endPointOffset.to = newOptions.endPointOffset.to;
 	        } else {
 	          parentOptions.endPointOffset.to = globalOptions.endPointOffset.to !== undefined ? globalOptions.endPointOffset.to : 0;
-	          console.error('endPointOffset.to is not a valid number');
+	          console.error("endPointOffset.to is not a valid number");
 	        }
 	      } // Only copy label if it's a legal value.
 
@@ -24967,9 +25031,9 @@
 	        parentOptions.label = undefined;
 	      }
 
-	      mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
-	      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
-	      mergeOptions(parentOptions, newOptions, 'background', globalOptions);
+	      mergeOptions(parentOptions, newOptions, "smooth", globalOptions);
+	      mergeOptions(parentOptions, newOptions, "shadow", globalOptions);
+	      mergeOptions(parentOptions, newOptions, "background", globalOptions);
 
 	      if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
 	        parentOptions.dashes = newOptions.dashes;
@@ -24987,22 +25051,22 @@
 	          parentOptions.scaling.max = newOptions.scaling.max;
 	        }
 
-	        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+	        mergeOptions(parentOptions.scaling, newOptions.scaling, "label", globalOptions.scaling);
 	      } else if (allowDeletion === true && newOptions.scaling === null) {
 	        parentOptions.scaling = create$2(globalOptions.scaling); // this sets the pointer of the option back to the global option.
 	      } // handle multiple input cases for arrows
 
 
 	      if (newOptions.arrows !== undefined && newOptions.arrows !== null) {
-	        if (typeof newOptions.arrows === 'string') {
+	        if (typeof newOptions.arrows === "string") {
 	          var arrows = newOptions.arrows.toLowerCase();
 	          parentOptions.arrows.to.enabled = indexOf$3(arrows).call(arrows, "to") != -1;
 	          parentOptions.arrows.middle.enabled = indexOf$3(arrows).call(arrows, "middle") != -1;
 	          parentOptions.arrows.from.enabled = indexOf$3(arrows).call(arrows, "from") != -1;
-	        } else if (_typeof_1(newOptions.arrows) === 'object') {
-	          mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
-	          mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
-	          mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
+	        } else if (_typeof_1(newOptions.arrows) === "object") {
+	          mergeOptions(parentOptions.arrows, newOptions.arrows, "to", globalOptions.arrows);
+	          mergeOptions(parentOptions.arrows, newOptions.arrows, "middle", globalOptions.arrows);
+	          mergeOptions(parentOptions.arrows, newOptions.arrows, "from", globalOptions.arrows);
 	        } else {
 	          throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + stringify$2(newOptions.arrows));
 	        }
@@ -25071,7 +25135,7 @@
 	            toColor.inherit = false;
 	          } else {
 	            if (toColor.inherit === undefined) {
-	              toColor.inherit = 'from'; // Set default
+	              toColor.inherit = "from"; // Set default
 	            }
 	          }
 	        }
@@ -25084,7 +25148,7 @@
 	      }
 
 	      if (Object.prototype.hasOwnProperty.call(newOptions, "selfReferenceSize")) {
-	        console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
+	        console.warn("The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}");
 	        parentOptions.selfReference.size = newOptions.selfReferenceSize;
 	      }
 	    }
@@ -25099,7 +25163,7 @@
 
 	var EdgesHandler = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Array.<Image>} images
 	   * @param {Array.<Group>} groups
 	   */
@@ -25131,18 +25195,18 @@
 	        to: {
 	          enabled: false,
 	          scaleFactor: 1,
-	          type: 'arrow'
+	          type: "arrow"
 	        },
 	        // boolean / {arrowScaleFactor:1} / {enabled: false, arrowScaleFactor:1}
 	        middle: {
 	          enabled: false,
 	          scaleFactor: 1,
-	          type: 'arrow'
+	          type: "arrow"
 	        },
 	        from: {
 	          enabled: false,
 	          scaleFactor: 1,
-	          type: 'arrow'
+	          type: "arrow"
 	        }
 	      },
 	      endPointOffset: {
@@ -25151,39 +25215,39 @@
 	      },
 	      arrowStrikethrough: true,
 	      color: {
-	        color: '#848484',
-	        highlight: '#848484',
-	        hover: '#848484',
-	        inherit: 'from',
+	        color: "#848484",
+	        highlight: "#848484",
+	        hover: "#848484",
+	        inherit: "from",
 	        opacity: 1.0
 	      },
 	      dashes: false,
 	      font: {
-	        color: '#343434',
+	        color: "#343434",
 	        size: 14,
 	        // px
-	        face: 'arial',
-	        background: 'none',
+	        face: "arial",
+	        background: "none",
 	        strokeWidth: 2,
 	        // px
-	        strokeColor: '#ffffff',
-	        align: 'horizontal',
+	        strokeColor: "#ffffff",
+	        align: "horizontal",
 	        multi: false,
 	        vadjust: 0,
 	        bold: {
-	          mod: 'bold'
+	          mod: "bold"
 	        },
 	        boldital: {
-	          mod: 'bold italic'
+	          mod: "bold italic"
 	        },
 	        ital: {
-	          mod: 'italic'
+	          mod: "italic"
 	        },
 	        mono: {
-	          mod: '',
+	          mod: "",
 	          size: 15,
 	          // px
-	          face: 'courier new',
+	          face: "courier new",
 	          vadjust: 2
 	        }
 	      },
@@ -25220,21 +25284,21 @@
 	      },
 	      shadow: {
 	        enabled: false,
-	        color: 'rgba(0,0,0,0.5)',
+	        color: "rgba(0,0,0,0.5)",
 	        size: 10,
 	        x: 5,
 	        y: 5
 	      },
 	      background: {
 	        enabled: false,
-	        color: 'rgba(111,111,111,1)',
+	        color: "rgba(111,111,111,1)",
 	        size: 10,
 	        dashes: false
 	      },
 	      smooth: {
 	        enabled: true,
 	        type: "dynamic",
-	        forceDirection: 'none',
+	        forceDirection: "none",
 	        roundness: 0.5
 	      },
 	      title: undefined,
@@ -25260,8 +25324,8 @@
 	      this.body.emitter.on("_forceDisableDynamicCurves", function (type) {
 	        var emit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-	        if (type === 'dynamic') {
-	          type = 'continuous';
+	        if (type === "dynamic") {
+	          type = "continuous";
 	        }
 
 	        var dataChanged = false;
@@ -25278,7 +25342,7 @@
 	              var smoothOptions = edgeData.smooth;
 
 	              if (smoothOptions !== undefined) {
-	                if (smoothOptions.enabled === true && smoothOptions.type === 'dynamic') {
+	                if (smoothOptions.enabled === true && smoothOptions.type === "dynamic") {
 	                  if (type === undefined) {
 	                    edge.setOptions({
 	                      smooth: false
@@ -25329,7 +25393,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
@@ -25360,12 +25424,13 @@
 
 
 	        if (options.hidden !== undefined || options.physics !== undefined || dataChanged === true) {
-	          this.body.emitter.emit('_dataChanged');
+	          this.body.emitter.emit("_dataChanged");
 	        }
 	      }
 	    }
 	    /**
 	     * Load edges by reading the data table
+	     *
 	     * @param {Array | DataSet | DataView} edges    The data containing the edges.
 	     * @param {boolean} [doNotEmit=false]
 	     * @private
@@ -25387,7 +25452,7 @@
 	      } else if (!edges) {
 	        this.body.data.edges = new DataSet();
 	      } else {
-	        throw new TypeError('Array or DataSet expected');
+	        throw new TypeError("Array or DataSet expected");
 	      } // TODO: is this null or undefined or false?
 
 
@@ -25411,7 +25476,7 @@
 	        this.add(ids, true);
 	      }
 
-	      this.body.emitter.emit('_adjustEdgesForHierarchicalLayout');
+	      this.body.emitter.emit("_adjustEdgesForHierarchicalLayout");
 
 	      if (doNotEmit === false) {
 	        this.body.emitter.emit("_dataChanged");
@@ -25419,6 +25484,7 @@
 	    }
 	    /**
 	     * Add edges
+	     *
 	     * @param {number[] | string[]} ids
 	     * @param {boolean} [doNotEmit=false]
 	     * @private
@@ -25440,12 +25506,12 @@
 	        }
 
 	        var data = edgesData.get(id, {
-	          "showInternalIds": true
+	          showInternalIds: true
 	        });
 	        edges[id] = this.create(data);
 	      }
 
-	      this.body.emitter.emit('_adjustEdgesForHierarchicalLayout');
+	      this.body.emitter.emit("_adjustEdgesForHierarchicalLayout");
 
 	      if (doNotEmit === false) {
 	        this.body.emitter.emit("_dataChanged");
@@ -25453,6 +25519,7 @@
 	    }
 	    /**
 	     * Update existing edges, or create them when not yet existing
+	     *
 	     * @param {number[] | string[]} ids
 	     * @private
 	     */
@@ -25483,7 +25550,7 @@
 	      }
 
 	      if (dataChanged === true) {
-	        this.body.emitter.emit('_adjustEdgesForHierarchicalLayout');
+	        this.body.emitter.emit("_adjustEdgesForHierarchicalLayout");
 	        this.body.emitter.emit("_dataChanged");
 	      } else {
 	        this.body.emitter.emit("_dataUpdated");
@@ -25491,6 +25558,7 @@
 	    }
 	    /**
 	     * Remove existing edges. Non existing ids will be ignored
+	     *
 	     * @param {number[] | string[]} ids
 	     * @param {boolean} [emit=true]
 	     * @private
@@ -25534,7 +25602,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} properties
+	     * @param {object} properties
 	     * @returns {Edge}
 	     */
 
@@ -25545,6 +25613,7 @@
 	    }
 	    /**
 	     * Reconnect all edges
+	     *
 	     * @private
 	     */
 
@@ -25609,6 +25678,7 @@
 	    }
 	    /**
 	     * Scan for missing nodes and remove corresponding edges, if any.
+	     *
 	     * @private
 	     */
 
@@ -25634,6 +25704,7 @@
 	    }
 	    /**
 	     * add all edges from dataset that are not in the cached state
+	     *
 	     * @private
 	     */
 
@@ -25670,9 +25741,9 @@
 
 	var BarnesHutSolver = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function BarnesHutSolver(body, physicsBody, options) {
 	    classCallCheck(this, BarnesHutSolver);
@@ -25686,7 +25757,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -25730,7 +25801,7 @@
 	      }
 	    }
 	    /**
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @param {Node} node
 	     * @private
 	     */
@@ -25750,7 +25821,7 @@
 	     * This function traverses the barnesHutTree. It checks when it can approximate distant nodes with their center of mass.
 	     * If a region contains a single node, we check if it is not itself, then we apply the force.
 	     *
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @param {Node} node
 	     * @private
 	     */
@@ -25790,7 +25861,7 @@
 	     * @param {number} dx
 	     * @param {number} dy
 	     * @param {Node} node
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @private
 	     */
 
@@ -25917,7 +25988,7 @@
 	    /**
 	     * this updates the mass of a branch. this is increased by adding a node.
 	     *
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @param {Node} node
 	     * @private
 	     */
@@ -25939,7 +26010,7 @@
 	    /**
 	     * determine in which branch the node will be placed.
 	     *
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @param {Node} node
 	     * @param {boolean} skipMassUpdate
 	     * @private
@@ -25977,7 +26048,7 @@
 	    /**
 	     * actually place the node in a region (or branch)
 	     *
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @param {Node} node
 	     * @param {'NW'| 'NE' | 'SW' | 'SE'} region
 	     * @private
@@ -26024,7 +26095,7 @@
 	     * this function splits a branch into 4 sub branches. If the branch contained a node, we place it in the subbranch
 	     * after the split is complete.
 	     *
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @private
 	     */
 
@@ -26061,7 +26132,7 @@
 	     * Specifically, this inserts a single new segment.
 	     * It fills the children section of the parentBranch
 	     *
-	     * @param {Object} parentBranch
+	     * @param {object} parentBranch
 	     * @param {'NW'| 'NE' | 'SW' | 'SE'} region
 	     * @private
 	     */
@@ -26145,7 +26216,7 @@
 	    /**
 	     * This function is for debugging purposes. It draws the branches recursively.
 	     *
-	     * @param {Object} branch
+	     * @param {object} branch
 	     * @param {CanvasRenderingContext2D} ctx
 	     * @param {string} color
 	     * @private
@@ -26203,9 +26274,9 @@
 
 	var RepulsionSolver = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function RepulsionSolver(body, physicsBody, options) {
 	    classCallCheck(this, RepulsionSolver);
@@ -26217,7 +26288,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -26289,9 +26360,9 @@
 	 */
 	var HierarchicalRepulsionSolver = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function HierarchicalRepulsionSolver(body, physicsBody, options) {
 	    classCallCheck(this, HierarchicalRepulsionSolver);
@@ -26302,7 +26373,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -26374,9 +26445,9 @@
 	 */
 	var SpringSolver = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function SpringSolver(body, physicsBody, options) {
 	    classCallCheck(this, SpringSolver);
@@ -26387,7 +26458,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -26476,9 +26547,9 @@
 	 */
 	var HierarchicalSpringSolver = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function HierarchicalSpringSolver(body, physicsBody, options) {
 	    classCallCheck(this, HierarchicalSpringSolver);
@@ -26489,7 +26560,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -26601,9 +26672,9 @@
 	 */
 	var CentralGravitySolver = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function CentralGravitySolver(body, physicsBody, options) {
 	    classCallCheck(this, CentralGravitySolver);
@@ -26614,7 +26685,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -26647,10 +26718,11 @@
 	    }
 	    /**
 	     * Calculate the forces based on the distance.
+	     *
 	     * @param {number} distance
 	     * @param {number} dx
 	     * @param {number} dy
-	     * @param {Object<Node.id, vis.Node>} forces
+	     * @param {object<Node.id, vis.Node>} forces
 	     * @param {Node} node
 	     * @private
 	     */
@@ -26671,7 +26743,7 @@
 
 	function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 	/**
-	 * @extends BarnesHutSolver
+	 * @augments BarnesHutSolver
 	 */
 
 	var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
@@ -26680,9 +26752,9 @@
 	  var _super = _createSuper$q(ForceAtlas2BasedRepulsionSolver);
 
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function ForceAtlas2BasedRepulsionSolver(body, physicsBody, options) {
 	    var _this;
@@ -26700,7 +26772,7 @@
 	   * @param {number} dx
 	   * @param {number} dy
 	   * @param {Node} node
-	   * @param {Object} parentBranch
+	   * @param {object} parentBranch
 	   * @private
 	   */
 
@@ -26735,7 +26807,7 @@
 
 	function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 	/**
-	 * @extends CentralGravitySolver
+	 * @augments CentralGravitySolver
 	 */
 
 	var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravitySolver) {
@@ -26744,9 +26816,9 @@
 	  var _super = _createSuper$r(ForceAtlas2BasedCentralGravitySolver);
 
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 	  function ForceAtlas2BasedCentralGravitySolver(body, physicsBody, options) {
 	    classCallCheck(this, ForceAtlas2BasedCentralGravitySolver);
@@ -26759,7 +26831,7 @@
 	   * @param {number} distance
 	   * @param {number} dx
 	   * @param {number} dy
-	   * @param {Object<Node.id, Node>} forces
+	   * @param {object<Node.id, Node>} forces
 	   * @param {Node} node
 	   * @private
 	   */
@@ -26786,7 +26858,7 @@
 
 	var PhysicsEngine = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   */
 	  function PhysicsEngine(body) {
 	    classCallCheck(this, PhysicsEngine);
@@ -26855,7 +26927,7 @@
 	      maxVelocity: 50,
 	      minVelocity: 0.75,
 	      // px/s
-	      solver: 'barnesHut',
+	      solver: "barnesHut",
 	      stabilization: {
 	        enabled: true,
 	        iterations: 1000,
@@ -26888,38 +26960,38 @@
 	    value: function bindEventListeners() {
 	      var _this = this;
 
-	      this.body.emitter.on('initPhysics', function () {
+	      this.body.emitter.on("initPhysics", function () {
 	        _this.initPhysics();
 	      });
-	      this.body.emitter.on('_layoutFailed', function () {
+	      this.body.emitter.on("_layoutFailed", function () {
 	        _this.layoutFailed = true;
 	      });
-	      this.body.emitter.on('resetPhysics', function () {
+	      this.body.emitter.on("resetPhysics", function () {
 	        _this.stopSimulation();
 
 	        _this.ready = false;
 	      });
-	      this.body.emitter.on('disablePhysics', function () {
+	      this.body.emitter.on("disablePhysics", function () {
 	        _this.physicsEnabled = false;
 
 	        _this.stopSimulation();
 	      });
-	      this.body.emitter.on('restorePhysics', function () {
+	      this.body.emitter.on("restorePhysics", function () {
 	        _this.setOptions(_this.options);
 
 	        if (_this.ready === true) {
 	          _this.startSimulation();
 	        }
 	      });
-	      this.body.emitter.on('startSimulation', function () {
+	      this.body.emitter.on("startSimulation", function () {
 	        if (_this.ready === true) {
 	          _this.startSimulation();
 	        }
 	      });
-	      this.body.emitter.on('stopSimulation', function () {
+	      this.body.emitter.on("stopSimulation", function () {
 	        _this.stopSimulation();
 	      });
-	      this.body.emitter.on('destroy', function () {
+	      this.body.emitter.on("destroy", function () {
 	        _this.stopSimulation(false);
 
 	        _this.body.emitter.off();
@@ -26932,7 +27004,8 @@
 	    }
 	    /**
 	     * set the physics options
-	     * @param {Object} options
+	     *
+	     * @param {object} options
 	     */
 
 	  }, {
@@ -26949,8 +27022,8 @@
 	          this.startSimulation();
 	        } else {
 	          this.physicsEnabled = true;
-	          selectiveNotDeepExtend(['stabilization'], this.options, options);
-	          mergeOptions(this.options, options, 'stabilization');
+	          selectiveNotDeepExtend(["stabilization"], this.options, options);
+	          mergeOptions(this.options, options, "stabilization");
 
 	          if (options.enabled === undefined) {
 	            this.options.enabled = true;
@@ -26964,11 +27037,11 @@
 	          var wind = this.options.wind;
 
 	          if (wind) {
-	            if (typeof wind.x !== 'number' || isNan$2(wind.x)) {
+	            if (typeof wind.x !== "number" || isNan$2(wind.x)) {
 	              wind.x = 0;
 	            }
 
-	            if (typeof wind.y !== 'number' || isNan$2(wind.y)) {
+	            if (typeof wind.y !== "number" || isNan$2(wind.y)) {
 	              wind.y = 0;
 	            }
 	          } // set the timestep
@@ -26989,17 +27062,17 @@
 	    value: function init() {
 	      var options;
 
-	      if (this.options.solver === 'forceAtlas2Based') {
+	      if (this.options.solver === "forceAtlas2Based") {
 	        options = this.options.forceAtlas2Based;
 	        this.nodesSolver = new ForceAtlas2BasedRepulsionSolver(this.body, this.physicsBody, options);
 	        this.edgesSolver = new SpringSolver(this.body, this.physicsBody, options);
 	        this.gravitySolver = new ForceAtlas2BasedCentralGravitySolver(this.body, this.physicsBody, options);
-	      } else if (this.options.solver === 'repulsion') {
+	      } else if (this.options.solver === "repulsion") {
 	        options = this.options.repulsion;
 	        this.nodesSolver = new RepulsionSolver(this.body, this.physicsBody, options);
 	        this.edgesSolver = new SpringSolver(this.body, this.physicsBody, options);
 	        this.gravitySolver = new CentralGravitySolver(this.body, this.physicsBody, options);
-	      } else if (this.options.solver === 'hierarchicalRepulsion') {
+	      } else if (this.options.solver === "hierarchicalRepulsion") {
 	        options = this.options.hierarchicalRepulsion;
 	        this.nodesSolver = new HierarchicalRepulsionSolver(this.body, this.physicsBody, options);
 	        this.edgesSolver = new HierarchicalSpringSolver(this.body, this.physicsBody, options);
@@ -27027,13 +27100,13 @@
 	        } else {
 	          this.stabilized = false;
 	          this.ready = true;
-	          this.body.emitter.emit('fit', {}, this.layoutFailed); // if the layout failed, we use the approximation for the zoom
+	          this.body.emitter.emit("fit", {}, this.layoutFailed); // if the layout failed, we use the approximation for the zoom
 
 	          this.startSimulation();
 	        }
 	      } else {
 	        this.ready = true;
-	        this.body.emitter.emit('fit');
+	        this.body.emitter.emit("fit");
 	      }
 	    }
 	    /**
@@ -27054,15 +27127,16 @@
 	          var _context;
 
 	          this.viewFunction = bind$2(_context = this.simulationStep).call(_context, this);
-	          this.body.emitter.on('initRedraw', this.viewFunction);
-	          this.body.emitter.emit('_startRendering');
+	          this.body.emitter.on("initRedraw", this.viewFunction);
+	          this.body.emitter.emit("_startRendering");
 	        }
 	      } else {
-	        this.body.emitter.emit('_redraw');
+	        this.body.emitter.emit("_redraw");
 	      }
 	    }
 	    /**
 	     * Stop the simulation, force stabilization.
+	     *
 	     * @param {boolean} [emit=true]
 	     */
 
@@ -27077,11 +27151,11 @@
 	      }
 
 	      if (this.viewFunction !== undefined) {
-	        this.body.emitter.off('initRedraw', this.viewFunction);
+	        this.body.emitter.off("initRedraw", this.viewFunction);
 	        this.viewFunction = undefined;
 
 	        if (emit === true) {
-	          this.body.emitter.emit('_stopRendering');
+	          this.body.emitter.emit("_stopRendering");
 	        }
 	      }
 	    }
@@ -27125,7 +27199,7 @@
 
 	      if (this.stabilizationIterations > 1 || this.startedStabilization === true) {
 	        setTimeout$2(function () {
-	          _this2.body.emitter.emit('stabilized', {
+	          _this2.body.emitter.emit("stabilized", {
 	            iterations: amountOfIterations
 	          });
 
@@ -27136,6 +27210,7 @@
 	    }
 	    /**
 	     * Calculate the forces for one physics iteration and move the nodes.
+	     *
 	     * @private
 	     */
 
@@ -27151,6 +27226,7 @@
 	     * Make dynamic adjustments to the timestep, based on current state.
 	     *
 	     * Helper function for physicsTick().
+	     *
 	     * @private
 	     */
 
@@ -27501,9 +27577,9 @@
 
 	      var iterations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.options.stabilization.iterations;
 
-	      if (typeof iterations !== 'number') {
+	      if (typeof iterations !== "number") {
 	        iterations = this.options.stabilization.iterations;
-	        console.log('The stabilize method needs a numeric amount of iterations. Switching to default: ', iterations);
+	        console.error("The stabilize method needs a numeric amount of iterations. Switching to default: ", iterations);
 	      }
 
 	      if (this.physicsBody.physicsNodeIndices.length === 0) {
@@ -27519,7 +27595,7 @@
 
 	      this.stabilized = false; // block redraw requests
 
-	      this.body.emitter.emit('_blockRedraw');
+	      this.body.emitter.emit("_blockRedraw");
 	      this.targetIterations = iterations; // start the stabilization
 
 	      if (this.options.stabilization.onlyDynamicEdges === true) {
@@ -27543,12 +27619,13 @@
 	    key: "_startStabilizing",
 	    value: function _startStabilizing() {
 	      if (this.startedStabilization === true) return false;
-	      this.body.emitter.emit('startStabilizing');
+	      this.body.emitter.emit("startStabilizing");
 	      this.startedStabilization = true;
 	      return true;
 	    }
 	    /**
 	     * One batch of stabilization
+	     *
 	     * @private
 	     */
 
@@ -27562,7 +27639,7 @@
 	      };
 
 	      var sendProgress = function sendProgress() {
-	        _this4.body.emitter.emit('stabilizationProgress', {
+	        _this4.body.emitter.emit("stabilizationProgress", {
 	          iterations: _this4.stabilizationIterations,
 	          total: _this4.targetIterations
 	        });
@@ -27591,24 +27668,25 @@
 	    }
 	    /**
 	     * Wrap up the stabilization, fit and emit the events.
+	     *
 	     * @private
 	     */
 
 	  }, {
 	    key: "_finalizeStabilization",
 	    value: function _finalizeStabilization() {
-	      this.body.emitter.emit('_allowRedraw');
+	      this.body.emitter.emit("_allowRedraw");
 
 	      if (this.options.stabilization.fit === true) {
-	        this.body.emitter.emit('fit');
+	        this.body.emitter.emit("fit");
 	      }
 
 	      if (this.options.stabilization.onlyDynamicEdges === true) {
 	        this._restoreFrozenNodes();
 	      }
 
-	      this.body.emitter.emit('stabilizationIterationsDone');
-	      this.body.emitter.emit('_requestRedraw');
+	      this.body.emitter.emit("stabilizationIterationsDone");
+	      this.body.emitter.emit("_requestRedraw");
 
 	      if (this.stabilized === true) {
 	        this._emitStabilized();
@@ -27654,7 +27732,7 @@
 	        var angle = Math.atan2(force.y, force.x);
 	        ctx.fillStyle = color;
 	        EndPoints.draw(ctx, {
-	          type: 'arrow',
+	          type: "arrow",
 	          point: point,
 	          angle: angle,
 	          length: arrowSize
@@ -27835,6 +27913,7 @@
 	    }
 	    /**
 	     * This returns a clone of the options or options of the edge or node to be used for construction of new edges or check functions for new nodes.
+	     *
 	     * @param {vis.Item} item
 	     * @param {'node'|undefined} type
 	     * @returns {{}}
@@ -27846,7 +27925,7 @@
 	    value: function cloneOptions(item, type) {
 	      var clonedOptions = {};
 
-	      if (type === undefined || type === 'node') {
+	      if (type === undefined || type === "node") {
 	        deepExtend(clonedOptions, item.options, true);
 	        clonedOptions.x = item.x;
 	        clonedOptions.y = item.y;
@@ -27869,7 +27948,7 @@
 	 * A Cluster is a special Node that allows a group of Nodes positioned closely together
 	 * to be represented by a single Cluster Node.
 	 *
-	 * @extends Node
+	 * @augments Node
 	 */
 
 	var Cluster = /*#__PURE__*/function (_Node) {
@@ -27878,12 +27957,12 @@
 	  var _super = _createSuper$s(Cluster);
 
 	  /**
-	   * @param {Object} options
-	   * @param {Object} body
+	   * @param {object} options
+	   * @param {object} body
 	   * @param {Array.<HTMLImageElement>}imagelist
 	   * @param {Array} grouplist
-	   * @param {Object} globalOptions
-	   * @param {Object} defaultOptions     Global default options for nodes
+	   * @param {object} globalOptions
+	   * @param {object} defaultOptions     Global default options for nodes
 	   */
 	  function Cluster(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
 	    var _this;
@@ -27913,11 +27992,11 @@
 	      var childCluster = this.body.nodes[childClusterId];
 
 	      if (this.containedNodes[childClusterId] === undefined) {
-	        throw new Error('node with id: ' + childClusterId + ' not in current cluster');
+	        throw new Error("node with id: " + childClusterId + " not in current cluster");
 	      }
 
 	      if (!childCluster.isCluster) {
-	        throw new Error('node with id: ' + childClusterId + ' is not a cluster');
+	        throw new Error("node with id: " + childClusterId + " is not a cluster");
 	      } // Disconnect child cluster from current cluster
 
 
@@ -27966,7 +28045,7 @@
 
 	var ClusterEngine = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   */
 	  function ClusterEngine(body) {
 	    var _this = this;
@@ -27983,16 +28062,16 @@
 
 	    assign$2(this.options, this.defaultOptions);
 
-	    this.body.emitter.on('_resetData', function () {
+	    this.body.emitter.on("_resetData", function () {
 	      _this.clusteredNodes = {};
 	      _this.clusteredEdges = {};
 	    });
 	  }
 	  /**
-	  *
-	  * @param {number} hubsize
-	  * @param {Object} options
-	  */
+	   *
+	   * @param {number} hubsize
+	   * @param {object} options
+	   */
 
 
 	  createClass(ClusterEngine, [{
@@ -28019,11 +28098,12 @@
 	        this.clusterByConnection(nodesToCluster[_i], options, true);
 	      }
 
-	      this.body.emitter.emit('_dataChanged');
+	      this.body.emitter.emit("_dataChanged");
 	    }
 	    /**
 	     * loop over all nodes, check if they adhere to the condition and cluster if needed.
-	     * @param {Object} options
+	     *
+	     * @param {object} options
 	     * @param {boolean} [refreshData=true]
 	     */
 
@@ -28060,8 +28140,9 @@
 	    }
 	    /**
 	     * Cluster all nodes in the network that have only X edges
+	     *
 	     * @param {number} edgeCount
-	     * @param {Object} options
+	     * @param {object} options
 	     * @param {boolean} [refreshData=true]
 	     */
 
@@ -28133,7 +28214,8 @@
 	            if (keys$3(childNodesObj).length > 0 && keys$3(childEdgesObj).length > 0 && gatheringSuccessful === true) {
 	              /**
 	               * Search for cluster data that contains any of the node id's
-	               * @returns {Boolean} true if no joinCondition, otherwise return value of joinCondition
+	               *
+	               * @returns {boolean} true if no joinCondition, otherwise return value of joinCondition
 	               */
 	              var findClusterData = function findClusterData() {
 	                for (var n = 0; n < clusters.length; ++n) {
@@ -28187,12 +28269,13 @@
 	      }
 
 	      if (refreshData === true) {
-	        this.body.emitter.emit('_dataChanged');
+	        this.body.emitter.emit("_dataChanged");
 	      }
 	    }
 	    /**
 	     * Cluster all nodes in the network that have only 1 edge
-	     * @param {Object} options
+	     *
+	     * @param {object} options
 	     * @param {boolean} [refreshData=true]
 	     */
 
@@ -28204,7 +28287,8 @@
 	    }
 	    /**
 	     * Cluster all nodes in the network that have only 2 edge
-	     * @param {Object} options
+	     *
+	     * @param {object} options
 	     * @param {boolean} [refreshData=true]
 	     */
 
@@ -28215,11 +28299,12 @@
 	      this.clusterByEdgeCount(2, options, refreshData);
 	    }
 	    /**
-	    * suck all connected nodes of a node into the node.
-	    * @param {Node.id} nodeId
-	    * @param {Object} options
-	    * @param {boolean} [refreshData=true]
-	    */
+	     * suck all connected nodes of a node into the node.
+	     *
+	     * @param {Node.id} nodeId
+	     * @param {object} options
+	     * @param {boolean} [refreshData=true]
+	     */
 
 	  }, {
 	    key: "clusterByConnection",
@@ -28309,15 +28394,15 @@
 	      this._cluster(childNodesObj, childEdgesObj, options, refreshData);
 	    }
 	    /**
-	    * This function creates the edges that will be attached to the cluster
-	    * It looks for edges that are connected to the nodes from the "outside' of the cluster.
-	    *
-	    * @param {{Node.id: vis.Node}} childNodesObj
-	    * @param {{vis.Edge.id: vis.Edge}} childEdgesObj
-	    * @param {Object} clusterNodeProperties
-	    * @param {Object} clusterEdgeProperties
-	    * @private
-	    */
+	     * This function creates the edges that will be attached to the cluster
+	     * It looks for edges that are connected to the nodes from the "outside' of the cluster.
+	     *
+	     * @param {{Node.id: vis.Node}} childNodesObj
+	     * @param {{vis.Edge.id: vis.Edge}} childEdgesObj
+	     * @param {object} clusterNodeProperties
+	     * @param {object} clusterEdgeProperties
+	     * @private
+	     */
 
 	  }, {
 	    key: "_createClusterEdges",
@@ -28377,6 +28462,7 @@
 	      var newEdges = [];
 	      /**
 	       * Find a cluster edge which matches the given created edge.
+	       *
 	       * @param {vis.Edge} createdEdge
 	       * @returns {vis.Edge}
 	       */
@@ -28420,12 +28506,13 @@
 	      }
 	    }
 	    /**
-	    * This function checks the options that can be supplied to the different cluster functions
-	    * for certain fields and inserts defaults if needed
-	    * @param {Object} options
-	    * @returns {*}
-	    * @private
-	    */
+	     * This function checks the options that can be supplied to the different cluster functions
+	     * for certain fields and inserts defaults if needed
+	     *
+	     * @param {object} options
+	     * @returns {*}
+	     * @private
+	     */
 
 	  }, {
 	    key: "_checkOptions",
@@ -28443,13 +28530,13 @@
 	      return options;
 	    }
 	    /**
-	    *
-	    * @param {Object}    childNodesObj         | object with node objects, id as keys, same as childNodes except it also contains a source node
-	    * @param {Object}    childEdgesObj         | object with edge objects, id as keys
-	    * @param {Array}     options               | object with {clusterNodeProperties, clusterEdgeProperties, processProperties}
-	    * @param {boolean}   refreshData | when true, do not wrap up
-	    * @private
-	    */
+	     *
+	     * @param {object}    childNodesObj         | object with node objects, id as keys, same as childNodes except it also contains a source node
+	     * @param {object}    childEdgesObj         | object with edge objects, id as keys
+	     * @param {Array}     options               | object with {clusterNodeProperties, clusterEdgeProperties, processProperties}
+	     * @param {boolean}   refreshData | when true, do not wrap up
+	     * @private
+	     */
 
 	  }, {
 	    key: "_cluster",
@@ -28500,7 +28587,7 @@
 	          if (Object.prototype.hasOwnProperty.call(childEdgesObj, edgeId)) {
 	            // these cluster edges will be removed on creation of the cluster.
 	            if (edgeId.substr(0, 12) !== "clusterEdge:") {
-	              var _clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], 'edge');
+	              var _clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], "edge");
 
 	              childEdgesOptions.push(_clonedOptions);
 	            }
@@ -28516,13 +28603,13 @@
 
 
 	      if (clusterNodeProperties.id === undefined) {
-	        clusterNodeProperties.id = 'cluster:' + v4();
+	        clusterNodeProperties.id = "cluster:" + v4();
 	      }
 
 	      var clusterId = clusterNodeProperties.id;
 
 	      if (clusterNodeProperties.label === undefined) {
-	        clusterNodeProperties.label = 'cluster';
+	        clusterNodeProperties.label = "cluster";
 	      } // give the clusterNode a position if it does not have one.
 
 
@@ -28559,7 +28646,7 @@
 	      clusterNodeProperties.id = undefined; // wrap up
 
 	      if (refreshData === true) {
-	        this.body.emitter.emit('_dataChanged');
+	        this.body.emitter.emit("_dataChanged");
 	      }
 	    }
 	    /**
@@ -28596,10 +28683,11 @@
 	      }
 	    }
 	    /**
-	    * Check if a node is a cluster.
-	    * @param {Node.id} nodeId
-	    * @returns {*}
-	    */
+	     * Check if a node is a cluster.
+	     *
+	     * @param {Node.id} nodeId
+	     * @returns {*}
+	     */
 
 	  }, {
 	    key: "isCluster",
@@ -28607,16 +28695,17 @@
 	      if (this.body.nodes[nodeId] !== undefined) {
 	        return this.body.nodes[nodeId].isCluster === true;
 	      } else {
-	        console.log("Node does not exist.");
+	        console.error("Node does not exist.");
 	        return false;
 	      }
 	    }
 	    /**
-	    * get the position of the cluster node based on what's inside
-	    * @param {object} childNodesObj    | object with node objects, id as keys
-	    * @returns {{x: number, y: number}}
-	    * @private
-	    */
+	     * get the position of the cluster node based on what's inside
+	     *
+	     * @param {object} childNodesObj    | object with node objects, id as keys
+	     * @returns {{x: number, y: number}}
+	     * @private
+	     */
 
 	  }, {
 	    key: "_getClusterPosition",
@@ -28644,8 +28733,9 @@
 	    }
 	    /**
 	     * Open a cluster by calling this function.
+	     *
 	     * @param {vis.Edge.id}  clusterNodeId | the ID of the cluster node
-	     * @param {Object} options
+	     * @param {object} options
 	     * @param {boolean} refreshData | wrap up afterwards if not true
 	     */
 
@@ -28684,7 +28774,7 @@
 	        delete this.body.nodes[clusterNodeId];
 
 	        if (refreshData === true) {
-	          this.body.emitter.emit('_dataChanged');
+	          this.body.emitter.emit("_dataChanged");
 	        }
 
 	        return;
@@ -28694,7 +28784,7 @@
 	      var containedNodes = clusterNode.containedNodes;
 	      var containedEdges = clusterNode.containedEdges; // allow the user to position the nodes after release.
 
-	      if (options !== undefined && options.releaseFunction !== undefined && typeof options.releaseFunction === 'function') {
+	      if (options !== undefined && options.releaseFunction !== undefined && typeof options.releaseFunction === "function") {
 	        var positions = {};
 	        var clusterPosition = {
 	          x: clusterNode.x,
@@ -28813,7 +28903,7 @@
 	      delete this.body.nodes[clusterNodeId];
 
 	      if (refreshData === true) {
-	        this.body.emitter.emit('_dataChanged');
+	        this.body.emitter.emit("_dataChanged");
 	      }
 	    }
 	    /**
@@ -28840,13 +28930,13 @@
 	      return nodesArray;
 	    }
 	    /**
-	    * Get the stack clusterId's that a certain node resides in. cluster A -> cluster B -> cluster C -> node
-	    *
-	    * If a node can't be found in the chain, return an empty array.
-	    *
-	    * @param {string|number} nodeId
-	    * @returns {Array}
-	    */
+	     * Get the stack clusterId's that a certain node resides in. cluster A -> cluster B -> cluster C -> node
+	     *
+	     * If a node can't be found in the chain, return an empty array.
+	     *
+	     * @param {string|number} nodeId
+	     * @returns {Array}
+	     */
 
 	  }, {
 	    key: "findNode",
@@ -28873,10 +28963,11 @@
 	      return stack;
 	    }
 	    /**
-	    * Using a clustered nodeId, update with the new options
-	    * @param {Node.id} clusteredNodeId
-	    * @param {object} newOptions
-	    */
+	     * Using a clustered nodeId, update with the new options
+	     *
+	     * @param {Node.id} clusteredNodeId
+	     * @param {object} newOptions
+	     */
 
 	  }, {
 	    key: "updateClusteredNode",
@@ -28894,13 +28985,14 @@
 	      }
 
 	      this.body.nodes[clusteredNodeId].setOptions(newOptions);
-	      this.body.emitter.emit('_dataChanged');
+	      this.body.emitter.emit("_dataChanged");
 	    }
 	    /**
-	    * Using a base edgeId, update all related clustered edges with the new options
-	    * @param {vis.Edge.id} startEdgeId
-	    * @param {object} newOptions
-	    */
+	     * Using a base edgeId, update all related clustered edges with the new options
+	     *
+	     * @param {vis.Edge.id} startEdgeId
+	     * @param {object} newOptions
+	     */
 
 	  }, {
 	    key: "updateEdge",
@@ -28924,13 +29016,14 @@
 	        edge.setOptions(newOptions);
 	      }
 
-	      this.body.emitter.emit('_dataChanged');
+	      this.body.emitter.emit("_dataChanged");
 	    }
 	    /**
-	    * Get a stack of clusterEdgeId's (+base edgeid) that a base edge is the same as. cluster edge C -> cluster edge B -> cluster edge A -> base edge(edgeId)
-	    * @param {vis.Edge.id} edgeId
-	    * @returns {Array.<vis.Edge.id>}
-	    */
+	     * Get a stack of clusterEdgeId's (+base edgeid) that a base edge is the same as. cluster edge C -> cluster edge B -> cluster edge A -> base edge(edgeId)
+	     *
+	     * @param {vis.Edge.id} edgeId
+	     * @returns {Array.<vis.Edge.id>}
+	     */
 
 	  }, {
 	    key: "getClusteredEdges",
@@ -28950,12 +29043,13 @@
 	      return stack;
 	    }
 	    /**
-	    * Get the base edge id of clusterEdgeId. cluster edge (clusteredEdgeId) -> cluster edge B -> cluster edge C -> base edge
-	    * @param {vis.Edge.id} clusteredEdgeId
-	    * @returns {vis.Edge.id} baseEdgeId
-	    *
-	    * TODO: deprecate in 5.0.0. Method getBaseEdges() is the correct one to use.
-	    */
+	     * Get the base edge id of clusterEdgeId. cluster edge (clusteredEdgeId) -> cluster edge B -> cluster edge C -> base edge
+	     *
+	     * @param {vis.Edge.id} clusteredEdgeId
+	     * @returns {vis.Edge.id} baseEdgeId
+	     *
+	     * TODO: deprecate in 5.0.0. Method getBaseEdges() is the correct one to use.
+	     */
 
 	  }, {
 	    key: "getBaseEdge",
@@ -29011,12 +29105,13 @@
 	      return foundIds;
 	    }
 	    /**
-	    * Get the Id the node is connected to
-	    * @param {vis.Edge} edge
-	    * @param {Node.id} nodeId
-	    * @returns {*}
-	    * @private
-	    */
+	     * Get the Id the node is connected to
+	     *
+	     * @param {vis.Edge} edge
+	     * @param {Node.id} nodeId
+	     * @returns {*}
+	     * @private
+	     */
 
 	  }, {
 	    key: "_getConnectedId",
@@ -29030,12 +29125,12 @@
 	      }
 	    }
 	    /**
-	    * We determine how many connections denote an important hub.
-	    * We take the mean + 2*std as the important hub size. (Assuming a normal distribution of data, ~2.2%)
-	    *
-	    * @returns {number}
-	    * @private
-	    */
+	     * We determine how many connections denote an important hub.
+	     * We take the mean + 2*std as the important hub size. (Assuming a normal distribution of data, ~2.2%)
+	     *
+	     * @returns {number}
+	     * @private
+	     */
 
 	  }, {
 	    key: "_getHubSize",
@@ -29075,8 +29170,8 @@
 	     * @param {Node.id} fromId
 	     * @param {Node.id} toId
 	     * @param {vis.Edge} baseEdge
-	     * @param {Object} clusterEdgeProperties
-	     * @param {Object} extraOptions
+	     * @param {object} clusterEdgeProperties
+	     * @param {object} extraOptions
 	     * @returns {Edge} newly created clustered edge
 	     * @private
 	     */
@@ -29085,13 +29180,13 @@
 	    key: "_createClusteredEdge",
 	    value: function _createClusteredEdge(fromId, toId, baseEdge, clusterEdgeProperties, extraOptions) {
 	      // copy the options of the edge we will replace
-	      var clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge'); // make sure the properties of clusterEdges are superimposed on it
+	      var clonedOptions = NetworkUtil.cloneOptions(baseEdge, "edge"); // make sure the properties of clusterEdges are superimposed on it
 
 	      deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
 
 	      clonedOptions.from = fromId;
 	      clonedOptions.to = toId;
-	      clonedOptions.id = 'clusterEdge:' + v4(); // apply the edge specific options to it if specified
+	      clonedOptions.id = "clusterEdge:" + v4(); // apply the edge specific options to it if specified
 
 	      if (extraOptions !== undefined) {
 	        deepExtend(clonedOptions, extraOptions);
@@ -29107,10 +29202,10 @@
 	    /**
 	     * Add the passed child nodes and edges to the given cluster node.
 	     *
-	     * @param {Object|Node} childNodes  hash of nodes or single node to add in cluster
-	     * @param {Object|Edge} childEdges  hash of edges or single edge to take into account when clustering
+	     * @param {object | Node} childNodes  hash of nodes or single node to add in cluster
+	     * @param {object | Edge} childEdges  hash of edges or single edge to take into account when clustering
 	     * @param {Node} clusterNode  cluster node to add nodes and edges to
-	     * @param {Object} [clusterEdgeProperties]
+	     * @param {object} [clusterEdgeProperties]
 	     * @private
 	     */
 
@@ -29202,7 +29297,7 @@
 	     * Done like this because Array.filter() is not fully supported by all IE's.
 	     *
 	     * @param {Array} arr
-	     * @param {function} callback
+	     * @param {Function} callback
 	     * @returns {Array}
 	     * @private
 	     */
@@ -29431,7 +29526,7 @@
 	     * Determine if node with given id is part of a cluster.
 	     *
 	     * @param {Node.id} nodeId
-	     * @return {boolean} true if part of a cluster.
+	     * @returns {boolean} true if part of a cluster.
 	     */
 
 	  }, {
@@ -29447,7 +29542,7 @@
 	     * - any of its connecting nodes is in a cluster
 	     *
 	     * @param {vis.Edge.id} edgeId
-	     * @return {boolean} true if part of a cluster.
+	     * @returns {boolean} true if part of a cluster.
 	     */
 
 	  }, {
@@ -29511,7 +29606,7 @@
 
 	var CanvasRenderer = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Canvas} canvas
 	   */
 	  function CanvasRenderer(body, canvas) {
@@ -29597,7 +29692,7 @@
 	        _this.renderingActive = _this.renderRequests > 0;
 	        _this.renderTimer = undefined;
 	      });
-	      this.body.emitter.on('destroy', function () {
+	      this.body.emitter.on("destroy", function () {
 	        _this.renderRequests = 0;
 	        _this.allowRedraw = false;
 	        _this.renderingActive = false;
@@ -29613,14 +29708,14 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
 	    key: "setOptions",
 	    value: function setOptions(options) {
 	      if (options !== undefined) {
-	        var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
+	        var fields = ["hideEdgesOnDrag", "hideEdgesOnZoom", "hideNodesOnDrag"];
 	        selectiveDeepExtend(fields, this.options, options);
 	      }
 	    }
@@ -29629,9 +29724,9 @@
 	     *
 	     * Calls the callback when the next frame can or will be drawn.
 	     *
-	     * @param {function} callback
+	     * @param {Function} callback
 	     * @param {number} delay - timeout case only, wait this number of milliseconds
-	     * @returns {function|undefined}
+	     * @returns {Function | undefined}
 	     * @private
 	     */
 
@@ -29649,7 +29744,7 @@
 	      // This is not something that will happen in normal operation, but we still need
 	      // to take it into account.
 	      //
-	      if (typeof window === 'undefined') return; // Doing `if (window === undefined)` does not work here!
+	      if (typeof window === "undefined") return; // Doing `if (window === undefined)` does not work here!
 
 	      var timer;
 	      var myWindow = window; // Grab a reference to reduce the possibility that 'window' is reset
@@ -29715,12 +29810,13 @@
 	  }, {
 	    key: "redraw",
 	    value: function redraw() {
-	      this.body.emitter.emit('setSize');
+	      this.body.emitter.emit("setSize");
 
 	      this._redraw();
 	    }
 	    /**
 	     * Redraw the network with the current data
+	     *
 	     * @private
 	     */
 
@@ -29739,6 +29835,7 @@
 	    }
 	    /**
 	     * Redraw the network with the current data
+	     *
 	     * @param {boolean} [hidden=false] | Used to get the first estimate of the node sizes.
 	     *                                   Only the nodes are drawn after which they are quickly drawn over.
 	     * @private
@@ -29855,7 +29952,7 @@
 	     * @param {boolean} [alwaysShow]
 	     * @private
 	     *
-	     * @returns {Object} Callbacks to draw later on higher layers.
+	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
 	  }, {
@@ -29955,6 +30052,7 @@
 	    }
 	    /**
 	     * Redraw all edges
+	     *
 	     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
 	     * @private
 	     */
@@ -29975,6 +30073,7 @@
 	    }
 	    /**
 	     * Redraw all arrows
+	     *
 	     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
 	     * @private
 	     */
@@ -29996,22 +30095,23 @@
 	    /**
 	     * Determine if the browser requires a setTimeout or a requestAnimationFrame. This was required because
 	     * some implementations (safari and IE9) did not support requestAnimationFrame
+	     *
 	     * @private
 	     */
 
 	  }, {
 	    key: "_determineBrowserMethod",
 	    value: function _determineBrowserMethod() {
-	      if (typeof window !== 'undefined') {
+	      if (typeof window !== "undefined") {
 	        var browserType = navigator.userAgent.toLowerCase();
 	        this.requiresTimeout = false;
 
-	        if (indexOf$3(browserType).call(browserType, 'msie 9.0') != -1) {
+	        if (indexOf$3(browserType).call(browserType, "msie 9.0") != -1) {
 	          // IE 9
 	          this.requiresTimeout = true;
-	        } else if (indexOf$3(browserType).call(browserType, 'safari') != -1) {
+	        } else if (indexOf$3(browserType).call(browserType, "safari") != -1) {
 	          // safari
-	          if (indexOf$3(browserType).call(browserType, 'chrome') <= -1) {
+	          if (indexOf$3(browserType).call(browserType, "chrome") <= -1) {
 	            this.requiresTimeout = true;
 	          }
 	        }
@@ -30020,10 +30120,11 @@
 	      }
 	    }
 	    /**
-	    * Redraw selection box
-	    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
-	    * @private
-	    */
+	     * Redraw selection box
+	     *
+	     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
+	     * @private
+	     */
 
 	  }, {
 	    key: "_drawSelectionBox",
@@ -30052,8 +30153,9 @@
 
 	/**
 	 * Register a touch event, taking place before a gesture
+	 *
 	 * @param {Hammer} hammer       A hammer instance
-	 * @param {function} callback   Callback, called as callback(event)
+	 * @param {Function} callback   Callback, called as callback(event)
 	 */
 	function onTouch(hammer, callback) {
 	  callback.inputHandler = function (event) {
@@ -30062,12 +30164,13 @@
 	    }
 	  };
 
-	  hammer.on('hammer.input', callback.inputHandler);
+	  hammer.on("hammer.input", callback.inputHandler);
 	}
 	/**
 	 * Register a release event, taking place after a gesture
+	 *
 	 * @param {Hammer} hammer       A hammer instance
-	 * @param {function} callback   Callback, called as callback(event)
+	 * @param {Function} callback   Callback, called as callback(event)
 	 * @returns {*}
 	 */
 
@@ -30078,7 +30181,7 @@
 	    }
 	  };
 
-	  return hammer.on('hammer.input', callback.inputHandler);
+	  return hammer.on("hammer.input", callback.inputHandler);
 	}
 
 	/**
@@ -30090,7 +30193,7 @@
 
 	var Canvas = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   */
 	  function Canvas(body) {
 	    classCallCheck(this, Canvas);
@@ -30104,8 +30207,8 @@
 	    this.options = {};
 	    this.defaultOptions = {
 	      autoResize: true,
-	      height: '100%',
-	      width: '100%'
+	      height: "100%",
+	      width: "100%"
 	    };
 
 	    assign$2(this.options, this.defaultOptions);
@@ -30143,7 +30246,7 @@
 	      });
 	    }
 	    /**
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
@@ -30152,7 +30255,7 @@
 	      var _this2 = this;
 
 	      if (options !== undefined) {
-	        var fields = ['width', 'height', 'autoResize'];
+	        var fields = ["width", "height", "autoResize"];
 	        selectiveDeepExtend(fields, this.options, options);
 	      } // Automatically adapt to changing size of the container element.
 
@@ -30253,6 +30356,7 @@
 	    }
 	    /**
 	     * Set the cameraState
+	     *
 	     * @private
 	     */
 
@@ -30297,17 +30401,17 @@
 	  }, {
 	    key: "_prepareValue",
 	    value: function _prepareValue(value) {
-	      if (typeof value === 'number') {
-	        return value + 'px';
-	      } else if (typeof value === 'string') {
-	        if (indexOf$3(value).call(value, '%') !== -1 || indexOf$3(value).call(value, 'px') !== -1) {
+	      if (typeof value === "number") {
+	        return value + "px";
+	      } else if (typeof value === "string") {
+	        if (indexOf$3(value).call(value, "%") !== -1 || indexOf$3(value).call(value, "px") !== -1) {
 	          return value;
-	        } else if (indexOf$3(value).call(value, '%') === -1) {
-	          return value + 'px';
+	        } else if (indexOf$3(value).call(value, "%") === -1) {
+	          return value + "px";
 	        }
 	      }
 
-	      throw new Error('Could not use the value supplied for width or height:' + value);
+	      throw new Error("Could not use the value supplied for width or height:" + value);
 	    }
 	    /**
 	     * Create the HTML
@@ -30321,23 +30425,23 @@
 	        this.body.container.removeChild(this.body.container.firstChild);
 	      }
 
-	      this.frame = document.createElement('div');
-	      this.frame.className = 'vis-network';
-	      this.frame.style.position = 'relative';
-	      this.frame.style.overflow = 'hidden';
+	      this.frame = document.createElement("div");
+	      this.frame.className = "vis-network";
+	      this.frame.style.position = "relative";
+	      this.frame.style.overflow = "hidden";
 	      this.frame.tabIndex = 900; // tab index is required for keycharm to bind keystrokes to the div instead of the window
 	      //////////////////////////////////////////////////////////////////
 
 	      this.frame.canvas = document.createElement("canvas");
-	      this.frame.canvas.style.position = 'relative';
+	      this.frame.canvas.style.position = "relative";
 	      this.frame.appendChild(this.frame.canvas);
 
 	      if (!this.frame.canvas.getContext) {
-	        var noCanvas = document.createElement('DIV');
-	        noCanvas.style.color = 'red';
-	        noCanvas.style.fontWeight = 'bold';
-	        noCanvas.style.padding = '10px';
-	        noCanvas.innerHTML = 'Error: your browser does not support HTML canvas';
+	        var noCanvas = document.createElement("DIV");
+	        noCanvas.style.color = "red";
+	        noCanvas.style.fontWeight = "bold";
+	        noCanvas.style.padding = "10px";
+	        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
 	        this.frame.canvas.appendChild(noCanvas);
 	      } else {
 	        this._setPixelRatio();
@@ -30357,6 +30461,7 @@
 	    }
 	    /**
 	     * This function binds hammer, it can be repeated over and over due to the uniqueness check.
+	     *
 	     * @private
 	     */
 
@@ -30373,46 +30478,46 @@
 	      this.pinch = {}; // init hammer
 
 	      this.hammer = new Hammer$1(this.frame.canvas);
-	      this.hammer.get('pinch').set({
+	      this.hammer.get("pinch").set({
 	        enable: true
 	      }); // enable to get better response, todo: test on mobile.
 
-	      this.hammer.get('pan').set({
+	      this.hammer.get("pan").set({
 	        threshold: 5,
 	        direction: Hammer$1.DIRECTION_ALL
 	      });
 	      onTouch(this.hammer, function (event) {
 	        _this3.body.eventListeners.onTouch(event);
 	      });
-	      this.hammer.on('tap', function (event) {
+	      this.hammer.on("tap", function (event) {
 	        _this3.body.eventListeners.onTap(event);
 	      });
-	      this.hammer.on('doubletap', function (event) {
+	      this.hammer.on("doubletap", function (event) {
 	        _this3.body.eventListeners.onDoubleTap(event);
 	      });
-	      this.hammer.on('press', function (event) {
+	      this.hammer.on("press", function (event) {
 	        _this3.body.eventListeners.onHold(event);
 	      });
-	      this.hammer.on('panstart', function (event) {
+	      this.hammer.on("panstart", function (event) {
 	        _this3.body.eventListeners.onDragStart(event);
 	      });
-	      this.hammer.on('panmove', function (event) {
+	      this.hammer.on("panmove", function (event) {
 	        _this3.body.eventListeners.onDrag(event);
 	      });
-	      this.hammer.on('panend', function (event) {
+	      this.hammer.on("panend", function (event) {
 	        _this3.body.eventListeners.onDragEnd(event);
 	      });
-	      this.hammer.on('pinch', function (event) {
+	      this.hammer.on("pinch", function (event) {
 	        _this3.body.eventListeners.onPinch(event);
 	      }); // TODO: neatly cleanup these handlers when re-creating the Canvas, IF these are done with hammer, event.stopPropagation will not work?
 
-	      this.frame.canvas.addEventListener('wheel', function (event) {
+	      this.frame.canvas.addEventListener("wheel", function (event) {
 	        _this3.body.eventListeners.onMouseWheel(event);
 	      });
-	      this.frame.canvas.addEventListener('mousemove', function (event) {
+	      this.frame.canvas.addEventListener("mousemove", function (event) {
 	        _this3.body.eventListeners.onMouseMove(event);
 	      });
-	      this.frame.canvas.addEventListener('contextmenu', function (event) {
+	      this.frame.canvas.addEventListener("contextmenu", function (event) {
 	        _this3.body.eventListeners.onContext(event);
 	      });
 	      this.hammerFrame = new Hammer$1(this.frame);
@@ -30422,6 +30527,7 @@
 	    }
 	    /**
 	     * Set a new size for the network
+	     *
 	     * @param {string} width   Width in pixels or percentage (for example '800px'
 	     *                         or '50%')
 	     * @param {string} height  Height in pixels or percentage  (for example '400px'
@@ -30460,8 +30566,8 @@
 
 	        this.frame.style.width = width;
 	        this.frame.style.height = height;
-	        this.frame.canvas.style.width = '100%';
-	        this.frame.canvas.style.height = '100%';
+	        this.frame.canvas.style.width = "100%";
+	        this.frame.canvas.style.height = "100%";
 	        this.frame.canvas.width = Math.round(this.frame.canvas.clientWidth * this.pixelRatio);
 	        this.frame.canvas.height = Math.round(this.frame.canvas.clientHeight * this.pixelRatio);
 	        this.options.width = width;
@@ -30493,7 +30599,7 @@
 	      }
 
 	      if (emitEvent === true) {
-	        this.body.emitter.emit('resize', {
+	        this.body.emitter.emit("resize", {
 	          width: Math.round(this.frame.canvas.width / this.pixelRatio),
 	          height: Math.round(this.frame.canvas.height / this.pixelRatio),
 	          oldWidth: Math.round(oldWidth / this.pixelRatio),
@@ -30535,7 +30641,7 @@
 
 	      var numerator = 1;
 
-	      if (typeof window !== 'undefined') {
+	      if (typeof window !== "undefined") {
 	        // (window !== undefined) doesn't work here!
 	        // Protection during unit tests, where 'window' can be missing
 	        numerator = window.devicePixelRatio || 1;
@@ -30573,6 +30679,7 @@
 	    /**
 	     * Convert the X coordinate in DOM-space (coordinate point in browser relative to the container div) to
 	     * the X coordinate in canvas-space (the simulation sandbox, which the camera looks upon)
+	     *
 	     * @param {number} x
 	     * @returns {number}
 	     * @private
@@ -30586,6 +30693,7 @@
 	    /**
 	     * Convert the X coordinate in canvas-space (the simulation sandbox, which the camera looks upon) to
 	     * the X coordinate in DOM-space (coordinate point in browser relative to the container div)
+	     *
 	     * @param {number} x
 	     * @returns {number}
 	     * @private
@@ -30599,6 +30707,7 @@
 	    /**
 	     * Convert the Y coordinate in DOM-space (coordinate point in browser relative to the container div) to
 	     * the Y coordinate in canvas-space (the simulation sandbox, which the camera looks upon)
+	     *
 	     * @param {number} y
 	     * @returns {number}
 	     * @private
@@ -30612,6 +30721,7 @@
 	    /**
 	     * Convert the Y coordinate in canvas-space (the simulation sandbox, which the camera looks upon) to
 	     * the Y coordinate in DOM-space (coordinate point in browser relative to the container div)
+	     *
 	     * @param {number} y
 	     * @returns {number}
 	     * @private
@@ -30660,7 +30770,7 @@
 
 	var View = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Canvas} canvas
 	   */
 	  function View(body, canvas) {
@@ -30691,7 +30801,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} [options={}]
+	   * @param {object} [options={}]
 	   */
 
 
@@ -30703,7 +30813,8 @@
 	    }
 	    /**
 	     * This function zooms out to fit all data on screen based on amount of nodes
-	     * @param {Object} [options={{nodes=Array}}]
+	     *
+	     * @param {object} [options={{nodes=Array}}]
 	     * @param {boolean} [initialZoom=false]  | zoom based on fitted formula or range, true = fitted, default = false;
 	     */
 
@@ -30805,12 +30916,12 @@
 	        options.lockedOnNode = nodeId;
 	        this.moveTo(options);
 	      } else {
-	        console.log("Node: " + nodeId + " cannot be found.");
+	        console.error("Node: " + nodeId + " cannot be found.");
 	      }
 	    }
 	    /**
 	     *
-	     * @param {Object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
+	     * @param {object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
 	     *                          |  options.scale    = number                 // scale to move to
 	     *                          |  options.position = {x:number, y:number}   // position to move to
 	     *                          |  options.animation = {duration:number, easingFunction:String} || Boolean   // position to move to
@@ -30920,7 +31031,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
+	     * @param {object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
 	     *                          |  options.time     = number                 // animation time in milliseconds
 	     *                          |  options.scale    = number                 // scale to animate to
 	     *                          |  options.position = {x:number, y:number}   // position to animate to
@@ -30996,6 +31107,7 @@
 	    }
 	    /**
 	     * used to animate smoothly by hijacking the redraw function.
+	     *
 	     * @private
 	     */
 
@@ -31095,7 +31207,7 @@
 	  return View;
 	}();
 
-	var css_248z$1 = "div.vis-network div.vis-navigation div.vis-button {\n    width:34px;\n    height:34px;\n    -moz-border-radius: 17px;\n    border-radius: 17px;\n    position:absolute;\n    display:inline-block;\n    background-position: 2px 2px;\n    background-repeat:no-repeat;\n    cursor: pointer;\n    -webkit-touch-callout: none;\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\ndiv.vis-network div.vis-navigation div.vis-button:hover {\n    box-shadow: 0 0 3px 3px rgba(56, 207, 21, 0.30);\n}\n\ndiv.vis-network div.vis-navigation div.vis-button:active {\n    box-shadow: 0 0 1px 3px rgba(56, 207, 21, 0.95);\n}\n\ndiv.vis-network div.vis-navigation div.vis-button.vis-up {\n    background-image: url('data:image/png;base64,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');\n    bottom:50px;\n    left:55px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-down {\n    background-image: url('data:image/png;base64,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');\n    bottom:10px;\n    left:55px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-left {\n    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABt5JREFUeNqsl2lUlOcVx//3Pi9DZRsGBgYiS2RYBQKIjAhEJW4pNrXNMbZpWtTGNkttYmJMG5soSZckRk+0p+dYPYY0Gk0ihlhRj63GhVUgBhDD5oIOy8AAMwzD4lCYtx+GqCQKuNyP7/Pc+3u2+7/3JUzEZFBYLh62S7yIZDmVBEIBqOwsQ4DNdtBFASq2A4cuZAwVgCCPF5LGHM0Chz+E1XamzUyAzCMO7IhMI+5MDCK+HpCANd+U2rYgC/Y7BoflYgVA2RAOoNYtyjDTe45+hk96e5QywaJR+NsAwDhocK61VCjLTYWaclNB0OW+en8mhl22g8C/rn7U+uGEwdov+C0i+Q0mIFWzoD7zwVU1czQ/6pjIreR3HPX5VL9jalHXiQgmBoH+XLHAtH5csDaXtxDLLzIBv5jyfOmG2H9U4S7snbpX43KaPpgBIhDx1rPzOlbfPC5GQT/nd1mS1zABa6PfPf5y5F/rcJeWpp7fPkly6f7KXBRCoOSATFfXll19x74HDsvFCghsJAG8HrvlvytCXm7EPVqc5wyzp5NX15muE1omKXXyMnd9yy5r5Q3wPghvJzrLAlimXV38+7D1DbhPFq1M6O4b6rPVWKsCBfHi5EWWv9TkQBYAEPpLvERMC9N8FtRvjt9dPl6wwo5jPvuas7WV5jNqEjz8wA+CBsaan+w9x1hrrXJtuaZX97ooLfqPLCUEGRR+iOwAsF2X98Uc30W3fb02u41frVqeVmo6FUkkwCAwCWxJ2Ls/0TPFNBb8TNdp9WvnVz4OAKdmX2QOzcMsAAjziDGMBd3asCF6SXHyknJTfqQTK+zpvhnVKT5zawCgzFTgN94pJXvP7gxxjTAIkpB+MnSWRMQZYEDnPVt/K4ejbZ/77726Lb6h95tAAiPELaJ1bcTbRfGeM8xv1azWSeyEa0P9igk+Nr1+oNFfkpwzJCJKIQA679ntN08yDXYo3qh+LuUrc0E4EcNL4dP7VNDzpU8FP3vpekoQQ5CEw4bPdEfa9+sAgEZUmkmAAAS5hLQ9p11XGO+pM8V5JLUfMeQARDMlEMKIGFOVCZYb0C7Fz0oeXmIZ6nZzYoV9od/jVS+GbahUOnn9b7T6sEOviUGyA8bMDlUa0W79wBW/bZf+lrY98cDBUI8YCxGDgHCJiVVEDN8R7QWAE8Z/+1mGut2i3eP1r0S+XRztkdBzq6NbF7WpbF3UprKxjvfHxbrfttla/QBArVDbJJIAQCURMRg8ugrKIAKBSNxzHtN3VdmxY0iQYSZmTeegwTlgknYAAB7RZBh2Nm7urbeeC1r19ROT52kWn3shfH2Fu1AO3RxjY/0fdac7/hPPJMDE11GC+HpBJmIEuAS3Oa6w01lybMbMgvgCE6O255zy24DeCr/Bvckn9+u8ZjXYIYvjxoMJy8oeXZrT9GHIqMWTwA2oI6cFMeDIcAiSEOyibXsmZG0hAFzuq1OyY6xBAnMJgdPOmks08zU/bbsB9x18P37PqS/b8+o/a96ZcLm3PmBH46Z5x40HW1eFvl4Uq0w0MwiCBOb7/qTsd6GvVY537DXWas1Iw1AiNJnOgwJi+bXhAbE08OnvaXSIW0TvYw88eaF/uM/WNdju3m5r9TlhPBzVNNDoPGC/5tRma/GJ80xqjPPUjVuvP2narrMOWd1Jlv/E1fN782UiNPZf9C/qOKa+ndOz2j+cz046sn+6KrVOsODirpOxld0lUxmEBK/ktvGgFd2l6taBZn9BAtEz5xYIvAn4/8rFKkgstAyZ6Yf+S67ezlkiSU73XXRV6xqh93TyssR4JF75efBvymLdE03jgT/Wb5tutLWpGbTm7wHZxQQAT+yDuKLyHRIk4cnAZ4pfCF9/HvfR9uh3xBxtz00BANsVDylnac6wAICaHMiBmW5NRLy4trcq0MtZ3RnpHme5H9AvjYeCc1t3pzMJgOSVnyw4eHZUB9Kyu68iMFPpysSppab8UJVC3Rnp/pDlXqF7mnYsdKQbv7cr6fDGW/Zczbt6jgUtV6kIlFxuyg/tH+6zJXmlGe8G+mlzdsyB1j3pTAwZ9q3/Sspbc9tmDwD0H3UffXCFlyuTlFpnPRdYb612c5c8+idPCu6fCLDKUubzsf6fSaWm0wmO9hbvZU8fDR2zoZ97OuppAu0UJEDEmOISZohT6q7Gek5rD3GN6FEp1DaAYB7sdNYPXPao7anS1Fmrg402g7+jYhGIaOXOaQc+uONfmCwZXJIf8xKx2KRgxYgOS+CROuyoyQKCxIhkOr4T6JWgxGnvZ1HWnf/CfHcBXxcnpRHxYwRKkUjSErFKkAQiNjP4kmBRTHbKm5KkKxwL+K39fwDX1XGF8ct++QAAAABJRU5ErkJggg==');\n    bottom:10px;\n    left:15px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-right {\n    background-image: url('data:image/png;base64,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');\n    bottom:10px;\n    left:95px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-zoomIn {\n    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABiBJREFUeNqkV2tQlOcVfp7zvgvDRe66y8htXUBR1GoFI+BtFJvRtjPJBGeaH2a8DGmbttgSTWbSJEw6TWOsrbbpTIeJZGqaTipTa6LJZDTVUTYQdNAohoso6qLucnERN0Axcb/8+HaJUHDX9Pz6vnnPe57vXJ5zzkeEIwaYcwBL/VrW0TCKqZANINEvBhSk3w9eUmC9HzjcsfarOhBGKJN84GkVJHcetvqFu4SAIYELYlpm4LpQQMqoQQKVnzeO7EYV/A8NnHMAGwHWQJmAjtg895LkFa7FU1d258UvGLBGpI4AQM9dd2TrwNn4016n9bS3LqNzsD1VKPAbfhCyqflR31thAzv+La+QxotCoNi6pn1D1s9aVli/3xtOVk72fjT1XVf17E9uHZspFBD8zdk13pdCAjsOyG6KUSEEnrT/tPHluW+cw7eQ19q2z6/t2rsYJEjZ07S6d+ukwI5/yQ7RxnYC2DZnx8dbHNs6xxs85T2R9GprZcmVwYs2BYWsmBzP83m7nIVJS73jdfdd+7PjjUu/XWUCGTtPre7ZHjxTY3Kq8DoV8Ou5u49snPGrKxN58syZ9aVXBztsigoUBd+Xt2NbfZ8llaVvah+vOz9hcX+CJenWp7eOOYS6ePpTU1w39vk+AwCzFPdDQbFGFPCUY2v9hqxfXJ0shNeHLtsUFc6UequbVvdVkwLX0GXbZPpl6Zuu/ij9x/VCBU1dU7bfdFYAIDsSFRCgeOqa9hfy/nDhwfwTKOrRd0U95n0iqch9+cKS5JVtpMCdkllhAhugCHcRwAb7z1tCEp8CCXAWAJRoCFXIYnti+sYWTQ0tll0wQMk+hGUAkBOX714xbV1IyuhxHhIMC/iR5OV9M2JmuhU1Vh7PXiakrIUQhcnLXeHQxPT4GyAtFqgwgAPF5iIFWkeu1SSLCKAweXn3/ZR5rXV7SddQpy3YDoNems9qTI5hGCitm1MOAAx0aaFCerTd84zjBed3Egq9ADA/rqD7Q3ctQC4REDmkYHb8goGgsR2tz5V0DV+xUdQoqAQ81RybU4IgFWgACgpaLLCIBUo0bv63y/aXy6+WBHWz4/IHSIGAuVooiaRgWqD3AsDVoQ6bEgtOrfJUhwrf0WUtk+r8sL6wvHvk5ijVUiJSRrQZuURtfoGMuaCoRyfP/yMy0XykgAA0DPRTxNp31x2ZFuUYBgB7bK7HNdhpKz6WXq6oQCooKghMKhkgji77vBoA1jkXlAvVfRQjFMUcmxSkRWd6gpjeu32R2kxTvyhKh1DQeud8fFBh26zfOe0xuR4JgAbzywCoRSzfeDUKatJKUQK+CjKiHZ6nZ2xzBnU7B9vixTy7qCHSQEhJU3+DtdT6mAcAFiWUeP/xyPH3Jwrfo3XzysemRcEA8F5RY8h6aPE1WwMLQ4OQ/EBANHmdGWHlzZyxk3ayB0m771yGooYy+KE0l35x0iBxZehS6ie9R1PCMaDvCzWDXA4hZ283ptwcvp6qqDBnyao6AWEQrBQQ/7y+d3YoA+NBTAaElo973p8tVFCQyipW+c3pdNu7BwBOe+tm/eniK/kPFWowpMfvuKrzzw80zSKIkWsJe0bHYu163BNwMwDsv7G36ODNtzMnM5IWZfeQgscbisvLPl1aDhLTo7I8k+n/p+dw5pGeg0WKGiS31K6vvTdmA7nx9uDZ9A3xMUIpbvSezE6MSOmbNWXewHhD6dH23o7BlqQvvrwTK6KQFpXl2WyvcE6LTB2eCPSdrurvmcUnO/cVfPD6pMteyfGs3QKpUFQoS9tU/xPH8xe+Tdd693pN/pHug0Xmqntvz1uLDo9Z9v5nnrn+dvujrI1JMUJd3OY7n97ua46douOGpkdlDoUDeG7g1NS/u/5a0Og9scCsB+ysWXSoMuyFftWJvM0E31SBjmWPznHPjy+8NjdhYfeMmJl3EiNSRgCi/25fpGu4M671zjlrm685s2fEnUoQ5lrLLW8uPLj3oX9hqgxIw8n8X1LU7yMkItCHzREZrGQV6ONmy5TggHk247sL/1jFqof/hRn/AWfqC0pI+QHBIk3tICXRrFTpF8hlJaqefh6yFxQ6HwQYlK8HAKyt3WsWxl7fAAAAAElFTkSuQmCC');\n    bottom:10px;\n    right:15px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-zoomOut {\n    background-image: url('data:image/png;base64,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');\n    bottom:10px;\n    right:55px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {\n    background-image: url('data:image/png;base64,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');\n    bottom:50px;\n    right:15px;\n}\n";
+	var css_248z$1 = "div.vis-network div.vis-navigation div.vis-button {\n  width: 34px;\n  height: 34px;\n  -moz-border-radius: 17px;\n  border-radius: 17px;\n  position: absolute;\n  display: inline-block;\n  background-position: 2px 2px;\n  background-repeat: no-repeat;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network div.vis-navigation div.vis-button:hover {\n  box-shadow: 0 0 3px 3px rgba(56, 207, 21, 0.3);\n}\n\ndiv.vis-network div.vis-navigation div.vis-button:active {\n  box-shadow: 0 0 1px 3px rgba(56, 207, 21, 0.95);\n}\n\ndiv.vis-network div.vis-navigation div.vis-button.vis-up {\n  background-image: url('data:image/png;base64,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');\n  bottom: 50px;\n  left: 55px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-down {\n  background-image: url('data:image/png;base64,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');\n  bottom: 10px;\n  left: 55px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-left {\n  background-image: url('data:image/png;base64,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');\n  bottom: 10px;\n  left: 15px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-right {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABs1JREFUeNqsl3tQlOcVxp9z3m+XygK7C4sLxkW5o4CAkYssFSkRjabjJEOSJm1IbZx2krapiZdeprW0NVVJ0pqMM0kYJQlqkoZImGioE1ItiCAgIsFwE4Es99vCslwChf36xy5EW1A0Pn9+73fO772e93kJC5EMCszFd20SbyFZNpJAAACtjWUI8KAN1CRAJTbg9LXNU+dBkG+Xkm7Zmg4OWoUdNqZXmQCZHQFsz0yOcCYGEc8mJGDnl2UTh5AO2x2DA3OxDaAsCDvQ32VF11qP9aZYz6SeFeooi17pPQEAvZNdTnWWKnWFuVhfYT7v0zza4M3EsMk2EPgnNZusby8Y7P8x/5lI/gMTYNSnNKQt/0Xtev1DfQtZlaK+M54fmDJXXhg4G8zEINBfqlLMe28L9s/lQ8Tyr5iAJ32fK/tj+OFq3IUO1O+JyGk7GgsiEPFrlQ/07bixXdwEPckHWZJ3MgG7Qw9+/mLIS/W4SyXoNvQskpyHLg1e8CNQ3NI0laoje7Tg/8CBudgGgQwSwO/DD322ze/FFnxLRWhiBzUK94GLA2f9mSTjfU+7mjqyrVe+AX8I4aGgShbA0/47Sn4ZuLcR90ih6qih0anRiVprtUEQb43bYtlXmwNZAEDAj/ACMW1M8ExpeDXyWMVCEl4yF7vntR/zLeov8JJlWfZR+Y3N92+cx/reOmu1quNrk27EWW0xvWspJcigoNNkA4C3Yk59vH7xltvu3ktDxe7PX34ilQCQfeci1j2xfn94ZrGCneY8uxcHCnW/vbr9EQD4d2ITc8AprAOAQLewroVAAaB8oMiLiRHvmVy7znNTjWCFrXKoJOSHFQ+kvnF9f+jco07s91MFdwmSkHQuYB0T8WYwIcYj0bTQdRufGlFKJMFVaCb/GvZW6aGI4yeXOwd2mr/u05zsyDY+W5X64Nm+fO85NpuJiCFJTpslIoonADEeiT2zIzIXuh+o25PQNtbsNVMOBUn2g08MiSTHN3uZjNTEDr4dnX/6H+1H/XPasmKvW+sMGfW/MXzende4K3h/ibvSYxIAItyie/K7cgCitQxCIBFjpTrKMgM+WPfrhLbxFi9iMQtlYjAJSCSBSYBAIPBNI3p86TPXj8bk56R4PVylFE626uFLQc9efiTVPDmgBIAAtzALEYNBQRITa4kYix21FwBax655CVagPLk7806Pj1qo/7MraF/FQ14/aMhszYhvGqn3KTef89rklWrSKXUTkn3mtJK9Bzf3XJA0e/PcrdgxIwSCDPmbZMQgABJkDBKzvn+yy2npIv9xAPB1Ceo2jTZ7Gc8afipIgEhAkACDwcSQQZBIIGnx5it7gg+U3wgcnbZKR1r+FnW+v2DVtDwtXCXNSKz797oAwDzZ7ySRAIBBFsTXmBh1w1+oZ4J3h+wv9lUFdbMDOrO+5IAqWIGZthuV13nC77nKRx8r7PssyibLIkoT1/h65HsfzWyu5tF6NYNB4EYJzKUETqgcLNVv0D/cDQBrNAnm9+LOfTLfNB5u2hf5z+6TMexYji+tVdrM5leMbWOtSwQx/F1C2rcuebIqwSO568a4WmuN3mEYSiUi+pRl2l1pLvYBsKArUKVwnZRYgdHpMWVG4+/WXhwoDBXE7OmkHzJ6JNemLfv51bniGqzVPoIkyLbpfK7ZMFIkE6FlrMn7Ql+BbiHg+zXGbgLjylDpyosD58KZmKM0cfWHI9//aD5o1VCZrnO83VuQQOja5PMCfwK8n3K2ChIbLVOD9KB36le3A+u/s2Q81C2yRavQmQNdVnamLnmq4nHD9jpB0rwm77jpjTW9E906Bu18fWlWCQHAox9CtGoXTwmS8IThZyXPB+29inuoE6bMsDM9ufEAMNHqJuU8ljMtAKA2B7IhzaWNiLfWjVQb3J10/SGuEZZ7Af1X7+lluZ3HkpgEQPL291M+qbzJgXQcG60ypKlVTGwsMxcFaJW6/hDXVZZvCz3RlrmRiQHwy9nRn2bM6bnas4cLfH6s1RIorsJcFDA2PToR7Z7QezfQD9qzwvI6TyTZC47ttXeiT+2c1+wBgOndoTPLt7mrmCRjvfULQ4O1xsVVchu7b9GysYUAqy3lnsdNb0aXmQuj7PYWL2etuRl6S0OfXLjiGQIdEY6K5esc2BWhjvkqXLO6x08VPKxV6iYAwuBkv5NpvNmtbrhaX2+tWdY70eVNINhtLW0/sjrv6B0/YdJlcGlR2AvE4hUlKwHQ7BU5cz8LRx0HaPY7gXb53L/67+mUfudPmP/twOWS6AQi/j6B4iWS/IlYK+yGYJDB1wWLErLRKd/omOJbAWf03wEAyO9m+/TtS3AAAAAASUVORK5CYII=');\n  bottom: 10px;\n  left: 95px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-zoomIn {\n  background-image: url('data:image/png;base64,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');\n  bottom: 10px;\n  right: 15px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-zoomOut {\n  background-image: url('data:image/png;base64,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');\n  bottom: 10px;\n  right: 55px;\n}\ndiv.vis-network div.vis-navigation div.vis-button.vis-zoomExtends {\n  background-image: url('data:image/png;base64,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');\n  bottom: 50px;\n  right: 15px;\n}\n";
 	styleInject(css_248z$1);
 
 	/**
@@ -31104,7 +31216,7 @@
 
 	var NavigationHandler = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Canvas} canvas
 	   */
 	  function NavigationHandler(body, canvas) {
@@ -31138,7 +31250,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -31184,8 +31296,8 @@
 	      } // clean up previous navigation items
 
 
-	      if (this.navigationDOM && this.navigationDOM['wrapper'] && this.navigationDOM['wrapper'].parentNode) {
-	        this.navigationDOM['wrapper'].parentNode.removeChild(this.navigationDOM['wrapper']);
+	      if (this.navigationDOM && this.navigationDOM["wrapper"] && this.navigationDOM["wrapper"].parentNode) {
+	        this.navigationDOM["wrapper"].parentNode.removeChild(this.navigationDOM["wrapper"]);
 	      }
 
 	      this.iconsCreated = false;
@@ -31206,16 +31318,16 @@
 
 	      this.cleanNavigation();
 	      this.navigationDOM = {};
-	      var navigationDivs = ['up', 'down', 'left', 'right', 'zoomIn', 'zoomOut', 'zoomExtends'];
-	      var navigationDivActions = ['_moveUp', '_moveDown', '_moveLeft', '_moveRight', '_zoomIn', '_zoomOut', '_fit'];
-	      this.navigationDOM['wrapper'] = document.createElement('div');
-	      this.navigationDOM['wrapper'].className = 'vis-navigation';
-	      this.canvas.frame.appendChild(this.navigationDOM['wrapper']);
+	      var navigationDivs = ["up", "down", "left", "right", "zoomIn", "zoomOut", "zoomExtends"];
+	      var navigationDivActions = ["_moveUp", "_moveDown", "_moveLeft", "_moveRight", "_zoomIn", "_zoomOut", "_fit"];
+	      this.navigationDOM["wrapper"] = document.createElement("div");
+	      this.navigationDOM["wrapper"].className = "vis-navigation";
+	      this.canvas.frame.appendChild(this.navigationDOM["wrapper"]);
 
 	      for (var i = 0; i < navigationDivs.length; i++) {
-	        this.navigationDOM[navigationDivs[i]] = document.createElement('div');
-	        this.navigationDOM[navigationDivs[i]].className = 'vis-button vis-' + navigationDivs[i];
-	        this.navigationDOM['wrapper'].appendChild(this.navigationDOM[navigationDivs[i]]);
+	        this.navigationDOM[navigationDivs[i]] = document.createElement("div");
+	        this.navigationDOM[navigationDivs[i]].className = "vis-button vis-" + navigationDivs[i];
+	        this.navigationDOM["wrapper"].appendChild(this.navigationDOM[navigationDivs[i]]);
 	        var hammer = new Hammer$1(this.navigationDOM[navigationDivs[i]]);
 
 	        if (navigationDivActions[i] === "_fit") {
@@ -31364,8 +31476,8 @@
 	        x: tx,
 	        y: ty
 	      };
-	      this.body.emitter.emit('zoom', {
-	        direction: '+',
+	      this.body.emitter.emit("zoom", {
+	        direction: "+",
 	        scale: this.body.view.scale,
 	        pointer: null
 	      });
@@ -31389,8 +31501,8 @@
 	        x: tx,
 	        y: ty
 	      };
-	      this.body.emitter.emit('zoom', {
-	        direction: '-',
+	      this.body.emitter.emit("zoom", {
+	        direction: "-",
 	        scale: this.body.view.scale,
 	        pointer: null
 	      });
@@ -31529,7 +31641,7 @@
 	  return NavigationHandler;
 	}();
 
-	var css_248z$2 = "div.vis-tooltip {\n  position: absolute;\n  visibility: hidden;\n  padding: 5px;\n  white-space: nowrap;\n\n  font-family: verdana;\n  font-size:14px;\n  color:#000000;\n  background-color: #f5f4ed;\n\n  -moz-border-radius: 3px;\n  -webkit-border-radius: 3px;\n  border-radius: 3px;\n  border: 1px solid #808074;\n\n  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);\n  pointer-events: none;\n\n  z-index: 5;\n}\n";
+	var css_248z$2 = "div.vis-tooltip {\n  position: absolute;\n  visibility: hidden;\n  padding: 5px;\n  white-space: nowrap;\n\n  font-family: verdana;\n  font-size: 14px;\n  color: #000000;\n  background-color: #f5f4ed;\n\n  -moz-border-radius: 3px;\n  -webkit-border-radius: 3px;\n  border-radius: 3px;\n  border: 1px solid #808074;\n\n  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);\n  pointer-events: none;\n\n  z-index: 5;\n}\n";
 	styleInject(css_248z$2);
 
 	/**
@@ -31545,14 +31657,14 @@
 	    classCallCheck(this, Popup);
 
 	    this.container = container;
-	    this.overflowMethod = overflowMethod || 'cap';
+	    this.overflowMethod = overflowMethod || "cap";
 	    this.x = 0;
 	    this.y = 0;
 	    this.padding = 5;
 	    this.hidden = false; // create the frame
 
-	    this.frame = document.createElement('div');
-	    this.frame.className = 'vis-tooltip';
+	    this.frame = document.createElement("div");
+	    this.frame.className = "vis-tooltip";
 	    this.container.appendChild(this.frame);
 	  }
 	  /**
@@ -31569,6 +31681,7 @@
 	    }
 	    /**
 	     * Set the content for the popup window. This can be HTML code or text.
+	     *
 	     * @param {string | Element} content
 	     */
 
@@ -31576,7 +31689,7 @@
 	    key: "setText",
 	    value: function setText(content) {
 	      if (content instanceof Element) {
-	        this.frame.innerHTML = '';
+	        this.frame.innerHTML = "";
 	        this.frame.appendChild(content);
 	      } else {
 	        this.frame.innerHTML = content; // string containing text or HTML
@@ -31584,6 +31697,7 @@
 	    }
 	    /**
 	     * Show the popup window
+	     *
 	     * @param {boolean} [doShow]    Show or hide the window
 	     */
 
@@ -31602,7 +31716,7 @@
 	        var left = 0,
 	            top = 0;
 
-	        if (this.overflowMethod == 'flip') {
+	        if (this.overflowMethod == "flip") {
 	          var isLeft = false,
 	              isTop = true; // Where around the position it's located
 
@@ -31687,7 +31801,7 @@
 
 	var InteractionHandler = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Canvas} canvas
 	   * @param {SelectionHandler} selectionHandler
 	   */
@@ -31754,14 +31868,14 @@
 	    value: function bindEventListeners() {
 	      var _this = this;
 
-	      this.body.emitter.on('destroy', function () {
+	      this.body.emitter.on("destroy", function () {
 	        clearTimeout(_this.popupTimer);
 	        delete _this.body.functions.getPointer;
 	      });
 	    }
 	    /**
 	     *
-	     * @param {Object} options
+	     * @param {object} options
 	     */
 
 	  }, {
@@ -31769,10 +31883,10 @@
 	    value: function setOptions(options) {
 	      if (options !== undefined) {
 	        // extend all but the values in fields
-	        var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag', 'keyboard', 'multiselect', 'selectable', 'selectConnectedEdges'];
+	        var fields = ["hideEdgesOnDrag", "hideEdgesOnZoom", "hideNodesOnDrag", "keyboard", "multiselect", "selectable", "selectConnectedEdges"];
 	        selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
 
-	        mergeOptions(this.options, options, 'keyboard');
+	        mergeOptions(this.options, options, "keyboard");
 
 	        if (options.tooltip) {
 	          assign$2(this.options.tooltip, options.tooltip);
@@ -31787,8 +31901,9 @@
 	    }
 	    /**
 	     * Get the pointer location from a touch location
+	     *
 	     * @param {{x: number, y: number}} touch
-	     * @return {{x: number, y: number}} pointer
+	     * @returns {{x: number, y: number}} pointer
 	     * @private
 	     */
 
@@ -31802,6 +31917,7 @@
 	    }
 	    /**
 	     * On start of a touch gesture, store the pointer
+	     *
 	     * @param {Event}  event   The event
 	     * @private
 	     */
@@ -31819,6 +31935,7 @@
 	    }
 	    /**
 	     * handle tap/click event: select/unselect a node
+	     *
 	     * @param {Event} event
 	     * @private
 	     */
@@ -31830,10 +31947,11 @@
 	      var multiselect = this.selectionHandler.options.multiselect && (event.changedPointers[0].ctrlKey || event.changedPointers[0].metaKey);
 	      this.checkSelectionChanges(pointer, event, multiselect);
 
-	      this.selectionHandler._generateClickEvent('click', event, pointer);
+	      this.selectionHandler._generateClickEvent("click", event, pointer);
 	    }
 	    /**
 	     * handle doubletap event
+	     *
 	     * @param {Event} event
 	     * @private
 	     */
@@ -31843,10 +31961,11 @@
 	    value: function onDoubleTap(event) {
 	      var pointer = this.getPointer(event.center);
 
-	      this.selectionHandler._generateClickEvent('doubleClick', event, pointer);
+	      this.selectionHandler._generateClickEvent("doubleClick", event, pointer);
 	    }
 	    /**
 	     * handle long tap event: multi select nodes
+	     *
 	     * @param {Event} event
 	     * @private
 	     */
@@ -31858,9 +31977,9 @@
 	      var multiselect = this.selectionHandler.options.multiselect;
 	      this.checkSelectionChanges(pointer, event, multiselect);
 
-	      this.selectionHandler._generateClickEvent('click', event, pointer);
+	      this.selectionHandler._generateClickEvent("click", event, pointer);
 
-	      this.selectionHandler._generateClickEvent('hold', event, pointer);
+	      this.selectionHandler._generateClickEvent("hold", event, pointer);
 	    }
 	    /**
 	     * handle the release of the screen
@@ -31875,7 +31994,7 @@
 	      if (new Date().valueOf() - this.touchTime > 10) {
 	        var pointer = this.getPointer(event.center);
 
-	        this.selectionHandler._generateClickEvent('release', event, pointer); // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
+	        this.selectionHandler._generateClickEvent("release", event, pointer); // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
 
 
 	        this.touchTime = new Date().valueOf();
@@ -31894,7 +32013,7 @@
 	        y: event.clientY
 	      });
 
-	      this.selectionHandler._generateClickEvent('oncontext', event, pointer);
+	      this.selectionHandler._generateClickEvent("oncontext", event, pointer);
 	    }
 	    /**
 	     * Select and deselect nodes depending current selection change.
@@ -31932,25 +32051,25 @@
 	      var selectedItems = this._determineDifference(currentSelection, previousSelection);
 
 	      if (deselectedItems.edges.length > 0) {
-	        this.selectionHandler._generateClickEvent('deselectEdge', event, pointer, previousSelection);
+	        this.selectionHandler._generateClickEvent("deselectEdge", event, pointer, previousSelection);
 
 	        selected = true;
 	      }
 
 	      if (deselectedItems.nodes.length > 0) {
-	        this.selectionHandler._generateClickEvent('deselectNode', event, pointer, previousSelection);
+	        this.selectionHandler._generateClickEvent("deselectNode", event, pointer, previousSelection);
 
 	        selected = true;
 	      }
 
 	      if (selectedItems.nodes.length > 0) {
-	        this.selectionHandler._generateClickEvent('selectNode', event, pointer);
+	        this.selectionHandler._generateClickEvent("selectNode", event, pointer);
 
 	        selected = true;
 	      }
 
 	      if (selectedItems.edges.length > 0) {
-	        this.selectionHandler._generateClickEvent('selectEdge', event, pointer);
+	        this.selectionHandler._generateClickEvent("selectEdge", event, pointer);
 
 	        selected = true;
 	      } // fire the select event if anything has been selected or deselected
@@ -31958,7 +32077,7 @@
 
 	      if (selected === true) {
 	        // select or unselect
-	        this.selectionHandler._generateClickEvent('select', event, pointer);
+	        this.selectionHandler._generateClickEvent("select", event, pointer);
 	      }
 	    }
 	    /**
@@ -32044,7 +32163,7 @@
 	        } // after select to contain the node
 
 
-	        this.selectionHandler._generateClickEvent('dragStart', event, this.drag.pointer);
+	        this.selectionHandler._generateClickEvent("dragStart", event, this.drag.pointer);
 
 	        var selection = this.selectionHandler.selectionObj.nodes; // create an array with the selected nodes and their original location and status
 
@@ -32067,11 +32186,12 @@
 	        }
 	      } else {
 	        // fallback if no node is selected and thus the view is dragged.
-	        this.selectionHandler._generateClickEvent('dragStart', event, this.drag.pointer, undefined, true);
+	        this.selectionHandler._generateClickEvent("dragStart", event, this.drag.pointer, undefined, true);
 	      }
 	    }
 	    /**
 	     * handle drag event
+	     *
 	     * @param {Event} event
 	     * @private
 	     */
@@ -32086,12 +32206,12 @@
 	      } // remove the focus on node if it is focussed on by the focusOnNode
 
 
-	      this.body.emitter.emit('unlockNode');
+	      this.body.emitter.emit("unlockNode");
 	      var pointer = this.getPointer(event.center);
 	      var selection = this.drag.selection;
 
 	      if (selection && selection.length && this.options.dragNodes === true) {
-	        this.selectionHandler._generateClickEvent('dragging', event, pointer); // calculate delta's and new location
+	        this.selectionHandler._generateClickEvent("dragging", event, pointer); // calculate delta's and new location
 
 
 	        var deltaX = pointer.x - this.drag.pointer.x;
@@ -32111,11 +32231,11 @@
 	        }); // start the simulation of the physics
 
 
-	        this.body.emitter.emit('startSimulation');
+	        this.body.emitter.emit("startSimulation");
 	      } else {
 	        // create selection box
 	        if (event.srcEvent.shiftKey) {
-	          this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
+	          this.selectionHandler._generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
 
 	          if (this.drag.pointer === undefined) {
@@ -32127,12 +32247,12 @@
 	            x: this.canvas._XconvertDOMtoCanvas(pointer.x),
 	            y: this.canvas._YconvertDOMtoCanvas(pointer.y)
 	          };
-	          this.body.emitter.emit('_requestRedraw');
+	          this.body.emitter.emit("_requestRedraw");
 	        } // move the network
 
 
 	        if (this.options.dragView === true && !event.srcEvent.shiftKey) {
-	          this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
+	          this.selectionHandler._generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
 
 	          if (this.drag.pointer === undefined) {
@@ -32146,12 +32266,13 @@
 	            x: this.drag.translation.x + diffX,
 	            y: this.drag.translation.y + diffY
 	          };
-	          this.body.emitter.emit('_requestRedraw');
+	          this.body.emitter.emit("_requestRedraw");
 	        }
 	      }
 	    }
 	    /**
 	     * handle drag start event
+	     *
 	     * @param {Event} event
 	     * @private
 	     */
@@ -32184,9 +32305,9 @@
 	          return _this3.selectionHandler.selectObject(_this3.body.nodes[nodeId]);
 	        });
 
-	        this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
+	        this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
 
-	        this.body.emitter.emit('_requestRedraw');
+	        this.body.emitter.emit("_requestRedraw");
 	      } else {
 	        var selection = this.drag.selection;
 
@@ -32197,18 +32318,19 @@
 	            s.node.options.fixed.y = s.yFixed;
 	          });
 
-	          this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center));
+	          this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center));
 
-	          this.body.emitter.emit('startSimulation');
+	          this.body.emitter.emit("startSimulation");
 	        } else {
-	          this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
+	          this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
 
-	          this.body.emitter.emit('_requestRedraw');
+	          this.body.emitter.emit("_requestRedraw");
 	        }
 	      }
 	    }
 	    /**
 	     * Handle pinch event
+	     *
 	     * @param {Event}  event   The event
 	     * @private
 	     */
@@ -32219,7 +32341,7 @@
 	      var pointer = this.getPointer(event.center);
 	      this.drag.pinched = true;
 
-	      if (this.pinch['scale'] === undefined) {
+	      if (this.pinch["scale"] === undefined) {
 	        this.pinch.scale = 1;
 	      } // TODO: enabled moving while pinching?
 
@@ -32229,6 +32351,7 @@
 	    }
 	    /**
 	     * Zoom the network in or out
+	     *
 	     * @param {number} scale a number around 1, and between 0.01 and 10
 	     * @param {{x: number, y: number}} pointer    Position on screen
 	     * @private
@@ -32273,17 +32396,17 @@
 	          this.drag.pointer.y = postScaleDragPointer.y;
 	        }
 
-	        this.body.emitter.emit('_requestRedraw');
+	        this.body.emitter.emit("_requestRedraw");
 
 	        if (scaleOld < scale) {
-	          this.body.emitter.emit('zoom', {
-	            direction: '+',
+	          this.body.emitter.emit("zoom", {
+	            direction: "+",
 	            scale: this.body.view.scale,
 	            pointer: pointer
 	          });
 	        } else {
-	          this.body.emitter.emit('zoom', {
-	            direction: '-',
+	          this.body.emitter.emit("zoom", {
+	            direction: "-",
 	            scale: this.body.view.scale,
 	            pointer: pointer
 	          });
@@ -32294,6 +32417,7 @@
 	     * Event handler for mouse wheel event, used to zoom the timeline
 	     * See http://adomas.org/javascript-mouse-wheel/
 	     *     https://github.com/EightMedia/hammer.js/issues/256
+	     *
 	     * @param {MouseEvent}  event
 	     * @private
 	     */
@@ -32324,6 +32448,7 @@
 	    }
 	    /**
 	     * Mouse move handler for checking whether the title moves over a node with a title.
+	     *
 	     * @param  {Event} event
 	     * @private
 	     */
@@ -32401,7 +32526,7 @@
 	      };
 	      var previousPopupObjId = this.popupObj === undefined ? undefined : this.popupObj.id;
 	      var nodeUnderCursor = false;
-	      var popupType = 'node'; // check if a node is under the cursor.
+	      var popupType = "node"; // check if a node is under the cursor.
 
 	      if (this.popupObj === undefined) {
 	        // search the nodes for overlap, select the top one in case of multiple nodes
@@ -32449,7 +32574,7 @@
 
 	        if (overlappingEdges.length > 0) {
 	          this.popupObj = edges[overlappingEdges[overlappingEdges.length - 1]];
-	          popupType = 'edge';
+	          popupType = "edge";
 	        }
 	      }
 
@@ -32468,18 +32593,19 @@
 	          this.popup.setPosition(pointer.x + 3, pointer.y - 5);
 	          this.popup.setText(this.popupObj.getTitle());
 	          this.popup.show();
-	          this.body.emitter.emit('showPopup', this.popupObj.id);
+	          this.body.emitter.emit("showPopup", this.popupObj.id);
 	        }
 	      } else {
 	        if (this.popup !== undefined) {
 	          this.popup.hide();
-	          this.body.emitter.emit('hidePopup');
+	          this.body.emitter.emit("hidePopup");
 	        }
 	      }
 	    }
 	    /**
 	     * Check if the popup must be hidden, which is the case when the mouse is no
 	     * longer hovering on the object
+	     *
 	     * @param {{x:number, y:number}} pointer
 	     * @private
 	     */
@@ -32491,7 +32617,7 @@
 
 	      var stillOnObj = false;
 
-	      if (this.popup.popupTargetType === 'node') {
+	      if (this.popup.popupTargetType === "node") {
 	        if (this.body.nodes[this.popup.popupTargetId] !== undefined) {
 	          stillOnObj = this.body.nodes[this.popup.popupTargetId].isOverlappingWith(pointerObj); // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
 	          // we initially only check stillOnObj because this is much faster.
@@ -32512,7 +32638,7 @@
 	      if (stillOnObj === false) {
 	        this.popupObj = undefined;
 	        this.popup.hide();
-	        this.body.emitter.emit('hidePopup');
+	        this.body.emitter.emit("hidePopup");
 	      }
 	    }
 	  }]);
@@ -32526,7 +32652,7 @@
 
 	var SelectionHandler = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Canvas} canvas
 	   */
 	  function SelectionHandler(body, canvas) {
@@ -32560,7 +32686,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} [options]
+	   * @param {object} [options]
 	   */
 
 
@@ -32568,7 +32694,7 @@
 	    key: "setOptions",
 	    value: function setOptions(options) {
 	      if (options !== undefined) {
-	        var fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
+	        var fields = ["multiselect", "hoverConnectedEdges", "selectable", "selectConnectedEdges"];
 	        selectiveDeepExtend(fields, this.options, options);
 	      }
 	    }
@@ -32640,14 +32766,14 @@
 	    key: "_initBaseEvent",
 	    value: function _initBaseEvent(event, pointer) {
 	      var properties = {};
-	      properties['pointer'] = {
+	      properties["pointer"] = {
 	        DOM: {
 	          x: pointer.x,
 	          y: pointer.y
 	        },
 	        canvas: this.canvas.DOMtoCanvas(pointer)
 	      };
-	      properties['event'] = event;
+	      properties["event"] = event;
 	      return properties;
 	    }
 	    /**
@@ -32659,7 +32785,7 @@
 	     * @param {string} eventType                          Name of event to send
 	     * @param {Event}  event
 	     * @param {{x: number, y: number}} pointer            Object with the x and y screen coordinates of the mouse
-	     * @param {Object|undefined} oldSelection             If present, selection state before event occured
+	     * @param {object | undefined} oldSelection             If present, selection state before event occured
 	     * @param {boolean|undefined} [emptySelection=false]  Indicate if selection data should be passed
 	     */
 
@@ -32680,10 +32806,10 @@
 	      }
 
 	      if (oldSelection !== undefined) {
-	        properties['previousSelection'] = oldSelection;
+	        properties["previousSelection"] = oldSelection;
 	      }
 
-	      if (eventType == 'click') {
+	      if (eventType == "click") {
 	        // For the time being, restrict this functionality to
 	        // just the click event.
 	        properties.items = this.getClickedItems(pointer);
@@ -32697,7 +32823,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} obj
+	     * @param {object} obj
 	     * @param {boolean} [highlightEdges=this.options.selectConnectedEdges]
 	     * @returns {boolean}
 	     */
@@ -32725,7 +32851,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} obj
+	     * @param {object} obj
 	     */
 
 	  }, {
@@ -32739,8 +32865,9 @@
 	    }
 	    /**
 	     * retrieve all nodes overlapping with given object
-	     * @param {Object} object  An object with parameters left, top, right, bottom
-	     * @return {number[]}   An array with id's of the overlapping nodes
+	     *
+	     * @param {object} object  An object with parameters left, top, right, bottom
+	     * @returns {number[]}   An array with id's of the overlapping nodes
 	     * @private
 	     */
 
@@ -32784,7 +32911,7 @@
 	     *
 	     * @param {{x: number, y: number}} pointer
 	     * @param {boolean} [returnNode=true]
-	     * @return {Node | undefined} node
+	     * @returns {Node | undefined} node
 	     */
 
 	  }, {
@@ -32811,7 +32938,8 @@
 	    }
 	    /**
 	     * retrieve all edges overlapping with given object, selector is around center
-	     * @param {Object} object  An object with parameters left, top, right, bottom
+	     *
+	     * @param {object} object  An object with parameters left, top, right, bottom
 	     * @param {number[]} overlappingEdges An array with id's of the overlapping nodes
 	     * @private
 	     */
@@ -32831,8 +32959,9 @@
 	    }
 	    /**
 	     * retrieve all nodes overlapping with given object
-	     * @param {Object} object  An object with parameters left, top, right, bottom
-	     * @return {number[]}   An array with id's of the overlapping nodes
+	     *
+	     * @param {object} object  An object with parameters left, top, right, bottom
+	     * @returns {number[]}   An array with id's of the overlapping nodes
 	     * @private
 	     */
 
@@ -32850,7 +32979,7 @@
 	     *
 	     * @param {{x: number, y: number}} pointer
 	     * @param {boolean} [returnEdge=true]
-	     * @return {Edge | undefined} node
+	     * @returns {Edge | undefined} node
 	     */
 
 	  }, {
@@ -32894,7 +33023,7 @@
 	    /**
 	     * Add object to the selection array.
 	     *
-	     * @param {Object} obj
+	     * @param {object} obj
 	     * @private
 	     */
 
@@ -32910,7 +33039,7 @@
 	    /**
 	     * Add object to the selection array.
 	     *
-	     * @param {Object} obj
+	     * @param {object} obj
 	     * @private
 	     */
 
@@ -32926,7 +33055,7 @@
 	    /**
 	     * Remove a single option from selection.
 	     *
-	     * @param {Object} obj
+	     * @param {object} obj
 	     * @private
 	     */
 
@@ -33287,13 +33416,14 @@
 	      }
 
 	      if (hoverChanged === true) {
-	        this.body.emitter.emit('_requestRedraw');
+	        this.body.emitter.emit("_requestRedraw");
 	      }
 	    }
 	    /**
 	     *
 	     * retrieve the currently selected objects
-	     * @return {{nodes: Array.<string>, edges: Array.<string>}} selection
+	     *
+	     * @returns {{nodes: Array.<string>, edges: Array.<string>}} selection
 	     */
 
 	  }, {
@@ -33309,7 +33439,8 @@
 	    /**
 	     *
 	     * retrieve the currently selected nodes
-	     * @return {string[]} selection    An array with the ids of the
+	     *
+	     * @returns {string[]} selection    An array with the ids of the
 	     *                                            selected nodes.
 	     */
 
@@ -33331,7 +33462,8 @@
 	    /**
 	     *
 	     * retrieve the currently selected edges
-	     * @return {Array} selection    An array with the ids of the
+	     *
+	     * @returns {Array} selection    An array with the ids of the
 	     *                                            selected nodes.
 	     */
 
@@ -33352,8 +33484,9 @@
 	    }
 	    /**
 	     * Updates the current selection
+	     *
 	     * @param {{nodes: Array.<string>, edges: Array.<string>}} selection
-	     * @param {Object} options                                 Options
+	     * @param {object} options                                 Options
 	     */
 
 	  }, {
@@ -33361,7 +33494,7 @@
 	    value: function setSelection(selection) {
 	      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	      var i, id;
-	      if (!selection || !selection.nodes && !selection.edges) throw 'Selection must be an object with nodes and/or edges properties'; // first unselect any selected node, if option is true or undefined
+	      if (!selection || !selection.nodes && !selection.edges) throw "Selection must be an object with nodes and/or edges properties"; // first unselect any selected node, if option is true or undefined
 
 	      if (options.unselectAll || options.unselectAll === undefined) {
 	        this.unselectAll();
@@ -33394,10 +33527,11 @@
 	        }
 	      }
 
-	      this.body.emitter.emit('_requestRedraw');
+	      this.body.emitter.emit("_requestRedraw");
 	    }
 	    /**
 	     * select zero or more nodes with the option to highlight edges
+	     *
 	     * @param {number[] | string[]} selection     An array with the ids of the
 	     *                                            selected nodes.
 	     * @param {boolean} [highlightEdges]
@@ -33407,7 +33541,7 @@
 	    key: "selectNodes",
 	    value: function selectNodes(selection) {
 	      var highlightEdges = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-	      if (!selection || selection.length === undefined) throw 'Selection must be an array with ids';
+	      if (!selection || selection.length === undefined) throw "Selection must be an array with ids";
 	      this.setSelection({
 	        nodes: selection
 	      }, {
@@ -33416,6 +33550,7 @@
 	    }
 	    /**
 	     * select zero or more edges
+	     *
 	     * @param {number[] | string[]} selection     An array with the ids of the
 	     *                                            selected nodes.
 	     */
@@ -33423,13 +33558,14 @@
 	  }, {
 	    key: "selectEdges",
 	    value: function selectEdges(selection) {
-	      if (!selection || selection.length === undefined) throw 'Selection must be an array with ids';
+	      if (!selection || selection.length === undefined) throw "Selection must be an array with ids";
 	      this.setSelection({
 	        edges: selection
 	      });
 	    }
 	    /**
 	     * Validate the selection: remove ids of nodes which no longer exist
+	     *
 	     * @private
 	     */
 
@@ -34356,7 +34492,9 @@
 	  createClass(DirectionInterface, [{
 	    key: "abstract",
 
-	    /** @ignore **/
+	    /**
+	     * @ignore
+	     */
 	    value: function abstract() {
 	      throw new Error("Can't instantiate abstract class!");
 	    }
@@ -34378,7 +34516,7 @@
 	     *
 	     * The value should be perpendicular to the actual direction of the layout.
 	     *
-	     * @return {string} Direction, either 'vertical' or 'horizontal'
+	     * @returns {string} Direction, either 'vertical' or 'horizontal'
 	     */
 
 	  }, {
@@ -34390,7 +34528,7 @@
 	     * Return the value of the coordinate that is not fixed for this direction.
 	     *
 	     * @param {Node} node The node to read
-	     * @return {number} Value of the unfixed coordinate
+	     * @returns {number} Value of the unfixed coordinate
 	     */
 
 	  }, {
@@ -34421,7 +34559,7 @@
 	     * only among themselves. In essence, it is a sub-network.
 	     *
 	     * @param {number} index The index number of a tree
-	     * @return {number} the width of a tree in the view coordinates
+	     * @returns {number} the width of a tree in the view coordinates
 	     */
 
 	  }, {
@@ -34486,7 +34624,7 @@
 	 *
 	 * Coordinate `y` is fixed on levels, coordinate `x` is unfixed.
 	 *
-	 * @extends DirectionInterface
+	 * @augments DirectionInterface
 	 * @private
 	 */
 
@@ -34499,7 +34637,7 @@
 	  /**
 	   * Constructor
 	   *
-	   * @param {Object} layout reference to the parent LayoutEngine instance.
+	   * @param {object} layout reference to the parent LayoutEngine instance.
 	   */
 	  function VerticalStrategy(layout) {
 	    var _this;
@@ -34510,22 +34648,22 @@
 	    _this.layout = layout;
 	    return _this;
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(VerticalStrategy, [{
 	    key: "curveType",
 	    value: function curveType() {
-	      return 'horizontal';
+	      return "horizontal";
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getPosition",
 	    value: function getPosition(node) {
 	      return node.x;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "setPosition",
@@ -34538,7 +34676,7 @@
 
 	      node.x = position;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getTreeSize",
@@ -34549,7 +34687,7 @@
 	        max: res.max_x
 	      };
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "sort",
@@ -34558,7 +34696,7 @@
 	        return a.x - b.x;
 	      });
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "fix",
@@ -34566,7 +34704,7 @@
 	      node.y = this.layout.options.hierarchical.levelSeparation * level;
 	      node.options.fixed.y = true;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "shift",
@@ -34582,7 +34720,7 @@
 	 *
 	 * Coordinate `x` is fixed on levels, coordinate `y` is unfixed.
 	 *
-	 * @extends DirectionInterface
+	 * @augments DirectionInterface
 	 * @private
 	 */
 
@@ -34595,7 +34733,7 @@
 	  /**
 	   * Constructor
 	   *
-	   * @param {Object} layout reference to the parent LayoutEngine instance.
+	   * @param {object} layout reference to the parent LayoutEngine instance.
 	   */
 	  function HorizontalStrategy(layout) {
 	    var _this2;
@@ -34606,22 +34744,22 @@
 	    _this2.layout = layout;
 	    return _this2;
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(HorizontalStrategy, [{
 	    key: "curveType",
 	    value: function curveType() {
-	      return 'vertical';
+	      return "vertical";
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getPosition",
 	    value: function getPosition(node) {
 	      return node.y;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "setPosition",
@@ -34634,7 +34772,7 @@
 
 	      node.y = position;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getTreeSize",
@@ -34645,7 +34783,7 @@
 	        max: res.max_y
 	      };
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "sort",
@@ -34654,7 +34792,7 @@
 	        return a.y - b.y;
 	      });
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "fix",
@@ -34662,7 +34800,7 @@
 	      node.x = this.layout.options.hierarchical.levelSeparation * level;
 	      node.options.fixed.x = true;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "shift",
@@ -35017,6 +35155,7 @@
 	    }
 	    /**
 	     * Return the number of separate trees in the current network.
+	     *
 	     * @returns {number}
 	     */
 
@@ -35027,6 +35166,7 @@
 	    }
 	    /**
 	     * Assign a tree id to a node
+	     *
 	     * @param {Node} node
 	     * @param {string|number} treeId
 	     */
@@ -35060,6 +35200,7 @@
 	     * get the maximum level of a branch.
 	     *
 	     * TODO: Never entered; find a test case to test this!
+	     *
 	     * @param {Node.id} nodeId
 	     * @returns {number}
 	     */
@@ -35181,7 +35322,7 @@
 	     *
 	     * @param {Node} node1
 	     * @param {Node} node2
-	     * @return {boolean} true if the two nodes have a same ancestor node, false otherwise
+	     * @returns {boolean} true if the two nodes have a same ancestor node, false otherwise
 	     */
 
 	  }, {
@@ -35209,7 +35350,7 @@
 	     *
 	     * @param {Node} node1
 	     * @param {Node} node2
-	     * @return {Boolean} true if this is so, false otherwise
+	     * @returns {boolean} true if this is so, false otherwise
 	     */
 
 	  }, {
@@ -35269,7 +35410,7 @@
 
 	var LayoutEngine = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   */
 	  function LayoutEngine(body) {
 	    classCallCheck(this, LayoutEngine);
@@ -35296,9 +35437,9 @@
 	        blockShifting: true,
 	        edgeMinimization: true,
 	        parentCentralization: true,
-	        direction: 'UD',
+	        direction: "UD",
 	        // UD, DU, LR, RL
-	        sortMethod: 'hubsize' // hubsize, directed
+	        sortMethod: "hubsize" // hubsize, directed
 
 	      }
 	    };
@@ -35317,16 +35458,16 @@
 	    value: function bindEventListeners() {
 	      var _this2 = this;
 
-	      this.body.emitter.on('_dataChanged', function () {
+	      this.body.emitter.on("_dataChanged", function () {
 	        _this2.setupHierarchicalLayout();
 	      });
-	      this.body.emitter.on('_dataLoaded', function () {
+	      this.body.emitter.on("_dataLoaded", function () {
 	        _this2.layoutNetwork();
 	      });
-	      this.body.emitter.on('_resetHierarchicalLayout', function () {
+	      this.body.emitter.on("_resetHierarchicalLayout", function () {
 	        _this2.setupHierarchicalLayout();
 	      });
-	      this.body.emitter.on('_adjustEdgesForHierarchicalLayout', function () {
+	      this.body.emitter.on("_adjustEdgesForHierarchicalLayout", function () {
 	        if (_this2.options.hierarchical.enabled !== true) {
 	          return;
 	        } // get the type of static smooth curve in case it is required
@@ -35335,14 +35476,14 @@
 	        var type = _this2.direction.curveType(); // force all edges into static smooth curves.
 
 
-	        _this2.body.emitter.emit('_forceDisableDynamicCurves', type, false);
+	        _this2.body.emitter.emit("_forceDisableDynamicCurves", type, false);
 	      });
 	    }
 	    /**
 	     *
-	     * @param {Object} options
-	     * @param {Object} allOptions
-	     * @returns {Object}
+	     * @param {object} options
+	     * @param {object} allOptions
+	     * @returns {object}
 	     */
 
 	  }, {
@@ -35352,7 +35493,7 @@
 	        var hierarchical = this.options.hierarchical;
 	        var prevHierarchicalState = hierarchical.enabled;
 	        selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
-	        mergeOptions(this.options, options, 'hierarchical');
+	        mergeOptions(this.options, options, "hierarchical");
 
 	        if (options.randomSeed !== undefined) {
 	          this._resetRNG(options.randomSeed);
@@ -35361,11 +35502,11 @@
 	        if (hierarchical.enabled === true) {
 	          if (prevHierarchicalState === true) {
 	            // refresh the overridden options for nodes and edges.
-	            this.body.emitter.emit('refresh', true);
+	            this.body.emitter.emit("refresh", true);
 	          } // make sure the level separation is the right way up
 
 
-	          if (hierarchical.direction === 'RL' || hierarchical.direction === 'DU') {
+	          if (hierarchical.direction === "RL" || hierarchical.direction === "DU") {
 	            if (hierarchical.levelSeparation > 0) {
 	              hierarchical.levelSeparation *= -1;
 	            }
@@ -35376,14 +35517,14 @@
 	          }
 
 	          this.setDirectionStrategy();
-	          this.body.emitter.emit('_resetHierarchicalLayout'); // because the hierarchical system needs it's own physics and smooth curve settings,
+	          this.body.emitter.emit("_resetHierarchicalLayout"); // because the hierarchical system needs it's own physics and smooth curve settings,
 	          // we adapt the other options if needed.
 
 	          return this.adaptAllOptionsForHierarchicalLayout(allOptions);
 	        } else {
 	          if (prevHierarchicalState === true) {
 	            // refresh the overridden options for nodes and edges.
-	            this.body.emitter.emit('refresh');
+	            this.body.emitter.emit("refresh");
 	            return deepExtend(allOptions, this.optionsBackup);
 	          }
 	        }
@@ -35405,8 +35546,8 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} allOptions
-	     * @returns {Object}
+	     * @param {object} allOptions
+	     * @returns {object}
 	     */
 
 	  }, {
@@ -35418,18 +35559,18 @@
 	        if (allOptions.physics === undefined || allOptions.physics === true) {
 	          allOptions.physics = {
 	            enabled: backupPhysics.enabled === undefined ? true : backupPhysics.enabled,
-	            solver: 'hierarchicalRepulsion'
+	            solver: "hierarchicalRepulsion"
 	          };
 	          backupPhysics.enabled = backupPhysics.enabled === undefined ? true : backupPhysics.enabled;
-	          backupPhysics.solver = backupPhysics.solver || 'barnesHut';
-	        } else if (_typeof_1(allOptions.physics) === 'object') {
+	          backupPhysics.solver = backupPhysics.solver || "barnesHut";
+	        } else if (_typeof_1(allOptions.physics) === "object") {
 	          backupPhysics.enabled = allOptions.physics.enabled === undefined ? true : allOptions.physics.enabled;
-	          backupPhysics.solver = allOptions.physics.solver || 'barnesHut';
-	          allOptions.physics.solver = 'hierarchicalRepulsion';
+	          backupPhysics.solver = allOptions.physics.solver || "barnesHut";
+	          allOptions.physics.solver = "hierarchicalRepulsion";
 	        } else if (allOptions.physics !== false) {
-	          backupPhysics.solver = 'barnesHut';
+	          backupPhysics.solver = "barnesHut";
 	          allOptions.physics = {
-	            solver: 'hierarchicalRepulsion'
+	            solver: "hierarchicalRepulsion"
 	          };
 	        } // get the type of static smooth curve in case it is required
 
@@ -35441,7 +35582,7 @@
 	          this.optionsBackup.edges = {
 	            smooth: {
 	              enabled: true,
-	              type: 'dynamic'
+	              type: "dynamic"
 	            }
 	          };
 	          allOptions.edges = {
@@ -35451,12 +35592,12 @@
 	          this.optionsBackup.edges = {
 	            smooth: {
 	              enabled: true,
-	              type: 'dynamic'
+	              type: "dynamic"
 	            }
 	          };
 	          allOptions.edges.smooth = false;
 	        } else {
-	          if (typeof allOptions.edges.smooth === 'boolean') {
+	          if (typeof allOptions.edges.smooth === "boolean") {
 	            this.optionsBackup.edges = {
 	              smooth: allOptions.edges.smooth
 	            };
@@ -35467,7 +35608,7 @@
 	          } else {
 	            var smooth = allOptions.edges.smooth; // allow custom types except for dynamic
 
-	            if (smooth.type !== undefined && smooth.type !== 'dynamic') {
+	            if (smooth.type !== undefined && smooth.type !== "dynamic") {
 	              type = smooth.type;
 	            } // TODO: this is options merging; see if the standard routines can be used here.
 
@@ -35475,7 +35616,7 @@
 	            this.optionsBackup.edges = {
 	              smooth: {
 	                enabled: smooth.enabled === undefined ? true : smooth.enabled,
-	                type: smooth.type === undefined ? 'dynamic' : smooth.type,
+	                type: smooth.type === undefined ? "dynamic" : smooth.type,
 	                roundness: smooth.roundness === undefined ? 0.5 : smooth.roundness,
 	                forceDirection: smooth.forceDirection === undefined ? false : smooth.forceDirection
 	              }
@@ -35492,7 +35633,7 @@
 	        // Only applies to edges that do not use the global options for smooth.
 
 
-	        this.body.emitter.emit('_forceDisableDynamicCurves', type);
+	        this.body.emitter.emit("_forceDisableDynamicCurves", type);
 	      }
 
 	      return allOptions;
@@ -35566,11 +35707,11 @@
 
 	          var clusterOptions = {
 	            clusterNodeProperties: {
-	              shape: 'ellipse',
+	              shape: "ellipse",
 	              // Bugfix: avoid type 'image', no images supplied
-	              label: '',
+	              label: "",
 	              // avoid label handling
-	              group: '',
+	              group: "",
 	              // avoid group handling
 	              font: {
 	                multi: false
@@ -35578,7 +35719,7 @@
 
 	            },
 	            clusterEdgeProperties: {
-	              label: '',
+	              label: "",
 	              // avoid label handling
 	              font: {
 	                multi: false
@@ -35659,6 +35800,7 @@
 	    }
 	    /**
 	     * Move all the nodes towards to the center so gravitational pull wil not move the nodes away from view
+	     *
 	     * @private
 	     */
 
@@ -35676,6 +35818,7 @@
 	    }
 	    /**
 	     * Expands all clusters
+	     *
 	     * @private
 	     */
 
@@ -35695,7 +35838,7 @@
 	        }
 
 	        if (clustersPresent === true) {
-	          this.body.emitter.emit('_dataChanged');
+	          this.body.emitter.emit("_dataChanged");
 	        }
 	      }
 	    }
@@ -35742,17 +35885,17 @@
 
 
 	        if (undefinedLevel === true && definedLevel === true) {
-	          throw new Error('To use the hierarchical layout, nodes require either no predefined levels' + ' or levels have to be defined for all nodes.');
+	          throw new Error("To use the hierarchical layout, nodes require either no predefined levels" + " or levels have to be defined for all nodes.");
 	        } else {
 	          // define levels if undefined by the users. Based on hubsize.
 	          if (undefinedLevel === true) {
 	            var sortMethod = this.options.hierarchical.sortMethod;
 
-	            if (sortMethod === 'hubsize') {
+	            if (sortMethod === "hubsize") {
 	              this._determineLevelsByHubsize();
-	            } else if (sortMethod === 'directed') {
+	            } else if (sortMethod === "directed") {
 	              this._determineLevelsDirected();
-	            } else if (sortMethod === 'custom') {
+	            } else if (sortMethod === "custom") {
 	              this._determineLevelsCustomCallback();
 	            }
 	          } // fallback for cases where there are nodes but no edges
@@ -35895,7 +36038,7 @@
 	      /**
 	       * Condense elements. These can be nodes or branches depending on the callback.
 	       *
-	       * @param {function} callback
+	       * @param {Function} callback
 	       * @param {Array.<number>} levels
 	       * @param {*} centerParents
 	       */
@@ -36197,6 +36340,7 @@
 	    /**
 	     * This gives the space around the node. IF a map is supplied, it will only check against nodes NOT in the map.
 	     * This is used to only get the distances to nodes outside of a branch.
+	     *
 	     * @param {Node} node
 	     * @param {{Node.id: vis.Node}} map
 	     * @returns {number[]}
@@ -36246,6 +36390,7 @@
 	    }
 	    /**
 	     * We use this method to center a parent node and check if it does not cross other nodes when it does.
+	     *
 	     * @param {Node} node
 	     * @private
 	     */
@@ -36284,7 +36429,7 @@
 	    /**
 	     * This function places the nodes on the canvas based on the hierarchial distribution.
 	     *
-	     * @param {Object} distribution | obtained by the function this._getDistribution()
+	     * @param {object} distribution | obtained by the function this._getDistribution()
 	     * @private
 	     */
 
@@ -36391,6 +36536,7 @@
 	    /**
 	     * This method checks for overlap and if required shifts the branch. It also keeps records of positioned nodes.
 	     * Finally it will call _placeBranchNodes to place the branch nodes.
+	     *
 	     * @param {Node} node
 	     * @param {number} level
 	     * @param {number} pos
@@ -36425,6 +36571,7 @@
 	    /**
 	     * Receives an array with node indices and returns an array with the actual node references.
 	     * Used for sorting based on node properties.
+	     *
 	     * @param {Array.<Node.id>} idArray
 	     * @returns {Array.<Node>}
 	     */
@@ -36443,7 +36590,7 @@
 	    /**
 	     * This function get the distribution of levels based on hubsize
 	     *
-	     * @returns {Object}
+	     * @returns {object}
 	     * @private
 	     */
 
@@ -36575,9 +36722,9 @@
 	      var _this7 = this;
 
 	      var minLevel = 100000; // TODO: this should come from options.
+	      // eslint-disable-next-line no-unused-vars -- This should eventually be implemented with these parameters used.
 
-	      var customCallback = function customCallback(nodeA, nodeB, edge) {// eslint-disable-line no-unused-vars
-	      }; // TODO: perhaps move to HierarchicalStatus.
+	      var customCallback = function customCallback(nodeA, nodeB, edge) {}; // TODO: perhaps move to HierarchicalStatus.
 	      //       But I currently don't see the point, this method is not used.
 
 
@@ -36588,7 +36735,7 @@
 	          levelA = _this7.hierarchical.levels[nodeA.id] = minLevel;
 	        }
 
-	        var diff = customCallback(NetworkUtil.cloneOptions(nodeA, 'node'), NetworkUtil.cloneOptions(nodeB, 'node'), NetworkUtil.cloneOptions(edge, 'edge'));
+	        var diff = customCallback(NetworkUtil.cloneOptions(nodeA, "node"), NetworkUtil.cloneOptions(nodeB, "node"), NetworkUtil.cloneOptions(edge, "edge"));
 	        _this7.hierarchical.levels[nodeB.id] = levelA + diff;
 	      };
 
@@ -36623,6 +36770,7 @@
 	    }
 	    /**
 	     * Update the bookkeeping of parent and child.
+	     *
 	     * @private
 	     */
 
@@ -36643,7 +36791,8 @@
 	    }
 	    /**
 	     * Crawl over the entire network and use a callback on each node couple that is connected to each other.
-	     * @param {function} [callback=function(){}]          | will receive nodeA, nodeB and the connecting edge. A and B are distinct.
+	     *
+	     * @param {Function} [callback=function(){}]          | will receive nodeA, nodeB and the connecting edge. A and B are distinct.
 	     * @param {Node.id} startingNodeId
 	     * @private
 	     */
@@ -36714,6 +36863,7 @@
 	    }
 	    /**
 	     * Shift a branch a certain distance
+	     *
 	     * @param {Node.id} parentId
 	     * @param {number} diff
 	     * @private
@@ -36748,6 +36898,7 @@
 	    }
 	    /**
 	     * Find a common parent between branches.
+	     *
 	     * @param {Node.id} childA
 	     * @param {Node.id} childB
 	     * @returns {{foundParent, withChild}}
@@ -36819,7 +36970,7 @@
 	  }, {
 	    key: "setDirectionStrategy",
 	    value: function setDirectionStrategy() {
-	      var isVertical = this.options.hierarchical.direction === 'UD' || this.options.hierarchical.direction === 'DU';
+	      var isVertical = this.options.hierarchical.direction === "UD" || this.options.hierarchical.direction === "DU";
 
 	      if (isVertical) {
 	        this.direction = new VerticalStrategy(this);
@@ -36831,8 +36982,9 @@
 	     * Determine the center position of a branch from the passed list of child nodes
 	     *
 	     * This takes into account the positions of all the child nodes.
+	     *
 	     * @param {Array.<Node|vis.Node.id>} childNodes  Array of either child nodes or node id's
-	     * @return {number}
+	     * @returns {number}
 	     * @private
 	     */
 
@@ -36864,7 +37016,7 @@
 	  return LayoutEngine;
 	}();
 
-	var css_248z$3 = "div.vis-network div.vis-manipulation {\n  box-sizing: content-box;\n\n  border-width: 0;\n  border-bottom: 1px;\n  border-style:solid;\n  border-color: #d6d9d8;\n  background: #ffffff; /* Old browsers */\n  background: -moz-linear-gradient(top,  #ffffff 0%, #fcfcfc 48%, #fafafa 50%, #fcfcfc 100%); /* FF3.6+ */\n  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(48%,#fcfcfc), color-stop(50%,#fafafa), color-stop(100%,#fcfcfc)); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* IE10+ */\n  background: linear-gradient(to bottom,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */\n\n  padding-top:4px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 28px;\n}\n\ndiv.vis-network div.vis-edit-mode {\n  position:absolute;\n  left: 0;\n  top: 5px;\n  height: 30px;\n}\n\n/* FIXME: shouldn't the vis-close button be a child of the vis-manipulation div? */\n\ndiv.vis-network div.vis-close {\n  position:absolute;\n  right: 0;\n  top: 0;\n  width: 30px;\n  height: 30px;\n\n  background-position: 20px 3px;\n  background-repeat: no-repeat;\n  background-image: url('data:image/png;base64,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/GMzLdsAADvGaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICAgICAgICAgIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTQtMDItMTRUMTE6NTU6MzUrMDE6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE0LTAyLTE0VDEyOjA1OjE3KzAxOjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNC0wMi0xNFQxMjowNToxNyswMTowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6NjU0YmM5YmQtMWI2Yi1jYjRhLTllOWQtNWY2MzgxNDVjZjk0PC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD54bXAuZGlkOjk4MmM2MGIwLWUzZjMtMDk0MC04MjU0LTFiZTliNWE0ZTE4MzwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjk4MmM2MGIwLWUzZjMtMDk0MC04MjU0LTFiZTliNWE0ZTE4MzwveG1wTU06T3JpZ2luYWxEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06SGlzdG9yeT4KICAgICAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmNyZWF0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo5ODJjNjBiMC1lM2YzLTA5NDAtODI1NC0xYmU5YjVhNGUxODM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMTRUMTE6NTU6MzUrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjIxODYxNmM2LTM1MWMtNDI0OS04YWFkLWJkZDQ2ZTczNWE0NDwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0xNFQxMTo1NTozNSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NjU0YmM5YmQtMWI2Yi1jYjRhLTllOWQtNWY2MzgxNDVjZjk0PC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAyLTE0VDEyOjA1OjE3KzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6U2VxPgogICAgICAgICA8L3htcE1NOkhpc3Rvcnk+CiAgICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2UvcG5nPC9kYzpmb3JtYXQ+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDAwMC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjc8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+NzwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+cZUZMwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAA2ElEQVR42gDLADT/AS0tLUQFBQUVFxcXtPHx8fPl5eUNCAgITCkpKesEHx8fGgYGBjH+/v4a+Pj4qgQEBFU6OjodMTExzwQUFBSvEBAQEfX19SD19fVqNDQ0CElJSd/9/f2vAwEBAfrn5+fkBwcHLRYWFgsXFxfz29vbo9LS0uwDDQ0NDfPz81orKysXIyMj+ODg4Avh4eEa/f391gMkJCRYPz8/KUhISOMCAgKh8fHxHRsbGx4UFBQQBDk5OeY7Ozv7CAgItPb29vMEBASaJSUlTQ0NDesDAEwpT0Ko8Ri2AAAAAElFTkSuQmCC');\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network div.vis-close:hover {\n  opacity: 0.6;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button,\ndiv.vis-network div.vis-edit-mode div.vis-button {\n  float:left;\n  font-family: verdana;\n  font-size: 12px;\n  -moz-border-radius: 15px;\n  border-radius: 15px;\n  display:inline-block;\n  background-position: 0px 0px;\n  background-repeat:no-repeat;\n  height:24px;\n  margin-left: 10px;\n  /*vertical-align:middle;*/\n  cursor: pointer;\n  padding: 0px 8px 0px 8px;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button:hover {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.20);\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button:active {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.50);\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-back {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNTowMTowOSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTU6MDE6MDkrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOmI2YjQwMjVkLTAxNjQtMzU0OC1hOTdlLTQ4ZmYxMWM3NTYzMzwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDpmOWQ3OGY4ZC1lNzY0LTc1NDgtODZiNy1iNmQ1OGMzZDg2OTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTU6MDE6MDkrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmI2YjQwMjVkLTAxNjQtMzU0OC1hOTdlLTQ4ZmYxMWM3NTYzMzwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNTowMTowOSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOmY5ZDc4ZjhkLWU3NjQtNzU0OC04NmI3LWI2ZDU4YzNkODY5Nzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4jq1U/AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAVTSURBVHjanFVfTFNnFP+d77ve8qeVFbBrpcVgRrCRFikFByLxwSAaE32oRCHD6JMxxhhn8G2RxxH3MsOTbyYsmCAxPMmMMYtkIUYmK60OO0qAK23BFlNob0uh3x7WS5jLZPpLbm6+k/P9zrm5v9855PF4UFhYCABgjIExBgAgIqRSqRIi6gDQRkQ1RGTB3wgR0e8AHgH4Sa/XR/EBiAiJRAJ04cIF5Ofng4g2n0gkUkxENwF0c843LzHGQEQQQkCLExEA9ALotVgsUQAQQmgNQhJCbF5kjCEUCl0moj4t5na7fTU1NUpVVVXUYrEkASAcDhe8efOmxOfzWScmJqoBdBNR99LS0hWz2dynNSSEAF28eBGFhYVgjCEcDn9HRD1EhIMHD3o9Hs9kWVlZAh9BKBQqGB4edr58+dKZ+6JbJpOpBwBWV1fB6+rqIMsyIpHIFcZYL2MMra2tY5cuXRrfuXNnBtvAYDBk3G63oqpqZm5uzgrgSDKZjBoMhueZTAbc5XIhFouVEtFTxhiOHTs2dv78eS8+Efv374+oqpqZnZ21cs5PJJPJPlmWkyynnBuMMTQ0NHi7uro+mVyDx+Pxulwu71ZOlkqlSonoJhGhvb39s8k1nDx50ss5hyRJN9PpdKlERB2aWjSVaEilUvzBgwcORVEs5eXloXPnzk1sV8BkMiUdDofP7/dXZ7PZDilnIhw4cGBeS1pbW2P37t1zBwKBikQiUUREWFhYsHHO0d7evm0Ru90+/+rVq2rO+XGJiJxEhMrKyhgAjI6OWoeHh5tWVla+4JzDZrO9bW5unhwcHGzz+/32np4e+xaDbfoHAMxmc6ijo2O0oqIiJkkSNjY2HBIRmRljMJvNyWfPnln7+/tPMMZQXl6+0NbW9qK2tjYcj8floaEhqKpq+HCkbD3PzMwYBgYG0NXV9UuusFna2kEgELAQEQ4dOvSis7PzN41Ar9dnrl27NqCNkv/C3bt3zy4tLVmICJxzEBFJRBQmorLFxcWCqqqq0Pj4eO3Y2JhbUZTdra2tL2pra8OJRGLHnTt3zkqS9K+huHU4EhHMZnMoGo0W5OIh7nK5jjLGKq1W69vDhw8rRqMxMjc3t2t5eXnX5ORklc/nM+fl5SWnpqa+0uv1K/n5+Ws6nW5NluXNd15e3ppOp1uz2WyzZ86cGQ0Gg6ZAIFCZzWZ/lYjokRDiuN/vt7W0tMw3NTUpbrd78P79++5gMFgRiUTKHj58WMYYQ3V19etTp05tq6Lp6Wkb5xxCiEfc7XZPM8a6FxcXTfX19a/1en2Gcy5qamreNjY2/qGq6joRZe12+9Tp06e3JY/FYgWPHz8+mhvr3/CWlpbk+vp6PmOseWVlBS6XS9GSJUkSdrs93NDQ8Oe+ffvC/8fJIyMjddFo9Esi6pVleVjT2m0A8Hq9zqGhIefnjoknT544A4GAM/eDbxMReFNTE0pKSpKqqsaI6Pj8/LxVVdWM3W6PfCr5xMTE1zllXS0uLn6aSqXAGxsbodPpoNfrn6uqCs75EUVRrJFIZMfevXsXdTrdxseIE4mEPDIyUu/3++tynd8yGo29RIR0Og26fv06ioqKwBgD5xzv3r27zBjrIyJIkgSHwzFZWVmp7NmzJ1ZaWpoAgGg0WqgoSvHMzIw1GAw6tvjhitFo7NPW5fv370Hd3d0oKCgA53zTQMvLy+VCiKuSJH0rSdLmztZytIWv5RPRD0T0Y3Fx8dzWfby6ugopHo//w4mcc8iyPMc5v5FOp7/PZrOdQohWInIC2C2EgBBigYi8Qoifs9lsv06nWyIiaFxagXg8jr8GAGxuIe7LBeWhAAAAAElFTkSuQmCC');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-none:hover {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);\n  cursor: default;\n}\ndiv.vis-network div.vis-manipulation div.vis-button.vis-none:active {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);\n}\ndiv.vis-network div.vis-manipulation div.vis-button.vis-none {\n  padding: 0;\n}\ndiv.vis-network div.vis-manipulation div.notification {\n  margin: 2px;\n  font-weight: bold;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-add {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDo0MDoyOSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6NDA6MjkrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjVkNWIwNmQwLTVmMjAtOGE0NC1hMzIwLWZmMTEzMzQwNDc0YjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo2OWVmYWE1NS01ZTI5LTIzNGUtYTUzMy0xNDkxYjM1NDNmYmE8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6NDA6MjkrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjVkNWIwNmQwLTVmMjAtOGE0NC1hMzIwLWZmMTEzMzQwNDc0Yjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDo0MDoyOSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjY5ZWZhYTU1LTVlMjktMjM0ZS1hNTMzLTE0OTFiMzU0M2ZiYTwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz5WKqp9AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYXSURBVHjafFZtUFTXGX7e9z27sveuMCwYV8ElrA7YSFYHtJUPkaaI0aRqG8wP00zUzljDINNSA/2ROtpO24SxnahlxjYd7SSjmUkymcxYlDhQPzHGisEVp8HwYWCVVVgEsrsuLnL74+5uqTF9Z+7cO/d8PO95zvO851BlZSV0XQcAMDOYGQBARDhX3JRmMDYZwLPMWAzGHACYIgwS46oBNBNwtOL8CwE8EkSEUCgE2rJlC2w2G4go8Zwo/bMDgnoG6gxLfAAAYvPDMCCszKTAMIAGAhrWnf15AAAMwwARIRKJgDZv3gy73Q4iAjPjxIr9VVOMRhbAYKB8zvrO0llrfEsdKwLZek6YAPSFvtSu3GtLawu0ZJ6625SHGBQB1T88t6MxvopgMAjaunUrdF0HM+P4yv27DMYeJmB1RqW3Jnf3tQX2p0L4P9EXuqEd7PmDp+XuMU9sRbvXnnt1TxxACgoKYLVacbzsQDUJGkSATe6qi28uPtzusM6Kxie6NHLGUX3lxVUNX9StPHnn4wy3njuUYcu6n2pNi66avcEXnByP/nv8aiaIyrqz2gO5A9+9FI1GIfn5+WhZdTAdjFMkwMvZOy7uWnTAOz3L4Yk71m3t69fdfTDoUGTBeHTUfiHQ6lo7Z2OXJvpDAChKe+aOCdKRKWxZ2+1qb3yyd3GYmRkQ7GQBVs99wfv6on3eR2k4PdTkDEbH7IuS8/svld/561PJS/pDk1/bzwx94pze7xc5v/H+YPY6r5BAkdrJzODTK46lE6PeYEJt7u+8j+OZwCBiEAgAoNgKJoEQf6PvNvdrXgtZoNhSf7q0KZ3B2AQmVMze0Jmt54S/DcDCVig2NcvEUGxJAE4Pl+YOr0iv6BRSIPAmBeBZAmHlE2sH4p1uhrq1s0MnnEQMBsf8wRASAICQQCCITN1X7/sOuc0kgOVp3/fPs2WHv+coG7gQOJUnLGsUCTxEjPzUohEA+NfIWUdtx0+efzA1kSSkIGyBAQNCKgHAEBAJ3u79U7kiAcWoem/gb5Fd33nrH3kp+SMWtuAB+GllMJxMjCx9QRgA3uiqL5kwHiTlpxb3smlfMDGYGPP1hcMAkJvs8ScpfdJspdj+MK6Pf+5+u29vyb4lR4+BGEziVESAkEpw6Av1OhUpHCz4qOXbzFWz4Ncdj/v/o08Lt92ODDgZDCEFJYoUGH4mzugP92puPTf0pD3H7wvfdFZdqSxnMtWjoGAAmG9fOLxjwesdjT2/XzIQ7ks3sycYMSEwGHNtWf5bkX5NkYCJBxUBXiGV0XHvosOt54Zey33j/K+8P33++vjnbiGJbbLE+J9SANAb6nJ2B79wcUwETAwQQ7fMjPzMvfP8ja87HUIKMOiaAqMZhrGmLdAy78eZrwwsTS0eObTs+IdtgVanxBUExqGbb5VzrIISGIoUXsmqbgEhJldCQWqRf27SvPAn/o8XmgLhZsUkR4ll37mhk3n94Z4OlzY/7NLcYZfm7o1z2zT4vsvUNSXqprBCkmiTFbPX90/fh8GIT2sf+zTPdDMf4dVnNg4z+E0ixsGeBs9jd5ViSgLHjCb/peaR+MD3d4/ZJg2llyuG2Vwy7QWAs8PNnn1f7vkGSGxAzE6mk+kxkx/p/4unffSCR0hAoL1EBCYiPNdWNcwkNQTCR7feWX6g+7f/A7I8rcw/U6UEe0Ndrhc/W7mtL9ztmqlSgstSS/zTJ28dalpOpkRryrwbhwBACgsLMWPGDOT4ll3qyeqAkJTdCF7P/CrUY/GkLL1rE+2hTbSH8+0Lb/WEuhzhyaA905blf9Vd/895WnZwLHrPevir/cvOB1oLYpTtLrm6oYGIMDExAaqtrUVKSgqYGSKCk0WHq5ikkWEWtNL0imv5qUW+RclLRjJsrhBAuH1/QL8R7HR4xy5nescuP23E6hOA6mLv+sb4uTw6Ogqqq6uDpmkQkcStorX4XRcM1FjZ+kvFFjCJKU1WpkNJJUqIMtX1RyLeX3JtQ0JRhmGYZ/L27duRnJycuFGISOJ9pqh5lrB6iYgqGOxRrOaa54DcZmKvkJxk8JHC9rKh+KVhOsD4+Dj+MwADIf8n5m4xGwAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-edit,\ndiv.vis-network div.vis-edit-mode div.vis-button.vis-edit {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNVQxNDoxMjoyNSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDVUMTQ6MTI6MjUrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjY5OTM3ZGZjLTJjNzQtYTU0YS05OTIzLTQyMmZhNDNkMjljNDwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDozOWNhNzE5ZC03YzNlLTUyNGEtYmY1NS03NGVmMmM1MzE0YTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDVUMTQ6MTI6MjUrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjY5OTM3ZGZjLTJjNzQtYTU0YS05OTIzLTQyMmZhNDNkMjljNDwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNVQxNDoxMjoyNSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjM5Y2E3MTlkLTdjM2UtNTI0YS1iZjU1LTc0ZWYyYzUzMTRhNzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4ykninAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYpSURBVHjafFZtTFvnFX7Oea+NudiY2Hwam4CBlgQwXdKREDKUoYg0jbRJ29RJ2VZ1mjRFUxSpA3VTfkzJfkQbS7spU6rtx5Z2UtppScjaHxvLuiatWi2jLEoMIUDCh23g2gbj7+tPuPvhOurawPl1dc99n+c55z33fV46ceIEZFkGADAziAgAQERoe/9ZK4GPM/AcgbsIXAcABCgMvkfAqAa89eDoJyF8LogIqqqChoaGYDAYHr8kItS8uc8iIH6iAa9IkAo5EAQX8pqmgUVBCBggYFgDhv0/GAsBgKZpICJkMhnQ4OAgZFkGEYGZUXmp+0cS+CKBwWA0DVRPOg5Zl2q6zaHyJlnVAMQXVTkwHrUqH0Xsvn+tdQAAMQDgpPLS2MViFY8rkGUZzIzaS/t/xqCzGggtz9e697zsnKhoLUtim4jOq/LE6x7X0nsh16dEZ5a/O3a2SCAOHjwInU6Hujd6ThJ4mCDQ+b2G232v7v6vwarPbQn8MGlMr+X0kpE3Wr5Zt5hL5HPhqYSdQIfKJ+yhxDPKWC6Xg+jt7UXD5b5KBt1kCHS85Ljd8/On3NupfnhFaZj4rWff1B98B1R/hnUmKd36bdtCNl4g0en4edNE/cXwLq8qMTMIPAQwmo/WuHvObA8+9c58k/dKtD0TyZWXN5YGA7ej7epKxspM//7SoNOdWc/Jyq2wiwhDzPxT8cP0jys3VMM7OmL0/77zn4Ydui3b8uiK0jD7RrA77c9Wd57cefPpF+2T6bWsFPWkaiPTCWvTsZpHFU+XrS+8G3AR08F6X+1FJvBxQQzHQOWk2SmrW4FPX/U2LVwPuDZj+fJKl2khPpeyAqA9rzR/YqwuiWXX8taN/CabGkrVuq9YJlkQQDjOAJ5jAhz9Vt9W4N5/rNp8I+vtMV/aZm4zLnUNNt0urdYnF68HWoJj4Wo1mLGUNRr8LEgDgNqeCh8xQIKOsgC7iAjVe83rT9zQa8uNM28u70kspessu8q8zq/V3NcZpVzb9+0zmVhOvvvrhaMVzrJg0zeq7xMVCCwdpnWSGBqjUyJwLTFgbvxie3w31uoWR1Y74r60rdxZqrR8q85t2W2MGCp12bm/KC3hyaSTiMhxuGrKcahqpbjOaDOoEhOEoFqJQCCJvqA85I6bfTdDjQlf2lbxVNlS6wt19yy7jRHZZlDnrinNj/6sHMhnNw2Ogco7O79e5fm/xQywRBBCEAuwn4gQ96bkYj4Vyuq9N1Z3Bj4Od5bs0MXt/dZZ21ctiqFan174q985P+Lfp+U1g7XDON/1ctP458WlVjLyJhOISZE0wM0S1QfuRC3lTjkJAKKEtNC9eIOhSh9xHLZOJRZTFuXDsEoStLkR/768ummsaJG9Pb9oe+9J+xaeSVokiQDSJphAo5uaBuWjiKP4QTqS1cUWU7ayesN66wu22frD1vmVW6GW6T8u9eVjGyZzs+w78Nqu0a2mbvVu1KEJQAgeZRL0liQYyx+GOmKeQpu0rMYsAJPNEFGD2dLodLIy6c9Ys7G8yeSUl3tf2/X3rcBVJSOv34l3sCBogi7z1LH/rBHjl4IJ93/ncQFAnjeImJD0Z8zuCwu9q3djDXqTlAKID5xv+9t2R8n8VcUFBljQ8Gyfe40BYBM4DwDLt8Kue79ZcFkbzfEdbUbv+oN4c9KTtsfm1MbYQqqh+2zrVZYKs/7Ef+byimt1POYiJhDhPBFBIiIEXhxfs7/dfYoIF+auBfYTE/pebx/V8hqBP2ODvD34yvuh/WCAmU75Bx6sIgaI/v5+6PV6JLqUsYr7dpDAoehs0h73pHTWrvKgThYbRSt9UmSjef3MpaUvBz4O72UmADgTOPJguGiZor+/HyUlJWBmJFz+D8xTtlUiOpbwpmrmrweeSXrT+g11k4SBN3RGKUcAVCVdFhyP1nreDbY//NPyEXUlU/Pp4XYycGT6V0Ux2WwWdO7cOZSWlkII8diX7SPPNgDaKdbxoNAxwATBAEkEEgSWCEQAqPAMwqvMdCEwMO0tVqZpWsGTT58+DaPR+PhGIYQAAAgh0P7B3ioW/B0iGiCGiwXbCuOHFSJys6AbYFye2T+xWhT3WYJEIoH/DQBMw3kes8OJPgAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-edit-mode div.vis-button.vis-edit.vis-edit-mode {\n  background-color: #fcfcfc;\n  border: 1px solid #cccccc;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-connect {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDozODo1NyswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6Mzg6NTcrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjlmYjUwMDU0LWE3ODEtMWQ0OC05ZTllLTU2ZWQ5YzhlYjdjNjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo3ZWRhMjI0MC0yYTQxLTNlNDQtYWM2My1iNzNiYTE5OWI3Y2E8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6Mzg6NTcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjlmYjUwMDU0LWE3ODEtMWQ0OC05ZTllLTU2ZWQ5YzhlYjdjNjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDozODo1NyswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjdlZGEyMjQwLTJhNDEtM2U0NC1hYzYzLWI3M2JhMTk5YjdjYTwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4ubxs+AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAUtSURBVHjajJZ/bNT1Gcdfz/P53PV6B4W7VltLqdAaplIOiMOoyxxJCSs/Gv/yB4gzJroAosmmDklwkYWR0bQsdmkykoojTpcsWYLxD/lRZdMQkTHRtkLZRqG0tIVe7662vTu43n32x/VKZ/jh89cn38/zvN7P5/l88zwf2blzJz6fDwARQUSm1n8s31CM0/VAnbNmsUPuAsDpgEO+Bg4C7//iyv5hvmMiQiqVQpqamvB6vVNwEeG1JZtCBrYi/MrkAwDNgjhwAlbzICBLA0rDb0+/839C6XQaaWxspLCw8Dp86cbNmqVFJQddE6KzdjZ9D89g+B6fSyCOcyn1nxil+O9xKg5HqWFSHGXLjrP7W/ICqVQK2bNnDz6fDxFh65KNvxbHDhF4rJj2bXPo+IGfcW5h5xL4f99P+FCEMIAob75x9t0dAMlkElNXV4e1lteXbNqiQoMaeOFOjrdU868SD2luYyEP6dUh+sYmSHeOU6GO5Z8VLx5+NNZxIpPJ5AS2L3upROCoCvz8Lo7vnkf77cAHhpiz/zIL9vWz8L8p/NvupmM0Q7pjnAoLqz8tDrc8MnQqYVUVhVdF4LEg7b+rvDn8wDDlH0WoPpukLJImSBaMwjcJqmwWts2jPZLG/8kwYVFeVdXXZcFf4yVDc2cNKfBFmD9X+0ncCP58F48eG+Feo2CAUkvs4dl0V/uJvdXLiiV+ut++n7YLSfxPfMMG54ChzB3WIesVWB2i82bw1AR6fJR7C4VsfYiv6u/k3A9nEgP4zXke8DiYHyAOMK+QxPIgnZ9GqSHr1itQJ8DK2fTerDQ+S/bHRXQJaHSCwNIZ2Xh+7+S3VAmwNMBA/tuPZtErgKquUmdMWIFlRURvdamRNEXGwIWrlP47pTMzLiunxghGMwTLvcTWlHAp77s4QNSrYMQtss6ZMgWqCm5cHoDHO1nbk6K8zEN8+3zatv2Hn1b59EqJZdxmYUERg9P9KwpIiAOTdWUWBXuLzB/vZG3P1Un4PNp2d1MbmyD45TWCxuCsQm0x56bHGHFYEZwxok7toAA9Sfw3hCcoL/NOwi9QO5wmWO1j4JEgZxTkodmcWRGkf3pcX0r8xoAaBixKu4U5/xwndM+0tpAvS6mP+PZK2nb1UBvPEKwKMLDvPj4ESGc55lGy303sdJKQdZB2rkMdctAB/4gzN+/Q2ENNd4LyUi/xN+bTtquX2thk5nk4wI3gAF+OMNcA1nFQDfK+BY5GqbkwWabTY5QZhXWlnNx1ntrY1Rz87fuvw29m/Sn8J+PUGAFj5T19baA1IspuBZp7cx1x4SwG1cEf+lgRSROs8jGwb+Ht4QB/GSSsAhYano39LWIBxNEIbP14hPDuiyS2VtJuHXQlKKvxM/jiXDq/D/xPlwifGMkJZB2NIoKpr69nxeiZxLHicFSFVWfGqBidIP3LSjrWltD94CyufF/4kQgPuVz2Lz93+dDRa9eu5QQ8Hg8/iXee+Dy4CKMs7xqn4nwKz9IirhQqmVuB42m8ey+x7LMoD6iAON782eChhqmRuXfvXgKBAKqKqtI0/8nNKrQI4BVYXkzHgzPpC88gWuHL/caXrhLoGiN0apSKr0ZZRBZM7q2w5ZnLR1oAnHOMjY0hra2tFBQUYIyZmstvVT1Z6eDlAuEVq7merxmwueNPDXy9PvybjKP5mctHLk4/XTKZRJqbm/H7/VNw1VyEMYbW4FN3WNWnnchKoy5sHeVGBRX6VWi3ymFx7r11Ix8MTX/y5C2RSPC/AQB61erowbpqSwAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-delete {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDo0MTowNCswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6NDE6MDQrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjc3NDkzYmUxLTEyZGItOTg0NC1iNDYyLTg2NGVmNGIzMzM3MTwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDowNmE3NWYwMy04MDdhLWUzNGYtYjk1Zi1jZGU2MjM0Mzg4OGY8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6NDE6MDQrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjc3NDkzYmUxLTEyZGItOTg0NC1iNDYyLTg2NGVmNGIzMzM3MTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDo0MTowNCswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjA2YTc1ZjAzLTgwN2EtZTM0Zi1iOTVmLWNkZTYyMzQzODg4Zjwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4aYJzYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYGSURBVHjalJZ7UJTnFcZ/73m/72PdJY1RbhoQp6lkXRAvmIYxdCUadLVOozPNtGObap1JsKipjiShbdoRbeKEiQHpQK3xj0xa03aamTbaTGyAYV1QGeqFi+JyiZFLAlmESBkWRmS3fyzslGkmnZ5/v/M873Oe75zzvqqoqAibzQaAiKCUAkApRdHIK/NFsx2NR91nOSILADDoJyzNaM4xxbtvPHh0iC+JiYkJ1OHDh4mJiUEpFSXPv/ziPC28TIiXDCOSrAClQDSEpsCwJPIhrEBRQpiSytXlQwDhcBilFPfu3UMVFxdjt9ujFTzfcLBADCoEEAFr1ZbrrNjch2vtEImPBgHob7fTcWE+bVXJNJ/NiFQlEGLvieXHKmYqGB8fRx05cgSbzYaIsPvywV8pKFaA7fGtLTzz61YWpo/xVTHQbufsq5lcez9zWuWhk5mvFwMEg0H0+vXrMU2Tn1wp3CtCiQ5DjGd3A/m/v8IDCZP8r4iNmyRrWx/j/5qktykZpXKzAjVDVxPzGqemptDr1q1jX3NRnIJarcDKK2hgR2ULXRfncv7UYv7xpovhnhiW5Mz+kefeSKO6LJ1A1xzEuk/Ojm4mRibpuZaMZW3OCtRUND60NmiICCIUShisx7a2sLMiQn4s77uEQgIabnqdfHIlgT1/qQeg8vs5dHhdCNB1wYn3RIiC995j26stjAbsNH+YiZJCESnS1Y/XxIXu8r4YIPv/VkVs3CTnTy2ms34xro1+sp9po6sxlTu34ultmsPVvy6is86FCHgO+DDs49zpjufBpCG+seYOC9OHaTidieicb9ouVAhKtouAseI710ma7pLuqwmgYfHqAFt+6WdLoQ/LBl11Lm7VudAa8vb72PCin9TlAWIsGGhLACD+kSAZnusYBii1XQAPYWDllt6ov2lrBkDBR2+6Ofuak2//3M+G/T4wAAPW7fPhKfRTVeqk9qQbFKRmDUTxS3N7QYGYmwzCkqklBGlPDEcTNv+sg9tNCbTXuvBWujE0bHrZj9JE1B/wU1Pm5PwJN6YBS9a2kVvQEcWnrh5GTFD3lxkYkqRMgYQlwVldUvDnen73LHTUuqitdKM0eAr9AFQfd1J/yo2aJn+2sn4Wdn5qEFODJskgBIjx5T0uCrQA08pnIjS9PERDjPnfOKXAMEBECUoGEIHBj+2zkt76UQ6dXheGAev3+cg74Kf6uJPqcicbfuond7cPy4SOiy7+tD9nFvZurx00KOk3CNEC+mE+vjSPBc7IWqgqTaPT60IMcO/xsXGa3HfKjRgRdbl7/KDg0jtubje6aHj7c7J3dgLQ2zoPwwQ91SooOQdAW1VKVMHty0kA5Bb48BycJn/LjWFGbLv4thvvb53kFvjJ+XEdWkPfjQVR/CcNKYgGMc8JWt5Fa2j+MIPPuyI2pa4IoHSkt6vLIuRaQ9q32khzt4GCxtNu6k46GeiIR2lIfDQQsafPzq1LGRGL9Gk9d+vrwewvfHPQOoexQVjxdB/auk/zmaUMdsfz6bVUtIalT7bxveP1ZHh6GPDPYeSzeD69kcpIfxymFWLNrka+ljhBTWkWwz2JiJT84YHnz2iPx0P20PkmRF5i6HYiwZFJsn/YzdezbzE3cQibY5xV266z6RfXohakb+xB9CjanCD9qTbW7Grk4WV38VZm0l6dhQiEw9taHSuDqrS0FIfDwXM3X9mHMsvRAk/sauDpQy38P+GtzOTGB9mEpkD0C2dS8n8zOjqK9ng8WJZFU+JTjasGvaCNXPpvJBPoMlm0OoDNMfWVxONfWNSUPUZ7TUQ56tCZlPwSgMnJSVRpaSmxsbFE1raw82ZxAZZRQUiBYUKGp5UlOX2krBzmoUVjiIKhHge9rfPo+Wcy3ZeXIYASgL1/X5RfMXMvj46OosrLy7HZbGitUUohIuzoem0RofALaOsghgWGjky0MiJTL8b0lOvI8hN1DKXKP0jd3TNTWDgcJhgMoo4ePYrD4Yi+KmaeLlprnrtXFo9h/AAlG1AqE8yFmBrC+jO0bgH9EVpO/1F2Dc5g//OAsbEx/j0Af+USsQynL1UAAAAASUVORK5CYII=');\n}\n/* top right bottom left */\ndiv.vis-network div.vis-manipulation div.vis-label,\ndiv.vis-network div.vis-edit-mode div.vis-label {\n  margin: 0 0 0 23px;\n  line-height: 25px;\n}\ndiv.vis-network div.vis-manipulation div.vis-separator-line {\n  float:left;\n  display:inline-block;\n  width:1px;\n  height:21px;\n  background-color: #bdbdbd;\n  margin: 0px 7px 0 15px; /*top right bottom left*/\n}\n\n/* TODO: is this redundant?\ndiv.network-navigation_wrapper {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n}\n*/\n";
+	var css_248z$3 = "div.vis-network div.vis-manipulation {\n  box-sizing: content-box;\n\n  border-width: 0;\n  border-bottom: 1px;\n  border-style: solid;\n  border-color: #d6d9d8;\n  background: #ffffff; /* Old browsers */\n  background: -moz-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #ffffff),\n    color-stop(48%, #fcfcfc),\n    color-stop(50%, #fafafa),\n    color-stop(100%, #fcfcfc)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* IE10+ */\n  background: linear-gradient(\n    to bottom,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */\n\n  padding-top: 4px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 28px;\n}\n\ndiv.vis-network div.vis-edit-mode {\n  position: absolute;\n  left: 0;\n  top: 5px;\n  height: 30px;\n}\n\n/* FIXME: shouldn't the vis-close button be a child of the vis-manipulation div? */\n\ndiv.vis-network div.vis-close {\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 30px;\n  height: 30px;\n\n  background-position: 20px 3px;\n  background-repeat: no-repeat;\n  background-image: url('data:image/png;base64,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/GMzLdsAADvGaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICAgICAgICAgIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTQtMDItMTRUMTE6NTU6MzUrMDE6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE0LTAyLTE0VDEyOjA1OjE3KzAxOjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNC0wMi0xNFQxMjowNToxNyswMTowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6NjU0YmM5YmQtMWI2Yi1jYjRhLTllOWQtNWY2MzgxNDVjZjk0PC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD54bXAuZGlkOjk4MmM2MGIwLWUzZjMtMDk0MC04MjU0LTFiZTliNWE0ZTE4MzwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjk4MmM2MGIwLWUzZjMtMDk0MC04MjU0LTFiZTliNWE0ZTE4MzwveG1wTU06T3JpZ2luYWxEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06SGlzdG9yeT4KICAgICAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmNyZWF0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo5ODJjNjBiMC1lM2YzLTA5NDAtODI1NC0xYmU5YjVhNGUxODM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMTRUMTE6NTU6MzUrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjIxODYxNmM2LTM1MWMtNDI0OS04YWFkLWJkZDQ2ZTczNWE0NDwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0xNFQxMTo1NTozNSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NjU0YmM5YmQtMWI2Yi1jYjRhLTllOWQtNWY2MzgxNDVjZjk0PC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAyLTE0VDEyOjA1OjE3KzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6U2VxPgogICAgICAgICA8L3htcE1NOkhpc3Rvcnk+CiAgICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2UvcG5nPC9kYzpmb3JtYXQ+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDAwMC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjc8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+NzwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+cZUZMwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAA2ElEQVR42gDLADT/AS0tLUQFBQUVFxcXtPHx8fPl5eUNCAgITCkpKesEHx8fGgYGBjH+/v4a+Pj4qgQEBFU6OjodMTExzwQUFBSvEBAQEfX19SD19fVqNDQ0CElJSd/9/f2vAwEBAfrn5+fkBwcHLRYWFgsXFxfz29vbo9LS0uwDDQ0NDfPz81orKysXIyMj+ODg4Avh4eEa/f391gMkJCRYPz8/KUhISOMCAgKh8fHxHRsbGx4UFBQQBDk5OeY7Ozv7CAgItPb29vMEBASaJSUlTQ0NDesDAEwpT0Ko8Ri2AAAAAElFTkSuQmCC');\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network div.vis-close:hover {\n  opacity: 0.6;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button,\ndiv.vis-network div.vis-edit-mode div.vis-button {\n  float: left;\n  font-family: verdana;\n  font-size: 12px;\n  -moz-border-radius: 15px;\n  border-radius: 15px;\n  display: inline-block;\n  background-position: 0px 0px;\n  background-repeat: no-repeat;\n  height: 24px;\n  margin-left: 10px;\n  /*vertical-align:middle;*/\n  cursor: pointer;\n  padding: 0px 8px 0px 8px;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button:hover {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button:active {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-back {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNTowMTowOSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTU6MDE6MDkrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOmI2YjQwMjVkLTAxNjQtMzU0OC1hOTdlLTQ4ZmYxMWM3NTYzMzwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDpmOWQ3OGY4ZC1lNzY0LTc1NDgtODZiNy1iNmQ1OGMzZDg2OTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTU6MDE6MDkrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmI2YjQwMjVkLTAxNjQtMzU0OC1hOTdlLTQ4ZmYxMWM3NTYzMzwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNTowMTowOSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOmY5ZDc4ZjhkLWU3NjQtNzU0OC04NmI3LWI2ZDU4YzNkODY5Nzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4jq1U/AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAVTSURBVHjanFVfTFNnFP+d77ve8qeVFbBrpcVgRrCRFikFByLxwSAaE32oRCHD6JMxxhhn8G2RxxH3MsOTbyYsmCAxPMmMMYtkIUYmK60OO0qAK23BFlNob0uh3x7WS5jLZPpLbm6+k/P9zrm5v9855PF4UFhYCABgjIExBgAgIqRSqRIi6gDQRkQ1RGTB3wgR0e8AHgH4Sa/XR/EBiAiJRAJ04cIF5Ofng4g2n0gkUkxENwF0c843LzHGQEQQQkCLExEA9ALotVgsUQAQQmgNQhJCbF5kjCEUCl0moj4t5na7fTU1NUpVVVXUYrEkASAcDhe8efOmxOfzWScmJqoBdBNR99LS0hWz2dynNSSEAF28eBGFhYVgjCEcDn9HRD1EhIMHD3o9Hs9kWVlZAh9BKBQqGB4edr58+dKZ+6JbJpOpBwBWV1fB6+rqIMsyIpHIFcZYL2MMra2tY5cuXRrfuXNnBtvAYDBk3G63oqpqZm5uzgrgSDKZjBoMhueZTAbc5XIhFouVEtFTxhiOHTs2dv78eS8+Efv374+oqpqZnZ21cs5PJJPJPlmWkyynnBuMMTQ0NHi7uro+mVyDx+Pxulwu71ZOlkqlSonoJhGhvb39s8k1nDx50ss5hyRJN9PpdKlERB2aWjSVaEilUvzBgwcORVEs5eXloXPnzk1sV8BkMiUdDofP7/dXZ7PZDilnIhw4cGBeS1pbW2P37t1zBwKBikQiUUREWFhYsHHO0d7evm0Ru90+/+rVq2rO+XGJiJxEhMrKyhgAjI6OWoeHh5tWVla+4JzDZrO9bW5unhwcHGzz+/32np4e+xaDbfoHAMxmc6ijo2O0oqIiJkkSNjY2HBIRmRljMJvNyWfPnln7+/tPMMZQXl6+0NbW9qK2tjYcj8floaEhqKpq+HCkbD3PzMwYBgYG0NXV9UuusFna2kEgELAQEQ4dOvSis7PzN41Ar9dnrl27NqCNkv/C3bt3zy4tLVmICJxzEBFJRBQmorLFxcWCqqqq0Pj4eO3Y2JhbUZTdra2tL2pra8OJRGLHnTt3zkqS9K+huHU4EhHMZnMoGo0W5OIh7nK5jjLGKq1W69vDhw8rRqMxMjc3t2t5eXnX5ORklc/nM+fl5SWnpqa+0uv1K/n5+Ws6nW5NluXNd15e3ppOp1uz2WyzZ86cGQ0Gg6ZAIFCZzWZ/lYjokRDiuN/vt7W0tMw3NTUpbrd78P79++5gMFgRiUTKHj58WMYYQ3V19etTp05tq6Lp6Wkb5xxCiEfc7XZPM8a6FxcXTfX19a/1en2Gcy5qamreNjY2/qGq6joRZe12+9Tp06e3JY/FYgWPHz8+mhvr3/CWlpbk+vp6PmOseWVlBS6XS9GSJUkSdrs93NDQ8Oe+ffvC/8fJIyMjddFo9Esi6pVleVjT2m0A8Hq9zqGhIefnjoknT544A4GAM/eDbxMReFNTE0pKSpKqqsaI6Pj8/LxVVdWM3W6PfCr5xMTE1zllXS0uLn6aSqXAGxsbodPpoNfrn6uqCs75EUVRrJFIZMfevXsXdTrdxseIE4mEPDIyUu/3++tynd8yGo29RIR0Og26fv06ioqKwBgD5xzv3r27zBjrIyJIkgSHwzFZWVmp7NmzJ1ZaWpoAgGg0WqgoSvHMzIw1GAw6tvjhitFo7NPW5fv370Hd3d0oKCgA53zTQMvLy+VCiKuSJH0rSdLmztZytIWv5RPRD0T0Y3Fx8dzWfby6ugopHo//w4mcc8iyPMc5v5FOp7/PZrOdQohWInIC2C2EgBBigYi8Qoifs9lsv06nWyIiaFxagXg8jr8GAGxuIe7LBeWhAAAAAElFTkSuQmCC');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-none:hover {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0);\n  cursor: default;\n}\ndiv.vis-network div.vis-manipulation div.vis-button.vis-none:active {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0);\n}\ndiv.vis-network div.vis-manipulation div.vis-button.vis-none {\n  padding: 0;\n}\ndiv.vis-network div.vis-manipulation div.notification {\n  margin: 2px;\n  font-weight: bold;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-add {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDo0MDoyOSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6NDA6MjkrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjVkNWIwNmQwLTVmMjAtOGE0NC1hMzIwLWZmMTEzMzQwNDc0YjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo2OWVmYWE1NS01ZTI5LTIzNGUtYTUzMy0xNDkxYjM1NDNmYmE8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6NDA6MjkrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjVkNWIwNmQwLTVmMjAtOGE0NC1hMzIwLWZmMTEzMzQwNDc0Yjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDo0MDoyOSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjY5ZWZhYTU1LTVlMjktMjM0ZS1hNTMzLTE0OTFiMzU0M2ZiYTwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz5WKqp9AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYXSURBVHjafFZtUFTXGX7e9z27sveuMCwYV8ElrA7YSFYHtJUPkaaI0aRqG8wP00zUzljDINNSA/2ROtpO24SxnahlxjYd7SSjmUkymcxYlDhQPzHGisEVp8HwYWCVVVgEsrsuLnL74+5uqTF9Z+7cO/d8PO95zvO851BlZSV0XQcAMDOYGQBARDhX3JRmMDYZwLPMWAzGHACYIgwS46oBNBNwtOL8CwE8EkSEUCgE2rJlC2w2G4go8Zwo/bMDgnoG6gxLfAAAYvPDMCCszKTAMIAGAhrWnf15AAAMwwARIRKJgDZv3gy73Q4iAjPjxIr9VVOMRhbAYKB8zvrO0llrfEsdKwLZek6YAPSFvtSu3GtLawu0ZJ6625SHGBQB1T88t6MxvopgMAjaunUrdF0HM+P4yv27DMYeJmB1RqW3Jnf3tQX2p0L4P9EXuqEd7PmDp+XuMU9sRbvXnnt1TxxACgoKYLVacbzsQDUJGkSATe6qi28uPtzusM6Kxie6NHLGUX3lxVUNX9StPHnn4wy3njuUYcu6n2pNi66avcEXnByP/nv8aiaIyrqz2gO5A9+9FI1GIfn5+WhZdTAdjFMkwMvZOy7uWnTAOz3L4Yk71m3t69fdfTDoUGTBeHTUfiHQ6lo7Z2OXJvpDAChKe+aOCdKRKWxZ2+1qb3yyd3GYmRkQ7GQBVs99wfv6on3eR2k4PdTkDEbH7IuS8/svld/561PJS/pDk1/bzwx94pze7xc5v/H+YPY6r5BAkdrJzODTK46lE6PeYEJt7u+8j+OZwCBiEAgAoNgKJoEQf6PvNvdrXgtZoNhSf7q0KZ3B2AQmVMze0Jmt54S/DcDCVig2NcvEUGxJAE4Pl+YOr0iv6BRSIPAmBeBZAmHlE2sH4p1uhrq1s0MnnEQMBsf8wRASAICQQCCITN1X7/sOuc0kgOVp3/fPs2WHv+coG7gQOJUnLGsUCTxEjPzUohEA+NfIWUdtx0+efzA1kSSkIGyBAQNCKgHAEBAJ3u79U7kiAcWoem/gb5Fd33nrH3kp+SMWtuAB+GllMJxMjCx9QRgA3uiqL5kwHiTlpxb3smlfMDGYGPP1hcMAkJvs8ScpfdJspdj+MK6Pf+5+u29vyb4lR4+BGEziVESAkEpw6Av1OhUpHCz4qOXbzFWz4Ncdj/v/o08Lt92ODDgZDCEFJYoUGH4mzugP92puPTf0pD3H7wvfdFZdqSxnMtWjoGAAmG9fOLxjwesdjT2/XzIQ7ks3sycYMSEwGHNtWf5bkX5NkYCJBxUBXiGV0XHvosOt54Zey33j/K+8P33++vjnbiGJbbLE+J9SANAb6nJ2B79wcUwETAwQQ7fMjPzMvfP8ja87HUIKMOiaAqMZhrGmLdAy78eZrwwsTS0eObTs+IdtgVanxBUExqGbb5VzrIISGIoUXsmqbgEhJldCQWqRf27SvPAn/o8XmgLhZsUkR4ll37mhk3n94Z4OlzY/7NLcYZfm7o1z2zT4vsvUNSXqprBCkmiTFbPX90/fh8GIT2sf+zTPdDMf4dVnNg4z+E0ixsGeBs9jd5ViSgLHjCb/peaR+MD3d4/ZJg2llyuG2Vwy7QWAs8PNnn1f7vkGSGxAzE6mk+kxkx/p/4unffSCR0hAoL1EBCYiPNdWNcwkNQTCR7feWX6g+7f/A7I8rcw/U6UEe0Ndrhc/W7mtL9ztmqlSgstSS/zTJ28dalpOpkRryrwbhwBACgsLMWPGDOT4ll3qyeqAkJTdCF7P/CrUY/GkLL1rE+2hTbSH8+0Lb/WEuhzhyaA905blf9Vd/895WnZwLHrPevir/cvOB1oLYpTtLrm6oYGIMDExAaqtrUVKSgqYGSKCk0WHq5ikkWEWtNL0imv5qUW+RclLRjJsrhBAuH1/QL8R7HR4xy5nescuP23E6hOA6mLv+sb4uTw6Ogqqq6uDpmkQkcStorX4XRcM1FjZ+kvFFjCJKU1WpkNJJUqIMtX1RyLeX3JtQ0JRhmGYZ/L27duRnJycuFGISOJ9pqh5lrB6iYgqGOxRrOaa54DcZmKvkJxk8JHC9rKh+KVhOsD4+Dj+MwADIf8n5m4xGwAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-edit,\ndiv.vis-network div.vis-edit-mode div.vis-button.vis-edit {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNVQxNDoxMjoyNSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDVUMTQ6MTI6MjUrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjY5OTM3ZGZjLTJjNzQtYTU0YS05OTIzLTQyMmZhNDNkMjljNDwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDozOWNhNzE5ZC03YzNlLTUyNGEtYmY1NS03NGVmMmM1MzE0YTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDVUMTQ6MTI6MjUrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjY5OTM3ZGZjLTJjNzQtYTU0YS05OTIzLTQyMmZhNDNkMjljNDwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNVQxNDoxMjoyNSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjM5Y2E3MTlkLTdjM2UtNTI0YS1iZjU1LTc0ZWYyYzUzMTRhNzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4ykninAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYpSURBVHjafFZtTFvnFX7Oea+NudiY2Hwam4CBlgQwXdKREDKUoYg0jbRJ29RJ2VZ1mjRFUxSpA3VTfkzJfkQbS7spU6rtx5Z2UtppScjaHxvLuiatWi2jLEoMIUDCh23g2gbj7+tPuPvhOurawPl1dc99n+c55z33fV46ceIEZFkGADAziAgAQERoe/9ZK4GPM/AcgbsIXAcABCgMvkfAqAa89eDoJyF8LogIqqqChoaGYDAYHr8kItS8uc8iIH6iAa9IkAo5EAQX8pqmgUVBCBggYFgDhv0/GAsBgKZpICJkMhnQ4OAgZFkGEYGZUXmp+0cS+CKBwWA0DVRPOg5Zl2q6zaHyJlnVAMQXVTkwHrUqH0Xsvn+tdQAAMQDgpPLS2MViFY8rkGUZzIzaS/t/xqCzGggtz9e697zsnKhoLUtim4jOq/LE6x7X0nsh16dEZ5a/O3a2SCAOHjwInU6Hujd6ThJ4mCDQ+b2G232v7v6vwarPbQn8MGlMr+X0kpE3Wr5Zt5hL5HPhqYSdQIfKJ+yhxDPKWC6Xg+jt7UXD5b5KBt1kCHS85Ljd8/On3NupfnhFaZj4rWff1B98B1R/hnUmKd36bdtCNl4g0en4edNE/cXwLq8qMTMIPAQwmo/WuHvObA8+9c58k/dKtD0TyZWXN5YGA7ej7epKxspM//7SoNOdWc/Jyq2wiwhDzPxT8cP0jys3VMM7OmL0/77zn4Ydui3b8uiK0jD7RrA77c9Wd57cefPpF+2T6bWsFPWkaiPTCWvTsZpHFU+XrS+8G3AR08F6X+1FJvBxQQzHQOWk2SmrW4FPX/U2LVwPuDZj+fJKl2khPpeyAqA9rzR/YqwuiWXX8taN/CabGkrVuq9YJlkQQDjOAJ5jAhz9Vt9W4N5/rNp8I+vtMV/aZm4zLnUNNt0urdYnF68HWoJj4Wo1mLGUNRr8LEgDgNqeCh8xQIKOsgC7iAjVe83rT9zQa8uNM28u70kspessu8q8zq/V3NcZpVzb9+0zmVhOvvvrhaMVzrJg0zeq7xMVCCwdpnWSGBqjUyJwLTFgbvxie3w31uoWR1Y74r60rdxZqrR8q85t2W2MGCp12bm/KC3hyaSTiMhxuGrKcahqpbjOaDOoEhOEoFqJQCCJvqA85I6bfTdDjQlf2lbxVNlS6wt19yy7jRHZZlDnrinNj/6sHMhnNw2Ogco7O79e5fm/xQywRBBCEAuwn4gQ96bkYj4Vyuq9N1Z3Bj4Od5bs0MXt/dZZ21ctiqFan174q985P+Lfp+U1g7XDON/1ctP458WlVjLyJhOISZE0wM0S1QfuRC3lTjkJAKKEtNC9eIOhSh9xHLZOJRZTFuXDsEoStLkR/768ummsaJG9Pb9oe+9J+xaeSVokiQDSJphAo5uaBuWjiKP4QTqS1cUWU7ayesN66wu22frD1vmVW6GW6T8u9eVjGyZzs+w78Nqu0a2mbvVu1KEJQAgeZRL0liQYyx+GOmKeQpu0rMYsAJPNEFGD2dLodLIy6c9Ys7G8yeSUl3tf2/X3rcBVJSOv34l3sCBogi7z1LH/rBHjl4IJ93/ncQFAnjeImJD0Z8zuCwu9q3djDXqTlAKID5xv+9t2R8n8VcUFBljQ8Gyfe40BYBM4DwDLt8Kue79ZcFkbzfEdbUbv+oN4c9KTtsfm1MbYQqqh+2zrVZYKs/7Ef+byimt1POYiJhDhPBFBIiIEXhxfs7/dfYoIF+auBfYTE/pebx/V8hqBP2ODvD34yvuh/WCAmU75Bx6sIgaI/v5+6PV6JLqUsYr7dpDAoehs0h73pHTWrvKgThYbRSt9UmSjef3MpaUvBz4O72UmADgTOPJguGiZor+/HyUlJWBmJFz+D8xTtlUiOpbwpmrmrweeSXrT+g11k4SBN3RGKUcAVCVdFhyP1nreDbY//NPyEXUlU/Pp4XYycGT6V0Ux2WwWdO7cOZSWlkII8diX7SPPNgDaKdbxoNAxwATBAEkEEgSWCEQAqPAMwqvMdCEwMO0tVqZpWsGTT58+DaPR+PhGIYQAAAgh0P7B3ioW/B0iGiCGiwXbCuOHFSJys6AbYFye2T+xWhT3WYJEIoH/DQBMw3kes8OJPgAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-edit-mode div.vis-button.vis-edit.vis-edit-mode {\n  background-color: #fcfcfc;\n  border: 1px solid #cccccc;\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-connect {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDozODo1NyswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6Mzg6NTcrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjlmYjUwMDU0LWE3ODEtMWQ0OC05ZTllLTU2ZWQ5YzhlYjdjNjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo3ZWRhMjI0MC0yYTQxLTNlNDQtYWM2My1iNzNiYTE5OWI3Y2E8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6Mzg6NTcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjlmYjUwMDU0LWE3ODEtMWQ0OC05ZTllLTU2ZWQ5YzhlYjdjNjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDozODo1NyswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjdlZGEyMjQwLTJhNDEtM2U0NC1hYzYzLWI3M2JhMTk5YjdjYTwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4ubxs+AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAUtSURBVHjajJZ/bNT1Gcdfz/P53PV6B4W7VltLqdAaplIOiMOoyxxJCSs/Gv/yB4gzJroAosmmDklwkYWR0bQsdmkykoojTpcsWYLxD/lRZdMQkTHRtkLZRqG0tIVe7662vTu43n32x/VKZ/jh89cn38/zvN7P5/l88zwf2blzJz6fDwARQUSm1n8s31CM0/VAnbNmsUPuAsDpgEO+Bg4C7//iyv5hvmMiQiqVQpqamvB6vVNwEeG1JZtCBrYi/MrkAwDNgjhwAlbzICBLA0rDb0+/839C6XQaaWxspLCw8Dp86cbNmqVFJQddE6KzdjZ9D89g+B6fSyCOcyn1nxil+O9xKg5HqWFSHGXLjrP7W/ICqVQK2bNnDz6fDxFh65KNvxbHDhF4rJj2bXPo+IGfcW5h5xL4f99P+FCEMIAob75x9t0dAMlkElNXV4e1lteXbNqiQoMaeOFOjrdU868SD2luYyEP6dUh+sYmSHeOU6GO5Z8VLx5+NNZxIpPJ5AS2L3upROCoCvz8Lo7vnkf77cAHhpiz/zIL9vWz8L8p/NvupmM0Q7pjnAoLqz8tDrc8MnQqYVUVhVdF4LEg7b+rvDn8wDDlH0WoPpukLJImSBaMwjcJqmwWts2jPZLG/8kwYVFeVdXXZcFf4yVDc2cNKfBFmD9X+0ncCP58F48eG+Feo2CAUkvs4dl0V/uJvdXLiiV+ut++n7YLSfxPfMMG54ChzB3WIesVWB2i82bw1AR6fJR7C4VsfYiv6u/k3A9nEgP4zXke8DiYHyAOMK+QxPIgnZ9GqSHr1itQJ8DK2fTerDQ+S/bHRXQJaHSCwNIZ2Xh+7+S3VAmwNMBA/tuPZtErgKquUmdMWIFlRURvdamRNEXGwIWrlP47pTMzLiunxghGMwTLvcTWlHAp77s4QNSrYMQtss6ZMgWqCm5cHoDHO1nbk6K8zEN8+3zatv2Hn1b59EqJZdxmYUERg9P9KwpIiAOTdWUWBXuLzB/vZG3P1Un4PNp2d1MbmyD45TWCxuCsQm0x56bHGHFYEZwxok7toAA9Sfw3hCcoL/NOwi9QO5wmWO1j4JEgZxTkodmcWRGkf3pcX0r8xoAaBixKu4U5/xwndM+0tpAvS6mP+PZK2nb1UBvPEKwKMLDvPj4ESGc55lGy303sdJKQdZB2rkMdctAB/4gzN+/Q2ENNd4LyUi/xN+bTtquX2thk5nk4wI3gAF+OMNcA1nFQDfK+BY5GqbkwWabTY5QZhXWlnNx1ntrY1Rz87fuvw29m/Sn8J+PUGAFj5T19baA1IspuBZp7cx1x4SwG1cEf+lgRSROs8jGwb+Ht4QB/GSSsAhYano39LWIBxNEIbP14hPDuiyS2VtJuHXQlKKvxM/jiXDq/D/xPlwifGMkJZB2NIoKpr69nxeiZxLHicFSFVWfGqBidIP3LSjrWltD94CyufF/4kQgPuVz2Lz93+dDRa9eu5QQ8Hg8/iXee+Dy4CKMs7xqn4nwKz9IirhQqmVuB42m8ey+x7LMoD6iAON782eChhqmRuXfvXgKBAKqKqtI0/8nNKrQI4BVYXkzHgzPpC88gWuHL/caXrhLoGiN0apSKr0ZZRBZM7q2w5ZnLR1oAnHOMjY0hra2tFBQUYIyZmstvVT1Z6eDlAuEVq7merxmwueNPDXy9PvybjKP5mctHLk4/XTKZRJqbm/H7/VNw1VyEMYbW4FN3WNWnnchKoy5sHeVGBRX6VWi3ymFx7r11Ix8MTX/y5C2RSPC/AQB61erowbpqSwAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-button.vis-delete {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDo0MTowNCswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6NDE6MDQrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjc3NDkzYmUxLTEyZGItOTg0NC1iNDYyLTg2NGVmNGIzMzM3MTwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDowNmE3NWYwMy04MDdhLWUzNGYtYjk1Zi1jZGU2MjM0Mzg4OGY8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6NDE6MDQrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjc3NDkzYmUxLTEyZGItOTg0NC1iNDYyLTg2NGVmNGIzMzM3MTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDo0MTowNCswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjA2YTc1ZjAzLTgwN2EtZTM0Zi1iOTVmLWNkZTYyMzQzODg4Zjwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4aYJzYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYGSURBVHjalJZ7UJTnFcZ/73m/72PdJY1RbhoQp6lkXRAvmIYxdCUadLVOozPNtGObap1JsKipjiShbdoRbeKEiQHpQK3xj0xa03aamTbaTGyAYV1QGeqFi+JyiZFLAlmESBkWRmS3fyzslGkmnZ5/v/M873Oe75zzvqqoqAibzQaAiKCUAkApRdHIK/NFsx2NR91nOSILADDoJyzNaM4xxbtvPHh0iC+JiYkJ1OHDh4mJiUEpFSXPv/ziPC28TIiXDCOSrAClQDSEpsCwJPIhrEBRQpiSytXlQwDhcBilFPfu3UMVFxdjt9ujFTzfcLBADCoEEAFr1ZbrrNjch2vtEImPBgHob7fTcWE+bVXJNJ/NiFQlEGLvieXHKmYqGB8fRx05cgSbzYaIsPvywV8pKFaA7fGtLTzz61YWpo/xVTHQbufsq5lcez9zWuWhk5mvFwMEg0H0+vXrMU2Tn1wp3CtCiQ5DjGd3A/m/v8IDCZP8r4iNmyRrWx/j/5qktykZpXKzAjVDVxPzGqemptDr1q1jX3NRnIJarcDKK2hgR2ULXRfncv7UYv7xpovhnhiW5Mz+kefeSKO6LJ1A1xzEuk/Ojm4mRibpuZaMZW3OCtRUND60NmiICCIUShisx7a2sLMiQn4s77uEQgIabnqdfHIlgT1/qQeg8vs5dHhdCNB1wYn3RIiC995j26stjAbsNH+YiZJCESnS1Y/XxIXu8r4YIPv/VkVs3CTnTy2ms34xro1+sp9po6sxlTu34ultmsPVvy6is86FCHgO+DDs49zpjufBpCG+seYOC9OHaTidieicb9ouVAhKtouAseI710ma7pLuqwmgYfHqAFt+6WdLoQ/LBl11Lm7VudAa8vb72PCin9TlAWIsGGhLACD+kSAZnusYBii1XQAPYWDllt6ov2lrBkDBR2+6Ofuak2//3M+G/T4wAAPW7fPhKfRTVeqk9qQbFKRmDUTxS3N7QYGYmwzCkqklBGlPDEcTNv+sg9tNCbTXuvBWujE0bHrZj9JE1B/wU1Pm5PwJN6YBS9a2kVvQEcWnrh5GTFD3lxkYkqRMgYQlwVldUvDnen73LHTUuqitdKM0eAr9AFQfd1J/yo2aJn+2sn4Wdn5qEFODJskgBIjx5T0uCrQA08pnIjS9PERDjPnfOKXAMEBECUoGEIHBj+2zkt76UQ6dXheGAev3+cg74Kf6uJPqcicbfuond7cPy4SOiy7+tD9nFvZurx00KOk3CNEC+mE+vjSPBc7IWqgqTaPT60IMcO/xsXGa3HfKjRgRdbl7/KDg0jtubje6aHj7c7J3dgLQ2zoPwwQ91SooOQdAW1VKVMHty0kA5Bb48BycJn/LjWFGbLv4thvvb53kFvjJ+XEdWkPfjQVR/CcNKYgGMc8JWt5Fa2j+MIPPuyI2pa4IoHSkt6vLIuRaQ9q32khzt4GCxtNu6k46GeiIR2lIfDQQsafPzq1LGRGL9Gk9d+vrwewvfHPQOoexQVjxdB/auk/zmaUMdsfz6bVUtIalT7bxveP1ZHh6GPDPYeSzeD69kcpIfxymFWLNrka+ljhBTWkWwz2JiJT84YHnz2iPx0P20PkmRF5i6HYiwZFJsn/YzdezbzE3cQibY5xV266z6RfXohakb+xB9CjanCD9qTbW7Grk4WV38VZm0l6dhQiEw9taHSuDqrS0FIfDwXM3X9mHMsvRAk/sauDpQy38P+GtzOTGB9mEpkD0C2dS8n8zOjqK9ng8WJZFU+JTjasGvaCNXPpvJBPoMlm0OoDNMfWVxONfWNSUPUZ7TUQ56tCZlPwSgMnJSVRpaSmxsbFE1raw82ZxAZZRQUiBYUKGp5UlOX2krBzmoUVjiIKhHge9rfPo+Wcy3ZeXIYASgL1/X5RfMXMvj46OosrLy7HZbGitUUohIuzoem0RofALaOsghgWGjky0MiJTL8b0lOvI8hN1DKXKP0jd3TNTWDgcJhgMoo4ePYrD4Yi+KmaeLlprnrtXFo9h/AAlG1AqE8yFmBrC+jO0bgH9EVpO/1F2Dc5g//OAsbEx/j0Af+USsQynL1UAAAAASUVORK5CYII=');\n}\n/* top right bottom left */\ndiv.vis-network div.vis-manipulation div.vis-label,\ndiv.vis-network div.vis-edit-mode div.vis-label {\n  margin: 0 0 0 23px;\n  line-height: 25px;\n}\ndiv.vis-network div.vis-manipulation div.vis-separator-line {\n  float: left;\n  display: inline-block;\n  width: 1px;\n  height: 21px;\n  background-color: #bdbdbd;\n  margin: 0px 7px 0 15px; /*top right bottom left*/\n}\n\n/* TODO: is this redundant?\ndiv.network-navigation_wrapper {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n}\n*/\n";
 	styleInject(css_248z$3);
 
 	/**
@@ -36875,7 +37027,7 @@
 
 	var ManipulationSystem = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Canvas} canvas
 	   * @param {SelectionHandler} selectionHandler
 	   * @param {InteractionHandler} interactionHandler
@@ -36917,14 +37069,14 @@
 	      deleteNode: true,
 	      deleteEdge: true,
 	      controlNodeStyle: {
-	        shape: 'dot',
+	        shape: "dot",
 	        size: 6,
 	        color: {
-	          background: '#ff0000',
-	          border: '#3c3c3c',
+	          background: "#ff0000",
+	          border: "#3c3c3c",
 	          highlight: {
-	            background: '#07f968',
-	            border: '#3c3c3c'
+	            background: "#07f968",
+	            border: "#3c3c3c"
 	          }
 	        },
 	        borderWidth: 2,
@@ -36934,14 +37086,15 @@
 
 	    assign$2(this.options, this.defaultOptions);
 
-	    this.body.emitter.on('destroy', function () {
+	    this.body.emitter.on("destroy", function () {
 	      _this._clean();
 	    });
-	    this.body.emitter.on('_dataChanged', bind$2(_context = this._restore).call(_context, this));
-	    this.body.emitter.on('_resetData', bind$2(_context2 = this._restore).call(_context2, this));
+	    this.body.emitter.on("_dataChanged", bind$2(_context = this._restore).call(_context, this));
+	    this.body.emitter.on("_resetData", bind$2(_context2 = this._restore).call(_context2, this));
 	  }
 	  /**
 	   * If something changes in the data during editing, switch back to the initial datamanipulation state and close all edit modes.
+	   *
 	   * @private
 	   */
 
@@ -36960,9 +37113,9 @@
 	    /**
 	     * Set the Options
 	     *
-	     * @param {Object} options
-	     * @param {Object} allOptions
-	     * @param {Object} globalOptions
+	     * @param {object} options
+	     * @param {object} allOptions
+	     * @param {object} globalOptions
 	     */
 
 	  }, {
@@ -36983,7 +37136,7 @@
 	      }
 
 	      if (options !== undefined) {
-	        if (typeof options === 'boolean') {
+	        if (typeof options === "boolean") {
 	          this.options.enabled = options;
 	        } else {
 	          this.options.enabled = true;
@@ -37024,9 +37177,9 @@
 	      this._clean();
 
 	      if (this.guiEnabled === true) {
-	        this.manipulationDiv.style.display = 'block';
-	        this.closeDiv.style.display = 'block';
-	        this.editModeDiv.style.display = 'none';
+	        this.manipulationDiv.style.display = "block";
+	        this.closeDiv.style.display = "block";
+	        this.editModeDiv.style.display = "none";
 	        this.showManipulatorToolbar();
 	      }
 	    }
@@ -37042,9 +37195,9 @@
 	      this._clean();
 
 	      if (this.guiEnabled === true) {
-	        this.manipulationDiv.style.display = 'none';
-	        this.closeDiv.style.display = 'none';
-	        this.editModeDiv.style.display = 'block';
+	        this.manipulationDiv.style.display = "none";
+	        this.closeDiv.style.display = "none";
+	        this.editModeDiv.style.display = "block";
 
 	        this._createEditButton();
 	      }
@@ -37069,8 +37222,8 @@
 
 	        // a _restore will hide these menus
 	        this.editMode = true;
-	        this.manipulationDiv.style.display = 'block';
-	        this.closeDiv.style.display = 'block';
+	        this.manipulationDiv.style.display = "block";
+	        this.closeDiv.style.display = "block";
 
 	        var selectedNodeCount = this.selectionHandler._getSelectedNodeCount();
 
@@ -37096,7 +37249,7 @@
 	          this._createAddEdgeButton(locale);
 	        }
 
-	        if (selectedNodeCount === 1 && typeof this.options.editNode === 'function') {
+	        if (selectedNodeCount === 1 && typeof this.options.editNode === "function") {
 	          if (needSeperator === true) {
 	            this._createSeperator(2);
 	          } else {
@@ -37135,11 +37288,11 @@
 	        this._bindHammerToDiv(this.closeDiv, bind$2(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
 
 
-	        this._temporaryBindEvent('select', bind$2(_context4 = this.showManipulatorToolbar).call(_context4, this));
+	        this._temporaryBindEvent("select", bind$2(_context4 = this.showManipulatorToolbar).call(_context4, this));
 	      } // redraw to show any possible changes
 
 
-	      this.body.emitter.emit('_redraw');
+	      this.body.emitter.emit("_redraw");
 	    }
 	    /**
 	     * Create the toolbar for adding Nodes
@@ -37158,7 +37311,7 @@
 
 	      this._clean();
 
-	      this.inMode = 'addNode';
+	      this.inMode = "addNode";
 
 	      if (this.guiEnabled === true) {
 	        var _context5;
@@ -37170,13 +37323,13 @@
 
 	        this._createSeperator();
 
-	        this._createDescription(locale['addDescription'] || this.options.locales['en']['addDescription']); // bind the close button
+	        this._createDescription(locale["addDescription"] || this.options.locales["en"]["addDescription"]); // bind the close button
 
 
 	        this._bindHammerToDiv(this.closeDiv, bind$2(_context5 = this.toggleEditMode).call(_context5, this));
 	      }
 
-	      this._temporaryBindEvent('click', bind$2(_context6 = this._performAddNode).call(_context6, this));
+	      this._temporaryBindEvent("click", bind$2(_context6 = this._performAddNode).call(_context6, this));
 	    }
 	    /**
 	     * call the bound function to handle the editing of the node. The node has to be selected.
@@ -37198,9 +37351,9 @@
 	      var node = this.selectionHandler._getSelectedNode();
 
 	      if (node !== undefined) {
-	        this.inMode = 'editNode';
+	        this.inMode = "editNode";
 
-	        if (typeof this.options.editNode === 'function') {
+	        if (typeof this.options.editNode === "function") {
 	          if (node.isCluster !== true) {
 	            var data = deepExtend({}, node.options, false);
 	            data.x = node.x;
@@ -37208,7 +37361,7 @@
 
 	            if (this.options.editNode.length === 2) {
 	              this.options.editNode(data, function (finalizedData) {
-	                if (finalizedData !== null && finalizedData !== undefined && _this2.inMode === 'editNode') {
+	                if (finalizedData !== null && finalizedData !== undefined && _this2.inMode === "editNode") {
 	                  // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
 	                  _this2.body.data.nodes.getDataSet().update(finalizedData);
 	                }
@@ -37216,13 +37369,13 @@
 	                _this2.showManipulatorToolbar();
 	              });
 	            } else {
-	              throw new Error('The function for edit does not support two arguments (data, callback)');
+	              throw new Error("The function for edit does not support two arguments (data, callback)");
 	            }
 	          } else {
-	            alert(this.options.locales[this.options.locale]['editClusterError'] || this.options.locales['en']['editClusterError']);
+	            alert(this.options.locales[this.options.locale]["editClusterError"] || this.options.locales["en"]["editClusterError"]);
 	          }
 	        } else {
-	          throw new Error('No function has been configured to handle the editing of nodes.');
+	          throw new Error("No function has been configured to handle the editing of nodes.");
 	        }
 	      } else {
 	        this.showManipulatorToolbar();
@@ -37245,7 +37398,7 @@
 
 	      this._clean();
 
-	      this.inMode = 'addEdge';
+	      this.inMode = "addEdge";
 
 	      if (this.guiEnabled === true) {
 	        var _context7;
@@ -37257,24 +37410,24 @@
 
 	        this._createSeperator();
 
-	        this._createDescription(locale['edgeDescription'] || this.options.locales['en']['edgeDescription']); // bind the close button
+	        this._createDescription(locale["edgeDescription"] || this.options.locales["en"]["edgeDescription"]); // bind the close button
 
 
 	        this._bindHammerToDiv(this.closeDiv, bind$2(_context7 = this.toggleEditMode).call(_context7, this));
 	      } // temporarily overload functions
 
 
-	      this._temporaryBindUI('onTouch', bind$2(_context8 = this._handleConnect).call(_context8, this));
+	      this._temporaryBindUI("onTouch", bind$2(_context8 = this._handleConnect).call(_context8, this));
 
-	      this._temporaryBindUI('onDragEnd', bind$2(_context9 = this._finishConnect).call(_context9, this));
+	      this._temporaryBindUI("onDragEnd", bind$2(_context9 = this._finishConnect).call(_context9, this));
 
-	      this._temporaryBindUI('onDrag', bind$2(_context10 = this._dragControlNode).call(_context10, this));
+	      this._temporaryBindUI("onDrag", bind$2(_context10 = this._dragControlNode).call(_context10, this));
 
-	      this._temporaryBindUI('onRelease', bind$2(_context11 = this._finishConnect).call(_context11, this));
+	      this._temporaryBindUI("onRelease", bind$2(_context11 = this._finishConnect).call(_context11, this));
 
-	      this._temporaryBindUI('onDragStart', bind$2(_context12 = this._dragStartEdge).call(_context12, this));
+	      this._temporaryBindUI("onDragStart", bind$2(_context12 = this._dragStartEdge).call(_context12, this));
 
-	      this._temporaryBindUI('onHold', function () {});
+	      this._temporaryBindUI("onHold", function () {});
 	    }
 	    /**
 	     * create the toolbar to edit edges
@@ -37291,9 +37444,9 @@
 
 	      this._clean();
 
-	      this.inMode = 'editEdge';
+	      this.inMode = "editEdge";
 
-	      if (_typeof_1(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
+	      if (_typeof_1(this.options.editEdge) === "object" && typeof this.options.editEdge.editWithoutDrag === "function") {
 	        this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
 
 	        if (this.edgeBeingEditedId !== undefined) {
@@ -37315,7 +37468,7 @@
 
 	        this._createSeperator();
 
-	        this._createDescription(locale['editEdgeDescription'] || this.options.locales['en']['editEdgeDescription']); // bind the close button
+	        this._createDescription(locale["editEdgeDescription"] || this.options.locales["en"]["editEdgeDescription"]); // bind the close button
 
 
 	        this._bindHammerToDiv(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
@@ -37339,30 +37492,30 @@
 	        this.body.nodes[controlNodeTo.id] = controlNodeTo;
 	        this.body.nodeIndices.push(controlNodeTo.id); // temporarily overload UI functions, cleaned up automatically because of _temporaryBindUI
 
-	        this._temporaryBindUI('onTouch', bind$2(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
+	        this._temporaryBindUI("onTouch", bind$2(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
 
 
-	        this._temporaryBindUI('onTap', function () {}); // disabled
+	        this._temporaryBindUI("onTap", function () {}); // disabled
 
 
-	        this._temporaryBindUI('onHold', function () {}); // disabled
+	        this._temporaryBindUI("onHold", function () {}); // disabled
 
 
-	        this._temporaryBindUI('onDragStart', bind$2(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
+	        this._temporaryBindUI("onDragStart", bind$2(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
 
 
-	        this._temporaryBindUI('onDrag', bind$2(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
+	        this._temporaryBindUI("onDrag", bind$2(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
 
 
-	        this._temporaryBindUI('onDragEnd', bind$2(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
+	        this._temporaryBindUI("onDragEnd", bind$2(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
 
 
-	        this._temporaryBindUI('onMouseMove', function () {}); // disabled
+	        this._temporaryBindUI("onMouseMove", function () {}); // disabled
 	        // create function to position control nodes correctly on movement
 	        // automatically cleaned up because we use the temporary bind
 
 
-	        this._temporaryBindEvent('beforeDrawing', function (ctx) {
+	        this._temporaryBindEvent("beforeDrawing", function (ctx) {
 	          var positions = _edge.edgeType.findBorderPositions(ctx);
 
 	          if (controlNodeFrom.selected === false) {
@@ -37376,7 +37529,7 @@
 	          }
 	        });
 
-	        this.body.emitter.emit('_redraw');
+	        this.body.emitter.emit("_redraw");
 	      } else {
 	        this.showManipulatorToolbar();
 	      }
@@ -37398,7 +37551,7 @@
 
 	      this._clean();
 
-	      this.inMode = 'delete';
+	      this.inMode = "delete";
 	      var selectedNodes = this.selectionHandler.getSelectedNodes();
 	      var selectedEdges = this.selectionHandler.getSelectedEdges();
 	      var deleteFunction = undefined;
@@ -37406,21 +37559,21 @@
 	      if (selectedNodes.length > 0) {
 	        for (var i = 0; i < selectedNodes.length; i++) {
 	          if (this.body.nodes[selectedNodes[i]].isCluster === true) {
-	            alert(this.options.locales[this.options.locale]['deleteClusterError'] || this.options.locales['en']['deleteClusterError']);
+	            alert(this.options.locales[this.options.locale]["deleteClusterError"] || this.options.locales["en"]["deleteClusterError"]);
 	            return;
 	          }
 	        }
 
-	        if (typeof this.options.deleteNode === 'function') {
+	        if (typeof this.options.deleteNode === "function") {
 	          deleteFunction = this.options.deleteNode;
 	        }
 	      } else if (selectedEdges.length > 0) {
-	        if (typeof this.options.deleteEdge === 'function') {
+	        if (typeof this.options.deleteEdge === "function") {
 	          deleteFunction = this.options.deleteEdge;
 	        }
 	      }
 
-	      if (typeof deleteFunction === 'function') {
+	      if (typeof deleteFunction === "function") {
 	        var data = {
 	          nodes: selectedNodes,
 	          edges: selectedEdges
@@ -37428,34 +37581,35 @@
 
 	        if (deleteFunction.length === 2) {
 	          deleteFunction(data, function (finalizedData) {
-	            if (finalizedData !== null && finalizedData !== undefined && _this3.inMode === 'delete') {
+	            if (finalizedData !== null && finalizedData !== undefined && _this3.inMode === "delete") {
 	              // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
 	              _this3.body.data.edges.getDataSet().remove(finalizedData.edges);
 
 	              _this3.body.data.nodes.getDataSet().remove(finalizedData.nodes);
 
-	              _this3.body.emitter.emit('startSimulation');
+	              _this3.body.emitter.emit("startSimulation");
 
 	              _this3.showManipulatorToolbar();
 	            } else {
-	              _this3.body.emitter.emit('startSimulation');
+	              _this3.body.emitter.emit("startSimulation");
 
 	              _this3.showManipulatorToolbar();
 	            }
 	          });
 	        } else {
-	          throw new Error('The function for delete does not support two arguments (data, callback)');
+	          throw new Error("The function for delete does not support two arguments (data, callback)");
 	        }
 	      } else {
 	        this.body.data.edges.getDataSet().remove(selectedEdges);
 	        this.body.data.nodes.getDataSet().remove(selectedNodes);
-	        this.body.emitter.emit('startSimulation');
+	        this.body.emitter.emit("startSimulation");
 	        this.showManipulatorToolbar();
 	      }
 	    } //********************************************** PRIVATE ***************************************//
 
 	    /**
 	     * draw or remove the DOM
+	     *
 	     * @private
 	     */
 
@@ -37482,6 +37636,7 @@
 	    }
 	    /**
 	     * create the div overlays that contain the DOM
+	     *
 	     * @private
 	     */
 
@@ -37490,13 +37645,13 @@
 	    value: function _createWrappers() {
 	      // load the manipulator HTML elements. All styling done in css.
 	      if (this.manipulationDiv === undefined) {
-	        this.manipulationDiv = document.createElement('div');
-	        this.manipulationDiv.className = 'vis-manipulation';
+	        this.manipulationDiv = document.createElement("div");
+	        this.manipulationDiv.className = "vis-manipulation";
 
 	        if (this.editMode === true) {
-	          this.manipulationDiv.style.display = 'block';
+	          this.manipulationDiv.style.display = "block";
 	        } else {
-	          this.manipulationDiv.style.display = 'none';
+	          this.manipulationDiv.style.display = "none";
 	        }
 
 	        this.canvas.frame.appendChild(this.manipulationDiv);
@@ -37504,13 +37659,13 @@
 
 
 	      if (this.editModeDiv === undefined) {
-	        this.editModeDiv = document.createElement('div');
-	        this.editModeDiv.className = 'vis-edit-mode';
+	        this.editModeDiv = document.createElement("div");
+	        this.editModeDiv.className = "vis-edit-mode";
 
 	        if (this.editMode === true) {
-	          this.editModeDiv.style.display = 'none';
+	          this.editModeDiv.style.display = "none";
 	        } else {
-	          this.editModeDiv.style.display = 'block';
+	          this.editModeDiv.style.display = "block";
 	        }
 
 	        this.canvas.frame.appendChild(this.editModeDiv);
@@ -37518,8 +37673,8 @@
 
 
 	      if (this.closeDiv === undefined) {
-	        this.closeDiv = document.createElement('div');
-	        this.closeDiv.className = 'vis-close';
+	        this.closeDiv = document.createElement("div");
+	        this.closeDiv.className = "vis-close";
 	        this.closeDiv.style.display = this.manipulationDiv.style.display;
 	        this.canvas.frame.appendChild(this.closeDiv);
 	      }
@@ -37537,7 +37692,7 @@
 	    key: "_getNewTargetNode",
 	    value: function _getNewTargetNode(x, y) {
 	      var controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
-	      controlNodeStyle.id = 'targetNode' + v4();
+	      controlNodeStyle.id = "targetNode" + v4();
 	      controlNodeStyle.hidden = false;
 	      controlNodeStyle.physics = false;
 	      controlNodeStyle.x = x;
@@ -37571,7 +37726,7 @@
 
 	      var locale = this.options.locales[this.options.locale];
 
-	      var button = this._createButton('editMode', 'vis-button vis-edit vis-edit-mode', locale['edit'] || this.options.locales['en']['edit']);
+	      var button = this._createButton("editMode", "vis-button vis-edit vis-edit-mode", locale["edit"] || this.options.locales["en"]["edit"]);
 
 	      this.editModeDiv.appendChild(button); // bind a hammer listener to the button, calling the function toggleEditMode.
 
@@ -37579,6 +37734,7 @@
 	    }
 	    /**
 	     * this function cleans up after everything this module does. Temporary elements, functions and events are removed, physics restored, hammers removed.
+	     *
 	     * @private
 	     */
 
@@ -37605,10 +37761,11 @@
 	      this._unbindTemporaryEvents(); // restore the physics if required
 
 
-	      this.body.emitter.emit('restorePhysics');
+	      this.body.emitter.emit("restorePhysics");
 	    }
 	    /**
 	     * Each dom element has it's own hammer. They are stored in this.manipulationHammers. This cleans them up.
+	     *
 	     * @private
 	     */
 
@@ -37626,6 +37783,7 @@
 	    }
 	    /**
 	     * Remove all DOM elements created by this module.
+	     *
 	     * @private
 	     */
 
@@ -37659,6 +37817,7 @@
 	    }
 	    /**
 	     * create a seperator line. the index is to differentiate in the manipulation dom
+	     *
 	     * @param {number} [index=1]
 	     * @private
 	     */
@@ -37667,9 +37826,9 @@
 	    key: "_createSeperator",
 	    value: function _createSeperator() {
 	      var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-	      this.manipulationDOM['seperatorLineDiv' + index] = document.createElement('div');
-	      this.manipulationDOM['seperatorLineDiv' + index].className = 'vis-separator-line';
-	      this.manipulationDiv.appendChild(this.manipulationDOM['seperatorLineDiv' + index]);
+	      this.manipulationDOM["seperatorLineDiv" + index] = document.createElement("div");
+	      this.manipulationDOM["seperatorLineDiv" + index].className = "vis-separator-line";
+	      this.manipulationDiv.appendChild(this.manipulationDOM["seperatorLineDiv" + index]);
 	    } // ----------------------    DOM functions for buttons    --------------------------//
 
 	    /**
@@ -37683,7 +37842,7 @@
 	    value: function _createAddNodeButton(locale) {
 	      var _context19;
 
-	      var button = this._createButton('addNode', 'vis-button vis-add', locale['addNode'] || this.options.locales['en']['addNode']);
+	      var button = this._createButton("addNode", "vis-button vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
 
 	      this.manipulationDiv.appendChild(button);
 
@@ -37700,7 +37859,7 @@
 	    value: function _createAddEdgeButton(locale) {
 	      var _context20;
 
-	      var button = this._createButton('addEdge', 'vis-button vis-connect', locale['addEdge'] || this.options.locales['en']['addEdge']);
+	      var button = this._createButton("addEdge", "vis-button vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
 
 	      this.manipulationDiv.appendChild(button);
 
@@ -37717,7 +37876,7 @@
 	    value: function _createEditNodeButton(locale) {
 	      var _context21;
 
-	      var button = this._createButton('editNode', 'vis-button vis-edit', locale['editNode'] || this.options.locales['en']['editNode']);
+	      var button = this._createButton("editNode", "vis-button vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
 
 	      this.manipulationDiv.appendChild(button);
 
@@ -37734,7 +37893,7 @@
 	    value: function _createEditEdgeButton(locale) {
 	      var _context22;
 
-	      var button = this._createButton('editEdge', 'vis-button vis-edit', locale['editEdge'] || this.options.locales['en']['editEdge']);
+	      var button = this._createButton("editEdge", "vis-button vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
 
 	      this.manipulationDiv.appendChild(button);
 
@@ -37754,12 +37913,12 @@
 	      var deleteBtnClass;
 
 	      if (this.options.rtl) {
-	        deleteBtnClass = 'vis-button vis-delete-rtl';
+	        deleteBtnClass = "vis-button vis-delete-rtl";
 	      } else {
-	        deleteBtnClass = 'vis-button vis-delete';
+	        deleteBtnClass = "vis-button vis-delete";
 	      }
 
-	      var button = this._createButton('delete', deleteBtnClass, locale['del'] || this.options.locales['en']['del']);
+	      var button = this._createButton("delete", deleteBtnClass, locale["del"] || this.options.locales["en"]["del"]);
 
 	      this.manipulationDiv.appendChild(button);
 
@@ -37776,7 +37935,7 @@
 	    value: function _createBackButton(locale) {
 	      var _context24;
 
-	      var button = this._createButton('back', 'vis-button vis-back', locale['back'] || this.options.locales['en']['back']);
+	      var button = this._createButton("back", "vis-button vis-back", locale["back"] || this.options.locales["en"]["back"]);
 
 	      this.manipulationDiv.appendChild(button);
 
@@ -37795,14 +37954,14 @@
 	  }, {
 	    key: "_createButton",
 	    value: function _createButton(id, className, label) {
-	      var labelClassName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'vis-label';
-	      this.manipulationDOM[id + 'Div'] = document.createElement('div');
-	      this.manipulationDOM[id + 'Div'].className = className;
-	      this.manipulationDOM[id + 'Label'] = document.createElement('div');
-	      this.manipulationDOM[id + 'Label'].className = labelClassName;
-	      this.manipulationDOM[id + 'Label'].innerHTML = label;
-	      this.manipulationDOM[id + 'Div'].appendChild(this.manipulationDOM[id + 'Label']);
-	      return this.manipulationDOM[id + 'Div'];
+	      var labelClassName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "vis-label";
+	      this.manipulationDOM[id + "Div"] = document.createElement("div");
+	      this.manipulationDOM[id + "Div"].className = className;
+	      this.manipulationDOM[id + "Label"] = document.createElement("div");
+	      this.manipulationDOM[id + "Label"].className = labelClassName;
+	      this.manipulationDOM[id + "Label"].innerHTML = label;
+	      this.manipulationDOM[id + "Div"].appendChild(this.manipulationDOM[id + "Label"]);
+	      return this.manipulationDOM[id + "Div"];
 	    }
 	    /**
 	     *
@@ -37813,13 +37972,14 @@
 	  }, {
 	    key: "_createDescription",
 	    value: function _createDescription(label) {
-	      this.manipulationDiv.appendChild(this._createButton('description', 'vis-button vis-none', label));
+	      this.manipulationDiv.appendChild(this._createButton("description", "vis-button vis-none", label));
 	    } // -------------------------- End of DOM functions for buttons ------------------------------//
 
 	    /**
 	     * this binds an event until cleanup by the clean functions.
+	     *
 	     * @param {Event}  event   The event
-	     * @param {function} newFunction
+	     * @param {Function} newFunction
 	     * @private
 	     */
 
@@ -37834,8 +37994,9 @@
 	    }
 	    /**
 	     * this overrides an UI function until cleanup by the clean function
+	     *
 	     * @param {string} UIfunctionName
-	     * @param {function} newFunction
+	     * @param {Function} newFunction
 	     * @private
 	     */
 
@@ -37846,7 +38007,7 @@
 	        this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[UIfunctionName];
 	        this.body.eventListeners[UIfunctionName] = newFunction;
 	      } else {
-	        throw new Error('This UI function does not exist. Typo? You tried: ' + UIfunctionName + ' possible are: ' + stringify$2(keys$3(this.body.eventListeners)));
+	        throw new Error("This UI function does not exist. Typo? You tried: " + UIfunctionName + " possible are: " + stringify$2(keys$3(this.body.eventListeners)));
 	      }
 	    }
 	    /**
@@ -37869,6 +38030,7 @@
 	    }
 	    /**
 	     * Unbind the events created by _temporaryBindEvent
+	     *
 	     * @private
 	     */
 
@@ -37887,7 +38049,7 @@
 	     * Bind an hammer instance to a DOM element.
 	     *
 	     * @param {Element} domElement
-	     * @param {function} boundFunction
+	     * @param {Function} boundFunction
 	     */
 
 	  }, {
@@ -37899,6 +38061,7 @@
 	    }
 	    /**
 	     * Neatly clean up temporary edges and nodes
+	     *
 	     * @private
 	     */
 
@@ -37944,6 +38107,7 @@
 
 	    /**
 	     * the touch is used to get the position of the initial click
+	     *
 	     * @param {Event}  event   The event
 	     * @private
 	     */
@@ -37957,14 +38121,13 @@
 	    }
 	    /**
 	     * the drag start is used to mark one of the control nodes as selected.
-	     * @param {Event}  event   The event
+	     *
 	     * @private
 	     */
 
 	  }, {
 	    key: "_controlNodeDragStart",
-	    value: function _controlNodeDragStart(event) {
-	      // eslint-disable-line no-unused-vars
+	    value: function _controlNodeDragStart() {
 	      var pointer = this.lastTouch;
 
 	      var pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
@@ -37989,10 +38152,11 @@
 	        this.selectionHandler.selectObject(this.selectedControlNode);
 	      }
 
-	      this.body.emitter.emit('_redraw');
+	      this.body.emitter.emit("_redraw");
 	    }
 	    /**
 	     * dragging the control nodes or the canvas
+	     *
 	     * @param {Event}  event   The event
 	     * @private
 	     */
@@ -38000,7 +38164,7 @@
 	  }, {
 	    key: "_controlNodeDrag",
 	    value: function _controlNodeDrag(event) {
-	      this.body.emitter.emit('disablePhysics');
+	      this.body.emitter.emit("disablePhysics");
 	      var pointer = this.body.functions.getPointer(event.center);
 	      var pos = this.canvas.DOMtoCanvas(pointer);
 
@@ -38011,10 +38175,11 @@
 	        this.interactionHandler.onDrag(event);
 	      }
 
-	      this.body.emitter.emit('_redraw');
+	      this.body.emitter.emit("_redraw");
 	    }
 	    /**
 	     * connecting or restoring the control nodes.
+	     *
 	     * @param {Event}  event   The event
 	     * @private
 	     */
@@ -38049,7 +38214,7 @@
 
 	      if (node !== undefined && this.selectedControlNode !== undefined) {
 	        if (node.isCluster === true) {
-	          alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
+	          alert(this.options.locales[this.options.locale]["createEdgeError"] || this.options.locales["en"]["createEdgeError"]);
 	        } else {
 	          var from = this.body.nodes[this.temporaryIds.nodes[0]];
 
@@ -38061,10 +38226,10 @@
 	        }
 	      } else {
 	        edge.updateEdgeType();
-	        this.body.emitter.emit('restorePhysics');
+	        this.body.emitter.emit("restorePhysics");
 	      }
 
-	      this.body.emitter.emit('_redraw');
+	      this.body.emitter.emit("_redraw");
 	    } // ------------------------------------ END OF EDIT EDGE FUNCTIONS -----------------------------------------//
 	    // ------------------------------------------- ADD EDGE FUNCTIONS -----------------------------------------//
 
@@ -38092,7 +38257,7 @@
 
 	        if (node !== undefined) {
 	          if (node.isCluster === true) {
-	            alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
+	            alert(this.options.locales[this.options.locale]["createEdgeError"] || this.options.locales["en"]["createEdgeError"]);
 	          } else {
 	            // create a node the temporary line can look at
 	            var targetNode = this._getNewTargetNode(node.x, node.y);
@@ -38101,13 +38266,13 @@
 	            this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
 	            var connectionEdge = this.body.functions.createEdge({
-	              id: 'connectionEdge' + v4(),
+	              id: "connectionEdge" + v4(),
 	              from: node.id,
 	              to: targetNode.id,
 	              physics: false,
 	              smooth: {
 	                enabled: true,
-	                type: 'continuous',
+	                type: "continuous",
 	                roundness: 0.5
 	              }
 	            });
@@ -38161,20 +38326,21 @@
 	        to: node ? node.id : undefined
 	      };
 
-	      this.selectionHandler._generateClickEvent('controlNodeDragging', event, pointer);
+	      this.selectionHandler._generateClickEvent("controlNodeDragging", event, pointer);
 
 	      if (this.temporaryIds.nodes[0] !== undefined) {
 	        var targetNode = this.body.nodes[this.temporaryIds.nodes[0]]; // there is only one temp node in the add edge mode.
 
 	        targetNode.x = this.canvas._XconvertDOMtoCanvas(pointer.x);
 	        targetNode.y = this.canvas._YconvertDOMtoCanvas(pointer.y);
-	        this.body.emitter.emit('_redraw');
+	        this.body.emitter.emit("_redraw");
 	      } else {
 	        this.interactionHandler.onDrag(event);
 	      }
 	    }
 	    /**
 	     * Connect the new edge to the target if one exists, otherwise remove temp line
+	     *
 	     * @param {Event}  event   The event
 	     * @private
 	     */
@@ -38214,7 +38380,7 @@
 
 	      if (node !== undefined) {
 	        if (node.isCluster === true) {
-	          alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
+	          alert(this.options.locales[this.options.locale]["createEdgeError"] || this.options.locales["en"]["createEdgeError"]);
 	        } else {
 	          if (this.body.nodes[connectFromId] !== undefined && this.body.nodes[node.id] !== undefined) {
 	            this._performAddEdge(connectFromId, node.id);
@@ -38227,10 +38393,10 @@
 	        to: node ? node.id : undefined
 	      };
 
-	      this.selectionHandler._generateClickEvent('controlNodeDragEnd', event, pointer); // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
+	      this.selectionHandler._generateClickEvent("controlNodeDragEnd", event, pointer); // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
 
 
-	      this.body.emitter.emit('_redraw');
+	      this.body.emitter.emit("_redraw");
 	    }
 	    /**
 	     *
@@ -38243,14 +38409,14 @@
 	    value: function _dragStartEdge(event) {
 	      var pointer = this.lastTouch;
 
-	      this.selectionHandler._generateClickEvent('dragStart', event, pointer, undefined, true);
+	      this.selectionHandler._generateClickEvent("dragStart", event, pointer, undefined, true);
 	    } // --------------------------------------- END OF ADD EDGE FUNCTIONS -------------------------------------//
 	    // ------------------------------ Performing all the actual data manipulation ------------------------//
 
 	    /**
 	     * Adds a node on the specified location
 	     *
-	     * @param {Object} clickData
+	     * @param {object} clickData
 	     * @private
 	     */
 
@@ -38263,13 +38429,13 @@
 	        id: v4(),
 	        x: clickData.pointer.canvas.x,
 	        y: clickData.pointer.canvas.y,
-	        label: 'new'
+	        label: "new"
 	      };
 
-	      if (typeof this.options.addNode === 'function') {
+	      if (typeof this.options.addNode === "function") {
 	        if (this.options.addNode.length === 2) {
 	          this.options.addNode(defaultData, function (finalizedData) {
-	            if (finalizedData !== null && finalizedData !== undefined && _this4.inMode === 'addNode') {
+	            if (finalizedData !== null && finalizedData !== undefined && _this4.inMode === "addNode") {
 	              // if for whatever reason the mode has changes (due to dataset change) disregard the callback
 	              _this4.body.data.nodes.getDataSet().add(finalizedData);
 	            }
@@ -38278,7 +38444,7 @@
 	          });
 	        } else {
 	          this.showManipulatorToolbar();
-	          throw new Error('The function for add does not support two arguments (data,callback)');
+	          throw new Error("The function for add does not support two arguments (data,callback)");
 	        }
 	      } else {
 	        this.body.data.nodes.getDataSet().add(defaultData);
@@ -38303,10 +38469,10 @@
 	        to: targetNodeId
 	      };
 
-	      if (typeof this.options.addEdge === 'function') {
+	      if (typeof this.options.addEdge === "function") {
 	        if (this.options.addEdge.length === 2) {
 	          this.options.addEdge(defaultData, function (finalizedData) {
-	            if (finalizedData !== null && finalizedData !== undefined && _this5.inMode === 'addEdge') {
+	            if (finalizedData !== null && finalizedData !== undefined && _this5.inMode === "addEdge") {
 	              // if for whatever reason the mode has changes (due to dataset change) disregard the callback
 	              _this5.body.data.edges.getDataSet().add(finalizedData);
 
@@ -38316,7 +38482,7 @@
 	            }
 	          });
 	        } else {
-	          throw new Error('The function for connect does not support two arguments (data,callback)');
+	          throw new Error("The function for connect does not support two arguments (data,callback)");
 	        }
 	      } else {
 	        this.body.data.edges.getDataSet().add(defaultData);
@@ -38345,18 +38511,18 @@
 	      };
 	      var eeFunct = this.options.editEdge;
 
-	      if (_typeof_1(eeFunct) === 'object') {
+	      if (_typeof_1(eeFunct) === "object") {
 	        eeFunct = eeFunct.editWithoutDrag;
 	      }
 
-	      if (typeof eeFunct === 'function') {
+	      if (typeof eeFunct === "function") {
 	        if (eeFunct.length === 2) {
 	          eeFunct(defaultData, function (finalizedData) {
-	            if (finalizedData === null || finalizedData === undefined || _this6.inMode !== 'editEdge') {
+	            if (finalizedData === null || finalizedData === undefined || _this6.inMode !== "editEdge") {
 	              // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
 	              _this6.body.edges[defaultData.id].updateEdgeType();
 
-	              _this6.body.emitter.emit('_redraw');
+	              _this6.body.emitter.emit("_redraw");
 
 	              _this6.showManipulatorToolbar();
 	            } else {
@@ -38368,7 +38534,7 @@
 	            }
 	          });
 	        } else {
-	          throw new Error('The function for edit does not support two arguments (data, callback)');
+	          throw new Error("The function for edit does not support two arguments (data, callback)");
 	        }
 	      } else {
 	        this.body.data.edges.getDataSet().update(defaultData);
@@ -38381,153 +38547,153 @@
 	  return ManipulationSystem;
 	}();
 
-	var css_248z$4 = "div.vis-configuration {\n    position:relative;\n    display:block;\n    float:left;\n    font-size:12px;\n}\n\ndiv.vis-configuration-wrapper {\n    display:block;\n    width:700px;\n}\n\ndiv.vis-configuration-wrapper::after {\n  clear: both;\n  content: \"\";\n  display: block;\n}\n\ndiv.vis-configuration.vis-config-option-container{\n    display:block;\n    width:495px;\n    background-color: #ffffff;\n    border:2px solid #f7f8fa;\n    border-radius:4px;\n    margin-top:20px;\n    left:10px;\n    padding-left:5px;\n}\n\ndiv.vis-configuration.vis-config-button{\n    display:block;\n    width:495px;\n    height:25px;\n    vertical-align: middle;\n    line-height:25px;\n    background-color: #f7f8fa;\n    border:2px solid #ceced0;\n    border-radius:4px;\n    margin-top:20px;\n    left:10px;\n    padding-left:5px;\n    cursor: pointer;\n    margin-bottom:30px;\n}\n\ndiv.vis-configuration.vis-config-button.hover{\n    background-color: #4588e6;\n    border:2px solid #214373;\n    color:#ffffff;\n}\n\ndiv.vis-configuration.vis-config-item{\n    display:block;\n    float:left;\n    width:495px;\n    height:25px;\n    vertical-align: middle;\n    line-height:25px;\n}\n\n\ndiv.vis-configuration.vis-config-item.vis-config-s2{\n    left:10px;\n    background-color: #f7f8fa;\n    padding-left:5px;\n    border-radius:3px;\n}\ndiv.vis-configuration.vis-config-item.vis-config-s3{\n    left:20px;\n    background-color: #e4e9f0;\n    padding-left:5px;\n    border-radius:3px;\n}\ndiv.vis-configuration.vis-config-item.vis-config-s4{\n    left:30px;\n    background-color: #cfd8e6;\n    padding-left:5px;\n    border-radius:3px;\n}\n\ndiv.vis-configuration.vis-config-header{\n    font-size:18px;\n    font-weight: bold;\n}\n\ndiv.vis-configuration.vis-config-label{\n    width:120px;\n    height:25px;\n    line-height: 25px;\n}\n\ndiv.vis-configuration.vis-config-label.vis-config-s3{\n    width:110px;\n}\ndiv.vis-configuration.vis-config-label.vis-config-s4{\n    width:100px;\n}\n\ndiv.vis-configuration.vis-config-colorBlock{\n    top:1px;\n    width:30px;\n    height:19px;\n    border:1px solid #444444;\n    border-radius:2px;\n    padding:0px;\n    margin:0px;\n    cursor:pointer;\n}\n\ninput.vis-configuration.vis-config-checkbox {\n    left:-5px;\n}\n\n\ninput.vis-configuration.vis-config-rangeinput{\n    position:relative;\n    top:-5px;\n    width:60px;\n    /*height:13px;*/\n    padding:1px;\n    margin:0;\n    pointer-events:none;\n}\n\ninput.vis-configuration.vis-config-range{\n    /*removes default webkit styles*/\n    -webkit-appearance: none;\n\n    /*fix for FF unable to apply focus style bug */\n    border: 0px solid white;\n    background-color:rgba(0,0,0,0);\n\n    /*required for proper track sizing in FF*/\n    width: 300px;\n    height:20px;\n}\ninput.vis-configuration.vis-config-range::-webkit-slider-runnable-track {\n    width: 300px;\n    height: 5px;\n    background: #dedede; /* Old browsers */\n    background: -moz-linear-gradient(top,  #dedede 0%, #c8c8c8 99%); /* FF3.6+ */\n    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(99%,#c8c8c8)); /* Chrome,Safari4+ */\n    background: -webkit-linear-gradient(top,  #dedede 0%,#c8c8c8 99%); /* Chrome10+,Safari5.1+ */\n    background: -o-linear-gradient(top, #dedede 0%, #c8c8c8 99%); /* Opera 11.10+ */\n    background: -ms-linear-gradient(top,  #dedede 0%,#c8c8c8 99%); /* IE10+ */\n    background: linear-gradient(to bottom,  #dedede 0%,#c8c8c8 99%); /* W3C */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#c8c8c8',GradientType=0 ); /* IE6-9 */\n\n    border: 1px solid #999999;\n    box-shadow: #aaaaaa 0px 0px 3px 0px;\n    border-radius: 3px;\n}\ninput.vis-configuration.vis-config-range::-webkit-slider-thumb {\n    -webkit-appearance: none;\n    border: 1px solid #14334b;\n    height: 17px;\n    width: 17px;\n    border-radius: 50%;\n    background: #3876c2; /* Old browsers */\n    background: -moz-linear-gradient(top,  #3876c2 0%, #385380 100%); /* FF3.6+ */\n    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3876c2), color-stop(100%,#385380)); /* Chrome,Safari4+ */\n    background: -webkit-linear-gradient(top,  #3876c2 0%,#385380 100%); /* Chrome10+,Safari5.1+ */\n    background: -o-linear-gradient(top,  #3876c2 0%,#385380 100%); /* Opera 11.10+ */\n    background: -ms-linear-gradient(top,  #3876c2 0%,#385380 100%); /* IE10+ */\n    background: linear-gradient(to bottom,  #3876c2 0%,#385380 100%); /* W3C */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3876c2', endColorstr='#385380',GradientType=0 ); /* IE6-9 */\n    box-shadow: #111927 0px 0px 1px 0px;\n    margin-top: -7px;\n}\ninput.vis-configuration.vis-config-range:focus {\n    outline: none;\n}\ninput.vis-configuration.vis-config-range:focus::-webkit-slider-runnable-track {\n    background: #9d9d9d; /* Old browsers */\n    background: -moz-linear-gradient(top, #9d9d9d 0%, #c8c8c8 99%); /* FF3.6+ */\n    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#9d9d9d), color-stop(99%,#c8c8c8)); /* Chrome,Safari4+ */\n    background: -webkit-linear-gradient(top,  #9d9d9d 0%,#c8c8c8 99%); /* Chrome10+,Safari5.1+ */\n    background: -o-linear-gradient(top,  #9d9d9d 0%,#c8c8c8 99%); /* Opera 11.10+ */\n    background: -ms-linear-gradient(top,  #9d9d9d 0%,#c8c8c8 99%); /* IE10+ */\n    background: linear-gradient(to bottom,  #9d9d9d 0%,#c8c8c8 99%); /* W3C */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d9d9d', endColorstr='#c8c8c8',GradientType=0 ); /* IE6-9 */\n}\n\ninput.vis-configuration.vis-config-range::-moz-range-track {\n    width: 300px;\n    height: 10px;\n    background: #dedede; /* Old browsers */\n    background: -moz-linear-gradient(top,  #dedede 0%, #c8c8c8 99%); /* FF3.6+ */\n    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dedede), color-stop(99%,#c8c8c8)); /* Chrome,Safari4+ */\n    background: -webkit-linear-gradient(top,  #dedede 0%,#c8c8c8 99%); /* Chrome10+,Safari5.1+ */\n    background: -o-linear-gradient(top, #dedede 0%, #c8c8c8 99%); /* Opera 11.10+ */\n    background: -ms-linear-gradient(top,  #dedede 0%,#c8c8c8 99%); /* IE10+ */\n    background: linear-gradient(to bottom,  #dedede 0%,#c8c8c8 99%); /* W3C */\n    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#c8c8c8',GradientType=0 ); /* IE6-9 */\n\n    border: 1px solid #999999;\n    box-shadow: #aaaaaa 0px 0px 3px 0px;\n    border-radius: 3px;\n}\ninput.vis-configuration.vis-config-range::-moz-range-thumb {\n    border: none;\n    height: 16px;\n    width: 16px;\n\n    border-radius: 50%;\n    background:  #385380;\n}\n\n/*hide the outline behind the border*/\ninput.vis-configuration.vis-config-range:-moz-focusring{\n    outline: 1px solid white;\n    outline-offset: -1px;\n}\n\ninput.vis-configuration.vis-config-range::-ms-track {\n    width: 300px;\n    height: 5px;\n\n    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */\n    background: transparent;\n\n    /*leave room for the larger thumb to overflow with a transparent border */\n    border-color: transparent;\n    border-width: 6px 0;\n\n    /*remove default tick marks*/\n    color: transparent;\n}\ninput.vis-configuration.vis-config-range::-ms-fill-lower {\n    background: #777;\n    border-radius: 10px;\n}\ninput.vis-configuration.vis-config-range::-ms-fill-upper {\n    background: #ddd;\n    border-radius: 10px;\n}\ninput.vis-configuration.vis-config-range::-ms-thumb {\n    border: none;\n    height: 16px;\n    width: 16px;\n    border-radius: 50%;\n    background:  #385380;\n}\ninput.vis-configuration.vis-config-range:focus::-ms-fill-lower {\n    background: #888;\n}\ninput.vis-configuration.vis-config-range:focus::-ms-fill-upper {\n    background: #ccc;\n}\n\n.vis-configuration-popup {\n    position: absolute;\n    background: rgba(57, 76, 89, 0.85);\n    border: 2px solid #f2faff;\n    line-height:30px;\n    height:30px;\n    width:150px;\n    text-align:center;\n    color: #ffffff;\n    font-size:14px;\n    border-radius:4px;\n    -webkit-transition: opacity 0.3s ease-in-out;\n    -moz-transition: opacity 0.3s ease-in-out;\n    transition: opacity 0.3s ease-in-out;\n}\n.vis-configuration-popup:after, .vis-configuration-popup:before {\n    left: 100%;\n    top: 50%;\n    border: solid transparent;\n    content: \" \";\n    height: 0;\n    width: 0;\n    position: absolute;\n    pointer-events: none;\n}\n\n.vis-configuration-popup:after {\n    border-color: rgba(136, 183, 213, 0);\n    border-left-color: rgba(57, 76, 89, 0.85);\n    border-width: 8px;\n    margin-top: -8px;\n}\n.vis-configuration-popup:before {\n    border-color: rgba(194, 225, 245, 0);\n    border-left-color: #f2faff;\n    border-width: 12px;\n    margin-top: -12px;\n}";
+	var css_248z$4 = "div.vis-configuration {\n  position: relative;\n  display: block;\n  float: left;\n  font-size: 12px;\n}\n\ndiv.vis-configuration-wrapper {\n  display: block;\n  width: 700px;\n}\n\ndiv.vis-configuration-wrapper::after {\n  clear: both;\n  content: \"\";\n  display: block;\n}\n\ndiv.vis-configuration.vis-config-option-container {\n  display: block;\n  width: 495px;\n  background-color: #ffffff;\n  border: 2px solid #f7f8fa;\n  border-radius: 4px;\n  margin-top: 20px;\n  left: 10px;\n  padding-left: 5px;\n}\n\ndiv.vis-configuration.vis-config-button {\n  display: block;\n  width: 495px;\n  height: 25px;\n  vertical-align: middle;\n  line-height: 25px;\n  background-color: #f7f8fa;\n  border: 2px solid #ceced0;\n  border-radius: 4px;\n  margin-top: 20px;\n  left: 10px;\n  padding-left: 5px;\n  cursor: pointer;\n  margin-bottom: 30px;\n}\n\ndiv.vis-configuration.vis-config-button.hover {\n  background-color: #4588e6;\n  border: 2px solid #214373;\n  color: #ffffff;\n}\n\ndiv.vis-configuration.vis-config-item {\n  display: block;\n  float: left;\n  width: 495px;\n  height: 25px;\n  vertical-align: middle;\n  line-height: 25px;\n}\n\ndiv.vis-configuration.vis-config-item.vis-config-s2 {\n  left: 10px;\n  background-color: #f7f8fa;\n  padding-left: 5px;\n  border-radius: 3px;\n}\ndiv.vis-configuration.vis-config-item.vis-config-s3 {\n  left: 20px;\n  background-color: #e4e9f0;\n  padding-left: 5px;\n  border-radius: 3px;\n}\ndiv.vis-configuration.vis-config-item.vis-config-s4 {\n  left: 30px;\n  background-color: #cfd8e6;\n  padding-left: 5px;\n  border-radius: 3px;\n}\n\ndiv.vis-configuration.vis-config-header {\n  font-size: 18px;\n  font-weight: bold;\n}\n\ndiv.vis-configuration.vis-config-label {\n  width: 120px;\n  height: 25px;\n  line-height: 25px;\n}\n\ndiv.vis-configuration.vis-config-label.vis-config-s3 {\n  width: 110px;\n}\ndiv.vis-configuration.vis-config-label.vis-config-s4 {\n  width: 100px;\n}\n\ndiv.vis-configuration.vis-config-colorBlock {\n  top: 1px;\n  width: 30px;\n  height: 19px;\n  border: 1px solid #444444;\n  border-radius: 2px;\n  padding: 0px;\n  margin: 0px;\n  cursor: pointer;\n}\n\ninput.vis-configuration.vis-config-checkbox {\n  left: -5px;\n}\n\ninput.vis-configuration.vis-config-rangeinput {\n  position: relative;\n  top: -5px;\n  width: 60px;\n  /*height:13px;*/\n  padding: 1px;\n  margin: 0;\n  pointer-events: none;\n}\n\ninput.vis-configuration.vis-config-range {\n  /*removes default webkit styles*/\n  -webkit-appearance: none;\n\n  /*fix for FF unable to apply focus style bug */\n  border: 0px solid white;\n  background-color: rgba(0, 0, 0, 0);\n\n  /*required for proper track sizing in FF*/\n  width: 300px;\n  height: 20px;\n}\ninput.vis-configuration.vis-config-range::-webkit-slider-runnable-track {\n  width: 300px;\n  height: 5px;\n  background: #dedede; /* Old browsers */\n  background: -moz-linear-gradient(top, #dedede 0%, #c8c8c8 99%); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #dedede),\n    color-stop(99%, #c8c8c8)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #dedede 0%,\n    #c8c8c8 99%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #dedede 0%,\n    #c8c8c8 99%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top, #dedede 0%, #c8c8c8 99%); /* IE10+ */\n  background: linear-gradient(to bottom, #dedede 0%, #c8c8c8 99%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#c8c8c8',GradientType=0 ); /* IE6-9 */\n\n  border: 1px solid #999999;\n  box-shadow: #aaaaaa 0px 0px 3px 0px;\n  border-radius: 3px;\n}\ninput.vis-configuration.vis-config-range::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  border: 1px solid #14334b;\n  height: 17px;\n  width: 17px;\n  border-radius: 50%;\n  background: #3876c2; /* Old browsers */\n  background: -moz-linear-gradient(top, #3876c2 0%, #385380 100%); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #3876c2),\n    color-stop(100%, #385380)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #3876c2 0%,\n    #385380 100%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #3876c2 0%,\n    #385380 100%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top, #3876c2 0%, #385380 100%); /* IE10+ */\n  background: linear-gradient(to bottom, #3876c2 0%, #385380 100%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3876c2', endColorstr='#385380',GradientType=0 ); /* IE6-9 */\n  box-shadow: #111927 0px 0px 1px 0px;\n  margin-top: -7px;\n}\ninput.vis-configuration.vis-config-range:focus {\n  outline: none;\n}\ninput.vis-configuration.vis-config-range:focus::-webkit-slider-runnable-track {\n  background: #9d9d9d; /* Old browsers */\n  background: -moz-linear-gradient(top, #9d9d9d 0%, #c8c8c8 99%); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #9d9d9d),\n    color-stop(99%, #c8c8c8)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #9d9d9d 0%,\n    #c8c8c8 99%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #9d9d9d 0%,\n    #c8c8c8 99%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top, #9d9d9d 0%, #c8c8c8 99%); /* IE10+ */\n  background: linear-gradient(to bottom, #9d9d9d 0%, #c8c8c8 99%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9d9d9d', endColorstr='#c8c8c8',GradientType=0 ); /* IE6-9 */\n}\n\ninput.vis-configuration.vis-config-range::-moz-range-track {\n  width: 300px;\n  height: 10px;\n  background: #dedede; /* Old browsers */\n  background: -moz-linear-gradient(top, #dedede 0%, #c8c8c8 99%); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #dedede),\n    color-stop(99%, #c8c8c8)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #dedede 0%,\n    #c8c8c8 99%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #dedede 0%,\n    #c8c8c8 99%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top, #dedede 0%, #c8c8c8 99%); /* IE10+ */\n  background: linear-gradient(to bottom, #dedede 0%, #c8c8c8 99%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dedede', endColorstr='#c8c8c8',GradientType=0 ); /* IE6-9 */\n\n  border: 1px solid #999999;\n  box-shadow: #aaaaaa 0px 0px 3px 0px;\n  border-radius: 3px;\n}\ninput.vis-configuration.vis-config-range::-moz-range-thumb {\n  border: none;\n  height: 16px;\n  width: 16px;\n\n  border-radius: 50%;\n  background: #385380;\n}\n\n/*hide the outline behind the border*/\ninput.vis-configuration.vis-config-range:-moz-focusring {\n  outline: 1px solid white;\n  outline-offset: -1px;\n}\n\ninput.vis-configuration.vis-config-range::-ms-track {\n  width: 300px;\n  height: 5px;\n\n  /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */\n  background: transparent;\n\n  /*leave room for the larger thumb to overflow with a transparent border */\n  border-color: transparent;\n  border-width: 6px 0;\n\n  /*remove default tick marks*/\n  color: transparent;\n}\ninput.vis-configuration.vis-config-range::-ms-fill-lower {\n  background: #777;\n  border-radius: 10px;\n}\ninput.vis-configuration.vis-config-range::-ms-fill-upper {\n  background: #ddd;\n  border-radius: 10px;\n}\ninput.vis-configuration.vis-config-range::-ms-thumb {\n  border: none;\n  height: 16px;\n  width: 16px;\n  border-radius: 50%;\n  background: #385380;\n}\ninput.vis-configuration.vis-config-range:focus::-ms-fill-lower {\n  background: #888;\n}\ninput.vis-configuration.vis-config-range:focus::-ms-fill-upper {\n  background: #ccc;\n}\n\n.vis-configuration-popup {\n  position: absolute;\n  background: rgba(57, 76, 89, 0.85);\n  border: 2px solid #f2faff;\n  line-height: 30px;\n  height: 30px;\n  width: 150px;\n  text-align: center;\n  color: #ffffff;\n  font-size: 14px;\n  border-radius: 4px;\n  -webkit-transition: opacity 0.3s ease-in-out;\n  -moz-transition: opacity 0.3s ease-in-out;\n  transition: opacity 0.3s ease-in-out;\n}\n.vis-configuration-popup:after,\n.vis-configuration-popup:before {\n  left: 100%;\n  top: 50%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n\n.vis-configuration-popup:after {\n  border-color: rgba(136, 183, 213, 0);\n  border-left-color: rgba(57, 76, 89, 0.85);\n  border-width: 8px;\n  margin-top: -8px;\n}\n.vis-configuration-popup:before {\n  border-color: rgba(194, 225, 245, 0);\n  border-left-color: #f2faff;\n  border-width: 12px;\n  margin-top: -12px;\n}\n";
 	styleInject(css_248z$4);
 
-	var css_248z$5 = "\ndiv.vis-color-picker {\n  position:absolute;\n  top: 0px;\n  left: 30px;\n  margin-top:-140px;\n  margin-left:30px;\n  width:310px;\n  height:444px;\n  z-index: 1;\n  padding: 10px;\n  border-radius:15px;\n  background-color:#ffffff;\n  display: none;\n  box-shadow: rgba(0,0,0,0.5) 0px 0px 10px 0px;\n}\n\ndiv.vis-color-picker div.vis-arrow {\n  position: absolute;\n  top:147px;\n  left:5px;\n}\n\ndiv.vis-color-picker div.vis-arrow::after,\ndiv.vis-color-picker div.vis-arrow::before {\n  right: 100%;\n  top: 50%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n\ndiv.vis-color-picker div.vis-arrow:after {\n  border-color: rgba(255, 255, 255, 0);\n  border-right-color: #ffffff;\n  border-width: 30px;\n  margin-top: -30px;\n}\n\ndiv.vis-color-picker div.vis-color {\n  position:absolute;\n  width: 289px;\n  height: 289px;\n  cursor: pointer;\n}\n\n\n\ndiv.vis-color-picker div.vis-brightness {\n  position: absolute;\n  top:313px;\n}\n\ndiv.vis-color-picker div.vis-opacity {\n  position:absolute;\n  top:350px;\n}\n\ndiv.vis-color-picker div.vis-selector {\n  position:absolute;\n  top:137px;\n  left:137px;\n  width:15px;\n  height:15px;\n  border-radius:15px;\n  border:1px solid #ffffff;\n  background: #4c4c4c; /* Old browsers */\n  background: -moz-linear-gradient(top,  #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, #000000 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%); /* FF3.6+ */\n  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4c4c4c), color-stop(12%,#595959), color-stop(25%,#666666), color-stop(39%,#474747), color-stop(50%,#2c2c2c), color-stop(51%,#000000), color-stop(60%,#111111), color-stop(76%,#2b2b2b), color-stop(91%,#1c1c1c), color-stop(100%,#131313)); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* IE10+ */\n  background: linear-gradient(to bottom,  #4c4c4c 0%,#595959 12%,#666666 25%,#474747 39%,#2c2c2c 50%,#000000 51%,#111111 60%,#2b2b2b 76%,#1c1c1c 91%,#131313 100%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */\n}\n\n\n\ndiv.vis-color-picker div.vis-new-color {\n  position:absolute;\n  width:140px;\n  height:20px;\n  border:1px solid rgba(0,0,0,0.1);\n  border-radius:5px;\n  top:380px;\n  left:159px;\n  text-align:right;\n  padding-right:2px;\n  font-size:10px;\n  color:rgba(0,0,0,0.4);\n  vertical-align:middle;\n  line-height:20px;\n\n}\n\ndiv.vis-color-picker div.vis-initial-color {\n  position:absolute;\n  width:140px;\n  height:20px;\n  border:1px solid rgba(0,0,0,0.1);\n  border-radius:5px;\n  top:380px;\n  left:10px;\n  text-align:left;\n  padding-left:2px;\n  font-size:10px;\n  color:rgba(0,0,0,0.4);\n  vertical-align:middle;\n  line-height:20px;\n}\n\ndiv.vis-color-picker div.vis-label {\n  position:absolute;\n  width:300px;\n  left:10px;\n}\n\ndiv.vis-color-picker div.vis-label.vis-brightness {\n  top:300px;\n}\n\ndiv.vis-color-picker div.vis-label.vis-opacity {\n  top:338px;\n}\n\ndiv.vis-color-picker div.vis-button {\n  position:absolute;\n  width:68px;\n  height:25px;\n  border-radius:10px;\n  vertical-align: middle;\n  text-align:center;\n  line-height: 25px;\n  top:410px;\n  border:2px solid #d9d9d9;\n  background-color: #f7f7f7;\n  cursor:pointer;\n}\n\ndiv.vis-color-picker div.vis-button.vis-cancel {\n  /*border:2px solid #ff4e33;*/\n  /*background-color: #ff7761;*/\n  left:5px;\n}\ndiv.vis-color-picker div.vis-button.vis-load {\n  /*border:2px solid #a153e6;*/\n  /*background-color: #cb8dff;*/\n  left:82px;\n}\ndiv.vis-color-picker div.vis-button.vis-apply {\n  /*border:2px solid #4588e6;*/\n  /*background-color: #82b6ff;*/\n  left:159px;\n}\ndiv.vis-color-picker div.vis-button.vis-save {\n  /*border:2px solid #45e655;*/\n  /*background-color: #6dff7c;*/\n  left:236px;\n}\n\n\ndiv.vis-color-picker input.vis-range {\n  width: 290px;\n  height:20px;\n}\n\n/* TODO: is this redundant?\ndiv.vis-color-picker input.vis-range-brightness {\n  width: 289px !important;\n}\n\n\ndiv.vis-color-picker input.vis-saturation-range {\n  width: 289px !important;\n}*/";
+	var css_248z$5 = "div.vis-color-picker {\n  position: absolute;\n  top: 0px;\n  left: 30px;\n  margin-top: -140px;\n  margin-left: 30px;\n  width: 310px;\n  height: 444px;\n  z-index: 1;\n  padding: 10px;\n  border-radius: 15px;\n  background-color: #ffffff;\n  display: none;\n  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px 0px;\n}\n\ndiv.vis-color-picker div.vis-arrow {\n  position: absolute;\n  top: 147px;\n  left: 5px;\n}\n\ndiv.vis-color-picker div.vis-arrow::after,\ndiv.vis-color-picker div.vis-arrow::before {\n  right: 100%;\n  top: 50%;\n  border: solid transparent;\n  content: \" \";\n  height: 0;\n  width: 0;\n  position: absolute;\n  pointer-events: none;\n}\n\ndiv.vis-color-picker div.vis-arrow:after {\n  border-color: rgba(255, 255, 255, 0);\n  border-right-color: #ffffff;\n  border-width: 30px;\n  margin-top: -30px;\n}\n\ndiv.vis-color-picker div.vis-color {\n  position: absolute;\n  width: 289px;\n  height: 289px;\n  cursor: pointer;\n}\n\ndiv.vis-color-picker div.vis-brightness {\n  position: absolute;\n  top: 313px;\n}\n\ndiv.vis-color-picker div.vis-opacity {\n  position: absolute;\n  top: 350px;\n}\n\ndiv.vis-color-picker div.vis-selector {\n  position: absolute;\n  top: 137px;\n  left: 137px;\n  width: 15px;\n  height: 15px;\n  border-radius: 15px;\n  border: 1px solid #ffffff;\n  background: #4c4c4c; /* Old browsers */\n  background: -moz-linear-gradient(\n    top,\n    #4c4c4c 0%,\n    #595959 12%,\n    #666666 25%,\n    #474747 39%,\n    #2c2c2c 50%,\n    #000000 51%,\n    #111111 60%,\n    #2b2b2b 76%,\n    #1c1c1c 91%,\n    #131313 100%\n  ); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #4c4c4c),\n    color-stop(12%, #595959),\n    color-stop(25%, #666666),\n    color-stop(39%, #474747),\n    color-stop(50%, #2c2c2c),\n    color-stop(51%, #000000),\n    color-stop(60%, #111111),\n    color-stop(76%, #2b2b2b),\n    color-stop(91%, #1c1c1c),\n    color-stop(100%, #131313)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #4c4c4c 0%,\n    #595959 12%,\n    #666666 25%,\n    #474747 39%,\n    #2c2c2c 50%,\n    #000000 51%,\n    #111111 60%,\n    #2b2b2b 76%,\n    #1c1c1c 91%,\n    #131313 100%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #4c4c4c 0%,\n    #595959 12%,\n    #666666 25%,\n    #474747 39%,\n    #2c2c2c 50%,\n    #000000 51%,\n    #111111 60%,\n    #2b2b2b 76%,\n    #1c1c1c 91%,\n    #131313 100%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(\n    top,\n    #4c4c4c 0%,\n    #595959 12%,\n    #666666 25%,\n    #474747 39%,\n    #2c2c2c 50%,\n    #000000 51%,\n    #111111 60%,\n    #2b2b2b 76%,\n    #1c1c1c 91%,\n    #131313 100%\n  ); /* IE10+ */\n  background: linear-gradient(\n    to bottom,\n    #4c4c4c 0%,\n    #595959 12%,\n    #666666 25%,\n    #474747 39%,\n    #2c2c2c 50%,\n    #000000 51%,\n    #111111 60%,\n    #2b2b2b 76%,\n    #1c1c1c 91%,\n    #131313 100%\n  ); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */\n}\n\ndiv.vis-color-picker div.vis-new-color {\n  position: absolute;\n  width: 140px;\n  height: 20px;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  border-radius: 5px;\n  top: 380px;\n  left: 159px;\n  text-align: right;\n  padding-right: 2px;\n  font-size: 10px;\n  color: rgba(0, 0, 0, 0.4);\n  vertical-align: middle;\n  line-height: 20px;\n}\n\ndiv.vis-color-picker div.vis-initial-color {\n  position: absolute;\n  width: 140px;\n  height: 20px;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  border-radius: 5px;\n  top: 380px;\n  left: 10px;\n  text-align: left;\n  padding-left: 2px;\n  font-size: 10px;\n  color: rgba(0, 0, 0, 0.4);\n  vertical-align: middle;\n  line-height: 20px;\n}\n\ndiv.vis-color-picker div.vis-label {\n  position: absolute;\n  width: 300px;\n  left: 10px;\n}\n\ndiv.vis-color-picker div.vis-label.vis-brightness {\n  top: 300px;\n}\n\ndiv.vis-color-picker div.vis-label.vis-opacity {\n  top: 338px;\n}\n\ndiv.vis-color-picker div.vis-button {\n  position: absolute;\n  width: 68px;\n  height: 25px;\n  border-radius: 10px;\n  vertical-align: middle;\n  text-align: center;\n  line-height: 25px;\n  top: 410px;\n  border: 2px solid #d9d9d9;\n  background-color: #f7f7f7;\n  cursor: pointer;\n}\n\ndiv.vis-color-picker div.vis-button.vis-cancel {\n  /*border:2px solid #ff4e33;*/\n  /*background-color: #ff7761;*/\n  left: 5px;\n}\ndiv.vis-color-picker div.vis-button.vis-load {\n  /*border:2px solid #a153e6;*/\n  /*background-color: #cb8dff;*/\n  left: 82px;\n}\ndiv.vis-color-picker div.vis-button.vis-apply {\n  /*border:2px solid #4588e6;*/\n  /*background-color: #82b6ff;*/\n  left: 159px;\n}\ndiv.vis-color-picker div.vis-button.vis-save {\n  /*border:2px solid #45e655;*/\n  /*background-color: #6dff7c;*/\n  left: 236px;\n}\n\ndiv.vis-color-picker input.vis-range {\n  width: 290px;\n  height: 20px;\n}\n\n/* TODO: is this redundant?\ndiv.vis-color-picker input.vis-range-brightness {\n  width: 289px !important;\n}\n\n\ndiv.vis-color-picker input.vis-saturation-range {\n  width: 289px !important;\n}*/\n";
 	styleInject(css_248z$5);
 
 	var htmlColors = {
-	  black: '#000000',
-	  navy: '#000080',
-	  darkblue: '#00008B',
-	  mediumblue: '#0000CD',
-	  blue: '#0000FF',
-	  darkgreen: '#006400',
-	  green: '#008000',
-	  teal: '#008080',
-	  darkcyan: '#008B8B',
-	  deepskyblue: '#00BFFF',
-	  darkturquoise: '#00CED1',
-	  mediumspringgreen: '#00FA9A',
-	  lime: '#00FF00',
-	  springgreen: '#00FF7F',
-	  aqua: '#00FFFF',
-	  cyan: '#00FFFF',
-	  midnightblue: '#191970',
-	  dodgerblue: '#1E90FF',
-	  lightseagreen: '#20B2AA',
-	  forestgreen: '#228B22',
-	  seagreen: '#2E8B57',
-	  darkslategray: '#2F4F4F',
-	  limegreen: '#32CD32',
-	  mediumseagreen: '#3CB371',
-	  turquoise: '#40E0D0',
-	  royalblue: '#4169E1',
-	  steelblue: '#4682B4',
-	  darkslateblue: '#483D8B',
-	  mediumturquoise: '#48D1CC',
-	  indigo: '#4B0082',
-	  darkolivegreen: '#556B2F',
-	  cadetblue: '#5F9EA0',
-	  cornflowerblue: '#6495ED',
-	  mediumaquamarine: '#66CDAA',
-	  dimgray: '#696969',
-	  slateblue: '#6A5ACD',
-	  olivedrab: '#6B8E23',
-	  slategray: '#708090',
-	  lightslategray: '#778899',
-	  mediumslateblue: '#7B68EE',
-	  lawngreen: '#7CFC00',
-	  chartreuse: '#7FFF00',
-	  aquamarine: '#7FFFD4',
-	  maroon: '#800000',
-	  purple: '#800080',
-	  olive: '#808000',
-	  gray: '#808080',
-	  skyblue: '#87CEEB',
-	  lightskyblue: '#87CEFA',
-	  blueviolet: '#8A2BE2',
-	  darkred: '#8B0000',
-	  darkmagenta: '#8B008B',
-	  saddlebrown: '#8B4513',
-	  darkseagreen: '#8FBC8F',
-	  lightgreen: '#90EE90',
-	  mediumpurple: '#9370D8',
-	  darkviolet: '#9400D3',
-	  palegreen: '#98FB98',
-	  darkorchid: '#9932CC',
-	  yellowgreen: '#9ACD32',
-	  sienna: '#A0522D',
-	  brown: '#A52A2A',
-	  darkgray: '#A9A9A9',
-	  lightblue: '#ADD8E6',
-	  greenyellow: '#ADFF2F',
-	  paleturquoise: '#AFEEEE',
-	  lightsteelblue: '#B0C4DE',
-	  powderblue: '#B0E0E6',
-	  firebrick: '#B22222',
-	  darkgoldenrod: '#B8860B',
-	  mediumorchid: '#BA55D3',
-	  rosybrown: '#BC8F8F',
-	  darkkhaki: '#BDB76B',
-	  silver: '#C0C0C0',
-	  mediumvioletred: '#C71585',
-	  indianred: '#CD5C5C',
-	  peru: '#CD853F',
-	  chocolate: '#D2691E',
-	  tan: '#D2B48C',
-	  lightgrey: '#D3D3D3',
-	  palevioletred: '#D87093',
-	  thistle: '#D8BFD8',
-	  orchid: '#DA70D6',
-	  goldenrod: '#DAA520',
-	  crimson: '#DC143C',
-	  gainsboro: '#DCDCDC',
-	  plum: '#DDA0DD',
-	  burlywood: '#DEB887',
-	  lightcyan: '#E0FFFF',
-	  lavender: '#E6E6FA',
-	  darksalmon: '#E9967A',
-	  violet: '#EE82EE',
-	  palegoldenrod: '#EEE8AA',
-	  lightcoral: '#F08080',
-	  khaki: '#F0E68C',
-	  aliceblue: '#F0F8FF',
-	  honeydew: '#F0FFF0',
-	  azure: '#F0FFFF',
-	  sandybrown: '#F4A460',
-	  wheat: '#F5DEB3',
-	  beige: '#F5F5DC',
-	  whitesmoke: '#F5F5F5',
-	  mintcream: '#F5FFFA',
-	  ghostwhite: '#F8F8FF',
-	  salmon: '#FA8072',
-	  antiquewhite: '#FAEBD7',
-	  linen: '#FAF0E6',
-	  lightgoldenrodyellow: '#FAFAD2',
-	  oldlace: '#FDF5E6',
-	  red: '#FF0000',
-	  fuchsia: '#FF00FF',
-	  magenta: '#FF00FF',
-	  deeppink: '#FF1493',
-	  orangered: '#FF4500',
-	  tomato: '#FF6347',
-	  hotpink: '#FF69B4',
-	  coral: '#FF7F50',
-	  darkorange: '#FF8C00',
-	  lightsalmon: '#FFA07A',
-	  orange: '#FFA500',
-	  lightpink: '#FFB6C1',
-	  pink: '#FFC0CB',
-	  gold: '#FFD700',
-	  peachpuff: '#FFDAB9',
-	  navajowhite: '#FFDEAD',
-	  moccasin: '#FFE4B5',
-	  bisque: '#FFE4C4',
-	  mistyrose: '#FFE4E1',
-	  blanchedalmond: '#FFEBCD',
-	  papayawhip: '#FFEFD5',
-	  lavenderblush: '#FFF0F5',
-	  seashell: '#FFF5EE',
-	  cornsilk: '#FFF8DC',
-	  lemonchiffon: '#FFFACD',
-	  floralwhite: '#FFFAF0',
-	  snow: '#FFFAFA',
-	  yellow: '#FFFF00',
-	  lightyellow: '#FFFFE0',
-	  ivory: '#FFFFF0',
-	  white: '#FFFFFF'
+	  black: "#000000",
+	  navy: "#000080",
+	  darkblue: "#00008B",
+	  mediumblue: "#0000CD",
+	  blue: "#0000FF",
+	  darkgreen: "#006400",
+	  green: "#008000",
+	  teal: "#008080",
+	  darkcyan: "#008B8B",
+	  deepskyblue: "#00BFFF",
+	  darkturquoise: "#00CED1",
+	  mediumspringgreen: "#00FA9A",
+	  lime: "#00FF00",
+	  springgreen: "#00FF7F",
+	  aqua: "#00FFFF",
+	  cyan: "#00FFFF",
+	  midnightblue: "#191970",
+	  dodgerblue: "#1E90FF",
+	  lightseagreen: "#20B2AA",
+	  forestgreen: "#228B22",
+	  seagreen: "#2E8B57",
+	  darkslategray: "#2F4F4F",
+	  limegreen: "#32CD32",
+	  mediumseagreen: "#3CB371",
+	  turquoise: "#40E0D0",
+	  royalblue: "#4169E1",
+	  steelblue: "#4682B4",
+	  darkslateblue: "#483D8B",
+	  mediumturquoise: "#48D1CC",
+	  indigo: "#4B0082",
+	  darkolivegreen: "#556B2F",
+	  cadetblue: "#5F9EA0",
+	  cornflowerblue: "#6495ED",
+	  mediumaquamarine: "#66CDAA",
+	  dimgray: "#696969",
+	  slateblue: "#6A5ACD",
+	  olivedrab: "#6B8E23",
+	  slategray: "#708090",
+	  lightslategray: "#778899",
+	  mediumslateblue: "#7B68EE",
+	  lawngreen: "#7CFC00",
+	  chartreuse: "#7FFF00",
+	  aquamarine: "#7FFFD4",
+	  maroon: "#800000",
+	  purple: "#800080",
+	  olive: "#808000",
+	  gray: "#808080",
+	  skyblue: "#87CEEB",
+	  lightskyblue: "#87CEFA",
+	  blueviolet: "#8A2BE2",
+	  darkred: "#8B0000",
+	  darkmagenta: "#8B008B",
+	  saddlebrown: "#8B4513",
+	  darkseagreen: "#8FBC8F",
+	  lightgreen: "#90EE90",
+	  mediumpurple: "#9370D8",
+	  darkviolet: "#9400D3",
+	  palegreen: "#98FB98",
+	  darkorchid: "#9932CC",
+	  yellowgreen: "#9ACD32",
+	  sienna: "#A0522D",
+	  brown: "#A52A2A",
+	  darkgray: "#A9A9A9",
+	  lightblue: "#ADD8E6",
+	  greenyellow: "#ADFF2F",
+	  paleturquoise: "#AFEEEE",
+	  lightsteelblue: "#B0C4DE",
+	  powderblue: "#B0E0E6",
+	  firebrick: "#B22222",
+	  darkgoldenrod: "#B8860B",
+	  mediumorchid: "#BA55D3",
+	  rosybrown: "#BC8F8F",
+	  darkkhaki: "#BDB76B",
+	  silver: "#C0C0C0",
+	  mediumvioletred: "#C71585",
+	  indianred: "#CD5C5C",
+	  peru: "#CD853F",
+	  chocolate: "#D2691E",
+	  tan: "#D2B48C",
+	  lightgrey: "#D3D3D3",
+	  palevioletred: "#D87093",
+	  thistle: "#D8BFD8",
+	  orchid: "#DA70D6",
+	  goldenrod: "#DAA520",
+	  crimson: "#DC143C",
+	  gainsboro: "#DCDCDC",
+	  plum: "#DDA0DD",
+	  burlywood: "#DEB887",
+	  lightcyan: "#E0FFFF",
+	  lavender: "#E6E6FA",
+	  darksalmon: "#E9967A",
+	  violet: "#EE82EE",
+	  palegoldenrod: "#EEE8AA",
+	  lightcoral: "#F08080",
+	  khaki: "#F0E68C",
+	  aliceblue: "#F0F8FF",
+	  honeydew: "#F0FFF0",
+	  azure: "#F0FFFF",
+	  sandybrown: "#F4A460",
+	  wheat: "#F5DEB3",
+	  beige: "#F5F5DC",
+	  whitesmoke: "#F5F5F5",
+	  mintcream: "#F5FFFA",
+	  ghostwhite: "#F8F8FF",
+	  salmon: "#FA8072",
+	  antiquewhite: "#FAEBD7",
+	  linen: "#FAF0E6",
+	  lightgoldenrodyellow: "#FAFAD2",
+	  oldlace: "#FDF5E6",
+	  red: "#FF0000",
+	  fuchsia: "#FF00FF",
+	  magenta: "#FF00FF",
+	  deeppink: "#FF1493",
+	  orangered: "#FF4500",
+	  tomato: "#FF6347",
+	  hotpink: "#FF69B4",
+	  coral: "#FF7F50",
+	  darkorange: "#FF8C00",
+	  lightsalmon: "#FFA07A",
+	  orange: "#FFA500",
+	  lightpink: "#FFB6C1",
+	  pink: "#FFC0CB",
+	  gold: "#FFD700",
+	  peachpuff: "#FFDAB9",
+	  navajowhite: "#FFDEAD",
+	  moccasin: "#FFE4B5",
+	  bisque: "#FFE4C4",
+	  mistyrose: "#FFE4E1",
+	  blanchedalmond: "#FFEBCD",
+	  papayawhip: "#FFEFD5",
+	  lavenderblush: "#FFF0F5",
+	  seashell: "#FFF5EE",
+	  cornsilk: "#FFF8DC",
+	  lemonchiffon: "#FFFACD",
+	  floralwhite: "#FFFAF0",
+	  snow: "#FFFAFA",
+	  yellow: "#FFFF00",
+	  lightyellow: "#FFFFE0",
+	  ivory: "#FFFFF0",
+	  white: "#FFFFFF"
 	};
 	/**
 	 * @param {number} [pixelRatio=1]
@@ -38574,6 +38740,7 @@
 	  }
 	  /**
 	   * this inserts the colorPicker into a div from the DOM
+	   *
 	   * @param {Element} container
 	   */
 
@@ -38595,13 +38762,14 @@
 	    }
 	    /**
 	     * the callback is executed on apply and save. Bind it to the application
-	     * @param {function} callback
+	     *
+	     * @param {Function} callback
 	     */
 
 	  }, {
 	    key: "setUpdateCallback",
 	    value: function setUpdateCallback(callback) {
-	      if (typeof callback === 'function') {
+	      if (typeof callback === "function") {
 	        this.updateCallback = callback;
 	      } else {
 	        throw new Error("Function attempted to set as colorPicker update callback is not a function.");
@@ -38609,13 +38777,14 @@
 	    }
 	    /**
 	     * the callback is executed on apply and save. Bind it to the application
-	     * @param {function} callback
+	     *
+	     * @param {Function} callback
 	     */
 
 	  }, {
 	    key: "setCloseCallback",
 	    value: function setCloseCallback(callback) {
-	      if (typeof callback === 'function') {
+	      if (typeof callback === "function") {
 	        this.closeCallback = callback;
 	      } else {
 	        throw new Error("Function attempted to set as colorPicker closing callback is not a function.");
@@ -38624,14 +38793,14 @@
 	    /**
 	     *
 	     * @param {string} color
-	     * @returns {String}
+	     * @returns {string}
 	     * @private
 	     */
 
 	  }, {
 	    key: "_isColorString",
 	    value: function _isColorString(color) {
-	      if (typeof color === 'string') {
+	      if (typeof color === "string") {
 	        return htmlColors[color];
 	      }
 	    }
@@ -38644,7 +38813,8 @@
 	     * 'rgba(255,255,255,1.0)' --> rgba string
 	     * {r:255,g:255,b:255}     --> rgb object
 	     * {r:255,g:255,b:255,a:1.0} --> rgba object
-	     * @param {string|Object} color
+	     *
+	     * @param {string | object} color
 	     * @param {boolean} [setInitial=true]
 	     */
 
@@ -38653,7 +38823,7 @@
 	    value: function setColor(color) {
 	      var setInitial = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-	      if (color === 'none') {
+	      if (color === "none") {
 	        return;
 	      }
 
@@ -38668,7 +38838,7 @@
 
 	      if (isString(color) === true) {
 	        if (isValidRGB(color) === true) {
-	          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
+	          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(",");
 	          rgba = {
 	            r: rgbaArray[0],
 	            g: rgbaArray[1],
@@ -38676,7 +38846,7 @@
 	            a: 1.0
 	          };
 	        } else if (isValidRGBA(color) === true) {
-	          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
+	          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(",");
 
 	          rgba = {
 	            r: _rgbaArray[0],
@@ -38696,7 +38866,7 @@
 	      } else {
 	        if (color instanceof Object) {
 	          if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
-	            var alpha = color.a !== undefined ? color.a : '1.0';
+	            var alpha = color.a !== undefined ? color.a : "1.0";
 	            rgba = {
 	              r: color.r,
 	              g: color.g,
@@ -38728,7 +38898,7 @@
 	      }
 
 	      this.applied = false;
-	      this.frame.style.display = 'block';
+	      this.frame.style.display = "block";
 
 	      this._generateHueCircle();
 	    } // ------------------------------------------ PRIVATE ----------------------------- //
@@ -38736,6 +38906,7 @@
 	    /**
 	     * Hide the picker. Is called by the cancel button.
 	     * Optional boolean to store the previous color for easy access later on.
+	     *
 	     * @param {boolean} [storePrevious=true]
 	     * @private
 	     */
@@ -38756,7 +38927,7 @@
 	        this.updateCallback(this.initialColor);
 	      }
 
-	      this.frame.style.display = 'none'; // call the closing callback, restoring the onclick method.
+	      this.frame.style.display = "none"; // call the closing callback, restoring the onclick method.
 	      // this is in a setTimeout because it will trigger the show again before the click is done.
 
 	      setTimeout$2(function () {
@@ -38769,6 +38940,7 @@
 	    }
 	    /**
 	     * bound to the save button. Saves and hides.
+	     *
 	     * @private
 	     */
 
@@ -38782,6 +38954,7 @@
 	    }
 	    /**
 	     * Bound to apply button. Saves but does not close. Is undone by the cancel button.
+	     *
 	     * @private
 	     */
 
@@ -38795,6 +38968,7 @@
 	    }
 	    /**
 	     * load the color from the previous session.
+	     *
 	     * @private
 	     */
 
@@ -38809,7 +38983,8 @@
 	    }
 	    /**
 	     * set the color, place the picker
-	     * @param {Object} rgba
+	     *
+	     * @param {object} rgba
 	     * @param {boolean} [setInitial=true]
 	     * @private
 	     */
@@ -38830,13 +39005,14 @@
 	      var radius = this.r * hsv.s;
 	      var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
 	      var y = this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
-	      this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + 'px';
-	      this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + 'px';
+	      this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + "px";
+	      this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + "px";
 
 	      this._updatePicker(rgba);
 	    }
 	    /**
 	     * bound to opacity control
+	     *
 	     * @param {number} value
 	     * @private
 	     */
@@ -38850,6 +39026,7 @@
 	    }
 	    /**
 	     * bound to brightness control
+	     *
 	     * @param {number} value
 	     * @private
 	     */
@@ -38860,14 +39037,15 @@
 	      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
 	      hsv.v = value / 100;
 	      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
-	      rgba['a'] = this.color.a;
+	      rgba["a"] = this.color.a;
 	      this.color = rgba;
 
 	      this._updatePicker();
 	    }
 	    /**
 	     * update the color picker. A black circle overlays the hue circle to mimic the brightness decreasing.
-	     * @param {Object} rgba
+	     *
+	     * @param {object} rgba
 	     * @private
 	     */
 
@@ -38876,7 +39054,7 @@
 	    value: function _updatePicker() {
 	      var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
 	      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
-	      var ctx = this.colorPickerCanvas.getContext('2d');
+	      var ctx = this.colorPickerCanvas.getContext("2d");
 
 	      if (this.pixelRation === undefined) {
 	        this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
@@ -38888,32 +39066,34 @@
 	      var h = this.colorPickerCanvas.clientHeight;
 	      ctx.clearRect(0, 0, w, h);
 	      ctx.putImageData(this.hueCircle, 0, 0);
-	      ctx.fillStyle = 'rgba(0,0,0,' + (1 - hsv.v) + ')';
+	      ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
 	      ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
 
 	      fill$2(ctx).call(ctx);
 
 	      this.brightnessRange.value = 100 * hsv.v;
 	      this.opacityRange.value = 100 * rgba.a;
-	      this.initialColorDiv.style.backgroundColor = 'rgba(' + this.initialColor.r + ',' + this.initialColor.g + ',' + this.initialColor.b + ',' + this.initialColor.a + ')';
-	      this.newColorDiv.style.backgroundColor = 'rgba(' + this.color.r + ',' + this.color.g + ',' + this.color.b + ',' + this.color.a + ')';
+	      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
+	      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
 	    }
 	    /**
 	     * used by create to set the size of the canvas.
+	     *
 	     * @private
 	     */
 
 	  }, {
 	    key: "_setSize",
 	    value: function _setSize() {
-	      this.colorPickerCanvas.style.width = '100%';
-	      this.colorPickerCanvas.style.height = '100%';
+	      this.colorPickerCanvas.style.width = "100%";
+	      this.colorPickerCanvas.style.height = "100%";
 	      this.colorPickerCanvas.width = 289 * this.pixelRatio;
 	      this.colorPickerCanvas.height = 289 * this.pixelRatio;
 	    }
 	    /**
 	     * create all dom elements
 	     * TODO: cleanup, lots of similar dom elements
+	     *
 	     * @private
 	     */
 
@@ -38922,21 +39102,21 @@
 	    value: function _create() {
 	      var _context, _context2, _context3, _context4;
 
-	      this.frame = document.createElement('div');
-	      this.frame.className = 'vis-color-picker';
-	      this.colorPickerDiv = document.createElement('div');
-	      this.colorPickerSelector = document.createElement('div');
-	      this.colorPickerSelector.className = 'vis-selector';
+	      this.frame = document.createElement("div");
+	      this.frame.className = "vis-color-picker";
+	      this.colorPickerDiv = document.createElement("div");
+	      this.colorPickerSelector = document.createElement("div");
+	      this.colorPickerSelector.className = "vis-selector";
 	      this.colorPickerDiv.appendChild(this.colorPickerSelector);
-	      this.colorPickerCanvas = document.createElement('canvas');
+	      this.colorPickerCanvas = document.createElement("canvas");
 	      this.colorPickerDiv.appendChild(this.colorPickerCanvas);
 
 	      if (!this.colorPickerCanvas.getContext) {
-	        var noCanvas = document.createElement('DIV');
-	        noCanvas.style.color = 'red';
-	        noCanvas.style.fontWeight = 'bold';
-	        noCanvas.style.padding = '10px';
-	        noCanvas.innerHTML = 'Error: your browser does not support HTML canvas';
+	        var noCanvas = document.createElement("DIV");
+	        noCanvas.style.color = "red";
+	        noCanvas.style.fontWeight = "bold";
+	        noCanvas.style.padding = "10px";
+	        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
 	        this.colorPickerCanvas.appendChild(noCanvas);
 	      } else {
 	        var ctx = this.colorPickerCanvas.getContext("2d");
@@ -38944,39 +39124,37 @@
 	        this.colorPickerCanvas.getContext("2d").setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
 	      }
 
-	      this.colorPickerDiv.className = 'vis-color';
-	      this.opacityDiv = document.createElement('div');
-	      this.opacityDiv.className = 'vis-opacity';
-	      this.brightnessDiv = document.createElement('div');
-	      this.brightnessDiv.className = 'vis-brightness';
-	      this.arrowDiv = document.createElement('div');
-	      this.arrowDiv.className = 'vis-arrow';
-	      this.opacityRange = document.createElement('input');
+	      this.colorPickerDiv.className = "vis-color";
+	      this.opacityDiv = document.createElement("div");
+	      this.opacityDiv.className = "vis-opacity";
+	      this.brightnessDiv = document.createElement("div");
+	      this.brightnessDiv.className = "vis-brightness";
+	      this.arrowDiv = document.createElement("div");
+	      this.arrowDiv.className = "vis-arrow";
+	      this.opacityRange = document.createElement("input");
 
 	      try {
-	        this.opacityRange.type = 'range'; // Not supported on IE9
+	        this.opacityRange.type = "range"; // Not supported on IE9
 
-	        this.opacityRange.min = '0';
-	        this.opacityRange.max = '100';
-	      } // TODO: Add some error handling and remove this lint exception
-	      catch (err) {} // eslint-disable-line no-empty
+	        this.opacityRange.min = "0";
+	        this.opacityRange.max = "100";
+	      } catch (err) {// TODO: Add some error handling.
+	      }
 
-
-	      this.opacityRange.value = '100';
-	      this.opacityRange.className = 'vis-range';
-	      this.brightnessRange = document.createElement('input');
+	      this.opacityRange.value = "100";
+	      this.opacityRange.className = "vis-range";
+	      this.brightnessRange = document.createElement("input");
 
 	      try {
-	        this.brightnessRange.type = 'range'; // Not supported on IE9
+	        this.brightnessRange.type = "range"; // Not supported on IE9
 
-	        this.brightnessRange.min = '0';
-	        this.brightnessRange.max = '100';
-	      } // TODO: Add some error handling and remove this lint exception
-	      catch (err) {} // eslint-disable-line no-empty
+	        this.brightnessRange.min = "0";
+	        this.brightnessRange.max = "100";
+	      } catch (err) {// TODO: Add some error handling.
+	      }
 
-
-	      this.brightnessRange.value = '100';
-	      this.brightnessRange.className = 'vis-range';
+	      this.brightnessRange.value = "100";
+	      this.brightnessRange.className = "vis-range";
 	      this.opacityDiv.appendChild(this.opacityRange);
 	      this.brightnessDiv.appendChild(this.brightnessRange);
 	      var me = this;
@@ -38999,31 +39177,31 @@
 
 	      this.brightnessLabel = document.createElement("div");
 	      this.brightnessLabel.className = "vis-label vis-brightness";
-	      this.brightnessLabel.innerHTML = 'brightness:';
+	      this.brightnessLabel.innerHTML = "brightness:";
 	      this.opacityLabel = document.createElement("div");
 	      this.opacityLabel.className = "vis-label vis-opacity";
-	      this.opacityLabel.innerHTML = 'opacity:';
+	      this.opacityLabel.innerHTML = "opacity:";
 	      this.newColorDiv = document.createElement("div");
 	      this.newColorDiv.className = "vis-new-color";
-	      this.newColorDiv.innerHTML = 'new';
+	      this.newColorDiv.innerHTML = "new";
 	      this.initialColorDiv = document.createElement("div");
 	      this.initialColorDiv.className = "vis-initial-color";
-	      this.initialColorDiv.innerHTML = 'initial';
+	      this.initialColorDiv.innerHTML = "initial";
 	      this.cancelButton = document.createElement("div");
 	      this.cancelButton.className = "vis-button vis-cancel";
-	      this.cancelButton.innerHTML = 'cancel';
+	      this.cancelButton.innerHTML = "cancel";
 	      this.cancelButton.onclick = bind$2(_context = this._hide).call(_context, this, false);
 	      this.applyButton = document.createElement("div");
 	      this.applyButton.className = "vis-button vis-apply";
-	      this.applyButton.innerHTML = 'apply';
+	      this.applyButton.innerHTML = "apply";
 	      this.applyButton.onclick = bind$2(_context2 = this._apply).call(_context2, this);
 	      this.saveButton = document.createElement("div");
 	      this.saveButton.className = "vis-button vis-save";
-	      this.saveButton.innerHTML = 'save';
+	      this.saveButton.innerHTML = "save";
 	      this.saveButton.onclick = bind$2(_context3 = this._save).call(_context3, this);
 	      this.loadButton = document.createElement("div");
 	      this.loadButton.className = "vis-button vis-load";
-	      this.loadButton.innerHTML = 'load last';
+	      this.loadButton.innerHTML = "load last";
 	      this.loadButton.onclick = bind$2(_context4 = this._loadLast).call(_context4, this);
 	      this.frame.appendChild(this.colorPickerDiv);
 	      this.frame.appendChild(this.arrowDiv);
@@ -39040,6 +39218,7 @@
 	    }
 	    /**
 	     * bind hammer to the color picker
+	     *
 	     * @private
 	     */
 
@@ -39051,27 +39230,28 @@
 	      this.drag = {};
 	      this.pinch = {};
 	      this.hammer = new Hammer$1(this.colorPickerCanvas);
-	      this.hammer.get('pinch').set({
+	      this.hammer.get("pinch").set({
 	        enable: true
 	      });
 	      onTouch(this.hammer, function (event) {
 	        _this2._moveSelector(event);
 	      });
-	      this.hammer.on('tap', function (event) {
+	      this.hammer.on("tap", function (event) {
 	        _this2._moveSelector(event);
 	      });
-	      this.hammer.on('panstart', function (event) {
+	      this.hammer.on("panstart", function (event) {
 	        _this2._moveSelector(event);
 	      });
-	      this.hammer.on('panmove', function (event) {
+	      this.hammer.on("panmove", function (event) {
 	        _this2._moveSelector(event);
 	      });
-	      this.hammer.on('panend', function (event) {
+	      this.hammer.on("panend", function (event) {
 	        _this2._moveSelector(event);
 	      });
 	    }
 	    /**
 	     * generate the hue circle. This is relatively heavy (200ms) and is done only once on the first time it is shown.
+	     *
 	     * @private
 	     */
 
@@ -39079,7 +39259,7 @@
 	    key: "_generateHueCircle",
 	    value: function _generateHueCircle() {
 	      if (this.generated === false) {
-	        var ctx = this.colorPickerCanvas.getContext('2d');
+	        var ctx = this.colorPickerCanvas.getContext("2d");
 
 	        if (this.pixelRation === undefined) {
 	          this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
@@ -39107,12 +39287,12 @@
 	            x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
 	            y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
 	            rgb = HSVToRGB(hue * hfac, sat * sfac, 1);
-	            ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
+	            ctx.fillStyle = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 	            ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
 	          }
 	        }
 
-	        ctx.strokeStyle = 'rgba(0,0,0,1)';
+	        ctx.strokeStyle = "rgba(0,0,0,1)";
 	        ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
 	        ctx.stroke();
 	        this.hueCircle = ctx.getImageData(0, 0, w, h);
@@ -39141,8 +39321,8 @@
 	      var radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
 	      var newTop = Math.cos(angle) * radius + centerY;
 	      var newLeft = Math.sin(angle) * radius + centerX;
-	      this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + 'px';
-	      this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + 'px'; // set color
+	      this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + "px";
+	      this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + "px"; // set color
 
 	      var h = angle / (2 * Math.PI);
 	      h = h < 0 ? h + 1 : h;
@@ -39151,11 +39331,11 @@
 	      hsv.h = h;
 	      hsv.s = s;
 	      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
-	      rgba['a'] = this.color.a;
+	      rgba["a"] = this.color.a;
 	      this.color = rgba; // update previews
 
-	      this.initialColorDiv.style.backgroundColor = 'rgba(' + this.initialColor.r + ',' + this.initialColor.g + ',' + this.initialColor.b + ',' + this.initialColor.a + ')';
-	      this.newColorDiv.style.backgroundColor = 'rgba(' + this.color.r + ',' + this.color.g + ',' + this.color.b + ',' + this.color.a + ')';
+	      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
+	      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
 	    }
 	  }]);
 
@@ -39174,9 +39354,9 @@
 
 	var Configurator = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} parentModule        | the location where parentModule.setOptions() can be called
-	   * @param {Object} defaultContainer    | the default container of the module
-	   * @param {Object} configureOptions    | the fully configured and predefined options set found in allOptions.js
+	   * @param {object} parentModule        | the location where parentModule.setOptions() can be called
+	   * @param {object} defaultContainer    | the default container of the module
+	   * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
 	   * @param {number} pixelRatio          | canvas pixel ratio
 	   */
 	  function Configurator(parentModule, defaultContainer, configureOptions) {
@@ -39213,7 +39393,7 @@
 	   * refresh all options.
 	   * Because all modules parse their options by themselves, we just use their options. We copy them here.
 	   *
-	   * @param {Object} options
+	   * @param {object} options
 	   */
 
 
@@ -39228,13 +39408,13 @@
 
 	        var enabled = true;
 
-	        if (typeof options === 'string') {
+	        if (typeof options === "string") {
 	          this.options.filter = options;
 	        } else if (options instanceof Array) {
 	          this.options.filter = options.join();
-	        } else if (_typeof_1(options) === 'object') {
+	        } else if (_typeof_1(options) === "object") {
 	          if (options == null) {
-	            throw new TypeError('options cannot be null');
+	            throw new TypeError("options cannot be null");
 	          }
 
 	          if (options.container !== undefined) {
@@ -39252,10 +39432,10 @@
 	          if (options.enabled !== undefined) {
 	            enabled = options.enabled;
 	          }
-	        } else if (typeof options === 'boolean') {
+	        } else if (typeof options === "boolean") {
 	          this.options.filter = true;
 	          enabled = options;
-	        } else if (typeof options === 'function') {
+	        } else if (typeof options === "function") {
 	          this.options.filter = options;
 	          enabled = true;
 	        }
@@ -39271,7 +39451,7 @@
 	    }
 	    /**
 	     *
-	     * @param {Object} moduleOptions
+	     * @param {object} moduleOptions
 	     */
 
 	  }, {
@@ -39291,6 +39471,7 @@
 	    }
 	    /**
 	     * Create all DOM elements
+	     *
 	     * @private
 	     */
 
@@ -39311,7 +39492,7 @@
 	          this.allowCreation = false;
 	          show = false;
 
-	          if (typeof filter === 'function') {
+	          if (typeof filter === "function") {
 	            show = filter(option, []);
 	            show = show || this._handleObject(this.configureOptions[option], [option], true);
 	          } else if (filter === true || indexOf$3(filter).call(filter, option) !== -1) {
@@ -39343,14 +39524,15 @@
 	    }
 	    /**
 	     * draw all DOM elements on the screen
+	     *
 	     * @private
 	     */
 
 	  }, {
 	    key: "_push",
 	    value: function _push() {
-	      this.wrapper = document.createElement('div');
-	      this.wrapper.className = 'vis-configuration-wrapper';
+	      this.wrapper = document.createElement("div");
+	      this.wrapper.className = "vis-configuration-wrapper";
 	      this.container.appendChild(this.wrapper);
 
 	      for (var i = 0; i < this.domElements.length; i++) {
@@ -39361,6 +39543,7 @@
 	    }
 	    /**
 	     * delete all DOM elements
+	     *
 	     * @private
 	     */
 
@@ -39382,7 +39565,8 @@
 	    }
 	    /**
 	     * get the value from the actualOptions if it exists
-	     * @param {array} path    | where to look for the actual option
+	     *
+	     * @param {Array} path    | where to look for the actual option
 	     * @returns {*}
 	     * @private
 	     */
@@ -39405,6 +39589,7 @@
 	    }
 	    /**
 	     * all option elements are wrapped in an item
+	     *
 	     * @param {Array} path    | where to look for the actual option
 	     * @param {Array.<Element>} domElements
 	     * @returns {number}
@@ -39415,8 +39600,8 @@
 	    key: "_makeItem",
 	    value: function _makeItem(path) {
 	      if (this.allowCreation === true) {
-	        var item = document.createElement('div');
-	        item.className = 'vis-configuration vis-config-item vis-config-s' + path.length;
+	        var item = document.createElement("div");
+	        item.className = "vis-configuration vis-config-item vis-config-s" + path.length;
 
 	        for (var _len = arguments.length, domElements = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	          domElements[_key - 1] = arguments[_key];
@@ -39434,6 +39619,7 @@
 	    }
 	    /**
 	     * header for major subjects
+	     *
 	     * @param {string} name
 	     * @private
 	     */
@@ -39441,16 +39627,17 @@
 	  }, {
 	    key: "_makeHeader",
 	    value: function _makeHeader(name) {
-	      var div = document.createElement('div');
-	      div.className = 'vis-configuration vis-config-header';
+	      var div = document.createElement("div");
+	      div.className = "vis-configuration vis-config-header";
 	      div.innerHTML = name;
 
 	      this._makeItem([], div);
 	    }
 	    /**
 	     * make a label, if it is an object label, it gets different styling.
+	     *
 	     * @param {string} name
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @param {string} objectLabel
 	     * @returns {HTMLElement}
 	     * @private
@@ -39460,30 +39647,31 @@
 	    key: "_makeLabel",
 	    value: function _makeLabel(name, path) {
 	      var objectLabel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-	      var div = document.createElement('div');
-	      div.className = 'vis-configuration vis-config-label vis-config-s' + path.length;
+	      var div = document.createElement("div");
+	      div.className = "vis-configuration vis-config-label vis-config-s" + path.length;
 
 	      if (objectLabel === true) {
-	        div.innerHTML = '<i><b>' + name + ':</b></i>';
+	        div.innerHTML = "<i><b>" + name + ":</b></i>";
 	      } else {
-	        div.innerHTML = name + ':';
+	        div.innerHTML = name + ":";
 	      }
 
 	      return div;
 	    }
 	    /**
 	     * make a dropdown list for multiple possible string optoins
+	     *
 	     * @param {Array.<number>} arr
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
 	  }, {
 	    key: "_makeDropdown",
 	    value: function _makeDropdown(arr, value, path) {
-	      var select = document.createElement('select');
-	      select.className = 'vis-configuration vis-config-select';
+	      var select = document.createElement("select");
+	      select.className = "vis-configuration vis-config-select";
 	      var selectedValue = 0;
 
 	      if (value !== undefined) {
@@ -39493,11 +39681,11 @@
 	      }
 
 	      for (var i = 0; i < arr.length; i++) {
-	        var option = document.createElement('option');
+	        var option = document.createElement("option");
 	        option.value = arr[i];
 
 	        if (i === selectedValue) {
-	          option.selected = 'selected';
+	          option.selected = "selected";
 	        }
 
 	        option.innerHTML = arr[i];
@@ -39516,9 +39704,10 @@
 	    }
 	    /**
 	     * make a range object for numeric options
+	     *
 	     * @param {Array.<number>} arr
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
@@ -39529,40 +39718,39 @@
 	      var min = arr[1];
 	      var max = arr[2];
 	      var step = arr[3];
-	      var range = document.createElement('input');
-	      range.className = 'vis-configuration vis-config-range';
+	      var range = document.createElement("input");
+	      range.className = "vis-configuration vis-config-range";
 
 	      try {
-	        range.type = 'range'; // not supported on IE9
+	        range.type = "range"; // not supported on IE9
 
 	        range.min = min;
 	        range.max = max;
-	      } // TODO: Add some error handling and remove this lint exception
-	      catch (err) {} // eslint-disable-line no-empty
-
+	      } catch (err) {// TODO: Add some error handling.
+	      }
 
 	      range.step = step; // set up the popup settings in case they are needed.
 
-	      var popupString = '';
+	      var popupString = "";
 	      var popupValue = 0;
 
 	      if (value !== undefined) {
-	        var factor = 1.20;
+	        var factor = 1.2;
 
 	        if (value < 0 && value * factor < min) {
 	          range.min = Math.ceil(value * factor);
 	          popupValue = range.min;
-	          popupString = 'range increased';
+	          popupString = "range increased";
 	        } else if (value / factor < min) {
 	          range.min = Math.ceil(value / factor);
 	          popupValue = range.min;
-	          popupString = 'range increased';
+	          popupString = "range increased";
 	        }
 
 	        if (value * factor > max && max !== 1) {
 	          range.max = Math.ceil(value * factor);
 	          popupValue = range.max;
-	          popupString = 'range increased';
+	          popupString = "range increased";
 	        }
 
 	        range.value = value;
@@ -39570,8 +39758,8 @@
 	        range.value = defaultValue;
 	      }
 
-	      var input = document.createElement('input');
-	      input.className = 'vis-configuration vis-config-rangeinput';
+	      var input = document.createElement("input");
+	      input.className = "vis-configuration vis-config-rangeinput";
 	      input.value = range.value;
 	      var me = this;
 
@@ -39590,7 +39778,7 @@
 	      var itemIndex = this._makeItem(path, label, range, input); // if a popup is needed AND it has not been shown for this value, show it.
 
 
-	      if (popupString !== '' && this.popupHistory[itemIndex] !== popupValue) {
+	      if (popupString !== "" && this.popupHistory[itemIndex] !== popupValue) {
 	        this.popupHistory[itemIndex] = popupValue;
 
 	        this._setupPopup(popupString, itemIndex);
@@ -39598,6 +39786,7 @@
 	    }
 	    /**
 	     * make a button object
+	     *
 	     * @private
 	     */
 
@@ -39607,30 +39796,31 @@
 	      var _this = this;
 
 	      if (this.options.showButton === true) {
-	        var generateButton = document.createElement('div');
-	        generateButton.className = 'vis-configuration vis-config-button';
-	        generateButton.innerHTML = 'generate options';
+	        var generateButton = document.createElement("div");
+	        generateButton.className = "vis-configuration vis-config-button";
+	        generateButton.innerHTML = "generate options";
 
 	        generateButton.onclick = function () {
 	          _this._printOptions();
 	        };
 
 	        generateButton.onmouseover = function () {
-	          generateButton.className = 'vis-configuration vis-config-button hover';
+	          generateButton.className = "vis-configuration vis-config-button hover";
 	        };
 
 	        generateButton.onmouseout = function () {
-	          generateButton.className = 'vis-configuration vis-config-button';
+	          generateButton.className = "vis-configuration vis-config-button";
 	        };
 
-	        this.optionsContainer = document.createElement('div');
-	        this.optionsContainer.className = 'vis-configuration vis-config-option-container';
+	        this.optionsContainer = document.createElement("div");
+	        this.optionsContainer.className = "vis-configuration vis-config-option-container";
 	        this.domElements.push(this.optionsContainer);
 	        this.domElements.push(generateButton);
 	      }
 	    }
 	    /**
 	     * prepare the popup
+	     *
 	     * @param {string} string
 	     * @param {number} index
 	     * @private
@@ -39660,6 +39850,7 @@
 	    }
 	    /**
 	     * remove the popup from the dom
+	     *
 	     * @private
 	     */
 
@@ -39675,6 +39866,7 @@
 	    }
 	    /**
 	     * Show the popup if it is needed.
+	     *
 	     * @private
 	     */
 
@@ -39700,25 +39892,26 @@
 	    }
 	    /**
 	     * make a checkbox for boolean options.
+	     *
 	     * @param {number} defaultValue
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
 	  }, {
 	    key: "_makeCheckbox",
 	    value: function _makeCheckbox(defaultValue, value, path) {
-	      var checkbox = document.createElement('input');
-	      checkbox.type = 'checkbox';
-	      checkbox.className = 'vis-configuration vis-config-checkbox';
+	      var checkbox = document.createElement("input");
+	      checkbox.type = "checkbox";
+	      checkbox.className = "vis-configuration vis-config-checkbox";
 	      checkbox.checked = defaultValue;
 
 	      if (value !== undefined) {
 	        checkbox.checked = value;
 
 	        if (value !== defaultValue) {
-	          if (_typeof_1(defaultValue) === 'object') {
+	          if (_typeof_1(defaultValue) === "object") {
 	            if (value !== defaultValue.enabled) {
 	              this.changedOptions.push({
 	                path: path,
@@ -39746,18 +39939,19 @@
 	    }
 	    /**
 	     * make a text input field for string options.
+	     *
 	     * @param {number} defaultValue
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
 	  }, {
 	    key: "_makeTextInput",
 	    value: function _makeTextInput(defaultValue, value, path) {
-	      var checkbox = document.createElement('input');
-	      checkbox.type = 'text';
-	      checkbox.className = 'vis-configuration vis-config-text';
+	      var checkbox = document.createElement("input");
+	      checkbox.type = "text";
+	      checkbox.className = "vis-configuration vis-config-text";
 	      checkbox.value = value;
 
 	      if (value !== defaultValue) {
@@ -39779,9 +39973,10 @@
 	    }
 	    /**
 	     * make a color field with a color picker for color fields
+	     *
 	     * @param {Array.<number>} arr
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
@@ -39791,14 +39986,14 @@
 	      var _this4 = this;
 
 	      var defaultColor = arr[1];
-	      var div = document.createElement('div');
+	      var div = document.createElement("div");
 	      value = value === undefined ? defaultColor : value;
 
-	      if (value !== 'none') {
-	        div.className = 'vis-configuration vis-config-colorBlock';
+	      if (value !== "none") {
+	        div.className = "vis-configuration vis-config-colorBlock";
 	        div.style.backgroundColor = value;
 	      } else {
-	        div.className = 'vis-configuration vis-config-colorBlock none';
+	        div.className = "vis-configuration vis-config-colorBlock none";
 	      }
 
 	      value = value === undefined ? defaultColor : value;
@@ -39813,9 +40008,10 @@
 	    }
 	    /**
 	     * used by the color buttons to call the color picker.
+	     *
 	     * @param {number} value
 	     * @param {HTMLElement} div
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
@@ -39831,7 +40027,7 @@
 	      this.colorPicker.show();
 	      this.colorPicker.setColor(value);
 	      this.colorPicker.setUpdateCallback(function (color) {
-	        var colorString = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
+	        var colorString = "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
 	        div.style.backgroundColor = colorString;
 
 	        _this5._update(colorString, path);
@@ -39845,8 +40041,9 @@
 	    }
 	    /**
 	     * parse an object and draw the correct items
-	     * @param {Object} obj
-	     * @param {array} [path=[]]    | where to look for the actual option
+	     *
+	     * @param {object} obj
+	     * @param {Array} [path=[]]    | where to look for the actual option
 	     * @param {boolean} [checkOnly=false]
 	     * @returns {boolean}
 	     * @private
@@ -39869,11 +40066,11 @@
 	          var item = obj[subObj];
 	          var newPath = copyAndExtendArray(path, subObj);
 
-	          if (typeof filter === 'function') {
+	          if (typeof filter === "function") {
 	            show = filter(subObj, path); // if needed we must go deeper into the object.
 
 	            if (show === false) {
-	              if (!(item instanceof Array) && typeof item !== 'string' && typeof item !== 'boolean' && item instanceof Object) {
+	              if (!(item instanceof Array) && typeof item !== "string" && typeof item !== "boolean" && item instanceof Object) {
 	                this.allowCreation = false;
 	                show = this._handleObject(item, newPath, true);
 	                this.allowCreation = checkOnly === false;
@@ -39888,16 +40085,16 @@
 
 	            if (item instanceof Array) {
 	              this._handleArray(item, value, newPath);
-	            } else if (typeof item === 'string') {
+	            } else if (typeof item === "string") {
 	              this._makeTextInput(item, value, newPath);
-	            } else if (typeof item === 'boolean') {
+	            } else if (typeof item === "boolean") {
 	              this._makeCheckbox(item, value, newPath);
 	            } else if (item instanceof Object) {
 	              // collapse the physics options that are not enabled
 	              var draw = true;
 
-	              if (indexOf$3(path).call(path, 'physics') !== -1) {
-	                if (this.moduleOptions.physics.solver !== subObj && subObj !== 'wind') {
+	              if (indexOf$3(path).call(path, "physics") !== -1) {
+	                if (this.moduleOptions.physics.solver !== subObj && subObj !== "wind") {
 	                  draw = false;
 	                }
 	              }
@@ -39905,7 +40102,7 @@
 	              if (draw === true) {
 	                // initially collapse options with an disabled enabled option.
 	                if (item.enabled !== undefined) {
-	                  var enabledPath = copyAndExtendArray(newPath, 'enabled');
+	                  var enabledPath = copyAndExtendArray(newPath, "enabled");
 
 	                  var enabledValue = this._getValue(enabledPath);
 
@@ -39927,7 +40124,7 @@
 	                }
 	              }
 	            } else {
-	              console.error('dont know how to handle', item, subObj, newPath);
+	              console.error("dont know how to handle", item, subObj, newPath);
 	            }
 	          }
 	        }
@@ -39937,16 +40134,17 @@
 	    }
 	    /**
 	     * handle the array type of option
+	     *
 	     * @param {Array.<number>} arr
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
 	  }, {
 	    key: "_handleArray",
 	    value: function _handleArray(arr, value, path) {
-	      if (typeof arr[0] === 'string' && arr[0] === 'color') {
+	      if (typeof arr[0] === "string" && arr[0] === "color") {
 	        this._makeColorField(arr, value, path);
 
 	        if (arr[1] !== value) {
@@ -39955,7 +40153,7 @@
 	            value: value
 	          });
 	        }
-	      } else if (typeof arr[0] === 'string') {
+	      } else if (typeof arr[0] === "string") {
 	        this._makeDropdown(arr, value, path);
 
 	        if (arr[0] !== value) {
@@ -39964,7 +40162,7 @@
 	            value: value
 	          });
 	        }
-	      } else if (typeof arr[0] === 'number') {
+	      } else if (typeof arr[0] === "number") {
 	        this._makeRange(arr, value, path);
 
 	        if (arr[0] !== value) {
@@ -39977,8 +40175,9 @@
 	    }
 	    /**
 	     * called to update the network with the new settings.
+	     *
 	     * @param {number} value
-	     * @param {array} path    | where to look for the actual option
+	     * @param {Array} path    | where to look for the actual option
 	     * @private
 	     */
 
@@ -39996,7 +40195,7 @@
 	    }
 	    /**
 	     *
-	     * @param {string|Boolean} value
+	     * @param {string | boolean} value
 	     * @param {Array.<string>} path
 	     * @param {{}} optionsObj
 	     * @returns {{}}
@@ -40009,11 +40208,11 @@
 	      var optionsObj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	      var pointer = optionsObj; // when dropdown boxes can be string or boolean, we typecast it into correct types
 
-	      value = value === 'true' ? true : value;
-	      value = value === 'false' ? false : value;
+	      value = value === "true" ? true : value;
+	      value = value === "false" ? false : value;
 
 	      for (var i = 0; i < path.length; i++) {
-	        if (path[i] !== 'global') {
+	        if (path[i] !== "global") {
 	          if (pointer[path[i]] === undefined) {
 	            pointer[path[i]] = {};
 	          }
@@ -40036,7 +40235,7 @@
 	    key: "_printOptions",
 	    value: function _printOptions() {
 	      var options = this.getOptions();
-	      this.optionsContainer.innerHTML = '<pre>var options = ' + stringify$2(options, null, 2) + '</pre>';
+	      this.optionsContainer.innerHTML = "<pre>var options = " + stringify$2(options, null, 2) + "</pre>";
 	    }
 	    /**
 	     *
@@ -40066,14 +40265,14 @@
 	 * __any__ means that the name of the property does not matter.
 	 * __type__ is a required field for all objects and contains the allowed types of all objects
 	 */
-	var string = 'string';
-	var bool = 'boolean';
-	var number = 'number';
-	var array = 'array';
-	var object = 'object'; // should only be in a __type__ property
+	var string = "string";
+	var bool = "boolean";
+	var number = "number";
+	var array = "array";
+	var object = "object"; // should only be in a __type__ property
 
-	var dom = 'dom';
-	var any = 'any'; // List of endpoints
+	var dom = "dom";
+	var any = "any"; // List of endpoints
 
 	var endPoints = ["arrow", "bar", "box", "circle", "crow", "curve", "diamond", "image", "inv_curve", "inv_triangle", "triangle", "vee"];
 	var allOptions$1 = {
@@ -40085,7 +40284,7 @@
 	      boolean: bool,
 	      string: string,
 	      array: array,
-	      'function': 'function'
+	      function: "function"
 	    },
 	    container: {
 	      dom: dom
@@ -40098,7 +40297,7 @@
 	      boolean: bool,
 	      string: string,
 	      array: array,
-	      'function': 'function'
+	      function: "function"
 	    }
 	  },
 	  edges: {
@@ -40217,11 +40416,11 @@
 	    chosen: {
 	      label: {
 	        boolean: bool,
-	        'function': 'function'
+	        function: "function"
 	      },
 	      edge: {
 	        boolean: bool,
-	        'function': 'function'
+	        function: "function"
 	      },
 	      __type__: {
 	        object: object,
@@ -40239,7 +40438,7 @@
 	        string: string
 	      },
 	      inherit: {
-	        string: ['from', 'to', 'both'],
+	        string: ["from", "to", "both"],
 	        boolean: bool
 	      },
 	      opacity: {
@@ -40276,7 +40475,7 @@
 	        string: string
 	      },
 	      align: {
-	        string: ['horizontal', 'top', 'middle', 'bottom']
+	        string: ["horizontal", "top", "middle", "bottom"]
 	      },
 	      vadjust: {
 	        number: number
@@ -40382,19 +40581,19 @@
 	      boolean: bool
 	    },
 	    hoverWidth: {
-	      'function': 'function',
+	      function: "function",
 	      number: number
 	    },
 	    label: {
 	      string: string,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    labelHighlightBold: {
 	      boolean: bool
 	    },
 	    length: {
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    physics: {
 	      boolean: bool
@@ -40428,14 +40627,14 @@
 	        }
 	      },
 	      customScalingFunction: {
-	        'function': 'function'
+	        function: "function"
 	      },
 	      __type__: {
 	        object: object
 	      }
 	    },
 	    selectionWidth: {
-	      'function': 'function',
+	      function: "function",
 	      number: number
 	    },
 	    selfReferenceSize: {
@@ -40481,13 +40680,13 @@
 	        boolean: bool
 	      },
 	      type: {
-	        string: ['dynamic', 'continuous', 'discrete', 'diagonalCross', 'straightCross', 'horizontal', 'vertical', 'curvedCW', 'curvedCCW', 'cubicBezier']
+	        string: ["dynamic", "continuous", "discrete", "diagonalCross", "straightCross", "horizontal", "vertical", "curvedCW", "curvedCCW", "cubicBezier"]
 	      },
 	      roundness: {
 	        number: number
 	      },
 	      forceDirection: {
-	        string: ['horizontal', 'vertical', 'none'],
+	        string: ["horizontal", "vertical", "none"],
 	        boolean: bool
 	      },
 	      __type__: {
@@ -40497,7 +40696,7 @@
 	    },
 	    title: {
 	      string: string,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    width: {
 	      number: number
@@ -40514,7 +40713,7 @@
 	    },
 	    value: {
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    __type__: {
 	      object: object
@@ -40524,7 +40723,7 @@
 	    useDefaultGroups: {
 	      boolean: bool
 	    },
-	    __any__: 'get from nodes, will be overwritten below',
+	    __any__: "get from nodes, will be overwritten below",
 	    __type__: {
 	      object: object
 	    }
@@ -40604,7 +40803,7 @@
 	  },
 	  layout: {
 	    randomSeed: {
-	      'undefined': 'undefined',
+	      undefined: "undefined",
 	      number: number,
 	      string: string
 	    },
@@ -40637,15 +40836,15 @@
 	        boolean: bool
 	      },
 	      direction: {
-	        string: ['UD', 'DU', 'LR', 'RL']
+	        string: ["UD", "DU", "LR", "RL"]
 	      },
 	      // UD, DU, LR, RL
 	      sortMethod: {
-	        string: ['hubsize', 'directed']
+	        string: ["hubsize", "directed"]
 	      },
 	      // hubsize, directed
 	      shakeTowards: {
-	        string: ['leaves', 'roots']
+	        string: ["leaves", "roots"]
 	      },
 	      // leaves, roots
 	      __type__: {
@@ -40666,34 +40865,34 @@
 	    },
 	    addNode: {
 	      boolean: bool,
-	      'function': 'function'
+	      function: "function"
 	    },
 	    addEdge: {
 	      boolean: bool,
-	      'function': 'function'
+	      function: "function"
 	    },
 	    editNode: {
-	      'function': 'function'
+	      function: "function"
 	    },
 	    editEdge: {
 	      editWithoutDrag: {
-	        'function': 'function'
+	        function: "function"
 	      },
 	      __type__: {
 	        object: object,
 	        boolean: bool,
-	        'function': 'function'
+	        function: "function"
 	      }
 	    },
 	    deleteNode: {
 	      boolean: bool,
-	      'function': 'function'
+	      function: "function"
 	    },
 	    deleteEdge: {
 	      boolean: bool,
-	      'function': 'function'
+	      function: "function"
 	    },
-	    controlNodeStyle: 'get from nodes, will be overwritten below',
+	    controlNodeStyle: "get from nodes, will be overwritten below",
 	    __type__: {
 	      object: object,
 	      boolean: bool
@@ -40705,20 +40904,20 @@
 	    },
 	    borderWidthSelected: {
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    brokenImage: {
 	      string: string,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    chosen: {
 	      label: {
 	        boolean: bool,
-	        'function': 'function'
+	        function: "function"
 	      },
 	      node: {
 	        boolean: bool,
-	        'function': 'function'
+	        function: "function"
 	      },
 	      __type__: {
 	        object: object,
@@ -40763,7 +40962,7 @@
 	    },
 	    opacity: {
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    fixed: {
 	      x: {
@@ -40904,7 +41103,7 @@
 	    group: {
 	      string: string,
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    heightConstraint: {
 	      minimum: {
@@ -40952,12 +41151,12 @@
 	    image: {
 	      selected: {
 	        string: string,
-	        'undefined': 'undefined'
+	        undefined: "undefined"
 	      },
 	      // --> URL
 	      unselected: {
 	        string: string,
-	        'undefined': 'undefined'
+	        undefined: "undefined"
 	      },
 	      // --> URL
 	      __type__: {
@@ -40985,14 +41184,14 @@
 	    },
 	    label: {
 	      string: string,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    labelHighlightBold: {
 	      boolean: bool
 	    },
 	    level: {
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    margin: {
 	      top: {
@@ -41047,7 +41246,7 @@
 	        }
 	      },
 	      customScalingFunction: {
-	        'function': 'function'
+	        function: "function"
 	      },
 	      __type__: {
 	        object: object
@@ -41075,10 +41274,10 @@
 	      }
 	    },
 	    shape: {
-	      string: ['custom', 'ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon']
+	      string: ["custom", "ellipse", "circle", "database", "box", "text", "image", "circularImage", "diamond", "dot", "star", "triangle", "triangleDown", "square", "icon", "hexagon"]
 	    },
 	    ctxRenderer: {
-	      'function': 'function'
+	      function: "function"
 	    },
 	    shapeProperties: {
 	      borderDashes: {
@@ -41098,7 +41297,7 @@
 	        boolean: bool
 	      },
 	      coordinateOrigin: {
-	        string: ['center', 'top-left']
+	        string: ["center", "top-left"]
 	      },
 	      __type__: {
 	        object: object
@@ -41110,11 +41309,11 @@
 	    title: {
 	      string: string,
 	      dom: dom,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    value: {
 	      number: number,
-	      'undefined': 'undefined'
+	      undefined: "undefined"
 	    },
 	    widthConstraint: {
 	      minimum: {
@@ -41246,7 +41445,7 @@
 	    },
 	    // px/s
 	    solver: {
-	      string: ['barnesHut', 'repulsion', 'hierarchicalRepulsion', 'forceAtlas2Based']
+	      string: ["barnesHut", "repulsion", "hierarchicalRepulsion", "forceAtlas2Based"]
 	    },
 	    stabilization: {
 	      enabled: {
@@ -41352,15 +41551,15 @@
 	    borderWidth: [1, 0, 10, 1],
 	    borderWidthSelected: [2, 0, 10, 1],
 	    color: {
-	      border: ['color', '#2B7CE9'],
-	      background: ['color', '#97C2FC'],
+	      border: ["color", "#2B7CE9"],
+	      background: ["color", "#97C2FC"],
 	      highlight: {
-	        border: ['color', '#2B7CE9'],
-	        background: ['color', '#D2E5FF']
+	        border: ["color", "#2B7CE9"],
+	        background: ["color", "#D2E5FF"]
 	      },
 	      hover: {
-	        border: ['color', '#2B7CE9'],
-	        background: ['color', '#D2E5FF']
+	        border: ["color", "#2B7CE9"],
+	        background: ["color", "#D2E5FF"]
 	      }
 	    },
 	    opacity: [0, 0, 1, 0.1],
@@ -41369,14 +41568,14 @@
 	      y: false
 	    },
 	    font: {
-	      color: ['color', '#343434'],
+	      color: ["color", "#343434"],
 	      size: [14, 0, 100, 1],
 	      // px
-	      face: ['arial', 'verdana', 'tahoma'],
-	      background: ['color', 'none'],
+	      face: ["arial", "verdana", "tahoma"],
+	      background: ["color", "none"],
 	      strokeWidth: [0, 0, 50, 1],
 	      // px
-	      strokeColor: ['color', '#ffffff']
+	      strokeColor: ["color", "#ffffff"]
 	    },
 	    //group: 'string',
 	    hidden: false,
@@ -41402,12 +41601,12 @@
 	    },
 	    shadow: {
 	      enabled: false,
-	      color: 'rgba(0,0,0,0.5)',
+	      color: "rgba(0,0,0,0.5)",
 	      size: [10, 0, 20, 1],
 	      x: [5, -30, 30, 1],
 	      y: [5, -30, 30, 1]
 	    },
-	    shape: ['ellipse', 'box', 'circle', 'database', 'diamond', 'dot', 'square', 'star', 'text', 'triangle', 'triangleDown', 'hexagon'],
+	    shape: ["ellipse", "box", "circle", "database", "diamond", "dot", "square", "star", "text", "triangle", "triangleDown", "hexagon"],
 	    shapeProperties: {
 	      borderDashes: false,
 	      borderRadius: [6, 0, 20, 1],
@@ -41421,17 +41620,17 @@
 	      to: {
 	        enabled: false,
 	        scaleFactor: [1, 0, 3, 0.05],
-	        type: 'arrow'
+	        type: "arrow"
 	      },
 	      middle: {
 	        enabled: false,
 	        scaleFactor: [1, 0, 3, 0.05],
-	        type: 'arrow'
+	        type: "arrow"
 	      },
 	      from: {
 	        enabled: false,
 	        scaleFactor: [1, 0, 3, 0.05],
-	        type: 'arrow'
+	        type: "arrow"
 	      }
 	    },
 	    endPointOffset: {
@@ -41440,23 +41639,23 @@
 	    },
 	    arrowStrikethrough: true,
 	    color: {
-	      color: ['color', '#848484'],
-	      highlight: ['color', '#848484'],
-	      hover: ['color', '#848484'],
-	      inherit: ['from', 'to', 'both', true, false],
+	      color: ["color", "#848484"],
+	      highlight: ["color", "#848484"],
+	      hover: ["color", "#848484"],
+	      inherit: ["from", "to", "both", true, false],
 	      opacity: [1, 0, 1, 0.05]
 	    },
 	    dashes: false,
 	    font: {
-	      color: ['color', '#343434'],
+	      color: ["color", "#343434"],
 	      size: [14, 0, 100, 1],
 	      // px
-	      face: ['arial', 'verdana', 'tahoma'],
-	      background: ['color', 'none'],
+	      face: ["arial", "verdana", "tahoma"],
+	      background: ["color", "none"],
 	      strokeWidth: [2, 0, 50, 1],
 	      // px
-	      strokeColor: ['color', '#ffffff'],
-	      align: ['horizontal', 'top', 'middle', 'bottom']
+	      strokeColor: ["color", "#ffffff"],
+	      align: ["horizontal", "top", "middle", "bottom"]
 	    },
 	    hidden: false,
 	    hoverWidth: [1.5, 0, 5, 0.1],
@@ -41482,15 +41681,15 @@
 	    },
 	    shadow: {
 	      enabled: false,
-	      color: 'rgba(0,0,0,0.5)',
+	      color: "rgba(0,0,0,0.5)",
 	      size: [10, 0, 20, 1],
 	      x: [5, -30, 30, 1],
 	      y: [5, -30, 30, 1]
 	    },
 	    smooth: {
 	      enabled: true,
-	      type: ['dynamic', 'continuous', 'discrete', 'diagonalCross', 'straightCross', 'horizontal', 'vertical', 'curvedCW', 'curvedCCW', 'cubicBezier'],
-	      forceDirection: ['horizontal', 'vertical', 'none'],
+	      type: ["dynamic", "continuous", "discrete", "diagonalCross", "straightCross", "horizontal", "vertical", "curvedCW", "curvedCCW", "cubicBezier"],
+	      forceDirection: ["horizontal", "vertical", "none"],
 	      roundness: [0.5, 0, 1, 0.05]
 	    },
 	    width: [1, 0, 30, 1]
@@ -41506,11 +41705,11 @@
 	      blockShifting: true,
 	      edgeMinimization: true,
 	      parentCentralization: true,
-	      direction: ['UD', 'DU', 'LR', 'RL'],
+	      direction: ["UD", "DU", "LR", "RL"],
 	      // UD, DU, LR, RL
-	      sortMethod: ['hubsize', 'directed'],
+	      sortMethod: ["hubsize", "directed"],
 	      // hubsize, directed
-	      shakeTowards: ['leaves', 'roots'] // leaves, roots
+	      shakeTowards: ["leaves", "roots"] // leaves, roots
 
 	    }
 	  },
@@ -41580,7 +41779,7 @@
 	    },
 	    maxVelocity: [50, 0, 150, 1],
 	    minVelocity: [0.1, 0.01, 0.5, 0.01],
-	    solver: ['barnesHut', 'forceAtlas2Based', 'repulsion', 'hierarchicalRepulsion'],
+	    solver: ["barnesHut", "forceAtlas2Based", "repulsion", "hierarchicalRepulsion"],
 	    timestep: [0.5, 0.01, 1, 0.01],
 	    wind: {
 	      x: [0, -10, 10, 0.1],
@@ -41610,7 +41809,7 @@
 	  }
 	  /**
 	   *
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {Array.<Node>} nodesArray
 	   * @param {Array.<Edge>} edgesArray
 	   * @returns {{}}
@@ -41681,7 +41880,7 @@
 
 	var KamadaKawai = /*#__PURE__*/function () {
 	  /**
-	   * @param {Object} body
+	   * @param {object} body
 	   * @param {number} edgeLength
 	   * @param {number} edgeStrength
 	   */
@@ -41695,7 +41894,8 @@
 	  }
 	  /**
 	   * Not sure if needed but can be used to update the spring length and spring constant
-	   * @param {Object} options
+	   *
+	   * @param {object} options
 	   */
 
 
@@ -41714,6 +41914,7 @@
 	    }
 	    /**
 	     * Position the system
+	     *
 	     * @param {Array.<Node>} nodesArray
 	     * @param {Array.<vis.Edge>} edgesArray
 	     * @param {boolean} [ignoreClusters=false]
@@ -41779,6 +41980,7 @@
 	    }
 	    /**
 	     * get the node with the highest energy
+	     *
 	     * @param {boolean} ignoreClusters
 	     * @returns {number[]}
 	     * @private
@@ -41817,6 +42019,7 @@
 	    }
 	    /**
 	     * calculate the energy of a single node
+	     *
 	     * @param {Node.id} m
 	     * @returns {number[]}
 	     * @private
@@ -41835,6 +42038,7 @@
 	    /**
 	     * move the node based on it's energy
 	     * the dx and dy are calculated from the linear system proposed by Kamada and Kawai
+	     *
 	     * @param {number} m
 	     * @param {number} dE_dx
 	     * @param {number} dE_dy
@@ -41886,7 +42090,8 @@
 	    }
 	    /**
 	     * Create the L matrix: edge length times shortest path
-	     * @param {Object} D_matrix
+	     *
+	     * @param {object} D_matrix
 	     * @private
 	     */
 
@@ -41907,7 +42112,8 @@
 	    }
 	    /**
 	     * Create the K matrix: spring constants times shortest path
-	     * @param {Object} D_matrix
+	     *
+	     * @param {object} D_matrix
 	     * @private
 	     */
 
@@ -41928,6 +42134,7 @@
 	    }
 	    /**
 	     *  Create matrix with all energies between nodes
+	     *
 	     *  @private
 	     */
 
@@ -42025,11 +42232,11 @@
 	 *
 	 * @param {Element} container   The DOM element in which the Network will
 	 *                                  be created. Normally a div element.
-	 * @param {Object} data         An object containing parameters
+	 * @param {object} data         An object containing parameters
 	 *                              {Array} nodes
 	 *                              {Array} edges
-	 * @param {Object} options      Options
-	 * @constructor Network
+	 * @param {object} options      Options
+	 * @class Network
 	 */
 
 	function Network(container, data, options) {
@@ -42040,13 +42247,13 @@
 	      _this = this;
 
 	  if (!(this instanceof Network)) {
-	    throw new SyntaxError('Constructor must be called with the new operator');
+	    throw new SyntaxError("Constructor must be called with the new operator");
 	  } // set constant values
 
 
 	  this.options = {};
 	  this.defaultOptions = {
-	    locale: 'en',
+	    locale: "en",
 	    locales: locales,
 	    clickToUse: false
 	  };
@@ -42172,7 +42379,8 @@
 	componentEmitter(Network.prototype);
 	/**
 	 * Set options
-	 * @param {Object} options
+	 *
+	 * @param {object} options
 	 */
 
 	Network.prototype.setOptions = function (options) {
@@ -42186,11 +42394,11 @@
 	    var errorFound = Validator.validate(options, allOptions$1);
 
 	    if (errorFound === true) {
-	      console.log('%cErrors have been found in the supplied options object.', printStyle);
+	      console.error("%cErrors have been found in the supplied options object.", printStyle);
 	    } // copy the global fields over
 
 
-	    var fields = ['locale', 'locales', 'clickToUse'];
+	    var fields = ["locale", "locales", "clickToUse"];
 	    selectiveDeepExtend(fields, this.options, options); // normalize the locale or use English
 
 	    if (options.locale !== undefined) {
@@ -42221,7 +42429,7 @@
 	    //this.clustering.setOptions(options.clustering);
 
 
-	    if ('configure' in options) {
+	    if ("configure" in options) {
 	      if (!this.configurator) {
 	        this.configurator = new Configurator(this, this.body.container, configureOptions, this.canvas.pixelRatio);
 	      }
@@ -42260,7 +42468,7 @@
 	      if (options.clickToUse === true) {
 	        if (this.activator === undefined) {
 	          this.activator = new Activator(this.canvas.frame);
-	          this.activator.on('change', function () {
+	          this.activator.on("change", function () {
 	            _this2.body.emitter.emit("activate");
 	          });
 	        }
@@ -42314,8 +42522,8 @@
 	      var fromNode = nodes[edge.fromId];
 	      var toNode = nodes[edge.toId];
 	      var edgeNodesPresent = fromNode !== undefined && toNode !== undefined;
-	      var isVisible = !this.clustering._isClusteredEdge(edgeId) && edge.options.hidden === false && edgeNodesPresent && fromNode.options.hidden === false // Also hidden if any of its connecting nodes are hidden
-	      && toNode.options.hidden === false; // idem
+	      var isVisible = !this.clustering._isClusteredEdge(edgeId) && edge.options.hidden === false && edgeNodesPresent && fromNode.options.hidden === false && // Also hidden if any of its connecting nodes are hidden
+	      toNode.options.hidden === false; // idem
 
 	      if (isVisible) {
 	        this.body.edgeIndices.push(edge.id);
@@ -42358,7 +42566,7 @@
 	/**
 	 * Set nodes and edges, and optionally options as well.
 	 *
-	 * @param {Object} data              Object containing parameters:
+	 * @param {object} data              Object containing parameters:
 	 *                                   {Array | DataSet | DataView} [nodes] Array with nodes
 	 *                                   {Array | DataSet | DataView} [edges] Array with edges
 	 *                                   {String} [dot] String containing data in DOT format
@@ -42382,14 +42590,14 @@
 	  this.setOptions(data && data.options); // set all data
 
 	  if (data && data.dot) {
-	    console.log('The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);'); // parse DOT file
+	    console.warn("The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);"); // parse DOT file
 
 	    var dotData = DOTToGraph(data.dot);
 	    this.setData(dotData);
 	    return;
 	  } else if (data && data.gephi) {
 	    // parse DOT file
-	    console.log('The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);');
+	    console.warn("The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);");
 	    var gephiData = parseGephi(data.gephi);
 	    this.setData(gephiData);
 	    return;
@@ -42450,7 +42658,8 @@
 	/**
 	 * Update the values of all object in the given array according to the current
 	 * value range of the objects in the array.
-	 * @param {Object} obj    An object containing a set of Edges or Nodes
+	 *
+	 * @param {object} obj    An object containing a set of Edges or Nodes
 	 *                        The objects must have a method getValue() and
 	 *                        setValueRange(min, max).
 	 * @private
@@ -42487,6 +42696,7 @@
 	};
 	/**
 	 * Returns true when the Network is active.
+	 *
 	 * @returns {boolean}
 	 */
 
@@ -42605,7 +42815,7 @@
 	};
 
 	Network.prototype.editNodeMode = function () {
-	  console.log("Deprecated: Please use editNode instead of editNodeMode.");
+	  console.warn("Deprecated: Please use editNode instead of editNodeMode.");
 	  return this.manipulation.editNode.apply(this.manipulation, arguments);
 	};
 

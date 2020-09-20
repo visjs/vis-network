@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-09-20T07:32:41.043Z
+ * @date    2020-09-20T18:02:10.429Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -836,8 +836,8 @@ function drawDatabase(ctx, x, y, w, h) {
  * @param pattern - List of lengths starting with line and then alternating between space and line.
  *
  * @author David Jordan
- * @date 2012-08-08
  * @remarks
+ * date 2012-08-08
  * http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
  */
 
@@ -5701,8 +5701,6 @@ var includes$3 = includes$2;
 
 var includes$4 = includes$3;
 
-/* eslint-disable max-statements */
-
 /* eslint-disable no-prototype-builtins */
 
 /* eslint-disable no-unused-vars */
@@ -5718,7 +5716,7 @@ var includes$4 = includes$3;
  * DOT language attributes: http://graphviz.org/content/attrs
  *
  * @param {string} data     Text containing a graph in DOT-notation
- * @return {Object} graph   An object containing two parameters:
+ * @returns {object} graph   An object containing two parameters:
  *                          {Object[]} nodes
  *                          {Object[]} edges
  *
@@ -5751,20 +5749,20 @@ function parseDOT(data) {
 } // mapping of attributes from DOT (the keys) to vis.js (the values)
 
 var NODE_ATTR_MAPPING = {
-  'fontsize': 'font.size',
-  'fontcolor': 'font.color',
-  'labelfontcolor': 'font.color',
-  'fontname': 'font.face',
-  'color': ['color.border', 'color.background'],
-  'fillcolor': 'color.background',
-  'tooltip': 'title',
-  'labeltooltip': 'title'
+  fontsize: "font.size",
+  fontcolor: "font.color",
+  labelfontcolor: "font.color",
+  fontname: "font.face",
+  color: ["color.border", "color.background"],
+  fillcolor: "color.background",
+  tooltip: "title",
+  labeltooltip: "title"
 };
 
 var EDGE_ATTR_MAPPING = create$2(NODE_ATTR_MAPPING);
 
-EDGE_ATTR_MAPPING.color = 'color.color';
-EDGE_ATTR_MAPPING.style = 'dashes'; // token types enumeration
+EDGE_ATTR_MAPPING.color = "color.color";
+EDGE_ATTR_MAPPING.style = "dashes"; // token types enumeration
 
 var TOKENTYPE = {
   NULL: 0,
@@ -5774,23 +5772,23 @@ var TOKENTYPE = {
 }; // map with all delimiters
 
 var DELIMITERS = {
-  '{': true,
-  '}': true,
-  '[': true,
-  ']': true,
-  ';': true,
-  '=': true,
-  ',': true,
-  '->': true,
-  '--': true
+  "{": true,
+  "}": true,
+  "[": true,
+  "]": true,
+  ";": true,
+  "=": true,
+  ",": true,
+  "->": true,
+  "--": true
 };
-var dot = ''; // current dot file
+var dot = ""; // current dot file
 
 var index$1 = 0; // current index in dot file
 
-var c = ''; // current token character in expr
+var c = ""; // current token character in expr
 
-var token = ''; // current token
+var token = ""; // current token
 
 var tokenType = TOKENTYPE.NULL; // type of the token
 
@@ -5817,7 +5815,8 @@ function next() {
 }
 /**
  * Preview the next character from the dot file.
- * @return {string} cNext
+ *
+ * @returns {string} cNext
  */
 
 
@@ -5828,8 +5827,9 @@ function nextPreview() {
 var regexAlphaNumeric = /[a-zA-Z_0-9.:#]/;
 /**
  * Test whether given character is alphabetic or numeric
+ *
  * @param {string} c
- * @return {Boolean} isAlphaNumeric
+ * @returns {boolean} isAlphaNumeric
  */
 
 function isAlphaNumeric(c) {
@@ -5837,9 +5837,10 @@ function isAlphaNumeric(c) {
 }
 /**
  * Merge all options of object b into object b
- * @param {Object} a
- * @param {Object} b
- * @return {Object} a
+ *
+ * @param {object} a
+ * @param {object} b
+ * @returns {object} a
  */
 
 
@@ -5865,7 +5866,7 @@ function merge(a, b) {
  *     var obj = {a: 2};
  *     setValue(obj, 'b.c', 3);     // obj = {a: 2, b: {c: 3}}
  *
- * @param {Object} obj
+ * @param {object} obj
  * @param {string} path  A parameter name or dot-separated parameter path,
  *                      like "color.highlight.border".
  * @param {*} value
@@ -5873,7 +5874,7 @@ function merge(a, b) {
 
 
 function setValue(obj, path, value) {
-  var keys = path.split('.');
+  var keys = path.split(".");
   var o = obj;
 
   while (keys.length) {
@@ -5895,8 +5896,9 @@ function setValue(obj, path, value) {
 /**
  * Add a node to a graph object. If there is already a node with
  * the same id, their attributes will be merged.
- * @param {Object} graph
- * @param {Object} node
+ *
+ * @param {object} graph
+ * @param {object} node
  */
 
 
@@ -5957,8 +5959,9 @@ function addNode(graph, node) {
 }
 /**
  * Add an edge to a graph object
- * @param {Object} graph
- * @param {Object} edge
+ *
+ * @param {object} graph
+ * @param {object} edge
  */
 
 
@@ -5977,12 +5980,13 @@ function addEdge(graph, edge) {
 }
 /**
  * Create an edge to a graph object
- * @param {Object} graph
- * @param {string | number | Object} from
- * @param {string | number | Object} to
+ *
+ * @param {object} graph
+ * @param {string | number | object} from
+ * @param {string | number | object} to
  * @param {string} type
- * @param {Object | null} attr
- * @return {Object} edge
+ * @param {object | null} attr
+ * @returns {object} edge
  */
 
 
@@ -6002,14 +6006,14 @@ function createEdge(graph, from, to, type, attr) {
   // parseAttributeList().
 
   if (attr != null) {
-    if (attr.hasOwnProperty('arrows') && attr['arrows'] != null) {
-      edge['arrows'] = {
+    if (attr.hasOwnProperty("arrows") && attr["arrows"] != null) {
+      edge["arrows"] = {
         to: {
           enabled: true,
           type: attr.arrows.type
         }
       };
-      attr['arrows'] = null;
+      attr["arrows"] = null;
     }
   }
 
@@ -6023,9 +6027,9 @@ function createEdge(graph, from, to, type, attr) {
 
 function getToken() {
   tokenType = TOKENTYPE.NULL;
-  token = ''; // skip over whitespaces
+  token = ""; // skip over whitespaces
 
-  while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
+  while (c === " " || c === "\t" || c === "\n" || c === "\r") {
     // space, tab, enter
     next();
   }
@@ -6033,17 +6037,17 @@ function getToken() {
   do {
     var isComment = false; // skip comment
 
-    if (c === '#') {
+    if (c === "#") {
       // find the previous non-space character
       var i = index$1 - 1;
 
-      while (dot.charAt(i) === ' ' || dot.charAt(i) === '\t') {
+      while (dot.charAt(i) === " " || dot.charAt(i) === "\t") {
         i--;
       }
 
-      if (dot.charAt(i) === '\n' || dot.charAt(i) === '') {
+      if (dot.charAt(i) === "\n" || dot.charAt(i) === "") {
         // the # is at the start of a line, this is indeed a line comment
-        while (c != '' && c != '\n') {
+        while (c != "" && c != "\n") {
           next();
         }
 
@@ -6051,19 +6055,19 @@ function getToken() {
       }
     }
 
-    if (c === '/' && nextPreview() === '/') {
+    if (c === "/" && nextPreview() === "/") {
       // skip line comment
-      while (c != '' && c != '\n') {
+      while (c != "" && c != "\n") {
         next();
       }
 
       isComment = true;
     }
 
-    if (c === '/' && nextPreview() === '*') {
+    if (c === "/" && nextPreview() === "*") {
       // skip block comment
-      while (c != '') {
-        if (c === '*' && nextPreview() === '/') {
+      while (c != "") {
+        if (c === "*" && nextPreview() === "/") {
           // end of block comment found. skip these last two characters
           next();
           next();
@@ -6077,14 +6081,14 @@ function getToken() {
     } // skip over whitespaces
 
 
-    while (c === ' ' || c === '\t' || c === '\n' || c === '\r') {
+    while (c === " " || c === "\t" || c === "\n" || c === "\r") {
       // space, tab, enter
       next();
     }
   } while (isComment); // check for end of dot file
 
 
-  if (c === '') {
+  if (c === "") {
     // token is still empty
     tokenType = TOKENTYPE.DELIMITER;
     return;
@@ -6111,7 +6115,7 @@ function getToken() {
   // TODO: more precise parsing of numbers/strings (and the port separator ':')
 
 
-  if (isAlphaNumeric(c) || c === '-') {
+  if (isAlphaNumeric(c) || c === "-") {
     token += c;
     next();
 
@@ -6120,9 +6124,9 @@ function getToken() {
       next();
     }
 
-    if (token === 'false') {
+    if (token === "false") {
       token = false; // convert to boolean
-    } else if (token === 'true') {
+    } else if (token === "true") {
       token = true; // convert to boolean
     } else if (!isNaN(Number(token))) {
       token = Number(token); // convert to number
@@ -6136,14 +6140,14 @@ function getToken() {
   if (c === '"') {
     next();
 
-    while (c != '' && (c != '"' || c === '"' && nextPreview() === '"')) {
+    while (c != "" && (c != '"' || c === '"' && nextPreview() === '"')) {
       if (c === '"') {
         // skip the escape character
         token += c;
         next();
-      } else if (c === '\\' && nextPreview() === 'n') {
+      } else if (c === "\\" && nextPreview() === "n") {
         // Honor a newline escape sequence
-        token += '\n';
+        token += "\n";
         next();
       } else {
         token += c;
@@ -6164,7 +6168,7 @@ function getToken() {
 
   tokenType = TOKENTYPE.UNKNOWN;
 
-  while (c != '') {
+  while (c != "") {
     token += c;
     next();
   }
@@ -6173,7 +6177,8 @@ function getToken() {
 }
 /**
  * Parse a graph.
- * @returns {Object} graph
+ *
+ * @returns {object} graph
  */
 
 
@@ -6182,13 +6187,13 @@ function parseGraph() {
   first();
   getToken(); // optional strict keyword
 
-  if (token === 'strict') {
+  if (token === "strict") {
     graph.strict = true;
     getToken();
   } // graph or digraph keyword
 
 
-  if (token === 'graph' || token === 'digraph') {
+  if (token === "graph" || token === "digraph") {
     graph.type = token;
     getToken();
   } // optional graph id
@@ -6200,22 +6205,22 @@ function parseGraph() {
   } // open angle bracket
 
 
-  if (token != '{') {
-    throw newSyntaxError('Angle bracket { expected');
+  if (token != "{") {
+    throw newSyntaxError("Angle bracket { expected");
   }
 
   getToken(); // statements
 
   parseStatements(graph); // close angle bracket
 
-  if (token != '}') {
-    throw newSyntaxError('Angle bracket } expected');
+  if (token != "}") {
+    throw newSyntaxError("Angle bracket } expected");
   }
 
   getToken(); // end of file
 
-  if (token !== '') {
-    throw newSyntaxError('End of file expected');
+  if (token !== "") {
+    throw newSyntaxError("End of file expected");
   }
 
   getToken(); // remove temporary default options
@@ -6227,15 +6232,16 @@ function parseGraph() {
 }
 /**
  * Parse a list with statements.
- * @param {Object} graph
+ *
+ * @param {object} graph
  */
 
 
 function parseStatements(graph) {
-  while (token !== '' && token != '}') {
+  while (token !== "" && token != "}") {
     parseStatement(graph);
 
-    if (token === ';') {
+    if (token === ";") {
       getToken();
     }
   }
@@ -6244,7 +6250,8 @@ function parseStatements(graph) {
  * Parse a single statement. Can be a an attribute statement, node
  * statement, a series of node statements and edge statements, or a
  * parameter.
- * @param {Object} graph
+ *
+ * @param {object} graph
  */
 
 
@@ -6267,19 +6274,19 @@ function parseStatement(graph) {
 
 
   if (tokenType != TOKENTYPE.IDENTIFIER) {
-    throw newSyntaxError('Identifier expected');
+    throw newSyntaxError("Identifier expected");
   }
 
   var id = token; // id can be a string or a number
 
   getToken();
 
-  if (token === '=') {
+  if (token === "=") {
     // id statement
     getToken();
 
     if (tokenType != TOKENTYPE.IDENTIFIER) {
-      throw newSyntaxError('Identifier expected');
+      throw newSyntaxError("Identifier expected");
     }
 
     graph[id] = token;
@@ -6290,17 +6297,18 @@ function parseStatement(graph) {
 }
 /**
  * Parse a subgraph
- * @param {Object} graph    parent graph object
- * @return {Object | null} subgraph
+ *
+ * @param {object} graph    parent graph object
+ * @returns {object | null} subgraph
  */
 
 
 function parseSubgraph(graph) {
   var subgraph = null; // optional subgraph keyword
 
-  if (token === 'subgraph') {
+  if (token === "subgraph") {
     subgraph = {};
-    subgraph.type = 'subgraph';
+    subgraph.type = "subgraph";
     getToken(); // optional graph id
 
     if (tokenType === TOKENTYPE.IDENTIFIER) {
@@ -6310,7 +6318,7 @@ function parseSubgraph(graph) {
   } // open angle bracket
 
 
-  if (token === '{') {
+  if (token === "{") {
     getToken();
 
     if (!subgraph) {
@@ -6324,8 +6332,8 @@ function parseSubgraph(graph) {
 
     parseStatements(subgraph); // close angle bracket
 
-    if (token != '}') {
-      throw newSyntaxError('Angle bracket } expected');
+    if (token != "}") {
+      throw newSyntaxError("Angle bracket } expected");
     }
 
     getToken(); // remove temporary default options
@@ -6348,8 +6356,9 @@ function parseSubgraph(graph) {
  * parse an attribute statement like "node [shape=circle fontSize=16]".
  * Available keywords are 'node', 'edge', 'graph'.
  * The previous list with default attributes will be replaced
- * @param {Object} graph
- * @returns {String | null} keyword Returns the name of the parsed attribute
+ *
+ * @param {object} graph
+ * @returns {string | null} keyword Returns the name of the parsed attribute
  *                                  (node, edge, graph), or null if nothing
  *                                  is parsed.
  */
@@ -6357,28 +6366,29 @@ function parseSubgraph(graph) {
 
 function parseAttributeStatement(graph) {
   // attribute statements
-  if (token === 'node') {
+  if (token === "node") {
     getToken(); // node attributes
 
     graph.node = parseAttributeList();
-    return 'node';
-  } else if (token === 'edge') {
+    return "node";
+  } else if (token === "edge") {
     getToken(); // edge attributes
 
     graph.edge = parseAttributeList();
-    return 'edge';
-  } else if (token === 'graph') {
+    return "edge";
+  } else if (token === "graph") {
     getToken(); // graph attributes
 
     graph.graph = parseAttributeList();
-    return 'graph';
+    return "graph";
   }
 
   return null;
 }
 /**
  * parse a node statement
- * @param {Object} graph
+ *
+ * @param {object} graph
  * @param {string | number} id
  */
 
@@ -6400,13 +6410,14 @@ function parseNodeStatement(graph, id) {
 }
 /**
  * Parse an edge or a series of edges
- * @param {Object} graph
+ *
+ * @param {object} graph
  * @param {string | number} from        Id of the from node
  */
 
 
 function parseEdge(graph, from) {
-  while (token === '->' || token === '--') {
+  while (token === "->" || token === "--") {
     var to;
     var type = token;
     getToken();
@@ -6416,7 +6427,7 @@ function parseEdge(graph, from) {
       to = subgraph;
     } else {
       if (tokenType != TOKENTYPE.IDENTIFIER) {
-        throw newSyntaxError('Identifier or subgraph expected');
+        throw newSyntaxError("Identifier or subgraph expected");
       }
 
       to = token;
@@ -6437,7 +6448,8 @@ function parseEdge(graph, from) {
 /**
  * Parse a set with attributes,
  * for example [label="1.000", shape=solid]
- * @return {Object | null} attr
+ *
+ * @returns {object | null} attr
  */
 
 
@@ -6446,9 +6458,9 @@ function parseAttributeList() {
   var attr = null; // edge styles of dot and vis
 
   var edgeStyles = {
-    'dashed': true,
-    'solid': false,
-    'dotted': [1, 5]
+    dashed: true,
+    solid: false,
+    dotted: [1, 5]
   };
   /**
    * Define arrow types.
@@ -6458,16 +6470,16 @@ function parseAttributeList() {
    */
 
   var arrowTypes = {
-    dot: 'circle',
-    box: 'box',
-    crow: 'crow',
-    curve: 'curve',
-    icurve: 'inv_curve',
-    normal: 'triangle',
-    inv: 'inv_triangle',
-    diamond: 'diamond',
-    tee: 'bar',
-    vee: 'vee'
+    dot: "circle",
+    box: "box",
+    crow: "crow",
+    curve: "curve",
+    icurve: "inv_curve",
+    normal: "triangle",
+    inv: "inv_triangle",
+    diamond: "diamond",
+    tee: "bar",
+    vee: "vee"
   };
   /**
    * 'attr_list' contains attributes for checking if some of them are affected
@@ -6479,73 +6491,73 @@ function parseAttributeList() {
   var attr_names = new Array(); // used for checking the case.
   // parse attributes
 
-  while (token === '[') {
+  while (token === "[") {
     getToken();
     attr = {};
 
-    while (token !== '' && token != ']') {
+    while (token !== "" && token != "]") {
       if (tokenType != TOKENTYPE.IDENTIFIER) {
-        throw newSyntaxError('Attribute name expected');
+        throw newSyntaxError("Attribute name expected");
       }
 
       var name = token;
       getToken();
 
-      if (token != '=') {
-        throw newSyntaxError('Equal sign = expected');
+      if (token != "=") {
+        throw newSyntaxError("Equal sign = expected");
       }
 
       getToken();
 
       if (tokenType != TOKENTYPE.IDENTIFIER) {
-        throw newSyntaxError('Attribute value expected');
+        throw newSyntaxError("Attribute value expected");
       }
 
       var value = token; // convert from dot style to vis
 
-      if (name === 'style') {
+      if (name === "style") {
         value = edgeStyles[value];
       }
 
       var arrowType;
 
-      if (name === 'arrowhead') {
+      if (name === "arrowhead") {
         arrowType = arrowTypes[value];
-        name = 'arrows';
+        name = "arrows";
         value = {
-          'to': {
-            'enabled': true,
-            'type': arrowType
+          to: {
+            enabled: true,
+            type: arrowType
           }
         };
       }
 
-      if (name === 'arrowtail') {
+      if (name === "arrowtail") {
         arrowType = arrowTypes[value];
-        name = 'arrows';
+        name = "arrows";
         value = {
-          'from': {
-            'enabled': true,
-            'type': arrowType
+          from: {
+            enabled: true,
+            type: arrowType
           }
         };
       }
 
       attr_list.push({
-        'attr': attr,
-        'name': name,
-        'value': value
+        attr: attr,
+        name: name,
+        value: value
       });
       attr_names.push(name);
       getToken();
 
-      if (token == ',') {
+      if (token == ",") {
         getToken();
       }
     }
 
-    if (token != ']') {
-      throw newSyntaxError('Bracket ] expected');
+    if (token != "]") {
+      throw newSyntaxError("Bracket ] expected");
     }
 
     getToken();
@@ -6561,21 +6573,21 @@ function parseAttributeList() {
    */
 
 
-  if (includes$4(attr_names).call(attr_names, 'dir')) {
+  if (includes$4(attr_names).call(attr_names, "dir")) {
     var idx = {}; // get index of 'arrows' and 'dir'
 
     idx.arrows = {};
 
     for (i = 0; i < attr_list.length; i++) {
-      if (attr_list[i].name === 'arrows') {
+      if (attr_list[i].name === "arrows") {
         if (attr_list[i].value.to != null) {
           idx.arrows.to = i;
         } else if (attr_list[i].value.from != null) {
           idx.arrows.from = i;
         } else {
-          throw newSyntaxError('Invalid value of arrows');
+          throw newSyntaxError("Invalid value of arrows");
         }
-      } else if (attr_list[i].name === 'dir') {
+      } else if (attr_list[i].name === "dir") {
         idx.dir = i;
       }
     } // first, add default arrow shape if it is not assigned to avoid error
@@ -6583,12 +6595,12 @@ function parseAttributeList() {
 
     var dir_type = attr_list[idx.dir].value;
 
-    if (!includes$4(attr_names).call(attr_names, 'arrows')) {
-      if (dir_type === 'both') {
+    if (!includes$4(attr_names).call(attr_names, "arrows")) {
+      if (dir_type === "both") {
         attr_list.push({
-          'attr': attr_list[idx.dir].attr,
-          'name': 'arrows',
-          'value': {
+          attr: attr_list[idx.dir].attr,
+          name: "arrows",
+          value: {
             to: {
               enabled: true
             }
@@ -6596,42 +6608,42 @@ function parseAttributeList() {
         });
         idx.arrows.to = attr_list.length - 1;
         attr_list.push({
-          'attr': attr_list[idx.dir].attr,
-          'name': 'arrows',
-          'value': {
+          attr: attr_list[idx.dir].attr,
+          name: "arrows",
+          value: {
             from: {
               enabled: true
             }
           }
         });
         idx.arrows.from = attr_list.length - 1;
-      } else if (dir_type === 'forward') {
+      } else if (dir_type === "forward") {
         attr_list.push({
-          'attr': attr_list[idx.dir].attr,
-          'name': 'arrows',
-          'value': {
+          attr: attr_list[idx.dir].attr,
+          name: "arrows",
+          value: {
             to: {
               enabled: true
             }
           }
         });
         idx.arrows.to = attr_list.length - 1;
-      } else if (dir_type === 'back') {
+      } else if (dir_type === "back") {
         attr_list.push({
-          'attr': attr_list[idx.dir].attr,
-          'name': 'arrows',
-          'value': {
+          attr: attr_list[idx.dir].attr,
+          name: "arrows",
+          value: {
             from: {
               enabled: true
             }
           }
         });
         idx.arrows.from = attr_list.length - 1;
-      } else if (dir_type === 'none') {
+      } else if (dir_type === "none") {
         attr_list.push({
-          'attr': attr_list[idx.dir].attr,
-          'name': 'arrows',
-          'value': ''
+          attr: attr_list[idx.dir].attr,
+          name: "arrows",
+          value: ""
         });
         idx.arrows.to = attr_list.length - 1;
       } else {
@@ -6642,15 +6654,15 @@ function parseAttributeList() {
     var from_type;
     var to_type; // update 'arrows' attribute from 'dir'.
 
-    if (dir_type === 'both') {
+    if (dir_type === "both") {
       // both of shapes of 'from' and 'to' are given
       if (idx.arrows.to && idx.arrows.from) {
         to_type = attr_list[idx.arrows.to].value.to.type;
         from_type = attr_list[idx.arrows.from].value.from.type;
         attr_list[idx.arrows.to] = {
-          'attr': attr_list[idx.arrows.to].attr,
-          'name': attr_list[idx.arrows.to].name,
-          'value': {
+          attr: attr_list[idx.arrows.to].attr,
+          name: attr_list[idx.arrows.to].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6666,11 +6678,11 @@ function parseAttributeList() {
 
       } else if (idx.arrows.to) {
         to_type = attr_list[idx.arrows.to].value.to.type;
-        from_type = 'arrow';
+        from_type = "arrow";
         attr_list[idx.arrows.to] = {
-          'attr': attr_list[idx.arrows.to].attr,
-          'name': attr_list[idx.arrows.to].name,
-          'value': {
+          attr: attr_list[idx.arrows.to].attr,
+          name: attr_list[idx.arrows.to].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6682,12 +6694,12 @@ function parseAttributeList() {
           }
         }; // only shape of 'from' is assigned and use default for 'to'
       } else if (idx.arrows.from) {
-        to_type = 'arrow';
+        to_type = "arrow";
         from_type = attr_list[idx.arrows.from].value.from.type;
         attr_list[idx.arrows.from] = {
-          'attr': attr_list[idx.arrows.from].attr,
-          'name': attr_list[idx.arrows.from].name,
-          'value': {
+          attr: attr_list[idx.arrows.from].attr,
+          name: attr_list[idx.arrows.from].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6699,15 +6711,15 @@ function parseAttributeList() {
           }
         };
       }
-    } else if (dir_type === 'back') {
+    } else if (dir_type === "back") {
       // given both of shapes, but use only 'from'
       if (idx.arrows.to && idx.arrows.from) {
-        to_type = '';
+        to_type = "";
         from_type = attr_list[idx.arrows.from].value.from.type;
         attr_list[idx.arrows.from] = {
-          'attr': attr_list[idx.arrows.from].attr,
-          'name': attr_list[idx.arrows.from].name,
-          'value': {
+          attr: attr_list[idx.arrows.from].attr,
+          name: attr_list[idx.arrows.from].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6719,13 +6731,13 @@ function parseAttributeList() {
           }
         }; // given shape of 'to', but does not use it
       } else if (idx.arrows.to) {
-        to_type = '';
-        from_type = 'arrow';
+        to_type = "";
+        from_type = "arrow";
         idx.arrows.from = idx.arrows.to;
         attr_list[idx.arrows.from] = {
-          'attr': attr_list[idx.arrows.from].attr,
-          'name': attr_list[idx.arrows.from].name,
-          'value': {
+          attr: attr_list[idx.arrows.from].attr,
+          name: attr_list[idx.arrows.from].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6737,12 +6749,12 @@ function parseAttributeList() {
           }
         }; // assign given 'from' shape
       } else if (idx.arrows.from) {
-        to_type = '';
+        to_type = "";
         from_type = attr_list[idx.arrows.from].value.from.type;
         attr_list[idx.arrows.to] = {
-          'attr': attr_list[idx.arrows.from].attr,
-          'name': attr_list[idx.arrows.from].name,
-          'value': {
+          attr: attr_list[idx.arrows.from].attr,
+          name: attr_list[idx.arrows.from].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6756,16 +6768,16 @@ function parseAttributeList() {
       }
 
       attr_list[idx.arrows.from] = {
-        'attr': attr_list[idx.arrows.from].attr,
-        'name': attr_list[idx.arrows.from].name,
-        'value': {
+        attr: attr_list[idx.arrows.from].attr,
+        name: attr_list[idx.arrows.from].name,
+        value: {
           from: {
             enabled: true,
             type: attr_list[idx.arrows.from].value.from.type
           }
         }
       };
-    } else if (dir_type === 'none') {
+    } else if (dir_type === "none") {
       var idx_arrow;
 
       if (idx.arrows.to) {
@@ -6775,19 +6787,19 @@ function parseAttributeList() {
       }
 
       attr_list[idx_arrow] = {
-        'attr': attr_list[idx_arrow].attr,
-        'name': attr_list[idx_arrow].name,
-        'value': ''
+        attr: attr_list[idx_arrow].attr,
+        name: attr_list[idx_arrow].name,
+        value: ""
       };
-    } else if (dir_type === 'forward') {
+    } else if (dir_type === "forward") {
       // given both of shapes, but use only 'to'
       if (idx.arrows.to && idx.arrows.from) {
         to_type = attr_list[idx.arrows.to].value.to.type;
-        from_type = '';
+        from_type = "";
         attr_list[idx.arrows.to] = {
-          'attr': attr_list[idx.arrows.to].attr,
-          'name': attr_list[idx.arrows.to].name,
-          'value': {
+          attr: attr_list[idx.arrows.to].attr,
+          name: attr_list[idx.arrows.to].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6800,11 +6812,11 @@ function parseAttributeList() {
         }; // assign given 'to' shape
       } else if (idx.arrows.to) {
         to_type = attr_list[idx.arrows.to].value.to.type;
-        from_type = '';
+        from_type = "";
         attr_list[idx.arrows.to] = {
-          'attr': attr_list[idx.arrows.to].attr,
-          'name': attr_list[idx.arrows.to].name,
-          'value': {
+          attr: attr_list[idx.arrows.to].attr,
+          name: attr_list[idx.arrows.to].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6816,13 +6828,13 @@ function parseAttributeList() {
           }
         }; // given shape of 'from', but does not use it
       } else if (idx.arrows.from) {
-        to_type = 'arrow';
-        from_type = '';
+        to_type = "arrow";
+        from_type = "";
         idx.arrows.to = idx.arrows.from;
         attr_list[idx.arrows.to] = {
-          'attr': attr_list[idx.arrows.to].attr,
-          'name': attr_list[idx.arrows.to].name,
-          'value': {
+          attr: attr_list[idx.arrows.to].attr,
+          name: attr_list[idx.arrows.to].name,
+          value: {
             to: {
               enabled: true,
               type: to_type
@@ -6836,9 +6848,9 @@ function parseAttributeList() {
       }
 
       attr_list[idx.arrows.to] = {
-        'attr': attr_list[idx.arrows.to].attr,
-        'name': attr_list[idx.arrows.to].name,
-        'value': {
+        attr: attr_list[idx.arrows.to].attr,
+        name: attr_list[idx.arrows.to].name,
+        value: {
           to: {
             enabled: true,
             type: attr_list[idx.arrows.to].value.to.type
@@ -6856,15 +6868,15 @@ function parseAttributeList() {
 
   var nof_attr_list;
 
-  if (includes$4(attr_names).call(attr_names, 'penwidth')) {
+  if (includes$4(attr_names).call(attr_names, "penwidth")) {
     var tmp_attr_list = [];
     nof_attr_list = attr_list.length;
 
     for (i = 0; i < nof_attr_list; i++) {
       // exclude 'width' from attr_list if 'penwidth' exists
-      if (attr_list[i].name !== 'width') {
-        if (attr_list[i].name === 'penwidth') {
-          attr_list[i].name = 'width';
+      if (attr_list[i].name !== "width") {
+        if (attr_list[i].name === "penwidth") {
+          attr_list[i].name = "width";
         }
 
         tmp_attr_list.push(attr_list[i]);
@@ -6884,30 +6896,33 @@ function parseAttributeList() {
 }
 /**
  * Create a syntax error with extra information on current token and index.
+ *
  * @param {string} message
  * @returns {SyntaxError} err
  */
 
 
 function newSyntaxError(message) {
-  return new SyntaxError(message + ', got "' + chop(token, 30) + '" (char ' + index$1 + ')');
+  return new SyntaxError(message + ', got "' + chop(token, 30) + '" (char ' + index$1 + ")");
 }
 /**
  * Chop off text after a maximum length
+ *
  * @param {string} text
  * @param {number} maxLength
- * @returns {String}
+ * @returns {string}
  */
 
 
 function chop(text, maxLength) {
-  return text.length <= maxLength ? text : text.substr(0, 27) + '...';
+  return text.length <= maxLength ? text : text.substr(0, 27) + "...";
 }
 /**
  * Execute a function fn for each pair of elements in two arrays
+ *
  * @param {Array | *} array1
  * @param {Array | *} array2
- * @param {function} fn
+ * @param {Function} fn
  */
 
 
@@ -6936,15 +6951,16 @@ function forEach2(array1, array2, fn) {
  * Set a nested property on an object
  * When nested objects are missing, they will be created.
  * For example setProp({}, 'font.color', 'red') will return {font: {color: 'red'}}
- * @param {Object} object
+ *
+ * @param {object} object
  * @param {string} path   A dot separated string like 'font.color'
  * @param {*} value       Value for the property
- * @return {Object} Returns the original object, allows for chaining.
+ * @returns {object} Returns the original object, allows for chaining.
  */
 
 
 function setProp(object, path, value) {
-  var names = path.split('.');
+  var names = path.split(".");
   var prop = names.pop(); // traverse over the nested objects
 
   var obj = object;
@@ -6965,9 +6981,10 @@ function setProp(object, path, value) {
 }
 /**
  * Convert an object with DOT attributes to their vis.js equivalents.
- * @param {Object} attr     Object with DOT attributes
- * @param {Object} mapping
- * @return {Object}         Returns an object with vis.js attributes
+ *
+ * @param {object} attr     Object with DOT attributes
+ * @param {object} mapping
+ * @returns {object}         Returns an object with vis.js attributes
  */
 
 
@@ -6982,7 +6999,7 @@ function convertAttr(attr, mapping) {
         forEach$2(visProp).call(visProp, function (visPropI) {
           setProp(converted, visPropI, attr[prop]);
         });
-      } else if (typeof visProp === 'string') {
+      } else if (typeof visProp === "string") {
         setProp(converted, visProp, attr[prop]);
       } else {
         setProp(converted, prop, attr[prop]);
@@ -6995,8 +7012,9 @@ function convertAttr(attr, mapping) {
 /**
  * Convert a string containing a graph in DOT language into a map containing
  * with nodes and edges in the format of graph.
+ *
  * @param {string} data         Text containing a graph in DOT-notation
- * @return {Object} graphData
+ * @returns {object} graphData
  */
 
 
@@ -7020,7 +7038,7 @@ function DOTToGraph(data) {
       merge(graphNode, convertAttr(dotNode.attr, NODE_ATTR_MAPPING));
 
       if (graphNode.image) {
-        graphNode.shape = 'image';
+        graphNode.shape = "image";
       }
 
       graphData.nodes.push(graphNode);
@@ -7033,8 +7051,9 @@ function DOTToGraph(data) {
 
     /**
      * Convert an edge in DOT format to an edge with VisGraph format
-     * @param {Object} dotEdge
-     * @returns {Object} graphEdge
+     *
+     * @param {object} dotEdge
+     * @returns {object} graphEdge
      */
     var convertEdge = function convertEdge(dotEdge) {
       var graphEdge = {
@@ -7045,8 +7064,8 @@ function DOTToGraph(data) {
       // The reason why default style is not added in parseAttributeList() is
       // because only default is cleared before here.
 
-      if (graphEdge.arrows == null && dotEdge.type === '->') {
-        graphEdge.arrows = 'to';
+      if (graphEdge.arrows == null && dotEdge.type === "->") {
+        graphEdge.arrows = "to";
       }
 
       return graphEdge;
@@ -7104,6 +7123,11 @@ function DOTToGraph(data) {
 
   return graphData;
 }
+/* eslint-enable no-var */
+
+/* eslint-enable no-unused-vars */
+
+/* eslint-enable no-prototype-builtins */
 
 var dotparser = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -10528,8 +10552,7 @@ function hammerMock() {
     off: noop,
     destroy: noop,
     emit: noop,
-    get: function get(m) {
-      //eslint-disable-line no-unused-vars
+    get: function get() {
       return {
         set: noop
       };
@@ -10554,8 +10577,9 @@ var hammer = /*#__PURE__*/Object.freeze({
  * When active, the element is displayed with a blue border around it, and
  * the interactive contents of the element can be used. When clicked outside
  * the element, the elements mode is changed to inactive.
+ *
  * @param {Element} container
- * @constructor Activator
+ * @class Activator
  */
 
 function Activator(container) {
@@ -10567,13 +10591,13 @@ function Activator(container) {
   this.dom = {
     container: container
   };
-  this.dom.overlay = document.createElement('div');
-  this.dom.overlay.className = 'vis-overlay';
+  this.dom.overlay = document.createElement("div");
+  this.dom.overlay.className = "vis-overlay";
   this.dom.container.appendChild(this.dom.overlay);
   this.hammer = Hammer$1(this.dom.overlay);
-  this.hammer.on('tap', bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
+  this.hammer.on("tap", bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
 
-  var events = ['tap', 'doubletap', 'press', 'pinch', 'pan', 'panstart', 'panmove', 'panend'];
+  var events = ["tap", "doubletap", "press", "pinch", "pan", "panstart", "panmove", "panend"];
 
   forEach$2(events).call(events, function (event) {
     _this.hammer.on(event, function (event) {
@@ -10589,7 +10613,7 @@ function Activator(container) {
       }
     };
 
-    document.body.addEventListener('click', this.onClick);
+    document.body.addEventListener("click", this.onClick);
   }
 
   if (this.keycharm !== undefined) {
@@ -10615,7 +10639,7 @@ Activator.prototype.destroy = function () {
   this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
 
   if (this.onClick) {
-    document.body.removeEventListener('click', this.onClick);
+    document.body.removeEventListener("click", this.onClick);
   } // remove keycharm
 
 
@@ -10644,13 +10668,13 @@ Activator.prototype.activate = function () {
 
   Activator.current = this;
   this.active = true;
-  this.dom.overlay.style.display = 'none';
-  addClassName(this.dom.container, 'vis-active');
-  this.emit('change');
-  this.emit('activate'); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
+  this.dom.overlay.style.display = "none";
+  addClassName(this.dom.container, "vis-active");
+  this.emit("change");
+  this.emit("activate"); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
   // keyboard events on a 'change' event
 
-  bind$2(_context3 = this.keycharm).call(_context3, 'esc', this.escListener);
+  bind$2(_context3 = this.keycharm).call(_context3, "esc", this.escListener);
 };
 /**
  * Deactivate the element
@@ -10660,14 +10684,15 @@ Activator.prototype.activate = function () {
 
 Activator.prototype.deactivate = function () {
   this.active = false;
-  this.dom.overlay.style.display = 'block';
-  removeClassName(this.dom.container, 'vis-active');
-  this.keycharm.unbind('esc', this.escListener);
-  this.emit('change');
-  this.emit('deactivate');
+  this.dom.overlay.style.display = "block";
+  removeClassName(this.dom.container, "vis-active");
+  this.keycharm.unbind("esc", this.escListener);
+  this.emit("change");
+  this.emit("deactivate");
 };
 /**
  * Handle a tap event: activate the container
+ *
  * @param {Event}  event   The event
  * @private
  */
@@ -10681,6 +10706,7 @@ Activator.prototype._onTapOverlay = function (event) {
 /**
  * Test whether the element has the requested parent element somewhere in
  * its chain of parent nodes.
+ *
  * @param {HTMLElement} element
  * @param {HTMLElement} parent
  * @returns {boolean} Returns true when the parent is found somewhere in the
@@ -10904,7 +10930,7 @@ var locales = /*#__PURE__*/Object.freeze({
  */
 function normalizeLanguageCode(locales, rawCode) {
   try {
-    var _rawCode$split = rawCode.split(/[-_ \/]/, 2),
+    var _rawCode$split = rawCode.split(/[-_ /]/, 2),
         _rawCode$split2 = slicedToArray(_rawCode$split, 2),
         rawLanguage = _rawCode$split2[0],
         rawCountry = _rawCode$split2[1];
@@ -10988,11 +11014,10 @@ var CachedImage = /*#__PURE__*/function () {
   function CachedImage() {
     classCallCheck(this, CachedImage);
 
-    // eslint-disable-line no-unused-vars
     this.NUM_ITERATIONS = 4; // Number of items in the coordinates array
 
     this.image = new Image();
-    this.canvas = document.createElement('canvas');
+    this.canvas = document.createElement("canvas");
   }
   /**
    * Called when the image has been successfully loaded.
@@ -11028,7 +11053,7 @@ var CachedImage = /*#__PURE__*/function () {
       this._fillMipMap();
     }
     /**
-     * @return {Boolean} true if init() has been called, false otherwise.
+     * @returns {boolean} true if init() has been called, false otherwise.
      */
 
   }, {
@@ -11057,7 +11082,7 @@ var CachedImage = /*#__PURE__*/function () {
   }, {
     key: "_fillMipMap",
     value: function _fillMipMap() {
-      var ctx = this.canvas.getContext('2d'); // First zoom-level comes from the image
+      var ctx = this.canvas.getContext("2d"); // First zoom-level comes from the image
 
       var to = this.coordinates[0];
       ctx.drawImage(this.image, to[0], to[1], to[2], to[3]); // The rest are copy actions internal to the canvas/context
@@ -11118,6 +11143,7 @@ var CachedImage = /*#__PURE__*/function () {
 
 /**
  * This callback is a callback that accepts an Image.
+ *
  * @callback ImageCallback
  * @param {Image} image
  */
@@ -11181,7 +11207,7 @@ var Images = /*#__PURE__*/function () {
     /**
      * @param {string} url          Url of the image
      * @param {string} brokenUrl    Url of an image to use if the url image is not found
-     * @return {Image} img          The image object
+     * @returns {Image} img          The image object
      */
 
   }, {
@@ -11223,6 +11249,7 @@ var Images = /*#__PURE__*/function () {
      * IE11 fix -- thanks dponch!
      *
      * Local helper function
+     *
      * @param {vis.Image} imageToCache
      * @private
      */
@@ -11506,14 +11533,14 @@ var Groups = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
   createClass(Groups, [{
     key: "setOptions",
     value: function setOptions(options) {
-      var optionFields = ['useDefaultGroups'];
+      var optionFields = ["useDefaultGroups"];
 
       if (options !== undefined) {
         for (var groupName in options) {
@@ -11542,7 +11569,7 @@ var Groups = /*#__PURE__*/function () {
      *
      * @param {*}       groupname     Can be a number, string, Date, etc.
      * @param {boolean} [shouldCreate=true] If true, create a new group
-     * @return {Object} The found or created group
+     * @returns {object} The found or created group
      */
 
   }, {
@@ -11574,10 +11601,11 @@ var Groups = /*#__PURE__*/function () {
     }
     /**
      * Add a custom group style
+     *
      * @param {string} groupName
-     * @param {Object} style       An object containing borderColor,
+     * @param {object} style       An object containing borderColor,
      *                             backgroundColor, etc.
-     * @return {Object} group      The created group object
+     * @returns {object} group      The created group object
      */
 
   }, {
@@ -16422,27 +16450,27 @@ var _parseFloat$2 = _parseFloat$1;
  *       should be able to get rid of this method.
  *
  * @param {string}  subOption  option within object 'chosen' to consider; either 'node', 'edge' or 'label'
- * @param {Object}  pile       array of options objects to consider
+ * @param {object}  pile       array of options objects to consider
  *
- * @return {boolean|function}  value for passed subOption of 'chosen' to use
+ * @returns {boolean | Function}  value for passed subOption of 'chosen' to use
  */
 
 function choosify(subOption, pile) {
   // allowed values for subOption
-  var allowed = ['node', 'edge', 'label'];
+  var allowed = ["node", "edge", "label"];
   var value = true;
-  var chosen = topMost(pile, 'chosen');
+  var chosen = topMost(pile, "chosen");
 
-  if (typeof chosen === 'boolean') {
+  if (typeof chosen === "boolean") {
     value = chosen;
-  } else if (_typeof_1(chosen) === 'object') {
+  } else if (_typeof_1(chosen) === "object") {
     if (indexOf$3(allowed).call(allowed, subOption) === -1) {
-      throw new Error('choosify: subOption \'' + subOption + '\' should be one of ' + "'" + allowed.join("', '") + "'");
+      throw new Error("choosify: subOption '" + subOption + "' should be one of " + "'" + allowed.join("', '") + "'");
     }
 
-    var chosenEdge = topMost(pile, ['chosen', subOption]);
+    var chosenEdge = topMost(pile, ["chosen", subOption]);
 
-    if (typeof chosenEdge === 'boolean' || typeof chosenEdge === 'function') {
+    if (typeof chosenEdge === "boolean" || typeof chosenEdge === "function") {
       value = chosenEdge;
     }
   }
@@ -16501,17 +16529,17 @@ function pointInRect(rect, point, rotationPoint) {
 
 function isValidLabel(text) {
   // Note that this is quite strict: types that *might* be converted to string are disallowed
-  return typeof text === 'string' && text !== '';
+  return typeof text === "string" && text !== "";
 }
 /**
  * Returns x, y of self reference circle based on provided angle
  *
- * @param {Object} ctx
+ * @param {object} ctx
  * @param {number} angle
  * @param {number} radius
  * @param {VisNode} node
  *
- * @returns {Object} x and y coordinates
+ * @returns {object} x and y coordinates
  */
 
 function getSelfRefCoordinates(ctx, angle, radius, node) {
@@ -16555,10 +16583,11 @@ function getSelfRefCoordinates(ctx, angle, radius, node) {
 
 /**
  * Callback to determine text dimensions, using the parent label settings.
+ *
  * @callback MeasureText
  * @param {text} text
  * @param {text} mod
- * @return {Object} { width, values} width in pixels and font attributes
+ * @returns {object} { width, values} width in pixels and font attributes
  */
 
 /**
@@ -16592,7 +16621,7 @@ var LabelAccumulator = /*#__PURE__*/function () {
   createClass(LabelAccumulator, [{
     key: "_add",
     value: function _add(l, text) {
-      var mod = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'normal';
+      var mod = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "normal";
 
       if (this.lines[l] === undefined) {
         this.lines[l] = {
@@ -16650,7 +16679,7 @@ var LabelAccumulator = /*#__PURE__*/function () {
   }, {
     key: "append",
     value: function append(text) {
-      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal';
+      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "normal";
 
       this._add(this.current, text, mod);
     }
@@ -16664,7 +16693,7 @@ var LabelAccumulator = /*#__PURE__*/function () {
   }, {
     key: "newLine",
     value: function newLine(text) {
-      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal';
+      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "normal";
 
       this._add(this.current, text, mod);
 
@@ -16808,22 +16837,22 @@ var LabelAccumulator = /*#__PURE__*/function () {
 
 var tagPattern = {
   // HTML
-  '<b>': /<b>/,
-  '<i>': /<i>/,
-  '<code>': /<code>/,
-  '</b>': /<\/b>/,
-  '</i>': /<\/i>/,
-  '</code>': /<\/code>/,
+  "<b>": /<b>/,
+  "<i>": /<i>/,
+  "<code>": /<code>/,
+  "</b>": /<\/b>/,
+  "</i>": /<\/i>/,
+  "</code>": /<\/code>/,
   // Markdown
-  '*': /\*/,
+  "*": /\*/,
   // bold
-  '_': /\_/,
+  _: /_/,
   // ital
-  '`': /`/,
+  "`": /`/,
   // mono
-  'afterBold': /[^\*]/,
-  'afterItal': /[^_]/,
-  'afterMono': /[^`]/
+  afterBold: /[^*]/,
+  afterItal: /[^_]/,
+  afterMono: /[^`]/
 };
 /**
  * Internal helper class for parsing the markup tags for HTML and Markdown.
@@ -16862,7 +16891,7 @@ var MarkupAccumulator = /*#__PURE__*/function () {
   createClass(MarkupAccumulator, [{
     key: "mod",
     value: function mod() {
-      return this.modStack.length === 0 ? 'normal' : this.modStack[0];
+      return this.modStack.length === 0 ? "normal" : this.modStack[0];
     }
     /**
      * Return the mod label currently active
@@ -16874,13 +16903,13 @@ var MarkupAccumulator = /*#__PURE__*/function () {
   }, {
     key: "modName",
     value: function modName() {
-      if (this.modStack.length === 0) return 'normal';else if (this.modStack[0] === 'mono') return 'mono';else {
+      if (this.modStack.length === 0) return "normal";else if (this.modStack[0] === "mono") return "mono";else {
         if (this.bold && this.ital) {
-          return 'boldital';
+          return "boldital";
         } else if (this.bold) {
-          return 'bold';
+          return "bold";
         } else if (this.ital) {
-          return 'ital';
+          return "ital";
         }
       }
     }
@@ -17027,7 +17056,7 @@ var MarkupAccumulator = /*#__PURE__*/function () {
     value: function parseEndTag(tagName, tag, nextTag) {
       var checkTag = this.mod() === tagName;
 
-      if (tagName === 'mono') {
+      if (tagName === "mono") {
         // special handling for 'mono'
         checkTag = checkTag && this.mono;
       } else {
@@ -17133,9 +17162,9 @@ var LabelSplitter = /*#__PURE__*/function () {
     /**
      * Callback to determine text width; passed to LabelAccumulator instance
      *
-     * @param  {String} text string to determine width of
-     * @param  {String} mod  font type to use for this text
-     * @return {Object} { width, values} width in pixels and font attributes
+     * @param  {string} text string to determine width of
+     * @param  {string} mod  font type to use for this text
+     * @returns {object} { width, values} width in pixels and font attributes
      */
 
     var textWidth = function textWidth(text, mod) {
@@ -17146,7 +17175,7 @@ var LabelSplitter = /*#__PURE__*/function () {
 
       var width = 0;
 
-      if (text !== '') {
+      if (text !== "") {
         var measure = _this.ctx.measureText(text);
 
         width = measure.width;
@@ -17188,13 +17217,13 @@ var LabelSplitter = /*#__PURE__*/function () {
 
       var font = this.parent.fontOptions; // Normalize the end-of-line's to a single representation - order important
 
-      text = text.replace(/\r\n/g, '\n'); // Dos EOL's
+      text = text.replace(/\r\n/g, "\n"); // Dos EOL's
 
-      text = text.replace(/\r/g, '\n'); // Mac EOL's
+      text = text.replace(/\r/g, "\n"); // Mac EOL's
       // Note that at this point, there can be no \r's in the text.
       // This is used later on splitStringIntoLines() to split multifont texts.
 
-      var nlLines = String(text).split('\n');
+      var nlLines = String(text).split("\n");
       var lineCount = nlLines.length;
 
       if (font.multi) {
@@ -17256,12 +17285,12 @@ var LabelSplitter = /*#__PURE__*/function () {
   }, {
     key: "decodeMarkupSystem",
     value: function decodeMarkupSystem(markupSystem) {
-      var system = 'none';
+      var system = "none";
 
-      if (markupSystem === 'markdown' || markupSystem === 'md') {
-        system = 'markdown';
-      } else if (markupSystem === true || markupSystem === 'html') {
-        system = 'html';
+      if (markupSystem === "markdown" || markupSystem === "md") {
+        system = "markdown";
+      } else if (markupSystem === true || markupSystem === "html") {
+        system = "html";
       }
 
       return system;
@@ -17279,7 +17308,7 @@ var LabelSplitter = /*#__PURE__*/function () {
 
       var parseEntities = function parseEntities(ch) {
         if (/&/.test(ch)) {
-          var parsed = s.replace(s.text, '&lt;', '<') || s.replace(s.text, '&amp;', '&');
+          var parsed = s.replace(s.text, "&lt;", "<") || s.replace(s.text, "&amp;", "&");
 
           if (!parsed) {
             s.add("&");
@@ -17293,7 +17322,7 @@ var LabelSplitter = /*#__PURE__*/function () {
 
       while (s.position < s.text.length) {
         var ch = s.text.charAt(s.position);
-        var parsed = s.parseWS(ch) || /</.test(ch) && (s.parseStartTag('bold', '<b>') || s.parseStartTag('ital', '<i>') || s.parseStartTag('mono', '<code>') || s.parseEndTag('bold', '</b>') || s.parseEndTag('ital', '</i>') || s.parseEndTag('mono', '</code>')) || parseEntities(ch);
+        var parsed = s.parseWS(ch) || /</.test(ch) && (s.parseStartTag("bold", "<b>") || s.parseStartTag("ital", "<i>") || s.parseStartTag("mono", "<code>") || s.parseEndTag("bold", "</b>") || s.parseEndTag("ital", "</i>") || s.parseEndTag("mono", "</code>")) || parseEntities(ch);
 
         if (!parsed) {
           s.add(ch);
@@ -17341,7 +17370,7 @@ var LabelSplitter = /*#__PURE__*/function () {
 
       while (s.position < s.text.length) {
         var ch = s.text.charAt(s.position);
-        var parsed = s.parseWS(ch) || parseOverride(ch) || (beginable || s.spacing) && (s.parseStartTag('bold', '*') || s.parseStartTag('ital', '_') || s.parseStartTag('mono', '`')) || s.parseEndTag('bold', '*', 'afterBold') || s.parseEndTag('ital', '_', 'afterItal') || s.parseEndTag('mono', '`', 'afterMono');
+        var parsed = s.parseWS(ch) || parseOverride(ch) || (beginable || s.spacing) && (s.parseStartTag("bold", "*") || s.parseStartTag("ital", "_") || s.parseStartTag("mono", "`")) || s.parseEndTag("bold", "*", "afterBold") || s.parseEndTag("ital", "_", "afterItal") || s.parseEndTag("mono", "`", "afterMono");
 
         if (!parsed) {
           s.add(ch);
@@ -17368,14 +17397,14 @@ var LabelSplitter = /*#__PURE__*/function () {
     value: function splitBlocks(text, markupSystem) {
       var system = this.decodeMarkupSystem(markupSystem);
 
-      if (system === 'none') {
+      if (system === "none") {
         return [{
           text: text,
-          mod: 'normal'
+          mod: "normal"
         }];
-      } else if (system === 'markdown') {
+      } else if (system === "markdown") {
         return this.splitMarkdownBlocks(text);
-      } else if (system === 'html') {
+      } else if (system === "html") {
         return this.splitHtmlBlocks(text);
       }
     }
@@ -17396,18 +17425,18 @@ var LabelSplitter = /*#__PURE__*/function () {
      * current max width.
      *
      * @param {Array} words  Array of strings signifying a text lines
-     * @return {number}      index of first item in string making string go over max
+     * @returns {number}      index of first item in string making string go over max
      * @private
      */
 
   }, {
     key: "getLongestFit",
     value: function getLongestFit(words) {
-      var text = '';
+      var text = "";
       var w = 0;
 
       while (w < words.length) {
-        var pre = text === '' ? '' : ' ';
+        var pre = text === "" ? "" : " ";
         var newText = text + pre + words[w];
         if (this.overMaxWidth(newText)) break;
         text = newText;
@@ -17421,7 +17450,7 @@ var LabelSplitter = /*#__PURE__*/function () {
      * current max width.
      *
      * @param {Array} words Array of strings signifying a text lines
-     * @return {number} index of first item in string making string go over max
+     * @returns {number} index of first item in string making string go over max
      */
 
   }, {
@@ -17454,16 +17483,16 @@ var LabelSplitter = /*#__PURE__*/function () {
   }, {
     key: "splitStringIntoLines",
     value: function splitStringIntoLines(str) {
-      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal';
+      var mod = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "normal";
       var appendLast = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       // Set the canvas context font, based upon the current selected/hover state
       // and the provided mod, so the text measurement performed by getLongestFit
       // will be accurate - and not just use the font of whoever last used the canvas.
       this.parent.getFormattingValues(this.ctx, this.selected, this.hover, mod); // Still-present spaces are relevant, retain them
 
-      str = str.replace(/^( +)/g, '$1\r');
-      str = str.replace(/([^\r][^ ]*)( +)/g, '$1\r$2\r');
-      var words = str.split('\r');
+      str = str.replace(/^( +)/g, "$1\r");
+      str = str.replace(/([^\r][^ ]*)( +)/g, "$1\r$2\r");
+      var words = str.split("\r");
 
       while (words.length > 0) {
         var w = this.getLongestFit(words);
@@ -17480,9 +17509,9 @@ var LabelSplitter = /*#__PURE__*/function () {
           // skip any space that is replaced by a newline
           var newW = w;
 
-          if (words[w - 1] === ' ') {
+          if (words[w - 1] === " ") {
             w--;
-          } else if (words[newW] === ' ') {
+          } else if (words[newW] === " ") {
             newW++;
           }
 
@@ -17506,18 +17535,19 @@ var LabelSplitter = /*#__PURE__*/function () {
 
 /**
  * List of special styles for multi-fonts
+ *
  * @private
  */
 
-var multiFontStyle = ['bold', 'ital', 'boldital', 'mono'];
+var multiFontStyle = ["bold", "ital", "boldital", "mono"];
 /**
  * A Label to be used for Nodes or Edges.
  */
 
 var Label = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
-   * @param {Object} options
+   * @param {object} body
+   * @param {object} options
    * @param {boolean} [edgelabel=false]
    */
   function Label(body, options) {
@@ -17541,7 +17571,7 @@ var Label = /*#__PURE__*/function () {
     this.isEdgeLabel = edgelabel;
   }
   /**
-   * @param {Object} options the options of the parent Node-instance
+   * @param {object} options the options of the parent Node-instance
    */
 
 
@@ -17561,9 +17591,9 @@ var Label = /*#__PURE__*/function () {
 
       if (options.font !== undefined && options.font !== null) {
         // font options can be deleted at various levels
-        if (typeof options.font === 'string') {
+        if (typeof options.font === "string") {
           this.baseSize = this.fontOptions.size;
-        } else if (_typeof_1(options.font) === 'object') {
+        } else if (_typeof_1(options.font) === "object") {
           var size = options.font.size;
 
           if (size !== undefined) {
@@ -17578,7 +17608,7 @@ var Label = /*#__PURE__*/function () {
      * Member fontOptions serves as an accumulator for the current font options.
      * As such, it needs to be completely separated from the node options.
      *
-     * @param {Object} newFontOptions the new font options to process
+     * @param {object} newFontOptions the new font options to process
      * @private
      */
 
@@ -17600,7 +17630,7 @@ var Label = /*#__PURE__*/function () {
 
 
       forEach$3(newFontOptions, function (prop, n) {
-        if (prop !== undefined && prop !== null && _typeof_1(prop) !== 'object') {
+        if (prop !== undefined && prop !== null && _typeof_1(prop) !== "object") {
           _this.fontOptions[n] = prop;
         }
       });
@@ -17611,9 +17641,9 @@ var Label = /*#__PURE__*/function () {
      * Note that following is not done here and have to be done after the call:
      * - Not all font options are set (vadjust, mod)
      *
-     * @param {Object} outOptions  out-parameter, object in which to store the parse results (if any)
-     * @param {Object} inOptions  font options to parse
-     * @return {boolean} true if font parsed as string, false otherwise
+     * @param {object} outOptions  out-parameter, object in which to store the parse results (if any)
+     * @param {object} inOptions  font options to parse
+     * @returns {boolean} true if font parsed as string, false otherwise
      * @static
      */
 
@@ -17637,42 +17667,42 @@ var Label = /*#__PURE__*/function () {
         minWdt: -1,
         constrainHeight: false,
         minHgt: -1,
-        valign: 'middle'
+        valign: "middle"
       };
-      var widthConstraint = topMost(pile, 'widthConstraint');
+      var widthConstraint = topMost(pile, "widthConstraint");
 
-      if (typeof widthConstraint === 'number') {
+      if (typeof widthConstraint === "number") {
         fontOptions.maxWdt = Number(widthConstraint);
         fontOptions.minWdt = Number(widthConstraint);
-      } else if (_typeof_1(widthConstraint) === 'object') {
-        var widthConstraintMaximum = topMost(pile, ['widthConstraint', 'maximum']);
+      } else if (_typeof_1(widthConstraint) === "object") {
+        var widthConstraintMaximum = topMost(pile, ["widthConstraint", "maximum"]);
 
-        if (typeof widthConstraintMaximum === 'number') {
+        if (typeof widthConstraintMaximum === "number") {
           fontOptions.maxWdt = Number(widthConstraintMaximum);
         }
 
-        var widthConstraintMinimum = topMost(pile, ['widthConstraint', 'minimum']);
+        var widthConstraintMinimum = topMost(pile, ["widthConstraint", "minimum"]);
 
-        if (typeof widthConstraintMinimum === 'number') {
+        if (typeof widthConstraintMinimum === "number") {
           fontOptions.minWdt = Number(widthConstraintMinimum);
         }
       }
 
-      var heightConstraint = topMost(pile, 'heightConstraint');
+      var heightConstraint = topMost(pile, "heightConstraint");
 
-      if (typeof heightConstraint === 'number') {
+      if (typeof heightConstraint === "number") {
         fontOptions.minHgt = Number(heightConstraint);
-      } else if (_typeof_1(heightConstraint) === 'object') {
-        var heightConstraintMinimum = topMost(pile, ['heightConstraint', 'minimum']);
+      } else if (_typeof_1(heightConstraint) === "object") {
+        var heightConstraintMinimum = topMost(pile, ["heightConstraint", "minimum"]);
 
-        if (typeof heightConstraintMinimum === 'number') {
+        if (typeof heightConstraintMinimum === "number") {
           fontOptions.minHgt = Number(heightConstraintMinimum);
         }
 
-        var heightConstraintValign = topMost(pile, ['heightConstraint', 'valign']);
+        var heightConstraintValign = topMost(pile, ["heightConstraint", "valign"]);
 
-        if (typeof heightConstraintValign === 'string') {
-          if (heightConstraintValign === 'top' || heightConstraintValign === 'bottom') {
+        if (typeof heightConstraintValign === "string") {
+          if (heightConstraintValign === "top" || heightConstraintValign === "bottom") {
             fontOptions.valign = heightConstraintValign;
           }
         }
@@ -17683,7 +17713,7 @@ var Label = /*#__PURE__*/function () {
     /**
      * Set options and update internal state
      *
-     * @param {Object} options  options to set
+     * @param {object} options  options to set
      * @param {Array}  pile     array of option objects to consider for option 'chosen'
      */
 
@@ -17693,7 +17723,7 @@ var Label = /*#__PURE__*/function () {
       this.setOptions(options, true);
       this.propagateFonts(pile);
       deepExtend(this.fontOptions, this.constrain(pile));
-      this.fontOptions.chooser = choosify('label', pile);
+      this.fontOptions.chooser = choosify("label", pile);
     }
     /**
      * When margins are set in an element, adjust sizes is called to remove them
@@ -17869,7 +17899,7 @@ var Label = /*#__PURE__*/function () {
     key: "getFontOptions",
     value: function getFontOptions(pile, multiName) {
       var result = {};
-      var optionNames = ['color', 'size', 'face', 'mod', 'vadjust']; // List of allowed options per multi-font
+      var optionNames = ["color", "size", "face", "mod", "vadjust"]; // List of allowed options per multi-font
 
       for (var i = 0; i < optionNames.length; ++i) {
         var mod = optionNames[i];
@@ -17920,6 +17950,7 @@ var Label = /*#__PURE__*/function () {
     }
     /**
      * Main function. This is called from anything that wants to draw a label.
+     *
      * @param {CanvasRenderingContext2D} ctx
      * @param {number} x
      * @param {number} y
@@ -17931,7 +17962,7 @@ var Label = /*#__PURE__*/function () {
   }, {
     key: "draw",
     value: function draw(ctx, x, y, selected, hover) {
-      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 'middle';
+      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "middle";
       // if no label, return
       if (this.elementOptions.label === undefined) return; // check if we have to render the label
 
@@ -17952,6 +17983,7 @@ var Label = /*#__PURE__*/function () {
     }
     /**
      * Draws the label background
+     *
      * @param {CanvasRenderingContext2D} ctx
      * @private
      */
@@ -17978,7 +18010,7 @@ var Label = /*#__PURE__*/function () {
   }, {
     key: "_drawText",
     value: function _drawText(ctx, x, y) {
-      var baseline = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'middle';
+      var baseline = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "middle";
       var viewFontSize = arguments.length > 4 ? arguments[4] : undefined;
 
       var _this$_setAlignment = this._setAlignment(ctx, x, y, baseline);
@@ -17987,15 +18019,15 @@ var Label = /*#__PURE__*/function () {
 
       x = _this$_setAlignment2[0];
       y = _this$_setAlignment2[1];
-      ctx.textAlign = 'left';
+      ctx.textAlign = "left";
       x = x - this.size.width / 2; // Shift label 1/2-distance to the left
 
       if (this.fontOptions.valign && this.size.height > this.size.labelHeight) {
-        if (this.fontOptions.valign === 'top') {
+        if (this.fontOptions.valign === "top") {
           y -= (this.size.height - this.size.labelHeight) / 2;
         }
 
-        if (this.fontOptions.valign === 'bottom') {
+        if (this.fontOptions.valign === "bottom") {
           y += (this.size.height - this.size.labelHeight) / 2;
         }
       } // draw the text
@@ -18007,9 +18039,9 @@ var Label = /*#__PURE__*/function () {
         if (line && line.blocks) {
           var width = 0;
 
-          if (this.isEdgeLabel || this.fontOptions.align === 'center') {
+          if (this.isEdgeLabel || this.fontOptions.align === "center") {
             width += (this.size.width - line.width) / 2;
-          } else if (this.fontOptions.align === 'right') {
+          } else if (this.fontOptions.align === "right") {
             width += this.size.width - line.width;
           }
 
@@ -18025,7 +18057,7 @@ var Label = /*#__PURE__*/function () {
             if (block.strokeWidth > 0) {
               ctx.lineWidth = block.strokeWidth;
               ctx.strokeStyle = strokeColor;
-              ctx.lineJoin = 'round';
+              ctx.lineJoin = "round";
             }
 
             ctx.fillStyle = fontColor;
@@ -18057,19 +18089,19 @@ var Label = /*#__PURE__*/function () {
     value: function _setAlignment(ctx, x, y, baseline) {
       // check for label alignment (for edges)
       // TODO: make alignment for nodes
-      if (this.isEdgeLabel && this.fontOptions.align !== 'horizontal' && this.pointToSelf === false) {
+      if (this.isEdgeLabel && this.fontOptions.align !== "horizontal" && this.pointToSelf === false) {
         x = 0;
         y = 0;
         var lineMargin = 2;
 
-        if (this.fontOptions.align === 'top') {
-          ctx.textBaseline = 'alphabetic';
+        if (this.fontOptions.align === "top") {
+          ctx.textBaseline = "alphabetic";
           y -= 2 * lineMargin; // distance from edge, required because we use alphabetic. Alphabetic has less difference between browsers
-        } else if (this.fontOptions.align === 'bottom') {
-          ctx.textBaseline = 'hanging';
+        } else if (this.fontOptions.align === "bottom") {
+          ctx.textBaseline = "hanging";
           y += 2 * lineMargin; // distance from edge, required because we use hanging. Hanging has less difference between browsers
         } else {
-          ctx.textBaseline = 'middle';
+          ctx.textBaseline = "middle";
         }
       } else {
         ctx.textBaseline = baseline;
@@ -18091,8 +18123,8 @@ var Label = /*#__PURE__*/function () {
   }, {
     key: "_getColor",
     value: function _getColor(color, viewFontSize, initialStrokeColor) {
-      var fontColor = color || '#000000';
-      var strokeColor = initialStrokeColor || '#ffffff';
+      var fontColor = color || "#000000";
+      var strokeColor = initialStrokeColor || "#ffffff";
 
       if (viewFontSize <= this.elementOptions.scaling.label.drawThreshold) {
         var opacity = Math.max(0, Math.min(1, 1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)));
@@ -18127,7 +18159,7 @@ var Label = /*#__PURE__*/function () {
     /**
      * Get the current dimensions of the label
      *
-     * @return {rect}
+     * @returns {rect}
      */
 
   }, {
@@ -18142,17 +18174,17 @@ var Label = /*#__PURE__*/function () {
         var x2 = -this.size.width * 0.5;
 
         switch (this.fontOptions.align) {
-          case 'middle':
+          case "middle":
             x = x2;
             y = -this.size.height * 0.5;
             break;
 
-          case 'top':
+          case "top":
             x = x2;
             y = -(this.size.height + lineMargin);
             break;
 
-          case 'bottom':
+          case "bottom":
             x = x2;
             y = lineMargin;
             break;
@@ -18182,7 +18214,7 @@ var Label = /*#__PURE__*/function () {
     value: function calculateLabelSize(ctx, selected, hover) {
       var x = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
       var y = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 'middle';
+      var baseline = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "middle";
 
       this._processLabel(ctx, selected, hover);
 
@@ -18211,7 +18243,7 @@ var Label = /*#__PURE__*/function () {
     value: function getFormattingValues(ctx, selected, hover, mod) {
       var getValue = function getValue(fontOptions, mod, option) {
         if (mod === "normal") {
-          if (option === 'mod') return "";
+          if (option === "mod") return "";
           return fontOptions[option];
         }
 
@@ -18225,20 +18257,20 @@ var Label = /*#__PURE__*/function () {
       };
 
       var values = {
-        color: getValue(this.fontOptions, mod, 'color'),
-        size: getValue(this.fontOptions, mod, 'size'),
-        face: getValue(this.fontOptions, mod, 'face'),
-        mod: getValue(this.fontOptions, mod, 'mod'),
-        vadjust: getValue(this.fontOptions, mod, 'vadjust'),
+        color: getValue(this.fontOptions, mod, "color"),
+        size: getValue(this.fontOptions, mod, "size"),
+        face: getValue(this.fontOptions, mod, "face"),
+        mod: getValue(this.fontOptions, mod, "mod"),
+        vadjust: getValue(this.fontOptions, mod, "vadjust"),
         strokeWidth: this.fontOptions.strokeWidth,
         strokeColor: this.fontOptions.strokeColor
       };
 
       if (selected || hover) {
         if (mod === "normal" && this.fontOptions.chooser === true && this.elementOptions.labelHighlightBold) {
-          values.mod = 'bold';
+          values.mod = "bold";
         } else {
-          if (typeof this.fontOptions.chooser === 'function') {
+          if (typeof this.fontOptions.chooser === "function") {
             this.fontOptions.chooser(values, this.elementOptions.id, selected, hover);
           }
         }
@@ -18288,6 +18320,7 @@ var Label = /*#__PURE__*/function () {
     }
     /**
      * This explodes the label string into lines and sets the width, height and number of lines.
+     *
      * @param {CanvasRenderingContext2D} ctx
      * @param {boolean} selected
      * @param {boolean} hover
@@ -18322,7 +18355,7 @@ var Label = /*#__PURE__*/function () {
     /**
      * Check if this label is visible
      *
-     * @return {boolean} true if this label will be show, false otherwise
+     * @returns {boolean} true if this label will be show, false otherwise
      */
 
   }, {
@@ -18343,9 +18376,9 @@ var Label = /*#__PURE__*/function () {
   }], [{
     key: "parseFontString",
     value: function parseFontString(outOptions, inOptions) {
-      if (!inOptions || typeof inOptions !== 'string') return false;
+      if (!inOptions || typeof inOptions !== "string") return false;
       var newOptionsArray = inOptions.split(" ");
-      outOptions.size = +newOptionsArray[0].replace("px", '');
+      outOptions.size = +newOptionsArray[0].replace("px", "");
       outOptions.face = newOptionsArray[1];
       outOptions.color = newOptionsArray[2];
       return true;
@@ -18400,8 +18433,8 @@ var fill$2 = fill$1;
  */
 var NodeBase = /*#__PURE__*/function () {
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function NodeBase(options, body, labelModule) {
@@ -18426,7 +18459,7 @@ var NodeBase = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -18447,7 +18480,7 @@ var NodeBase = /*#__PURE__*/function () {
       this.margin = {};
 
       if (this.options.margin) {
-        if (_typeof_1(this.options.margin) == 'object') {
+        if (_typeof_1(this.options.margin) == "object") {
           this.margin.top = this.options.margin.top;
           this.margin.right = this.options.margin.right;
           this.margin.bottom = this.options.margin.bottom;
@@ -18507,7 +18540,7 @@ var NodeBase = /*#__PURE__*/function () {
     key: "disableShadow",
     value: function disableShadow(ctx, values) {
       if (values.shadow) {
-        ctx.shadowColor = 'rgba(0,0,0,0)';
+        ctx.shadowColor = "rgba(0,0,0,0)";
         ctx.shadowBlur = 0;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 0;
@@ -18741,7 +18774,7 @@ function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !
 /**
  * A Box Node/Cluster shape.
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var Box = /*#__PURE__*/function (_NodeBase) {
@@ -18750,8 +18783,8 @@ var Box = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$1(Box);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Box(options, body, labelModule) {
@@ -18864,7 +18897,7 @@ function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !
  *       Rename this to ImageBase
  *       Consolidate common code in Image and CircleImage to base class
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
@@ -18873,8 +18906,8 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$2(CircleImageBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function CircleImageBase(options, body, labelModule) {
@@ -18889,9 +18922,9 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
   }
   /**
    *
-   * @param {Object} options
-   * @param {Object} [imageObj]
-   * @param {Object} [imageObjAlt]
+   * @param {object} options
+   * @param {object} [imageObj]
+   * @param {object} [imageObjAlt]
    */
 
 
@@ -18968,7 +19001,7 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
       if (this.options.imagePadding) {
         var optImgPadding = this.options.imagePadding;
 
-        if (_typeof_1(optImgPadding) == 'object') {
+        if (_typeof_1(optImgPadding) == "object") {
           imgPadding.top = optImgPadding.top;
           imgPadding.right = optImgPadding.right;
           imgPadding.bottom = optImgPadding.bottom;
@@ -19099,7 +19132,7 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
         this.labelOffset = offset;
       }
 
-      this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+      this.labelModule.draw(ctx, x, yLabel, selected, hover, "hanging");
     }
   }]);
 
@@ -19112,7 +19145,7 @@ function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !
 /**
  * A Circle Node/Cluster shape.
  *
- * @extends CircleImageBase
+ * @augments CircleImageBase
  */
 
 var Circle = /*#__PURE__*/function (_CircleImageBase) {
@@ -19121,8 +19154,8 @@ var Circle = /*#__PURE__*/function (_CircleImageBase) {
   var _super = _createSuper$3(Circle);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Circle(options, body, labelModule) {
@@ -19199,14 +19232,12 @@ var Circle = /*#__PURE__*/function (_CircleImageBase) {
     /**
      *
      * @param {CanvasRenderingContext2D} ctx
-     * @param {number} angle - Unused
      * @returns {number}
      */
 
   }, {
     key: "distanceToBorder",
-    value: function distanceToBorder(ctx, angle) {
-      // eslint-disable-line no-unused-vars
+    value: function distanceToBorder(ctx) {
       if (ctx) {
         this.resize(ctx);
       }
@@ -19224,7 +19255,7 @@ function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !
 /**
  * A CircularImage Node/Cluster shape.
  *
- * @extends CircleImageBase
+ * @augments CircleImageBase
  */
 
 var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
@@ -19233,8 +19264,8 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
   var _super = _createSuper$4(CircularImage);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    * @param {Image} imageObj
    * @param {Image} imageObjAlt
@@ -19296,7 +19327,7 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
       var labelX = x,
           labelY = y;
 
-      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
         this.left = x;
         this.top = y;
         labelX += this.width / 2;
@@ -19333,7 +19364,7 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
   }, {
     key: "updateBoundingBox",
     value: function updateBoundingBox(x, y) {
-      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
         this.boundingBox.top = y;
         this.boundingBox.left = x;
         this.boundingBox.right = x + this.options.size * 2;
@@ -19353,14 +19384,12 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
     /**
      *
      * @param {CanvasRenderingContext2D} ctx
-     * @param {number} angle - Unused
      * @returns {number}
      */
 
   }, {
     key: "distanceToBorder",
-    value: function distanceToBorder(ctx, angle) {
-      // eslint-disable-line no-unused-vars
+    value: function distanceToBorder(ctx) {
       if (ctx) {
         this.resize(ctx);
       }
@@ -19378,7 +19407,7 @@ function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !
 /**
  * Base class for constructing Node/Cluster Shapes.
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var ShapeBase = /*#__PURE__*/function (_NodeBase) {
@@ -19387,8 +19416,8 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$5(ShapeBase);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function ShapeBase(options, body, labelModule) {
@@ -19401,7 +19430,7 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} [selected]
    * @param {boolean} [hover]
-   * @param {Object} [values={size: this.options.size}]
+   * @param {object} [values={size: this.options.size}]
    */
 
 
@@ -19436,7 +19465,7 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
      * @param {ArrowOptions} values
      * @private
      *
-     * @returns {Object} Callbacks to draw later on higher layers.
+     * @returns {object} Callbacks to draw later on higher layers.
      */
 
   }, {
@@ -19466,11 +19495,11 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
           if (_this.options.label !== undefined) {
             // Need to call following here in order to ensure value for
             // `this.labelModule.size.height`.
-            _this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, 'hanging');
+            _this.labelModule.calculateLabelSize(ctx, selected, hover, x, y, "hanging");
 
             var yLabel = y + 0.5 * _this.height + 0.5 * _this.labelModule.size.height;
 
-            _this.labelModule.draw(ctx, x, yLabel, selected, hover, 'hanging');
+            _this.labelModule.draw(ctx, x, yLabel, selected, hover, "hanging");
           }
 
           _this.updateBoundingBox(x, y);
@@ -19512,7 +19541,7 @@ function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !
 /**
  * A CustomShape Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var CustomShape = /*#__PURE__*/function (_ShapeBase) {
@@ -19521,11 +19550,12 @@ var CustomShape = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$6(CustomShape);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
-   * @param {function} ctxRenderer
-    */
+   * @param {Function} ctxRenderer
+   
+   */
   function CustomShape(options, body, labelModule, ctxRenderer) {
     var _this;
 
@@ -19544,7 +19574,7 @@ var CustomShape = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on different layers.
+   * @returns {object} Callbacks to draw later on different layers.
    */
 
 
@@ -19616,7 +19646,7 @@ function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !
 /**
  * A Database Node/Cluster shape.
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var Database = /*#__PURE__*/function (_NodeBase) {
@@ -19625,8 +19655,8 @@ var Database = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$7(Database);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Database(options, body, labelModule) {
@@ -19704,7 +19734,7 @@ function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !
 /**
  * A Diamond Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var Diamond = /*#__PURE__*/function (_ShapeBase) {
@@ -19713,8 +19743,8 @@ var Diamond = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$8(Diamond);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Diamond(options, body, labelModule) {
@@ -19731,14 +19761,14 @@ var Diamond = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(Diamond, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'diamond', 4, x, y, selected, hover, values);
+      return this._drawShape(ctx, "diamond", 4, x, y, selected, hover, values);
     }
     /**
      *
@@ -19763,7 +19793,7 @@ function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !
 /**
  * A Dot Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var Dot = /*#__PURE__*/function (_ShapeBase) {
@@ -19772,8 +19802,8 @@ var Dot = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$9(Dot);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Dot(options, body, labelModule) {
@@ -19790,26 +19820,24 @@ var Dot = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(Dot, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'circle', 2, x, y, selected, hover, values);
+      return this._drawShape(ctx, "circle", 2, x, y, selected, hover, values);
     }
     /**
      *
      * @param {CanvasRenderingContext2D} ctx
-     * @param {number} angle
      * @returns {number}
      */
 
   }, {
     key: "distanceToBorder",
-    value: function distanceToBorder(ctx, angle) {
-      // eslint-disable-line no-unused-vars
+    value: function distanceToBorder(ctx) {
       if (ctx) {
         this.resize(ctx);
       }
@@ -19827,7 +19855,7 @@ function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !
 /**
  * Am Ellipse Node/Cluster shape.
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var Ellipse = /*#__PURE__*/function (_NodeBase) {
@@ -19836,8 +19864,8 @@ var Ellipse = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$a(Ellipse);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Ellipse(options, body, labelModule) {
@@ -19919,7 +19947,7 @@ function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !
 /**
  * An icon replacement for the default Node shape.
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var Icon = /*#__PURE__*/function (_NodeBase) {
@@ -19928,8 +19956,8 @@ var Icon = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$b(Icon);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Icon(options, body, labelModule) {
@@ -19973,7 +20001,7 @@ var Icon = /*#__PURE__*/function (_NodeBase) {
      * @param {boolean} hover
      * @param {ArrowOptions} values
      *
-     * @returns {Object} Callbacks to draw later on higher layers.
+     * @returns {object} Callbacks to draw later on higher layers.
      */
 
   }, {
@@ -20050,7 +20078,7 @@ var Icon = /*#__PURE__*/function (_NodeBase) {
 
         this.disableShadow(ctx, values);
       } else {
-        console.error('When using the icon shape, you need to define the code in the icon options object. This can be done per node or globally.');
+        console.error("When using the icon shape, you need to define the code in the icon options object. This can be done per node or globally.");
       }
     }
     /**
@@ -20076,7 +20104,7 @@ function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !
 /**
  * An image-based replacement for the default Node shape.
  *
- * @extends CircleImageBase
+ * @augments CircleImageBase
  */
 
 var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
@@ -20085,8 +20113,8 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
   var _super = _createSuper$c(Image);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    * @param {Image} imageObj
    * @param {Image} imageObjAlt
@@ -20147,7 +20175,7 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
       var labelX = x,
           labelY = y;
 
-      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
         this.left = x;
         this.top = y;
         labelX += this.width / 2;
@@ -20202,7 +20230,7 @@ var Image$1 = /*#__PURE__*/function (_CircleImageBase) {
     value: function updateBoundingBox(x, y) {
       this.resize();
 
-      if (this.options.shapeProperties.coordinateOrigin === 'top-left') {
+      if (this.options.shapeProperties.coordinateOrigin === "top-left") {
         this.left = x;
         this.top = y;
       } else {
@@ -20244,7 +20272,7 @@ function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !
 /**
  * A Square Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var Square = /*#__PURE__*/function (_ShapeBase) {
@@ -20253,8 +20281,8 @@ var Square = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$d(Square);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Square(options, body, labelModule) {
@@ -20271,14 +20299,14 @@ var Square = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(Square, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'square', 2, x, y, selected, hover, values);
+      return this._drawShape(ctx, "square", 2, x, y, selected, hover, values);
     }
     /**
      *
@@ -20303,7 +20331,7 @@ function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !
 /**
  * A Hexagon Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var Hexagon = /*#__PURE__*/function (_ShapeBase) {
@@ -20312,8 +20340,8 @@ var Hexagon = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$e(Hexagon);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Hexagon(options, body, labelModule) {
@@ -20330,14 +20358,14 @@ var Hexagon = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(Hexagon, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'hexagon', 4, x, y, selected, hover, values);
+      return this._drawShape(ctx, "hexagon", 4, x, y, selected, hover, values);
     }
     /**
      *
@@ -20362,7 +20390,7 @@ function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !
 /**
  * A Star Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var Star = /*#__PURE__*/function (_ShapeBase) {
@@ -20371,8 +20399,8 @@ var Star = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$f(Star);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Star(options, body, labelModule) {
@@ -20389,14 +20417,14 @@ var Star = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(Star, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'star', 4, x, y, selected, hover, values);
+      return this._drawShape(ctx, "star", 4, x, y, selected, hover, values);
     }
     /**
      *
@@ -20421,7 +20449,7 @@ function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !
 /**
  * A text-based replacement for the default Node shape.
  *
- * @extends NodeBase
+ * @augments NodeBase
  */
 
 var Text = /*#__PURE__*/function (_NodeBase) {
@@ -20430,8 +20458,8 @@ var Text = /*#__PURE__*/function (_NodeBase) {
   var _super = _createSuper$g(Text);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Text(options, body, labelModule) {
@@ -20509,7 +20537,7 @@ function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !
 /**
  * A Triangle Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var Triangle = /*#__PURE__*/function (_ShapeBase) {
@@ -20518,8 +20546,8 @@ var Triangle = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$h(Triangle);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function Triangle(options, body, labelModule) {
@@ -20536,14 +20564,14 @@ var Triangle = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(Triangle, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'triangle', 3, x, y, selected, hover, values);
+      return this._drawShape(ctx, "triangle", 3, x, y, selected, hover, values);
     }
     /**
      *
@@ -20568,7 +20596,7 @@ function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !
 /**
  * A downward facing Triangle Node/Cluster shape.
  *
- * @extends ShapeBase
+ * @augments ShapeBase
  */
 
 var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
@@ -20577,8 +20605,8 @@ var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
   var _super = _createSuper$i(TriangleDown);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Label} labelModule
    */
   function TriangleDown(options, body, labelModule) {
@@ -20595,14 +20623,14 @@ var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
    * @param {boolean} hover
    * @param {ArrowOptions} values
    *
-   * @returns {Object} Callbacks to draw later on higher layers.
+   * @returns {object} Callbacks to draw later on higher layers.
    */
 
 
   createClass(TriangleDown, [{
     key: "draw",
     value: function draw(ctx, x, y, selected, hover, values) {
-      return this._drawShape(ctx, 'triangleDown', 3, x, y, selected, hover, values);
+      return this._drawShape(ctx, "triangleDown", 3, x, y, selected, hover, values);
     }
     /**
      *
@@ -20623,7 +20651,7 @@ var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
 
 var errorFound = false;
 var allOptions;
-var printStyle = 'background: #FFeeee; color: #dd0000';
+var printStyle = "background: #FFeeee; color: #dd0000";
 /**
  *  Used to validate options.
  */
@@ -20637,9 +20665,10 @@ var Validator = /*#__PURE__*/function () {
   }
   /**
    * Main function to be called
-   * @param {Object} options
-   * @param {Object} referenceOptions
-   * @param {Object} subObject
+   *
+   * @param {object} options
+   * @param {object} referenceOptions
+   * @param {object} subObject
    * @returns {boolean}
    * @static
    */
@@ -20661,9 +20690,10 @@ var Validator = /*#__PURE__*/function () {
     }
     /**
      * Will traverse an object recursively and check every value
-     * @param {Object} options
-     * @param {Object} referenceOptions
-     * @param {array} path    | where to look for the actual option
+     *
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {Array} path    | where to look for the actual option
      * @static
      */
 
@@ -20678,10 +20708,11 @@ var Validator = /*#__PURE__*/function () {
     }
     /**
      * Check every value. If the value is an object, call the parse function on that object.
+     *
      * @param {string} option
-     * @param {Object} options
-     * @param {Object} referenceOptions
-     * @param {array} path    | where to look for the actual option
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {Array} path    | where to look for the actual option
      * @static
      */
 
@@ -20701,10 +20732,10 @@ var Validator = /*#__PURE__*/function () {
         //       THAT'S A REALLY BAD PLACE TO ALLOW IT!!!!
         // TODO: Examine if needed, remove if possible
         // __any__ is a wildcard. Any value is accepted and will be further analysed by reference.
-        referenceOption = '__any__'; // if the any-subgroup is not a predefined object in the configurator,
+        referenceOption = "__any__"; // if the any-subgroup is not a predefined object in the configurator,
         // we do not look deeper into the object.
 
-        is_object = Validator.getType(options[option]) === 'object';
+        is_object = Validator.getType(options[option]) === "object";
       }
 
       var refOptionObj = referenceOptions[referenceOption];
@@ -20718,8 +20749,8 @@ var Validator = /*#__PURE__*/function () {
     /**
      *
      * @param {string}  option           | the option property
-     * @param {Object}  options          | The supplied options object
-     * @param {Object}  referenceOptions | The reference options containing all options and their allowed formats
+     * @param {object}  options          | The supplied options object
+     * @param {object}  referenceOptions | The reference options containing all options and their allowed formats
      * @param {string}  referenceOption  | Usually this is the same as option, except when handling an __any__ tag.
      * @param {string}  refOptionObj     | This is the type object from the reference options
      * @param {Array}   path             | where in the object is the option
@@ -20730,7 +20761,7 @@ var Validator = /*#__PURE__*/function () {
     key: "checkFields",
     value: function checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path) {
       var log = function log(message) {
-        console.log('%c' + message + Validator.printLocation(path, option), printStyle);
+        console.error("%c" + message + Validator.printLocation(path, option), printStyle);
       };
 
       var optionType = Validator.getType(options[option]);
@@ -20738,22 +20769,22 @@ var Validator = /*#__PURE__*/function () {
 
       if (refOptionType !== undefined) {
         // if the type is correct, we check if it is supposed to be one of a few select values
-        if (Validator.getType(refOptionType) === 'array' && indexOf$3(refOptionType).call(refOptionType, options[option]) === -1) {
-          log('Invalid option detected in "' + option + '".' + ' Allowed values are:' + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
+        if (Validator.getType(refOptionType) === "array" && indexOf$3(refOptionType).call(refOptionType, options[option]) === -1) {
+          log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
           errorFound = true;
-        } else if (optionType === 'object' && referenceOption !== "__any__") {
+        } else if (optionType === "object" && referenceOption !== "__any__") {
           path = copyAndExtendArray(path, option);
           Validator.parse(options[option], referenceOptions[referenceOption], path);
         }
-      } else if (refOptionObj['any'] === undefined) {
+      } else if (refOptionObj["any"] === undefined) {
         // type of the field is incorrect and the field cannot be any
-        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$3(refOptionObj)) + '. Received [' + optionType + '] "' + options[option] + '"');
+        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$3(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
         errorFound = true;
       }
     }
     /**
      *
-     * @param {Object|boolean|number|string|Array.<number>|Date|Node|Moment|undefined|null} object
+     * @param {object | boolean | number | string | Array.<number> | Date | Node | Moment | undefined | null} object
      * @returns {string}
      * @static
      */
@@ -20763,55 +20794,55 @@ var Validator = /*#__PURE__*/function () {
     value: function getType(object) {
       var type = _typeof_1(object);
 
-      if (type === 'object') {
+      if (type === "object") {
         if (object === null) {
-          return 'null';
+          return "null";
         }
 
         if (object instanceof Boolean) {
-          return 'boolean';
+          return "boolean";
         }
 
         if (object instanceof Number) {
-          return 'number';
+          return "number";
         }
 
         if (object instanceof String) {
-          return 'string';
+          return "string";
         }
 
         if (isArray$5(object)) {
-          return 'array';
+          return "array";
         }
 
         if (object instanceof Date) {
-          return 'date';
+          return "date";
         }
 
         if (object.nodeType !== undefined) {
-          return 'dom';
+          return "dom";
         }
 
         if (object._isAMomentObject === true) {
-          return 'moment';
+          return "moment";
         }
 
-        return 'object';
-      } else if (type === 'number') {
-        return 'number';
-      } else if (type === 'boolean') {
-        return 'boolean';
-      } else if (type === 'string') {
-        return 'string';
+        return "object";
+      } else if (type === "number") {
+        return "number";
+      } else if (type === "boolean") {
+        return "boolean";
+      } else if (type === "string") {
+        return "string";
       } else if (type === undefined) {
-        return 'undefined';
+        return "undefined";
       }
 
       return type;
     }
     /**
      * @param {string} option
-     * @param {Object} options
+     * @param {object} options
      * @param {Array.<string>} path
      * @static
      */
@@ -20826,22 +20857,23 @@ var Validator = /*#__PURE__*/function () {
       var msg;
 
       if (localSearch.indexMatch !== undefined) {
-        msg = ' in ' + Validator.printLocation(localSearch.path, option, '') + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
+        msg = " in " + Validator.printLocation(localSearch.path, option, "") + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
       } else if (globalSearch.distance <= globalSearchThreshold && localSearch.distance > globalSearch.distance) {
-        msg = ' in ' + Validator.printLocation(localSearch.path, option, '') + 'Perhaps it was misplaced? Matching option found at: ' + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, '');
+        msg = " in " + Validator.printLocation(localSearch.path, option, "") + "Perhaps it was misplaced? Matching option found at: " + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, "");
       } else if (localSearch.distance <= localSearchThreshold) {
         msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator.printLocation(localSearch.path, option);
       } else {
-        msg = '. Did you mean one of these: ' + Validator.print(keys$3(options)) + Validator.printLocation(path, option);
+        msg = ". Did you mean one of these: " + Validator.print(keys$3(options)) + Validator.printLocation(path, option);
       }
 
-      console.log('%cUnknown option detected: "' + option + '"' + msg, printStyle);
+      console.error('%cUnknown option detected: "' + option + '"' + msg, printStyle);
       errorFound = true;
     }
     /**
      * traverse the options in search for a match.
+     *
      * @param {string} option
-     * @param {Object} options
+     * @param {object} options
      * @param {Array} path    | where to look for the actual option
      * @param {boolean} [recursive=false]
      * @returns {{closestMatch: string, path: Array, distance: number}}
@@ -20853,13 +20885,12 @@ var Validator = /*#__PURE__*/function () {
     value: function findInOptions(option, options, path) {
       var recursive = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
       var min = 1e9;
-      var closestMatch = '';
+      var closestMatch = "";
       var closestMatchPath = [];
       var lowerCaseOption = option.toLowerCase();
       var indexMatch = undefined;
 
       for (var op in options) {
-        // eslint-disable-line guard-for-in
         var distance = void 0;
 
         if (options[op].__type__ !== undefined && recursive === true) {
@@ -20897,52 +20928,52 @@ var Validator = /*#__PURE__*/function () {
     }
     /**
      * @param {Array.<string>} path
-     * @param {Object} option
+     * @param {object} option
      * @param {string} prefix
-     * @returns {String}
+     * @returns {string}
      * @static
      */
 
   }, {
     key: "printLocation",
     value: function printLocation(path, option) {
-      var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Problem value found at: \n';
-      var str = '\n\n' + prefix + 'options = {\n';
+      var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Problem value found at: \n";
+      var str = "\n\n" + prefix + "options = {\n";
 
       for (var i = 0; i < path.length; i++) {
         for (var j = 0; j < i + 1; j++) {
-          str += '  ';
+          str += "  ";
         }
 
-        str += path[i] + ': {\n';
+        str += path[i] + ": {\n";
       }
 
       for (var _j = 0; _j < path.length + 1; _j++) {
-        str += '  ';
+        str += "  ";
       }
 
-      str += option + '\n';
+      str += option + "\n";
 
       for (var _i = 0; _i < path.length + 1; _i++) {
         for (var _j2 = 0; _j2 < path.length - _i; _j2++) {
-          str += '  ';
+          str += "  ";
         }
 
-        str += '}\n';
+        str += "}\n";
       }
 
-      return str + '\n\n';
+      return str + "\n\n";
     }
     /**
-     * @param {Object} options
-     * @returns {String}
+     * @param {object} options
+     * @returns {string}
      * @static
      */
 
   }, {
     key: "print",
     value: function print(options) {
-      return stringify$2(options).replace(/(\")|(\[)|(\])|(,"__type__")/g, "").replace(/(\,)/g, ', ');
+      return stringify$2(options).replace(/(")|(\[)|(\])|(,"__type__")/g, "").replace(/(,)/g, ", ");
     }
     /**
      *  Compute the edit distance between the two given strings
@@ -21023,11 +21054,11 @@ var Node = /*#__PURE__*/function () {
    *                              {string} title  A title text, can be HTML
    *                              {anytype} group A group name or number
    *
-   * @param {Object} body               Shared state of current network instance
+   * @param {object} body               Shared state of current network instance
    * @param {Network.Images} imagelist  A list with images. Only needed when the node has an image
    * @param {Groups} grouplist          A list with groups. Needed for retrieving group options
-   * @param {Object} globalOptions      Current global node options; these serve as defaults for the node instance
-   * @param {Object} defaultOptions     Global default options for nodes; note that this is also the prototype
+   * @param {object} globalOptions      Current global node options; these serve as defaults for the node instance
+   * @param {object} defaultOptions     Global default options for nodes; note that this is also the prototype
    *                                    for parameter `globalOptions`.
    */
   function Node(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
@@ -21059,6 +21090,7 @@ var Node = /*#__PURE__*/function () {
   }
   /**
    * Attach a edge to the node
+   *
    * @param {Edge} edge
    */
 
@@ -21094,7 +21126,7 @@ var Node = /*#__PURE__*/function () {
     /**
      * Set or overwrite options for the node
      *
-     * @param {Object} options an object with options
+     * @param {object} options an object with options
      * @returns {null|boolean}
      */
 
@@ -21111,7 +21143,7 @@ var Node = /*#__PURE__*/function () {
       // This is not the only problem with current options handling.
 
 
-      if (typeof options.color !== 'undefined') {
+      if (typeof options.color !== "undefined") {
         this._localColor = options.color;
       } // basic options
 
@@ -21158,7 +21190,7 @@ var Node = /*#__PURE__*/function () {
 
       Node.parseOptions(this.options, options, true, this.globalOptions, this.grouplist);
       var pile = [options, this.options, this.defaultOptions];
-      this.chooser = choosify('node', pile);
+      this.chooser = choosify("node", pile);
 
       this._load_images();
 
@@ -21183,7 +21215,7 @@ var Node = /*#__PURE__*/function () {
   }, {
     key: "_load_images",
     value: function _load_images() {
-      if (this.options.shape === 'circularImage' || this.options.shape === 'image') {
+      if (this.options.shape === "circularImage" || this.options.shape === "image") {
         if (this.options.image === undefined) {
           throw new Error("Option image must be defined for node type '" + this.options.shape + "'");
         }
@@ -21197,7 +21229,7 @@ var Node = /*#__PURE__*/function () {
         throw new Error("Internal Error: No images provided");
       }
 
-      if (typeof this.options.image === 'string') {
+      if (typeof this.options.image === "string") {
         this.imageObj = this.imagelist.load(this.options.image, this.options.brokenImage, this.id);
       } else {
         if (this.options.image.unselected === undefined) {
@@ -21216,7 +21248,7 @@ var Node = /*#__PURE__*/function () {
     /**
      * Check that opacity is only between 0 and 1
      *
-     * @param {Number} opacity
+     * @param {number} opacity
      * @returns {boolean}
      */
 
@@ -21255,7 +21287,7 @@ var Node = /*#__PURE__*/function () {
             values.borderColor = this.options.color.hover.border;
             values.shadow = this.options.shadow.enabled;
           }
-        } else if (typeof this.chooser === 'function') {
+        } else if (typeof this.chooser === "function") {
           this.chooser(values, this.options.id, this.selected, this.hover);
 
           if (values.shadow === false) {
@@ -21279,14 +21311,14 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
     key: "updateLabelModule",
     value: function updateLabelModule(options) {
       if (this.options.label === undefined || this.options.label === null) {
-        this.options.label = '';
+        this.options.label = "";
       }
 
       Node.updateGroupOptions(this.options, _objectSpread$3(_objectSpread$3({}, options), {}, {
@@ -21328,67 +21360,67 @@ var Node = /*#__PURE__*/function () {
       } else {
         // choose draw method depending on the shape
         switch (this.options.shape) {
-          case 'box':
+          case "box":
             this.shape = new Box(this.options, this.body, this.labelModule);
             break;
 
-          case 'circle':
+          case "circle":
             this.shape = new Circle(this.options, this.body, this.labelModule);
             break;
 
-          case 'circularImage':
+          case "circularImage":
             this.shape = new CircularImage(this.options, this.body, this.labelModule, this.imageObj, this.imageObjAlt);
             break;
 
-          case 'custom':
+          case "custom":
             this.shape = new CustomShape(this.options, this.body, this.labelModule, this.options.ctxRenderer);
             break;
 
-          case 'database':
+          case "database":
             this.shape = new Database(this.options, this.body, this.labelModule);
             break;
 
-          case 'diamond':
+          case "diamond":
             this.shape = new Diamond(this.options, this.body, this.labelModule);
             break;
 
-          case 'dot':
+          case "dot":
             this.shape = new Dot(this.options, this.body, this.labelModule);
             break;
 
-          case 'ellipse':
+          case "ellipse":
             this.shape = new Ellipse(this.options, this.body, this.labelModule);
             break;
 
-          case 'icon':
+          case "icon":
             this.shape = new Icon(this.options, this.body, this.labelModule);
             break;
 
-          case 'image':
+          case "image":
             this.shape = new Image$1(this.options, this.body, this.labelModule, this.imageObj, this.imageObjAlt);
             break;
 
-          case 'square':
+          case "square":
             this.shape = new Square(this.options, this.body, this.labelModule);
             break;
 
-          case 'hexagon':
+          case "hexagon":
             this.shape = new Hexagon(this.options, this.body, this.labelModule);
             break;
 
-          case 'star':
+          case "star":
             this.shape = new Star(this.options, this.body, this.labelModule);
             break;
 
-          case 'text':
+          case "text":
             this.shape = new Text(this.options, this.body, this.labelModule);
             break;
 
-          case 'triangle':
+          case "triangle":
             this.shape = new Triangle(this.options, this.body, this.labelModule);
             break;
 
-          case 'triangleDown':
+          case "triangleDown":
             this.shape = new TriangleDown(this.options, this.body, this.labelModule);
             break;
 
@@ -21431,7 +21463,8 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * get the title of this node.
-     * @return {string} title    The title of the node, or undefined when no title
+     *
+     * @returns {string} title    The title of the node, or undefined when no title
      *                           has been set.
      */
 
@@ -21442,6 +21475,7 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * Calculate the distance to the border of the Node
+     *
      * @param {CanvasRenderingContext2D}   ctx
      * @param {number} angle        Angle in radians
      * @returns {number} distance   Distance to the border in pixels
@@ -21454,7 +21488,8 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * Check if this node has a fixed x and y position
-     * @return {boolean}      true if fixed, false if not
+     *
+     * @returns {boolean}      true if fixed, false if not
      */
 
   }, {
@@ -21464,7 +21499,8 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * check if this node is selecte
-     * @return {boolean} selected   True if node is selected, else false
+     *
+     * @returns {boolean} selected   True if node is selected, else false
      */
 
   }, {
@@ -21474,7 +21510,8 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * Retrieve the value of the node. Can be undefined
-     * @return {number} value
+     *
+     * @returns {number} value
      */
 
   }, {
@@ -21485,7 +21522,7 @@ var Node = /*#__PURE__*/function () {
     /**
      * Get the current dimensions of the label
      *
-     * @return {rect}
+     * @returns {rect}
      */
 
   }, {
@@ -21496,6 +21533,7 @@ var Node = /*#__PURE__*/function () {
     /**
      * Adjust the value range of the node. The node will adjust it's size
      * based on its value.
+     *
      * @param {number} min
      * @param {number} max
      * @param {number} total
@@ -21524,9 +21562,10 @@ var Node = /*#__PURE__*/function () {
     /**
      * Draw this node in the given canvas
      * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+     *
      * @param {CanvasRenderingContext2D}   ctx
      *
-     * @returns {Object} Callbacks to draw later on higher layers.
+     * @returns {object} Callbacks to draw later on higher layers.
      */
 
   }, {
@@ -21537,6 +21576,7 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * Update the bounding box of the shape
+     *
      * @param {CanvasRenderingContext2D}   ctx
      */
 
@@ -21548,6 +21588,7 @@ var Node = /*#__PURE__*/function () {
     /**
      * Recalculate the size of this node in the given canvas
      * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+     *
      * @param {CanvasRenderingContext2D}   ctx
      */
 
@@ -21589,8 +21630,9 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * Check if this object is overlapping with the provided object
-     * @param {Object} obj   an object with parameters left, top, right, bottom
-     * @return {boolean}     True if location is located on node
+     *
+     * @param {object} obj   an object with parameters left, top, right, bottom
+     * @returns {boolean}     True if location is located on node
      */
 
   }, {
@@ -21600,8 +21642,9 @@ var Node = /*#__PURE__*/function () {
     }
     /**
      * Check if this object is overlapping with the provided object
-     * @param {Object} obj   an object with parameters left, top, right, bottom
-     * @return {boolean}     True if location is located on node
+     *
+     * @param {object} obj   an object with parameters left, top, right, bottom
+     * @returns {boolean}     True if location is located on node
      */
 
   }, {
@@ -21610,14 +21653,14 @@ var Node = /*#__PURE__*/function () {
       return this.shape.boundingBox.left < obj.right && this.shape.boundingBox.right > obj.left && this.shape.boundingBox.top < obj.bottom && this.shape.boundingBox.bottom > obj.top;
     }
     /**
-    * Check valid values for mass
-    *
-    * The mass may not be negative or zero. If it is, reset to 1
-    *
-    * @param {object} options
-    * @param {Node.id} id
+     * Check valid values for mass
+     *
+     * The mass may not be negative or zero. If it is, reset to 1
+     *
+     * @param {object} options
+     * @param {Node.id} id
      * @static
-    */
+     */
 
   }], [{
     key: "checkOpacity",
@@ -21627,14 +21670,14 @@ var Node = /*#__PURE__*/function () {
     /**
      * Check that origin is 'center' or 'top-left'
      *
-     * @param {String} origin
+     * @param {string} origin
      * @returns {boolean}
      */
 
   }, {
     key: "checkCoordinateOrigin",
     value: function checkCoordinateOrigin(origin) {
-      return origin === undefined || origin === 'center' || origin === 'top-left';
+      return origin === undefined || origin === "center" || origin === "top-left";
     }
     /**
      * Copy group option values into the node options.
@@ -21644,9 +21687,9 @@ var Node = /*#__PURE__*/function () {
      *
      * This method must also be called also if the global node options have changed and the group options did not.
      *
-     * @param {Object} parentOptions
-     * @param {Object} newOptions  new values for the options, currently only passed in for check
-     * @param {Object} groupList
+     * @param {object} parentOptions
+     * @param {object} newOptions  new values for the options, currently only passed in for check
+     * @param {object} groupList
      */
 
   }, {
@@ -21662,7 +21705,7 @@ var Node = /*#__PURE__*/function () {
         throw new Error("updateGroupOptions: group values in options don't match.");
       }
 
-      var hasGroup = typeof group === 'number' || typeof group === 'string' && group != '';
+      var hasGroup = typeof group === "number" || typeof group === "string" && group != "";
       if (!hasGroup) return; // current node has no group, no need to merge
 
       var groupObj = groupList.get(group);
@@ -21680,7 +21723,7 @@ var Node = /*#__PURE__*/function () {
       }); // Always skip merging group font options into parent; these are required to be distinct for labels
 
 
-      skipProperties.push('font');
+      skipProperties.push("font");
       selectiveNotDeepExtend(skipProperties, parentOptions, groupObj); // the color object needs to be completely defined.
       // Since groups can partially overwrite the colors, we parse it again, just in case.
 
@@ -21690,11 +21733,11 @@ var Node = /*#__PURE__*/function () {
      * This process all possible shorthands in the new options and makes sure that the parentOptions are fully defined.
      * Static so it can also be used by the handler.
      *
-     * @param {Object} parentOptions
-     * @param {Object} newOptions
+     * @param {object} parentOptions
+     * @param {object} newOptions
      * @param {boolean} [allowDeletion=false]
-     * @param {Object} [globalOptions={}]
-     * @param {Object} [groupList]
+     * @param {object} [globalOptions={}]
+     * @param {object} [groupList]
      * @static
      */
 
@@ -21704,7 +21747,7 @@ var Node = /*#__PURE__*/function () {
       var allowDeletion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
       var groupList = arguments.length > 4 ? arguments[4] : undefined;
-      var fields = ['color', 'fixed', 'shadow'];
+      var fields = ["color", "fixed", "shadow"];
       selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
       Node.checkMass(newOptions);
 
@@ -21727,7 +21770,7 @@ var Node = /*#__PURE__*/function () {
       } // merge the shadow options into the parent.
 
 
-      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions); // individual shape newOptions
+      mergeOptions(parentOptions, newOptions, "shadow", globalOptions); // individual shape newOptions
 
       if (newOptions.color !== undefined && newOptions.color !== null) {
         var parsedColor = parseColor(newOptions.color);
@@ -21738,15 +21781,15 @@ var Node = /*#__PURE__*/function () {
 
 
       if (newOptions.fixed !== undefined && newOptions.fixed !== null) {
-        if (typeof newOptions.fixed === 'boolean') {
+        if (typeof newOptions.fixed === "boolean") {
           parentOptions.fixed.x = newOptions.fixed;
           parentOptions.fixed.y = newOptions.fixed;
         } else {
-          if (newOptions.fixed.x !== undefined && typeof newOptions.fixed.x === 'boolean') {
+          if (newOptions.fixed.x !== undefined && typeof newOptions.fixed.x === "boolean") {
             parentOptions.fixed.x = newOptions.fixed.x;
           }
 
-          if (newOptions.fixed.y !== undefined && typeof newOptions.fixed.y === 'boolean') {
+          if (newOptions.fixed.y !== undefined && typeof newOptions.fixed.y === "boolean") {
             parentOptions.fixed.y = newOptions.fixed.y;
           }
         }
@@ -21759,20 +21802,20 @@ var Node = /*#__PURE__*/function () {
       Node.updateGroupOptions(parentOptions, newOptions, groupList); // handle the scaling options, specifically the label part
 
       if (newOptions.scaling !== undefined) {
-        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+        mergeOptions(parentOptions.scaling, newOptions.scaling, "label", globalOptions.scaling);
       }
     }
   }, {
     key: "checkMass",
     value: function checkMass(options, id) {
       if (options.mass !== undefined && options.mass <= 0) {
-        var strId = '';
+        var strId = "";
 
         if (id !== undefined) {
-          strId = ' in node id: ' + id;
+          strId = " in node id: " + id;
         }
 
-        console.log('%cNegative or zero mass disallowed' + strId + ', setting mass to 1.', printStyle);
+        console.error("%cNegative or zero mass disallowed" + strId + ", setting mass to 1.", printStyle);
         options.mass = 1;
       }
     }
@@ -21792,7 +21835,7 @@ function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) le
 
 var NodesHandler = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Images} images
    * @param {Array.<Group>} groups
    * @param {LayoutEngine} layoutEngine
@@ -21825,15 +21868,15 @@ var NodesHandler = /*#__PURE__*/function () {
       borderWidthSelected: 2,
       brokenImage: undefined,
       color: {
-        border: '#2B7CE9',
-        background: '#97C2FC',
+        border: "#2B7CE9",
+        background: "#97C2FC",
         highlight: {
-          border: '#2B7CE9',
-          background: '#D2E5FF'
+          border: "#2B7CE9",
+          background: "#D2E5FF"
         },
         hover: {
-          border: '#2B7CE9',
-          background: '#D2E5FF'
+          border: "#2B7CE9",
+          background: "#D2E5FF"
         }
       },
       opacity: undefined,
@@ -21843,44 +21886,44 @@ var NodesHandler = /*#__PURE__*/function () {
         y: false
       },
       font: {
-        color: '#343434',
+        color: "#343434",
         size: 14,
         // px
-        face: 'arial',
-        background: 'none',
+        face: "arial",
+        background: "none",
         strokeWidth: 0,
         // px
-        strokeColor: '#ffffff',
-        align: 'center',
+        strokeColor: "#ffffff",
+        align: "center",
         vadjust: 0,
         multi: false,
         bold: {
-          mod: 'bold'
+          mod: "bold"
         },
         boldital: {
-          mod: 'bold italic'
+          mod: "bold italic"
         },
         ital: {
-          mod: 'italic'
+          mod: "italic"
         },
         mono: {
-          mod: '',
+          mod: "",
           size: 15,
           // px
-          face: 'monospace',
+          face: "monospace",
           vadjust: 2
         }
       },
       group: undefined,
       hidden: false,
       icon: {
-        face: 'FontAwesome',
+        face: "FontAwesome",
         //'FontAwesome',
         code: undefined,
         //'\uf007',
         size: 50,
         //50,
-        color: '#2B7CE9' //'#aa00ff'
+        color: "#2B7CE9" //'#aa00ff'
 
       },
       image: undefined,
@@ -21924,12 +21967,12 @@ var NodesHandler = /*#__PURE__*/function () {
       },
       shadow: {
         enabled: false,
-        color: 'rgba(0,0,0,0.5)',
+        color: "rgba(0,0,0,0.5)",
         size: 10,
         x: 5,
         y: 5
       },
-      shape: 'ellipse',
+      shape: "ellipse",
       shapeProperties: {
         borderDashes: false,
         // only for borders
@@ -21941,7 +21984,7 @@ var NodesHandler = /*#__PURE__*/function () {
         // only for image and circularImage shapes
         useBorderWithImage: false,
         // only for image shape
-        coordinateOrigin: 'center' // only for image and circularImage shapes
+        coordinateOrigin: "center" // only for image and circularImage shapes
 
       },
       size: 25,
@@ -21952,7 +21995,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }; // Protect from idiocy
 
     if (this.defaultOptions.mass <= 0) {
-      throw 'Internal error: mass in defaultOptions of NodesHandler may not be zero or negative';
+      throw "Internal error: mass in defaultOptions of NodesHandler may not be zero or negative";
     }
 
     this.options = bridgeObject(this.defaultOptions);
@@ -21971,9 +22014,9 @@ var NodesHandler = /*#__PURE__*/function () {
           _this2 = this;
 
       // refresh the nodes. Used when reverting from hierarchical layout
-      this.body.emitter.on('refreshNodes', bind$2(_context2 = this.refresh).call(_context2, this));
-      this.body.emitter.on('refresh', bind$2(_context3 = this.refresh).call(_context3, this));
-      this.body.emitter.on('destroy', function () {
+      this.body.emitter.on("refreshNodes", bind$2(_context2 = this.refresh).call(_context2, this));
+      this.body.emitter.on("refresh", bind$2(_context3 = this.refresh).call(_context3, this));
+      this.body.emitter.on("destroy", function () {
         forEach$3(_this2.nodesListeners, function (callback, event) {
           if (_this2.body.data.nodes) _this2.body.data.nodes.off(event, callback);
         });
@@ -21986,7 +22029,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
@@ -22035,12 +22078,13 @@ var NodesHandler = /*#__PURE__*/function () {
 
 
         if (options.hidden !== undefined || options.physics !== undefined) {
-          this.body.emitter.emit('_dataChanged');
+          this.body.emitter.emit("_dataChanged");
         }
       }
     }
     /**
      * Set a data set with nodes for the network
+     *
      * @param {Array | DataSet | DataView} nodes         The data containing the nodes.
      * @param {boolean} [doNotEmit=false]
      * @private
@@ -22060,7 +22104,7 @@ var NodesHandler = /*#__PURE__*/function () {
       } else if (!nodes) {
         this.body.data.nodes = new DataSet();
       } else {
-        throw new TypeError('Array or DataSet expected');
+        throw new TypeError("Array or DataSet expected");
       }
 
       if (oldNodesData) {
@@ -22090,6 +22134,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Add nodes
+     *
      * @param {number[] | string[]} ids
      * @param {boolean} [doNotEmit=false]
      * @private
@@ -22118,6 +22163,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Update existing nodes, or create them when not yet existing
+     *
      * @param {number[] | string[]} ids id's of changed nodes
      * @param {Array} changedData array with changed data
      * @param {Array|undefined} oldData optional; array with previous data
@@ -22166,6 +22212,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Remove existing nodes. If nodes do not exist, the method will just ignore it.
+     *
      * @param {number[] | string[]} ids
      * @private
      */
@@ -22184,7 +22231,8 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * create a node
-     * @param {Object} properties
+     *
+     * @param {object} properties
      * @param {class} [constructorClass=Node.default]
      * @returns {*}
      */
@@ -22226,7 +22274,8 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Returns the positions of the nodes.
-     * @param {Array.<Node.id>|String} [ids]  --> optional, can be array of nodeIds, can be string
+     *
+     * @param {Array.<Node.id> | string} [ids]  --> optional, can be array of nodeIds, can be string
      * @returns {{}}
      */
 
@@ -22332,6 +22381,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * get the bounding box of a node.
+     *
      * @param {Node.id} nodeId
      * @returns {j|*}
      */
@@ -22345,6 +22395,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Get the Ids of nodes connected to this node.
+     *
      * @param {Node.id} nodeId
      * @param {'to'|'from'|undefined} direction values 'from' and 'to' select respectively parent and child nodes only.
      *                                          Any other value returns both parent and child nodes.
@@ -22363,13 +22414,13 @@ var NodesHandler = /*#__PURE__*/function () {
         for (var i = 0; i < node.edges.length; i++) {
           var edge = node.edges[i];
 
-          if (direction !== 'to' && edge.toId == node.id) {
+          if (direction !== "to" && edge.toId == node.id) {
             // these are double equals since ids can be numeric or string
             if (nodeObj[edge.fromId] === undefined) {
               nodeList.push(edge.fromId);
               nodeObj[edge.fromId] = true;
             }
-          } else if (direction !== 'from' && edge.fromId == node.id) {
+          } else if (direction !== "from" && edge.fromId == node.id) {
             // these are double equals since ids can be numeric or string
             if (nodeObj[edge.toId] === undefined) {
               nodeList.push(edge.toId);
@@ -22383,6 +22434,7 @@ var NodesHandler = /*#__PURE__*/function () {
     }
     /**
      * Get the ids of the edges connected to this node.
+     *
      * @param {Node.id} nodeId
      * @returns {*}
      */
@@ -22399,7 +22451,7 @@ var NodesHandler = /*#__PURE__*/function () {
           edgeList.push(node.edges[i].id);
         }
       } else {
-        console.log("NodeId provided for getConnectedEdges does not exist. Provided: ", nodeId);
+        console.error("NodeId provided for getConnectedEdges does not exist. Provided: ", nodeId);
       }
 
       return edgeList;
@@ -22425,7 +22477,7 @@ var NodesHandler = /*#__PURE__*/function () {
           _this4.body.emitter.emit("startSimulation");
         }, 0);
       } else {
-        console.log("Node id supplied to moveNode does not exist. Provided: ", nodeId);
+        console.error("Node id supplied to moveNode does not exist. Provided: ", nodeId);
       }
     }
   }]);
@@ -23248,7 +23300,7 @@ var EdgeBase = /*#__PURE__*/function () {
     this.fromPoint = this.from;
     this.toPoint = this.to;
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(EdgeBase, [{
@@ -23257,7 +23309,7 @@ var EdgeBase = /*#__PURE__*/function () {
       this.from = this._body.nodes[this.options.from];
       this.to = this._body.nodes[this.options.to];
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "cleanup",
@@ -23278,7 +23330,7 @@ var EdgeBase = /*#__PURE__*/function () {
       this.to = this._body.nodes[this.options.to];
       this.id = this.options.id;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "drawLine",
@@ -23400,7 +23452,7 @@ var EdgeBase = /*#__PURE__*/function () {
         return this._findBorderPositionCircle(node, ctx, options);
       }
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "findBorderPositions",
@@ -23669,7 +23721,7 @@ var EdgeBase = /*#__PURE__*/function () {
       this.disableShadow(ctx, values);
     }
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
@@ -23730,7 +23782,7 @@ var EdgeBase = /*#__PURE__*/function () {
 
       return Math.sqrt(dx * dx + dy * dy);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getArrowData",
@@ -23853,7 +23905,7 @@ var EdgeBase = /*#__PURE__*/function () {
         type: type
       };
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "drawArrowHead",
@@ -24147,7 +24199,7 @@ var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
       ctx.stroke();
       this.disableShadow(ctx, values);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getViaNode",
@@ -24167,7 +24219,7 @@ function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !
  * curves in paths between nodes. The Dynamic piece refers to how the curve
  * reacts to physics changes.
  *
- * @extends BezierEdgeBase
+ * @augments BezierEdgeBase
  */
 
 var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
@@ -24200,7 +24252,7 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
 
     return _this;
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(BezierEdgeDynamic, [{
@@ -24231,7 +24283,7 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
         this.positionBezierNode();
       }
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "connect",
@@ -24256,7 +24308,7 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
         }
       }
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "cleanup",
@@ -24316,28 +24368,28 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
         this.via.y = 0;
       }
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_line",
     value: function _line(ctx, values, viaNode) {
       this._bezierCurve(ctx, values, viaNode);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_getViaCoordinates",
     value: function _getViaCoordinates() {
       return this.via;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return this.via;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getPoint",
@@ -24363,14 +24415,14 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
         };
       }
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_findBorderPosition",
     value: function _findBorderPosition(nearNode, ctx) {
       return this._findBorderPositionBezier(nearNode, ctx, this.via);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -24407,7 +24459,7 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
 
     return _super.call(this, options, body, labelModule);
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(BezierEdgeStatic, [{
@@ -24415,7 +24467,7 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
     value: function _line(ctx, values, viaNode) {
       this._bezierCurve(ctx, values, viaNode);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getViaNode",
@@ -24591,7 +24643,7 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
         };
       }
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_findBorderPosition",
@@ -24599,7 +24651,7 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
       var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       return this._findBorderPositionBezier(nearNode, ctx, options.via);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -24608,7 +24660,7 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
       // x3,y3 is the point
       return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getPoint",
@@ -24634,7 +24686,7 @@ function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
  * smooth gradual curves in paths between nodes.
  *
- * @extends BezierEdgeBase
+ * @augments BezierEdgeBase
  */
 
 var CubicBezierEdgeBase = /*#__PURE__*/function (_BezierEdgeBase) {
@@ -24733,7 +24785,7 @@ var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
 
     return _super.call(this, options, body, labelModule);
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(CubicBezierEdge, [{
@@ -24782,21 +24834,21 @@ var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
         y: y2
       }];
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return this._getViaCoordinates();
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_findBorderPosition",
     value: function _findBorderPosition(nearNode, ctx) {
       return this._findBorderPositionBezier(nearNode, ctx);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -24809,7 +24861,7 @@ var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
       // x3,y3 is the point
       return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getPoint",
@@ -24857,7 +24909,7 @@ var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
 
     return _super.call(this, options, body, labelModule);
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(StraightEdge, [{
@@ -24872,14 +24924,14 @@ var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
       ctx.stroke();
       this.disableShadow(ctx, values);
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getViaNode",
     value: function getViaNode() {
       return undefined;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getPoint",
@@ -24889,7 +24941,7 @@ var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
         y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
       };
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_findBorderPosition",
@@ -24914,7 +24966,7 @@ var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
         t: 0
       };
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "_getDistanceToEdge",
@@ -24933,11 +24985,11 @@ var StraightEdge = /*#__PURE__*/function (_EdgeBase) {
 
 var Edge = /*#__PURE__*/function () {
   /**
-   * @param {Object} options        values specific to this edge, must contain at least 'from' and 'to'
-   * @param {Object} body           shared state from Network instance
+   * @param {object} options        values specific to this edge, must contain at least 'from' and 'to'
+   * @param {object} body           shared state from Network instance
    * @param {Network.Images} imagelist  A list with images. Only needed when the edge has image arrows.
-   * @param {Object} globalOptions  options from the EdgesHandler instance
-   * @param {Object} defaultOptions default options from the EdgeHandler instance. Value and reference are constant
+   * @param {object} globalOptions  options from the EdgesHandler instance
+   * @param {object} defaultOptions default options from the EdgeHandler instance. Value and reference are constant
    */
   function Edge(options, body, imagelist, globalOptions, defaultOptions) {
     classCallCheck(this, Edge);
@@ -24975,7 +25027,8 @@ var Edge = /*#__PURE__*/function () {
   }
   /**
    * Set or overwrite options for the edge
-   * @param {Object} options  an object with options
+   *
+   * @param {object} options  an object with options
    * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
    */
 
@@ -25012,7 +25065,7 @@ var Edge = /*#__PURE__*/function () {
       }
 
       var pile = [options, this.options, this.defaultOptions];
-      this.chooser = choosify('edge', pile); // update label Module
+      this.chooser = choosify("edge", pile); // update label Module
 
       this.updateLabelModule(options); // Update edge type, this if changed affects the layout.
 
@@ -25026,10 +25079,10 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} parentOptions
-     * @param {Object} newOptions
+     * @param {object} parentOptions
+     * @param {object} newOptions
      * @param {boolean} [allowDeletion=false]
-     * @param {Object} [globalOptions={}]
+     * @param {object} [globalOptions={}]
      * @param {boolean} [copyFromGlobals=false]
      */
 
@@ -25088,9 +25141,9 @@ var Edge = /*#__PURE__*/function () {
           if (this.selected) {
             var selectedWidth = this.options.selectionWidth;
 
-            if (typeof selectedWidth === 'function') {
+            if (typeof selectedWidth === "function") {
               values.width = selectedWidth(values.width);
-            } else if (typeof selectedWidth === 'number') {
+            } else if (typeof selectedWidth === "number") {
               values.width += selectedWidth;
             }
 
@@ -25100,9 +25153,9 @@ var Edge = /*#__PURE__*/function () {
           } else if (this.hover) {
             var hoverWidth = this.options.hoverWidth;
 
-            if (typeof hoverWidth === 'function') {
+            if (typeof hoverWidth === "function") {
               values.width = hoverWidth(values.width);
-            } else if (typeof hoverWidth === 'number') {
+            } else if (typeof hoverWidth === "number") {
               values.width += hoverWidth;
             }
 
@@ -25110,7 +25163,7 @@ var Edge = /*#__PURE__*/function () {
             values.color = this.options.color.hover;
             values.shadow = this.options.shadow.enabled;
           }
-        } else if (typeof this.chooser === 'function') {
+        } else if (typeof this.chooser === "function") {
           this.chooser(values, this.options.id, this.selected, this.hover);
 
           if (values.color !== undefined) {
@@ -25133,7 +25186,7 @@ var Edge = /*#__PURE__*/function () {
     /**
      * update the options in the label module
      *
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
@@ -25149,6 +25202,7 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * update the edge type, set the options
+     *
      * @returns {boolean}
      */
 
@@ -25160,7 +25214,7 @@ var Edge = /*#__PURE__*/function () {
       var changeInType = true;
 
       if (this.edgeType !== undefined) {
-        if (this.edgeType instanceof BezierEdgeDynamic && smooth.enabled === true && smooth.type === 'dynamic' || this.edgeType instanceof CubicBezierEdge && smooth.enabled === true && smooth.type === 'cubicBezier' || this.edgeType instanceof BezierEdgeStatic && smooth.enabled === true && smooth.type !== 'dynamic' && smooth.type !== 'cubicBezier' || this.edgeType instanceof StraightEdge && smooth.type.enabled === false) {
+        if (this.edgeType instanceof BezierEdgeDynamic && smooth.enabled === true && smooth.type === "dynamic" || this.edgeType instanceof CubicBezierEdge && smooth.enabled === true && smooth.type === "cubicBezier" || this.edgeType instanceof BezierEdgeStatic && smooth.enabled === true && smooth.type !== "dynamic" && smooth.type !== "cubicBezier" || this.edgeType instanceof StraightEdge && smooth.type.enabled === false) {
           changeInType = false;
         }
 
@@ -25171,10 +25225,10 @@ var Edge = /*#__PURE__*/function () {
 
       if (changeInType === true) {
         if (smooth.enabled === true) {
-          if (smooth.type === 'dynamic') {
+          if (smooth.type === "dynamic") {
             dataChanged = true;
             this.edgeType = new BezierEdgeDynamic(this.options, this.body, this.labelModule);
-          } else if (smooth.type === 'cubicBezier') {
+          } else if (smooth.type === "cubicBezier") {
             this.edgeType = new CubicBezierEdge(this.options, this.body, this.labelModule);
           } else {
             this.edgeType = new BezierEdgeStatic(this.options, this.body, this.labelModule);
@@ -25237,7 +25291,8 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * get the title of this edge.
-     * @return {string} title    The title of the edge, or undefined when no title
+     *
+     * @returns {string} title    The title of the edge, or undefined when no title
      *                           has been set.
      */
 
@@ -25248,7 +25303,8 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * check if this node is selecte
-     * @return {boolean} selected   True if node is selected, else false
+     *
+     * @returns {boolean} selected   True if node is selected, else false
      */
 
   }, {
@@ -25258,7 +25314,8 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * Retrieve the value of the edge. Can be undefined
-     * @return {number} value
+     *
+     * @returns {number} value
      */
 
   }, {
@@ -25269,6 +25326,7 @@ var Edge = /*#__PURE__*/function () {
     /**
      * Adjust the value range of the edge. The edge will adjust it's width
      * based on its value.
+     *
      * @param {number} min
      * @param {number} max
      * @param {number} total
@@ -25304,13 +25362,13 @@ var Edge = /*#__PURE__*/function () {
   }, {
     key: "_setInteractionWidths",
     value: function _setInteractionWidths() {
-      if (typeof this.options.hoverWidth === 'function') {
+      if (typeof this.options.hoverWidth === "function") {
         this.edgeType.hoverWidth = this.options.hoverWidth(this.options.width);
       } else {
         this.edgeType.hoverWidth = this.options.hoverWidth + this.options.width;
       }
 
-      if (typeof this.options.selectionWidth === 'function') {
+      if (typeof this.options.selectionWidth === "function") {
         this.edgeType.selectionWidth = this.options.selectionWidth(this.options.width);
       } else {
         this.edgeType.selectionWidth = this.options.selectionWidth + this.options.width;
@@ -25320,6 +25378,7 @@ var Edge = /*#__PURE__*/function () {
      * Redraw a edge
      * Draw this edge in the given canvas
      * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+     *
      * @param {CanvasRenderingContext2D}   ctx
      */
 
@@ -25339,11 +25398,12 @@ var Edge = /*#__PURE__*/function () {
       this.drawLabel(ctx, viaNode);
     }
     /**
-    * Redraw arrows
-    * Draw this arrows in the given canvas
-    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-    * @param {CanvasRenderingContext2D}   ctx
-    */
+     * Redraw arrows
+     * Draw this arrows in the given canvas
+     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
+     *
+     * @param {CanvasRenderingContext2D}   ctx
+     */
 
   }, {
     key: "drawArrows",
@@ -25459,12 +25519,12 @@ var Edge = /*#__PURE__*/function () {
 
           this.labelModule.draw(ctx, point.x, point.y, this.selected, this.hover);
           /*
-                  // Useful debug code: draw a border around the label
-                  // This should **not** be enabled in production!
-                  var size = this.labelModule.getSize();; // ;; intentional so lint catches it
-                  ctx.strokeStyle = "#ff0000";
-                  ctx.strokeRect(size.left, size.top, size.width, size.height);
-                  // End  debug code
+          // Useful debug code: draw a border around the label
+          // This should **not** be enabled in production!
+          var size = this.labelModule.getSize();; // ;; intentional so lint catches it
+          ctx.strokeStyle = "#ff0000";
+          ctx.strokeRect(size.left, size.top, size.width, size.height);
+          // End  debug code
           */
 
           ctx.restore();
@@ -25517,8 +25577,9 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * Check if this object is overlapping with the provided object
-     * @param {Object} obj   an object with parameters left, top
-     * @return {boolean}     True if location is located on the edge
+     *
+     * @param {object} obj   an object with parameters left, top
+     * @returns {boolean}     True if location is located on the edge
      */
 
   }, {
@@ -25584,11 +25645,12 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * Get a point on a circle
+     *
      * @param {number} x
      * @param {number} y
      * @param {number} radius
      * @param {number} angle
-     * @return {Object} point
+     * @returns {object} point
      * @private
      */
 
@@ -25620,6 +25682,7 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * cleans all required things on delete
+     *
      * @returns {*}
      */
 
@@ -25641,6 +25704,7 @@ var Edge = /*#__PURE__*/function () {
     }
     /**
      * Check if both connecting nodes exist
+     *
      * @returns {boolean}
      */
 
@@ -25655,7 +25719,7 @@ var Edge = /*#__PURE__*/function () {
       var allowDeletion = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var globalOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
       var copyFromGlobals = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-      var fields = ['endPointOffset', 'arrowStrikethrough', 'id', 'from', 'hidden', 'hoverWidth', 'labelHighlightBold', 'length', 'line', 'opacity', 'physics', 'scaling', 'selectionWidth', 'selfReferenceSize', 'selfReference', 'to', 'title', 'value', 'width', 'font', 'chosen', 'widthConstraint']; // only deep extend the items in the field array. These do not have shorthand.
+      var fields = ["endPointOffset", "arrowStrikethrough", "id", "from", "hidden", "hoverWidth", "labelHighlightBold", "length", "line", "opacity", "physics", "scaling", "selectionWidth", "selfReferenceSize", "selfReference", "to", "title", "value", "width", "font", "chosen", "widthConstraint"]; // only deep extend the items in the field array. These do not have shorthand.
 
       selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only use endPointOffset values (from and to) if it's valid values
 
@@ -25664,7 +25728,7 @@ var Edge = /*#__PURE__*/function () {
           parentOptions.endPointOffset.from = newOptions.endPointOffset.from;
         } else {
           parentOptions.endPointOffset.from = globalOptions.endPointOffset.from !== undefined ? globalOptions.endPointOffset.from : 0;
-          console.error('endPointOffset.from is not a valid number');
+          console.error("endPointOffset.from is not a valid number");
         }
       }
 
@@ -25673,7 +25737,7 @@ var Edge = /*#__PURE__*/function () {
           parentOptions.endPointOffset.to = newOptions.endPointOffset.to;
         } else {
           parentOptions.endPointOffset.to = globalOptions.endPointOffset.to !== undefined ? globalOptions.endPointOffset.to : 0;
-          console.error('endPointOffset.to is not a valid number');
+          console.error("endPointOffset.to is not a valid number");
         }
       } // Only copy label if it's a legal value.
 
@@ -25684,9 +25748,9 @@ var Edge = /*#__PURE__*/function () {
         parentOptions.label = undefined;
       }
 
-      mergeOptions(parentOptions, newOptions, 'smooth', globalOptions);
-      mergeOptions(parentOptions, newOptions, 'shadow', globalOptions);
-      mergeOptions(parentOptions, newOptions, 'background', globalOptions);
+      mergeOptions(parentOptions, newOptions, "smooth", globalOptions);
+      mergeOptions(parentOptions, newOptions, "shadow", globalOptions);
+      mergeOptions(parentOptions, newOptions, "background", globalOptions);
 
       if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
         parentOptions.dashes = newOptions.dashes;
@@ -25704,22 +25768,22 @@ var Edge = /*#__PURE__*/function () {
           parentOptions.scaling.max = newOptions.scaling.max;
         }
 
-        mergeOptions(parentOptions.scaling, newOptions.scaling, 'label', globalOptions.scaling);
+        mergeOptions(parentOptions.scaling, newOptions.scaling, "label", globalOptions.scaling);
       } else if (allowDeletion === true && newOptions.scaling === null) {
         parentOptions.scaling = create$2(globalOptions.scaling); // this sets the pointer of the option back to the global option.
       } // handle multiple input cases for arrows
 
 
       if (newOptions.arrows !== undefined && newOptions.arrows !== null) {
-        if (typeof newOptions.arrows === 'string') {
+        if (typeof newOptions.arrows === "string") {
           var arrows = newOptions.arrows.toLowerCase();
           parentOptions.arrows.to.enabled = indexOf$3(arrows).call(arrows, "to") != -1;
           parentOptions.arrows.middle.enabled = indexOf$3(arrows).call(arrows, "middle") != -1;
           parentOptions.arrows.from.enabled = indexOf$3(arrows).call(arrows, "from") != -1;
-        } else if (_typeof_1(newOptions.arrows) === 'object') {
-          mergeOptions(parentOptions.arrows, newOptions.arrows, 'to', globalOptions.arrows);
-          mergeOptions(parentOptions.arrows, newOptions.arrows, 'middle', globalOptions.arrows);
-          mergeOptions(parentOptions.arrows, newOptions.arrows, 'from', globalOptions.arrows);
+        } else if (_typeof_1(newOptions.arrows) === "object") {
+          mergeOptions(parentOptions.arrows, newOptions.arrows, "to", globalOptions.arrows);
+          mergeOptions(parentOptions.arrows, newOptions.arrows, "middle", globalOptions.arrows);
+          mergeOptions(parentOptions.arrows, newOptions.arrows, "from", globalOptions.arrows);
         } else {
           throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + stringify$2(newOptions.arrows));
         }
@@ -25788,7 +25852,7 @@ var Edge = /*#__PURE__*/function () {
             toColor.inherit = false;
           } else {
             if (toColor.inherit === undefined) {
-              toColor.inherit = 'from'; // Set default
+              toColor.inherit = "from"; // Set default
             }
           }
         }
@@ -25801,7 +25865,7 @@ var Edge = /*#__PURE__*/function () {
       }
 
       if (Object.prototype.hasOwnProperty.call(newOptions, "selfReferenceSize")) {
-        console.log('The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}');
+        console.warn("The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}");
         parentOptions.selfReference.size = newOptions.selfReferenceSize;
       }
     }
@@ -25816,7 +25880,7 @@ var Edge = /*#__PURE__*/function () {
 
 var EdgesHandler = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Array.<Image>} images
    * @param {Array.<Group>} groups
    */
@@ -25848,18 +25912,18 @@ var EdgesHandler = /*#__PURE__*/function () {
         to: {
           enabled: false,
           scaleFactor: 1,
-          type: 'arrow'
+          type: "arrow"
         },
         // boolean / {arrowScaleFactor:1} / {enabled: false, arrowScaleFactor:1}
         middle: {
           enabled: false,
           scaleFactor: 1,
-          type: 'arrow'
+          type: "arrow"
         },
         from: {
           enabled: false,
           scaleFactor: 1,
-          type: 'arrow'
+          type: "arrow"
         }
       },
       endPointOffset: {
@@ -25868,39 +25932,39 @@ var EdgesHandler = /*#__PURE__*/function () {
       },
       arrowStrikethrough: true,
       color: {
-        color: '#848484',
-        highlight: '#848484',
-        hover: '#848484',
-        inherit: 'from',
+        color: "#848484",
+        highlight: "#848484",
+        hover: "#848484",
+        inherit: "from",
         opacity: 1.0
       },
       dashes: false,
       font: {
-        color: '#343434',
+        color: "#343434",
         size: 14,
         // px
-        face: 'arial',
-        background: 'none',
+        face: "arial",
+        background: "none",
         strokeWidth: 2,
         // px
-        strokeColor: '#ffffff',
-        align: 'horizontal',
+        strokeColor: "#ffffff",
+        align: "horizontal",
         multi: false,
         vadjust: 0,
         bold: {
-          mod: 'bold'
+          mod: "bold"
         },
         boldital: {
-          mod: 'bold italic'
+          mod: "bold italic"
         },
         ital: {
-          mod: 'italic'
+          mod: "italic"
         },
         mono: {
-          mod: '',
+          mod: "",
           size: 15,
           // px
-          face: 'courier new',
+          face: "courier new",
           vadjust: 2
         }
       },
@@ -25937,21 +26001,21 @@ var EdgesHandler = /*#__PURE__*/function () {
       },
       shadow: {
         enabled: false,
-        color: 'rgba(0,0,0,0.5)',
+        color: "rgba(0,0,0,0.5)",
         size: 10,
         x: 5,
         y: 5
       },
       background: {
         enabled: false,
-        color: 'rgba(111,111,111,1)',
+        color: "rgba(111,111,111,1)",
         size: 10,
         dashes: false
       },
       smooth: {
         enabled: true,
         type: "dynamic",
-        forceDirection: 'none',
+        forceDirection: "none",
         roundness: 0.5
       },
       title: undefined,
@@ -25977,8 +26041,8 @@ var EdgesHandler = /*#__PURE__*/function () {
       this.body.emitter.on("_forceDisableDynamicCurves", function (type) {
         var emit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-        if (type === 'dynamic') {
-          type = 'continuous';
+        if (type === "dynamic") {
+          type = "continuous";
         }
 
         var dataChanged = false;
@@ -25995,7 +26059,7 @@ var EdgesHandler = /*#__PURE__*/function () {
               var smoothOptions = edgeData.smooth;
 
               if (smoothOptions !== undefined) {
-                if (smoothOptions.enabled === true && smoothOptions.type === 'dynamic') {
+                if (smoothOptions.enabled === true && smoothOptions.type === "dynamic") {
                   if (type === undefined) {
                     edge.setOptions({
                       smooth: false
@@ -26046,7 +26110,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
@@ -26077,12 +26141,13 @@ var EdgesHandler = /*#__PURE__*/function () {
 
 
         if (options.hidden !== undefined || options.physics !== undefined || dataChanged === true) {
-          this.body.emitter.emit('_dataChanged');
+          this.body.emitter.emit("_dataChanged");
         }
       }
     }
     /**
      * Load edges by reading the data table
+     *
      * @param {Array | DataSet | DataView} edges    The data containing the edges.
      * @param {boolean} [doNotEmit=false]
      * @private
@@ -26104,7 +26169,7 @@ var EdgesHandler = /*#__PURE__*/function () {
       } else if (!edges) {
         this.body.data.edges = new DataSet();
       } else {
-        throw new TypeError('Array or DataSet expected');
+        throw new TypeError("Array or DataSet expected");
       } // TODO: is this null or undefined or false?
 
 
@@ -26128,7 +26193,7 @@ var EdgesHandler = /*#__PURE__*/function () {
         this.add(ids, true);
       }
 
-      this.body.emitter.emit('_adjustEdgesForHierarchicalLayout');
+      this.body.emitter.emit("_adjustEdgesForHierarchicalLayout");
 
       if (doNotEmit === false) {
         this.body.emitter.emit("_dataChanged");
@@ -26136,6 +26201,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      * Add edges
+     *
      * @param {number[] | string[]} ids
      * @param {boolean} [doNotEmit=false]
      * @private
@@ -26157,12 +26223,12 @@ var EdgesHandler = /*#__PURE__*/function () {
         }
 
         var data = edgesData.get(id, {
-          "showInternalIds": true
+          showInternalIds: true
         });
         edges[id] = this.create(data);
       }
 
-      this.body.emitter.emit('_adjustEdgesForHierarchicalLayout');
+      this.body.emitter.emit("_adjustEdgesForHierarchicalLayout");
 
       if (doNotEmit === false) {
         this.body.emitter.emit("_dataChanged");
@@ -26170,6 +26236,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      * Update existing edges, or create them when not yet existing
+     *
      * @param {number[] | string[]} ids
      * @private
      */
@@ -26200,7 +26267,7 @@ var EdgesHandler = /*#__PURE__*/function () {
       }
 
       if (dataChanged === true) {
-        this.body.emitter.emit('_adjustEdgesForHierarchicalLayout');
+        this.body.emitter.emit("_adjustEdgesForHierarchicalLayout");
         this.body.emitter.emit("_dataChanged");
       } else {
         this.body.emitter.emit("_dataUpdated");
@@ -26208,6 +26275,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      * Remove existing edges. Non existing ids will be ignored
+     *
      * @param {number[] | string[]} ids
      * @param {boolean} [emit=true]
      * @private
@@ -26251,7 +26319,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} properties
+     * @param {object} properties
      * @returns {Edge}
      */
 
@@ -26262,6 +26330,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      * Reconnect all edges
+     *
      * @private
      */
 
@@ -26326,6 +26395,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      * Scan for missing nodes and remove corresponding edges, if any.
+     *
      * @private
      */
 
@@ -26351,6 +26421,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     }
     /**
      * add all edges from dataset that are not in the cached state
+     *
      * @private
      */
 
@@ -26387,9 +26458,9 @@ var EdgesHandler = /*#__PURE__*/function () {
 
 var BarnesHutSolver = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function BarnesHutSolver(body, physicsBody, options) {
     classCallCheck(this, BarnesHutSolver);
@@ -26403,7 +26474,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -26447,7 +26518,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
       }
     }
     /**
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @param {Node} node
      * @private
      */
@@ -26467,7 +26538,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
      * This function traverses the barnesHutTree. It checks when it can approximate distant nodes with their center of mass.
      * If a region contains a single node, we check if it is not itself, then we apply the force.
      *
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @param {Node} node
      * @private
      */
@@ -26507,7 +26578,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
      * @param {number} dx
      * @param {number} dy
      * @param {Node} node
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @private
      */
 
@@ -26634,7 +26705,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
     /**
      * this updates the mass of a branch. this is increased by adding a node.
      *
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @param {Node} node
      * @private
      */
@@ -26656,7 +26727,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
     /**
      * determine in which branch the node will be placed.
      *
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @param {Node} node
      * @param {boolean} skipMassUpdate
      * @private
@@ -26694,7 +26765,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
     /**
      * actually place the node in a region (or branch)
      *
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @param {Node} node
      * @param {'NW'| 'NE' | 'SW' | 'SE'} region
      * @private
@@ -26741,7 +26812,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
      * this function splits a branch into 4 sub branches. If the branch contained a node, we place it in the subbranch
      * after the split is complete.
      *
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @private
      */
 
@@ -26778,7 +26849,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
      * Specifically, this inserts a single new segment.
      * It fills the children section of the parentBranch
      *
-     * @param {Object} parentBranch
+     * @param {object} parentBranch
      * @param {'NW'| 'NE' | 'SW' | 'SE'} region
      * @private
      */
@@ -26862,7 +26933,7 @@ var BarnesHutSolver = /*#__PURE__*/function () {
     /**
      * This function is for debugging purposes. It draws the branches recursively.
      *
-     * @param {Object} branch
+     * @param {object} branch
      * @param {CanvasRenderingContext2D} ctx
      * @param {string} color
      * @private
@@ -26920,9 +26991,9 @@ var BarnesHutSolver = /*#__PURE__*/function () {
 
 var RepulsionSolver = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function RepulsionSolver(body, physicsBody, options) {
     classCallCheck(this, RepulsionSolver);
@@ -26934,7 +27005,7 @@ var RepulsionSolver = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -27006,9 +27077,9 @@ var RepulsionSolver = /*#__PURE__*/function () {
  */
 var HierarchicalRepulsionSolver = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function HierarchicalRepulsionSolver(body, physicsBody, options) {
     classCallCheck(this, HierarchicalRepulsionSolver);
@@ -27019,7 +27090,7 @@ var HierarchicalRepulsionSolver = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -27091,9 +27162,9 @@ var HierarchicalRepulsionSolver = /*#__PURE__*/function () {
  */
 var SpringSolver = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function SpringSolver(body, physicsBody, options) {
     classCallCheck(this, SpringSolver);
@@ -27104,7 +27175,7 @@ var SpringSolver = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -27193,9 +27264,9 @@ var SpringSolver = /*#__PURE__*/function () {
  */
 var HierarchicalSpringSolver = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function HierarchicalSpringSolver(body, physicsBody, options) {
     classCallCheck(this, HierarchicalSpringSolver);
@@ -27206,7 +27277,7 @@ var HierarchicalSpringSolver = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -27318,9 +27389,9 @@ var HierarchicalSpringSolver = /*#__PURE__*/function () {
  */
 var CentralGravitySolver = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function CentralGravitySolver(body, physicsBody, options) {
     classCallCheck(this, CentralGravitySolver);
@@ -27331,7 +27402,7 @@ var CentralGravitySolver = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -27364,10 +27435,11 @@ var CentralGravitySolver = /*#__PURE__*/function () {
     }
     /**
      * Calculate the forces based on the distance.
+     *
      * @param {number} distance
      * @param {number} dx
      * @param {number} dy
-     * @param {Object<Node.id, vis.Node>} forces
+     * @param {object<Node.id, vis.Node>} forces
      * @param {Node} node
      * @private
      */
@@ -27388,7 +27460,7 @@ function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeRefl
 
 function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
- * @extends BarnesHutSolver
+ * @augments BarnesHutSolver
  */
 
 var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
@@ -27397,9 +27469,9 @@ var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
   var _super = _createSuper$q(ForceAtlas2BasedRepulsionSolver);
 
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function ForceAtlas2BasedRepulsionSolver(body, physicsBody, options) {
     var _this;
@@ -27417,7 +27489,7 @@ var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
    * @param {number} dx
    * @param {number} dy
    * @param {Node} node
-   * @param {Object} parentBranch
+   * @param {object} parentBranch
    * @private
    */
 
@@ -27452,7 +27524,7 @@ function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeRefl
 
 function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !construct$3) return false; if (construct$3.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(construct$3(Date, [], function () {})); return true; } catch (e) { return false; } }
 /**
- * @extends CentralGravitySolver
+ * @augments CentralGravitySolver
  */
 
 var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravitySolver) {
@@ -27461,9 +27533,9 @@ var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravit
   var _super = _createSuper$r(ForceAtlas2BasedCentralGravitySolver);
 
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {Object} options
+   * @param {object} options
    */
   function ForceAtlas2BasedCentralGravitySolver(body, physicsBody, options) {
     classCallCheck(this, ForceAtlas2BasedCentralGravitySolver);
@@ -27476,7 +27548,7 @@ var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravit
    * @param {number} distance
    * @param {number} dx
    * @param {number} dy
-   * @param {Object<Node.id, Node>} forces
+   * @param {object<Node.id, Node>} forces
    * @param {Node} node
    * @private
    */
@@ -27503,7 +27575,7 @@ var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravit
 
 var PhysicsEngine = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    */
   function PhysicsEngine(body) {
     classCallCheck(this, PhysicsEngine);
@@ -27572,7 +27644,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       maxVelocity: 50,
       minVelocity: 0.75,
       // px/s
-      solver: 'barnesHut',
+      solver: "barnesHut",
       stabilization: {
         enabled: true,
         iterations: 1000,
@@ -27605,38 +27677,38 @@ var PhysicsEngine = /*#__PURE__*/function () {
     value: function bindEventListeners() {
       var _this = this;
 
-      this.body.emitter.on('initPhysics', function () {
+      this.body.emitter.on("initPhysics", function () {
         _this.initPhysics();
       });
-      this.body.emitter.on('_layoutFailed', function () {
+      this.body.emitter.on("_layoutFailed", function () {
         _this.layoutFailed = true;
       });
-      this.body.emitter.on('resetPhysics', function () {
+      this.body.emitter.on("resetPhysics", function () {
         _this.stopSimulation();
 
         _this.ready = false;
       });
-      this.body.emitter.on('disablePhysics', function () {
+      this.body.emitter.on("disablePhysics", function () {
         _this.physicsEnabled = false;
 
         _this.stopSimulation();
       });
-      this.body.emitter.on('restorePhysics', function () {
+      this.body.emitter.on("restorePhysics", function () {
         _this.setOptions(_this.options);
 
         if (_this.ready === true) {
           _this.startSimulation();
         }
       });
-      this.body.emitter.on('startSimulation', function () {
+      this.body.emitter.on("startSimulation", function () {
         if (_this.ready === true) {
           _this.startSimulation();
         }
       });
-      this.body.emitter.on('stopSimulation', function () {
+      this.body.emitter.on("stopSimulation", function () {
         _this.stopSimulation();
       });
-      this.body.emitter.on('destroy', function () {
+      this.body.emitter.on("destroy", function () {
         _this.stopSimulation(false);
 
         _this.body.emitter.off();
@@ -27649,7 +27721,8 @@ var PhysicsEngine = /*#__PURE__*/function () {
     }
     /**
      * set the physics options
-     * @param {Object} options
+     *
+     * @param {object} options
      */
 
   }, {
@@ -27666,8 +27739,8 @@ var PhysicsEngine = /*#__PURE__*/function () {
           this.startSimulation();
         } else {
           this.physicsEnabled = true;
-          selectiveNotDeepExtend(['stabilization'], this.options, options);
-          mergeOptions(this.options, options, 'stabilization');
+          selectiveNotDeepExtend(["stabilization"], this.options, options);
+          mergeOptions(this.options, options, "stabilization");
 
           if (options.enabled === undefined) {
             this.options.enabled = true;
@@ -27681,11 +27754,11 @@ var PhysicsEngine = /*#__PURE__*/function () {
           var wind = this.options.wind;
 
           if (wind) {
-            if (typeof wind.x !== 'number' || isNan$2(wind.x)) {
+            if (typeof wind.x !== "number" || isNan$2(wind.x)) {
               wind.x = 0;
             }
 
-            if (typeof wind.y !== 'number' || isNan$2(wind.y)) {
+            if (typeof wind.y !== "number" || isNan$2(wind.y)) {
               wind.y = 0;
             }
           } // set the timestep
@@ -27706,17 +27779,17 @@ var PhysicsEngine = /*#__PURE__*/function () {
     value: function init() {
       var options;
 
-      if (this.options.solver === 'forceAtlas2Based') {
+      if (this.options.solver === "forceAtlas2Based") {
         options = this.options.forceAtlas2Based;
         this.nodesSolver = new ForceAtlas2BasedRepulsionSolver(this.body, this.physicsBody, options);
         this.edgesSolver = new SpringSolver(this.body, this.physicsBody, options);
         this.gravitySolver = new ForceAtlas2BasedCentralGravitySolver(this.body, this.physicsBody, options);
-      } else if (this.options.solver === 'repulsion') {
+      } else if (this.options.solver === "repulsion") {
         options = this.options.repulsion;
         this.nodesSolver = new RepulsionSolver(this.body, this.physicsBody, options);
         this.edgesSolver = new SpringSolver(this.body, this.physicsBody, options);
         this.gravitySolver = new CentralGravitySolver(this.body, this.physicsBody, options);
-      } else if (this.options.solver === 'hierarchicalRepulsion') {
+      } else if (this.options.solver === "hierarchicalRepulsion") {
         options = this.options.hierarchicalRepulsion;
         this.nodesSolver = new HierarchicalRepulsionSolver(this.body, this.physicsBody, options);
         this.edgesSolver = new HierarchicalSpringSolver(this.body, this.physicsBody, options);
@@ -27744,13 +27817,13 @@ var PhysicsEngine = /*#__PURE__*/function () {
         } else {
           this.stabilized = false;
           this.ready = true;
-          this.body.emitter.emit('fit', {}, this.layoutFailed); // if the layout failed, we use the approximation for the zoom
+          this.body.emitter.emit("fit", {}, this.layoutFailed); // if the layout failed, we use the approximation for the zoom
 
           this.startSimulation();
         }
       } else {
         this.ready = true;
-        this.body.emitter.emit('fit');
+        this.body.emitter.emit("fit");
       }
     }
     /**
@@ -27771,15 +27844,16 @@ var PhysicsEngine = /*#__PURE__*/function () {
           var _context;
 
           this.viewFunction = bind$2(_context = this.simulationStep).call(_context, this);
-          this.body.emitter.on('initRedraw', this.viewFunction);
-          this.body.emitter.emit('_startRendering');
+          this.body.emitter.on("initRedraw", this.viewFunction);
+          this.body.emitter.emit("_startRendering");
         }
       } else {
-        this.body.emitter.emit('_redraw');
+        this.body.emitter.emit("_redraw");
       }
     }
     /**
      * Stop the simulation, force stabilization.
+     *
      * @param {boolean} [emit=true]
      */
 
@@ -27794,11 +27868,11 @@ var PhysicsEngine = /*#__PURE__*/function () {
       }
 
       if (this.viewFunction !== undefined) {
-        this.body.emitter.off('initRedraw', this.viewFunction);
+        this.body.emitter.off("initRedraw", this.viewFunction);
         this.viewFunction = undefined;
 
         if (emit === true) {
-          this.body.emitter.emit('_stopRendering');
+          this.body.emitter.emit("_stopRendering");
         }
       }
     }
@@ -27842,7 +27916,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
 
       if (this.stabilizationIterations > 1 || this.startedStabilization === true) {
         setTimeout$2(function () {
-          _this2.body.emitter.emit('stabilized', {
+          _this2.body.emitter.emit("stabilized", {
             iterations: amountOfIterations
           });
 
@@ -27853,6 +27927,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
     }
     /**
      * Calculate the forces for one physics iteration and move the nodes.
+     *
      * @private
      */
 
@@ -27868,6 +27943,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
      * Make dynamic adjustments to the timestep, based on current state.
      *
      * Helper function for physicsTick().
+     *
      * @private
      */
 
@@ -28218,9 +28294,9 @@ var PhysicsEngine = /*#__PURE__*/function () {
 
       var iterations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.options.stabilization.iterations;
 
-      if (typeof iterations !== 'number') {
+      if (typeof iterations !== "number") {
         iterations = this.options.stabilization.iterations;
-        console.log('The stabilize method needs a numeric amount of iterations. Switching to default: ', iterations);
+        console.error("The stabilize method needs a numeric amount of iterations. Switching to default: ", iterations);
       }
 
       if (this.physicsBody.physicsNodeIndices.length === 0) {
@@ -28236,7 +28312,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
 
       this.stabilized = false; // block redraw requests
 
-      this.body.emitter.emit('_blockRedraw');
+      this.body.emitter.emit("_blockRedraw");
       this.targetIterations = iterations; // start the stabilization
 
       if (this.options.stabilization.onlyDynamicEdges === true) {
@@ -28260,12 +28336,13 @@ var PhysicsEngine = /*#__PURE__*/function () {
     key: "_startStabilizing",
     value: function _startStabilizing() {
       if (this.startedStabilization === true) return false;
-      this.body.emitter.emit('startStabilizing');
+      this.body.emitter.emit("startStabilizing");
       this.startedStabilization = true;
       return true;
     }
     /**
      * One batch of stabilization
+     *
      * @private
      */
 
@@ -28279,7 +28356,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       };
 
       var sendProgress = function sendProgress() {
-        _this4.body.emitter.emit('stabilizationProgress', {
+        _this4.body.emitter.emit("stabilizationProgress", {
           iterations: _this4.stabilizationIterations,
           total: _this4.targetIterations
         });
@@ -28308,24 +28385,25 @@ var PhysicsEngine = /*#__PURE__*/function () {
     }
     /**
      * Wrap up the stabilization, fit and emit the events.
+     *
      * @private
      */
 
   }, {
     key: "_finalizeStabilization",
     value: function _finalizeStabilization() {
-      this.body.emitter.emit('_allowRedraw');
+      this.body.emitter.emit("_allowRedraw");
 
       if (this.options.stabilization.fit === true) {
-        this.body.emitter.emit('fit');
+        this.body.emitter.emit("fit");
       }
 
       if (this.options.stabilization.onlyDynamicEdges === true) {
         this._restoreFrozenNodes();
       }
 
-      this.body.emitter.emit('stabilizationIterationsDone');
-      this.body.emitter.emit('_requestRedraw');
+      this.body.emitter.emit("stabilizationIterationsDone");
+      this.body.emitter.emit("_requestRedraw");
 
       if (this.stabilized === true) {
         this._emitStabilized();
@@ -28371,7 +28449,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
         var angle = Math.atan2(force.y, force.x);
         ctx.fillStyle = color;
         EndPoints.draw(ctx, {
-          type: 'arrow',
+          type: "arrow",
           point: point,
           angle: angle,
           length: arrowSize
@@ -28552,6 +28630,7 @@ var NetworkUtil = /*#__PURE__*/function () {
     }
     /**
      * This returns a clone of the options or options of the edge or node to be used for construction of new edges or check functions for new nodes.
+     *
      * @param {vis.Item} item
      * @param {'node'|undefined} type
      * @returns {{}}
@@ -28563,7 +28642,7 @@ var NetworkUtil = /*#__PURE__*/function () {
     value: function cloneOptions(item, type) {
       var clonedOptions = {};
 
-      if (type === undefined || type === 'node') {
+      if (type === undefined || type === "node") {
         deepExtend(clonedOptions, item.options, true);
         clonedOptions.x = item.x;
         clonedOptions.y = item.y;
@@ -28586,7 +28665,7 @@ function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !
  * A Cluster is a special Node that allows a group of Nodes positioned closely together
  * to be represented by a single Cluster Node.
  *
- * @extends Node
+ * @augments Node
  */
 
 var Cluster = /*#__PURE__*/function (_Node) {
@@ -28595,12 +28674,12 @@ var Cluster = /*#__PURE__*/function (_Node) {
   var _super = _createSuper$s(Cluster);
 
   /**
-   * @param {Object} options
-   * @param {Object} body
+   * @param {object} options
+   * @param {object} body
    * @param {Array.<HTMLImageElement>}imagelist
    * @param {Array} grouplist
-   * @param {Object} globalOptions
-   * @param {Object} defaultOptions     Global default options for nodes
+   * @param {object} globalOptions
+   * @param {object} defaultOptions     Global default options for nodes
    */
   function Cluster(options, body, imagelist, grouplist, globalOptions, defaultOptions) {
     var _this;
@@ -28630,11 +28709,11 @@ var Cluster = /*#__PURE__*/function (_Node) {
       var childCluster = this.body.nodes[childClusterId];
 
       if (this.containedNodes[childClusterId] === undefined) {
-        throw new Error('node with id: ' + childClusterId + ' not in current cluster');
+        throw new Error("node with id: " + childClusterId + " not in current cluster");
       }
 
       if (!childCluster.isCluster) {
-        throw new Error('node with id: ' + childClusterId + ' is not a cluster');
+        throw new Error("node with id: " + childClusterId + " is not a cluster");
       } // Disconnect child cluster from current cluster
 
 
@@ -28683,7 +28762,7 @@ var Cluster = /*#__PURE__*/function (_Node) {
 
 var ClusterEngine = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    */
   function ClusterEngine(body) {
     var _this = this;
@@ -28700,16 +28779,16 @@ var ClusterEngine = /*#__PURE__*/function () {
 
     assign$2(this.options, this.defaultOptions);
 
-    this.body.emitter.on('_resetData', function () {
+    this.body.emitter.on("_resetData", function () {
       _this.clusteredNodes = {};
       _this.clusteredEdges = {};
     });
   }
   /**
-  *
-  * @param {number} hubsize
-  * @param {Object} options
-  */
+   *
+   * @param {number} hubsize
+   * @param {object} options
+   */
 
 
   createClass(ClusterEngine, [{
@@ -28736,11 +28815,12 @@ var ClusterEngine = /*#__PURE__*/function () {
         this.clusterByConnection(nodesToCluster[_i], options, true);
       }
 
-      this.body.emitter.emit('_dataChanged');
+      this.body.emitter.emit("_dataChanged");
     }
     /**
      * loop over all nodes, check if they adhere to the condition and cluster if needed.
-     * @param {Object} options
+     *
+     * @param {object} options
      * @param {boolean} [refreshData=true]
      */
 
@@ -28777,8 +28857,9 @@ var ClusterEngine = /*#__PURE__*/function () {
     }
     /**
      * Cluster all nodes in the network that have only X edges
+     *
      * @param {number} edgeCount
-     * @param {Object} options
+     * @param {object} options
      * @param {boolean} [refreshData=true]
      */
 
@@ -28850,7 +28931,8 @@ var ClusterEngine = /*#__PURE__*/function () {
             if (keys$3(childNodesObj).length > 0 && keys$3(childEdgesObj).length > 0 && gatheringSuccessful === true) {
               /**
                * Search for cluster data that contains any of the node id's
-               * @returns {Boolean} true if no joinCondition, otherwise return value of joinCondition
+               *
+               * @returns {boolean} true if no joinCondition, otherwise return value of joinCondition
                */
               var findClusterData = function findClusterData() {
                 for (var n = 0; n < clusters.length; ++n) {
@@ -28904,12 +28986,13 @@ var ClusterEngine = /*#__PURE__*/function () {
       }
 
       if (refreshData === true) {
-        this.body.emitter.emit('_dataChanged');
+        this.body.emitter.emit("_dataChanged");
       }
     }
     /**
      * Cluster all nodes in the network that have only 1 edge
-     * @param {Object} options
+     *
+     * @param {object} options
      * @param {boolean} [refreshData=true]
      */
 
@@ -28921,7 +29004,8 @@ var ClusterEngine = /*#__PURE__*/function () {
     }
     /**
      * Cluster all nodes in the network that have only 2 edge
-     * @param {Object} options
+     *
+     * @param {object} options
      * @param {boolean} [refreshData=true]
      */
 
@@ -28932,11 +29016,12 @@ var ClusterEngine = /*#__PURE__*/function () {
       this.clusterByEdgeCount(2, options, refreshData);
     }
     /**
-    * suck all connected nodes of a node into the node.
-    * @param {Node.id} nodeId
-    * @param {Object} options
-    * @param {boolean} [refreshData=true]
-    */
+     * suck all connected nodes of a node into the node.
+     *
+     * @param {Node.id} nodeId
+     * @param {object} options
+     * @param {boolean} [refreshData=true]
+     */
 
   }, {
     key: "clusterByConnection",
@@ -29026,15 +29111,15 @@ var ClusterEngine = /*#__PURE__*/function () {
       this._cluster(childNodesObj, childEdgesObj, options, refreshData);
     }
     /**
-    * This function creates the edges that will be attached to the cluster
-    * It looks for edges that are connected to the nodes from the "outside' of the cluster.
-    *
-    * @param {{Node.id: vis.Node}} childNodesObj
-    * @param {{vis.Edge.id: vis.Edge}} childEdgesObj
-    * @param {Object} clusterNodeProperties
-    * @param {Object} clusterEdgeProperties
-    * @private
-    */
+     * This function creates the edges that will be attached to the cluster
+     * It looks for edges that are connected to the nodes from the "outside' of the cluster.
+     *
+     * @param {{Node.id: vis.Node}} childNodesObj
+     * @param {{vis.Edge.id: vis.Edge}} childEdgesObj
+     * @param {object} clusterNodeProperties
+     * @param {object} clusterEdgeProperties
+     * @private
+     */
 
   }, {
     key: "_createClusterEdges",
@@ -29094,6 +29179,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       var newEdges = [];
       /**
        * Find a cluster edge which matches the given created edge.
+       *
        * @param {vis.Edge} createdEdge
        * @returns {vis.Edge}
        */
@@ -29137,12 +29223,13 @@ var ClusterEngine = /*#__PURE__*/function () {
       }
     }
     /**
-    * This function checks the options that can be supplied to the different cluster functions
-    * for certain fields and inserts defaults if needed
-    * @param {Object} options
-    * @returns {*}
-    * @private
-    */
+     * This function checks the options that can be supplied to the different cluster functions
+     * for certain fields and inserts defaults if needed
+     *
+     * @param {object} options
+     * @returns {*}
+     * @private
+     */
 
   }, {
     key: "_checkOptions",
@@ -29160,13 +29247,13 @@ var ClusterEngine = /*#__PURE__*/function () {
       return options;
     }
     /**
-    *
-    * @param {Object}    childNodesObj         | object with node objects, id as keys, same as childNodes except it also contains a source node
-    * @param {Object}    childEdgesObj         | object with edge objects, id as keys
-    * @param {Array}     options               | object with {clusterNodeProperties, clusterEdgeProperties, processProperties}
-    * @param {boolean}   refreshData | when true, do not wrap up
-    * @private
-    */
+     *
+     * @param {object}    childNodesObj         | object with node objects, id as keys, same as childNodes except it also contains a source node
+     * @param {object}    childEdgesObj         | object with edge objects, id as keys
+     * @param {Array}     options               | object with {clusterNodeProperties, clusterEdgeProperties, processProperties}
+     * @param {boolean}   refreshData | when true, do not wrap up
+     * @private
+     */
 
   }, {
     key: "_cluster",
@@ -29217,7 +29304,7 @@ var ClusterEngine = /*#__PURE__*/function () {
           if (Object.prototype.hasOwnProperty.call(childEdgesObj, edgeId)) {
             // these cluster edges will be removed on creation of the cluster.
             if (edgeId.substr(0, 12) !== "clusterEdge:") {
-              var _clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], 'edge');
+              var _clonedOptions = NetworkUtil.cloneOptions(childEdgesObj[edgeId], "edge");
 
               childEdgesOptions.push(_clonedOptions);
             }
@@ -29233,13 +29320,13 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       if (clusterNodeProperties.id === undefined) {
-        clusterNodeProperties.id = 'cluster:' + v4();
+        clusterNodeProperties.id = "cluster:" + v4();
       }
 
       var clusterId = clusterNodeProperties.id;
 
       if (clusterNodeProperties.label === undefined) {
-        clusterNodeProperties.label = 'cluster';
+        clusterNodeProperties.label = "cluster";
       } // give the clusterNode a position if it does not have one.
 
 
@@ -29276,7 +29363,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       clusterNodeProperties.id = undefined; // wrap up
 
       if (refreshData === true) {
-        this.body.emitter.emit('_dataChanged');
+        this.body.emitter.emit("_dataChanged");
       }
     }
     /**
@@ -29313,10 +29400,11 @@ var ClusterEngine = /*#__PURE__*/function () {
       }
     }
     /**
-    * Check if a node is a cluster.
-    * @param {Node.id} nodeId
-    * @returns {*}
-    */
+     * Check if a node is a cluster.
+     *
+     * @param {Node.id} nodeId
+     * @returns {*}
+     */
 
   }, {
     key: "isCluster",
@@ -29324,16 +29412,17 @@ var ClusterEngine = /*#__PURE__*/function () {
       if (this.body.nodes[nodeId] !== undefined) {
         return this.body.nodes[nodeId].isCluster === true;
       } else {
-        console.log("Node does not exist.");
+        console.error("Node does not exist.");
         return false;
       }
     }
     /**
-    * get the position of the cluster node based on what's inside
-    * @param {object} childNodesObj    | object with node objects, id as keys
-    * @returns {{x: number, y: number}}
-    * @private
-    */
+     * get the position of the cluster node based on what's inside
+     *
+     * @param {object} childNodesObj    | object with node objects, id as keys
+     * @returns {{x: number, y: number}}
+     * @private
+     */
 
   }, {
     key: "_getClusterPosition",
@@ -29361,8 +29450,9 @@ var ClusterEngine = /*#__PURE__*/function () {
     }
     /**
      * Open a cluster by calling this function.
+     *
      * @param {vis.Edge.id}  clusterNodeId | the ID of the cluster node
-     * @param {Object} options
+     * @param {object} options
      * @param {boolean} refreshData | wrap up afterwards if not true
      */
 
@@ -29401,7 +29491,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         delete this.body.nodes[clusterNodeId];
 
         if (refreshData === true) {
-          this.body.emitter.emit('_dataChanged');
+          this.body.emitter.emit("_dataChanged");
         }
 
         return;
@@ -29411,7 +29501,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       var containedNodes = clusterNode.containedNodes;
       var containedEdges = clusterNode.containedEdges; // allow the user to position the nodes after release.
 
-      if (options !== undefined && options.releaseFunction !== undefined && typeof options.releaseFunction === 'function') {
+      if (options !== undefined && options.releaseFunction !== undefined && typeof options.releaseFunction === "function") {
         var positions = {};
         var clusterPosition = {
           x: clusterNode.x,
@@ -29530,7 +29620,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       delete this.body.nodes[clusterNodeId];
 
       if (refreshData === true) {
-        this.body.emitter.emit('_dataChanged');
+        this.body.emitter.emit("_dataChanged");
       }
     }
     /**
@@ -29557,13 +29647,13 @@ var ClusterEngine = /*#__PURE__*/function () {
       return nodesArray;
     }
     /**
-    * Get the stack clusterId's that a certain node resides in. cluster A -> cluster B -> cluster C -> node
-    *
-    * If a node can't be found in the chain, return an empty array.
-    *
-    * @param {string|number} nodeId
-    * @returns {Array}
-    */
+     * Get the stack clusterId's that a certain node resides in. cluster A -> cluster B -> cluster C -> node
+     *
+     * If a node can't be found in the chain, return an empty array.
+     *
+     * @param {string|number} nodeId
+     * @returns {Array}
+     */
 
   }, {
     key: "findNode",
@@ -29590,10 +29680,11 @@ var ClusterEngine = /*#__PURE__*/function () {
       return stack;
     }
     /**
-    * Using a clustered nodeId, update with the new options
-    * @param {Node.id} clusteredNodeId
-    * @param {object} newOptions
-    */
+     * Using a clustered nodeId, update with the new options
+     *
+     * @param {Node.id} clusteredNodeId
+     * @param {object} newOptions
+     */
 
   }, {
     key: "updateClusteredNode",
@@ -29611,13 +29702,14 @@ var ClusterEngine = /*#__PURE__*/function () {
       }
 
       this.body.nodes[clusteredNodeId].setOptions(newOptions);
-      this.body.emitter.emit('_dataChanged');
+      this.body.emitter.emit("_dataChanged");
     }
     /**
-    * Using a base edgeId, update all related clustered edges with the new options
-    * @param {vis.Edge.id} startEdgeId
-    * @param {object} newOptions
-    */
+     * Using a base edgeId, update all related clustered edges with the new options
+     *
+     * @param {vis.Edge.id} startEdgeId
+     * @param {object} newOptions
+     */
 
   }, {
     key: "updateEdge",
@@ -29641,13 +29733,14 @@ var ClusterEngine = /*#__PURE__*/function () {
         edge.setOptions(newOptions);
       }
 
-      this.body.emitter.emit('_dataChanged');
+      this.body.emitter.emit("_dataChanged");
     }
     /**
-    * Get a stack of clusterEdgeId's (+base edgeid) that a base edge is the same as. cluster edge C -> cluster edge B -> cluster edge A -> base edge(edgeId)
-    * @param {vis.Edge.id} edgeId
-    * @returns {Array.<vis.Edge.id>}
-    */
+     * Get a stack of clusterEdgeId's (+base edgeid) that a base edge is the same as. cluster edge C -> cluster edge B -> cluster edge A -> base edge(edgeId)
+     *
+     * @param {vis.Edge.id} edgeId
+     * @returns {Array.<vis.Edge.id>}
+     */
 
   }, {
     key: "getClusteredEdges",
@@ -29667,12 +29760,13 @@ var ClusterEngine = /*#__PURE__*/function () {
       return stack;
     }
     /**
-    * Get the base edge id of clusterEdgeId. cluster edge (clusteredEdgeId) -> cluster edge B -> cluster edge C -> base edge
-    * @param {vis.Edge.id} clusteredEdgeId
-    * @returns {vis.Edge.id} baseEdgeId
-    *
-    * TODO: deprecate in 5.0.0. Method getBaseEdges() is the correct one to use.
-    */
+     * Get the base edge id of clusterEdgeId. cluster edge (clusteredEdgeId) -> cluster edge B -> cluster edge C -> base edge
+     *
+     * @param {vis.Edge.id} clusteredEdgeId
+     * @returns {vis.Edge.id} baseEdgeId
+     *
+     * TODO: deprecate in 5.0.0. Method getBaseEdges() is the correct one to use.
+     */
 
   }, {
     key: "getBaseEdge",
@@ -29728,12 +29822,13 @@ var ClusterEngine = /*#__PURE__*/function () {
       return foundIds;
     }
     /**
-    * Get the Id the node is connected to
-    * @param {vis.Edge} edge
-    * @param {Node.id} nodeId
-    * @returns {*}
-    * @private
-    */
+     * Get the Id the node is connected to
+     *
+     * @param {vis.Edge} edge
+     * @param {Node.id} nodeId
+     * @returns {*}
+     * @private
+     */
 
   }, {
     key: "_getConnectedId",
@@ -29747,12 +29842,12 @@ var ClusterEngine = /*#__PURE__*/function () {
       }
     }
     /**
-    * We determine how many connections denote an important hub.
-    * We take the mean + 2*std as the important hub size. (Assuming a normal distribution of data, ~2.2%)
-    *
-    * @returns {number}
-    * @private
-    */
+     * We determine how many connections denote an important hub.
+     * We take the mean + 2*std as the important hub size. (Assuming a normal distribution of data, ~2.2%)
+     *
+     * @returns {number}
+     * @private
+     */
 
   }, {
     key: "_getHubSize",
@@ -29792,8 +29887,8 @@ var ClusterEngine = /*#__PURE__*/function () {
      * @param {Node.id} fromId
      * @param {Node.id} toId
      * @param {vis.Edge} baseEdge
-     * @param {Object} clusterEdgeProperties
-     * @param {Object} extraOptions
+     * @param {object} clusterEdgeProperties
+     * @param {object} extraOptions
      * @returns {Edge} newly created clustered edge
      * @private
      */
@@ -29802,13 +29897,13 @@ var ClusterEngine = /*#__PURE__*/function () {
     key: "_createClusteredEdge",
     value: function _createClusteredEdge(fromId, toId, baseEdge, clusterEdgeProperties, extraOptions) {
       // copy the options of the edge we will replace
-      var clonedOptions = NetworkUtil.cloneOptions(baseEdge, 'edge'); // make sure the properties of clusterEdges are superimposed on it
+      var clonedOptions = NetworkUtil.cloneOptions(baseEdge, "edge"); // make sure the properties of clusterEdges are superimposed on it
 
       deepExtend(clonedOptions, clusterEdgeProperties); // set up the edge
 
       clonedOptions.from = fromId;
       clonedOptions.to = toId;
-      clonedOptions.id = 'clusterEdge:' + v4(); // apply the edge specific options to it if specified
+      clonedOptions.id = "clusterEdge:" + v4(); // apply the edge specific options to it if specified
 
       if (extraOptions !== undefined) {
         deepExtend(clonedOptions, extraOptions);
@@ -29824,10 +29919,10 @@ var ClusterEngine = /*#__PURE__*/function () {
     /**
      * Add the passed child nodes and edges to the given cluster node.
      *
-     * @param {Object|Node} childNodes  hash of nodes or single node to add in cluster
-     * @param {Object|Edge} childEdges  hash of edges or single edge to take into account when clustering
+     * @param {object | Node} childNodes  hash of nodes or single node to add in cluster
+     * @param {object | Edge} childEdges  hash of edges or single edge to take into account when clustering
      * @param {Node} clusterNode  cluster node to add nodes and edges to
-     * @param {Object} [clusterEdgeProperties]
+     * @param {object} [clusterEdgeProperties]
      * @private
      */
 
@@ -29919,7 +30014,7 @@ var ClusterEngine = /*#__PURE__*/function () {
      * Done like this because Array.filter() is not fully supported by all IE's.
      *
      * @param {Array} arr
-     * @param {function} callback
+     * @param {Function} callback
      * @returns {Array}
      * @private
      */
@@ -30148,7 +30243,7 @@ var ClusterEngine = /*#__PURE__*/function () {
      * Determine if node with given id is part of a cluster.
      *
      * @param {Node.id} nodeId
-     * @return {boolean} true if part of a cluster.
+     * @returns {boolean} true if part of a cluster.
      */
 
   }, {
@@ -30164,7 +30259,7 @@ var ClusterEngine = /*#__PURE__*/function () {
      * - any of its connecting nodes is in a cluster
      *
      * @param {vis.Edge.id} edgeId
-     * @return {boolean} true if part of a cluster.
+     * @returns {boolean} true if part of a cluster.
      */
 
   }, {
@@ -30228,7 +30323,7 @@ function _initRequestAnimationFrame() {
 
 var CanvasRenderer = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Canvas} canvas
    */
   function CanvasRenderer(body, canvas) {
@@ -30314,7 +30409,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
         _this.renderingActive = _this.renderRequests > 0;
         _this.renderTimer = undefined;
       });
-      this.body.emitter.on('destroy', function () {
+      this.body.emitter.on("destroy", function () {
         _this.renderRequests = 0;
         _this.allowRedraw = false;
         _this.renderingActive = false;
@@ -30330,14 +30425,14 @@ var CanvasRenderer = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
     key: "setOptions",
     value: function setOptions(options) {
       if (options !== undefined) {
-        var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag'];
+        var fields = ["hideEdgesOnDrag", "hideEdgesOnZoom", "hideNodesOnDrag"];
         selectiveDeepExtend(fields, this.options, options);
       }
     }
@@ -30346,9 +30441,9 @@ var CanvasRenderer = /*#__PURE__*/function () {
      *
      * Calls the callback when the next frame can or will be drawn.
      *
-     * @param {function} callback
+     * @param {Function} callback
      * @param {number} delay - timeout case only, wait this number of milliseconds
-     * @returns {function|undefined}
+     * @returns {Function | undefined}
      * @private
      */
 
@@ -30366,7 +30461,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
       // This is not something that will happen in normal operation, but we still need
       // to take it into account.
       //
-      if (typeof window === 'undefined') return; // Doing `if (window === undefined)` does not work here!
+      if (typeof window === "undefined") return; // Doing `if (window === undefined)` does not work here!
 
       var timer;
       var myWindow = window; // Grab a reference to reduce the possibility that 'window' is reset
@@ -30432,12 +30527,13 @@ var CanvasRenderer = /*#__PURE__*/function () {
   }, {
     key: "redraw",
     value: function redraw() {
-      this.body.emitter.emit('setSize');
+      this.body.emitter.emit("setSize");
 
       this._redraw();
     }
     /**
      * Redraw the network with the current data
+     *
      * @private
      */
 
@@ -30456,6 +30552,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
     }
     /**
      * Redraw the network with the current data
+     *
      * @param {boolean} [hidden=false] | Used to get the first estimate of the node sizes.
      *                                   Only the nodes are drawn after which they are quickly drawn over.
      * @private
@@ -30572,7 +30669,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
      * @param {boolean} [alwaysShow]
      * @private
      *
-     * @returns {Object} Callbacks to draw later on higher layers.
+     * @returns {object} Callbacks to draw later on higher layers.
      */
 
   }, {
@@ -30672,6 +30769,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
     }
     /**
      * Redraw all edges
+     *
      * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
      * @private
      */
@@ -30692,6 +30790,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
     }
     /**
      * Redraw all arrows
+     *
      * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
      * @private
      */
@@ -30713,22 +30812,23 @@ var CanvasRenderer = /*#__PURE__*/function () {
     /**
      * Determine if the browser requires a setTimeout or a requestAnimationFrame. This was required because
      * some implementations (safari and IE9) did not support requestAnimationFrame
+     *
      * @private
      */
 
   }, {
     key: "_determineBrowserMethod",
     value: function _determineBrowserMethod() {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         var browserType = navigator.userAgent.toLowerCase();
         this.requiresTimeout = false;
 
-        if (indexOf$3(browserType).call(browserType, 'msie 9.0') != -1) {
+        if (indexOf$3(browserType).call(browserType, "msie 9.0") != -1) {
           // IE 9
           this.requiresTimeout = true;
-        } else if (indexOf$3(browserType).call(browserType, 'safari') != -1) {
+        } else if (indexOf$3(browserType).call(browserType, "safari") != -1) {
           // safari
-          if (indexOf$3(browserType).call(browserType, 'chrome') <= -1) {
+          if (indexOf$3(browserType).call(browserType, "chrome") <= -1) {
             this.requiresTimeout = true;
           }
         }
@@ -30737,10 +30837,11 @@ var CanvasRenderer = /*#__PURE__*/function () {
       }
     }
     /**
-    * Redraw selection box
-    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
-    * @private
-    */
+     * Redraw selection box
+     *
+     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
+     * @private
+     */
 
   }, {
     key: "_drawSelectionBox",
@@ -30769,8 +30870,9 @@ var setInterval$1 = setInterval;
 
 /**
  * Register a touch event, taking place before a gesture
+ *
  * @param {Hammer} hammer       A hammer instance
- * @param {function} callback   Callback, called as callback(event)
+ * @param {Function} callback   Callback, called as callback(event)
  */
 function onTouch(hammer, callback) {
   callback.inputHandler = function (event) {
@@ -30779,12 +30881,13 @@ function onTouch(hammer, callback) {
     }
   };
 
-  hammer.on('hammer.input', callback.inputHandler);
+  hammer.on("hammer.input", callback.inputHandler);
 }
 /**
  * Register a release event, taking place after a gesture
+ *
  * @param {Hammer} hammer       A hammer instance
- * @param {function} callback   Callback, called as callback(event)
+ * @param {Function} callback   Callback, called as callback(event)
  * @returns {*}
  */
 
@@ -30795,7 +30898,7 @@ function onRelease(hammer, callback) {
     }
   };
 
-  return hammer.on('hammer.input', callback.inputHandler);
+  return hammer.on("hammer.input", callback.inputHandler);
 }
 
 /**
@@ -30807,7 +30910,7 @@ function onRelease(hammer, callback) {
 
 var Canvas = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    */
   function Canvas(body) {
     classCallCheck(this, Canvas);
@@ -30821,8 +30924,8 @@ var Canvas = /*#__PURE__*/function () {
     this.options = {};
     this.defaultOptions = {
       autoResize: true,
-      height: '100%',
-      width: '100%'
+      height: "100%",
+      width: "100%"
     };
 
     assign$2(this.options, this.defaultOptions);
@@ -30860,7 +30963,7 @@ var Canvas = /*#__PURE__*/function () {
       });
     }
     /**
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
@@ -30869,7 +30972,7 @@ var Canvas = /*#__PURE__*/function () {
       var _this2 = this;
 
       if (options !== undefined) {
-        var fields = ['width', 'height', 'autoResize'];
+        var fields = ["width", "height", "autoResize"];
         selectiveDeepExtend(fields, this.options, options);
       } // Automatically adapt to changing size of the container element.
 
@@ -30970,6 +31073,7 @@ var Canvas = /*#__PURE__*/function () {
     }
     /**
      * Set the cameraState
+     *
      * @private
      */
 
@@ -31014,17 +31118,17 @@ var Canvas = /*#__PURE__*/function () {
   }, {
     key: "_prepareValue",
     value: function _prepareValue(value) {
-      if (typeof value === 'number') {
-        return value + 'px';
-      } else if (typeof value === 'string') {
-        if (indexOf$3(value).call(value, '%') !== -1 || indexOf$3(value).call(value, 'px') !== -1) {
+      if (typeof value === "number") {
+        return value + "px";
+      } else if (typeof value === "string") {
+        if (indexOf$3(value).call(value, "%") !== -1 || indexOf$3(value).call(value, "px") !== -1) {
           return value;
-        } else if (indexOf$3(value).call(value, '%') === -1) {
-          return value + 'px';
+        } else if (indexOf$3(value).call(value, "%") === -1) {
+          return value + "px";
         }
       }
 
-      throw new Error('Could not use the value supplied for width or height:' + value);
+      throw new Error("Could not use the value supplied for width or height:" + value);
     }
     /**
      * Create the HTML
@@ -31038,23 +31142,23 @@ var Canvas = /*#__PURE__*/function () {
         this.body.container.removeChild(this.body.container.firstChild);
       }
 
-      this.frame = document.createElement('div');
-      this.frame.className = 'vis-network';
-      this.frame.style.position = 'relative';
-      this.frame.style.overflow = 'hidden';
+      this.frame = document.createElement("div");
+      this.frame.className = "vis-network";
+      this.frame.style.position = "relative";
+      this.frame.style.overflow = "hidden";
       this.frame.tabIndex = 900; // tab index is required for keycharm to bind keystrokes to the div instead of the window
       //////////////////////////////////////////////////////////////////
 
       this.frame.canvas = document.createElement("canvas");
-      this.frame.canvas.style.position = 'relative';
+      this.frame.canvas.style.position = "relative";
       this.frame.appendChild(this.frame.canvas);
 
       if (!this.frame.canvas.getContext) {
-        var noCanvas = document.createElement('DIV');
-        noCanvas.style.color = 'red';
-        noCanvas.style.fontWeight = 'bold';
-        noCanvas.style.padding = '10px';
-        noCanvas.innerHTML = 'Error: your browser does not support HTML canvas';
+        var noCanvas = document.createElement("DIV");
+        noCanvas.style.color = "red";
+        noCanvas.style.fontWeight = "bold";
+        noCanvas.style.padding = "10px";
+        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
         this.frame.canvas.appendChild(noCanvas);
       } else {
         this._setPixelRatio();
@@ -31074,6 +31178,7 @@ var Canvas = /*#__PURE__*/function () {
     }
     /**
      * This function binds hammer, it can be repeated over and over due to the uniqueness check.
+     *
      * @private
      */
 
@@ -31090,46 +31195,46 @@ var Canvas = /*#__PURE__*/function () {
       this.pinch = {}; // init hammer
 
       this.hammer = new Hammer$1(this.frame.canvas);
-      this.hammer.get('pinch').set({
+      this.hammer.get("pinch").set({
         enable: true
       }); // enable to get better response, todo: test on mobile.
 
-      this.hammer.get('pan').set({
+      this.hammer.get("pan").set({
         threshold: 5,
         direction: Hammer$1.DIRECTION_ALL
       });
       onTouch(this.hammer, function (event) {
         _this3.body.eventListeners.onTouch(event);
       });
-      this.hammer.on('tap', function (event) {
+      this.hammer.on("tap", function (event) {
         _this3.body.eventListeners.onTap(event);
       });
-      this.hammer.on('doubletap', function (event) {
+      this.hammer.on("doubletap", function (event) {
         _this3.body.eventListeners.onDoubleTap(event);
       });
-      this.hammer.on('press', function (event) {
+      this.hammer.on("press", function (event) {
         _this3.body.eventListeners.onHold(event);
       });
-      this.hammer.on('panstart', function (event) {
+      this.hammer.on("panstart", function (event) {
         _this3.body.eventListeners.onDragStart(event);
       });
-      this.hammer.on('panmove', function (event) {
+      this.hammer.on("panmove", function (event) {
         _this3.body.eventListeners.onDrag(event);
       });
-      this.hammer.on('panend', function (event) {
+      this.hammer.on("panend", function (event) {
         _this3.body.eventListeners.onDragEnd(event);
       });
-      this.hammer.on('pinch', function (event) {
+      this.hammer.on("pinch", function (event) {
         _this3.body.eventListeners.onPinch(event);
       }); // TODO: neatly cleanup these handlers when re-creating the Canvas, IF these are done with hammer, event.stopPropagation will not work?
 
-      this.frame.canvas.addEventListener('wheel', function (event) {
+      this.frame.canvas.addEventListener("wheel", function (event) {
         _this3.body.eventListeners.onMouseWheel(event);
       });
-      this.frame.canvas.addEventListener('mousemove', function (event) {
+      this.frame.canvas.addEventListener("mousemove", function (event) {
         _this3.body.eventListeners.onMouseMove(event);
       });
-      this.frame.canvas.addEventListener('contextmenu', function (event) {
+      this.frame.canvas.addEventListener("contextmenu", function (event) {
         _this3.body.eventListeners.onContext(event);
       });
       this.hammerFrame = new Hammer$1(this.frame);
@@ -31139,6 +31244,7 @@ var Canvas = /*#__PURE__*/function () {
     }
     /**
      * Set a new size for the network
+     *
      * @param {string} width   Width in pixels or percentage (for example '800px'
      *                         or '50%')
      * @param {string} height  Height in pixels or percentage  (for example '400px'
@@ -31177,8 +31283,8 @@ var Canvas = /*#__PURE__*/function () {
 
         this.frame.style.width = width;
         this.frame.style.height = height;
-        this.frame.canvas.style.width = '100%';
-        this.frame.canvas.style.height = '100%';
+        this.frame.canvas.style.width = "100%";
+        this.frame.canvas.style.height = "100%";
         this.frame.canvas.width = Math.round(this.frame.canvas.clientWidth * this.pixelRatio);
         this.frame.canvas.height = Math.round(this.frame.canvas.clientHeight * this.pixelRatio);
         this.options.width = width;
@@ -31210,7 +31316,7 @@ var Canvas = /*#__PURE__*/function () {
       }
 
       if (emitEvent === true) {
-        this.body.emitter.emit('resize', {
+        this.body.emitter.emit("resize", {
           width: Math.round(this.frame.canvas.width / this.pixelRatio),
           height: Math.round(this.frame.canvas.height / this.pixelRatio),
           oldWidth: Math.round(oldWidth / this.pixelRatio),
@@ -31252,7 +31358,7 @@ var Canvas = /*#__PURE__*/function () {
 
       var numerator = 1;
 
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         // (window !== undefined) doesn't work here!
         // Protection during unit tests, where 'window' can be missing
         numerator = window.devicePixelRatio || 1;
@@ -31290,6 +31396,7 @@ var Canvas = /*#__PURE__*/function () {
     /**
      * Convert the X coordinate in DOM-space (coordinate point in browser relative to the container div) to
      * the X coordinate in canvas-space (the simulation sandbox, which the camera looks upon)
+     *
      * @param {number} x
      * @returns {number}
      * @private
@@ -31303,6 +31410,7 @@ var Canvas = /*#__PURE__*/function () {
     /**
      * Convert the X coordinate in canvas-space (the simulation sandbox, which the camera looks upon) to
      * the X coordinate in DOM-space (coordinate point in browser relative to the container div)
+     *
      * @param {number} x
      * @returns {number}
      * @private
@@ -31316,6 +31424,7 @@ var Canvas = /*#__PURE__*/function () {
     /**
      * Convert the Y coordinate in DOM-space (coordinate point in browser relative to the container div) to
      * the Y coordinate in canvas-space (the simulation sandbox, which the camera looks upon)
+     *
      * @param {number} y
      * @returns {number}
      * @private
@@ -31329,6 +31438,7 @@ var Canvas = /*#__PURE__*/function () {
     /**
      * Convert the Y coordinate in canvas-space (the simulation sandbox, which the camera looks upon) to
      * the Y coordinate in DOM-space (coordinate point in browser relative to the container div)
+     *
      * @param {number} y
      * @returns {number}
      * @private
@@ -31377,7 +31487,7 @@ var Canvas = /*#__PURE__*/function () {
 
 var View = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Canvas} canvas
    */
   function View(body, canvas) {
@@ -31408,7 +31518,7 @@ var View = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} [options={}]
+   * @param {object} [options={}]
    */
 
 
@@ -31420,7 +31530,8 @@ var View = /*#__PURE__*/function () {
     }
     /**
      * This function zooms out to fit all data on screen based on amount of nodes
-     * @param {Object} [options={{nodes=Array}}]
+     *
+     * @param {object} [options={{nodes=Array}}]
      * @param {boolean} [initialZoom=false]  | zoom based on fitted formula or range, true = fitted, default = false;
      */
 
@@ -31522,12 +31633,12 @@ var View = /*#__PURE__*/function () {
         options.lockedOnNode = nodeId;
         this.moveTo(options);
       } else {
-        console.log("Node: " + nodeId + " cannot be found.");
+        console.error("Node: " + nodeId + " cannot be found.");
       }
     }
     /**
      *
-     * @param {Object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
+     * @param {object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
      *                          |  options.scale    = number                 // scale to move to
      *                          |  options.position = {x:number, y:number}   // position to move to
      *                          |  options.animation = {duration:number, easingFunction:String} || Boolean   // position to move to
@@ -31637,7 +31748,7 @@ var View = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
+     * @param {object} options  |  options.offset   = {x:number, y:number}   // offset from the center in DOM pixels
      *                          |  options.time     = number                 // animation time in milliseconds
      *                          |  options.scale    = number                 // scale to animate to
      *                          |  options.position = {x:number, y:number}   // position to animate to
@@ -31713,6 +31824,7 @@ var View = /*#__PURE__*/function () {
     }
     /**
      * used to animate smoothly by hijacking the redraw function.
+     *
      * @private
      */
 
@@ -31818,7 +31930,7 @@ var View = /*#__PURE__*/function () {
 
 var NavigationHandler = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Canvas} canvas
    */
   function NavigationHandler(body, canvas) {
@@ -31852,7 +31964,7 @@ var NavigationHandler = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -31898,8 +32010,8 @@ var NavigationHandler = /*#__PURE__*/function () {
       } // clean up previous navigation items
 
 
-      if (this.navigationDOM && this.navigationDOM['wrapper'] && this.navigationDOM['wrapper'].parentNode) {
-        this.navigationDOM['wrapper'].parentNode.removeChild(this.navigationDOM['wrapper']);
+      if (this.navigationDOM && this.navigationDOM["wrapper"] && this.navigationDOM["wrapper"].parentNode) {
+        this.navigationDOM["wrapper"].parentNode.removeChild(this.navigationDOM["wrapper"]);
       }
 
       this.iconsCreated = false;
@@ -31920,16 +32032,16 @@ var NavigationHandler = /*#__PURE__*/function () {
 
       this.cleanNavigation();
       this.navigationDOM = {};
-      var navigationDivs = ['up', 'down', 'left', 'right', 'zoomIn', 'zoomOut', 'zoomExtends'];
-      var navigationDivActions = ['_moveUp', '_moveDown', '_moveLeft', '_moveRight', '_zoomIn', '_zoomOut', '_fit'];
-      this.navigationDOM['wrapper'] = document.createElement('div');
-      this.navigationDOM['wrapper'].className = 'vis-navigation';
-      this.canvas.frame.appendChild(this.navigationDOM['wrapper']);
+      var navigationDivs = ["up", "down", "left", "right", "zoomIn", "zoomOut", "zoomExtends"];
+      var navigationDivActions = ["_moveUp", "_moveDown", "_moveLeft", "_moveRight", "_zoomIn", "_zoomOut", "_fit"];
+      this.navigationDOM["wrapper"] = document.createElement("div");
+      this.navigationDOM["wrapper"].className = "vis-navigation";
+      this.canvas.frame.appendChild(this.navigationDOM["wrapper"]);
 
       for (var i = 0; i < navigationDivs.length; i++) {
-        this.navigationDOM[navigationDivs[i]] = document.createElement('div');
-        this.navigationDOM[navigationDivs[i]].className = 'vis-button vis-' + navigationDivs[i];
-        this.navigationDOM['wrapper'].appendChild(this.navigationDOM[navigationDivs[i]]);
+        this.navigationDOM[navigationDivs[i]] = document.createElement("div");
+        this.navigationDOM[navigationDivs[i]].className = "vis-button vis-" + navigationDivs[i];
+        this.navigationDOM["wrapper"].appendChild(this.navigationDOM[navigationDivs[i]]);
         var hammer = new Hammer$1(this.navigationDOM[navigationDivs[i]]);
 
         if (navigationDivActions[i] === "_fit") {
@@ -32078,8 +32190,8 @@ var NavigationHandler = /*#__PURE__*/function () {
         x: tx,
         y: ty
       };
-      this.body.emitter.emit('zoom', {
-        direction: '+',
+      this.body.emitter.emit("zoom", {
+        direction: "+",
         scale: this.body.view.scale,
         pointer: null
       });
@@ -32103,8 +32215,8 @@ var NavigationHandler = /*#__PURE__*/function () {
         x: tx,
         y: ty
       };
-      this.body.emitter.emit('zoom', {
-        direction: '-',
+      this.body.emitter.emit("zoom", {
+        direction: "-",
         scale: this.body.view.scale,
         pointer: null
       });
@@ -32256,14 +32368,14 @@ var Popup = /*#__PURE__*/function () {
     classCallCheck(this, Popup);
 
     this.container = container;
-    this.overflowMethod = overflowMethod || 'cap';
+    this.overflowMethod = overflowMethod || "cap";
     this.x = 0;
     this.y = 0;
     this.padding = 5;
     this.hidden = false; // create the frame
 
-    this.frame = document.createElement('div');
-    this.frame.className = 'vis-tooltip';
+    this.frame = document.createElement("div");
+    this.frame.className = "vis-tooltip";
     this.container.appendChild(this.frame);
   }
   /**
@@ -32280,6 +32392,7 @@ var Popup = /*#__PURE__*/function () {
     }
     /**
      * Set the content for the popup window. This can be HTML code or text.
+     *
      * @param {string | Element} content
      */
 
@@ -32287,7 +32400,7 @@ var Popup = /*#__PURE__*/function () {
     key: "setText",
     value: function setText(content) {
       if (content instanceof Element) {
-        this.frame.innerHTML = '';
+        this.frame.innerHTML = "";
         this.frame.appendChild(content);
       } else {
         this.frame.innerHTML = content; // string containing text or HTML
@@ -32295,6 +32408,7 @@ var Popup = /*#__PURE__*/function () {
     }
     /**
      * Show the popup window
+     *
      * @param {boolean} [doShow]    Show or hide the window
      */
 
@@ -32313,7 +32427,7 @@ var Popup = /*#__PURE__*/function () {
         var left = 0,
             top = 0;
 
-        if (this.overflowMethod == 'flip') {
+        if (this.overflowMethod == "flip") {
           var isLeft = false,
               isTop = true; // Where around the position it's located
 
@@ -32398,7 +32512,7 @@ var Popup = /*#__PURE__*/function () {
 
 var InteractionHandler = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Canvas} canvas
    * @param {SelectionHandler} selectionHandler
    */
@@ -32465,14 +32579,14 @@ var InteractionHandler = /*#__PURE__*/function () {
     value: function bindEventListeners() {
       var _this = this;
 
-      this.body.emitter.on('destroy', function () {
+      this.body.emitter.on("destroy", function () {
         clearTimeout(_this.popupTimer);
         delete _this.body.functions.getPointer;
       });
     }
     /**
      *
-     * @param {Object} options
+     * @param {object} options
      */
 
   }, {
@@ -32480,10 +32594,10 @@ var InteractionHandler = /*#__PURE__*/function () {
     value: function setOptions(options) {
       if (options !== undefined) {
         // extend all but the values in fields
-        var fields = ['hideEdgesOnDrag', 'hideEdgesOnZoom', 'hideNodesOnDrag', 'keyboard', 'multiselect', 'selectable', 'selectConnectedEdges'];
+        var fields = ["hideEdgesOnDrag", "hideEdgesOnZoom", "hideNodesOnDrag", "keyboard", "multiselect", "selectable", "selectConnectedEdges"];
         selectiveNotDeepExtend(fields, this.options, options); // merge the keyboard options in.
 
-        mergeOptions(this.options, options, 'keyboard');
+        mergeOptions(this.options, options, "keyboard");
 
         if (options.tooltip) {
           assign$2(this.options.tooltip, options.tooltip);
@@ -32498,8 +32612,9 @@ var InteractionHandler = /*#__PURE__*/function () {
     }
     /**
      * Get the pointer location from a touch location
+     *
      * @param {{x: number, y: number}} touch
-     * @return {{x: number, y: number}} pointer
+     * @returns {{x: number, y: number}} pointer
      * @private
      */
 
@@ -32513,6 +32628,7 @@ var InteractionHandler = /*#__PURE__*/function () {
     }
     /**
      * On start of a touch gesture, store the pointer
+     *
      * @param {Event}  event   The event
      * @private
      */
@@ -32530,6 +32646,7 @@ var InteractionHandler = /*#__PURE__*/function () {
     }
     /**
      * handle tap/click event: select/unselect a node
+     *
      * @param {Event} event
      * @private
      */
@@ -32541,10 +32658,11 @@ var InteractionHandler = /*#__PURE__*/function () {
       var multiselect = this.selectionHandler.options.multiselect && (event.changedPointers[0].ctrlKey || event.changedPointers[0].metaKey);
       this.checkSelectionChanges(pointer, event, multiselect);
 
-      this.selectionHandler._generateClickEvent('click', event, pointer);
+      this.selectionHandler._generateClickEvent("click", event, pointer);
     }
     /**
      * handle doubletap event
+     *
      * @param {Event} event
      * @private
      */
@@ -32554,10 +32672,11 @@ var InteractionHandler = /*#__PURE__*/function () {
     value: function onDoubleTap(event) {
       var pointer = this.getPointer(event.center);
 
-      this.selectionHandler._generateClickEvent('doubleClick', event, pointer);
+      this.selectionHandler._generateClickEvent("doubleClick", event, pointer);
     }
     /**
      * handle long tap event: multi select nodes
+     *
      * @param {Event} event
      * @private
      */
@@ -32569,9 +32688,9 @@ var InteractionHandler = /*#__PURE__*/function () {
       var multiselect = this.selectionHandler.options.multiselect;
       this.checkSelectionChanges(pointer, event, multiselect);
 
-      this.selectionHandler._generateClickEvent('click', event, pointer);
+      this.selectionHandler._generateClickEvent("click", event, pointer);
 
-      this.selectionHandler._generateClickEvent('hold', event, pointer);
+      this.selectionHandler._generateClickEvent("hold", event, pointer);
     }
     /**
      * handle the release of the screen
@@ -32586,7 +32705,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       if (new Date().valueOf() - this.touchTime > 10) {
         var pointer = this.getPointer(event.center);
 
-        this.selectionHandler._generateClickEvent('release', event, pointer); // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
+        this.selectionHandler._generateClickEvent("release", event, pointer); // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
 
 
         this.touchTime = new Date().valueOf();
@@ -32605,7 +32724,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         y: event.clientY
       });
 
-      this.selectionHandler._generateClickEvent('oncontext', event, pointer);
+      this.selectionHandler._generateClickEvent("oncontext", event, pointer);
     }
     /**
      * Select and deselect nodes depending current selection change.
@@ -32643,25 +32762,25 @@ var InteractionHandler = /*#__PURE__*/function () {
       var selectedItems = this._determineDifference(currentSelection, previousSelection);
 
       if (deselectedItems.edges.length > 0) {
-        this.selectionHandler._generateClickEvent('deselectEdge', event, pointer, previousSelection);
+        this.selectionHandler._generateClickEvent("deselectEdge", event, pointer, previousSelection);
 
         selected = true;
       }
 
       if (deselectedItems.nodes.length > 0) {
-        this.selectionHandler._generateClickEvent('deselectNode', event, pointer, previousSelection);
+        this.selectionHandler._generateClickEvent("deselectNode", event, pointer, previousSelection);
 
         selected = true;
       }
 
       if (selectedItems.nodes.length > 0) {
-        this.selectionHandler._generateClickEvent('selectNode', event, pointer);
+        this.selectionHandler._generateClickEvent("selectNode", event, pointer);
 
         selected = true;
       }
 
       if (selectedItems.edges.length > 0) {
-        this.selectionHandler._generateClickEvent('selectEdge', event, pointer);
+        this.selectionHandler._generateClickEvent("selectEdge", event, pointer);
 
         selected = true;
       } // fire the select event if anything has been selected or deselected
@@ -32669,7 +32788,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
       if (selected === true) {
         // select or unselect
-        this.selectionHandler._generateClickEvent('select', event, pointer);
+        this.selectionHandler._generateClickEvent("select", event, pointer);
       }
     }
     /**
@@ -32755,7 +32874,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         } // after select to contain the node
 
 
-        this.selectionHandler._generateClickEvent('dragStart', event, this.drag.pointer);
+        this.selectionHandler._generateClickEvent("dragStart", event, this.drag.pointer);
 
         var selection = this.selectionHandler.selectionObj.nodes; // create an array with the selected nodes and their original location and status
 
@@ -32778,11 +32897,12 @@ var InteractionHandler = /*#__PURE__*/function () {
         }
       } else {
         // fallback if no node is selected and thus the view is dragged.
-        this.selectionHandler._generateClickEvent('dragStart', event, this.drag.pointer, undefined, true);
+        this.selectionHandler._generateClickEvent("dragStart", event, this.drag.pointer, undefined, true);
       }
     }
     /**
      * handle drag event
+     *
      * @param {Event} event
      * @private
      */
@@ -32797,12 +32917,12 @@ var InteractionHandler = /*#__PURE__*/function () {
       } // remove the focus on node if it is focussed on by the focusOnNode
 
 
-      this.body.emitter.emit('unlockNode');
+      this.body.emitter.emit("unlockNode");
       var pointer = this.getPointer(event.center);
       var selection = this.drag.selection;
 
       if (selection && selection.length && this.options.dragNodes === true) {
-        this.selectionHandler._generateClickEvent('dragging', event, pointer); // calculate delta's and new location
+        this.selectionHandler._generateClickEvent("dragging", event, pointer); // calculate delta's and new location
 
 
         var deltaX = pointer.x - this.drag.pointer.x;
@@ -32822,11 +32942,11 @@ var InteractionHandler = /*#__PURE__*/function () {
         }); // start the simulation of the physics
 
 
-        this.body.emitter.emit('startSimulation');
+        this.body.emitter.emit("startSimulation");
       } else {
         // create selection box
         if (event.srcEvent.shiftKey) {
-          this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
+          this.selectionHandler._generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
 
           if (this.drag.pointer === undefined) {
@@ -32838,12 +32958,12 @@ var InteractionHandler = /*#__PURE__*/function () {
             x: this.canvas._XconvertDOMtoCanvas(pointer.x),
             y: this.canvas._YconvertDOMtoCanvas(pointer.y)
           };
-          this.body.emitter.emit('_requestRedraw');
+          this.body.emitter.emit("_requestRedraw");
         } // move the network
 
 
         if (this.options.dragView === true && !event.srcEvent.shiftKey) {
-          this.selectionHandler._generateClickEvent('dragging', event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
+          this.selectionHandler._generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
 
           if (this.drag.pointer === undefined) {
@@ -32857,12 +32977,13 @@ var InteractionHandler = /*#__PURE__*/function () {
             x: this.drag.translation.x + diffX,
             y: this.drag.translation.y + diffY
           };
-          this.body.emitter.emit('_requestRedraw');
+          this.body.emitter.emit("_requestRedraw");
         }
       }
     }
     /**
      * handle drag start event
+     *
      * @param {Event} event
      * @private
      */
@@ -32895,9 +33016,9 @@ var InteractionHandler = /*#__PURE__*/function () {
           return _this3.selectionHandler.selectObject(_this3.body.nodes[nodeId]);
         });
 
-        this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
+        this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
 
-        this.body.emitter.emit('_requestRedraw');
+        this.body.emitter.emit("_requestRedraw");
       } else {
         var selection = this.drag.selection;
 
@@ -32908,18 +33029,19 @@ var InteractionHandler = /*#__PURE__*/function () {
             s.node.options.fixed.y = s.yFixed;
           });
 
-          this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center));
+          this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center));
 
-          this.body.emitter.emit('startSimulation');
+          this.body.emitter.emit("startSimulation");
         } else {
-          this.selectionHandler._generateClickEvent('dragEnd', event, this.getPointer(event.center), undefined, true);
+          this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
 
-          this.body.emitter.emit('_requestRedraw');
+          this.body.emitter.emit("_requestRedraw");
         }
       }
     }
     /**
      * Handle pinch event
+     *
      * @param {Event}  event   The event
      * @private
      */
@@ -32930,7 +33052,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       var pointer = this.getPointer(event.center);
       this.drag.pinched = true;
 
-      if (this.pinch['scale'] === undefined) {
+      if (this.pinch["scale"] === undefined) {
         this.pinch.scale = 1;
       } // TODO: enabled moving while pinching?
 
@@ -32940,6 +33062,7 @@ var InteractionHandler = /*#__PURE__*/function () {
     }
     /**
      * Zoom the network in or out
+     *
      * @param {number} scale a number around 1, and between 0.01 and 10
      * @param {{x: number, y: number}} pointer    Position on screen
      * @private
@@ -32984,17 +33107,17 @@ var InteractionHandler = /*#__PURE__*/function () {
           this.drag.pointer.y = postScaleDragPointer.y;
         }
 
-        this.body.emitter.emit('_requestRedraw');
+        this.body.emitter.emit("_requestRedraw");
 
         if (scaleOld < scale) {
-          this.body.emitter.emit('zoom', {
-            direction: '+',
+          this.body.emitter.emit("zoom", {
+            direction: "+",
             scale: this.body.view.scale,
             pointer: pointer
           });
         } else {
-          this.body.emitter.emit('zoom', {
-            direction: '-',
+          this.body.emitter.emit("zoom", {
+            direction: "-",
             scale: this.body.view.scale,
             pointer: pointer
           });
@@ -33005,6 +33128,7 @@ var InteractionHandler = /*#__PURE__*/function () {
      * Event handler for mouse wheel event, used to zoom the timeline
      * See http://adomas.org/javascript-mouse-wheel/
      *     https://github.com/EightMedia/hammer.js/issues/256
+     *
      * @param {MouseEvent}  event
      * @private
      */
@@ -33035,6 +33159,7 @@ var InteractionHandler = /*#__PURE__*/function () {
     }
     /**
      * Mouse move handler for checking whether the title moves over a node with a title.
+     *
      * @param  {Event} event
      * @private
      */
@@ -33112,7 +33237,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       };
       var previousPopupObjId = this.popupObj === undefined ? undefined : this.popupObj.id;
       var nodeUnderCursor = false;
-      var popupType = 'node'; // check if a node is under the cursor.
+      var popupType = "node"; // check if a node is under the cursor.
 
       if (this.popupObj === undefined) {
         // search the nodes for overlap, select the top one in case of multiple nodes
@@ -33160,7 +33285,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
         if (overlappingEdges.length > 0) {
           this.popupObj = edges[overlappingEdges[overlappingEdges.length - 1]];
-          popupType = 'edge';
+          popupType = "edge";
         }
       }
 
@@ -33179,18 +33304,19 @@ var InteractionHandler = /*#__PURE__*/function () {
           this.popup.setPosition(pointer.x + 3, pointer.y - 5);
           this.popup.setText(this.popupObj.getTitle());
           this.popup.show();
-          this.body.emitter.emit('showPopup', this.popupObj.id);
+          this.body.emitter.emit("showPopup", this.popupObj.id);
         }
       } else {
         if (this.popup !== undefined) {
           this.popup.hide();
-          this.body.emitter.emit('hidePopup');
+          this.body.emitter.emit("hidePopup");
         }
       }
     }
     /**
      * Check if the popup must be hidden, which is the case when the mouse is no
      * longer hovering on the object
+     *
      * @param {{x:number, y:number}} pointer
      * @private
      */
@@ -33202,7 +33328,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
       var stillOnObj = false;
 
-      if (this.popup.popupTargetType === 'node') {
+      if (this.popup.popupTargetType === "node") {
         if (this.body.nodes[this.popup.popupTargetId] !== undefined) {
           stillOnObj = this.body.nodes[this.popup.popupTargetId].isOverlappingWith(pointerObj); // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
           // we initially only check stillOnObj because this is much faster.
@@ -33223,7 +33349,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       if (stillOnObj === false) {
         this.popupObj = undefined;
         this.popup.hide();
-        this.body.emitter.emit('hidePopup');
+        this.body.emitter.emit("hidePopup");
       }
     }
   }]);
@@ -33237,7 +33363,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
 var SelectionHandler = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Canvas} canvas
    */
   function SelectionHandler(body, canvas) {
@@ -33271,7 +33397,7 @@ var SelectionHandler = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} [options]
+   * @param {object} [options]
    */
 
 
@@ -33279,7 +33405,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "setOptions",
     value: function setOptions(options) {
       if (options !== undefined) {
-        var fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
+        var fields = ["multiselect", "hoverConnectedEdges", "selectable", "selectConnectedEdges"];
         selectiveDeepExtend(fields, this.options, options);
       }
     }
@@ -33351,14 +33477,14 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "_initBaseEvent",
     value: function _initBaseEvent(event, pointer) {
       var properties = {};
-      properties['pointer'] = {
+      properties["pointer"] = {
         DOM: {
           x: pointer.x,
           y: pointer.y
         },
         canvas: this.canvas.DOMtoCanvas(pointer)
       };
-      properties['event'] = event;
+      properties["event"] = event;
       return properties;
     }
     /**
@@ -33370,7 +33496,7 @@ var SelectionHandler = /*#__PURE__*/function () {
      * @param {string} eventType                          Name of event to send
      * @param {Event}  event
      * @param {{x: number, y: number}} pointer            Object with the x and y screen coordinates of the mouse
-     * @param {Object|undefined} oldSelection             If present, selection state before event occured
+     * @param {object | undefined} oldSelection             If present, selection state before event occured
      * @param {boolean|undefined} [emptySelection=false]  Indicate if selection data should be passed
      */
 
@@ -33391,10 +33517,10 @@ var SelectionHandler = /*#__PURE__*/function () {
       }
 
       if (oldSelection !== undefined) {
-        properties['previousSelection'] = oldSelection;
+        properties["previousSelection"] = oldSelection;
       }
 
-      if (eventType == 'click') {
+      if (eventType == "click") {
         // For the time being, restrict this functionality to
         // just the click event.
         properties.items = this.getClickedItems(pointer);
@@ -33408,7 +33534,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} obj
+     * @param {object} obj
      * @param {boolean} [highlightEdges=this.options.selectConnectedEdges]
      * @returns {boolean}
      */
@@ -33436,7 +33562,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} obj
+     * @param {object} obj
      */
 
   }, {
@@ -33450,8 +33576,9 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      * retrieve all nodes overlapping with given object
-     * @param {Object} object  An object with parameters left, top, right, bottom
-     * @return {number[]}   An array with id's of the overlapping nodes
+     *
+     * @param {object} object  An object with parameters left, top, right, bottom
+     * @returns {number[]}   An array with id's of the overlapping nodes
      * @private
      */
 
@@ -33495,7 +33622,7 @@ var SelectionHandler = /*#__PURE__*/function () {
      *
      * @param {{x: number, y: number}} pointer
      * @param {boolean} [returnNode=true]
-     * @return {Node | undefined} node
+     * @returns {Node | undefined} node
      */
 
   }, {
@@ -33522,7 +33649,8 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      * retrieve all edges overlapping with given object, selector is around center
-     * @param {Object} object  An object with parameters left, top, right, bottom
+     *
+     * @param {object} object  An object with parameters left, top, right, bottom
      * @param {number[]} overlappingEdges An array with id's of the overlapping nodes
      * @private
      */
@@ -33542,8 +33670,9 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      * retrieve all nodes overlapping with given object
-     * @param {Object} object  An object with parameters left, top, right, bottom
-     * @return {number[]}   An array with id's of the overlapping nodes
+     *
+     * @param {object} object  An object with parameters left, top, right, bottom
+     * @returns {number[]}   An array with id's of the overlapping nodes
      * @private
      */
 
@@ -33561,7 +33690,7 @@ var SelectionHandler = /*#__PURE__*/function () {
      *
      * @param {{x: number, y: number}} pointer
      * @param {boolean} [returnEdge=true]
-     * @return {Edge | undefined} node
+     * @returns {Edge | undefined} node
      */
 
   }, {
@@ -33605,7 +33734,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     /**
      * Add object to the selection array.
      *
-     * @param {Object} obj
+     * @param {object} obj
      * @private
      */
 
@@ -33621,7 +33750,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     /**
      * Add object to the selection array.
      *
-     * @param {Object} obj
+     * @param {object} obj
      * @private
      */
 
@@ -33637,7 +33766,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     /**
      * Remove a single option from selection.
      *
-     * @param {Object} obj
+     * @param {object} obj
      * @private
      */
 
@@ -33998,13 +34127,14 @@ var SelectionHandler = /*#__PURE__*/function () {
       }
 
       if (hoverChanged === true) {
-        this.body.emitter.emit('_requestRedraw');
+        this.body.emitter.emit("_requestRedraw");
       }
     }
     /**
      *
      * retrieve the currently selected objects
-     * @return {{nodes: Array.<string>, edges: Array.<string>}} selection
+     *
+     * @returns {{nodes: Array.<string>, edges: Array.<string>}} selection
      */
 
   }, {
@@ -34020,7 +34150,8 @@ var SelectionHandler = /*#__PURE__*/function () {
     /**
      *
      * retrieve the currently selected nodes
-     * @return {string[]} selection    An array with the ids of the
+     *
+     * @returns {string[]} selection    An array with the ids of the
      *                                            selected nodes.
      */
 
@@ -34042,7 +34173,8 @@ var SelectionHandler = /*#__PURE__*/function () {
     /**
      *
      * retrieve the currently selected edges
-     * @return {Array} selection    An array with the ids of the
+     *
+     * @returns {Array} selection    An array with the ids of the
      *                                            selected nodes.
      */
 
@@ -34063,8 +34195,9 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      * Updates the current selection
+     *
      * @param {{nodes: Array.<string>, edges: Array.<string>}} selection
-     * @param {Object} options                                 Options
+     * @param {object} options                                 Options
      */
 
   }, {
@@ -34072,7 +34205,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     value: function setSelection(selection) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var i, id;
-      if (!selection || !selection.nodes && !selection.edges) throw 'Selection must be an object with nodes and/or edges properties'; // first unselect any selected node, if option is true or undefined
+      if (!selection || !selection.nodes && !selection.edges) throw "Selection must be an object with nodes and/or edges properties"; // first unselect any selected node, if option is true or undefined
 
       if (options.unselectAll || options.unselectAll === undefined) {
         this.unselectAll();
@@ -34105,10 +34238,11 @@ var SelectionHandler = /*#__PURE__*/function () {
         }
       }
 
-      this.body.emitter.emit('_requestRedraw');
+      this.body.emitter.emit("_requestRedraw");
     }
     /**
      * select zero or more nodes with the option to highlight edges
+     *
      * @param {number[] | string[]} selection     An array with the ids of the
      *                                            selected nodes.
      * @param {boolean} [highlightEdges]
@@ -34118,7 +34252,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "selectNodes",
     value: function selectNodes(selection) {
       var highlightEdges = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      if (!selection || selection.length === undefined) throw 'Selection must be an array with ids';
+      if (!selection || selection.length === undefined) throw "Selection must be an array with ids";
       this.setSelection({
         nodes: selection
       }, {
@@ -34127,6 +34261,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     }
     /**
      * select zero or more edges
+     *
      * @param {number[] | string[]} selection     An array with the ids of the
      *                                            selected nodes.
      */
@@ -34134,13 +34269,14 @@ var SelectionHandler = /*#__PURE__*/function () {
   }, {
     key: "selectEdges",
     value: function selectEdges(selection) {
-      if (!selection || selection.length === undefined) throw 'Selection must be an array with ids';
+      if (!selection || selection.length === undefined) throw "Selection must be an array with ids";
       this.setSelection({
         edges: selection
       });
     }
     /**
      * Validate the selection: remove ids of nodes which no longer exist
+     *
      * @private
      */
 
@@ -35069,7 +35205,9 @@ var DirectionInterface = /*#__PURE__*/function () {
   createClass(DirectionInterface, [{
     key: "abstract",
 
-    /** @ignore **/
+    /**
+     * @ignore
+     */
     value: function abstract() {
       throw new Error("Can't instantiate abstract class!");
     }
@@ -35091,7 +35229,7 @@ var DirectionInterface = /*#__PURE__*/function () {
      *
      * The value should be perpendicular to the actual direction of the layout.
      *
-     * @return {string} Direction, either 'vertical' or 'horizontal'
+     * @returns {string} Direction, either 'vertical' or 'horizontal'
      */
 
   }, {
@@ -35103,7 +35241,7 @@ var DirectionInterface = /*#__PURE__*/function () {
      * Return the value of the coordinate that is not fixed for this direction.
      *
      * @param {Node} node The node to read
-     * @return {number} Value of the unfixed coordinate
+     * @returns {number} Value of the unfixed coordinate
      */
 
   }, {
@@ -35134,7 +35272,7 @@ var DirectionInterface = /*#__PURE__*/function () {
      * only among themselves. In essence, it is a sub-network.
      *
      * @param {number} index The index number of a tree
-     * @return {number} the width of a tree in the view coordinates
+     * @returns {number} the width of a tree in the view coordinates
      */
 
   }, {
@@ -35199,7 +35337,7 @@ var DirectionInterface = /*#__PURE__*/function () {
  *
  * Coordinate `y` is fixed on levels, coordinate `x` is unfixed.
  *
- * @extends DirectionInterface
+ * @augments DirectionInterface
  * @private
  */
 
@@ -35212,7 +35350,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
   /**
    * Constructor
    *
-   * @param {Object} layout reference to the parent LayoutEngine instance.
+   * @param {object} layout reference to the parent LayoutEngine instance.
    */
   function VerticalStrategy(layout) {
     var _this;
@@ -35223,22 +35361,22 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
     _this.layout = layout;
     return _this;
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(VerticalStrategy, [{
     key: "curveType",
     value: function curveType() {
-      return 'horizontal';
+      return "horizontal";
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getPosition",
     value: function getPosition(node) {
       return node.x;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "setPosition",
@@ -35251,7 +35389,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
 
       node.x = position;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getTreeSize",
@@ -35262,7 +35400,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
         max: res.max_x
       };
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "sort",
@@ -35271,7 +35409,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
         return a.x - b.x;
       });
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "fix",
@@ -35279,7 +35417,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
       node.y = this.layout.options.hierarchical.levelSeparation * level;
       node.options.fixed.y = true;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "shift",
@@ -35295,7 +35433,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
  *
  * Coordinate `x` is fixed on levels, coordinate `y` is unfixed.
  *
- * @extends DirectionInterface
+ * @augments DirectionInterface
  * @private
  */
 
@@ -35308,7 +35446,7 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
   /**
    * Constructor
    *
-   * @param {Object} layout reference to the parent LayoutEngine instance.
+   * @param {object} layout reference to the parent LayoutEngine instance.
    */
   function HorizontalStrategy(layout) {
     var _this2;
@@ -35319,22 +35457,22 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
     _this2.layout = layout;
     return _this2;
   }
-  /** @inheritdoc */
+  /** @inheritDoc */
 
 
   createClass(HorizontalStrategy, [{
     key: "curveType",
     value: function curveType() {
-      return 'vertical';
+      return "vertical";
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getPosition",
     value: function getPosition(node) {
       return node.y;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "setPosition",
@@ -35347,7 +35485,7 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
 
       node.y = position;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "getTreeSize",
@@ -35358,7 +35496,7 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
         max: res.max_y
       };
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "sort",
@@ -35367,7 +35505,7 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
         return a.y - b.y;
       });
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "fix",
@@ -35375,7 +35513,7 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
       node.x = this.layout.options.hierarchical.levelSeparation * level;
       node.options.fixed.x = true;
     }
-    /** @inheritdoc */
+    /** @inheritDoc */
 
   }, {
     key: "shift",
@@ -35730,6 +35868,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
     }
     /**
      * Return the number of separate trees in the current network.
+     *
      * @returns {number}
      */
 
@@ -35740,6 +35879,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
     }
     /**
      * Assign a tree id to a node
+     *
      * @param {Node} node
      * @param {string|number} treeId
      */
@@ -35773,6 +35913,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
      * get the maximum level of a branch.
      *
      * TODO: Never entered; find a test case to test this!
+     *
      * @param {Node.id} nodeId
      * @returns {number}
      */
@@ -35894,7 +36035,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
      *
      * @param {Node} node1
      * @param {Node} node2
-     * @return {boolean} true if the two nodes have a same ancestor node, false otherwise
+     * @returns {boolean} true if the two nodes have a same ancestor node, false otherwise
      */
 
   }, {
@@ -35922,7 +36063,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
      *
      * @param {Node} node1
      * @param {Node} node2
-     * @return {Boolean} true if this is so, false otherwise
+     * @returns {boolean} true if this is so, false otherwise
      */
 
   }, {
@@ -35982,7 +36123,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
 
 var LayoutEngine = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    */
   function LayoutEngine(body) {
     classCallCheck(this, LayoutEngine);
@@ -36009,9 +36150,9 @@ var LayoutEngine = /*#__PURE__*/function () {
         blockShifting: true,
         edgeMinimization: true,
         parentCentralization: true,
-        direction: 'UD',
+        direction: "UD",
         // UD, DU, LR, RL
-        sortMethod: 'hubsize' // hubsize, directed
+        sortMethod: "hubsize" // hubsize, directed
 
       }
     };
@@ -36030,16 +36171,16 @@ var LayoutEngine = /*#__PURE__*/function () {
     value: function bindEventListeners() {
       var _this2 = this;
 
-      this.body.emitter.on('_dataChanged', function () {
+      this.body.emitter.on("_dataChanged", function () {
         _this2.setupHierarchicalLayout();
       });
-      this.body.emitter.on('_dataLoaded', function () {
+      this.body.emitter.on("_dataLoaded", function () {
         _this2.layoutNetwork();
       });
-      this.body.emitter.on('_resetHierarchicalLayout', function () {
+      this.body.emitter.on("_resetHierarchicalLayout", function () {
         _this2.setupHierarchicalLayout();
       });
-      this.body.emitter.on('_adjustEdgesForHierarchicalLayout', function () {
+      this.body.emitter.on("_adjustEdgesForHierarchicalLayout", function () {
         if (_this2.options.hierarchical.enabled !== true) {
           return;
         } // get the type of static smooth curve in case it is required
@@ -36048,14 +36189,14 @@ var LayoutEngine = /*#__PURE__*/function () {
         var type = _this2.direction.curveType(); // force all edges into static smooth curves.
 
 
-        _this2.body.emitter.emit('_forceDisableDynamicCurves', type, false);
+        _this2.body.emitter.emit("_forceDisableDynamicCurves", type, false);
       });
     }
     /**
      *
-     * @param {Object} options
-     * @param {Object} allOptions
-     * @returns {Object}
+     * @param {object} options
+     * @param {object} allOptions
+     * @returns {object}
      */
 
   }, {
@@ -36065,7 +36206,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         var hierarchical = this.options.hierarchical;
         var prevHierarchicalState = hierarchical.enabled;
         selectiveDeepExtend(["randomSeed", "improvedLayout", "clusterThreshold"], this.options, options);
-        mergeOptions(this.options, options, 'hierarchical');
+        mergeOptions(this.options, options, "hierarchical");
 
         if (options.randomSeed !== undefined) {
           this._resetRNG(options.randomSeed);
@@ -36074,11 +36215,11 @@ var LayoutEngine = /*#__PURE__*/function () {
         if (hierarchical.enabled === true) {
           if (prevHierarchicalState === true) {
             // refresh the overridden options for nodes and edges.
-            this.body.emitter.emit('refresh', true);
+            this.body.emitter.emit("refresh", true);
           } // make sure the level separation is the right way up
 
 
-          if (hierarchical.direction === 'RL' || hierarchical.direction === 'DU') {
+          if (hierarchical.direction === "RL" || hierarchical.direction === "DU") {
             if (hierarchical.levelSeparation > 0) {
               hierarchical.levelSeparation *= -1;
             }
@@ -36089,14 +36230,14 @@ var LayoutEngine = /*#__PURE__*/function () {
           }
 
           this.setDirectionStrategy();
-          this.body.emitter.emit('_resetHierarchicalLayout'); // because the hierarchical system needs it's own physics and smooth curve settings,
+          this.body.emitter.emit("_resetHierarchicalLayout"); // because the hierarchical system needs it's own physics and smooth curve settings,
           // we adapt the other options if needed.
 
           return this.adaptAllOptionsForHierarchicalLayout(allOptions);
         } else {
           if (prevHierarchicalState === true) {
             // refresh the overridden options for nodes and edges.
-            this.body.emitter.emit('refresh');
+            this.body.emitter.emit("refresh");
             return deepExtend(allOptions, this.optionsBackup);
           }
         }
@@ -36118,8 +36259,8 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} allOptions
-     * @returns {Object}
+     * @param {object} allOptions
+     * @returns {object}
      */
 
   }, {
@@ -36131,18 +36272,18 @@ var LayoutEngine = /*#__PURE__*/function () {
         if (allOptions.physics === undefined || allOptions.physics === true) {
           allOptions.physics = {
             enabled: backupPhysics.enabled === undefined ? true : backupPhysics.enabled,
-            solver: 'hierarchicalRepulsion'
+            solver: "hierarchicalRepulsion"
           };
           backupPhysics.enabled = backupPhysics.enabled === undefined ? true : backupPhysics.enabled;
-          backupPhysics.solver = backupPhysics.solver || 'barnesHut';
-        } else if (_typeof_1(allOptions.physics) === 'object') {
+          backupPhysics.solver = backupPhysics.solver || "barnesHut";
+        } else if (_typeof_1(allOptions.physics) === "object") {
           backupPhysics.enabled = allOptions.physics.enabled === undefined ? true : allOptions.physics.enabled;
-          backupPhysics.solver = allOptions.physics.solver || 'barnesHut';
-          allOptions.physics.solver = 'hierarchicalRepulsion';
+          backupPhysics.solver = allOptions.physics.solver || "barnesHut";
+          allOptions.physics.solver = "hierarchicalRepulsion";
         } else if (allOptions.physics !== false) {
-          backupPhysics.solver = 'barnesHut';
+          backupPhysics.solver = "barnesHut";
           allOptions.physics = {
-            solver: 'hierarchicalRepulsion'
+            solver: "hierarchicalRepulsion"
           };
         } // get the type of static smooth curve in case it is required
 
@@ -36154,7 +36295,7 @@ var LayoutEngine = /*#__PURE__*/function () {
           this.optionsBackup.edges = {
             smooth: {
               enabled: true,
-              type: 'dynamic'
+              type: "dynamic"
             }
           };
           allOptions.edges = {
@@ -36164,12 +36305,12 @@ var LayoutEngine = /*#__PURE__*/function () {
           this.optionsBackup.edges = {
             smooth: {
               enabled: true,
-              type: 'dynamic'
+              type: "dynamic"
             }
           };
           allOptions.edges.smooth = false;
         } else {
-          if (typeof allOptions.edges.smooth === 'boolean') {
+          if (typeof allOptions.edges.smooth === "boolean") {
             this.optionsBackup.edges = {
               smooth: allOptions.edges.smooth
             };
@@ -36180,7 +36321,7 @@ var LayoutEngine = /*#__PURE__*/function () {
           } else {
             var smooth = allOptions.edges.smooth; // allow custom types except for dynamic
 
-            if (smooth.type !== undefined && smooth.type !== 'dynamic') {
+            if (smooth.type !== undefined && smooth.type !== "dynamic") {
               type = smooth.type;
             } // TODO: this is options merging; see if the standard routines can be used here.
 
@@ -36188,7 +36329,7 @@ var LayoutEngine = /*#__PURE__*/function () {
             this.optionsBackup.edges = {
               smooth: {
                 enabled: smooth.enabled === undefined ? true : smooth.enabled,
-                type: smooth.type === undefined ? 'dynamic' : smooth.type,
+                type: smooth.type === undefined ? "dynamic" : smooth.type,
                 roundness: smooth.roundness === undefined ? 0.5 : smooth.roundness,
                 forceDirection: smooth.forceDirection === undefined ? false : smooth.forceDirection
               }
@@ -36205,7 +36346,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         // Only applies to edges that do not use the global options for smooth.
 
 
-        this.body.emitter.emit('_forceDisableDynamicCurves', type);
+        this.body.emitter.emit("_forceDisableDynamicCurves", type);
       }
 
       return allOptions;
@@ -36279,11 +36420,11 @@ var LayoutEngine = /*#__PURE__*/function () {
 
           var clusterOptions = {
             clusterNodeProperties: {
-              shape: 'ellipse',
+              shape: "ellipse",
               // Bugfix: avoid type 'image', no images supplied
-              label: '',
+              label: "",
               // avoid label handling
-              group: '',
+              group: "",
               // avoid group handling
               font: {
                 multi: false
@@ -36291,7 +36432,7 @@ var LayoutEngine = /*#__PURE__*/function () {
 
             },
             clusterEdgeProperties: {
-              label: '',
+              label: "",
               // avoid label handling
               font: {
                 multi: false
@@ -36372,6 +36513,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * Move all the nodes towards to the center so gravitational pull wil not move the nodes away from view
+     *
      * @private
      */
 
@@ -36389,6 +36531,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * Expands all clusters
+     *
      * @private
      */
 
@@ -36408,7 +36551,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         }
 
         if (clustersPresent === true) {
-          this.body.emitter.emit('_dataChanged');
+          this.body.emitter.emit("_dataChanged");
         }
       }
     }
@@ -36455,17 +36598,17 @@ var LayoutEngine = /*#__PURE__*/function () {
 
 
         if (undefinedLevel === true && definedLevel === true) {
-          throw new Error('To use the hierarchical layout, nodes require either no predefined levels' + ' or levels have to be defined for all nodes.');
+          throw new Error("To use the hierarchical layout, nodes require either no predefined levels" + " or levels have to be defined for all nodes.");
         } else {
           // define levels if undefined by the users. Based on hubsize.
           if (undefinedLevel === true) {
             var sortMethod = this.options.hierarchical.sortMethod;
 
-            if (sortMethod === 'hubsize') {
+            if (sortMethod === "hubsize") {
               this._determineLevelsByHubsize();
-            } else if (sortMethod === 'directed') {
+            } else if (sortMethod === "directed") {
               this._determineLevelsDirected();
-            } else if (sortMethod === 'custom') {
+            } else if (sortMethod === "custom") {
               this._determineLevelsCustomCallback();
             }
           } // fallback for cases where there are nodes but no edges
@@ -36608,7 +36751,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       /**
        * Condense elements. These can be nodes or branches depending on the callback.
        *
-       * @param {function} callback
+       * @param {Function} callback
        * @param {Array.<number>} levels
        * @param {*} centerParents
        */
@@ -36910,6 +37053,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     /**
      * This gives the space around the node. IF a map is supplied, it will only check against nodes NOT in the map.
      * This is used to only get the distances to nodes outside of a branch.
+     *
      * @param {Node} node
      * @param {{Node.id: vis.Node}} map
      * @returns {number[]}
@@ -36959,6 +37103,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * We use this method to center a parent node and check if it does not cross other nodes when it does.
+     *
      * @param {Node} node
      * @private
      */
@@ -36997,7 +37142,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     /**
      * This function places the nodes on the canvas based on the hierarchial distribution.
      *
-     * @param {Object} distribution | obtained by the function this._getDistribution()
+     * @param {object} distribution | obtained by the function this._getDistribution()
      * @private
      */
 
@@ -37104,6 +37249,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     /**
      * This method checks for overlap and if required shifts the branch. It also keeps records of positioned nodes.
      * Finally it will call _placeBranchNodes to place the branch nodes.
+     *
      * @param {Node} node
      * @param {number} level
      * @param {number} pos
@@ -37138,6 +37284,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     /**
      * Receives an array with node indices and returns an array with the actual node references.
      * Used for sorting based on node properties.
+     *
      * @param {Array.<Node.id>} idArray
      * @returns {Array.<Node>}
      */
@@ -37156,7 +37303,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     /**
      * This function get the distribution of levels based on hubsize
      *
-     * @returns {Object}
+     * @returns {object}
      * @private
      */
 
@@ -37288,9 +37435,9 @@ var LayoutEngine = /*#__PURE__*/function () {
       var _this7 = this;
 
       var minLevel = 100000; // TODO: this should come from options.
+      // eslint-disable-next-line no-unused-vars -- This should eventually be implemented with these parameters used.
 
-      var customCallback = function customCallback(nodeA, nodeB, edge) {// eslint-disable-line no-unused-vars
-      }; // TODO: perhaps move to HierarchicalStatus.
+      var customCallback = function customCallback(nodeA, nodeB, edge) {}; // TODO: perhaps move to HierarchicalStatus.
       //       But I currently don't see the point, this method is not used.
 
 
@@ -37301,7 +37448,7 @@ var LayoutEngine = /*#__PURE__*/function () {
           levelA = _this7.hierarchical.levels[nodeA.id] = minLevel;
         }
 
-        var diff = customCallback(NetworkUtil.cloneOptions(nodeA, 'node'), NetworkUtil.cloneOptions(nodeB, 'node'), NetworkUtil.cloneOptions(edge, 'edge'));
+        var diff = customCallback(NetworkUtil.cloneOptions(nodeA, "node"), NetworkUtil.cloneOptions(nodeB, "node"), NetworkUtil.cloneOptions(edge, "edge"));
         _this7.hierarchical.levels[nodeB.id] = levelA + diff;
       };
 
@@ -37336,6 +37483,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * Update the bookkeeping of parent and child.
+     *
      * @private
      */
 
@@ -37356,7 +37504,8 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * Crawl over the entire network and use a callback on each node couple that is connected to each other.
-     * @param {function} [callback=function(){}]          | will receive nodeA, nodeB and the connecting edge. A and B are distinct.
+     *
+     * @param {Function} [callback=function(){}]          | will receive nodeA, nodeB and the connecting edge. A and B are distinct.
      * @param {Node.id} startingNodeId
      * @private
      */
@@ -37427,6 +37576,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * Shift a branch a certain distance
+     *
      * @param {Node.id} parentId
      * @param {number} diff
      * @private
@@ -37461,6 +37611,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     }
     /**
      * Find a common parent between branches.
+     *
      * @param {Node.id} childA
      * @param {Node.id} childB
      * @returns {{foundParent, withChild}}
@@ -37532,7 +37683,7 @@ var LayoutEngine = /*#__PURE__*/function () {
   }, {
     key: "setDirectionStrategy",
     value: function setDirectionStrategy() {
-      var isVertical = this.options.hierarchical.direction === 'UD' || this.options.hierarchical.direction === 'DU';
+      var isVertical = this.options.hierarchical.direction === "UD" || this.options.hierarchical.direction === "DU";
 
       if (isVertical) {
         this.direction = new VerticalStrategy(this);
@@ -37544,8 +37695,9 @@ var LayoutEngine = /*#__PURE__*/function () {
      * Determine the center position of a branch from the passed list of child nodes
      *
      * This takes into account the positions of all the child nodes.
+     *
      * @param {Array.<Node|vis.Node.id>} childNodes  Array of either child nodes or node id's
-     * @return {number}
+     * @returns {number}
      * @private
      */
 
@@ -37585,7 +37737,7 @@ var LayoutEngine = /*#__PURE__*/function () {
 
 var ManipulationSystem = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {Canvas} canvas
    * @param {SelectionHandler} selectionHandler
    * @param {InteractionHandler} interactionHandler
@@ -37627,14 +37779,14 @@ var ManipulationSystem = /*#__PURE__*/function () {
       deleteNode: true,
       deleteEdge: true,
       controlNodeStyle: {
-        shape: 'dot',
+        shape: "dot",
         size: 6,
         color: {
-          background: '#ff0000',
-          border: '#3c3c3c',
+          background: "#ff0000",
+          border: "#3c3c3c",
           highlight: {
-            background: '#07f968',
-            border: '#3c3c3c'
+            background: "#07f968",
+            border: "#3c3c3c"
           }
         },
         borderWidth: 2,
@@ -37644,14 +37796,15 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
     assign$2(this.options, this.defaultOptions);
 
-    this.body.emitter.on('destroy', function () {
+    this.body.emitter.on("destroy", function () {
       _this._clean();
     });
-    this.body.emitter.on('_dataChanged', bind$2(_context = this._restore).call(_context, this));
-    this.body.emitter.on('_resetData', bind$2(_context2 = this._restore).call(_context2, this));
+    this.body.emitter.on("_dataChanged", bind$2(_context = this._restore).call(_context, this));
+    this.body.emitter.on("_resetData", bind$2(_context2 = this._restore).call(_context2, this));
   }
   /**
    * If something changes in the data during editing, switch back to the initial datamanipulation state and close all edit modes.
+   *
    * @private
    */
 
@@ -37670,9 +37823,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
     /**
      * Set the Options
      *
-     * @param {Object} options
-     * @param {Object} allOptions
-     * @param {Object} globalOptions
+     * @param {object} options
+     * @param {object} allOptions
+     * @param {object} globalOptions
      */
 
   }, {
@@ -37693,7 +37846,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
       }
 
       if (options !== undefined) {
-        if (typeof options === 'boolean') {
+        if (typeof options === "boolean") {
           this.options.enabled = options;
         } else {
           this.options.enabled = true;
@@ -37734,9 +37887,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
       this._clean();
 
       if (this.guiEnabled === true) {
-        this.manipulationDiv.style.display = 'block';
-        this.closeDiv.style.display = 'block';
-        this.editModeDiv.style.display = 'none';
+        this.manipulationDiv.style.display = "block";
+        this.closeDiv.style.display = "block";
+        this.editModeDiv.style.display = "none";
         this.showManipulatorToolbar();
       }
     }
@@ -37752,9 +37905,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
       this._clean();
 
       if (this.guiEnabled === true) {
-        this.manipulationDiv.style.display = 'none';
-        this.closeDiv.style.display = 'none';
-        this.editModeDiv.style.display = 'block';
+        this.manipulationDiv.style.display = "none";
+        this.closeDiv.style.display = "none";
+        this.editModeDiv.style.display = "block";
 
         this._createEditButton();
       }
@@ -37779,8 +37932,8 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         // a _restore will hide these menus
         this.editMode = true;
-        this.manipulationDiv.style.display = 'block';
-        this.closeDiv.style.display = 'block';
+        this.manipulationDiv.style.display = "block";
+        this.closeDiv.style.display = "block";
 
         var selectedNodeCount = this.selectionHandler._getSelectedNodeCount();
 
@@ -37806,7 +37959,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
           this._createAddEdgeButton(locale);
         }
 
-        if (selectedNodeCount === 1 && typeof this.options.editNode === 'function') {
+        if (selectedNodeCount === 1 && typeof this.options.editNode === "function") {
           if (needSeperator === true) {
             this._createSeperator(2);
           } else {
@@ -37845,11 +37998,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._bindHammerToDiv(this.closeDiv, bind$2(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
 
 
-        this._temporaryBindEvent('select', bind$2(_context4 = this.showManipulatorToolbar).call(_context4, this));
+        this._temporaryBindEvent("select", bind$2(_context4 = this.showManipulatorToolbar).call(_context4, this));
       } // redraw to show any possible changes
 
 
-      this.body.emitter.emit('_redraw');
+      this.body.emitter.emit("_redraw");
     }
     /**
      * Create the toolbar for adding Nodes
@@ -37868,7 +38021,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this._clean();
 
-      this.inMode = 'addNode';
+      this.inMode = "addNode";
 
       if (this.guiEnabled === true) {
         var _context5;
@@ -37880,13 +38033,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         this._createSeperator();
 
-        this._createDescription(locale['addDescription'] || this.options.locales['en']['addDescription']); // bind the close button
+        this._createDescription(locale["addDescription"] || this.options.locales["en"]["addDescription"]); // bind the close button
 
 
         this._bindHammerToDiv(this.closeDiv, bind$2(_context5 = this.toggleEditMode).call(_context5, this));
       }
 
-      this._temporaryBindEvent('click', bind$2(_context6 = this._performAddNode).call(_context6, this));
+      this._temporaryBindEvent("click", bind$2(_context6 = this._performAddNode).call(_context6, this));
     }
     /**
      * call the bound function to handle the editing of the node. The node has to be selected.
@@ -37908,9 +38061,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var node = this.selectionHandler._getSelectedNode();
 
       if (node !== undefined) {
-        this.inMode = 'editNode';
+        this.inMode = "editNode";
 
-        if (typeof this.options.editNode === 'function') {
+        if (typeof this.options.editNode === "function") {
           if (node.isCluster !== true) {
             var data = deepExtend({}, node.options, false);
             data.x = node.x;
@@ -37918,7 +38071,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
             if (this.options.editNode.length === 2) {
               this.options.editNode(data, function (finalizedData) {
-                if (finalizedData !== null && finalizedData !== undefined && _this2.inMode === 'editNode') {
+                if (finalizedData !== null && finalizedData !== undefined && _this2.inMode === "editNode") {
                   // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
                   _this2.body.data.nodes.getDataSet().update(finalizedData);
                 }
@@ -37926,13 +38079,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
                 _this2.showManipulatorToolbar();
               });
             } else {
-              throw new Error('The function for edit does not support two arguments (data, callback)');
+              throw new Error("The function for edit does not support two arguments (data, callback)");
             }
           } else {
-            alert(this.options.locales[this.options.locale]['editClusterError'] || this.options.locales['en']['editClusterError']);
+            alert(this.options.locales[this.options.locale]["editClusterError"] || this.options.locales["en"]["editClusterError"]);
           }
         } else {
-          throw new Error('No function has been configured to handle the editing of nodes.');
+          throw new Error("No function has been configured to handle the editing of nodes.");
         }
       } else {
         this.showManipulatorToolbar();
@@ -37955,7 +38108,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this._clean();
 
-      this.inMode = 'addEdge';
+      this.inMode = "addEdge";
 
       if (this.guiEnabled === true) {
         var _context7;
@@ -37967,24 +38120,24 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         this._createSeperator();
 
-        this._createDescription(locale['edgeDescription'] || this.options.locales['en']['edgeDescription']); // bind the close button
+        this._createDescription(locale["edgeDescription"] || this.options.locales["en"]["edgeDescription"]); // bind the close button
 
 
         this._bindHammerToDiv(this.closeDiv, bind$2(_context7 = this.toggleEditMode).call(_context7, this));
       } // temporarily overload functions
 
 
-      this._temporaryBindUI('onTouch', bind$2(_context8 = this._handleConnect).call(_context8, this));
+      this._temporaryBindUI("onTouch", bind$2(_context8 = this._handleConnect).call(_context8, this));
 
-      this._temporaryBindUI('onDragEnd', bind$2(_context9 = this._finishConnect).call(_context9, this));
+      this._temporaryBindUI("onDragEnd", bind$2(_context9 = this._finishConnect).call(_context9, this));
 
-      this._temporaryBindUI('onDrag', bind$2(_context10 = this._dragControlNode).call(_context10, this));
+      this._temporaryBindUI("onDrag", bind$2(_context10 = this._dragControlNode).call(_context10, this));
 
-      this._temporaryBindUI('onRelease', bind$2(_context11 = this._finishConnect).call(_context11, this));
+      this._temporaryBindUI("onRelease", bind$2(_context11 = this._finishConnect).call(_context11, this));
 
-      this._temporaryBindUI('onDragStart', bind$2(_context12 = this._dragStartEdge).call(_context12, this));
+      this._temporaryBindUI("onDragStart", bind$2(_context12 = this._dragStartEdge).call(_context12, this));
 
-      this._temporaryBindUI('onHold', function () {});
+      this._temporaryBindUI("onHold", function () {});
     }
     /**
      * create the toolbar to edit edges
@@ -38001,9 +38154,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this._clean();
 
-      this.inMode = 'editEdge';
+      this.inMode = "editEdge";
 
-      if (_typeof_1(this.options.editEdge) === 'object' && typeof this.options.editEdge.editWithoutDrag === "function") {
+      if (_typeof_1(this.options.editEdge) === "object" && typeof this.options.editEdge.editWithoutDrag === "function") {
         this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
 
         if (this.edgeBeingEditedId !== undefined) {
@@ -38025,7 +38178,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         this._createSeperator();
 
-        this._createDescription(locale['editEdgeDescription'] || this.options.locales['en']['editEdgeDescription']); // bind the close button
+        this._createDescription(locale["editEdgeDescription"] || this.options.locales["en"]["editEdgeDescription"]); // bind the close button
 
 
         this._bindHammerToDiv(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
@@ -38049,30 +38202,30 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.body.nodes[controlNodeTo.id] = controlNodeTo;
         this.body.nodeIndices.push(controlNodeTo.id); // temporarily overload UI functions, cleaned up automatically because of _temporaryBindUI
 
-        this._temporaryBindUI('onTouch', bind$2(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
+        this._temporaryBindUI("onTouch", bind$2(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
 
 
-        this._temporaryBindUI('onTap', function () {}); // disabled
+        this._temporaryBindUI("onTap", function () {}); // disabled
 
 
-        this._temporaryBindUI('onHold', function () {}); // disabled
+        this._temporaryBindUI("onHold", function () {}); // disabled
 
 
-        this._temporaryBindUI('onDragStart', bind$2(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
+        this._temporaryBindUI("onDragStart", bind$2(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
 
 
-        this._temporaryBindUI('onDrag', bind$2(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
+        this._temporaryBindUI("onDrag", bind$2(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
 
 
-        this._temporaryBindUI('onDragEnd', bind$2(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
+        this._temporaryBindUI("onDragEnd", bind$2(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
 
 
-        this._temporaryBindUI('onMouseMove', function () {}); // disabled
+        this._temporaryBindUI("onMouseMove", function () {}); // disabled
         // create function to position control nodes correctly on movement
         // automatically cleaned up because we use the temporary bind
 
 
-        this._temporaryBindEvent('beforeDrawing', function (ctx) {
+        this._temporaryBindEvent("beforeDrawing", function (ctx) {
           var positions = _edge.edgeType.findBorderPositions(ctx);
 
           if (controlNodeFrom.selected === false) {
@@ -38086,7 +38239,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
           }
         });
 
-        this.body.emitter.emit('_redraw');
+        this.body.emitter.emit("_redraw");
       } else {
         this.showManipulatorToolbar();
       }
@@ -38108,7 +38261,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this._clean();
 
-      this.inMode = 'delete';
+      this.inMode = "delete";
       var selectedNodes = this.selectionHandler.getSelectedNodes();
       var selectedEdges = this.selectionHandler.getSelectedEdges();
       var deleteFunction = undefined;
@@ -38116,21 +38269,21 @@ var ManipulationSystem = /*#__PURE__*/function () {
       if (selectedNodes.length > 0) {
         for (var i = 0; i < selectedNodes.length; i++) {
           if (this.body.nodes[selectedNodes[i]].isCluster === true) {
-            alert(this.options.locales[this.options.locale]['deleteClusterError'] || this.options.locales['en']['deleteClusterError']);
+            alert(this.options.locales[this.options.locale]["deleteClusterError"] || this.options.locales["en"]["deleteClusterError"]);
             return;
           }
         }
 
-        if (typeof this.options.deleteNode === 'function') {
+        if (typeof this.options.deleteNode === "function") {
           deleteFunction = this.options.deleteNode;
         }
       } else if (selectedEdges.length > 0) {
-        if (typeof this.options.deleteEdge === 'function') {
+        if (typeof this.options.deleteEdge === "function") {
           deleteFunction = this.options.deleteEdge;
         }
       }
 
-      if (typeof deleteFunction === 'function') {
+      if (typeof deleteFunction === "function") {
         var data = {
           nodes: selectedNodes,
           edges: selectedEdges
@@ -38138,34 +38291,35 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         if (deleteFunction.length === 2) {
           deleteFunction(data, function (finalizedData) {
-            if (finalizedData !== null && finalizedData !== undefined && _this3.inMode === 'delete') {
+            if (finalizedData !== null && finalizedData !== undefined && _this3.inMode === "delete") {
               // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
               _this3.body.data.edges.getDataSet().remove(finalizedData.edges);
 
               _this3.body.data.nodes.getDataSet().remove(finalizedData.nodes);
 
-              _this3.body.emitter.emit('startSimulation');
+              _this3.body.emitter.emit("startSimulation");
 
               _this3.showManipulatorToolbar();
             } else {
-              _this3.body.emitter.emit('startSimulation');
+              _this3.body.emitter.emit("startSimulation");
 
               _this3.showManipulatorToolbar();
             }
           });
         } else {
-          throw new Error('The function for delete does not support two arguments (data, callback)');
+          throw new Error("The function for delete does not support two arguments (data, callback)");
         }
       } else {
         this.body.data.edges.getDataSet().remove(selectedEdges);
         this.body.data.nodes.getDataSet().remove(selectedNodes);
-        this.body.emitter.emit('startSimulation');
+        this.body.emitter.emit("startSimulation");
         this.showManipulatorToolbar();
       }
     } //********************************************** PRIVATE ***************************************//
 
     /**
      * draw or remove the DOM
+     *
      * @private
      */
 
@@ -38192,6 +38346,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * create the div overlays that contain the DOM
+     *
      * @private
      */
 
@@ -38200,13 +38355,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _createWrappers() {
       // load the manipulator HTML elements. All styling done in css.
       if (this.manipulationDiv === undefined) {
-        this.manipulationDiv = document.createElement('div');
-        this.manipulationDiv.className = 'vis-manipulation';
+        this.manipulationDiv = document.createElement("div");
+        this.manipulationDiv.className = "vis-manipulation";
 
         if (this.editMode === true) {
-          this.manipulationDiv.style.display = 'block';
+          this.manipulationDiv.style.display = "block";
         } else {
-          this.manipulationDiv.style.display = 'none';
+          this.manipulationDiv.style.display = "none";
         }
 
         this.canvas.frame.appendChild(this.manipulationDiv);
@@ -38214,13 +38369,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
 
       if (this.editModeDiv === undefined) {
-        this.editModeDiv = document.createElement('div');
-        this.editModeDiv.className = 'vis-edit-mode';
+        this.editModeDiv = document.createElement("div");
+        this.editModeDiv.className = "vis-edit-mode";
 
         if (this.editMode === true) {
-          this.editModeDiv.style.display = 'none';
+          this.editModeDiv.style.display = "none";
         } else {
-          this.editModeDiv.style.display = 'block';
+          this.editModeDiv.style.display = "block";
         }
 
         this.canvas.frame.appendChild(this.editModeDiv);
@@ -38228,8 +38383,8 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
 
       if (this.closeDiv === undefined) {
-        this.closeDiv = document.createElement('div');
-        this.closeDiv.className = 'vis-close';
+        this.closeDiv = document.createElement("div");
+        this.closeDiv.className = "vis-close";
         this.closeDiv.style.display = this.manipulationDiv.style.display;
         this.canvas.frame.appendChild(this.closeDiv);
       }
@@ -38247,7 +38402,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_getNewTargetNode",
     value: function _getNewTargetNode(x, y) {
       var controlNodeStyle = deepExtend({}, this.options.controlNodeStyle);
-      controlNodeStyle.id = 'targetNode' + v4();
+      controlNodeStyle.id = "targetNode" + v4();
       controlNodeStyle.hidden = false;
       controlNodeStyle.physics = false;
       controlNodeStyle.x = x;
@@ -38281,7 +38436,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       var locale = this.options.locales[this.options.locale];
 
-      var button = this._createButton('editMode', 'vis-button vis-edit vis-edit-mode', locale['edit'] || this.options.locales['en']['edit']);
+      var button = this._createButton("editMode", "vis-button vis-edit vis-edit-mode", locale["edit"] || this.options.locales["en"]["edit"]);
 
       this.editModeDiv.appendChild(button); // bind a hammer listener to the button, calling the function toggleEditMode.
 
@@ -38289,6 +38444,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * this function cleans up after everything this module does. Temporary elements, functions and events are removed, physics restored, hammers removed.
+     *
      * @private
      */
 
@@ -38315,10 +38471,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
       this._unbindTemporaryEvents(); // restore the physics if required
 
 
-      this.body.emitter.emit('restorePhysics');
+      this.body.emitter.emit("restorePhysics");
     }
     /**
      * Each dom element has it's own hammer. They are stored in this.manipulationHammers. This cleans them up.
+     *
      * @private
      */
 
@@ -38336,6 +38493,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * Remove all DOM elements created by this module.
+     *
      * @private
      */
 
@@ -38369,6 +38527,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * create a seperator line. the index is to differentiate in the manipulation dom
+     *
      * @param {number} [index=1]
      * @private
      */
@@ -38377,9 +38536,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_createSeperator",
     value: function _createSeperator() {
       var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.manipulationDOM['seperatorLineDiv' + index] = document.createElement('div');
-      this.manipulationDOM['seperatorLineDiv' + index].className = 'vis-separator-line';
-      this.manipulationDiv.appendChild(this.manipulationDOM['seperatorLineDiv' + index]);
+      this.manipulationDOM["seperatorLineDiv" + index] = document.createElement("div");
+      this.manipulationDOM["seperatorLineDiv" + index].className = "vis-separator-line";
+      this.manipulationDiv.appendChild(this.manipulationDOM["seperatorLineDiv" + index]);
     } // ----------------------    DOM functions for buttons    --------------------------//
 
     /**
@@ -38393,7 +38552,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _createAddNodeButton(locale) {
       var _context19;
 
-      var button = this._createButton('addNode', 'vis-button vis-add', locale['addNode'] || this.options.locales['en']['addNode']);
+      var button = this._createButton("addNode", "vis-button vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
 
       this.manipulationDiv.appendChild(button);
 
@@ -38410,7 +38569,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _createAddEdgeButton(locale) {
       var _context20;
 
-      var button = this._createButton('addEdge', 'vis-button vis-connect', locale['addEdge'] || this.options.locales['en']['addEdge']);
+      var button = this._createButton("addEdge", "vis-button vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
 
       this.manipulationDiv.appendChild(button);
 
@@ -38427,7 +38586,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _createEditNodeButton(locale) {
       var _context21;
 
-      var button = this._createButton('editNode', 'vis-button vis-edit', locale['editNode'] || this.options.locales['en']['editNode']);
+      var button = this._createButton("editNode", "vis-button vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
 
       this.manipulationDiv.appendChild(button);
 
@@ -38444,7 +38603,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _createEditEdgeButton(locale) {
       var _context22;
 
-      var button = this._createButton('editEdge', 'vis-button vis-edit', locale['editEdge'] || this.options.locales['en']['editEdge']);
+      var button = this._createButton("editEdge", "vis-button vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
 
       this.manipulationDiv.appendChild(button);
 
@@ -38464,12 +38623,12 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var deleteBtnClass;
 
       if (this.options.rtl) {
-        deleteBtnClass = 'vis-button vis-delete-rtl';
+        deleteBtnClass = "vis-button vis-delete-rtl";
       } else {
-        deleteBtnClass = 'vis-button vis-delete';
+        deleteBtnClass = "vis-button vis-delete";
       }
 
-      var button = this._createButton('delete', deleteBtnClass, locale['del'] || this.options.locales['en']['del']);
+      var button = this._createButton("delete", deleteBtnClass, locale["del"] || this.options.locales["en"]["del"]);
 
       this.manipulationDiv.appendChild(button);
 
@@ -38486,7 +38645,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _createBackButton(locale) {
       var _context24;
 
-      var button = this._createButton('back', 'vis-button vis-back', locale['back'] || this.options.locales['en']['back']);
+      var button = this._createButton("back", "vis-button vis-back", locale["back"] || this.options.locales["en"]["back"]);
 
       this.manipulationDiv.appendChild(button);
 
@@ -38505,14 +38664,14 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createButton",
     value: function _createButton(id, className, label) {
-      var labelClassName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'vis-label';
-      this.manipulationDOM[id + 'Div'] = document.createElement('div');
-      this.manipulationDOM[id + 'Div'].className = className;
-      this.manipulationDOM[id + 'Label'] = document.createElement('div');
-      this.manipulationDOM[id + 'Label'].className = labelClassName;
-      this.manipulationDOM[id + 'Label'].innerHTML = label;
-      this.manipulationDOM[id + 'Div'].appendChild(this.manipulationDOM[id + 'Label']);
-      return this.manipulationDOM[id + 'Div'];
+      var labelClassName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "vis-label";
+      this.manipulationDOM[id + "Div"] = document.createElement("div");
+      this.manipulationDOM[id + "Div"].className = className;
+      this.manipulationDOM[id + "Label"] = document.createElement("div");
+      this.manipulationDOM[id + "Label"].className = labelClassName;
+      this.manipulationDOM[id + "Label"].innerHTML = label;
+      this.manipulationDOM[id + "Div"].appendChild(this.manipulationDOM[id + "Label"]);
+      return this.manipulationDOM[id + "Div"];
     }
     /**
      *
@@ -38523,13 +38682,14 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createDescription",
     value: function _createDescription(label) {
-      this.manipulationDiv.appendChild(this._createButton('description', 'vis-button vis-none', label));
+      this.manipulationDiv.appendChild(this._createButton("description", "vis-button vis-none", label));
     } // -------------------------- End of DOM functions for buttons ------------------------------//
 
     /**
      * this binds an event until cleanup by the clean functions.
+     *
      * @param {Event}  event   The event
-     * @param {function} newFunction
+     * @param {Function} newFunction
      * @private
      */
 
@@ -38544,8 +38704,9 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * this overrides an UI function until cleanup by the clean function
+     *
      * @param {string} UIfunctionName
-     * @param {function} newFunction
+     * @param {Function} newFunction
      * @private
      */
 
@@ -38556,7 +38717,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[UIfunctionName];
         this.body.eventListeners[UIfunctionName] = newFunction;
       } else {
-        throw new Error('This UI function does not exist. Typo? You tried: ' + UIfunctionName + ' possible are: ' + stringify$2(keys$3(this.body.eventListeners)));
+        throw new Error("This UI function does not exist. Typo? You tried: " + UIfunctionName + " possible are: " + stringify$2(keys$3(this.body.eventListeners)));
       }
     }
     /**
@@ -38579,6 +38740,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * Unbind the events created by _temporaryBindEvent
+     *
      * @private
      */
 
@@ -38597,7 +38759,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
      * Bind an hammer instance to a DOM element.
      *
      * @param {Element} domElement
-     * @param {function} boundFunction
+     * @param {Function} boundFunction
      */
 
   }, {
@@ -38609,6 +38771,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * Neatly clean up temporary edges and nodes
+     *
      * @private
      */
 
@@ -38654,6 +38817,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
     /**
      * the touch is used to get the position of the initial click
+     *
      * @param {Event}  event   The event
      * @private
      */
@@ -38667,14 +38831,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
     }
     /**
      * the drag start is used to mark one of the control nodes as selected.
-     * @param {Event}  event   The event
+     *
      * @private
      */
 
   }, {
     key: "_controlNodeDragStart",
-    value: function _controlNodeDragStart(event) {
-      // eslint-disable-line no-unused-vars
+    value: function _controlNodeDragStart() {
       var pointer = this.lastTouch;
 
       var pointerObj = this.selectionHandler._pointerToPositionObject(pointer);
@@ -38699,10 +38862,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.selectionHandler.selectObject(this.selectedControlNode);
       }
 
-      this.body.emitter.emit('_redraw');
+      this.body.emitter.emit("_redraw");
     }
     /**
      * dragging the control nodes or the canvas
+     *
      * @param {Event}  event   The event
      * @private
      */
@@ -38710,7 +38874,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_controlNodeDrag",
     value: function _controlNodeDrag(event) {
-      this.body.emitter.emit('disablePhysics');
+      this.body.emitter.emit("disablePhysics");
       var pointer = this.body.functions.getPointer(event.center);
       var pos = this.canvas.DOMtoCanvas(pointer);
 
@@ -38721,10 +38885,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.interactionHandler.onDrag(event);
       }
 
-      this.body.emitter.emit('_redraw');
+      this.body.emitter.emit("_redraw");
     }
     /**
      * connecting or restoring the control nodes.
+     *
      * @param {Event}  event   The event
      * @private
      */
@@ -38759,7 +38924,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       if (node !== undefined && this.selectedControlNode !== undefined) {
         if (node.isCluster === true) {
-          alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
+          alert(this.options.locales[this.options.locale]["createEdgeError"] || this.options.locales["en"]["createEdgeError"]);
         } else {
           var from = this.body.nodes[this.temporaryIds.nodes[0]];
 
@@ -38771,10 +38936,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
         }
       } else {
         edge.updateEdgeType();
-        this.body.emitter.emit('restorePhysics');
+        this.body.emitter.emit("restorePhysics");
       }
 
-      this.body.emitter.emit('_redraw');
+      this.body.emitter.emit("_redraw");
     } // ------------------------------------ END OF EDIT EDGE FUNCTIONS -----------------------------------------//
     // ------------------------------------------- ADD EDGE FUNCTIONS -----------------------------------------//
 
@@ -38802,7 +38967,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         if (node !== undefined) {
           if (node.isCluster === true) {
-            alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
+            alert(this.options.locales[this.options.locale]["createEdgeError"] || this.options.locales["en"]["createEdgeError"]);
           } else {
             // create a node the temporary line can look at
             var targetNode = this._getNewTargetNode(node.x, node.y);
@@ -38811,13 +38976,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
             this.body.nodeIndices.push(targetNode.id); // create a temporary edge
 
             var connectionEdge = this.body.functions.createEdge({
-              id: 'connectionEdge' + v4(),
+              id: "connectionEdge" + v4(),
               from: node.id,
               to: targetNode.id,
               physics: false,
               smooth: {
                 enabled: true,
-                type: 'continuous',
+                type: "continuous",
                 roundness: 0.5
               }
             });
@@ -38871,20 +39036,21 @@ var ManipulationSystem = /*#__PURE__*/function () {
         to: node ? node.id : undefined
       };
 
-      this.selectionHandler._generateClickEvent('controlNodeDragging', event, pointer);
+      this.selectionHandler._generateClickEvent("controlNodeDragging", event, pointer);
 
       if (this.temporaryIds.nodes[0] !== undefined) {
         var targetNode = this.body.nodes[this.temporaryIds.nodes[0]]; // there is only one temp node in the add edge mode.
 
         targetNode.x = this.canvas._XconvertDOMtoCanvas(pointer.x);
         targetNode.y = this.canvas._YconvertDOMtoCanvas(pointer.y);
-        this.body.emitter.emit('_redraw');
+        this.body.emitter.emit("_redraw");
       } else {
         this.interactionHandler.onDrag(event);
       }
     }
     /**
      * Connect the new edge to the target if one exists, otherwise remove temp line
+     *
      * @param {Event}  event   The event
      * @private
      */
@@ -38924,7 +39090,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       if (node !== undefined) {
         if (node.isCluster === true) {
-          alert(this.options.locales[this.options.locale]['createEdgeError'] || this.options.locales['en']['createEdgeError']);
+          alert(this.options.locales[this.options.locale]["createEdgeError"] || this.options.locales["en"]["createEdgeError"]);
         } else {
           if (this.body.nodes[connectFromId] !== undefined && this.body.nodes[node.id] !== undefined) {
             this._performAddEdge(connectFromId, node.id);
@@ -38937,10 +39103,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
         to: node ? node.id : undefined
       };
 
-      this.selectionHandler._generateClickEvent('controlNodeDragEnd', event, pointer); // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
+      this.selectionHandler._generateClickEvent("controlNodeDragEnd", event, pointer); // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
 
 
-      this.body.emitter.emit('_redraw');
+      this.body.emitter.emit("_redraw");
     }
     /**
      *
@@ -38953,14 +39119,14 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _dragStartEdge(event) {
       var pointer = this.lastTouch;
 
-      this.selectionHandler._generateClickEvent('dragStart', event, pointer, undefined, true);
+      this.selectionHandler._generateClickEvent("dragStart", event, pointer, undefined, true);
     } // --------------------------------------- END OF ADD EDGE FUNCTIONS -------------------------------------//
     // ------------------------------ Performing all the actual data manipulation ------------------------//
 
     /**
      * Adds a node on the specified location
      *
-     * @param {Object} clickData
+     * @param {object} clickData
      * @private
      */
 
@@ -38973,13 +39139,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
         id: v4(),
         x: clickData.pointer.canvas.x,
         y: clickData.pointer.canvas.y,
-        label: 'new'
+        label: "new"
       };
 
-      if (typeof this.options.addNode === 'function') {
+      if (typeof this.options.addNode === "function") {
         if (this.options.addNode.length === 2) {
           this.options.addNode(defaultData, function (finalizedData) {
-            if (finalizedData !== null && finalizedData !== undefined && _this4.inMode === 'addNode') {
+            if (finalizedData !== null && finalizedData !== undefined && _this4.inMode === "addNode") {
               // if for whatever reason the mode has changes (due to dataset change) disregard the callback
               _this4.body.data.nodes.getDataSet().add(finalizedData);
             }
@@ -38988,7 +39154,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
           });
         } else {
           this.showManipulatorToolbar();
-          throw new Error('The function for add does not support two arguments (data,callback)');
+          throw new Error("The function for add does not support two arguments (data,callback)");
         }
       } else {
         this.body.data.nodes.getDataSet().add(defaultData);
@@ -39013,10 +39179,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
         to: targetNodeId
       };
 
-      if (typeof this.options.addEdge === 'function') {
+      if (typeof this.options.addEdge === "function") {
         if (this.options.addEdge.length === 2) {
           this.options.addEdge(defaultData, function (finalizedData) {
-            if (finalizedData !== null && finalizedData !== undefined && _this5.inMode === 'addEdge') {
+            if (finalizedData !== null && finalizedData !== undefined && _this5.inMode === "addEdge") {
               // if for whatever reason the mode has changes (due to dataset change) disregard the callback
               _this5.body.data.edges.getDataSet().add(finalizedData);
 
@@ -39026,7 +39192,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
             }
           });
         } else {
-          throw new Error('The function for connect does not support two arguments (data,callback)');
+          throw new Error("The function for connect does not support two arguments (data,callback)");
         }
       } else {
         this.body.data.edges.getDataSet().add(defaultData);
@@ -39055,18 +39221,18 @@ var ManipulationSystem = /*#__PURE__*/function () {
       };
       var eeFunct = this.options.editEdge;
 
-      if (_typeof_1(eeFunct) === 'object') {
+      if (_typeof_1(eeFunct) === "object") {
         eeFunct = eeFunct.editWithoutDrag;
       }
 
-      if (typeof eeFunct === 'function') {
+      if (typeof eeFunct === "function") {
         if (eeFunct.length === 2) {
           eeFunct(defaultData, function (finalizedData) {
-            if (finalizedData === null || finalizedData === undefined || _this6.inMode !== 'editEdge') {
+            if (finalizedData === null || finalizedData === undefined || _this6.inMode !== "editEdge") {
               // if for whatever reason the mode has changes (due to dataset change) disregard the callback) {
               _this6.body.edges[defaultData.id].updateEdgeType();
 
-              _this6.body.emitter.emit('_redraw');
+              _this6.body.emitter.emit("_redraw");
 
               _this6.showManipulatorToolbar();
             } else {
@@ -39078,7 +39244,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
             }
           });
         } else {
-          throw new Error('The function for edit does not support two arguments (data, callback)');
+          throw new Error("The function for edit does not support two arguments (data, callback)");
         }
       } else {
         this.body.data.edges.getDataSet().update(defaultData);
@@ -39092,146 +39258,146 @@ var ManipulationSystem = /*#__PURE__*/function () {
 }();
 
 var htmlColors = {
-  black: '#000000',
-  navy: '#000080',
-  darkblue: '#00008B',
-  mediumblue: '#0000CD',
-  blue: '#0000FF',
-  darkgreen: '#006400',
-  green: '#008000',
-  teal: '#008080',
-  darkcyan: '#008B8B',
-  deepskyblue: '#00BFFF',
-  darkturquoise: '#00CED1',
-  mediumspringgreen: '#00FA9A',
-  lime: '#00FF00',
-  springgreen: '#00FF7F',
-  aqua: '#00FFFF',
-  cyan: '#00FFFF',
-  midnightblue: '#191970',
-  dodgerblue: '#1E90FF',
-  lightseagreen: '#20B2AA',
-  forestgreen: '#228B22',
-  seagreen: '#2E8B57',
-  darkslategray: '#2F4F4F',
-  limegreen: '#32CD32',
-  mediumseagreen: '#3CB371',
-  turquoise: '#40E0D0',
-  royalblue: '#4169E1',
-  steelblue: '#4682B4',
-  darkslateblue: '#483D8B',
-  mediumturquoise: '#48D1CC',
-  indigo: '#4B0082',
-  darkolivegreen: '#556B2F',
-  cadetblue: '#5F9EA0',
-  cornflowerblue: '#6495ED',
-  mediumaquamarine: '#66CDAA',
-  dimgray: '#696969',
-  slateblue: '#6A5ACD',
-  olivedrab: '#6B8E23',
-  slategray: '#708090',
-  lightslategray: '#778899',
-  mediumslateblue: '#7B68EE',
-  lawngreen: '#7CFC00',
-  chartreuse: '#7FFF00',
-  aquamarine: '#7FFFD4',
-  maroon: '#800000',
-  purple: '#800080',
-  olive: '#808000',
-  gray: '#808080',
-  skyblue: '#87CEEB',
-  lightskyblue: '#87CEFA',
-  blueviolet: '#8A2BE2',
-  darkred: '#8B0000',
-  darkmagenta: '#8B008B',
-  saddlebrown: '#8B4513',
-  darkseagreen: '#8FBC8F',
-  lightgreen: '#90EE90',
-  mediumpurple: '#9370D8',
-  darkviolet: '#9400D3',
-  palegreen: '#98FB98',
-  darkorchid: '#9932CC',
-  yellowgreen: '#9ACD32',
-  sienna: '#A0522D',
-  brown: '#A52A2A',
-  darkgray: '#A9A9A9',
-  lightblue: '#ADD8E6',
-  greenyellow: '#ADFF2F',
-  paleturquoise: '#AFEEEE',
-  lightsteelblue: '#B0C4DE',
-  powderblue: '#B0E0E6',
-  firebrick: '#B22222',
-  darkgoldenrod: '#B8860B',
-  mediumorchid: '#BA55D3',
-  rosybrown: '#BC8F8F',
-  darkkhaki: '#BDB76B',
-  silver: '#C0C0C0',
-  mediumvioletred: '#C71585',
-  indianred: '#CD5C5C',
-  peru: '#CD853F',
-  chocolate: '#D2691E',
-  tan: '#D2B48C',
-  lightgrey: '#D3D3D3',
-  palevioletred: '#D87093',
-  thistle: '#D8BFD8',
-  orchid: '#DA70D6',
-  goldenrod: '#DAA520',
-  crimson: '#DC143C',
-  gainsboro: '#DCDCDC',
-  plum: '#DDA0DD',
-  burlywood: '#DEB887',
-  lightcyan: '#E0FFFF',
-  lavender: '#E6E6FA',
-  darksalmon: '#E9967A',
-  violet: '#EE82EE',
-  palegoldenrod: '#EEE8AA',
-  lightcoral: '#F08080',
-  khaki: '#F0E68C',
-  aliceblue: '#F0F8FF',
-  honeydew: '#F0FFF0',
-  azure: '#F0FFFF',
-  sandybrown: '#F4A460',
-  wheat: '#F5DEB3',
-  beige: '#F5F5DC',
-  whitesmoke: '#F5F5F5',
-  mintcream: '#F5FFFA',
-  ghostwhite: '#F8F8FF',
-  salmon: '#FA8072',
-  antiquewhite: '#FAEBD7',
-  linen: '#FAF0E6',
-  lightgoldenrodyellow: '#FAFAD2',
-  oldlace: '#FDF5E6',
-  red: '#FF0000',
-  fuchsia: '#FF00FF',
-  magenta: '#FF00FF',
-  deeppink: '#FF1493',
-  orangered: '#FF4500',
-  tomato: '#FF6347',
-  hotpink: '#FF69B4',
-  coral: '#FF7F50',
-  darkorange: '#FF8C00',
-  lightsalmon: '#FFA07A',
-  orange: '#FFA500',
-  lightpink: '#FFB6C1',
-  pink: '#FFC0CB',
-  gold: '#FFD700',
-  peachpuff: '#FFDAB9',
-  navajowhite: '#FFDEAD',
-  moccasin: '#FFE4B5',
-  bisque: '#FFE4C4',
-  mistyrose: '#FFE4E1',
-  blanchedalmond: '#FFEBCD',
-  papayawhip: '#FFEFD5',
-  lavenderblush: '#FFF0F5',
-  seashell: '#FFF5EE',
-  cornsilk: '#FFF8DC',
-  lemonchiffon: '#FFFACD',
-  floralwhite: '#FFFAF0',
-  snow: '#FFFAFA',
-  yellow: '#FFFF00',
-  lightyellow: '#FFFFE0',
-  ivory: '#FFFFF0',
-  white: '#FFFFFF'
+  black: "#000000",
+  navy: "#000080",
+  darkblue: "#00008B",
+  mediumblue: "#0000CD",
+  blue: "#0000FF",
+  darkgreen: "#006400",
+  green: "#008000",
+  teal: "#008080",
+  darkcyan: "#008B8B",
+  deepskyblue: "#00BFFF",
+  darkturquoise: "#00CED1",
+  mediumspringgreen: "#00FA9A",
+  lime: "#00FF00",
+  springgreen: "#00FF7F",
+  aqua: "#00FFFF",
+  cyan: "#00FFFF",
+  midnightblue: "#191970",
+  dodgerblue: "#1E90FF",
+  lightseagreen: "#20B2AA",
+  forestgreen: "#228B22",
+  seagreen: "#2E8B57",
+  darkslategray: "#2F4F4F",
+  limegreen: "#32CD32",
+  mediumseagreen: "#3CB371",
+  turquoise: "#40E0D0",
+  royalblue: "#4169E1",
+  steelblue: "#4682B4",
+  darkslateblue: "#483D8B",
+  mediumturquoise: "#48D1CC",
+  indigo: "#4B0082",
+  darkolivegreen: "#556B2F",
+  cadetblue: "#5F9EA0",
+  cornflowerblue: "#6495ED",
+  mediumaquamarine: "#66CDAA",
+  dimgray: "#696969",
+  slateblue: "#6A5ACD",
+  olivedrab: "#6B8E23",
+  slategray: "#708090",
+  lightslategray: "#778899",
+  mediumslateblue: "#7B68EE",
+  lawngreen: "#7CFC00",
+  chartreuse: "#7FFF00",
+  aquamarine: "#7FFFD4",
+  maroon: "#800000",
+  purple: "#800080",
+  olive: "#808000",
+  gray: "#808080",
+  skyblue: "#87CEEB",
+  lightskyblue: "#87CEFA",
+  blueviolet: "#8A2BE2",
+  darkred: "#8B0000",
+  darkmagenta: "#8B008B",
+  saddlebrown: "#8B4513",
+  darkseagreen: "#8FBC8F",
+  lightgreen: "#90EE90",
+  mediumpurple: "#9370D8",
+  darkviolet: "#9400D3",
+  palegreen: "#98FB98",
+  darkorchid: "#9932CC",
+  yellowgreen: "#9ACD32",
+  sienna: "#A0522D",
+  brown: "#A52A2A",
+  darkgray: "#A9A9A9",
+  lightblue: "#ADD8E6",
+  greenyellow: "#ADFF2F",
+  paleturquoise: "#AFEEEE",
+  lightsteelblue: "#B0C4DE",
+  powderblue: "#B0E0E6",
+  firebrick: "#B22222",
+  darkgoldenrod: "#B8860B",
+  mediumorchid: "#BA55D3",
+  rosybrown: "#BC8F8F",
+  darkkhaki: "#BDB76B",
+  silver: "#C0C0C0",
+  mediumvioletred: "#C71585",
+  indianred: "#CD5C5C",
+  peru: "#CD853F",
+  chocolate: "#D2691E",
+  tan: "#D2B48C",
+  lightgrey: "#D3D3D3",
+  palevioletred: "#D87093",
+  thistle: "#D8BFD8",
+  orchid: "#DA70D6",
+  goldenrod: "#DAA520",
+  crimson: "#DC143C",
+  gainsboro: "#DCDCDC",
+  plum: "#DDA0DD",
+  burlywood: "#DEB887",
+  lightcyan: "#E0FFFF",
+  lavender: "#E6E6FA",
+  darksalmon: "#E9967A",
+  violet: "#EE82EE",
+  palegoldenrod: "#EEE8AA",
+  lightcoral: "#F08080",
+  khaki: "#F0E68C",
+  aliceblue: "#F0F8FF",
+  honeydew: "#F0FFF0",
+  azure: "#F0FFFF",
+  sandybrown: "#F4A460",
+  wheat: "#F5DEB3",
+  beige: "#F5F5DC",
+  whitesmoke: "#F5F5F5",
+  mintcream: "#F5FFFA",
+  ghostwhite: "#F8F8FF",
+  salmon: "#FA8072",
+  antiquewhite: "#FAEBD7",
+  linen: "#FAF0E6",
+  lightgoldenrodyellow: "#FAFAD2",
+  oldlace: "#FDF5E6",
+  red: "#FF0000",
+  fuchsia: "#FF00FF",
+  magenta: "#FF00FF",
+  deeppink: "#FF1493",
+  orangered: "#FF4500",
+  tomato: "#FF6347",
+  hotpink: "#FF69B4",
+  coral: "#FF7F50",
+  darkorange: "#FF8C00",
+  lightsalmon: "#FFA07A",
+  orange: "#FFA500",
+  lightpink: "#FFB6C1",
+  pink: "#FFC0CB",
+  gold: "#FFD700",
+  peachpuff: "#FFDAB9",
+  navajowhite: "#FFDEAD",
+  moccasin: "#FFE4B5",
+  bisque: "#FFE4C4",
+  mistyrose: "#FFE4E1",
+  blanchedalmond: "#FFEBCD",
+  papayawhip: "#FFEFD5",
+  lavenderblush: "#FFF0F5",
+  seashell: "#FFF5EE",
+  cornsilk: "#FFF8DC",
+  lemonchiffon: "#FFFACD",
+  floralwhite: "#FFFAF0",
+  snow: "#FFFAFA",
+  yellow: "#FFFF00",
+  lightyellow: "#FFFFE0",
+  ivory: "#FFFFF0",
+  white: "#FFFFFF"
 };
 /**
  * @param {number} [pixelRatio=1]
@@ -39278,6 +39444,7 @@ var ColorPicker = /*#__PURE__*/function () {
   }
   /**
    * this inserts the colorPicker into a div from the DOM
+   *
    * @param {Element} container
    */
 
@@ -39299,13 +39466,14 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * the callback is executed on apply and save. Bind it to the application
-     * @param {function} callback
+     *
+     * @param {Function} callback
      */
 
   }, {
     key: "setUpdateCallback",
     value: function setUpdateCallback(callback) {
-      if (typeof callback === 'function') {
+      if (typeof callback === "function") {
         this.updateCallback = callback;
       } else {
         throw new Error("Function attempted to set as colorPicker update callback is not a function.");
@@ -39313,13 +39481,14 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * the callback is executed on apply and save. Bind it to the application
-     * @param {function} callback
+     *
+     * @param {Function} callback
      */
 
   }, {
     key: "setCloseCallback",
     value: function setCloseCallback(callback) {
-      if (typeof callback === 'function') {
+      if (typeof callback === "function") {
         this.closeCallback = callback;
       } else {
         throw new Error("Function attempted to set as colorPicker closing callback is not a function.");
@@ -39328,14 +39497,14 @@ var ColorPicker = /*#__PURE__*/function () {
     /**
      *
      * @param {string} color
-     * @returns {String}
+     * @returns {string}
      * @private
      */
 
   }, {
     key: "_isColorString",
     value: function _isColorString(color) {
-      if (typeof color === 'string') {
+      if (typeof color === "string") {
         return htmlColors[color];
       }
     }
@@ -39348,7 +39517,8 @@ var ColorPicker = /*#__PURE__*/function () {
      * 'rgba(255,255,255,1.0)' --> rgba string
      * {r:255,g:255,b:255}     --> rgb object
      * {r:255,g:255,b:255,a:1.0} --> rgba object
-     * @param {string|Object} color
+     *
+     * @param {string | object} color
      * @param {boolean} [setInitial=true]
      */
 
@@ -39357,7 +39527,7 @@ var ColorPicker = /*#__PURE__*/function () {
     value: function setColor(color) {
       var setInitial = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-      if (color === 'none') {
+      if (color === "none") {
         return;
       }
 
@@ -39372,7 +39542,7 @@ var ColorPicker = /*#__PURE__*/function () {
 
       if (isString(color) === true) {
         if (isValidRGB(color) === true) {
-          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(',');
+          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(",");
           rgba = {
             r: rgbaArray[0],
             g: rgbaArray[1],
@@ -39380,7 +39550,7 @@ var ColorPicker = /*#__PURE__*/function () {
             a: 1.0
           };
         } else if (isValidRGBA(color) === true) {
-          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(',');
+          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(",");
 
           rgba = {
             r: _rgbaArray[0],
@@ -39400,7 +39570,7 @@ var ColorPicker = /*#__PURE__*/function () {
       } else {
         if (color instanceof Object) {
           if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
-            var alpha = color.a !== undefined ? color.a : '1.0';
+            var alpha = color.a !== undefined ? color.a : "1.0";
             rgba = {
               r: color.r,
               g: color.g,
@@ -39432,7 +39602,7 @@ var ColorPicker = /*#__PURE__*/function () {
       }
 
       this.applied = false;
-      this.frame.style.display = 'block';
+      this.frame.style.display = "block";
 
       this._generateHueCircle();
     } // ------------------------------------------ PRIVATE ----------------------------- //
@@ -39440,6 +39610,7 @@ var ColorPicker = /*#__PURE__*/function () {
     /**
      * Hide the picker. Is called by the cancel button.
      * Optional boolean to store the previous color for easy access later on.
+     *
      * @param {boolean} [storePrevious=true]
      * @private
      */
@@ -39460,7 +39631,7 @@ var ColorPicker = /*#__PURE__*/function () {
         this.updateCallback(this.initialColor);
       }
 
-      this.frame.style.display = 'none'; // call the closing callback, restoring the onclick method.
+      this.frame.style.display = "none"; // call the closing callback, restoring the onclick method.
       // this is in a setTimeout because it will trigger the show again before the click is done.
 
       setTimeout$2(function () {
@@ -39473,6 +39644,7 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * bound to the save button. Saves and hides.
+     *
      * @private
      */
 
@@ -39486,6 +39658,7 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * Bound to apply button. Saves but does not close. Is undone by the cancel button.
+     *
      * @private
      */
 
@@ -39499,6 +39672,7 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * load the color from the previous session.
+     *
      * @private
      */
 
@@ -39513,7 +39687,8 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * set the color, place the picker
-     * @param {Object} rgba
+     *
+     * @param {object} rgba
      * @param {boolean} [setInitial=true]
      * @private
      */
@@ -39534,13 +39709,14 @@ var ColorPicker = /*#__PURE__*/function () {
       var radius = this.r * hsv.s;
       var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
       var y = this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
-      this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + 'px';
-      this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + 'px';
+      this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + "px";
+      this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + "px";
 
       this._updatePicker(rgba);
     }
     /**
      * bound to opacity control
+     *
      * @param {number} value
      * @private
      */
@@ -39554,6 +39730,7 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * bound to brightness control
+     *
      * @param {number} value
      * @private
      */
@@ -39564,14 +39741,15 @@ var ColorPicker = /*#__PURE__*/function () {
       var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
       hsv.v = value / 100;
       var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
-      rgba['a'] = this.color.a;
+      rgba["a"] = this.color.a;
       this.color = rgba;
 
       this._updatePicker();
     }
     /**
      * update the color picker. A black circle overlays the hue circle to mimic the brightness decreasing.
-     * @param {Object} rgba
+     *
+     * @param {object} rgba
      * @private
      */
 
@@ -39580,7 +39758,7 @@ var ColorPicker = /*#__PURE__*/function () {
     value: function _updatePicker() {
       var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
       var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
-      var ctx = this.colorPickerCanvas.getContext('2d');
+      var ctx = this.colorPickerCanvas.getContext("2d");
 
       if (this.pixelRation === undefined) {
         this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
@@ -39592,32 +39770,34 @@ var ColorPicker = /*#__PURE__*/function () {
       var h = this.colorPickerCanvas.clientHeight;
       ctx.clearRect(0, 0, w, h);
       ctx.putImageData(this.hueCircle, 0, 0);
-      ctx.fillStyle = 'rgba(0,0,0,' + (1 - hsv.v) + ')';
+      ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
       ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
 
       fill$2(ctx).call(ctx);
 
       this.brightnessRange.value = 100 * hsv.v;
       this.opacityRange.value = 100 * rgba.a;
-      this.initialColorDiv.style.backgroundColor = 'rgba(' + this.initialColor.r + ',' + this.initialColor.g + ',' + this.initialColor.b + ',' + this.initialColor.a + ')';
-      this.newColorDiv.style.backgroundColor = 'rgba(' + this.color.r + ',' + this.color.g + ',' + this.color.b + ',' + this.color.a + ')';
+      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
+      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
     }
     /**
      * used by create to set the size of the canvas.
+     *
      * @private
      */
 
   }, {
     key: "_setSize",
     value: function _setSize() {
-      this.colorPickerCanvas.style.width = '100%';
-      this.colorPickerCanvas.style.height = '100%';
+      this.colorPickerCanvas.style.width = "100%";
+      this.colorPickerCanvas.style.height = "100%";
       this.colorPickerCanvas.width = 289 * this.pixelRatio;
       this.colorPickerCanvas.height = 289 * this.pixelRatio;
     }
     /**
      * create all dom elements
      * TODO: cleanup, lots of similar dom elements
+     *
      * @private
      */
 
@@ -39626,21 +39806,21 @@ var ColorPicker = /*#__PURE__*/function () {
     value: function _create() {
       var _context, _context2, _context3, _context4;
 
-      this.frame = document.createElement('div');
-      this.frame.className = 'vis-color-picker';
-      this.colorPickerDiv = document.createElement('div');
-      this.colorPickerSelector = document.createElement('div');
-      this.colorPickerSelector.className = 'vis-selector';
+      this.frame = document.createElement("div");
+      this.frame.className = "vis-color-picker";
+      this.colorPickerDiv = document.createElement("div");
+      this.colorPickerSelector = document.createElement("div");
+      this.colorPickerSelector.className = "vis-selector";
       this.colorPickerDiv.appendChild(this.colorPickerSelector);
-      this.colorPickerCanvas = document.createElement('canvas');
+      this.colorPickerCanvas = document.createElement("canvas");
       this.colorPickerDiv.appendChild(this.colorPickerCanvas);
 
       if (!this.colorPickerCanvas.getContext) {
-        var noCanvas = document.createElement('DIV');
-        noCanvas.style.color = 'red';
-        noCanvas.style.fontWeight = 'bold';
-        noCanvas.style.padding = '10px';
-        noCanvas.innerHTML = 'Error: your browser does not support HTML canvas';
+        var noCanvas = document.createElement("DIV");
+        noCanvas.style.color = "red";
+        noCanvas.style.fontWeight = "bold";
+        noCanvas.style.padding = "10px";
+        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
         this.colorPickerCanvas.appendChild(noCanvas);
       } else {
         var ctx = this.colorPickerCanvas.getContext("2d");
@@ -39648,39 +39828,37 @@ var ColorPicker = /*#__PURE__*/function () {
         this.colorPickerCanvas.getContext("2d").setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
       }
 
-      this.colorPickerDiv.className = 'vis-color';
-      this.opacityDiv = document.createElement('div');
-      this.opacityDiv.className = 'vis-opacity';
-      this.brightnessDiv = document.createElement('div');
-      this.brightnessDiv.className = 'vis-brightness';
-      this.arrowDiv = document.createElement('div');
-      this.arrowDiv.className = 'vis-arrow';
-      this.opacityRange = document.createElement('input');
+      this.colorPickerDiv.className = "vis-color";
+      this.opacityDiv = document.createElement("div");
+      this.opacityDiv.className = "vis-opacity";
+      this.brightnessDiv = document.createElement("div");
+      this.brightnessDiv.className = "vis-brightness";
+      this.arrowDiv = document.createElement("div");
+      this.arrowDiv.className = "vis-arrow";
+      this.opacityRange = document.createElement("input");
 
       try {
-        this.opacityRange.type = 'range'; // Not supported on IE9
+        this.opacityRange.type = "range"; // Not supported on IE9
 
-        this.opacityRange.min = '0';
-        this.opacityRange.max = '100';
-      } // TODO: Add some error handling and remove this lint exception
-      catch (err) {} // eslint-disable-line no-empty
+        this.opacityRange.min = "0";
+        this.opacityRange.max = "100";
+      } catch (err) {// TODO: Add some error handling.
+      }
 
-
-      this.opacityRange.value = '100';
-      this.opacityRange.className = 'vis-range';
-      this.brightnessRange = document.createElement('input');
+      this.opacityRange.value = "100";
+      this.opacityRange.className = "vis-range";
+      this.brightnessRange = document.createElement("input");
 
       try {
-        this.brightnessRange.type = 'range'; // Not supported on IE9
+        this.brightnessRange.type = "range"; // Not supported on IE9
 
-        this.brightnessRange.min = '0';
-        this.brightnessRange.max = '100';
-      } // TODO: Add some error handling and remove this lint exception
-      catch (err) {} // eslint-disable-line no-empty
+        this.brightnessRange.min = "0";
+        this.brightnessRange.max = "100";
+      } catch (err) {// TODO: Add some error handling.
+      }
 
-
-      this.brightnessRange.value = '100';
-      this.brightnessRange.className = 'vis-range';
+      this.brightnessRange.value = "100";
+      this.brightnessRange.className = "vis-range";
       this.opacityDiv.appendChild(this.opacityRange);
       this.brightnessDiv.appendChild(this.brightnessRange);
       var me = this;
@@ -39703,31 +39881,31 @@ var ColorPicker = /*#__PURE__*/function () {
 
       this.brightnessLabel = document.createElement("div");
       this.brightnessLabel.className = "vis-label vis-brightness";
-      this.brightnessLabel.innerHTML = 'brightness:';
+      this.brightnessLabel.innerHTML = "brightness:";
       this.opacityLabel = document.createElement("div");
       this.opacityLabel.className = "vis-label vis-opacity";
-      this.opacityLabel.innerHTML = 'opacity:';
+      this.opacityLabel.innerHTML = "opacity:";
       this.newColorDiv = document.createElement("div");
       this.newColorDiv.className = "vis-new-color";
-      this.newColorDiv.innerHTML = 'new';
+      this.newColorDiv.innerHTML = "new";
       this.initialColorDiv = document.createElement("div");
       this.initialColorDiv.className = "vis-initial-color";
-      this.initialColorDiv.innerHTML = 'initial';
+      this.initialColorDiv.innerHTML = "initial";
       this.cancelButton = document.createElement("div");
       this.cancelButton.className = "vis-button vis-cancel";
-      this.cancelButton.innerHTML = 'cancel';
+      this.cancelButton.innerHTML = "cancel";
       this.cancelButton.onclick = bind$2(_context = this._hide).call(_context, this, false);
       this.applyButton = document.createElement("div");
       this.applyButton.className = "vis-button vis-apply";
-      this.applyButton.innerHTML = 'apply';
+      this.applyButton.innerHTML = "apply";
       this.applyButton.onclick = bind$2(_context2 = this._apply).call(_context2, this);
       this.saveButton = document.createElement("div");
       this.saveButton.className = "vis-button vis-save";
-      this.saveButton.innerHTML = 'save';
+      this.saveButton.innerHTML = "save";
       this.saveButton.onclick = bind$2(_context3 = this._save).call(_context3, this);
       this.loadButton = document.createElement("div");
       this.loadButton.className = "vis-button vis-load";
-      this.loadButton.innerHTML = 'load last';
+      this.loadButton.innerHTML = "load last";
       this.loadButton.onclick = bind$2(_context4 = this._loadLast).call(_context4, this);
       this.frame.appendChild(this.colorPickerDiv);
       this.frame.appendChild(this.arrowDiv);
@@ -39744,6 +39922,7 @@ var ColorPicker = /*#__PURE__*/function () {
     }
     /**
      * bind hammer to the color picker
+     *
      * @private
      */
 
@@ -39755,27 +39934,28 @@ var ColorPicker = /*#__PURE__*/function () {
       this.drag = {};
       this.pinch = {};
       this.hammer = new Hammer$1(this.colorPickerCanvas);
-      this.hammer.get('pinch').set({
+      this.hammer.get("pinch").set({
         enable: true
       });
       onTouch(this.hammer, function (event) {
         _this2._moveSelector(event);
       });
-      this.hammer.on('tap', function (event) {
+      this.hammer.on("tap", function (event) {
         _this2._moveSelector(event);
       });
-      this.hammer.on('panstart', function (event) {
+      this.hammer.on("panstart", function (event) {
         _this2._moveSelector(event);
       });
-      this.hammer.on('panmove', function (event) {
+      this.hammer.on("panmove", function (event) {
         _this2._moveSelector(event);
       });
-      this.hammer.on('panend', function (event) {
+      this.hammer.on("panend", function (event) {
         _this2._moveSelector(event);
       });
     }
     /**
      * generate the hue circle. This is relatively heavy (200ms) and is done only once on the first time it is shown.
+     *
      * @private
      */
 
@@ -39783,7 +39963,7 @@ var ColorPicker = /*#__PURE__*/function () {
     key: "_generateHueCircle",
     value: function _generateHueCircle() {
       if (this.generated === false) {
-        var ctx = this.colorPickerCanvas.getContext('2d');
+        var ctx = this.colorPickerCanvas.getContext("2d");
 
         if (this.pixelRation === undefined) {
           this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
@@ -39811,12 +39991,12 @@ var ColorPicker = /*#__PURE__*/function () {
             x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
             y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
             rgb = HSVToRGB(hue * hfac, sat * sfac, 1);
-            ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
+            ctx.fillStyle = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
             ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
           }
         }
 
-        ctx.strokeStyle = 'rgba(0,0,0,1)';
+        ctx.strokeStyle = "rgba(0,0,0,1)";
         ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
         ctx.stroke();
         this.hueCircle = ctx.getImageData(0, 0, w, h);
@@ -39845,8 +40025,8 @@ var ColorPicker = /*#__PURE__*/function () {
       var radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
       var newTop = Math.cos(angle) * radius + centerY;
       var newLeft = Math.sin(angle) * radius + centerX;
-      this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + 'px';
-      this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + 'px'; // set color
+      this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + "px";
+      this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + "px"; // set color
 
       var h = angle / (2 * Math.PI);
       h = h < 0 ? h + 1 : h;
@@ -39855,11 +40035,11 @@ var ColorPicker = /*#__PURE__*/function () {
       hsv.h = h;
       hsv.s = s;
       var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
-      rgba['a'] = this.color.a;
+      rgba["a"] = this.color.a;
       this.color = rgba; // update previews
 
-      this.initialColorDiv.style.backgroundColor = 'rgba(' + this.initialColor.r + ',' + this.initialColor.g + ',' + this.initialColor.b + ',' + this.initialColor.a + ')';
-      this.newColorDiv.style.backgroundColor = 'rgba(' + this.color.r + ',' + this.color.g + ',' + this.color.b + ',' + this.color.a + ')';
+      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
+      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
     }
   }]);
 
@@ -39878,9 +40058,9 @@ var ColorPicker = /*#__PURE__*/function () {
 
 var Configurator = /*#__PURE__*/function () {
   /**
-   * @param {Object} parentModule        | the location where parentModule.setOptions() can be called
-   * @param {Object} defaultContainer    | the default container of the module
-   * @param {Object} configureOptions    | the fully configured and predefined options set found in allOptions.js
+   * @param {object} parentModule        | the location where parentModule.setOptions() can be called
+   * @param {object} defaultContainer    | the default container of the module
+   * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
    * @param {number} pixelRatio          | canvas pixel ratio
    */
   function Configurator(parentModule, defaultContainer, configureOptions) {
@@ -39917,7 +40097,7 @@ var Configurator = /*#__PURE__*/function () {
    * refresh all options.
    * Because all modules parse their options by themselves, we just use their options. We copy them here.
    *
-   * @param {Object} options
+   * @param {object} options
    */
 
 
@@ -39932,13 +40112,13 @@ var Configurator = /*#__PURE__*/function () {
 
         var enabled = true;
 
-        if (typeof options === 'string') {
+        if (typeof options === "string") {
           this.options.filter = options;
         } else if (options instanceof Array) {
           this.options.filter = options.join();
-        } else if (_typeof_1(options) === 'object') {
+        } else if (_typeof_1(options) === "object") {
           if (options == null) {
-            throw new TypeError('options cannot be null');
+            throw new TypeError("options cannot be null");
           }
 
           if (options.container !== undefined) {
@@ -39956,10 +40136,10 @@ var Configurator = /*#__PURE__*/function () {
           if (options.enabled !== undefined) {
             enabled = options.enabled;
           }
-        } else if (typeof options === 'boolean') {
+        } else if (typeof options === "boolean") {
           this.options.filter = true;
           enabled = options;
-        } else if (typeof options === 'function') {
+        } else if (typeof options === "function") {
           this.options.filter = options;
           enabled = true;
         }
@@ -39975,7 +40155,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {Object} moduleOptions
+     * @param {object} moduleOptions
      */
 
   }, {
@@ -39995,6 +40175,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * Create all DOM elements
+     *
      * @private
      */
 
@@ -40015,7 +40196,7 @@ var Configurator = /*#__PURE__*/function () {
           this.allowCreation = false;
           show = false;
 
-          if (typeof filter === 'function') {
+          if (typeof filter === "function") {
             show = filter(option, []);
             show = show || this._handleObject(this.configureOptions[option], [option], true);
           } else if (filter === true || indexOf$3(filter).call(filter, option) !== -1) {
@@ -40047,14 +40228,15 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * draw all DOM elements on the screen
+     *
      * @private
      */
 
   }, {
     key: "_push",
     value: function _push() {
-      this.wrapper = document.createElement('div');
-      this.wrapper.className = 'vis-configuration-wrapper';
+      this.wrapper = document.createElement("div");
+      this.wrapper.className = "vis-configuration-wrapper";
       this.container.appendChild(this.wrapper);
 
       for (var i = 0; i < this.domElements.length; i++) {
@@ -40065,6 +40247,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * delete all DOM elements
+     *
      * @private
      */
 
@@ -40086,7 +40269,8 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * get the value from the actualOptions if it exists
-     * @param {array} path    | where to look for the actual option
+     *
+     * @param {Array} path    | where to look for the actual option
      * @returns {*}
      * @private
      */
@@ -40109,6 +40293,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * all option elements are wrapped in an item
+     *
      * @param {Array} path    | where to look for the actual option
      * @param {Array.<Element>} domElements
      * @returns {number}
@@ -40119,8 +40304,8 @@ var Configurator = /*#__PURE__*/function () {
     key: "_makeItem",
     value: function _makeItem(path) {
       if (this.allowCreation === true) {
-        var item = document.createElement('div');
-        item.className = 'vis-configuration vis-config-item vis-config-s' + path.length;
+        var item = document.createElement("div");
+        item.className = "vis-configuration vis-config-item vis-config-s" + path.length;
 
         for (var _len = arguments.length, domElements = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
           domElements[_key - 1] = arguments[_key];
@@ -40138,6 +40323,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * header for major subjects
+     *
      * @param {string} name
      * @private
      */
@@ -40145,16 +40331,17 @@ var Configurator = /*#__PURE__*/function () {
   }, {
     key: "_makeHeader",
     value: function _makeHeader(name) {
-      var div = document.createElement('div');
-      div.className = 'vis-configuration vis-config-header';
+      var div = document.createElement("div");
+      div.className = "vis-configuration vis-config-header";
       div.innerHTML = name;
 
       this._makeItem([], div);
     }
     /**
      * make a label, if it is an object label, it gets different styling.
+     *
      * @param {string} name
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @param {string} objectLabel
      * @returns {HTMLElement}
      * @private
@@ -40164,30 +40351,31 @@ var Configurator = /*#__PURE__*/function () {
     key: "_makeLabel",
     value: function _makeLabel(name, path) {
       var objectLabel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      var div = document.createElement('div');
-      div.className = 'vis-configuration vis-config-label vis-config-s' + path.length;
+      var div = document.createElement("div");
+      div.className = "vis-configuration vis-config-label vis-config-s" + path.length;
 
       if (objectLabel === true) {
-        div.innerHTML = '<i><b>' + name + ':</b></i>';
+        div.innerHTML = "<i><b>" + name + ":</b></i>";
       } else {
-        div.innerHTML = name + ':';
+        div.innerHTML = name + ":";
       }
 
       return div;
     }
     /**
      * make a dropdown list for multiple possible string optoins
+     *
      * @param {Array.<number>} arr
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
   }, {
     key: "_makeDropdown",
     value: function _makeDropdown(arr, value, path) {
-      var select = document.createElement('select');
-      select.className = 'vis-configuration vis-config-select';
+      var select = document.createElement("select");
+      select.className = "vis-configuration vis-config-select";
       var selectedValue = 0;
 
       if (value !== undefined) {
@@ -40197,11 +40385,11 @@ var Configurator = /*#__PURE__*/function () {
       }
 
       for (var i = 0; i < arr.length; i++) {
-        var option = document.createElement('option');
+        var option = document.createElement("option");
         option.value = arr[i];
 
         if (i === selectedValue) {
-          option.selected = 'selected';
+          option.selected = "selected";
         }
 
         option.innerHTML = arr[i];
@@ -40220,9 +40408,10 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * make a range object for numeric options
+     *
      * @param {Array.<number>} arr
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
@@ -40233,40 +40422,39 @@ var Configurator = /*#__PURE__*/function () {
       var min = arr[1];
       var max = arr[2];
       var step = arr[3];
-      var range = document.createElement('input');
-      range.className = 'vis-configuration vis-config-range';
+      var range = document.createElement("input");
+      range.className = "vis-configuration vis-config-range";
 
       try {
-        range.type = 'range'; // not supported on IE9
+        range.type = "range"; // not supported on IE9
 
         range.min = min;
         range.max = max;
-      } // TODO: Add some error handling and remove this lint exception
-      catch (err) {} // eslint-disable-line no-empty
-
+      } catch (err) {// TODO: Add some error handling.
+      }
 
       range.step = step; // set up the popup settings in case they are needed.
 
-      var popupString = '';
+      var popupString = "";
       var popupValue = 0;
 
       if (value !== undefined) {
-        var factor = 1.20;
+        var factor = 1.2;
 
         if (value < 0 && value * factor < min) {
           range.min = Math.ceil(value * factor);
           popupValue = range.min;
-          popupString = 'range increased';
+          popupString = "range increased";
         } else if (value / factor < min) {
           range.min = Math.ceil(value / factor);
           popupValue = range.min;
-          popupString = 'range increased';
+          popupString = "range increased";
         }
 
         if (value * factor > max && max !== 1) {
           range.max = Math.ceil(value * factor);
           popupValue = range.max;
-          popupString = 'range increased';
+          popupString = "range increased";
         }
 
         range.value = value;
@@ -40274,8 +40462,8 @@ var Configurator = /*#__PURE__*/function () {
         range.value = defaultValue;
       }
 
-      var input = document.createElement('input');
-      input.className = 'vis-configuration vis-config-rangeinput';
+      var input = document.createElement("input");
+      input.className = "vis-configuration vis-config-rangeinput";
       input.value = range.value;
       var me = this;
 
@@ -40294,7 +40482,7 @@ var Configurator = /*#__PURE__*/function () {
       var itemIndex = this._makeItem(path, label, range, input); // if a popup is needed AND it has not been shown for this value, show it.
 
 
-      if (popupString !== '' && this.popupHistory[itemIndex] !== popupValue) {
+      if (popupString !== "" && this.popupHistory[itemIndex] !== popupValue) {
         this.popupHistory[itemIndex] = popupValue;
 
         this._setupPopup(popupString, itemIndex);
@@ -40302,6 +40490,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * make a button object
+     *
      * @private
      */
 
@@ -40311,30 +40500,31 @@ var Configurator = /*#__PURE__*/function () {
       var _this = this;
 
       if (this.options.showButton === true) {
-        var generateButton = document.createElement('div');
-        generateButton.className = 'vis-configuration vis-config-button';
-        generateButton.innerHTML = 'generate options';
+        var generateButton = document.createElement("div");
+        generateButton.className = "vis-configuration vis-config-button";
+        generateButton.innerHTML = "generate options";
 
         generateButton.onclick = function () {
           _this._printOptions();
         };
 
         generateButton.onmouseover = function () {
-          generateButton.className = 'vis-configuration vis-config-button hover';
+          generateButton.className = "vis-configuration vis-config-button hover";
         };
 
         generateButton.onmouseout = function () {
-          generateButton.className = 'vis-configuration vis-config-button';
+          generateButton.className = "vis-configuration vis-config-button";
         };
 
-        this.optionsContainer = document.createElement('div');
-        this.optionsContainer.className = 'vis-configuration vis-config-option-container';
+        this.optionsContainer = document.createElement("div");
+        this.optionsContainer.className = "vis-configuration vis-config-option-container";
         this.domElements.push(this.optionsContainer);
         this.domElements.push(generateButton);
       }
     }
     /**
      * prepare the popup
+     *
      * @param {string} string
      * @param {number} index
      * @private
@@ -40364,6 +40554,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * remove the popup from the dom
+     *
      * @private
      */
 
@@ -40379,6 +40570,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * Show the popup if it is needed.
+     *
      * @private
      */
 
@@ -40404,25 +40596,26 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * make a checkbox for boolean options.
+     *
      * @param {number} defaultValue
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
   }, {
     key: "_makeCheckbox",
     value: function _makeCheckbox(defaultValue, value, path) {
-      var checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.className = 'vis-configuration vis-config-checkbox';
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "vis-configuration vis-config-checkbox";
       checkbox.checked = defaultValue;
 
       if (value !== undefined) {
         checkbox.checked = value;
 
         if (value !== defaultValue) {
-          if (_typeof_1(defaultValue) === 'object') {
+          if (_typeof_1(defaultValue) === "object") {
             if (value !== defaultValue.enabled) {
               this.changedOptions.push({
                 path: path,
@@ -40450,18 +40643,19 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * make a text input field for string options.
+     *
      * @param {number} defaultValue
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
   }, {
     key: "_makeTextInput",
     value: function _makeTextInput(defaultValue, value, path) {
-      var checkbox = document.createElement('input');
-      checkbox.type = 'text';
-      checkbox.className = 'vis-configuration vis-config-text';
+      var checkbox = document.createElement("input");
+      checkbox.type = "text";
+      checkbox.className = "vis-configuration vis-config-text";
       checkbox.value = value;
 
       if (value !== defaultValue) {
@@ -40483,9 +40677,10 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * make a color field with a color picker for color fields
+     *
      * @param {Array.<number>} arr
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
@@ -40495,14 +40690,14 @@ var Configurator = /*#__PURE__*/function () {
       var _this4 = this;
 
       var defaultColor = arr[1];
-      var div = document.createElement('div');
+      var div = document.createElement("div");
       value = value === undefined ? defaultColor : value;
 
-      if (value !== 'none') {
-        div.className = 'vis-configuration vis-config-colorBlock';
+      if (value !== "none") {
+        div.className = "vis-configuration vis-config-colorBlock";
         div.style.backgroundColor = value;
       } else {
-        div.className = 'vis-configuration vis-config-colorBlock none';
+        div.className = "vis-configuration vis-config-colorBlock none";
       }
 
       value = value === undefined ? defaultColor : value;
@@ -40517,9 +40712,10 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * used by the color buttons to call the color picker.
+     *
      * @param {number} value
      * @param {HTMLElement} div
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
@@ -40535,7 +40731,7 @@ var Configurator = /*#__PURE__*/function () {
       this.colorPicker.show();
       this.colorPicker.setColor(value);
       this.colorPicker.setUpdateCallback(function (color) {
-        var colorString = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
+        var colorString = "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
         div.style.backgroundColor = colorString;
 
         _this5._update(colorString, path);
@@ -40549,8 +40745,9 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * parse an object and draw the correct items
-     * @param {Object} obj
-     * @param {array} [path=[]]    | where to look for the actual option
+     *
+     * @param {object} obj
+     * @param {Array} [path=[]]    | where to look for the actual option
      * @param {boolean} [checkOnly=false]
      * @returns {boolean}
      * @private
@@ -40573,11 +40770,11 @@ var Configurator = /*#__PURE__*/function () {
           var item = obj[subObj];
           var newPath = copyAndExtendArray(path, subObj);
 
-          if (typeof filter === 'function') {
+          if (typeof filter === "function") {
             show = filter(subObj, path); // if needed we must go deeper into the object.
 
             if (show === false) {
-              if (!(item instanceof Array) && typeof item !== 'string' && typeof item !== 'boolean' && item instanceof Object) {
+              if (!(item instanceof Array) && typeof item !== "string" && typeof item !== "boolean" && item instanceof Object) {
                 this.allowCreation = false;
                 show = this._handleObject(item, newPath, true);
                 this.allowCreation = checkOnly === false;
@@ -40592,16 +40789,16 @@ var Configurator = /*#__PURE__*/function () {
 
             if (item instanceof Array) {
               this._handleArray(item, value, newPath);
-            } else if (typeof item === 'string') {
+            } else if (typeof item === "string") {
               this._makeTextInput(item, value, newPath);
-            } else if (typeof item === 'boolean') {
+            } else if (typeof item === "boolean") {
               this._makeCheckbox(item, value, newPath);
             } else if (item instanceof Object) {
               // collapse the physics options that are not enabled
               var draw = true;
 
-              if (indexOf$3(path).call(path, 'physics') !== -1) {
-                if (this.moduleOptions.physics.solver !== subObj && subObj !== 'wind') {
+              if (indexOf$3(path).call(path, "physics") !== -1) {
+                if (this.moduleOptions.physics.solver !== subObj && subObj !== "wind") {
                   draw = false;
                 }
               }
@@ -40609,7 +40806,7 @@ var Configurator = /*#__PURE__*/function () {
               if (draw === true) {
                 // initially collapse options with an disabled enabled option.
                 if (item.enabled !== undefined) {
-                  var enabledPath = copyAndExtendArray(newPath, 'enabled');
+                  var enabledPath = copyAndExtendArray(newPath, "enabled");
 
                   var enabledValue = this._getValue(enabledPath);
 
@@ -40631,7 +40828,7 @@ var Configurator = /*#__PURE__*/function () {
                 }
               }
             } else {
-              console.error('dont know how to handle', item, subObj, newPath);
+              console.error("dont know how to handle", item, subObj, newPath);
             }
           }
         }
@@ -40641,16 +40838,17 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * handle the array type of option
+     *
      * @param {Array.<number>} arr
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
   }, {
     key: "_handleArray",
     value: function _handleArray(arr, value, path) {
-      if (typeof arr[0] === 'string' && arr[0] === 'color') {
+      if (typeof arr[0] === "string" && arr[0] === "color") {
         this._makeColorField(arr, value, path);
 
         if (arr[1] !== value) {
@@ -40659,7 +40857,7 @@ var Configurator = /*#__PURE__*/function () {
             value: value
           });
         }
-      } else if (typeof arr[0] === 'string') {
+      } else if (typeof arr[0] === "string") {
         this._makeDropdown(arr, value, path);
 
         if (arr[0] !== value) {
@@ -40668,7 +40866,7 @@ var Configurator = /*#__PURE__*/function () {
             value: value
           });
         }
-      } else if (typeof arr[0] === 'number') {
+      } else if (typeof arr[0] === "number") {
         this._makeRange(arr, value, path);
 
         if (arr[0] !== value) {
@@ -40681,8 +40879,9 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      * called to update the network with the new settings.
+     *
      * @param {number} value
-     * @param {array} path    | where to look for the actual option
+     * @param {Array} path    | where to look for the actual option
      * @private
      */
 
@@ -40700,7 +40899,7 @@ var Configurator = /*#__PURE__*/function () {
     }
     /**
      *
-     * @param {string|Boolean} value
+     * @param {string | boolean} value
      * @param {Array.<string>} path
      * @param {{}} optionsObj
      * @returns {{}}
@@ -40713,11 +40912,11 @@ var Configurator = /*#__PURE__*/function () {
       var optionsObj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       var pointer = optionsObj; // when dropdown boxes can be string or boolean, we typecast it into correct types
 
-      value = value === 'true' ? true : value;
-      value = value === 'false' ? false : value;
+      value = value === "true" ? true : value;
+      value = value === "false" ? false : value;
 
       for (var i = 0; i < path.length; i++) {
-        if (path[i] !== 'global') {
+        if (path[i] !== "global") {
           if (pointer[path[i]] === undefined) {
             pointer[path[i]] = {};
           }
@@ -40740,7 +40939,7 @@ var Configurator = /*#__PURE__*/function () {
     key: "_printOptions",
     value: function _printOptions() {
       var options = this.getOptions();
-      this.optionsContainer.innerHTML = '<pre>var options = ' + stringify$2(options, null, 2) + '</pre>';
+      this.optionsContainer.innerHTML = "<pre>var options = " + stringify$2(options, null, 2) + "</pre>";
     }
     /**
      *
@@ -40770,14 +40969,14 @@ var Configurator = /*#__PURE__*/function () {
  * __any__ means that the name of the property does not matter.
  * __type__ is a required field for all objects and contains the allowed types of all objects
  */
-var string = 'string';
-var bool = 'boolean';
-var number = 'number';
-var array = 'array';
-var object = 'object'; // should only be in a __type__ property
+var string = "string";
+var bool = "boolean";
+var number = "number";
+var array = "array";
+var object = "object"; // should only be in a __type__ property
 
-var dom = 'dom';
-var any = 'any'; // List of endpoints
+var dom = "dom";
+var any = "any"; // List of endpoints
 
 var endPoints = ["arrow", "bar", "box", "circle", "crow", "curve", "diamond", "image", "inv_curve", "inv_triangle", "triangle", "vee"];
 var allOptions$1 = {
@@ -40789,7 +40988,7 @@ var allOptions$1 = {
       boolean: bool,
       string: string,
       array: array,
-      'function': 'function'
+      function: "function"
     },
     container: {
       dom: dom
@@ -40802,7 +41001,7 @@ var allOptions$1 = {
       boolean: bool,
       string: string,
       array: array,
-      'function': 'function'
+      function: "function"
     }
   },
   edges: {
@@ -40921,11 +41120,11 @@ var allOptions$1 = {
     chosen: {
       label: {
         boolean: bool,
-        'function': 'function'
+        function: "function"
       },
       edge: {
         boolean: bool,
-        'function': 'function'
+        function: "function"
       },
       __type__: {
         object: object,
@@ -40943,7 +41142,7 @@ var allOptions$1 = {
         string: string
       },
       inherit: {
-        string: ['from', 'to', 'both'],
+        string: ["from", "to", "both"],
         boolean: bool
       },
       opacity: {
@@ -40980,7 +41179,7 @@ var allOptions$1 = {
         string: string
       },
       align: {
-        string: ['horizontal', 'top', 'middle', 'bottom']
+        string: ["horizontal", "top", "middle", "bottom"]
       },
       vadjust: {
         number: number
@@ -41086,19 +41285,19 @@ var allOptions$1 = {
       boolean: bool
     },
     hoverWidth: {
-      'function': 'function',
+      function: "function",
       number: number
     },
     label: {
       string: string,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     labelHighlightBold: {
       boolean: bool
     },
     length: {
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     physics: {
       boolean: bool
@@ -41132,14 +41331,14 @@ var allOptions$1 = {
         }
       },
       customScalingFunction: {
-        'function': 'function'
+        function: "function"
       },
       __type__: {
         object: object
       }
     },
     selectionWidth: {
-      'function': 'function',
+      function: "function",
       number: number
     },
     selfReferenceSize: {
@@ -41185,13 +41384,13 @@ var allOptions$1 = {
         boolean: bool
       },
       type: {
-        string: ['dynamic', 'continuous', 'discrete', 'diagonalCross', 'straightCross', 'horizontal', 'vertical', 'curvedCW', 'curvedCCW', 'cubicBezier']
+        string: ["dynamic", "continuous", "discrete", "diagonalCross", "straightCross", "horizontal", "vertical", "curvedCW", "curvedCCW", "cubicBezier"]
       },
       roundness: {
         number: number
       },
       forceDirection: {
-        string: ['horizontal', 'vertical', 'none'],
+        string: ["horizontal", "vertical", "none"],
         boolean: bool
       },
       __type__: {
@@ -41201,7 +41400,7 @@ var allOptions$1 = {
     },
     title: {
       string: string,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     width: {
       number: number
@@ -41218,7 +41417,7 @@ var allOptions$1 = {
     },
     value: {
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     __type__: {
       object: object
@@ -41228,7 +41427,7 @@ var allOptions$1 = {
     useDefaultGroups: {
       boolean: bool
     },
-    __any__: 'get from nodes, will be overwritten below',
+    __any__: "get from nodes, will be overwritten below",
     __type__: {
       object: object
     }
@@ -41308,7 +41507,7 @@ var allOptions$1 = {
   },
   layout: {
     randomSeed: {
-      'undefined': 'undefined',
+      undefined: "undefined",
       number: number,
       string: string
     },
@@ -41341,15 +41540,15 @@ var allOptions$1 = {
         boolean: bool
       },
       direction: {
-        string: ['UD', 'DU', 'LR', 'RL']
+        string: ["UD", "DU", "LR", "RL"]
       },
       // UD, DU, LR, RL
       sortMethod: {
-        string: ['hubsize', 'directed']
+        string: ["hubsize", "directed"]
       },
       // hubsize, directed
       shakeTowards: {
-        string: ['leaves', 'roots']
+        string: ["leaves", "roots"]
       },
       // leaves, roots
       __type__: {
@@ -41370,34 +41569,34 @@ var allOptions$1 = {
     },
     addNode: {
       boolean: bool,
-      'function': 'function'
+      function: "function"
     },
     addEdge: {
       boolean: bool,
-      'function': 'function'
+      function: "function"
     },
     editNode: {
-      'function': 'function'
+      function: "function"
     },
     editEdge: {
       editWithoutDrag: {
-        'function': 'function'
+        function: "function"
       },
       __type__: {
         object: object,
         boolean: bool,
-        'function': 'function'
+        function: "function"
       }
     },
     deleteNode: {
       boolean: bool,
-      'function': 'function'
+      function: "function"
     },
     deleteEdge: {
       boolean: bool,
-      'function': 'function'
+      function: "function"
     },
-    controlNodeStyle: 'get from nodes, will be overwritten below',
+    controlNodeStyle: "get from nodes, will be overwritten below",
     __type__: {
       object: object,
       boolean: bool
@@ -41409,20 +41608,20 @@ var allOptions$1 = {
     },
     borderWidthSelected: {
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     brokenImage: {
       string: string,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     chosen: {
       label: {
         boolean: bool,
-        'function': 'function'
+        function: "function"
       },
       node: {
         boolean: bool,
-        'function': 'function'
+        function: "function"
       },
       __type__: {
         object: object,
@@ -41467,7 +41666,7 @@ var allOptions$1 = {
     },
     opacity: {
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     fixed: {
       x: {
@@ -41608,7 +41807,7 @@ var allOptions$1 = {
     group: {
       string: string,
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     heightConstraint: {
       minimum: {
@@ -41656,12 +41855,12 @@ var allOptions$1 = {
     image: {
       selected: {
         string: string,
-        'undefined': 'undefined'
+        undefined: "undefined"
       },
       // --> URL
       unselected: {
         string: string,
-        'undefined': 'undefined'
+        undefined: "undefined"
       },
       // --> URL
       __type__: {
@@ -41689,14 +41888,14 @@ var allOptions$1 = {
     },
     label: {
       string: string,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     labelHighlightBold: {
       boolean: bool
     },
     level: {
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     margin: {
       top: {
@@ -41751,7 +41950,7 @@ var allOptions$1 = {
         }
       },
       customScalingFunction: {
-        'function': 'function'
+        function: "function"
       },
       __type__: {
         object: object
@@ -41779,10 +41978,10 @@ var allOptions$1 = {
       }
     },
     shape: {
-      string: ['custom', 'ellipse', 'circle', 'database', 'box', 'text', 'image', 'circularImage', 'diamond', 'dot', 'star', 'triangle', 'triangleDown', 'square', 'icon', 'hexagon']
+      string: ["custom", "ellipse", "circle", "database", "box", "text", "image", "circularImage", "diamond", "dot", "star", "triangle", "triangleDown", "square", "icon", "hexagon"]
     },
     ctxRenderer: {
-      'function': 'function'
+      function: "function"
     },
     shapeProperties: {
       borderDashes: {
@@ -41802,7 +42001,7 @@ var allOptions$1 = {
         boolean: bool
       },
       coordinateOrigin: {
-        string: ['center', 'top-left']
+        string: ["center", "top-left"]
       },
       __type__: {
         object: object
@@ -41814,11 +42013,11 @@ var allOptions$1 = {
     title: {
       string: string,
       dom: dom,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     value: {
       number: number,
-      'undefined': 'undefined'
+      undefined: "undefined"
     },
     widthConstraint: {
       minimum: {
@@ -41950,7 +42149,7 @@ var allOptions$1 = {
     },
     // px/s
     solver: {
-      string: ['barnesHut', 'repulsion', 'hierarchicalRepulsion', 'forceAtlas2Based']
+      string: ["barnesHut", "repulsion", "hierarchicalRepulsion", "forceAtlas2Based"]
     },
     stabilization: {
       enabled: {
@@ -42056,15 +42255,15 @@ var configureOptions = {
     borderWidth: [1, 0, 10, 1],
     borderWidthSelected: [2, 0, 10, 1],
     color: {
-      border: ['color', '#2B7CE9'],
-      background: ['color', '#97C2FC'],
+      border: ["color", "#2B7CE9"],
+      background: ["color", "#97C2FC"],
       highlight: {
-        border: ['color', '#2B7CE9'],
-        background: ['color', '#D2E5FF']
+        border: ["color", "#2B7CE9"],
+        background: ["color", "#D2E5FF"]
       },
       hover: {
-        border: ['color', '#2B7CE9'],
-        background: ['color', '#D2E5FF']
+        border: ["color", "#2B7CE9"],
+        background: ["color", "#D2E5FF"]
       }
     },
     opacity: [0, 0, 1, 0.1],
@@ -42073,14 +42272,14 @@ var configureOptions = {
       y: false
     },
     font: {
-      color: ['color', '#343434'],
+      color: ["color", "#343434"],
       size: [14, 0, 100, 1],
       // px
-      face: ['arial', 'verdana', 'tahoma'],
-      background: ['color', 'none'],
+      face: ["arial", "verdana", "tahoma"],
+      background: ["color", "none"],
       strokeWidth: [0, 0, 50, 1],
       // px
-      strokeColor: ['color', '#ffffff']
+      strokeColor: ["color", "#ffffff"]
     },
     //group: 'string',
     hidden: false,
@@ -42106,12 +42305,12 @@ var configureOptions = {
     },
     shadow: {
       enabled: false,
-      color: 'rgba(0,0,0,0.5)',
+      color: "rgba(0,0,0,0.5)",
       size: [10, 0, 20, 1],
       x: [5, -30, 30, 1],
       y: [5, -30, 30, 1]
     },
-    shape: ['ellipse', 'box', 'circle', 'database', 'diamond', 'dot', 'square', 'star', 'text', 'triangle', 'triangleDown', 'hexagon'],
+    shape: ["ellipse", "box", "circle", "database", "diamond", "dot", "square", "star", "text", "triangle", "triangleDown", "hexagon"],
     shapeProperties: {
       borderDashes: false,
       borderRadius: [6, 0, 20, 1],
@@ -42125,17 +42324,17 @@ var configureOptions = {
       to: {
         enabled: false,
         scaleFactor: [1, 0, 3, 0.05],
-        type: 'arrow'
+        type: "arrow"
       },
       middle: {
         enabled: false,
         scaleFactor: [1, 0, 3, 0.05],
-        type: 'arrow'
+        type: "arrow"
       },
       from: {
         enabled: false,
         scaleFactor: [1, 0, 3, 0.05],
-        type: 'arrow'
+        type: "arrow"
       }
     },
     endPointOffset: {
@@ -42144,23 +42343,23 @@ var configureOptions = {
     },
     arrowStrikethrough: true,
     color: {
-      color: ['color', '#848484'],
-      highlight: ['color', '#848484'],
-      hover: ['color', '#848484'],
-      inherit: ['from', 'to', 'both', true, false],
+      color: ["color", "#848484"],
+      highlight: ["color", "#848484"],
+      hover: ["color", "#848484"],
+      inherit: ["from", "to", "both", true, false],
       opacity: [1, 0, 1, 0.05]
     },
     dashes: false,
     font: {
-      color: ['color', '#343434'],
+      color: ["color", "#343434"],
       size: [14, 0, 100, 1],
       // px
-      face: ['arial', 'verdana', 'tahoma'],
-      background: ['color', 'none'],
+      face: ["arial", "verdana", "tahoma"],
+      background: ["color", "none"],
       strokeWidth: [2, 0, 50, 1],
       // px
-      strokeColor: ['color', '#ffffff'],
-      align: ['horizontal', 'top', 'middle', 'bottom']
+      strokeColor: ["color", "#ffffff"],
+      align: ["horizontal", "top", "middle", "bottom"]
     },
     hidden: false,
     hoverWidth: [1.5, 0, 5, 0.1],
@@ -42186,15 +42385,15 @@ var configureOptions = {
     },
     shadow: {
       enabled: false,
-      color: 'rgba(0,0,0,0.5)',
+      color: "rgba(0,0,0,0.5)",
       size: [10, 0, 20, 1],
       x: [5, -30, 30, 1],
       y: [5, -30, 30, 1]
     },
     smooth: {
       enabled: true,
-      type: ['dynamic', 'continuous', 'discrete', 'diagonalCross', 'straightCross', 'horizontal', 'vertical', 'curvedCW', 'curvedCCW', 'cubicBezier'],
-      forceDirection: ['horizontal', 'vertical', 'none'],
+      type: ["dynamic", "continuous", "discrete", "diagonalCross", "straightCross", "horizontal", "vertical", "curvedCW", "curvedCCW", "cubicBezier"],
+      forceDirection: ["horizontal", "vertical", "none"],
       roundness: [0.5, 0, 1, 0.05]
     },
     width: [1, 0, 30, 1]
@@ -42210,11 +42409,11 @@ var configureOptions = {
       blockShifting: true,
       edgeMinimization: true,
       parentCentralization: true,
-      direction: ['UD', 'DU', 'LR', 'RL'],
+      direction: ["UD", "DU", "LR", "RL"],
       // UD, DU, LR, RL
-      sortMethod: ['hubsize', 'directed'],
+      sortMethod: ["hubsize", "directed"],
       // hubsize, directed
-      shakeTowards: ['leaves', 'roots'] // leaves, roots
+      shakeTowards: ["leaves", "roots"] // leaves, roots
 
     }
   },
@@ -42284,7 +42483,7 @@ var configureOptions = {
     },
     maxVelocity: [50, 0, 150, 1],
     minVelocity: [0.1, 0.01, 0.5, 0.01],
-    solver: ['barnesHut', 'forceAtlas2Based', 'repulsion', 'hierarchicalRepulsion'],
+    solver: ["barnesHut", "forceAtlas2Based", "repulsion", "hierarchicalRepulsion"],
     timestep: [0.5, 0.01, 1, 0.01],
     wind: {
       x: [0, -10, 10, 0.1],
@@ -42314,7 +42513,7 @@ var FloydWarshall = /*#__PURE__*/function () {
   }
   /**
    *
-   * @param {Object} body
+   * @param {object} body
    * @param {Array.<Node>} nodesArray
    * @param {Array.<Edge>} edgesArray
    * @returns {{}}
@@ -42385,7 +42584,7 @@ var FloydWarshall = /*#__PURE__*/function () {
 
 var KamadaKawai = /*#__PURE__*/function () {
   /**
-   * @param {Object} body
+   * @param {object} body
    * @param {number} edgeLength
    * @param {number} edgeStrength
    */
@@ -42399,7 +42598,8 @@ var KamadaKawai = /*#__PURE__*/function () {
   }
   /**
    * Not sure if needed but can be used to update the spring length and spring constant
-   * @param {Object} options
+   *
+   * @param {object} options
    */
 
 
@@ -42418,6 +42618,7 @@ var KamadaKawai = /*#__PURE__*/function () {
     }
     /**
      * Position the system
+     *
      * @param {Array.<Node>} nodesArray
      * @param {Array.<vis.Edge>} edgesArray
      * @param {boolean} [ignoreClusters=false]
@@ -42483,6 +42684,7 @@ var KamadaKawai = /*#__PURE__*/function () {
     }
     /**
      * get the node with the highest energy
+     *
      * @param {boolean} ignoreClusters
      * @returns {number[]}
      * @private
@@ -42521,6 +42723,7 @@ var KamadaKawai = /*#__PURE__*/function () {
     }
     /**
      * calculate the energy of a single node
+     *
      * @param {Node.id} m
      * @returns {number[]}
      * @private
@@ -42539,6 +42742,7 @@ var KamadaKawai = /*#__PURE__*/function () {
     /**
      * move the node based on it's energy
      * the dx and dy are calculated from the linear system proposed by Kamada and Kawai
+     *
      * @param {number} m
      * @param {number} dE_dx
      * @param {number} dE_dy
@@ -42590,7 +42794,8 @@ var KamadaKawai = /*#__PURE__*/function () {
     }
     /**
      * Create the L matrix: edge length times shortest path
-     * @param {Object} D_matrix
+     *
+     * @param {object} D_matrix
      * @private
      */
 
@@ -42611,7 +42816,8 @@ var KamadaKawai = /*#__PURE__*/function () {
     }
     /**
      * Create the K matrix: spring constants times shortest path
-     * @param {Object} D_matrix
+     *
+     * @param {object} D_matrix
      * @private
      */
 
@@ -42632,6 +42838,7 @@ var KamadaKawai = /*#__PURE__*/function () {
     }
     /**
      *  Create matrix with all energies between nodes
+     *
      *  @private
      */
 
@@ -42729,11 +42936,11 @@ var KamadaKawai = /*#__PURE__*/function () {
  *
  * @param {Element} container   The DOM element in which the Network will
  *                                  be created. Normally a div element.
- * @param {Object} data         An object containing parameters
+ * @param {object} data         An object containing parameters
  *                              {Array} nodes
  *                              {Array} edges
- * @param {Object} options      Options
- * @constructor Network
+ * @param {object} options      Options
+ * @class Network
  */
 
 function Network(container, data, options) {
@@ -42744,13 +42951,13 @@ function Network(container, data, options) {
       _this = this;
 
   if (!(this instanceof Network)) {
-    throw new SyntaxError('Constructor must be called with the new operator');
+    throw new SyntaxError("Constructor must be called with the new operator");
   } // set constant values
 
 
   this.options = {};
   this.defaultOptions = {
-    locale: 'en',
+    locale: "en",
     locales: locales,
     clickToUse: false
   };
@@ -42876,7 +43083,8 @@ function Network(container, data, options) {
 componentEmitter(Network.prototype);
 /**
  * Set options
- * @param {Object} options
+ *
+ * @param {object} options
  */
 
 Network.prototype.setOptions = function (options) {
@@ -42890,11 +43098,11 @@ Network.prototype.setOptions = function (options) {
     var errorFound = Validator.validate(options, allOptions$1);
 
     if (errorFound === true) {
-      console.log('%cErrors have been found in the supplied options object.', printStyle);
+      console.error("%cErrors have been found in the supplied options object.", printStyle);
     } // copy the global fields over
 
 
-    var fields = ['locale', 'locales', 'clickToUse'];
+    var fields = ["locale", "locales", "clickToUse"];
     selectiveDeepExtend(fields, this.options, options); // normalize the locale or use English
 
     if (options.locale !== undefined) {
@@ -42925,7 +43133,7 @@ Network.prototype.setOptions = function (options) {
     //this.clustering.setOptions(options.clustering);
 
 
-    if ('configure' in options) {
+    if ("configure" in options) {
       if (!this.configurator) {
         this.configurator = new Configurator(this, this.body.container, configureOptions, this.canvas.pixelRatio);
       }
@@ -42964,7 +43172,7 @@ Network.prototype.setOptions = function (options) {
       if (options.clickToUse === true) {
         if (this.activator === undefined) {
           this.activator = new Activator(this.canvas.frame);
-          this.activator.on('change', function () {
+          this.activator.on("change", function () {
             _this2.body.emitter.emit("activate");
           });
         }
@@ -43018,8 +43226,8 @@ Network.prototype._updateVisibleIndices = function () {
       var fromNode = nodes[edge.fromId];
       var toNode = nodes[edge.toId];
       var edgeNodesPresent = fromNode !== undefined && toNode !== undefined;
-      var isVisible = !this.clustering._isClusteredEdge(edgeId) && edge.options.hidden === false && edgeNodesPresent && fromNode.options.hidden === false // Also hidden if any of its connecting nodes are hidden
-      && toNode.options.hidden === false; // idem
+      var isVisible = !this.clustering._isClusteredEdge(edgeId) && edge.options.hidden === false && edgeNodesPresent && fromNode.options.hidden === false && // Also hidden if any of its connecting nodes are hidden
+      toNode.options.hidden === false; // idem
 
       if (isVisible) {
         this.body.edgeIndices.push(edge.id);
@@ -43062,7 +43270,7 @@ Network.prototype.bindEventListeners = function () {
 /**
  * Set nodes and edges, and optionally options as well.
  *
- * @param {Object} data              Object containing parameters:
+ * @param {object} data              Object containing parameters:
  *                                   {Array | DataSet | DataView} [nodes] Array with nodes
  *                                   {Array | DataSet | DataView} [edges] Array with edges
  *                                   {String} [dot] String containing data in DOT format
@@ -43086,14 +43294,14 @@ Network.prototype.setData = function (data) {
   this.setOptions(data && data.options); // set all data
 
   if (data && data.dot) {
-    console.log('The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);'); // parse DOT file
+    console.warn("The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);"); // parse DOT file
 
     var dotData = DOTToGraph(data.dot);
     this.setData(dotData);
     return;
   } else if (data && data.gephi) {
     // parse DOT file
-    console.log('The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);');
+    console.warn("The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);");
     var gephiData = parseGephi(data.gephi);
     this.setData(gephiData);
     return;
@@ -43154,7 +43362,8 @@ Network.prototype.destroy = function () {
 /**
  * Update the values of all object in the given array according to the current
  * value range of the objects in the array.
- * @param {Object} obj    An object containing a set of Edges or Nodes
+ *
+ * @param {object} obj    An object containing a set of Edges or Nodes
  *                        The objects must have a method getValue() and
  *                        setValueRange(min, max).
  * @private
@@ -43191,6 +43400,7 @@ Network.prototype._updateValueRange = function (obj) {
 };
 /**
  * Returns true when the Network is active.
+ *
  * @returns {boolean}
  */
 
@@ -43309,7 +43519,7 @@ Network.prototype.editNode = function () {
 };
 
 Network.prototype.editNodeMode = function () {
-  console.log("Deprecated: Please use editNode instead of editNodeMode.");
+  console.warn("Deprecated: Please use editNode instead of editNodeMode.");
   return this.manipulation.editNode.apply(this.manipulation, arguments);
 };
 
@@ -43460,7 +43670,8 @@ Network.prototype.getOptionsFromConfigurator = function () {
 
 /**
  * this prepares the JSON container for allocating SVG elements
- * @param {Object} JSONcontainer
+ *
+ * @param {object} JSONcontainer
  * @private
  */
 function prepareElements(JSONcontainer) {
@@ -43476,7 +43687,7 @@ function prepareElements(JSONcontainer) {
  * this cleans up all the unused SVG elements. By asking for the parentNode, we only need to supply the JSON container from
  * which to remove the redundant elements.
  *
- * @param {Object} JSONcontainer
+ * @param {object} JSONcontainer
  * @private
  */
 
@@ -43496,7 +43707,8 @@ function cleanupElements(JSONcontainer) {
 }
 /**
  * Ensures that all elements are removed first up so they can be recreated cleanly
- * @param {Object} JSONcontainer
+ *
+ * @param {object} JSONcontainer
  */
 
 function resetElements(JSONcontainer) {
@@ -43509,8 +43721,8 @@ function resetElements(JSONcontainer) {
  * the JSON container and the SVG container have to be supplied so other svg containers (like the legend) can use this.
  *
  * @param {string} elementType
- * @param {Object} JSONcontainer
- * @param {Object} svgContainer
+ * @param {object} JSONcontainer
+ * @param {object} svgContainer
  * @returns {Element}
  * @private
  */
@@ -43526,12 +43738,12 @@ function getSVGElement(elementType, JSONcontainer, svgContainer) {
       JSONcontainer[elementType].redundant.shift();
     } else {
       // create a new element and add it to the SVG
-      element = document.createElementNS('http://www.w3.org/2000/svg', elementType);
+      element = document.createElementNS("http://www.w3.org/2000/svg", elementType);
       svgContainer.appendChild(element);
     }
   } else {
     // create a new element and add it to the SVG, also create a new object in the svgElements to keep track of it.
-    element = document.createElementNS('http://www.w3.org/2000/svg', elementType);
+    element = document.createElementNS("http://www.w3.org/2000/svg", elementType);
     JSONcontainer[elementType] = {
       used: [],
       redundant: []
@@ -43547,7 +43759,7 @@ function getSVGElement(elementType, JSONcontainer, svgContainer) {
  * the JSON container and the SVG container have to be supplied so other svg containers (like the legend) can use this.
  *
  * @param {string} elementType
- * @param {Object} JSONcontainer
+ * @param {object} JSONcontainer
  * @param {Element} DOMContainer
  * @param {Element} insertBefore
  * @returns {*}
@@ -43597,23 +43809,24 @@ function getDOMElement(elementType, JSONcontainer, DOMContainer, insertBefore) {
  *
  * @param {number} x
  * @param {number} y
- * @param {Object} groupTemplate: A template containing the necessary information to draw the datapoint e.g., {style: 'circle', size: 5, className: 'className' }
- * @param {Object} JSONcontainer
- * @param {Object} svgContainer
- * @param {Object} labelObj
+ * @param {object} groupTemplate: A template containing the necessary information to draw the datapoint e.g., {style: 'circle', size: 5, className: 'className' }
+ * @param groupTemplate
+ * @param {object} JSONcontainer
+ * @param {object} svgContainer
+ * @param {object} labelObj
  * @returns {vis.PointItem}
  */
 
 function drawPoint(x, y, groupTemplate, JSONcontainer, svgContainer, labelObj) {
   var point;
 
-  if (groupTemplate.style == 'circle') {
-    point = getSVGElement('circle', JSONcontainer, svgContainer);
+  if (groupTemplate.style == "circle") {
+    point = getSVGElement("circle", JSONcontainer, svgContainer);
     point.setAttributeNS(null, "cx", x);
     point.setAttributeNS(null, "cy", y);
     point.setAttributeNS(null, "r", 0.5 * groupTemplate.size);
   } else {
-    point = getSVGElement('rect', JSONcontainer, svgContainer);
+    point = getSVGElement("rect", JSONcontainer, svgContainer);
     point.setAttributeNS(null, "x", x - 0.5 * groupTemplate.size);
     point.setAttributeNS(null, "y", y - 0.5 * groupTemplate.size);
     point.setAttributeNS(null, "width", groupTemplate.size);
@@ -43627,7 +43840,7 @@ function drawPoint(x, y, groupTemplate, JSONcontainer, svgContainer, labelObj) {
   point.setAttributeNS(null, "class", groupTemplate.className + " vis-point"); //handle label
 
   if (labelObj) {
-    var label = getSVGElement('text', JSONcontainer, svgContainer);
+    var label = getSVGElement("text", JSONcontainer, svgContainer);
 
     if (labelObj.xOffset) {
       x = x + labelObj.xOffset;
@@ -43659,8 +43872,8 @@ function drawPoint(x, y, groupTemplate, JSONcontainer, svgContainer, labelObj) {
  * @param {number} width
  * @param {number} height
  * @param {string} className
- * @param {Object} JSONcontainer
- * @param {Object} svgContainer
+ * @param {object} JSONcontainer
+ * @param {object} svgContainer
  * @param {string} style
  */
 
@@ -43671,7 +43884,7 @@ function drawBar(x, y, width, height, className, JSONcontainer, svgContainer, st
       y -= height;
     }
 
-    var rect = getSVGElement('rect', JSONcontainer, svgContainer);
+    var rect = getSVGElement("rect", JSONcontainer, svgContainer);
     rect.setAttributeNS(null, "x", x - 0.5 * width);
     rect.setAttributeNS(null, "y", y);
     rect.setAttributeNS(null, "width", width);

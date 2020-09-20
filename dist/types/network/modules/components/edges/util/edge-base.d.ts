@@ -50,11 +50,11 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @returns Cartesian coordinates of the point(s) the edge passes through.
      */
     abstract getViaNode(): Via;
-    /** @inheritdoc */
+    /** @inheritDoc */
     abstract getPoint(position: number, viaNode?: Via): Point;
-    /** @inheritdoc */
+    /** @inheritDoc */
     connect(): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     cleanup(): boolean;
     /**
      * Set new edge options.
@@ -62,7 +62,7 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param options - The new edge options object.
      */
     setOptions(options: EdgeOptions): void;
-    /** @inheritdoc */
+    /** @inheritDoc */
     drawLine(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY" | "width">, _selected?: boolean, _hover?: boolean, viaNode?: Via): void;
     /**
      * Draw a line with given style between two nodes through supplied node(s).
@@ -104,7 +104,7 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
     findBorderPosition(node: VNode, ctx: CanvasRenderingContext2D, options?: FindBorderPositionOptions<Via> | FindBorderPositionCircleOptions): PointT;
-    /** @inheritdoc */
+    /** @inheritDoc */
     findBorderPositions(ctx: CanvasRenderingContext2D): {
         from: Point;
         to: Point;
@@ -172,7 +172,7 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      */
     private _circle;
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
@@ -208,13 +208,13 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @returns The distance between the line segment and the point.
      */
     protected _getDistanceToLine(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): number;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getArrowData(ctx: CanvasRenderingContext2D, position: "middle", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "middleArrowType" | "middleArrowScale" | "width">): ArrowDataWithCore;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getArrowData(ctx: CanvasRenderingContext2D, position: "to", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "toArrowType" | "toArrowScale" | "width">): ArrowDataWithCore;
-    /** @inheritdoc */
+    /** @inheritDoc */
     getArrowData(ctx: CanvasRenderingContext2D, position: "from", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "fromArrowType" | "fromArrowScale" | "width">): ArrowDataWithCore;
-    /** @inheritdoc */
+    /** @inheritDoc */
     drawArrowHead(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY" | "width">, _selected: boolean, _hover: boolean, arrowData: ArrowData): void;
     /**
      * Set the shadow formatting values in the context if enabled, do nothing otherwise.
