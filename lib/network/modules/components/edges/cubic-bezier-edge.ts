@@ -7,7 +7,7 @@ import {
   PointT,
   SelectiveRequired,
   VBody,
-  VNode
+  VNode,
 } from "./util/types";
 
 /**
@@ -25,7 +25,7 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
     super(options, body, labelModule);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _line(
     ctx: CanvasRenderingContext2D,
     values: SelectiveRequired<
@@ -80,16 +80,16 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
 
     return [
       { x: x1, y: y1 },
-      { x: x2, y: y2 }
+      { x: x2, y: y2 },
     ];
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getViaNode(): [Point, Point] {
     return this._getViaCoordinates();
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _findBorderPosition(
     nearNode: VNode,
     ctx: CanvasRenderingContext2D
@@ -97,7 +97,7 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
     return this._findBorderPositionBezier(nearNode, ctx);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _getDistanceToEdge(
     x1: number,
     y1: number,
@@ -111,7 +111,7 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
     return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getPoint(
     position: number,
     [via1, via2]: [Point, Point] = this._getViaCoordinates()
@@ -121,7 +121,7 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
       Math.pow(1 - t, 3),
       3 * t * Math.pow(1 - t, 2),
       3 * Math.pow(t, 2) * (1 - t),
-      Math.pow(t, 3)
+      Math.pow(t, 3),
     ];
     const x =
       vec[0] * this.fromPoint.x +

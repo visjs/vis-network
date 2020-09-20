@@ -3,18 +3,56 @@ div.vis-network div.vis-manipulation {
 
   border-width: 0;
   border-bottom: 1px;
-  border-style:solid;
+  border-style: solid;
   border-color: #d6d9d8;
   background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 0%, #fcfcfc 48%, #fafafa 50%, #fcfcfc 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(48%,#fcfcfc), color-stop(50%,#fafafa), color-stop(100%,#fcfcfc)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 0%,#fcfcfc 48%,#fafafa 50%,#fcfcfc 100%); /* W3C */
+  background: -moz-linear-gradient(
+    top,
+    #ffffff 0%,
+    #fcfcfc 48%,
+    #fafafa 50%,
+    #fcfcfc 100%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #ffffff),
+    color-stop(48%, #fcfcfc),
+    color-stop(50%, #fafafa),
+    color-stop(100%, #fcfcfc)
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    top,
+    #ffffff 0%,
+    #fcfcfc 48%,
+    #fafafa 50%,
+    #fcfcfc 100%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    #ffffff 0%,
+    #fcfcfc 48%,
+    #fafafa 50%,
+    #fcfcfc 100%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    #ffffff 0%,
+    #fcfcfc 48%,
+    #fafafa 50%,
+    #fcfcfc 100%
+  ); /* IE10+ */
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #fcfcfc 48%,
+    #fafafa 50%,
+    #fcfcfc 100%
+  ); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */
 
-  padding-top:4px;
+  padding-top: 4px;
   position: absolute;
   left: 0;
   top: 0;
@@ -23,7 +61,7 @@ div.vis-network div.vis-manipulation {
 }
 
 div.vis-network div.vis-edit-mode {
-  position:absolute;
+  position: absolute;
   left: 0;
   top: 5px;
   height: 30px;
@@ -32,7 +70,7 @@ div.vis-network div.vis-edit-mode {
 /* FIXME: shouldn't the vis-close button be a child of the vis-manipulation div? */
 
 div.vis-network div.vis-close {
-  position:absolute;
+  position: absolute;
   right: 0;
   top: 0;
   width: 30px;
@@ -56,15 +94,15 @@ div.vis-network div.vis-close:hover {
 
 div.vis-network div.vis-manipulation div.vis-button,
 div.vis-network div.vis-edit-mode div.vis-button {
-  float:left;
+  float: left;
   font-family: verdana;
   font-size: 12px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  display:inline-block;
+  display: inline-block;
   background-position: 0px 0px;
-  background-repeat:no-repeat;
-  height:24px;
+  background-repeat: no-repeat;
+  height: 24px;
   margin-left: 10px;
   /*vertical-align:middle;*/
   cursor: pointer;
@@ -78,11 +116,11 @@ div.vis-network div.vis-edit-mode div.vis-button {
 }
 
 div.vis-network div.vis-manipulation div.vis-button:hover {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.20);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
 }
 
 div.vis-network div.vis-manipulation div.vis-button:active {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.50);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
 }
 
 div.vis-network div.vis-manipulation div.vis-button.vis-back {
@@ -90,11 +128,11 @@ div.vis-network div.vis-manipulation div.vis-button.vis-back {
 }
 
 div.vis-network div.vis-manipulation div.vis-button.vis-none:hover {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0);
   cursor: default;
 }
 div.vis-network div.vis-manipulation div.vis-button.vis-none:active {
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.0);
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0);
 }
 div.vis-network div.vis-manipulation div.vis-button.vis-none {
   padding: 0;
@@ -132,10 +170,10 @@ div.vis-network div.vis-edit-mode div.vis-label {
   line-height: 25px;
 }
 div.vis-network div.vis-manipulation div.vis-separator-line {
-  float:left;
-  display:inline-block;
-  width:1px;
-  height:21px;
+  float: left;
+  display: inline-block;
+  width: 1px;
+  height: 21px;
   background-color: #bdbdbd;
   margin: 0px 7px 0 15px; /*top right bottom left*/
 }

@@ -90,12 +90,12 @@ export function parseGephi(
 ): VisData {
   const options = {
     edges: {
-      inheritColor: false
+      inheritColor: false,
     },
     nodes: {
       fixed: false,
-      parseColor: false
-    }
+      parseColor: false,
+    },
   };
 
   if (optionsObj != null) {
@@ -116,7 +116,7 @@ export function parseGephi(
       const vEdge: VisEdge = {
         from: gEdge.source,
         id: gEdge.id,
-        to: gEdge.target
+        to: gEdge.target,
       };
 
       if (gEdge.attributes != null) {
@@ -145,7 +145,7 @@ export function parseGephi(
     (gNode): VisNode => {
       const vNode: VisNode = {
         id: gNode.id,
-        fixed: options.nodes.fixed && gNode.x != null && gNode.y != null
+        fixed: options.nodes.fixed && gNode.x != null && gNode.y != null,
       };
 
       if (gNode.attributes != null) {
@@ -178,12 +178,12 @@ export function parseGephi(
             border: gNode.color,
             highlight: {
               background: gNode.color,
-              border: gNode.color
+              border: gNode.color,
             },
             hover: {
               background: gNode.color,
-              border: gNode.color
-            }
+              border: gNode.color,
+            },
           };
         }
       }

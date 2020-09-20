@@ -12,7 +12,7 @@ export const network = {
   gephiParser,
   allOptions,
   convertDot: dotparser.DOTToGraph,
-  convertGephi: parseGephi
+  convertGephi: parseGephi,
 };
 
 // utils

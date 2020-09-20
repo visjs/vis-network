@@ -7,7 +7,7 @@ import {
   PointT,
   SelectiveRequired,
   VBody,
-  VNode
+  VNode,
 } from "./types";
 
 /**
@@ -112,7 +112,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
 
     return {
       ...pos,
-      t: middle
+      t: middle,
     };
   }
 
@@ -225,7 +225,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
     this.disableShadow(ctx, values);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getViaNode(): Via {
     return this._getViaCoordinates();
   }
