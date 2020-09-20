@@ -1053,6 +1053,7 @@ export interface EdgeOptions {
     type: string,
     forceDirection?: string | boolean,
     roundness: number,
+    radius?: number
   };
 
   title?: string;
