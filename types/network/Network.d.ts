@@ -895,21 +895,7 @@ export interface NodeOptions {
     y?: boolean,
   };
 
-  font?: string | {
-    color?: string,
-    size?: number, // px
-    face?: string,
-    background?: string,
-    strokeWidth?: number, // px
-    strokeColor?: string,
-    align?: string,
-    vadjust?: number,
-    multi?: boolean | string,
-    bold?: string | FontOptions,
-    ital?: string | FontOptions,
-    boldital?: string | FontOptions,
-    mono?: string | FontOptions,
-  };
+  font?: string | Font;
 
   group?: string;
 
@@ -979,30 +965,9 @@ export interface NodeOptions {
 
 export interface EdgeOptions {
   arrows?: string | {
-    to?: boolean | {
-      enabled?: boolean,
-      imageHeight?: number,
-      imageWidth?: number,
-      scaleFactor?: number,
-      src?: string,
-      type?: string
-    },
-    middle?: boolean | {
-      enabled?: boolean,
-      imageHeight?: number,
-      imageWidth?: number,
-      scaleFactor?: number,
-      src?: string,
-      type?: string
-    },
-    from?: boolean | {
-      enabled?: boolean,
-      imageHeight?: number,
-      imageWidth?: number,
-      scaleFactor?: number,
-      src?: string,
-      type?: string
-    }
+    to?: boolean | ArrowHead
+    middle?: boolean | ArrowHead
+    from?: boolean | ArrowHead
   };
 
   arrowStrikethrough?: boolean;
@@ -1022,21 +987,7 @@ export interface EdgeOptions {
 
   dashes?: boolean | number[];
 
-  font?: string | {
-    color?: string,
-    size?: number, // px
-    face?: string,
-    background?: string,
-    strokeWidth?: number, // px
-    strokeColor?: string,
-    align?: string,
-    vadjust?: number,
-    multi?: boolean | string,
-    bold?: string | FontOptions,
-    ital?: string | FontOptions,
-    boldital?: string | FontOptions,
-    mono?: string | FontOptions,
-  };
+  font?: string | Font;
 
   hidden?: boolean;
 
@@ -1082,7 +1033,32 @@ export interface EdgeOptions {
   };
 }
 
-export interface FontOptions {
+export interface ArrowHead {
+  enabled?: boolean,
+  imageHeight?: number,
+  imageWidth?: number,
+  scaleFactor?: number,
+  src?: string,
+  type?: string;
+}
+
+export interface Font {
+  color?: string,
+  size?: number, // px
+  face?: string,
+  background?: string,
+  strokeWidth?: number, // px
+  strokeColor?: string,
+  align?: string,
+  vadjust?: number,
+  multi?: boolean | string,
+  bold?: string | FontStyles,
+  ital?: string | FontStyles,
+  boldital?: string | FontStyles,
+  mono?: string | FontStyles,
+}
+
+export interface FontStyles {
   color?: string;
   size?: number;
   face?: string;
