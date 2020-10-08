@@ -778,7 +778,6 @@ export interface LocaleMessages {
   editClusterError: string;
 }
 
-
 export interface Options {
   autoResize?: boolean;
 
