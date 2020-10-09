@@ -1,4 +1,4 @@
-// Type definitions for vis.js 4.21
+// Type definitions for vis.js 8.3.2
 // Project: https://github.com/almende/vis, http://visjs.org
 // Definitions by: Michaël Bitard <https://github.com/MichaelBitard>
 //                 MacLeod Broad <https://github.com/macleodbroad-wf>
@@ -48,6 +48,8 @@ export type NetworkEvents =
   'dragStart' |
   'dragging' |
   'dragEnd' |
+  'controlNodeDragging' |
+  'controlNodeDragEnd' |
   'hoverNode' |
   'blurNode' |
   'hoverEdge' |
@@ -356,7 +358,7 @@ export class Network {
    * @returns A an object containing the x y positions in canvas space of the nodes in the network, keyed by id.
    */
   getPositions(nodeIds?: IdType[] | IdType): { [nodeId: string]: Position };
-  
+
   /**
    * Retrieves the x y position of a specific id.
    * 
@@ -885,7 +887,7 @@ export interface NodeOptions {
   color?: string | Color;
 
   chosen?: boolean | NodeChosen;
-  
+
   opacity?: number;
 
   fixed?: boolean | {
@@ -893,21 +895,7 @@ export interface NodeOptions {
     y?: boolean,
   };
 
-  font?: string | {
-    color?: string,
-    size?: number, // px
-    face?: string,
-    background?: string,
-    strokeWidth?: number, // px
-    strokeColor?: string,
-    align?: string,
-    vadjust?: number,
-    multi?: boolean | string,
-    bold?: string | FontOptions,
-    ital?: string | FontOptions,
-    boldital?: string | FontOptions,
-    mono?: string | FontOptions,
-  };
+  font?: string | Font;
 
   group?: string;
 
@@ -922,7 +910,7 @@ export interface NodeOptions {
   };
 
   image?: string | Image;
-  
+
   imagePadding?: number | ImagePadding;
 
   label?: string;
@@ -977,24 +965,17 @@ export interface NodeOptions {
 
 export interface EdgeOptions {
   arrows?: string | {
-    to?: boolean | {
-      enabled?: boolean,
-      scaleFactor?: number,
-      type?: string
-    },
-    middle?: boolean | {
-      enabled?: boolean,
-      scaleFactor?: number,
-      type?: string
-    },
-    from?: boolean | {
-      enabled?: boolean,
-      scaleFactor?: number,
-      type?: string
-    }
+    to?: boolean | ArrowHead
+    middle?: boolean | ArrowHead
+    from?: boolean | ArrowHead
   };
 
   arrowStrikethrough?: boolean;
+
+  chosen?: boolean | {
+    edge?: boolean, // please note, chosen.edge could be also a function. This case is not represented here
+    label?: boolean, // please note, chosen.label could be also a function. This case is not represented here
+  };
 
   color?: string | {
     color?: string,
@@ -1006,21 +987,7 @@ export interface EdgeOptions {
 
   dashes?: boolean | number[];
 
-  font?: string | {
-    color?: string,
-    size?: number, // px
-    face?: string,
-    background?: string,
-    strokeWidth?: number, // px
-    strokeColor?: string,
-    align?: string,
-    vadjust?: number,
-    multi?: boolean | string,
-    bold?: string | FontOptions,
-    ital?: string | FontOptions,
-    boldital?: string | FontOptions,
-    mono?: string | FontOptions,
-  };
+  font?: string | Font;
 
   hidden?: boolean;
 
@@ -1060,9 +1027,38 @@ export interface EdgeOptions {
   value?: number;
 
   width?: number;
+
+  widthConstraint?: number | boolean | {
+    maximum?: number;
+  };
 }
 
-export interface FontOptions {
+export interface ArrowHead {
+  enabled?: boolean,
+  imageHeight?: number,
+  imageWidth?: number,
+  scaleFactor?: number,
+  src?: string,
+  type?: string;
+}
+
+export interface Font {
+  color?: string,
+  size?: number, // px
+  face?: string,
+  background?: string,
+  strokeWidth?: number, // px
+  strokeColor?: string,
+  align?: string,
+  vadjust?: number,
+  multi?: boolean | string,
+  bold?: string | FontStyles,
+  ital?: string | FontStyles,
+  boldital?: string | FontStyles,
+  mono?: string | FontStyles,
+}
+
+export interface FontStyles {
   color?: string;
   size?: number;
   face?: string;
@@ -1084,9 +1080,9 @@ export interface OptionsScaling {
 }
 
 export interface OptionsShadow {
-  enabled: boolean;
-  color: string;
-  size: number;
-  x: number;
-  y: number;
+  enabled?: boolean;
+  color?: string;
+  size?: number;
+  x?: number;
+  y?: number;
 }
