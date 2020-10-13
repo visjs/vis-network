@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-13T19:47:13.308Z
+ * @date    2020-10-13T20:57:26.118Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -11714,16 +11714,6 @@
 
 	var isNan$2 = isNan$1;
 
-	function _assertThisInitialized$1(self) {
-	  if (self === void 0) {
-	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	  }
-
-	  return self;
-	}
-
-	var assertThisInitialized = _assertThisInitialized$1;
-
 	var nativeConstruct = getBuiltIn('Reflect', 'construct'); // `Reflect.construct` method
 	// https://tc39.github.io/ecma262/#sec-reflect.construct
 	// MS Edge supports only 2 arguments and argumentsList argument is optional
@@ -11897,6 +11887,16 @@
 	};
 
 	var keys$6 = keys_1;
+
+	function _assertThisInitialized$1(self) {
+	  if (self === void 0) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }
+
+	  return self;
+	}
+
+	var assertThisInitialized = _assertThisInitialized$1;
 
 	var create$3 = create;
 
@@ -13168,6 +13168,186 @@
 
 	var iterator$4 = iterator$3;
 
+	var getWeakData = internalMetadata.getWeakData;
+	var setInternalState$5 = internalState.set;
+	var internalStateGetterFor$2 = internalState.getterFor;
+	var find = arrayIteration.find;
+	var findIndex = arrayIteration.findIndex;
+	var id$1 = 0; // fallback for uncaught frozen keys
+
+	var uncaughtFrozenStore = function (store) {
+	  return store.frozen || (store.frozen = new UncaughtFrozenStore());
+	};
+
+	var UncaughtFrozenStore = function () {
+	  this.entries = [];
+	};
+
+	var findUncaughtFrozen = function (store, key) {
+	  return find(store.entries, function (it) {
+	    return it[0] === key;
+	  });
+	};
+
+	UncaughtFrozenStore.prototype = {
+	  get: function (key) {
+	    var entry = findUncaughtFrozen(this, key);
+	    if (entry) return entry[1];
+	  },
+	  has: function (key) {
+	    return !!findUncaughtFrozen(this, key);
+	  },
+	  set: function (key, value) {
+	    var entry = findUncaughtFrozen(this, key);
+	    if (entry) entry[1] = value;else this.entries.push([key, value]);
+	  },
+	  'delete': function (key) {
+	    var index = findIndex(this.entries, function (it) {
+	      return it[0] === key;
+	    });
+	    if (~index) this.entries.splice(index, 1);
+	    return !!~index;
+	  }
+	};
+	var collectionWeak = {
+	  getConstructor: function (wrapper, CONSTRUCTOR_NAME, IS_MAP, ADDER) {
+	    var C = wrapper(function (that, iterable) {
+	      anInstance(that, C, CONSTRUCTOR_NAME);
+	      setInternalState$5(that, {
+	        type: CONSTRUCTOR_NAME,
+	        id: id$1++,
+	        frozen: undefined
+	      });
+	      if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+	    });
+	    var getInternalState = internalStateGetterFor$2(CONSTRUCTOR_NAME);
+
+	    var define = function (that, key, value) {
+	      var state = getInternalState(that);
+	      var data = getWeakData(anObject(key), true);
+	      if (data === true) uncaughtFrozenStore(state).set(key, value);else data[state.id] = value;
+	      return that;
+	    };
+
+	    redefineAll(C.prototype, {
+	      // 23.3.3.2 WeakMap.prototype.delete(key)
+	      // 23.4.3.3 WeakSet.prototype.delete(value)
+	      'delete': function (key) {
+	        var state = getInternalState(this);
+	        if (!isObject(key)) return false;
+	        var data = getWeakData(key);
+	        if (data === true) return uncaughtFrozenStore(state)['delete'](key);
+	        return data && has(data, state.id) && delete data[state.id];
+	      },
+	      // 23.3.3.4 WeakMap.prototype.has(key)
+	      // 23.4.3.4 WeakSet.prototype.has(value)
+	      has: function has$1(key) {
+	        var state = getInternalState(this);
+	        if (!isObject(key)) return false;
+	        var data = getWeakData(key);
+	        if (data === true) return uncaughtFrozenStore(state).has(key);
+	        return data && has(data, state.id);
+	      }
+	    });
+	    redefineAll(C.prototype, IS_MAP ? {
+	      // 23.3.3.3 WeakMap.prototype.get(key)
+	      get: function get(key) {
+	        var state = getInternalState(this);
+
+	        if (isObject(key)) {
+	          var data = getWeakData(key);
+	          if (data === true) return uncaughtFrozenStore(state).get(key);
+	          return data ? data[state.id] : undefined;
+	        }
+	      },
+	      // 23.3.3.5 WeakMap.prototype.set(key, value)
+	      set: function set(key, value) {
+	        return define(this, key, value);
+	      }
+	    } : {
+	      // 23.4.3.1 WeakSet.prototype.add(value)
+	      add: function add(value) {
+	        return define(this, value, true);
+	      }
+	    });
+	    return C;
+	  }
+	};
+
+	var es_weakMap = createCommonjsModule(function (module) {
+
+	  var enforceIternalState = internalState.enforce;
+	  var IS_IE11 = !global_1.ActiveXObject && 'ActiveXObject' in global_1;
+	  var isExtensible = Object.isExtensible;
+	  var InternalWeakMap;
+
+	  var wrapper = function (init) {
+	    return function WeakMap() {
+	      return init(this, arguments.length ? arguments[0] : undefined);
+	    };
+	  }; // `WeakMap` constructor
+	  // https://tc39.github.io/ecma262/#sec-weakmap-constructor
+
+
+	  var $WeakMap = module.exports = collection('WeakMap', wrapper, collectionWeak); // IE11 WeakMap frozen keys fix
+	  // We can't use feature detection because it crash some old IE builds
+	  // https://github.com/zloirock/core-js/issues/485
+
+	  if (nativeWeakMap && IS_IE11) {
+	    InternalWeakMap = collectionWeak.getConstructor(wrapper, 'WeakMap', true);
+	    internalMetadata.REQUIRED = true;
+	    var WeakMapPrototype = $WeakMap.prototype;
+	    var nativeDelete = WeakMapPrototype['delete'];
+	    var nativeHas = WeakMapPrototype.has;
+	    var nativeGet = WeakMapPrototype.get;
+	    var nativeSet = WeakMapPrototype.set;
+	    redefineAll(WeakMapPrototype, {
+	      'delete': function (key) {
+	        if (isObject(key) && !isExtensible(key)) {
+	          var state = enforceIternalState(this);
+	          if (!state.frozen) state.frozen = new InternalWeakMap();
+	          return nativeDelete.call(this, key) || state.frozen['delete'](key);
+	        }
+
+	        return nativeDelete.call(this, key);
+	      },
+	      has: function has(key) {
+	        if (isObject(key) && !isExtensible(key)) {
+	          var state = enforceIternalState(this);
+	          if (!state.frozen) state.frozen = new InternalWeakMap();
+	          return nativeHas.call(this, key) || state.frozen.has(key);
+	        }
+
+	        return nativeHas.call(this, key);
+	      },
+	      get: function get(key) {
+	        if (isObject(key) && !isExtensible(key)) {
+	          var state = enforceIternalState(this);
+	          if (!state.frozen) state.frozen = new InternalWeakMap();
+	          return nativeHas.call(this, key) ? nativeGet.call(this, key) : state.frozen.get(key);
+	        }
+
+	        return nativeGet.call(this, key);
+	      },
+	      set: function set(key, value) {
+	        if (isObject(key) && !isExtensible(key)) {
+	          var state = enforceIternalState(this);
+	          if (!state.frozen) state.frozen = new InternalWeakMap();
+	          nativeHas.call(this, key) ? nativeSet.call(this, key, value) : state.frozen.set(key, value);
+	        } else nativeSet.call(this, key, value);
+
+	        return this;
+	      }
+	    });
+	  }
+	});
+
+	var weakMap = path.WeakMap;
+
+	var weakMap$1 = weakMap;
+
+	var weakMap$2 = weakMap$1;
+
 	// https://tc39.github.io/proposal-flatMap/#sec-FlattenIntoArray
 
 
@@ -13385,8 +13565,39 @@
 	function _unsupportedIterableToArray$2(o, minLen) { var _context19; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context19 = Object.prototype.toString.call(o)).call(_context19, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 
 	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-	/* eslint @typescript-eslint/member-ordering: ["error", { "classes": ["field", "constructor", "method"] }] */
+	/*! *****************************************************************************
+	Copyright (c) Microsoft Corporation.
 
+	Permission to use, copy, modify, and/or distribute this software for any
+	purpose with or without fee is hereby granted.
+
+	THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+	REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+	AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+	INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+	LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+	OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+	PERFORMANCE OF THIS SOFTWARE.
+	***************************************************************************** */
+
+	function __classPrivateFieldGet(receiver, privateMap) {
+	  if (!privateMap.has(receiver)) {
+	    throw new TypeError("attempted to get private field on non-instance");
+	  }
+
+	  return privateMap.get(receiver);
+	}
+
+	function __classPrivateFieldSet(receiver, privateMap, value) {
+	  if (!privateMap.has(receiver)) {
+	    throw new TypeError("attempted to set private field on non-instance");
+	  }
+
+	  privateMap.set(receiver, value);
+	  return value;
+	}
+
+	var _transformers_1;
 	/**
 	 * Create new data pipe.
 	 *
@@ -13422,6 +13633,7 @@
 	 * @returns A factory whose methods can be used to configure the pipe.
 	 */
 
+
 	function createNewDataPipeFrom(from) {
 	  return new DataPipeUnderConstruction(from);
 	}
@@ -13429,10 +13641,10 @@
 	 * Internal implementation of the pipe. This should be accessible only through
 	 * `createNewDataPipeFrom` from the outside.
 	 *
-	 * @typeparam SI - Source item type.
-	 * @typeparam SP - Source item type's id property name.
-	 * @typeparam TI - Target item type.
-	 * @typeparam TP - Target item type's id property name.
+	 * @typeParam SI - Source item type.
+	 * @typeParam SP - Source item type's id property name.
+	 * @typeParam TI - Target item type.
+	 * @typeParam TP - Target item type's id property name.
 	 */
 
 
@@ -13463,7 +13675,7 @@
 	      update: bind$2(_context3 = this._update).call(_context3, this)
 	    };
 	  }
-	  /** @inheritdoc */
+	  /** @inheritDoc */
 
 
 	  createClass(SimpleDataPipe, [{
@@ -13473,7 +13685,7 @@
 
 	      return this;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "start",
@@ -13486,7 +13698,7 @@
 
 	      return this;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "stop",
@@ -13572,8 +13784,8 @@
 	 * Internal implementation of the pipe factory. This should be accessible
 	 * only through `createNewDataPipeFrom` from the outside.
 	 *
-	 * @typeparam TI - Target item type.
-	 * @typeparam TP - Target item type's id property name.
+	 * @typeParam TI - Target item type.
+	 * @typeParam TP - Target item type's id property name.
 	 */
 
 
@@ -13593,7 +13805,7 @@
 	     * as any for the sake of simplicity.
 	     */
 
-	    this._transformers = [];
+	    _transformers_1.set(this, []);
 	  }
 	  /**
 	   * Filter the items.
@@ -13608,7 +13820,7 @@
 	  createClass(DataPipeUnderConstruction, [{
 	    key: "filter",
 	    value: function filter(callback) {
-	      this._transformers.push(function (input) {
+	      __classPrivateFieldGet(this, _transformers_1).push(function (input) {
 	        return filter$2(input).call(input, callback);
 	      });
 
@@ -13620,8 +13832,8 @@
 	     * @param callback - A mapping function that takes a source item and returns
 	     * corresponding mapped item.
 	     *
-	     * @typeparam TI - Target item type.
-	     * @typeparam TP - Target item type's id property name.
+	     * @typeParam TI - Target item type.
+	     * @typeParam TP - Target item type's id property name.
 	     *
 	     * @returns This factory for further configuration.
 	     */
@@ -13629,7 +13841,7 @@
 	  }, {
 	    key: "map",
 	    value: function map(callback) {
-	      this._transformers.push(function (input) {
+	      __classPrivateFieldGet(this, _transformers_1).push(function (input) {
 	        return map$2(input).call(input, callback);
 	      });
 
@@ -13641,8 +13853,8 @@
 	     * @param callback - A mapping function that takes a source item and returns
 	     * an array of corresponding mapped items.
 	     *
-	     * @typeparam TI - Target item type.
-	     * @typeparam TP - Target item type's id property name.
+	     * @typeParam TI - Target item type.
+	     * @typeParam TP - Target item type's id property name.
 	     *
 	     * @returns This factory for further configuration.
 	     */
@@ -13650,7 +13862,7 @@
 	  }, {
 	    key: "flatMap",
 	    value: function flatMap(callback) {
-	      this._transformers.push(function (input) {
+	      __classPrivateFieldGet(this, _transformers_1).push(function (input) {
 	        return flatMap$2(input).call(input, callback);
 	      });
 
@@ -13668,12 +13880,14 @@
 	  }, {
 	    key: "to",
 	    value: function to(target) {
-	      return new SimpleDataPipe(this._source, this._transformers, target);
+	      return new SimpleDataPipe(this._source, __classPrivateFieldGet(this, _transformers_1), target);
 	    }
 	  }]);
 
 	  return DataPipeUnderConstruction;
 	}();
+
+	_transformers_1 = new weakMap$2();
 	/**
 	 * Determine whether a value can be used as an id.
 	 *
@@ -13682,12 +13896,11 @@
 	 * @returns True if the value is valid id, false otherwise.
 	 */
 
-
 	function isId(value) {
 	  return typeof value === "string" || typeof value === "number";
 	}
-	/* eslint @typescript-eslint/member-ordering: ["error", { "classes": ["field", "constructor", "method"] }] */
 
+	var _queue, _timeout, _extended;
 	/**
 	 * A queue.
 	 *
@@ -13704,9 +13917,12 @@
 	  function Queue(options) {
 	    classCallCheck(this, Queue);
 
-	    this._queue = [];
-	    this._timeout = null;
-	    this._extended = null; // options
+	    _queue.set(this, []);
+
+	    _timeout.set(this, null);
+
+	    _extended.set(this, null); // options
+
 
 	    this.delay = null;
 	    this.max = Infinity;
@@ -13751,9 +13967,10 @@
 	    value: function destroy() {
 	      this.flush();
 
-	      if (this._extended) {
-	        var object = this._extended.object;
-	        var methods = this._extended.methods;
+	      if (__classPrivateFieldGet(this, _extended)) {
+	        var object = __classPrivateFieldGet(this, _extended).object;
+
+	        var methods = __classPrivateFieldGet(this, _extended).methods;
 
 	        for (var i = 0; i < methods.length; i++) {
 	          var method = methods[i];
@@ -13767,7 +13984,7 @@
 	          }
 	        }
 
-	        this._extended = null;
+	        __classPrivateFieldSet(this, _extended, null);
 	      }
 	    }
 	    /**
@@ -13780,7 +13997,7 @@
 	  }, {
 	    key: "replace",
 	    value: function replace(object, method) {
-	      /* eslint-disable-next-line @typescript-eslint/no-this-alias */
+	      /* eslint-disable-next-line @typescript-eslint/no-this-alias -- Function this is necessary in the function bellow, so class this has to be saved into a variable here. */
 	      var me = this;
 	      var original = object[method];
 
@@ -13811,11 +14028,11 @@
 	    key: "queue",
 	    value: function queue(entry) {
 	      if (typeof entry === "function") {
-	        this._queue.push({
+	        __classPrivateFieldGet(this, _queue).push({
 	          fn: entry
 	        });
 	      } else {
-	        this._queue.push(entry);
+	        __classPrivateFieldGet(this, _queue).push(entry);
 	      }
 
 	      this._flushIfNeeded();
@@ -13830,20 +14047,21 @@
 	      var _this = this;
 
 	      // flush when the maximum is exceeded.
-	      if (this._queue.length > this.max) {
+	      if (__classPrivateFieldGet(this, _queue).length > this.max) {
 	        this.flush();
 	      } // flush after a period of inactivity when a delay is configured
 
 
-	      if (this._timeout != null) {
-	        clearTimeout(this._timeout);
-	        this._timeout = null;
+	      if (__classPrivateFieldGet(this, _timeout) != null) {
+	        clearTimeout(__classPrivateFieldGet(this, _timeout));
+
+	        __classPrivateFieldSet(this, _timeout, null);
 	      }
 
 	      if (this.queue.length > 0 && typeof this.delay === "number") {
-	        this._timeout = setTimeout$2(function () {
+	        __classPrivateFieldSet(this, _timeout, setTimeout$2(function () {
 	          _this.flush();
-	        }, this.delay);
+	        }, this.delay));
 	      }
 	    }
 	    /**
@@ -13855,7 +14073,7 @@
 	    value: function flush() {
 	      var _context5, _context6;
 
-	      forEach$2(_context5 = splice$2(_context6 = this._queue).call(_context6, 0)).call(_context5, function (entry) {
+	      forEach$2(_context5 = splice$2(_context6 = __classPrivateFieldGet(this, _queue)).call(_context6, 0)).call(_context5, function (entry) {
 	        entry.fn.apply(entry.context || entry.fn, entry.args || []);
 	      });
 	    }
@@ -13890,18 +14108,21 @@
 	        }
 	      }
 
-	      queue._extended = {
+	      __classPrivateFieldSet(queue, _extended, {
 	        object: object,
 	        methods: methods
-	      };
+	      });
+
 	      return queue;
 	    }
 	  }]);
 
 	  return Queue;
 	}();
-	/* eslint-disable @typescript-eslint/member-ordering */
 
+	_queue = new weakMap$2(), _timeout = new weakMap$2(), _extended = new weakMap$2();
+
+	var _subscribers;
 	/**
 	 * [[DataSet]] code that can be reused in [[DataView]] or other similar implementations of [[DataInterface]].
 	 *
@@ -13914,15 +14135,16 @@
 	  function DataSetPart() {
 	    classCallCheck(this, DataSetPart);
 
-	    this._subscribers = {
+	    _subscribers.set(this, {
 	      "*": [],
 	      add: [],
 	      remove: [],
 	      update: []
-	    };
+	    });
 	    /**
 	     * @deprecated Use on instead (PS: DataView.subscribe === DataView.on).
 	     */
+
 
 	    this.subscribe = DataSetPart.prototype.on;
 	    /**
@@ -13949,7 +14171,7 @@
 	        throw new Error("Cannot trigger event *");
 	      }
 
-	      forEach$2(_context7 = concat$2(_context8 = []).call(_context8, toConsumableArray(this._subscribers[event]), toConsumableArray(this._subscribers["*"]))).call(_context7, function (subscriber) {
+	      forEach$2(_context7 = concat$2(_context8 = []).call(_context8, toConsumableArray(__classPrivateFieldGet(this, _subscribers)[event]), toConsumableArray(__classPrivateFieldGet(this, _subscribers)["*"]))).call(_context7, function (subscriber) {
 	        subscriber(event, payload, senderId != null ? senderId : null);
 	      });
 	    }
@@ -13966,7 +14188,7 @@
 	    key: "on",
 	    value: function on(event, callback) {
 	      if (typeof callback === "function") {
-	        this._subscribers[event].push(callback);
+	        __classPrivateFieldGet(this, _subscribers)[event].push(callback);
 	      } // @TODO: Maybe throw for invalid callbacks?
 
 	    }
@@ -13984,7 +14206,7 @@
 	    value: function off(event, callback) {
 	      var _context9;
 
-	      this._subscribers[event] = filter$2(_context9 = this._subscribers[event]).call(_context9, function (subscriber) {
+	      __classPrivateFieldGet(this, _subscribers)[event] = filter$2(_context9 = __classPrivateFieldGet(this, _subscribers)[event]).call(_context9, function (subscriber) {
 	        return subscriber !== callback;
 	      });
 	    }
@@ -13992,6 +14214,10 @@
 
 	  return DataSetPart;
 	}();
+
+	_subscribers = new weakMap$2();
+
+	var _pairs;
 	/**
 	 * Data stream
 	 *
@@ -14000,7 +14226,7 @@
 	 * That means that the stream is evaluated at the time of iteration, conversion to another data type or when [[cache]] is called, not when the [[DataStream]] was created.
 	 * Multiple invocations of for example [[toItemArray]] may yield different results (if the data source like for example [[DataSet]] gets modified).
 	 *
-	 * @typeparam Item - The item type this stream is going to work with.
+	 * @typeParam Item - The item type this stream is going to work with.
 	 */
 
 
@@ -14008,12 +14234,14 @@
 	  /**
 	   * Create a new data stream.
 	   *
-	   * @param _pairs - The id, item pairs.
+	   * @param pairs - The id, item pairs.
 	   */
-	  function DataStream(_pairs) {
+	  function DataStream(pairs) {
 	    classCallCheck(this, DataStream);
 
-	    this._pairs = _pairs;
+	    _pairs.set(this, void 0);
+
+	    __classPrivateFieldSet(this, _pairs, pairs);
 	  }
 	  /**
 	   * Return an iterable of key, value pairs for every entry in the stream.
@@ -14021,7 +14249,7 @@
 
 
 	  createClass(DataStream, [{
-	    key: iterator$4,
+	    key: (_pairs = new weakMap$2(), iterator$4),
 	    value: /*#__PURE__*/regenerator.mark(function value() {
 	      var _iterator, _step, _step$value, id, item;
 
@@ -14029,7 +14257,7 @@
 	        while (1) {
 	          switch (_context10.prev = _context10.next) {
 	            case 0:
-	              _iterator = _createForOfIteratorHelper$1(this._pairs);
+	              _iterator = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs));
 	              _context10.prev = 1;
 
 	              _iterator.s();
@@ -14085,7 +14313,7 @@
 	        while (1) {
 	          switch (_context11.prev = _context11.next) {
 	            case 0:
-	              _iterator2 = _createForOfIteratorHelper$1(this._pairs);
+	              _iterator2 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs));
 	              _context11.prev = 1;
 
 	              _iterator2.s();
@@ -14141,7 +14369,7 @@
 	        while (1) {
 	          switch (_context12.prev = _context12.next) {
 	            case 0:
-	              _iterator3 = _createForOfIteratorHelper$1(this._pairs);
+	              _iterator3 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs));
 	              _context12.prev = 1;
 
 	              _iterator3.s();
@@ -14197,7 +14425,7 @@
 	        while (1) {
 	          switch (_context13.prev = _context13.next) {
 	            case 0:
-	              _iterator4 = _createForOfIteratorHelper$1(this._pairs);
+	              _iterator4 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs));
 	              _context13.prev = 1;
 
 	              _iterator4.s();
@@ -14254,7 +14482,7 @@
 	    value: function toIdArray() {
 	      var _context14;
 
-	      return map$2(_context14 = toConsumableArray(this._pairs)).call(_context14, function (pair) {
+	      return map$2(_context14 = toConsumableArray(__classPrivateFieldGet(this, _pairs))).call(_context14, function (pair) {
 	        return pair[0];
 	      });
 	    }
@@ -14272,7 +14500,7 @@
 	    value: function toItemArray() {
 	      var _context15;
 
-	      return map$2(_context15 = toConsumableArray(this._pairs)).call(_context15, function (pair) {
+	      return map$2(_context15 = toConsumableArray(__classPrivateFieldGet(this, _pairs))).call(_context15, function (pair) {
 	        return pair[1];
 	      });
 	    }
@@ -14288,7 +14516,7 @@
 	  }, {
 	    key: "toEntryArray",
 	    value: function toEntryArray() {
-	      return toConsumableArray(this._pairs);
+	      return toConsumableArray(__classPrivateFieldGet(this, _pairs));
 	    }
 	    /**
 	     * Return an object map containing all the items in this stream accessible by ids.
@@ -14304,7 +14532,7 @@
 	    value: function toObjectMap() {
 	      var map = create$2(null);
 
-	      var _iterator5 = _createForOfIteratorHelper$1(this._pairs),
+	      var _iterator5 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs)),
 	          _step5;
 
 	      try {
@@ -14332,7 +14560,7 @@
 	  }, {
 	    key: "toMap",
 	    value: function toMap() {
-	      return new map$5(this._pairs);
+	      return new map$5(__classPrivateFieldGet(this, _pairs));
 	    }
 	    /**
 	     * Return a set containing all the (unique) ids in this stream.
@@ -14383,14 +14611,14 @@
 	  }, {
 	    key: "cache",
 	    value: function cache() {
-	      return new DataStream(toConsumableArray(this._pairs));
+	      return new DataStream(toConsumableArray(__classPrivateFieldGet(this, _pairs)));
 	    }
 	    /**
 	     * Get the distinct values of given property.
 	     *
 	     * @param callback - The function that picks and possibly converts the property.
 	     *
-	     * @typeparam T - The type of the distinct value.
+	     * @typeParam T - The type of the distinct value.
 	     *
 	     * @returns A set of all distinct properties.
 	     */
@@ -14400,7 +14628,7 @@
 	    value: function distinct(callback) {
 	      var set = new set$3();
 
-	      var _iterator6 = _createForOfIteratorHelper$1(this._pairs),
+	      var _iterator6 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs)),
 	          _step6;
 
 	      try {
@@ -14430,7 +14658,8 @@
 	  }, {
 	    key: "filter",
 	    value: function filter(callback) {
-	      var pairs = this._pairs;
+	      var pairs = __classPrivateFieldGet(this, _pairs);
+
 	      return new DataStream(defineProperty$7({}, iterator$4, /*#__PURE__*/regenerator.mark(function _callee() {
 	        var _iterator7, _step7, _step7$value, id, item;
 
@@ -14497,7 +14726,7 @@
 	  }, {
 	    key: "forEach",
 	    value: function forEach(callback) {
-	      var _iterator8 = _createForOfIteratorHelper$1(this._pairs),
+	      var _iterator8 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs)),
 	          _step8;
 
 	      try {
@@ -14519,7 +14748,7 @@
 	     *
 	     * @param callback - The function that does the conversion.
 	     *
-	     * @typeparam Mapped - The type of the item after mapping.
+	     * @typeParam Mapped - The type of the item after mapping.
 	     *
 	     * @returns A new data stream with the mapped items.
 	     */
@@ -14527,7 +14756,8 @@
 	  }, {
 	    key: "map",
 	    value: function map(callback) {
-	      var pairs = this._pairs;
+	      var pairs = __classPrivateFieldGet(this, _pairs);
+
 	      return new DataStream(defineProperty$7({}, iterator$4, /*#__PURE__*/regenerator.mark(function _callee2() {
 	        var _iterator9, _step9, _step9$value, id, item;
 
@@ -14590,7 +14820,7 @@
 	  }, {
 	    key: "max",
 	    value: function max(callback) {
-	      var iter = getIterator$1(this._pairs);
+	      var iter = getIterator$1(__classPrivateFieldGet(this, _pairs));
 
 	      var curr = iter.next();
 
@@ -14627,7 +14857,7 @@
 	  }, {
 	    key: "min",
 	    value: function min(callback) {
-	      var iter = getIterator$1(this._pairs);
+	      var iter = getIterator$1(__classPrivateFieldGet(this, _pairs));
 
 	      var curr = iter.next();
 
@@ -14659,7 +14889,7 @@
 	     * @param callback - The function that does the reduction.
 	     * @param accumulator - The initial value of the accumulator.
 	     *
-	     * @typeparam T - The type of the accumulated value.
+	     * @typeParam T - The type of the accumulated value.
 	     *
 	     * @returns The reduced value.
 	     */
@@ -14667,7 +14897,7 @@
 	  }, {
 	    key: "reduce",
 	    value: function reduce(callback, accumulator) {
-	      var _iterator10 = _createForOfIteratorHelper$1(this._pairs),
+	      var _iterator10 = _createForOfIteratorHelper$1(__classPrivateFieldGet(this, _pairs)),
 	          _step10;
 
 	      try {
@@ -14702,7 +14932,7 @@
 	      return new DataStream(defineProperty$7({}, iterator$4, function () {
 	        var _context18;
 
-	        return getIterator$1(sort$2(_context18 = toConsumableArray(_this2._pairs)).call(_context18, function (_ref, _ref2) {
+	        return getIterator$1(sort$2(_context18 = toConsumableArray(__classPrivateFieldGet(_this2, _pairs))).call(_context18, function (_ref, _ref2) {
 	          var _ref3 = slicedToArray(_ref, 2),
 	              idA = _ref3[0],
 	              itemA = _ref3[1];
@@ -14719,8 +14949,8 @@
 
 	  return DataStream;
 	}();
-	/* eslint @typescript-eslint/member-ordering: ["error", { "classes": ["field", "constructor", "method"] }] */
 
+	var _options, _data, _idProp, _queue$1;
 	/**
 	 * Add an id to given item if it doesn't have one already.
 	 *
@@ -14822,20 +15052,33 @@
 
 	    classCallCheck(this, DataSet);
 
-	    _this3 = _super.call(this); // correctly read optional arguments
+	    _this3 = _super.call(this);
+
+	    _options.set(assertThisInitialized(_this3), void 0);
+
+	    _data.set(assertThisInitialized(_this3), void 0);
+
+	    _idProp.set(assertThisInitialized(_this3), void 0);
+
+	    _queue$1.set(assertThisInitialized(_this3), null); // correctly read optional arguments
+
 
 	    if (data && !isArray$5(data)) {
 	      options = data;
 	      data = [];
 	    }
 
-	    _this3._options = options || {};
-	    _this3._data = new map$5(); // map with data indexed by id
+	    __classPrivateFieldSet(assertThisInitialized(_this3), _options, options || {});
+
+	    __classPrivateFieldSet(assertThisInitialized(_this3), _data, new map$5()); // map with data indexed by id
+
 
 	    _this3.length = 0; // number of items in the DataSet
 
-	    _this3._idProp = _this3._options.fieldId || "id"; // name of the field containing id
+	    __classPrivateFieldSet( // number of items in the DataSet
+	    assertThisInitialized(_this3), _idProp, __classPrivateFieldGet(assertThisInitialized(_this3), _options).fieldId || "id"); // name of the field containing id
 	    // add initial data when provided
+
 
 	    if (data && data.length) {
 	      _this3.add(data);
@@ -14858,21 +15101,21 @@
 	      if (options && options.queue !== undefined) {
 	        if (options.queue === false) {
 	          // delete queue if loaded
-	          if (this._queue) {
-	            this._queue.destroy();
+	          if (__classPrivateFieldGet(this, _queue$1)) {
+	            __classPrivateFieldGet(this, _queue$1).destroy();
 
-	            delete this._queue;
+	            __classPrivateFieldSet(this, _queue$1, null);
 	          }
 	        } else {
 	          // create queue and update its options
-	          if (!this._queue) {
-	            this._queue = Queue.extend(this, {
+	          if (!__classPrivateFieldGet(this, _queue$1)) {
+	            __classPrivateFieldSet(this, _queue$1, Queue.extend(this, {
 	              replace: ["add", "update", "remove"]
-	            });
+	            }));
 	          }
 
 	          if (options.queue && _typeof_1(options.queue) === "object") {
-	            this._queue.setOptions(options.queue);
+	            __classPrivateFieldGet(this, _queue$1).setOptions(options.queue);
 	          }
 	        }
 	      }
@@ -14917,11 +15160,11 @@
 	      if (isArray$5(data)) {
 	        // Array
 	        var idsToAdd = map$2(data).call(data, function (d) {
-	          return d[_this4._idProp];
+	          return d[__classPrivateFieldGet(_this4, _idProp)];
 	        });
 
 	        if (some$2(idsToAdd).call(idsToAdd, function (id) {
-	          return _this4._data.has(id);
+	          return __classPrivateFieldGet(_this4, _data).has(id);
 	        })) {
 	          throw new Error("A duplicate id was found in the parameter array.");
 	        }
@@ -14993,15 +15236,16 @@
 	      var updatedIds = [];
 	      var oldData = [];
 	      var updatedData = [];
-	      var idProp = this._idProp;
+
+	      var idProp = __classPrivateFieldGet(this, _idProp);
 
 	      var addOrUpdate = function addOrUpdate(item) {
 	        var origId = item[idProp];
 
-	        if (origId != null && _this5._data.has(origId)) {
+	        if (origId != null && __classPrivateFieldGet(_this5, _data).has(origId)) {
 	          var fullItem = item; // it has an id, therefore it is a fullitem
 
-	          var oldItem = assign$2({}, _this5._data.get(origId)); // update item
+	          var oldItem = assign$2({}, __classPrivateFieldGet(_this5, _data).get(origId)); // update item
 
 
 	          var id = _this5._updateItem(fullItem);
@@ -15106,7 +15350,7 @@
 	      }
 
 	      var updateEventData = map$2(_context20 = map$2(data).call(data, function (update) {
-	        var oldData = _this6._data.get(update[_this6._idProp]);
+	        var oldData = __classPrivateFieldGet(_this6, _data).get(update[__classPrivateFieldGet(_this6, _idProp)]);
 
 	        if (oldData == null) {
 	          throw new Error("Updating non-existent items is not allowed.");
@@ -15119,10 +15363,12 @@
 	      })).call(_context20, function (_ref5) {
 	        var oldData = _ref5.oldData,
 	            update = _ref5.update;
-	        var id = oldData[_this6._idProp];
+
+	        var id = oldData[__classPrivateFieldGet(_this6, _idProp)];
+
 	        var updatedData = pureDeepObjectAssign(oldData, update);
 
-	        _this6._data.set(id, updatedData);
+	        __classPrivateFieldGet(_this6, _data).set(id, updatedData);
 
 	        return {
 	          id: id,
@@ -15157,7 +15403,7 @@
 	        return [];
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "get",
@@ -15204,7 +15450,7 @@
 
 	      if (id != null) {
 	        // return a single item
-	        item = this._data.get(id);
+	        item = __classPrivateFieldGet(this, _data).get(id);
 
 	        if (item && filter && !filter(item)) {
 	          item = undefined;
@@ -15212,7 +15458,7 @@
 	      } else if (ids != null) {
 	        // return a subset of items
 	        for (var i = 0, len = ids.length; i < len; i++) {
-	          item = this._data.get(ids[i]);
+	          item = __classPrivateFieldGet(this, _data).get(ids[i]);
 
 	          if (item != null && (!filter || filter(item))) {
 	            items.push(item);
@@ -15222,11 +15468,11 @@
 	        var _context21;
 
 	        // return all items
-	        itemIds = toConsumableArray(keys$6(_context21 = this._data).call(_context21));
+	        itemIds = toConsumableArray(keys$6(_context21 = __classPrivateFieldGet(this, _data)).call(_context21));
 
 	        for (var _i = 0, _len2 = itemIds.length; _i < _len2; _i++) {
 	          itemId = itemIds[_i];
-	          item = this._data.get(itemId);
+	          item = __classPrivateFieldGet(this, _data).get(itemId);
 
 	          if (item != null && (!filter || filter(item))) {
 	            items.push(item);
@@ -15260,7 +15506,8 @@
 	          var resultant = items[_i3]; // @TODO: Shoudn't this be this._fieldId?
 	          // result[resultant.id] = resultant
 
-	          var _id2 = resultant[this._idProp];
+	          var _id2 = resultant[__classPrivateFieldGet(this, _idProp)];
+
 	          result[_id2] = resultant;
 	        }
 
@@ -15275,12 +15522,12 @@
 	        }
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getIds",
 	    value: function getIds(options) {
-	      var data = this._data;
+	      var data = __classPrivateFieldGet(this, _data);
 
 	      var filter = options && filter$2(options);
 
@@ -15299,7 +15546,7 @@
 	          for (var i = 0, len = itemIds.length; i < len; i++) {
 	            var id = itemIds[i];
 
-	            var item = this._data.get(id);
+	            var item = __classPrivateFieldGet(this, _data).get(id);
 
 	            if (item != null && filter(item)) {
 	              items.push(item);
@@ -15309,17 +15556,17 @@
 	          this._sort(items, order);
 
 	          for (var _i4 = 0, _len5 = items.length; _i4 < _len5; _i4++) {
-	            ids.push(items[_i4][this._idProp]);
+	            ids.push(items[_i4][__classPrivateFieldGet(this, _idProp)]);
 	          }
 	        } else {
 	          // create unordered list
 	          for (var _i5 = 0, _len6 = itemIds.length; _i5 < _len6; _i5++) {
 	            var _id3 = itemIds[_i5];
 
-	            var _item = this._data.get(_id3);
+	            var _item = __classPrivateFieldGet(this, _data).get(_id3);
 
 	            if (_item != null && filter(_item)) {
-	              ids.push(_item[this._idProp]);
+	              ids.push(_item[__classPrivateFieldGet(this, _idProp)]);
 	            }
 	          }
 	        }
@@ -15338,7 +15585,7 @@
 	          this._sort(_items, order);
 
 	          for (var _i7 = 0, _len8 = _items.length; _i7 < _len8; _i7++) {
-	            ids.push(_items[_i7][this._idProp]);
+	            ids.push(_items[_i7][__classPrivateFieldGet(this, _idProp)]);
 	          }
 	        } else {
 	          // create unordered list
@@ -15348,7 +15595,7 @@
 	            var _item2 = data.get(_id5);
 
 	            if (_item2 != null) {
-	              ids.push(_item2[this._idProp]);
+	              ids.push(_item2[__classPrivateFieldGet(this, _idProp)]);
 	            }
 	          }
 	        }
@@ -15356,21 +15603,21 @@
 
 	      return ids;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getDataSet",
 	    value: function getDataSet() {
 	      return this;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "forEach",
 	    value: function forEach(callback, options) {
 	      var filter = options && filter$2(options);
 
-	      var data = this._data;
+	      var data = __classPrivateFieldGet(this, _data);
 
 	      var itemIds = toConsumableArray(keys$6(data).call(data));
 
@@ -15380,7 +15627,9 @@
 
 	        for (var i = 0, len = items.length; i < len; i++) {
 	          var item = items[i];
-	          var id = item[this._idProp];
+
+	          var id = item[__classPrivateFieldGet(this, _idProp)];
+
 	          callback(item, id);
 	        }
 	      } else {
@@ -15388,7 +15637,7 @@
 	        for (var _i9 = 0, _len10 = itemIds.length; _i9 < _len10; _i9++) {
 	          var _id6 = itemIds[_i9];
 
-	          var _item3 = this._data.get(_id6);
+	          var _item3 = __classPrivateFieldGet(this, _data).get(_id6);
 
 	          if (_item3 != null && (!filter || filter(_item3))) {
 	            callback(_item3, _id6);
@@ -15396,7 +15645,7 @@
 	        }
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "map",
@@ -15404,7 +15653,8 @@
 	      var filter = options && filter$2(options);
 
 	      var mappedItems = [];
-	      var data = this._data;
+
+	      var data = __classPrivateFieldGet(this, _data);
 
 	      var itemIds = toConsumableArray(keys$6(data).call(data)); // convert and filter items
 
@@ -15412,7 +15662,7 @@
 	      for (var i = 0, len = itemIds.length; i < len; i++) {
 	        var id = itemIds[i];
 
-	        var item = this._data.get(id);
+	        var item = __classPrivateFieldGet(this, _data).get(id);
 
 	        if (item != null && (!filter || filter(item))) {
 	          mappedItems.push(callback(item, id));
@@ -15525,7 +15775,7 @@
 	        var item = this._remove(ids[i]);
 
 	        if (item) {
-	          var itemId = item[this._idProp];
+	          var itemId = item[__classPrivateFieldGet(this, _idProp)];
 
 	          if (itemId != null) {
 	            removedIds.push(itemId);
@@ -15561,14 +15811,14 @@
 	      if (isId(id)) {
 	        ident = id;
 	      } else if (id && _typeof_1(id) === "object") {
-	        ident = id[this._idProp]; // look for the identifier field using ._idProp
+	        ident = id[__classPrivateFieldGet(this, _idProp)]; // look for the identifier field using ._idProp
 	      } // do the removing if the item is found
 
 
-	      if (ident != null && this._data.has(ident)) {
-	        var item = this._data.get(ident) || null;
+	      if (ident != null && __classPrivateFieldGet(this, _data).has(ident)) {
+	        var item = __classPrivateFieldGet(this, _data).get(ident) || null;
 
-	        this._data.delete(ident);
+	        __classPrivateFieldGet(this, _data).delete(ident);
 
 	        --this.length;
 	        return item;
@@ -15591,15 +15841,15 @@
 	    value: function clear(senderId) {
 	      var _context23;
 
-	      var ids = toConsumableArray(keys$6(_context23 = this._data).call(_context23));
+	      var ids = toConsumableArray(keys$6(_context23 = __classPrivateFieldGet(this, _data)).call(_context23));
 
 	      var items = [];
 
 	      for (var i = 0, len = ids.length; i < len; i++) {
-	        items.push(this._data.get(ids[i]));
+	        items.push(__classPrivateFieldGet(this, _data).get(ids[i]));
 	      }
 
-	      this._data.clear();
+	      __classPrivateFieldGet(this, _data).clear();
 
 	      this.length = 0;
 
@@ -15626,7 +15876,7 @@
 	      var max = null;
 	      var maxField = null;
 
-	      var _iterator11 = _createForOfIteratorHelper$1(values$5(_context24 = this._data).call(_context24)),
+	      var _iterator11 = _createForOfIteratorHelper$1(values$5(_context24 = __classPrivateFieldGet(this, _data)).call(_context24)),
 	          _step11;
 
 	      try {
@@ -15663,7 +15913,7 @@
 	      var min = null;
 	      var minField = null;
 
-	      var _iterator12 = _createForOfIteratorHelper$1(values$5(_context25 = this._data).call(_context25)),
+	      var _iterator12 = _createForOfIteratorHelper$1(values$5(_context25 = __classPrivateFieldGet(this, _data)).call(_context25)),
 	          _step12;
 
 	      try {
@@ -15695,7 +15945,7 @@
 	  }, {
 	    key: "distinct",
 	    value: function distinct(prop) {
-	      var data = this._data;
+	      var data = __classPrivateFieldGet(this, _data);
 
 	      var itemIds = toConsumableArray(keys$6(data).call(data));
 
@@ -15734,15 +15984,17 @@
 	  }, {
 	    key: "_addItem",
 	    value: function _addItem(item) {
-	      var fullItem = ensureFullItem(item, this._idProp);
-	      var id = fullItem[this._idProp]; // check whether this id is already taken
+	      var fullItem = ensureFullItem(item, __classPrivateFieldGet(this, _idProp));
 
-	      if (this._data.has(id)) {
+	      var id = fullItem[__classPrivateFieldGet(this, _idProp)]; // check whether this id is already taken
+
+
+	      if (__classPrivateFieldGet(this, _data).has(id)) {
 	        // item already exists
 	        throw new Error("Cannot add item: item with id " + id + " already exists");
 	      }
 
-	      this._data.set(id, fullItem);
+	      __classPrivateFieldGet(this, _data).set(id, fullItem);
 
 	      ++this.length;
 	      return id;
@@ -15759,30 +16011,31 @@
 	  }, {
 	    key: "_updateItem",
 	    value: function _updateItem(update) {
-	      var id = update[this._idProp];
+	      var id = update[__classPrivateFieldGet(this, _idProp)];
 
 	      if (id == null) {
 	        throw new Error("Cannot update item: item has no id (item: " + stringify$2(update) + ")");
 	      }
 
-	      var item = this._data.get(id);
+	      var item = __classPrivateFieldGet(this, _data).get(id);
 
 	      if (!item) {
 	        // item doesn't exist
 	        throw new Error("Cannot update item: no item with id " + id + " found");
 	      }
 
-	      this._data.set(id, _objectSpread$1(_objectSpread$1({}, item), update));
+	      __classPrivateFieldGet(this, _data).set(id, _objectSpread$1(_objectSpread$1({}, item), update));
 
 	      return id;
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "stream",
 	    value: function stream(ids) {
 	      if (ids) {
-	        var data = this._data;
+	        var data = __classPrivateFieldGet(this, _data);
+
 	        return new DataStream(defineProperty$7({}, iterator$4, /*#__PURE__*/regenerator.mark(function _callee3() {
 	          var _iterator13, _step13, id, item;
 
@@ -15843,13 +16096,17 @@
 	      } else {
 	        var _context27;
 
-	        return new DataStream(defineProperty$7({}, iterator$4, bind$2(_context27 = entries$2(this._data)).call(_context27, this._data)));
+	        return new DataStream(defineProperty$7({}, iterator$4, bind$2(_context27 = entries$2(__classPrivateFieldGet(this, _data))).call(_context27, __classPrivateFieldGet(this, _data))));
 	      }
 	    }
 	  }]);
 
 	  return DataSet;
 	}(DataSetPart);
+
+	_options = new weakMap$2(), _data = new weakMap$2(), _idProp = new weakMap$2(), _queue$1 = new weakMap$2();
+
+	var _listener, _data$1, _ids, _options$1;
 	/**
 	 * DataView
 	 *
@@ -15916,13 +16173,23 @@
 	    classCallCheck(this, DataView);
 
 	    _this7 = _super2.call(this);
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	    _this7.length = 0;
-	    _this7._ids = new set$3(); // ids of the items currently in memory (just contains a boolean true)
 
-	    _this7._options = options || {};
-	    _this7._listener = bind$2(_context30 = _this7._onEvent).call(_context30, assertThisInitialized(_this7));
+	    _listener.set(assertThisInitialized(_this7), void 0);
+
+	    _data$1.set(assertThisInitialized(_this7), void 0); // constructor → setData
+
+
+	    _ids.set(assertThisInitialized(_this7), new set$3()); // ids of the items currently in memory (just contains a boolean true)
+
+
+	    _options$1.set(assertThisInitialized(_this7), void 0);
+
+	    __classPrivateFieldSet(assertThisInitialized(_this7), _options$1, options || {});
+
+	    __classPrivateFieldSet(assertThisInitialized(_this7), _listener, bind$2(_context30 = _this7._onEvent).call(_context30, assertThisInitialized(_this7)));
 
 	    _this7.setData(data);
 
@@ -15946,20 +16213,20 @@
 	  createClass(DataView, [{
 	    key: "setData",
 	    value: function setData(data) {
-	      if (this._data) {
+	      if (__classPrivateFieldGet(this, _data$1)) {
 	        // unsubscribe from current dataset
-	        if (this._data.off) {
-	          this._data.off("*", this._listener);
+	        if (__classPrivateFieldGet(this, _data$1).off) {
+	          __classPrivateFieldGet(this, _data$1).off("*", __classPrivateFieldGet(this, _listener));
 	        } // trigger a remove of all items in memory
 
 
-	        var ids = this._data.getIds({
-	          filter: filter$2(this._options)
+	        var ids = __classPrivateFieldGet(this, _data$1).getIds({
+	          filter: filter$2(__classPrivateFieldGet(this, _options$1))
 	        });
 
-	        var items = this._data.get(ids);
+	        var items = __classPrivateFieldGet(this, _data$1).get(ids);
 
-	        this._ids.clear();
+	        __classPrivateFieldGet(this, _ids).clear();
 
 	        this.length = 0;
 
@@ -15970,30 +16237,31 @@
 	      }
 
 	      if (data != null) {
-	        this._data = data; // trigger an add of all added items
+	        __classPrivateFieldSet(this, _data$1, data); // trigger an add of all added items
 
-	        var _ids = this._data.getIds({
-	          filter: filter$2(this._options)
+
+	        var _ids2 = __classPrivateFieldGet(this, _data$1).getIds({
+	          filter: filter$2(__classPrivateFieldGet(this, _options$1))
 	        });
 
-	        for (var i = 0, len = _ids.length; i < len; i++) {
-	          var id = _ids[i];
+	        for (var i = 0, len = _ids2.length; i < len; i++) {
+	          var id = _ids2[i];
 
-	          this._ids.add(id);
+	          __classPrivateFieldGet(this, _ids).add(id);
 	        }
 
-	        this.length = _ids.length;
+	        this.length = _ids2.length;
 
 	        this._trigger("add", {
-	          items: _ids
+	          items: _ids2
 	        });
 	      } else {
-	        this._data = new DataSet();
+	        __classPrivateFieldSet(this, _data$1, new DataSet());
 	      } // subscribe to new dataset
 
 
-	      if (this._data.on) {
-	        this._data.on("*", this._listener);
+	      if (__classPrivateFieldGet(this, _data$1).on) {
+	        __classPrivateFieldGet(this, _data$1).on("*", __classPrivateFieldGet(this, _listener));
 	      }
 	    }
 	    /**
@@ -16004,11 +16272,11 @@
 	  }, {
 	    key: "refresh",
 	    value: function refresh() {
-	      var ids = this._data.getIds({
-	        filter: filter$2(this._options)
+	      var ids = __classPrivateFieldGet(this, _data$1).getIds({
+	        filter: filter$2(__classPrivateFieldGet(this, _options$1))
 	      });
 
-	      var oldIds = toConsumableArray(this._ids);
+	      var oldIds = toConsumableArray(__classPrivateFieldGet(this, _ids));
 
 	      var newIds = {};
 	      var addedIds = [];
@@ -16019,10 +16287,10 @@
 	        var id = ids[i];
 	        newIds[id] = true;
 
-	        if (!this._ids.has(id)) {
+	        if (!__classPrivateFieldGet(this, _ids).has(id)) {
 	          addedIds.push(id);
 
-	          this._ids.add(id);
+	          __classPrivateFieldGet(this, _ids).add(id);
 	        }
 	      } // check for removals
 
@@ -16030,7 +16298,7 @@
 	      for (var _i10 = 0, _len11 = oldIds.length; _i10 < _len11; _i10++) {
 	        var _id7 = oldIds[_i10];
 
-	        var item = this._data.get(_id7);
+	        var item = __classPrivateFieldGet(this, _data$1).get(_id7);
 
 	        if (item == null) {
 	          // @TODO: Investigate.
@@ -16042,7 +16310,7 @@
 	          removedIds.push(_id7);
 	          removedItems.push(item);
 
-	          this._ids.delete(_id7);
+	          __classPrivateFieldGet(this, _ids).delete(_id7);
 	        }
 	      }
 
@@ -16061,12 +16329,12 @@
 	        });
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "get",
 	    value: function get(first, second) {
-	      if (this._data == null) {
+	      if (__classPrivateFieldGet(this, _data$1) == null) {
 	        return null;
 	      } // parse the arguments
 
@@ -16082,10 +16350,10 @@
 	      } // extend the options with the default options and provided options
 
 
-	      var viewOptions = assign$2({}, this._options, options); // create a combined filter method when needed
+	      var viewOptions = assign$2({}, __classPrivateFieldGet(this, _options$1), options); // create a combined filter method when needed
 
 
-	      var thisFilter = filter$2(this._options);
+	      var thisFilter = filter$2(__classPrivateFieldGet(this, _options$1));
 
 	      var optionsFilter = options && filter$2(options);
 
@@ -16096,18 +16364,18 @@
 	      }
 
 	      if (ids == null) {
-	        return this._data.get(viewOptions);
+	        return __classPrivateFieldGet(this, _data$1).get(viewOptions);
 	      } else {
-	        return this._data.get(ids, viewOptions);
+	        return __classPrivateFieldGet(this, _data$1).get(ids, viewOptions);
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getIds",
 	    value: function getIds(options) {
-	      if (this._data.length) {
-	        var defaultFilter = filter$2(this._options);
+	      if (__classPrivateFieldGet(this, _data$1).length) {
+	        var defaultFilter = filter$2(__classPrivateFieldGet(this, _options$1));
 
 	        var optionsFilter = options != null ? filter$2(options) : null;
 	        var filter;
@@ -16124,7 +16392,7 @@
 	          filter = defaultFilter;
 	        }
 
-	        return this._data.getIds({
+	        return __classPrivateFieldGet(this, _data$1).getIds({
 	          filter: filter,
 	          order: options && options.order
 	        });
@@ -16132,15 +16400,15 @@
 	        return [];
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "forEach",
 	    value: function forEach(callback, options) {
-	      if (this._data) {
+	      if (__classPrivateFieldGet(this, _data$1)) {
 	        var _context31;
 
-	        var defaultFilter = filter$2(this._options);
+	        var defaultFilter = filter$2(__classPrivateFieldGet(this, _options$1));
 
 	        var optionsFilter = options && filter$2(options);
 
@@ -16158,21 +16426,21 @@
 	          filter = defaultFilter;
 	        }
 
-	        forEach$2(_context31 = this._data).call(_context31, callback, {
+	        forEach$2(_context31 = __classPrivateFieldGet(this, _data$1)).call(_context31, callback, {
 	          filter: filter,
 	          order: options && options.order
 	        });
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "map",
 	    value: function map(callback, options) {
-	      if (this._data) {
+	      if (__classPrivateFieldGet(this, _data$1)) {
 	        var _context32;
 
-	        var defaultFilter = filter$2(this._options);
+	        var defaultFilter = filter$2(__classPrivateFieldGet(this, _options$1));
 
 	        var optionsFilter = options && filter$2(options);
 
@@ -16190,7 +16458,7 @@
 	          filter = defaultFilter;
 	        }
 
-	        return map$2(_context32 = this._data).call(_context32, callback, {
+	        return map$2(_context32 = __classPrivateFieldGet(this, _data$1)).call(_context32, callback, {
 	          filter: filter,
 	          order: options && options.order
 	        });
@@ -16198,21 +16466,21 @@
 	        return [];
 	      }
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "getDataSet",
 	    value: function getDataSet() {
-	      return this._data.getDataSet();
+	      return __classPrivateFieldGet(this, _data$1).getDataSet();
 	    }
-	    /** @inheritdoc */
+	    /** @inheritDoc */
 
 	  }, {
 	    key: "stream",
 	    value: function stream(ids) {
 	      var _context33;
 
-	      return this._data.stream(ids || defineProperty$7({}, iterator$4, bind$2(_context33 = keys$6(this._ids)).call(_context33, this._ids)));
+	      return __classPrivateFieldGet(this, _data$1).stream(ids || defineProperty$7({}, iterator$4, bind$2(_context33 = keys$6(__classPrivateFieldGet(this, _ids))).call(_context33, __classPrivateFieldGet(this, _ids))));
 	    }
 	    /**
 	     * Render the instance unusable prior to garbage collection.
@@ -16228,13 +16496,12 @@
 	    value: function dispose() {
 	      var _a;
 
-	      if ((_a = this._data) === null || _a === void 0 ? void 0 : _a.off) {
-	        this._data.off("*", this._listener);
+	      if ((_a = __classPrivateFieldGet(this, _data$1)) === null || _a === void 0 ? void 0 : _a.off) {
+	        __classPrivateFieldGet(this, _data$1).off("*", __classPrivateFieldGet(this, _listener));
 	      }
 
 	      var message = "This data view has already been disposed of.";
-
-	      defineProperty$2(this, "_data", {
+	      var replacement = {
 	        get: function get() {
 	          throw new Error(message);
 	        },
@@ -16242,7 +16509,22 @@
 	          throw new Error(message);
 	        },
 	        configurable: false
-	      });
+	      };
+
+	      var _iterator14 = _createForOfIteratorHelper$1(ownKeys$3(DataView.prototype)),
+	          _step14;
+
+	      try {
+	        for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+	          var key = _step14.value;
+
+	          defineProperty$2(this, key, replacement);
+	        }
+	      } catch (err) {
+	        _iterator14.e(err);
+	      } finally {
+	        _iterator14.f();
+	      }
 	    }
 	    /**
 	     * Event listener. Will propagate all events from the connected data set to the subscribers of the DataView, but will filter the items and only trigger when there are changes in the filtered data set.
@@ -16255,7 +16537,7 @@
 	  }, {
 	    key: "_onEvent",
 	    value: function _onEvent(event, params, senderId) {
-	      if (!params || !params.items || !this._data) {
+	      if (!params || !params.items || !__classPrivateFieldGet(this, _data$1)) {
 	        return;
 	      }
 
@@ -16275,7 +16557,7 @@
 	            var item = this.get(id);
 
 	            if (item) {
-	              this._ids.add(id);
+	              __classPrivateFieldGet(this, _ids).add(id);
 
 	              addedIds.push(id);
 	            }
@@ -16292,18 +16574,18 @@
 	            var _item4 = this.get(_id8);
 
 	            if (_item4) {
-	              if (this._ids.has(_id8)) {
+	              if (__classPrivateFieldGet(this, _ids).has(_id8)) {
 	                updatedIds.push(_id8);
 	                updatedItems.push(params.data[_i11]);
 	                oldItems.push(params.oldData[_i11]);
 	              } else {
-	                this._ids.add(_id8);
+	                __classPrivateFieldGet(this, _ids).add(_id8);
 
 	                addedIds.push(_id8);
 	              }
 	            } else {
-	              if (this._ids.has(_id8)) {
-	                this._ids.delete(_id8);
+	              if (__classPrivateFieldGet(this, _ids).has(_id8)) {
+	                __classPrivateFieldGet(this, _ids).delete(_id8);
 
 	                removedIds.push(_id8);
 	                removedItems.push(params.oldData[_i11]);
@@ -16318,8 +16600,8 @@
 	          for (var _i12 = 0, _len13 = ids.length; _i12 < _len13; _i12++) {
 	            var _id9 = ids[_i12];
 
-	            if (this._ids.has(_id9)) {
-	              this._ids.delete(_id9);
+	            if (__classPrivateFieldGet(this, _ids).has(_id9)) {
+	              __classPrivateFieldGet(this, _ids).delete(_id9);
 
 	              removedIds.push(_id9);
 	              removedItems.push(params.oldData[_i12]);
@@ -16356,6 +16638,8 @@
 
 	  return DataView;
 	}(DataSetPart);
+
+	_listener = new weakMap$2(), _data$1 = new weakMap$2(), _ids = new weakMap$2(), _options$1 = new weakMap$2();
 
 	var index$2 = /*#__PURE__*/Object.freeze({
 		__proto__: null,
