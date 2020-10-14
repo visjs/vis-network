@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-14T06:30:34.974Z
+ * @date    2020-10-14T07:23:59.840Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -14361,15 +14361,17 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
     return _this3;
   }
-  /**
-   * Set new options.
-   *
-   * @param options - The new options.
-   */
+  /** @inheritDoc */
 
 
   createClass(DataSet, [{
     key: "setOptions",
+
+    /**
+     * Set new options.
+     *
+     * @param options - The new options.
+     */
     value: function setOptions(options) {
       if (options && options.queue !== undefined) {
         if (options.queue === false) {
@@ -15372,6 +15374,11 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         return new DataStream(defineProperty$7({}, iterator$4, bind$2(_context27 = entries$2(__classPrivateFieldGet(this, _data))).call(_context27, __classPrivateFieldGet(this, _data))));
       }
     }
+  }, {
+    key: "idProp",
+    get: function get() {
+      return __classPrivateFieldGet(this, _idProp);
+    }
   }]);
 
   return DataSet;
@@ -15467,24 +15474,26 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
     _this7.setData(data);
 
     return _this7;
-  } // TODO: implement a function .config() to dynamically update things like configured filter
-  // and trigger changes accordingly
-
-  /**
-   * Set a data source for the view.
-   *
-   * @param data - The instance containing data (directly or indirectly).
-   *
-   * @remarks
-   * Note that when the data view is bound to a data set it won't be garbage
-   * collected unless the data set is too. Use `dataView.setData(null)` or
-   * `dataView.dispose()` to enable garbage collection before you lose the last
-   * reference.
-   */
+  }
+  /** @inheritDoc */
 
 
   createClass(DataView, [{
     key: "setData",
+    // TODO: implement a function .config() to dynamically update things like configured filter
+    // and trigger changes accordingly
+
+    /**
+     * Set a data source for the view.
+     *
+     * @param data - The instance containing data (directly or indirectly).
+     *
+     * @remarks
+     * Note that when the data view is bound to a data set it won't be garbage
+     * collected unless the data set is too. Use `dataView.setData(null)` or
+     * `dataView.dispose()` to enable garbage collection before you lose the last
+     * reference.
+     */
     value: function setData(data) {
       if (__classPrivateFieldGet(this, _data$1)) {
         // unsubscribe from current dataset
@@ -15907,12 +15916,42 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
         }, senderId);
       }
     }
+  }, {
+    key: "idProp",
+    get: function get() {
+      return this.getDataSet().idProp;
+    }
   }]);
 
   return DataView;
 }(DataSetPart);
 
 _listener = new weakMap$2(), _data$1 = new weakMap$2(), _ids = new weakMap$2(), _options$1 = new weakMap$2();
+/**
+ * Check that given value is compatible with Vis Data Set interface.
+ *
+ * @param idProp - The expected property to contain item id.
+ * @param v - The value to be tested.
+ *
+ * @returns True if all expected values and methods match, false otherwise.
+ */
+
+function isDataSetLike(idProp, v) {
+  return _typeof_1(v) === "object" && v !== null && idProp === v.idProp && typeof v.add === "function" && typeof v.clear === "function" && typeof v.distinct === "function" && typeof forEach$2(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof map$2(v) === "function" && typeof v.max === "function" && typeof v.min === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.remove === "function" && typeof v.setOptions === "function" && typeof v.stream === "function" && typeof v.update === "function" && typeof v.updateOnly === "function";
+}
+/**
+ * Check that given value is compatible with Vis Data View interface.
+ *
+ * @param idProp - The expected property to contain item id.
+ * @param v - The value to be tested.
+ *
+ * @returns True if all expected values and methods match, false otherwise.
+ */
+
+
+function isDataViewLike(idProp, v) {
+  return _typeof_1(v) === "object" && v !== null && idProp === v.idProp && typeof forEach$2(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof map$2(v) === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.stream === "function" && isDataSetLike(idProp, v.getDataSet());
+}
 
 var index$1 = /*#__PURE__*/Object.freeze({
 	__proto__: null,
@@ -15921,7 +15960,9 @@ var index$1 = /*#__PURE__*/Object.freeze({
 	DataStream: DataStream,
 	DataView: DataView,
 	Queue: Queue,
-	createNewDataPipeFrom: createNewDataPipeFrom
+	createNewDataPipeFrom: createNewDataPipeFrom,
+	isDataSetLike: isDataSetLike,
+	isDataViewLike: isDataViewLike
 });
 
 var nativeGetOwnPropertyNames$2 = objectGetOwnPropertyNamesExternal.f;
