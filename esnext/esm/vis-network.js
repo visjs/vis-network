@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-14T07:23:59.840Z
+ * @date    2020-10-14T20:16:25.407Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28,7 +28,7 @@ import Emitter from 'component-emitter';
 import { addClassName, removeClassName, topMost, forEach, deepExtend, overrideOpacity, copyAndExtendArray, copyArray, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, selectiveDeepExtend, isString, Alea, HSVToHex, addEventListener, removeEventListener, easingFunctions, getAbsoluteLeft, getAbsoluteTop, recursiveDOMDelete, isValidRGB, isValidRGBA, isValidHex, hexToRGB, RGBToHSV, HSVToRGB } from 'vis-util/esnext/esm/vis-util.js';
 import keycharm from 'keycharm';
 import RealHammer from '@egjs/hammerjs';
-import { DataSet, DataView } from 'vis-data/esnext/esm/vis-data.js';
+import { isDataViewLike, DataSet } from 'vis-data/esnext/esm/vis-data.js';
 import { v4 } from 'uuid';
 import TimSort, { sort } from 'timsort';
 
@@ -7881,13 +7881,13 @@ class NodesHandler {
    * Set a data set with nodes for the network
    *
    * @param {Array | DataSet | DataView} nodes         The data containing the nodes.
-   * @param {boolean} [doNotEmit=false]
+   * @param {boolean} [doNotEmit=false] - Suppress data changed event.
    * @private
    */
   setData(nodes, doNotEmit = false) {
     const oldNodesData = this.body.data.nodes;
 
-    if (nodes instanceof DataSet || nodes instanceof DataView) {
+    if (isDataViewLike("id", nodes)) {
       this.body.data.nodes = nodes;
     } else if (Array.isArray(nodes)) {
       this.body.data.nodes = new DataSet();
@@ -11267,13 +11267,13 @@ class EdgesHandler {
    * Load edges by reading the data table
    *
    * @param {Array | DataSet | DataView} edges    The data containing the edges.
-   * @param {boolean} [doNotEmit=false]
+   * @param {boolean} [doNotEmit=false] - Suppress data changed event.
    * @private
    */
   setData(edges, doNotEmit = false) {
     const oldEdgesData = this.body.data.edges;
 
-    if (edges instanceof DataSet || edges instanceof DataView) {
+    if (isDataViewLike("id", edges)) {
       this.body.data.edges = edges;
     } else if (Array.isArray(edges)) {
       this.body.data.edges = new DataSet();

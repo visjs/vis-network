@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-14T07:26:19.283Z
+ * @date    2020-10-14T20:18:03.529Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -22400,7 +22400,7 @@
 	     * Set a data set with nodes for the network
 	     *
 	     * @param {Array | DataSet | DataView} nodes         The data containing the nodes.
-	     * @param {boolean} [doNotEmit=false]
+	     * @param {boolean} [doNotEmit=false] - Suppress data changed event.
 	     * @private
 	     */
 
@@ -22410,7 +22410,7 @@
 	      var doNotEmit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 	      var oldNodesData = this.body.data.nodes;
 
-	      if (nodes instanceof DataSet || nodes instanceof DataView) {
+	      if (isDataViewLike("id", nodes)) {
 	        this.body.data.nodes = nodes;
 	      } else if (isArray$5(nodes)) {
 	        this.body.data.nodes = new DataSet();
@@ -26463,7 +26463,7 @@
 	     * Load edges by reading the data table
 	     *
 	     * @param {Array | DataSet | DataView} edges    The data containing the edges.
-	     * @param {boolean} [doNotEmit=false]
+	     * @param {boolean} [doNotEmit=false] - Suppress data changed event.
 	     * @private
 	     */
 
@@ -26475,7 +26475,7 @@
 	      var doNotEmit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 	      var oldEdgesData = this.body.data.edges;
 
-	      if (edges instanceof DataSet || edges instanceof DataView) {
+	      if (isDataViewLike("id", edges)) {
 	        this.body.data.edges = edges;
 	      } else if (isArray$5(edges)) {
 	        this.body.data.edges = new DataSet();
