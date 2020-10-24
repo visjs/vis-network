@@ -49,7 +49,7 @@ function merge(a, b) {
  * Load legacy-style (i.e. not module) javascript files into the given context.
  */
 function include(list, context) {
-  if (!(list instanceof Array)) {
+  if (!Array.isArray(list)) {
     list = [list];
   }
 
