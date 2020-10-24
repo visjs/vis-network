@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-24T03:58:01.530Z
+ * @date    2020-10-24T11:48:30.859Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -23589,7 +23589,7 @@
         let enabled = true;
         if (typeof options === "string") {
           this.options.filter = options;
-        } else if (options instanceof Array) {
+        } else if (Array.isArray(options)) {
           this.options.filter = options.join();
         } else if (typeof options === "object") {
           if (options == null) {
@@ -24138,7 +24138,7 @@
             // if needed we must go deeper into the object.
             if (show === false) {
               if (
-                !(item instanceof Array) &&
+                !Array.isArray(item) &&
                 typeof item !== "string" &&
                 typeof item !== "boolean" &&
                 item instanceof Object
@@ -24154,7 +24154,7 @@
             visibleInSet = true;
             const value = this._getValue(newPath);
 
-            if (item instanceof Array) {
+            if (Array.isArray(item)) {
               this._handleArray(item, value, newPath);
             } else if (typeof item === "string") {
               this._makeTextInput(item, value, newPath);
