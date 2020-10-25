@@ -11,7 +11,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "esnext"
+    "target": "ES2019"
   },
   "exclude": ["node_modules", "**/__tests__/*"]
 }

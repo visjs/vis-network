@@ -41,3 +41,5 @@ export interface UniversalNetworkConfig {
 export interface UniversalConfig extends UniversalNetworkConfig {
   version: null | "latest";
 }
+
+export type IdType = string | number;

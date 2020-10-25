@@ -26,8 +26,8 @@ export function visDrag(paths: readonly DragPath[]): void {
     )) {
       cy.get("#mynetwork canvas").trigger(
         "pointermove",
-        from.x + to.x * relativeDistance,
-        from.y + to.y * relativeDistance,
+        from.x + (to.x - from.x) * relativeDistance,
+        from.y + (to.y - from.y) * relativeDistance,
         {
           button,
           shiftKey,
