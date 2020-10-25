@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-24T18:38:01.926Z
+ * @date    2020-10-25T15:00:27.921Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -32814,6 +32814,11 @@ var Popup = /*#__PURE__*/function () {
   return Popup;
 }();
 
+function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray$5(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
+
+function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Handler for interactions
  */
@@ -32964,9 +32969,9 @@ var InteractionHandler = /*#__PURE__*/function () {
     value: function onTap(event) {
       var pointer = this.getPointer(event.center);
       var multiselect = this.selectionHandler.options.multiselect && (event.changedPointers[0].ctrlKey || event.changedPointers[0].metaKey);
-      this.checkSelectionChanges(pointer, event, multiselect);
-
-      this.selectionHandler._generateClickEvent("click", event, pointer);
+      this.checkSelectionChanges(pointer, multiselect);
+      this.selectionHandler.commitAndEmit(pointer, event);
+      this.selectionHandler.generateClickEvent("click", event, pointer);
     }
     /**
      * handle doubletap event
@@ -32979,8 +32984,7 @@ var InteractionHandler = /*#__PURE__*/function () {
     key: "onDoubleTap",
     value: function onDoubleTap(event) {
       var pointer = this.getPointer(event.center);
-
-      this.selectionHandler._generateClickEvent("doubleClick", event, pointer);
+      this.selectionHandler.generateClickEvent("doubleClick", event, pointer);
     }
     /**
      * handle long tap event: multi select nodes
@@ -32994,11 +32998,10 @@ var InteractionHandler = /*#__PURE__*/function () {
     value: function onHold(event) {
       var pointer = this.getPointer(event.center);
       var multiselect = this.selectionHandler.options.multiselect;
-      this.checkSelectionChanges(pointer, event, multiselect);
-
-      this.selectionHandler._generateClickEvent("click", event, pointer);
-
-      this.selectionHandler._generateClickEvent("hold", event, pointer);
+      this.checkSelectionChanges(pointer, multiselect);
+      this.selectionHandler.commitAndEmit(pointer, event);
+      this.selectionHandler.generateClickEvent("click", event, pointer);
+      this.selectionHandler.generateClickEvent("hold", event, pointer);
     }
     /**
      * handle the release of the screen
@@ -33012,9 +33015,7 @@ var InteractionHandler = /*#__PURE__*/function () {
     value: function onRelease(event) {
       if (new Date().valueOf() - this.touchTime > 10) {
         var pointer = this.getPointer(event.center);
-
-        this.selectionHandler._generateClickEvent("release", event, pointer); // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
-
+        this.selectionHandler.generateClickEvent("release", event, pointer); // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
 
         this.touchTime = new Date().valueOf();
       }
@@ -33031,72 +33032,24 @@ var InteractionHandler = /*#__PURE__*/function () {
         x: event.clientX,
         y: event.clientY
       });
-
-      this.selectionHandler._generateClickEvent("oncontext", event, pointer);
+      this.selectionHandler.generateClickEvent("oncontext", event, pointer);
     }
     /**
      * Select and deselect nodes depending current selection change.
      *
-     * For changing nodes, select/deselect events are fired.
-     *
-     * NOTE: For a given edge, if one connecting node is deselected and with the same
-     *       click the other node is selected, no events for the edge will fire.
-     *       It was selected and it will remain selected.
-     *
-     * TODO: This is all SelectionHandler calls; the method should be moved to there.
-     *
      * @param {{x: number, y: number}} pointer
-     * @param {Event} event
      * @param {boolean} [add=false]
      */
 
   }, {
     key: "checkSelectionChanges",
-    value: function checkSelectionChanges(pointer, event) {
-      var add = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      var previousSelection = this.selectionHandler.getSelection();
-      var selected = false;
+    value: function checkSelectionChanges(pointer) {
+      var add = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
       if (add === true) {
-        selected = this.selectionHandler.selectAdditionalOnPoint(pointer);
+        this.selectionHandler.selectAdditionalOnPoint(pointer);
       } else {
-        selected = this.selectionHandler.selectOnPoint(pointer);
-      }
-
-      var currentSelection = this.selectionHandler.getSelection(); // See NOTE in method comment for the reason to do it like this
-
-      var deselectedItems = this._determineDifference(previousSelection, currentSelection);
-
-      var selectedItems = this._determineDifference(currentSelection, previousSelection);
-
-      if (deselectedItems.edges.length > 0) {
-        this.selectionHandler._generateClickEvent("deselectEdge", event, pointer, previousSelection);
-
-        selected = true;
-      }
-
-      if (deselectedItems.nodes.length > 0) {
-        this.selectionHandler._generateClickEvent("deselectNode", event, pointer, previousSelection);
-
-        selected = true;
-      }
-
-      if (selectedItems.nodes.length > 0) {
-        this.selectionHandler._generateClickEvent("selectNode", event, pointer);
-
-        selected = true;
-      }
-
-      if (selectedItems.edges.length > 0) {
-        this.selectionHandler._generateClickEvent("selectEdge", event, pointer);
-
-        selected = true;
-      } // fire the select event if anything has been selected or deselected
-
-
-      if (selected === true) {
-        // select or unselect
-        this.selectionHandler._generateClickEvent("select", event, pointer);
+        this.selectionHandler.selectOnPoint(pointer);
       }
     }
     /**
@@ -33182,30 +33135,35 @@ var InteractionHandler = /*#__PURE__*/function () {
         } // after select to contain the node
 
 
-        this.selectionHandler._generateClickEvent("dragStart", event, this.drag.pointer);
+        this.selectionHandler.generateClickEvent("dragStart", event, this.drag.pointer); // create an array with the selected nodes and their original location and status
 
-        var selection = this.selectionHandler.selectionObj.nodes; // create an array with the selected nodes and their original location and status
+        var _iterator = _createForOfIteratorHelper$4(this.selectionHandler.getSelectedNodes()),
+            _step;
 
-        for (var nodeId in selection) {
-          if (Object.prototype.hasOwnProperty.call(selection, nodeId)) {
-            var object = selection[nodeId];
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var _node = _step.value;
             var s = {
-              id: object.id,
-              node: object,
+              id: _node.id,
+              node: _node,
               // store original x, y, xFixed and yFixed, make the node temporarily Fixed
-              x: object.x,
-              y: object.y,
-              xFixed: object.options.fixed.x,
-              yFixed: object.options.fixed.y
+              x: _node.x,
+              y: _node.y,
+              xFixed: _node.options.fixed.x,
+              yFixed: _node.options.fixed.y
             };
-            object.options.fixed.x = true;
-            object.options.fixed.y = true;
+            _node.options.fixed.x = true;
+            _node.options.fixed.y = true;
             this.drag.selection.push(s);
           }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
         }
       } else {
         // fallback if no node is selected and thus the view is dragged.
-        this.selectionHandler._generateClickEvent("dragStart", event, this.drag.pointer, undefined, true);
+        this.selectionHandler.generateClickEvent("dragStart", event, this.drag.pointer, undefined, true);
       }
     }
     /**
@@ -33230,8 +33188,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       var selection = this.drag.selection;
 
       if (selection && selection.length && this.options.dragNodes === true) {
-        this.selectionHandler._generateClickEvent("dragging", event, pointer); // calculate delta's and new location
-
+        this.selectionHandler.generateClickEvent("dragging", event, pointer); // calculate delta's and new location
 
         var deltaX = pointer.x - this.drag.pointer.x;
         var deltaY = pointer.y - this.drag.pointer.y; // update position of all selected nodes
@@ -33254,8 +33211,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       } else {
         // create selection box
         if (event.srcEvent.shiftKey) {
-          this.selectionHandler._generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
-
+          this.selectionHandler.generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
           if (this.drag.pointer === undefined) {
             this.onDragStart(event);
@@ -33271,8 +33227,7 @@ var InteractionHandler = /*#__PURE__*/function () {
 
 
         if (this.options.dragView === true && !event.srcEvent.shiftKey) {
-          this.selectionHandler._generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
-
+          this.selectionHandler.generateClickEvent("dragging", event, pointer, undefined, true); // if the drag was not started properly because the click started outside the network div, start it now.
 
           if (this.drag.pointer === undefined) {
             this.onDragStart(event);
@@ -33324,8 +33279,9 @@ var InteractionHandler = /*#__PURE__*/function () {
           return _this3.selectionHandler.selectObject(_this3.body.nodes[nodeId]);
         });
 
-        this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
-
+        var pointer = this.getPointer(event.center);
+        this.selectionHandler.commitAndEmit(pointer, event);
+        this.selectionHandler.generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
         this.body.emitter.emit("_requestRedraw");
       } else {
         var selection = this.drag.selection;
@@ -33337,12 +33293,10 @@ var InteractionHandler = /*#__PURE__*/function () {
             s.node.options.fixed.y = s.yFixed;
           });
 
-          this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center));
-
+          this.selectionHandler.generateClickEvent("dragEnd", event, this.getPointer(event.center));
           this.body.emitter.emit("startSimulation");
         } else {
-          this.selectionHandler._generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
-
+          this.selectionHandler.generateClickEvent("dragEnd", event, this.getPointer(event.center), undefined, true);
           this.body.emitter.emit("_requestRedraw");
         }
       }
@@ -33665,6 +33619,267 @@ var InteractionHandler = /*#__PURE__*/function () {
   return InteractionHandler;
 }();
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+function __classPrivateFieldGet$1(receiver, privateMap) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to get private field on non-instance");
+  }
+
+  return privateMap.get(receiver);
+}
+function __classPrivateFieldSet$1(receiver, privateMap, value) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError("attempted to set private field on non-instance");
+  }
+
+  privateMap.set(receiver, value);
+  return value;
+}
+
+function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray$6(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
+
+function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var _previousSelection, _selection, _nodes, _edges, _commitHandler;
+/**
+ * @param prev
+ * @param next
+ */
+
+function diffSets(prev, next) {
+  var diff = new set$3();
+
+  var _iterator = _createForOfIteratorHelper$5(next),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var item = _step.value;
+
+      if (!prev.has(item)) {
+        diff.add(item);
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return diff;
+}
+
+var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
+  function SingleTypeSelectionAccumulator() {
+    classCallCheck(this, SingleTypeSelectionAccumulator);
+
+    _previousSelection.set(this, new set$3());
+
+    _selection.set(this, new set$3());
+  }
+
+  createClass(SingleTypeSelectionAccumulator, [{
+    key: "add",
+    value: function add() {
+      for (var _len = arguments.length, items = new Array(_len), _key = 0; _key < _len; _key++) {
+        items[_key] = arguments[_key];
+      }
+
+      for (var _i = 0, _items = items; _i < _items.length; _i++) {
+        var item = _items[_i];
+
+        __classPrivateFieldGet$1(this, _selection).add(item);
+      }
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      for (var _len2 = arguments.length, items = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        items[_key2] = arguments[_key2];
+      }
+
+      for (var _i2 = 0, _items2 = items; _i2 < _items2.length; _i2++) {
+        var item = _items2[_i2];
+
+        __classPrivateFieldGet$1(this, _selection).delete(item);
+      }
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      __classPrivateFieldGet$1(this, _selection).clear();
+    }
+  }, {
+    key: "getSelection",
+    value: function getSelection() {
+      return toConsumableArray(__classPrivateFieldGet$1(this, _selection));
+    }
+  }, {
+    key: "getChanges",
+    value: function getChanges() {
+      return {
+        added: toConsumableArray(diffSets(__classPrivateFieldGet$1(this, _previousSelection), __classPrivateFieldGet$1(this, _selection))),
+        deleted: toConsumableArray(diffSets(__classPrivateFieldGet$1(this, _selection), __classPrivateFieldGet$1(this, _previousSelection))),
+        previous: toConsumableArray(new set$3(__classPrivateFieldGet$1(this, _previousSelection))),
+        current: toConsumableArray(new set$3(__classPrivateFieldGet$1(this, _selection)))
+      };
+    }
+  }, {
+    key: "commit",
+    value: function commit() {
+      var changes = this.getChanges();
+
+      __classPrivateFieldSet$1(this, _previousSelection, __classPrivateFieldGet$1(this, _selection));
+
+      __classPrivateFieldSet$1(this, _selection, new set$3(__classPrivateFieldGet$1(this, _previousSelection)));
+
+      var _iterator2 = _createForOfIteratorHelper$5(changes.added),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var item = _step2.value;
+          item.select();
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      var _iterator3 = _createForOfIteratorHelper$5(changes.deleted),
+          _step3;
+
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _item = _step3.value;
+
+          _item.unselect();
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+
+      return changes;
+    }
+  }, {
+    key: "size",
+    get: function get() {
+      return __classPrivateFieldGet$1(this, _selection).size;
+    }
+  }]);
+
+  return SingleTypeSelectionAccumulator;
+}();
+
+_previousSelection = new weakMap$2(), _selection = new weakMap$2();
+var SelectionAccumulator = /*#__PURE__*/function () {
+  function SelectionAccumulator() {
+    var commitHandler = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+
+    classCallCheck(this, SelectionAccumulator);
+
+    _nodes.set(this, new SingleTypeSelectionAccumulator());
+
+    _edges.set(this, new SingleTypeSelectionAccumulator());
+
+    _commitHandler.set(this, void 0);
+
+    __classPrivateFieldSet$1(this, _commitHandler, commitHandler);
+  }
+
+  createClass(SelectionAccumulator, [{
+    key: "getNodes",
+    value: function getNodes() {
+      return __classPrivateFieldGet$1(this, _nodes).getSelection();
+    }
+  }, {
+    key: "getEdges",
+    value: function getEdges() {
+      return __classPrivateFieldGet$1(this, _edges).getSelection();
+    }
+  }, {
+    key: "addNodes",
+    value: function addNodes() {
+      var _classPrivateFieldGe;
+
+      (_classPrivateFieldGe = __classPrivateFieldGet$1(this, _nodes)).add.apply(_classPrivateFieldGe, arguments);
+    }
+  }, {
+    key: "addEdges",
+    value: function addEdges() {
+      var _classPrivateFieldGe2;
+
+      (_classPrivateFieldGe2 = __classPrivateFieldGet$1(this, _edges)).add.apply(_classPrivateFieldGe2, arguments);
+    }
+  }, {
+    key: "deleteNodes",
+    value: function deleteNodes(node) {
+      __classPrivateFieldGet$1(this, _nodes).delete(node);
+    }
+  }, {
+    key: "deleteEdges",
+    value: function deleteEdges(edge) {
+      __classPrivateFieldGet$1(this, _edges).delete(edge);
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      __classPrivateFieldGet$1(this, _nodes).clear();
+
+      __classPrivateFieldGet$1(this, _edges).clear();
+    }
+  }, {
+    key: "commit",
+    value: function commit() {
+      var _classPrivateFieldGe3, _context;
+
+      var summary = {
+        nodes: __classPrivateFieldGet$1(this, _nodes).commit(),
+        edges: __classPrivateFieldGet$1(this, _edges).commit()
+      };
+
+      for (var _len3 = arguments.length, rest = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        rest[_key3] = arguments[_key3];
+      }
+
+      (_classPrivateFieldGe3 = __classPrivateFieldGet$1(this, _commitHandler)).call.apply(_classPrivateFieldGe3, concat$2(_context = [this, summary]).call(_context, rest));
+
+      return summary;
+    }
+  }, {
+    key: "sizeNodes",
+    get: function get() {
+      return __classPrivateFieldGet$1(this, _nodes).size;
+    }
+  }, {
+    key: "sizeEdges",
+    get: function get() {
+      return __classPrivateFieldGet$1(this, _edges).size;
+    }
+  }]);
+
+  return SelectionAccumulator;
+}();
+_nodes = new weakMap$2(), _edges = new weakMap$2(), _commitHandler = new weakMap$2();
+
 /**
  * The handler for selections
  */
@@ -33681,10 +33896,7 @@ var SelectionHandler = /*#__PURE__*/function () {
 
     this.body = body;
     this.canvas = canvas;
-    this.selectionObj = {
-      nodes: [],
-      edges: []
-    };
+    this._selectionAccumulator = new SelectionAccumulator();
     this.hoverObj = {
       nodes: {},
       edges: {}
@@ -33809,8 +34021,8 @@ var SelectionHandler = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "_generateClickEvent",
-    value: function _generateClickEvent(eventType, event, pointer, oldSelection) {
+    key: "generateClickEvent",
+    value: function generateClickEvent(eventType, event, pointer, oldSelection) {
       var emptySelection = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
 
       var properties = this._initBaseEvent(event, pointer);
@@ -33855,13 +34067,15 @@ var SelectionHandler = /*#__PURE__*/function () {
       if (obj !== undefined) {
         if (obj instanceof Node) {
           if (highlightEdges === true) {
-            this._selectConnectedEdges(obj);
+            var _this$_selectionAccum;
+
+            (_this$_selectionAccum = this._selectionAccumulator).addEdges.apply(_this$_selectionAccum, toConsumableArray(obj.edges));
           }
+
+          this._selectionAccumulator.addNodes(obj);
+        } else {
+          this._selectionAccumulator.addEdges(obj);
         }
-
-        obj.select();
-
-        this._addToSelection(obj);
 
         return true;
       }
@@ -34047,22 +34261,6 @@ var SelectionHandler = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "_addToSelection",
-    value: function _addToSelection(obj) {
-      if (obj instanceof Node) {
-        this.selectionObj.nodes[obj.id] = obj;
-      } else {
-        this.selectionObj.edges[obj.id] = obj;
-      }
-    }
-    /**
-     * Add object to the selection array.
-     *
-     * @param {object} obj
-     * @private
-     */
-
-  }, {
     key: "_addToHover",
     value: function _addToHover(obj) {
       if (obj instanceof Node) {
@@ -34082,199 +34280,45 @@ var SelectionHandler = /*#__PURE__*/function () {
     key: "_removeFromSelection",
     value: function _removeFromSelection(obj) {
       if (obj instanceof Node) {
-        delete this.selectionObj.nodes[obj.id];
+        var _this$_selectionAccum2;
 
-        this._unselectConnectedEdges(obj);
+        this._selectionAccumulator.deleteNodes(obj);
+
+        (_this$_selectionAccum2 = this._selectionAccumulator).deleteEdges.apply(_this$_selectionAccum2, toConsumableArray(obj.edges));
       } else {
-        delete this.selectionObj.edges[obj.id];
+        this._selectionAccumulator.deleteEdges(obj);
       }
     }
     /**
-     * Unselect all. The selectionObj is useful for this.
+     * Unselect all nodes and edges.
      */
 
   }, {
     key: "unselectAll",
     value: function unselectAll() {
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          this.selectionObj.nodes[nodeId].unselect();
-        }
-      }
-
-      for (var edgeId in this.selectionObj.edges) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-          this.selectionObj.edges[edgeId].unselect();
-        }
-      }
-
-      this.selectionObj = {
-        nodes: {},
-        edges: {}
-      };
+      this._selectionAccumulator.clear();
     }
     /**
      * return the number of selected nodes
      *
      * @returns {number}
-     * @private
      */
 
   }, {
-    key: "_getSelectedNodeCount",
-    value: function _getSelectedNodeCount() {
-      var count = 0;
-
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          count += 1;
-        }
-      }
-
-      return count;
-    }
-    /**
-     * return the selected node
-     *
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_getSelectedNode",
-    value: function _getSelectedNode() {
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          return this.selectionObj.nodes[nodeId];
-        }
-      }
-
-      return undefined;
-    }
-    /**
-     * return the selected edge
-     *
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_getSelectedEdge",
-    value: function _getSelectedEdge() {
-      for (var edgeId in this.selectionObj.edges) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-          return this.selectionObj.edges[edgeId];
-        }
-      }
-
-      return undefined;
+    key: "getSelectedNodeCount",
+    value: function getSelectedNodeCount() {
+      return this._selectionAccumulator.sizeNodes;
     }
     /**
      * return the number of selected edges
      *
      * @returns {number}
-     * @private
      */
 
   }, {
-    key: "_getSelectedEdgeCount",
-    value: function _getSelectedEdgeCount() {
-      var count = 0;
-
-      for (var edgeId in this.selectionObj.edges) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-          count += 1;
-        }
-      }
-
-      return count;
-    }
-    /**
-     * return the number of selected objects.
-     *
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_getSelectedObjectCount",
-    value: function _getSelectedObjectCount() {
-      var count = 0;
-
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          count += 1;
-        }
-      }
-
-      for (var edgeId in this.selectionObj.edges) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-          count += 1;
-        }
-      }
-
-      return count;
-    }
-    /**
-     * Check if anything is selected
-     *
-     * @returns {boolean}
-     * @private
-     */
-
-  }, {
-    key: "_selectionIsEmpty",
-    value: function _selectionIsEmpty() {
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          return false;
-        }
-      }
-
-      for (var edgeId in this.selectionObj.edges) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-    /**
-     * check if one of the selected nodes is a cluster.
-     *
-     * @returns {boolean}
-     * @private
-     */
-
-  }, {
-    key: "_clusterInSelection",
-    value: function _clusterInSelection() {
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          if (this.selectionObj.nodes[nodeId].clusterSize > 1) {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    }
-    /**
-     * select the edges connected to the node that is being selected
-     *
-     * @param {Node} node
-     * @private
-     */
-
-  }, {
-    key: "_selectConnectedEdges",
-    value: function _selectConnectedEdges(node) {
-      for (var i = 0; i < node.edges.length; i++) {
-        var edge = node.edges[i];
-        edge.select();
-
-        this._addToSelection(edge);
-      }
+    key: "getSelectedEdgeCount",
+    value: function getSelectedEdgeCount() {
+      return this._selectionAccumulator.sizeEdges;
     }
     /**
      * select the edges connected to the node that is being selected
@@ -34291,23 +34335,6 @@ var SelectionHandler = /*#__PURE__*/function () {
         edge.hover = true;
 
         this._addToHover(edge);
-      }
-    }
-    /**
-     * unselect the edges connected to the node that is being selected
-     *
-     * @param {Node} node
-     * @private
-     */
-
-  }, {
-    key: "_unselectConnectedEdges",
-    value: function _unselectConnectedEdges(node) {
-      for (var i = 0; i < node.edges.length; i++) {
-        var edge = node.edges[i];
-        edge.unselect();
-
-        this._removeFromSelection(edge);
       }
     }
     /**
@@ -34439,67 +34466,123 @@ var SelectionHandler = /*#__PURE__*/function () {
       }
     }
     /**
+     * Select and deselect nodes depending current selection change.
      *
-     * retrieve the currently selected objects
+     * For changing nodes, select/deselect events are fired.
      *
-     * @returns {{nodes: Array.<string>, edges: Array.<string>}} selection
+     * NOTE: For a given edge, if one connecting node is deselected and with the
+     * same click the other node is selected, no events for the edge will fire. It
+     * was selected and it will remain selected.
+     *
+     * @param {{x: number, y: number}} pointer - The x and y coordinates of the
+     * click, tap, dragend… that triggered this.
+     * @param {UIEvent} event - The event that triggered this.
+     */
+
+  }, {
+    key: "commitAndEmit",
+    value: function commitAndEmit(pointer, event) {
+      var selected = false;
+
+      var selectionChanges = this._selectionAccumulator.commit();
+
+      var previousSelection = {
+        nodes: selectionChanges.nodes.previous,
+        edges: selectionChanges.edges.previous
+      };
+
+      if (selectionChanges.edges.deleted.length > 0) {
+        this.generateClickEvent("deselectEdge", event, pointer, previousSelection);
+        selected = true;
+      }
+
+      if (selectionChanges.nodes.deleted.length > 0) {
+        this.generateClickEvent("deselectNode", event, pointer, previousSelection);
+        selected = true;
+      }
+
+      if (selectionChanges.nodes.added.length > 0) {
+        this.generateClickEvent("selectNode", event, pointer);
+        selected = true;
+      }
+
+      if (selectionChanges.edges.added.length > 0) {
+        this.generateClickEvent("selectEdge", event, pointer);
+        selected = true;
+      } // fire the select event if anything has been selected or deselected
+
+
+      if (selected === true) {
+        // select or unselect
+        this.generateClickEvent("select", event, pointer);
+      }
+    }
+    /**
+     * Retrieve the currently selected node and edge ids.
+     *
+     * @returns {{nodes: Array.<string>, edges: Array.<string>}} Arrays with the
+     * ids of the selected nodes and edges.
      */
 
   }, {
     key: "getSelection",
     value: function getSelection() {
-      var nodeIds = this.getSelectedNodes();
-      var edgeIds = this.getSelectedEdges();
       return {
-        nodes: nodeIds,
-        edges: edgeIds
+        nodes: this.getSelectedNodeIds(),
+        edges: this.getSelectedEdgeIds()
       };
     }
     /**
+     * Retrieve the currently selected nodes.
      *
-     * retrieve the currently selected nodes
-     *
-     * @returns {string[]} selection    An array with the ids of the
-     *                                            selected nodes.
+     * @returns {Array} An array with selected nodes.
      */
 
   }, {
     key: "getSelectedNodes",
     value: function getSelectedNodes() {
-      var idArray = [];
-
-      if (this.options.selectable === true) {
-        for (var nodeId in this.selectionObj.nodes) {
-          if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-            idArray.push(this.selectionObj.nodes[nodeId].id);
-          }
-        }
-      }
-
-      return idArray;
+      return this._selectionAccumulator.getNodes();
     }
     /**
+     * Retrieve the currently selected edges.
      *
-     * retrieve the currently selected edges
-     *
-     * @returns {Array} selection    An array with the ids of the
-     *                                            selected nodes.
+     * @returns {Array} An array with selected edges.
      */
 
   }, {
     key: "getSelectedEdges",
     value: function getSelectedEdges() {
-      var idArray = [];
+      return this._selectionAccumulator.getEdges();
+    }
+    /**
+     * Retrieve the currently selected node ids.
+     *
+     * @returns {Array} An array with the ids of the selected nodes.
+     */
 
-      if (this.options.selectable === true) {
-        for (var edgeId in this.selectionObj.edges) {
-          if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-            idArray.push(this.selectionObj.edges[edgeId].id);
-          }
-        }
-      }
+  }, {
+    key: "getSelectedNodeIds",
+    value: function getSelectedNodeIds() {
+      var _context;
 
-      return idArray;
+      return map$2(_context = this._selectionAccumulator.getNodes()).call(_context, function (node) {
+        return node.id;
+      });
+    }
+    /**
+     * Retrieve the currently selected edge ids.
+     *
+     * @returns {Array} An array with the ids of the selected edges.
+     */
+
+  }, {
+    key: "getSelectedEdgeIds",
+    value: function getSelectedEdgeIds() {
+      var _context2;
+
+      return map$2(_context2 = this._selectionAccumulator.getEdges()).call(_context2, function (edge) {
+        return edge.id;
+      });
     }
     /**
      * Updates the current selection
@@ -34591,19 +34674,15 @@ var SelectionHandler = /*#__PURE__*/function () {
   }, {
     key: "updateSelection",
     value: function updateSelection() {
-      for (var nodeId in this.selectionObj.nodes) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)) {
-          if (!Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
-            delete this.selectionObj.nodes[nodeId];
-          }
+      for (var node in this._selectionAccumulator.getNodes()) {
+        if (!Object.prototype.hasOwnProperty.call(this.body.nodes, node.id)) {
+          this._selectionAccumulator.deleteNodes(node);
         }
       }
 
-      for (var edgeId in this.selectionObj.edges) {
-        if (Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)) {
-          if (!Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
-            delete this.selectionObj.edges[edgeId];
-          }
+      for (var edge in this._selectionAccumulator.getEdges()) {
+        if (!Object.prototype.hasOwnProperty.call(this.body.edges, edge.id)) {
+          this._selectionAccumulator.deleteEdges(edge);
         }
       }
     }
@@ -35863,11 +35942,11 @@ var every$1 = every_1;
 
 var every$2 = every$1;
 
-function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$6(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$5(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
+function _unsupportedIterableToArray$7(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
 
-function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 /**
  * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
@@ -35987,7 +36066,7 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
   var edgeIdProp = direction + "Id";
   var newLevelDiff = direction === "to" ? 1 : -1;
 
-  var _iterator = _createForOfIteratorHelper$4(nodes),
+  var _iterator = _createForOfIteratorHelper$6(nodes),
       _step;
 
   try {
@@ -38242,11 +38321,8 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.editMode = true;
         this.manipulationDiv.style.display = "block";
         this.closeDiv.style.display = "block";
-
-        var selectedNodeCount = this.selectionHandler._getSelectedNodeCount();
-
-        var selectedEdgeCount = this.selectionHandler._getSelectedEdgeCount();
-
+        var selectedNodeCount = this.selectionHandler.getSelectedNodeCount();
+        var selectedEdgeCount = this.selectionHandler.getSelectedEdgeCount();
         var selectedTotalCount = selectedNodeCount + selectedEdgeCount;
         var locale = this.options.locales[this.options.locale];
         var needSeperator = false;
@@ -38366,7 +38442,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this._clean();
 
-      var node = this.selectionHandler._getSelectedNode();
+      var node = this.selectionHandler.getSelectedNodes()[0];
 
       if (node !== undefined) {
         this.inMode = "editNode";
@@ -38465,7 +38541,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
       this.inMode = "editEdge";
 
       if (_typeof_1(this.options.editEdge) === "object" && typeof this.options.editEdge.editWithoutDrag === "function") {
-        this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
+        this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
 
         if (this.edgeBeingEditedId !== undefined) {
           var edge = this.body.edges[this.edgeBeingEditedId];
@@ -38492,7 +38568,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._bindHammerToDiv(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
       }
 
-      this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
+      this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
 
       if (this.edgeBeingEditedId !== undefined) {
         var _context14, _context15, _context16, _context17;
@@ -38570,8 +38646,8 @@ var ManipulationSystem = /*#__PURE__*/function () {
       this._clean();
 
       this.inMode = "delete";
-      var selectedNodes = this.selectionHandler.getSelectedNodes();
-      var selectedEdges = this.selectionHandler.getSelectedEdges();
+      var selectedNodes = this.selectionHandler.getSelectedNodeIds();
+      var selectedEdges = this.selectionHandler.getSelectedEdgeIds();
       var deleteFunction = undefined;
 
       if (selectedNodes.length > 0) {
@@ -39343,8 +39419,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         from: connectFromId,
         to: node ? node.id : undefined
       };
-
-      this.selectionHandler._generateClickEvent("controlNodeDragging", event, pointer);
+      this.selectionHandler.generateClickEvent("controlNodeDragging", event, pointer);
 
       if (this.temporaryIds.nodes[0] !== undefined) {
         var targetNode = this.body.nodes[this.temporaryIds.nodes[0]]; // there is only one temp node in the add edge mode.
@@ -39410,9 +39485,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         from: connectFromId,
         to: node ? node.id : undefined
       };
-
-      this.selectionHandler._generateClickEvent("controlNodeDragEnd", event, pointer); // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
-
+      this.selectionHandler.generateClickEvent("controlNodeDragEnd", event, pointer); // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
 
       this.body.emitter.emit("_redraw");
     }
@@ -39426,8 +39499,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_dragStartEdge",
     value: function _dragStartEdge(event) {
       var pointer = this.lastTouch;
-
-      this.selectionHandler._generateClickEvent("dragStart", event, pointer, undefined, true);
+      this.selectionHandler.generateClickEvent("dragStart", event, pointer, undefined, true);
     } // --------------------------------------- END OF ADD EDGE FUNCTIONS -------------------------------------//
     // ------------------------------ Performing all the actual data manipulation ------------------------//
 
@@ -43896,11 +43968,11 @@ Network.prototype.setSelection = function () {
 };
 
 Network.prototype.getSelectedNodes = function () {
-  return this.selectionHandler.getSelectedNodes.apply(this.selectionHandler, arguments);
+  return this.selectionHandler.getSelectedNodeIds.apply(this.selectionHandler, arguments);
 };
 
 Network.prototype.getSelectedEdges = function () {
-  return this.selectionHandler.getSelectedEdges.apply(this.selectionHandler, arguments);
+  return this.selectionHandler.getSelectedEdgeIds.apply(this.selectionHandler, arguments);
 };
 
 Network.prototype.getNodeAt = function () {

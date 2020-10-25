@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-24T18:36:04.648Z
+ * @date    2020-10-25T14:58:58.575Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -17523,8 +17523,10 @@ class InteractionHandler {
       this.selectionHandler.options.multiselect &&
       (event.changedPointers[0].ctrlKey || event.changedPointers[0].metaKey);
 
-    this.checkSelectionChanges(pointer, event, multiselect);
-    this.selectionHandler._generateClickEvent("click", event, pointer);
+    this.checkSelectionChanges(pointer, multiselect);
+
+    this.selectionHandler.commitAndEmit(pointer, event);
+    this.selectionHandler.generateClickEvent("click", event, pointer);
   }
 
   /**
@@ -17535,7 +17537,7 @@ class InteractionHandler {
    */
   onDoubleTap(event) {
     const pointer = this.getPointer(event.center);
-    this.selectionHandler._generateClickEvent("doubleClick", event, pointer);
+    this.selectionHandler.generateClickEvent("doubleClick", event, pointer);
   }
 
   /**
@@ -17548,10 +17550,11 @@ class InteractionHandler {
     const pointer = this.getPointer(event.center);
     const multiselect = this.selectionHandler.options.multiselect;
 
-    this.checkSelectionChanges(pointer, event, multiselect);
+    this.checkSelectionChanges(pointer, multiselect);
 
-    this.selectionHandler._generateClickEvent("click", event, pointer);
-    this.selectionHandler._generateClickEvent("hold", event, pointer);
+    this.selectionHandler.commitAndEmit(pointer, event);
+    this.selectionHandler.generateClickEvent("click", event, pointer);
+    this.selectionHandler.generateClickEvent("hold", event, pointer);
   }
 
   /**
@@ -17563,7 +17566,7 @@ class InteractionHandler {
   onRelease(event) {
     if (new Date().valueOf() - this.touchTime > 10) {
       const pointer = this.getPointer(event.center);
-      this.selectionHandler._generateClickEvent("release", event, pointer);
+      this.selectionHandler.generateClickEvent("release", event, pointer);
       // to avoid double fireing of this event because we have two hammer instances. (on canvas and on frame)
       this.touchTime = new Date().valueOf();
     }
@@ -17575,78 +17578,20 @@ class InteractionHandler {
    */
   onContext(event) {
     const pointer = this.getPointer({ x: event.clientX, y: event.clientY });
-    this.selectionHandler._generateClickEvent("oncontext", event, pointer);
+    this.selectionHandler.generateClickEvent("oncontext", event, pointer);
   }
 
   /**
    * Select and deselect nodes depending current selection change.
    *
-   * For changing nodes, select/deselect events are fired.
-   *
-   * NOTE: For a given edge, if one connecting node is deselected and with the same
-   *       click the other node is selected, no events for the edge will fire.
-   *       It was selected and it will remain selected.
-   *
-   * TODO: This is all SelectionHandler calls; the method should be moved to there.
-   *
    * @param {{x: number, y: number}} pointer
-   * @param {Event} event
    * @param {boolean} [add=false]
    */
-  checkSelectionChanges(pointer, event, add = false) {
-    const previousSelection = this.selectionHandler.getSelection();
-    let selected = false;
+  checkSelectionChanges(pointer, add = false) {
     if (add === true) {
-      selected = this.selectionHandler.selectAdditionalOnPoint(pointer);
+      this.selectionHandler.selectAdditionalOnPoint(pointer);
     } else {
-      selected = this.selectionHandler.selectOnPoint(pointer);
-    }
-    const currentSelection = this.selectionHandler.getSelection();
-
-    // See NOTE in method comment for the reason to do it like this
-    const deselectedItems = this._determineDifference(
-      previousSelection,
-      currentSelection
-    );
-    const selectedItems = this._determineDifference(
-      currentSelection,
-      previousSelection
-    );
-
-    if (deselectedItems.edges.length > 0) {
-      this.selectionHandler._generateClickEvent(
-        "deselectEdge",
-        event,
-        pointer,
-        previousSelection
-      );
-      selected = true;
-    }
-
-    if (deselectedItems.nodes.length > 0) {
-      this.selectionHandler._generateClickEvent(
-        "deselectNode",
-        event,
-        pointer,
-        previousSelection
-      );
-      selected = true;
-    }
-
-    if (selectedItems.nodes.length > 0) {
-      this.selectionHandler._generateClickEvent("selectNode", event, pointer);
-      selected = true;
-    }
-
-    if (selectedItems.edges.length > 0) {
-      this.selectionHandler._generateClickEvent("selectEdge", event, pointer);
-      selected = true;
-    }
-
-    // fire the select event if anything has been selected or deselected
-    if (selected === true) {
-      // select or unselect
-      this.selectionHandler._generateClickEvent("select", event, pointer);
+      this.selectionHandler.selectOnPoint(pointer);
     }
   }
 
@@ -17728,37 +17673,33 @@ class InteractionHandler {
       }
 
       // after select to contain the node
-      this.selectionHandler._generateClickEvent(
+      this.selectionHandler.generateClickEvent(
         "dragStart",
         event,
         this.drag.pointer
       );
 
-      const selection = this.selectionHandler.selectionObj.nodes;
       // create an array with the selected nodes and their original location and status
-      for (const nodeId in selection) {
-        if (Object.prototype.hasOwnProperty.call(selection, nodeId)) {
-          const object = selection[nodeId];
-          const s = {
-            id: object.id,
-            node: object,
+      for (const node of this.selectionHandler.getSelectedNodes()) {
+        const s = {
+          id: node.id,
+          node: node,
 
-            // store original x, y, xFixed and yFixed, make the node temporarily Fixed
-            x: object.x,
-            y: object.y,
-            xFixed: object.options.fixed.x,
-            yFixed: object.options.fixed.y,
-          };
+          // store original x, y, xFixed and yFixed, make the node temporarily Fixed
+          x: node.x,
+          y: node.y,
+          xFixed: node.options.fixed.x,
+          yFixed: node.options.fixed.y,
+        };
 
-          object.options.fixed.x = true;
-          object.options.fixed.y = true;
+        node.options.fixed.x = true;
+        node.options.fixed.y = true;
 
-          this.drag.selection.push(s);
-        }
+        this.drag.selection.push(s);
       }
     } else {
       // fallback if no node is selected and thus the view is dragged.
-      this.selectionHandler._generateClickEvent(
+      this.selectionHandler.generateClickEvent(
         "dragStart",
         event,
         this.drag.pointer,
@@ -17786,7 +17727,7 @@ class InteractionHandler {
 
     const selection = this.drag.selection;
     if (selection && selection.length && this.options.dragNodes === true) {
-      this.selectionHandler._generateClickEvent("dragging", event, pointer);
+      this.selectionHandler.generateClickEvent("dragging", event, pointer);
 
       // calculate delta's and new location
       const deltaX = pointer.x - this.drag.pointer.x;
@@ -17814,7 +17755,7 @@ class InteractionHandler {
     } else {
       // create selection box
       if (event.srcEvent.shiftKey) {
-        this.selectionHandler._generateClickEvent(
+        this.selectionHandler.generateClickEvent(
           "dragging",
           event,
           pointer,
@@ -17837,7 +17778,7 @@ class InteractionHandler {
 
       // move the network
       if (this.options.dragView === true && !event.srcEvent.shiftKey) {
-        this.selectionHandler._generateClickEvent(
+        this.selectionHandler.generateClickEvent(
           "dragging",
           event,
           pointer,
@@ -17907,7 +17848,10 @@ class InteractionHandler {
       toBeSelectedNodes.forEach((nodeId) =>
         this.selectionHandler.selectObject(this.body.nodes[nodeId])
       );
-      this.selectionHandler._generateClickEvent(
+
+      const pointer = this.getPointer(event.center);
+      this.selectionHandler.commitAndEmit(pointer, event);
+      this.selectionHandler.generateClickEvent(
         "dragEnd",
         event,
         this.getPointer(event.center),
@@ -17923,14 +17867,14 @@ class InteractionHandler {
           s.node.options.fixed.x = s.xFixed;
           s.node.options.fixed.y = s.yFixed;
         });
-        this.selectionHandler._generateClickEvent(
+        this.selectionHandler.generateClickEvent(
           "dragEnd",
           event,
           this.getPointer(event.center)
         );
         this.body.emitter.emit("startSimulation");
       } else {
-        this.selectionHandler._generateClickEvent(
+        this.selectionHandler.generateClickEvent(
           "dragEnd",
           event,
           this.getPointer(event.center),
@@ -18243,6 +18187,142 @@ class InteractionHandler {
   }
 }
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __classPrivateFieldGet(receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+}
+
+var _previousSelection, _selection, _nodes, _edges, _commitHandler;
+/**
+ * @param prev
+ * @param next
+ */
+function diffSets(prev, next) {
+    const diff = new Set();
+    for (const item of next) {
+        if (!prev.has(item)) {
+            diff.add(item);
+        }
+    }
+    return diff;
+}
+class SingleTypeSelectionAccumulator {
+    constructor() {
+        _previousSelection.set(this, new Set());
+        _selection.set(this, new Set());
+    }
+    get size() {
+        return __classPrivateFieldGet(this, _selection).size;
+    }
+    add(...items) {
+        for (const item of items) {
+            __classPrivateFieldGet(this, _selection).add(item);
+        }
+    }
+    delete(...items) {
+        for (const item of items) {
+            __classPrivateFieldGet(this, _selection).delete(item);
+        }
+    }
+    clear() {
+        __classPrivateFieldGet(this, _selection).clear();
+    }
+    getSelection() {
+        return [...__classPrivateFieldGet(this, _selection)];
+    }
+    getChanges() {
+        return {
+            added: [...diffSets(__classPrivateFieldGet(this, _previousSelection), __classPrivateFieldGet(this, _selection))],
+            deleted: [...diffSets(__classPrivateFieldGet(this, _selection), __classPrivateFieldGet(this, _previousSelection))],
+            previous: [...new Set(__classPrivateFieldGet(this, _previousSelection))],
+            current: [...new Set(__classPrivateFieldGet(this, _selection))],
+        };
+    }
+    commit() {
+        const changes = this.getChanges();
+        __classPrivateFieldSet(this, _previousSelection, __classPrivateFieldGet(this, _selection));
+        __classPrivateFieldSet(this, _selection, new Set(__classPrivateFieldGet(this, _previousSelection)));
+        for (const item of changes.added) {
+            item.select();
+        }
+        for (const item of changes.deleted) {
+            item.unselect();
+        }
+        return changes;
+    }
+}
+_previousSelection = new WeakMap(), _selection = new WeakMap();
+class SelectionAccumulator {
+    constructor(commitHandler = () => { }) {
+        _nodes.set(this, new SingleTypeSelectionAccumulator());
+        _edges.set(this, new SingleTypeSelectionAccumulator());
+        _commitHandler.set(this, void 0);
+        __classPrivateFieldSet(this, _commitHandler, commitHandler);
+    }
+    get sizeNodes() {
+        return __classPrivateFieldGet(this, _nodes).size;
+    }
+    get sizeEdges() {
+        return __classPrivateFieldGet(this, _edges).size;
+    }
+    getNodes() {
+        return __classPrivateFieldGet(this, _nodes).getSelection();
+    }
+    getEdges() {
+        return __classPrivateFieldGet(this, _edges).getSelection();
+    }
+    addNodes(...nodes) {
+        __classPrivateFieldGet(this, _nodes).add(...nodes);
+    }
+    addEdges(...edges) {
+        __classPrivateFieldGet(this, _edges).add(...edges);
+    }
+    deleteNodes(node) {
+        __classPrivateFieldGet(this, _nodes).delete(node);
+    }
+    deleteEdges(edge) {
+        __classPrivateFieldGet(this, _edges).delete(edge);
+    }
+    clear() {
+        __classPrivateFieldGet(this, _nodes).clear();
+        __classPrivateFieldGet(this, _edges).clear();
+    }
+    commit(...rest) {
+        const summary = {
+            nodes: __classPrivateFieldGet(this, _nodes).commit(),
+            edges: __classPrivateFieldGet(this, _edges).commit(),
+        };
+        __classPrivateFieldGet(this, _commitHandler).call(this, summary, ...rest);
+        return summary;
+    }
+}
+_nodes = new WeakMap(), _edges = new WeakMap(), _commitHandler = new WeakMap();
+
 /**
  * The handler for selections
  */
@@ -18254,7 +18334,7 @@ class SelectionHandler {
   constructor(body, canvas) {
     this.body = body;
     this.canvas = canvas;
-    this.selectionObj = { nodes: [], edges: [] };
+    this._selectionAccumulator = new SelectionAccumulator();
     this.hoverObj = { nodes: {}, edges: {} };
 
     this.options = {};
@@ -18365,7 +18445,7 @@ class SelectionHandler {
    * @param {object | undefined} oldSelection             If present, selection state before event occured
    * @param {boolean|undefined} [emptySelection=false]  Indicate if selection data should be passed
    */
-  _generateClickEvent(
+  generateClickEvent(
     eventType,
     event,
     pointer,
@@ -18410,11 +18490,12 @@ class SelectionHandler {
     if (obj !== undefined) {
       if (obj instanceof Node) {
         if (highlightEdges === true) {
-          this._selectConnectedEdges(obj);
+          this._selectionAccumulator.addEdges(...obj.edges);
         }
+        this._selectionAccumulator.addNodes(obj);
+      } else {
+        this._selectionAccumulator.addEdges(obj);
       }
-      obj.select();
-      this._addToSelection(obj);
       return true;
     }
     return false;
@@ -18573,20 +18654,6 @@ class SelectionHandler {
    * @param {object} obj
    * @private
    */
-  _addToSelection(obj) {
-    if (obj instanceof Node) {
-      this.selectionObj.nodes[obj.id] = obj;
-    } else {
-      this.selectionObj.edges[obj.id] = obj;
-    }
-  }
-
-  /**
-   * Add object to the selection array.
-   *
-   * @param {object} obj
-   * @private
-   */
   _addToHover(obj) {
     if (obj instanceof Node) {
       this.hoverObj.nodes[obj.id] = obj;
@@ -18603,185 +18670,36 @@ class SelectionHandler {
    */
   _removeFromSelection(obj) {
     if (obj instanceof Node) {
-      delete this.selectionObj.nodes[obj.id];
-      this._unselectConnectedEdges(obj);
+      this._selectionAccumulator.deleteNodes(obj);
+      this._selectionAccumulator.deleteEdges(...obj.edges);
     } else {
-      delete this.selectionObj.edges[obj.id];
+      this._selectionAccumulator.deleteEdges(obj);
     }
   }
 
   /**
-   * Unselect all. The selectionObj is useful for this.
+   * Unselect all nodes and edges.
    */
   unselectAll() {
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        this.selectionObj.nodes[nodeId].unselect();
-      }
-    }
-    for (const edgeId in this.selectionObj.edges) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-      ) {
-        this.selectionObj.edges[edgeId].unselect();
-      }
-    }
-
-    this.selectionObj = { nodes: {}, edges: {} };
+    this._selectionAccumulator.clear();
   }
 
   /**
    * return the number of selected nodes
    *
    * @returns {number}
-   * @private
    */
-  _getSelectedNodeCount() {
-    let count = 0;
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
-  /**
-   * return the selected node
-   *
-   * @returns {number}
-   * @private
-   */
-  _getSelectedNode() {
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        return this.selectionObj.nodes[nodeId];
-      }
-    }
-    return undefined;
-  }
-
-  /**
-   * return the selected edge
-   *
-   * @returns {number}
-   * @private
-   */
-  _getSelectedEdge() {
-    for (const edgeId in this.selectionObj.edges) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-      ) {
-        return this.selectionObj.edges[edgeId];
-      }
-    }
-    return undefined;
+  getSelectedNodeCount() {
+    return this._selectionAccumulator.sizeNodes;
   }
 
   /**
    * return the number of selected edges
    *
    * @returns {number}
-   * @private
    */
-  _getSelectedEdgeCount() {
-    let count = 0;
-    for (const edgeId in this.selectionObj.edges) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-      ) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
-  /**
-   * return the number of selected objects.
-   *
-   * @returns {number}
-   * @private
-   */
-  _getSelectedObjectCount() {
-    let count = 0;
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        count += 1;
-      }
-    }
-    for (const edgeId in this.selectionObj.edges) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-      ) {
-        count += 1;
-      }
-    }
-    return count;
-  }
-
-  /**
-   * Check if anything is selected
-   *
-   * @returns {boolean}
-   * @private
-   */
-  _selectionIsEmpty() {
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        return false;
-      }
-    }
-    for (const edgeId in this.selectionObj.edges) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-      ) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * check if one of the selected nodes is a cluster.
-   *
-   * @returns {boolean}
-   * @private
-   */
-  _clusterInSelection() {
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        if (this.selectionObj.nodes[nodeId].clusterSize > 1) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  /**
-   * select the edges connected to the node that is being selected
-   *
-   * @param {Node} node
-   * @private
-   */
-  _selectConnectedEdges(node) {
-    for (let i = 0; i < node.edges.length; i++) {
-      const edge = node.edges[i];
-      edge.select();
-      this._addToSelection(edge);
-    }
+  getSelectedEdgeCount() {
+    return this._selectionAccumulator.sizeEdges;
   }
 
   /**
@@ -18795,20 +18713,6 @@ class SelectionHandler {
       const edge = node.edges[i];
       edge.hover = true;
       this._addToHover(edge);
-    }
-  }
-
-  /**
-   * unselect the edges connected to the node that is being selected
-   *
-   * @param {Node} node
-   * @private
-   */
-  _unselectConnectedEdges(node) {
-    for (let i = 0; i < node.edges.length; i++) {
-      const edge = node.edges[i];
-      edge.unselect();
-      this._removeFromSelection(edge);
     }
   }
 
@@ -18942,57 +18846,111 @@ class SelectionHandler {
   }
 
   /**
+   * Select and deselect nodes depending current selection change.
    *
-   * retrieve the currently selected objects
+   * For changing nodes, select/deselect events are fired.
    *
-   * @returns {{nodes: Array.<string>, edges: Array.<string>}} selection
+   * NOTE: For a given edge, if one connecting node is deselected and with the
+   * same click the other node is selected, no events for the edge will fire. It
+   * was selected and it will remain selected.
+   *
+   * @param {{x: number, y: number}} pointer - The x and y coordinates of the
+   * click, tap, dragend… that triggered this.
+   * @param {UIEvent} event - The event that triggered this.
+   */
+  commitAndEmit(pointer, event) {
+    let selected = false;
+
+    const selectionChanges = this._selectionAccumulator.commit();
+    const previousSelection = {
+      nodes: selectionChanges.nodes.previous,
+      edges: selectionChanges.edges.previous,
+    };
+
+    if (selectionChanges.edges.deleted.length > 0) {
+      this.generateClickEvent(
+        "deselectEdge",
+        event,
+        pointer,
+        previousSelection
+      );
+      selected = true;
+    }
+
+    if (selectionChanges.nodes.deleted.length > 0) {
+      this.generateClickEvent(
+        "deselectNode",
+        event,
+        pointer,
+        previousSelection
+      );
+      selected = true;
+    }
+
+    if (selectionChanges.nodes.added.length > 0) {
+      this.generateClickEvent("selectNode", event, pointer);
+      selected = true;
+    }
+
+    if (selectionChanges.edges.added.length > 0) {
+      this.generateClickEvent("selectEdge", event, pointer);
+      selected = true;
+    }
+
+    // fire the select event if anything has been selected or deselected
+    if (selected === true) {
+      // select or unselect
+      this.generateClickEvent("select", event, pointer);
+    }
+  }
+
+  /**
+   * Retrieve the currently selected node and edge ids.
+   *
+   * @returns {{nodes: Array.<string>, edges: Array.<string>}} Arrays with the
+   * ids of the selected nodes and edges.
    */
   getSelection() {
-    const nodeIds = this.getSelectedNodes();
-    const edgeIds = this.getSelectedEdges();
-    return { nodes: nodeIds, edges: edgeIds };
+    return {
+      nodes: this.getSelectedNodeIds(),
+      edges: this.getSelectedEdgeIds(),
+    };
   }
 
   /**
+   * Retrieve the currently selected nodes.
    *
-   * retrieve the currently selected nodes
-   *
-   * @returns {string[]} selection    An array with the ids of the
-   *                                            selected nodes.
+   * @returns {Array} An array with selected nodes.
    */
   getSelectedNodes() {
-    const idArray = [];
-    if (this.options.selectable === true) {
-      for (const nodeId in this.selectionObj.nodes) {
-        if (
-          Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-        ) {
-          idArray.push(this.selectionObj.nodes[nodeId].id);
-        }
-      }
-    }
-    return idArray;
+    return this._selectionAccumulator.getNodes();
   }
 
   /**
+   * Retrieve the currently selected edges.
    *
-   * retrieve the currently selected edges
-   *
-   * @returns {Array} selection    An array with the ids of the
-   *                                            selected nodes.
+   * @returns {Array} An array with selected edges.
    */
   getSelectedEdges() {
-    const idArray = [];
-    if (this.options.selectable === true) {
-      for (const edgeId in this.selectionObj.edges) {
-        if (
-          Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-        ) {
-          idArray.push(this.selectionObj.edges[edgeId].id);
-        }
-      }
-    }
-    return idArray;
+    return this._selectionAccumulator.getEdges();
+  }
+
+  /**
+   * Retrieve the currently selected node ids.
+   *
+   * @returns {Array} An array with the ids of the selected nodes.
+   */
+  getSelectedNodeIds() {
+    return this._selectionAccumulator.getNodes().map((node) => node.id);
+  }
+
+  /**
+   * Retrieve the currently selected edge ids.
+   *
+   * @returns {Array} An array with the ids of the selected edges.
+   */
+  getSelectedEdgeIds() {
+    return this._selectionAccumulator.getEdges().map((edge) => edge.id);
   }
 
   /**
@@ -19070,22 +19028,14 @@ class SelectionHandler {
    * @private
    */
   updateSelection() {
-    for (const nodeId in this.selectionObj.nodes) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.nodes, nodeId)
-      ) {
-        if (!Object.prototype.hasOwnProperty.call(this.body.nodes, nodeId)) {
-          delete this.selectionObj.nodes[nodeId];
-        }
+    for (const node in this._selectionAccumulator.getNodes()) {
+      if (!Object.prototype.hasOwnProperty.call(this.body.nodes, node.id)) {
+        this._selectionAccumulator.deleteNodes(node);
       }
     }
-    for (const edgeId in this.selectionObj.edges) {
-      if (
-        Object.prototype.hasOwnProperty.call(this.selectionObj.edges, edgeId)
-      ) {
-        if (!Object.prototype.hasOwnProperty.call(this.body.edges, edgeId)) {
-          delete this.selectionObj.edges[edgeId];
-        }
+    for (const edge in this._selectionAccumulator.getEdges()) {
+      if (!Object.prototype.hasOwnProperty.call(this.body.edges, edge.id)) {
+        this._selectionAccumulator.deleteEdges(edge);
       }
     }
   }
@@ -21503,8 +21453,8 @@ class ManipulationSystem {
       this.manipulationDiv.style.display = "block";
       this.closeDiv.style.display = "block";
 
-      const selectedNodeCount = this.selectionHandler._getSelectedNodeCount();
-      const selectedEdgeCount = this.selectionHandler._getSelectedEdgeCount();
+      const selectedNodeCount = this.selectionHandler.getSelectedNodeCount();
+      const selectedEdgeCount = this.selectionHandler.getSelectedEdgeCount();
       const selectedTotalCount = selectedNodeCount + selectedEdgeCount;
       const locale = this.options.locales[this.options.locale];
       let needSeperator = false;
@@ -21617,7 +21567,7 @@ class ManipulationSystem {
 
     // restore the state of any bound functions or events, remove control nodes, restore physics
     this._clean();
-    const node = this.selectionHandler._getSelectedNode();
+    const node = this.selectionHandler.getSelectedNodes()[0];
     if (node !== undefined) {
       this.inMode = "editNode";
       if (typeof this.options.editNode === "function") {
@@ -21712,7 +21662,7 @@ class ManipulationSystem {
       typeof this.options.editEdge === "object" &&
       typeof this.options.editEdge.editWithoutDrag === "function"
     ) {
-      this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
+      this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
       if (this.edgeBeingEditedId !== undefined) {
         const edge = this.body.edges[this.edgeBeingEditedId];
         this._performEditEdge(edge.from.id, edge.to.id);
@@ -21733,7 +21683,7 @@ class ManipulationSystem {
       this._bindHammerToDiv(this.closeDiv, this.toggleEditMode.bind(this));
     }
 
-    this.edgeBeingEditedId = this.selectionHandler.getSelectedEdges()[0];
+    this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
     if (this.edgeBeingEditedId !== undefined) {
       const edge = this.body.edges[this.edgeBeingEditedId];
 
@@ -21794,8 +21744,8 @@ class ManipulationSystem {
     this._clean();
 
     this.inMode = "delete";
-    const selectedNodes = this.selectionHandler.getSelectedNodes();
-    const selectedEdges = this.selectionHandler.getSelectedEdges();
+    const selectedNodes = this.selectionHandler.getSelectedNodeIds();
+    const selectedEdges = this.selectionHandler.getSelectedEdgeIds();
     let deleteFunction = undefined;
     if (selectedNodes.length > 0) {
       for (let i = 0; i < selectedNodes.length; i++) {
@@ -22512,7 +22462,7 @@ class ManipulationSystem {
     }
 
     event.controlEdge = { from: connectFromId, to: node ? node.id : undefined };
-    this.selectionHandler._generateClickEvent(
+    this.selectionHandler.generateClickEvent(
       "controlNodeDragging",
       event,
       pointer
@@ -22578,7 +22528,7 @@ class ManipulationSystem {
     }
 
     event.controlEdge = { from: connectFromId, to: node ? node.id : undefined };
-    this.selectionHandler._generateClickEvent(
+    this.selectionHandler.generateClickEvent(
       "controlNodeDragEnd",
       event,
       pointer
@@ -22595,7 +22545,7 @@ class ManipulationSystem {
    */
   _dragStartEdge(event) {
     const pointer = this.lastTouch;
-    this.selectionHandler._generateClickEvent(
+    this.selectionHandler.generateClickEvent(
       "dragStart",
       event,
       pointer,
@@ -26172,13 +26122,13 @@ Network.prototype.setSelection = function () {
   );
 };
 Network.prototype.getSelectedNodes = function () {
-  return this.selectionHandler.getSelectedNodes.apply(
+  return this.selectionHandler.getSelectedNodeIds.apply(
     this.selectionHandler,
     arguments
   );
 };
 Network.prototype.getSelectedEdges = function () {
-  return this.selectionHandler.getSelectedEdges.apply(
+  return this.selectionHandler.getSelectedEdgeIds.apply(
     this.selectionHandler,
     arguments
   );
