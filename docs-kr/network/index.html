@@ -1888,16 +1888,21 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
               옵션을 제공 할 수 있습니다:
               <pre class="code">
 {
-  nodes:[Array of nodeIds],
-  animation: { // -------------------> can be a boolean too!
-    duration: Number
-    easingFunction: String
+  nodes?: (string | number)[],
+  minZoomLevel?: number,
+  maxZoomLevel?: number,
+  animation?: boolean | {
+    duration?: number
+    easingFunction?: string
   }
 }
 </pre
               >
               Node를 사용하여 뷰의 특정 Node에만 맞도록 확대 / 축소 할 수
-              있습니다. <br /><br />
+              있습니다.<br />
+              최소 및 최대 확대 / 축소 수준을 사용하여 주어진 수준 내에서 맞춤을
+              제한 할 수 있습니다. 기본값은 0 (포함되지 않음)에서
+              1까지입니다.<br /><br />
               다른 옵션들은 <code>moveTo()</code>에 자세히 설명되어 있습니다.
               모든 방법은 적합한 방법에 대한 선택 사항입니다.
             </td>
