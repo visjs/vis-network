@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-25T16:17:44.974Z
+ * @date    2020-10-25T16:34:23.855Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -31069,6 +31069,41 @@ var Canvas = /*#__PURE__*/function () {
 }();
 
 /**
+ * Validate the fit options, replace missing optional values by defaults etc.
+ *
+ * @param rawOptions - The raw options.
+ * @param allNodeIds - All node ids that will be used if nodes are omitted in
+ * the raw options.
+ *
+ * @returns Options with everything filled in and validated.
+ */
+function normalizeFitOptions(rawOptions, allNodeIds) {
+  var options = assign$2({
+    nodes: allNodeIds,
+    minZoomLevel: Number.MIN_VALUE,
+    maxZoomLevel: 1
+  }, rawOptions !== null && rawOptions !== void 0 ? rawOptions : {});
+
+  if (!isArray$5(options.nodes)) {
+    throw new TypeError("Nodes has to be an array of ids.");
+  }
+
+  if (options.nodes.length === 0) {
+    options.nodes = allNodeIds;
+  }
+
+  if (!(typeof options.minZoomLevel === "number" && options.minZoomLevel > 0)) {
+    throw new TypeError("Min zoom level has to be a number higher than zero.");
+  }
+
+  if (!(typeof options.maxZoomLevel === "number" && options.minZoomLevel <= options.maxZoomLevel)) {
+    throw new TypeError("Max zoom level has to be a number higher than min zoom level.");
+  }
+
+  return options;
+}
+
+/**
  * The view
  */
 
@@ -31124,21 +31159,13 @@ var View = /*#__PURE__*/function () {
 
   }, {
     key: "fit",
-    value: function fit() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-        nodes: []
-      };
+    value: function fit(options) {
       var initialZoom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var range;
-      var zoomLevel;
-      options = assign$2({}, options);
-
-      if (options.nodes === undefined || options.nodes.length === 0) {
-        options.nodes = this.body.nodeIndices;
-      }
-
+      options = normalizeFitOptions(options, this.body.nodeIndices);
       var canvasWidth = this.canvas.frame.canvas.clientWidth;
       var canvasHeight = this.canvas.frame.canvas.clientHeight;
+      var range;
+      var zoomLevel;
 
       if (canvasWidth === 0 || canvasHeight === 0) {
         // There's no point in trying to fit into zero sized canvas. This could
@@ -31184,10 +31211,10 @@ var View = /*#__PURE__*/function () {
         zoomLevel = xZoomLevel <= yZoomLevel ? xZoomLevel : yZoomLevel;
       }
 
-      if (zoomLevel > 1.0) {
-        zoomLevel = 1.0;
-      } else if (zoomLevel === 0) {
-        zoomLevel = 1.0;
+      if (zoomLevel > options.maxZoomLevel) {
+        zoomLevel = options.maxZoomLevel;
+      } else if (zoomLevel < options.minZoomLevel) {
+        zoomLevel = options.minZoomLevel;
       }
 
       var center = NetworkUtil.findCenter(range);

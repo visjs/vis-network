@@ -1975,19 +1975,23 @@ network.getPosition('a123');
               to customize this:
               <pre class="code">
 {
-  nodes:[Array of nodeIds],
-  animation: { // -------------------> can be a boolean too!
-    duration: Number
-    easingFunction: String
+  nodes?: (string | number)[],
+  minZoomLevel?: number,
+  maxZoomLevel?: number,
+  animation?: boolean | {
+    duration?: number
+    easingFunction?: string
   }
 }
 </pre
               >
               The nodes can be used to zoom to fit only specific nodes in the
-              view. <br /><br />
-              The other options are explained in the
-              <code>moveTo()</code> description below. All options are optional
-              for the fit method.
+              view.<br />
+              The min and max zoom levels can be used to constrain the fit
+              within given levels. The default is from zero (not included)
+              through one.<br /><br />
+              The other options are explained in the <code>moveTo()</code>
+              description below. All options are optional for the fit method.
             </td>
           </tr>
           <tr
