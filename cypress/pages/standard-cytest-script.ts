@@ -27,22 +27,27 @@ type VisUtil = typeof visUtil;
     throw new Error("Element #mynetwork was not found in the DOM.");
   }
 
-  const $events = document.getElementById("events")!;
+  const $events = document.getElementById("events");
   if ($events == null) {
     throw new Error("Element #events was not found in the DOM.");
   }
 
-  const $selection = document.getElementById("selection")!;
+  const $selection = document.getElementById("selection");
   if ($selection == null) {
     throw new Error("Element #selection was not found in the DOM.");
   }
 
-  const $version = document.getElementById("version")!;
+  const $selectionJSON = document.getElementById("selection-json");
+  if ($selectionJSON == null) {
+    throw new Error("Element #selection-json was not found in the DOM.");
+  }
+
+  const $version = document.getElementById("version");
   if ($version == null) {
     throw new Error("Element #version was not found in the DOM.");
   }
 
-  const $status = document.getElementById("status")!;
+  const $status = document.getElementById("status");
   if ($status == null) {
     throw new Error("Element #status was not found in the DOM.");
   }
@@ -191,6 +196,16 @@ type VisUtil = typeof visUtil;
     });
   });
 
+  const updateSelectionJSON = (): void => {
+    const selection = network.getSelection();
+    $selectionJSON.innerText = JSON.stringify({
+      nodes: [...selection.nodes].sort(),
+      edges: [...selection.edges].sort(),
+    });
+  };
+  // Make sure the selection is always filled in.
+  updateSelectionJSON();
+
   // Selection events:
   ([
     "deselectEdge",
@@ -199,6 +214,8 @@ type VisUtil = typeof visUtil;
     "selectEdge",
     "selectNode",
   ] as const).forEach((eventName): void => {
+    network.on(eventName, updateSelectionJSON);
+
     network.on(eventName, (): void => {
       const selection = [
         ["node", network.getSelectedNodes()],
