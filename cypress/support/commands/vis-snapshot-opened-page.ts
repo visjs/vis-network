@@ -20,27 +20,33 @@ declare global {
 }
 
 export interface VisSnapshotOpenedPageOptions extends VisVisitPageOptions {
-  moveTo?: {
-    position?: { x?: number; y?: number };
-    scale?: number;
-  };
+  moveTo?:
+    | false
+    | {
+        position?: { x?: number; y?: number };
+        scale?: number;
+      };
 }
 
 export function visSnapshotOpenedPage(
   label: number | string,
   options: VisSnapshotOpenedPageOptions = {}
 ): void {
-  cy.visRun(({ network }): void => {
-    network.moveTo(
-      deepObjectAssign<MoveToOptions>(
-        {
-          position: { x: 0, y: 0 },
-          scale: 1,
-        },
-        options.moveTo ?? {}
-      )
-    );
-  });
+  const moveTo = options.moveTo;
+  if (moveTo !== false) {
+    cy.visRun(({ network }): void => {
+      network.moveTo(
+        deepObjectAssign<MoveToOptions>(
+          {
+            position: { x: 0, y: 0 },
+            scale: 1,
+          },
+          moveTo ?? {}
+        )
+      );
+    });
+  }
+
   cy.get("#mynetwork canvas").compareSnapshot(
     typeof label === "string" ? label : ("" + label).padStart(3, "0")
   );

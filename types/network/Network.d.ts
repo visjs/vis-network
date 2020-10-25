@@ -642,13 +642,29 @@ export interface FitOptions {
   /**
    * The nodes can be used to zoom to fit only specific nodes in the view.
    */
-  nodes?: string[];
+  nodes?: IdType[];
+
+  /**
+   * How far away can be zoomed out, the default is just above 0.
+   *
+   * @remarks
+   * Values less than 1 mean zooming out, more than 1 means zooming in.
+   */
+  minZoomLevel?: number;
+
+  /**
+   * How close can be zoomed in, the default is 1.
+   *
+   * @remarks
+   * Values less than 1 mean zooming out, more than 1 means zooming in.
+   */
+  maxZoomLevel?: number;
 
   /**
    * For animation you can either use a Boolean to use it with the default options or
    * disable it or you can define the duration (in milliseconds) and easing function manually.
    */
-  animation: TimelineAnimationType;
+  animation?: TimelineAnimationType;
 }
 
 export interface SelectionOptions {
