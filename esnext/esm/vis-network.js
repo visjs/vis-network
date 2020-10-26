@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-26T20:25:59.434Z
+ * @date    2020-10-26T21:26:45.834Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18988,18 +18988,18 @@ class SelectionHandler {
    * @param {object} options                                 Options
    */
   setSelection(selection, options = {}) {
-    let i, id;
+    if (!selection || (!selection.nodes && !selection.edges)) {
+      throw new TypeError(
+        "Selection must be an object with nodes and/or edges properties"
+      );
+    }
 
-    if (!selection || (!selection.nodes && !selection.edges))
-      throw "Selection must be an object with nodes and/or edges properties";
     // first unselect any selected node, if option is true or undefined
     if (options.unselectAll || options.unselectAll === undefined) {
       this.unselectAll();
     }
     if (selection.nodes) {
-      for (i = 0; i < selection.nodes.length; i++) {
-        id = selection.nodes[i];
-
+      for (const id of selection.nodes) {
         const node = this.body.nodes[id];
         if (!node) {
           throw new RangeError('Node with id "' + id + '" not found');
@@ -19010,9 +19010,7 @@ class SelectionHandler {
     }
 
     if (selection.edges) {
-      for (i = 0; i < selection.edges.length; i++) {
-        id = selection.edges[i];
-
+      for (const id of selection.edges) {
         const edge = this.body.edges[id];
         if (!edge) {
           throw new RangeError('Edge with id "' + id + '" not found');
@@ -19021,6 +19019,7 @@ class SelectionHandler {
       }
     }
     this.body.emitter.emit("_requestRedraw");
+    this._selectionAccumulator.commit();
   }
 
   /**

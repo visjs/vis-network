@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-26T20:25:59.434Z
+ * @date    2020-10-26T21:26:45.834Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28940,6 +28940,11 @@
 	}();
 	_nodes = new weakMap$2(), _edges = new weakMap$2(), _commitHandler = new weakMap$2();
 
+	function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+	function _unsupportedIterableToArray$6(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
+
+	function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * The handler for selections
 	 */
@@ -29655,41 +29660,64 @@
 	    key: "setSelection",
 	    value: function setSelection(selection) {
 	      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	      var i, id;
-	      if (!selection || !selection.nodes && !selection.edges) throw "Selection must be an object with nodes and/or edges properties"; // first unselect any selected node, if option is true or undefined
+
+	      if (!selection || !selection.nodes && !selection.edges) {
+	        throw new TypeError("Selection must be an object with nodes and/or edges properties");
+	      } // first unselect any selected node, if option is true or undefined
+
 
 	      if (options.unselectAll || options.unselectAll === undefined) {
 	        this.unselectAll();
 	      }
 
 	      if (selection.nodes) {
-	        for (i = 0; i < selection.nodes.length; i++) {
-	          id = selection.nodes[i];
-	          var node = this.body.nodes[id];
+	        var _iterator = _createForOfIteratorHelper$5(selection.nodes),
+	            _step;
 
-	          if (!node) {
-	            throw new RangeError('Node with id "' + id + '" not found');
-	          } // don't select edges with it
+	        try {
+	          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	            var id = _step.value;
+	            var node = this.body.nodes[id];
+
+	            if (!node) {
+	              throw new RangeError('Node with id "' + id + '" not found');
+	            } // don't select edges with it
 
 
-	          this.selectObject(node, options.highlightEdges);
+	            this.selectObject(node, options.highlightEdges);
+	          }
+	        } catch (err) {
+	          _iterator.e(err);
+	        } finally {
+	          _iterator.f();
 	        }
 	      }
 
 	      if (selection.edges) {
-	        for (i = 0; i < selection.edges.length; i++) {
-	          id = selection.edges[i];
-	          var edge = this.body.edges[id];
+	        var _iterator2 = _createForOfIteratorHelper$5(selection.edges),
+	            _step2;
 
-	          if (!edge) {
-	            throw new RangeError('Edge with id "' + id + '" not found');
+	        try {
+	          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+	            var _id = _step2.value;
+	            var edge = this.body.edges[_id];
+
+	            if (!edge) {
+	              throw new RangeError('Edge with id "' + _id + '" not found');
+	            }
+
+	            this.selectObject(edge);
 	          }
-
-	          this.selectObject(edge);
+	        } catch (err) {
+	          _iterator2.e(err);
+	        } finally {
+	          _iterator2.f();
 	        }
 	      }
 
 	      this.body.emitter.emit("_requestRedraw");
+
+	      this._selectionAccumulator.commit();
 	    }
 	    /**
 	     * select zero or more nodes with the option to highlight edges
@@ -31124,11 +31152,11 @@
 
 	var every$2 = every$1;
 
-	function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$6(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$6(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
+	function _unsupportedIterableToArray$7(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
 
-	function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 	/**
 	 * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
@@ -31248,7 +31276,7 @@
 	  var edgeIdProp = direction + "Id";
 	  var newLevelDiff = direction === "to" ? 1 : -1;
 
-	  var _iterator = _createForOfIteratorHelper$5(nodes),
+	  var _iterator = _createForOfIteratorHelper$6(nodes),
 	      _step;
 
 	  try {
