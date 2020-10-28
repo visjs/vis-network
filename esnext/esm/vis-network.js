@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-10-28T12:34:24.734Z
+ * @date    2020-10-28T18:42:44.723Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7249,7 +7249,11 @@ class Node {
     if (this.selected || this.hover) {
       if (this.chooser === true) {
         if (this.selected) {
-          values.borderWidth *= 2;
+          if (this.options.borderWidthSelected != null) {
+            values.borderWidth = this.options.borderWidthSelected;
+          } else {
+            values.borderWidth *= 2;
+          }
           values.color = this.options.color.highlight.background;
           values.borderColor = this.options.color.highlight.border;
           values.shadow = this.options.shadow.enabled;
@@ -7671,7 +7675,7 @@ class NodesHandler {
 
     this.defaultOptions = {
       borderWidth: 1,
-      borderWidthSelected: 2,
+      borderWidthSelected: undefined,
       brokenImage: undefined,
       color: {
         border: "#2B7CE9",
