@@ -147,7 +147,7 @@
     "typescript": "4.0.5",
     "uuid": "8.3.1",
     "vis-data": "7.1.0",
-    "vis-dev-utils": "2.8.14",
+    "vis-dev-utils": "2.8.15",
     "vis-util": "4.3.4"
   },
   "collective": {
