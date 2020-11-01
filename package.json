@@ -133,7 +133,7 @@
     "nyc": "15.1.0",
     "prettier": "2.1.2",
     "rimraf": "3.0.2",
-    "rollup": "2.32.1",
+    "rollup": "2.33.0",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "7.0.2",
