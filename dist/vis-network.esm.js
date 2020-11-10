@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-11-09T23:05:13.958Z
+ * @date    2020-11-09T23:58:59.371Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -41,7 +41,9 @@ var check = function (it) {
 
 var global_1 = // eslint-disable-next-line no-undef
 check(typeof globalThis == 'object' && globalThis) || check(typeof window == 'object' && window) || check(typeof self == 'object' && self) || check(typeof commonjsGlobal == 'object' && commonjsGlobal) || // eslint-disable-next-line no-new-func
-Function('return this')();
+function () {
+  return this;
+}() || Function('return this')();
 
 var fails = function (exec) {
   try {
@@ -1300,7 +1302,7 @@ var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.6.4',
+    version: '3.7.0',
     mode:  'pure' ,
     copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
   });
@@ -1539,12 +1541,13 @@ var getterFor = function (TYPE) {
 };
 
 if (nativeWeakMap) {
-  var store$1 = new WeakMap$1();
+  var store$1 = sharedStore.state || (sharedStore.state = new WeakMap$1());
   var wmget = store$1.get;
   var wmhas = store$1.has;
   var wmset = store$1.set;
 
   set = function (it, metadata) {
+    metadata.facade = it;
     wmset.call(store$1, it, metadata);
     return metadata;
   };
@@ -1561,6 +1564,7 @@ if (nativeWeakMap) {
   hiddenKeys[STATE] = true;
 
   set = function (it, metadata) {
+    metadata.facade = it;
     createNonEnumerableProperty(it, STATE, metadata);
     return metadata;
   };
@@ -2369,12 +2373,19 @@ var getIteratorMethod_1 = getIteratorMethod;
 
 var getIteratorMethod$1 = getIteratorMethod_1;
 
+var iteratorClose = function (iterator) {
+  var returnMethod = iterator['return'];
+
+  if (returnMethod !== undefined) {
+    return anObject(returnMethod.call(iterator)).value;
+  }
+};
+
 var callWithSafeIterationClosing = function (iterator, fn, value, ENTRIES) {
   try {
     return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value); // 7.4.6 IteratorClose(iterator, completion)
   } catch (error) {
-    var returnMethod = iterator['return'];
-    if (returnMethod !== undefined) anObject(returnMethod.call(iterator));
+    iteratorClose(iterator);
     throw error;
   }
 };
@@ -3022,10 +3033,6 @@ defineWellKnownSymbol('toStringTag');
 // https://tc39.github.io/ecma262/#sec-symbol.unscopables
 
 defineWellKnownSymbol('unscopables');
-
-// https://tc39.github.io/ecma262/#sec-math-@@tostringtag
-
-setToStringTag(Math, 'Math', true);
 
 // https://tc39.github.io/ecma262/#sec-json-@@tostringtag
 
@@ -5654,11 +5661,11 @@ var correctIsRegexpLogic = function (METHOD_NAME) {
 
   try {
     '/./'[METHOD_NAME](regexp);
-  } catch (e) {
+  } catch (error1) {
     try {
       regexp[MATCH$1] = false;
       return '/./'[METHOD_NAME](regexp);
-    } catch (f) {
+    } catch (error2) {
       /* empty */
     }
   }
@@ -12076,48 +12083,66 @@ var internalMetadata_2 = internalMetadata.fastKey;
 var internalMetadata_3 = internalMetadata.getWeakData;
 var internalMetadata_4 = internalMetadata.onFreeze;
 
-var iterate_1 = createCommonjsModule(function (module) {
-  var Result = function (stopped, result) {
-    this.stopped = stopped;
-    this.result = result;
+var Result = function (stopped, result) {
+  this.stopped = stopped;
+  this.result = result;
+};
+
+var iterate = function (iterable, unboundFunction, options) {
+  var that = options && options.that;
+  var AS_ENTRIES = !!(options && options.AS_ENTRIES);
+  var IS_ITERATOR = !!(options && options.IS_ITERATOR);
+  var INTERRUPTED = !!(options && options.INTERRUPTED);
+  var fn = functionBindContext(unboundFunction, that, 1 + AS_ENTRIES + INTERRUPTED);
+  var iterator, iterFn, index, length, result, next, step;
+
+  var stop = function (condition) {
+    if (iterator) iteratorClose(iterator);
+    return new Result(true, condition);
   };
 
-  var iterate = module.exports = function (iterable, fn, that, AS_ENTRIES, IS_ITERATOR) {
-    var boundFunction = functionBindContext(fn, that, AS_ENTRIES ? 2 : 1);
-    var iterator, iterFn, index, length, result, next, step;
+  var callFn = function (value) {
+    if (AS_ENTRIES) {
+      anObject(value);
+      return INTERRUPTED ? fn(value[0], value[1], stop) : fn(value[0], value[1]);
+    }
 
-    if (IS_ITERATOR) {
-      iterator = iterable;
-    } else {
-      iterFn = getIteratorMethod(iterable);
-      if (typeof iterFn != 'function') throw TypeError('Target is not iterable'); // optimisation for array iterators
+    return INTERRUPTED ? fn(value, stop) : fn(value);
+  };
 
-      if (isArrayIteratorMethod(iterFn)) {
-        for (index = 0, length = toLength(iterable.length); length > index; index++) {
-          result = AS_ENTRIES ? boundFunction(anObject(step = iterable[index])[0], step[1]) : boundFunction(iterable[index]);
-          if (result && result instanceof Result) return result;
-        }
+  if (IS_ITERATOR) {
+    iterator = iterable;
+  } else {
+    iterFn = getIteratorMethod(iterable);
+    if (typeof iterFn != 'function') throw TypeError('Target is not iterable'); // optimisation for array iterators
 
-        return new Result(false);
+    if (isArrayIteratorMethod(iterFn)) {
+      for (index = 0, length = toLength(iterable.length); length > index; index++) {
+        result = callFn(iterable[index]);
+        if (result && result instanceof Result) return result;
       }
 
-      iterator = iterFn.call(iterable);
+      return new Result(false);
     }
 
-    next = iterator.next;
+    iterator = iterFn.call(iterable);
+  }
 
-    while (!(step = next.call(iterator)).done) {
-      result = callWithSafeIterationClosing(iterator, boundFunction, step.value, AS_ENTRIES);
-      if (typeof result == 'object' && result && result instanceof Result) return result;
+  next = iterator.next;
+
+  while (!(step = next.call(iterator)).done) {
+    try {
+      result = callFn(step.value);
+    } catch (error) {
+      iteratorClose(iterator);
+      throw error;
     }
 
-    return new Result(false);
-  };
+    if (typeof result == 'object' && result && result instanceof Result) return result;
+  }
 
-  iterate.stop = function (result) {
-    return new Result(true, result);
-  };
-});
+  return new Result(false);
+};
 
 var anInstance = function (it, Constructor, name) {
   if (!(it instanceof Constructor)) {
@@ -12153,7 +12178,10 @@ var collection = function (CONSTRUCTOR_NAME, wrapper, common) {
         type: CONSTRUCTOR_NAME,
         collection: new NativeConstructor()
       });
-      if (iterable != undefined) iterate_1(iterable, target[ADDER], target, IS_MAP);
+      if (iterable != undefined) iterate(iterable, target[ADDER], {
+        that: target,
+        AS_ENTRIES: IS_MAP
+      });
     });
     var getInternalState = internalStateGetterFor(CONSTRUCTOR_NAME);
     forEach$4(['add', 'clear', 'delete', 'forEach', 'get', 'has', 'set', 'keys', 'values', 'entries'], function (KEY) {
@@ -12226,7 +12254,10 @@ var collectionStrong = {
         size: 0
       });
       if (!descriptors) that.size = 0;
-      if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+      if (iterable != undefined) iterate(iterable, that[ADDER], {
+        that: that,
+        AS_ENTRIES: IS_MAP
+      });
     });
     var getInternalState = internalStateGetterFor$1(CONSTRUCTOR_NAME);
 
@@ -13212,7 +13243,10 @@ var collectionWeak = {
         id: id$1++,
         frozen: undefined
       });
-      if (iterable != undefined) iterate_1(iterable, that[ADDER], that, IS_MAP);
+      if (iterable != undefined) iterate(iterable, that[ADDER], {
+        that: that,
+        AS_ENTRIES: IS_MAP
+      });
     });
     var getInternalState = internalStateGetterFor$2(CONSTRUCTOR_NAME);
 
@@ -13445,17 +13479,22 @@ var arrayReduce = {
   right: createMethod$5(true)
 };
 
+var engineIsNode = classofRaw(global_1.process) == 'process';
+
 var $reduce = arrayReduce.left;
 var STRICT_METHOD$4 = arrayMethodIsStrict('reduce');
 var USES_TO_LENGTH$8 = arrayMethodUsesToLength('reduce', {
   1: 0
-}); // `Array.prototype.reduce` method
+}); // Chrome 80-82 has a critical bug
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
+
+var CHROME_BUG = !engineIsNode && engineV8Version > 79 && engineV8Version < 83; // `Array.prototype.reduce` method
 // https://tc39.github.io/ecma262/#sec-array.prototype.reduce
 
 _export({
   target: 'Array',
   proto: true,
-  forced: !STRICT_METHOD$4 || !USES_TO_LENGTH$8
+  forced: !STRICT_METHOD$4 || !USES_TO_LENGTH$8 || CHROME_BUG
 }, {
   reduce: function reduce(callbackfn
   /* , initialValue */
