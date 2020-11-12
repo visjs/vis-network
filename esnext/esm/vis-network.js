@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-11-11T02:39:52.602Z
+ * @date    2020-11-12T06:25:14.294Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -2454,11 +2454,10 @@ class Groups {
    */
   constructor() {
     this.clear();
-    this.defaultIndex = 0;
-    this.groupsArray = [];
-    this.groupIndex = 0;
+    this._defaultIndex = 0;
+    this._groupIndex = 0;
 
-    this.defaultGroups = [
+    this._defaultGroups = [
       {
         border: "#2B7CE9",
         background: "#97C2FC",
@@ -2614,8 +2613,8 @@ class Groups {
    * Clear all groups
    */
   clear() {
-    this.groups = {};
-    this.groupsArray = [];
+    this._groups = new Map();
+    this._groupNames = [];
   }
 
   /**
@@ -2627,26 +2626,26 @@ class Groups {
    * @returns {object} The found or created group
    */
   get(groupname, shouldCreate = true) {
-    let group = this.groups[groupname];
+    let group = this._groups.get(groupname);
 
     if (group === undefined && shouldCreate) {
       if (
         this.options.useDefaultGroups === false &&
-        this.groupsArray.length > 0
+        this._groupNames.length > 0
       ) {
         // create new group
-        const index = this.groupIndex % this.groupsArray.length;
-        this.groupIndex++;
+        const index = this._groupIndex % this._groupNames.length;
+        ++this._groupIndex;
         group = {};
-        group.color = this.groups[this.groupsArray[index]];
-        this.groups[groupname] = group;
+        group.color = this._groups.get(this._groupNames[index]);
+        this._groups.set(groupname, group);
       } else {
         // create new group
-        const index = this.defaultIndex % this.defaultGroups.length;
-        this.defaultIndex++;
+        const index = this._defaultIndex % this._defaultGroups.length;
+        this._defaultIndex++;
         group = {};
-        group.color = this.defaultGroups[index];
-        this.groups[groupname] = group;
+        group.color = this._defaultGroups[index];
+        this._groups.set(groupname, group);
       }
     }
 
@@ -2654,16 +2653,23 @@ class Groups {
   }
 
   /**
-   * Add a custom group style
+   * Add custom group style.
    *
-   * @param {string} groupName
-   * @param {object} style       An object containing borderColor,
-   *                             backgroundColor, etc.
-   * @returns {object} group      The created group object
+   * @param {string} groupName - The name of the group, a new group will be
+   * created if a group with the same name doesn't exist, otherwise the old
+   * groups style will be overwritten.
+   * @param {object} style - An object containing borderColor, backgroundColor,
+   * etc.
+   * @returns {object} The created group object.
    */
   add(groupName, style) {
-    this.groups[groupName] = style;
-    this.groupsArray.push(groupName);
+    // Only push group name once to prevent duplicates which would consume more
+    // RAM and also skew the distribution towards more often updated groups,
+    // neither of which is desirable.
+    if (!this._groups.has(groupName)) {
+      this._groupNames.push(groupName);
+    }
+    this._groups.set(groupName, style);
     return style;
   }
 }

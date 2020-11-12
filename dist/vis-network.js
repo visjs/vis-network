@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-11-11T02:41:27.300Z
+ * @date    2020-11-12T06:26:55.625Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -11265,758 +11265,6 @@
 	  return Images;
 	}();
 
-	/**
-	 * This class can store groups and options specific for groups.
-	 */
-	var Groups = /*#__PURE__*/function () {
-	  /**
-	   * @ignore
-	   */
-	  function Groups() {
-	    classCallCheck(this, Groups);
-
-	    this.clear();
-	    this.defaultIndex = 0;
-	    this.groupsArray = [];
-	    this.groupIndex = 0;
-	    this.defaultGroups = [{
-	      border: "#2B7CE9",
-	      background: "#97C2FC",
-	      highlight: {
-	        border: "#2B7CE9",
-	        background: "#D2E5FF"
-	      },
-	      hover: {
-	        border: "#2B7CE9",
-	        background: "#D2E5FF"
-	      }
-	    }, // 0: blue
-	    {
-	      border: "#FFA500",
-	      background: "#FFFF00",
-	      highlight: {
-	        border: "#FFA500",
-	        background: "#FFFFA3"
-	      },
-	      hover: {
-	        border: "#FFA500",
-	        background: "#FFFFA3"
-	      }
-	    }, // 1: yellow
-	    {
-	      border: "#FA0A10",
-	      background: "#FB7E81",
-	      highlight: {
-	        border: "#FA0A10",
-	        background: "#FFAFB1"
-	      },
-	      hover: {
-	        border: "#FA0A10",
-	        background: "#FFAFB1"
-	      }
-	    }, // 2: red
-	    {
-	      border: "#41A906",
-	      background: "#7BE141",
-	      highlight: {
-	        border: "#41A906",
-	        background: "#A1EC76"
-	      },
-	      hover: {
-	        border: "#41A906",
-	        background: "#A1EC76"
-	      }
-	    }, // 3: green
-	    {
-	      border: "#E129F0",
-	      background: "#EB7DF4",
-	      highlight: {
-	        border: "#E129F0",
-	        background: "#F0B3F5"
-	      },
-	      hover: {
-	        border: "#E129F0",
-	        background: "#F0B3F5"
-	      }
-	    }, // 4: magenta
-	    {
-	      border: "#7C29F0",
-	      background: "#AD85E4",
-	      highlight: {
-	        border: "#7C29F0",
-	        background: "#D3BDF0"
-	      },
-	      hover: {
-	        border: "#7C29F0",
-	        background: "#D3BDF0"
-	      }
-	    }, // 5: purple
-	    {
-	      border: "#C37F00",
-	      background: "#FFA807",
-	      highlight: {
-	        border: "#C37F00",
-	        background: "#FFCA66"
-	      },
-	      hover: {
-	        border: "#C37F00",
-	        background: "#FFCA66"
-	      }
-	    }, // 6: orange
-	    {
-	      border: "#4220FB",
-	      background: "#6E6EFD",
-	      highlight: {
-	        border: "#4220FB",
-	        background: "#9B9BFD"
-	      },
-	      hover: {
-	        border: "#4220FB",
-	        background: "#9B9BFD"
-	      }
-	    }, // 7: darkblue
-	    {
-	      border: "#FD5A77",
-	      background: "#FFC0CB",
-	      highlight: {
-	        border: "#FD5A77",
-	        background: "#FFD1D9"
-	      },
-	      hover: {
-	        border: "#FD5A77",
-	        background: "#FFD1D9"
-	      }
-	    }, // 8: pink
-	    {
-	      border: "#4AD63A",
-	      background: "#C2FABC",
-	      highlight: {
-	        border: "#4AD63A",
-	        background: "#E6FFE3"
-	      },
-	      hover: {
-	        border: "#4AD63A",
-	        background: "#E6FFE3"
-	      }
-	    }, // 9: mint
-	    {
-	      border: "#990000",
-	      background: "#EE0000",
-	      highlight: {
-	        border: "#BB0000",
-	        background: "#FF3333"
-	      },
-	      hover: {
-	        border: "#BB0000",
-	        background: "#FF3333"
-	      }
-	    }, // 10:bright red
-	    {
-	      border: "#FF6000",
-	      background: "#FF6000",
-	      highlight: {
-	        border: "#FF6000",
-	        background: "#FF6000"
-	      },
-	      hover: {
-	        border: "#FF6000",
-	        background: "#FF6000"
-	      }
-	    }, // 12: real orange
-	    {
-	      border: "#97C2FC",
-	      background: "#2B7CE9",
-	      highlight: {
-	        border: "#D2E5FF",
-	        background: "#2B7CE9"
-	      },
-	      hover: {
-	        border: "#D2E5FF",
-	        background: "#2B7CE9"
-	      }
-	    }, // 13: blue
-	    {
-	      border: "#399605",
-	      background: "#255C03",
-	      highlight: {
-	        border: "#399605",
-	        background: "#255C03"
-	      },
-	      hover: {
-	        border: "#399605",
-	        background: "#255C03"
-	      }
-	    }, // 14: green
-	    {
-	      border: "#B70054",
-	      background: "#FF007E",
-	      highlight: {
-	        border: "#B70054",
-	        background: "#FF007E"
-	      },
-	      hover: {
-	        border: "#B70054",
-	        background: "#FF007E"
-	      }
-	    }, // 15: magenta
-	    {
-	      border: "#AD85E4",
-	      background: "#7C29F0",
-	      highlight: {
-	        border: "#D3BDF0",
-	        background: "#7C29F0"
-	      },
-	      hover: {
-	        border: "#D3BDF0",
-	        background: "#7C29F0"
-	      }
-	    }, // 16: purple
-	    {
-	      border: "#4557FA",
-	      background: "#000EA1",
-	      highlight: {
-	        border: "#6E6EFD",
-	        background: "#000EA1"
-	      },
-	      hover: {
-	        border: "#6E6EFD",
-	        background: "#000EA1"
-	      }
-	    }, // 17: darkblue
-	    {
-	      border: "#FFC0CB",
-	      background: "#FD5A77",
-	      highlight: {
-	        border: "#FFD1D9",
-	        background: "#FD5A77"
-	      },
-	      hover: {
-	        border: "#FFD1D9",
-	        background: "#FD5A77"
-	      }
-	    }, // 18: pink
-	    {
-	      border: "#C2FABC",
-	      background: "#74D66A",
-	      highlight: {
-	        border: "#E6FFE3",
-	        background: "#74D66A"
-	      },
-	      hover: {
-	        border: "#E6FFE3",
-	        background: "#74D66A"
-	      }
-	    }, // 19: mint
-	    {
-	      border: "#EE0000",
-	      background: "#990000",
-	      highlight: {
-	        border: "#FF3333",
-	        background: "#BB0000"
-	      },
-	      hover: {
-	        border: "#FF3333",
-	        background: "#BB0000"
-	      }
-	    } // 20:bright red
-	    ];
-	    this.options = {};
-	    this.defaultOptions = {
-	      useDefaultGroups: true
-	    };
-
-	    assign$2(this.options, this.defaultOptions);
-	  }
-	  /**
-	   *
-	   * @param {object} options
-	   */
-
-
-	  createClass(Groups, [{
-	    key: "setOptions",
-	    value: function setOptions(options) {
-	      var optionFields = ["useDefaultGroups"];
-
-	      if (options !== undefined) {
-	        for (var groupName in options) {
-	          if (Object.prototype.hasOwnProperty.call(options, groupName)) {
-	            if (indexOf$3(optionFields).call(optionFields, groupName) === -1) {
-	              var group = options[groupName];
-	              this.add(groupName, group);
-	            }
-	          }
-	        }
-	      }
-	    }
-	    /**
-	     * Clear all groups
-	     */
-
-	  }, {
-	    key: "clear",
-	    value: function clear() {
-	      this.groups = {};
-	      this.groupsArray = [];
-	    }
-	    /**
-	     * Get group options of a groupname.
-	     * If groupname is not found, a new group may be created.
-	     *
-	     * @param {*}       groupname     Can be a number, string, Date, etc.
-	     * @param {boolean} [shouldCreate=true] If true, create a new group
-	     * @returns {object} The found or created group
-	     */
-
-	  }, {
-	    key: "get",
-	    value: function get(groupname) {
-	      var shouldCreate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-	      var group = this.groups[groupname];
-
-	      if (group === undefined && shouldCreate) {
-	        if (this.options.useDefaultGroups === false && this.groupsArray.length > 0) {
-	          // create new group
-	          var index = this.groupIndex % this.groupsArray.length;
-	          this.groupIndex++;
-	          group = {};
-	          group.color = this.groups[this.groupsArray[index]];
-	          this.groups[groupname] = group;
-	        } else {
-	          // create new group
-	          var _index = this.defaultIndex % this.defaultGroups.length;
-
-	          this.defaultIndex++;
-	          group = {};
-	          group.color = this.defaultGroups[_index];
-	          this.groups[groupname] = group;
-	        }
-	      }
-
-	      return group;
-	    }
-	    /**
-	     * Add a custom group style
-	     *
-	     * @param {string} groupName
-	     * @param {object} style       An object containing borderColor,
-	     *                             backgroundColor, etc.
-	     * @returns {object} group      The created group object
-	     */
-
-	  }, {
-	    key: "add",
-	    value: function add(groupName, style) {
-	      this.groups[groupName] = style;
-	      this.groupsArray.push(groupName);
-	      return style;
-	    }
-	  }]);
-
-	  return Groups;
-	}();
-
-	var slice$6 = [].slice;
-	var MSIE = /MSIE .\./.test(engineUserAgent); // <- dirty ie9- check
-
-	var wrap$1 = function (scheduler) {
-	  return function (handler, timeout
-	  /* , ...arguments */
-	  ) {
-	    var boundArgs = arguments.length > 2;
-	    var args = boundArgs ? slice$6.call(arguments, 2) : undefined;
-	    return scheduler(boundArgs ? function () {
-	      // eslint-disable-next-line no-new-func
-	      (typeof handler == 'function' ? handler : Function(handler)).apply(this, args);
-	    } : handler, timeout);
-	  };
-	}; // ie9- setTimeout & setInterval additional parameters fix
-	// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
-
-
-	_export({
-	  global: true,
-	  bind: true,
-	  forced: MSIE
-	}, {
-	  // `setTimeout` method
-	  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
-	  setTimeout: wrap$1(global_1.setTimeout),
-	  // `setInterval` method
-	  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
-	  setInterval: wrap$1(global_1.setInterval)
-	});
-
-	var setTimeout$1 = path.setTimeout;
-
-	var setTimeout$2 = setTimeout$1;
-
-	var $some = arrayIteration.some;
-	var STRICT_METHOD$2 = arrayMethodIsStrict('some');
-	var USES_TO_LENGTH$7 = arrayMethodUsesToLength('some'); // `Array.prototype.some` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.some
-
-	_export({
-	  target: 'Array',
-	  proto: true,
-	  forced: !STRICT_METHOD$2 || !USES_TO_LENGTH$7
-	}, {
-	  some: function some(callbackfn
-	  /* , thisArg */
-	  ) {
-	    return $some(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	  }
-	});
-
-	var some = entryVirtual('Array').some;
-
-	var ArrayPrototype$9 = Array.prototype;
-
-	var some_1 = function (it) {
-	  var own = it.some;
-	  return it === ArrayPrototype$9 || it instanceof Array && own === ArrayPrototype$9.some ? some : own;
-	};
-
-	var some$1 = some_1;
-
-	var some$2 = some$1;
-
-	var globalIsFinite = global_1.isFinite; // `Number.isFinite` method
-	// https://tc39.github.io/ecma262/#sec-number.isfinite
-
-	var numberIsFinite = Number.isFinite || function isFinite(it) {
-	  return typeof it == 'number' && globalIsFinite(it);
-	};
-
-	// https://tc39.github.io/ecma262/#sec-number.isfinite
-
-	_export({
-	  target: 'Number',
-	  stat: true
-	}, {
-	  isFinite: numberIsFinite
-	});
-
-	var _isFinite = path.Number.isFinite;
-
-	var _isFinite$1 = _isFinite;
-
-	var _isFinite$2 = _isFinite$1;
-
-	// https://tc39.github.io/ecma262/#sec-number.isnan
-
-	_export({
-	  target: 'Number',
-	  stat: true
-	}, {
-	  isNaN: function isNaN(number) {
-	    // eslint-disable-next-line no-self-compare
-	    return number != number;
-	  }
-	});
-
-	var isNan = path.Number.isNaN;
-
-	var isNan$1 = isNan;
-
-	var isNan$2 = isNan$1;
-
-	var nativeConstruct = getBuiltIn('Reflect', 'construct'); // `Reflect.construct` method
-	// https://tc39.github.io/ecma262/#sec-reflect.construct
-	// MS Edge supports only 2 arguments and argumentsList argument is optional
-	// FF Nightly sets third argument as `new.target`, but does not create `this` from it
-
-	var NEW_TARGET_BUG = fails(function () {
-	  function F() {
-	    /* empty */
-	  }
-
-	  return !(nativeConstruct(function () {
-	    /* empty */
-	  }, [], F) instanceof F);
-	});
-	var ARGS_BUG = !fails(function () {
-	  nativeConstruct(function () {
-	    /* empty */
-	  });
-	});
-	var FORCED$3 = NEW_TARGET_BUG || ARGS_BUG;
-	_export({
-	  target: 'Reflect',
-	  stat: true,
-	  forced: FORCED$3,
-	  sham: FORCED$3
-	}, {
-	  construct: function construct(Target, args
-	  /* , newTarget */
-	  ) {
-	    aFunction(Target);
-	    anObject(args);
-	    var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
-	    if (ARGS_BUG && !NEW_TARGET_BUG) return nativeConstruct(Target, args, newTarget);
-
-	    if (Target == newTarget) {
-	      // w/o altered newTarget, optimization for 0-4 arguments
-	      switch (args.length) {
-	        case 0:
-	          return new Target();
-
-	        case 1:
-	          return new Target(args[0]);
-
-	        case 2:
-	          return new Target(args[0], args[1]);
-
-	        case 3:
-	          return new Target(args[0], args[1], args[2]);
-
-	        case 4:
-	          return new Target(args[0], args[1], args[2], args[3]);
-	      } // w/o altered newTarget, lot of arguments case
-
-
-	      var $args = [null];
-	      $args.push.apply($args, args);
-	      return new (functionBind.apply(Target, $args))();
-	    } // with altered newTarget, not support built-in constructors
-
-
-	    var proto = newTarget.prototype;
-	    var instance = objectCreate(isObject(proto) ? proto : Object.prototype);
-	    var result = Function.apply.call(Target, instance, args);
-	    return isObject(result) ? result : instance;
-	  }
-	});
-
-	var construct$1 = path.Reflect.construct;
-
-	var construct$2 = construct$1;
-
-	var construct$3 = construct$2;
-
-	var entries = entryVirtual('Array').entries;
-
-	var entries$1 = entries;
-
-	var ArrayPrototype$a = Array.prototype;
-	var DOMIterables$1 = {
-	  DOMTokenList: true,
-	  NodeList: true
-	};
-
-	var entries_1 = function (it) {
-	  var own = it.entries;
-	  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.entries // eslint-disable-next-line no-prototype-builtins
-	  || DOMIterables$1.hasOwnProperty(classof(it)) ? entries$1 : own;
-	};
-
-	var entries$2 = entries_1;
-
-	var $stringify$1 = getBuiltIn('JSON', 'stringify');
-	var re = /[\uD800-\uDFFF]/g;
-	var low = /^[\uD800-\uDBFF]$/;
-	var hi = /^[\uDC00-\uDFFF]$/;
-
-	var fix = function (match, offset, string) {
-	  var prev = string.charAt(offset - 1);
-	  var next = string.charAt(offset + 1);
-
-	  if (low.test(match) && !hi.test(next) || hi.test(match) && !low.test(prev)) {
-	    return '\\u' + match.charCodeAt(0).toString(16);
-	  }
-
-	  return match;
-	};
-
-	var FORCED$4 = fails(function () {
-	  return $stringify$1('\uDF06\uD834') !== '"\\udf06\\ud834"' || $stringify$1('\uDEAD') !== '"\\udead"';
-	});
-
-	if ($stringify$1) {
-	  // https://github.com/tc39/proposal-well-formed-stringify
-	  _export({
-	    target: 'JSON',
-	    stat: true,
-	    forced: FORCED$4
-	  }, {
-	    // eslint-disable-next-line no-unused-vars
-	    stringify: function stringify(it, replacer, space) {
-	      var result = $stringify$1.apply(null, arguments);
-	      return typeof result == 'string' ? result.replace(re, fix) : result;
-	    }
-	  });
-	}
-
-	if (!path.JSON) path.JSON = {
-	  stringify: JSON.stringify
-	}; // eslint-disable-next-line no-unused-vars
-
-	var stringify = function stringify(it, replacer, space) {
-	  return path.JSON.stringify.apply(null, arguments);
-	};
-
-	var stringify$1 = stringify;
-
-	var stringify$2 = stringify$1;
-
-	var values$3 = entryVirtual('Array').values;
-
-	var values$4 = values$3;
-
-	var ArrayPrototype$b = Array.prototype;
-	var DOMIterables$2 = {
-	  DOMTokenList: true,
-	  NodeList: true
-	};
-
-	var values_1 = function (it) {
-	  var own = it.values;
-	  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.values // eslint-disable-next-line no-prototype-builtins
-	  || DOMIterables$2.hasOwnProperty(classof(it)) ? values$4 : own;
-	};
-
-	var values$5 = values_1;
-
-	var keys$4 = entryVirtual('Array').keys;
-
-	var keys$5 = keys$4;
-
-	var ArrayPrototype$c = Array.prototype;
-	var DOMIterables$3 = {
-	  DOMTokenList: true,
-	  NodeList: true
-	};
-
-	var keys_1 = function (it) {
-	  var own = it.keys;
-	  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.keys // eslint-disable-next-line no-prototype-builtins
-	  || DOMIterables$3.hasOwnProperty(classof(it)) ? keys$5 : own;
-	};
-
-	var keys$6 = keys_1;
-
-	function _assertThisInitialized$1(self) {
-	  if (self === void 0) {
-	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	  }
-
-	  return self;
-	}
-
-	var assertThisInitialized = _assertThisInitialized$1;
-
-	var create$3 = create;
-
-	var create$4 = create$3;
-
-	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
-
-	_export({
-	  target: 'Object',
-	  stat: true
-	}, {
-	  setPrototypeOf: objectSetPrototypeOf
-	});
-
-	var setPrototypeOf = path.Object.setPrototypeOf;
-
-	var setPrototypeOf$1 = setPrototypeOf;
-
-	var setPrototypeOf$2 = setPrototypeOf$1;
-
-	var setPrototypeOf$3 = createCommonjsModule(function (module) {
-	  function _setPrototypeOf(o, p) {
-	    module.exports = _setPrototypeOf = setPrototypeOf$2 || function _setPrototypeOf(o, p) {
-	      o.__proto__ = p;
-	      return o;
-	    };
-
-	    return _setPrototypeOf(o, p);
-	  }
-
-	  module.exports = _setPrototypeOf;
-	});
-
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== "function" && superClass !== null) {
-	    throw new TypeError("Super expression must either be null or a function");
-	  }
-
-	  subClass.prototype = create$4(superClass && superClass.prototype, {
-	    constructor: {
-	      value: subClass,
-	      writable: true,
-	      configurable: true
-	    }
-	  });
-	  if (superClass) setPrototypeOf$3(subClass, superClass);
-	}
-
-	var inherits = _inherits;
-
-	function _possibleConstructorReturn(self, call) {
-	  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
-	    return call;
-	  }
-
-	  return assertThisInitialized(self);
-	}
-
-	var possibleConstructorReturn = _possibleConstructorReturn;
-
-	var getPrototypeOf$3 = getPrototypeOf;
-
-	var getPrototypeOf$4 = getPrototypeOf$3;
-
-	var getPrototypeOf$5 = createCommonjsModule(function (module) {
-	  function _getPrototypeOf(o) {
-	    module.exports = _getPrototypeOf = setPrototypeOf$2 ? getPrototypeOf$4 : function _getPrototypeOf(o) {
-	      return o.__proto__ || getPrototypeOf$4(o);
-	    };
-	    return _getPrototypeOf(o);
-	  }
-
-	  module.exports = _getPrototypeOf;
-	});
-
-	var test$1 = [];
-	var nativeSort = test$1.sort; // IE8-
-
-	var FAILS_ON_UNDEFINED = fails(function () {
-	  test$1.sort(undefined);
-	}); // V8 bug
-
-	var FAILS_ON_NULL = fails(function () {
-	  test$1.sort(null);
-	}); // Old WebKit
-
-	var STRICT_METHOD$3 = arrayMethodIsStrict('sort');
-	var FORCED$5 = FAILS_ON_UNDEFINED || !FAILS_ON_NULL || !STRICT_METHOD$3; // `Array.prototype.sort` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.sort
-
-	_export({
-	  target: 'Array',
-	  proto: true,
-	  forced: FORCED$5
-	}, {
-	  sort: function sort(comparefn) {
-	    return comparefn === undefined ? nativeSort.call(toObject(this)) : nativeSort.call(toObject(this), aFunction(comparefn));
-	  }
-	});
-
-	var sort = entryVirtual('Array').sort;
-
-	var ArrayPrototype$d = Array.prototype;
-
-	var sort_1 = function (it) {
-	  var own = it.sort;
-	  return it === ArrayPrototype$d || it instanceof Array && own === ArrayPrototype$d.sort ? sort : own;
-	};
-
-	var sort$1 = sort_1;
-
-	var sort$2 = sort$1;
-
 	var freezing = !fails(function () {
 	  return Object.isExtensible(Object.preventExtensions({}));
 	});
@@ -12439,21 +11687,6 @@
 	  }
 	};
 
-	// https://tc39.github.io/ecma262/#sec-set-objects
-
-
-	var es_set = collection('Set', function (init) {
-	  return function Set() {
-	    return init(this, arguments.length ? arguments[0] : undefined);
-	  };
-	}, collectionStrong);
-
-	var set$1 = path.Set;
-
-	var set$2 = set$1;
-
-	var set$3 = set$2;
-
 	// https://tc39.github.io/ecma262/#sec-map-objects
 
 
@@ -12468,6 +11701,784 @@
 	var map$4 = map$3;
 
 	var map$5 = map$4;
+
+	/**
+	 * This class can store groups and options specific for groups.
+	 */
+	var Groups = /*#__PURE__*/function () {
+	  /**
+	   * @ignore
+	   */
+	  function Groups() {
+	    classCallCheck(this, Groups);
+
+	    this.clear();
+	    this._defaultIndex = 0;
+	    this._groupIndex = 0;
+	    this._defaultGroups = [{
+	      border: "#2B7CE9",
+	      background: "#97C2FC",
+	      highlight: {
+	        border: "#2B7CE9",
+	        background: "#D2E5FF"
+	      },
+	      hover: {
+	        border: "#2B7CE9",
+	        background: "#D2E5FF"
+	      }
+	    }, // 0: blue
+	    {
+	      border: "#FFA500",
+	      background: "#FFFF00",
+	      highlight: {
+	        border: "#FFA500",
+	        background: "#FFFFA3"
+	      },
+	      hover: {
+	        border: "#FFA500",
+	        background: "#FFFFA3"
+	      }
+	    }, // 1: yellow
+	    {
+	      border: "#FA0A10",
+	      background: "#FB7E81",
+	      highlight: {
+	        border: "#FA0A10",
+	        background: "#FFAFB1"
+	      },
+	      hover: {
+	        border: "#FA0A10",
+	        background: "#FFAFB1"
+	      }
+	    }, // 2: red
+	    {
+	      border: "#41A906",
+	      background: "#7BE141",
+	      highlight: {
+	        border: "#41A906",
+	        background: "#A1EC76"
+	      },
+	      hover: {
+	        border: "#41A906",
+	        background: "#A1EC76"
+	      }
+	    }, // 3: green
+	    {
+	      border: "#E129F0",
+	      background: "#EB7DF4",
+	      highlight: {
+	        border: "#E129F0",
+	        background: "#F0B3F5"
+	      },
+	      hover: {
+	        border: "#E129F0",
+	        background: "#F0B3F5"
+	      }
+	    }, // 4: magenta
+	    {
+	      border: "#7C29F0",
+	      background: "#AD85E4",
+	      highlight: {
+	        border: "#7C29F0",
+	        background: "#D3BDF0"
+	      },
+	      hover: {
+	        border: "#7C29F0",
+	        background: "#D3BDF0"
+	      }
+	    }, // 5: purple
+	    {
+	      border: "#C37F00",
+	      background: "#FFA807",
+	      highlight: {
+	        border: "#C37F00",
+	        background: "#FFCA66"
+	      },
+	      hover: {
+	        border: "#C37F00",
+	        background: "#FFCA66"
+	      }
+	    }, // 6: orange
+	    {
+	      border: "#4220FB",
+	      background: "#6E6EFD",
+	      highlight: {
+	        border: "#4220FB",
+	        background: "#9B9BFD"
+	      },
+	      hover: {
+	        border: "#4220FB",
+	        background: "#9B9BFD"
+	      }
+	    }, // 7: darkblue
+	    {
+	      border: "#FD5A77",
+	      background: "#FFC0CB",
+	      highlight: {
+	        border: "#FD5A77",
+	        background: "#FFD1D9"
+	      },
+	      hover: {
+	        border: "#FD5A77",
+	        background: "#FFD1D9"
+	      }
+	    }, // 8: pink
+	    {
+	      border: "#4AD63A",
+	      background: "#C2FABC",
+	      highlight: {
+	        border: "#4AD63A",
+	        background: "#E6FFE3"
+	      },
+	      hover: {
+	        border: "#4AD63A",
+	        background: "#E6FFE3"
+	      }
+	    }, // 9: mint
+	    {
+	      border: "#990000",
+	      background: "#EE0000",
+	      highlight: {
+	        border: "#BB0000",
+	        background: "#FF3333"
+	      },
+	      hover: {
+	        border: "#BB0000",
+	        background: "#FF3333"
+	      }
+	    }, // 10:bright red
+	    {
+	      border: "#FF6000",
+	      background: "#FF6000",
+	      highlight: {
+	        border: "#FF6000",
+	        background: "#FF6000"
+	      },
+	      hover: {
+	        border: "#FF6000",
+	        background: "#FF6000"
+	      }
+	    }, // 12: real orange
+	    {
+	      border: "#97C2FC",
+	      background: "#2B7CE9",
+	      highlight: {
+	        border: "#D2E5FF",
+	        background: "#2B7CE9"
+	      },
+	      hover: {
+	        border: "#D2E5FF",
+	        background: "#2B7CE9"
+	      }
+	    }, // 13: blue
+	    {
+	      border: "#399605",
+	      background: "#255C03",
+	      highlight: {
+	        border: "#399605",
+	        background: "#255C03"
+	      },
+	      hover: {
+	        border: "#399605",
+	        background: "#255C03"
+	      }
+	    }, // 14: green
+	    {
+	      border: "#B70054",
+	      background: "#FF007E",
+	      highlight: {
+	        border: "#B70054",
+	        background: "#FF007E"
+	      },
+	      hover: {
+	        border: "#B70054",
+	        background: "#FF007E"
+	      }
+	    }, // 15: magenta
+	    {
+	      border: "#AD85E4",
+	      background: "#7C29F0",
+	      highlight: {
+	        border: "#D3BDF0",
+	        background: "#7C29F0"
+	      },
+	      hover: {
+	        border: "#D3BDF0",
+	        background: "#7C29F0"
+	      }
+	    }, // 16: purple
+	    {
+	      border: "#4557FA",
+	      background: "#000EA1",
+	      highlight: {
+	        border: "#6E6EFD",
+	        background: "#000EA1"
+	      },
+	      hover: {
+	        border: "#6E6EFD",
+	        background: "#000EA1"
+	      }
+	    }, // 17: darkblue
+	    {
+	      border: "#FFC0CB",
+	      background: "#FD5A77",
+	      highlight: {
+	        border: "#FFD1D9",
+	        background: "#FD5A77"
+	      },
+	      hover: {
+	        border: "#FFD1D9",
+	        background: "#FD5A77"
+	      }
+	    }, // 18: pink
+	    {
+	      border: "#C2FABC",
+	      background: "#74D66A",
+	      highlight: {
+	        border: "#E6FFE3",
+	        background: "#74D66A"
+	      },
+	      hover: {
+	        border: "#E6FFE3",
+	        background: "#74D66A"
+	      }
+	    }, // 19: mint
+	    {
+	      border: "#EE0000",
+	      background: "#990000",
+	      highlight: {
+	        border: "#FF3333",
+	        background: "#BB0000"
+	      },
+	      hover: {
+	        border: "#FF3333",
+	        background: "#BB0000"
+	      }
+	    } // 20:bright red
+	    ];
+	    this.options = {};
+	    this.defaultOptions = {
+	      useDefaultGroups: true
+	    };
+
+	    assign$2(this.options, this.defaultOptions);
+	  }
+	  /**
+	   *
+	   * @param {object} options
+	   */
+
+
+	  createClass(Groups, [{
+	    key: "setOptions",
+	    value: function setOptions(options) {
+	      var optionFields = ["useDefaultGroups"];
+
+	      if (options !== undefined) {
+	        for (var groupName in options) {
+	          if (Object.prototype.hasOwnProperty.call(options, groupName)) {
+	            if (indexOf$3(optionFields).call(optionFields, groupName) === -1) {
+	              var group = options[groupName];
+	              this.add(groupName, group);
+	            }
+	          }
+	        }
+	      }
+	    }
+	    /**
+	     * Clear all groups
+	     */
+
+	  }, {
+	    key: "clear",
+	    value: function clear() {
+	      this._groups = new map$5();
+	      this._groupNames = [];
+	    }
+	    /**
+	     * Get group options of a groupname.
+	     * If groupname is not found, a new group may be created.
+	     *
+	     * @param {*}       groupname     Can be a number, string, Date, etc.
+	     * @param {boolean} [shouldCreate=true] If true, create a new group
+	     * @returns {object} The found or created group
+	     */
+
+	  }, {
+	    key: "get",
+	    value: function get(groupname) {
+	      var shouldCreate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+	      var group = this._groups.get(groupname);
+
+	      if (group === undefined && shouldCreate) {
+	        if (this.options.useDefaultGroups === false && this._groupNames.length > 0) {
+	          // create new group
+	          var index = this._groupIndex % this._groupNames.length;
+	          ++this._groupIndex;
+	          group = {};
+	          group.color = this._groups.get(this._groupNames[index]);
+
+	          this._groups.set(groupname, group);
+	        } else {
+	          // create new group
+	          var _index = this._defaultIndex % this._defaultGroups.length;
+
+	          this._defaultIndex++;
+	          group = {};
+	          group.color = this._defaultGroups[_index];
+
+	          this._groups.set(groupname, group);
+	        }
+	      }
+
+	      return group;
+	    }
+	    /**
+	     * Add custom group style.
+	     *
+	     * @param {string} groupName - The name of the group, a new group will be
+	     * created if a group with the same name doesn't exist, otherwise the old
+	     * groups style will be overwritten.
+	     * @param {object} style - An object containing borderColor, backgroundColor,
+	     * etc.
+	     * @returns {object} The created group object.
+	     */
+
+	  }, {
+	    key: "add",
+	    value: function add(groupName, style) {
+	      // Only push group name once to prevent duplicates which would consume more
+	      // RAM and also skew the distribution towards more often updated groups,
+	      // neither of which is desirable.
+	      if (!this._groups.has(groupName)) {
+	        this._groupNames.push(groupName);
+	      }
+
+	      this._groups.set(groupName, style);
+
+	      return style;
+	    }
+	  }]);
+
+	  return Groups;
+	}();
+
+	var slice$6 = [].slice;
+	var MSIE = /MSIE .\./.test(engineUserAgent); // <- dirty ie9- check
+
+	var wrap$1 = function (scheduler) {
+	  return function (handler, timeout
+	  /* , ...arguments */
+	  ) {
+	    var boundArgs = arguments.length > 2;
+	    var args = boundArgs ? slice$6.call(arguments, 2) : undefined;
+	    return scheduler(boundArgs ? function () {
+	      // eslint-disable-next-line no-new-func
+	      (typeof handler == 'function' ? handler : Function(handler)).apply(this, args);
+	    } : handler, timeout);
+	  };
+	}; // ie9- setTimeout & setInterval additional parameters fix
+	// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
+
+
+	_export({
+	  global: true,
+	  bind: true,
+	  forced: MSIE
+	}, {
+	  // `setTimeout` method
+	  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
+	  setTimeout: wrap$1(global_1.setTimeout),
+	  // `setInterval` method
+	  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
+	  setInterval: wrap$1(global_1.setInterval)
+	});
+
+	var setTimeout$1 = path.setTimeout;
+
+	var setTimeout$2 = setTimeout$1;
+
+	var $some = arrayIteration.some;
+	var STRICT_METHOD$2 = arrayMethodIsStrict('some');
+	var USES_TO_LENGTH$7 = arrayMethodUsesToLength('some'); // `Array.prototype.some` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.some
+
+	_export({
+	  target: 'Array',
+	  proto: true,
+	  forced: !STRICT_METHOD$2 || !USES_TO_LENGTH$7
+	}, {
+	  some: function some(callbackfn
+	  /* , thisArg */
+	  ) {
+	    return $some(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+	  }
+	});
+
+	var some = entryVirtual('Array').some;
+
+	var ArrayPrototype$9 = Array.prototype;
+
+	var some_1 = function (it) {
+	  var own = it.some;
+	  return it === ArrayPrototype$9 || it instanceof Array && own === ArrayPrototype$9.some ? some : own;
+	};
+
+	var some$1 = some_1;
+
+	var some$2 = some$1;
+
+	var globalIsFinite = global_1.isFinite; // `Number.isFinite` method
+	// https://tc39.github.io/ecma262/#sec-number.isfinite
+
+	var numberIsFinite = Number.isFinite || function isFinite(it) {
+	  return typeof it == 'number' && globalIsFinite(it);
+	};
+
+	// https://tc39.github.io/ecma262/#sec-number.isfinite
+
+	_export({
+	  target: 'Number',
+	  stat: true
+	}, {
+	  isFinite: numberIsFinite
+	});
+
+	var _isFinite = path.Number.isFinite;
+
+	var _isFinite$1 = _isFinite;
+
+	var _isFinite$2 = _isFinite$1;
+
+	// https://tc39.github.io/ecma262/#sec-number.isnan
+
+	_export({
+	  target: 'Number',
+	  stat: true
+	}, {
+	  isNaN: function isNaN(number) {
+	    // eslint-disable-next-line no-self-compare
+	    return number != number;
+	  }
+	});
+
+	var isNan = path.Number.isNaN;
+
+	var isNan$1 = isNan;
+
+	var isNan$2 = isNan$1;
+
+	var nativeConstruct = getBuiltIn('Reflect', 'construct'); // `Reflect.construct` method
+	// https://tc39.github.io/ecma262/#sec-reflect.construct
+	// MS Edge supports only 2 arguments and argumentsList argument is optional
+	// FF Nightly sets third argument as `new.target`, but does not create `this` from it
+
+	var NEW_TARGET_BUG = fails(function () {
+	  function F() {
+	    /* empty */
+	  }
+
+	  return !(nativeConstruct(function () {
+	    /* empty */
+	  }, [], F) instanceof F);
+	});
+	var ARGS_BUG = !fails(function () {
+	  nativeConstruct(function () {
+	    /* empty */
+	  });
+	});
+	var FORCED$3 = NEW_TARGET_BUG || ARGS_BUG;
+	_export({
+	  target: 'Reflect',
+	  stat: true,
+	  forced: FORCED$3,
+	  sham: FORCED$3
+	}, {
+	  construct: function construct(Target, args
+	  /* , newTarget */
+	  ) {
+	    aFunction(Target);
+	    anObject(args);
+	    var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
+	    if (ARGS_BUG && !NEW_TARGET_BUG) return nativeConstruct(Target, args, newTarget);
+
+	    if (Target == newTarget) {
+	      // w/o altered newTarget, optimization for 0-4 arguments
+	      switch (args.length) {
+	        case 0:
+	          return new Target();
+
+	        case 1:
+	          return new Target(args[0]);
+
+	        case 2:
+	          return new Target(args[0], args[1]);
+
+	        case 3:
+	          return new Target(args[0], args[1], args[2]);
+
+	        case 4:
+	          return new Target(args[0], args[1], args[2], args[3]);
+	      } // w/o altered newTarget, lot of arguments case
+
+
+	      var $args = [null];
+	      $args.push.apply($args, args);
+	      return new (functionBind.apply(Target, $args))();
+	    } // with altered newTarget, not support built-in constructors
+
+
+	    var proto = newTarget.prototype;
+	    var instance = objectCreate(isObject(proto) ? proto : Object.prototype);
+	    var result = Function.apply.call(Target, instance, args);
+	    return isObject(result) ? result : instance;
+	  }
+	});
+
+	var construct$1 = path.Reflect.construct;
+
+	var construct$2 = construct$1;
+
+	var construct$3 = construct$2;
+
+	var entries = entryVirtual('Array').entries;
+
+	var entries$1 = entries;
+
+	var ArrayPrototype$a = Array.prototype;
+	var DOMIterables$1 = {
+	  DOMTokenList: true,
+	  NodeList: true
+	};
+
+	var entries_1 = function (it) {
+	  var own = it.entries;
+	  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.entries // eslint-disable-next-line no-prototype-builtins
+	  || DOMIterables$1.hasOwnProperty(classof(it)) ? entries$1 : own;
+	};
+
+	var entries$2 = entries_1;
+
+	var $stringify$1 = getBuiltIn('JSON', 'stringify');
+	var re = /[\uD800-\uDFFF]/g;
+	var low = /^[\uD800-\uDBFF]$/;
+	var hi = /^[\uDC00-\uDFFF]$/;
+
+	var fix = function (match, offset, string) {
+	  var prev = string.charAt(offset - 1);
+	  var next = string.charAt(offset + 1);
+
+	  if (low.test(match) && !hi.test(next) || hi.test(match) && !low.test(prev)) {
+	    return '\\u' + match.charCodeAt(0).toString(16);
+	  }
+
+	  return match;
+	};
+
+	var FORCED$4 = fails(function () {
+	  return $stringify$1('\uDF06\uD834') !== '"\\udf06\\ud834"' || $stringify$1('\uDEAD') !== '"\\udead"';
+	});
+
+	if ($stringify$1) {
+	  // https://github.com/tc39/proposal-well-formed-stringify
+	  _export({
+	    target: 'JSON',
+	    stat: true,
+	    forced: FORCED$4
+	  }, {
+	    // eslint-disable-next-line no-unused-vars
+	    stringify: function stringify(it, replacer, space) {
+	      var result = $stringify$1.apply(null, arguments);
+	      return typeof result == 'string' ? result.replace(re, fix) : result;
+	    }
+	  });
+	}
+
+	if (!path.JSON) path.JSON = {
+	  stringify: JSON.stringify
+	}; // eslint-disable-next-line no-unused-vars
+
+	var stringify = function stringify(it, replacer, space) {
+	  return path.JSON.stringify.apply(null, arguments);
+	};
+
+	var stringify$1 = stringify;
+
+	var stringify$2 = stringify$1;
+
+	var values$3 = entryVirtual('Array').values;
+
+	var values$4 = values$3;
+
+	var ArrayPrototype$b = Array.prototype;
+	var DOMIterables$2 = {
+	  DOMTokenList: true,
+	  NodeList: true
+	};
+
+	var values_1 = function (it) {
+	  var own = it.values;
+	  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.values // eslint-disable-next-line no-prototype-builtins
+	  || DOMIterables$2.hasOwnProperty(classof(it)) ? values$4 : own;
+	};
+
+	var values$5 = values_1;
+
+	var keys$4 = entryVirtual('Array').keys;
+
+	var keys$5 = keys$4;
+
+	var ArrayPrototype$c = Array.prototype;
+	var DOMIterables$3 = {
+	  DOMTokenList: true,
+	  NodeList: true
+	};
+
+	var keys_1 = function (it) {
+	  var own = it.keys;
+	  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.keys // eslint-disable-next-line no-prototype-builtins
+	  || DOMIterables$3.hasOwnProperty(classof(it)) ? keys$5 : own;
+	};
+
+	var keys$6 = keys_1;
+
+	function _assertThisInitialized$1(self) {
+	  if (self === void 0) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }
+
+	  return self;
+	}
+
+	var assertThisInitialized = _assertThisInitialized$1;
+
+	var create$3 = create;
+
+	var create$4 = create$3;
+
+	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+
+	_export({
+	  target: 'Object',
+	  stat: true
+	}, {
+	  setPrototypeOf: objectSetPrototypeOf
+	});
+
+	var setPrototypeOf = path.Object.setPrototypeOf;
+
+	var setPrototypeOf$1 = setPrototypeOf;
+
+	var setPrototypeOf$2 = setPrototypeOf$1;
+
+	var setPrototypeOf$3 = createCommonjsModule(function (module) {
+	  function _setPrototypeOf(o, p) {
+	    module.exports = _setPrototypeOf = setPrototypeOf$2 || function _setPrototypeOf(o, p) {
+	      o.__proto__ = p;
+	      return o;
+	    };
+
+	    return _setPrototypeOf(o, p);
+	  }
+
+	  module.exports = _setPrototypeOf;
+	});
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== "function" && superClass !== null) {
+	    throw new TypeError("Super expression must either be null or a function");
+	  }
+
+	  subClass.prototype = create$4(superClass && superClass.prototype, {
+	    constructor: {
+	      value: subClass,
+	      writable: true,
+	      configurable: true
+	    }
+	  });
+	  if (superClass) setPrototypeOf$3(subClass, superClass);
+	}
+
+	var inherits = _inherits;
+
+	function _possibleConstructorReturn(self, call) {
+	  if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+	    return call;
+	  }
+
+	  return assertThisInitialized(self);
+	}
+
+	var possibleConstructorReturn = _possibleConstructorReturn;
+
+	var getPrototypeOf$3 = getPrototypeOf;
+
+	var getPrototypeOf$4 = getPrototypeOf$3;
+
+	var getPrototypeOf$5 = createCommonjsModule(function (module) {
+	  function _getPrototypeOf(o) {
+	    module.exports = _getPrototypeOf = setPrototypeOf$2 ? getPrototypeOf$4 : function _getPrototypeOf(o) {
+	      return o.__proto__ || getPrototypeOf$4(o);
+	    };
+	    return _getPrototypeOf(o);
+	  }
+
+	  module.exports = _getPrototypeOf;
+	});
+
+	var test$1 = [];
+	var nativeSort = test$1.sort; // IE8-
+
+	var FAILS_ON_UNDEFINED = fails(function () {
+	  test$1.sort(undefined);
+	}); // V8 bug
+
+	var FAILS_ON_NULL = fails(function () {
+	  test$1.sort(null);
+	}); // Old WebKit
+
+	var STRICT_METHOD$3 = arrayMethodIsStrict('sort');
+	var FORCED$5 = FAILS_ON_UNDEFINED || !FAILS_ON_NULL || !STRICT_METHOD$3; // `Array.prototype.sort` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.sort
+
+	_export({
+	  target: 'Array',
+	  proto: true,
+	  forced: FORCED$5
+	}, {
+	  sort: function sort(comparefn) {
+	    return comparefn === undefined ? nativeSort.call(toObject(this)) : nativeSort.call(toObject(this), aFunction(comparefn));
+	  }
+	});
+
+	var sort = entryVirtual('Array').sort;
+
+	var ArrayPrototype$d = Array.prototype;
+
+	var sort_1 = function (it) {
+	  var own = it.sort;
+	  return it === ArrayPrototype$d || it instanceof Array && own === ArrayPrototype$d.sort ? sort : own;
+	};
+
+	var sort$1 = sort_1;
+
+	var sort$2 = sort$1;
+
+	// https://tc39.github.io/ecma262/#sec-set-objects
+
+
+	var es_set = collection('Set', function (init) {
+	  return function Set() {
+	    return init(this, arguments.length ? arguments[0] : undefined);
+	  };
+	}, collectionStrong);
+
+	var set$1 = path.Set;
+
+	var set$2 = set$1;
+
+	var set$3 = set$2;
 
 	var runtime_1 = createCommonjsModule(function (module) {
 	  /**
