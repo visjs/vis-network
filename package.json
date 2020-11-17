@@ -109,7 +109,7 @@
     "@mdi/font": "5.8.55",
     "@semantic-release/commit-analyzer": "8.0.1",
     "@semantic-release/github": "7.1.2",
-    "@semantic-release/npm": "7.0.6",
+    "@semantic-release/npm": "7.0.8",
     "@semantic-release/release-notes-generator": "9.0.1",
     "@types/chai": "4.2.14",
     "@types/mocha": "8.0.4",
