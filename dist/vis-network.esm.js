@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-11-21T00:24:40.927Z
+ * @date    2020-11-21T02:09:15.902Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -16273,7 +16273,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
     value: function dispose() {
       var _this$_data;
 
-      if ((_this$_data = this._data) === null || _this$_data === void 0 ? void 0 : _this$_data.off) {
+      if ((_this$_data = this._data) !== null && _this$_data !== void 0 && _this$_data.off) {
         this._data.off("*", this._listener);
       }
 
