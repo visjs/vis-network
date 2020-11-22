@@ -138,7 +138,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "7.0.2",
     "sazerac": "2.0.0",
-    "semantic-release": "17.2.4",
+    "semantic-release": "17.3.0",
     "serve": "11.3.2",
     "sinon": "9.2.1",
     "snap-shot-it": "7.9.3",
