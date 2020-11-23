@@ -51,3 +51,27 @@ export function deepFreeze<T extends object>(
 
   return recursivelyFreeze(object);
 }
+
+/**
+ * Sort arrays in given input.
+ *
+ * @remarks
+ * This is intended to be used with assertions when the order doesn't matter.
+ *
+ * @param input - The input whose arrays should be sorted (in-place).
+ *
+ * @returns The input (same reference).
+ */
+export function sortArrays<T>(input: any): T {
+  if (Array.isArray(input)) {
+    input.sort();
+  }
+
+  if (typeof input === "object" && input !== null) {
+    for (const key of Reflect.ownKeys(input)) {
+      sortArrays(input[key]);
+    }
+  }
+
+  return input;
+}
