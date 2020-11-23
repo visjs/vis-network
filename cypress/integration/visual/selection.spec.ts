@@ -22,7 +22,7 @@ context("Selection", (): void => {
         ],
         physics: false,
       },
-      { requireNewerVersionThan: "8.5.0" }
+      { requireNewerVersionThan: "8.5.3" }
     );
   });
 
@@ -134,5 +134,25 @@ context("Selection", (): void => {
     });
 
     cy.visSnapshotOpenedPage("select-via-method");
+  });
+
+  it("Programatic selection", function (): void {
+    cy.visRun(({ network }): void => {
+      network.setSelection({ nodes: ["N_1", "N_5"] }, { unselectAll: false });
+    });
+    cy.visSnapshotOpenedPage("programmatic-select-nodes");
+
+    cy.visRun(({ network }): void => {
+      network.setSelection(
+        { edges: ["E_2-3", "E_3-4"] },
+        { unselectAll: false }
+      );
+    });
+    cy.visSnapshotOpenedPage("programmatic-select-edges");
+
+    cy.visRun(({ network }): void => {
+      network.unselectAll();
+    });
+    cy.visSnapshotOpenedPage("programmatic-select-unselect-all");
   });
 });
