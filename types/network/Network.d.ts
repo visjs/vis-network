@@ -498,7 +498,7 @@ export class Network {
    * You can also pass only nodes or edges in selection object.
    *
    */
-  setSelection(selection: { nodes: IdType[], edges: IdType[] }, options?: SelectionOptions): void;
+  setSelection(selection: { nodes?: IdType[], edges?: IdType[] }, options?: SelectionOptions): void;
 
   /**
    * Unselect all objects.
