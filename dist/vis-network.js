@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-11-22T20:31:03.011Z
+ * @date    2020-11-23T19:37:14.000Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -34296,6 +34296,8 @@
 	    key: "unselectAll",
 	    value: function unselectAll() {
 	      this._selectionAccumulator.clear();
+
+	      this._selectionAccumulator.commit();
 	    }
 	    /**
 	     * return the number of selected nodes
