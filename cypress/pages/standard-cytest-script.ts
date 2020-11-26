@@ -9,13 +9,13 @@ type VisUtil = typeof visUtil;
 
 (async (): Promise<void> => {
   // Wait for all the assets to load.
-  await new Promise((resolve): void => {
+  await new Promise<void>((resolve): void => {
     if (document.readyState === "complete") {
       // Already loaded.
       resolve();
     } else {
       // Not loaded yet.
-      window.addEventListener("load", resolve);
+      window.addEventListener("load", (): void => void resolve());
     }
   });
 
