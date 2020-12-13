@@ -160,8 +160,6 @@ type VisUtil = typeof visUtil;
     names: readonly (string | number)[],
     content: string | number
   ): void => {
-    names = Array.isArray(names) ? names : [names];
-
     const elem = document.createElement("pre");
     elem.classList.add(...names.map((value): string => "" + value));
     elem.innerText = "" + content;
