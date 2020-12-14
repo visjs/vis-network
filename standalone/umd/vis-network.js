@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-14T18:20:55.027Z
+ * @date    2020-12-14T20:10:50.837Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1313,7 +1313,7 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.8.0',
+	    version: '3.8.1',
 	    mode:  'pure' ,
 	    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
 	  });
