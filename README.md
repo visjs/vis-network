@@ -32,7 +32,7 @@ of the project.
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Network</title>
     <script
