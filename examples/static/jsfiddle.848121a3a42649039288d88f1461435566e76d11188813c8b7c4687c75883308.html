@@ -149,6 +149,7 @@ function draw() {
   var options = {
     layout: { randomSeed: seed }, // just to make sure the layout is the same when the locale is changed
     locale: document.getElementById("locale").value,
+    interaction: { keyboard: true },
     manipulation: {
       addNode: function (data, callback) {
         // filling in the popup DOM elements

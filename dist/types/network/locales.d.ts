@@ -3,6 +3,7 @@ export interface Locale {
     addEdge: string;
     addNode: string;
     back: string;
+    close: string;
     createEdgeError: string;
     del: string;
     deleteClusterError: string;

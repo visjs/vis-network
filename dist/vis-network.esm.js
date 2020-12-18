@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-16T04:31:05.128Z
+ * @date    2020-12-18T07:51:57.386Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -10735,6 +10735,7 @@ var en = {
   addEdge: "Add Edge",
   addNode: "Add Node",
   back: "Back",
+  close: "Close",
   createEdgeError: "Cannot link edges to a cluster.",
   del: "Delete selected",
   deleteClusterError: "Clusters cannot be deleted.",
@@ -10751,6 +10752,7 @@ var de = {
   addEdge: "Kante hinzuf\xFCgen",
   addNode: "Knoten hinzuf\xFCgen",
   back: "Zur\xFCck",
+  close: "Schließen",
   createEdgeError: "Es ist nicht m\xF6glich, Kanten mit Clustern zu verbinden.",
   del: "L\xF6sche Auswahl",
   deleteClusterError: "Cluster k\xF6nnen nicht gel\xF6scht werden.",
@@ -10767,6 +10769,7 @@ var es = {
   addEdge: "A\xF1adir arista",
   addNode: "A\xF1adir nodo",
   back: "Atr\xE1s",
+  close: "Cerrar",
   createEdgeError: "No se puede conectar una arista a un grupo.",
   del: "Eliminar selecci\xF3n",
   deleteClusterError: "No es posible eliminar grupos.",
@@ -10783,6 +10786,7 @@ var it = {
   addEdge: "Aggiungi un vertice",
   addNode: "Aggiungi un nodo",
   back: "Indietro",
+  close: "Chiudere",
   createEdgeError: "Non si possono collegare vertici ad un cluster",
   del: "Cancella la selezione",
   deleteClusterError: "I cluster non possono essere cancellati",
@@ -10799,6 +10803,7 @@ var nl = {
   addEdge: "Link toevoegen",
   addNode: "Node toevoegen",
   back: "Terug",
+  close: "Sluiten",
   createEdgeError: "Kan geen link maken naar een cluster.",
   del: "Selectie verwijderen",
   deleteClusterError: "Clusters kunnen niet worden verwijderd.",
@@ -10815,6 +10820,7 @@ var pt = {
   addEdge: "Adicionar aresta",
   addNode: "Adicionar nó",
   back: "Voltar",
+  close: "Fechar",
   createEdgeError: "Não foi possível linkar arestas a um cluster.",
   del: "Remover selecionado",
   deleteClusterError: "Clusters não puderam ser removidos.",
@@ -10831,6 +10837,7 @@ var ru = {
   addEdge: "Добавить ребро",
   addNode: "Добавить узел",
   back: "Назад",
+  close: "Закрывать",
   createEdgeError: "Невозможно соединить ребра в кластер.",
   del: "Удалить выбранное",
   deleteClusterError: "Кластеры не могут быть удалены",
@@ -10847,6 +10854,7 @@ var cn = {
   addEdge: "添加连接线",
   addNode: "添加节点",
   back: "返回",
+  close: "關閉",
   createEdgeError: "无法将连接线连接到群集。",
   del: "删除选定",
   deleteClusterError: "无法删除群集。",
@@ -10863,6 +10871,7 @@ var uk = {
   addEdge: "Додати край",
   addNode: "Додати вузол",
   back: "Назад",
+  close: "Закрити",
   createEdgeError: "Не можливо об'єднати краї в групу.",
   del: "Видалити обране",
   deleteClusterError: "Групи не можуть бути видалені.",
@@ -10879,6 +10888,7 @@ var fr = {
   addEdge: "Ajouter un lien",
   addNode: "Ajouter un nœud",
   back: "Retour",
+  close: "Fermer",
   createEdgeError: "Impossible de créer un lien vers un cluster.",
   del: "Effacer la sélection",
   deleteClusterError: "Les clusters ne peuvent pas être effacés.",
@@ -10895,6 +10905,7 @@ var cs = {
   addEdge: "Přidat hranu",
   addNode: "Přidat vrchol",
   back: "Zpět",
+  close: "Zavřít",
   createEdgeError: "Nelze připojit hranu ke shluku.",
   del: "Smazat výběr",
   deleteClusterError: "Nelze mazat shluky.",
@@ -31249,7 +31260,7 @@ var Canvas = /*#__PURE__*/function () {
       this.frame.className = "vis-network";
       this.frame.style.position = "relative";
       this.frame.style.overflow = "hidden";
-      this.frame.tabIndex = 900; // tab index is required for keycharm to bind keystrokes to the div instead of the window
+      this.frame.tabIndex = 0; // tab index is required for keycharm to bind keystrokes to the div instead of the window
       //////////////////////////////////////////////////////////////////
 
       this.frame.canvas = document.createElement("canvas");
@@ -38151,6 +38162,11 @@ var LayoutEngine = /*#__PURE__*/function () {
   return LayoutEngine;
 }();
 
+function _createForOfIteratorHelper$8(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$9(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray$9(o, minLen) { var _context32; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$9(o, minLen); var n = slice$5(_context32 = Object.prototype.toString.call(o)).call(_context32, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from_1$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$9(o, minLen); }
+
+function _arrayLikeToArray$9(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Clears the toolbar div element of children
  *
@@ -38179,7 +38195,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     this.manipulationDiv = undefined;
     this.editModeDiv = undefined;
     this.closeDiv = undefined;
-    this.manipulationHammers = [];
+    this._domEventListenerCleanupQueue = [];
     this.temporaryUIFunctions = {};
     this.temporaryEventFunctions = [];
     this.touchTime = 0;
@@ -38414,7 +38430,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         } // bind the close button
 
 
-        this._bindHammerToDiv(this.closeDiv, bind$2(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
+        this._bindElementEvents(this.closeDiv, bind$2(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
 
 
         this._temporaryBindEvent("select", bind$2(_context4 = this.showManipulatorToolbar).call(_context4, this));
@@ -38455,7 +38471,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["addDescription"] || this.options.locales["en"]["addDescription"]); // bind the close button
 
 
-        this._bindHammerToDiv(this.closeDiv, bind$2(_context5 = this.toggleEditMode).call(_context5, this));
+        this._bindElementEvents(this.closeDiv, bind$2(_context5 = this.toggleEditMode).call(_context5, this));
       }
 
       this._temporaryBindEvent("click", bind$2(_context6 = this._performAddNode).call(_context6, this));
@@ -38542,7 +38558,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["edgeDescription"] || this.options.locales["en"]["edgeDescription"]); // bind the close button
 
 
-        this._bindHammerToDiv(this.closeDiv, bind$2(_context7 = this.toggleEditMode).call(_context7, this));
+        this._bindElementEvents(this.closeDiv, bind$2(_context7 = this.toggleEditMode).call(_context7, this));
       } // temporarily overload functions
 
 
@@ -38600,7 +38616,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["editEdgeDescription"] || this.options.locales["en"]["editEdgeDescription"]); // bind the close button
 
 
-        this._bindHammerToDiv(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
+        this._bindElementEvents(this.closeDiv, bind$2(_context13 = this.toggleEditMode).call(_context13, this));
       }
 
       this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
@@ -38802,8 +38818,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
 
       if (this.closeDiv === undefined) {
-        this.closeDiv = document.createElement("div");
+        var _this$options$locales, _this$options$locales2;
+
+        this.closeDiv = document.createElement("button");
         this.closeDiv.className = "vis-close";
+        this.closeDiv.setAttribute("aria-label", (_this$options$locales = (_this$options$locales2 = this.options.locales[this.options.locale]) === null || _this$options$locales2 === void 0 ? void 0 : _this$options$locales2["close"]) !== null && _this$options$locales !== void 0 ? _this$options$locales : this.options.locales["en"]["close"]);
         this.closeDiv.style.display = this.manipulationDiv.style.display;
         this.canvas.frame.appendChild(this.closeDiv);
       }
@@ -38855,11 +38874,11 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       var locale = this.options.locales[this.options.locale];
 
-      var button = this._createButton("editMode", "vis-button vis-edit vis-edit-mode", locale["edit"] || this.options.locales["en"]["edit"]);
+      var button = this._createButton("editMode", "vis-edit vis-edit-mode", locale["edit"] || this.options.locales["en"]["edit"]);
 
       this.editModeDiv.appendChild(button); // bind a hammer listener to the button, calling the function toggleEditMode.
 
-      this._bindHammerToDiv(button, bind$2(_context18 = this.toggleEditMode).call(_context18, this));
+      this._bindElementEvents(button, bind$2(_context18 = this.toggleEditMode).call(_context18, this));
     }
     /**
      * this function cleans up after everything this module does. Temporary elements, functions and events are removed, physics restored, hammers removed.
@@ -38877,7 +38896,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         recursiveDOMDelete(this.editModeDiv);
         recursiveDOMDelete(this.manipulationDiv); // removes all the bindings and overloads
 
-        this._cleanManipulatorHammers();
+        this._cleanupDOMEventListeners();
       } // remove temporary nodes and edges
 
 
@@ -38899,15 +38918,23 @@ var ManipulationSystem = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "_cleanManipulatorHammers",
-    value: function _cleanManipulatorHammers() {
-      // _clean hammer bindings
-      if (this.manipulationHammers.length != 0) {
-        for (var i = 0; i < this.manipulationHammers.length; i++) {
-          this.manipulationHammers[i].destroy();
-        }
+    key: "_cleanupDOMEventListeners",
+    value: function _cleanupDOMEventListeners() {
+      var _context19;
 
-        this.manipulationHammers = [];
+      // _clean DOM event listener bindings
+      var _iterator = _createForOfIteratorHelper$8(splice$2(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var callback = _step.value;
+          callback();
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
     }
     /**
@@ -38969,13 +38996,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createAddNodeButton",
     value: function _createAddNodeButton(locale) {
-      var _context19;
+      var _context20;
 
-      var button = this._createButton("addNode", "vis-button vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
+      var button = this._createButton("addNode", "vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindHammerToDiv(button, bind$2(_context19 = this.addNodeMode).call(_context19, this));
+      this._bindElementEvents(button, bind$2(_context20 = this.addNodeMode).call(_context20, this));
     }
     /**
      *
@@ -38986,13 +39013,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createAddEdgeButton",
     value: function _createAddEdgeButton(locale) {
-      var _context20;
+      var _context21;
 
-      var button = this._createButton("addEdge", "vis-button vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
+      var button = this._createButton("addEdge", "vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindHammerToDiv(button, bind$2(_context20 = this.addEdgeMode).call(_context20, this));
+      this._bindElementEvents(button, bind$2(_context21 = this.addEdgeMode).call(_context21, this));
     }
     /**
      *
@@ -39003,13 +39030,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createEditNodeButton",
     value: function _createEditNodeButton(locale) {
-      var _context21;
+      var _context22;
 
-      var button = this._createButton("editNode", "vis-button vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
+      var button = this._createButton("editNode", "vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindHammerToDiv(button, bind$2(_context21 = this.editNode).call(_context21, this));
+      this._bindElementEvents(button, bind$2(_context22 = this.editNode).call(_context22, this));
     }
     /**
      *
@@ -39020,13 +39047,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createEditEdgeButton",
     value: function _createEditEdgeButton(locale) {
-      var _context22;
+      var _context23;
 
-      var button = this._createButton("editEdge", "vis-button vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
+      var button = this._createButton("editEdge", "vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindHammerToDiv(button, bind$2(_context22 = this.editEdgeMode).call(_context22, this));
+      this._bindElementEvents(button, bind$2(_context23 = this.editEdgeMode).call(_context23, this));
     }
     /**
      *
@@ -39037,21 +39064,21 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createDeleteButton",
     value: function _createDeleteButton(locale) {
-      var _context23;
+      var _context24;
 
       var deleteBtnClass;
 
       if (this.options.rtl) {
-        deleteBtnClass = "vis-button vis-delete-rtl";
+        deleteBtnClass = "vis-delete-rtl";
       } else {
-        deleteBtnClass = "vis-button vis-delete";
+        deleteBtnClass = "vis-delete";
       }
 
       var button = this._createButton("delete", deleteBtnClass, locale["del"] || this.options.locales["en"]["del"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindHammerToDiv(button, bind$2(_context23 = this.deleteSelected).call(_context23, this));
+      this._bindElementEvents(button, bind$2(_context24 = this.deleteSelected).call(_context24, this));
     }
     /**
      *
@@ -39062,13 +39089,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createBackButton",
     value: function _createBackButton(locale) {
-      var _context24;
+      var _context25;
 
-      var button = this._createButton("back", "vis-button vis-back", locale["back"] || this.options.locales["en"]["back"]);
+      var button = this._createButton("back", "vis-back", locale["back"] || this.options.locales["en"]["back"]);
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindHammerToDiv(button, bind$2(_context24 = this.showManipulatorToolbar).call(_context24, this));
+      this._bindElementEvents(button, bind$2(_context25 = this.showManipulatorToolbar).call(_context25, this));
     }
     /**
      *
@@ -39084,8 +39111,8 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_createButton",
     value: function _createButton(id, className, label) {
       var labelClassName = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "vis-label";
-      this.manipulationDOM[id + "Div"] = document.createElement("div");
-      this.manipulationDOM[id + "Div"].className = className;
+      this.manipulationDOM[id + "Div"] = document.createElement("button");
+      this.manipulationDOM[id + "Div"].className = "vis-button " + className;
       this.manipulationDOM[id + "Label"] = document.createElement("div");
       this.manipulationDOM[id + "Label"].className = labelClassName;
       this.manipulationDOM[id + "Label"].innerHTML = label;
@@ -39101,7 +39128,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }, {
     key: "_createDescription",
     value: function _createDescription(label) {
-      this.manipulationDiv.appendChild(this._createButton("description", "vis-button vis-none", label));
+      this.manipulationDOM["descriptionLabel"] = document.createElement("div");
+      this.manipulationDOM["descriptionLabel"].className = "vis-none";
+      this.manipulationDOM["descriptionLabel"].innerHTML = label;
+      this.manipulationDiv.appendChild(this.manipulationDOM["descriptionLabel"]);
     } // -------------------------- End of DOM functions for buttons ------------------------------//
 
     /**
@@ -39182,11 +39212,31 @@ var ManipulationSystem = /*#__PURE__*/function () {
      */
 
   }, {
-    key: "_bindHammerToDiv",
-    value: function _bindHammerToDiv(domElement, boundFunction) {
+    key: "_bindElementEvents",
+    value: function _bindElementEvents(domElement, boundFunction) {
+      // Bind touch events.
       var hammer = new Hammer$1(domElement, {});
       onTouch(hammer, boundFunction);
-      this.manipulationHammers.push(hammer);
+
+      this._domEventListenerCleanupQueue.push(function () {
+        hammer.destroy();
+      }); // Bind keyboard events.
+
+
+      var keyupListener = function keyupListener(_ref) {
+        var keyCode = _ref.keyCode,
+            key = _ref.key;
+
+        if (key === "Enter" || key === " " || keyCode === 13 || keyCode === 32) {
+          boundFunction();
+        }
+      };
+
+      domElement.addEventListener("keyup", keyupListener, false);
+
+      this._domEventListenerCleanupQueue.push(function () {
+        domElement.removeEventListener("keyup", keyupListener, false);
+      });
     }
     /**
      * Neatly clean up temporary edges and nodes
@@ -39199,32 +39249,32 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _cleanupTemporaryNodesAndEdges() {
       // _clean temporary edges
       for (var i = 0; i < this.temporaryIds.edges.length; i++) {
-        var _context25;
+        var _context26;
 
         this.body.edges[this.temporaryIds.edges[i]].disconnect();
         delete this.body.edges[this.temporaryIds.edges[i]];
 
-        var indexTempEdge = indexOf$3(_context25 = this.body.edgeIndices).call(_context25, this.temporaryIds.edges[i]);
+        var indexTempEdge = indexOf$3(_context26 = this.body.edgeIndices).call(_context26, this.temporaryIds.edges[i]);
 
         if (indexTempEdge !== -1) {
-          var _context26;
+          var _context27;
 
-          splice$2(_context26 = this.body.edgeIndices).call(_context26, indexTempEdge, 1);
+          splice$2(_context27 = this.body.edgeIndices).call(_context27, indexTempEdge, 1);
         }
       } // _clean temporary nodes
 
 
       for (var _i = 0; _i < this.temporaryIds.nodes.length; _i++) {
-        var _context27;
+        var _context28;
 
         delete this.body.nodes[this.temporaryIds.nodes[_i]];
 
-        var indexTempNode = indexOf$3(_context27 = this.body.nodeIndices).call(_context27, this.temporaryIds.nodes[_i]);
+        var indexTempNode = indexOf$3(_context28 = this.body.nodeIndices).call(_context28, this.temporaryIds.nodes[_i]);
 
         if (indexTempNode !== -1) {
-          var _context28;
+          var _context29;
 
-          splice$2(_context28 = this.body.nodeIndices).call(_context28, indexTempNode, 1);
+          splice$2(_context29 = this.body.nodeIndices).call(_context29, indexTempNode, 1);
         }
       }
 
@@ -39441,10 +39491,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var node = undefined;
 
       for (var i = overlappingNodeIds.length - 1; i >= 0; i--) {
-        var _context29;
+        var _context30;
 
         // if the node id is NOT a temporary node, accept the node.
-        if (indexOf$3(_context29 = this.temporaryIds.nodes).call(_context29, overlappingNodeIds[i]) === -1) {
+        if (indexOf$3(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
           node = this.body.nodes[overlappingNodeIds[i]];
           break;
         }
@@ -39493,10 +39543,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var node = undefined;
 
       for (var i = overlappingNodeIds.length - 1; i >= 0; i--) {
-        var _context30;
+        var _context31;
 
         // if the node id is NOT a temporary node, accept the node.
-        if (indexOf$3(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
+        if (indexOf$3(_context31 = this.temporaryIds.nodes).call(_context31, overlappingNodeIds[i]) === -1) {
           node = this.body.nodes[overlappingNodeIds[i]];
           break;
         }

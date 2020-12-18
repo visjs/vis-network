@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-16T04:29:20.332Z
+ * @date    2020-12-18T07:49:52.168Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1940,6 +1940,7 @@ const en = {
     addEdge: "Add Edge",
     addNode: "Add Node",
     back: "Back",
+    close: "Close",
     createEdgeError: "Cannot link edges to a cluster.",
     del: "Delete selected",
     deleteClusterError: "Clusters cannot be deleted.",
@@ -1956,6 +1957,7 @@ const de = {
     addEdge: "Kante hinzuf\u00fcgen",
     addNode: "Knoten hinzuf\u00fcgen",
     back: "Zur\u00fcck",
+    close: "Schließen",
     createEdgeError: "Es ist nicht m\u00f6glich, Kanten mit Clustern zu verbinden.",
     del: "L\u00f6sche Auswahl",
     deleteClusterError: "Cluster k\u00f6nnen nicht gel\u00f6scht werden.",
@@ -1972,6 +1974,7 @@ const es = {
     addEdge: "A\u00f1adir arista",
     addNode: "A\u00f1adir nodo",
     back: "Atr\u00e1s",
+    close: "Cerrar",
     createEdgeError: "No se puede conectar una arista a un grupo.",
     del: "Eliminar selecci\u00f3n",
     deleteClusterError: "No es posible eliminar grupos.",
@@ -1988,6 +1991,7 @@ const it = {
     addEdge: "Aggiungi un vertice",
     addNode: "Aggiungi un nodo",
     back: "Indietro",
+    close: "Chiudere",
     createEdgeError: "Non si possono collegare vertici ad un cluster",
     del: "Cancella la selezione",
     deleteClusterError: "I cluster non possono essere cancellati",
@@ -2004,6 +2008,7 @@ const nl = {
     addEdge: "Link toevoegen",
     addNode: "Node toevoegen",
     back: "Terug",
+    close: "Sluiten",
     createEdgeError: "Kan geen link maken naar een cluster.",
     del: "Selectie verwijderen",
     deleteClusterError: "Clusters kunnen niet worden verwijderd.",
@@ -2020,6 +2025,7 @@ const pt = {
     addEdge: "Adicionar aresta",
     addNode: "Adicionar nó",
     back: "Voltar",
+    close: "Fechar",
     createEdgeError: "Não foi possível linkar arestas a um cluster.",
     del: "Remover selecionado",
     deleteClusterError: "Clusters não puderam ser removidos.",
@@ -2036,6 +2042,7 @@ const ru = {
     addEdge: "Добавить ребро",
     addNode: "Добавить узел",
     back: "Назад",
+    close: "Закрывать",
     createEdgeError: "Невозможно соединить ребра в кластер.",
     del: "Удалить выбранное",
     deleteClusterError: "Кластеры не могут быть удалены",
@@ -2052,6 +2059,7 @@ const cn = {
     addEdge: "添加连接线",
     addNode: "添加节点",
     back: "返回",
+    close: "關閉",
     createEdgeError: "无法将连接线连接到群集。",
     del: "删除选定",
     deleteClusterError: "无法删除群集。",
@@ -2068,6 +2076,7 @@ const uk = {
     addEdge: "Додати край",
     addNode: "Додати вузол",
     back: "Назад",
+    close: "Закрити",
     createEdgeError: "Не можливо об'єднати краї в групу.",
     del: "Видалити обране",
     deleteClusterError: "Групи не можуть бути видалені.",
@@ -2084,6 +2093,7 @@ const fr = {
     addEdge: "Ajouter un lien",
     addNode: "Ajouter un nœud",
     back: "Retour",
+    close: "Fermer",
     createEdgeError: "Impossible de créer un lien vers un cluster.",
     del: "Effacer la sélection",
     deleteClusterError: "Les clusters ne peuvent pas être effacés.",
@@ -2100,6 +2110,7 @@ const cs = {
     addEdge: "Přidat hranu",
     addNode: "Přidat vrchol",
     back: "Zpět",
+    close: "Zavřít",
     createEdgeError: "Nelze připojit hranu ke shluku.",
     del: "Smazat výběr",
     deleteClusterError: "Nelze mazat shluky.",
@@ -16026,7 +16037,7 @@ class Canvas {
     this.frame.className = "vis-network";
     this.frame.style.position = "relative";
     this.frame.style.overflow = "hidden";
-    this.frame.tabIndex = 900; // tab index is required for keycharm to bind keystrokes to the div instead of the window
+    this.frame.tabIndex = 0; // tab index is required for keycharm to bind keystrokes to the div instead of the window
 
     //////////////////////////////////////////////////////////////////
 
@@ -21338,7 +21349,7 @@ class ManipulationSystem {
     this.editModeDiv = undefined;
     this.closeDiv = undefined;
 
-    this.manipulationHammers = [];
+    this._domEventListenerCleanupQueue = [];
     this.temporaryUIFunctions = {};
     this.temporaryEventFunctions = [];
 
@@ -21552,7 +21563,7 @@ class ManipulationSystem {
       }
 
       // bind the close button
-      this._bindHammerToDiv(this.closeDiv, this.toggleEditMode.bind(this));
+      this._bindElementEvents(this.closeDiv, this.toggleEditMode.bind(this));
 
       // refresh this bar based on what has been selected
       this._temporaryBindEvent(
@@ -21588,7 +21599,7 @@ class ManipulationSystem {
       );
 
       // bind the close button
-      this._bindHammerToDiv(this.closeDiv, this.toggleEditMode.bind(this));
+      this._bindElementEvents(this.closeDiv, this.toggleEditMode.bind(this));
     }
 
     this._temporaryBindEvent("click", this._performAddNode.bind(this));
@@ -21671,7 +21682,7 @@ class ManipulationSystem {
       );
 
       // bind the close button
-      this._bindHammerToDiv(this.closeDiv, this.toggleEditMode.bind(this));
+      this._bindElementEvents(this.closeDiv, this.toggleEditMode.bind(this));
     }
 
     // temporarily overload functions
@@ -21718,7 +21729,7 @@ class ManipulationSystem {
       );
 
       // bind the close button
-      this._bindHammerToDiv(this.closeDiv, this.toggleEditMode.bind(this));
+      this._bindElementEvents(this.closeDiv, this.toggleEditMode.bind(this));
     }
 
     this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
@@ -21895,8 +21906,13 @@ class ManipulationSystem {
 
     // container for the close div button
     if (this.closeDiv === undefined) {
-      this.closeDiv = document.createElement("div");
+      this.closeDiv = document.createElement("button");
       this.closeDiv.className = "vis-close";
+      this.closeDiv.setAttribute(
+        "aria-label",
+        this.options.locales[this.options.locale]?.["close"] ??
+          this.options.locales["en"]["close"]
+      );
       this.closeDiv.style.display = this.manipulationDiv.style.display;
       this.canvas.frame.appendChild(this.closeDiv);
     }
@@ -21943,13 +21959,13 @@ class ManipulationSystem {
     const locale = this.options.locales[this.options.locale];
     const button = this._createButton(
       "editMode",
-      "vis-button vis-edit vis-edit-mode",
+      "vis-edit vis-edit-mode",
       locale["edit"] || this.options.locales["en"]["edit"]
     );
     this.editModeDiv.appendChild(button);
 
     // bind a hammer listener to the button, calling the function toggleEditMode.
-    this._bindHammerToDiv(button, this.toggleEditMode.bind(this));
+    this._bindElementEvents(button, this.toggleEditMode.bind(this));
   }
 
   /**
@@ -21967,7 +21983,7 @@ class ManipulationSystem {
       recursiveDOMDelete(this.manipulationDiv);
 
       // removes all the bindings and overloads
-      this._cleanManipulatorHammers();
+      this._cleanupDOMEventListeners();
     }
 
     // remove temporary nodes and edges
@@ -21988,13 +22004,10 @@ class ManipulationSystem {
    *
    * @private
    */
-  _cleanManipulatorHammers() {
-    // _clean hammer bindings
-    if (this.manipulationHammers.length != 0) {
-      for (let i = 0; i < this.manipulationHammers.length; i++) {
-        this.manipulationHammers[i].destroy();
-      }
-      this.manipulationHammers = [];
+  _cleanupDOMEventListeners() {
+    // _clean DOM event listener bindings
+    for (const callback of this._domEventListenerCleanupQueue.splice(0)) {
+      callback();
     }
   }
 
@@ -22056,11 +22069,11 @@ class ManipulationSystem {
   _createAddNodeButton(locale) {
     const button = this._createButton(
       "addNode",
-      "vis-button vis-add",
+      "vis-add",
       locale["addNode"] || this.options.locales["en"]["addNode"]
     );
     this.manipulationDiv.appendChild(button);
-    this._bindHammerToDiv(button, this.addNodeMode.bind(this));
+    this._bindElementEvents(button, this.addNodeMode.bind(this));
   }
 
   /**
@@ -22071,11 +22084,11 @@ class ManipulationSystem {
   _createAddEdgeButton(locale) {
     const button = this._createButton(
       "addEdge",
-      "vis-button vis-connect",
+      "vis-connect",
       locale["addEdge"] || this.options.locales["en"]["addEdge"]
     );
     this.manipulationDiv.appendChild(button);
-    this._bindHammerToDiv(button, this.addEdgeMode.bind(this));
+    this._bindElementEvents(button, this.addEdgeMode.bind(this));
   }
 
   /**
@@ -22086,11 +22099,11 @@ class ManipulationSystem {
   _createEditNodeButton(locale) {
     const button = this._createButton(
       "editNode",
-      "vis-button vis-edit",
+      "vis-edit",
       locale["editNode"] || this.options.locales["en"]["editNode"]
     );
     this.manipulationDiv.appendChild(button);
-    this._bindHammerToDiv(button, this.editNode.bind(this));
+    this._bindElementEvents(button, this.editNode.bind(this));
   }
 
   /**
@@ -22101,11 +22114,11 @@ class ManipulationSystem {
   _createEditEdgeButton(locale) {
     const button = this._createButton(
       "editEdge",
-      "vis-button vis-edit",
+      "vis-edit",
       locale["editEdge"] || this.options.locales["en"]["editEdge"]
     );
     this.manipulationDiv.appendChild(button);
-    this._bindHammerToDiv(button, this.editEdgeMode.bind(this));
+    this._bindElementEvents(button, this.editEdgeMode.bind(this));
   }
 
   /**
@@ -22116,9 +22129,9 @@ class ManipulationSystem {
   _createDeleteButton(locale) {
     let deleteBtnClass;
     if (this.options.rtl) {
-      deleteBtnClass = "vis-button vis-delete-rtl";
+      deleteBtnClass = "vis-delete-rtl";
     } else {
-      deleteBtnClass = "vis-button vis-delete";
+      deleteBtnClass = "vis-delete";
     }
     const button = this._createButton(
       "delete",
@@ -22126,7 +22139,7 @@ class ManipulationSystem {
       locale["del"] || this.options.locales["en"]["del"]
     );
     this.manipulationDiv.appendChild(button);
-    this._bindHammerToDiv(button, this.deleteSelected.bind(this));
+    this._bindElementEvents(button, this.deleteSelected.bind(this));
   }
 
   /**
@@ -22137,11 +22150,11 @@ class ManipulationSystem {
   _createBackButton(locale) {
     const button = this._createButton(
       "back",
-      "vis-button vis-back",
+      "vis-back",
       locale["back"] || this.options.locales["en"]["back"]
     );
     this.manipulationDiv.appendChild(button);
-    this._bindHammerToDiv(button, this.showManipulatorToolbar.bind(this));
+    this._bindElementEvents(button, this.showManipulatorToolbar.bind(this));
   }
 
   /**
@@ -22154,8 +22167,8 @@ class ManipulationSystem {
    * @private
    */
   _createButton(id, className, label, labelClassName = "vis-label") {
-    this.manipulationDOM[id + "Div"] = document.createElement("div");
-    this.manipulationDOM[id + "Div"].className = className;
+    this.manipulationDOM[id + "Div"] = document.createElement("button");
+    this.manipulationDOM[id + "Div"].className = "vis-button " + className;
     this.manipulationDOM[id + "Label"] = document.createElement("div");
     this.manipulationDOM[id + "Label"].className = labelClassName;
     this.manipulationDOM[id + "Label"].innerHTML = label;
@@ -22171,9 +22184,10 @@ class ManipulationSystem {
    * @private
    */
   _createDescription(label) {
-    this.manipulationDiv.appendChild(
-      this._createButton("description", "vis-button vis-none", label)
-    );
+    this.manipulationDOM["descriptionLabel"] = document.createElement("div");
+    this.manipulationDOM["descriptionLabel"].className = "vis-none";
+    this.manipulationDOM["descriptionLabel"].innerHTML = label;
+    this.manipulationDiv.appendChild(this.manipulationDOM["descriptionLabel"]);
   }
 
   // -------------------------- End of DOM functions for buttons ------------------------------//
@@ -22258,10 +22272,24 @@ class ManipulationSystem {
    * @param {Element} domElement
    * @param {Function} boundFunction
    */
-  _bindHammerToDiv(domElement, boundFunction) {
+  _bindElementEvents(domElement, boundFunction) {
+    // Bind touch events.
     const hammer = new Hammer(domElement, {});
     onTouch(hammer, boundFunction);
-    this.manipulationHammers.push(hammer);
+    this._domEventListenerCleanupQueue.push(() => {
+      hammer.destroy();
+    });
+
+    // Bind keyboard events.
+    const keyupListener = ({ keyCode, key }) => {
+      if (key === "Enter" || key === " " || keyCode === 13 || keyCode === 32) {
+        boundFunction();
+      }
+    };
+    domElement.addEventListener("keyup", keyupListener, false);
+    this._domEventListenerCleanupQueue.push(() => {
+      domElement.removeEventListener("keyup", keyupListener, false);
+    });
   }
 
   /**
