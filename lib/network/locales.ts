@@ -3,6 +3,7 @@ export interface Locale {
   addEdge: string;
   addNode: string;
   back: string;
+  close: string;
   createEdgeError: string;
   del: string;
   deleteClusterError: string;
@@ -21,6 +22,7 @@ export const en: Locale = {
   addEdge: "Add Edge",
   addNode: "Add Node",
   back: "Back",
+  close: "Close",
   createEdgeError: "Cannot link edges to a cluster.",
   del: "Delete selected",
   deleteClusterError: "Clusters cannot be deleted.",
@@ -41,6 +43,7 @@ export const de: Locale = {
   addEdge: "Kante hinzuf\u00fcgen",
   addNode: "Knoten hinzuf\u00fcgen",
   back: "Zur\u00fcck",
+  close: "Schließen",
   createEdgeError:
     "Es ist nicht m\u00f6glich, Kanten mit Clustern zu verbinden.",
   del: "L\u00f6sche Auswahl",
@@ -62,6 +65,7 @@ export const es: Locale = {
   addEdge: "A\u00f1adir arista",
   addNode: "A\u00f1adir nodo",
   back: "Atr\u00e1s",
+  close: "Cerrar",
   createEdgeError: "No se puede conectar una arista a un grupo.",
   del: "Eliminar selecci\u00f3n",
   deleteClusterError: "No es posible eliminar grupos.",
@@ -81,6 +85,7 @@ export const it: Locale = {
   addEdge: "Aggiungi un vertice",
   addNode: "Aggiungi un nodo",
   back: "Indietro",
+  close: "Chiudere",
   createEdgeError: "Non si possono collegare vertici ad un cluster",
   del: "Cancella la selezione",
   deleteClusterError: "I cluster non possono essere cancellati",
@@ -100,6 +105,7 @@ export const nl: Locale = {
   addEdge: "Link toevoegen",
   addNode: "Node toevoegen",
   back: "Terug",
+  close: "Sluiten",
   createEdgeError: "Kan geen link maken naar een cluster.",
   del: "Selectie verwijderen",
   deleteClusterError: "Clusters kunnen niet worden verwijderd.",
@@ -119,6 +125,7 @@ export const pt: Locale = {
   addEdge: "Adicionar aresta",
   addNode: "Adicionar nó",
   back: "Voltar",
+  close: "Fechar",
   createEdgeError: "Não foi possível linkar arestas a um cluster.",
   del: "Remover selecionado",
   deleteClusterError: "Clusters não puderam ser removidos.",
@@ -138,6 +145,7 @@ export const ru: Locale = {
   addEdge: "Добавить ребро",
   addNode: "Добавить узел",
   back: "Назад",
+  close: "Закрывать",
   createEdgeError: "Невозможно соединить ребра в кластер.",
   del: "Удалить выбранное",
   deleteClusterError: "Кластеры не могут быть удалены",
@@ -157,6 +165,7 @@ export const cn: Locale = {
   addEdge: "添加连接线",
   addNode: "添加节点",
   back: "返回",
+  close: "關閉",
   createEdgeError: "无法将连接线连接到群集。",
   del: "删除选定",
   deleteClusterError: "无法删除群集。",
@@ -174,6 +183,7 @@ export const uk: Locale = {
   addEdge: "Додати край",
   addNode: "Додати вузол",
   back: "Назад",
+  close: "Закрити",
   createEdgeError: "Не можливо об'єднати краї в групу.",
   del: "Видалити обране",
   deleteClusterError: "Групи не можуть бути видалені.",
@@ -193,6 +203,7 @@ export const fr: Locale = {
   addEdge: "Ajouter un lien",
   addNode: "Ajouter un nœud",
   back: "Retour",
+  close: "Fermer",
   createEdgeError: "Impossible de créer un lien vers un cluster.",
   del: "Effacer la sélection",
   deleteClusterError: "Les clusters ne peuvent pas être effacés.",
@@ -212,6 +223,7 @@ export const cs: Locale = {
   addEdge: "Přidat hranu",
   addNode: "Přidat vrchol",
   back: "Zpět",
+  close: "Zavřít",
   createEdgeError: "Nelze připojit hranu ke shluku.",
   del: "Smazat výběr",
   deleteClusterError: "Nelze mazat shluky.",
