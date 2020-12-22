@@ -121,7 +121,7 @@
     "component-emitter": "1.3.0",
     "cpy-cli": "3.1.1",
     "cross-env": "7.0.3",
-    "cypress": "6.1.0",
+    "cypress": "6.2.0",
     "cypress-visual-regression": "1.5.1",
     "eslint": "7.16.0",
     "gh-pages": "3.1.0",
@@ -148,7 +148,7 @@
     "typescript": "4.1.3",
     "uuid": "8.3.2",
     "vis-data": "7.1.1",
-    "vis-dev-utils": "2.8.36",
+    "vis-dev-utils": "2.8.39",
     "vis-util": "4.3.4"
   },
   "collective": {
