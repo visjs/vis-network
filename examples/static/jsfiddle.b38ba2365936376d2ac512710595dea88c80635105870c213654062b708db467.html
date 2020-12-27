@@ -26,7 +26,9 @@
         value='&lt;p&gt;Create a simple network with some nodes and edges.&lt;/p&gt;
 
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;pre id="eventSpan"&gt;&lt;/pre&gt;
+
+&lt;h2 id="eventSpanHeading"&gt;&lt;/h2&gt;
+&lt;pre id="eventSpanContent"&gt;&lt;/pre&gt;
 '
       />
       <input
@@ -59,23 +61,34 @@ var options = {};
 var network = new vis.Network(container, data, options);
 
 network.on("startStabilizing", function (params) {
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h3&gt;Starting Stabilization&lt;/h3&gt;";
+  document.getElementById("eventSpanHeading").innerText =
+    "Starting Stabilization";
+  document.getElementById("eventSpanContent").innerText = "";
   console.log("started");
 });
 network.on("stabilizationProgress", function (params) {
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h3&gt;Stabilization progress&lt;/h3&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText =
+    "Stabilization progress";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
   console.log("progress:", params);
 });
 network.on("stabilizationIterationsDone", function (params) {
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h3&gt;Stabilization iterations complete&lt;/h3&gt;";
+  document.getElementById("eventSpanHeading").innerText =
+    "Stabilization iterations complete";
+  document.getElementById("eventSpanContent").innerText = "";
   console.log("finished stabilization interations");
 });
 network.on("stabilized", function (params) {
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h3&gt;Stabilized!&lt;/h3&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "Stabilized!";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
   console.log("stabilized!", params);
 });
 '

@@ -145,7 +145,7 @@ network = new vis.Network(container, data, options);
 network.on("click", function (params) {
   if (params.nodes.length &gt; 0) {
     var data = nodes.get(params.nodes[0]); // get the data from selected node
-    nodeContent.innerHTML = JSON.stringify(data, undefined, 3); // show the data in the div
+    nodeContent.innerText = JSON.stringify(data, undefined, 3); // show the data in the div
   }
 });
 
@@ -175,7 +175,7 @@ function redrawAll(gephiJSON) {
   edges.add(parsed.edges);
 
   var data = nodes.get(2); // get the data from node 2 as example
-  nodeContent.innerHTML = JSON.stringify(data, undefined, 3); // show the data in the div
+  nodeContent.innerText = JSON.stringify(data, undefined, 3); // show the data in the div
   network.fit(); // zoom to fit
 }
 '

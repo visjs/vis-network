@@ -238,7 +238,7 @@ function draw() {
   // create an array with nodes
   nodes = new vis.DataSet();
   nodes.on("*", function () {
-    document.getElementById("nodes").innerHTML = JSON.stringify(
+    document.getElementById("nodes").innerText = JSON.stringify(
       nodes.get(),
       null,
       4
@@ -255,7 +255,7 @@ function draw() {
   // create an array with edges
   edges = new vis.DataSet();
   edges.on("*", function () {
-    document.getElementById("edges").innerHTML = JSON.stringify(
+    document.getElementById("edges").innerText = JSON.stringify(
       edges.get(),
       null,
       4

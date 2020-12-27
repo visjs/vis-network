@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-27T14:09:24.675Z
+ * @date    2020-12-27T14:16:03.209Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -16057,7 +16057,7 @@
         noCanvas.style.color = "red";
         noCanvas.style.fontWeight = "bold";
         noCanvas.style.padding = "10px";
-        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
+        noCanvas.innerText = "Error: your browser does not support HTML canvas";
         this.frame.canvas.appendChild(noCanvas);
       } else {
         this._setPixelRatio();
@@ -17343,7 +17343,9 @@
      */
     setText(content) {
       if (content instanceof Element) {
-        this.frame.innerHTML = "";
+        while (this.frame.firstChild) {
+          this.frame.removeChild(this.frame.firstChild);
+        }
         this.frame.appendChild(content);
       } else {
         this.frame.innerHTML = content; // string containing text or HTML
@@ -22178,7 +22180,7 @@
       this.manipulationDOM[id + "Div"].className = "vis-button " + className;
       this.manipulationDOM[id + "Label"] = document.createElement("div");
       this.manipulationDOM[id + "Label"].className = labelClassName;
-      this.manipulationDOM[id + "Label"].innerHTML = label;
+      this.manipulationDOM[id + "Label"].innerText = label;
       this.manipulationDOM[id + "Div"].appendChild(
         this.manipulationDOM[id + "Label"]
       );
@@ -22193,7 +22195,7 @@
     _createDescription(label) {
       this.manipulationDOM["descriptionLabel"] = document.createElement("div");
       this.manipulationDOM["descriptionLabel"].className = "vis-none";
-      this.manipulationDOM["descriptionLabel"].innerHTML = label;
+      this.manipulationDOM["descriptionLabel"].innerText = label;
       this.manipulationDiv.appendChild(this.manipulationDOM["descriptionLabel"]);
     }
 
@@ -23285,7 +23287,7 @@
         noCanvas.style.color = "red";
         noCanvas.style.fontWeight = "bold";
         noCanvas.style.padding = "10px";
-        noCanvas.innerHTML = "Error: your browser does not support HTML canvas";
+        noCanvas.innerText = "Error: your browser does not support HTML canvas";
         this.colorPickerCanvas.appendChild(noCanvas);
       } else {
         const ctx = this.colorPickerCanvas.getContext("2d");
@@ -23354,38 +23356,38 @@
 
       this.brightnessLabel = document.createElement("div");
       this.brightnessLabel.className = "vis-label vis-brightness";
-      this.brightnessLabel.innerHTML = "brightness:";
+      this.brightnessLabel.innerText = "brightness:";
 
       this.opacityLabel = document.createElement("div");
       this.opacityLabel.className = "vis-label vis-opacity";
-      this.opacityLabel.innerHTML = "opacity:";
+      this.opacityLabel.innerText = "opacity:";
 
       this.newColorDiv = document.createElement("div");
       this.newColorDiv.className = "vis-new-color";
-      this.newColorDiv.innerHTML = "new";
+      this.newColorDiv.innerText = "new";
 
       this.initialColorDiv = document.createElement("div");
       this.initialColorDiv.className = "vis-initial-color";
-      this.initialColorDiv.innerHTML = "initial";
+      this.initialColorDiv.innerText = "initial";
 
       this.cancelButton = document.createElement("div");
       this.cancelButton.className = "vis-button vis-cancel";
-      this.cancelButton.innerHTML = "cancel";
+      this.cancelButton.innerText = "cancel";
       this.cancelButton.onclick = this._hide.bind(this, false);
 
       this.applyButton = document.createElement("div");
       this.applyButton.className = "vis-button vis-apply";
-      this.applyButton.innerHTML = "apply";
+      this.applyButton.innerText = "apply";
       this.applyButton.onclick = this._apply.bind(this);
 
       this.saveButton = document.createElement("div");
       this.saveButton.className = "vis-button vis-save";
-      this.saveButton.innerHTML = "save";
+      this.saveButton.innerText = "save";
       this.saveButton.onclick = this._save.bind(this);
 
       this.loadButton = document.createElement("div");
       this.loadButton.className = "vis-button vis-load";
-      this.loadButton.innerHTML = "load last";
+      this.loadButton.innerText = "load last";
       this.loadButton.onclick = this._loadLast.bind(this);
 
       this.frame.appendChild(this.colorPickerDiv);
@@ -23542,6 +23544,25 @@
         "," +
         this.color.a +
         ")";
+    }
+  }
+
+  /**
+   * Wrap given text (last argument) in HTML elements (all preceding arguments).
+   *
+   * @param {...any} rest - List of tag names followed by inner text.
+   *
+   * @returns An element or a text node.
+   */
+  function wrapInTag(...rest) {
+    if (rest.length < 1) {
+      throw new TypeError("Invalid arguments.");
+    } else if (rest.length === 1) {
+      return document.createTextNode(rest[0]);
+    } else {
+      const element = document.createElement(rest[0]);
+      element.appendChild(wrapInTag(rest.slice(1)));
+      return element;
     }
   }
 
@@ -23789,7 +23810,7 @@
     _makeHeader(name) {
       const div = document.createElement("div");
       div.className = "vis-configuration vis-config-header";
-      div.innerHTML = name;
+      div.innerText = name;
       this._makeItem([], div);
     }
 
@@ -23807,9 +23828,12 @@
       div.className =
         "vis-configuration vis-config-label vis-config-s" + path.length;
       if (objectLabel === true) {
-        div.innerHTML = "<i><b>" + name + ":</b></i>";
+        while (div.firstChild) {
+          div.removeChild(div.firstChild);
+        }
+        div.appendChild(wrapInTag("i", "b", name));
       } else {
-        div.innerHTML = name + ":";
+        div.innerText = name + ":";
       }
       return div;
     }
@@ -23838,7 +23862,7 @@
         if (i === selectedValue) {
           option.selected = "selected";
         }
-        option.innerHTML = arr[i];
+        option.innerText = arr[i];
         select.appendChild(option);
       }
 
@@ -23932,7 +23956,7 @@
       if (this.options.showButton === true) {
         const generateButton = document.createElement("div");
         generateButton.className = "vis-configuration vis-config-button";
-        generateButton.innerHTML = "generate options";
+        generateButton.innerText = "generate options";
         generateButton.onclick = () => {
           this._printOptions();
         };
@@ -23968,7 +23992,7 @@
         const div = document.createElement("div");
         div.id = "vis-configuration-popup";
         div.className = "vis-configuration-popup";
-        div.innerHTML = string;
+        div.innerText = string;
         div.onclick = () => {
           this._removePopup();
         };
@@ -24303,8 +24327,13 @@
      */
     _printOptions() {
       const options = this.getOptions();
-      this.optionsContainer.innerHTML =
-        "<pre>var options = " + JSON.stringify(options, null, 2) + "</pre>";
+
+      while (this.optionsContainer.firstChild) {
+        this.optionsContainer.removeChild(this.optionsContainer.firstChild);
+      }
+      this.optionsContainer.appendChild(
+        wrapInTag("pre", "const options = " + JSON.stringify(options, null, 2))
+      );
     }
 
     /**

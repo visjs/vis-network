@@ -29,7 +29,9 @@
 &lt;/p&gt;
 
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;pre id="eventSpan"&gt;&lt;/pre&gt;
+
+&lt;h2 id="eventSpanHeading"&gt;&lt;/h2&gt;
+&lt;pre id="eventSpanContent"&gt;&lt;/pre&gt;
 '
       />
       <input
@@ -70,21 +72,34 @@ var network = new vis.Network(container, data, options);
 
 network.on("click", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;Click event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "Click event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
   console.log(
     "click event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM)
   );
 });
 network.on("doubleClick", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;doubleClick event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "doubleClick event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 network.on("oncontext", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;oncontext (right click) event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText =
+    "oncontext (right click) event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 network.on("dragStart", function (params) {
   // There&apos;s no point in displaying this event on screen, it gets immediately overwritten
@@ -96,13 +111,21 @@ network.on("dragStart", function (params) {
 });
 network.on("dragging", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;dragging event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "dragging event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 network.on("dragEnd", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;dragEnd event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "dragEnd event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
   console.log("dragEnd Event:", params);
   console.log(
     "dragEnd event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM)
@@ -110,22 +133,40 @@ network.on("dragEnd", function (params) {
 });
 network.on("controlNodeDragging", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;control node dragging event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText =
+    "control node dragging event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 network.on("controlNodeDragEnd", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;control node drag end event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText =
+    "control node drag end event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
   console.log("controlNodeDragEnd Event:", params);
 });
 network.on("zoom", function (params) {
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;zoom event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "zoom event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 network.on("showPopup", function (params) {
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;showPopup event: &lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "showPopup event: ";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 network.on("hidePopup", function () {
   console.log("hidePopup Event");

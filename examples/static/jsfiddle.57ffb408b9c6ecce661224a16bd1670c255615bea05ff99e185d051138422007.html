@@ -49,7 +49,9 @@ h4 {
 &lt;/ul&gt;
 
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;pre id="eventSpan"&gt;&lt;/pre&gt;
+
+&lt;h2 id="eventSpanHeading"&gt;&lt;/h2&gt;
+&lt;pre id="eventSpanContent"&gt;&lt;/pre&gt;
 '
       />
       <input
@@ -138,8 +140,12 @@ network.on("selectEdge", function (params) {
     obj.all_clustered_edges = network.clustering.getClusteredEdges(
       params.edges[0]
     );
-    document.getElementById("eventSpan").innerHTML =
-      "&lt;h2&gt;selectEdge event:&lt;/h2&gt;" + JSON.stringify(obj, null, 4);
+    document.getElementById("eventSpanHeading").innerText = "selectEdge event:";
+    document.getElementById("eventSpanContent").innerText = JSON.stringify(
+      obj,
+      null,
+      4
+    );
   }
 });
 '

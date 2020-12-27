@@ -182,12 +182,12 @@ function draw() {
     manipulation: {
       addNode: function (data, callback) {
         // filling in the popup DOM elements
-        document.getElementById("node-operation").innerHTML = "Add Node";
+        document.getElementById("node-operation").innerText = "Add Node";
         editNode(data, clearNodePopUp, callback);
       },
       editNode: function (data, callback) {
         // filling in the popup DOM elements
-        document.getElementById("node-operation").innerHTML = "Edit Node";
+        document.getElementById("node-operation").innerText = "Edit Node";
         editNode(data, cancelNodeEdit, callback);
       },
       addEdge: function (data, callback) {
@@ -198,12 +198,12 @@ function draw() {
             return;
           }
         }
-        document.getElementById("edge-operation").innerHTML = "Add Edge";
+        document.getElementById("edge-operation").innerText = "Add Edge";
         editEdgeWithoutDrag(data, callback);
       },
       editEdge: {
         editWithoutDrag: function (data, callback) {
-          document.getElementById("edge-operation").innerHTML = "Edit Edge";
+          document.getElementById("edge-operation").innerText = "Edit Edge";
           editEdgeWithoutDrag(data, callback);
         },
       },

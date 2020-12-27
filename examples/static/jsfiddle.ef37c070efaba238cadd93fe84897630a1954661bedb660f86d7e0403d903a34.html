@@ -48,12 +48,18 @@
 
 // update list of arrow types in html body
 var nof_types = arrow_types.length;
-var list_contents = [];
-for (var i = 0; i &lt; nof_types; i++) {
-  list_contents.push("&lt;code&gt;&apos;" + arrow_types[i] + "&apos;&lt;/code&gt;");
-}
 var mylist = document.getElementById("arrow_type_list");
-mylist.innerHTML = list_contents.join(", ");
+while (mylist.firstChild) {
+  mylist.removeChild(mylist.firstChild);
+}
+for (var i = 0; i &lt; nof_types; i++) {
+  if (i &gt; 0) {
+    mylist.appendChild(document.createTextNode(", "));
+  }
+  const code = document.createElement("code");
+  code.innerText = arrow_types[i];
+  mylist.appendChild(code);
+}
 
 // create an array with nodes
 var node_attrs = new Array();

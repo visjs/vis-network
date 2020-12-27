@@ -42,7 +42,9 @@ p {
 &lt;/p&gt;
 
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;pre id="eventSpan"&gt;&lt;/pre&gt;
+
+&lt;h2 id="eventSpanHeading"&gt;&lt;/h2&gt;
+&lt;pre id="eventSpanContent"&gt;&lt;/pre&gt;
 '
       />
       <input
@@ -85,8 +87,12 @@ var network = new vis.Network(container, data, options);
 
 network.on("click", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpan").innerHTML =
-    "&lt;h2&gt;Click event:&lt;/h2&gt;" + JSON.stringify(params, null, 4);
+  document.getElementById("eventSpanHeading").innerText = "Click event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(
+    params,
+    null,
+    4
+  );
 });
 '
       />

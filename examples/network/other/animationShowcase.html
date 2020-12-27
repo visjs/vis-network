@@ -105,15 +105,15 @@
 
         // add event listeners
         network.on("select", function (params) {
-          document.getElementById("selection").innerHTML =
+          document.getElementById("selection").innerText =
             "Selection: " + params.nodes;
         });
         network.on("stabilized", function (params) {
-          document.getElementById("stabilization").innerHTML =
+          document.getElementById("stabilization").innerText =
             "Stabilization took " + params.iterations + " iterations.";
         });
         network.on("animationFinished", function () {
-          statusUpdateSpan.innerHTML = finishMessage;
+          statusUpdateSpan.innerText = finishMessage;
         });
       }
 
@@ -125,7 +125,7 @@
           duration: duration,
           easingFunction: easingFunction,
         };
-        statusUpdateSpan.innerHTML = "Doing fit() Animation.";
+        statusUpdateSpan.innerText = "Doing fit() Animation.";
         finishMessage = "Animation finished.";
         network.fit({ animation: options });
       }
@@ -139,7 +139,7 @@
           offset: { x: offsetx, y: offsety },
           animation: true, // default duration is 1000ms and default easingFunction is easeInOutQuad.
         };
-        statusUpdateSpan.innerHTML = "Doing Animation.";
+        statusUpdateSpan.innerText = "Doing Animation.";
         finishMessage = "Animation finished.";
         network.moveTo(options);
       }
@@ -156,7 +156,7 @@
             easingFunction: easingFunction,
           },
         };
-        statusUpdateSpan.innerHTML = "Doing Animation.";
+        statusUpdateSpan.innerText = "Doing Animation.";
         finishMessage = "Animation finished.";
         network.moveTo(options);
       }
@@ -174,7 +174,7 @@
             easingFunction: easingFunction,
           },
         };
-        statusUpdateSpan.innerHTML = "Focusing on node: " + nodeId;
+        statusUpdateSpan.innerText = "Focusing on node: " + nodeId;
         finishMessage = "Node: " + nodeId + " in focus.";
         network.focus(nodeId, options);
       }

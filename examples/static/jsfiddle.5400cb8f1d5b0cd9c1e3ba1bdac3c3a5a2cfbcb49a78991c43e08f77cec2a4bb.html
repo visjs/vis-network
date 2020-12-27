@@ -218,7 +218,7 @@ function draw() {
 
   // add event listeners
   network.on("select", function (params) {
-    document.getElementById("selection").innerHTML =
+    document.getElementById("selection").innerText =
       "Selection: " + params.nodes;
   });
 }

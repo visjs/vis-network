@@ -21,14 +21,6 @@
   height: 600px;
   border: 1px solid lightgray;
 }
-
-#message {
-  color: darkred;
-  max-width: 600px;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: underline;
-}
 "
       />
       <input
@@ -40,7 +32,25 @@
   &lt;input id="nodeCount" type="text" value="25" style="width: 50px" /&gt;
   &lt;input type="button" value="Go" onclick="draw()" /&gt;
 &lt;/form&gt;
-&lt;span id="message"&gt;&lt;/span&gt;
+
+&lt;a
+  id="disable-smooth-curves"
+  style="display: none"
+  href="#"
+  onclick="disableSmoothCurves()"
+&gt;
+  You may want to disable dynamic smooth curves for better performance with a
+  large amount of nodes and edges. Click here to disable them.
+&lt;/a&gt;
+&lt;a
+  id="enable-smooth-curves"
+  style="display: none"
+  href="#"
+  onclick="enableSmoothCurves()"
+&gt;
+  Click here to reenable the dynamic smooth curves.
+&lt;/a&gt;
+
 &lt;div id="mynetwork"&gt;&lt;/div&gt;
 '
       />
@@ -63,10 +73,11 @@ function draw() {
   destroy();
   var nodeCount = document.getElementById("nodeCount").value;
   if (nodeCount &gt; 100) {
-    document.getElementById("message").innerHTML =
-      &apos;&lt;a onclick="disableSmoothCurves()"&gt;You may want to disable dynamic smooth curves for better performance with a large amount of nodes and edges. Click here to disable them.&lt;/a&gt;&apos;;
+    document.getElementById("disable-smooth-curves").style.display = "inline";
+    document.getElementById("enable-smooth-curves").style.display = "none";
   } else if (setSmooth === false) {
-    document.getElementById("message").innerHTML = "";
+    document.getElementById("disable-smooth-curves").style.display = "none";
+    document.getElementById("enable-smooth-curves").style.display = "none";
   }
   // create a network
   var container = document.getElementById("mynetwork");
@@ -80,14 +91,14 @@ function draw() {
 function disableSmoothCurves() {
   setSmooth = true;
   network.setOptions({ edges: { smooth: { type: "continuous" } } });
-  document.getElementById("message").innerHTML =
-    &apos;&lt;a onclick="enableSmoothCurves()"&gt;Click here to reenable the dynamic smooth curves.&lt;/a&gt;&apos;;
+  document.getElementById("disable-smooth-curves").style.display = "none";
+  document.getElementById("enable-smooth-curves").style.display = "inline";
 }
 
 function enableSmoothCurves() {
   setSmooth = false;
-  document.getElementById("message").innerHTML =
-    &apos;&lt;a onclick="disableSmoothCurves()"&gt;You may want to disable dynamic smooth curves for better performance with a large amount of nodes and edges. Click here to disable them.&lt;/a&gt;&apos;;
+  document.getElementById("disable-smooth-curves").style.display = "inline";
+  document.getElementById("enable-smooth-curves").style.display = "none";
   network.setOptions({ edges: { smooth: { type: "dynamic" } } });
 }
 
