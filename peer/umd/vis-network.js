@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-27T08:03:29.946Z
+ * @date    2020-12-27T14:09:24.675Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3830,38 +3830,6 @@
 	  return elem.getBoundingClientRect().top;
 	}
 	/**
-	 * Add a className to the given elements style.
-	 *
-	 * @param elem - The element to which the classes will be added.
-	 * @param classNames - Space separated list of classes.
-	 */
-
-
-	function addClassName(elem, classNames) {
-	  var classes = elem.className.split(" ");
-	  var newClasses = classNames.split(" ");
-	  classes = concat$2(classes).call(classes, filter$2(newClasses).call(newClasses, function (className) {
-	    return indexOf$3(classes).call(classes, className) < 0;
-	  }));
-	  elem.className = classes.join(" ");
-	}
-	/**
-	 * Remove a className from the given elements style.
-	 *
-	 * @param elem - The element from which the classes will be removed.
-	 * @param classNames - Space separated list of classes.
-	 */
-
-
-	function removeClassName(elem, classNames) {
-	  var classes = elem.className.split(" ");
-	  var oldClasses = classNames.split(" ");
-	  classes = filter$2(classes).call(classes, function (className) {
-	    return indexOf$3(oldClasses).call(oldClasses, className) < 0;
-	  });
-	  elem.className = classes.join(" ");
-	}
-	/**
 	 * For each method for both arrays and objects.
 	 * In case of an array, the built-in Array.forEach() is applied (**No, it's not!**).
 	 * In case of an Object, the method loops over all properties of the object.
@@ -6422,291 +6390,36 @@
 		parseGephi: parseGephi
 	});
 
-	/**
-	 * Created by Alex on 11/6/2014.
-	 */
-	function keycharm(options) {
-	  var preventDefault = options && options.preventDefault || false;
-	  var container = options && options.container || window;
-	  var _exportFunctions = {};
-	  var _bound = {
-	    keydown: {},
-	    keyup: {}
-	  };
-	  var _keys = {};
-	  var i; // a - z
+	var nativeReverse = [].reverse;
+	var test$1 = [1, 2]; // `Array.prototype.reverse` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.reverse
+	// fix for Safari 12.0 bug
+	// https://bugs.webkit.org/show_bug.cgi?id=188794
 
-	  for (i = 97; i <= 122; i++) {
-	    _keys[String.fromCharCode(i)] = {
-	      code: 65 + (i - 97),
-	      shift: false
-	    };
-	  } // A - Z
+	_export({
+	  target: 'Array',
+	  proto: true,
+	  forced: String(test$1) === String(test$1.reverse())
+	}, {
+	  reverse: function reverse() {
+	    // eslint-disable-next-line no-self-assign
+	    if (isArray(this)) this.length = this.length;
+	    return nativeReverse.call(this);
+	  }
+	});
 
+	var reverse = entryVirtual('Array').reverse;
 
-	  for (i = 65; i <= 90; i++) {
-	    _keys[String.fromCharCode(i)] = {
-	      code: i,
-	      shift: true
-	    };
-	  } // 0 - 9
+	var ArrayPrototype$9 = Array.prototype;
 
+	var reverse_1 = function (it) {
+	  var own = it.reverse;
+	  return it === ArrayPrototype$9 || it instanceof Array && own === ArrayPrototype$9.reverse ? reverse : own;
+	};
 
-	  for (i = 0; i <= 9; i++) {
-	    _keys['' + i] = {
-	      code: 48 + i,
-	      shift: false
-	    };
-	  } // F1 - F12
+	var reverse$1 = reverse_1;
 
-
-	  for (i = 1; i <= 12; i++) {
-	    _keys['F' + i] = {
-	      code: 111 + i,
-	      shift: false
-	    };
-	  } // num0 - num9
-
-
-	  for (i = 0; i <= 9; i++) {
-	    _keys['num' + i] = {
-	      code: 96 + i,
-	      shift: false
-	    };
-	  } // numpad misc
-
-
-	  _keys['num*'] = {
-	    code: 106,
-	    shift: false
-	  };
-	  _keys['num+'] = {
-	    code: 107,
-	    shift: false
-	  };
-	  _keys['num-'] = {
-	    code: 109,
-	    shift: false
-	  };
-	  _keys['num/'] = {
-	    code: 111,
-	    shift: false
-	  };
-	  _keys['num.'] = {
-	    code: 110,
-	    shift: false
-	  }; // arrows
-
-	  _keys['left'] = {
-	    code: 37,
-	    shift: false
-	  };
-	  _keys['up'] = {
-	    code: 38,
-	    shift: false
-	  };
-	  _keys['right'] = {
-	    code: 39,
-	    shift: false
-	  };
-	  _keys['down'] = {
-	    code: 40,
-	    shift: false
-	  }; // extra keys
-
-	  _keys['space'] = {
-	    code: 32,
-	    shift: false
-	  };
-	  _keys['enter'] = {
-	    code: 13,
-	    shift: false
-	  };
-	  _keys['shift'] = {
-	    code: 16,
-	    shift: undefined
-	  };
-	  _keys['esc'] = {
-	    code: 27,
-	    shift: false
-	  };
-	  _keys['backspace'] = {
-	    code: 8,
-	    shift: false
-	  };
-	  _keys['tab'] = {
-	    code: 9,
-	    shift: false
-	  };
-	  _keys['ctrl'] = {
-	    code: 17,
-	    shift: false
-	  };
-	  _keys['alt'] = {
-	    code: 18,
-	    shift: false
-	  };
-	  _keys['delete'] = {
-	    code: 46,
-	    shift: false
-	  };
-	  _keys['pageup'] = {
-	    code: 33,
-	    shift: false
-	  };
-	  _keys['pagedown'] = {
-	    code: 34,
-	    shift: false
-	  }; // symbols
-
-	  _keys['='] = {
-	    code: 187,
-	    shift: false
-	  };
-	  _keys['-'] = {
-	    code: 189,
-	    shift: false
-	  };
-	  _keys[']'] = {
-	    code: 221,
-	    shift: false
-	  };
-	  _keys['['] = {
-	    code: 219,
-	    shift: false
-	  };
-
-	  var down = function (event) {
-	    handleEvent(event, 'keydown');
-	  };
-
-	  var up = function (event) {
-	    handleEvent(event, 'keyup');
-	  }; // handle the actualy bound key with the event
-
-
-	  var handleEvent = function (event, type) {
-	    if (_bound[type][event.keyCode] !== undefined) {
-	      var bound = _bound[type][event.keyCode];
-
-	      for (var i = 0; i < bound.length; i++) {
-	        if (bound[i].shift === undefined) {
-	          bound[i].fn(event);
-	        } else if (bound[i].shift == true && event.shiftKey == true) {
-	          bound[i].fn(event);
-	        } else if (bound[i].shift == false && event.shiftKey == false) {
-	          bound[i].fn(event);
-	        }
-	      }
-
-	      if (preventDefault == true) {
-	        event.preventDefault();
-	      }
-	    }
-	  }; // bind a key to a callback
-
-
-	  _exportFunctions.bind = function (key, callback, type) {
-	    if (type === undefined) {
-	      type = 'keydown';
-	    }
-
-	    if (_keys[key] === undefined) {
-	      throw new Error("unsupported key: " + key);
-	    }
-
-	    if (_bound[type][_keys[key].code] === undefined) {
-	      _bound[type][_keys[key].code] = [];
-	    }
-
-	    _bound[type][_keys[key].code].push({
-	      fn: callback,
-	      shift: _keys[key].shift
-	    });
-	  }; // bind all keys to a call back (demo purposes)
-
-
-	  _exportFunctions.bindAll = function (callback, type) {
-	    if (type === undefined) {
-	      type = 'keydown';
-	    }
-
-	    for (var key in _keys) {
-	      if (_keys.hasOwnProperty(key)) {
-	        _exportFunctions.bind(key, callback, type);
-	      }
-	    }
-	  }; // get the key label from an event
-
-
-	  _exportFunctions.getKey = function (event) {
-	    for (var key in _keys) {
-	      if (_keys.hasOwnProperty(key)) {
-	        if (event.shiftKey == true && _keys[key].shift == true && event.keyCode == _keys[key].code) {
-	          return key;
-	        } else if (event.shiftKey == false && _keys[key].shift == false && event.keyCode == _keys[key].code) {
-	          return key;
-	        } else if (event.keyCode == _keys[key].code && key == 'shift') {
-	          return key;
-	        }
-	      }
-	    }
-
-	    return "unknown key, currently not supported";
-	  }; // unbind either a specific callback from a key or all of them (by leaving callback undefined)
-
-
-	  _exportFunctions.unbind = function (key, callback, type) {
-	    if (type === undefined) {
-	      type = 'keydown';
-	    }
-
-	    if (_keys[key] === undefined) {
-	      throw new Error("unsupported key: " + key);
-	    }
-
-	    if (callback !== undefined) {
-	      var newBindings = [];
-	      var bound = _bound[type][_keys[key].code];
-
-	      if (bound !== undefined) {
-	        for (var i = 0; i < bound.length; i++) {
-	          if (!(bound[i].fn == callback && bound[i].shift == _keys[key].shift)) {
-	            newBindings.push(_bound[type][_keys[key].code][i]);
-	          }
-	        }
-	      }
-
-	      _bound[type][_keys[key].code] = newBindings;
-	    } else {
-	      _bound[type][_keys[key].code] = [];
-	    }
-	  }; // reset all bound variables.
-
-
-	  _exportFunctions.reset = function () {
-	    _bound = {
-	      keydown: {},
-	      keyup: {}
-	    };
-	  }; // unbind all listeners and reset all variables.
-
-
-	  _exportFunctions.destroy = function () {
-	    _bound = {
-	      keydown: {},
-	      keyup: {}
-	    };
-	    container.removeEventListener('keydown', down, true);
-	    container.removeEventListener('keyup', up, true);
-	  }; // create listeners.
-
-
-	  container.addEventListener('keydown', down, true);
-	  container.addEventListener('keyup', up, true); // return the public functions.
-
-	  return _exportFunctions;
-	}
+	var reverse$2 = reverse$1;
 
 	/*! Hammer.JS - v2.0.17-rc - 2019-12-16
 	 * http://naver.github.io/egjs
@@ -9694,6 +9407,11 @@
 	  return hammerMock();
 	};
 
+	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+	function _unsupportedIterableToArray$2(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
+
+	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * Turn an element into an clickToUse element.
 	 * When not active, the element has a transparent overlay. When the overlay is
@@ -9707,46 +9425,64 @@
 	 */
 
 	function Activator(container) {
-	  var _context,
-	      _this = this,
-	      _context2;
+	  var _this = this,
+	      _context;
 
+	  this._cleanupQueue = [];
 	  this.active = false;
-	  this.dom = {
-	    container: container
+	  this._dom = {
+	    container: container,
+	    overlay: document.createElement("div")
 	  };
-	  this.dom.overlay = document.createElement("div");
-	  this.dom.overlay.className = "vis-overlay";
-	  this.dom.container.appendChild(this.dom.overlay);
-	  this.hammer = Hammer$1(this.dom.overlay);
-	  this.hammer.on("tap", bind$2(_context = this._onTapOverlay).call(_context, this)); // block all touch events (except tap)
+
+	  this._dom.overlay.classList.add("vis-overlay");
+
+	  this._dom.container.appendChild(this._dom.overlay);
+
+	  this._cleanupQueue.push(function () {
+	    _this._dom.overlay.parentNode.removeChild(_this._dom.overlay);
+	  });
+
+	  var hammer = Hammer$1(this._dom.overlay);
+	  hammer.on("tap", bind$2(_context = this._onTapOverlay).call(_context, this));
+
+	  this._cleanupQueue.push(function () {
+	    hammer.destroy(); // FIXME: cleaning up hammer instances doesn't work (Timeline not removed
+	    // from memory)
+	  }); // block all touch events (except tap)
+
 
 	  var events = ["tap", "doubletap", "press", "pinch", "pan", "panstart", "panmove", "panend"];
 
 	  forEach$2(events).call(events, function (event) {
-	    _this.hammer.on(event, function (event) {
+	    hammer.on(event, function (event) {
 	      event.srcEvent.stopPropagation();
 	    });
 	  }); // attach a click event to the window, in order to deactivate when clicking outside the timeline
 
 
 	  if (document && document.body) {
-	    this.onClick = function (event) {
+	    this._onClick = function (event) {
 	      if (!_hasParent(event.target, container)) {
 	        _this.deactivate();
 	      }
 	    };
 
-	    document.body.addEventListener("click", this.onClick);
-	  }
+	    document.body.addEventListener("click", this._onClick);
 
-	  if (this.keycharm !== undefined) {
-	    this.keycharm.destroy();
-	  }
+	    this._cleanupQueue.push(function () {
+	      document.body.removeEventListener("click", _this._onClick);
+	    });
+	  } // prepare escape key listener for deactivating when active
 
-	  this.keycharm = keycharm(); // keycharm listener only bounded when active)
 
-	  this.escListener = bind$2(_context2 = this.deactivate).call(_context2, this);
+	  this._escListener = function (event) {
+	    if ("key" in event ? event.key === "Escape" : event.keyCode === 27
+	    /* the keyCode is for IE11 */
+	    ) {
+	        _this.deactivate();
+	      }
+	  };
 	} // turn into an event emitter
 
 
@@ -9758,23 +9494,23 @@
 	 */
 
 	Activator.prototype.destroy = function () {
-	  this.deactivate(); // remove dom
+	  var _context2, _context3;
 
-	  this.dom.overlay.parentNode.removeChild(this.dom.overlay); // remove global event listener
+	  this.deactivate();
 
-	  if (this.onClick) {
-	    document.body.removeEventListener("click", this.onClick);
-	  } // remove keycharm
+	  var _iterator = _createForOfIteratorHelper$1(reverse$2(_context2 = splice$2(_context3 = this._cleanupQueue).call(_context3, 0)).call(_context2)),
+	      _step;
 
-
-	  if (this.keycharm !== undefined) {
-	    this.keycharm.destroy();
+	  try {
+	    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	      var callback = _step.value;
+	      callback();
+	    }
+	  } catch (err) {
+	    _iterator.e(err);
+	  } finally {
+	    _iterator.f();
 	  }
-
-	  this.keycharm = null; // cleanup hammer instances
-
-	  this.hammer.destroy();
-	  this.hammer = null; // FIXME: cleaning up hammer instances doesn't work (Timeline not removed from memory)
 	};
 	/**
 	 * Activate the element
@@ -9783,8 +9519,6 @@
 
 
 	Activator.prototype.activate = function () {
-	  var _context3;
-
 	  // we allow only one active activator at a time
 	  if (Activator.current) {
 	    Activator.current.deactivate();
@@ -9792,13 +9526,15 @@
 
 	  Activator.current = this;
 	  this.active = true;
-	  this.dom.overlay.style.display = "none";
-	  addClassName(this.dom.container, "vis-active");
+	  this._dom.overlay.style.display = "none";
+
+	  this._dom.container.classList.add("vis-active");
+
 	  this.emit("change");
 	  this.emit("activate"); // ugly hack: bind ESC after emitting the events, as the Network rebinds all
 	  // keyboard events on a 'change' event
 
-	  bind$2(_context3 = this.keycharm).call(_context3, "esc", this.escListener);
+	  document.body.addEventListener("keydown", this._escListener);
 	};
 	/**
 	 * Deactivate the element
@@ -9808,9 +9544,11 @@
 
 	Activator.prototype.deactivate = function () {
 	  this.active = false;
-	  this.dom.overlay.style.display = "block";
-	  removeClassName(this.dom.container, "vis-active");
-	  this.keycharm.unbind("esc", this.escListener);
+	  this._dom.overlay.style.display = "block";
+
+	  this._dom.container.classList.remove("vis-active");
+
+	  document.body.removeEventListener("keydown", this._escListener);
 	  this.emit("change");
 	  this.emit("deactivate");
 	};
@@ -11253,11 +10991,11 @@
 
 	var some = entryVirtual('Array').some;
 
-	var ArrayPrototype$9 = Array.prototype;
+	var ArrayPrototype$a = Array.prototype;
 
 	var some_1 = function (it) {
 	  var own = it.some;
-	  return it === ArrayPrototype$9 || it instanceof Array && own === ArrayPrototype$9.some ? some : own;
+	  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.some ? some : own;
 	};
 
 	var some$1 = some_1;
@@ -11511,7 +11249,7 @@
 
 	var values$2 = values$1;
 
-	var ArrayPrototype$a = Array.prototype;
+	var ArrayPrototype$b = Array.prototype;
 	var DOMIterables$1 = {
 	  DOMTokenList: true,
 	  NodeList: true
@@ -11519,7 +11257,7 @@
 
 	var values_1 = function (it) {
 	  var own = it.values;
-	  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.values // eslint-disable-next-line no-prototype-builtins
+	  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.values // eslint-disable-next-line no-prototype-builtins
 	  || DOMIterables$1.hasOwnProperty(classof(it)) ? values$2 : own;
 	};
 
@@ -13518,11 +13256,11 @@
 
 	var fill = entryVirtual('Array').fill;
 
-	var ArrayPrototype$b = Array.prototype;
+	var ArrayPrototype$c = Array.prototype;
 
 	var fill_1 = function (it) {
 	  var own = it.fill;
-	  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.fill ? fill : own;
+	  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.fill ? fill : own;
 	};
 
 	var fill$1 = fill_1;
@@ -16977,11 +16715,11 @@
 	  return Node;
 	}();
 
-	function _createForOfIteratorHelper$1(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$2(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
+	function _unsupportedIterableToArray$3(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
 
-	function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * Handler for Nodes
 	 */
@@ -17505,7 +17243,7 @@
 	      var dataArray = [];
 	      var dataset = this.body.data.nodes.getDataSet();
 
-	      var _iterator = _createForOfIteratorHelper$1(dataset.get()),
+	      var _iterator = _createForOfIteratorHelper$2(dataset.get()),
 	          _step;
 
 	      try {
@@ -23616,37 +23354,6 @@
 	  return PhysicsEngine;
 	}();
 
-	var nativeReverse = [].reverse;
-	var test$1 = [1, 2]; // `Array.prototype.reverse` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.reverse
-	// fix for Safari 12.0 bug
-	// https://bugs.webkit.org/show_bug.cgi?id=188794
-
-	_export({
-	  target: 'Array',
-	  proto: true,
-	  forced: String(test$1) === String(test$1.reverse())
-	}, {
-	  reverse: function reverse() {
-	    // eslint-disable-next-line no-self-assign
-	    if (isArray(this)) this.length = this.length;
-	    return nativeReverse.call(this);
-	  }
-	});
-
-	var reverse = entryVirtual('Array').reverse;
-
-	var ArrayPrototype$c = Array.prototype;
-
-	var reverse_1 = function (it) {
-	  var own = it.reverse;
-	  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.reverse ? reverse : own;
-	};
-
-	var reverse$1 = reverse_1;
-
-	var reverse$2 = reverse$1;
-
 	// Unique ID creation requires a high quality random # generator. In the browser we therefore
 	// require the crypto API and do not support built-in fallback to lower quality random number
 	// generators (like Math.random()).
@@ -25499,11 +25206,11 @@
 	  return ClusterEngine;
 	}();
 
-	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$3(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
+	function _unsupportedIterableToArray$4(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
 
-	function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * Initializes window.requestAnimationFrame() to a usable form.
 	 *
@@ -25978,7 +25685,7 @@
 
 	      return {
 	        drawExternalLabels: function drawExternalLabels() {
-	          var _iterator = _createForOfIteratorHelper$2(_drawExternalLabels),
+	          var _iterator = _createForOfIteratorHelper$3(_drawExternalLabels),
 	              _step;
 
 	          try {
@@ -27179,6 +26886,292 @@
 	}();
 
 	/**
+	 * Created by Alex on 11/6/2014.
+	 */
+	function keycharm(options) {
+	  var preventDefault = options && options.preventDefault || false;
+	  var container = options && options.container || window;
+	  var _exportFunctions = {};
+	  var _bound = {
+	    keydown: {},
+	    keyup: {}
+	  };
+	  var _keys = {};
+	  var i; // a - z
+
+	  for (i = 97; i <= 122; i++) {
+	    _keys[String.fromCharCode(i)] = {
+	      code: 65 + (i - 97),
+	      shift: false
+	    };
+	  } // A - Z
+
+
+	  for (i = 65; i <= 90; i++) {
+	    _keys[String.fromCharCode(i)] = {
+	      code: i,
+	      shift: true
+	    };
+	  } // 0 - 9
+
+
+	  for (i = 0; i <= 9; i++) {
+	    _keys['' + i] = {
+	      code: 48 + i,
+	      shift: false
+	    };
+	  } // F1 - F12
+
+
+	  for (i = 1; i <= 12; i++) {
+	    _keys['F' + i] = {
+	      code: 111 + i,
+	      shift: false
+	    };
+	  } // num0 - num9
+
+
+	  for (i = 0; i <= 9; i++) {
+	    _keys['num' + i] = {
+	      code: 96 + i,
+	      shift: false
+	    };
+	  } // numpad misc
+
+
+	  _keys['num*'] = {
+	    code: 106,
+	    shift: false
+	  };
+	  _keys['num+'] = {
+	    code: 107,
+	    shift: false
+	  };
+	  _keys['num-'] = {
+	    code: 109,
+	    shift: false
+	  };
+	  _keys['num/'] = {
+	    code: 111,
+	    shift: false
+	  };
+	  _keys['num.'] = {
+	    code: 110,
+	    shift: false
+	  }; // arrows
+
+	  _keys['left'] = {
+	    code: 37,
+	    shift: false
+	  };
+	  _keys['up'] = {
+	    code: 38,
+	    shift: false
+	  };
+	  _keys['right'] = {
+	    code: 39,
+	    shift: false
+	  };
+	  _keys['down'] = {
+	    code: 40,
+	    shift: false
+	  }; // extra keys
+
+	  _keys['space'] = {
+	    code: 32,
+	    shift: false
+	  };
+	  _keys['enter'] = {
+	    code: 13,
+	    shift: false
+	  };
+	  _keys['shift'] = {
+	    code: 16,
+	    shift: undefined
+	  };
+	  _keys['esc'] = {
+	    code: 27,
+	    shift: false
+	  };
+	  _keys['backspace'] = {
+	    code: 8,
+	    shift: false
+	  };
+	  _keys['tab'] = {
+	    code: 9,
+	    shift: false
+	  };
+	  _keys['ctrl'] = {
+	    code: 17,
+	    shift: false
+	  };
+	  _keys['alt'] = {
+	    code: 18,
+	    shift: false
+	  };
+	  _keys['delete'] = {
+	    code: 46,
+	    shift: false
+	  };
+	  _keys['pageup'] = {
+	    code: 33,
+	    shift: false
+	  };
+	  _keys['pagedown'] = {
+	    code: 34,
+	    shift: false
+	  }; // symbols
+
+	  _keys['='] = {
+	    code: 187,
+	    shift: false
+	  };
+	  _keys['-'] = {
+	    code: 189,
+	    shift: false
+	  };
+	  _keys[']'] = {
+	    code: 221,
+	    shift: false
+	  };
+	  _keys['['] = {
+	    code: 219,
+	    shift: false
+	  };
+
+	  var down = function (event) {
+	    handleEvent(event, 'keydown');
+	  };
+
+	  var up = function (event) {
+	    handleEvent(event, 'keyup');
+	  }; // handle the actualy bound key with the event
+
+
+	  var handleEvent = function (event, type) {
+	    if (_bound[type][event.keyCode] !== undefined) {
+	      var bound = _bound[type][event.keyCode];
+
+	      for (var i = 0; i < bound.length; i++) {
+	        if (bound[i].shift === undefined) {
+	          bound[i].fn(event);
+	        } else if (bound[i].shift == true && event.shiftKey == true) {
+	          bound[i].fn(event);
+	        } else if (bound[i].shift == false && event.shiftKey == false) {
+	          bound[i].fn(event);
+	        }
+	      }
+
+	      if (preventDefault == true) {
+	        event.preventDefault();
+	      }
+	    }
+	  }; // bind a key to a callback
+
+
+	  _exportFunctions.bind = function (key, callback, type) {
+	    if (type === undefined) {
+	      type = 'keydown';
+	    }
+
+	    if (_keys[key] === undefined) {
+	      throw new Error("unsupported key: " + key);
+	    }
+
+	    if (_bound[type][_keys[key].code] === undefined) {
+	      _bound[type][_keys[key].code] = [];
+	    }
+
+	    _bound[type][_keys[key].code].push({
+	      fn: callback,
+	      shift: _keys[key].shift
+	    });
+	  }; // bind all keys to a call back (demo purposes)
+
+
+	  _exportFunctions.bindAll = function (callback, type) {
+	    if (type === undefined) {
+	      type = 'keydown';
+	    }
+
+	    for (var key in _keys) {
+	      if (_keys.hasOwnProperty(key)) {
+	        _exportFunctions.bind(key, callback, type);
+	      }
+	    }
+	  }; // get the key label from an event
+
+
+	  _exportFunctions.getKey = function (event) {
+	    for (var key in _keys) {
+	      if (_keys.hasOwnProperty(key)) {
+	        if (event.shiftKey == true && _keys[key].shift == true && event.keyCode == _keys[key].code) {
+	          return key;
+	        } else if (event.shiftKey == false && _keys[key].shift == false && event.keyCode == _keys[key].code) {
+	          return key;
+	        } else if (event.keyCode == _keys[key].code && key == 'shift') {
+	          return key;
+	        }
+	      }
+	    }
+
+	    return "unknown key, currently not supported";
+	  }; // unbind either a specific callback from a key or all of them (by leaving callback undefined)
+
+
+	  _exportFunctions.unbind = function (key, callback, type) {
+	    if (type === undefined) {
+	      type = 'keydown';
+	    }
+
+	    if (_keys[key] === undefined) {
+	      throw new Error("unsupported key: " + key);
+	    }
+
+	    if (callback !== undefined) {
+	      var newBindings = [];
+	      var bound = _bound[type][_keys[key].code];
+
+	      if (bound !== undefined) {
+	        for (var i = 0; i < bound.length; i++) {
+	          if (!(bound[i].fn == callback && bound[i].shift == _keys[key].shift)) {
+	            newBindings.push(_bound[type][_keys[key].code][i]);
+	          }
+	        }
+	      }
+
+	      _bound[type][_keys[key].code] = newBindings;
+	    } else {
+	      _bound[type][_keys[key].code] = [];
+	    }
+	  }; // reset all bound variables.
+
+
+	  _exportFunctions.reset = function () {
+	    _bound = {
+	      keydown: {},
+	      keyup: {}
+	    };
+	  }; // unbind all listeners and reset all variables.
+
+
+	  _exportFunctions.destroy = function () {
+	    _bound = {
+	      keydown: {},
+	      keyup: {}
+	    };
+	    container.removeEventListener('keydown', down, true);
+	    container.removeEventListener('keyup', up, true);
+	  }; // create listeners.
+
+
+	  container.addEventListener('keydown', down, true);
+	  container.addEventListener('keyup', up, true); // return the public functions.
+
+	  return _exportFunctions;
+	}
+
+	/**
 	 * Navigation Handler
 	 */
 
@@ -27760,11 +27753,11 @@
 	  return Popup;
 	}();
 
-	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$4(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice$5(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
+	function _unsupportedIterableToArray$5(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
 
-	function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * Handler for interactions
 	 */
@@ -28083,7 +28076,7 @@
 
 	        this.selectionHandler.generateClickEvent("dragStart", event, this.drag.pointer); // create an array with the selected nodes and their original location and status
 
-	        var _iterator = _createForOfIteratorHelper$3(this.selectionHandler.getSelectedNodes()),
+	        var _iterator = _createForOfIteratorHelper$4(this.selectionHandler.getSelectedNodes()),
 	            _step;
 
 	        try {
@@ -28793,11 +28786,11 @@
 	  return value;
 	}
 
-	function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$5(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice$5(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
+	function _unsupportedIterableToArray$6(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
 
-	function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 	var _previousSelection, _selection, _nodes, _edges, _commitHandler;
 	/**
@@ -28808,7 +28801,7 @@
 	function diffSets(prev, next) {
 	  var diff = new set$3();
 
-	  var _iterator = _createForOfIteratorHelper$4(next),
+	  var _iterator = _createForOfIteratorHelper$5(next),
 	      _step;
 
 	  try {
@@ -28892,7 +28885,7 @@
 
 	      __classPrivateFieldSet(this, _selection, new set$3(__classPrivateFieldGet(this, _previousSelection)));
 
-	      var _iterator2 = _createForOfIteratorHelper$4(changes.added),
+	      var _iterator2 = _createForOfIteratorHelper$5(changes.added),
 	          _step2;
 
 	      try {
@@ -28906,7 +28899,7 @@
 	        _iterator2.f();
 	      }
 
-	      var _iterator3 = _createForOfIteratorHelper$4(changes.deleted),
+	      var _iterator3 = _createForOfIteratorHelper$5(changes.deleted),
 	          _step3;
 
 	      try {
@@ -29024,11 +29017,11 @@
 	}();
 	_nodes = new weakMap$2(), _edges = new weakMap$2(), _commitHandler = new weakMap$2();
 
-	function _createForOfIteratorHelper$5(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$6(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$6(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice$5(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
+	function _unsupportedIterableToArray$7(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice$5(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
 
-	function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * The handler for selections
 	 */
@@ -29757,7 +29750,7 @@
 	      }
 
 	      if (selection.nodes) {
-	        var _iterator = _createForOfIteratorHelper$5(selection.nodes),
+	        var _iterator = _createForOfIteratorHelper$6(selection.nodes),
 	            _step;
 
 	        try {
@@ -29780,7 +29773,7 @@
 	      }
 
 	      if (selection.edges) {
-	        var _iterator2 = _createForOfIteratorHelper$5(selection.edges),
+	        var _iterator2 = _createForOfIteratorHelper$6(selection.edges),
 	            _step2;
 
 	        try {
@@ -31228,11 +31221,11 @@
 
 	var every$2 = every$1;
 
-	function _createForOfIteratorHelper$6(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$7(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$8(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$7(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
+	function _unsupportedIterableToArray$8(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$8(o, minLen); var n = slice$5(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$8(o, minLen); }
 
-	function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$8(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 	/**
 	 * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
@@ -31352,7 +31345,7 @@
 	  var edgeIdProp = direction + "Id";
 	  var newLevelDiff = direction === "to" ? 1 : -1;
 
-	  var _iterator = _createForOfIteratorHelper$6(nodes),
+	  var _iterator = _createForOfIteratorHelper$7(nodes),
 	      _step;
 
 	  try {
@@ -33402,11 +33395,11 @@
 	  return LayoutEngine;
 	}();
 
-	function _createForOfIteratorHelper$7(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$8(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+	function _createForOfIteratorHelper$8(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$9(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-	function _unsupportedIterableToArray$8(o, minLen) { var _context32; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$8(o, minLen); var n = slice$5(_context32 = Object.prototype.toString.call(o)).call(_context32, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$8(o, minLen); }
+	function _unsupportedIterableToArray$9(o, minLen) { var _context32; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$9(o, minLen); var n = slice$5(_context32 = Object.prototype.toString.call(o)).call(_context32, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$2(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$9(o, minLen); }
 
-	function _arrayLikeToArray$8(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+	function _arrayLikeToArray$9(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 	/**
 	 * Clears the toolbar div element of children
 	 *
@@ -34163,7 +34156,7 @@
 	      var _context19;
 
 	      // _clean DOM event listener bindings
-	      var _iterator = _createForOfIteratorHelper$7(splice$2(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)),
+	      var _iterator = _createForOfIteratorHelper$8(splice$2(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)),
 	          _step;
 
 	      try {

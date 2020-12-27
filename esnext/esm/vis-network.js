@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-27T08:03:29.946Z
+ * @date    2020-12-27T14:09:24.675Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,11 +25,11 @@
  */
 
 import Emitter from 'component-emitter';
-import { addClassName, removeClassName, topMost, forEach, deepExtend, overrideOpacity, copyAndExtendArray, copyArray, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, selectiveDeepExtend, isString, Alea, HSVToHex, addEventListener, removeEventListener, easingFunctions, getAbsoluteLeft, getAbsoluteTop, recursiveDOMDelete, isValidRGB, isValidRGBA, isValidHex, hexToRGB, RGBToHSV, HSVToRGB } from 'vis-util/esnext/esm/vis-util.js';
-import keycharm from 'keycharm';
+import { topMost, forEach, deepExtend, overrideOpacity, copyAndExtendArray, copyArray, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, selectiveDeepExtend, isString, Alea, HSVToHex, addEventListener, removeEventListener, easingFunctions, getAbsoluteLeft, getAbsoluteTop, recursiveDOMDelete, isValidRGB, isValidRGBA, isValidHex, hexToRGB, RGBToHSV, HSVToRGB } from 'vis-util/esnext/esm/vis-util.js';
 import RealHammer from '@egjs/hammerjs';
 import { isDataViewLike, DataSet } from 'vis-data/esnext/esm/vis-data.js';
 import { v4 } from 'uuid';
+import keycharm from 'keycharm';
 import TimSort, { sort } from 'timsort';
 
 /**
@@ -1785,19 +1785,29 @@ const Hammer =
  * @class Activator
  */
 function Activator(container) {
+  this._cleanupQueue = [];
+
   this.active = false;
 
-  this.dom = {
-    container: container,
+  this._dom = {
+    container,
+    overlay: document.createElement("div"),
   };
 
-  this.dom.overlay = document.createElement("div");
-  this.dom.overlay.className = "vis-overlay";
+  this._dom.overlay.classList.add("vis-overlay");
 
-  this.dom.container.appendChild(this.dom.overlay);
+  this._dom.container.appendChild(this._dom.overlay);
+  this._cleanupQueue.push(() => {
+    this._dom.overlay.parentNode.removeChild(this._dom.overlay);
+  });
 
-  this.hammer = Hammer(this.dom.overlay);
-  this.hammer.on("tap", this._onTapOverlay.bind(this));
+  const hammer = Hammer(this._dom.overlay);
+  hammer.on("tap", this._onTapOverlay.bind(this));
+  this._cleanupQueue.push(() => {
+    hammer.destroy();
+    // FIXME: cleaning up hammer instances doesn't work (Timeline not removed
+    // from memory)
+  });
 
   // block all touch events (except tap)
   const events = [
@@ -1811,28 +1821,34 @@ function Activator(container) {
     "panend",
   ];
   events.forEach((event) => {
-    this.hammer.on(event, (event) => {
+    hammer.on(event, (event) => {
       event.srcEvent.stopPropagation();
     });
   });
 
   // attach a click event to the window, in order to deactivate when clicking outside the timeline
   if (document && document.body) {
-    this.onClick = (event) => {
+    this._onClick = (event) => {
       if (!_hasParent(event.target, container)) {
         this.deactivate();
       }
     };
-    document.body.addEventListener("click", this.onClick);
+    document.body.addEventListener("click", this._onClick);
+    this._cleanupQueue.push(() => {
+      document.body.removeEventListener("click", this._onClick);
+    });
   }
 
-  if (this.keycharm !== undefined) {
-    this.keycharm.destroy();
-  }
-  this.keycharm = keycharm();
-
-  // keycharm listener only bounded when active)
-  this.escListener = this.deactivate.bind(this);
+  // prepare escape key listener for deactivating when active
+  this._escListener = (event) => {
+    if (
+      "key" in event
+        ? event.key === "Escape"
+        : event.keyCode === 27 /* the keyCode is for IE11 */
+    ) {
+      this.deactivate();
+    }
+  };
 }
 
 // turn into an event emitter
@@ -1847,22 +1863,9 @@ Activator.current = null;
 Activator.prototype.destroy = function () {
   this.deactivate();
 
-  // remove dom
-  this.dom.overlay.parentNode.removeChild(this.dom.overlay);
-
-  // remove global event listener
-  if (this.onClick) {
-    document.body.removeEventListener("click", this.onClick);
+  for (const callback of this._cleanupQueue.splice(0).reverse()) {
+    callback();
   }
-  // remove keycharm
-  if (this.keycharm !== undefined) {
-    this.keycharm.destroy();
-  }
-  this.keycharm = null;
-  // cleanup hammer instances
-  this.hammer.destroy();
-  this.hammer = null;
-  // FIXME: cleaning up hammer instances doesn't work (Timeline not removed from memory)
 };
 
 /**
@@ -1877,15 +1880,15 @@ Activator.prototype.activate = function () {
   Activator.current = this;
 
   this.active = true;
-  this.dom.overlay.style.display = "none";
-  addClassName(this.dom.container, "vis-active");
+  this._dom.overlay.style.display = "none";
+  this._dom.container.classList.add("vis-active");
 
   this.emit("change");
   this.emit("activate");
 
   // ugly hack: bind ESC after emitting the events, as the Network rebinds all
   // keyboard events on a 'change' event
-  this.keycharm.bind("esc", this.escListener);
+  document.body.addEventListener("keydown", this._escListener);
 };
 
 /**
@@ -1894,9 +1897,9 @@ Activator.prototype.activate = function () {
  */
 Activator.prototype.deactivate = function () {
   this.active = false;
-  this.dom.overlay.style.display = "block";
-  removeClassName(this.dom.container, "vis-active");
-  this.keycharm.unbind("esc", this.escListener);
+  this._dom.overlay.style.display = "block";
+  this._dom.container.classList.remove("vis-active");
+  document.body.removeEventListener("keydown", this._escListener);
 
   this.emit("change");
   this.emit("deactivate");
