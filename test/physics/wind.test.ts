@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import Network from "../../lib/network/Network";
-import canvasMockify from "../canvas-mock";
+import { canvasMockify } from "../canvas-mock";
 
 describe("wind", function (): void {
   beforeEach(function () {
