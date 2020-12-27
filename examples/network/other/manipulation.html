@@ -108,7 +108,7 @@
           manipulation: {
             addNode: function (data, callback) {
               // filling in the popup DOM elements
-              document.getElementById("operation").innerHTML = "Add Node";
+              document.getElementById("operation").innerText = "Add Node";
               document.getElementById("node-id").value = data.id;
               document.getElementById("node-label").value = data.label;
               document.getElementById("saveButton").onclick = saveData.bind(
@@ -123,7 +123,7 @@
             },
             editNode: function (data, callback) {
               // filling in the popup DOM elements
-              document.getElementById("operation").innerHTML = "Edit Node";
+              document.getElementById("operation").innerText = "Edit Node";
               document.getElementById("node-id").value = data.id;
               document.getElementById("node-label").value = data.label;
               document.getElementById("saveButton").onclick = saveData.bind(

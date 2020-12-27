@@ -44,7 +44,9 @@
     </ul>
 
     <div id="mynetwork"></div>
-    <pre id="eventSpan"></pre>
+
+    <h2 id="eventSpanHeading"></h2>
+    <pre id="eventSpanContent"></pre>
 
     <script type="text/javascript">
       // create an array with nodes
@@ -130,8 +132,11 @@
           obj.all_clustered_edges = network.clustering.getClusteredEdges(
             params.edges[0]
           );
-          document.getElementById("eventSpan").innerHTML =
-            "<h2>selectEdge event:</h2>" + JSON.stringify(obj, null, 4);
+          document.getElementById("eventSpanHeading").innerText =
+            "selectEdge event:";
+          document.getElementById(
+            "eventSpanContent"
+          ).innerText = JSON.stringify(obj, null, 4);
         }
       });
     </script>

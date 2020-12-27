@@ -70,7 +70,9 @@
           );
 
           const root = document.getElementById(id);
-          root.innerText = "";
+          while (root.firstChild) {
+            root.removeChild(root.firstChild);
+          }
 
           const table = document.createElement("table");
           ["added", "changed", "missing"].forEach((key) => {

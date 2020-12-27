@@ -68,12 +68,12 @@
     <script>
       function toggleGettingStarted(aThis) {
         var gettingStartedDiv = document.getElementById("gettingStarted");
-        if (aThis.innerHTML.indexOf("Show") !== -1) {
+        if (aThis.innerText.indexOf("Show") !== -1) {
           gettingStartedDiv.className = "";
-          aThis.innerHTML = "Hide the getting started again.";
+          aThis.innerText = "Hide the getting started again.";
         } else {
           gettingStartedDiv.className = "hidden";
-          aThis.innerHTML = "Show the getting started!";
+          aThis.innerText = "Show the getting started!";
         }
       }
     </script>
