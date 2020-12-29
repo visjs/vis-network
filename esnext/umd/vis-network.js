@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-28T22:17:37.279Z
+ * @date    2020-12-29T19:12:32.318Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1940,6 +1940,2165 @@
     }
     return false;
   }
+
+  const htmlColors = {
+    black: "#000000",
+    navy: "#000080",
+    darkblue: "#00008B",
+    mediumblue: "#0000CD",
+    blue: "#0000FF",
+    darkgreen: "#006400",
+    green: "#008000",
+    teal: "#008080",
+    darkcyan: "#008B8B",
+    deepskyblue: "#00BFFF",
+    darkturquoise: "#00CED1",
+    mediumspringgreen: "#00FA9A",
+    lime: "#00FF00",
+    springgreen: "#00FF7F",
+    aqua: "#00FFFF",
+    cyan: "#00FFFF",
+    midnightblue: "#191970",
+    dodgerblue: "#1E90FF",
+    lightseagreen: "#20B2AA",
+    forestgreen: "#228B22",
+    seagreen: "#2E8B57",
+    darkslategray: "#2F4F4F",
+    limegreen: "#32CD32",
+    mediumseagreen: "#3CB371",
+    turquoise: "#40E0D0",
+    royalblue: "#4169E1",
+    steelblue: "#4682B4",
+    darkslateblue: "#483D8B",
+    mediumturquoise: "#48D1CC",
+    indigo: "#4B0082",
+    darkolivegreen: "#556B2F",
+    cadetblue: "#5F9EA0",
+    cornflowerblue: "#6495ED",
+    mediumaquamarine: "#66CDAA",
+    dimgray: "#696969",
+    slateblue: "#6A5ACD",
+    olivedrab: "#6B8E23",
+    slategray: "#708090",
+    lightslategray: "#778899",
+    mediumslateblue: "#7B68EE",
+    lawngreen: "#7CFC00",
+    chartreuse: "#7FFF00",
+    aquamarine: "#7FFFD4",
+    maroon: "#800000",
+    purple: "#800080",
+    olive: "#808000",
+    gray: "#808080",
+    skyblue: "#87CEEB",
+    lightskyblue: "#87CEFA",
+    blueviolet: "#8A2BE2",
+    darkred: "#8B0000",
+    darkmagenta: "#8B008B",
+    saddlebrown: "#8B4513",
+    darkseagreen: "#8FBC8F",
+    lightgreen: "#90EE90",
+    mediumpurple: "#9370D8",
+    darkviolet: "#9400D3",
+    palegreen: "#98FB98",
+    darkorchid: "#9932CC",
+    yellowgreen: "#9ACD32",
+    sienna: "#A0522D",
+    brown: "#A52A2A",
+    darkgray: "#A9A9A9",
+    lightblue: "#ADD8E6",
+    greenyellow: "#ADFF2F",
+    paleturquoise: "#AFEEEE",
+    lightsteelblue: "#B0C4DE",
+    powderblue: "#B0E0E6",
+    firebrick: "#B22222",
+    darkgoldenrod: "#B8860B",
+    mediumorchid: "#BA55D3",
+    rosybrown: "#BC8F8F",
+    darkkhaki: "#BDB76B",
+    silver: "#C0C0C0",
+    mediumvioletred: "#C71585",
+    indianred: "#CD5C5C",
+    peru: "#CD853F",
+    chocolate: "#D2691E",
+    tan: "#D2B48C",
+    lightgrey: "#D3D3D3",
+    palevioletred: "#D87093",
+    thistle: "#D8BFD8",
+    orchid: "#DA70D6",
+    goldenrod: "#DAA520",
+    crimson: "#DC143C",
+    gainsboro: "#DCDCDC",
+    plum: "#DDA0DD",
+    burlywood: "#DEB887",
+    lightcyan: "#E0FFFF",
+    lavender: "#E6E6FA",
+    darksalmon: "#E9967A",
+    violet: "#EE82EE",
+    palegoldenrod: "#EEE8AA",
+    lightcoral: "#F08080",
+    khaki: "#F0E68C",
+    aliceblue: "#F0F8FF",
+    honeydew: "#F0FFF0",
+    azure: "#F0FFFF",
+    sandybrown: "#F4A460",
+    wheat: "#F5DEB3",
+    beige: "#F5F5DC",
+    whitesmoke: "#F5F5F5",
+    mintcream: "#F5FFFA",
+    ghostwhite: "#F8F8FF",
+    salmon: "#FA8072",
+    antiquewhite: "#FAEBD7",
+    linen: "#FAF0E6",
+    lightgoldenrodyellow: "#FAFAD2",
+    oldlace: "#FDF5E6",
+    red: "#FF0000",
+    fuchsia: "#FF00FF",
+    magenta: "#FF00FF",
+    deeppink: "#FF1493",
+    orangered: "#FF4500",
+    tomato: "#FF6347",
+    hotpink: "#FF69B4",
+    coral: "#FF7F50",
+    darkorange: "#FF8C00",
+    lightsalmon: "#FFA07A",
+    orange: "#FFA500",
+    lightpink: "#FFB6C1",
+    pink: "#FFC0CB",
+    gold: "#FFD700",
+    peachpuff: "#FFDAB9",
+    navajowhite: "#FFDEAD",
+    moccasin: "#FFE4B5",
+    bisque: "#FFE4C4",
+    mistyrose: "#FFE4E1",
+    blanchedalmond: "#FFEBCD",
+    papayawhip: "#FFEFD5",
+    lavenderblush: "#FFF0F5",
+    seashell: "#FFF5EE",
+    cornsilk: "#FFF8DC",
+    lemonchiffon: "#FFFACD",
+    floralwhite: "#FFFAF0",
+    snow: "#FFFAFA",
+    yellow: "#FFFF00",
+    lightyellow: "#FFFFE0",
+    ivory: "#FFFFF0",
+    white: "#FFFFFF",
+  };
+
+  /**
+   * @param {number} [pixelRatio=1]
+   */
+  class ColorPicker {
+    /**
+     * @param {number} [pixelRatio=1]
+     */
+    constructor(pixelRatio = 1) {
+      this.pixelRatio = pixelRatio;
+      this.generated = false;
+      this.centerCoordinates = { x: 289 / 2, y: 289 / 2 };
+      this.r = 289 * 0.49;
+      this.color = { r: 255, g: 255, b: 255, a: 1.0 };
+      this.hueCircle = undefined;
+      this.initialColor = { r: 255, g: 255, b: 255, a: 1.0 };
+      this.previousColor = undefined;
+      this.applied = false;
+
+      // bound by
+      this.updateCallback = () => {};
+      this.closeCallback = () => {};
+
+      // create all DOM elements
+      this._create();
+    }
+
+    /**
+     * this inserts the colorPicker into a div from the DOM
+     *
+     * @param {Element} container
+     */
+    insertTo(container) {
+      if (this.hammer !== undefined) {
+        this.hammer.destroy();
+        this.hammer = undefined;
+      }
+      this.container = container;
+      this.container.appendChild(this.frame);
+      this._bindHammer();
+
+      this._setSize();
+    }
+
+    /**
+     * the callback is executed on apply and save. Bind it to the application
+     *
+     * @param {Function} callback
+     */
+    setUpdateCallback(callback) {
+      if (typeof callback === "function") {
+        this.updateCallback = callback;
+      } else {
+        throw new Error(
+          "Function attempted to set as colorPicker update callback is not a function."
+        );
+      }
+    }
+
+    /**
+     * the callback is executed on apply and save. Bind it to the application
+     *
+     * @param {Function} callback
+     */
+    setCloseCallback(callback) {
+      if (typeof callback === "function") {
+        this.closeCallback = callback;
+      } else {
+        throw new Error(
+          "Function attempted to set as colorPicker closing callback is not a function."
+        );
+      }
+    }
+
+    /**
+     *
+     * @param {string} color
+     * @returns {string}
+     * @private
+     */
+    _isColorString(color) {
+      if (typeof color === "string") {
+        return htmlColors[color];
+      }
+    }
+
+    /**
+     * Set the color of the colorPicker
+     * Supported formats:
+     * 'red'                   --> HTML color string
+     * '#ffffff'               --> hex string
+     * 'rgb(255,255,255)'      --> rgb string
+     * 'rgba(255,255,255,1.0)' --> rgba string
+     * {r:255,g:255,b:255}     --> rgb object
+     * {r:255,g:255,b:255,a:1.0} --> rgba object
+     *
+     * @param {string | object} color
+     * @param {boolean} [setInitial=true]
+     */
+    setColor(color, setInitial = true) {
+      if (color === "none") {
+        return;
+      }
+
+      let rgba;
+
+      // if a html color shorthand is used, convert to hex
+      const htmlColor = this._isColorString(color);
+      if (htmlColor !== undefined) {
+        color = htmlColor;
+      }
+
+      // check format
+      if (esnext.isString(color) === true) {
+        if (esnext.isValidRGB(color) === true) {
+          const rgbaArray = color
+            .substr(4)
+            .substr(0, color.length - 5)
+            .split(",");
+          rgba = { r: rgbaArray[0], g: rgbaArray[1], b: rgbaArray[2], a: 1.0 };
+        } else if (esnext.isValidRGBA(color) === true) {
+          const rgbaArray = color
+            .substr(5)
+            .substr(0, color.length - 6)
+            .split(",");
+          rgba = {
+            r: rgbaArray[0],
+            g: rgbaArray[1],
+            b: rgbaArray[2],
+            a: rgbaArray[3],
+          };
+        } else if (esnext.isValidHex(color) === true) {
+          const rgbObj = esnext.hexToRGB(color);
+          rgba = { r: rgbObj.r, g: rgbObj.g, b: rgbObj.b, a: 1.0 };
+        }
+      } else {
+        if (color instanceof Object) {
+          if (
+            color.r !== undefined &&
+            color.g !== undefined &&
+            color.b !== undefined
+          ) {
+            const alpha = color.a !== undefined ? color.a : "1.0";
+            rgba = { r: color.r, g: color.g, b: color.b, a: alpha };
+          }
+        }
+      }
+
+      // set color
+      if (rgba === undefined) {
+        throw new Error(
+          "Unknown color passed to the colorPicker. Supported are strings: rgb, hex, rgba. Object: rgb ({r:r,g:g,b:b,[a:a]}). Supplied: " +
+            JSON.stringify(color)
+        );
+      } else {
+        this._setColor(rgba, setInitial);
+      }
+    }
+
+    /**
+     * this shows the color picker.
+     * The hue circle is constructed once and stored.
+     */
+    show() {
+      if (this.closeCallback !== undefined) {
+        this.closeCallback();
+        this.closeCallback = undefined;
+      }
+
+      this.applied = false;
+      this.frame.style.display = "block";
+      this._generateHueCircle();
+    }
+
+    // ------------------------------------------ PRIVATE ----------------------------- //
+
+    /**
+     * Hide the picker. Is called by the cancel button.
+     * Optional boolean to store the previous color for easy access later on.
+     *
+     * @param {boolean} [storePrevious=true]
+     * @private
+     */
+    _hide(storePrevious = true) {
+      // store the previous color for next time;
+      if (storePrevious === true) {
+        this.previousColor = Object.assign({}, this.color);
+      }
+
+      if (this.applied === true) {
+        this.updateCallback(this.initialColor);
+      }
+
+      this.frame.style.display = "none";
+
+      // call the closing callback, restoring the onclick method.
+      // this is in a setTimeout because it will trigger the show again before the click is done.
+      setTimeout(() => {
+        if (this.closeCallback !== undefined) {
+          this.closeCallback();
+          this.closeCallback = undefined;
+        }
+      }, 0);
+    }
+
+    /**
+     * bound to the save button. Saves and hides.
+     *
+     * @private
+     */
+    _save() {
+      this.updateCallback(this.color);
+      this.applied = false;
+      this._hide();
+    }
+
+    /**
+     * Bound to apply button. Saves but does not close. Is undone by the cancel button.
+     *
+     * @private
+     */
+    _apply() {
+      this.applied = true;
+      this.updateCallback(this.color);
+      this._updatePicker(this.color);
+    }
+
+    /**
+     * load the color from the previous session.
+     *
+     * @private
+     */
+    _loadLast() {
+      if (this.previousColor !== undefined) {
+        this.setColor(this.previousColor, false);
+      } else {
+        alert("There is no last color to load...");
+      }
+    }
+
+    /**
+     * set the color, place the picker
+     *
+     * @param {object} rgba
+     * @param {boolean} [setInitial=true]
+     * @private
+     */
+    _setColor(rgba, setInitial = true) {
+      // store the initial color
+      if (setInitial === true) {
+        this.initialColor = Object.assign({}, rgba);
+      }
+
+      this.color = rgba;
+      const hsv = esnext.RGBToHSV(rgba.r, rgba.g, rgba.b);
+
+      const angleConvert = 2 * Math.PI;
+      const radius = this.r * hsv.s;
+      const x =
+        this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
+      const y =
+        this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
+
+      this.colorPickerSelector.style.left =
+        x - 0.5 * this.colorPickerSelector.clientWidth + "px";
+      this.colorPickerSelector.style.top =
+        y - 0.5 * this.colorPickerSelector.clientHeight + "px";
+
+      this._updatePicker(rgba);
+    }
+
+    /**
+     * bound to opacity control
+     *
+     * @param {number} value
+     * @private
+     */
+    _setOpacity(value) {
+      this.color.a = value / 100;
+      this._updatePicker(this.color);
+    }
+
+    /**
+     * bound to brightness control
+     *
+     * @param {number} value
+     * @private
+     */
+    _setBrightness(value) {
+      const hsv = esnext.RGBToHSV(this.color.r, this.color.g, this.color.b);
+      hsv.v = value / 100;
+      const rgba = esnext.HSVToRGB(hsv.h, hsv.s, hsv.v);
+      rgba["a"] = this.color.a;
+      this.color = rgba;
+      this._updatePicker();
+    }
+
+    /**
+     * update the color picker. A black circle overlays the hue circle to mimic the brightness decreasing.
+     *
+     * @param {object} rgba
+     * @private
+     */
+    _updatePicker(rgba = this.color) {
+      const hsv = esnext.RGBToHSV(rgba.r, rgba.g, rgba.b);
+      const ctx = this.colorPickerCanvas.getContext("2d");
+      if (this.pixelRation === undefined) {
+        this.pixelRatio =
+          (window.devicePixelRatio || 1) /
+          (ctx.webkitBackingStorePixelRatio ||
+            ctx.mozBackingStorePixelRatio ||
+            ctx.msBackingStorePixelRatio ||
+            ctx.oBackingStorePixelRatio ||
+            ctx.backingStorePixelRatio ||
+            1);
+      }
+      ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
+
+      // clear the canvas
+      const w = this.colorPickerCanvas.clientWidth;
+      const h = this.colorPickerCanvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.putImageData(this.hueCircle, 0, 0);
+      ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
+      ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
+      ctx.fill();
+
+      this.brightnessRange.value = 100 * hsv.v;
+      this.opacityRange.value = 100 * rgba.a;
+
+      this.initialColorDiv.style.backgroundColor =
+        "rgba(" +
+        this.initialColor.r +
+        "," +
+        this.initialColor.g +
+        "," +
+        this.initialColor.b +
+        "," +
+        this.initialColor.a +
+        ")";
+      this.newColorDiv.style.backgroundColor =
+        "rgba(" +
+        this.color.r +
+        "," +
+        this.color.g +
+        "," +
+        this.color.b +
+        "," +
+        this.color.a +
+        ")";
+    }
+
+    /**
+     * used by create to set the size of the canvas.
+     *
+     * @private
+     */
+    _setSize() {
+      this.colorPickerCanvas.style.width = "100%";
+      this.colorPickerCanvas.style.height = "100%";
+
+      this.colorPickerCanvas.width = 289 * this.pixelRatio;
+      this.colorPickerCanvas.height = 289 * this.pixelRatio;
+    }
+
+    /**
+     * create all dom elements
+     * TODO: cleanup, lots of similar dom elements
+     *
+     * @private
+     */
+    _create() {
+      this.frame = document.createElement("div");
+      this.frame.className = "vis-color-picker";
+
+      this.colorPickerDiv = document.createElement("div");
+      this.colorPickerSelector = document.createElement("div");
+      this.colorPickerSelector.className = "vis-selector";
+      this.colorPickerDiv.appendChild(this.colorPickerSelector);
+
+      this.colorPickerCanvas = document.createElement("canvas");
+      this.colorPickerDiv.appendChild(this.colorPickerCanvas);
+
+      if (!this.colorPickerCanvas.getContext) {
+        const noCanvas = document.createElement("DIV");
+        noCanvas.style.color = "red";
+        noCanvas.style.fontWeight = "bold";
+        noCanvas.style.padding = "10px";
+        noCanvas.innerText = "Error: your browser does not support HTML canvas";
+        this.colorPickerCanvas.appendChild(noCanvas);
+      } else {
+        const ctx = this.colorPickerCanvas.getContext("2d");
+        this.pixelRatio =
+          (window.devicePixelRatio || 1) /
+          (ctx.webkitBackingStorePixelRatio ||
+            ctx.mozBackingStorePixelRatio ||
+            ctx.msBackingStorePixelRatio ||
+            ctx.oBackingStorePixelRatio ||
+            ctx.backingStorePixelRatio ||
+            1);
+        this.colorPickerCanvas
+          .getContext("2d")
+          .setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
+      }
+
+      this.colorPickerDiv.className = "vis-color";
+
+      this.opacityDiv = document.createElement("div");
+      this.opacityDiv.className = "vis-opacity";
+
+      this.brightnessDiv = document.createElement("div");
+      this.brightnessDiv.className = "vis-brightness";
+
+      this.arrowDiv = document.createElement("div");
+      this.arrowDiv.className = "vis-arrow";
+
+      this.opacityRange = document.createElement("input");
+      try {
+        this.opacityRange.type = "range"; // Not supported on IE9
+        this.opacityRange.min = "0";
+        this.opacityRange.max = "100";
+      } catch (err) {
+        // TODO: Add some error handling.
+      }
+      this.opacityRange.value = "100";
+      this.opacityRange.className = "vis-range";
+
+      this.brightnessRange = document.createElement("input");
+      try {
+        this.brightnessRange.type = "range"; // Not supported on IE9
+        this.brightnessRange.min = "0";
+        this.brightnessRange.max = "100";
+      } catch (err) {
+        // TODO: Add some error handling.
+      }
+      this.brightnessRange.value = "100";
+      this.brightnessRange.className = "vis-range";
+
+      this.opacityDiv.appendChild(this.opacityRange);
+      this.brightnessDiv.appendChild(this.brightnessRange);
+
+      const me = this;
+      this.opacityRange.onchange = function () {
+        me._setOpacity(this.value);
+      };
+      this.opacityRange.oninput = function () {
+        me._setOpacity(this.value);
+      };
+      this.brightnessRange.onchange = function () {
+        me._setBrightness(this.value);
+      };
+      this.brightnessRange.oninput = function () {
+        me._setBrightness(this.value);
+      };
+
+      this.brightnessLabel = document.createElement("div");
+      this.brightnessLabel.className = "vis-label vis-brightness";
+      this.brightnessLabel.innerText = "brightness:";
+
+      this.opacityLabel = document.createElement("div");
+      this.opacityLabel.className = "vis-label vis-opacity";
+      this.opacityLabel.innerText = "opacity:";
+
+      this.newColorDiv = document.createElement("div");
+      this.newColorDiv.className = "vis-new-color";
+      this.newColorDiv.innerText = "new";
+
+      this.initialColorDiv = document.createElement("div");
+      this.initialColorDiv.className = "vis-initial-color";
+      this.initialColorDiv.innerText = "initial";
+
+      this.cancelButton = document.createElement("div");
+      this.cancelButton.className = "vis-button vis-cancel";
+      this.cancelButton.innerText = "cancel";
+      this.cancelButton.onclick = this._hide.bind(this, false);
+
+      this.applyButton = document.createElement("div");
+      this.applyButton.className = "vis-button vis-apply";
+      this.applyButton.innerText = "apply";
+      this.applyButton.onclick = this._apply.bind(this);
+
+      this.saveButton = document.createElement("div");
+      this.saveButton.className = "vis-button vis-save";
+      this.saveButton.innerText = "save";
+      this.saveButton.onclick = this._save.bind(this);
+
+      this.loadButton = document.createElement("div");
+      this.loadButton.className = "vis-button vis-load";
+      this.loadButton.innerText = "load last";
+      this.loadButton.onclick = this._loadLast.bind(this);
+
+      this.frame.appendChild(this.colorPickerDiv);
+      this.frame.appendChild(this.arrowDiv);
+      this.frame.appendChild(this.brightnessLabel);
+      this.frame.appendChild(this.brightnessDiv);
+      this.frame.appendChild(this.opacityLabel);
+      this.frame.appendChild(this.opacityDiv);
+      this.frame.appendChild(this.newColorDiv);
+      this.frame.appendChild(this.initialColorDiv);
+
+      this.frame.appendChild(this.cancelButton);
+      this.frame.appendChild(this.applyButton);
+      this.frame.appendChild(this.saveButton);
+      this.frame.appendChild(this.loadButton);
+    }
+
+    /**
+     * bind hammer to the color picker
+     *
+     * @private
+     */
+    _bindHammer() {
+      this.drag = {};
+      this.pinch = {};
+      this.hammer = new Hammer(this.colorPickerCanvas);
+      this.hammer.get("pinch").set({ enable: true });
+
+      this.hammer.on("hammer.input", (event) => {
+        if (event.isFirst) {
+          this._moveSelector(event);
+        }
+      });
+      this.hammer.on("tap", (event) => {
+        this._moveSelector(event);
+      });
+      this.hammer.on("panstart", (event) => {
+        this._moveSelector(event);
+      });
+      this.hammer.on("panmove", (event) => {
+        this._moveSelector(event);
+      });
+      this.hammer.on("panend", (event) => {
+        this._moveSelector(event);
+      });
+    }
+
+    /**
+     * generate the hue circle. This is relatively heavy (200ms) and is done only once on the first time it is shown.
+     *
+     * @private
+     */
+    _generateHueCircle() {
+      if (this.generated === false) {
+        const ctx = this.colorPickerCanvas.getContext("2d");
+        if (this.pixelRation === undefined) {
+          this.pixelRatio =
+            (window.devicePixelRatio || 1) /
+            (ctx.webkitBackingStorePixelRatio ||
+              ctx.mozBackingStorePixelRatio ||
+              ctx.msBackingStorePixelRatio ||
+              ctx.oBackingStorePixelRatio ||
+              ctx.backingStorePixelRatio ||
+              1);
+        }
+        ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
+
+        // clear the canvas
+        const w = this.colorPickerCanvas.clientWidth;
+        const h = this.colorPickerCanvas.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+
+        // draw hue circle
+        let x, y, hue, sat;
+        this.centerCoordinates = { x: w * 0.5, y: h * 0.5 };
+        this.r = 0.49 * w;
+        const angleConvert = (2 * Math.PI) / 360;
+        const hfac = 1 / 360;
+        const sfac = 1 / this.r;
+        let rgb;
+        for (hue = 0; hue < 360; hue++) {
+          for (sat = 0; sat < this.r; sat++) {
+            x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
+            y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
+            rgb = esnext.HSVToRGB(hue * hfac, sat * sfac, 1);
+            ctx.fillStyle = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+            ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
+          }
+        }
+        ctx.strokeStyle = "rgba(0,0,0,1)";
+        ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
+        ctx.stroke();
+
+        this.hueCircle = ctx.getImageData(0, 0, w, h);
+      }
+      this.generated = true;
+    }
+
+    /**
+     * move the selector. This is called by hammer functions.
+     *
+     * @param {Event}  event   The event
+     * @private
+     */
+    _moveSelector(event) {
+      const rect = this.colorPickerDiv.getBoundingClientRect();
+      const left = event.center.x - rect.left;
+      const top = event.center.y - rect.top;
+
+      const centerY = 0.5 * this.colorPickerDiv.clientHeight;
+      const centerX = 0.5 * this.colorPickerDiv.clientWidth;
+
+      const x = left - centerX;
+      const y = top - centerY;
+
+      const angle = Math.atan2(x, y);
+      const radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
+
+      const newTop = Math.cos(angle) * radius + centerY;
+      const newLeft = Math.sin(angle) * radius + centerX;
+
+      this.colorPickerSelector.style.top =
+        newTop - 0.5 * this.colorPickerSelector.clientHeight + "px";
+      this.colorPickerSelector.style.left =
+        newLeft - 0.5 * this.colorPickerSelector.clientWidth + "px";
+
+      // set color
+      let h = angle / (2 * Math.PI);
+      h = h < 0 ? h + 1 : h;
+      const s = radius / this.r;
+      const hsv = esnext.RGBToHSV(this.color.r, this.color.g, this.color.b);
+      hsv.h = h;
+      hsv.s = s;
+      const rgba = esnext.HSVToRGB(hsv.h, hsv.s, hsv.v);
+      rgba["a"] = this.color.a;
+      this.color = rgba;
+
+      // update previews
+      this.initialColorDiv.style.backgroundColor =
+        "rgba(" +
+        this.initialColor.r +
+        "," +
+        this.initialColor.g +
+        "," +
+        this.initialColor.b +
+        "," +
+        this.initialColor.a +
+        ")";
+      this.newColorDiv.style.backgroundColor =
+        "rgba(" +
+        this.color.r +
+        "," +
+        this.color.g +
+        "," +
+        this.color.b +
+        "," +
+        this.color.a +
+        ")";
+    }
+  }
+
+  /**
+   * Wrap given text (last argument) in HTML elements (all preceding arguments).
+   *
+   * @param {...any} rest - List of tag names followed by inner text.
+   *
+   * @returns An element or a text node.
+   */
+  function wrapInTag(...rest) {
+    if (rest.length < 1) {
+      throw new TypeError("Invalid arguments.");
+    } else if (rest.length === 1) {
+      return document.createTextNode(rest[0]);
+    } else {
+      const element = document.createElement(rest[0]);
+      element.appendChild(wrapInTag(rest.slice(1)));
+      return element;
+    }
+  }
+
+  /**
+   * The way this works is for all properties of this.possible options, you can supply the property name in any form to list the options.
+   * Boolean options are recognised as Boolean
+   * Number options should be written as array: [default value, min value, max value, stepsize]
+   * Colors should be written as array: ['color', '#ffffff']
+   * Strings with should be written as array: [option1, option2, option3, ..]
+   *
+   * The options are matched with their counterparts in each of the modules and the values used in the configuration are
+   */
+  class Configurator {
+    /**
+     * @param {object} parentModule        | the location where parentModule.setOptions() can be called
+     * @param {object} defaultContainer    | the default container of the module
+     * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
+     * @param {number} pixelRatio          | canvas pixel ratio
+     */
+    constructor(
+      parentModule,
+      defaultContainer,
+      configureOptions,
+      pixelRatio = 1
+    ) {
+      this.parent = parentModule;
+      this.changedOptions = [];
+      this.container = defaultContainer;
+      this.allowCreation = false;
+
+      this.options = {};
+      this.initialized = false;
+      this.popupCounter = 0;
+      this.defaultOptions = {
+        enabled: false,
+        filter: true,
+        container: undefined,
+        showButton: true,
+      };
+      Object.assign(this.options, this.defaultOptions);
+
+      this.configureOptions = configureOptions;
+      this.moduleOptions = {};
+      this.domElements = [];
+      this.popupDiv = {};
+      this.popupLimit = 5;
+      this.popupHistory = {};
+      this.colorPicker = new ColorPicker(pixelRatio);
+      this.wrapper = undefined;
+    }
+
+    /**
+     * refresh all options.
+     * Because all modules parse their options by themselves, we just use their options. We copy them here.
+     *
+     * @param {object} options
+     */
+    setOptions(options) {
+      if (options !== undefined) {
+        // reset the popup history because the indices may have been changed.
+        this.popupHistory = {};
+        this._removePopup();
+
+        let enabled = true;
+        if (typeof options === "string") {
+          this.options.filter = options;
+        } else if (Array.isArray(options)) {
+          this.options.filter = options.join();
+        } else if (typeof options === "object") {
+          if (options == null) {
+            throw new TypeError("options cannot be null");
+          }
+          if (options.container !== undefined) {
+            this.options.container = options.container;
+          }
+          if (options.filter !== undefined) {
+            this.options.filter = options.filter;
+          }
+          if (options.showButton !== undefined) {
+            this.options.showButton = options.showButton;
+          }
+          if (options.enabled !== undefined) {
+            enabled = options.enabled;
+          }
+        } else if (typeof options === "boolean") {
+          this.options.filter = true;
+          enabled = options;
+        } else if (typeof options === "function") {
+          this.options.filter = options;
+          enabled = true;
+        }
+        if (this.options.filter === false) {
+          enabled = false;
+        }
+
+        this.options.enabled = enabled;
+      }
+      this._clean();
+    }
+
+    /**
+     *
+     * @param {object} moduleOptions
+     */
+    setModuleOptions(moduleOptions) {
+      this.moduleOptions = moduleOptions;
+      if (this.options.enabled === true) {
+        this._clean();
+        if (this.options.container !== undefined) {
+          this.container = this.options.container;
+        }
+        this._create();
+      }
+    }
+
+    /**
+     * Create all DOM elements
+     *
+     * @private
+     */
+    _create() {
+      this._clean();
+      this.changedOptions = [];
+
+      const filter = this.options.filter;
+      let counter = 0;
+      let show = false;
+      for (const option in this.configureOptions) {
+        if (Object.prototype.hasOwnProperty.call(this.configureOptions, option)) {
+          this.allowCreation = false;
+          show = false;
+          if (typeof filter === "function") {
+            show = filter(option, []);
+            show =
+              show ||
+              this._handleObject(this.configureOptions[option], [option], true);
+          } else if (filter === true || filter.indexOf(option) !== -1) {
+            show = true;
+          }
+
+          if (show !== false) {
+            this.allowCreation = true;
+
+            // linebreak between categories
+            if (counter > 0) {
+              this._makeItem([]);
+            }
+            // a header for the category
+            this._makeHeader(option);
+
+            // get the sub options
+            this._handleObject(this.configureOptions[option], [option]);
+          }
+          counter++;
+        }
+      }
+      this._makeButton();
+      this._push();
+      //~ this.colorPicker.insertTo(this.container);
+    }
+
+    /**
+     * draw all DOM elements on the screen
+     *
+     * @private
+     */
+    _push() {
+      this.wrapper = document.createElement("div");
+      this.wrapper.className = "vis-configuration-wrapper";
+      this.container.appendChild(this.wrapper);
+      for (let i = 0; i < this.domElements.length; i++) {
+        this.wrapper.appendChild(this.domElements[i]);
+      }
+
+      this._showPopupIfNeeded();
+    }
+
+    /**
+     * delete all DOM elements
+     *
+     * @private
+     */
+    _clean() {
+      for (let i = 0; i < this.domElements.length; i++) {
+        this.wrapper.removeChild(this.domElements[i]);
+      }
+
+      if (this.wrapper !== undefined) {
+        this.container.removeChild(this.wrapper);
+        this.wrapper = undefined;
+      }
+      this.domElements = [];
+
+      this._removePopup();
+    }
+
+    /**
+     * get the value from the actualOptions if it exists
+     *
+     * @param {Array} path    | where to look for the actual option
+     * @returns {*}
+     * @private
+     */
+    _getValue(path) {
+      let base = this.moduleOptions;
+      for (let i = 0; i < path.length; i++) {
+        if (base[path[i]] !== undefined) {
+          base = base[path[i]];
+        } else {
+          base = undefined;
+          break;
+        }
+      }
+      return base;
+    }
+
+    /**
+     * all option elements are wrapped in an item
+     *
+     * @param {Array} path    | where to look for the actual option
+     * @param {Array.<Element>} domElements
+     * @returns {number}
+     * @private
+     */
+    _makeItem(path, ...domElements) {
+      if (this.allowCreation === true) {
+        const item = document.createElement("div");
+        item.className =
+          "vis-configuration vis-config-item vis-config-s" + path.length;
+        domElements.forEach((element) => {
+          item.appendChild(element);
+        });
+        this.domElements.push(item);
+        return this.domElements.length;
+      }
+      return 0;
+    }
+
+    /**
+     * header for major subjects
+     *
+     * @param {string} name
+     * @private
+     */
+    _makeHeader(name) {
+      const div = document.createElement("div");
+      div.className = "vis-configuration vis-config-header";
+      div.innerText = name;
+      this._makeItem([], div);
+    }
+
+    /**
+     * make a label, if it is an object label, it gets different styling.
+     *
+     * @param {string} name
+     * @param {Array} path    | where to look for the actual option
+     * @param {string} objectLabel
+     * @returns {HTMLElement}
+     * @private
+     */
+    _makeLabel(name, path, objectLabel = false) {
+      const div = document.createElement("div");
+      div.className =
+        "vis-configuration vis-config-label vis-config-s" + path.length;
+      if (objectLabel === true) {
+        while (div.firstChild) {
+          div.removeChild(div.firstChild);
+        }
+        div.appendChild(wrapInTag("i", "b", name));
+      } else {
+        div.innerText = name + ":";
+      }
+      return div;
+    }
+
+    /**
+     * make a dropdown list for multiple possible string optoins
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _makeDropdown(arr, value, path) {
+      const select = document.createElement("select");
+      select.className = "vis-configuration vis-config-select";
+      let selectedValue = 0;
+      if (value !== undefined) {
+        if (arr.indexOf(value) !== -1) {
+          selectedValue = arr.indexOf(value);
+        }
+      }
+
+      for (let i = 0; i < arr.length; i++) {
+        const option = document.createElement("option");
+        option.value = arr[i];
+        if (i === selectedValue) {
+          option.selected = "selected";
+        }
+        option.innerText = arr[i];
+        select.appendChild(option);
+      }
+
+      const me = this;
+      select.onchange = function () {
+        me._update(this.value, path);
+      };
+
+      const label = this._makeLabel(path[path.length - 1], path);
+      this._makeItem(path, label, select);
+    }
+
+    /**
+     * make a range object for numeric options
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _makeRange(arr, value, path) {
+      const defaultValue = arr[0];
+      const min = arr[1];
+      const max = arr[2];
+      const step = arr[3];
+      const range = document.createElement("input");
+      range.className = "vis-configuration vis-config-range";
+      try {
+        range.type = "range"; // not supported on IE9
+        range.min = min;
+        range.max = max;
+      } catch (err) {
+        // TODO: Add some error handling.
+      }
+      range.step = step;
+
+      // set up the popup settings in case they are needed.
+      let popupString = "";
+      let popupValue = 0;
+
+      if (value !== undefined) {
+        const factor = 1.2;
+        if (value < 0 && value * factor < min) {
+          range.min = Math.ceil(value * factor);
+          popupValue = range.min;
+          popupString = "range increased";
+        } else if (value / factor < min) {
+          range.min = Math.ceil(value / factor);
+          popupValue = range.min;
+          popupString = "range increased";
+        }
+        if (value * factor > max && max !== 1) {
+          range.max = Math.ceil(value * factor);
+          popupValue = range.max;
+          popupString = "range increased";
+        }
+        range.value = value;
+      } else {
+        range.value = defaultValue;
+      }
+
+      const input = document.createElement("input");
+      input.className = "vis-configuration vis-config-rangeinput";
+      input.value = range.value;
+
+      const me = this;
+      range.onchange = function () {
+        input.value = this.value;
+        me._update(Number(this.value), path);
+      };
+      range.oninput = function () {
+        input.value = this.value;
+      };
+
+      const label = this._makeLabel(path[path.length - 1], path);
+      const itemIndex = this._makeItem(path, label, range, input);
+
+      // if a popup is needed AND it has not been shown for this value, show it.
+      if (popupString !== "" && this.popupHistory[itemIndex] !== popupValue) {
+        this.popupHistory[itemIndex] = popupValue;
+        this._setupPopup(popupString, itemIndex);
+      }
+    }
+
+    /**
+     * make a button object
+     *
+     * @private
+     */
+    _makeButton() {
+      if (this.options.showButton === true) {
+        const generateButton = document.createElement("div");
+        generateButton.className = "vis-configuration vis-config-button";
+        generateButton.innerText = "generate options";
+        generateButton.onclick = () => {
+          this._printOptions();
+        };
+        generateButton.onmouseover = () => {
+          generateButton.className = "vis-configuration vis-config-button hover";
+        };
+        generateButton.onmouseout = () => {
+          generateButton.className = "vis-configuration vis-config-button";
+        };
+
+        this.optionsContainer = document.createElement("div");
+        this.optionsContainer.className =
+          "vis-configuration vis-config-option-container";
+
+        this.domElements.push(this.optionsContainer);
+        this.domElements.push(generateButton);
+      }
+    }
+
+    /**
+     * prepare the popup
+     *
+     * @param {string} string
+     * @param {number} index
+     * @private
+     */
+    _setupPopup(string, index) {
+      if (
+        this.initialized === true &&
+        this.allowCreation === true &&
+        this.popupCounter < this.popupLimit
+      ) {
+        const div = document.createElement("div");
+        div.id = "vis-configuration-popup";
+        div.className = "vis-configuration-popup";
+        div.innerText = string;
+        div.onclick = () => {
+          this._removePopup();
+        };
+        this.popupCounter += 1;
+        this.popupDiv = { html: div, index: index };
+      }
+    }
+
+    /**
+     * remove the popup from the dom
+     *
+     * @private
+     */
+    _removePopup() {
+      if (this.popupDiv.html !== undefined) {
+        this.popupDiv.html.parentNode.removeChild(this.popupDiv.html);
+        clearTimeout(this.popupDiv.hideTimeout);
+        clearTimeout(this.popupDiv.deleteTimeout);
+        this.popupDiv = {};
+      }
+    }
+
+    /**
+     * Show the popup if it is needed.
+     *
+     * @private
+     */
+    _showPopupIfNeeded() {
+      if (this.popupDiv.html !== undefined) {
+        const correspondingElement = this.domElements[this.popupDiv.index];
+        const rect = correspondingElement.getBoundingClientRect();
+        this.popupDiv.html.style.left = rect.left + "px";
+        this.popupDiv.html.style.top = rect.top - 30 + "px"; // 30 is the height;
+        document.body.appendChild(this.popupDiv.html);
+        this.popupDiv.hideTimeout = setTimeout(() => {
+          this.popupDiv.html.style.opacity = 0;
+        }, 1500);
+        this.popupDiv.deleteTimeout = setTimeout(() => {
+          this._removePopup();
+        }, 1800);
+      }
+    }
+
+    /**
+     * make a checkbox for boolean options.
+     *
+     * @param {number} defaultValue
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _makeCheckbox(defaultValue, value, path) {
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "vis-configuration vis-config-checkbox";
+      checkbox.checked = defaultValue;
+      if (value !== undefined) {
+        checkbox.checked = value;
+        if (value !== defaultValue) {
+          if (typeof defaultValue === "object") {
+            if (value !== defaultValue.enabled) {
+              this.changedOptions.push({ path: path, value: value });
+            }
+          } else {
+            this.changedOptions.push({ path: path, value: value });
+          }
+        }
+      }
+
+      const me = this;
+      checkbox.onchange = function () {
+        me._update(this.checked, path);
+      };
+
+      const label = this._makeLabel(path[path.length - 1], path);
+      this._makeItem(path, label, checkbox);
+    }
+
+    /**
+     * make a text input field for string options.
+     *
+     * @param {number} defaultValue
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _makeTextInput(defaultValue, value, path) {
+      const checkbox = document.createElement("input");
+      checkbox.type = "text";
+      checkbox.className = "vis-configuration vis-config-text";
+      checkbox.value = value;
+      if (value !== defaultValue) {
+        this.changedOptions.push({ path: path, value: value });
+      }
+
+      const me = this;
+      checkbox.onchange = function () {
+        me._update(this.value, path);
+      };
+
+      const label = this._makeLabel(path[path.length - 1], path);
+      this._makeItem(path, label, checkbox);
+    }
+
+    /**
+     * make a color field with a color picker for color fields
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _makeColorField(arr, value, path) {
+      const defaultColor = arr[1];
+      const div = document.createElement("div");
+      value = value === undefined ? defaultColor : value;
+
+      if (value !== "none") {
+        div.className = "vis-configuration vis-config-colorBlock";
+        div.style.backgroundColor = value;
+      } else {
+        div.className = "vis-configuration vis-config-colorBlock none";
+      }
+
+      value = value === undefined ? defaultColor : value;
+      div.onclick = () => {
+        this._showColorPicker(value, div, path);
+      };
+
+      const label = this._makeLabel(path[path.length - 1], path);
+      this._makeItem(path, label, div);
+    }
+
+    /**
+     * used by the color buttons to call the color picker.
+     *
+     * @param {number} value
+     * @param {HTMLElement} div
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _showColorPicker(value, div, path) {
+      // clear the callback from this div
+      div.onclick = function () {};
+
+      this.colorPicker.insertTo(div);
+      this.colorPicker.show();
+
+      this.colorPicker.setColor(value);
+      this.colorPicker.setUpdateCallback((color) => {
+        const colorString =
+          "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
+        div.style.backgroundColor = colorString;
+        this._update(colorString, path);
+      });
+
+      // on close of the colorpicker, restore the callback.
+      this.colorPicker.setCloseCallback(() => {
+        div.onclick = () => {
+          this._showColorPicker(value, div, path);
+        };
+      });
+    }
+
+    /**
+     * parse an object and draw the correct items
+     *
+     * @param {object} obj
+     * @param {Array} [path=[]]    | where to look for the actual option
+     * @param {boolean} [checkOnly=false]
+     * @returns {boolean}
+     * @private
+     */
+    _handleObject(obj, path = [], checkOnly = false) {
+      let show = false;
+      const filter = this.options.filter;
+      let visibleInSet = false;
+      for (const subObj in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, subObj)) {
+          show = true;
+          const item = obj[subObj];
+          const newPath = esnext.copyAndExtendArray(path, subObj);
+          if (typeof filter === "function") {
+            show = filter(subObj, path);
+
+            // if needed we must go deeper into the object.
+            if (show === false) {
+              if (
+                !Array.isArray(item) &&
+                typeof item !== "string" &&
+                typeof item !== "boolean" &&
+                item instanceof Object
+              ) {
+                this.allowCreation = false;
+                show = this._handleObject(item, newPath, true);
+                this.allowCreation = checkOnly === false;
+              }
+            }
+          }
+
+          if (show !== false) {
+            visibleInSet = true;
+            const value = this._getValue(newPath);
+
+            if (Array.isArray(item)) {
+              this._handleArray(item, value, newPath);
+            } else if (typeof item === "string") {
+              this._makeTextInput(item, value, newPath);
+            } else if (typeof item === "boolean") {
+              this._makeCheckbox(item, value, newPath);
+            } else if (item instanceof Object) {
+              // collapse the physics options that are not enabled
+              let draw = true;
+              if (path.indexOf("physics") !== -1) {
+                if (
+                  this.moduleOptions.physics.solver !== subObj &&
+                  subObj !== "wind"
+                ) {
+                  draw = false;
+                }
+              }
+
+              if (draw === true) {
+                // initially collapse options with an disabled enabled option.
+                if (item.enabled !== undefined) {
+                  const enabledPath = esnext.copyAndExtendArray(newPath, "enabled");
+                  const enabledValue = this._getValue(enabledPath);
+                  if (enabledValue === true) {
+                    const label = this._makeLabel(subObj, newPath, true);
+                    this._makeItem(newPath, label);
+                    visibleInSet =
+                      this._handleObject(item, newPath) || visibleInSet;
+                  } else {
+                    this._makeCheckbox(item, enabledValue, newPath);
+                  }
+                } else {
+                  const label = this._makeLabel(subObj, newPath, true);
+                  this._makeItem(newPath, label);
+                  visibleInSet =
+                    this._handleObject(item, newPath) || visibleInSet;
+                }
+              }
+            } else {
+              console.error("dont know how to handle", item, subObj, newPath);
+            }
+          }
+        }
+      }
+      return visibleInSet;
+    }
+
+    /**
+     * handle the array type of option
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _handleArray(arr, value, path) {
+      if (typeof arr[0] === "string" && arr[0] === "color") {
+        this._makeColorField(arr, value, path);
+        if (arr[1] !== value) {
+          this.changedOptions.push({ path: path, value: value });
+        }
+      } else if (typeof arr[0] === "string") {
+        this._makeDropdown(arr, value, path);
+        if (arr[0] !== value) {
+          this.changedOptions.push({ path: path, value: value });
+        }
+      } else if (typeof arr[0] === "number") {
+        this._makeRange(arr, value, path);
+        if (arr[0] !== value) {
+          this.changedOptions.push({ path: path, value: Number(value) });
+        }
+      }
+    }
+
+    /**
+     * called to update the network with the new settings.
+     *
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+    _update(value, path) {
+      const options = this._constructOptions(value, path);
+
+      if (
+        this.parent.body &&
+        this.parent.body.emitter &&
+        this.parent.body.emitter.emit
+      ) {
+        this.parent.body.emitter.emit("configChange", options);
+      }
+      this.initialized = true;
+      this.parent.setOptions(options);
+    }
+
+    /**
+     *
+     * @param {string | boolean} value
+     * @param {Array.<string>} path
+     * @param {{}} optionsObj
+     * @returns {{}}
+     * @private
+     */
+    _constructOptions(value, path, optionsObj = {}) {
+      let pointer = optionsObj;
+
+      // when dropdown boxes can be string or boolean, we typecast it into correct types
+      value = value === "true" ? true : value;
+      value = value === "false" ? false : value;
+
+      for (let i = 0; i < path.length; i++) {
+        if (path[i] !== "global") {
+          if (pointer[path[i]] === undefined) {
+            pointer[path[i]] = {};
+          }
+          if (i !== path.length - 1) {
+            pointer = pointer[path[i]];
+          } else {
+            pointer[path[i]] = value;
+          }
+        }
+      }
+      return optionsObj;
+    }
+
+    /**
+     * @private
+     */
+    _printOptions() {
+      const options = this.getOptions();
+
+      while (this.optionsContainer.firstChild) {
+        this.optionsContainer.removeChild(this.optionsContainer.firstChild);
+      }
+      this.optionsContainer.appendChild(
+        wrapInTag("pre", "const options = " + JSON.stringify(options, null, 2))
+      );
+    }
+
+    /**
+     *
+     * @returns {{}} options
+     */
+    getOptions() {
+      const options = {};
+      for (let i = 0; i < this.changedOptions.length; i++) {
+        this._constructOptions(
+          this.changedOptions[i].value,
+          this.changedOptions[i].path,
+          options
+        );
+      }
+      return options;
+    }
+  }
+
+  /**
+   * Popup is a class to create a popup window with some text
+   */
+  class Popup {
+    /**
+     * @param {Element} container       The container object.
+     * @param {string}  overflowMethod  How the popup should act to overflowing ('flip' or 'cap')
+     */
+    constructor(container, overflowMethod) {
+      this.container = container;
+      this.overflowMethod = overflowMethod || "cap";
+
+      this.x = 0;
+      this.y = 0;
+      this.padding = 5;
+      this.hidden = false;
+
+      // create the frame
+      this.frame = document.createElement("div");
+      this.frame.className = "vis-tooltip";
+      this.container.appendChild(this.frame);
+    }
+
+    /**
+     * @param {number} x   Horizontal position of the popup window
+     * @param {number} y   Vertical position of the popup window
+     */
+    setPosition(x, y) {
+      this.x = parseInt(x);
+      this.y = parseInt(y);
+    }
+
+    /**
+     * Set the content for the popup window. This can be HTML code or text.
+     *
+     * @param {string | Element} content
+     */
+    setText(content) {
+      if (content instanceof Element) {
+        while (this.frame.firstChild) {
+          this.frame.removeChild(this.frame.firstChild);
+        }
+        this.frame.appendChild(content);
+      } else {
+        this.frame.innerHTML = content; // string containing text or HTML
+      }
+    }
+
+    /**
+     * Show the popup window
+     *
+     * @param {boolean} [doShow]    Show or hide the window
+     */
+    show(doShow) {
+      if (doShow === undefined) {
+        doShow = true;
+      }
+
+      if (doShow === true) {
+        const height = this.frame.clientHeight;
+        const width = this.frame.clientWidth;
+        const maxHeight = this.frame.parentNode.clientHeight;
+        const maxWidth = this.frame.parentNode.clientWidth;
+
+        let left = 0,
+          top = 0;
+
+        if (this.overflowMethod == "flip") {
+          let isLeft = false,
+            isTop = true; // Where around the position it's located
+
+          if (this.y - height < this.padding) {
+            isTop = false;
+          }
+
+          if (this.x + width > maxWidth - this.padding) {
+            isLeft = true;
+          }
+
+          if (isLeft) {
+            left = this.x - width;
+          } else {
+            left = this.x;
+          }
+
+          if (isTop) {
+            top = this.y - height;
+          } else {
+            top = this.y;
+          }
+        } else {
+          top = this.y - height;
+          if (top + height + this.padding > maxHeight) {
+            top = maxHeight - height - this.padding;
+          }
+          if (top < this.padding) {
+            top = this.padding;
+          }
+
+          left = this.x;
+          if (left + width + this.padding > maxWidth) {
+            left = maxWidth - width - this.padding;
+          }
+          if (left < this.padding) {
+            left = this.padding;
+          }
+        }
+
+        this.frame.style.left = left + "px";
+        this.frame.style.top = top + "px";
+        this.frame.style.visibility = "visible";
+        this.hidden = false;
+      } else {
+        this.hide();
+      }
+    }
+
+    /**
+     * Hide the popup window
+     */
+    hide() {
+      this.hidden = true;
+      this.frame.style.left = "0";
+      this.frame.style.top = "0";
+      this.frame.style.visibility = "hidden";
+    }
+
+    /**
+     * Remove the popup window
+     */
+    destroy() {
+      this.frame.parentNode.removeChild(this.frame); // Remove element from DOM
+    }
+  }
+
+  let errorFound = false;
+  let allOptions;
+
+  const VALIDATOR_PRINT_STYLE = "background: #FFeeee; color: #dd0000";
+
+  /**
+   *  Used to validate options.
+   */
+  class Validator {
+    /**
+     * @ignore
+     */
+    constructor() {}
+
+    /**
+     * Main function to be called
+     *
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {object} subObject
+     * @returns {boolean}
+     * @static
+     */
+    static validate(options, referenceOptions, subObject) {
+      errorFound = false;
+      allOptions = referenceOptions;
+      let usedOptions = referenceOptions;
+      if (subObject !== undefined) {
+        usedOptions = referenceOptions[subObject];
+      }
+      Validator.parse(options, usedOptions, []);
+      return errorFound;
+    }
+
+    /**
+     * Will traverse an object recursively and check every value
+     *
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {Array} path    | where to look for the actual option
+     * @static
+     */
+    static parse(options, referenceOptions, path) {
+      for (const option in options) {
+        if (Object.prototype.hasOwnProperty.call(options, option)) {
+          Validator.check(option, options, referenceOptions, path);
+        }
+      }
+    }
+
+    /**
+     * Check every value. If the value is an object, call the parse function on that object.
+     *
+     * @param {string} option
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {Array} path    | where to look for the actual option
+     * @static
+     */
+    static check(option, options, referenceOptions, path) {
+      if (
+        referenceOptions[option] === undefined &&
+        referenceOptions.__any__ === undefined
+      ) {
+        Validator.getSuggestion(option, referenceOptions, path);
+        return;
+      }
+
+      let referenceOption = option;
+      let is_object = true;
+
+      if (
+        referenceOptions[option] === undefined &&
+        referenceOptions.__any__ !== undefined
+      ) {
+        // NOTE: This only triggers if the __any__ is in the top level of the options object.
+        //       THAT'S A REALLY BAD PLACE TO ALLOW IT!!!!
+        // TODO: Examine if needed, remove if possible
+
+        // __any__ is a wildcard. Any value is accepted and will be further analysed by reference.
+        referenceOption = "__any__";
+
+        // if the any-subgroup is not a predefined object in the configurator,
+        // we do not look deeper into the object.
+        is_object = Validator.getType(options[option]) === "object";
+      }
+
+      let refOptionObj = referenceOptions[referenceOption];
+      if (is_object && refOptionObj.__type__ !== undefined) {
+        refOptionObj = refOptionObj.__type__;
+      }
+
+      Validator.checkFields(
+        option,
+        options,
+        referenceOptions,
+        referenceOption,
+        refOptionObj,
+        path
+      );
+    }
+
+    /**
+     *
+     * @param {string}  option           | the option property
+     * @param {object}  options          | The supplied options object
+     * @param {object}  referenceOptions | The reference options containing all options and their allowed formats
+     * @param {string}  referenceOption  | Usually this is the same as option, except when handling an __any__ tag.
+     * @param {string}  refOptionObj     | This is the type object from the reference options
+     * @param {Array}   path             | where in the object is the option
+     * @static
+     */
+    static checkFields(
+      option,
+      options,
+      referenceOptions,
+      referenceOption,
+      refOptionObj,
+      path
+    ) {
+      const log = function (message) {
+        console.error(
+          "%c" + message + Validator.printLocation(path, option),
+          VALIDATOR_PRINT_STYLE
+        );
+      };
+
+      const optionType = Validator.getType(options[option]);
+      const refOptionType = refOptionObj[optionType];
+
+      if (refOptionType !== undefined) {
+        // if the type is correct, we check if it is supposed to be one of a few select values
+        if (
+          Validator.getType(refOptionType) === "array" &&
+          refOptionType.indexOf(options[option]) === -1
+        ) {
+          log(
+            'Invalid option detected in "' +
+              option +
+              '".' +
+              " Allowed values are:" +
+              Validator.print(refOptionType) +
+              ' not "' +
+              options[option] +
+              '". '
+          );
+          errorFound = true;
+        } else if (optionType === "object" && referenceOption !== "__any__") {
+          path = esnext.copyAndExtendArray(path, option);
+          Validator.parse(
+            options[option],
+            referenceOptions[referenceOption],
+            path
+          );
+        }
+      } else if (refOptionObj["any"] === undefined) {
+        // type of the field is incorrect and the field cannot be any
+        log(
+          'Invalid type received for "' +
+            option +
+            '". Expected: ' +
+            Validator.print(Object.keys(refOptionObj)) +
+            ". Received [" +
+            optionType +
+            '] "' +
+            options[option] +
+            '"'
+        );
+        errorFound = true;
+      }
+    }
+
+    /**
+     *
+     * @param {object | boolean | number | string | Array.<number> | Date | Node | Moment | undefined | null} object
+     * @returns {string}
+     * @static
+     */
+    static getType(object) {
+      const type = typeof object;
+
+      if (type === "object") {
+        if (object === null) {
+          return "null";
+        }
+        if (object instanceof Boolean) {
+          return "boolean";
+        }
+        if (object instanceof Number) {
+          return "number";
+        }
+        if (object instanceof String) {
+          return "string";
+        }
+        if (Array.isArray(object)) {
+          return "array";
+        }
+        if (object instanceof Date) {
+          return "date";
+        }
+        if (object.nodeType !== undefined) {
+          return "dom";
+        }
+        if (object._isAMomentObject === true) {
+          return "moment";
+        }
+        return "object";
+      } else if (type === "number") {
+        return "number";
+      } else if (type === "boolean") {
+        return "boolean";
+      } else if (type === "string") {
+        return "string";
+      } else if (type === undefined) {
+        return "undefined";
+      }
+      return type;
+    }
+
+    /**
+     * @param {string} option
+     * @param {object} options
+     * @param {Array.<string>} path
+     * @static
+     */
+    static getSuggestion(option, options, path) {
+      const localSearch = Validator.findInOptions(option, options, path, false);
+      const globalSearch = Validator.findInOptions(option, allOptions, [], true);
+
+      const localSearchThreshold = 8;
+      const globalSearchThreshold = 4;
+
+      let msg;
+      if (localSearch.indexMatch !== undefined) {
+        msg =
+          " in " +
+          Validator.printLocation(localSearch.path, option, "") +
+          'Perhaps it was incomplete? Did you mean: "' +
+          localSearch.indexMatch +
+          '"?\n\n';
+      } else if (
+        globalSearch.distance <= globalSearchThreshold &&
+        localSearch.distance > globalSearch.distance
+      ) {
+        msg =
+          " in " +
+          Validator.printLocation(localSearch.path, option, "") +
+          "Perhaps it was misplaced? Matching option found at: " +
+          Validator.printLocation(
+            globalSearch.path,
+            globalSearch.closestMatch,
+            ""
+          );
+      } else if (localSearch.distance <= localSearchThreshold) {
+        msg =
+          '. Did you mean "' +
+          localSearch.closestMatch +
+          '"?' +
+          Validator.printLocation(localSearch.path, option);
+      } else {
+        msg =
+          ". Did you mean one of these: " +
+          Validator.print(Object.keys(options)) +
+          Validator.printLocation(path, option);
+      }
+
+      console.error(
+        '%cUnknown option detected: "' + option + '"' + msg,
+        VALIDATOR_PRINT_STYLE
+      );
+      errorFound = true;
+    }
+
+    /**
+     * traverse the options in search for a match.
+     *
+     * @param {string} option
+     * @param {object} options
+     * @param {Array} path    | where to look for the actual option
+     * @param {boolean} [recursive=false]
+     * @returns {{closestMatch: string, path: Array, distance: number}}
+     * @static
+     */
+    static findInOptions(option, options, path, recursive = false) {
+      let min = 1e9;
+      let closestMatch = "";
+      let closestMatchPath = [];
+      const lowerCaseOption = option.toLowerCase();
+      let indexMatch = undefined;
+      for (const op in options) {
+        let distance;
+        if (options[op].__type__ !== undefined && recursive === true) {
+          const result = Validator.findInOptions(
+            option,
+            options[op],
+            esnext.copyAndExtendArray(path, op)
+          );
+          if (min > result.distance) {
+            closestMatch = result.closestMatch;
+            closestMatchPath = result.path;
+            min = result.distance;
+            indexMatch = result.indexMatch;
+          }
+        } else {
+          if (op.toLowerCase().indexOf(lowerCaseOption) !== -1) {
+            indexMatch = op;
+          }
+          distance = Validator.levenshteinDistance(option, op);
+          if (min > distance) {
+            closestMatch = op;
+            closestMatchPath = esnext.copyArray(path);
+            min = distance;
+          }
+        }
+      }
+      return {
+        closestMatch: closestMatch,
+        path: closestMatchPath,
+        distance: min,
+        indexMatch: indexMatch,
+      };
+    }
+
+    /**
+     * @param {Array.<string>} path
+     * @param {object} option
+     * @param {string} prefix
+     * @returns {string}
+     * @static
+     */
+    static printLocation(path, option, prefix = "Problem value found at: \n") {
+      let str = "\n\n" + prefix + "options = {\n";
+      for (let i = 0; i < path.length; i++) {
+        for (let j = 0; j < i + 1; j++) {
+          str += "  ";
+        }
+        str += path[i] + ": {\n";
+      }
+      for (let j = 0; j < path.length + 1; j++) {
+        str += "  ";
+      }
+      str += option + "\n";
+      for (let i = 0; i < path.length + 1; i++) {
+        for (let j = 0; j < path.length - i; j++) {
+          str += "  ";
+        }
+        str += "}\n";
+      }
+      return str + "\n\n";
+    }
+
+    /**
+     * @param {object} options
+     * @returns {string}
+     * @static
+     */
+    static print(options) {
+      return JSON.stringify(options)
+        .replace(/(")|(\[)|(\])|(,"__type__")/g, "")
+        .replace(/(,)/g, ", ");
+    }
+
+    /**
+     *  Compute the edit distance between the two given strings
+     * http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#JavaScript
+     *
+     * Copyright (c) 2011 Andrei Mackenzie
+     *
+     * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+     *
+     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+     *
+     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+     *
+     * @param {string} a
+     * @param {string} b
+     * @returns {Array.<Array.<number>>}}
+     * @static
+     */
+    static levenshteinDistance(a, b) {
+      if (a.length === 0) return b.length;
+      if (b.length === 0) return a.length;
+
+      const matrix = [];
+
+      // increment along the first column of each row
+      let i;
+      for (i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+      }
+
+      // increment each column in the first row
+      let j;
+      for (j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+      }
+
+      // Fill in the rest of the matrix
+      for (i = 1; i <= b.length; i++) {
+        for (j = 1; j <= a.length; j++) {
+          if (b.charAt(i - 1) == a.charAt(j - 1)) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = Math.min(
+              matrix[i - 1][j - 1] + 1, // substitution
+              Math.min(
+                matrix[i][j - 1] + 1, // insertion
+                matrix[i - 1][j] + 1
+              )
+            ); // deletion
+          }
+        }
+      }
+
+      return matrix[b.length][a.length];
+    }
+  }
+
+  const Activator$1 = Activator;
+  const Configurator$1 = Configurator;
+  const Hammer$1 = Hammer;
+  const Popup$1 = Popup;
+  const VALIDATOR_PRINT_STYLE$1 = VALIDATOR_PRINT_STYLE;
+  const Validator$1 = Validator;
 
   // English
   const en = {
@@ -6429,422 +8588,6 @@
     }
   }
 
-  let errorFound = false;
-  let allOptions;
-  const printStyle = "background: #FFeeee; color: #dd0000";
-  /**
-   *  Used to validate options.
-   */
-  class Validator {
-    /**
-     * @ignore
-     */
-    constructor() {}
-
-    /**
-     * Main function to be called
-     *
-     * @param {object} options
-     * @param {object} referenceOptions
-     * @param {object} subObject
-     * @returns {boolean}
-     * @static
-     */
-    static validate(options, referenceOptions, subObject) {
-      errorFound = false;
-      allOptions = referenceOptions;
-      let usedOptions = referenceOptions;
-      if (subObject !== undefined) {
-        usedOptions = referenceOptions[subObject];
-      }
-      Validator.parse(options, usedOptions, []);
-      return errorFound;
-    }
-
-    /**
-     * Will traverse an object recursively and check every value
-     *
-     * @param {object} options
-     * @param {object} referenceOptions
-     * @param {Array} path    | where to look for the actual option
-     * @static
-     */
-    static parse(options, referenceOptions, path) {
-      for (const option in options) {
-        if (Object.prototype.hasOwnProperty.call(options, option)) {
-          Validator.check(option, options, referenceOptions, path);
-        }
-      }
-    }
-
-    /**
-     * Check every value. If the value is an object, call the parse function on that object.
-     *
-     * @param {string} option
-     * @param {object} options
-     * @param {object} referenceOptions
-     * @param {Array} path    | where to look for the actual option
-     * @static
-     */
-    static check(option, options, referenceOptions, path) {
-      if (
-        referenceOptions[option] === undefined &&
-        referenceOptions.__any__ === undefined
-      ) {
-        Validator.getSuggestion(option, referenceOptions, path);
-        return;
-      }
-
-      let referenceOption = option;
-      let is_object = true;
-
-      if (
-        referenceOptions[option] === undefined &&
-        referenceOptions.__any__ !== undefined
-      ) {
-        // NOTE: This only triggers if the __any__ is in the top level of the options object.
-        //       THAT'S A REALLY BAD PLACE TO ALLOW IT!!!!
-        // TODO: Examine if needed, remove if possible
-
-        // __any__ is a wildcard. Any value is accepted and will be further analysed by reference.
-        referenceOption = "__any__";
-
-        // if the any-subgroup is not a predefined object in the configurator,
-        // we do not look deeper into the object.
-        is_object = Validator.getType(options[option]) === "object";
-      }
-
-      let refOptionObj = referenceOptions[referenceOption];
-      if (is_object && refOptionObj.__type__ !== undefined) {
-        refOptionObj = refOptionObj.__type__;
-      }
-
-      Validator.checkFields(
-        option,
-        options,
-        referenceOptions,
-        referenceOption,
-        refOptionObj,
-        path
-      );
-    }
-
-    /**
-     *
-     * @param {string}  option           | the option property
-     * @param {object}  options          | The supplied options object
-     * @param {object}  referenceOptions | The reference options containing all options and their allowed formats
-     * @param {string}  referenceOption  | Usually this is the same as option, except when handling an __any__ tag.
-     * @param {string}  refOptionObj     | This is the type object from the reference options
-     * @param {Array}   path             | where in the object is the option
-     * @static
-     */
-    static checkFields(
-      option,
-      options,
-      referenceOptions,
-      referenceOption,
-      refOptionObj,
-      path
-    ) {
-      const log = function (message) {
-        console.error(
-          "%c" + message + Validator.printLocation(path, option),
-          printStyle
-        );
-      };
-
-      const optionType = Validator.getType(options[option]);
-      const refOptionType = refOptionObj[optionType];
-
-      if (refOptionType !== undefined) {
-        // if the type is correct, we check if it is supposed to be one of a few select values
-        if (
-          Validator.getType(refOptionType) === "array" &&
-          refOptionType.indexOf(options[option]) === -1
-        ) {
-          log(
-            'Invalid option detected in "' +
-              option +
-              '".' +
-              " Allowed values are:" +
-              Validator.print(refOptionType) +
-              ' not "' +
-              options[option] +
-              '". '
-          );
-          errorFound = true;
-        } else if (optionType === "object" && referenceOption !== "__any__") {
-          path = esnext.copyAndExtendArray(path, option);
-          Validator.parse(
-            options[option],
-            referenceOptions[referenceOption],
-            path
-          );
-        }
-      } else if (refOptionObj["any"] === undefined) {
-        // type of the field is incorrect and the field cannot be any
-        log(
-          'Invalid type received for "' +
-            option +
-            '". Expected: ' +
-            Validator.print(Object.keys(refOptionObj)) +
-            ". Received [" +
-            optionType +
-            '] "' +
-            options[option] +
-            '"'
-        );
-        errorFound = true;
-      }
-    }
-
-    /**
-     *
-     * @param {object | boolean | number | string | Array.<number> | Date | Node | Moment | undefined | null} object
-     * @returns {string}
-     * @static
-     */
-    static getType(object) {
-      const type = typeof object;
-
-      if (type === "object") {
-        if (object === null) {
-          return "null";
-        }
-        if (object instanceof Boolean) {
-          return "boolean";
-        }
-        if (object instanceof Number) {
-          return "number";
-        }
-        if (object instanceof String) {
-          return "string";
-        }
-        if (Array.isArray(object)) {
-          return "array";
-        }
-        if (object instanceof Date) {
-          return "date";
-        }
-        if (object.nodeType !== undefined) {
-          return "dom";
-        }
-        if (object._isAMomentObject === true) {
-          return "moment";
-        }
-        return "object";
-      } else if (type === "number") {
-        return "number";
-      } else if (type === "boolean") {
-        return "boolean";
-      } else if (type === "string") {
-        return "string";
-      } else if (type === undefined) {
-        return "undefined";
-      }
-      return type;
-    }
-
-    /**
-     * @param {string} option
-     * @param {object} options
-     * @param {Array.<string>} path
-     * @static
-     */
-    static getSuggestion(option, options, path) {
-      const localSearch = Validator.findInOptions(option, options, path, false);
-      const globalSearch = Validator.findInOptions(option, allOptions, [], true);
-
-      const localSearchThreshold = 8;
-      const globalSearchThreshold = 4;
-
-      let msg;
-      if (localSearch.indexMatch !== undefined) {
-        msg =
-          " in " +
-          Validator.printLocation(localSearch.path, option, "") +
-          'Perhaps it was incomplete? Did you mean: "' +
-          localSearch.indexMatch +
-          '"?\n\n';
-      } else if (
-        globalSearch.distance <= globalSearchThreshold &&
-        localSearch.distance > globalSearch.distance
-      ) {
-        msg =
-          " in " +
-          Validator.printLocation(localSearch.path, option, "") +
-          "Perhaps it was misplaced? Matching option found at: " +
-          Validator.printLocation(
-            globalSearch.path,
-            globalSearch.closestMatch,
-            ""
-          );
-      } else if (localSearch.distance <= localSearchThreshold) {
-        msg =
-          '. Did you mean "' +
-          localSearch.closestMatch +
-          '"?' +
-          Validator.printLocation(localSearch.path, option);
-      } else {
-        msg =
-          ". Did you mean one of these: " +
-          Validator.print(Object.keys(options)) +
-          Validator.printLocation(path, option);
-      }
-
-      console.error(
-        '%cUnknown option detected: "' + option + '"' + msg,
-        printStyle
-      );
-      errorFound = true;
-    }
-
-    /**
-     * traverse the options in search for a match.
-     *
-     * @param {string} option
-     * @param {object} options
-     * @param {Array} path    | where to look for the actual option
-     * @param {boolean} [recursive=false]
-     * @returns {{closestMatch: string, path: Array, distance: number}}
-     * @static
-     */
-    static findInOptions(option, options, path, recursive = false) {
-      let min = 1e9;
-      let closestMatch = "";
-      let closestMatchPath = [];
-      const lowerCaseOption = option.toLowerCase();
-      let indexMatch = undefined;
-      for (const op in options) {
-        let distance;
-        if (options[op].__type__ !== undefined && recursive === true) {
-          const result = Validator.findInOptions(
-            option,
-            options[op],
-            esnext.copyAndExtendArray(path, op)
-          );
-          if (min > result.distance) {
-            closestMatch = result.closestMatch;
-            closestMatchPath = result.path;
-            min = result.distance;
-            indexMatch = result.indexMatch;
-          }
-        } else {
-          if (op.toLowerCase().indexOf(lowerCaseOption) !== -1) {
-            indexMatch = op;
-          }
-          distance = Validator.levenshteinDistance(option, op);
-          if (min > distance) {
-            closestMatch = op;
-            closestMatchPath = esnext.copyArray(path);
-            min = distance;
-          }
-        }
-      }
-      return {
-        closestMatch: closestMatch,
-        path: closestMatchPath,
-        distance: min,
-        indexMatch: indexMatch,
-      };
-    }
-
-    /**
-     * @param {Array.<string>} path
-     * @param {object} option
-     * @param {string} prefix
-     * @returns {string}
-     * @static
-     */
-    static printLocation(path, option, prefix = "Problem value found at: \n") {
-      let str = "\n\n" + prefix + "options = {\n";
-      for (let i = 0; i < path.length; i++) {
-        for (let j = 0; j < i + 1; j++) {
-          str += "  ";
-        }
-        str += path[i] + ": {\n";
-      }
-      for (let j = 0; j < path.length + 1; j++) {
-        str += "  ";
-      }
-      str += option + "\n";
-      for (let i = 0; i < path.length + 1; i++) {
-        for (let j = 0; j < path.length - i; j++) {
-          str += "  ";
-        }
-        str += "}\n";
-      }
-      return str + "\n\n";
-    }
-
-    /**
-     * @param {object} options
-     * @returns {string}
-     * @static
-     */
-    static print(options) {
-      return JSON.stringify(options)
-        .replace(/(")|(\[)|(\])|(,"__type__")/g, "")
-        .replace(/(,)/g, ", ");
-    }
-
-    /**
-     *  Compute the edit distance between the two given strings
-     * http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#JavaScript
-     *
-     * Copyright (c) 2011 Andrei Mackenzie
-     *
-     * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-     *
-     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-     *
-     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-     *
-     * @param {string} a
-     * @param {string} b
-     * @returns {Array.<Array.<number>>}}
-     * @static
-     */
-    static levenshteinDistance(a, b) {
-      if (a.length === 0) return b.length;
-      if (b.length === 0) return a.length;
-
-      const matrix = [];
-
-      // increment along the first column of each row
-      let i;
-      for (i = 0; i <= b.length; i++) {
-        matrix[i] = [i];
-      }
-
-      // increment each column in the first row
-      let j;
-      for (j = 0; j <= a.length; j++) {
-        matrix[0][j] = j;
-      }
-
-      // Fill in the rest of the matrix
-      for (i = 1; i <= b.length; i++) {
-        for (j = 1; j <= a.length; j++) {
-          if (b.charAt(i - 1) == a.charAt(j - 1)) {
-            matrix[i][j] = matrix[i - 1][j - 1];
-          } else {
-            matrix[i][j] = Math.min(
-              matrix[i - 1][j - 1] + 1, // substitution
-              Math.min(
-                matrix[i][j - 1] + 1, // insertion
-                matrix[i - 1][j] + 1
-              )
-            ); // deletion
-          }
-        }
-      }
-
-      return matrix[b.length][a.length];
-    }
-  }
-
   /**
    * A node. A node can be connected to other nodes via one or multiple edges.
    */
@@ -7659,7 +9402,7 @@
         }
         console.error(
           "%cNegative or zero mass disallowed" + strId + ", setting mass to 1.",
-          printStyle
+          VALIDATOR_PRINT_STYLE$1
         );
         options.mass = 1;
       }
@@ -16089,12 +17832,12 @@
       this.pinch = {};
 
       // init hammer
-      this.hammer = new Hammer(this.frame.canvas);
+      this.hammer = new Hammer$1(this.frame.canvas);
       this.hammer.get("pinch").set({ enable: true });
       // enable to get better response, todo: test on mobile.
       this.hammer
         .get("pan")
-        .set({ threshold: 5, direction: Hammer.DIRECTION_ALL });
+        .set({ threshold: 5, direction: Hammer$1.DIRECTION_ALL });
 
       onTouch(this.hammer, (event) => {
         this.body.eventListeners.onTouch(event);
@@ -16133,7 +17876,7 @@
         this.body.eventListeners.onContext(event);
       });
 
-      this.hammerFrame = new Hammer(this.frame);
+      this.hammerFrame = new Hammer$1(this.frame);
       onRelease(this.hammerFrame, (event) => {
         this.body.eventListeners.onRelease(event);
       });
@@ -16957,7 +18700,7 @@
           this.navigationDOM[navigationDivs[i]]
         );
 
-        const hammer = new Hammer(this.navigationDOM[navigationDivs[i]]);
+        const hammer = new Hammer$1(this.navigationDOM[navigationDivs[i]]);
         if (navigationDivActions[i] === "_fit") {
           onTouch(hammer, this._fit.bind(this));
         } else {
@@ -16969,7 +18712,7 @@
 
       // use a hammer for the release so we do not require the one used in the rest of the network
       // the one the rest uses can be overloaded by the manipulation system.
-      const hammerFrame = new Hammer(this.canvas.frame);
+      const hammerFrame = new Hammer$1(this.canvas.frame);
       onRelease(hammerFrame, () => {
         this._stopMovement();
       });
@@ -17301,141 +19044,6 @@
           );
         }
       }
-    }
-  }
-
-  /**
-   * Popup is a class to create a popup window with some text
-   */
-  class Popup {
-    /**
-     * @param {Element} container       The container object.
-     * @param {string}  overflowMethod  How the popup should act to overflowing ('flip' or 'cap')
-     */
-    constructor(container, overflowMethod) {
-      this.container = container;
-      this.overflowMethod = overflowMethod || "cap";
-
-      this.x = 0;
-      this.y = 0;
-      this.padding = 5;
-      this.hidden = false;
-
-      // create the frame
-      this.frame = document.createElement("div");
-      this.frame.className = "vis-tooltip";
-      this.container.appendChild(this.frame);
-    }
-
-    /**
-     * @param {number} x   Horizontal position of the popup window
-     * @param {number} y   Vertical position of the popup window
-     */
-    setPosition(x, y) {
-      this.x = parseInt(x);
-      this.y = parseInt(y);
-    }
-
-    /**
-     * Set the content for the popup window. This can be HTML code or text.
-     *
-     * @param {string | Element} content
-     */
-    setText(content) {
-      if (content instanceof Element) {
-        while (this.frame.firstChild) {
-          this.frame.removeChild(this.frame.firstChild);
-        }
-        this.frame.appendChild(content);
-      } else {
-        this.frame.innerHTML = content; // string containing text or HTML
-      }
-    }
-
-    /**
-     * Show the popup window
-     *
-     * @param {boolean} [doShow]    Show or hide the window
-     */
-    show(doShow) {
-      if (doShow === undefined) {
-        doShow = true;
-      }
-
-      if (doShow === true) {
-        const height = this.frame.clientHeight;
-        const width = this.frame.clientWidth;
-        const maxHeight = this.frame.parentNode.clientHeight;
-        const maxWidth = this.frame.parentNode.clientWidth;
-
-        let left = 0,
-          top = 0;
-
-        if (this.overflowMethod == "flip") {
-          let isLeft = false,
-            isTop = true; // Where around the position it's located
-
-          if (this.y - height < this.padding) {
-            isTop = false;
-          }
-
-          if (this.x + width > maxWidth - this.padding) {
-            isLeft = true;
-          }
-
-          if (isLeft) {
-            left = this.x - width;
-          } else {
-            left = this.x;
-          }
-
-          if (isTop) {
-            top = this.y - height;
-          } else {
-            top = this.y;
-          }
-        } else {
-          top = this.y - height;
-          if (top + height + this.padding > maxHeight) {
-            top = maxHeight - height - this.padding;
-          }
-          if (top < this.padding) {
-            top = this.padding;
-          }
-
-          left = this.x;
-          if (left + width + this.padding > maxWidth) {
-            left = maxWidth - width - this.padding;
-          }
-          if (left < this.padding) {
-            left = this.padding;
-          }
-        }
-
-        this.frame.style.left = left + "px";
-        this.frame.style.top = top + "px";
-        this.frame.style.visibility = "visible";
-        this.hidden = false;
-      } else {
-        this.hide();
-      }
-    }
-
-    /**
-     * Hide the popup window
-     */
-    hide() {
-      this.hidden = true;
-      this.frame.style.left = "0";
-      this.frame.style.top = "0";
-      this.frame.style.visibility = "hidden";
-    }
-
-    /**
-     * Remove the popup window
-     */
-    destroy() {
-      this.frame.parentNode.removeChild(this.frame); // Remove element from DOM
     }
   }
 
@@ -18178,7 +19786,7 @@
         // show popup message window
         if (this.popupObj.id !== previousPopupObjId) {
           if (this.popup === undefined) {
-            this.popup = new Popup(this.canvas.frame);
+            this.popup = new Popup$1(this.canvas.frame);
           }
 
           this.popup.popupTargetType = popupType;
@@ -22283,7 +23891,7 @@
      */
     _bindElementEvents(domElement, boundFunction) {
       // Bind touch events.
-      const hammer = new Hammer(domElement, {});
+      const hammer = new Hammer$1(domElement, {});
       onTouch(hammer, boundFunction);
       this._domEventListenerCleanupQueue.push(() => {
         hammer.destroy();
@@ -22753,1603 +24361,6 @@
         this.selectionHandler.unselectAll();
         this.showManipulatorToolbar();
       }
-    }
-  }
-
-  const htmlColors = {
-    black: "#000000",
-    navy: "#000080",
-    darkblue: "#00008B",
-    mediumblue: "#0000CD",
-    blue: "#0000FF",
-    darkgreen: "#006400",
-    green: "#008000",
-    teal: "#008080",
-    darkcyan: "#008B8B",
-    deepskyblue: "#00BFFF",
-    darkturquoise: "#00CED1",
-    mediumspringgreen: "#00FA9A",
-    lime: "#00FF00",
-    springgreen: "#00FF7F",
-    aqua: "#00FFFF",
-    cyan: "#00FFFF",
-    midnightblue: "#191970",
-    dodgerblue: "#1E90FF",
-    lightseagreen: "#20B2AA",
-    forestgreen: "#228B22",
-    seagreen: "#2E8B57",
-    darkslategray: "#2F4F4F",
-    limegreen: "#32CD32",
-    mediumseagreen: "#3CB371",
-    turquoise: "#40E0D0",
-    royalblue: "#4169E1",
-    steelblue: "#4682B4",
-    darkslateblue: "#483D8B",
-    mediumturquoise: "#48D1CC",
-    indigo: "#4B0082",
-    darkolivegreen: "#556B2F",
-    cadetblue: "#5F9EA0",
-    cornflowerblue: "#6495ED",
-    mediumaquamarine: "#66CDAA",
-    dimgray: "#696969",
-    slateblue: "#6A5ACD",
-    olivedrab: "#6B8E23",
-    slategray: "#708090",
-    lightslategray: "#778899",
-    mediumslateblue: "#7B68EE",
-    lawngreen: "#7CFC00",
-    chartreuse: "#7FFF00",
-    aquamarine: "#7FFFD4",
-    maroon: "#800000",
-    purple: "#800080",
-    olive: "#808000",
-    gray: "#808080",
-    skyblue: "#87CEEB",
-    lightskyblue: "#87CEFA",
-    blueviolet: "#8A2BE2",
-    darkred: "#8B0000",
-    darkmagenta: "#8B008B",
-    saddlebrown: "#8B4513",
-    darkseagreen: "#8FBC8F",
-    lightgreen: "#90EE90",
-    mediumpurple: "#9370D8",
-    darkviolet: "#9400D3",
-    palegreen: "#98FB98",
-    darkorchid: "#9932CC",
-    yellowgreen: "#9ACD32",
-    sienna: "#A0522D",
-    brown: "#A52A2A",
-    darkgray: "#A9A9A9",
-    lightblue: "#ADD8E6",
-    greenyellow: "#ADFF2F",
-    paleturquoise: "#AFEEEE",
-    lightsteelblue: "#B0C4DE",
-    powderblue: "#B0E0E6",
-    firebrick: "#B22222",
-    darkgoldenrod: "#B8860B",
-    mediumorchid: "#BA55D3",
-    rosybrown: "#BC8F8F",
-    darkkhaki: "#BDB76B",
-    silver: "#C0C0C0",
-    mediumvioletred: "#C71585",
-    indianred: "#CD5C5C",
-    peru: "#CD853F",
-    chocolate: "#D2691E",
-    tan: "#D2B48C",
-    lightgrey: "#D3D3D3",
-    palevioletred: "#D87093",
-    thistle: "#D8BFD8",
-    orchid: "#DA70D6",
-    goldenrod: "#DAA520",
-    crimson: "#DC143C",
-    gainsboro: "#DCDCDC",
-    plum: "#DDA0DD",
-    burlywood: "#DEB887",
-    lightcyan: "#E0FFFF",
-    lavender: "#E6E6FA",
-    darksalmon: "#E9967A",
-    violet: "#EE82EE",
-    palegoldenrod: "#EEE8AA",
-    lightcoral: "#F08080",
-    khaki: "#F0E68C",
-    aliceblue: "#F0F8FF",
-    honeydew: "#F0FFF0",
-    azure: "#F0FFFF",
-    sandybrown: "#F4A460",
-    wheat: "#F5DEB3",
-    beige: "#F5F5DC",
-    whitesmoke: "#F5F5F5",
-    mintcream: "#F5FFFA",
-    ghostwhite: "#F8F8FF",
-    salmon: "#FA8072",
-    antiquewhite: "#FAEBD7",
-    linen: "#FAF0E6",
-    lightgoldenrodyellow: "#FAFAD2",
-    oldlace: "#FDF5E6",
-    red: "#FF0000",
-    fuchsia: "#FF00FF",
-    magenta: "#FF00FF",
-    deeppink: "#FF1493",
-    orangered: "#FF4500",
-    tomato: "#FF6347",
-    hotpink: "#FF69B4",
-    coral: "#FF7F50",
-    darkorange: "#FF8C00",
-    lightsalmon: "#FFA07A",
-    orange: "#FFA500",
-    lightpink: "#FFB6C1",
-    pink: "#FFC0CB",
-    gold: "#FFD700",
-    peachpuff: "#FFDAB9",
-    navajowhite: "#FFDEAD",
-    moccasin: "#FFE4B5",
-    bisque: "#FFE4C4",
-    mistyrose: "#FFE4E1",
-    blanchedalmond: "#FFEBCD",
-    papayawhip: "#FFEFD5",
-    lavenderblush: "#FFF0F5",
-    seashell: "#FFF5EE",
-    cornsilk: "#FFF8DC",
-    lemonchiffon: "#FFFACD",
-    floralwhite: "#FFFAF0",
-    snow: "#FFFAFA",
-    yellow: "#FFFF00",
-    lightyellow: "#FFFFE0",
-    ivory: "#FFFFF0",
-    white: "#FFFFFF",
-  };
-
-  /**
-   * @param {number} [pixelRatio=1]
-   */
-  class ColorPicker {
-    /**
-     * @param {number} [pixelRatio=1]
-     */
-    constructor(pixelRatio = 1) {
-      this.pixelRatio = pixelRatio;
-      this.generated = false;
-      this.centerCoordinates = { x: 289 / 2, y: 289 / 2 };
-      this.r = 289 * 0.49;
-      this.color = { r: 255, g: 255, b: 255, a: 1.0 };
-      this.hueCircle = undefined;
-      this.initialColor = { r: 255, g: 255, b: 255, a: 1.0 };
-      this.previousColor = undefined;
-      this.applied = false;
-
-      // bound by
-      this.updateCallback = () => {};
-      this.closeCallback = () => {};
-
-      // create all DOM elements
-      this._create();
-    }
-
-    /**
-     * this inserts the colorPicker into a div from the DOM
-     *
-     * @param {Element} container
-     */
-    insertTo(container) {
-      if (this.hammer !== undefined) {
-        this.hammer.destroy();
-        this.hammer = undefined;
-      }
-      this.container = container;
-      this.container.appendChild(this.frame);
-      this._bindHammer();
-
-      this._setSize();
-    }
-
-    /**
-     * the callback is executed on apply and save. Bind it to the application
-     *
-     * @param {Function} callback
-     */
-    setUpdateCallback(callback) {
-      if (typeof callback === "function") {
-        this.updateCallback = callback;
-      } else {
-        throw new Error(
-          "Function attempted to set as colorPicker update callback is not a function."
-        );
-      }
-    }
-
-    /**
-     * the callback is executed on apply and save. Bind it to the application
-     *
-     * @param {Function} callback
-     */
-    setCloseCallback(callback) {
-      if (typeof callback === "function") {
-        this.closeCallback = callback;
-      } else {
-        throw new Error(
-          "Function attempted to set as colorPicker closing callback is not a function."
-        );
-      }
-    }
-
-    /**
-     *
-     * @param {string} color
-     * @returns {string}
-     * @private
-     */
-    _isColorString(color) {
-      if (typeof color === "string") {
-        return htmlColors[color];
-      }
-    }
-
-    /**
-     * Set the color of the colorPicker
-     * Supported formats:
-     * 'red'                   --> HTML color string
-     * '#ffffff'               --> hex string
-     * 'rgb(255,255,255)'      --> rgb string
-     * 'rgba(255,255,255,1.0)' --> rgba string
-     * {r:255,g:255,b:255}     --> rgb object
-     * {r:255,g:255,b:255,a:1.0} --> rgba object
-     *
-     * @param {string | object} color
-     * @param {boolean} [setInitial=true]
-     */
-    setColor(color, setInitial = true) {
-      if (color === "none") {
-        return;
-      }
-
-      let rgba;
-
-      // if a html color shorthand is used, convert to hex
-      const htmlColor = this._isColorString(color);
-      if (htmlColor !== undefined) {
-        color = htmlColor;
-      }
-
-      // check format
-      if (esnext.isString(color) === true) {
-        if (esnext.isValidRGB(color) === true) {
-          const rgbaArray = color
-            .substr(4)
-            .substr(0, color.length - 5)
-            .split(",");
-          rgba = { r: rgbaArray[0], g: rgbaArray[1], b: rgbaArray[2], a: 1.0 };
-        } else if (esnext.isValidRGBA(color) === true) {
-          const rgbaArray = color
-            .substr(5)
-            .substr(0, color.length - 6)
-            .split(",");
-          rgba = {
-            r: rgbaArray[0],
-            g: rgbaArray[1],
-            b: rgbaArray[2],
-            a: rgbaArray[3],
-          };
-        } else if (esnext.isValidHex(color) === true) {
-          const rgbObj = esnext.hexToRGB(color);
-          rgba = { r: rgbObj.r, g: rgbObj.g, b: rgbObj.b, a: 1.0 };
-        }
-      } else {
-        if (color instanceof Object) {
-          if (
-            color.r !== undefined &&
-            color.g !== undefined &&
-            color.b !== undefined
-          ) {
-            const alpha = color.a !== undefined ? color.a : "1.0";
-            rgba = { r: color.r, g: color.g, b: color.b, a: alpha };
-          }
-        }
-      }
-
-      // set color
-      if (rgba === undefined) {
-        throw new Error(
-          "Unknown color passed to the colorPicker. Supported are strings: rgb, hex, rgba. Object: rgb ({r:r,g:g,b:b,[a:a]}). Supplied: " +
-            JSON.stringify(color)
-        );
-      } else {
-        this._setColor(rgba, setInitial);
-      }
-    }
-
-    /**
-     * this shows the color picker.
-     * The hue circle is constructed once and stored.
-     */
-    show() {
-      if (this.closeCallback !== undefined) {
-        this.closeCallback();
-        this.closeCallback = undefined;
-      }
-
-      this.applied = false;
-      this.frame.style.display = "block";
-      this._generateHueCircle();
-    }
-
-    // ------------------------------------------ PRIVATE ----------------------------- //
-
-    /**
-     * Hide the picker. Is called by the cancel button.
-     * Optional boolean to store the previous color for easy access later on.
-     *
-     * @param {boolean} [storePrevious=true]
-     * @private
-     */
-    _hide(storePrevious = true) {
-      // store the previous color for next time;
-      if (storePrevious === true) {
-        this.previousColor = Object.assign({}, this.color);
-      }
-
-      if (this.applied === true) {
-        this.updateCallback(this.initialColor);
-      }
-
-      this.frame.style.display = "none";
-
-      // call the closing callback, restoring the onclick method.
-      // this is in a setTimeout because it will trigger the show again before the click is done.
-      setTimeout(() => {
-        if (this.closeCallback !== undefined) {
-          this.closeCallback();
-          this.closeCallback = undefined;
-        }
-      }, 0);
-    }
-
-    /**
-     * bound to the save button. Saves and hides.
-     *
-     * @private
-     */
-    _save() {
-      this.updateCallback(this.color);
-      this.applied = false;
-      this._hide();
-    }
-
-    /**
-     * Bound to apply button. Saves but does not close. Is undone by the cancel button.
-     *
-     * @private
-     */
-    _apply() {
-      this.applied = true;
-      this.updateCallback(this.color);
-      this._updatePicker(this.color);
-    }
-
-    /**
-     * load the color from the previous session.
-     *
-     * @private
-     */
-    _loadLast() {
-      if (this.previousColor !== undefined) {
-        this.setColor(this.previousColor, false);
-      } else {
-        alert("There is no last color to load...");
-      }
-    }
-
-    /**
-     * set the color, place the picker
-     *
-     * @param {object} rgba
-     * @param {boolean} [setInitial=true]
-     * @private
-     */
-    _setColor(rgba, setInitial = true) {
-      // store the initial color
-      if (setInitial === true) {
-        this.initialColor = Object.assign({}, rgba);
-      }
-
-      this.color = rgba;
-      const hsv = esnext.RGBToHSV(rgba.r, rgba.g, rgba.b);
-
-      const angleConvert = 2 * Math.PI;
-      const radius = this.r * hsv.s;
-      const x =
-        this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
-      const y =
-        this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
-
-      this.colorPickerSelector.style.left =
-        x - 0.5 * this.colorPickerSelector.clientWidth + "px";
-      this.colorPickerSelector.style.top =
-        y - 0.5 * this.colorPickerSelector.clientHeight + "px";
-
-      this._updatePicker(rgba);
-    }
-
-    /**
-     * bound to opacity control
-     *
-     * @param {number} value
-     * @private
-     */
-    _setOpacity(value) {
-      this.color.a = value / 100;
-      this._updatePicker(this.color);
-    }
-
-    /**
-     * bound to brightness control
-     *
-     * @param {number} value
-     * @private
-     */
-    _setBrightness(value) {
-      const hsv = esnext.RGBToHSV(this.color.r, this.color.g, this.color.b);
-      hsv.v = value / 100;
-      const rgba = esnext.HSVToRGB(hsv.h, hsv.s, hsv.v);
-      rgba["a"] = this.color.a;
-      this.color = rgba;
-      this._updatePicker();
-    }
-
-    /**
-     * update the color picker. A black circle overlays the hue circle to mimic the brightness decreasing.
-     *
-     * @param {object} rgba
-     * @private
-     */
-    _updatePicker(rgba = this.color) {
-      const hsv = esnext.RGBToHSV(rgba.r, rgba.g, rgba.b);
-      const ctx = this.colorPickerCanvas.getContext("2d");
-      if (this.pixelRation === undefined) {
-        this.pixelRatio =
-          (window.devicePixelRatio || 1) /
-          (ctx.webkitBackingStorePixelRatio ||
-            ctx.mozBackingStorePixelRatio ||
-            ctx.msBackingStorePixelRatio ||
-            ctx.oBackingStorePixelRatio ||
-            ctx.backingStorePixelRatio ||
-            1);
-      }
-      ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
-
-      // clear the canvas
-      const w = this.colorPickerCanvas.clientWidth;
-      const h = this.colorPickerCanvas.clientHeight;
-      ctx.clearRect(0, 0, w, h);
-
-      ctx.putImageData(this.hueCircle, 0, 0);
-      ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
-      ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
-      ctx.fill();
-
-      this.brightnessRange.value = 100 * hsv.v;
-      this.opacityRange.value = 100 * rgba.a;
-
-      this.initialColorDiv.style.backgroundColor =
-        "rgba(" +
-        this.initialColor.r +
-        "," +
-        this.initialColor.g +
-        "," +
-        this.initialColor.b +
-        "," +
-        this.initialColor.a +
-        ")";
-      this.newColorDiv.style.backgroundColor =
-        "rgba(" +
-        this.color.r +
-        "," +
-        this.color.g +
-        "," +
-        this.color.b +
-        "," +
-        this.color.a +
-        ")";
-    }
-
-    /**
-     * used by create to set the size of the canvas.
-     *
-     * @private
-     */
-    _setSize() {
-      this.colorPickerCanvas.style.width = "100%";
-      this.colorPickerCanvas.style.height = "100%";
-
-      this.colorPickerCanvas.width = 289 * this.pixelRatio;
-      this.colorPickerCanvas.height = 289 * this.pixelRatio;
-    }
-
-    /**
-     * create all dom elements
-     * TODO: cleanup, lots of similar dom elements
-     *
-     * @private
-     */
-    _create() {
-      this.frame = document.createElement("div");
-      this.frame.className = "vis-color-picker";
-
-      this.colorPickerDiv = document.createElement("div");
-      this.colorPickerSelector = document.createElement("div");
-      this.colorPickerSelector.className = "vis-selector";
-      this.colorPickerDiv.appendChild(this.colorPickerSelector);
-
-      this.colorPickerCanvas = document.createElement("canvas");
-      this.colorPickerDiv.appendChild(this.colorPickerCanvas);
-
-      if (!this.colorPickerCanvas.getContext) {
-        const noCanvas = document.createElement("DIV");
-        noCanvas.style.color = "red";
-        noCanvas.style.fontWeight = "bold";
-        noCanvas.style.padding = "10px";
-        noCanvas.innerText = "Error: your browser does not support HTML canvas";
-        this.colorPickerCanvas.appendChild(noCanvas);
-      } else {
-        const ctx = this.colorPickerCanvas.getContext("2d");
-        this.pixelRatio =
-          (window.devicePixelRatio || 1) /
-          (ctx.webkitBackingStorePixelRatio ||
-            ctx.mozBackingStorePixelRatio ||
-            ctx.msBackingStorePixelRatio ||
-            ctx.oBackingStorePixelRatio ||
-            ctx.backingStorePixelRatio ||
-            1);
-        this.colorPickerCanvas
-          .getContext("2d")
-          .setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
-      }
-
-      this.colorPickerDiv.className = "vis-color";
-
-      this.opacityDiv = document.createElement("div");
-      this.opacityDiv.className = "vis-opacity";
-
-      this.brightnessDiv = document.createElement("div");
-      this.brightnessDiv.className = "vis-brightness";
-
-      this.arrowDiv = document.createElement("div");
-      this.arrowDiv.className = "vis-arrow";
-
-      this.opacityRange = document.createElement("input");
-      try {
-        this.opacityRange.type = "range"; // Not supported on IE9
-        this.opacityRange.min = "0";
-        this.opacityRange.max = "100";
-      } catch (err) {
-        // TODO: Add some error handling.
-      }
-      this.opacityRange.value = "100";
-      this.opacityRange.className = "vis-range";
-
-      this.brightnessRange = document.createElement("input");
-      try {
-        this.brightnessRange.type = "range"; // Not supported on IE9
-        this.brightnessRange.min = "0";
-        this.brightnessRange.max = "100";
-      } catch (err) {
-        // TODO: Add some error handling.
-      }
-      this.brightnessRange.value = "100";
-      this.brightnessRange.className = "vis-range";
-
-      this.opacityDiv.appendChild(this.opacityRange);
-      this.brightnessDiv.appendChild(this.brightnessRange);
-
-      const me = this;
-      this.opacityRange.onchange = function () {
-        me._setOpacity(this.value);
-      };
-      this.opacityRange.oninput = function () {
-        me._setOpacity(this.value);
-      };
-      this.brightnessRange.onchange = function () {
-        me._setBrightness(this.value);
-      };
-      this.brightnessRange.oninput = function () {
-        me._setBrightness(this.value);
-      };
-
-      this.brightnessLabel = document.createElement("div");
-      this.brightnessLabel.className = "vis-label vis-brightness";
-      this.brightnessLabel.innerText = "brightness:";
-
-      this.opacityLabel = document.createElement("div");
-      this.opacityLabel.className = "vis-label vis-opacity";
-      this.opacityLabel.innerText = "opacity:";
-
-      this.newColorDiv = document.createElement("div");
-      this.newColorDiv.className = "vis-new-color";
-      this.newColorDiv.innerText = "new";
-
-      this.initialColorDiv = document.createElement("div");
-      this.initialColorDiv.className = "vis-initial-color";
-      this.initialColorDiv.innerText = "initial";
-
-      this.cancelButton = document.createElement("div");
-      this.cancelButton.className = "vis-button vis-cancel";
-      this.cancelButton.innerText = "cancel";
-      this.cancelButton.onclick = this._hide.bind(this, false);
-
-      this.applyButton = document.createElement("div");
-      this.applyButton.className = "vis-button vis-apply";
-      this.applyButton.innerText = "apply";
-      this.applyButton.onclick = this._apply.bind(this);
-
-      this.saveButton = document.createElement("div");
-      this.saveButton.className = "vis-button vis-save";
-      this.saveButton.innerText = "save";
-      this.saveButton.onclick = this._save.bind(this);
-
-      this.loadButton = document.createElement("div");
-      this.loadButton.className = "vis-button vis-load";
-      this.loadButton.innerText = "load last";
-      this.loadButton.onclick = this._loadLast.bind(this);
-
-      this.frame.appendChild(this.colorPickerDiv);
-      this.frame.appendChild(this.arrowDiv);
-      this.frame.appendChild(this.brightnessLabel);
-      this.frame.appendChild(this.brightnessDiv);
-      this.frame.appendChild(this.opacityLabel);
-      this.frame.appendChild(this.opacityDiv);
-      this.frame.appendChild(this.newColorDiv);
-      this.frame.appendChild(this.initialColorDiv);
-
-      this.frame.appendChild(this.cancelButton);
-      this.frame.appendChild(this.applyButton);
-      this.frame.appendChild(this.saveButton);
-      this.frame.appendChild(this.loadButton);
-    }
-
-    /**
-     * bind hammer to the color picker
-     *
-     * @private
-     */
-    _bindHammer() {
-      this.drag = {};
-      this.pinch = {};
-      this.hammer = new Hammer(this.colorPickerCanvas);
-      this.hammer.get("pinch").set({ enable: true });
-
-      onTouch(this.hammer, (event) => {
-        this._moveSelector(event);
-      });
-      this.hammer.on("tap", (event) => {
-        this._moveSelector(event);
-      });
-      this.hammer.on("panstart", (event) => {
-        this._moveSelector(event);
-      });
-      this.hammer.on("panmove", (event) => {
-        this._moveSelector(event);
-      });
-      this.hammer.on("panend", (event) => {
-        this._moveSelector(event);
-      });
-    }
-
-    /**
-     * generate the hue circle. This is relatively heavy (200ms) and is done only once on the first time it is shown.
-     *
-     * @private
-     */
-    _generateHueCircle() {
-      if (this.generated === false) {
-        const ctx = this.colorPickerCanvas.getContext("2d");
-        if (this.pixelRation === undefined) {
-          this.pixelRatio =
-            (window.devicePixelRatio || 1) /
-            (ctx.webkitBackingStorePixelRatio ||
-              ctx.mozBackingStorePixelRatio ||
-              ctx.msBackingStorePixelRatio ||
-              ctx.oBackingStorePixelRatio ||
-              ctx.backingStorePixelRatio ||
-              1);
-        }
-        ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
-
-        // clear the canvas
-        const w = this.colorPickerCanvas.clientWidth;
-        const h = this.colorPickerCanvas.clientHeight;
-        ctx.clearRect(0, 0, w, h);
-
-        // draw hue circle
-        let x, y, hue, sat;
-        this.centerCoordinates = { x: w * 0.5, y: h * 0.5 };
-        this.r = 0.49 * w;
-        const angleConvert = (2 * Math.PI) / 360;
-        const hfac = 1 / 360;
-        const sfac = 1 / this.r;
-        let rgb;
-        for (hue = 0; hue < 360; hue++) {
-          for (sat = 0; sat < this.r; sat++) {
-            x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
-            y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
-            rgb = esnext.HSVToRGB(hue * hfac, sat * sfac, 1);
-            ctx.fillStyle = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
-            ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
-          }
-        }
-        ctx.strokeStyle = "rgba(0,0,0,1)";
-        ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
-        ctx.stroke();
-
-        this.hueCircle = ctx.getImageData(0, 0, w, h);
-      }
-      this.generated = true;
-    }
-
-    /**
-     * move the selector. This is called by hammer functions.
-     *
-     * @param {Event}  event   The event
-     * @private
-     */
-    _moveSelector(event) {
-      const rect = this.colorPickerDiv.getBoundingClientRect();
-      const left = event.center.x - rect.left;
-      const top = event.center.y - rect.top;
-
-      const centerY = 0.5 * this.colorPickerDiv.clientHeight;
-      const centerX = 0.5 * this.colorPickerDiv.clientWidth;
-
-      const x = left - centerX;
-      const y = top - centerY;
-
-      const angle = Math.atan2(x, y);
-      const radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
-
-      const newTop = Math.cos(angle) * radius + centerY;
-      const newLeft = Math.sin(angle) * radius + centerX;
-
-      this.colorPickerSelector.style.top =
-        newTop - 0.5 * this.colorPickerSelector.clientHeight + "px";
-      this.colorPickerSelector.style.left =
-        newLeft - 0.5 * this.colorPickerSelector.clientWidth + "px";
-
-      // set color
-      let h = angle / (2 * Math.PI);
-      h = h < 0 ? h + 1 : h;
-      const s = radius / this.r;
-      const hsv = esnext.RGBToHSV(this.color.r, this.color.g, this.color.b);
-      hsv.h = h;
-      hsv.s = s;
-      const rgba = esnext.HSVToRGB(hsv.h, hsv.s, hsv.v);
-      rgba["a"] = this.color.a;
-      this.color = rgba;
-
-      // update previews
-      this.initialColorDiv.style.backgroundColor =
-        "rgba(" +
-        this.initialColor.r +
-        "," +
-        this.initialColor.g +
-        "," +
-        this.initialColor.b +
-        "," +
-        this.initialColor.a +
-        ")";
-      this.newColorDiv.style.backgroundColor =
-        "rgba(" +
-        this.color.r +
-        "," +
-        this.color.g +
-        "," +
-        this.color.b +
-        "," +
-        this.color.a +
-        ")";
-    }
-  }
-
-  /**
-   * Wrap given text (last argument) in HTML elements (all preceding arguments).
-   *
-   * @param {...any} rest - List of tag names followed by inner text.
-   *
-   * @returns An element or a text node.
-   */
-  function wrapInTag(...rest) {
-    if (rest.length < 1) {
-      throw new TypeError("Invalid arguments.");
-    } else if (rest.length === 1) {
-      return document.createTextNode(rest[0]);
-    } else {
-      const element = document.createElement(rest[0]);
-      element.appendChild(wrapInTag(rest.slice(1)));
-      return element;
-    }
-  }
-
-  /**
-   * The way this works is for all properties of this.possible options, you can supply the property name in any form to list the options.
-   * Boolean options are recognised as Boolean
-   * Number options should be written as array: [default value, min value, max value, stepsize]
-   * Colors should be written as array: ['color', '#ffffff']
-   * Strings with should be written as array: [option1, option2, option3, ..]
-   *
-   * The options are matched with their counterparts in each of the modules and the values used in the configuration are
-   */
-  class Configurator {
-    /**
-     * @param {object} parentModule        | the location where parentModule.setOptions() can be called
-     * @param {object} defaultContainer    | the default container of the module
-     * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
-     * @param {number} pixelRatio          | canvas pixel ratio
-     */
-    constructor(
-      parentModule,
-      defaultContainer,
-      configureOptions,
-      pixelRatio = 1
-    ) {
-      this.parent = parentModule;
-      this.changedOptions = [];
-      this.container = defaultContainer;
-      this.allowCreation = false;
-
-      this.options = {};
-      this.initialized = false;
-      this.popupCounter = 0;
-      this.defaultOptions = {
-        enabled: false,
-        filter: true,
-        container: undefined,
-        showButton: true,
-      };
-      Object.assign(this.options, this.defaultOptions);
-
-      this.configureOptions = configureOptions;
-      this.moduleOptions = {};
-      this.domElements = [];
-      this.popupDiv = {};
-      this.popupLimit = 5;
-      this.popupHistory = {};
-      this.colorPicker = new ColorPicker(pixelRatio);
-      this.wrapper = undefined;
-    }
-
-    /**
-     * refresh all options.
-     * Because all modules parse their options by themselves, we just use their options. We copy them here.
-     *
-     * @param {object} options
-     */
-    setOptions(options) {
-      if (options !== undefined) {
-        // reset the popup history because the indices may have been changed.
-        this.popupHistory = {};
-        this._removePopup();
-
-        let enabled = true;
-        if (typeof options === "string") {
-          this.options.filter = options;
-        } else if (Array.isArray(options)) {
-          this.options.filter = options.join();
-        } else if (typeof options === "object") {
-          if (options == null) {
-            throw new TypeError("options cannot be null");
-          }
-          if (options.container !== undefined) {
-            this.options.container = options.container;
-          }
-          if (options.filter !== undefined) {
-            this.options.filter = options.filter;
-          }
-          if (options.showButton !== undefined) {
-            this.options.showButton = options.showButton;
-          }
-          if (options.enabled !== undefined) {
-            enabled = options.enabled;
-          }
-        } else if (typeof options === "boolean") {
-          this.options.filter = true;
-          enabled = options;
-        } else if (typeof options === "function") {
-          this.options.filter = options;
-          enabled = true;
-        }
-        if (this.options.filter === false) {
-          enabled = false;
-        }
-
-        this.options.enabled = enabled;
-      }
-      this._clean();
-    }
-
-    /**
-     *
-     * @param {object} moduleOptions
-     */
-    setModuleOptions(moduleOptions) {
-      this.moduleOptions = moduleOptions;
-      if (this.options.enabled === true) {
-        this._clean();
-        if (this.options.container !== undefined) {
-          this.container = this.options.container;
-        }
-        this._create();
-      }
-    }
-
-    /**
-     * Create all DOM elements
-     *
-     * @private
-     */
-    _create() {
-      this._clean();
-      this.changedOptions = [];
-
-      const filter = this.options.filter;
-      let counter = 0;
-      let show = false;
-      for (const option in this.configureOptions) {
-        if (Object.prototype.hasOwnProperty.call(this.configureOptions, option)) {
-          this.allowCreation = false;
-          show = false;
-          if (typeof filter === "function") {
-            show = filter(option, []);
-            show =
-              show ||
-              this._handleObject(this.configureOptions[option], [option], true);
-          } else if (filter === true || filter.indexOf(option) !== -1) {
-            show = true;
-          }
-
-          if (show !== false) {
-            this.allowCreation = true;
-
-            // linebreak between categories
-            if (counter > 0) {
-              this._makeItem([]);
-            }
-            // a header for the category
-            this._makeHeader(option);
-
-            // get the sub options
-            this._handleObject(this.configureOptions[option], [option]);
-          }
-          counter++;
-        }
-      }
-      this._makeButton();
-      this._push();
-      //~ this.colorPicker.insertTo(this.container);
-    }
-
-    /**
-     * draw all DOM elements on the screen
-     *
-     * @private
-     */
-    _push() {
-      this.wrapper = document.createElement("div");
-      this.wrapper.className = "vis-configuration-wrapper";
-      this.container.appendChild(this.wrapper);
-      for (let i = 0; i < this.domElements.length; i++) {
-        this.wrapper.appendChild(this.domElements[i]);
-      }
-
-      this._showPopupIfNeeded();
-    }
-
-    /**
-     * delete all DOM elements
-     *
-     * @private
-     */
-    _clean() {
-      for (let i = 0; i < this.domElements.length; i++) {
-        this.wrapper.removeChild(this.domElements[i]);
-      }
-
-      if (this.wrapper !== undefined) {
-        this.container.removeChild(this.wrapper);
-        this.wrapper = undefined;
-      }
-      this.domElements = [];
-
-      this._removePopup();
-    }
-
-    /**
-     * get the value from the actualOptions if it exists
-     *
-     * @param {Array} path    | where to look for the actual option
-     * @returns {*}
-     * @private
-     */
-    _getValue(path) {
-      let base = this.moduleOptions;
-      for (let i = 0; i < path.length; i++) {
-        if (base[path[i]] !== undefined) {
-          base = base[path[i]];
-        } else {
-          base = undefined;
-          break;
-        }
-      }
-      return base;
-    }
-
-    /**
-     * all option elements are wrapped in an item
-     *
-     * @param {Array} path    | where to look for the actual option
-     * @param {Array.<Element>} domElements
-     * @returns {number}
-     * @private
-     */
-    _makeItem(path, ...domElements) {
-      if (this.allowCreation === true) {
-        const item = document.createElement("div");
-        item.className =
-          "vis-configuration vis-config-item vis-config-s" + path.length;
-        domElements.forEach((element) => {
-          item.appendChild(element);
-        });
-        this.domElements.push(item);
-        return this.domElements.length;
-      }
-      return 0;
-    }
-
-    /**
-     * header for major subjects
-     *
-     * @param {string} name
-     * @private
-     */
-    _makeHeader(name) {
-      const div = document.createElement("div");
-      div.className = "vis-configuration vis-config-header";
-      div.innerText = name;
-      this._makeItem([], div);
-    }
-
-    /**
-     * make a label, if it is an object label, it gets different styling.
-     *
-     * @param {string} name
-     * @param {Array} path    | where to look for the actual option
-     * @param {string} objectLabel
-     * @returns {HTMLElement}
-     * @private
-     */
-    _makeLabel(name, path, objectLabel = false) {
-      const div = document.createElement("div");
-      div.className =
-        "vis-configuration vis-config-label vis-config-s" + path.length;
-      if (objectLabel === true) {
-        while (div.firstChild) {
-          div.removeChild(div.firstChild);
-        }
-        div.appendChild(wrapInTag("i", "b", name));
-      } else {
-        div.innerText = name + ":";
-      }
-      return div;
-    }
-
-    /**
-     * make a dropdown list for multiple possible string optoins
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _makeDropdown(arr, value, path) {
-      const select = document.createElement("select");
-      select.className = "vis-configuration vis-config-select";
-      let selectedValue = 0;
-      if (value !== undefined) {
-        if (arr.indexOf(value) !== -1) {
-          selectedValue = arr.indexOf(value);
-        }
-      }
-
-      for (let i = 0; i < arr.length; i++) {
-        const option = document.createElement("option");
-        option.value = arr[i];
-        if (i === selectedValue) {
-          option.selected = "selected";
-        }
-        option.innerText = arr[i];
-        select.appendChild(option);
-      }
-
-      const me = this;
-      select.onchange = function () {
-        me._update(this.value, path);
-      };
-
-      const label = this._makeLabel(path[path.length - 1], path);
-      this._makeItem(path, label, select);
-    }
-
-    /**
-     * make a range object for numeric options
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _makeRange(arr, value, path) {
-      const defaultValue = arr[0];
-      const min = arr[1];
-      const max = arr[2];
-      const step = arr[3];
-      const range = document.createElement("input");
-      range.className = "vis-configuration vis-config-range";
-      try {
-        range.type = "range"; // not supported on IE9
-        range.min = min;
-        range.max = max;
-      } catch (err) {
-        // TODO: Add some error handling.
-      }
-      range.step = step;
-
-      // set up the popup settings in case they are needed.
-      let popupString = "";
-      let popupValue = 0;
-
-      if (value !== undefined) {
-        const factor = 1.2;
-        if (value < 0 && value * factor < min) {
-          range.min = Math.ceil(value * factor);
-          popupValue = range.min;
-          popupString = "range increased";
-        } else if (value / factor < min) {
-          range.min = Math.ceil(value / factor);
-          popupValue = range.min;
-          popupString = "range increased";
-        }
-        if (value * factor > max && max !== 1) {
-          range.max = Math.ceil(value * factor);
-          popupValue = range.max;
-          popupString = "range increased";
-        }
-        range.value = value;
-      } else {
-        range.value = defaultValue;
-      }
-
-      const input = document.createElement("input");
-      input.className = "vis-configuration vis-config-rangeinput";
-      input.value = range.value;
-
-      const me = this;
-      range.onchange = function () {
-        input.value = this.value;
-        me._update(Number(this.value), path);
-      };
-      range.oninput = function () {
-        input.value = this.value;
-      };
-
-      const label = this._makeLabel(path[path.length - 1], path);
-      const itemIndex = this._makeItem(path, label, range, input);
-
-      // if a popup is needed AND it has not been shown for this value, show it.
-      if (popupString !== "" && this.popupHistory[itemIndex] !== popupValue) {
-        this.popupHistory[itemIndex] = popupValue;
-        this._setupPopup(popupString, itemIndex);
-      }
-    }
-
-    /**
-     * make a button object
-     *
-     * @private
-     */
-    _makeButton() {
-      if (this.options.showButton === true) {
-        const generateButton = document.createElement("div");
-        generateButton.className = "vis-configuration vis-config-button";
-        generateButton.innerText = "generate options";
-        generateButton.onclick = () => {
-          this._printOptions();
-        };
-        generateButton.onmouseover = () => {
-          generateButton.className = "vis-configuration vis-config-button hover";
-        };
-        generateButton.onmouseout = () => {
-          generateButton.className = "vis-configuration vis-config-button";
-        };
-
-        this.optionsContainer = document.createElement("div");
-        this.optionsContainer.className =
-          "vis-configuration vis-config-option-container";
-
-        this.domElements.push(this.optionsContainer);
-        this.domElements.push(generateButton);
-      }
-    }
-
-    /**
-     * prepare the popup
-     *
-     * @param {string} string
-     * @param {number} index
-     * @private
-     */
-    _setupPopup(string, index) {
-      if (
-        this.initialized === true &&
-        this.allowCreation === true &&
-        this.popupCounter < this.popupLimit
-      ) {
-        const div = document.createElement("div");
-        div.id = "vis-configuration-popup";
-        div.className = "vis-configuration-popup";
-        div.innerText = string;
-        div.onclick = () => {
-          this._removePopup();
-        };
-        this.popupCounter += 1;
-        this.popupDiv = { html: div, index: index };
-      }
-    }
-
-    /**
-     * remove the popup from the dom
-     *
-     * @private
-     */
-    _removePopup() {
-      if (this.popupDiv.html !== undefined) {
-        this.popupDiv.html.parentNode.removeChild(this.popupDiv.html);
-        clearTimeout(this.popupDiv.hideTimeout);
-        clearTimeout(this.popupDiv.deleteTimeout);
-        this.popupDiv = {};
-      }
-    }
-
-    /**
-     * Show the popup if it is needed.
-     *
-     * @private
-     */
-    _showPopupIfNeeded() {
-      if (this.popupDiv.html !== undefined) {
-        const correspondingElement = this.domElements[this.popupDiv.index];
-        const rect = correspondingElement.getBoundingClientRect();
-        this.popupDiv.html.style.left = rect.left + "px";
-        this.popupDiv.html.style.top = rect.top - 30 + "px"; // 30 is the height;
-        document.body.appendChild(this.popupDiv.html);
-        this.popupDiv.hideTimeout = setTimeout(() => {
-          this.popupDiv.html.style.opacity = 0;
-        }, 1500);
-        this.popupDiv.deleteTimeout = setTimeout(() => {
-          this._removePopup();
-        }, 1800);
-      }
-    }
-
-    /**
-     * make a checkbox for boolean options.
-     *
-     * @param {number} defaultValue
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _makeCheckbox(defaultValue, value, path) {
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.className = "vis-configuration vis-config-checkbox";
-      checkbox.checked = defaultValue;
-      if (value !== undefined) {
-        checkbox.checked = value;
-        if (value !== defaultValue) {
-          if (typeof defaultValue === "object") {
-            if (value !== defaultValue.enabled) {
-              this.changedOptions.push({ path: path, value: value });
-            }
-          } else {
-            this.changedOptions.push({ path: path, value: value });
-          }
-        }
-      }
-
-      const me = this;
-      checkbox.onchange = function () {
-        me._update(this.checked, path);
-      };
-
-      const label = this._makeLabel(path[path.length - 1], path);
-      this._makeItem(path, label, checkbox);
-    }
-
-    /**
-     * make a text input field for string options.
-     *
-     * @param {number} defaultValue
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _makeTextInput(defaultValue, value, path) {
-      const checkbox = document.createElement("input");
-      checkbox.type = "text";
-      checkbox.className = "vis-configuration vis-config-text";
-      checkbox.value = value;
-      if (value !== defaultValue) {
-        this.changedOptions.push({ path: path, value: value });
-      }
-
-      const me = this;
-      checkbox.onchange = function () {
-        me._update(this.value, path);
-      };
-
-      const label = this._makeLabel(path[path.length - 1], path);
-      this._makeItem(path, label, checkbox);
-    }
-
-    /**
-     * make a color field with a color picker for color fields
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _makeColorField(arr, value, path) {
-      const defaultColor = arr[1];
-      const div = document.createElement("div");
-      value = value === undefined ? defaultColor : value;
-
-      if (value !== "none") {
-        div.className = "vis-configuration vis-config-colorBlock";
-        div.style.backgroundColor = value;
-      } else {
-        div.className = "vis-configuration vis-config-colorBlock none";
-      }
-
-      value = value === undefined ? defaultColor : value;
-      div.onclick = () => {
-        this._showColorPicker(value, div, path);
-      };
-
-      const label = this._makeLabel(path[path.length - 1], path);
-      this._makeItem(path, label, div);
-    }
-
-    /**
-     * used by the color buttons to call the color picker.
-     *
-     * @param {number} value
-     * @param {HTMLElement} div
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _showColorPicker(value, div, path) {
-      // clear the callback from this div
-      div.onclick = function () {};
-
-      this.colorPicker.insertTo(div);
-      this.colorPicker.show();
-
-      this.colorPicker.setColor(value);
-      this.colorPicker.setUpdateCallback((color) => {
-        const colorString =
-          "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
-        div.style.backgroundColor = colorString;
-        this._update(colorString, path);
-      });
-
-      // on close of the colorpicker, restore the callback.
-      this.colorPicker.setCloseCallback(() => {
-        div.onclick = () => {
-          this._showColorPicker(value, div, path);
-        };
-      });
-    }
-
-    /**
-     * parse an object and draw the correct items
-     *
-     * @param {object} obj
-     * @param {Array} [path=[]]    | where to look for the actual option
-     * @param {boolean} [checkOnly=false]
-     * @returns {boolean}
-     * @private
-     */
-    _handleObject(obj, path = [], checkOnly = false) {
-      let show = false;
-      const filter = this.options.filter;
-      let visibleInSet = false;
-      for (const subObj in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, subObj)) {
-          show = true;
-          const item = obj[subObj];
-          const newPath = esnext.copyAndExtendArray(path, subObj);
-          if (typeof filter === "function") {
-            show = filter(subObj, path);
-
-            // if needed we must go deeper into the object.
-            if (show === false) {
-              if (
-                !Array.isArray(item) &&
-                typeof item !== "string" &&
-                typeof item !== "boolean" &&
-                item instanceof Object
-              ) {
-                this.allowCreation = false;
-                show = this._handleObject(item, newPath, true);
-                this.allowCreation = checkOnly === false;
-              }
-            }
-          }
-
-          if (show !== false) {
-            visibleInSet = true;
-            const value = this._getValue(newPath);
-
-            if (Array.isArray(item)) {
-              this._handleArray(item, value, newPath);
-            } else if (typeof item === "string") {
-              this._makeTextInput(item, value, newPath);
-            } else if (typeof item === "boolean") {
-              this._makeCheckbox(item, value, newPath);
-            } else if (item instanceof Object) {
-              // collapse the physics options that are not enabled
-              let draw = true;
-              if (path.indexOf("physics") !== -1) {
-                if (
-                  this.moduleOptions.physics.solver !== subObj &&
-                  subObj !== "wind"
-                ) {
-                  draw = false;
-                }
-              }
-
-              if (draw === true) {
-                // initially collapse options with an disabled enabled option.
-                if (item.enabled !== undefined) {
-                  const enabledPath = esnext.copyAndExtendArray(newPath, "enabled");
-                  const enabledValue = this._getValue(enabledPath);
-                  if (enabledValue === true) {
-                    const label = this._makeLabel(subObj, newPath, true);
-                    this._makeItem(newPath, label);
-                    visibleInSet =
-                      this._handleObject(item, newPath) || visibleInSet;
-                  } else {
-                    this._makeCheckbox(item, enabledValue, newPath);
-                  }
-                } else {
-                  const label = this._makeLabel(subObj, newPath, true);
-                  this._makeItem(newPath, label);
-                  visibleInSet =
-                    this._handleObject(item, newPath) || visibleInSet;
-                }
-              }
-            } else {
-              console.error("dont know how to handle", item, subObj, newPath);
-            }
-          }
-        }
-      }
-      return visibleInSet;
-    }
-
-    /**
-     * handle the array type of option
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _handleArray(arr, value, path) {
-      if (typeof arr[0] === "string" && arr[0] === "color") {
-        this._makeColorField(arr, value, path);
-        if (arr[1] !== value) {
-          this.changedOptions.push({ path: path, value: value });
-        }
-      } else if (typeof arr[0] === "string") {
-        this._makeDropdown(arr, value, path);
-        if (arr[0] !== value) {
-          this.changedOptions.push({ path: path, value: value });
-        }
-      } else if (typeof arr[0] === "number") {
-        this._makeRange(arr, value, path);
-        if (arr[0] !== value) {
-          this.changedOptions.push({ path: path, value: Number(value) });
-        }
-      }
-    }
-
-    /**
-     * called to update the network with the new settings.
-     *
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-    _update(value, path) {
-      const options = this._constructOptions(value, path);
-
-      if (
-        this.parent.body &&
-        this.parent.body.emitter &&
-        this.parent.body.emitter.emit
-      ) {
-        this.parent.body.emitter.emit("configChange", options);
-      }
-      this.initialized = true;
-      this.parent.setOptions(options);
-    }
-
-    /**
-     *
-     * @param {string | boolean} value
-     * @param {Array.<string>} path
-     * @param {{}} optionsObj
-     * @returns {{}}
-     * @private
-     */
-    _constructOptions(value, path, optionsObj = {}) {
-      let pointer = optionsObj;
-
-      // when dropdown boxes can be string or boolean, we typecast it into correct types
-      value = value === "true" ? true : value;
-      value = value === "false" ? false : value;
-
-      for (let i = 0; i < path.length; i++) {
-        if (path[i] !== "global") {
-          if (pointer[path[i]] === undefined) {
-            pointer[path[i]] = {};
-          }
-          if (i !== path.length - 1) {
-            pointer = pointer[path[i]];
-          } else {
-            pointer[path[i]] = value;
-          }
-        }
-      }
-      return optionsObj;
-    }
-
-    /**
-     * @private
-     */
-    _printOptions() {
-      const options = this.getOptions();
-
-      while (this.optionsContainer.firstChild) {
-        this.optionsContainer.removeChild(this.optionsContainer.firstChild);
-      }
-      this.optionsContainer.appendChild(
-        wrapInTag("pre", "const options = " + JSON.stringify(options, null, 2))
-      );
-    }
-
-    /**
-     *
-     * @returns {{}} options
-     */
-    getOptions() {
-      const options = {};
-      for (let i = 0; i < this.changedOptions.length; i++) {
-        this._constructOptions(
-          this.changedOptions[i].value,
-          this.changedOptions[i].path,
-          options
-        );
-      }
-      return options;
     }
   }
 
@@ -25729,11 +25740,11 @@
     }
 
     if (options !== undefined) {
-      const errorFound = Validator.validate(options, allOptions$1);
+      const errorFound = Validator$1.validate(options, allOptions$1);
       if (errorFound === true) {
         console.error(
           "%cErrors have been found in the supplied options object.",
-          printStyle
+          VALIDATOR_PRINT_STYLE$1
         );
       }
 
@@ -25775,7 +25786,7 @@
 
       if ("configure" in options) {
         if (!this.configurator) {
-          this.configurator = new Configurator(
+          this.configurator = new Configurator$1(
             this,
             this.body.container,
             configureOptions,
@@ -25819,7 +25830,7 @@
       if (options.clickToUse !== undefined) {
         if (options.clickToUse === true) {
           if (this.activator === undefined) {
-            this.activator = new Activator(this.canvas.frame);
+            this.activator = new Activator$1(this.canvas.frame);
             this.activator.on("change", () => {
               this.body.emitter.emit("activate");
             });

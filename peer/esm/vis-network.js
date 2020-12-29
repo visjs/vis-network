@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2020-12-28T22:17:37.279Z
+ * @date    2020-12-29T19:12:32.318Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -9482,7 +9482,6 @@ function Activator(container) {
   };
 } // turn into an event emitter
 
-
 componentEmitter(Activator.prototype); // The currently active activator
 
 Activator.current = null;
@@ -9585,6 +9584,2440 @@ function _hasParent(element, parent) {
 
   return false;
 }
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+
+
+var arrayFill = function fill(value
+/* , start = 0, end = @length */
+) {
+  var O = toObject(this);
+  var length = toLength(O.length);
+  var argumentsLength = arguments.length;
+  var index = toAbsoluteIndex(argumentsLength > 1 ? arguments[1] : undefined, length);
+  var end = argumentsLength > 2 ? arguments[2] : undefined;
+  var endPos = end === undefined ? length : toAbsoluteIndex(end, length);
+
+  while (endPos > index) O[index++] = value;
+
+  return O;
+};
+
+// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+
+_export({
+  target: 'Array',
+  proto: true
+}, {
+  fill: arrayFill
+}); // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+
+var fill = entryVirtual('Array').fill;
+
+var ArrayPrototype$a = Array.prototype;
+
+var fill_1 = function (it) {
+  var own = it.fill;
+  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.fill ? fill : own;
+};
+
+var fill$1 = fill_1;
+
+var fill$2 = fill$1;
+
+var slice$6 = [].slice;
+var MSIE = /MSIE .\./.test(engineUserAgent); // <- dirty ie9- check
+
+var wrap$1 = function (scheduler) {
+  return function (handler, timeout
+  /* , ...arguments */
+  ) {
+    var boundArgs = arguments.length > 2;
+    var args = boundArgs ? slice$6.call(arguments, 2) : undefined;
+    return scheduler(boundArgs ? function () {
+      // eslint-disable-next-line no-new-func
+      (typeof handler == 'function' ? handler : Function(handler)).apply(this, args);
+    } : handler, timeout);
+  };
+}; // ie9- setTimeout & setInterval additional parameters fix
+// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
+
+
+_export({
+  global: true,
+  bind: true,
+  forced: MSIE
+}, {
+  // `setTimeout` method
+  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
+  setTimeout: wrap$1(global$1.setTimeout),
+  // `setInterval` method
+  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
+  setInterval: wrap$1(global$1.setInterval)
+});
+
+var setTimeout$1 = path.setTimeout;
+
+var setTimeout$2 = setTimeout$1;
+
+var $stringify$1 = getBuiltIn('JSON', 'stringify');
+var re = /[\uD800-\uDFFF]/g;
+var low = /^[\uD800-\uDBFF]$/;
+var hi = /^[\uDC00-\uDFFF]$/;
+
+var fix = function (match, offset, string) {
+  var prev = string.charAt(offset - 1);
+  var next = string.charAt(offset + 1);
+
+  if (low.test(match) && !hi.test(next) || hi.test(match) && !low.test(prev)) {
+    return '\\u' + match.charCodeAt(0).toString(16);
+  }
+
+  return match;
+};
+
+var FORCED$3 = fails(function () {
+  return $stringify$1('\uDF06\uD834') !== '"\\udf06\\ud834"' || $stringify$1('\uDEAD') !== '"\\udead"';
+});
+
+if ($stringify$1) {
+  // https://github.com/tc39/proposal-well-formed-stringify
+  _export({
+    target: 'JSON',
+    stat: true,
+    forced: FORCED$3
+  }, {
+    // eslint-disable-next-line no-unused-vars
+    stringify: function stringify(it, replacer, space) {
+      var result = $stringify$1.apply(null, arguments);
+      return typeof result == 'string' ? result.replace(re, fix) : result;
+    }
+  });
+}
+
+if (!path.JSON) path.JSON = {
+  stringify: JSON.stringify
+}; // eslint-disable-next-line no-unused-vars
+
+var stringify = function stringify(it, replacer, space) {
+  return path.JSON.stringify.apply(null, arguments);
+};
+
+var stringify$1 = stringify;
+
+var stringify$2 = stringify$1;
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+var classCallCheck = _classCallCheck;
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+
+    defineProperty$6(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+var createClass = _createClass;
+
+var htmlColors = {
+  black: "#000000",
+  navy: "#000080",
+  darkblue: "#00008B",
+  mediumblue: "#0000CD",
+  blue: "#0000FF",
+  darkgreen: "#006400",
+  green: "#008000",
+  teal: "#008080",
+  darkcyan: "#008B8B",
+  deepskyblue: "#00BFFF",
+  darkturquoise: "#00CED1",
+  mediumspringgreen: "#00FA9A",
+  lime: "#00FF00",
+  springgreen: "#00FF7F",
+  aqua: "#00FFFF",
+  cyan: "#00FFFF",
+  midnightblue: "#191970",
+  dodgerblue: "#1E90FF",
+  lightseagreen: "#20B2AA",
+  forestgreen: "#228B22",
+  seagreen: "#2E8B57",
+  darkslategray: "#2F4F4F",
+  limegreen: "#32CD32",
+  mediumseagreen: "#3CB371",
+  turquoise: "#40E0D0",
+  royalblue: "#4169E1",
+  steelblue: "#4682B4",
+  darkslateblue: "#483D8B",
+  mediumturquoise: "#48D1CC",
+  indigo: "#4B0082",
+  darkolivegreen: "#556B2F",
+  cadetblue: "#5F9EA0",
+  cornflowerblue: "#6495ED",
+  mediumaquamarine: "#66CDAA",
+  dimgray: "#696969",
+  slateblue: "#6A5ACD",
+  olivedrab: "#6B8E23",
+  slategray: "#708090",
+  lightslategray: "#778899",
+  mediumslateblue: "#7B68EE",
+  lawngreen: "#7CFC00",
+  chartreuse: "#7FFF00",
+  aquamarine: "#7FFFD4",
+  maroon: "#800000",
+  purple: "#800080",
+  olive: "#808000",
+  gray: "#808080",
+  skyblue: "#87CEEB",
+  lightskyblue: "#87CEFA",
+  blueviolet: "#8A2BE2",
+  darkred: "#8B0000",
+  darkmagenta: "#8B008B",
+  saddlebrown: "#8B4513",
+  darkseagreen: "#8FBC8F",
+  lightgreen: "#90EE90",
+  mediumpurple: "#9370D8",
+  darkviolet: "#9400D3",
+  palegreen: "#98FB98",
+  darkorchid: "#9932CC",
+  yellowgreen: "#9ACD32",
+  sienna: "#A0522D",
+  brown: "#A52A2A",
+  darkgray: "#A9A9A9",
+  lightblue: "#ADD8E6",
+  greenyellow: "#ADFF2F",
+  paleturquoise: "#AFEEEE",
+  lightsteelblue: "#B0C4DE",
+  powderblue: "#B0E0E6",
+  firebrick: "#B22222",
+  darkgoldenrod: "#B8860B",
+  mediumorchid: "#BA55D3",
+  rosybrown: "#BC8F8F",
+  darkkhaki: "#BDB76B",
+  silver: "#C0C0C0",
+  mediumvioletred: "#C71585",
+  indianred: "#CD5C5C",
+  peru: "#CD853F",
+  chocolate: "#D2691E",
+  tan: "#D2B48C",
+  lightgrey: "#D3D3D3",
+  palevioletred: "#D87093",
+  thistle: "#D8BFD8",
+  orchid: "#DA70D6",
+  goldenrod: "#DAA520",
+  crimson: "#DC143C",
+  gainsboro: "#DCDCDC",
+  plum: "#DDA0DD",
+  burlywood: "#DEB887",
+  lightcyan: "#E0FFFF",
+  lavender: "#E6E6FA",
+  darksalmon: "#E9967A",
+  violet: "#EE82EE",
+  palegoldenrod: "#EEE8AA",
+  lightcoral: "#F08080",
+  khaki: "#F0E68C",
+  aliceblue: "#F0F8FF",
+  honeydew: "#F0FFF0",
+  azure: "#F0FFFF",
+  sandybrown: "#F4A460",
+  wheat: "#F5DEB3",
+  beige: "#F5F5DC",
+  whitesmoke: "#F5F5F5",
+  mintcream: "#F5FFFA",
+  ghostwhite: "#F8F8FF",
+  salmon: "#FA8072",
+  antiquewhite: "#FAEBD7",
+  linen: "#FAF0E6",
+  lightgoldenrodyellow: "#FAFAD2",
+  oldlace: "#FDF5E6",
+  red: "#FF0000",
+  fuchsia: "#FF00FF",
+  magenta: "#FF00FF",
+  deeppink: "#FF1493",
+  orangered: "#FF4500",
+  tomato: "#FF6347",
+  hotpink: "#FF69B4",
+  coral: "#FF7F50",
+  darkorange: "#FF8C00",
+  lightsalmon: "#FFA07A",
+  orange: "#FFA500",
+  lightpink: "#FFB6C1",
+  pink: "#FFC0CB",
+  gold: "#FFD700",
+  peachpuff: "#FFDAB9",
+  navajowhite: "#FFDEAD",
+  moccasin: "#FFE4B5",
+  bisque: "#FFE4C4",
+  mistyrose: "#FFE4E1",
+  blanchedalmond: "#FFEBCD",
+  papayawhip: "#FFEFD5",
+  lavenderblush: "#FFF0F5",
+  seashell: "#FFF5EE",
+  cornsilk: "#FFF8DC",
+  lemonchiffon: "#FFFACD",
+  floralwhite: "#FFFAF0",
+  snow: "#FFFAFA",
+  yellow: "#FFFF00",
+  lightyellow: "#FFFFE0",
+  ivory: "#FFFFF0",
+  white: "#FFFFFF"
+};
+/**
+ * @param {number} [pixelRatio=1]
+ */
+
+var ColorPicker = /*#__PURE__*/function () {
+  /**
+   * @param {number} [pixelRatio=1]
+   */
+  function ColorPicker() {
+    var pixelRatio = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+    classCallCheck(this, ColorPicker);
+
+    this.pixelRatio = pixelRatio;
+    this.generated = false;
+    this.centerCoordinates = {
+      x: 289 / 2,
+      y: 289 / 2
+    };
+    this.r = 289 * 0.49;
+    this.color = {
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 1.0
+    };
+    this.hueCircle = undefined;
+    this.initialColor = {
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 1.0
+    };
+    this.previousColor = undefined;
+    this.applied = false; // bound by
+
+    this.updateCallback = function () {};
+
+    this.closeCallback = function () {}; // create all DOM elements
+
+
+    this._create();
+  }
+  /**
+   * this inserts the colorPicker into a div from the DOM
+   *
+   * @param {Element} container
+   */
+
+
+  createClass(ColorPicker, [{
+    key: "insertTo",
+    value: function insertTo(container) {
+      if (this.hammer !== undefined) {
+        this.hammer.destroy();
+        this.hammer = undefined;
+      }
+
+      this.container = container;
+      this.container.appendChild(this.frame);
+
+      this._bindHammer();
+
+      this._setSize();
+    }
+    /**
+     * the callback is executed on apply and save. Bind it to the application
+     *
+     * @param {Function} callback
+     */
+
+  }, {
+    key: "setUpdateCallback",
+    value: function setUpdateCallback(callback) {
+      if (typeof callback === "function") {
+        this.updateCallback = callback;
+      } else {
+        throw new Error("Function attempted to set as colorPicker update callback is not a function.");
+      }
+    }
+    /**
+     * the callback is executed on apply and save. Bind it to the application
+     *
+     * @param {Function} callback
+     */
+
+  }, {
+    key: "setCloseCallback",
+    value: function setCloseCallback(callback) {
+      if (typeof callback === "function") {
+        this.closeCallback = callback;
+      } else {
+        throw new Error("Function attempted to set as colorPicker closing callback is not a function.");
+      }
+    }
+    /**
+     *
+     * @param {string} color
+     * @returns {string}
+     * @private
+     */
+
+  }, {
+    key: "_isColorString",
+    value: function _isColorString(color) {
+      if (typeof color === "string") {
+        return htmlColors[color];
+      }
+    }
+    /**
+     * Set the color of the colorPicker
+     * Supported formats:
+     * 'red'                   --> HTML color string
+     * '#ffffff'               --> hex string
+     * 'rgb(255,255,255)'      --> rgb string
+     * 'rgba(255,255,255,1.0)' --> rgba string
+     * {r:255,g:255,b:255}     --> rgb object
+     * {r:255,g:255,b:255,a:1.0} --> rgba object
+     *
+     * @param {string | object} color
+     * @param {boolean} [setInitial=true]
+     */
+
+  }, {
+    key: "setColor",
+    value: function setColor(color) {
+      var setInitial = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      if (color === "none") {
+        return;
+      }
+
+      var rgba; // if a html color shorthand is used, convert to hex
+
+      var htmlColor = this._isColorString(color);
+
+      if (htmlColor !== undefined) {
+        color = htmlColor;
+      } // check format
+
+
+      if (isString(color) === true) {
+        if (isValidRGB(color) === true) {
+          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(",");
+          rgba = {
+            r: rgbaArray[0],
+            g: rgbaArray[1],
+            b: rgbaArray[2],
+            a: 1.0
+          };
+        } else if (isValidRGBA(color) === true) {
+          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(",");
+
+          rgba = {
+            r: _rgbaArray[0],
+            g: _rgbaArray[1],
+            b: _rgbaArray[2],
+            a: _rgbaArray[3]
+          };
+        } else if (isValidHex(color) === true) {
+          var rgbObj = hexToRGB(color);
+          rgba = {
+            r: rgbObj.r,
+            g: rgbObj.g,
+            b: rgbObj.b,
+            a: 1.0
+          };
+        }
+      } else {
+        if (color instanceof Object) {
+          if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
+            var alpha = color.a !== undefined ? color.a : "1.0";
+            rgba = {
+              r: color.r,
+              g: color.g,
+              b: color.b,
+              a: alpha
+            };
+          }
+        }
+      } // set color
+
+
+      if (rgba === undefined) {
+        throw new Error("Unknown color passed to the colorPicker. Supported are strings: rgb, hex, rgba. Object: rgb ({r:r,g:g,b:b,[a:a]}). Supplied: " + stringify$2(color));
+      } else {
+        this._setColor(rgba, setInitial);
+      }
+    }
+    /**
+     * this shows the color picker.
+     * The hue circle is constructed once and stored.
+     */
+
+  }, {
+    key: "show",
+    value: function show() {
+      if (this.closeCallback !== undefined) {
+        this.closeCallback();
+        this.closeCallback = undefined;
+      }
+
+      this.applied = false;
+      this.frame.style.display = "block";
+
+      this._generateHueCircle();
+    } // ------------------------------------------ PRIVATE ----------------------------- //
+
+    /**
+     * Hide the picker. Is called by the cancel button.
+     * Optional boolean to store the previous color for easy access later on.
+     *
+     * @param {boolean} [storePrevious=true]
+     * @private
+     */
+
+  }, {
+    key: "_hide",
+    value: function _hide() {
+      var _this = this;
+
+      var storePrevious = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      // store the previous color for next time;
+      if (storePrevious === true) {
+        this.previousColor = assign$2({}, this.color);
+      }
+
+      if (this.applied === true) {
+        this.updateCallback(this.initialColor);
+      }
+
+      this.frame.style.display = "none"; // call the closing callback, restoring the onclick method.
+      // this is in a setTimeout because it will trigger the show again before the click is done.
+
+      setTimeout$2(function () {
+        if (_this.closeCallback !== undefined) {
+          _this.closeCallback();
+
+          _this.closeCallback = undefined;
+        }
+      }, 0);
+    }
+    /**
+     * bound to the save button. Saves and hides.
+     *
+     * @private
+     */
+
+  }, {
+    key: "_save",
+    value: function _save() {
+      this.updateCallback(this.color);
+      this.applied = false;
+
+      this._hide();
+    }
+    /**
+     * Bound to apply button. Saves but does not close. Is undone by the cancel button.
+     *
+     * @private
+     */
+
+  }, {
+    key: "_apply",
+    value: function _apply() {
+      this.applied = true;
+      this.updateCallback(this.color);
+
+      this._updatePicker(this.color);
+    }
+    /**
+     * load the color from the previous session.
+     *
+     * @private
+     */
+
+  }, {
+    key: "_loadLast",
+    value: function _loadLast() {
+      if (this.previousColor !== undefined) {
+        this.setColor(this.previousColor, false);
+      } else {
+        alert("There is no last color to load...");
+      }
+    }
+    /**
+     * set the color, place the picker
+     *
+     * @param {object} rgba
+     * @param {boolean} [setInitial=true]
+     * @private
+     */
+
+  }, {
+    key: "_setColor",
+    value: function _setColor(rgba) {
+      var setInitial = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      // store the initial color
+      if (setInitial === true) {
+        this.initialColor = assign$2({}, rgba);
+      }
+
+      this.color = rgba;
+      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
+      var angleConvert = 2 * Math.PI;
+      var radius = this.r * hsv.s;
+      var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
+      var y = this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
+      this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + "px";
+      this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + "px";
+
+      this._updatePicker(rgba);
+    }
+    /**
+     * bound to opacity control
+     *
+     * @param {number} value
+     * @private
+     */
+
+  }, {
+    key: "_setOpacity",
+    value: function _setOpacity(value) {
+      this.color.a = value / 100;
+
+      this._updatePicker(this.color);
+    }
+    /**
+     * bound to brightness control
+     *
+     * @param {number} value
+     * @private
+     */
+
+  }, {
+    key: "_setBrightness",
+    value: function _setBrightness(value) {
+      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
+      hsv.v = value / 100;
+      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
+      rgba["a"] = this.color.a;
+      this.color = rgba;
+
+      this._updatePicker();
+    }
+    /**
+     * update the color picker. A black circle overlays the hue circle to mimic the brightness decreasing.
+     *
+     * @param {object} rgba
+     * @private
+     */
+
+  }, {
+    key: "_updatePicker",
+    value: function _updatePicker() {
+      var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
+      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
+      var ctx = this.colorPickerCanvas.getContext("2d");
+
+      if (this.pixelRation === undefined) {
+        this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
+      }
+
+      ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0); // clear the canvas
+
+      var w = this.colorPickerCanvas.clientWidth;
+      var h = this.colorPickerCanvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      ctx.putImageData(this.hueCircle, 0, 0);
+      ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
+      ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
+
+      fill$2(ctx).call(ctx);
+
+      this.brightnessRange.value = 100 * hsv.v;
+      this.opacityRange.value = 100 * rgba.a;
+      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
+      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
+    }
+    /**
+     * used by create to set the size of the canvas.
+     *
+     * @private
+     */
+
+  }, {
+    key: "_setSize",
+    value: function _setSize() {
+      this.colorPickerCanvas.style.width = "100%";
+      this.colorPickerCanvas.style.height = "100%";
+      this.colorPickerCanvas.width = 289 * this.pixelRatio;
+      this.colorPickerCanvas.height = 289 * this.pixelRatio;
+    }
+    /**
+     * create all dom elements
+     * TODO: cleanup, lots of similar dom elements
+     *
+     * @private
+     */
+
+  }, {
+    key: "_create",
+    value: function _create() {
+      var _context, _context2, _context3, _context4;
+
+      this.frame = document.createElement("div");
+      this.frame.className = "vis-color-picker";
+      this.colorPickerDiv = document.createElement("div");
+      this.colorPickerSelector = document.createElement("div");
+      this.colorPickerSelector.className = "vis-selector";
+      this.colorPickerDiv.appendChild(this.colorPickerSelector);
+      this.colorPickerCanvas = document.createElement("canvas");
+      this.colorPickerDiv.appendChild(this.colorPickerCanvas);
+
+      if (!this.colorPickerCanvas.getContext) {
+        var noCanvas = document.createElement("DIV");
+        noCanvas.style.color = "red";
+        noCanvas.style.fontWeight = "bold";
+        noCanvas.style.padding = "10px";
+        noCanvas.innerText = "Error: your browser does not support HTML canvas";
+        this.colorPickerCanvas.appendChild(noCanvas);
+      } else {
+        var ctx = this.colorPickerCanvas.getContext("2d");
+        this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
+        this.colorPickerCanvas.getContext("2d").setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
+      }
+
+      this.colorPickerDiv.className = "vis-color";
+      this.opacityDiv = document.createElement("div");
+      this.opacityDiv.className = "vis-opacity";
+      this.brightnessDiv = document.createElement("div");
+      this.brightnessDiv.className = "vis-brightness";
+      this.arrowDiv = document.createElement("div");
+      this.arrowDiv.className = "vis-arrow";
+      this.opacityRange = document.createElement("input");
+
+      try {
+        this.opacityRange.type = "range"; // Not supported on IE9
+
+        this.opacityRange.min = "0";
+        this.opacityRange.max = "100";
+      } catch (err) {// TODO: Add some error handling.
+      }
+
+      this.opacityRange.value = "100";
+      this.opacityRange.className = "vis-range";
+      this.brightnessRange = document.createElement("input");
+
+      try {
+        this.brightnessRange.type = "range"; // Not supported on IE9
+
+        this.brightnessRange.min = "0";
+        this.brightnessRange.max = "100";
+      } catch (err) {// TODO: Add some error handling.
+      }
+
+      this.brightnessRange.value = "100";
+      this.brightnessRange.className = "vis-range";
+      this.opacityDiv.appendChild(this.opacityRange);
+      this.brightnessDiv.appendChild(this.brightnessRange);
+      var me = this;
+
+      this.opacityRange.onchange = function () {
+        me._setOpacity(this.value);
+      };
+
+      this.opacityRange.oninput = function () {
+        me._setOpacity(this.value);
+      };
+
+      this.brightnessRange.onchange = function () {
+        me._setBrightness(this.value);
+      };
+
+      this.brightnessRange.oninput = function () {
+        me._setBrightness(this.value);
+      };
+
+      this.brightnessLabel = document.createElement("div");
+      this.brightnessLabel.className = "vis-label vis-brightness";
+      this.brightnessLabel.innerText = "brightness:";
+      this.opacityLabel = document.createElement("div");
+      this.opacityLabel.className = "vis-label vis-opacity";
+      this.opacityLabel.innerText = "opacity:";
+      this.newColorDiv = document.createElement("div");
+      this.newColorDiv.className = "vis-new-color";
+      this.newColorDiv.innerText = "new";
+      this.initialColorDiv = document.createElement("div");
+      this.initialColorDiv.className = "vis-initial-color";
+      this.initialColorDiv.innerText = "initial";
+      this.cancelButton = document.createElement("div");
+      this.cancelButton.className = "vis-button vis-cancel";
+      this.cancelButton.innerText = "cancel";
+      this.cancelButton.onclick = bind$2(_context = this._hide).call(_context, this, false);
+      this.applyButton = document.createElement("div");
+      this.applyButton.className = "vis-button vis-apply";
+      this.applyButton.innerText = "apply";
+      this.applyButton.onclick = bind$2(_context2 = this._apply).call(_context2, this);
+      this.saveButton = document.createElement("div");
+      this.saveButton.className = "vis-button vis-save";
+      this.saveButton.innerText = "save";
+      this.saveButton.onclick = bind$2(_context3 = this._save).call(_context3, this);
+      this.loadButton = document.createElement("div");
+      this.loadButton.className = "vis-button vis-load";
+      this.loadButton.innerText = "load last";
+      this.loadButton.onclick = bind$2(_context4 = this._loadLast).call(_context4, this);
+      this.frame.appendChild(this.colorPickerDiv);
+      this.frame.appendChild(this.arrowDiv);
+      this.frame.appendChild(this.brightnessLabel);
+      this.frame.appendChild(this.brightnessDiv);
+      this.frame.appendChild(this.opacityLabel);
+      this.frame.appendChild(this.opacityDiv);
+      this.frame.appendChild(this.newColorDiv);
+      this.frame.appendChild(this.initialColorDiv);
+      this.frame.appendChild(this.cancelButton);
+      this.frame.appendChild(this.applyButton);
+      this.frame.appendChild(this.saveButton);
+      this.frame.appendChild(this.loadButton);
+    }
+    /**
+     * bind hammer to the color picker
+     *
+     * @private
+     */
+
+  }, {
+    key: "_bindHammer",
+    value: function _bindHammer() {
+      var _this2 = this;
+
+      this.drag = {};
+      this.pinch = {};
+      this.hammer = new Hammer$1(this.colorPickerCanvas);
+      this.hammer.get("pinch").set({
+        enable: true
+      });
+      this.hammer.on("hammer.input", function (event) {
+        if (event.isFirst) {
+          _this2._moveSelector(event);
+        }
+      });
+      this.hammer.on("tap", function (event) {
+        _this2._moveSelector(event);
+      });
+      this.hammer.on("panstart", function (event) {
+        _this2._moveSelector(event);
+      });
+      this.hammer.on("panmove", function (event) {
+        _this2._moveSelector(event);
+      });
+      this.hammer.on("panend", function (event) {
+        _this2._moveSelector(event);
+      });
+    }
+    /**
+     * generate the hue circle. This is relatively heavy (200ms) and is done only once on the first time it is shown.
+     *
+     * @private
+     */
+
+  }, {
+    key: "_generateHueCircle",
+    value: function _generateHueCircle() {
+      if (this.generated === false) {
+        var ctx = this.colorPickerCanvas.getContext("2d");
+
+        if (this.pixelRation === undefined) {
+          this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
+        }
+
+        ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0); // clear the canvas
+
+        var w = this.colorPickerCanvas.clientWidth;
+        var h = this.colorPickerCanvas.clientHeight;
+        ctx.clearRect(0, 0, w, h); // draw hue circle
+
+        var x, y, hue, sat;
+        this.centerCoordinates = {
+          x: w * 0.5,
+          y: h * 0.5
+        };
+        this.r = 0.49 * w;
+        var angleConvert = 2 * Math.PI / 360;
+        var hfac = 1 / 360;
+        var sfac = 1 / this.r;
+        var rgb;
+
+        for (hue = 0; hue < 360; hue++) {
+          for (sat = 0; sat < this.r; sat++) {
+            x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
+            y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
+            rgb = HSVToRGB(hue * hfac, sat * sfac, 1);
+            ctx.fillStyle = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+            ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
+          }
+        }
+
+        ctx.strokeStyle = "rgba(0,0,0,1)";
+        ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
+        ctx.stroke();
+        this.hueCircle = ctx.getImageData(0, 0, w, h);
+      }
+
+      this.generated = true;
+    }
+    /**
+     * move the selector. This is called by hammer functions.
+     *
+     * @param {Event}  event   The event
+     * @private
+     */
+
+  }, {
+    key: "_moveSelector",
+    value: function _moveSelector(event) {
+      var rect = this.colorPickerDiv.getBoundingClientRect();
+      var left = event.center.x - rect.left;
+      var top = event.center.y - rect.top;
+      var centerY = 0.5 * this.colorPickerDiv.clientHeight;
+      var centerX = 0.5 * this.colorPickerDiv.clientWidth;
+      var x = left - centerX;
+      var y = top - centerY;
+      var angle = Math.atan2(x, y);
+      var radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
+      var newTop = Math.cos(angle) * radius + centerY;
+      var newLeft = Math.sin(angle) * radius + centerX;
+      this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + "px";
+      this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + "px"; // set color
+
+      var h = angle / (2 * Math.PI);
+      h = h < 0 ? h + 1 : h;
+      var s = radius / this.r;
+      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
+      hsv.h = h;
+      hsv.s = s;
+      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
+      rgba["a"] = this.color.a;
+      this.color = rgba; // update previews
+
+      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
+      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
+    }
+  }]);
+
+  return ColorPicker;
+}();
+
+/**
+ * Wrap given text (last argument) in HTML elements (all preceding arguments).
+ *
+ * @param {...any} rest - List of tag names followed by inner text.
+ *
+ * @returns An element or a text node.
+ */
+
+function wrapInTag() {
+  for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
+    rest[_key] = arguments[_key];
+  }
+
+  if (rest.length < 1) {
+    throw new TypeError("Invalid arguments.");
+  } else if (rest.length === 1) {
+    return document.createTextNode(rest[0]);
+  } else {
+    var element = document.createElement(rest[0]);
+    element.appendChild(wrapInTag(slice$5(rest).call(rest, 1)));
+    return element;
+  }
+}
+/**
+ * The way this works is for all properties of this.possible options, you can supply the property name in any form to list the options.
+ * Boolean options are recognised as Boolean
+ * Number options should be written as array: [default value, min value, max value, stepsize]
+ * Colors should be written as array: ['color', '#ffffff']
+ * Strings with should be written as array: [option1, option2, option3, ..]
+ *
+ * The options are matched with their counterparts in each of the modules and the values used in the configuration are
+ */
+
+
+var Configurator = /*#__PURE__*/function () {
+  /**
+   * @param {object} parentModule        | the location where parentModule.setOptions() can be called
+   * @param {object} defaultContainer    | the default container of the module
+   * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
+   * @param {number} pixelRatio          | canvas pixel ratio
+   */
+  function Configurator(parentModule, defaultContainer, configureOptions) {
+    var pixelRatio = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+
+    classCallCheck(this, Configurator);
+
+    this.parent = parentModule;
+    this.changedOptions = [];
+    this.container = defaultContainer;
+    this.allowCreation = false;
+    this.options = {};
+    this.initialized = false;
+    this.popupCounter = 0;
+    this.defaultOptions = {
+      enabled: false,
+      filter: true,
+      container: undefined,
+      showButton: true
+    };
+
+    assign$2(this.options, this.defaultOptions);
+
+    this.configureOptions = configureOptions;
+    this.moduleOptions = {};
+    this.domElements = [];
+    this.popupDiv = {};
+    this.popupLimit = 5;
+    this.popupHistory = {};
+    this.colorPicker = new ColorPicker(pixelRatio);
+    this.wrapper = undefined;
+  }
+  /**
+   * refresh all options.
+   * Because all modules parse their options by themselves, we just use their options. We copy them here.
+   *
+   * @param {object} options
+   */
+
+
+  createClass(Configurator, [{
+    key: "setOptions",
+    value: function setOptions(options) {
+      if (options !== undefined) {
+        // reset the popup history because the indices may have been changed.
+        this.popupHistory = {};
+
+        this._removePopup();
+
+        var enabled = true;
+
+        if (typeof options === "string") {
+          this.options.filter = options;
+        } else if (isArray$5(options)) {
+          this.options.filter = options.join();
+        } else if (_typeof_1(options) === "object") {
+          if (options == null) {
+            throw new TypeError("options cannot be null");
+          }
+
+          if (options.container !== undefined) {
+            this.options.container = options.container;
+          }
+
+          if (filter$2(options) !== undefined) {
+            this.options.filter = filter$2(options);
+          }
+
+          if (options.showButton !== undefined) {
+            this.options.showButton = options.showButton;
+          }
+
+          if (options.enabled !== undefined) {
+            enabled = options.enabled;
+          }
+        } else if (typeof options === "boolean") {
+          this.options.filter = true;
+          enabled = options;
+        } else if (typeof options === "function") {
+          this.options.filter = options;
+          enabled = true;
+        }
+
+        if (filter$2(this.options) === false) {
+          enabled = false;
+        }
+
+        this.options.enabled = enabled;
+      }
+
+      this._clean();
+    }
+    /**
+     *
+     * @param {object} moduleOptions
+     */
+
+  }, {
+    key: "setModuleOptions",
+    value: function setModuleOptions(moduleOptions) {
+      this.moduleOptions = moduleOptions;
+
+      if (this.options.enabled === true) {
+        this._clean();
+
+        if (this.options.container !== undefined) {
+          this.container = this.options.container;
+        }
+
+        this._create();
+      }
+    }
+    /**
+     * Create all DOM elements
+     *
+     * @private
+     */
+
+  }, {
+    key: "_create",
+    value: function _create() {
+      this._clean();
+
+      this.changedOptions = [];
+
+      var filter = filter$2(this.options);
+
+      var counter = 0;
+      var show = false;
+
+      for (var option in this.configureOptions) {
+        if (Object.prototype.hasOwnProperty.call(this.configureOptions, option)) {
+          this.allowCreation = false;
+          show = false;
+
+          if (typeof filter === "function") {
+            show = filter(option, []);
+            show = show || this._handleObject(this.configureOptions[option], [option], true);
+          } else if (filter === true || indexOf$3(filter).call(filter, option) !== -1) {
+            show = true;
+          }
+
+          if (show !== false) {
+            this.allowCreation = true; // linebreak between categories
+
+            if (counter > 0) {
+              this._makeItem([]);
+            } // a header for the category
+
+
+            this._makeHeader(option); // get the sub options
+
+
+            this._handleObject(this.configureOptions[option], [option]);
+          }
+
+          counter++;
+        }
+      }
+
+      this._makeButton();
+
+      this._push(); //~ this.colorPicker.insertTo(this.container);
+
+    }
+    /**
+     * draw all DOM elements on the screen
+     *
+     * @private
+     */
+
+  }, {
+    key: "_push",
+    value: function _push() {
+      this.wrapper = document.createElement("div");
+      this.wrapper.className = "vis-configuration-wrapper";
+      this.container.appendChild(this.wrapper);
+
+      for (var i = 0; i < this.domElements.length; i++) {
+        this.wrapper.appendChild(this.domElements[i]);
+      }
+
+      this._showPopupIfNeeded();
+    }
+    /**
+     * delete all DOM elements
+     *
+     * @private
+     */
+
+  }, {
+    key: "_clean",
+    value: function _clean() {
+      for (var i = 0; i < this.domElements.length; i++) {
+        this.wrapper.removeChild(this.domElements[i]);
+      }
+
+      if (this.wrapper !== undefined) {
+        this.container.removeChild(this.wrapper);
+        this.wrapper = undefined;
+      }
+
+      this.domElements = [];
+
+      this._removePopup();
+    }
+    /**
+     * get the value from the actualOptions if it exists
+     *
+     * @param {Array} path    | where to look for the actual option
+     * @returns {*}
+     * @private
+     */
+
+  }, {
+    key: "_getValue",
+    value: function _getValue(path) {
+      var base = this.moduleOptions;
+
+      for (var i = 0; i < path.length; i++) {
+        if (base[path[i]] !== undefined) {
+          base = base[path[i]];
+        } else {
+          base = undefined;
+          break;
+        }
+      }
+
+      return base;
+    }
+    /**
+     * all option elements are wrapped in an item
+     *
+     * @param {Array} path    | where to look for the actual option
+     * @param {Array.<Element>} domElements
+     * @returns {number}
+     * @private
+     */
+
+  }, {
+    key: "_makeItem",
+    value: function _makeItem(path) {
+      if (this.allowCreation === true) {
+        var item = document.createElement("div");
+        item.className = "vis-configuration vis-config-item vis-config-s" + path.length;
+
+        for (var _len2 = arguments.length, domElements = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+          domElements[_key2 - 1] = arguments[_key2];
+        }
+
+        forEach$2(domElements).call(domElements, function (element) {
+          item.appendChild(element);
+        });
+
+        this.domElements.push(item);
+        return this.domElements.length;
+      }
+
+      return 0;
+    }
+    /**
+     * header for major subjects
+     *
+     * @param {string} name
+     * @private
+     */
+
+  }, {
+    key: "_makeHeader",
+    value: function _makeHeader(name) {
+      var div = document.createElement("div");
+      div.className = "vis-configuration vis-config-header";
+      div.innerText = name;
+
+      this._makeItem([], div);
+    }
+    /**
+     * make a label, if it is an object label, it gets different styling.
+     *
+     * @param {string} name
+     * @param {Array} path    | where to look for the actual option
+     * @param {string} objectLabel
+     * @returns {HTMLElement}
+     * @private
+     */
+
+  }, {
+    key: "_makeLabel",
+    value: function _makeLabel(name, path) {
+      var objectLabel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var div = document.createElement("div");
+      div.className = "vis-configuration vis-config-label vis-config-s" + path.length;
+
+      if (objectLabel === true) {
+        while (div.firstChild) {
+          div.removeChild(div.firstChild);
+        }
+
+        div.appendChild(wrapInTag("i", "b", name));
+      } else {
+        div.innerText = name + ":";
+      }
+
+      return div;
+    }
+    /**
+     * make a dropdown list for multiple possible string optoins
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_makeDropdown",
+    value: function _makeDropdown(arr, value, path) {
+      var select = document.createElement("select");
+      select.className = "vis-configuration vis-config-select";
+      var selectedValue = 0;
+
+      if (value !== undefined) {
+        if (indexOf$3(arr).call(arr, value) !== -1) {
+          selectedValue = indexOf$3(arr).call(arr, value);
+        }
+      }
+
+      for (var i = 0; i < arr.length; i++) {
+        var option = document.createElement("option");
+        option.value = arr[i];
+
+        if (i === selectedValue) {
+          option.selected = "selected";
+        }
+
+        option.innerText = arr[i];
+        select.appendChild(option);
+      }
+
+      var me = this;
+
+      select.onchange = function () {
+        me._update(this.value, path);
+      };
+
+      var label = this._makeLabel(path[path.length - 1], path);
+
+      this._makeItem(path, label, select);
+    }
+    /**
+     * make a range object for numeric options
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_makeRange",
+    value: function _makeRange(arr, value, path) {
+      var defaultValue = arr[0];
+      var min = arr[1];
+      var max = arr[2];
+      var step = arr[3];
+      var range = document.createElement("input");
+      range.className = "vis-configuration vis-config-range";
+
+      try {
+        range.type = "range"; // not supported on IE9
+
+        range.min = min;
+        range.max = max;
+      } catch (err) {// TODO: Add some error handling.
+      }
+
+      range.step = step; // set up the popup settings in case they are needed.
+
+      var popupString = "";
+      var popupValue = 0;
+
+      if (value !== undefined) {
+        var factor = 1.2;
+
+        if (value < 0 && value * factor < min) {
+          range.min = Math.ceil(value * factor);
+          popupValue = range.min;
+          popupString = "range increased";
+        } else if (value / factor < min) {
+          range.min = Math.ceil(value / factor);
+          popupValue = range.min;
+          popupString = "range increased";
+        }
+
+        if (value * factor > max && max !== 1) {
+          range.max = Math.ceil(value * factor);
+          popupValue = range.max;
+          popupString = "range increased";
+        }
+
+        range.value = value;
+      } else {
+        range.value = defaultValue;
+      }
+
+      var input = document.createElement("input");
+      input.className = "vis-configuration vis-config-rangeinput";
+      input.value = range.value;
+      var me = this;
+
+      range.onchange = function () {
+        input.value = this.value;
+
+        me._update(Number(this.value), path);
+      };
+
+      range.oninput = function () {
+        input.value = this.value;
+      };
+
+      var label = this._makeLabel(path[path.length - 1], path);
+
+      var itemIndex = this._makeItem(path, label, range, input); // if a popup is needed AND it has not been shown for this value, show it.
+
+
+      if (popupString !== "" && this.popupHistory[itemIndex] !== popupValue) {
+        this.popupHistory[itemIndex] = popupValue;
+
+        this._setupPopup(popupString, itemIndex);
+      }
+    }
+    /**
+     * make a button object
+     *
+     * @private
+     */
+
+  }, {
+    key: "_makeButton",
+    value: function _makeButton() {
+      var _this = this;
+
+      if (this.options.showButton === true) {
+        var generateButton = document.createElement("div");
+        generateButton.className = "vis-configuration vis-config-button";
+        generateButton.innerText = "generate options";
+
+        generateButton.onclick = function () {
+          _this._printOptions();
+        };
+
+        generateButton.onmouseover = function () {
+          generateButton.className = "vis-configuration vis-config-button hover";
+        };
+
+        generateButton.onmouseout = function () {
+          generateButton.className = "vis-configuration vis-config-button";
+        };
+
+        this.optionsContainer = document.createElement("div");
+        this.optionsContainer.className = "vis-configuration vis-config-option-container";
+        this.domElements.push(this.optionsContainer);
+        this.domElements.push(generateButton);
+      }
+    }
+    /**
+     * prepare the popup
+     *
+     * @param {string} string
+     * @param {number} index
+     * @private
+     */
+
+  }, {
+    key: "_setupPopup",
+    value: function _setupPopup(string, index) {
+      var _this2 = this;
+
+      if (this.initialized === true && this.allowCreation === true && this.popupCounter < this.popupLimit) {
+        var div = document.createElement("div");
+        div.id = "vis-configuration-popup";
+        div.className = "vis-configuration-popup";
+        div.innerText = string;
+
+        div.onclick = function () {
+          _this2._removePopup();
+        };
+
+        this.popupCounter += 1;
+        this.popupDiv = {
+          html: div,
+          index: index
+        };
+      }
+    }
+    /**
+     * remove the popup from the dom
+     *
+     * @private
+     */
+
+  }, {
+    key: "_removePopup",
+    value: function _removePopup() {
+      if (this.popupDiv.html !== undefined) {
+        this.popupDiv.html.parentNode.removeChild(this.popupDiv.html);
+        clearTimeout(this.popupDiv.hideTimeout);
+        clearTimeout(this.popupDiv.deleteTimeout);
+        this.popupDiv = {};
+      }
+    }
+    /**
+     * Show the popup if it is needed.
+     *
+     * @private
+     */
+
+  }, {
+    key: "_showPopupIfNeeded",
+    value: function _showPopupIfNeeded() {
+      var _this3 = this;
+
+      if (this.popupDiv.html !== undefined) {
+        var correspondingElement = this.domElements[this.popupDiv.index];
+        var rect = correspondingElement.getBoundingClientRect();
+        this.popupDiv.html.style.left = rect.left + "px";
+        this.popupDiv.html.style.top = rect.top - 30 + "px"; // 30 is the height;
+
+        document.body.appendChild(this.popupDiv.html);
+        this.popupDiv.hideTimeout = setTimeout$2(function () {
+          _this3.popupDiv.html.style.opacity = 0;
+        }, 1500);
+        this.popupDiv.deleteTimeout = setTimeout$2(function () {
+          _this3._removePopup();
+        }, 1800);
+      }
+    }
+    /**
+     * make a checkbox for boolean options.
+     *
+     * @param {number} defaultValue
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_makeCheckbox",
+    value: function _makeCheckbox(defaultValue, value, path) {
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "vis-configuration vis-config-checkbox";
+      checkbox.checked = defaultValue;
+
+      if (value !== undefined) {
+        checkbox.checked = value;
+
+        if (value !== defaultValue) {
+          if (_typeof_1(defaultValue) === "object") {
+            if (value !== defaultValue.enabled) {
+              this.changedOptions.push({
+                path: path,
+                value: value
+              });
+            }
+          } else {
+            this.changedOptions.push({
+              path: path,
+              value: value
+            });
+          }
+        }
+      }
+
+      var me = this;
+
+      checkbox.onchange = function () {
+        me._update(this.checked, path);
+      };
+
+      var label = this._makeLabel(path[path.length - 1], path);
+
+      this._makeItem(path, label, checkbox);
+    }
+    /**
+     * make a text input field for string options.
+     *
+     * @param {number} defaultValue
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_makeTextInput",
+    value: function _makeTextInput(defaultValue, value, path) {
+      var checkbox = document.createElement("input");
+      checkbox.type = "text";
+      checkbox.className = "vis-configuration vis-config-text";
+      checkbox.value = value;
+
+      if (value !== defaultValue) {
+        this.changedOptions.push({
+          path: path,
+          value: value
+        });
+      }
+
+      var me = this;
+
+      checkbox.onchange = function () {
+        me._update(this.value, path);
+      };
+
+      var label = this._makeLabel(path[path.length - 1], path);
+
+      this._makeItem(path, label, checkbox);
+    }
+    /**
+     * make a color field with a color picker for color fields
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_makeColorField",
+    value: function _makeColorField(arr, value, path) {
+      var _this4 = this;
+
+      var defaultColor = arr[1];
+      var div = document.createElement("div");
+      value = value === undefined ? defaultColor : value;
+
+      if (value !== "none") {
+        div.className = "vis-configuration vis-config-colorBlock";
+        div.style.backgroundColor = value;
+      } else {
+        div.className = "vis-configuration vis-config-colorBlock none";
+      }
+
+      value = value === undefined ? defaultColor : value;
+
+      div.onclick = function () {
+        _this4._showColorPicker(value, div, path);
+      };
+
+      var label = this._makeLabel(path[path.length - 1], path);
+
+      this._makeItem(path, label, div);
+    }
+    /**
+     * used by the color buttons to call the color picker.
+     *
+     * @param {number} value
+     * @param {HTMLElement} div
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_showColorPicker",
+    value: function _showColorPicker(value, div, path) {
+      var _this5 = this;
+
+      // clear the callback from this div
+      div.onclick = function () {};
+
+      this.colorPicker.insertTo(div);
+      this.colorPicker.show();
+      this.colorPicker.setColor(value);
+      this.colorPicker.setUpdateCallback(function (color) {
+        var colorString = "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
+        div.style.backgroundColor = colorString;
+
+        _this5._update(colorString, path);
+      }); // on close of the colorpicker, restore the callback.
+
+      this.colorPicker.setCloseCallback(function () {
+        div.onclick = function () {
+          _this5._showColorPicker(value, div, path);
+        };
+      });
+    }
+    /**
+     * parse an object and draw the correct items
+     *
+     * @param {object} obj
+     * @param {Array} [path=[]]    | where to look for the actual option
+     * @param {boolean} [checkOnly=false]
+     * @returns {boolean}
+     * @private
+     */
+
+  }, {
+    key: "_handleObject",
+    value: function _handleObject(obj) {
+      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var checkOnly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var show = false;
+
+      var filter = filter$2(this.options);
+
+      var visibleInSet = false;
+
+      for (var subObj in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, subObj)) {
+          show = true;
+          var item = obj[subObj];
+          var newPath = copyAndExtendArray(path, subObj);
+
+          if (typeof filter === "function") {
+            show = filter(subObj, path); // if needed we must go deeper into the object.
+
+            if (show === false) {
+              if (!isArray$5(item) && typeof item !== "string" && typeof item !== "boolean" && item instanceof Object) {
+                this.allowCreation = false;
+                show = this._handleObject(item, newPath, true);
+                this.allowCreation = checkOnly === false;
+              }
+            }
+          }
+
+          if (show !== false) {
+            visibleInSet = true;
+
+            var value = this._getValue(newPath);
+
+            if (isArray$5(item)) {
+              this._handleArray(item, value, newPath);
+            } else if (typeof item === "string") {
+              this._makeTextInput(item, value, newPath);
+            } else if (typeof item === "boolean") {
+              this._makeCheckbox(item, value, newPath);
+            } else if (item instanceof Object) {
+              // collapse the physics options that are not enabled
+              var draw = true;
+
+              if (indexOf$3(path).call(path, "physics") !== -1) {
+                if (this.moduleOptions.physics.solver !== subObj && subObj !== "wind") {
+                  draw = false;
+                }
+              }
+
+              if (draw === true) {
+                // initially collapse options with an disabled enabled option.
+                if (item.enabled !== undefined) {
+                  var enabledPath = copyAndExtendArray(newPath, "enabled");
+
+                  var enabledValue = this._getValue(enabledPath);
+
+                  if (enabledValue === true) {
+                    var label = this._makeLabel(subObj, newPath, true);
+
+                    this._makeItem(newPath, label);
+
+                    visibleInSet = this._handleObject(item, newPath) || visibleInSet;
+                  } else {
+                    this._makeCheckbox(item, enabledValue, newPath);
+                  }
+                } else {
+                  var _label = this._makeLabel(subObj, newPath, true);
+
+                  this._makeItem(newPath, _label);
+
+                  visibleInSet = this._handleObject(item, newPath) || visibleInSet;
+                }
+              }
+            } else {
+              console.error("dont know how to handle", item, subObj, newPath);
+            }
+          }
+        }
+      }
+
+      return visibleInSet;
+    }
+    /**
+     * handle the array type of option
+     *
+     * @param {Array.<number>} arr
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_handleArray",
+    value: function _handleArray(arr, value, path) {
+      if (typeof arr[0] === "string" && arr[0] === "color") {
+        this._makeColorField(arr, value, path);
+
+        if (arr[1] !== value) {
+          this.changedOptions.push({
+            path: path,
+            value: value
+          });
+        }
+      } else if (typeof arr[0] === "string") {
+        this._makeDropdown(arr, value, path);
+
+        if (arr[0] !== value) {
+          this.changedOptions.push({
+            path: path,
+            value: value
+          });
+        }
+      } else if (typeof arr[0] === "number") {
+        this._makeRange(arr, value, path);
+
+        if (arr[0] !== value) {
+          this.changedOptions.push({
+            path: path,
+            value: Number(value)
+          });
+        }
+      }
+    }
+    /**
+     * called to update the network with the new settings.
+     *
+     * @param {number} value
+     * @param {Array} path    | where to look for the actual option
+     * @private
+     */
+
+  }, {
+    key: "_update",
+    value: function _update(value, path) {
+      var options = this._constructOptions(value, path);
+
+      if (this.parent.body && this.parent.body.emitter && this.parent.body.emitter.emit) {
+        this.parent.body.emitter.emit("configChange", options);
+      }
+
+      this.initialized = true;
+      this.parent.setOptions(options);
+    }
+    /**
+     *
+     * @param {string | boolean} value
+     * @param {Array.<string>} path
+     * @param {{}} optionsObj
+     * @returns {{}}
+     * @private
+     */
+
+  }, {
+    key: "_constructOptions",
+    value: function _constructOptions(value, path) {
+      var optionsObj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      var pointer = optionsObj; // when dropdown boxes can be string or boolean, we typecast it into correct types
+
+      value = value === "true" ? true : value;
+      value = value === "false" ? false : value;
+
+      for (var i = 0; i < path.length; i++) {
+        if (path[i] !== "global") {
+          if (pointer[path[i]] === undefined) {
+            pointer[path[i]] = {};
+          }
+
+          if (i !== path.length - 1) {
+            pointer = pointer[path[i]];
+          } else {
+            pointer[path[i]] = value;
+          }
+        }
+      }
+
+      return optionsObj;
+    }
+    /**
+     * @private
+     */
+
+  }, {
+    key: "_printOptions",
+    value: function _printOptions() {
+      var options = this.getOptions();
+
+      while (this.optionsContainer.firstChild) {
+        this.optionsContainer.removeChild(this.optionsContainer.firstChild);
+      }
+
+      this.optionsContainer.appendChild(wrapInTag("pre", "const options = " + stringify$2(options, null, 2)));
+    }
+    /**
+     *
+     * @returns {{}} options
+     */
+
+  }, {
+    key: "getOptions",
+    value: function getOptions() {
+      var options = {};
+
+      for (var i = 0; i < this.changedOptions.length; i++) {
+        this._constructOptions(this.changedOptions[i].value, this.changedOptions[i].path, options);
+      }
+
+      return options;
+    }
+  }]);
+
+  return Configurator;
+}();
+
+/**
+ * Popup is a class to create a popup window with some text
+ */
+
+var Popup = /*#__PURE__*/function () {
+  /**
+   * @param {Element} container       The container object.
+   * @param {string}  overflowMethod  How the popup should act to overflowing ('flip' or 'cap')
+   */
+  function Popup(container, overflowMethod) {
+    classCallCheck(this, Popup);
+
+    this.container = container;
+    this.overflowMethod = overflowMethod || "cap";
+    this.x = 0;
+    this.y = 0;
+    this.padding = 5;
+    this.hidden = false; // create the frame
+
+    this.frame = document.createElement("div");
+    this.frame.className = "vis-tooltip";
+    this.container.appendChild(this.frame);
+  }
+  /**
+   * @param {number} x   Horizontal position of the popup window
+   * @param {number} y   Vertical position of the popup window
+   */
+
+
+  createClass(Popup, [{
+    key: "setPosition",
+    value: function setPosition(x, y) {
+      this.x = _parseInt$2(x);
+      this.y = _parseInt$2(y);
+    }
+    /**
+     * Set the content for the popup window. This can be HTML code or text.
+     *
+     * @param {string | Element} content
+     */
+
+  }, {
+    key: "setText",
+    value: function setText(content) {
+      if (content instanceof Element) {
+        while (this.frame.firstChild) {
+          this.frame.removeChild(this.frame.firstChild);
+        }
+
+        this.frame.appendChild(content);
+      } else {
+        this.frame.innerHTML = content; // string containing text or HTML
+      }
+    }
+    /**
+     * Show the popup window
+     *
+     * @param {boolean} [doShow]    Show or hide the window
+     */
+
+  }, {
+    key: "show",
+    value: function show(doShow) {
+      if (doShow === undefined) {
+        doShow = true;
+      }
+
+      if (doShow === true) {
+        var height = this.frame.clientHeight;
+        var width = this.frame.clientWidth;
+        var maxHeight = this.frame.parentNode.clientHeight;
+        var maxWidth = this.frame.parentNode.clientWidth;
+        var left = 0,
+            top = 0;
+
+        if (this.overflowMethod == "flip") {
+          var isLeft = false,
+              isTop = true; // Where around the position it's located
+
+          if (this.y - height < this.padding) {
+            isTop = false;
+          }
+
+          if (this.x + width > maxWidth - this.padding) {
+            isLeft = true;
+          }
+
+          if (isLeft) {
+            left = this.x - width;
+          } else {
+            left = this.x;
+          }
+
+          if (isTop) {
+            top = this.y - height;
+          } else {
+            top = this.y;
+          }
+        } else {
+          top = this.y - height;
+
+          if (top + height + this.padding > maxHeight) {
+            top = maxHeight - height - this.padding;
+          }
+
+          if (top < this.padding) {
+            top = this.padding;
+          }
+
+          left = this.x;
+
+          if (left + width + this.padding > maxWidth) {
+            left = maxWidth - width - this.padding;
+          }
+
+          if (left < this.padding) {
+            left = this.padding;
+          }
+        }
+
+        this.frame.style.left = left + "px";
+        this.frame.style.top = top + "px";
+        this.frame.style.visibility = "visible";
+        this.hidden = false;
+      } else {
+        this.hide();
+      }
+    }
+    /**
+     * Hide the popup window
+     */
+
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.hidden = true;
+      this.frame.style.left = "0";
+      this.frame.style.top = "0";
+      this.frame.style.visibility = "hidden";
+    }
+    /**
+     * Remove the popup window
+     */
+
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.frame.parentNode.removeChild(this.frame); // Remove element from DOM
+    }
+  }]);
+
+  return Popup;
+}();
+
+var errorFound = false;
+var allOptions;
+var VALIDATOR_PRINT_STYLE = "background: #FFeeee; color: #dd0000";
+/**
+ *  Used to validate options.
+ */
+
+var Validator = /*#__PURE__*/function () {
+  /**
+   * @ignore
+   */
+  function Validator() {
+    classCallCheck(this, Validator);
+  }
+  /**
+   * Main function to be called
+   *
+   * @param {object} options
+   * @param {object} referenceOptions
+   * @param {object} subObject
+   * @returns {boolean}
+   * @static
+   */
+
+
+  createClass(Validator, null, [{
+    key: "validate",
+    value: function validate(options, referenceOptions, subObject) {
+      errorFound = false;
+      allOptions = referenceOptions;
+      var usedOptions = referenceOptions;
+
+      if (subObject !== undefined) {
+        usedOptions = referenceOptions[subObject];
+      }
+
+      Validator.parse(options, usedOptions, []);
+      return errorFound;
+    }
+    /**
+     * Will traverse an object recursively and check every value
+     *
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {Array} path    | where to look for the actual option
+     * @static
+     */
+
+  }, {
+    key: "parse",
+    value: function parse(options, referenceOptions, path) {
+      for (var option in options) {
+        if (Object.prototype.hasOwnProperty.call(options, option)) {
+          Validator.check(option, options, referenceOptions, path);
+        }
+      }
+    }
+    /**
+     * Check every value. If the value is an object, call the parse function on that object.
+     *
+     * @param {string} option
+     * @param {object} options
+     * @param {object} referenceOptions
+     * @param {Array} path    | where to look for the actual option
+     * @static
+     */
+
+  }, {
+    key: "check",
+    value: function check(option, options, referenceOptions, path) {
+      if (referenceOptions[option] === undefined && referenceOptions.__any__ === undefined) {
+        Validator.getSuggestion(option, referenceOptions, path);
+        return;
+      }
+
+      var referenceOption = option;
+      var is_object = true;
+
+      if (referenceOptions[option] === undefined && referenceOptions.__any__ !== undefined) {
+        // NOTE: This only triggers if the __any__ is in the top level of the options object.
+        //       THAT'S A REALLY BAD PLACE TO ALLOW IT!!!!
+        // TODO: Examine if needed, remove if possible
+        // __any__ is a wildcard. Any value is accepted and will be further analysed by reference.
+        referenceOption = "__any__"; // if the any-subgroup is not a predefined object in the configurator,
+        // we do not look deeper into the object.
+
+        is_object = Validator.getType(options[option]) === "object";
+      }
+
+      var refOptionObj = referenceOptions[referenceOption];
+
+      if (is_object && refOptionObj.__type__ !== undefined) {
+        refOptionObj = refOptionObj.__type__;
+      }
+
+      Validator.checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path);
+    }
+    /**
+     *
+     * @param {string}  option           | the option property
+     * @param {object}  options          | The supplied options object
+     * @param {object}  referenceOptions | The reference options containing all options and their allowed formats
+     * @param {string}  referenceOption  | Usually this is the same as option, except when handling an __any__ tag.
+     * @param {string}  refOptionObj     | This is the type object from the reference options
+     * @param {Array}   path             | where in the object is the option
+     * @static
+     */
+
+  }, {
+    key: "checkFields",
+    value: function checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path) {
+      var log = function log(message) {
+        console.error("%c" + message + Validator.printLocation(path, option), VALIDATOR_PRINT_STYLE);
+      };
+
+      var optionType = Validator.getType(options[option]);
+      var refOptionType = refOptionObj[optionType];
+
+      if (refOptionType !== undefined) {
+        // if the type is correct, we check if it is supposed to be one of a few select values
+        if (Validator.getType(refOptionType) === "array" && indexOf$3(refOptionType).call(refOptionType, options[option]) === -1) {
+          log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
+          errorFound = true;
+        } else if (optionType === "object" && referenceOption !== "__any__") {
+          path = copyAndExtendArray(path, option);
+          Validator.parse(options[option], referenceOptions[referenceOption], path);
+        }
+      } else if (refOptionObj["any"] === undefined) {
+        // type of the field is incorrect and the field cannot be any
+        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$3(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
+        errorFound = true;
+      }
+    }
+    /**
+     *
+     * @param {object | boolean | number | string | Array.<number> | Date | Node | Moment | undefined | null} object
+     * @returns {string}
+     * @static
+     */
+
+  }, {
+    key: "getType",
+    value: function getType(object) {
+      var type = _typeof_1(object);
+
+      if (type === "object") {
+        if (object === null) {
+          return "null";
+        }
+
+        if (object instanceof Boolean) {
+          return "boolean";
+        }
+
+        if (object instanceof Number) {
+          return "number";
+        }
+
+        if (object instanceof String) {
+          return "string";
+        }
+
+        if (isArray$5(object)) {
+          return "array";
+        }
+
+        if (object instanceof Date) {
+          return "date";
+        }
+
+        if (object.nodeType !== undefined) {
+          return "dom";
+        }
+
+        if (object._isAMomentObject === true) {
+          return "moment";
+        }
+
+        return "object";
+      } else if (type === "number") {
+        return "number";
+      } else if (type === "boolean") {
+        return "boolean";
+      } else if (type === "string") {
+        return "string";
+      } else if (type === undefined) {
+        return "undefined";
+      }
+
+      return type;
+    }
+    /**
+     * @param {string} option
+     * @param {object} options
+     * @param {Array.<string>} path
+     * @static
+     */
+
+  }, {
+    key: "getSuggestion",
+    value: function getSuggestion(option, options, path) {
+      var localSearch = Validator.findInOptions(option, options, path, false);
+      var globalSearch = Validator.findInOptions(option, allOptions, [], true);
+      var localSearchThreshold = 8;
+      var globalSearchThreshold = 4;
+      var msg;
+
+      if (localSearch.indexMatch !== undefined) {
+        msg = " in " + Validator.printLocation(localSearch.path, option, "") + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
+      } else if (globalSearch.distance <= globalSearchThreshold && localSearch.distance > globalSearch.distance) {
+        msg = " in " + Validator.printLocation(localSearch.path, option, "") + "Perhaps it was misplaced? Matching option found at: " + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, "");
+      } else if (localSearch.distance <= localSearchThreshold) {
+        msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator.printLocation(localSearch.path, option);
+      } else {
+        msg = ". Did you mean one of these: " + Validator.print(keys$3(options)) + Validator.printLocation(path, option);
+      }
+
+      console.error('%cUnknown option detected: "' + option + '"' + msg, VALIDATOR_PRINT_STYLE);
+      errorFound = true;
+    }
+    /**
+     * traverse the options in search for a match.
+     *
+     * @param {string} option
+     * @param {object} options
+     * @param {Array} path    | where to look for the actual option
+     * @param {boolean} [recursive=false]
+     * @returns {{closestMatch: string, path: Array, distance: number}}
+     * @static
+     */
+
+  }, {
+    key: "findInOptions",
+    value: function findInOptions(option, options, path) {
+      var recursive = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+      var min = 1e9;
+      var closestMatch = "";
+      var closestMatchPath = [];
+      var lowerCaseOption = option.toLowerCase();
+      var indexMatch = undefined;
+
+      for (var op in options) {
+        var distance = void 0;
+
+        if (options[op].__type__ !== undefined && recursive === true) {
+          var result = Validator.findInOptions(option, options[op], copyAndExtendArray(path, op));
+
+          if (min > result.distance) {
+            closestMatch = result.closestMatch;
+            closestMatchPath = result.path;
+            min = result.distance;
+            indexMatch = result.indexMatch;
+          }
+        } else {
+          var _context;
+
+          if (indexOf$3(_context = op.toLowerCase()).call(_context, lowerCaseOption) !== -1) {
+            indexMatch = op;
+          }
+
+          distance = Validator.levenshteinDistance(option, op);
+
+          if (min > distance) {
+            closestMatch = op;
+            closestMatchPath = copyArray(path);
+            min = distance;
+          }
+        }
+      }
+
+      return {
+        closestMatch: closestMatch,
+        path: closestMatchPath,
+        distance: min,
+        indexMatch: indexMatch
+      };
+    }
+    /**
+     * @param {Array.<string>} path
+     * @param {object} option
+     * @param {string} prefix
+     * @returns {string}
+     * @static
+     */
+
+  }, {
+    key: "printLocation",
+    value: function printLocation(path, option) {
+      var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Problem value found at: \n";
+      var str = "\n\n" + prefix + "options = {\n";
+
+      for (var i = 0; i < path.length; i++) {
+        for (var j = 0; j < i + 1; j++) {
+          str += "  ";
+        }
+
+        str += path[i] + ": {\n";
+      }
+
+      for (var _j = 0; _j < path.length + 1; _j++) {
+        str += "  ";
+      }
+
+      str += option + "\n";
+
+      for (var _i = 0; _i < path.length + 1; _i++) {
+        for (var _j2 = 0; _j2 < path.length - _i; _j2++) {
+          str += "  ";
+        }
+
+        str += "}\n";
+      }
+
+      return str + "\n\n";
+    }
+    /**
+     * @param {object} options
+     * @returns {string}
+     * @static
+     */
+
+  }, {
+    key: "print",
+    value: function print(options) {
+      return stringify$2(options).replace(/(")|(\[)|(\])|(,"__type__")/g, "").replace(/(,)/g, ", ");
+    }
+    /**
+     *  Compute the edit distance between the two given strings
+     * http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#JavaScript
+     *
+     * Copyright (c) 2011 Andrei Mackenzie
+     *
+     * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+     *
+     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+     *
+     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+     *
+     * @param {string} a
+     * @param {string} b
+     * @returns {Array.<Array.<number>>}}
+     * @static
+     */
+
+  }, {
+    key: "levenshteinDistance",
+    value: function levenshteinDistance(a, b) {
+      if (a.length === 0) return b.length;
+      if (b.length === 0) return a.length;
+      var matrix = []; // increment along the first column of each row
+
+      var i;
+
+      for (i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+      } // increment each column in the first row
+
+
+      var j;
+
+      for (j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+      } // Fill in the rest of the matrix
+
+
+      for (i = 1; i <= b.length; i++) {
+        for (j = 1; j <= a.length; j++) {
+          if (b.charAt(i - 1) == a.charAt(j - 1)) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
+            Math.min(matrix[i][j - 1] + 1, // insertion
+            matrix[i - 1][j] + 1)); // deletion
+          }
+        }
+      }
+
+      return matrix[b.length][a.length];
+    }
+  }]);
+
+  return Validator;
+}();
+
+var Activator$1 = Activator;
+var Configurator$1 = Configurator;
+var Hammer$2 = Hammer$1;
+var Popup$1 = Popup;
+var VALIDATOR_PRINT_STYLE$1 = VALIDATOR_PRINT_STYLE;
+var Validator$1 = Validator;
 
 // English
 var en = {
@@ -9838,33 +12271,6 @@ function normalizeLanguageCode(locales, rawCode) {
     return "en";
   }
 }
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-var classCallCheck = _classCallCheck;
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-
-    defineProperty$6(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-var createClass = _createClass;
 
 /**
  * Associates a canvas to a given image, containing a number of renderings
@@ -10934,41 +13340,6 @@ var Groups = /*#__PURE__*/function () {
   return Groups;
 }();
 
-var slice$6 = [].slice;
-var MSIE = /MSIE .\./.test(engineUserAgent); // <- dirty ie9- check
-
-var wrap$1 = function (scheduler) {
-  return function (handler, timeout
-  /* , ...arguments */
-  ) {
-    var boundArgs = arguments.length > 2;
-    var args = boundArgs ? slice$6.call(arguments, 2) : undefined;
-    return scheduler(boundArgs ? function () {
-      // eslint-disable-next-line no-new-func
-      (typeof handler == 'function' ? handler : Function(handler)).apply(this, args);
-    } : handler, timeout);
-  };
-}; // ie9- setTimeout & setInterval additional parameters fix
-// https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers
-
-
-_export({
-  global: true,
-  bind: true,
-  forced: MSIE
-}, {
-  // `setTimeout` method
-  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-settimeout
-  setTimeout: wrap$1(global$1.setTimeout),
-  // `setInterval` method
-  // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#dom-setinterval
-  setInterval: wrap$1(global$1.setInterval)
-});
-
-var setTimeout$1 = path.setTimeout;
-
-var setTimeout$2 = setTimeout$1;
-
 var $some = arrayIteration.some;
 var STRICT_METHOD$2 = arrayMethodIsStrict('some');
 var USES_TO_LENGTH$7 = arrayMethodUsesToLength('some'); // `Array.prototype.some` method
@@ -10988,11 +13359,11 @@ _export({
 
 var some = entryVirtual('Array').some;
 
-var ArrayPrototype$a = Array.prototype;
+var ArrayPrototype$b = Array.prototype;
 
 var some_1 = function (it) {
   var own = it.some;
-  return it === ArrayPrototype$a || it instanceof Array && own === ArrayPrototype$a.some ? some : own;
+  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.some ? some : own;
 };
 
 var some$1 = some_1;
@@ -11065,10 +13436,10 @@ var getOwnPropertyNames$2 = getOwnPropertyNames$1;
 
 var trim$2 = stringTrim.trim;
 var $parseFloat = global$1.parseFloat;
-var FORCED$3 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
+var FORCED$4 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
 // https://tc39.github.io/ecma262/#sec-parsefloat-string
 
-var numberParseFloat = FORCED$3 ? function parseFloat(string) {
+var numberParseFloat = FORCED$4 ? function parseFloat(string) {
   var trimmedString = trim$2(String(string));
   var result = $parseFloat(trimmedString);
   return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
@@ -11246,7 +13617,7 @@ var values$1 = entryVirtual('Array').values;
 
 var values$2 = values$1;
 
-var ArrayPrototype$b = Array.prototype;
+var ArrayPrototype$c = Array.prototype;
 var DOMIterables$1 = {
   DOMTokenList: true,
   NodeList: true
@@ -11254,7 +13625,7 @@ var DOMIterables$1 = {
 
 var values_1 = function (it) {
   var own = it.values;
-  return it === ArrayPrototype$b || it instanceof Array && own === ArrayPrototype$b.values // eslint-disable-next-line no-prototype-builtins
+  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.values // eslint-disable-next-line no-prototype-builtins
   || DOMIterables$1.hasOwnProperty(classof(it)) ? values$2 : own;
 };
 
@@ -13086,12 +15457,12 @@ var ARGS_BUG = !fails(function () {
     /* empty */
   });
 });
-var FORCED$4 = NEW_TARGET_BUG || ARGS_BUG;
+var FORCED$5 = NEW_TARGET_BUG || ARGS_BUG;
 _export({
   target: 'Reflect',
   stat: true,
-  forced: FORCED$4,
-  sham: FORCED$4
+  forced: FORCED$5,
+  sham: FORCED$5
 }, {
   construct: function construct(Target, args
   /* , newTarget */
@@ -13223,46 +15594,6 @@ var getPrototypeOf$5 = createCommonjsModule(function (module) {
 
   module.exports = _getPrototypeOf;
 });
-
-// https://tc39.github.io/ecma262/#sec-array.prototype.fill
-
-
-var arrayFill = function fill(value
-/* , start = 0, end = @length */
-) {
-  var O = toObject(this);
-  var length = toLength(O.length);
-  var argumentsLength = arguments.length;
-  var index = toAbsoluteIndex(argumentsLength > 1 ? arguments[1] : undefined, length);
-  var end = argumentsLength > 2 ? arguments[2] : undefined;
-  var endPos = end === undefined ? length : toAbsoluteIndex(end, length);
-
-  while (endPos > index) O[index++] = value;
-
-  return O;
-};
-
-// https://tc39.github.io/ecma262/#sec-array.prototype.fill
-
-_export({
-  target: 'Array',
-  proto: true
-}, {
-  fill: arrayFill
-}); // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
-
-var fill = entryVirtual('Array').fill;
-
-var ArrayPrototype$c = Array.prototype;
-
-var fill_1 = function (it) {
-  var own = it.fill;
-  return it === ArrayPrototype$c || it instanceof Array && own === ArrayPrototype$c.fill ? fill : own;
-};
-
-var fill$1 = fill_1;
-
-var fill$2 = fill$1;
 
 /**
  * The Base class for all Nodes.
@@ -15485,437 +17816,6 @@ var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
   return TriangleDown;
 }(ShapeBase);
 
-var $stringify$1 = getBuiltIn('JSON', 'stringify');
-var re = /[\uD800-\uDFFF]/g;
-var low = /^[\uD800-\uDBFF]$/;
-var hi = /^[\uDC00-\uDFFF]$/;
-
-var fix = function (match, offset, string) {
-  var prev = string.charAt(offset - 1);
-  var next = string.charAt(offset + 1);
-
-  if (low.test(match) && !hi.test(next) || hi.test(match) && !low.test(prev)) {
-    return '\\u' + match.charCodeAt(0).toString(16);
-  }
-
-  return match;
-};
-
-var FORCED$5 = fails(function () {
-  return $stringify$1('\uDF06\uD834') !== '"\\udf06\\ud834"' || $stringify$1('\uDEAD') !== '"\\udead"';
-});
-
-if ($stringify$1) {
-  // https://github.com/tc39/proposal-well-formed-stringify
-  _export({
-    target: 'JSON',
-    stat: true,
-    forced: FORCED$5
-  }, {
-    // eslint-disable-next-line no-unused-vars
-    stringify: function stringify(it, replacer, space) {
-      var result = $stringify$1.apply(null, arguments);
-      return typeof result == 'string' ? result.replace(re, fix) : result;
-    }
-  });
-}
-
-if (!path.JSON) path.JSON = {
-  stringify: JSON.stringify
-}; // eslint-disable-next-line no-unused-vars
-
-var stringify = function stringify(it, replacer, space) {
-  return path.JSON.stringify.apply(null, arguments);
-};
-
-var stringify$1 = stringify;
-
-var stringify$2 = stringify$1;
-
-var errorFound = false;
-var allOptions;
-var printStyle = "background: #FFeeee; color: #dd0000";
-/**
- *  Used to validate options.
- */
-
-var Validator = /*#__PURE__*/function () {
-  /**
-   * @ignore
-   */
-  function Validator() {
-    classCallCheck(this, Validator);
-  }
-  /**
-   * Main function to be called
-   *
-   * @param {object} options
-   * @param {object} referenceOptions
-   * @param {object} subObject
-   * @returns {boolean}
-   * @static
-   */
-
-
-  createClass(Validator, null, [{
-    key: "validate",
-    value: function validate(options, referenceOptions, subObject) {
-      errorFound = false;
-      allOptions = referenceOptions;
-      var usedOptions = referenceOptions;
-
-      if (subObject !== undefined) {
-        usedOptions = referenceOptions[subObject];
-      }
-
-      Validator.parse(options, usedOptions, []);
-      return errorFound;
-    }
-    /**
-     * Will traverse an object recursively and check every value
-     *
-     * @param {object} options
-     * @param {object} referenceOptions
-     * @param {Array} path    | where to look for the actual option
-     * @static
-     */
-
-  }, {
-    key: "parse",
-    value: function parse(options, referenceOptions, path) {
-      for (var option in options) {
-        if (Object.prototype.hasOwnProperty.call(options, option)) {
-          Validator.check(option, options, referenceOptions, path);
-        }
-      }
-    }
-    /**
-     * Check every value. If the value is an object, call the parse function on that object.
-     *
-     * @param {string} option
-     * @param {object} options
-     * @param {object} referenceOptions
-     * @param {Array} path    | where to look for the actual option
-     * @static
-     */
-
-  }, {
-    key: "check",
-    value: function check(option, options, referenceOptions, path) {
-      if (referenceOptions[option] === undefined && referenceOptions.__any__ === undefined) {
-        Validator.getSuggestion(option, referenceOptions, path);
-        return;
-      }
-
-      var referenceOption = option;
-      var is_object = true;
-
-      if (referenceOptions[option] === undefined && referenceOptions.__any__ !== undefined) {
-        // NOTE: This only triggers if the __any__ is in the top level of the options object.
-        //       THAT'S A REALLY BAD PLACE TO ALLOW IT!!!!
-        // TODO: Examine if needed, remove if possible
-        // __any__ is a wildcard. Any value is accepted and will be further analysed by reference.
-        referenceOption = "__any__"; // if the any-subgroup is not a predefined object in the configurator,
-        // we do not look deeper into the object.
-
-        is_object = Validator.getType(options[option]) === "object";
-      }
-
-      var refOptionObj = referenceOptions[referenceOption];
-
-      if (is_object && refOptionObj.__type__ !== undefined) {
-        refOptionObj = refOptionObj.__type__;
-      }
-
-      Validator.checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path);
-    }
-    /**
-     *
-     * @param {string}  option           | the option property
-     * @param {object}  options          | The supplied options object
-     * @param {object}  referenceOptions | The reference options containing all options and their allowed formats
-     * @param {string}  referenceOption  | Usually this is the same as option, except when handling an __any__ tag.
-     * @param {string}  refOptionObj     | This is the type object from the reference options
-     * @param {Array}   path             | where in the object is the option
-     * @static
-     */
-
-  }, {
-    key: "checkFields",
-    value: function checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path) {
-      var log = function log(message) {
-        console.error("%c" + message + Validator.printLocation(path, option), printStyle);
-      };
-
-      var optionType = Validator.getType(options[option]);
-      var refOptionType = refOptionObj[optionType];
-
-      if (refOptionType !== undefined) {
-        // if the type is correct, we check if it is supposed to be one of a few select values
-        if (Validator.getType(refOptionType) === "array" && indexOf$3(refOptionType).call(refOptionType, options[option]) === -1) {
-          log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
-          errorFound = true;
-        } else if (optionType === "object" && referenceOption !== "__any__") {
-          path = copyAndExtendArray(path, option);
-          Validator.parse(options[option], referenceOptions[referenceOption], path);
-        }
-      } else if (refOptionObj["any"] === undefined) {
-        // type of the field is incorrect and the field cannot be any
-        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys$3(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
-        errorFound = true;
-      }
-    }
-    /**
-     *
-     * @param {object | boolean | number | string | Array.<number> | Date | Node | Moment | undefined | null} object
-     * @returns {string}
-     * @static
-     */
-
-  }, {
-    key: "getType",
-    value: function getType(object) {
-      var type = _typeof_1(object);
-
-      if (type === "object") {
-        if (object === null) {
-          return "null";
-        }
-
-        if (object instanceof Boolean) {
-          return "boolean";
-        }
-
-        if (object instanceof Number) {
-          return "number";
-        }
-
-        if (object instanceof String) {
-          return "string";
-        }
-
-        if (isArray$5(object)) {
-          return "array";
-        }
-
-        if (object instanceof Date) {
-          return "date";
-        }
-
-        if (object.nodeType !== undefined) {
-          return "dom";
-        }
-
-        if (object._isAMomentObject === true) {
-          return "moment";
-        }
-
-        return "object";
-      } else if (type === "number") {
-        return "number";
-      } else if (type === "boolean") {
-        return "boolean";
-      } else if (type === "string") {
-        return "string";
-      } else if (type === undefined) {
-        return "undefined";
-      }
-
-      return type;
-    }
-    /**
-     * @param {string} option
-     * @param {object} options
-     * @param {Array.<string>} path
-     * @static
-     */
-
-  }, {
-    key: "getSuggestion",
-    value: function getSuggestion(option, options, path) {
-      var localSearch = Validator.findInOptions(option, options, path, false);
-      var globalSearch = Validator.findInOptions(option, allOptions, [], true);
-      var localSearchThreshold = 8;
-      var globalSearchThreshold = 4;
-      var msg;
-
-      if (localSearch.indexMatch !== undefined) {
-        msg = " in " + Validator.printLocation(localSearch.path, option, "") + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
-      } else if (globalSearch.distance <= globalSearchThreshold && localSearch.distance > globalSearch.distance) {
-        msg = " in " + Validator.printLocation(localSearch.path, option, "") + "Perhaps it was misplaced? Matching option found at: " + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, "");
-      } else if (localSearch.distance <= localSearchThreshold) {
-        msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator.printLocation(localSearch.path, option);
-      } else {
-        msg = ". Did you mean one of these: " + Validator.print(keys$3(options)) + Validator.printLocation(path, option);
-      }
-
-      console.error('%cUnknown option detected: "' + option + '"' + msg, printStyle);
-      errorFound = true;
-    }
-    /**
-     * traverse the options in search for a match.
-     *
-     * @param {string} option
-     * @param {object} options
-     * @param {Array} path    | where to look for the actual option
-     * @param {boolean} [recursive=false]
-     * @returns {{closestMatch: string, path: Array, distance: number}}
-     * @static
-     */
-
-  }, {
-    key: "findInOptions",
-    value: function findInOptions(option, options, path) {
-      var recursive = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-      var min = 1e9;
-      var closestMatch = "";
-      var closestMatchPath = [];
-      var lowerCaseOption = option.toLowerCase();
-      var indexMatch = undefined;
-
-      for (var op in options) {
-        var distance = void 0;
-
-        if (options[op].__type__ !== undefined && recursive === true) {
-          var result = Validator.findInOptions(option, options[op], copyAndExtendArray(path, op));
-
-          if (min > result.distance) {
-            closestMatch = result.closestMatch;
-            closestMatchPath = result.path;
-            min = result.distance;
-            indexMatch = result.indexMatch;
-          }
-        } else {
-          var _context;
-
-          if (indexOf$3(_context = op.toLowerCase()).call(_context, lowerCaseOption) !== -1) {
-            indexMatch = op;
-          }
-
-          distance = Validator.levenshteinDistance(option, op);
-
-          if (min > distance) {
-            closestMatch = op;
-            closestMatchPath = copyArray(path);
-            min = distance;
-          }
-        }
-      }
-
-      return {
-        closestMatch: closestMatch,
-        path: closestMatchPath,
-        distance: min,
-        indexMatch: indexMatch
-      };
-    }
-    /**
-     * @param {Array.<string>} path
-     * @param {object} option
-     * @param {string} prefix
-     * @returns {string}
-     * @static
-     */
-
-  }, {
-    key: "printLocation",
-    value: function printLocation(path, option) {
-      var prefix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "Problem value found at: \n";
-      var str = "\n\n" + prefix + "options = {\n";
-
-      for (var i = 0; i < path.length; i++) {
-        for (var j = 0; j < i + 1; j++) {
-          str += "  ";
-        }
-
-        str += path[i] + ": {\n";
-      }
-
-      for (var _j = 0; _j < path.length + 1; _j++) {
-        str += "  ";
-      }
-
-      str += option + "\n";
-
-      for (var _i = 0; _i < path.length + 1; _i++) {
-        for (var _j2 = 0; _j2 < path.length - _i; _j2++) {
-          str += "  ";
-        }
-
-        str += "}\n";
-      }
-
-      return str + "\n\n";
-    }
-    /**
-     * @param {object} options
-     * @returns {string}
-     * @static
-     */
-
-  }, {
-    key: "print",
-    value: function print(options) {
-      return stringify$2(options).replace(/(")|(\[)|(\])|(,"__type__")/g, "").replace(/(,)/g, ", ");
-    }
-    /**
-     *  Compute the edit distance between the two given strings
-     * http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#JavaScript
-     *
-     * Copyright (c) 2011 Andrei Mackenzie
-     *
-     * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-     *
-     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-     *
-     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-     *
-     * @param {string} a
-     * @param {string} b
-     * @returns {Array.<Array.<number>>}}
-     * @static
-     */
-
-  }, {
-    key: "levenshteinDistance",
-    value: function levenshteinDistance(a, b) {
-      if (a.length === 0) return b.length;
-      if (b.length === 0) return a.length;
-      var matrix = []; // increment along the first column of each row
-
-      var i;
-
-      for (i = 0; i <= b.length; i++) {
-        matrix[i] = [i];
-      } // increment each column in the first row
-
-
-      var j;
-
-      for (j = 0; j <= a.length; j++) {
-        matrix[0][j] = j;
-      } // Fill in the rest of the matrix
-
-
-      for (i = 1; i <= b.length; i++) {
-        for (j = 1; j <= a.length; j++) {
-          if (b.charAt(i - 1) == a.charAt(j - 1)) {
-            matrix[i][j] = matrix[i - 1][j - 1];
-          } else {
-            matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
-            Math.min(matrix[i][j - 1] + 1, // insertion
-            matrix[i - 1][j] + 1)); // deletion
-          }
-        }
-      }
-
-      return matrix[b.length][a.length];
-    }
-  }]);
-
-  return Validator;
-}();
-
 function ownKeys$3(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols$2) { var symbols = getOwnPropertySymbols$2(object); if (enumerableOnly) symbols = filter$2(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; forEach$2(_context5 = ownKeys$3(Object(source), true)).call(_context5, function (key) { defineProperty$7(target, key, source[key]); }); } else if (getOwnPropertyDescriptors$2) { defineProperties$1(target, getOwnPropertyDescriptors$2(source)); } else { var _context6; forEach$2(_context6 = ownKeys$3(Object(source))).call(_context6, function (key) { defineProperty$2(target, key, getOwnPropertyDescriptor$3(source, key)); }); } } return target; }
@@ -16703,7 +18603,7 @@ var Node = /*#__PURE__*/function () {
           strId = " in node id: " + id;
         }
 
-        console.error("%cNegative or zero mass disallowed" + strId + ", setting mass to 1.", printStyle);
+        console.error("%cNegative or zero mass disallowed" + strId + ", setting mass to 1.", VALIDATOR_PRINT_STYLE$1);
         options.mass = 1;
       }
     }
@@ -26125,14 +28025,14 @@ var Canvas = /*#__PURE__*/function () {
       this.drag = {};
       this.pinch = {}; // init hammer
 
-      this.hammer = new Hammer$1(this.frame.canvas);
+      this.hammer = new Hammer$2(this.frame.canvas);
       this.hammer.get("pinch").set({
         enable: true
       }); // enable to get better response, todo: test on mobile.
 
       this.hammer.get("pan").set({
         threshold: 5,
-        direction: Hammer$1.DIRECTION_ALL
+        direction: Hammer$2.DIRECTION_ALL
       });
       onTouch(this.hammer, function (event) {
         _this3.body.eventListeners.onTouch(event);
@@ -26168,7 +28068,7 @@ var Canvas = /*#__PURE__*/function () {
       this.frame.canvas.addEventListener("contextmenu", function (event) {
         _this3.body.eventListeners.onContext(event);
       });
-      this.hammerFrame = new Hammer$1(this.frame);
+      this.hammerFrame = new Hammer$2(this.frame);
       onRelease(this.hammerFrame, function (event) {
         _this3.body.eventListeners.onRelease(event);
       });
@@ -27286,7 +29186,7 @@ var NavigationHandler = /*#__PURE__*/function () {
         this.navigationDOM[navigationDivs[i]] = document.createElement("div");
         this.navigationDOM[navigationDivs[i]].className = "vis-button vis-" + navigationDivs[i];
         this.navigationDOM["wrapper"].appendChild(this.navigationDOM[navigationDivs[i]]);
-        var hammer = new Hammer$1(this.navigationDOM[navigationDivs[i]]);
+        var hammer = new Hammer$2(this.navigationDOM[navigationDivs[i]]);
 
         if (navigationDivActions[i] === "_fit") {
           var _context;
@@ -27303,7 +29203,7 @@ var NavigationHandler = /*#__PURE__*/function () {
       // the one the rest uses can be overloaded by the manipulation system.
 
 
-      var hammerFrame = new Hammer$1(this.canvas.frame);
+      var hammerFrame = new Hammer$2(this.canvas.frame);
       onRelease(hammerFrame, function () {
         _this2._stopMovement();
       });
@@ -27597,160 +29497,6 @@ var NavigationHandler = /*#__PURE__*/function () {
   }]);
 
   return NavigationHandler;
-}();
-
-/**
- * Popup is a class to create a popup window with some text
- */
-
-var Popup = /*#__PURE__*/function () {
-  /**
-   * @param {Element} container       The container object.
-   * @param {string}  overflowMethod  How the popup should act to overflowing ('flip' or 'cap')
-   */
-  function Popup(container, overflowMethod) {
-    classCallCheck(this, Popup);
-
-    this.container = container;
-    this.overflowMethod = overflowMethod || "cap";
-    this.x = 0;
-    this.y = 0;
-    this.padding = 5;
-    this.hidden = false; // create the frame
-
-    this.frame = document.createElement("div");
-    this.frame.className = "vis-tooltip";
-    this.container.appendChild(this.frame);
-  }
-  /**
-   * @param {number} x   Horizontal position of the popup window
-   * @param {number} y   Vertical position of the popup window
-   */
-
-
-  createClass(Popup, [{
-    key: "setPosition",
-    value: function setPosition(x, y) {
-      this.x = _parseInt$2(x);
-      this.y = _parseInt$2(y);
-    }
-    /**
-     * Set the content for the popup window. This can be HTML code or text.
-     *
-     * @param {string | Element} content
-     */
-
-  }, {
-    key: "setText",
-    value: function setText(content) {
-      if (content instanceof Element) {
-        while (this.frame.firstChild) {
-          this.frame.removeChild(this.frame.firstChild);
-        }
-
-        this.frame.appendChild(content);
-      } else {
-        this.frame.innerHTML = content; // string containing text or HTML
-      }
-    }
-    /**
-     * Show the popup window
-     *
-     * @param {boolean} [doShow]    Show or hide the window
-     */
-
-  }, {
-    key: "show",
-    value: function show(doShow) {
-      if (doShow === undefined) {
-        doShow = true;
-      }
-
-      if (doShow === true) {
-        var height = this.frame.clientHeight;
-        var width = this.frame.clientWidth;
-        var maxHeight = this.frame.parentNode.clientHeight;
-        var maxWidth = this.frame.parentNode.clientWidth;
-        var left = 0,
-            top = 0;
-
-        if (this.overflowMethod == "flip") {
-          var isLeft = false,
-              isTop = true; // Where around the position it's located
-
-          if (this.y - height < this.padding) {
-            isTop = false;
-          }
-
-          if (this.x + width > maxWidth - this.padding) {
-            isLeft = true;
-          }
-
-          if (isLeft) {
-            left = this.x - width;
-          } else {
-            left = this.x;
-          }
-
-          if (isTop) {
-            top = this.y - height;
-          } else {
-            top = this.y;
-          }
-        } else {
-          top = this.y - height;
-
-          if (top + height + this.padding > maxHeight) {
-            top = maxHeight - height - this.padding;
-          }
-
-          if (top < this.padding) {
-            top = this.padding;
-          }
-
-          left = this.x;
-
-          if (left + width + this.padding > maxWidth) {
-            left = maxWidth - width - this.padding;
-          }
-
-          if (left < this.padding) {
-            left = this.padding;
-          }
-        }
-
-        this.frame.style.left = left + "px";
-        this.frame.style.top = top + "px";
-        this.frame.style.visibility = "visible";
-        this.hidden = false;
-      } else {
-        this.hide();
-      }
-    }
-    /**
-     * Hide the popup window
-     */
-
-  }, {
-    key: "hide",
-    value: function hide() {
-      this.hidden = true;
-      this.frame.style.left = "0";
-      this.frame.style.top = "0";
-      this.frame.style.visibility = "hidden";
-    }
-    /**
-     * Remove the popup window
-     */
-
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.frame.parentNode.removeChild(this.frame); // Remove element from DOM
-    }
-  }]);
-
-  return Popup;
 }();
 
 function _createForOfIteratorHelper$4(o, allowArrayLike) { var it; if (typeof symbol$4 === "undefined" || getIteratorMethod$1(o) == null) { if (isArray$5(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = getIterator$1(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
@@ -28494,7 +30240,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         // show popup message window
         if (this.popupObj.id !== previousPopupObjId) {
           if (this.popup === undefined) {
-            this.popup = new Popup(this.canvas.frame);
+            this.popup = new Popup$1(this.canvas.frame);
           }
 
           this.popup.popupTargetType = popupType;
@@ -34448,7 +36194,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_bindElementEvents",
     value: function _bindElementEvents(domElement, boundFunction) {
       // Bind touch events.
-      var hammer = new Hammer$1(domElement, {});
+      var hammer = new Hammer$2(domElement, {});
       onTouch(hammer, boundFunction);
 
       this._domEventListenerCleanupQueue.push(function () {
@@ -34953,1744 +36699,6 @@ var ManipulationSystem = /*#__PURE__*/function () {
   }]);
 
   return ManipulationSystem;
-}();
-
-var htmlColors = {
-  black: "#000000",
-  navy: "#000080",
-  darkblue: "#00008B",
-  mediumblue: "#0000CD",
-  blue: "#0000FF",
-  darkgreen: "#006400",
-  green: "#008000",
-  teal: "#008080",
-  darkcyan: "#008B8B",
-  deepskyblue: "#00BFFF",
-  darkturquoise: "#00CED1",
-  mediumspringgreen: "#00FA9A",
-  lime: "#00FF00",
-  springgreen: "#00FF7F",
-  aqua: "#00FFFF",
-  cyan: "#00FFFF",
-  midnightblue: "#191970",
-  dodgerblue: "#1E90FF",
-  lightseagreen: "#20B2AA",
-  forestgreen: "#228B22",
-  seagreen: "#2E8B57",
-  darkslategray: "#2F4F4F",
-  limegreen: "#32CD32",
-  mediumseagreen: "#3CB371",
-  turquoise: "#40E0D0",
-  royalblue: "#4169E1",
-  steelblue: "#4682B4",
-  darkslateblue: "#483D8B",
-  mediumturquoise: "#48D1CC",
-  indigo: "#4B0082",
-  darkolivegreen: "#556B2F",
-  cadetblue: "#5F9EA0",
-  cornflowerblue: "#6495ED",
-  mediumaquamarine: "#66CDAA",
-  dimgray: "#696969",
-  slateblue: "#6A5ACD",
-  olivedrab: "#6B8E23",
-  slategray: "#708090",
-  lightslategray: "#778899",
-  mediumslateblue: "#7B68EE",
-  lawngreen: "#7CFC00",
-  chartreuse: "#7FFF00",
-  aquamarine: "#7FFFD4",
-  maroon: "#800000",
-  purple: "#800080",
-  olive: "#808000",
-  gray: "#808080",
-  skyblue: "#87CEEB",
-  lightskyblue: "#87CEFA",
-  blueviolet: "#8A2BE2",
-  darkred: "#8B0000",
-  darkmagenta: "#8B008B",
-  saddlebrown: "#8B4513",
-  darkseagreen: "#8FBC8F",
-  lightgreen: "#90EE90",
-  mediumpurple: "#9370D8",
-  darkviolet: "#9400D3",
-  palegreen: "#98FB98",
-  darkorchid: "#9932CC",
-  yellowgreen: "#9ACD32",
-  sienna: "#A0522D",
-  brown: "#A52A2A",
-  darkgray: "#A9A9A9",
-  lightblue: "#ADD8E6",
-  greenyellow: "#ADFF2F",
-  paleturquoise: "#AFEEEE",
-  lightsteelblue: "#B0C4DE",
-  powderblue: "#B0E0E6",
-  firebrick: "#B22222",
-  darkgoldenrod: "#B8860B",
-  mediumorchid: "#BA55D3",
-  rosybrown: "#BC8F8F",
-  darkkhaki: "#BDB76B",
-  silver: "#C0C0C0",
-  mediumvioletred: "#C71585",
-  indianred: "#CD5C5C",
-  peru: "#CD853F",
-  chocolate: "#D2691E",
-  tan: "#D2B48C",
-  lightgrey: "#D3D3D3",
-  palevioletred: "#D87093",
-  thistle: "#D8BFD8",
-  orchid: "#DA70D6",
-  goldenrod: "#DAA520",
-  crimson: "#DC143C",
-  gainsboro: "#DCDCDC",
-  plum: "#DDA0DD",
-  burlywood: "#DEB887",
-  lightcyan: "#E0FFFF",
-  lavender: "#E6E6FA",
-  darksalmon: "#E9967A",
-  violet: "#EE82EE",
-  palegoldenrod: "#EEE8AA",
-  lightcoral: "#F08080",
-  khaki: "#F0E68C",
-  aliceblue: "#F0F8FF",
-  honeydew: "#F0FFF0",
-  azure: "#F0FFFF",
-  sandybrown: "#F4A460",
-  wheat: "#F5DEB3",
-  beige: "#F5F5DC",
-  whitesmoke: "#F5F5F5",
-  mintcream: "#F5FFFA",
-  ghostwhite: "#F8F8FF",
-  salmon: "#FA8072",
-  antiquewhite: "#FAEBD7",
-  linen: "#FAF0E6",
-  lightgoldenrodyellow: "#FAFAD2",
-  oldlace: "#FDF5E6",
-  red: "#FF0000",
-  fuchsia: "#FF00FF",
-  magenta: "#FF00FF",
-  deeppink: "#FF1493",
-  orangered: "#FF4500",
-  tomato: "#FF6347",
-  hotpink: "#FF69B4",
-  coral: "#FF7F50",
-  darkorange: "#FF8C00",
-  lightsalmon: "#FFA07A",
-  orange: "#FFA500",
-  lightpink: "#FFB6C1",
-  pink: "#FFC0CB",
-  gold: "#FFD700",
-  peachpuff: "#FFDAB9",
-  navajowhite: "#FFDEAD",
-  moccasin: "#FFE4B5",
-  bisque: "#FFE4C4",
-  mistyrose: "#FFE4E1",
-  blanchedalmond: "#FFEBCD",
-  papayawhip: "#FFEFD5",
-  lavenderblush: "#FFF0F5",
-  seashell: "#FFF5EE",
-  cornsilk: "#FFF8DC",
-  lemonchiffon: "#FFFACD",
-  floralwhite: "#FFFAF0",
-  snow: "#FFFAFA",
-  yellow: "#FFFF00",
-  lightyellow: "#FFFFE0",
-  ivory: "#FFFFF0",
-  white: "#FFFFFF"
-};
-/**
- * @param {number} [pixelRatio=1]
- */
-
-var ColorPicker = /*#__PURE__*/function () {
-  /**
-   * @param {number} [pixelRatio=1]
-   */
-  function ColorPicker() {
-    var pixelRatio = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-    classCallCheck(this, ColorPicker);
-
-    this.pixelRatio = pixelRatio;
-    this.generated = false;
-    this.centerCoordinates = {
-      x: 289 / 2,
-      y: 289 / 2
-    };
-    this.r = 289 * 0.49;
-    this.color = {
-      r: 255,
-      g: 255,
-      b: 255,
-      a: 1.0
-    };
-    this.hueCircle = undefined;
-    this.initialColor = {
-      r: 255,
-      g: 255,
-      b: 255,
-      a: 1.0
-    };
-    this.previousColor = undefined;
-    this.applied = false; // bound by
-
-    this.updateCallback = function () {};
-
-    this.closeCallback = function () {}; // create all DOM elements
-
-
-    this._create();
-  }
-  /**
-   * this inserts the colorPicker into a div from the DOM
-   *
-   * @param {Element} container
-   */
-
-
-  createClass(ColorPicker, [{
-    key: "insertTo",
-    value: function insertTo(container) {
-      if (this.hammer !== undefined) {
-        this.hammer.destroy();
-        this.hammer = undefined;
-      }
-
-      this.container = container;
-      this.container.appendChild(this.frame);
-
-      this._bindHammer();
-
-      this._setSize();
-    }
-    /**
-     * the callback is executed on apply and save. Bind it to the application
-     *
-     * @param {Function} callback
-     */
-
-  }, {
-    key: "setUpdateCallback",
-    value: function setUpdateCallback(callback) {
-      if (typeof callback === "function") {
-        this.updateCallback = callback;
-      } else {
-        throw new Error("Function attempted to set as colorPicker update callback is not a function.");
-      }
-    }
-    /**
-     * the callback is executed on apply and save. Bind it to the application
-     *
-     * @param {Function} callback
-     */
-
-  }, {
-    key: "setCloseCallback",
-    value: function setCloseCallback(callback) {
-      if (typeof callback === "function") {
-        this.closeCallback = callback;
-      } else {
-        throw new Error("Function attempted to set as colorPicker closing callback is not a function.");
-      }
-    }
-    /**
-     *
-     * @param {string} color
-     * @returns {string}
-     * @private
-     */
-
-  }, {
-    key: "_isColorString",
-    value: function _isColorString(color) {
-      if (typeof color === "string") {
-        return htmlColors[color];
-      }
-    }
-    /**
-     * Set the color of the colorPicker
-     * Supported formats:
-     * 'red'                   --> HTML color string
-     * '#ffffff'               --> hex string
-     * 'rgb(255,255,255)'      --> rgb string
-     * 'rgba(255,255,255,1.0)' --> rgba string
-     * {r:255,g:255,b:255}     --> rgb object
-     * {r:255,g:255,b:255,a:1.0} --> rgba object
-     *
-     * @param {string | object} color
-     * @param {boolean} [setInitial=true]
-     */
-
-  }, {
-    key: "setColor",
-    value: function setColor(color) {
-      var setInitial = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-      if (color === "none") {
-        return;
-      }
-
-      var rgba; // if a html color shorthand is used, convert to hex
-
-      var htmlColor = this._isColorString(color);
-
-      if (htmlColor !== undefined) {
-        color = htmlColor;
-      } // check format
-
-
-      if (isString(color) === true) {
-        if (isValidRGB(color) === true) {
-          var rgbaArray = color.substr(4).substr(0, color.length - 5).split(",");
-          rgba = {
-            r: rgbaArray[0],
-            g: rgbaArray[1],
-            b: rgbaArray[2],
-            a: 1.0
-          };
-        } else if (isValidRGBA(color) === true) {
-          var _rgbaArray = color.substr(5).substr(0, color.length - 6).split(",");
-
-          rgba = {
-            r: _rgbaArray[0],
-            g: _rgbaArray[1],
-            b: _rgbaArray[2],
-            a: _rgbaArray[3]
-          };
-        } else if (isValidHex(color) === true) {
-          var rgbObj = hexToRGB(color);
-          rgba = {
-            r: rgbObj.r,
-            g: rgbObj.g,
-            b: rgbObj.b,
-            a: 1.0
-          };
-        }
-      } else {
-        if (color instanceof Object) {
-          if (color.r !== undefined && color.g !== undefined && color.b !== undefined) {
-            var alpha = color.a !== undefined ? color.a : "1.0";
-            rgba = {
-              r: color.r,
-              g: color.g,
-              b: color.b,
-              a: alpha
-            };
-          }
-        }
-      } // set color
-
-
-      if (rgba === undefined) {
-        throw new Error("Unknown color passed to the colorPicker. Supported are strings: rgb, hex, rgba. Object: rgb ({r:r,g:g,b:b,[a:a]}). Supplied: " + stringify$2(color));
-      } else {
-        this._setColor(rgba, setInitial);
-      }
-    }
-    /**
-     * this shows the color picker.
-     * The hue circle is constructed once and stored.
-     */
-
-  }, {
-    key: "show",
-    value: function show() {
-      if (this.closeCallback !== undefined) {
-        this.closeCallback();
-        this.closeCallback = undefined;
-      }
-
-      this.applied = false;
-      this.frame.style.display = "block";
-
-      this._generateHueCircle();
-    } // ------------------------------------------ PRIVATE ----------------------------- //
-
-    /**
-     * Hide the picker. Is called by the cancel button.
-     * Optional boolean to store the previous color for easy access later on.
-     *
-     * @param {boolean} [storePrevious=true]
-     * @private
-     */
-
-  }, {
-    key: "_hide",
-    value: function _hide() {
-      var _this = this;
-
-      var storePrevious = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      // store the previous color for next time;
-      if (storePrevious === true) {
-        this.previousColor = assign$2({}, this.color);
-      }
-
-      if (this.applied === true) {
-        this.updateCallback(this.initialColor);
-      }
-
-      this.frame.style.display = "none"; // call the closing callback, restoring the onclick method.
-      // this is in a setTimeout because it will trigger the show again before the click is done.
-
-      setTimeout$2(function () {
-        if (_this.closeCallback !== undefined) {
-          _this.closeCallback();
-
-          _this.closeCallback = undefined;
-        }
-      }, 0);
-    }
-    /**
-     * bound to the save button. Saves and hides.
-     *
-     * @private
-     */
-
-  }, {
-    key: "_save",
-    value: function _save() {
-      this.updateCallback(this.color);
-      this.applied = false;
-
-      this._hide();
-    }
-    /**
-     * Bound to apply button. Saves but does not close. Is undone by the cancel button.
-     *
-     * @private
-     */
-
-  }, {
-    key: "_apply",
-    value: function _apply() {
-      this.applied = true;
-      this.updateCallback(this.color);
-
-      this._updatePicker(this.color);
-    }
-    /**
-     * load the color from the previous session.
-     *
-     * @private
-     */
-
-  }, {
-    key: "_loadLast",
-    value: function _loadLast() {
-      if (this.previousColor !== undefined) {
-        this.setColor(this.previousColor, false);
-      } else {
-        alert("There is no last color to load...");
-      }
-    }
-    /**
-     * set the color, place the picker
-     *
-     * @param {object} rgba
-     * @param {boolean} [setInitial=true]
-     * @private
-     */
-
-  }, {
-    key: "_setColor",
-    value: function _setColor(rgba) {
-      var setInitial = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-      // store the initial color
-      if (setInitial === true) {
-        this.initialColor = assign$2({}, rgba);
-      }
-
-      this.color = rgba;
-      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
-      var angleConvert = 2 * Math.PI;
-      var radius = this.r * hsv.s;
-      var x = this.centerCoordinates.x + radius * Math.sin(angleConvert * hsv.h);
-      var y = this.centerCoordinates.y + radius * Math.cos(angleConvert * hsv.h);
-      this.colorPickerSelector.style.left = x - 0.5 * this.colorPickerSelector.clientWidth + "px";
-      this.colorPickerSelector.style.top = y - 0.5 * this.colorPickerSelector.clientHeight + "px";
-
-      this._updatePicker(rgba);
-    }
-    /**
-     * bound to opacity control
-     *
-     * @param {number} value
-     * @private
-     */
-
-  }, {
-    key: "_setOpacity",
-    value: function _setOpacity(value) {
-      this.color.a = value / 100;
-
-      this._updatePicker(this.color);
-    }
-    /**
-     * bound to brightness control
-     *
-     * @param {number} value
-     * @private
-     */
-
-  }, {
-    key: "_setBrightness",
-    value: function _setBrightness(value) {
-      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
-      hsv.v = value / 100;
-      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
-      rgba["a"] = this.color.a;
-      this.color = rgba;
-
-      this._updatePicker();
-    }
-    /**
-     * update the color picker. A black circle overlays the hue circle to mimic the brightness decreasing.
-     *
-     * @param {object} rgba
-     * @private
-     */
-
-  }, {
-    key: "_updatePicker",
-    value: function _updatePicker() {
-      var rgba = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.color;
-      var hsv = RGBToHSV(rgba.r, rgba.g, rgba.b);
-      var ctx = this.colorPickerCanvas.getContext("2d");
-
-      if (this.pixelRation === undefined) {
-        this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
-      }
-
-      ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0); // clear the canvas
-
-      var w = this.colorPickerCanvas.clientWidth;
-      var h = this.colorPickerCanvas.clientHeight;
-      ctx.clearRect(0, 0, w, h);
-      ctx.putImageData(this.hueCircle, 0, 0);
-      ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
-      ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
-
-      fill$2(ctx).call(ctx);
-
-      this.brightnessRange.value = 100 * hsv.v;
-      this.opacityRange.value = 100 * rgba.a;
-      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
-      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
-    }
-    /**
-     * used by create to set the size of the canvas.
-     *
-     * @private
-     */
-
-  }, {
-    key: "_setSize",
-    value: function _setSize() {
-      this.colorPickerCanvas.style.width = "100%";
-      this.colorPickerCanvas.style.height = "100%";
-      this.colorPickerCanvas.width = 289 * this.pixelRatio;
-      this.colorPickerCanvas.height = 289 * this.pixelRatio;
-    }
-    /**
-     * create all dom elements
-     * TODO: cleanup, lots of similar dom elements
-     *
-     * @private
-     */
-
-  }, {
-    key: "_create",
-    value: function _create() {
-      var _context, _context2, _context3, _context4;
-
-      this.frame = document.createElement("div");
-      this.frame.className = "vis-color-picker";
-      this.colorPickerDiv = document.createElement("div");
-      this.colorPickerSelector = document.createElement("div");
-      this.colorPickerSelector.className = "vis-selector";
-      this.colorPickerDiv.appendChild(this.colorPickerSelector);
-      this.colorPickerCanvas = document.createElement("canvas");
-      this.colorPickerDiv.appendChild(this.colorPickerCanvas);
-
-      if (!this.colorPickerCanvas.getContext) {
-        var noCanvas = document.createElement("DIV");
-        noCanvas.style.color = "red";
-        noCanvas.style.fontWeight = "bold";
-        noCanvas.style.padding = "10px";
-        noCanvas.innerText = "Error: your browser does not support HTML canvas";
-        this.colorPickerCanvas.appendChild(noCanvas);
-      } else {
-        var ctx = this.colorPickerCanvas.getContext("2d");
-        this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
-        this.colorPickerCanvas.getContext("2d").setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0);
-      }
-
-      this.colorPickerDiv.className = "vis-color";
-      this.opacityDiv = document.createElement("div");
-      this.opacityDiv.className = "vis-opacity";
-      this.brightnessDiv = document.createElement("div");
-      this.brightnessDiv.className = "vis-brightness";
-      this.arrowDiv = document.createElement("div");
-      this.arrowDiv.className = "vis-arrow";
-      this.opacityRange = document.createElement("input");
-
-      try {
-        this.opacityRange.type = "range"; // Not supported on IE9
-
-        this.opacityRange.min = "0";
-        this.opacityRange.max = "100";
-      } catch (err) {// TODO: Add some error handling.
-      }
-
-      this.opacityRange.value = "100";
-      this.opacityRange.className = "vis-range";
-      this.brightnessRange = document.createElement("input");
-
-      try {
-        this.brightnessRange.type = "range"; // Not supported on IE9
-
-        this.brightnessRange.min = "0";
-        this.brightnessRange.max = "100";
-      } catch (err) {// TODO: Add some error handling.
-      }
-
-      this.brightnessRange.value = "100";
-      this.brightnessRange.className = "vis-range";
-      this.opacityDiv.appendChild(this.opacityRange);
-      this.brightnessDiv.appendChild(this.brightnessRange);
-      var me = this;
-
-      this.opacityRange.onchange = function () {
-        me._setOpacity(this.value);
-      };
-
-      this.opacityRange.oninput = function () {
-        me._setOpacity(this.value);
-      };
-
-      this.brightnessRange.onchange = function () {
-        me._setBrightness(this.value);
-      };
-
-      this.brightnessRange.oninput = function () {
-        me._setBrightness(this.value);
-      };
-
-      this.brightnessLabel = document.createElement("div");
-      this.brightnessLabel.className = "vis-label vis-brightness";
-      this.brightnessLabel.innerText = "brightness:";
-      this.opacityLabel = document.createElement("div");
-      this.opacityLabel.className = "vis-label vis-opacity";
-      this.opacityLabel.innerText = "opacity:";
-      this.newColorDiv = document.createElement("div");
-      this.newColorDiv.className = "vis-new-color";
-      this.newColorDiv.innerText = "new";
-      this.initialColorDiv = document.createElement("div");
-      this.initialColorDiv.className = "vis-initial-color";
-      this.initialColorDiv.innerText = "initial";
-      this.cancelButton = document.createElement("div");
-      this.cancelButton.className = "vis-button vis-cancel";
-      this.cancelButton.innerText = "cancel";
-      this.cancelButton.onclick = bind$2(_context = this._hide).call(_context, this, false);
-      this.applyButton = document.createElement("div");
-      this.applyButton.className = "vis-button vis-apply";
-      this.applyButton.innerText = "apply";
-      this.applyButton.onclick = bind$2(_context2 = this._apply).call(_context2, this);
-      this.saveButton = document.createElement("div");
-      this.saveButton.className = "vis-button vis-save";
-      this.saveButton.innerText = "save";
-      this.saveButton.onclick = bind$2(_context3 = this._save).call(_context3, this);
-      this.loadButton = document.createElement("div");
-      this.loadButton.className = "vis-button vis-load";
-      this.loadButton.innerText = "load last";
-      this.loadButton.onclick = bind$2(_context4 = this._loadLast).call(_context4, this);
-      this.frame.appendChild(this.colorPickerDiv);
-      this.frame.appendChild(this.arrowDiv);
-      this.frame.appendChild(this.brightnessLabel);
-      this.frame.appendChild(this.brightnessDiv);
-      this.frame.appendChild(this.opacityLabel);
-      this.frame.appendChild(this.opacityDiv);
-      this.frame.appendChild(this.newColorDiv);
-      this.frame.appendChild(this.initialColorDiv);
-      this.frame.appendChild(this.cancelButton);
-      this.frame.appendChild(this.applyButton);
-      this.frame.appendChild(this.saveButton);
-      this.frame.appendChild(this.loadButton);
-    }
-    /**
-     * bind hammer to the color picker
-     *
-     * @private
-     */
-
-  }, {
-    key: "_bindHammer",
-    value: function _bindHammer() {
-      var _this2 = this;
-
-      this.drag = {};
-      this.pinch = {};
-      this.hammer = new Hammer$1(this.colorPickerCanvas);
-      this.hammer.get("pinch").set({
-        enable: true
-      });
-      onTouch(this.hammer, function (event) {
-        _this2._moveSelector(event);
-      });
-      this.hammer.on("tap", function (event) {
-        _this2._moveSelector(event);
-      });
-      this.hammer.on("panstart", function (event) {
-        _this2._moveSelector(event);
-      });
-      this.hammer.on("panmove", function (event) {
-        _this2._moveSelector(event);
-      });
-      this.hammer.on("panend", function (event) {
-        _this2._moveSelector(event);
-      });
-    }
-    /**
-     * generate the hue circle. This is relatively heavy (200ms) and is done only once on the first time it is shown.
-     *
-     * @private
-     */
-
-  }, {
-    key: "_generateHueCircle",
-    value: function _generateHueCircle() {
-      if (this.generated === false) {
-        var ctx = this.colorPickerCanvas.getContext("2d");
-
-        if (this.pixelRation === undefined) {
-          this.pixelRatio = (window.devicePixelRatio || 1) / (ctx.webkitBackingStorePixelRatio || ctx.mozBackingStorePixelRatio || ctx.msBackingStorePixelRatio || ctx.oBackingStorePixelRatio || ctx.backingStorePixelRatio || 1);
-        }
-
-        ctx.setTransform(this.pixelRatio, 0, 0, this.pixelRatio, 0, 0); // clear the canvas
-
-        var w = this.colorPickerCanvas.clientWidth;
-        var h = this.colorPickerCanvas.clientHeight;
-        ctx.clearRect(0, 0, w, h); // draw hue circle
-
-        var x, y, hue, sat;
-        this.centerCoordinates = {
-          x: w * 0.5,
-          y: h * 0.5
-        };
-        this.r = 0.49 * w;
-        var angleConvert = 2 * Math.PI / 360;
-        var hfac = 1 / 360;
-        var sfac = 1 / this.r;
-        var rgb;
-
-        for (hue = 0; hue < 360; hue++) {
-          for (sat = 0; sat < this.r; sat++) {
-            x = this.centerCoordinates.x + sat * Math.sin(angleConvert * hue);
-            y = this.centerCoordinates.y + sat * Math.cos(angleConvert * hue);
-            rgb = HSVToRGB(hue * hfac, sat * sfac, 1);
-            ctx.fillStyle = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
-            ctx.fillRect(x - 0.5, y - 0.5, 2, 2);
-          }
-        }
-
-        ctx.strokeStyle = "rgba(0,0,0,1)";
-        ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
-        ctx.stroke();
-        this.hueCircle = ctx.getImageData(0, 0, w, h);
-      }
-
-      this.generated = true;
-    }
-    /**
-     * move the selector. This is called by hammer functions.
-     *
-     * @param {Event}  event   The event
-     * @private
-     */
-
-  }, {
-    key: "_moveSelector",
-    value: function _moveSelector(event) {
-      var rect = this.colorPickerDiv.getBoundingClientRect();
-      var left = event.center.x - rect.left;
-      var top = event.center.y - rect.top;
-      var centerY = 0.5 * this.colorPickerDiv.clientHeight;
-      var centerX = 0.5 * this.colorPickerDiv.clientWidth;
-      var x = left - centerX;
-      var y = top - centerY;
-      var angle = Math.atan2(x, y);
-      var radius = 0.98 * Math.min(Math.sqrt(x * x + y * y), centerX);
-      var newTop = Math.cos(angle) * radius + centerY;
-      var newLeft = Math.sin(angle) * radius + centerX;
-      this.colorPickerSelector.style.top = newTop - 0.5 * this.colorPickerSelector.clientHeight + "px";
-      this.colorPickerSelector.style.left = newLeft - 0.5 * this.colorPickerSelector.clientWidth + "px"; // set color
-
-      var h = angle / (2 * Math.PI);
-      h = h < 0 ? h + 1 : h;
-      var s = radius / this.r;
-      var hsv = RGBToHSV(this.color.r, this.color.g, this.color.b);
-      hsv.h = h;
-      hsv.s = s;
-      var rgba = HSVToRGB(hsv.h, hsv.s, hsv.v);
-      rgba["a"] = this.color.a;
-      this.color = rgba; // update previews
-
-      this.initialColorDiv.style.backgroundColor = "rgba(" + this.initialColor.r + "," + this.initialColor.g + "," + this.initialColor.b + "," + this.initialColor.a + ")";
-      this.newColorDiv.style.backgroundColor = "rgba(" + this.color.r + "," + this.color.g + "," + this.color.b + "," + this.color.a + ")";
-    }
-  }]);
-
-  return ColorPicker;
-}();
-
-/**
- * Wrap given text (last argument) in HTML elements (all preceding arguments).
- *
- * @param {...any} rest - List of tag names followed by inner text.
- *
- * @returns An element or a text node.
- */
-
-function wrapInTag() {
-  for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
-    rest[_key] = arguments[_key];
-  }
-
-  if (rest.length < 1) {
-    throw new TypeError("Invalid arguments.");
-  } else if (rest.length === 1) {
-    return document.createTextNode(rest[0]);
-  } else {
-    var element = document.createElement(rest[0]);
-    element.appendChild(wrapInTag(slice$5(rest).call(rest, 1)));
-    return element;
-  }
-}
-/**
- * The way this works is for all properties of this.possible options, you can supply the property name in any form to list the options.
- * Boolean options are recognised as Boolean
- * Number options should be written as array: [default value, min value, max value, stepsize]
- * Colors should be written as array: ['color', '#ffffff']
- * Strings with should be written as array: [option1, option2, option3, ..]
- *
- * The options are matched with their counterparts in each of the modules and the values used in the configuration are
- */
-
-
-var Configurator = /*#__PURE__*/function () {
-  /**
-   * @param {object} parentModule        | the location where parentModule.setOptions() can be called
-   * @param {object} defaultContainer    | the default container of the module
-   * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
-   * @param {number} pixelRatio          | canvas pixel ratio
-   */
-  function Configurator(parentModule, defaultContainer, configureOptions) {
-    var pixelRatio = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-
-    classCallCheck(this, Configurator);
-
-    this.parent = parentModule;
-    this.changedOptions = [];
-    this.container = defaultContainer;
-    this.allowCreation = false;
-    this.options = {};
-    this.initialized = false;
-    this.popupCounter = 0;
-    this.defaultOptions = {
-      enabled: false,
-      filter: true,
-      container: undefined,
-      showButton: true
-    };
-
-    assign$2(this.options, this.defaultOptions);
-
-    this.configureOptions = configureOptions;
-    this.moduleOptions = {};
-    this.domElements = [];
-    this.popupDiv = {};
-    this.popupLimit = 5;
-    this.popupHistory = {};
-    this.colorPicker = new ColorPicker(pixelRatio);
-    this.wrapper = undefined;
-  }
-  /**
-   * refresh all options.
-   * Because all modules parse their options by themselves, we just use their options. We copy them here.
-   *
-   * @param {object} options
-   */
-
-
-  createClass(Configurator, [{
-    key: "setOptions",
-    value: function setOptions(options) {
-      if (options !== undefined) {
-        // reset the popup history because the indices may have been changed.
-        this.popupHistory = {};
-
-        this._removePopup();
-
-        var enabled = true;
-
-        if (typeof options === "string") {
-          this.options.filter = options;
-        } else if (isArray$5(options)) {
-          this.options.filter = options.join();
-        } else if (_typeof_1(options) === "object") {
-          if (options == null) {
-            throw new TypeError("options cannot be null");
-          }
-
-          if (options.container !== undefined) {
-            this.options.container = options.container;
-          }
-
-          if (filter$2(options) !== undefined) {
-            this.options.filter = filter$2(options);
-          }
-
-          if (options.showButton !== undefined) {
-            this.options.showButton = options.showButton;
-          }
-
-          if (options.enabled !== undefined) {
-            enabled = options.enabled;
-          }
-        } else if (typeof options === "boolean") {
-          this.options.filter = true;
-          enabled = options;
-        } else if (typeof options === "function") {
-          this.options.filter = options;
-          enabled = true;
-        }
-
-        if (filter$2(this.options) === false) {
-          enabled = false;
-        }
-
-        this.options.enabled = enabled;
-      }
-
-      this._clean();
-    }
-    /**
-     *
-     * @param {object} moduleOptions
-     */
-
-  }, {
-    key: "setModuleOptions",
-    value: function setModuleOptions(moduleOptions) {
-      this.moduleOptions = moduleOptions;
-
-      if (this.options.enabled === true) {
-        this._clean();
-
-        if (this.options.container !== undefined) {
-          this.container = this.options.container;
-        }
-
-        this._create();
-      }
-    }
-    /**
-     * Create all DOM elements
-     *
-     * @private
-     */
-
-  }, {
-    key: "_create",
-    value: function _create() {
-      this._clean();
-
-      this.changedOptions = [];
-
-      var filter = filter$2(this.options);
-
-      var counter = 0;
-      var show = false;
-
-      for (var option in this.configureOptions) {
-        if (Object.prototype.hasOwnProperty.call(this.configureOptions, option)) {
-          this.allowCreation = false;
-          show = false;
-
-          if (typeof filter === "function") {
-            show = filter(option, []);
-            show = show || this._handleObject(this.configureOptions[option], [option], true);
-          } else if (filter === true || indexOf$3(filter).call(filter, option) !== -1) {
-            show = true;
-          }
-
-          if (show !== false) {
-            this.allowCreation = true; // linebreak between categories
-
-            if (counter > 0) {
-              this._makeItem([]);
-            } // a header for the category
-
-
-            this._makeHeader(option); // get the sub options
-
-
-            this._handleObject(this.configureOptions[option], [option]);
-          }
-
-          counter++;
-        }
-      }
-
-      this._makeButton();
-
-      this._push(); //~ this.colorPicker.insertTo(this.container);
-
-    }
-    /**
-     * draw all DOM elements on the screen
-     *
-     * @private
-     */
-
-  }, {
-    key: "_push",
-    value: function _push() {
-      this.wrapper = document.createElement("div");
-      this.wrapper.className = "vis-configuration-wrapper";
-      this.container.appendChild(this.wrapper);
-
-      for (var i = 0; i < this.domElements.length; i++) {
-        this.wrapper.appendChild(this.domElements[i]);
-      }
-
-      this._showPopupIfNeeded();
-    }
-    /**
-     * delete all DOM elements
-     *
-     * @private
-     */
-
-  }, {
-    key: "_clean",
-    value: function _clean() {
-      for (var i = 0; i < this.domElements.length; i++) {
-        this.wrapper.removeChild(this.domElements[i]);
-      }
-
-      if (this.wrapper !== undefined) {
-        this.container.removeChild(this.wrapper);
-        this.wrapper = undefined;
-      }
-
-      this.domElements = [];
-
-      this._removePopup();
-    }
-    /**
-     * get the value from the actualOptions if it exists
-     *
-     * @param {Array} path    | where to look for the actual option
-     * @returns {*}
-     * @private
-     */
-
-  }, {
-    key: "_getValue",
-    value: function _getValue(path) {
-      var base = this.moduleOptions;
-
-      for (var i = 0; i < path.length; i++) {
-        if (base[path[i]] !== undefined) {
-          base = base[path[i]];
-        } else {
-          base = undefined;
-          break;
-        }
-      }
-
-      return base;
-    }
-    /**
-     * all option elements are wrapped in an item
-     *
-     * @param {Array} path    | where to look for the actual option
-     * @param {Array.<Element>} domElements
-     * @returns {number}
-     * @private
-     */
-
-  }, {
-    key: "_makeItem",
-    value: function _makeItem(path) {
-      if (this.allowCreation === true) {
-        var item = document.createElement("div");
-        item.className = "vis-configuration vis-config-item vis-config-s" + path.length;
-
-        for (var _len2 = arguments.length, domElements = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-          domElements[_key2 - 1] = arguments[_key2];
-        }
-
-        forEach$2(domElements).call(domElements, function (element) {
-          item.appendChild(element);
-        });
-
-        this.domElements.push(item);
-        return this.domElements.length;
-      }
-
-      return 0;
-    }
-    /**
-     * header for major subjects
-     *
-     * @param {string} name
-     * @private
-     */
-
-  }, {
-    key: "_makeHeader",
-    value: function _makeHeader(name) {
-      var div = document.createElement("div");
-      div.className = "vis-configuration vis-config-header";
-      div.innerText = name;
-
-      this._makeItem([], div);
-    }
-    /**
-     * make a label, if it is an object label, it gets different styling.
-     *
-     * @param {string} name
-     * @param {Array} path    | where to look for the actual option
-     * @param {string} objectLabel
-     * @returns {HTMLElement}
-     * @private
-     */
-
-  }, {
-    key: "_makeLabel",
-    value: function _makeLabel(name, path) {
-      var objectLabel = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      var div = document.createElement("div");
-      div.className = "vis-configuration vis-config-label vis-config-s" + path.length;
-
-      if (objectLabel === true) {
-        while (div.firstChild) {
-          div.removeChild(div.firstChild);
-        }
-
-        div.appendChild(wrapInTag("i", "b", name));
-      } else {
-        div.innerText = name + ":";
-      }
-
-      return div;
-    }
-    /**
-     * make a dropdown list for multiple possible string optoins
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_makeDropdown",
-    value: function _makeDropdown(arr, value, path) {
-      var select = document.createElement("select");
-      select.className = "vis-configuration vis-config-select";
-      var selectedValue = 0;
-
-      if (value !== undefined) {
-        if (indexOf$3(arr).call(arr, value) !== -1) {
-          selectedValue = indexOf$3(arr).call(arr, value);
-        }
-      }
-
-      for (var i = 0; i < arr.length; i++) {
-        var option = document.createElement("option");
-        option.value = arr[i];
-
-        if (i === selectedValue) {
-          option.selected = "selected";
-        }
-
-        option.innerText = arr[i];
-        select.appendChild(option);
-      }
-
-      var me = this;
-
-      select.onchange = function () {
-        me._update(this.value, path);
-      };
-
-      var label = this._makeLabel(path[path.length - 1], path);
-
-      this._makeItem(path, label, select);
-    }
-    /**
-     * make a range object for numeric options
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_makeRange",
-    value: function _makeRange(arr, value, path) {
-      var defaultValue = arr[0];
-      var min = arr[1];
-      var max = arr[2];
-      var step = arr[3];
-      var range = document.createElement("input");
-      range.className = "vis-configuration vis-config-range";
-
-      try {
-        range.type = "range"; // not supported on IE9
-
-        range.min = min;
-        range.max = max;
-      } catch (err) {// TODO: Add some error handling.
-      }
-
-      range.step = step; // set up the popup settings in case they are needed.
-
-      var popupString = "";
-      var popupValue = 0;
-
-      if (value !== undefined) {
-        var factor = 1.2;
-
-        if (value < 0 && value * factor < min) {
-          range.min = Math.ceil(value * factor);
-          popupValue = range.min;
-          popupString = "range increased";
-        } else if (value / factor < min) {
-          range.min = Math.ceil(value / factor);
-          popupValue = range.min;
-          popupString = "range increased";
-        }
-
-        if (value * factor > max && max !== 1) {
-          range.max = Math.ceil(value * factor);
-          popupValue = range.max;
-          popupString = "range increased";
-        }
-
-        range.value = value;
-      } else {
-        range.value = defaultValue;
-      }
-
-      var input = document.createElement("input");
-      input.className = "vis-configuration vis-config-rangeinput";
-      input.value = range.value;
-      var me = this;
-
-      range.onchange = function () {
-        input.value = this.value;
-
-        me._update(Number(this.value), path);
-      };
-
-      range.oninput = function () {
-        input.value = this.value;
-      };
-
-      var label = this._makeLabel(path[path.length - 1], path);
-
-      var itemIndex = this._makeItem(path, label, range, input); // if a popup is needed AND it has not been shown for this value, show it.
-
-
-      if (popupString !== "" && this.popupHistory[itemIndex] !== popupValue) {
-        this.popupHistory[itemIndex] = popupValue;
-
-        this._setupPopup(popupString, itemIndex);
-      }
-    }
-    /**
-     * make a button object
-     *
-     * @private
-     */
-
-  }, {
-    key: "_makeButton",
-    value: function _makeButton() {
-      var _this = this;
-
-      if (this.options.showButton === true) {
-        var generateButton = document.createElement("div");
-        generateButton.className = "vis-configuration vis-config-button";
-        generateButton.innerText = "generate options";
-
-        generateButton.onclick = function () {
-          _this._printOptions();
-        };
-
-        generateButton.onmouseover = function () {
-          generateButton.className = "vis-configuration vis-config-button hover";
-        };
-
-        generateButton.onmouseout = function () {
-          generateButton.className = "vis-configuration vis-config-button";
-        };
-
-        this.optionsContainer = document.createElement("div");
-        this.optionsContainer.className = "vis-configuration vis-config-option-container";
-        this.domElements.push(this.optionsContainer);
-        this.domElements.push(generateButton);
-      }
-    }
-    /**
-     * prepare the popup
-     *
-     * @param {string} string
-     * @param {number} index
-     * @private
-     */
-
-  }, {
-    key: "_setupPopup",
-    value: function _setupPopup(string, index) {
-      var _this2 = this;
-
-      if (this.initialized === true && this.allowCreation === true && this.popupCounter < this.popupLimit) {
-        var div = document.createElement("div");
-        div.id = "vis-configuration-popup";
-        div.className = "vis-configuration-popup";
-        div.innerText = string;
-
-        div.onclick = function () {
-          _this2._removePopup();
-        };
-
-        this.popupCounter += 1;
-        this.popupDiv = {
-          html: div,
-          index: index
-        };
-      }
-    }
-    /**
-     * remove the popup from the dom
-     *
-     * @private
-     */
-
-  }, {
-    key: "_removePopup",
-    value: function _removePopup() {
-      if (this.popupDiv.html !== undefined) {
-        this.popupDiv.html.parentNode.removeChild(this.popupDiv.html);
-        clearTimeout(this.popupDiv.hideTimeout);
-        clearTimeout(this.popupDiv.deleteTimeout);
-        this.popupDiv = {};
-      }
-    }
-    /**
-     * Show the popup if it is needed.
-     *
-     * @private
-     */
-
-  }, {
-    key: "_showPopupIfNeeded",
-    value: function _showPopupIfNeeded() {
-      var _this3 = this;
-
-      if (this.popupDiv.html !== undefined) {
-        var correspondingElement = this.domElements[this.popupDiv.index];
-        var rect = correspondingElement.getBoundingClientRect();
-        this.popupDiv.html.style.left = rect.left + "px";
-        this.popupDiv.html.style.top = rect.top - 30 + "px"; // 30 is the height;
-
-        document.body.appendChild(this.popupDiv.html);
-        this.popupDiv.hideTimeout = setTimeout$2(function () {
-          _this3.popupDiv.html.style.opacity = 0;
-        }, 1500);
-        this.popupDiv.deleteTimeout = setTimeout$2(function () {
-          _this3._removePopup();
-        }, 1800);
-      }
-    }
-    /**
-     * make a checkbox for boolean options.
-     *
-     * @param {number} defaultValue
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_makeCheckbox",
-    value: function _makeCheckbox(defaultValue, value, path) {
-      var checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.className = "vis-configuration vis-config-checkbox";
-      checkbox.checked = defaultValue;
-
-      if (value !== undefined) {
-        checkbox.checked = value;
-
-        if (value !== defaultValue) {
-          if (_typeof_1(defaultValue) === "object") {
-            if (value !== defaultValue.enabled) {
-              this.changedOptions.push({
-                path: path,
-                value: value
-              });
-            }
-          } else {
-            this.changedOptions.push({
-              path: path,
-              value: value
-            });
-          }
-        }
-      }
-
-      var me = this;
-
-      checkbox.onchange = function () {
-        me._update(this.checked, path);
-      };
-
-      var label = this._makeLabel(path[path.length - 1], path);
-
-      this._makeItem(path, label, checkbox);
-    }
-    /**
-     * make a text input field for string options.
-     *
-     * @param {number} defaultValue
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_makeTextInput",
-    value: function _makeTextInput(defaultValue, value, path) {
-      var checkbox = document.createElement("input");
-      checkbox.type = "text";
-      checkbox.className = "vis-configuration vis-config-text";
-      checkbox.value = value;
-
-      if (value !== defaultValue) {
-        this.changedOptions.push({
-          path: path,
-          value: value
-        });
-      }
-
-      var me = this;
-
-      checkbox.onchange = function () {
-        me._update(this.value, path);
-      };
-
-      var label = this._makeLabel(path[path.length - 1], path);
-
-      this._makeItem(path, label, checkbox);
-    }
-    /**
-     * make a color field with a color picker for color fields
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_makeColorField",
-    value: function _makeColorField(arr, value, path) {
-      var _this4 = this;
-
-      var defaultColor = arr[1];
-      var div = document.createElement("div");
-      value = value === undefined ? defaultColor : value;
-
-      if (value !== "none") {
-        div.className = "vis-configuration vis-config-colorBlock";
-        div.style.backgroundColor = value;
-      } else {
-        div.className = "vis-configuration vis-config-colorBlock none";
-      }
-
-      value = value === undefined ? defaultColor : value;
-
-      div.onclick = function () {
-        _this4._showColorPicker(value, div, path);
-      };
-
-      var label = this._makeLabel(path[path.length - 1], path);
-
-      this._makeItem(path, label, div);
-    }
-    /**
-     * used by the color buttons to call the color picker.
-     *
-     * @param {number} value
-     * @param {HTMLElement} div
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_showColorPicker",
-    value: function _showColorPicker(value, div, path) {
-      var _this5 = this;
-
-      // clear the callback from this div
-      div.onclick = function () {};
-
-      this.colorPicker.insertTo(div);
-      this.colorPicker.show();
-      this.colorPicker.setColor(value);
-      this.colorPicker.setUpdateCallback(function (color) {
-        var colorString = "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
-        div.style.backgroundColor = colorString;
-
-        _this5._update(colorString, path);
-      }); // on close of the colorpicker, restore the callback.
-
-      this.colorPicker.setCloseCallback(function () {
-        div.onclick = function () {
-          _this5._showColorPicker(value, div, path);
-        };
-      });
-    }
-    /**
-     * parse an object and draw the correct items
-     *
-     * @param {object} obj
-     * @param {Array} [path=[]]    | where to look for the actual option
-     * @param {boolean} [checkOnly=false]
-     * @returns {boolean}
-     * @private
-     */
-
-  }, {
-    key: "_handleObject",
-    value: function _handleObject(obj) {
-      var path = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-      var checkOnly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      var show = false;
-
-      var filter = filter$2(this.options);
-
-      var visibleInSet = false;
-
-      for (var subObj in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, subObj)) {
-          show = true;
-          var item = obj[subObj];
-          var newPath = copyAndExtendArray(path, subObj);
-
-          if (typeof filter === "function") {
-            show = filter(subObj, path); // if needed we must go deeper into the object.
-
-            if (show === false) {
-              if (!isArray$5(item) && typeof item !== "string" && typeof item !== "boolean" && item instanceof Object) {
-                this.allowCreation = false;
-                show = this._handleObject(item, newPath, true);
-                this.allowCreation = checkOnly === false;
-              }
-            }
-          }
-
-          if (show !== false) {
-            visibleInSet = true;
-
-            var value = this._getValue(newPath);
-
-            if (isArray$5(item)) {
-              this._handleArray(item, value, newPath);
-            } else if (typeof item === "string") {
-              this._makeTextInput(item, value, newPath);
-            } else if (typeof item === "boolean") {
-              this._makeCheckbox(item, value, newPath);
-            } else if (item instanceof Object) {
-              // collapse the physics options that are not enabled
-              var draw = true;
-
-              if (indexOf$3(path).call(path, "physics") !== -1) {
-                if (this.moduleOptions.physics.solver !== subObj && subObj !== "wind") {
-                  draw = false;
-                }
-              }
-
-              if (draw === true) {
-                // initially collapse options with an disabled enabled option.
-                if (item.enabled !== undefined) {
-                  var enabledPath = copyAndExtendArray(newPath, "enabled");
-
-                  var enabledValue = this._getValue(enabledPath);
-
-                  if (enabledValue === true) {
-                    var label = this._makeLabel(subObj, newPath, true);
-
-                    this._makeItem(newPath, label);
-
-                    visibleInSet = this._handleObject(item, newPath) || visibleInSet;
-                  } else {
-                    this._makeCheckbox(item, enabledValue, newPath);
-                  }
-                } else {
-                  var _label = this._makeLabel(subObj, newPath, true);
-
-                  this._makeItem(newPath, _label);
-
-                  visibleInSet = this._handleObject(item, newPath) || visibleInSet;
-                }
-              }
-            } else {
-              console.error("dont know how to handle", item, subObj, newPath);
-            }
-          }
-        }
-      }
-
-      return visibleInSet;
-    }
-    /**
-     * handle the array type of option
-     *
-     * @param {Array.<number>} arr
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_handleArray",
-    value: function _handleArray(arr, value, path) {
-      if (typeof arr[0] === "string" && arr[0] === "color") {
-        this._makeColorField(arr, value, path);
-
-        if (arr[1] !== value) {
-          this.changedOptions.push({
-            path: path,
-            value: value
-          });
-        }
-      } else if (typeof arr[0] === "string") {
-        this._makeDropdown(arr, value, path);
-
-        if (arr[0] !== value) {
-          this.changedOptions.push({
-            path: path,
-            value: value
-          });
-        }
-      } else if (typeof arr[0] === "number") {
-        this._makeRange(arr, value, path);
-
-        if (arr[0] !== value) {
-          this.changedOptions.push({
-            path: path,
-            value: Number(value)
-          });
-        }
-      }
-    }
-    /**
-     * called to update the network with the new settings.
-     *
-     * @param {number} value
-     * @param {Array} path    | where to look for the actual option
-     * @private
-     */
-
-  }, {
-    key: "_update",
-    value: function _update(value, path) {
-      var options = this._constructOptions(value, path);
-
-      if (this.parent.body && this.parent.body.emitter && this.parent.body.emitter.emit) {
-        this.parent.body.emitter.emit("configChange", options);
-      }
-
-      this.initialized = true;
-      this.parent.setOptions(options);
-    }
-    /**
-     *
-     * @param {string | boolean} value
-     * @param {Array.<string>} path
-     * @param {{}} optionsObj
-     * @returns {{}}
-     * @private
-     */
-
-  }, {
-    key: "_constructOptions",
-    value: function _constructOptions(value, path) {
-      var optionsObj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      var pointer = optionsObj; // when dropdown boxes can be string or boolean, we typecast it into correct types
-
-      value = value === "true" ? true : value;
-      value = value === "false" ? false : value;
-
-      for (var i = 0; i < path.length; i++) {
-        if (path[i] !== "global") {
-          if (pointer[path[i]] === undefined) {
-            pointer[path[i]] = {};
-          }
-
-          if (i !== path.length - 1) {
-            pointer = pointer[path[i]];
-          } else {
-            pointer[path[i]] = value;
-          }
-        }
-      }
-
-      return optionsObj;
-    }
-    /**
-     * @private
-     */
-
-  }, {
-    key: "_printOptions",
-    value: function _printOptions() {
-      var options = this.getOptions();
-
-      while (this.optionsContainer.firstChild) {
-        this.optionsContainer.removeChild(this.optionsContainer.firstChild);
-      }
-
-      this.optionsContainer.appendChild(wrapInTag("pre", "const options = " + stringify$2(options, null, 2)));
-    }
-    /**
-     *
-     * @returns {{}} options
-     */
-
-  }, {
-    key: "getOptions",
-    value: function getOptions() {
-      var options = {};
-
-      for (var i = 0; i < this.changedOptions.length; i++) {
-        this._constructOptions(this.changedOptions[i].value, this.changedOptions[i].path, options);
-      }
-
-      return options;
-    }
-  }]);
-
-  return Configurator;
 }();
 
 /**
@@ -38826,10 +38834,10 @@ Network.prototype.setOptions = function (options) {
   }
 
   if (options !== undefined) {
-    var errorFound = Validator.validate(options, allOptions$1);
+    var errorFound = Validator$1.validate(options, allOptions$1);
 
     if (errorFound === true) {
-      console.error("%cErrors have been found in the supplied options object.", printStyle);
+      console.error("%cErrors have been found in the supplied options object.", VALIDATOR_PRINT_STYLE$1);
     } // copy the global fields over
 
 
@@ -38866,7 +38874,7 @@ Network.prototype.setOptions = function (options) {
 
     if ("configure" in options) {
       if (!this.configurator) {
-        this.configurator = new Configurator(this, this.body.container, configureOptions, this.canvas.pixelRatio);
+        this.configurator = new Configurator$1(this, this.body.container, configureOptions, this.canvas.pixelRatio);
       }
 
       this.configurator.setOptions(options.configure);
@@ -38902,7 +38910,7 @@ Network.prototype.setOptions = function (options) {
     if (options.clickToUse !== undefined) {
       if (options.clickToUse === true) {
         if (this.activator === undefined) {
-          this.activator = new Activator(this.canvas.frame);
+          this.activator = new Activator$1(this.canvas.frame);
           this.activator.on("change", function () {
             _this2.body.emitter.emit("activate");
           });
