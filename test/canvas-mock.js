@@ -3,8 +3,8 @@
  *
  * Adapted from: https://github.com/Cristy94/canvas-mock
  */
-const jsdom = require("jsdom");
-const jsdom_global = require("jsdom-global");
+import jsdom from "jsdom";
+import jsdom_global from "jsdom-global";
 
 let canvasMock; // Use one canvas instance for all calls to createElement('canvas');
 
@@ -130,7 +130,7 @@ function overrideCreateElementNS(window) {
  * @param {string} [html='']  html definitions which should be added to the jsdom definition
  * @returns {Function}  function to call in after(), to clean up for `jsdom_global`
  */
-function mockify(html = "") {
+export function canvasMockify(html = "") {
   // Start of message that we want to suppress.
   const consoleErrorMessageToSuppress =
     "Error: Not implemented: HTMLCanvasElement.prototype.getContext" +
@@ -165,5 +165,3 @@ function mockify(html = "") {
 
   return cleanupFunction;
 }
-
-module.exports = mockify;

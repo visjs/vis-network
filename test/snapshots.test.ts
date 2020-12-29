@@ -5,7 +5,7 @@
  */
 
 import Network from "../lib/network/Network";
-import canvasMockify from "./canvas-mock";
+import { canvasMockify } from "./canvas-mock";
 import snapshot from "snap-shot-it";
 
 const optionsConfigs = [

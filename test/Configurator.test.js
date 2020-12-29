@@ -1,9 +1,9 @@
-const assert = require("assert");
+import assert from "assert";
 
-const canvasMockify = require("./canvas-mock");
-const Configurator = require("../lib/shared/Configurator").default;
-const Network = require("../lib/network/Network");
-const { configureOptions } = require("../lib/network/options.js");
+import { canvasMockify } from "./canvas-mock";
+import { Configurator } from "../lib/shared";
+import Network from "../lib/network/Network";
+import { configureOptions } from "../lib/network/options.js";
 
 describe("Configurator", function () {
   beforeEach(function () {

@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import Network from "../../lib/network/Network";
-import canvasMockify from "../canvas-mock";
+import { canvasMockify } from "../canvas-mock";
 import { sortArrays } from "../helpers";
 
 describe("Network", function () {

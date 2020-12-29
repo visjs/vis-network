@@ -1,13 +1,13 @@
-const assert = require("assert"),
-  fs = require("fs"),
-  dot = require("../lib/network/dotparser.js");
+import assert from "assert";
+import fs from "fs";
+import { parseDOT } from "../lib/network/dotparser.js";
 
 describe("dotparser", function () {
   it("should parse a DOT file into JSON", function (done) {
     fs.readFile("test/dot.txt", function (err, data) {
       data = String(data);
 
-      const graph = dot.parseDOT(data);
+      const graph = parseDOT(data);
 
       assert.deepEqual(graph, {
         type: "digraph",
@@ -190,7 +190,7 @@ describe("dotparser", function () {
 
     data = String(data);
 
-    const graph = dot.parseDOT(data);
+    const graph = parseDOT(data);
 
     assert.deepEqual(graph, {
       id: "dinetwork",
@@ -218,7 +218,7 @@ describe("dotparser", function () {
 
     data2 = String(data2);
 
-    const graph2 = dot.parseDOT(data2);
+    const graph2 = parseDOT(data2);
     //console.log(JSON.stringify(graph, null, 2));
 
     assert.deepEqual(graph2, {
