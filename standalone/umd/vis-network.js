@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-01-02T05:25:38.254Z
+ * @date    2021-01-03T17:47:55.095Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -10710,7 +10710,7 @@
 	    return document.createTextNode(rest[0]);
 	  } else {
 	    var element = document.createElement(rest[0]);
-	    element.appendChild(wrapInTag(slice$5(rest).call(rest, 1)));
+	    element.appendChild(wrapInTag.apply(void 0, toConsumableArray(slice$5(rest).call(rest, 1))));
 	    return element;
 	  }
 	}
@@ -10731,9 +10731,13 @@
 	   * @param {object} defaultContainer    | the default container of the module
 	   * @param {object} configureOptions    | the fully configured and predefined options set found in allOptions.js
 	   * @param {number} pixelRatio          | canvas pixel ratio
+	   * @param {Function} hideOption        | custom logic to dynamically hide options
 	   */
 	  function Configurator(parentModule, defaultContainer, configureOptions) {
 	    var pixelRatio = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+	    var hideOption = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : function () {
+	      return false;
+	    };
 
 	    classCallCheck(this, Configurator);
 
@@ -10741,6 +10745,7 @@
 	    this.changedOptions = [];
 	    this.container = defaultContainer;
 	    this.allowCreation = false;
+	    this.hideOption = hideOption;
 	    this.options = {};
 	    this.initialized = false;
 	    this.popupCounter = 0;
@@ -11467,16 +11472,8 @@
 	            } else if (typeof item === "boolean") {
 	              this._makeCheckbox(item, value, newPath);
 	            } else if (item instanceof Object) {
-	              // collapse the physics options that are not enabled
-	              var draw = true;
-
-	              if (indexOf$3(path).call(path, "physics") !== -1) {
-	                if (this.moduleOptions.physics.solver !== subObj && subObj !== "wind") {
-	                  draw = false;
-	                }
-	              }
-
-	              if (draw === true) {
+	              // skip the options that are not enabled
+	              if (!this.hideOption(path, subObj, this.moduleOptions)) {
 	                // initially collapse options with an disabled enabled option.
 	                if (item.enabled !== undefined) {
 	                  var enabledPath = copyAndExtendArray(newPath, "enabled");
@@ -40769,6 +40766,438 @@
 	var any = "any"; // List of endpoints
 
 	var endPoints = ["arrow", "bar", "box", "circle", "crow", "curve", "diamond", "image", "inv_curve", "inv_triangle", "triangle", "vee"];
+	/* eslint-disable @typescript-eslint/naming-convention -- The __*__ format is used to prevent collisions with actual option names. */
+
+	var nodeOptions = {
+	  borderWidth: {
+	    number: number
+	  },
+	  borderWidthSelected: {
+	    number: number,
+	    undefined: "undefined"
+	  },
+	  brokenImage: {
+	    string: string,
+	    undefined: "undefined"
+	  },
+	  chosen: {
+	    label: {
+	      boolean: bool,
+	      function: "function"
+	    },
+	    node: {
+	      boolean: bool,
+	      function: "function"
+	    },
+	    __type__: {
+	      object: object,
+	      boolean: bool
+	    }
+	  },
+	  color: {
+	    border: {
+	      string: string
+	    },
+	    background: {
+	      string: string
+	    },
+	    highlight: {
+	      border: {
+	        string: string
+	      },
+	      background: {
+	        string: string
+	      },
+	      __type__: {
+	        object: object,
+	        string: string
+	      }
+	    },
+	    hover: {
+	      border: {
+	        string: string
+	      },
+	      background: {
+	        string: string
+	      },
+	      __type__: {
+	        object: object,
+	        string: string
+	      }
+	    },
+	    __type__: {
+	      object: object,
+	      string: string
+	    }
+	  },
+	  opacity: {
+	    number: number,
+	    undefined: "undefined"
+	  },
+	  fixed: {
+	    x: {
+	      boolean: bool
+	    },
+	    y: {
+	      boolean: bool
+	    },
+	    __type__: {
+	      object: object,
+	      boolean: bool
+	    }
+	  },
+	  font: {
+	    align: {
+	      string: string
+	    },
+	    color: {
+	      string: string
+	    },
+	    size: {
+	      number: number
+	    },
+	    face: {
+	      string: string
+	    },
+	    background: {
+	      string: string
+	    },
+	    strokeWidth: {
+	      number: number
+	    },
+	    strokeColor: {
+	      string: string
+	    },
+	    vadjust: {
+	      number: number
+	    },
+	    multi: {
+	      boolean: bool,
+	      string: string
+	    },
+	    bold: {
+	      color: {
+	        string: string
+	      },
+	      size: {
+	        number: number
+	      },
+	      face: {
+	        string: string
+	      },
+	      mod: {
+	        string: string
+	      },
+	      vadjust: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object,
+	        string: string
+	      }
+	    },
+	    boldital: {
+	      color: {
+	        string: string
+	      },
+	      size: {
+	        number: number
+	      },
+	      face: {
+	        string: string
+	      },
+	      mod: {
+	        string: string
+	      },
+	      vadjust: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object,
+	        string: string
+	      }
+	    },
+	    ital: {
+	      color: {
+	        string: string
+	      },
+	      size: {
+	        number: number
+	      },
+	      face: {
+	        string: string
+	      },
+	      mod: {
+	        string: string
+	      },
+	      vadjust: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object,
+	        string: string
+	      }
+	    },
+	    mono: {
+	      color: {
+	        string: string
+	      },
+	      size: {
+	        number: number
+	      },
+	      face: {
+	        string: string
+	      },
+	      mod: {
+	        string: string
+	      },
+	      vadjust: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object,
+	        string: string
+	      }
+	    },
+	    __type__: {
+	      object: object,
+	      string: string
+	    }
+	  },
+	  group: {
+	    string: string,
+	    number: number,
+	    undefined: "undefined"
+	  },
+	  heightConstraint: {
+	    minimum: {
+	      number: number
+	    },
+	    valign: {
+	      string: string
+	    },
+	    __type__: {
+	      object: object,
+	      boolean: bool,
+	      number: number
+	    }
+	  },
+	  hidden: {
+	    boolean: bool
+	  },
+	  icon: {
+	    face: {
+	      string: string
+	    },
+	    code: {
+	      string: string
+	    },
+	    size: {
+	      number: number
+	    },
+	    color: {
+	      string: string
+	    },
+	    weight: {
+	      string: string,
+	      number: number
+	    },
+	    __type__: {
+	      object: object
+	    }
+	  },
+	  id: {
+	    string: string,
+	    number: number
+	  },
+	  image: {
+	    selected: {
+	      string: string,
+	      undefined: "undefined"
+	    },
+	    unselected: {
+	      string: string,
+	      undefined: "undefined"
+	    },
+	    __type__: {
+	      object: object,
+	      string: string
+	    }
+	  },
+	  imagePadding: {
+	    top: {
+	      number: number
+	    },
+	    right: {
+	      number: number
+	    },
+	    bottom: {
+	      number: number
+	    },
+	    left: {
+	      number: number
+	    },
+	    __type__: {
+	      object: object,
+	      number: number
+	    }
+	  },
+	  label: {
+	    string: string,
+	    undefined: "undefined"
+	  },
+	  labelHighlightBold: {
+	    boolean: bool
+	  },
+	  level: {
+	    number: number,
+	    undefined: "undefined"
+	  },
+	  margin: {
+	    top: {
+	      number: number
+	    },
+	    right: {
+	      number: number
+	    },
+	    bottom: {
+	      number: number
+	    },
+	    left: {
+	      number: number
+	    },
+	    __type__: {
+	      object: object,
+	      number: number
+	    }
+	  },
+	  mass: {
+	    number: number
+	  },
+	  physics: {
+	    boolean: bool
+	  },
+	  scaling: {
+	    min: {
+	      number: number
+	    },
+	    max: {
+	      number: number
+	    },
+	    label: {
+	      enabled: {
+	        boolean: bool
+	      },
+	      min: {
+	        number: number
+	      },
+	      max: {
+	        number: number
+	      },
+	      maxVisible: {
+	        number: number
+	      },
+	      drawThreshold: {
+	        number: number
+	      },
+	      __type__: {
+	        object: object,
+	        boolean: bool
+	      }
+	    },
+	    customScalingFunction: {
+	      function: "function"
+	    },
+	    __type__: {
+	      object: object
+	    }
+	  },
+	  shadow: {
+	    enabled: {
+	      boolean: bool
+	    },
+	    color: {
+	      string: string
+	    },
+	    size: {
+	      number: number
+	    },
+	    x: {
+	      number: number
+	    },
+	    y: {
+	      number: number
+	    },
+	    __type__: {
+	      object: object,
+	      boolean: bool
+	    }
+	  },
+	  shape: {
+	    string: ["custom", "ellipse", "circle", "database", "box", "text", "image", "circularImage", "diamond", "dot", "star", "triangle", "triangleDown", "square", "icon", "hexagon"]
+	  },
+	  ctxRenderer: {
+	    function: "function"
+	  },
+	  shapeProperties: {
+	    borderDashes: {
+	      boolean: bool,
+	      array: array
+	    },
+	    borderRadius: {
+	      number: number
+	    },
+	    interpolation: {
+	      boolean: bool
+	    },
+	    useImageSize: {
+	      boolean: bool
+	    },
+	    useBorderWithImage: {
+	      boolean: bool
+	    },
+	    coordinateOrigin: {
+	      string: ["center", "top-left"]
+	    },
+	    __type__: {
+	      object: object
+	    }
+	  },
+	  size: {
+	    number: number
+	  },
+	  title: {
+	    string: string,
+	    dom: dom,
+	    undefined: "undefined"
+	  },
+	  value: {
+	    number: number,
+	    undefined: "undefined"
+	  },
+	  widthConstraint: {
+	    minimum: {
+	      number: number
+	    },
+	    maximum: {
+	      number: number
+	    },
+	    __type__: {
+	      object: object,
+	      boolean: bool,
+	      number: number
+	    }
+	  },
+	  x: {
+	    number: number
+	  },
+	  y: {
+	    number: number
+	  },
+	  __type__: {
+	    object: object
+	  }
+	};
 	var allOptions$1 = {
 	  configure: {
 	    enabled: {
@@ -40954,7 +41383,6 @@
 	      size: {
 	        number: number
 	      },
-	      // px
 	      face: {
 	        string: string
 	      },
@@ -40964,7 +41392,6 @@
 	      strokeWidth: {
 	        number: number
 	      },
-	      // px
 	      strokeColor: {
 	        string: string
 	      },
@@ -40985,7 +41412,6 @@
 	        size: {
 	          number: number
 	        },
-	        // px
 	        face: {
 	          string: string
 	        },
@@ -41007,7 +41433,6 @@
 	        size: {
 	          number: number
 	        },
-	        // px
 	        face: {
 	          string: string
 	        },
@@ -41029,7 +41454,6 @@
 	        size: {
 	          number: number
 	        },
-	        // px
 	        face: {
 	          string: string
 	        },
@@ -41051,7 +41475,6 @@
 	        size: {
 	          number: number
 	        },
-	        // px
 	        face: {
 	          string: string
 	        },
@@ -41217,7 +41640,7 @@
 	    useDefaultGroups: {
 	      boolean: bool
 	    },
-	    __any__: "get from nodes, will be overwritten below",
+	    __any__: nodeOptions,
 	    __type__: {
 	      object: object
 	    }
@@ -41332,15 +41755,12 @@
 	      direction: {
 	        string: ["UD", "DU", "LR", "RL"]
 	      },
-	      // UD, DU, LR, RL
 	      sortMethod: {
 	        string: ["hubsize", "directed"]
 	      },
-	      // hubsize, directed
 	      shakeTowards: {
 	        string: ["leaves", "roots"]
 	      },
-	      // leaves, roots
 	      __type__: {
 	        object: object,
 	        boolean: bool
@@ -41386,452 +41806,13 @@
 	      boolean: bool,
 	      function: "function"
 	    },
-	    controlNodeStyle: "get from nodes, will be overwritten below",
+	    controlNodeStyle: nodeOptions,
 	    __type__: {
 	      object: object,
 	      boolean: bool
 	    }
 	  },
-	  nodes: {
-	    borderWidth: {
-	      number: number
-	    },
-	    borderWidthSelected: {
-	      number: number,
-	      undefined: "undefined"
-	    },
-	    brokenImage: {
-	      string: string,
-	      undefined: "undefined"
-	    },
-	    chosen: {
-	      label: {
-	        boolean: bool,
-	        function: "function"
-	      },
-	      node: {
-	        boolean: bool,
-	        function: "function"
-	      },
-	      __type__: {
-	        object: object,
-	        boolean: bool
-	      }
-	    },
-	    color: {
-	      border: {
-	        string: string
-	      },
-	      background: {
-	        string: string
-	      },
-	      highlight: {
-	        border: {
-	          string: string
-	        },
-	        background: {
-	          string: string
-	        },
-	        __type__: {
-	          object: object,
-	          string: string
-	        }
-	      },
-	      hover: {
-	        border: {
-	          string: string
-	        },
-	        background: {
-	          string: string
-	        },
-	        __type__: {
-	          object: object,
-	          string: string
-	        }
-	      },
-	      __type__: {
-	        object: object,
-	        string: string
-	      }
-	    },
-	    opacity: {
-	      number: number,
-	      undefined: "undefined"
-	    },
-	    fixed: {
-	      x: {
-	        boolean: bool
-	      },
-	      y: {
-	        boolean: bool
-	      },
-	      __type__: {
-	        object: object,
-	        boolean: bool
-	      }
-	    },
-	    font: {
-	      align: {
-	        string: string
-	      },
-	      color: {
-	        string: string
-	      },
-	      size: {
-	        number: number
-	      },
-	      // px
-	      face: {
-	        string: string
-	      },
-	      background: {
-	        string: string
-	      },
-	      strokeWidth: {
-	        number: number
-	      },
-	      // px
-	      strokeColor: {
-	        string: string
-	      },
-	      vadjust: {
-	        number: number
-	      },
-	      multi: {
-	        boolean: bool,
-	        string: string
-	      },
-	      bold: {
-	        color: {
-	          string: string
-	        },
-	        size: {
-	          number: number
-	        },
-	        // px
-	        face: {
-	          string: string
-	        },
-	        mod: {
-	          string: string
-	        },
-	        vadjust: {
-	          number: number
-	        },
-	        __type__: {
-	          object: object,
-	          string: string
-	        }
-	      },
-	      boldital: {
-	        color: {
-	          string: string
-	        },
-	        size: {
-	          number: number
-	        },
-	        // px
-	        face: {
-	          string: string
-	        },
-	        mod: {
-	          string: string
-	        },
-	        vadjust: {
-	          number: number
-	        },
-	        __type__: {
-	          object: object,
-	          string: string
-	        }
-	      },
-	      ital: {
-	        color: {
-	          string: string
-	        },
-	        size: {
-	          number: number
-	        },
-	        // px
-	        face: {
-	          string: string
-	        },
-	        mod: {
-	          string: string
-	        },
-	        vadjust: {
-	          number: number
-	        },
-	        __type__: {
-	          object: object,
-	          string: string
-	        }
-	      },
-	      mono: {
-	        color: {
-	          string: string
-	        },
-	        size: {
-	          number: number
-	        },
-	        // px
-	        face: {
-	          string: string
-	        },
-	        mod: {
-	          string: string
-	        },
-	        vadjust: {
-	          number: number
-	        },
-	        __type__: {
-	          object: object,
-	          string: string
-	        }
-	      },
-	      __type__: {
-	        object: object,
-	        string: string
-	      }
-	    },
-	    group: {
-	      string: string,
-	      number: number,
-	      undefined: "undefined"
-	    },
-	    heightConstraint: {
-	      minimum: {
-	        number: number
-	      },
-	      valign: {
-	        string: string
-	      },
-	      __type__: {
-	        object: object,
-	        boolean: bool,
-	        number: number
-	      }
-	    },
-	    hidden: {
-	      boolean: bool
-	    },
-	    icon: {
-	      face: {
-	        string: string
-	      },
-	      code: {
-	        string: string
-	      },
-	      //'\uf007',
-	      size: {
-	        number: number
-	      },
-	      //50,
-	      color: {
-	        string: string
-	      },
-	      weight: {
-	        string: string,
-	        number: number
-	      },
-	      __type__: {
-	        object: object
-	      }
-	    },
-	    id: {
-	      string: string,
-	      number: number
-	    },
-	    image: {
-	      selected: {
-	        string: string,
-	        undefined: "undefined"
-	      },
-	      // --> URL
-	      unselected: {
-	        string: string,
-	        undefined: "undefined"
-	      },
-	      // --> URL
-	      __type__: {
-	        object: object,
-	        string: string
-	      }
-	    },
-	    imagePadding: {
-	      top: {
-	        number: number
-	      },
-	      right: {
-	        number: number
-	      },
-	      bottom: {
-	        number: number
-	      },
-	      left: {
-	        number: number
-	      },
-	      __type__: {
-	        object: object,
-	        number: number
-	      }
-	    },
-	    label: {
-	      string: string,
-	      undefined: "undefined"
-	    },
-	    labelHighlightBold: {
-	      boolean: bool
-	    },
-	    level: {
-	      number: number,
-	      undefined: "undefined"
-	    },
-	    margin: {
-	      top: {
-	        number: number
-	      },
-	      right: {
-	        number: number
-	      },
-	      bottom: {
-	        number: number
-	      },
-	      left: {
-	        number: number
-	      },
-	      __type__: {
-	        object: object,
-	        number: number
-	      }
-	    },
-	    mass: {
-	      number: number
-	    },
-	    physics: {
-	      boolean: bool
-	    },
-	    scaling: {
-	      min: {
-	        number: number
-	      },
-	      max: {
-	        number: number
-	      },
-	      label: {
-	        enabled: {
-	          boolean: bool
-	        },
-	        min: {
-	          number: number
-	        },
-	        max: {
-	          number: number
-	        },
-	        maxVisible: {
-	          number: number
-	        },
-	        drawThreshold: {
-	          number: number
-	        },
-	        __type__: {
-	          object: object,
-	          boolean: bool
-	        }
-	      },
-	      customScalingFunction: {
-	        function: "function"
-	      },
-	      __type__: {
-	        object: object
-	      }
-	    },
-	    shadow: {
-	      enabled: {
-	        boolean: bool
-	      },
-	      color: {
-	        string: string
-	      },
-	      size: {
-	        number: number
-	      },
-	      x: {
-	        number: number
-	      },
-	      y: {
-	        number: number
-	      },
-	      __type__: {
-	        object: object,
-	        boolean: bool
-	      }
-	    },
-	    shape: {
-	      string: ["custom", "ellipse", "circle", "database", "box", "text", "image", "circularImage", "diamond", "dot", "star", "triangle", "triangleDown", "square", "icon", "hexagon"]
-	    },
-	    ctxRenderer: {
-	      function: "function"
-	    },
-	    shapeProperties: {
-	      borderDashes: {
-	        boolean: bool,
-	        array: array
-	      },
-	      borderRadius: {
-	        number: number
-	      },
-	      interpolation: {
-	        boolean: bool
-	      },
-	      useImageSize: {
-	        boolean: bool
-	      },
-	      useBorderWithImage: {
-	        boolean: bool
-	      },
-	      coordinateOrigin: {
-	        string: ["center", "top-left"]
-	      },
-	      __type__: {
-	        object: object
-	      }
-	    },
-	    size: {
-	      number: number
-	    },
-	    title: {
-	      string: string,
-	      dom: dom,
-	      undefined: "undefined"
-	    },
-	    value: {
-	      number: number,
-	      undefined: "undefined"
-	    },
-	    widthConstraint: {
-	      minimum: {
-	        number: number
-	      },
-	      maximum: {
-	        number: number
-	      },
-	      __type__: {
-	        object: object,
-	        boolean: bool,
-	        number: number
-	      }
-	    },
-	    x: {
-	      number: number
-	    },
-	    y: {
-	      number: number
-	    },
-	    __type__: {
-	      object: object
-	    }
-	  },
+	  nodes: nodeOptions,
 	  physics: {
 	    enabled: {
 	      boolean: bool
@@ -41937,7 +41918,6 @@
 	    minVelocity: {
 	      number: number
 	    },
-	    // px/s
 	    solver: {
 	      string: ["barnesHut", "repulsion", "hierarchicalRepulsion", "forceAtlas2Based"]
 	    },
@@ -41948,7 +41928,6 @@
 	      iterations: {
 	        number: number
 	      },
-	      // maximum number of iteration to stabilize
 	      updateInterval: {
 	        number: number
 	      },
@@ -42013,8 +41992,8 @@
 	    object: object
 	  }
 	};
-	allOptions$1.groups.__any__ = allOptions$1.nodes;
-	allOptions$1.manipulation.controlNodeStyle = allOptions$1.nodes;
+	/* eslint-enable @typescript-eslint/naming-convention */
+
 	/**
 	 * This provides ranges, initial values, steps and dropdown menu choices for the
 	 * configuration.
@@ -42064,11 +42043,9 @@
 	    font: {
 	      color: ["color", "#343434"],
 	      size: [14, 0, 100, 1],
-	      // px
 	      face: ["arial", "verdana", "tahoma"],
 	      background: ["color", "none"],
 	      strokeWidth: [0, 0, 50, 1],
-	      // px
 	      strokeColor: ["color", "#ffffff"]
 	    },
 	    //group: 'string',
@@ -42143,11 +42120,9 @@
 	    font: {
 	      color: ["color", "#343434"],
 	      size: [14, 0, 100, 1],
-	      // px
 	      face: ["arial", "verdana", "tahoma"],
 	      background: ["color", "none"],
 	      strokeWidth: [2, 0, 50, 1],
-	      // px
 	      strokeColor: ["color", "#ffffff"],
 	      align: ["horizontal", "top", "middle", "bottom"]
 	    },
@@ -42200,11 +42175,8 @@
 	      edgeMinimization: true,
 	      parentCentralization: true,
 	      direction: ["UD", "DU", "LR", "RL"],
-	      // UD, DU, LR, RL
 	      sortMethod: ["hubsize", "directed"],
-	      // hubsize, directed
-	      shakeTowards: ["leaves", "roots"] // leaves, roots
-
+	      shakeTowards: ["leaves", "roots"]
 	    }
 	  },
 	  interaction: {
@@ -42278,13 +42250,22 @@
 	    wind: {
 	      x: [0, -10, 10, 0.1],
 	      y: [0, -10, 10, 0.1]
-	    } //adaptiveTimestep: true
-
+	    }
 	  }
+	};
+	var configuratorHideOption = function configuratorHideOption(parentPath, optionName, options) {
+	  var _context;
+
+	  if (includes$4(parentPath).call(parentPath, "physics") && includes$4(_context = configureOptions.physics.solver).call(_context, optionName) && options.physics.solver !== optionName && optionName !== "wind") {
+	    return true;
+	  }
+
+	  return false;
 	};
 
 	var options = /*#__PURE__*/Object.freeze({
 		__proto__: null,
+		configuratorHideOption: configuratorHideOption,
 		allOptions: allOptions$1,
 		configureOptions: configureOptions
 	});
@@ -42925,7 +42906,7 @@
 
 	    if ("configure" in options) {
 	      if (!this.configurator) {
-	        this.configurator = new Configurator$1(this, this.body.container, configureOptions, this.canvas.pixelRatio);
+	        this.configurator = new Configurator$1(this, this.body.container, configureOptions, this.canvas.pixelRatio, configuratorHideOption);
 	      }
 
 	      this.configurator.setOptions(options.configure);

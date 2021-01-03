@@ -1,10 +1,11 @@
 export * from "./network/Network";
 import * as gephiParser from "./network/gephiParser";
+import * as allOptions from "./network/options";
 export declare const network: {
     Images: any;
     dotparser: any;
     gephiParser: typeof gephiParser;
-    allOptions: any;
+    allOptions: typeof allOptions;
     convertDot: any;
     convertGephi: typeof gephiParser.parseGephi;
 };
