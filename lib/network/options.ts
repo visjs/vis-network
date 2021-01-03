@@ -1,3 +1,9 @@
+import {
+  ConfiguratorConfig,
+  ConfiguratorHideOption,
+  OptionsConfig,
+} from "../shared";
+
 /**
  * This object contains all possible options. It will check if the types are correct, if required if the option is one
  * of the allowed values.
@@ -29,7 +35,186 @@ const endPoints = [
   "vee",
 ];
 
-const allOptions = {
+/* eslint-disable @typescript-eslint/naming-convention -- The __*__ format is used to prevent collisions with actual option names. */
+const nodeOptions: OptionsConfig = {
+  borderWidth: { number },
+  borderWidthSelected: { number, undefined: "undefined" },
+  brokenImage: { string, undefined: "undefined" },
+  chosen: {
+    label: { boolean: bool, function: "function" },
+    node: { boolean: bool, function: "function" },
+    __type__: { object, boolean: bool },
+  },
+  color: {
+    border: { string },
+    background: { string },
+    highlight: {
+      border: { string },
+      background: { string },
+      __type__: { object, string },
+    },
+    hover: {
+      border: { string },
+      background: { string },
+      __type__: { object, string },
+    },
+    __type__: { object, string },
+  },
+  opacity: { number, undefined: "undefined" },
+  fixed: {
+    x: { boolean: bool },
+    y: { boolean: bool },
+    __type__: { object, boolean: bool },
+  },
+  font: {
+    align: { string },
+    color: { string },
+    size: { number }, // px
+    face: { string },
+    background: { string },
+    strokeWidth: { number }, // px
+    strokeColor: { string },
+    vadjust: { number },
+    multi: { boolean: bool, string },
+    bold: {
+      color: { string },
+      size: { number }, // px
+      face: { string },
+      mod: { string },
+      vadjust: { number },
+      __type__: { object, string },
+    },
+    boldital: {
+      color: { string },
+      size: { number }, // px
+      face: { string },
+      mod: { string },
+      vadjust: { number },
+      __type__: { object, string },
+    },
+    ital: {
+      color: { string },
+      size: { number }, // px
+      face: { string },
+      mod: { string },
+      vadjust: { number },
+      __type__: { object, string },
+    },
+    mono: {
+      color: { string },
+      size: { number }, // px
+      face: { string },
+      mod: { string },
+      vadjust: { number },
+      __type__: { object, string },
+    },
+    __type__: { object, string },
+  },
+  group: { string, number, undefined: "undefined" },
+  heightConstraint: {
+    minimum: { number },
+    valign: { string },
+    __type__: { object, boolean: bool, number },
+  },
+  hidden: { boolean: bool },
+  icon: {
+    face: { string },
+    code: { string }, //'\uf007',
+    size: { number }, //50,
+    color: { string },
+    weight: { string, number },
+    __type__: { object },
+  },
+  id: { string, number },
+  image: {
+    selected: { string, undefined: "undefined" }, // --> URL
+    unselected: { string, undefined: "undefined" }, // --> URL
+    __type__: { object, string },
+  },
+  imagePadding: {
+    top: { number },
+    right: { number },
+    bottom: { number },
+    left: { number },
+    __type__: { object, number },
+  },
+  label: { string, undefined: "undefined" },
+  labelHighlightBold: { boolean: bool },
+  level: { number, undefined: "undefined" },
+  margin: {
+    top: { number },
+    right: { number },
+    bottom: { number },
+    left: { number },
+    __type__: { object, number },
+  },
+  mass: { number },
+  physics: { boolean: bool },
+  scaling: {
+    min: { number },
+    max: { number },
+    label: {
+      enabled: { boolean: bool },
+      min: { number },
+      max: { number },
+      maxVisible: { number },
+      drawThreshold: { number },
+      __type__: { object, boolean: bool },
+    },
+    customScalingFunction: { function: "function" },
+    __type__: { object },
+  },
+  shadow: {
+    enabled: { boolean: bool },
+    color: { string },
+    size: { number },
+    x: { number },
+    y: { number },
+    __type__: { object, boolean: bool },
+  },
+  shape: {
+    string: [
+      "custom",
+      "ellipse",
+      "circle",
+      "database",
+      "box",
+      "text",
+      "image",
+      "circularImage",
+      "diamond",
+      "dot",
+      "star",
+      "triangle",
+      "triangleDown",
+      "square",
+      "icon",
+      "hexagon",
+    ],
+  },
+  ctxRenderer: { function: "function" },
+  shapeProperties: {
+    borderDashes: { boolean: bool, array },
+    borderRadius: { number },
+    interpolation: { boolean: bool },
+    useImageSize: { boolean: bool },
+    useBorderWithImage: { boolean: bool },
+    coordinateOrigin: { string: ["center", "top-left"] },
+    __type__: { object },
+  },
+  size: { number },
+  title: { string, dom, undefined: "undefined" },
+  value: { number, undefined: "undefined" },
+  widthConstraint: {
+    minimum: { number },
+    maximum: { number },
+    __type__: { object, boolean: bool, number },
+  },
+  x: { number },
+  y: { number },
+  __type__: { object },
+};
+const allOptions: OptionsConfig = {
   configure: {
     enabled: { boolean: bool },
     filter: { boolean: bool, string, array, function: "function" },
@@ -216,7 +401,7 @@ const allOptions = {
   },
   groups: {
     useDefaultGroups: { boolean: bool },
-    __any__: "get from nodes, will be overwritten below",
+    __any__: nodeOptions,
     __type__: { object },
   },
   interaction: {
@@ -278,187 +463,10 @@ const allOptions = {
     },
     deleteNode: { boolean: bool, function: "function" },
     deleteEdge: { boolean: bool, function: "function" },
-    controlNodeStyle: "get from nodes, will be overwritten below",
+    controlNodeStyle: nodeOptions,
     __type__: { object, boolean: bool },
   },
-  nodes: {
-    borderWidth: { number },
-    borderWidthSelected: { number, undefined: "undefined" },
-    brokenImage: { string, undefined: "undefined" },
-    chosen: {
-      label: { boolean: bool, function: "function" },
-      node: { boolean: bool, function: "function" },
-      __type__: { object, boolean: bool },
-    },
-    color: {
-      border: { string },
-      background: { string },
-      highlight: {
-        border: { string },
-        background: { string },
-        __type__: { object, string },
-      },
-      hover: {
-        border: { string },
-        background: { string },
-        __type__: { object, string },
-      },
-      __type__: { object, string },
-    },
-    opacity: { number, undefined: "undefined" },
-    fixed: {
-      x: { boolean: bool },
-      y: { boolean: bool },
-      __type__: { object, boolean: bool },
-    },
-    font: {
-      align: { string },
-      color: { string },
-      size: { number }, // px
-      face: { string },
-      background: { string },
-      strokeWidth: { number }, // px
-      strokeColor: { string },
-      vadjust: { number },
-      multi: { boolean: bool, string },
-      bold: {
-        color: { string },
-        size: { number }, // px
-        face: { string },
-        mod: { string },
-        vadjust: { number },
-        __type__: { object, string },
-      },
-      boldital: {
-        color: { string },
-        size: { number }, // px
-        face: { string },
-        mod: { string },
-        vadjust: { number },
-        __type__: { object, string },
-      },
-      ital: {
-        color: { string },
-        size: { number }, // px
-        face: { string },
-        mod: { string },
-        vadjust: { number },
-        __type__: { object, string },
-      },
-      mono: {
-        color: { string },
-        size: { number }, // px
-        face: { string },
-        mod: { string },
-        vadjust: { number },
-        __type__: { object, string },
-      },
-      __type__: { object, string },
-    },
-    group: { string, number, undefined: "undefined" },
-    heightConstraint: {
-      minimum: { number },
-      valign: { string },
-      __type__: { object, boolean: bool, number },
-    },
-    hidden: { boolean: bool },
-    icon: {
-      face: { string },
-      code: { string }, //'\uf007',
-      size: { number }, //50,
-      color: { string },
-      weight: { string, number },
-      __type__: { object },
-    },
-    id: { string, number },
-    image: {
-      selected: { string, undefined: "undefined" }, // --> URL
-      unselected: { string, undefined: "undefined" }, // --> URL
-      __type__: { object, string },
-    },
-    imagePadding: {
-      top: { number },
-      right: { number },
-      bottom: { number },
-      left: { number },
-      __type__: { object, number },
-    },
-    label: { string, undefined: "undefined" },
-    labelHighlightBold: { boolean: bool },
-    level: { number, undefined: "undefined" },
-    margin: {
-      top: { number },
-      right: { number },
-      bottom: { number },
-      left: { number },
-      __type__: { object, number },
-    },
-    mass: { number },
-    physics: { boolean: bool },
-    scaling: {
-      min: { number },
-      max: { number },
-      label: {
-        enabled: { boolean: bool },
-        min: { number },
-        max: { number },
-        maxVisible: { number },
-        drawThreshold: { number },
-        __type__: { object, boolean: bool },
-      },
-      customScalingFunction: { function: "function" },
-      __type__: { object },
-    },
-    shadow: {
-      enabled: { boolean: bool },
-      color: { string },
-      size: { number },
-      x: { number },
-      y: { number },
-      __type__: { object, boolean: bool },
-    },
-    shape: {
-      string: [
-        "custom",
-        "ellipse",
-        "circle",
-        "database",
-        "box",
-        "text",
-        "image",
-        "circularImage",
-        "diamond",
-        "dot",
-        "star",
-        "triangle",
-        "triangleDown",
-        "square",
-        "icon",
-        "hexagon",
-      ],
-    },
-    ctxRenderer: { function: "function" },
-    shapeProperties: {
-      borderDashes: { boolean: bool, array },
-      borderRadius: { number },
-      interpolation: { boolean: bool },
-      useImageSize: { boolean: bool },
-      useBorderWithImage: { boolean: bool },
-      coordinateOrigin: { string: ["center", "top-left"] },
-      __type__: { object },
-    },
-    size: { number },
-    title: { string, dom, undefined: "undefined" },
-    value: { number, undefined: "undefined" },
-    widthConstraint: {
-      minimum: { number },
-      maximum: { number },
-      __type__: { object, boolean: bool, number },
-    },
-    x: { number },
-    y: { number },
-    __type__: { object },
-  },
+  nodes: nodeOptions,
   physics: {
     enabled: { boolean: bool },
     barnesHut: {
@@ -538,9 +546,7 @@ const allOptions = {
   width: { string },
   __type__: { object },
 };
-
-allOptions.groups.__any__ = allOptions.nodes;
-allOptions.manipulation.controlNodeStyle = allOptions.nodes;
+/* eslint-enable @typescript-eslint/naming-convention */
 
 /**
  * This provides ranges, initial values, steps and dropdown menu choices for the
@@ -566,7 +572,7 @@ allOptions.manipulation.controlNodeStyle = allOptions.nodes;
  *   The first value says this will be a color picker not a dropdown menu. The
  *   next value is the initial color.
  */
-const configureOptions = {
+const configureOptions: ConfiguratorConfig = {
   nodes: {
     borderWidth: [1, 0, 10, 1],
     borderWidthSelected: [2, 0, 10, 1],
@@ -817,6 +823,23 @@ const configureOptions = {
     },
     //adaptiveTimestep: true
   },
+} as const;
+
+export const configuratorHideOption: ConfiguratorHideOption = (
+  parentPath,
+  optionName,
+  options
+): boolean => {
+  if (
+    parentPath.includes("physics") &&
+    (configureOptions as any).physics.solver.includes(optionName) &&
+    options.physics.solver !== optionName &&
+    optionName !== "wind"
+  ) {
+    return true;
+  }
+
+  return false;
 };
 
 export { allOptions, configureOptions };
