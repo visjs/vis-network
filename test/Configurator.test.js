@@ -3,7 +3,7 @@ import assert from "assert";
 import { canvasMockify } from "./canvas-mock";
 import { Configurator } from "../lib/shared";
 import Network from "../lib/network/Network";
-import { configureOptions } from "../lib/network/options.js";
+import { configureOptions } from "../lib/network/options";
 
 describe("Configurator", function () {
   beforeEach(function () {

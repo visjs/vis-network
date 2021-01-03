@@ -13,3 +13,5 @@ export const Hammer: HammerStatic = HammerJS;
 export const Popup: any = PopupJS;
 export const VALIDATOR_PRINT_STYLE: string = VALIDATOR_PRINT_STYLE_JS;
 export const Validator: any = ValidatorJS;
+
+export * from "./configurator-types";
