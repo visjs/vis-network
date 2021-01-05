@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-01-05T01:48:40.216Z
+ * @date    2021-01-05T04:48:20.444Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -73,7 +73,7 @@
 	var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({
 	  1: 2
 	}, 1); // `Object.prototype.propertyIsEnumerable` method implementation
-	// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
+	// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
 
 	var f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 	  var descriptor = getOwnPropertyDescriptor(this, V);
@@ -109,7 +109,7 @@
 	} : Object;
 
 	// `RequireObjectCoercible` abstract operation
-	// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+	// https://tc39.es/ecma262/#sec-requireobjectcoercible
 	var requireObjectCoercible = function (it) {
 	  if (it == undefined) throw TypeError("Can't call method on " + it);
 	  return it;
@@ -123,7 +123,7 @@
 	  return typeof it === 'object' ? it !== null : typeof it === 'function';
 	};
 
-	// https://tc39.github.io/ecma262/#sec-toprimitive
+	// https://tc39.es/ecma262/#sec-toprimitive
 	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
 	// and the second argument - flag - preferred type is a string
 
@@ -159,7 +159,7 @@
 	});
 
 	var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // `Object.getOwnPropertyDescriptor` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 	var f$1 = descriptors ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
 	  O = toIndexedObject(O);
@@ -243,7 +243,7 @@
 	};
 
 	var nativeDefineProperty = Object.defineProperty; // `Object.defineProperty` method
-	// https://tc39.github.io/ecma262/#sec-object.defineproperty
+	// https://tc39.es/ecma262/#sec-object.defineproperty
 
 	var f$2 = descriptors ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
 	  anObject(O);
@@ -375,7 +375,7 @@
 
 	  return factories[argsLength](C, args);
 	}; // `Function.prototype.bind` method implementation
-	// https://tc39.github.io/ecma262/#sec-function.prototype.bind
+	// https://tc39.es/ecma262/#sec-function.prototype.bind
 
 
 	var functionBind = Function.bind || function bind(that
@@ -395,7 +395,7 @@
 	  return boundFunction;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-function.prototype.bind
+	// https://tc39.es/ecma262/#sec-function.prototype.bind
 
 	_export({
 	  target: 'Function',
@@ -423,14 +423,14 @@
 
 	var ceil = Math.ceil;
 	var floor = Math.floor; // `ToInteger` abstract operation
-	// https://tc39.github.io/ecma262/#sec-tointeger
+	// https://tc39.es/ecma262/#sec-tointeger
 
 	var toInteger = function (argument) {
 	  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 	};
 
 	var min = Math.min; // `ToLength` abstract operation
-	// https://tc39.github.io/ecma262/#sec-tolength
+	// https://tc39.es/ecma262/#sec-tolength
 
 	var toLength = function (argument) {
 	  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
@@ -467,10 +467,10 @@
 
 	var arrayIncludes = {
 	  // `Array.prototype.includes` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+	  // https://tc39.es/ecma262/#sec-array.prototype.includes
 	  includes: createMethod(true),
 	  // `Array.prototype.indexOf` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+	  // https://tc39.es/ecma262/#sec-array.prototype.indexof
 	  indexOf: createMethod(false)
 	};
 
@@ -497,7 +497,7 @@
 	// IE8- don't enum bug keys
 	var enumBugKeys = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
 
-	// https://tc39.github.io/ecma262/#sec-object.keys
+	// https://tc39.es/ecma262/#sec-object.keys
 
 	var objectKeys = Object.keys || function keys(O) {
 	  return objectKeysInternal(O, enumBugKeys);
@@ -508,7 +508,7 @@
 	  f: f$3
 	};
 
-	// https://tc39.github.io/ecma262/#sec-toobject
+	// https://tc39.es/ecma262/#sec-toobject
 
 	var toObject = function (argument) {
 	  return Object(requireObjectCoercible(argument));
@@ -516,7 +516,7 @@
 
 	var nativeAssign = Object.assign;
 	var defineProperty = Object.defineProperty; // `Object.assign` method
-	// https://tc39.github.io/ecma262/#sec-object.assign
+	// https://tc39.es/ecma262/#sec-object.assign
 
 	var objectAssign = !nativeAssign || fails(function () {
 	  // should have correct order of operations (Edge bug)
@@ -568,7 +568,7 @@
 	  return T;
 	} : nativeAssign;
 
-	// https://tc39.github.io/ecma262/#sec-object.assign
+	// https://tc39.es/ecma262/#sec-object.assign
 
 	_export({
 	  target: 'Object',
@@ -1116,7 +1116,7 @@
 	  };
 	});
 
-	// https://tc39.github.io/ecma262/#sec-object.defineproperty
+	// https://tc39.es/ecma262/#sec-object.defineproperty
 
 	_export({
 	  target: 'Object',
@@ -1141,7 +1141,7 @@
 
 	var defineProperty$2 = defineProperty$1;
 
-	// https://tc39.github.io/ecma262/#sec-object.defineproperties
+	// https://tc39.es/ecma262/#sec-object.defineproperties
 
 	var objectDefineProperties = descriptors ? Object.defineProperties : function defineProperties(O, Properties) {
 	  anObject(O);
@@ -1155,7 +1155,7 @@
 	  return O;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.defineproperties
+	// https://tc39.es/ecma262/#sec-object.defineproperties
 
 	_export({
 	  target: 'Object',
@@ -1189,7 +1189,7 @@
 	};
 
 	var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype'); // `Object.getOwnPropertyNames` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 	var f$4 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 	  return objectKeysInternal(O, hiddenKeys$1);
@@ -1210,7 +1210,7 @@
 	  if (propertyKey in object) objectDefineProperty.f(object, propertyKey, createPropertyDescriptor(0, value));else object[propertyKey] = value;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
 
 	_export({
 	  target: 'Object',
@@ -1245,7 +1245,7 @@
 	  nativeGetOwnPropertyDescriptor$1(1);
 	});
 	var FORCED = !descriptors || FAILS_ON_PRIMITIVES; // `Object.getOwnPropertyDescriptor` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 	_export({
 	  target: 'Object',
@@ -1282,7 +1282,7 @@
 	&& !Symbol.sham // eslint-disable-next-line no-undef
 	&& typeof Symbol.iterator == 'symbol';
 
-	// https://tc39.github.io/ecma262/#sec-isarray
+	// https://tc39.es/ecma262/#sec-isarray
 
 	var isArray = Array.isArray || function isArray(arg) {
 	  return classofRaw(arg) == 'Array';
@@ -1308,9 +1308,9 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.8.1',
+	    version: '3.8.2',
 	    mode:  'pure' ,
-	    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
 	});
 
@@ -1392,7 +1392,7 @@
 	};
 
 	hiddenKeys[IE_PROTO] = true; // `Object.create` method
-	// https://tc39.github.io/ecma262/#sec-object.create
+	// https://tc39.es/ecma262/#sec-object.create
 
 	var objectCreate = Object.create || function create(O, Properties) {
 	  var result;
@@ -1487,7 +1487,7 @@
 	  : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+	// https://tc39.es/ecma262/#sec-object.prototype.tostring
 
 
 	var objectToString = toStringTagSupport ? {}.toString : function toString() {
@@ -1593,7 +1593,7 @@
 	};
 
 	var SPECIES = wellKnownSymbol('species'); // `ArraySpeciesCreate` abstract operation
-	// https://tc39.github.io/ecma262/#sec-arrayspeciescreate
+	// https://tc39.es/ecma262/#sec-arrayspeciescreate
 
 	var arraySpeciesCreate = function (originalArray, length) {
 	  var C;
@@ -1670,25 +1670,25 @@
 
 	var arrayIteration = {
 	  // `Array.prototype.forEach` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.foreach
+	  // https://tc39.es/ecma262/#sec-array.prototype.foreach
 	  forEach: createMethod$1(0),
 	  // `Array.prototype.map` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.map
+	  // https://tc39.es/ecma262/#sec-array.prototype.map
 	  map: createMethod$1(1),
 	  // `Array.prototype.filter` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.filter
+	  // https://tc39.es/ecma262/#sec-array.prototype.filter
 	  filter: createMethod$1(2),
 	  // `Array.prototype.some` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.some
+	  // https://tc39.es/ecma262/#sec-array.prototype.some
 	  some: createMethod$1(3),
 	  // `Array.prototype.every` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.every
+	  // https://tc39.es/ecma262/#sec-array.prototype.every
 	  every: createMethod$1(4),
 	  // `Array.prototype.find` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.find
+	  // https://tc39.es/ecma262/#sec-array.prototype.find
 	  find: createMethod$1(5),
 	  // `Array.prototype.findIndex` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+	  // https://tc39.es/ecma262/#sec-array.prototype.findIndex
 	  findIndex: createMethod$1(6),
 	  // `Array.prototype.filterOut` method
 	  // https://github.com/tc39/proposal-array-filtering
@@ -1830,7 +1830,7 @@
 	  });
 	  return result;
 	}; // `Symbol` constructor
-	// https://tc39.github.io/ecma262/#sec-symbol-constructor
+	// https://tc39.es/ecma262/#sec-symbol-constructor
 
 
 	if (!nativeSymbol) {
@@ -1896,7 +1896,7 @@
 	  forced: !nativeSymbol
 	}, {
 	  // `Symbol.for` method
-	  // https://tc39.github.io/ecma262/#sec-symbol.for
+	  // https://tc39.es/ecma262/#sec-symbol.for
 	  'for': function (key) {
 	    var string = String(key);
 	    if (has(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
@@ -1906,7 +1906,7 @@
 	    return symbol;
 	  },
 	  // `Symbol.keyFor` method
-	  // https://tc39.github.io/ecma262/#sec-symbol.keyfor
+	  // https://tc39.es/ecma262/#sec-symbol.keyfor
 	  keyFor: function keyFor(sym) {
 	    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol');
 	    if (has(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
@@ -1925,16 +1925,16 @@
 	  sham: !descriptors
 	}, {
 	  // `Object.create` method
-	  // https://tc39.github.io/ecma262/#sec-object.create
+	  // https://tc39.es/ecma262/#sec-object.create
 	  create: $create,
 	  // `Object.defineProperty` method
-	  // https://tc39.github.io/ecma262/#sec-object.defineproperty
+	  // https://tc39.es/ecma262/#sec-object.defineproperty
 	  defineProperty: $defineProperty,
 	  // `Object.defineProperties` method
-	  // https://tc39.github.io/ecma262/#sec-object.defineproperties
+	  // https://tc39.es/ecma262/#sec-object.defineproperties
 	  defineProperties: $defineProperties,
 	  // `Object.getOwnPropertyDescriptor` method
-	  // https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
+	  // https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
 	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor
 	});
 	_export({
@@ -1943,10 +1943,10 @@
 	  forced: !nativeSymbol
 	}, {
 	  // `Object.getOwnPropertyNames` method
-	  // https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	  // https://tc39.es/ecma262/#sec-object.getownpropertynames
 	  getOwnPropertyNames: $getOwnPropertyNames,
 	  // `Object.getOwnPropertySymbols` method
-	  // https://tc39.github.io/ecma262/#sec-object.getownpropertysymbols
+	  // https://tc39.es/ecma262/#sec-object.getownpropertysymbols
 	  getOwnPropertySymbols: $getOwnPropertySymbols
 	}); // Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
 	// https://bugs.chromium.org/p/v8/issues/detail?id=3443
@@ -1962,7 +1962,7 @@
 	    return objectGetOwnPropertySymbols.f(toObject(it));
 	  }
 	}); // `JSON.stringify` method behavior with symbols
-	// https://tc39.github.io/ecma262/#sec-json.stringify
+	// https://tc39.es/ecma262/#sec-json.stringify
 
 	if ($stringify) {
 	  var FORCED_JSON_STRINGIFY = !nativeSymbol || fails(function () {
@@ -1999,13 +1999,13 @@
 	    }
 	  });
 	} // `Symbol.prototype[@@toPrimitive]` method
-	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@toprimitive
+	// https://tc39.es/ecma262/#sec-symbol.prototype-@@toprimitive
 
 
 	if (!$Symbol[PROTOTYPE$1][TO_PRIMITIVE]) {
 	  createNonEnumerableProperty($Symbol[PROTOTYPE$1], TO_PRIMITIVE, $Symbol[PROTOTYPE$1].valueOf);
 	} // `Symbol.prototype[@@toStringTag]` property
-	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@tostringtag
+	// https://tc39.es/ecma262/#sec-symbol.prototype-@@tostringtag
 
 
 	setToStringTag($Symbol, SYMBOL);
@@ -2030,7 +2030,7 @@
 
 	var IE_PROTO$1 = sharedKey('IE_PROTO');
 	var ObjectPrototype$1 = Object.prototype; // `Object.getPrototypeOf` method
-	// https://tc39.github.io/ecma262/#sec-object.getprototypeof
+	// https://tc39.es/ecma262/#sec-object.getprototypeof
 
 	var objectGetPrototypeOf = correctPrototypeGetter ? Object.getPrototypeOf : function (O) {
 	  O = toObject(O);
@@ -2045,7 +2045,7 @@
 
 	var ITERATOR = wellKnownSymbol('iterator');
 	var BUGGY_SAFARI_ITERATORS = false;
-	// https://tc39.github.io/ecma262/#sec-%iteratorprototype%-object
+	// https://tc39.es/ecma262/#sec-%iteratorprototype%-object
 
 
 	var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
@@ -2090,7 +2090,7 @@
 	  return it;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+	// https://tc39.es/ecma262/#sec-object.setprototypeof
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
 
 	/* eslint-disable no-proto */
@@ -2214,15 +2214,15 @@
 	var ARRAY_ITERATOR = 'Array Iterator';
 	var setInternalState$1 = internalState.set;
 	var getInternalState$1 = internalState.getterFor(ARRAY_ITERATOR); // `Array.prototype.entries` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.entries
+	// https://tc39.es/ecma262/#sec-array.prototype.entries
 	// `Array.prototype.keys` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.keys
+	// https://tc39.es/ecma262/#sec-array.prototype.keys
 	// `Array.prototype.values` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.values
+	// https://tc39.es/ecma262/#sec-array.prototype.values
 	// `Array.prototype[@@iterator]` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype-@@iterator
+	// https://tc39.es/ecma262/#sec-array.prototype-@@iterator
 	// `CreateArrayIterator` internal method
-	// https://tc39.github.io/ecma262/#sec-createarrayiterator
+	// https://tc39.es/ecma262/#sec-createarrayiterator
 
 	var es_array_iterator = defineIterator(Array, 'Array', function (iterated, kind) {
 	  setInternalState$1(this, {
@@ -2234,7 +2234,7 @@
 	    kind: kind // kind
 
 	  }); // `%ArrayIteratorPrototype%.next` method
-	  // https://tc39.github.io/ecma262/#sec-%arrayiteratorprototype%.next
+	  // https://tc39.es/ecma262/#sec-%arrayiteratorprototype%.next
 	}, function () {
 	  var state = getInternalState$1(this);
 	  var target = state.target;
@@ -2262,10 +2262,10 @@
 	    done: false
 	  };
 	}, 'values'); // argumentsList[@@iterator] is %ArrayProto_values%
-	// https://tc39.github.io/ecma262/#sec-createunmappedargumentsobject
-	// https://tc39.github.io/ecma262/#sec-createmappedargumentsobject
+	// https://tc39.es/ecma262/#sec-createunmappedargumentsobject
+	// https://tc39.es/ecma262/#sec-createmappedargumentsobject
 
-	iterators.Arguments = iterators.Array; // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	iterators.Arguments = iterators.Array; // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 	// iterable DOM collections
 	// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
@@ -2330,7 +2330,7 @@
 
 	var stringMultibyte = {
 	  // `String.prototype.codePointAt` method
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.codepointat
+	  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
 	  codeAt: createMethod$2(false),
 	  // `String.prototype.at` method
 	  // https://github.com/mathiasbynens/String.prototype.at
@@ -2341,7 +2341,7 @@
 	var STRING_ITERATOR = 'String Iterator';
 	var setInternalState$2 = internalState.set;
 	var getInternalState$2 = internalState.getterFor(STRING_ITERATOR); // `String.prototype[@@iterator]` method
-	// https://tc39.github.io/ecma262/#sec-string.prototype-@@iterator
+	// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
 
 	defineIterator(String, 'String', function (iterated) {
 	  setInternalState$2(this, {
@@ -2349,7 +2349,7 @@
 	    string: String(iterated),
 	    index: 0
 	  }); // `%StringIteratorPrototype%.next` method
-	  // https://tc39.github.io/ecma262/#sec-%stringiteratorprototype%.next
+	  // https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
 	}, function next() {
 	  var state = getInternalState$2(this);
 	  var string = state.string;
@@ -2415,7 +2415,7 @@
 	  return it !== undefined && (iterators.Array === it || ArrayPrototype[ITERATOR$3] === it);
 	};
 
-	// https://tc39.github.io/ecma262/#sec-array.from
+	// https://tc39.es/ecma262/#sec-array.from
 
 
 	var arrayFrom = function from(arrayLike
@@ -2510,7 +2510,7 @@
 	var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
 	  Array.from(iterable);
 	}); // `Array.from` method
-	// https://tc39.github.io/ecma262/#sec-array.from
+	// https://tc39.es/ecma262/#sec-array.from
 
 	_export({
 	  target: 'Array',
@@ -2526,7 +2526,7 @@
 
 	var from_1$2 = from_1$1;
 
-	// https://tc39.github.io/ecma262/#sec-object.create
+	// https://tc39.es/ecma262/#sec-object.create
 
 	_export({
 	  target: 'Object',
@@ -2586,13 +2586,13 @@
 
 	var stringTrim = {
 	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.trimstart
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
 	  start: createMethod$3(1),
 	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.trimend
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
 	  end: createMethod$3(2),
 	  // `String.prototype.trim` method
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.trim
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
 	  trim: createMethod$3(3)
 	};
 
@@ -2606,7 +2606,7 @@
 	};
 
 	var $trim = stringTrim.trim; // `String.prototype.trim` method
-	// https://tc39.github.io/ecma262/#sec-string.prototype.trim
+	// https://tc39.es/ecma262/#sec-string.prototype.trim
 
 	_export({
 	  target: 'String',
@@ -2671,7 +2671,7 @@
 	var $forEach$1 = arrayIteration.forEach;
 	var STRICT_METHOD = arrayMethodIsStrict('forEach');
 	var USES_TO_LENGTH = arrayMethodUsesToLength('forEach'); // `Array.prototype.forEach` method implementation
-	// https://tc39.github.io/ecma262/#sec-array.prototype.foreach
+	// https://tc39.es/ecma262/#sec-array.prototype.foreach
 
 	var arrayForEach = !STRICT_METHOD || !USES_TO_LENGTH ? function forEach(callbackfn
 	/* , thisArg */
@@ -2679,7 +2679,7 @@
 	  return $forEach$1(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	} : [].forEach;
 
-	// https://tc39.github.io/ecma262/#sec-array.prototype.foreach
+	// https://tc39.es/ecma262/#sec-array.prototype.foreach
 
 
 	_export({
@@ -2712,14 +2712,14 @@
 	var $parseInt = global_1.parseInt;
 	var hex = /^[+-]?0[Xx]/;
 	var FORCED$1 = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22; // `parseInt` method
-	// https://tc39.github.io/ecma262/#sec-parseint-string-radix
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
 
 	var numberParseInt = FORCED$1 ? function parseInt(string, radix) {
 	  var S = trim$3(String(string));
 	  return $parseInt(S, radix >>> 0 || (hex.test(S) ? 16 : 10));
 	} : $parseInt;
 
-	// https://tc39.github.io/ecma262/#sec-parseint-string-radix
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
 
 	_export({
 	  global: true,
@@ -2759,15 +2759,15 @@
 
 	var objectToArray = {
 	  // `Object.entries` method
-	  // https://tc39.github.io/ecma262/#sec-object.entries
+	  // https://tc39.es/ecma262/#sec-object.entries
 	  entries: createMethod$4(true),
 	  // `Object.values` method
-	  // https://tc39.github.io/ecma262/#sec-object.values
+	  // https://tc39.es/ecma262/#sec-object.values
 	  values: createMethod$4(false)
 	};
 
 	var $values = objectToArray.values; // `Object.values` method
-	// https://tc39.github.io/ecma262/#sec-object.values
+	// https://tc39.es/ecma262/#sec-object.values
 
 	_export({
 	  target: 'Object',
@@ -2829,7 +2829,7 @@
 	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter'); // Edge 14- issue
 
 	var USES_TO_LENGTH$1 = arrayMethodUsesToLength('filter'); // `Array.prototype.filter` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.filter
+	// https://tc39.es/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
 
 	_export({
@@ -2860,7 +2860,7 @@
 	var FAILS_ON_PRIMITIVES$1 = fails(function () {
 	  objectGetPrototypeOf(1);
 	}); // `Object.getPrototypeOf` method
-	// https://tc39.github.io/ecma262/#sec-object.getprototypeof
+	// https://tc39.es/ecma262/#sec-object.getprototypeof
 
 	_export({
 	  target: 'Object',
@@ -2887,7 +2887,7 @@
 	  ACCESSORS: true,
 	  1: 0
 	}); // `Array.prototype.indexOf` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+	// https://tc39.es/ecma262/#sec-array.prototype.indexof
 
 	_export({
 	  target: 'Array',
@@ -2915,7 +2915,7 @@
 
 	var indexOf$3 = indexOf$2;
 
-	// https://tc39.github.io/ecma262/#sec-array.isarray
+	// https://tc39.es/ecma262/#sec-array.isarray
 
 	_export({
 	  target: 'Array',
@@ -2968,7 +2968,7 @@
 	};
 
 	var FORCED$2 = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT; // `Array.prototype.concat` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.concat
+	// https://tc39.es/ecma262/#sec-array.prototype.concat
 	// with adding support of @@isConcatSpreadable and @@species
 
 	_export({
@@ -3002,57 +3002,59 @@
 	  }
 	});
 
-	// https://tc39.github.io/ecma262/#sec-symbol.asynciterator
+	// https://tc39.es/ecma262/#sec-symbol.asynciterator
 
 	defineWellKnownSymbol('asyncIterator');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.hasinstance
+	// https://tc39.es/ecma262/#sec-symbol.hasinstance
 
 	defineWellKnownSymbol('hasInstance');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.isconcatspreadable
+	// https://tc39.es/ecma262/#sec-symbol.isconcatspreadable
 
 	defineWellKnownSymbol('isConcatSpreadable');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.iterator
+	// https://tc39.es/ecma262/#sec-symbol.iterator
 
 	defineWellKnownSymbol('iterator');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.match
+	// https://tc39.es/ecma262/#sec-symbol.match
 
 	defineWellKnownSymbol('match');
 
+	// https://tc39.es/ecma262/#sec-symbol.matchall
+
 	defineWellKnownSymbol('matchAll');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.replace
+	// https://tc39.es/ecma262/#sec-symbol.replace
 
 	defineWellKnownSymbol('replace');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.search
+	// https://tc39.es/ecma262/#sec-symbol.search
 
 	defineWellKnownSymbol('search');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.species
+	// https://tc39.es/ecma262/#sec-symbol.species
 
 	defineWellKnownSymbol('species');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.split
+	// https://tc39.es/ecma262/#sec-symbol.split
 
 	defineWellKnownSymbol('split');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.toprimitive
+	// https://tc39.es/ecma262/#sec-symbol.toprimitive
 
 	defineWellKnownSymbol('toPrimitive');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.tostringtag
+	// https://tc39.es/ecma262/#sec-symbol.tostringtag
 
 	defineWellKnownSymbol('toStringTag');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.unscopables
+	// https://tc39.es/ecma262/#sec-symbol.unscopables
 
 	defineWellKnownSymbol('unscopables');
 
-	// https://tc39.github.io/ecma262/#sec-json-@@tostringtag
+	// https://tc39.es/ecma262/#sec-json-@@tostringtag
 
 	setToStringTag(global_1.JSON, 'JSON', true);
 
@@ -3122,7 +3124,7 @@
 	var SPECIES$2 = wellKnownSymbol('species');
 	var nativeSlice = [].slice;
 	var max$1 = Math.max; // `Array.prototype.slice` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.slice
+	// https://tc39.es/ecma262/#sec-array.prototype.slice
 	// fallback for not array-like ES3 strings and DOM objects
 
 	_export({
@@ -3214,7 +3216,7 @@
 
 	var slicedToArray = _slicedToArray;
 
-	// https://tc39.github.io/ecma262/#sec-date.now
+	// https://tc39.es/ecma262/#sec-date.now
 
 	_export({
 	  target: 'Date',
@@ -3234,7 +3236,7 @@
 	var FAILS_ON_PRIMITIVES$2 = fails(function () {
 	  objectKeys(1);
 	}); // `Object.keys` method
-	// https://tc39.github.io/ecma262/#sec-object.keys
+	// https://tc39.es/ecma262/#sec-object.keys
 
 	_export({
 	  target: 'Object',
@@ -3256,7 +3258,7 @@
 	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport('map'); // FF49- issue
 
 	var USES_TO_LENGTH$4 = arrayMethodUsesToLength('map'); // `Array.prototype.map` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.map
+	// https://tc39.es/ecma262/#sec-array.prototype.map
 	// with adding support of @@species
 
 	_export({
@@ -3314,7 +3316,7 @@
 	  module.exports = _typeof;
 	});
 
-	// https://tc39.github.io/ecma262/#sec-reflect.ownkeys
+	// https://tc39.es/ecma262/#sec-reflect.ownkeys
 
 	_export({
 	  target: 'Reflect',
@@ -5557,7 +5559,7 @@
 	var min$2 = Math.min;
 	var MAX_SAFE_INTEGER$1 = 0x1FFFFFFFFFFFFF;
 	var MAXIMUM_ALLOWED_LENGTH_EXCEEDED = 'Maximum allowed length exceeded'; // `Array.prototype.splice` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.splice
+	// https://tc39.es/ecma262/#sec-array.prototype.splice
 	// with adding support of @@species
 
 	_export({
@@ -5640,7 +5642,7 @@
 	  ACCESSORS: true,
 	  1: 0
 	}); // `Array.prototype.includes` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+	// https://tc39.es/ecma262/#sec-array.prototype.includes
 
 	_export({
 	  target: 'Array',
@@ -5652,12 +5654,12 @@
 	  ) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
-	}); // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	}); // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 	var includes = entryVirtual('Array').includes;
 
 	var MATCH = wellKnownSymbol('match'); // `IsRegExp` abstract operation
-	// https://tc39.github.io/ecma262/#sec-isregexp
+	// https://tc39.es/ecma262/#sec-isregexp
 
 	var isRegexp = function (it) {
 	  var isRegExp;
@@ -5691,7 +5693,7 @@
 	  return false;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-string.prototype.includes
+	// https://tc39.es/ecma262/#sec-string.prototype.includes
 
 
 	_export({
@@ -7298,7 +7300,7 @@
 
 	var nativeReverse = [].reverse;
 	var test$1 = [1, 2]; // `Array.prototype.reverse` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.reverse
+	// https://tc39.es/ecma262/#sec-array.prototype.reverse
 	// fix for Safari 12.0 bug
 	// https://bugs.webkit.org/show_bug.cgi?id=188794
 
@@ -10494,7 +10496,7 @@
 	  return false;
 	}
 
-	// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+	// https://tc39.es/ecma262/#sec-array.prototype.fill
 
 
 	var arrayFill = function fill(value
@@ -10512,14 +10514,14 @@
 	  return O;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+	// https://tc39.es/ecma262/#sec-array.prototype.fill
 
 	_export({
 	  target: 'Array',
 	  proto: true
 	}, {
 	  fill: arrayFill
-	}); // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	}); // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 	var fill = entryVirtual('Array').fill;
 
@@ -10590,6 +10592,8 @@
 	});
 
 	if ($stringify$1) {
+	  // `JSON.stringify` method
+	  // https://tc39.es/ecma262/#sec-json.stringify
 	  // https://github.com/tc39/proposal-well-formed-stringify
 	  _export({
 	    target: 'JSON',
@@ -13873,7 +13877,7 @@
 	  }
 	};
 
-	// https://tc39.github.io/ecma262/#sec-map-objects
+	// https://tc39.es/ecma262/#sec-map-objects
 
 
 	var es_map = collection('Map', function (init) {
@@ -14253,7 +14257,7 @@
 	var $some = arrayIteration.some;
 	var STRICT_METHOD$2 = arrayMethodIsStrict('some');
 	var USES_TO_LENGTH$7 = arrayMethodUsesToLength('some'); // `Array.prototype.some` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.some
+	// https://tc39.es/ecma262/#sec-array.prototype.some
 
 	_export({
 	  target: 'Array',
@@ -14281,13 +14285,13 @@
 	var some$2 = some$1;
 
 	var globalIsFinite = global_1.isFinite; // `Number.isFinite` method
-	// https://tc39.github.io/ecma262/#sec-number.isfinite
+	// https://tc39.es/ecma262/#sec-number.isfinite
 
 	var numberIsFinite = Number.isFinite || function isFinite(it) {
 	  return typeof it == 'number' && globalIsFinite(it);
 	};
 
-	// https://tc39.github.io/ecma262/#sec-number.isfinite
+	// https://tc39.es/ecma262/#sec-number.isfinite
 
 	_export({
 	  target: 'Number',
@@ -14302,7 +14306,7 @@
 
 	var _isFinite$2 = _isFinite$1;
 
-	// https://tc39.github.io/ecma262/#sec-number.isnan
+	// https://tc39.es/ecma262/#sec-number.isnan
 
 	_export({
 	  target: 'Number',
@@ -14331,7 +14335,7 @@
 	var assertThisInitialized = _assertThisInitialized$1;
 
 	var nativeConstruct = getBuiltIn('Reflect', 'construct'); // `Reflect.construct` method
-	// https://tc39.github.io/ecma262/#sec-reflect.construct
+	// https://tc39.es/ecma262/#sec-reflect.construct
 	// MS Edge supports only 2 arguments and argumentsList argument is optional
 	// FF Nightly sets third argument as `new.target`, but does not create `this` from it
 
@@ -14461,7 +14465,7 @@
 
 	var create$4 = create$3;
 
-	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+	// https://tc39.es/ecma262/#sec-object.setprototypeof
 
 	_export({
 	  target: 'Object',
@@ -14544,7 +14548,7 @@
 
 	var STRICT_METHOD$3 = arrayMethodIsStrict('sort');
 	var FORCED$5 = FAILS_ON_UNDEFINED || !FAILS_ON_NULL || !STRICT_METHOD$3; // `Array.prototype.sort` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.sort
+	// https://tc39.es/ecma262/#sec-array.prototype.sort
 
 	_export({
 	  target: 'Array',
@@ -14569,7 +14573,7 @@
 
 	var sort$2 = sort$1;
 
-	// https://tc39.github.io/ecma262/#sec-set-objects
+	// https://tc39.es/ecma262/#sec-set-objects
 
 
 	var es_set = collection('Set', function (init) {
@@ -15345,7 +15349,7 @@
 
 	var flattenIntoArray_1 = flattenIntoArray;
 
-	// https://github.com/tc39/proposal-flatMap
+	// https://tc39.es/ecma262/#sec-array.prototype.flatmap
 
 
 	_export({
@@ -15410,10 +15414,10 @@
 
 	var arrayReduce = {
 	  // `Array.prototype.reduce` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.reduce
+	  // https://tc39.es/ecma262/#sec-array.prototype.reduce
 	  left: createMethod$5(false),
 	  // `Array.prototype.reduceRight` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.reduceright
+	  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
 	  right: createMethod$5(true)
 	};
 
@@ -15427,7 +15431,7 @@
 	// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
 
 	var CHROME_BUG = !engineIsNode && engineV8Version > 79 && engineV8Version < 83; // `Array.prototype.reduce` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.reduce
+	// https://tc39.es/ecma262/#sec-array.prototype.reduce
 
 	_export({
 	  target: 'Array',
@@ -18578,7 +18582,7 @@
 	var FAILS_ON_PRIMITIVES$3 = fails(function () {
 	  return !Object.getOwnPropertyNames(1);
 	}); // `Object.getOwnPropertyNames` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 	_export({
 	  target: 'Object',
@@ -18601,7 +18605,7 @@
 	var trim$4 = stringTrim.trim;
 	var $parseFloat = global_1.parseFloat;
 	var FORCED$6 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
-	// https://tc39.github.io/ecma262/#sec-parsefloat-string
+	// https://tc39.es/ecma262/#sec-parsefloat-string
 
 	var numberParseFloat = FORCED$6 ? function parseFloat(string) {
 	  var trimmedString = trim$4(String(string));
@@ -18609,7 +18613,7 @@
 	  return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
 	} : $parseFloat;
 
-	// https://tc39.github.io/ecma262/#sec-parsefloat-string
+	// https://tc39.es/ecma262/#sec-parsefloat-string
 
 	_export({
 	  global: true,
@@ -24266,7 +24270,7 @@
 
 	var getOwnPropertyDescriptor$5 = getOwnPropertyDescriptor$4;
 
-	// https://tc39.github.io/ecma262/#sec-reflect.get
+	// https://tc39.es/ecma262/#sec-reflect.get
 
 	function get$1(target, propertyKey
 	/* , receiver */
@@ -24333,7 +24337,7 @@
 	// https://bugs.chromium.org/p/v8/issues/detail?id=9546
 
 	var BUGGY = !!$hypot && $hypot(Infinity, NaN) !== Infinity; // `Math.hypot` method
-	// https://tc39.github.io/ecma262/#sec-math.hypot
+	// https://tc39.es/ecma262/#sec-math.hypot
 
 	_export({
 	  target: 'Math',
@@ -35345,7 +35349,7 @@
 	      return init(this, arguments.length ? arguments[0] : undefined);
 	    };
 	  }; // `WeakMap` constructor
-	  // https://tc39.github.io/ecma262/#sec-weakmap-constructor
+	  // https://tc39.es/ecma262/#sec-weakmap-constructor
 
 
 	  var $WeakMap = module.exports = collection('WeakMap', wrapper, collectionWeak); // IE11 WeakMap frozen keys fix
@@ -37733,7 +37737,7 @@
 	var $every = arrayIteration.every;
 	var STRICT_METHOD$5 = arrayMethodIsStrict('every');
 	var USES_TO_LENGTH$9 = arrayMethodUsesToLength('every'); // `Array.prototype.every` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.every
+	// https://tc39.es/ecma262/#sec-array.prototype.every
 
 	_export({
 	  target: 'Array',
