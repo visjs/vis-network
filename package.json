@@ -102,7 +102,7 @@
     "timsort": "^0.3.0",
     "uuid": "^3.4.0 || ^7.0.0 || ^8.0.0",
     "vis-data": "^7.0.0",
-    "vis-util": "^3.0.0 || ^4.0.0"
+    "vis-util": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
     "@egjs/hammerjs": "2.0.17",
@@ -149,7 +149,7 @@
     "uuid": "8.3.2",
     "vis-data": "7.1.2",
     "vis-dev-utils": "2.9.4",
-    "vis-util": "4.3.4"
+    "vis-util": "5.0.1"
   },
   "collective": {
     "type": "opencollective",
