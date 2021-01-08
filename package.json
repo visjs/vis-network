@@ -102,7 +102,7 @@
     "timsort": "^0.3.0",
     "uuid": "^3.4.0 || ^7.0.0 || ^8.0.0",
     "vis-data": "^7.0.0",
-    "vis-util": "^3.0.0 || ^4.0.0"
+    "vis-util": "^5.0.1"
   },
   "devDependencies": {
     "@egjs/hammerjs": "2.0.17",
@@ -137,6 +137,7 @@
     "rollup": "2.36.1",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-postcss": "4.0.0",
     "rollup-plugin-terser": "7.0.2",
     "sazerac": "2.0.0",
     "semantic-release": "17.3.1",
@@ -149,7 +150,7 @@
     "uuid": "8.3.2",
     "vis-data": "7.1.1",
     "vis-dev-utils": "2.9.4",
-    "vis-util": "4.3.4"
+    "vis-util": "5.0.1"
   },
   "collective": {
     "type": "opencollective",

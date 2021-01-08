@@ -29,7 +29,7 @@ export { data };
 export { DataSet, DataView, Queue } from "vis-data/esnext";
 
 // bundled external libraries
-import { Hammer } from "./shared";
+import { Hammer } from "vis-util/esnext";
 export { Hammer };
 import * as keycharm from "keycharm";
 export { keycharm };

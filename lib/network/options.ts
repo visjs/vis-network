@@ -2,7 +2,7 @@ import {
   ConfiguratorConfig,
   ConfiguratorHideOption,
   OptionsConfig,
-} from "../shared";
+} from "vis-util/esnext";
 
 /**
  * This object contains all possible options. It will check if the types are correct, if required if the option is one
