@@ -1,7 +1,7 @@
 import assert from "assert";
 
 import { canvasMockify } from "./canvas-mock";
-import { Configurator } from "../lib/shared";
+import { Configurator } from "vis-util/esnext";
 import Network from "../lib/network/Network";
 import { configureOptions } from "../lib/network/options";
 
