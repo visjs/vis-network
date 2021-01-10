@@ -1,0 +1,181 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Popups</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  position: absolute;
+  left: 50%;
+  padding: 1em;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Other&lt;/h2&gt;
+    &lt;h3&gt;Popups&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;Both nodes and edges can have popup shown when hovered by a cursor.&lt;/p&gt;
+
+  &lt;p&gt;It is possible to use plain text:&lt;/p&gt;
+  &lt;pre&gt;&lt;code&gt;
+const nodes = [{
+  id: 1,
+  title: &amp;quot;Popup text&amp;quot;,
+}];
+      &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;p&gt;Alternatively an element can be supplied:&lt;/p&gt;
+  &lt;pre&gt;&lt;code&gt;
+const element = document.createElement(&amp;quot;div&amp;quot;);
+// Add child nodes, change styles&amp;#x2026;
+
+const nodes = [{
+  id: 1,
+  title: element,
+}];
+      &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;h4&gt;XSS&lt;/h4&gt;
+  &lt;p&gt;
+    In the past the popup was filled using innerHTML. It is still possible to
+    achieve similar behavior via an element.
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code&gt;
+function createHTMLTitle(html) {
+  var element = document.createElement(&amp;quot;div&amp;quot;);
+  element.innerHTML = html;
+  return element;
+}
+      &lt;/code&gt;&lt;/pre&gt;
+  &lt;p&gt;
+    Keep in mind though that this can lead to XSS attacks:
+    &lt;input type="button" onclick="addXSSNode()" value="add XSS node." /&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// You can supply an element as your title.
+var titleElement = document.createElement("div");
+titleElement.style.border = "1px solid gray";
+titleElement.style.height = "10em";
+titleElement.style.width = "10em";
+
+// With arbitrary DOM structure underneath.
+var titleElementInner = document.createElement("div");
+titleElementInner.style.height = "1em";
+titleElementInner.style.width = "1em";
+titleElementInner.style.background = "red";
+titleElementInner.style.transition = "all 1s ease-in-out";
+titleElement.appendChild(titleElementInner);
+
+// Even dynamic behavior is possible.
+setInterval(function () {
+  titleElementInner.style.marginTop = Math.random() * 9 + "em";
+  titleElementInner.style.marginLeft = Math.random() * 9 + "em";
+}, 2000);
+
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label: "Text",
+    title: "Plain text with no chance of &lt;script&gt;alert(&apos;XSS&apos;)&lt;/scr" + "ipt&gt;!",
+  },
+  { id: 2, label: "Element", title: titleElement },
+]);
+
+var edges = new vis.DataSet([
+  { from: 1, to: 2, title: "Edges work exactly the same." },
+]);
+
+// Instantiate our network object.
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+var options = {
+  nodes: {
+    shape: "dot",
+  },
+};
+network = new vis.Network(container, data, options);
+
+// You can use the element to process HTML and execute JavaScript.
+function createHTMLTitle(html) {
+  var element = document.createElement("div");
+  element.innerHTML = html;
+  return element;
+}
+
+// You can run this function by clicking the &#x201C;add XSS node&#x201D; button above.
+function addXSSNode() {
+  nodes.add({
+    label: "XSS",
+    title: createHTMLTitle(
+      "HTML with a chance of " +
+        &apos;&lt;script&gt;alert("Up to the specs, scripts shouldn\&apos;t execute.");&lt;/scr&apos; +
+        "ipt&gt;" +
+        &apos;&lt;img src="But that doesn\&apos;t mean you\&apos;re safe!" onerror="alert(\&apos;You\\\&apos;ve been hacked, muhehehe!\&apos;);" alt="XSS" /&gt;.&apos;
+    ),
+  });
+}
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/styles/vis-network.min.css,https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js,https://visjs.github.io/vis-network/peer/umd/vis-network.min.js"
+      />
+      <input type="hidden" name="title" value="Vis Network | Other | Popups" />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

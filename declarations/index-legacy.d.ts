@@ -16,7 +16,7 @@ export { util };
 import * as data from "vis-data/esnext";
 export { data };
 export { DataSet, DataView, Queue } from "vis-data/esnext";
-import { Hammer } from "./shared";
+import { Hammer } from "vis-util/esnext";
 export { Hammer };
 import * as keycharm from "keycharm";
 export { keycharm };
