@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-01-21T02:48:28.249Z
+ * @date    2021-01-22T18:59:26.914Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -2078,7 +2078,7 @@ var objectGetPrototypeOf = correctPrototypeGetter ? Object.getPrototypeOf : func
   return O instanceof Object ? ObjectPrototype$1 : null;
 };
 
-var ITERATOR = wellKnownSymbol('iterator');
+wellKnownSymbol('iterator');
 var BUGGY_SAFARI_ITERATORS = false;
 // https://tc39.github.io/ecma262/#sec-%iteratorprototype%-object
 
@@ -2153,7 +2153,7 @@ var objectSetPrototypeOf = Object.setPrototypeOf || ('__proto__' in {} ? functio
 
 var IteratorPrototype$2 = iteratorsCore.IteratorPrototype;
 var BUGGY_SAFARI_ITERATORS$1 = iteratorsCore.BUGGY_SAFARI_ITERATORS;
-var ITERATOR$1 = wellKnownSymbol('iterator');
+var ITERATOR = wellKnownSymbol('iterator');
 var KEYS = 'keys';
 var VALUES = 'values';
 var ENTRIES = 'entries';
@@ -2194,7 +2194,7 @@ var defineIterator = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
   var TO_STRING_TAG = NAME + ' Iterator';
   var INCORRECT_VALUES_NAME = false;
   var IterablePrototype = Iterable.prototype;
-  var nativeIterator = IterablePrototype[ITERATOR$1] || IterablePrototype['@@iterator'] || DEFAULT && IterablePrototype[DEFAULT];
+  var nativeIterator = IterablePrototype[ITERATOR] || IterablePrototype['@@iterator'] || DEFAULT && IterablePrototype[DEFAULT];
   var defaultIterator = !BUGGY_SAFARI_ITERATORS$1 && nativeIterator || getIterationMethod(DEFAULT);
   var anyNativeIterator = NAME == 'Array' ? IterablePrototype.entries || nativeIterator : nativeIterator;
   var CurrentIteratorPrototype, methods, KEY; // fix native
@@ -2220,8 +2220,8 @@ var defineIterator = function (Iterable, NAME, IteratorConstructor, next, DEFAUL
   } // define iterator
 
 
-  if (( FORCED) && IterablePrototype[ITERATOR$1] !== defaultIterator) {
-    createNonEnumerableProperty(IterablePrototype, ITERATOR$1, defaultIterator);
+  if (( FORCED) && IterablePrototype[ITERATOR] !== defaultIterator) {
+    createNonEnumerableProperty(IterablePrototype, ITERATOR, defaultIterator);
   }
 
   iterators[NAME] = defaultIterator; // export additional methods
@@ -2259,7 +2259,7 @@ var getInternalState$1 = internalState.getterFor(ARRAY_ITERATOR); // `Array.prot
 // `CreateArrayIterator` internal method
 // https://tc39.github.io/ecma262/#sec-createarrayiterator
 
-var es_array_iterator = defineIterator(Array, 'Array', function (iterated, kind) {
+defineIterator(Array, 'Array', function (iterated, kind) {
   setInternalState$1(this, {
     type: ARRAY_ITERATOR,
     target: toIndexedObject(iterated),
@@ -2402,10 +2402,10 @@ defineIterator(String, 'String', function (iterated) {
   };
 });
 
-var ITERATOR$2 = wellKnownSymbol('iterator');
+var ITERATOR$1 = wellKnownSymbol('iterator');
 
 var getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR$2] || it['@@iterator'] || iterators[classof(it)];
+  if (it != undefined) return it[ITERATOR$1] || it['@@iterator'] || iterators[classof(it)];
 };
 
 var getIterator = function (it) {
@@ -2443,11 +2443,11 @@ var callWithSafeIterationClosing = function (iterator, fn, value, ENTRIES) {
   }
 };
 
-var ITERATOR$3 = wellKnownSymbol('iterator');
+var ITERATOR$2 = wellKnownSymbol('iterator');
 var ArrayPrototype = Array.prototype; // check on default Array iterator
 
 var isArrayIteratorMethod = function (it) {
-  return it !== undefined && (iterators.Array === it || ArrayPrototype[ITERATOR$3] === it);
+  return it !== undefined && (iterators.Array === it || ArrayPrototype[ITERATOR$2] === it);
 };
 
 // https://tc39.github.io/ecma262/#sec-array.from
@@ -2489,7 +2489,7 @@ var arrayFrom = function from(arrayLike
   return result;
 };
 
-var ITERATOR$4 = wellKnownSymbol('iterator');
+var ITERATOR$3 = wellKnownSymbol('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -2505,7 +2505,7 @@ try {
     }
   };
 
-  iteratorWithReturn[ITERATOR$4] = function () {
+  iteratorWithReturn[ITERATOR$3] = function () {
     return this;
   }; // eslint-disable-next-line no-throw-literal
 
@@ -2524,7 +2524,7 @@ var checkCorrectnessOfIteration = function (exec, SKIP_CLOSING) {
   try {
     var object = {};
 
-    object[ITERATOR$4] = function () {
+    object[ITERATOR$3] = function () {
       return {
         next: function () {
           return {
@@ -2804,7 +2804,7 @@ _export({
   }
 });
 
-var trim = entryVirtual('String').trim;
+entryVirtual('String').trim;
 
 var arrayMethodIsStrict = function (METHOD_NAME, argument) {
   var method = [][METHOD_NAME];
@@ -2879,14 +2879,14 @@ var indexOf$2 = indexOf_1;
 
 var indexOf$3 = indexOf$2;
 
-var trim$1 = stringTrim.trim;
+var trim = stringTrim.trim;
 var $parseInt = global$1.parseInt;
 var hex = /^[+-]?0[Xx]/;
 var FORCED$2 = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22; // `parseInt` method
 // https://tc39.github.io/ecma262/#sec-parseint-string-radix
 
 var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
-  var S = trim$1(String(string));
+  var S = trim(String(string));
   return $parseInt(S, radix >>> 0 || (hex.test(S) ? 16 : 10));
 } : $parseInt;
 
@@ -2949,7 +2949,7 @@ _export({
   }
 });
 
-var values = path.Object.values;
+path.Object.values;
 
 var process = global$1.process;
 var versions = process && process.versions;
@@ -3315,11 +3315,11 @@ function _arrayWithHoles(arr) {
 
 var arrayWithHoles = _arrayWithHoles;
 
-var ITERATOR$5 = wellKnownSymbol('iterator');
+var ITERATOR$4 = wellKnownSymbol('iterator');
 
 var isIterable = function (it) {
   var O = Object(it);
-  return O[ITERATOR$5] !== undefined || '@@iterator' in O // eslint-disable-next-line no-prototype-builtins
+  return O[ITERATOR$4] !== undefined || '@@iterator' in O // eslint-disable-next-line no-prototype-builtins
   || iterators.hasOwnProperty(classof(O));
 };
 
@@ -13099,7 +13099,7 @@ var collectionStrong = {
 // https://tc39.github.io/ecma262/#sec-map-objects
 
 
-var es_map = collection('Map', function (init) {
+collection('Map', function (init) {
   return function Map() {
     return init(this, arguments.length ? arguments[0] : undefined);
   };
@@ -13644,9 +13644,9 @@ var entries_1 = function (it) {
 
 var entries$2 = entries_1;
 
-var values$1 = entryVirtual('Array').values;
+var values = entryVirtual('Array').values;
 
-var values$2 = values$1;
+var values$1 = values;
 
 var ArrayPrototype$d = Array.prototype;
 var DOMIterables$2 = {
@@ -13657,10 +13657,10 @@ var DOMIterables$2 = {
 var values_1 = function (it) {
   var own = it.values;
   return it === ArrayPrototype$d || it instanceof Array && own === ArrayPrototype$d.values // eslint-disable-next-line no-prototype-builtins
-  || DOMIterables$2.hasOwnProperty(classof(it)) ? values$2 : own;
+  || DOMIterables$2.hasOwnProperty(classof(it)) ? values$1 : own;
 };
 
-var values$3 = values_1;
+var values$2 = values_1;
 
 var keys$4 = entryVirtual('Array').keys;
 
@@ -13795,7 +13795,7 @@ var sort$2 = sort$1;
 // https://tc39.github.io/ecma262/#sec-set-objects
 
 
-var es_set = collection('Set', function (init) {
+collection('Set', function (init) {
   return function Set() {
     return init(this, arguments.length ? arguments[0] : undefined);
   };
@@ -17002,7 +17002,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var max = null;
       var maxField = null;
 
-      var _iterator11 = _createForOfIteratorHelper$1(values$3(_context24 = this._data).call(_context24)),
+      var _iterator11 = _createForOfIteratorHelper$1(values$2(_context24 = this._data).call(_context24)),
           _step11;
 
       try {
@@ -17039,7 +17039,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var min = null;
       var minField = null;
 
-      var _iterator12 = _createForOfIteratorHelper$1(values$3(_context25 = this._data).call(_context25)),
+      var _iterator12 = _createForOfIteratorHelper$1(values$2(_context25 = this._data).call(_context25)),
           _step12;
 
       try {
@@ -17821,13 +17821,13 @@ var getOwnPropertyNames$1 = getOwnPropertyNames;
 
 var getOwnPropertyNames$2 = getOwnPropertyNames$1;
 
-var trim$2 = stringTrim.trim;
+var trim$1 = stringTrim.trim;
 var $parseFloat = global$1.parseFloat;
 var FORCED$6 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
 // https://tc39.github.io/ecma262/#sec-parsefloat-string
 
 var numberParseFloat = FORCED$6 ? function parseFloat(string) {
-  var trimmedString = trim$2(String(string));
+  var trimmedString = trim$1(String(string));
   var result = $parseFloat(trimmedString);
   return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
 } : $parseFloat;
@@ -18061,7 +18061,7 @@ var LabelAccumulator = /*#__PURE__*/function () {
 
       var result = this.measureText(tmpText, mod);
 
-      var block = assign$2({}, values$3(result));
+      var block = assign$2({}, values$2(result));
 
       block.text = text;
       block.width = result.width;
@@ -34554,7 +34554,7 @@ var collectionWeak = {
   }
 };
 
-var es_weakMap = createCommonjsModule(function (module) {
+createCommonjsModule(function (module) {
 
   var enforceIternalState = internalState.enforce;
   var IS_IE11 = !global$1.ActiveXObject && 'ActiveXObject' in global$1;
@@ -37096,7 +37096,7 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
   // cyclic graphs).
 
 
-  var limit = reduce$2(_context6 = toConsumableArray(values$3(nodes).call(nodes))).call(_context6, function (acc, node) {
+  var limit = reduce$2(_context6 = toConsumableArray(values$2(nodes).call(nodes))).call(_context6, function (acc, node) {
     return acc + 1 + node.edges.length;
   }, 0);
 
