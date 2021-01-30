@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-01-29T21:24:57.051Z
+ * @date    2021-01-30T18:01:49.554Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -35665,7 +35665,11 @@
 	    classCallCheck(this, SelectionHandler);
 
 	    this.body = body;
-	    this.canvas = canvas;
+	    this.canvas = canvas; // TODO: Consider firing an event on any change to the selection, not
+	    // only those caused by clicks and taps. It would be easy to implement
+	    // now and (at least to me) it seems like something that could be
+	    // quite useful.
+
 	    this._selectionAccumulator = new SelectionAccumulator();
 	    this.hoverObj = {
 	      nodes: {},
@@ -36067,8 +36071,6 @@
 	    key: "unselectAll",
 	    value: function unselectAll() {
 	      this._selectionAccumulator.clear();
-
-	      this._selectionAccumulator.commit();
 	    }
 	    /**
 	     * return the number of selected nodes
@@ -36236,6 +36238,15 @@
 	      if (hoverChanged === true) {
 	        this.body.emitter.emit("_requestRedraw");
 	      }
+	    }
+	    /**
+	     * Commit the selection changes but don't emit any events.
+	     */
+
+	  }, {
+	    key: "commitWithoutEmitting",
+	    value: function commitWithoutEmitting() {
+	      this._selectionAccumulator.commit();
 	    }
 	    /**
 	     * Select and deselect nodes depending current selection change.
@@ -44118,6 +44129,7 @@
 
 	Network.prototype.unselectAll = function () {
 	  this.selectionHandler.unselectAll.apply(this.selectionHandler, arguments);
+	  this.selectionHandler.commitWithoutEmitting.apply(this.selectionHandler);
 	  this.redraw();
 	};
 
