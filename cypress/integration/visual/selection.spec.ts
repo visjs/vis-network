@@ -22,7 +22,7 @@ context("Selection", (): void => {
         ],
         physics: false,
       },
-      { requireNewerVersionThan: "8.5.3" }
+      { requireNewerVersionThan: "9.0.0" }
     );
   });
 
@@ -32,12 +32,34 @@ context("Selection", (): void => {
       nodes: ["N_1"],
       edges: ["E_1-2", "E_1-3", "E_1-4", "E_1-5"],
     });
+    cy.visShiftAndAssertEventFired("select");
+    cy.visShiftAndAssertEventFired("selectEdge");
+    cy.visShiftAndAssertEventFired("selectNode");
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visClickPoint({ x: 500 + 200, y: 500 + 0 });
     cy.visAssertSelection({
       nodes: ["N_2"],
       edges: ["E_5-2", "E_1-2", "E_2-3"],
     });
+    cy.visShiftAndAssertEventFired("deselectEdge");
+    cy.visShiftAndAssertEventFired("deselectNode");
+    cy.visShiftAndAssertEventFired("select");
+    cy.visShiftAndAssertEventFired("selectEdge");
+    cy.visShiftAndAssertEventFired("selectNode");
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visSnapshotOpenedPage("select-one-by-click");
   });
@@ -55,6 +77,13 @@ context("Selection", (): void => {
       nodes: [],
       edges: [],
     });
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visSnapshotOpenedPage("select-none-by-single-drag");
   });
@@ -72,6 +101,16 @@ context("Selection", (): void => {
       nodes: ["N_1"],
       edges: ["E_1-2", "E_1-3", "E_1-4", "E_1-5"],
     });
+    cy.visShiftAndAssertEventFired("select");
+    cy.visShiftAndAssertEventFired("selectEdge");
+    cy.visShiftAndAssertEventFired("selectNode");
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visSnapshotOpenedPage("select-one-by-single-drag-(TL_to_BR)");
   });
@@ -89,6 +128,16 @@ context("Selection", (): void => {
       nodes: ["N_1", "N_2", "N_3"],
       edges: ["E_1-2", "E_1-3", "E_1-4", "E_1-5", "E_3-4", "E_2-3", "E_5-2"],
     });
+    cy.visShiftAndAssertEventFired("select");
+    cy.visShiftAndAssertEventFired("selectEdge");
+    cy.visShiftAndAssertEventFired("selectNode");
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visSnapshotOpenedPage("select-three-by-single-drag-(BR_to_TL)");
   });
@@ -106,6 +155,16 @@ context("Selection", (): void => {
       nodes: ["N_1", "N_3"],
       edges: ["E_1-2", "E_1-3", "E_1-4", "E_1-5", "E_3-4", "E_2-3"],
     });
+    cy.visShiftAndAssertEventFired("select");
+    cy.visShiftAndAssertEventFired("selectEdge");
+    cy.visShiftAndAssertEventFired("selectNode");
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visDrag([
       {
@@ -119,6 +178,16 @@ context("Selection", (): void => {
       nodes: ["N_1", "N_2", "N_3"],
       edges: ["E_1-2", "E_1-3", "E_1-4", "E_1-5", "E_3-4", "E_2-3", "E_5-2"],
     });
+    cy.visShiftAndAssertEventFired("select");
+    cy.visShiftAndAssertEventFired("selectEdge");
+    cy.visShiftAndAssertEventFired("selectNode");
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visSnapshotOpenedPage(
       "select-three-by-two-drags-(TR_to_BL_then_BL_to_TR)"
@@ -132,6 +201,13 @@ context("Selection", (): void => {
         edges: ["E_1-2", "E_1-3", "E_1-4", "E_1-5", "E_3-4", "E_2-3"],
       });
     });
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
 
     cy.visSnapshotOpenedPage("select-via-method");
   });
@@ -140,6 +216,13 @@ context("Selection", (): void => {
     cy.visRun(({ network }): void => {
       network.setSelection({ nodes: ["N_1", "N_5"] }, { unselectAll: false });
     });
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
     cy.visSnapshotOpenedPage("programmatic-select-nodes");
 
     cy.visRun(({ network }): void => {
@@ -148,11 +231,25 @@ context("Selection", (): void => {
         { unselectAll: false }
       );
     });
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
     cy.visSnapshotOpenedPage("programmatic-select-edges");
 
     cy.visRun(({ network }): void => {
       network.unselectAll();
     });
+    cy.visShiftAndAssertEventNone(
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode"
+    );
     cy.visSnapshotOpenedPage("programmatic-select-unselect-all");
   });
 });

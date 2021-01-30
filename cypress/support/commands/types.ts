@@ -1,7 +1,8 @@
-import {
+import type {
   DataSetEdges,
   DataSetNodes,
   Network,
+  NetworkEvents,
   Options,
 } from "../../../declarations/entry-standalone";
 
@@ -11,10 +12,19 @@ export * from "../../../standalone";
 
 export interface VisGlobals {
   edges: DataSetEdges;
+  eventQueue: Record<NetworkEvents, { params: any }[]>;
   lastEvents: Record<string, any>;
   network: Network;
   nodes: DataSetNodes;
 }
+
+export type VisWindow = {
+  visEdges: VisGlobals["edges"];
+  visEventQueue: VisGlobals["eventQueue"];
+  visLastEvents: VisGlobals["lastEvents"];
+  visNetwork: VisGlobals["network"];
+  visNodes: VisGlobals["nodes"];
+};
 
 export interface Point {
   x: number;

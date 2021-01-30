@@ -1,9 +1,9 @@
 // These imports are there only for their types. Their values can't be used as
 // this will be loaded in a web browser without bundling.
-import * as visNetworkStandalone from "../../standalone";
-import * as visUtil from "vis-util";
-import { Options } from "../../standalone";
-import { UniversalConfig } from "../support/commands/types";
+import type * as visNetworkStandalone from "../../standalone";
+import type * as visUtil from "vis-util";
+import type { Options } from "../../standalone";
+import type { UniversalConfig, VisWindow } from "../support/commands/types";
 type VisNetworkStandalone = typeof visNetworkStandalone;
 type VisUtil = typeof visUtil;
 
@@ -237,10 +237,55 @@ type VisUtil = typeof visUtil;
     });
   });
 
-  (window as any).visEdges = edges;
-  (window as any).visLastEvents = {};
-  (window as any).visNetwork = network;
-  (window as any).visNodes = nodes;
+  // Event queue:
+  const eventQueue: VisWindow["visEventQueue"] = {} as any;
+  ([
+    "afterDrawing",
+    "animationFinished",
+    "beforeDrawing",
+    "blurEdge",
+    "blurNode",
+    "click",
+    "configChange",
+    "controlNodeDragEnd",
+    "controlNodeDragging",
+    "deselectEdge",
+    "deselectNode",
+    "doubleClick",
+    "dragEnd",
+    "dragStart",
+    "dragging",
+    "hidePopup",
+    "hold",
+    "hoverEdge",
+    "hoverNode",
+    "initRedraw",
+    "oncontext",
+    "release",
+    "resize",
+    "select",
+    "selectEdge",
+    "selectNode",
+    "showPopup",
+    "stabilizationIterationsDone",
+    "stabilizationProgress",
+    "stabilized",
+    "startStabilizing",
+    "zoom",
+  ] as const).forEach((eventName): void => {
+    eventQueue[eventName] = [];
+    network.on(eventName, (params: any): void => {
+      eventQueue[eventName].push({ params });
+    });
+  });
+
+  Object.assign<any, VisWindow>(window, {
+    visEdges: edges,
+    visEventQueue: eventQueue,
+    visLastEvents: {},
+    visNetwork: network,
+    visNodes: nodes,
+  });
 
   $status.innerText = "Ready";
 })();

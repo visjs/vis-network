@@ -1,4 +1,4 @@
-import { VisGlobals } from "./types";
+import { VisGlobals, VisWindow } from "./types";
 
 export interface VisRunOptions {
   /**
@@ -19,7 +19,7 @@ declare global {
        * @param options - Additional options.
        */
       visRun<S>(
-        callback: (props: VisGlobals) => void,
+        callback: (props: VisGlobals) => void | Promise<void>,
         options?: VisRunOptions
       ): Chainable<S>;
     }
@@ -27,19 +27,22 @@ declare global {
 }
 
 export function visRun(
-  callback: (props: VisGlobals) => void,
+  callback: (props: VisGlobals) => void | Promise<void>,
   { timeout = VIS_DEFAULT_RUN_TIMEOUT }: VisRunOptions = {}
 ): void {
   cy.window().then(
     { timeout },
-    ({
-      visEdges: edges,
-      visLastEvents: lastEvents,
-      visNetwork: network,
-      visNodes: nodes,
-    }: any): void => {
+    async (win: any): Promise<void> => {
+      const {
+        visEdges: edges,
+        visEventQueue: eventQueue,
+        visLastEvents: lastEvents,
+        visNetwork: network,
+        visNodes: nodes,
+      }: VisWindow = win;
+
       if (edges && lastEvents && network && nodes) {
-        callback({ edges, lastEvents, network, nodes });
+        await callback({ edges, eventQueue, lastEvents, network, nodes });
       } else {
         throw new Error("No page globals were found.");
       }
