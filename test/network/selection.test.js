@@ -39,6 +39,30 @@ describe("Network", function () {
       { physics: false }
     );
 
+    const events = {
+      deselectEdge: [],
+      deselectNode: [],
+      select: [],
+      selectEdge: [],
+      selectNode: [],
+    };
+    function resetEvents() {
+      Object.values(events).forEach((array) => array.splice(0));
+    }
+
+    network.on("deselectEdge", (...rest) => events["deselectEdge"].push(rest));
+    network.on("deselectNode", (...rest) => events["deselectNode"].push(rest));
+    network.on("select", (...rest) => events["select"].push(rest));
+    network.on("selectEdge", (...rest) => events["selectEdge"].push(rest));
+    network.on("selectNode", (...rest) => events["selectNode"].push(rest));
+
+    expect(events["deselectEdge"]).to.have.length(0);
+    expect(events["deselectNode"]).to.have.length(0);
+    expect(events["select"]).to.have.length(0);
+    expect(events["selectEdge"]).to.have.length(0);
+    expect(events["selectNode"]).to.have.length(0);
+    resetEvents();
+
     // Select a node with it's edges.
     network.setSelection({ nodes: ["N_5"] }, { unselectAll: false });
     expect(sortArrays(network.getSelection())).to.deep.equal(
@@ -47,6 +71,13 @@ describe("Network", function () {
         edges: ["E_1-5", "E_4-5", "E_5-2"],
       })
     );
+
+    expect(events["deselectEdge"]).to.have.length(0);
+    expect(events["deselectNode"]).to.have.length(0);
+    expect(events["select"]).to.have.length(0);
+    expect(events["selectEdge"]).to.have.length(0);
+    expect(events["selectNode"]).to.have.length(0);
+    resetEvents();
 
     // Select a node without it's edges.
     network.setSelection(
@@ -60,6 +91,13 @@ describe("Network", function () {
       })
     );
 
+    expect(events["deselectEdge"]).to.have.length(0);
+    expect(events["deselectNode"]).to.have.length(0);
+    expect(events["select"]).to.have.length(0);
+    expect(events["selectEdge"]).to.have.length(0);
+    expect(events["selectNode"]).to.have.length(0);
+    resetEvents();
+
     // Select some edges.
     network.setSelection({ edges: ["E_2-3", "E_3-4"] }, { unselectAll: false });
     expect(sortArrays(network.getSelection())).to.deep.equal(
@@ -69,6 +107,13 @@ describe("Network", function () {
       })
     );
 
+    expect(events["deselectEdge"]).to.have.length(0);
+    expect(events["deselectNode"]).to.have.length(0);
+    expect(events["select"]).to.have.length(0);
+    expect(events["selectEdge"]).to.have.length(0);
+    expect(events["selectNode"]).to.have.length(0);
+    resetEvents();
+
     // Unselect all.
     network.unselectAll();
     expect(sortArrays(network.getSelection())).to.deep.equal(
@@ -77,5 +122,12 @@ describe("Network", function () {
         edges: [],
       })
     );
+
+    expect(events["deselectEdge"]).to.have.length(0);
+    expect(events["deselectNode"]).to.have.length(0);
+    expect(events["select"]).to.have.length(0);
+    expect(events["selectEdge"]).to.have.length(0);
+    expect(events["selectNode"]).to.have.length(0);
+    resetEvents();
   });
 });
