@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-02-02T22:10:33.041Z
+ * @date    2021-02-03T06:40:53.523Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -69,7 +69,7 @@
 	var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({
 	  1: 2
 	}, 1); // `Object.prototype.propertyIsEnumerable` method implementation
-	// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
+	// https://tc39.es/ecma262/#sec-object.prototype.propertyisenumerable
 
 	var f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 	  var descriptor = getOwnPropertyDescriptor(this, V);
@@ -105,7 +105,7 @@
 	} : Object;
 
 	// `RequireObjectCoercible` abstract operation
-	// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+	// https://tc39.es/ecma262/#sec-requireobjectcoercible
 	var requireObjectCoercible = function (it) {
 	  if (it == undefined) throw TypeError("Can't call method on " + it);
 	  return it;
@@ -119,7 +119,7 @@
 	  return typeof it === 'object' ? it !== null : typeof it === 'function';
 	};
 
-	// https://tc39.github.io/ecma262/#sec-toprimitive
+	// https://tc39.es/ecma262/#sec-toprimitive
 	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
 	// and the second argument - flag - preferred type is a string
 
@@ -155,7 +155,7 @@
 	});
 
 	var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor; // `Object.getOwnPropertyDescriptor` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 	var f$1 = descriptors ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
 	  O = toIndexedObject(O);
@@ -239,7 +239,7 @@
 	};
 
 	var nativeDefineProperty = Object.defineProperty; // `Object.defineProperty` method
-	// https://tc39.github.io/ecma262/#sec-object.defineproperty
+	// https://tc39.es/ecma262/#sec-object.defineproperty
 
 	var f$2 = descriptors ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
 	  anObject(O);
@@ -371,7 +371,7 @@
 
 	  return factories[argsLength](C, args);
 	}; // `Function.prototype.bind` method implementation
-	// https://tc39.github.io/ecma262/#sec-function.prototype.bind
+	// https://tc39.es/ecma262/#sec-function.prototype.bind
 
 
 	var functionBind = Function.bind || function bind(that
@@ -391,7 +391,7 @@
 	  return boundFunction;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-function.prototype.bind
+	// https://tc39.es/ecma262/#sec-function.prototype.bind
 
 	_export({
 	  target: 'Function',
@@ -419,14 +419,14 @@
 
 	var ceil = Math.ceil;
 	var floor = Math.floor; // `ToInteger` abstract operation
-	// https://tc39.github.io/ecma262/#sec-tointeger
+	// https://tc39.es/ecma262/#sec-tointeger
 
 	var toInteger = function (argument) {
 	  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
 	};
 
 	var min = Math.min; // `ToLength` abstract operation
-	// https://tc39.github.io/ecma262/#sec-tolength
+	// https://tc39.es/ecma262/#sec-tolength
 
 	var toLength = function (argument) {
 	  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
@@ -463,10 +463,10 @@
 
 	var arrayIncludes = {
 	  // `Array.prototype.includes` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+	  // https://tc39.es/ecma262/#sec-array.prototype.includes
 	  includes: createMethod(true),
 	  // `Array.prototype.indexOf` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+	  // https://tc39.es/ecma262/#sec-array.prototype.indexof
 	  indexOf: createMethod(false)
 	};
 
@@ -493,7 +493,7 @@
 	// IE8- don't enum bug keys
 	var enumBugKeys = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString', 'valueOf'];
 
-	// https://tc39.github.io/ecma262/#sec-object.keys
+	// https://tc39.es/ecma262/#sec-object.keys
 
 	var objectKeys = Object.keys || function keys(O) {
 	  return objectKeysInternal(O, enumBugKeys);
@@ -504,7 +504,7 @@
 	  f: f$3
 	};
 
-	// https://tc39.github.io/ecma262/#sec-toobject
+	// https://tc39.es/ecma262/#sec-toobject
 
 	var toObject = function (argument) {
 	  return Object(requireObjectCoercible(argument));
@@ -512,7 +512,7 @@
 
 	var nativeAssign = Object.assign;
 	var defineProperty = Object.defineProperty; // `Object.assign` method
-	// https://tc39.github.io/ecma262/#sec-object.assign
+	// https://tc39.es/ecma262/#sec-object.assign
 
 	var objectAssign = !nativeAssign || fails(function () {
 	  // should have correct order of operations (Edge bug)
@@ -564,7 +564,7 @@
 	  return T;
 	} : nativeAssign;
 
-	// https://tc39.github.io/ecma262/#sec-object.assign
+	// https://tc39.es/ecma262/#sec-object.assign
 
 	_export({
 	  target: 'Object',
@@ -1112,7 +1112,7 @@
 	  };
 	});
 
-	// https://tc39.github.io/ecma262/#sec-object.defineproperty
+	// https://tc39.es/ecma262/#sec-object.defineproperty
 
 	_export({
 	  target: 'Object',
@@ -1137,7 +1137,7 @@
 
 	var defineProperty$2 = defineProperty$1;
 
-	// https://tc39.github.io/ecma262/#sec-object.defineproperties
+	// https://tc39.es/ecma262/#sec-object.defineproperties
 
 	var objectDefineProperties = descriptors ? Object.defineProperties : function defineProperties(O, Properties) {
 	  anObject(O);
@@ -1151,7 +1151,7 @@
 	  return O;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.defineproperties
+	// https://tc39.es/ecma262/#sec-object.defineproperties
 
 	_export({
 	  target: 'Object',
@@ -1185,7 +1185,7 @@
 	};
 
 	var hiddenKeys$1 = enumBugKeys.concat('length', 'prototype'); // `Object.getOwnPropertyNames` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 	var f$4 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 	  return objectKeysInternal(O, hiddenKeys$1);
@@ -1206,7 +1206,7 @@
 	  if (propertyKey in object) objectDefineProperty.f(object, propertyKey, createPropertyDescriptor(0, value));else object[propertyKey] = value;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
 
 	_export({
 	  target: 'Object',
@@ -1241,7 +1241,7 @@
 	  nativeGetOwnPropertyDescriptor$1(1);
 	});
 	var FORCED = !descriptors || FAILS_ON_PRIMITIVES; // `Object.getOwnPropertyDescriptor` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+	// https://tc39.es/ecma262/#sec-object.getownpropertydescriptor
 
 	_export({
 	  target: 'Object',
@@ -1278,7 +1278,7 @@
 	&& !Symbol.sham // eslint-disable-next-line no-undef
 	&& typeof Symbol.iterator == 'symbol';
 
-	// https://tc39.github.io/ecma262/#sec-isarray
+	// https://tc39.es/ecma262/#sec-isarray
 
 	var isArray = Array.isArray || function isArray(arg) {
 	  return classofRaw(arg) == 'Array';
@@ -1304,9 +1304,9 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.8.1',
+	    version: '3.8.3',
 	    mode:  'pure' ,
-	    copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
 	});
 
@@ -1388,7 +1388,7 @@
 	};
 
 	hiddenKeys[IE_PROTO] = true; // `Object.create` method
-	// https://tc39.github.io/ecma262/#sec-object.create
+	// https://tc39.es/ecma262/#sec-object.create
 
 	var objectCreate = Object.create || function create(O, Properties) {
 	  var result;
@@ -1483,7 +1483,7 @@
 	  : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+	// https://tc39.es/ecma262/#sec-object.prototype.tostring
 
 
 	var objectToString = toStringTagSupport ? {}.toString : function toString() {
@@ -1589,7 +1589,7 @@
 	};
 
 	var SPECIES = wellKnownSymbol('species'); // `ArraySpeciesCreate` abstract operation
-	// https://tc39.github.io/ecma262/#sec-arrayspeciescreate
+	// https://tc39.es/ecma262/#sec-arrayspeciescreate
 
 	var arraySpeciesCreate = function (originalArray, length) {
 	  var C;
@@ -1666,25 +1666,25 @@
 
 	var arrayIteration = {
 	  // `Array.prototype.forEach` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.foreach
+	  // https://tc39.es/ecma262/#sec-array.prototype.foreach
 	  forEach: createMethod$1(0),
 	  // `Array.prototype.map` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.map
+	  // https://tc39.es/ecma262/#sec-array.prototype.map
 	  map: createMethod$1(1),
 	  // `Array.prototype.filter` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.filter
+	  // https://tc39.es/ecma262/#sec-array.prototype.filter
 	  filter: createMethod$1(2),
 	  // `Array.prototype.some` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.some
+	  // https://tc39.es/ecma262/#sec-array.prototype.some
 	  some: createMethod$1(3),
 	  // `Array.prototype.every` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.every
+	  // https://tc39.es/ecma262/#sec-array.prototype.every
 	  every: createMethod$1(4),
 	  // `Array.prototype.find` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.find
+	  // https://tc39.es/ecma262/#sec-array.prototype.find
 	  find: createMethod$1(5),
 	  // `Array.prototype.findIndex` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+	  // https://tc39.es/ecma262/#sec-array.prototype.findIndex
 	  findIndex: createMethod$1(6),
 	  // `Array.prototype.filterOut` method
 	  // https://github.com/tc39/proposal-array-filtering
@@ -1826,7 +1826,7 @@
 	  });
 	  return result;
 	}; // `Symbol` constructor
-	// https://tc39.github.io/ecma262/#sec-symbol-constructor
+	// https://tc39.es/ecma262/#sec-symbol-constructor
 
 
 	if (!nativeSymbol) {
@@ -1892,7 +1892,7 @@
 	  forced: !nativeSymbol
 	}, {
 	  // `Symbol.for` method
-	  // https://tc39.github.io/ecma262/#sec-symbol.for
+	  // https://tc39.es/ecma262/#sec-symbol.for
 	  'for': function (key) {
 	    var string = String(key);
 	    if (has(StringToSymbolRegistry, string)) return StringToSymbolRegistry[string];
@@ -1902,7 +1902,7 @@
 	    return symbol;
 	  },
 	  // `Symbol.keyFor` method
-	  // https://tc39.github.io/ecma262/#sec-symbol.keyfor
+	  // https://tc39.es/ecma262/#sec-symbol.keyfor
 	  keyFor: function keyFor(sym) {
 	    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol');
 	    if (has(SymbolToStringRegistry, sym)) return SymbolToStringRegistry[sym];
@@ -1921,16 +1921,16 @@
 	  sham: !descriptors
 	}, {
 	  // `Object.create` method
-	  // https://tc39.github.io/ecma262/#sec-object.create
+	  // https://tc39.es/ecma262/#sec-object.create
 	  create: $create,
 	  // `Object.defineProperty` method
-	  // https://tc39.github.io/ecma262/#sec-object.defineproperty
+	  // https://tc39.es/ecma262/#sec-object.defineproperty
 	  defineProperty: $defineProperty,
 	  // `Object.defineProperties` method
-	  // https://tc39.github.io/ecma262/#sec-object.defineproperties
+	  // https://tc39.es/ecma262/#sec-object.defineproperties
 	  defineProperties: $defineProperties,
 	  // `Object.getOwnPropertyDescriptor` method
-	  // https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
+	  // https://tc39.es/ecma262/#sec-object.getownpropertydescriptors
 	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor
 	});
 	_export({
@@ -1939,10 +1939,10 @@
 	  forced: !nativeSymbol
 	}, {
 	  // `Object.getOwnPropertyNames` method
-	  // https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	  // https://tc39.es/ecma262/#sec-object.getownpropertynames
 	  getOwnPropertyNames: $getOwnPropertyNames,
 	  // `Object.getOwnPropertySymbols` method
-	  // https://tc39.github.io/ecma262/#sec-object.getownpropertysymbols
+	  // https://tc39.es/ecma262/#sec-object.getownpropertysymbols
 	  getOwnPropertySymbols: $getOwnPropertySymbols
 	}); // Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
 	// https://bugs.chromium.org/p/v8/issues/detail?id=3443
@@ -1958,7 +1958,7 @@
 	    return objectGetOwnPropertySymbols.f(toObject(it));
 	  }
 	}); // `JSON.stringify` method behavior with symbols
-	// https://tc39.github.io/ecma262/#sec-json.stringify
+	// https://tc39.es/ecma262/#sec-json.stringify
 
 	if ($stringify) {
 	  var FORCED_JSON_STRINGIFY = !nativeSymbol || fails(function () {
@@ -1995,13 +1995,13 @@
 	    }
 	  });
 	} // `Symbol.prototype[@@toPrimitive]` method
-	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@toprimitive
+	// https://tc39.es/ecma262/#sec-symbol.prototype-@@toprimitive
 
 
 	if (!$Symbol[PROTOTYPE$1][TO_PRIMITIVE]) {
 	  createNonEnumerableProperty($Symbol[PROTOTYPE$1], TO_PRIMITIVE, $Symbol[PROTOTYPE$1].valueOf);
 	} // `Symbol.prototype[@@toStringTag]` property
-	// https://tc39.github.io/ecma262/#sec-symbol.prototype-@@tostringtag
+	// https://tc39.es/ecma262/#sec-symbol.prototype-@@tostringtag
 
 
 	setToStringTag($Symbol, SYMBOL);
@@ -2026,7 +2026,7 @@
 
 	var IE_PROTO$1 = sharedKey('IE_PROTO');
 	var ObjectPrototype$1 = Object.prototype; // `Object.getPrototypeOf` method
-	// https://tc39.github.io/ecma262/#sec-object.getprototypeof
+	// https://tc39.es/ecma262/#sec-object.getprototypeof
 
 	var objectGetPrototypeOf = correctPrototypeGetter ? Object.getPrototypeOf : function (O) {
 	  O = toObject(O);
@@ -2039,9 +2039,13 @@
 	  return O instanceof Object ? ObjectPrototype$1 : null;
 	};
 
-	wellKnownSymbol('iterator');
+	var ITERATOR = wellKnownSymbol('iterator');
 	var BUGGY_SAFARI_ITERATORS = false;
-	// https://tc39.github.io/ecma262/#sec-%iteratorprototype%-object
+
+	var returnThis = function () {
+	  return this;
+	}; // `%IteratorPrototype%` object
+	// https://tc39.es/ecma262/#sec-%iteratorprototype%-object
 
 
 	var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
@@ -2055,7 +2059,16 @@
 	  }
 	}
 
-	if (IteratorPrototype == undefined) IteratorPrototype = {}; // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+	var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function () {
+	  var test = {}; // FF44- legacy iterators case
+
+	  return IteratorPrototype[ITERATOR].call(test) !== test;
+	});
+	if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {}; // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+
+	if (( NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
+	  createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
+	}
 
 	var iteratorsCore = {
 	  IteratorPrototype: IteratorPrototype,
@@ -2064,7 +2077,7 @@
 
 	var IteratorPrototype$1 = iteratorsCore.IteratorPrototype;
 
-	var returnThis = function () {
+	var returnThis$1 = function () {
 	  return this;
 	};
 
@@ -2074,7 +2087,7 @@
 	    next: createPropertyDescriptor(1, next)
 	  });
 	  setToStringTag(IteratorConstructor, TO_STRING_TAG, false, true);
-	  iterators[TO_STRING_TAG] = returnThis;
+	  iterators[TO_STRING_TAG] = returnThis$1;
 	  return IteratorConstructor;
 	};
 
@@ -2086,7 +2099,7 @@
 	  return it;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+	// https://tc39.es/ecma262/#sec-object.setprototypeof
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
 
 	/* eslint-disable no-proto */
@@ -2114,12 +2127,12 @@
 
 	var IteratorPrototype$2 = iteratorsCore.IteratorPrototype;
 	var BUGGY_SAFARI_ITERATORS$1 = iteratorsCore.BUGGY_SAFARI_ITERATORS;
-	var ITERATOR = wellKnownSymbol('iterator');
+	var ITERATOR$1 = wellKnownSymbol('iterator');
 	var KEYS = 'keys';
 	var VALUES = 'values';
 	var ENTRIES = 'entries';
 
-	var returnThis$1 = function () {
+	var returnThis$2 = function () {
 	  return this;
 	};
 
@@ -2155,7 +2168,7 @@
 	  var TO_STRING_TAG = NAME + ' Iterator';
 	  var INCORRECT_VALUES_NAME = false;
 	  var IterablePrototype = Iterable.prototype;
-	  var nativeIterator = IterablePrototype[ITERATOR] || IterablePrototype['@@iterator'] || DEFAULT && IterablePrototype[DEFAULT];
+	  var nativeIterator = IterablePrototype[ITERATOR$1] || IterablePrototype['@@iterator'] || DEFAULT && IterablePrototype[DEFAULT];
 	  var defaultIterator = !BUGGY_SAFARI_ITERATORS$1 && nativeIterator || getIterationMethod(DEFAULT);
 	  var anyNativeIterator = NAME == 'Array' ? IterablePrototype.entries || nativeIterator : nativeIterator;
 	  var CurrentIteratorPrototype, methods, KEY; // fix native
@@ -2167,7 +2180,7 @@
 
 
 	      setToStringTag(CurrentIteratorPrototype, TO_STRING_TAG, true, true);
-	      iterators[TO_STRING_TAG] = returnThis$1;
+	      iterators[TO_STRING_TAG] = returnThis$2;
 	    }
 	  } // fix Array#{values, @@iterator}.name in V8 / FF
 
@@ -2181,8 +2194,8 @@
 	  } // define iterator
 
 
-	  if (( FORCED) && IterablePrototype[ITERATOR] !== defaultIterator) {
-	    createNonEnumerableProperty(IterablePrototype, ITERATOR, defaultIterator);
+	  if (( FORCED) && IterablePrototype[ITERATOR$1] !== defaultIterator) {
+	    createNonEnumerableProperty(IterablePrototype, ITERATOR$1, defaultIterator);
 	  }
 
 	  iterators[NAME] = defaultIterator; // export additional methods
@@ -2210,15 +2223,15 @@
 	var ARRAY_ITERATOR = 'Array Iterator';
 	var setInternalState$1 = internalState.set;
 	var getInternalState$1 = internalState.getterFor(ARRAY_ITERATOR); // `Array.prototype.entries` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.entries
+	// https://tc39.es/ecma262/#sec-array.prototype.entries
 	// `Array.prototype.keys` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.keys
+	// https://tc39.es/ecma262/#sec-array.prototype.keys
 	// `Array.prototype.values` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.values
+	// https://tc39.es/ecma262/#sec-array.prototype.values
 	// `Array.prototype[@@iterator]` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype-@@iterator
+	// https://tc39.es/ecma262/#sec-array.prototype-@@iterator
 	// `CreateArrayIterator` internal method
-	// https://tc39.github.io/ecma262/#sec-createarrayiterator
+	// https://tc39.es/ecma262/#sec-createarrayiterator
 
 	defineIterator(Array, 'Array', function (iterated, kind) {
 	  setInternalState$1(this, {
@@ -2230,7 +2243,7 @@
 	    kind: kind // kind
 
 	  }); // `%ArrayIteratorPrototype%.next` method
-	  // https://tc39.github.io/ecma262/#sec-%arrayiteratorprototype%.next
+	  // https://tc39.es/ecma262/#sec-%arrayiteratorprototype%.next
 	}, function () {
 	  var state = getInternalState$1(this);
 	  var target = state.target;
@@ -2258,10 +2271,10 @@
 	    done: false
 	  };
 	}, 'values'); // argumentsList[@@iterator] is %ArrayProto_values%
-	// https://tc39.github.io/ecma262/#sec-createunmappedargumentsobject
-	// https://tc39.github.io/ecma262/#sec-createmappedargumentsobject
+	// https://tc39.es/ecma262/#sec-createunmappedargumentsobject
+	// https://tc39.es/ecma262/#sec-createmappedargumentsobject
 
-	iterators.Arguments = iterators.Array; // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	iterators.Arguments = iterators.Array; // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 	// iterable DOM collections
 	// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
@@ -2326,7 +2339,7 @@
 
 	var stringMultibyte = {
 	  // `String.prototype.codePointAt` method
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.codepointat
+	  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
 	  codeAt: createMethod$2(false),
 	  // `String.prototype.at` method
 	  // https://github.com/mathiasbynens/String.prototype.at
@@ -2337,7 +2350,7 @@
 	var STRING_ITERATOR = 'String Iterator';
 	var setInternalState$2 = internalState.set;
 	var getInternalState$2 = internalState.getterFor(STRING_ITERATOR); // `String.prototype[@@iterator]` method
-	// https://tc39.github.io/ecma262/#sec-string.prototype-@@iterator
+	// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
 
 	defineIterator(String, 'String', function (iterated) {
 	  setInternalState$2(this, {
@@ -2345,7 +2358,7 @@
 	    string: String(iterated),
 	    index: 0
 	  }); // `%StringIteratorPrototype%.next` method
-	  // https://tc39.github.io/ecma262/#sec-%stringiteratorprototype%.next
+	  // https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
 	}, function next() {
 	  var state = getInternalState$2(this);
 	  var string = state.string;
@@ -2363,10 +2376,10 @@
 	  };
 	});
 
-	var ITERATOR$1 = wellKnownSymbol('iterator');
+	var ITERATOR$2 = wellKnownSymbol('iterator');
 
 	var getIteratorMethod = function (it) {
-	  if (it != undefined) return it[ITERATOR$1] || it['@@iterator'] || iterators[classof(it)];
+	  if (it != undefined) return it[ITERATOR$2] || it['@@iterator'] || iterators[classof(it)];
 	};
 
 	var getIterator = function (it) {
@@ -2404,14 +2417,14 @@
 	  }
 	};
 
-	var ITERATOR$2 = wellKnownSymbol('iterator');
+	var ITERATOR$3 = wellKnownSymbol('iterator');
 	var ArrayPrototype = Array.prototype; // check on default Array iterator
 
 	var isArrayIteratorMethod = function (it) {
-	  return it !== undefined && (iterators.Array === it || ArrayPrototype[ITERATOR$2] === it);
+	  return it !== undefined && (iterators.Array === it || ArrayPrototype[ITERATOR$3] === it);
 	};
 
-	// https://tc39.github.io/ecma262/#sec-array.from
+	// https://tc39.es/ecma262/#sec-array.from
 
 
 	var arrayFrom = function from(arrayLike
@@ -2450,7 +2463,7 @@
 	  return result;
 	};
 
-	var ITERATOR$3 = wellKnownSymbol('iterator');
+	var ITERATOR$4 = wellKnownSymbol('iterator');
 	var SAFE_CLOSING = false;
 
 	try {
@@ -2466,7 +2479,7 @@
 	    }
 	  };
 
-	  iteratorWithReturn[ITERATOR$3] = function () {
+	  iteratorWithReturn[ITERATOR$4] = function () {
 	    return this;
 	  }; // eslint-disable-next-line no-throw-literal
 
@@ -2485,7 +2498,7 @@
 	  try {
 	    var object = {};
 
-	    object[ITERATOR$3] = function () {
+	    object[ITERATOR$4] = function () {
 	      return {
 	        next: function () {
 	          return {
@@ -2506,7 +2519,7 @@
 	var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
 	  Array.from(iterable);
 	}); // `Array.from` method
-	// https://tc39.github.io/ecma262/#sec-array.from
+	// https://tc39.es/ecma262/#sec-array.from
 
 	_export({
 	  target: 'Array',
@@ -2522,7 +2535,7 @@
 
 	var from$2 = from$1;
 
-	// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+	// https://tc39.es/ecma262/#sec-array.prototype.fill
 
 
 	var arrayFill = function fill(value
@@ -2540,14 +2553,14 @@
 	  return O;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-array.prototype.fill
+	// https://tc39.es/ecma262/#sec-array.prototype.fill
 
 	_export({
 	  target: 'Array',
 	  proto: true
 	}, {
 	  fill: arrayFill
-	}); // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	}); // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 	var fill = entryVirtual('Array').fill;
 
@@ -2620,6 +2633,8 @@
 	});
 
 	if ($stringify$1) {
+	  // `JSON.stringify` method
+	  // https://tc39.es/ecma262/#sec-json.stringify
 	  // https://github.com/tc39/proposal-well-formed-stringify
 	  _export({
 	    target: 'JSON',
@@ -2677,7 +2692,7 @@
 
 	var createClass = _createClass;
 
-	// https://tc39.github.io/ecma262/#sec-object.create
+	// https://tc39.es/ecma262/#sec-object.create
 
 	_export({
 	  target: 'Object',
@@ -2733,13 +2748,13 @@
 
 	var stringTrim = {
 	  // `String.prototype.{ trimLeft, trimStart }` methods
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.trimstart
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
 	  start: createMethod$3(1),
 	  // `String.prototype.{ trimRight, trimEnd }` methods
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.trimend
+	  // https://tc39.es/ecma262/#sec-string.prototype.trimend
 	  end: createMethod$3(2),
 	  // `String.prototype.trim` method
-	  // https://tc39.github.io/ecma262/#sec-string.prototype.trim
+	  // https://tc39.es/ecma262/#sec-string.prototype.trim
 	  trim: createMethod$3(3)
 	};
 
@@ -2753,7 +2768,7 @@
 	};
 
 	var $trim = stringTrim.trim; // `String.prototype.trim` method
-	// https://tc39.github.io/ecma262/#sec-string.prototype.trim
+	// https://tc39.es/ecma262/#sec-string.prototype.trim
 
 	_export({
 	  target: 'String',
@@ -2812,7 +2827,7 @@
 	  ACCESSORS: true,
 	  1: 0
 	}); // `Array.prototype.indexOf` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+	// https://tc39.es/ecma262/#sec-array.prototype.indexof
 
 	_export({
 	  target: 'Array',
@@ -2844,14 +2859,14 @@
 	var $parseInt = global$1.parseInt;
 	var hex = /^[+-]?0[Xx]/;
 	var FORCED$2 = $parseInt(whitespaces + '08') !== 8 || $parseInt(whitespaces + '0x16') !== 22; // `parseInt` method
-	// https://tc39.github.io/ecma262/#sec-parseint-string-radix
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
 
 	var numberParseInt = FORCED$2 ? function parseInt(string, radix) {
 	  var S = trim(String(string));
 	  return $parseInt(S, radix >>> 0 || (hex.test(S) ? 16 : 10));
 	} : $parseInt;
 
-	// https://tc39.github.io/ecma262/#sec-parseint-string-radix
+	// https://tc39.es/ecma262/#sec-parseint-string-radix
 
 	_export({
 	  global: true,
@@ -2891,15 +2906,15 @@
 
 	var objectToArray = {
 	  // `Object.entries` method
-	  // https://tc39.github.io/ecma262/#sec-object.entries
+	  // https://tc39.es/ecma262/#sec-object.entries
 	  entries: createMethod$4(true),
 	  // `Object.values` method
-	  // https://tc39.github.io/ecma262/#sec-object.values
+	  // https://tc39.es/ecma262/#sec-object.values
 	  values: createMethod$4(false)
 	};
 
 	var $values = objectToArray.values; // `Object.values` method
-	// https://tc39.github.io/ecma262/#sec-object.values
+	// https://tc39.es/ecma262/#sec-object.values
 
 	_export({
 	  target: 'Object',
@@ -2955,7 +2970,7 @@
 	var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter'); // Edge 14- issue
 
 	var USES_TO_LENGTH$1 = arrayMethodUsesToLength('filter'); // `Array.prototype.filter` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.filter
+	// https://tc39.es/ecma262/#sec-array.prototype.filter
 	// with adding support of @@species
 
 	_export({
@@ -2986,7 +3001,7 @@
 	var FAILS_ON_PRIMITIVES$1 = fails(function () {
 	  objectGetPrototypeOf(1);
 	}); // `Object.getPrototypeOf` method
-	// https://tc39.github.io/ecma262/#sec-object.getprototypeof
+	// https://tc39.es/ecma262/#sec-object.getprototypeof
 
 	_export({
 	  target: 'Object',
@@ -3010,7 +3025,7 @@
 	  ACCESSORS: true,
 	  1: 0
 	}); // `Array.prototype.includes` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+	// https://tc39.es/ecma262/#sec-array.prototype.includes
 
 	_export({
 	  target: 'Array',
@@ -3022,12 +3037,12 @@
 	  ) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
-	}); // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	}); // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 	var includes = entryVirtual('Array').includes;
 
 	var MATCH = wellKnownSymbol('match'); // `IsRegExp` abstract operation
-	// https://tc39.github.io/ecma262/#sec-isregexp
+	// https://tc39.es/ecma262/#sec-isregexp
 
 	var isRegexp = function (it) {
 	  var isRegExp;
@@ -3061,7 +3076,7 @@
 	  return false;
 	};
 
-	// https://tc39.github.io/ecma262/#sec-string.prototype.includes
+	// https://tc39.es/ecma262/#sec-string.prototype.includes
 
 
 	_export({
@@ -3106,7 +3121,7 @@
 	var min$2 = Math.min;
 	var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
 	var MAXIMUM_ALLOWED_LENGTH_EXCEEDED = 'Maximum allowed length exceeded'; // `Array.prototype.splice` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.splice
+	// https://tc39.es/ecma262/#sec-array.prototype.splice
 	// with adding support of @@species
 
 	_export({
@@ -3186,7 +3201,7 @@
 
 	var nativeReverse = [].reverse;
 	var test$1 = [1, 2]; // `Array.prototype.reverse` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.reverse
+	// https://tc39.es/ecma262/#sec-array.prototype.reverse
 	// fix for Safari 12.0 bug
 	// https://bugs.webkit.org/show_bug.cgi?id=188794
 
@@ -3218,7 +3233,7 @@
 	var $forEach$1 = arrayIteration.forEach;
 	var STRICT_METHOD$1 = arrayMethodIsStrict('forEach');
 	var USES_TO_LENGTH$4 = arrayMethodUsesToLength('forEach'); // `Array.prototype.forEach` method implementation
-	// https://tc39.github.io/ecma262/#sec-array.prototype.foreach
+	// https://tc39.es/ecma262/#sec-array.prototype.foreach
 
 	var arrayForEach = !STRICT_METHOD$1 || !USES_TO_LENGTH$4 ? function forEach(callbackfn
 	/* , thisArg */
@@ -3226,7 +3241,7 @@
 	  return $forEach$1(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	} : [].forEach;
 
-	// https://tc39.github.io/ecma262/#sec-array.prototype.foreach
+	// https://tc39.es/ecma262/#sec-array.prototype.foreach
 
 
 	_export({
@@ -3255,7 +3270,7 @@
 
 	var forEach$2 = forEach_1;
 
-	// https://tc39.github.io/ecma262/#sec-array.isarray
+	// https://tc39.es/ecma262/#sec-array.isarray
 
 	_export({
 	  target: 'Array',
@@ -3276,11 +3291,11 @@
 
 	var arrayWithHoles = _arrayWithHoles;
 
-	var ITERATOR$4 = wellKnownSymbol('iterator');
+	var ITERATOR$5 = wellKnownSymbol('iterator');
 
 	var isIterable = function (it) {
 	  var O = Object(it);
-	  return O[ITERATOR$4] !== undefined || '@@iterator' in O // eslint-disable-next-line no-prototype-builtins
+	  return O[ITERATOR$5] !== undefined || '@@iterator' in O // eslint-disable-next-line no-prototype-builtins
 	  || iterators.hasOwnProperty(classof(O));
 	};
 
@@ -3308,7 +3323,7 @@
 	};
 
 	var FORCED$3 = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT; // `Array.prototype.concat` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.concat
+	// https://tc39.es/ecma262/#sec-array.prototype.concat
 	// with adding support of @@isConcatSpreadable and @@species
 
 	_export({
@@ -3342,57 +3357,59 @@
 	  }
 	});
 
-	// https://tc39.github.io/ecma262/#sec-symbol.asynciterator
+	// https://tc39.es/ecma262/#sec-symbol.asynciterator
 
 	defineWellKnownSymbol('asyncIterator');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.hasinstance
+	// https://tc39.es/ecma262/#sec-symbol.hasinstance
 
 	defineWellKnownSymbol('hasInstance');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.isconcatspreadable
+	// https://tc39.es/ecma262/#sec-symbol.isconcatspreadable
 
 	defineWellKnownSymbol('isConcatSpreadable');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.iterator
+	// https://tc39.es/ecma262/#sec-symbol.iterator
 
 	defineWellKnownSymbol('iterator');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.match
+	// https://tc39.es/ecma262/#sec-symbol.match
 
 	defineWellKnownSymbol('match');
 
+	// https://tc39.es/ecma262/#sec-symbol.matchall
+
 	defineWellKnownSymbol('matchAll');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.replace
+	// https://tc39.es/ecma262/#sec-symbol.replace
 
 	defineWellKnownSymbol('replace');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.search
+	// https://tc39.es/ecma262/#sec-symbol.search
 
 	defineWellKnownSymbol('search');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.species
+	// https://tc39.es/ecma262/#sec-symbol.species
 
 	defineWellKnownSymbol('species');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.split
+	// https://tc39.es/ecma262/#sec-symbol.split
 
 	defineWellKnownSymbol('split');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.toprimitive
+	// https://tc39.es/ecma262/#sec-symbol.toprimitive
 
 	defineWellKnownSymbol('toPrimitive');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.tostringtag
+	// https://tc39.es/ecma262/#sec-symbol.tostringtag
 
 	defineWellKnownSymbol('toStringTag');
 
-	// https://tc39.github.io/ecma262/#sec-symbol.unscopables
+	// https://tc39.es/ecma262/#sec-symbol.unscopables
 
 	defineWellKnownSymbol('unscopables');
 
-	// https://tc39.github.io/ecma262/#sec-json-@@tostringtag
+	// https://tc39.es/ecma262/#sec-json-@@tostringtag
 
 	setToStringTag(global$1.JSON, 'JSON', true);
 
@@ -3462,7 +3479,7 @@
 	var SPECIES$2 = wellKnownSymbol('species');
 	var nativeSlice = [].slice;
 	var max$2 = Math.max; // `Array.prototype.slice` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.slice
+	// https://tc39.es/ecma262/#sec-array.prototype.slice
 	// fallback for not array-like ES3 strings and DOM objects
 
 	_export({
@@ -3554,7 +3571,7 @@
 
 	var slicedToArray = _slicedToArray;
 
-	// https://tc39.github.io/ecma262/#sec-date.now
+	// https://tc39.es/ecma262/#sec-date.now
 
 	_export({
 	  target: 'Date',
@@ -3574,7 +3591,7 @@
 	var FAILS_ON_PRIMITIVES$2 = fails(function () {
 	  objectKeys(1);
 	}); // `Object.keys` method
-	// https://tc39.github.io/ecma262/#sec-object.keys
+	// https://tc39.es/ecma262/#sec-object.keys
 
 	_export({
 	  target: 'Object',
@@ -3596,7 +3613,7 @@
 	var HAS_SPECIES_SUPPORT$3 = arrayMethodHasSpeciesSupport('map'); // FF49- issue
 
 	var USES_TO_LENGTH$6 = arrayMethodUsesToLength('map'); // `Array.prototype.map` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.map
+	// https://tc39.es/ecma262/#sec-array.prototype.map
 	// with adding support of @@species
 
 	_export({
@@ -3654,7 +3671,7 @@
 	  module.exports = _typeof;
 	});
 
-	// https://tc39.github.io/ecma262/#sec-reflect.ownkeys
+	// https://tc39.es/ecma262/#sec-reflect.ownkeys
 
 	_export({
 	  target: 'Reflect',
@@ -10044,7 +10061,7 @@
 
 	  createClass(Validator, null, [{
 	    key: "validate",
-
+	    value:
 	    /**
 	     * Main function to be called
 	     *
@@ -10054,7 +10071,7 @@
 	     * @returns {boolean}
 	     * @static
 	     */
-	    value: function validate(options, referenceOptions, subObject) {
+	    function validate(options, referenceOptions, subObject) {
 	      errorFound = false;
 	      allOptions = referenceOptions;
 	      var usedOptions = referenceOptions;
@@ -12932,7 +12949,7 @@
 	  }
 	};
 
-	// https://tc39.github.io/ecma262/#sec-map-objects
+	// https://tc39.es/ecma262/#sec-map-objects
 
 
 	collection('Map', function (init) {
@@ -13312,7 +13329,7 @@
 	var $some = arrayIteration.some;
 	var STRICT_METHOD$2 = arrayMethodIsStrict('some');
 	var USES_TO_LENGTH$7 = arrayMethodUsesToLength('some'); // `Array.prototype.some` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.some
+	// https://tc39.es/ecma262/#sec-array.prototype.some
 
 	_export({
 	  target: 'Array',
@@ -13340,13 +13357,13 @@
 	var some$2 = some$1;
 
 	var globalIsFinite = global$1.isFinite; // `Number.isFinite` method
-	// https://tc39.github.io/ecma262/#sec-number.isfinite
+	// https://tc39.es/ecma262/#sec-number.isfinite
 
 	var numberIsFinite = Number.isFinite || function isFinite(it) {
 	  return typeof it == 'number' && globalIsFinite(it);
 	};
 
-	// https://tc39.github.io/ecma262/#sec-number.isfinite
+	// https://tc39.es/ecma262/#sec-number.isfinite
 
 	_export({
 	  target: 'Number',
@@ -13361,7 +13378,7 @@
 
 	var _isFinite$2 = _isFinite$1;
 
-	// https://tc39.github.io/ecma262/#sec-number.isnan
+	// https://tc39.es/ecma262/#sec-number.isnan
 
 	_export({
 	  target: 'Number',
@@ -13383,7 +13400,7 @@
 	var FAILS_ON_PRIMITIVES$3 = fails(function () {
 	  return !Object.getOwnPropertyNames(1);
 	}); // `Object.getOwnPropertyNames` method
-	// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+	// https://tc39.es/ecma262/#sec-object.getownpropertynames
 
 	_export({
 	  target: 'Object',
@@ -13406,7 +13423,7 @@
 	var trim$1 = stringTrim.trim;
 	var $parseFloat = global$1.parseFloat;
 	var FORCED$4 = 1 / $parseFloat(whitespaces + '-0') !== -Infinity; // `parseFloat` method
-	// https://tc39.github.io/ecma262/#sec-parsefloat-string
+	// https://tc39.es/ecma262/#sec-parsefloat-string
 
 	var numberParseFloat = FORCED$4 ? function parseFloat(string) {
 	  var trimmedString = trim$1(String(string));
@@ -13414,7 +13431,7 @@
 	  return result === 0 && trimmedString.charAt(0) == '-' ? -0 : result;
 	} : $parseFloat;
 
-	// https://tc39.github.io/ecma262/#sec-parsefloat-string
+	// https://tc39.es/ecma262/#sec-parsefloat-string
 
 	_export({
 	  global: true,
@@ -14668,7 +14685,7 @@
 
 	  }, {
 	    key: "constrain",
-
+	    value:
 	    /**
 	     * Set the width and height constraints based on 'nearest' value
 	     *
@@ -14676,7 +14693,7 @@
 	     * @returns {object} the actual constraint values to use
 	     * @private
 	     */
-	    value: function constrain(pile) {
+	    function constrain(pile) {
 	      // NOTE: constrainWidth and  constrainHeight never set!
 	      // NOTE: for edge labels, only 'maxWdt' set
 	      // Node labels can set all the fields
@@ -15408,7 +15425,7 @@
 	}();
 
 	var nativeConstruct = getBuiltIn('Reflect', 'construct'); // `Reflect.construct` method
-	// https://tc39.github.io/ecma262/#sec-reflect.construct
+	// https://tc39.es/ecma262/#sec-reflect.construct
 	// MS Edge supports only 2 arguments and argumentsList argument is optional
 	// FF Nightly sets third argument as `new.target`, but does not create `this` from it
 
@@ -15484,7 +15501,7 @@
 
 	var create$4 = create$3;
 
-	// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+	// https://tc39.es/ecma262/#sec-object.setprototypeof
 
 	_export({
 	  target: 'Object',
@@ -18006,12 +18023,12 @@
 
 	  }, {
 	    key: "getFormattingValues",
-
+	    value:
 	    /**
 	     *
 	     * @returns {{color: *, borderWidth: *, borderColor: *, size: *, borderDashes: (boolean|Array|allOptions.nodes.shapeProperties.borderDashes|{boolean, array}), borderRadius: (number|allOptions.nodes.shapeProperties.borderRadius|{number}|Array), shadow: *, shadowColor: *, shadowSize: *, shadowX: *, shadowY: *}}
 	     */
-	    value: function getFormattingValues() {
+	    function getFormattingValues() {
 	      var values = {
 	        color: this.options.color.background,
 	        opacity: this.options.opacity,
@@ -19246,7 +19263,7 @@
 
 	var getOwnPropertyDescriptor$5 = getOwnPropertyDescriptor$4;
 
-	// https://tc39.github.io/ecma262/#sec-reflect.get
+	// https://tc39.es/ecma262/#sec-reflect.get
 
 	function get$1(target, propertyKey
 	/* , receiver */
@@ -19313,7 +19330,7 @@
 	// https://bugs.chromium.org/p/v8/issues/detail?id=9546
 
 	var BUGGY = !!$hypot && $hypot(Infinity, NaN) !== Infinity; // `Math.hypot` method
-	// https://tc39.github.io/ecma262/#sec-math.hypot
+	// https://tc39.es/ecma262/#sec-math.hypot
 
 	_export({
 	  target: 'Math',
@@ -19367,7 +19384,7 @@
 
 	  createClass(EndPoint, null, [{
 	    key: "transform",
-
+	    value:
 	    /**
 	     * Apply transformation on points for display.
 	     *
@@ -19379,7 +19396,7 @@
 	     * @param points - The point(s) to be transformed.
 	     * @param arrowData - The data determining the result of the transformation.
 	     */
-	    value: function transform(points, arrowData) {
+	    function transform(points, arrowData) {
 	      if (!isArray$5(points)) {
 	        points = [points];
 	      }
@@ -19438,7 +19455,7 @@
 
 	  createClass(Image, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19447,7 +19464,7 @@
 	     *
 	     * @returns False as there is no way to fill an image.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      if (arrowData.image) {
 	        ctx.save();
 	        ctx.translate(arrowData.point.x, arrowData.point.y);
@@ -19485,7 +19502,7 @@
 
 	  createClass(Arrow, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19494,7 +19511,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var points = [{
@@ -19530,7 +19547,7 @@
 
 	  createClass(Crow, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19539,7 +19556,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var points = [{
@@ -19575,7 +19592,7 @@
 
 	  createClass(Curve, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19584,7 +19601,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var point = {
@@ -19620,7 +19637,7 @@
 
 	  createClass(InvertedCurve, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19629,7 +19646,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var point = {
@@ -19665,7 +19682,7 @@
 
 	  createClass(Triangle, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19674,7 +19691,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var points = [{
@@ -19707,7 +19724,7 @@
 
 	  createClass(InvertedTriangle, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19716,7 +19733,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var points = [{
@@ -19749,7 +19766,7 @@
 
 	  createClass(Circle, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19758,7 +19775,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      var point = {
 	        x: -0.4,
 	        y: 0
@@ -19783,7 +19800,7 @@
 
 	  createClass(Bar, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19792,7 +19809,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      /*
 	      var points = [
 	        {x:0, y:0.5},
@@ -19837,7 +19854,7 @@
 
 	  createClass(Box, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19846,7 +19863,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      var points = [{
 	        x: 0,
 	        y: 0.3
@@ -19880,7 +19897,7 @@
 
 	  createClass(Diamond, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19889,7 +19906,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      var points = [{
 	        x: 0,
 	        y: 0
@@ -19923,7 +19940,7 @@
 
 	  createClass(Vee, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw this shape at the end of a line.
 	     *
@@ -19932,7 +19949,7 @@
 	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      // Normalized points of closed path, in the order that they should be drawn.
 	      // (0, 0) is the attachment point, and the point around which should be rotated
 	      var points = [{
@@ -19968,7 +19985,7 @@
 
 	  createClass(EndPoints, null, [{
 	    key: "draw",
-
+	    value:
 	    /**
 	     * Draw an endpoint.
 	     *
@@ -19977,7 +19994,7 @@
 	     *
 	     * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
 	     */
-	    value: function draw(ctx, arrowData) {
+	    function draw(ctx, arrowData) {
 	      var type;
 
 	      if (arrowData.type) {
@@ -21845,12 +21862,12 @@
 
 	  }, {
 	    key: "getFormattingValues",
-
+	    value:
 	    /**
 	     *
 	     * @returns {ArrowOptions}
 	     */
-	    value: function getFormattingValues() {
+	    function getFormattingValues() {
 	      var toArrow = this.options.arrows.to === true || this.options.arrows.to.enabled === true;
 	      var fromArrow = this.options.arrows.from === true || this.options.arrows.from.enabled === true;
 	      var middleArrow = this.options.arrows.middle === true || this.options.arrows.middle.enabled === true;
@@ -30394,7 +30411,7 @@
 	      return init(this, arguments.length ? arguments[0] : undefined);
 	    };
 	  }; // `WeakMap` constructor
-	  // https://tc39.github.io/ecma262/#sec-weakmap-constructor
+	  // https://tc39.es/ecma262/#sec-weakmap-constructor
 
 
 	  var $WeakMap = module.exports = collection('WeakMap', wrapper, collectionWeak); // IE11 WeakMap frozen keys fix
@@ -30456,7 +30473,7 @@
 
 	var weakMap$2 = weakMap$1;
 
-	// https://tc39.github.io/ecma262/#sec-set-objects
+	// https://tc39.es/ecma262/#sec-set-objects
 
 
 	collection('Set', function (init) {
@@ -30546,6 +30563,11 @@
 	  }
 
 	  createClass(SingleTypeSelectionAccumulator, [{
+	    key: "size",
+	    get: function get() {
+	      return __classPrivateFieldGet(this, _selection).size;
+	    }
+	  }, {
 	    key: "add",
 	    value: function add() {
 	      for (var _len = arguments.length, items = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -30631,11 +30653,6 @@
 
 	      return changes;
 	    }
-	  }, {
-	    key: "size",
-	    get: function get() {
-	      return __classPrivateFieldGet(this, _selection).size;
-	    }
 	  }]);
 
 	  return SingleTypeSelectionAccumulator;
@@ -30658,6 +30675,16 @@
 	  }
 
 	  createClass(SelectionAccumulator, [{
+	    key: "sizeNodes",
+	    get: function get() {
+	      return __classPrivateFieldGet(this, _nodes).size;
+	    }
+	  }, {
+	    key: "sizeEdges",
+	    get: function get() {
+	      return __classPrivateFieldGet(this, _edges).size;
+	    }
+	  }, {
 	    key: "getNodes",
 	    value: function getNodes() {
 	      return __classPrivateFieldGet(this, _nodes).getSelection();
@@ -30715,16 +30742,6 @@
 	      (_classPrivateFieldGe3 = __classPrivateFieldGet(this, _commitHandler)).call.apply(_classPrivateFieldGe3, concat$2(_context = [this, summary]).call(_context, rest));
 
 	      return summary;
-	    }
-	  }, {
-	    key: "sizeNodes",
-	    get: function get() {
-	      return __classPrivateFieldGet(this, _nodes).size;
-	    }
-	  }, {
-	    key: "sizeEdges",
-	    get: function get() {
-	      return __classPrivateFieldGet(this, _edges).size;
 	    }
 	  }]);
 
@@ -31671,10 +31688,10 @@
 
 	var arrayReduce = {
 	  // `Array.prototype.reduce` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.reduce
+	  // https://tc39.es/ecma262/#sec-array.prototype.reduce
 	  left: createMethod$5(false),
 	  // `Array.prototype.reduceRight` method
-	  // https://tc39.github.io/ecma262/#sec-array.prototype.reduceright
+	  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
 	  right: createMethod$5(true)
 	};
 
@@ -31688,7 +31705,7 @@
 	// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
 
 	var CHROME_BUG = !engineIsNode && engineV8Version > 79 && engineV8Version < 83; // `Array.prototype.reduce` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.reduce
+	// https://tc39.es/ecma262/#sec-array.prototype.reduce
 
 	_export({
 	  target: 'Array',
@@ -31728,7 +31745,7 @@
 
 	var STRICT_METHOD$4 = arrayMethodIsStrict('sort');
 	var FORCED$6 = FAILS_ON_UNDEFINED || !FAILS_ON_NULL || !STRICT_METHOD$4; // `Array.prototype.sort` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.sort
+	// https://tc39.es/ecma262/#sec-array.prototype.sort
 
 	_export({
 	  target: 'Array',
@@ -32596,11 +32613,11 @@
 
 	  createClass(DirectionInterface, [{
 	    key: "abstract",
-
+	    value:
 	    /**
 	     * @ignore
 	     */
-	    value: function abstract() {
+	    function abstract() {
 	      throw new Error("Can't instantiate abstract class!");
 	    }
 	    /**
@@ -32920,7 +32937,7 @@
 	var $every = arrayIteration.every;
 	var STRICT_METHOD$5 = arrayMethodIsStrict('every');
 	var USES_TO_LENGTH$9 = arrayMethodUsesToLength('every'); // `Array.prototype.every` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.every
+	// https://tc39.es/ecma262/#sec-array.prototype.every
 
 	_export({
 	  target: 'Array',
