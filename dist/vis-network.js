@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-02-05T03:00:22.726Z
+ * @date    2021-02-05T07:42:07.299Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1309,7 +1309,7 @@
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
 	    version: '3.8.3',
-	    mode:  'pure' ,
+	    mode: 'pure' ,
 	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
 	});
@@ -2070,7 +2070,7 @@
 	});
 	if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {}; // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
 
-	if (( NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
+	if ((NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
 	  createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
 	}
 
@@ -2198,7 +2198,7 @@
 	  } // define iterator
 
 
-	  if (( FORCED) && IterablePrototype[ITERATOR$1] !== defaultIterator) {
+	  if ((FORCED) && IterablePrototype[ITERATOR$1] !== defaultIterator) {
 	    createNonEnumerableProperty(IterablePrototype, ITERATOR$1, defaultIterator);
 	  }
 
@@ -15284,7 +15284,7 @@
 	  // as the regeneratorRuntime namespace. Otherwise create a new empty
 	  // object. Either way, the resulting object will be used to initialize
 	  // the regeneratorRuntime variable at the top of this file.
-	   module.exports );
+	  module.exports );
 
 	  try {
 	    regeneratorRuntime = runtime;
@@ -30084,7 +30084,7 @@
 	      } // enable adaptive timesteps
 
 
-	      this.adaptiveTimestep =  this.options.adaptiveTimestep; // this sets the width of all nodes initially which could be required for the avoidOverlap
+	      this.adaptiveTimestep = this.options.adaptiveTimestep; // this sets the width of all nodes initially which could be required for the avoidOverlap
 
 	      this.body.emitter.emit("_resizeNodes");
 	      this.stopSimulation(); // stop the render loop
