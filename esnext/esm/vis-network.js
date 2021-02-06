@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-02-05T19:23:22.982Z
+ * @date    2021-02-06T19:06:27.111Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -462,15 +462,37 @@ function nextPreview() {
   return dot.charAt(index + 1);
 }
 
-var regexAlphaNumeric = /[a-zA-Z_0-9.:#]/;
 /**
- * Test whether given character is alphabetic or numeric
+ * Test whether given character is alphabetic or numeric ( a-zA-Z_0-9.:# )
  *
  * @param {string} c
  * @returns {boolean} isAlphaNumeric
  */
 function isAlphaNumeric(c) {
-  return regexAlphaNumeric.test(c);
+  var charCode = c.charCodeAt(0);
+
+  if (charCode < 47) {
+    // #.
+    return charCode === 35 || charCode === 46;
+  }
+  if (charCode < 59) {
+    // 0-9 and :
+    return charCode > 47;
+  }
+  if (charCode < 91) {
+    // A-Z
+    return charCode > 64;
+  }
+  if (charCode < 96) {
+    // _
+    return charCode === 95;
+  }
+  if (charCode < 123) {
+    // a-z
+    return charCode > 96;
+  }
+
+  return false;
 }
 
 /**
