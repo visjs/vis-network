@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-02-23T20:28:29.579Z
+ * @date    2021-02-24T01:07:36.357Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -22773,7 +22773,7 @@
               parentCentralization: true,
               direction: ["UD", "DU", "LR", "RL"],
               sortMethod: ["hubsize", "directed"],
-              shakeTowards: ["leaves", "roots"],
+              shakeTowards: ["leaves", "roots"], // leaves, roots
           },
       },
       interaction: {
@@ -22853,6 +22853,7 @@
               x: [0, -10, 10, 0.1],
               y: [0, -10, 10, 0.1],
           },
+          //adaptiveTimestep: true
       },
   };
   const configuratorHideOption = (parentPath, optionName, options) => {
