@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-02-26T05:52:53.740Z
+ * @date    2021-02-26T17:09:31.341Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -4650,7 +4650,7 @@ class NodeBase {
  *
  * @augments NodeBase
  */
-class Box extends NodeBase {
+class Box$1 extends NodeBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -4983,7 +4983,7 @@ class CircleImageBase extends NodeBase {
  *
  * @augments CircleImageBase
  */
-class Circle extends CircleImageBase {
+class Circle$1 extends CircleImageBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -5489,7 +5489,7 @@ class Database extends NodeBase {
  *
  * @augments ShapeBase
  */
-class Diamond extends ShapeBase {
+class Diamond$1 extends ShapeBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -5798,7 +5798,7 @@ class Icon extends NodeBase {
  *
  * @augments CircleImageBase
  */
-class Image$1 extends CircleImageBase {
+class Image$2 extends CircleImageBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -6164,7 +6164,7 @@ class Text extends NodeBase {
  *
  * @augments ShapeBase
  */
-class Triangle extends ShapeBase {
+class Triangle$1 extends ShapeBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -6770,10 +6770,10 @@ class Node {
       // choose draw method depending on the shape
       switch (this.options.shape) {
         case "box":
-          this.shape = new Box(this.options, this.body, this.labelModule);
+          this.shape = new Box$1(this.options, this.body, this.labelModule);
           break;
         case "circle":
-          this.shape = new Circle(this.options, this.body, this.labelModule);
+          this.shape = new Circle$1(this.options, this.body, this.labelModule);
           break;
         case "circularImage":
           this.shape = new CircularImage(
@@ -6796,7 +6796,7 @@ class Node {
           this.shape = new Database(this.options, this.body, this.labelModule);
           break;
         case "diamond":
-          this.shape = new Diamond(this.options, this.body, this.labelModule);
+          this.shape = new Diamond$1(this.options, this.body, this.labelModule);
           break;
         case "dot":
           this.shape = new Dot(this.options, this.body, this.labelModule);
@@ -6808,7 +6808,7 @@ class Node {
           this.shape = new Icon(this.options, this.body, this.labelModule);
           break;
         case "image":
-          this.shape = new Image$1(
+          this.shape = new Image$2(
             this.options,
             this.body,
             this.labelModule,
@@ -6829,7 +6829,7 @@ class Node {
           this.shape = new Text(this.options, this.body, this.labelModule);
           break;
         case "triangle":
-          this.shape = new Triangle(this.options, this.body, this.labelModule);
+          this.shape = new Triangle$1(this.options, this.body, this.labelModule);
           break;
         case "triangleDown":
           this.shape = new TriangleDown(
@@ -7731,7 +7731,7 @@ class EndPoint {
 /**
  * Drawing methods for the arrow endpoint.
  */
-class Image$2 extends EndPoint {
+class Image$1 extends EndPoint {
     /**
      * Draw this shape at the end of a line.
      *
@@ -7875,7 +7875,7 @@ class InvertedCurve {
 /**
  * Drawing methods for the trinagle endpoint.
  */
-class Triangle$1 {
+class Triangle {
     /**
      * Draw this shape at the end of a line.
      *
@@ -7925,7 +7925,7 @@ class InvertedTriangle {
 /**
  * Drawing methods for the circle endpoint.
  */
-class Circle$1 {
+class Circle {
     /**
      * Draw this shape at the end of a line.
      *
@@ -7980,7 +7980,7 @@ class Bar {
 /**
  * Drawing methods for the box endpoint.
  */
-class Box$1 {
+class Box {
     /**
      * Draw this shape at the end of a line.
      *
@@ -8004,7 +8004,7 @@ class Box$1 {
 /**
  * Drawing methods for the diamond endpoint.
  */
-class Diamond$1 {
+class Diamond {
     /**
      * Draw this shape at the end of a line.
      *
@@ -8070,21 +8070,21 @@ class EndPoints {
         }
         switch (type) {
             case "image":
-                return Image$2.draw(ctx, arrowData);
+                return Image$1.draw(ctx, arrowData);
             case "circle":
-                return Circle$1.draw(ctx, arrowData);
+                return Circle.draw(ctx, arrowData);
             case "box":
-                return Box$1.draw(ctx, arrowData);
+                return Box.draw(ctx, arrowData);
             case "crow":
                 return Crow.draw(ctx, arrowData);
             case "curve":
                 return Curve.draw(ctx, arrowData);
             case "diamond":
-                return Diamond$1.draw(ctx, arrowData);
+                return Diamond.draw(ctx, arrowData);
             case "inv_curve":
                 return InvertedCurve.draw(ctx, arrowData);
             case "triangle":
-                return Triangle$1.draw(ctx, arrowData);
+                return Triangle.draw(ctx, arrowData);
             case "inv_triangle":
                 return InvertedTriangle.draw(ctx, arrowData);
             case "bar":
