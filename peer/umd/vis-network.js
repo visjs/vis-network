@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-03-02T01:13:33.770Z
+ * @date    2021-03-02T04:47:28.261Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1166,7 +1166,7 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.9.0',
+	    version: '3.9.1',
 	    mode: 'pure' ,
 	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
@@ -1274,11 +1274,42 @@
 	  return O instanceof Object ? ObjectPrototype$1 : null;
 	};
 
-	var nativeSymbol = !!Object.getOwnPropertySymbols && !fails(function () {
-	  // Chrome 38 Symbol has incorrect toString conversion
+	var engineIsNode = classofRaw(global$1.process) == 'process';
 
+	var aFunction = function (variable) {
+	  return typeof variable == 'function' ? variable : undefined;
+	};
+
+	var getBuiltIn = function (namespace, method) {
+	  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global$1[namespace]) : path[namespace] && path[namespace][method] || global$1[namespace] && global$1[namespace][method];
+	};
+
+	var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
+
+	var process = global$1.process;
+	var versions = process && process.versions;
+	var v8 = versions && versions.v8;
+	var match, version;
+
+	if (v8) {
+	  match = v8.split('.');
+	  version = match[0] + match[1];
+	} else if (engineUserAgent) {
+	  match = engineUserAgent.match(/Edge\/(\d+)/);
+
+	  if (!match || match[1] >= 74) {
+	    match = engineUserAgent.match(/Chrome\/(\d+)/);
+	    if (match) version = match[1];
+	  }
+	}
+
+	var engineV8Version = version && +version;
+
+	var nativeSymbol = !!Object.getOwnPropertySymbols && !fails(function () {
 	  /* global Symbol -- required for testing */
-	  return !String(Symbol());
+	  return !Symbol.sham && ( // Chrome 38 Symbol has incorrect toString conversion
+	  // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
+	  engineIsNode ? engineV8Version === 38 : engineV8Version > 37 && engineV8Version < 41);
 	});
 
 	var useSymbolAsUid = nativeSymbol
@@ -1290,8 +1321,12 @@
 	var createWellKnownSymbol = useSymbolAsUid ? Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid;
 
 	var wellKnownSymbol = function (name) {
-	  if (!has$1(WellKnownSymbolsStore$1, name)) {
-	    if (nativeSymbol && has$1(Symbol$1, name)) WellKnownSymbolsStore$1[name] = Symbol$1[name];else WellKnownSymbolsStore$1[name] = createWellKnownSymbol('Symbol.' + name);
+	  if (!has$1(WellKnownSymbolsStore$1, name) || !(nativeSymbol || typeof WellKnownSymbolsStore$1[name] == 'string')) {
+	    if (nativeSymbol && has$1(Symbol$1, name)) {
+	      WellKnownSymbolsStore$1[name] = Symbol$1[name];
+	    } else {
+	      WellKnownSymbolsStore$1[name] = createWellKnownSymbol('Symbol.' + name);
+	    }
 	  }
 
 	  return WellKnownSymbolsStore$1[name];
@@ -1345,14 +1380,6 @@
 	  while (length > index) objectDefineProperty.f(O, key = keys[index++], Properties[key]);
 
 	  return O;
-	};
-
-	var aFunction = function (variable) {
-	  return typeof variable == 'function' ? variable : undefined;
-	};
-
-	var getBuiltIn = function (namespace, method) {
-	  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global$1[namespace]) : path[namespace] && path[namespace][method] || global$1[namespace] && global$1[namespace][method];
 	};
 
 	var html = getBuiltIn('document', 'documentElement');
@@ -2597,27 +2624,6 @@
 	function _arrayWithHoles(arr) {
 	  if (isArray$2(arr)) return arr;
 	}
-
-	var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
-
-	var process = global$1.process;
-	var versions = process && process.versions;
-	var v8 = versions && versions.v8;
-	var match, version;
-
-	if (v8) {
-	  match = v8.split('.');
-	  version = match[0] + match[1];
-	} else if (engineUserAgent) {
-	  match = engineUserAgent.match(/Edge\/(\d+)/);
-
-	  if (!match || match[1] >= 74) {
-	    match = engineUserAgent.match(/Chrome\/(\d+)/);
-	    if (match) version = match[1];
-	  }
-	}
-
-	var engineV8Version = version && +version;
 
 	var SPECIES$2 = wellKnownSymbol('species');
 
@@ -31657,8 +31663,6 @@
 	  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
 	  right: createMethod(true)
 	};
-
-	var engineIsNode = classofRaw(global$1.process) == 'process';
 
 	var $reduce = arrayReduce.left;
 	var STRICT_METHOD$1 = arrayMethodIsStrict('reduce'); // Chrome 80-82 has a critical bug
