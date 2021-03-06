@@ -963,7 +963,7 @@ export interface NodeOptions {
 
   size?: number;
 
-  title?: string;
+  title?: string | HTMLElement;
 
   value?: number;
 
