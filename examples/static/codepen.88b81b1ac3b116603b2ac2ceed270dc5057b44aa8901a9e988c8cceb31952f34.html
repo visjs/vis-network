@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | HTML in titles</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://codepen.io/pen/define"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="data"
+        value='{"css":"html,\nbody,\n#mynetwork {\n  margin: 0px;\n  padding: 0px;\n}\n\n#mynetwork {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  bottom: 0px;\n  right: 50%;\n  min-height: 100vh;\n  border-right: 1px solid lightgray;\n  background: white;\n}\n\n#text {\n  left: 50%;\n  padding: 1em;\n  position: absolute;\n  right: 0%;\n}\n\n#text pre {\n  overflow-x: auto;\n}\n\n#title {\n  margin-bottom: 5em;\n}\n\n@keyframes be-tacky {\n  0% {\n    background: yellow;\n    border-radius: 0px;\n    border: green 2px solid;\n    color: blue;\n    display: inline-block;\n    padding: 5px;\n    transform: rotate(0);\n  }\n  100% {\n    background: pink;\n    border-radius: 50px;\n    border: cyan 5px solid;\n    color: purple;\n    display: inline-block;\n    padding: 2px;\n    transform: rotate(3600deg);\n  }\n}\n","css_external":"","html":"&lt;div id=\"text\"&gt;\n  &lt;div id=\"title\"&gt;\n    &lt;h1&gt;Vis Network&lt;/h1&gt;\n    &lt;h2&gt;Other&lt;/h2&gt;\n    &lt;h3&gt;HTML in titles&lt;/h3&gt;\n  &lt;/div&gt;\n\n  &lt;p&gt;\n    HTML parsing in titles has been disabled due to covert XSS issues (i.e. it\n    was really easy to introduce XSS vulnerability into your project by\n    accident). If you want to parse HTML anyway, you can still do it as the\n    title accepts HTML elements.\n  &lt;/p&gt;\n\n  &lt;h4&gt;But I just want to maintain white space&lt;/h4&gt;\n  &lt;pre&gt;&lt;code&gt;\nfunction preTitle(text) {\n  const container = document.createElement(&amp;quot;pre&amp;quot;);\n  container.innerText = text;\n  return container;\n}\n\n// create an array with nodes\nvar nodes = new vis.DataSet([\n  {\n    id: 1,\n    label: &amp;quot;PRE&amp;quot;,\n    title: preTitle(&amp;quot;ASCII\\n    art&amp;quot;),\n  },\n]);\n      &lt;/code&gt;&lt;/pre&gt;\n\n  &lt;h4&gt;But I just want my HTML to be parsed as it used to be&lt;/h4&gt;\n  &lt;pre&gt;&lt;code&gt;\nfunction htmlTitle(html) {\n  const container = document.createElement(&amp;quot;div&amp;quot;);\n  container.innerHTML = html;\n  return container;\n}\n\n// create an array with nodes\nvar nodes = new vis.DataSet([\n  {\n    id: 1,\n    label: &amp;quot;HTML&amp;quot;,\n    title: htmlTitle(\n      &amp;quot;Go wild &amp;lt;&amp;apos;span style=&amp;apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&amp;apos;&amp;gt;!&amp;lt;&amp;apos;/span&amp;gt;&amp;quot;\n    ),\n  },\n]);\n      &lt;/code&gt;&lt;/pre&gt;\n&lt;/div&gt;\n\n&lt;div id=\"mynetwork\"&gt;&lt;/div&gt;\n","js":"// just maintain whitespace\nfunction preTitle(text) {\n  const container = document.createElement(\"pre\");\n  container.innerText = text;\n  return container;\n}\n\n// HTML parsing with all XSS goodness\nfunction htmlTitle(html) {\n  const container = document.createElement(\"div\");\n  container.innerHTML = html;\n  return container;\n}\n\n// create an array with nodes\nvar nodes = new vis.DataSet([\n  { id: 1, label: \"PRE\", title: preTitle(\"ASCII\\n    art\") },\n  {\n    id: 2,\n    label: \"HTML\",\n    title: htmlTitle(\n      \"Go wild &lt;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&gt;!&lt;/span&gt;\"\n    ),\n  },\n  { id: 3, label: \"PRE\", title: preTitle(\"ASCII\\n    art\") },\n]);\n\n// create an array with edges\nvar edges = new vis.DataSet([\n  { from: 1, to: 2, label: \"PRE\", title: preTitle(\"ASCII\\n    art\") },\n  {\n    from: 2,\n    to: 3,\n    label: \"HTML\",\n    title: htmlTitle(\n      \"Go wild &lt;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&gt;!&lt;/span&gt;\"\n    ),\n  },\n]);\n\n// create a network\nvar container = document.getElementById(\"mynetwork\");\nvar data = {\n  nodes: nodes,\n  edges: edges,\n};\nvar options = {};\nvar network = new vis.Network(container, data, options);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.js","title":"Vis Network | Other | HTML in titles"}'
+      />
+      <button id="open" alt="JSFiddle" title="JSFiddle">Open CodePen</button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>

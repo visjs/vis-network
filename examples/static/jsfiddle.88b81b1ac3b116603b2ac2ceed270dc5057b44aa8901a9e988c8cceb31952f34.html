@@ -1,0 +1,201 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | HTML in titles</title>
+  </head>
+  <body>
+    <form
+      id="form"
+      action="https://jsfiddle.net/api/post/library/pure/"
+      method="post"
+      target="_self"
+    >
+      <input
+        type="hidden"
+        name="css"
+        value="html,
+body,
+#mynetwork {
+  margin: 0px;
+  padding: 0px;
+}
+
+#mynetwork {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  right: 50%;
+  min-height: 100vh;
+  border-right: 1px solid lightgray;
+  background: white;
+}
+
+#text {
+  left: 50%;
+  padding: 1em;
+  position: absolute;
+  right: 0%;
+}
+
+#text pre {
+  overflow-x: auto;
+}
+
+#title {
+  margin-bottom: 5em;
+}
+
+@keyframes be-tacky {
+  0% {
+    background: yellow;
+    border-radius: 0px;
+    border: green 2px solid;
+    color: blue;
+    display: inline-block;
+    padding: 5px;
+    transform: rotate(0);
+  }
+  100% {
+    background: pink;
+    border-radius: 50px;
+    border: cyan 5px solid;
+    color: purple;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(3600deg);
+  }
+}
+"
+      />
+      <input
+        type="hidden"
+        name="html"
+        value='&lt;div id="text"&gt;
+  &lt;div id="title"&gt;
+    &lt;h1&gt;Vis Network&lt;/h1&gt;
+    &lt;h2&gt;Other&lt;/h2&gt;
+    &lt;h3&gt;HTML in titles&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    HTML parsing in titles has been disabled due to covert XSS issues (i.e. it
+    was really easy to introduce XSS vulnerability into your project by
+    accident). If you want to parse HTML anyway, you can still do it as the
+    title accepts HTML elements.
+  &lt;/p&gt;
+
+  &lt;h4&gt;But I just want to maintain white space&lt;/h4&gt;
+  &lt;pre&gt;&lt;code&gt;
+function preTitle(text) {
+  const container = document.createElement(&amp;quot;pre&amp;quot;);
+  container.innerText = text;
+  return container;
+}
+
+// create an array with nodes
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label: &amp;quot;PRE&amp;quot;,
+    title: preTitle(&amp;quot;ASCII\n    art&amp;quot;),
+  },
+]);
+      &lt;/code&gt;&lt;/pre&gt;
+
+  &lt;h4&gt;But I just want my HTML to be parsed as it used to be&lt;/h4&gt;
+  &lt;pre&gt;&lt;code&gt;
+function htmlTitle(html) {
+  const container = document.createElement(&amp;quot;div&amp;quot;);
+  container.innerHTML = html;
+  return container;
+}
+
+// create an array with nodes
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label: &amp;quot;HTML&amp;quot;,
+    title: htmlTitle(
+      &amp;quot;Go wild &amp;lt;&amp;apos;span style=&amp;apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&amp;apos;&amp;gt;!&amp;lt;&amp;apos;/span&amp;gt;&amp;quot;
+    ),
+  },
+]);
+      &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+'
+      />
+      <input
+        type="hidden"
+        name="js"
+        value='// just maintain whitespace
+function preTitle(text) {
+  const container = document.createElement("pre");
+  container.innerText = text;
+  return container;
+}
+
+// HTML parsing with all XSS goodness
+function htmlTitle(html) {
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  return container;
+}
+
+// create an array with nodes
+var nodes = new vis.DataSet([
+  { id: 1, label: "PRE", title: preTitle("ASCII\n    art") },
+  {
+    id: 2,
+    label: "HTML",
+    title: htmlTitle(
+      "Go wild &lt;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&gt;!&lt;/span&gt;"
+    ),
+  },
+  { id: 3, label: "PRE", title: preTitle("ASCII\n    art") },
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  { from: 1, to: 2, label: "PRE", title: preTitle("ASCII\n    art") },
+  {
+    from: 2,
+    to: 3,
+    label: "HTML",
+    title: htmlTitle(
+      "Go wild &lt;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&gt;!&lt;/span&gt;"
+    ),
+  },
+]);
+
+// create a network
+var container = document.getElementById("mynetwork");
+var data = {
+  nodes: nodes,
+  edges: edges,
+};
+var options = {};
+var network = new vis.Network(container, data, options);
+'
+      />
+      <input
+        type="hidden"
+        name="resources"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.js"
+      />
+      <input
+        type="hidden"
+        name="title"
+        value="Vis Network | Other | HTML in titles"
+      />
+      <input type="hidden" name="wrap" value="b" />
+      <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
+    </form>
+
+    <script type="text/javascript">
+      document.getElementById("open").click();
+    </script>
+  </body>
+</html>
