@@ -149,7 +149,7 @@
     "typescript": "4.2.3",
     "uuid": "8.3.2",
     "vis-data": "7.1.2",
-    "vis-dev-utils": "2.9.34",
+    "vis-dev-utils": "2.9.35",
     "vis-util": "5.0.2"
   },
   "collective": {
