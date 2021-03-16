@@ -1038,7 +1038,7 @@ export interface EdgeOptions {
     roundness: number,
   };
 
-  title?: string;
+  title?: string | HTMLElement;
 
   value?: number;
 
