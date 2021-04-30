@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-04-29T08:37:41.480Z
+ * @date    2021-04-30T02:47:14.447Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -133,10 +133,16 @@ var toPrimitive = function (input, PREFERRED_STRING) {
   throw TypeError("Can't convert object to primitive value");
 };
 
+// https://tc39.es/ecma262/#sec-toobject
+
+var toObject = function (argument) {
+  return Object(requireObjectCoercible(argument));
+};
+
 var hasOwnProperty = {}.hasOwnProperty;
 
-var has$1 = function (it, key) {
-  return hasOwnProperty.call(it, key);
+var has$1 = function hasOwn(it, key) {
+  return hasOwnProperty.call(toObject(it), key);
 };
 
 var document$1 = global_1.document; // typeof document.createElement is 'object' in old IE
@@ -447,12 +453,6 @@ var objectKeys = Object.keys || function keys(O) {
 var f$3 = Object.getOwnPropertySymbols;
 var objectGetOwnPropertySymbols = {
   f: f$3
-};
-
-// https://tc39.es/ecma262/#sec-toobject
-
-var toObject = function (argument) {
-  return Object(requireObjectCoercible(argument));
 };
 
 var $assign = Object.assign; // eslint-disable-next-line es/no-object-defineproperty -- required for testing
@@ -1170,7 +1170,7 @@ var shared = createCommonjsModule(function (module) {
   (module.exports = function (key, value) {
     return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.10.2',
+    version: '3.11.1',
     mode: 'pure' ,
     copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
   });
@@ -6718,7 +6718,7 @@ var Hammer$2 = /*#__PURE__*/function () {
   return Hammer;
 }(); //  style loader but by script tag, not by the loader.
 
-function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context22; forEach$2(_context22 = ownKeys$5(Object(source), true)).call(_context22, function (key) { _defineProperty(target, key, source[key]); }); } else if (getOwnPropertyDescriptors) { defineProperties(target, getOwnPropertyDescriptors(source)); } else { var _context23; forEach$2(_context23 = ownKeys$5(Object(source))).call(_context23, function (key) { defineProperty$5(target, key, getOwnPropertyDescriptor$2(source, key)); }); } } return target; }
 
@@ -15589,7 +15589,7 @@ function v4(options, buf, offset) {
   return stringify(rnds);
 }
 
-function ownKeys$4(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$4(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context32; forEach$2(_context32 = ownKeys$4(Object(source), true)).call(_context32, function (key) { _defineProperty(target, key, source[key]); }); } else if (getOwnPropertyDescriptors) { defineProperties(target, getOwnPropertyDescriptors(source)); } else { var _context33; forEach$2(_context33 = ownKeys$4(Object(source))).call(_context33, function (key) { defineProperty$5(target, key, getOwnPropertyDescriptor$2(source, key)); }); } } return target; }
 
@@ -21757,7 +21757,7 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
   return ShapeBase;
 }(NodeBase);
 
-function ownKeys$3(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$3(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys$3(Object(source), true)).call(_context, function (key) { _defineProperty(target, key, source[key]); }); } else if (getOwnPropertyDescriptors) { defineProperties(target, getOwnPropertyDescriptors(source)); } else { var _context2; forEach$2(_context2 = ownKeys$3(Object(source))).call(_context2, function (key) { defineProperty$5(target, key, getOwnPropertyDescriptor$2(source, key)); }); } } return target; }
 
@@ -22875,7 +22875,7 @@ var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
   return TriangleDown;
 }(ShapeBase);
 
-function ownKeys$2(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; forEach$2(_context5 = ownKeys$2(Object(source), true)).call(_context5, function (key) { _defineProperty(target, key, source[key]); }); } else if (getOwnPropertyDescriptors) { defineProperties(target, getOwnPropertyDescriptors(source)); } else { var _context6; forEach$2(_context6 = ownKeys$2(Object(source))).call(_context6, function (key) { defineProperty$5(target, key, getOwnPropertyDescriptor$2(source, key)); }); } } return target; }
 /**
@@ -25128,7 +25128,7 @@ var EndPoints = /*#__PURE__*/function () {
   return EndPoints;
 }();
 
-function ownKeys$1(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; forEach$2(_context2 = ownKeys$1(Object(source), true)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }); } else if (getOwnPropertyDescriptors) { defineProperties(target, getOwnPropertyDescriptors(source)); } else { var _context3; forEach$2(_context3 = ownKeys$1(Object(source))).call(_context3, function (key) { defineProperty$5(target, key, getOwnPropertyDescriptor$2(source, key)); }); } } return target; }
 /**
@@ -25874,7 +25874,7 @@ var EdgeBase = /*#__PURE__*/function () {
   return EdgeBase;
 }();
 
-function ownKeys(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; forEach$2(_context = ownKeys(Object(source), true)).call(_context, function (key) { _defineProperty(target, key, source[key]); }); } else if (getOwnPropertyDescriptors) { defineProperties(target, getOwnPropertyDescriptors(source)); } else { var _context2; forEach$2(_context2 = ownKeys(Object(source))).call(_context2, function (key) { defineProperty$5(target, key, getOwnPropertyDescriptor$2(source, key)); }); } } return target; }
 
