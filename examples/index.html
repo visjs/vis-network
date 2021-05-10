@@ -7,10 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" type="text/css" href="examples.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet"/>
+    <link href="../common-docs-files/css/style.css" rel="stylesheet"/>
+    <link href="../docs/css/overrides.css" rel="stylesheet"/>
+    <style>
+
+      div.full {
+        min-height: 50vh;
+        padding-bottom: 80px;
+      }
+    </style>
   </head>
   <body>
-    <div class="examples-root">
+  <div class="navbar-wrapper">
+    <div class="container">
+      <nav class="navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <a class="navbar-brand " href="./index.html">vis.js</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"></ul>
+
+
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+    <div class="container full examples-root">
       <div>
+        <div id="breadcrumbs"><a href="../">vis-network</a><a href="./">examples</a></div>
         <h1>Vis Network</h1>
         <div>
           <span class="example-link"
