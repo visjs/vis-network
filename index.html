@@ -1,64 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>Vis Network</title>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css" rel="stylesheet"/>
+    <link href="common-docs-files/css/style.css" rel="stylesheet"/>
+    <link href="docs/css/overrides.css" rel="stylesheet"/>
     <style>
-      .docs td:nth-child(1) {
-        text-align: right;
-      }
-      .docs td:nth-child(1) img {
-        border: 1px solid #000000;
-        height: 1em;
-        vertical-align: middle;
-      }
+
+
+        div.full {
+            min-height: 50vh;
+            padding-bottom: 80px;
+        }
     </style>
-  </head>
+</head>
+<body>
+<div class="navbar-wrapper">
+    <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
 
-  <body>
-    <ul>
-      <li><a href="./coverage/lcov-report/">Coverage</a></li>
+                    <a class="navbar-brand " href="./index.html">vis.js</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav"></ul>
 
-      <li>
-        Documentation:
-        <table class="docs">
-          <tr>
-            <td>
-              <a href="./docs/network/">
-                <img src="./common-docs-files/img/flags/en.svg" />
-              </a>
-            </td>
-            <td>
-              <a href="./docs/network/">English</a>
-            </td>
-          </tr>
 
-          <tr>
-            <td>
-              <a href="./docs-kr/network/">
-                <img src="./common-docs-files/img/flags/kr.svg" />
-              </a>
-            </td>
-            <td>
-              <a href="./docs-kr/network/">Korean</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="https://ame.cool/core/frontend-tools/">
-                <img src="./common-docs-files/img/flags/zh.svg" />
-              </a>
-            </td>
-            <td>
-              <a href="https://ame.cool/core/frontend-tools/">Chinese</a>
-              <sup> (third party) </sup>
-            </td>
-          </tr>
-        </table>
-      </li>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="container full">
+    <div id="breadcrumbs"><a href="./">vis-network</a></div>
 
-      <li><a href="./examples/">Examples</a></li>
-    </ul>
-  </body>
+    <h1>vis-network</h1>
+
+    <p>Network is a visualization to display networks and networks consisting of nodes and edges. The visualization is
+        easy to use and supports custom shapes, styles, colors, sizes, images, and more. The network visualization works
+        smooth on any modern browser for up to a few thousand nodes and edges. To handle a larger amount of nodes,
+        Network has clustering support. Network uses HTML canvas for rendering.
+    </p>
+
+    <p>
+        네트워크는 Node와 가장자리로 구성된 네트워크와 네트워크를 표시하기 위한 시각화다. 시각화는 사용하기 쉽고 사용자 지정 모양, 스타일, 색상, 크기, 이미지 등을 지원한다. 네트워크 시각화는 현대
+        브라우저에서 최대 수천 개의 Node와 Edge에 대해 원활하게 작동한다. 더 많은 Node를 처리하기 위해, 네트워크에는 클러스터링 지원이 있다. 네트워크는 렌더링을 위해 HTML 캔버스를 사용한다.
+    </p>
+
+
+    <a class="btn btn-primary btn-lg" href="./examples/">See Examples</a>
+
+    <h2>Documentation</h2>
+
+
+    <a href="./docs/network/" class="btn btn-default btn-lg">
+        <img src="./common-docs-files/img/flags/en.svg" height="30"/>
+        English</a>
+
+
+    <a href="./docs-kr/network/" class="btn btn-default btn-lg">
+        <img src="./common-docs-files/img/flags/kr.svg" height="30"/>
+        Korean</a>
+
+    <a href="https://ame.cool/core/frontend-tools/" class="btn btn-default btn-lg">
+        <img src="./common-docs-files/img/flags/zh.svg" height="30"/>
+        Chinese <small> (third party) </small></a>
+
+
+</div>
+
+
+</body>
 </html>
