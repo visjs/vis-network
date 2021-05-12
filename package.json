@@ -140,7 +140,7 @@
     "rollup-plugin-postcss": "4.0.0",
     "rollup-plugin-terser": "7.0.2",
     "sazerac": "2.0.0",
-    "semantic-release": "17.4.2",
+    "semantic-release": "17.4.3",
     "serve": "11.3.2",
     "sinon": "9.2.4",
     "snap-shot-it": "7.9.6",
