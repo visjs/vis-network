@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-05-22T03:16:07.683Z
+ * @date    2021-05-23T09:50:51.785Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -13910,6 +13910,8 @@
 	    setSpecies(CONSTRUCTOR_NAME);
 	  }
 	};
+	collectionStrong.getConstructor;
+	collectionStrong.setStrong;
 
 	// https://tc39.es/ecma262/#sec-map-objects
 
@@ -35417,6 +35419,7 @@
 	    return C;
 	  }
 	};
+	collectionWeak.getConstructor;
 
 	createCommonjsModule(function (module) {
 
