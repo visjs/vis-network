@@ -144,7 +144,7 @@
     "serve": "11.3.2",
     "sinon": "9.2.4",
     "snap-shot-it": "7.9.6",
-    "start-server-and-test": "1.12.2",
+    "start-server-and-test": "1.12.3",
     "timsort": "0.3.0",
     "typescript": "4.2.4",
     "uuid": "8.3.2",
