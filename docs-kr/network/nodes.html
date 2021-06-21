@@ -279,6 +279,7 @@ var options = {
       coordinateOrigin: 'center'  // only for image and circularImage shapes
     }
     size: 25,
+    touchPadding: 0,
     title: undefined,
     value: undefined,
     widthConstraint: false,
@@ -1493,6 +1494,14 @@ mySize = minSize + diff * scale;
             <code>diamond</code>, <code>dot</code>, <code>star</code>,
             <code>triangle</code>, <code>triangleDown</code>,
             <code>hexagon</code>, <code>square</code>, <code>icon</code>
+          </td>
+        </tr>
+        <tr>
+          <td>touchPadding</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>
+            실제 모양 치수보다 더 큰 터치 영역을 허용하는 데 사용됩니다.
           </td>
         </tr>
         <tr>

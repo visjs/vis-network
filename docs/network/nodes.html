@@ -280,6 +280,7 @@ var options = {
       coordinateOrigin: 'center'  // only for image and circularImage shapes
     }
     size: 25,
+    touchPadding: 0,
     title: undefined,
     value: undefined,
     widthConstraint: false,
@@ -1613,6 +1614,14 @@ mySize = minSize + diff * scale;
             <code>circularImage</code>, <code>diamond</code>, <code>dot</code>,
             <code>star</code>, <code>triangle</code>, <code>triangleDown</code>,
             <code>hexagon</code>, <code>square</code> and <code>icon</code>
+          </td>
+        </tr>
+        <tr>
+          <td>touchPadding</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>
+            Used to allow a bigger touch area than the actual shape dimensions.
           </td>
         </tr>
         <tr>
