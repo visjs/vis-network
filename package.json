@@ -1,5 +1,5 @@
 {
-  "name": "vis-network",
+  "name": "@gregdeane/vis-network",
   "version": "1.0.0-no-version",
   "description": "A dynamic, browser-based visualization library.",
   "homepage": "https://visjs.github.io/vis-network/",
