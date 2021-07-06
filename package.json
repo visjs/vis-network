@@ -1,6 +1,6 @@
 {
   "name": "vis-network",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A dynamic, browser-based visualization library.",
   "homepage": "https://visjs.github.io/vis-network/",
   "license": "(Apache-2.0 OR MIT)",
