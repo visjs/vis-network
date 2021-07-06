@@ -12,7 +12,7 @@ export function normalizeLanguageCode(
   rawCode: string
 ): string {
   try {
-    const [rawLanguage, rawCountry] = rawCode.split(/[-_ \/]/, 2);
+    const [rawLanguage, rawCountry] = rawCode.split(/[-_ /]/, 2);
     const language = rawLanguage != null ? rawLanguage.toLowerCase() : null;
     const country = rawCountry != null ? rawCountry.toUpperCase() : null;
 

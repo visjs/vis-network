@@ -5,36 +5,36 @@
  */
 
 import Network from "../lib/network/Network";
-import canvasMockify from "./canvas-mock";
+import { canvasMockify } from "./canvas-mock";
 import snapshot from "snap-shot-it";
 
 const optionsConfigs = [
   {
     name: "defaults",
-    options: {}
+    options: {},
   },
   {
     name: "Barnes Hut defaults",
-    options: { physics: { solver: "barnesHut" } }
+    options: { physics: { solver: "barnesHut" } },
   },
   {
     name: "Force Atlas 2 defaults",
-    options: { physics: { solver: "forceAtlas2Based" } }
+    options: { physics: { solver: "forceAtlas2Based" } },
   },
   {
     name: "Repulstion defaults",
-    options: { physics: { solver: "repulsion" } }
-  }
+    options: { physics: { solver: "repulsion" } },
+  },
 ];
 
 const dataconfigs = [
   {
     name: "2 disconnected nodes",
-    data: { nodes: [{ id: 1 }, { id: 2 }], edges: [] }
+    data: { nodes: [{ id: 1 }, { id: 2 }], edges: [] },
   },
   {
     name: "2 connected nodes",
-    data: { nodes: [{ id: 1 }, { id: 2 }], edges: [{ from: 1, to: 2 }] }
+    data: { nodes: [{ id: 1 }, { id: 2 }], edges: [{ from: 1, to: 2 }] },
   },
   {
     name: "2 doubly connected nodes",
@@ -42,9 +42,9 @@ const dataconfigs = [
       nodes: [{ id: 1 }, { id: 2 }],
       edges: [
         { from: 1, to: 2 },
-        { from: 1, to: 2 }
-      ]
-    }
+        { from: 1, to: 2 },
+      ],
+    },
   },
   {
     name: "6 node star",
@@ -55,9 +55,9 @@ const dataconfigs = [
         { from: 1, to: 3 },
         { from: 1, to: 4 },
         { from: 1, to: 5 },
-        { from: 1, to: 6 }
-      ]
-    }
+        { from: 1, to: 6 },
+      ],
+    },
   },
   {
     name: "6 node circle",
@@ -69,9 +69,9 @@ const dataconfigs = [
         { from: 3, to: 4 },
         { from: 4, to: 5 },
         { from: 5, to: 6 },
-        { from: 6, to: 1 }
-      ]
-    }
+        { from: 6, to: 1 },
+      ],
+    },
   },
   {
     name: "6 node complete graph",
@@ -107,9 +107,9 @@ const dataconfigs = [
         { from: 6, to: 2 },
         { from: 6, to: 3 },
         { from: 6, to: 4 },
-        { from: 6, to: 5 }
-      ]
-    }
+        { from: 6, to: 5 },
+      ],
+    },
   },
   {
     name: "binary tree",
@@ -133,7 +133,7 @@ const dataconfigs = [
         { id: 16 },
         { id: 17 },
         { id: 18 },
-        { id: 19 }
+        { id: 19 },
       ],
       edges: [
         { from: 1, to: 2 },
@@ -153,19 +153,19 @@ const dataconfigs = [
         { from: 8, to: 16 },
         { from: 8, to: 17 },
         { from: 9, to: 18 },
-        { from: 9, to: 19 }
-      ]
-    }
-  }
+        { from: 9, to: 19 },
+      ],
+    },
+  },
 ];
 
-describe("Physics snapshots", function(): void {
-  beforeEach(function() {
+describe("Physics snapshots", function (): void {
+  beforeEach(function () {
     this.clearJSDOM = canvasMockify("<div id='mynetwork'></div>");
     this.container = document.getElementById("mynetwork");
   });
 
-  afterEach(function() {
+  afterEach(function () {
     this.clearJSDOM();
 
     delete this.clearJSDOM;
@@ -173,16 +173,16 @@ describe("Physics snapshots", function(): void {
   });
 
   for (const { name: optionsName, options } of optionsConfigs) {
-    describe(optionsName, function(): void {
+    describe(optionsName, function (): void {
       for (const { name: dataName, data } of dataconfigs) {
-        it(dataName, async function(): Promise<void> {
+        it(dataName, async function (): Promise<void> {
           const optionsWithSeed = {
             ...options,
             layout: {
               ...((options as any).layout || {}),
               // Set the seed to always get the same layout.
-              randomSeed: 159
-            }
+              randomSeed: 159,
+            },
           };
 
           const network = new Network(this.container, data, optionsWithSeed);

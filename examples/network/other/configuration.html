@@ -1,84 +1,94 @@
-<!doctype html>
-<html>
-<head>
-  <title>Vis Network | Other | Playing with Physics</title>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Other | Playing with Physics</title>
 
-  <style type="text/css">
-    body {
-      font: 10pt sans;
-    }
-    #mynetwork {
-      float:left;
-      width: 600px;
-      height: 600px;
-      margin:5px;
-      border: 1px solid lightgray;
-    }
-    #config {
-      float:left;
-      width: 400px;
-      height: 600px;
-    }
+    <style type="text/css">
+      body {
+        font: 10pt sans;
+      }
+      #mynetwork {
+        float: left;
+        width: 600px;
+        height: 600px;
+        margin: 5px;
+        border: 1px solid lightgray;
+      }
+      #config {
+        float: left;
+        width: 400px;
+        height: 600px;
+      }
 
-    p {
-      font-size:16px;
-      max-width:700px;
-    }
-  </style>
+      p {
+        font-size: 16px;
+        max-width: 700px;
+      }
+    </style>
 
-  <script
-    type="text/javascript"
-    src="../../../standalone/umd/vis-network.min.js"
-  ></script>
-  <script type="text/javascript" src="../exampleUtil.js"></script>
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
 
-  <script type="text/javascript">
-    var nodes = null;
-    var edges = null;
-    var network = null;
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/alea@1.0.0/alea.js"
+    ></script>
+    <script type="text/javascript" src="../exampleUtil.js"></script>
 
-    function draw() {
-      nodes = [];
-      edges = [];
-      // randomly create some nodes and edges
-      var data = getScaleFreeNetwork(25);
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
 
-      // create a network
-      var container = document.getElementById('mynetwork');
+      function draw() {
+        nodes = [];
+        edges = [];
+        // randomly create some nodes and edges
+        var data = getScaleFreeNetwork(25);
 
-      var options = {
-        physics: {
-          stabilization: false
-        },
-        configure: true
-      };
-      network = new vis.Network(container, data, options);
-      
-      network.on("configChange", function() {
-        // this will immediately fix the height of the configuration
-        // wrapper to prevent unecessary scrolls in chrome.
-        // see https://github.com/almende/vis/issues/1568
-        var div = container.getElementsByClassName('vis-configuration-wrapper')[0];
-        div.style["height"] = div.getBoundingClientRect().height + "px";
-      });
-      
-    }
-  </script>
-  
-</head>
+        // create a network
+        var container = document.getElementById("mynetwork");
 
-<body onload="draw();">
+        var options = {
+          physics: {
+            stabilization: false,
+          },
+          configure: true,
+        };
+        network = new vis.Network(container, data, options);
 
-<p>
-  The configurator can be used to play with the options. In this example, all options that can be configured with this tool are shown.
-  You can also supply a custom filter function or filter string. You can press the generate options button below to have an options object printed. You can then use
-  this in the network.
-</p>
-<p><b>Note:</b> The configurator is recreated in the dom tree on input change. This may cause undesired scrolls in your application. In order to avoid this, explicitly set the height of the configurator (see this example's source code).
-</p>
-<br />
-<div id="mynetwork"></div>
+        network.on("configChange", function () {
+          // this will immediately fix the height of the configuration
+          // wrapper to prevent unecessary scrolls in chrome.
+          // see https://github.com/almende/vis/issues/1568
+          var div = container.getElementsByClassName(
+            "vis-configuration-wrapper"
+          )[0];
+          div.style["height"] = div.getBoundingClientRect().height + "px";
+        });
+      }
+    </script>
+  </head>
 
-<p id="selection"></p>
-</body>
+  <body onload="draw();">
+    <p>
+      The configurator can be used to play with the options. In this example,
+      all options that can be configured with this tool are shown. You can also
+      supply a custom filter function or filter string. You can press the
+      generate options button below to have an options object printed. You can
+      then use this in the network.
+    </p>
+    <p>
+      <b>Note:</b> The configurator is recreated in the dom tree on input
+      change. This may cause undesired scrolls in your application. In order to
+      avoid this, explicitly set the height of the configurator (see this
+      example's source code).
+    </p>
+    <br />
+    <div id="mynetwork"></div>
+
+    <p id="selection"></p>
+  </body>
 </html>

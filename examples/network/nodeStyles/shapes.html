@@ -1,77 +1,284 @@
-<!doctype html>
-<html>
-<head>
-  <title>Vis Network | Node Styles | Shapes</title>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Node Styles | Shapes</title>
 
-  <style type="text/css">
-    #mynetwork {
-      width: 1000px;
-      height: 800px;
-      border: 1px solid lightgray;
-    }
-  </style>
+    <style type="text/css">
+      #mynetwork {
+        width: 1000px;
+        height: 800px;
+        border: 1px solid lightgray;
+      }
+    </style>
 
-  <script type="text/javascript" src="../../../standalone/umd/vis-network.min.js"></script>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
 
-  <script type="text/javascript">
-    var nodes = null;
-    var edges = null;
-    var network = null;
+    <script type="text/javascript">
+      var nodes = null;
+      var edges = null;
+      var network = null;
 
-    function draw() {
-      nodes = [
-        {id: 1,  label: 'circle',  shape: 'circle' },
-        {id: 2,  label: 'ellipse', shape: 'ellipse'},
-        {id: 3,  label: 'database',shape: 'database'},
-        {id: 4,  label: 'box',     shape: 'box'    },
-        {id: 5,  label: 'diamond', shape: 'diamond'},
-        {id: 6,  label: 'dot',     shape: 'dot'},
-        {id: 7,  label: 'square',  shape: 'square'},
-        {id: 8,  label: 'triangle',shape: 'triangle'},
-        {id: 9,  label: 'triangleDown', shape: 'triangleDown'},
-        {id: 10, label: 'text',    shape: 'text'},
-        {id: 11, label: 'star',    shape: 'star'},
-        {id: 12, label: 'hexagon', shape: 'hexagon'},
-        {id: 21, font:{size:30},          label: 'big circle',  shape: 'circle' },
-        {id: 22, font:{size:30},          label: 'big ellipse', shape: 'ellipse'},
-        {id: 23, font:{size:30},          label: 'ellipse with a long label text', shape: 'ellipse'},
-        {id: 24, font:{size:30},          label: 'big database',shape: 'database'},
-        {id: 25, font:{size:30},          label: 'big box',     shape: 'box'    },
-        {id: 26, font:{size:30}, size:40, label: 'big diamond', shape: 'diamond'},
-        {id: 27, font:{size:30}, size:40, label: 'big dot',     shape: 'dot'},
-        {id: 28, font:{size:30}, size:40, label: 'big square',  shape: 'square'},
-        {id: 29, font:{size:30}, size:40, label: 'big triangle',shape: 'triangle'},
-        {id: 30, font:{size:30}, size:40, label: 'big triangleDown', shape: 'triangleDown'},
-        {id: 31, font:{size:30},          label: 'big text',    shape: 'text'},
-        {id: 32, font:{size:30}, size:40, label: 'big star',    shape: 'star'},
-        {id: 33, font:{size:30}, size:40, label: 'big hexagon', shape: 'hexagon'},
-        {id: 34, font:{size:30},          label: 'icon square', shape: 'square', icon: {code:'\uf164'} },
-        {id: 35, font:{size:30},          label: 'icon dot',    shape: 'dot',    icon: {code:'\uf165'} },        
-      ];
+      function draw() {
+        nodes = [
+          { id: 1, label: "circle", shape: "circle" },
+          { id: 2, label: "ellipse", shape: "ellipse" },
+          { id: 3, label: "database", shape: "database" },
+          { id: 4, label: "box", shape: "box" },
+          { id: 5, label: "diamond", shape: "diamond" },
+          { id: 6, label: "dot", shape: "dot" },
+          { id: 7, label: "square", shape: "square" },
+          { id: 8, label: "triangle", shape: "triangle" },
+          { id: 9, label: "triangleDown", shape: "triangleDown" },
+          { id: 10, label: "text", shape: "text" },
+          { id: 11, label: "star", shape: "star" },
+          { id: 12, label: "hexagon", shape: "hexagon" },
+          { id: 21, font: { size: 30 }, label: "big circle", shape: "circle" },
+          {
+            id: 22,
+            font: { size: 30 },
+            label: "big ellipse",
+            shape: "ellipse",
+          },
+          {
+            id: 23,
+            font: { size: 30 },
+            label: "ellipse with a long label text",
+            shape: "ellipse",
+          },
+          {
+            id: 24,
+            font: { size: 30 },
+            label: "big database",
+            shape: "database",
+          },
+          { id: 25, font: { size: 30 }, label: "big box", shape: "box" },
+          {
+            id: 26,
+            font: { size: 30 },
+            size: 40,
+            label: "big diamond",
+            shape: "diamond",
+          },
+          {
+            id: 27,
+            font: { size: 30 },
+            size: 40,
+            label: "big dot",
+            shape: "dot",
+          },
+          {
+            id: 28,
+            font: { size: 30 },
+            size: 40,
+            label: "big square",
+            shape: "square",
+          },
+          {
+            id: 29,
+            font: { size: 30 },
+            size: 40,
+            label: "big triangle",
+            shape: "triangle",
+          },
+          {
+            id: 30,
+            font: { size: 30 },
+            size: 40,
+            label: "big triangleDown",
+            shape: "triangleDown",
+          },
+          { id: 31, font: { size: 30 }, label: "big text", shape: "text" },
+          {
+            id: 32,
+            font: { size: 30 },
+            size: 40,
+            label: "big star",
+            shape: "star",
+          },
+          {
+            id: 33,
+            font: { size: 30 },
+            size: 40,
+            label: "big hexagon",
+            shape: "hexagon",
+          },
+          {
+            id: 34,
+            font: { size: 30 },
+            label: "icon square",
+            shape: "square",
+            icon: { code: "\uf164" },
+          },
+          {
+            id: 35,
+            font: { size: 30 },
+            label: "icon dot",
+            shape: "dot",
+            icon: { code: "\uf165" },
+          },
+          {
+            id: 36,
+            label: "custom",
+            shape: "custom",
+            ctxRenderer: ({
+              ctx,
+              id,
+              x,
+              y,
+              state: { selected, hover },
+              style,
+            }) => {
+              const r = style.size;
+              const drawNode = () => {
+                ctx.beginPath();
+                const sides = 6;
+                const a = (Math.PI * 2) / sides;
+                ctx.moveTo(x, y + r);
+                for (let i = 1; i < sides; i++) {
+                  ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
+                }
+                ctx.closePath();
+                ctx.save();
+                ctx.fillStyle = "red";
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
 
-      edges = [
-      ];
+                ctx.font = "normal 12px sans-serif";
+                ctx.fillStyle = "black";
+                ctx.fillText("custom shape", x - r + 10, y, 2 * r - 20);
+              };
+              return {
+                drawNode,
+                nodeDimensions: { width: 2 * r, height: 2 * r },
+              };
+            },
+          },
+          {
+            id: 37,
+            label: "FIELD---my value",
+            shape: "custom",
+            group: "a",
+            ctxRenderer: ({
+              ctx,
+              x,
+              y,
+              state: { selected, hover },
+              style,
+              label,
+            }) => {
+              const splittedLabel = label.split("---");
+              ctx.save();
+              ctx.restore();
+              const labelText = splittedLabel[0];
+              const valueText = splittedLabel[1];
+              const r = 5;
 
-      // create a network
-      var container = document.getElementById('mynetwork');
-      var data = {
-        nodes: nodes,
-        edges: edges
-      };
-      var options = {physics:{barnesHut:{gravitationalConstant:-4000}}};
-      network = new vis.Network(container, data, options);
-    }
-  </script>
-  
+              const labelWidth = ctx.measureText(labelText).width;
+              const valueWidth = ctx.measureText(valueText).width;
 
-<body onload="draw()">
+              const wPadding = 10;
+              const hPadding = 10;
 
-<p>
-  Nodes can have all sorts of shapes. Note the exception where the nodes with text inside and the text type's size are determined by the font size, not the node size.
-</p>
-<div id="mynetwork"></div>
+              const w = 200;
+              const h = 60;
+              const drawNode = () => {
+                const r2d = Math.PI / 180;
+                if (w - 2 * r < 0) {
+                  r = w / 2;
+                } //ensure that the radius isn't too large for x
+                if (h - 2 * r < 0) {
+                  r = h / 2;
+                } //ensure that the radius isn't too large for y
 
-<div id="info"></div>
-</body>
+                const top = y - h / 2;
+                const left = x - w / 2;
+
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(left + r, top);
+                ctx.lineTo(left + w - r, top);
+                ctx.arc(left + w - r, top + r, r, r2d * 270, r2d * 360, false);
+                ctx.lineTo(left + w, top + h - r);
+                ctx.arc(left + w - r, top + h - r, r, 0, r2d * 90, false);
+                ctx.lineTo(left + r, top + h);
+                ctx.arc(left + r, top + h - r, r, r2d * 90, r2d * 180, false);
+                ctx.lineTo(left, top + r);
+                ctx.arc(left + r, top + r, r, r2d * 180, r2d * 270, false);
+                ctx.closePath();
+                ctx.save();
+                ctx.fillStyle = style.color || "#56CCF2";
+                ctx.fill();
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.stroke();
+
+                // label text
+                ctx.font = "normal 12px sans-serif";
+                ctx.fillStyle = "grey";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                const textHeight1 = 12;
+                ctx.fillText(
+                  labelText,
+                  left + w / 2,
+                  top + textHeight1 + hPadding,
+                  w
+                );
+
+                // value text
+                ctx.font = "bold 14px sans-serif";
+                ctx.fillStyle = "black";
+                const textHeight2 = 12;
+
+                ctx.fillText(
+                  valueText,
+                  left + w / 2,
+                  top + h / 2 + hPadding,
+                  w
+                );
+              };
+
+              ctx.save();
+              ctx.restore();
+              return {
+                drawNode,
+                nodeDimensions: { width: w, height: h },
+              };
+            },
+          },
+        ];
+
+        edges = [{ from: 1, to: 37, arrows: { to: { enabled: true } } }];
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+          nodes: nodes,
+          edges: edges,
+        };
+        var options = {
+          physics: { barnesHut: { gravitationalConstant: -4000 } },
+        };
+        network = new vis.Network(container, data, options);
+      }
+    </script>
+  </head>
+
+  <body onload="draw()">
+    <p>
+      Nodes can have all sorts of shapes. Note the exception where the nodes
+      with text inside and the text type's size are determined by the font size,
+      not the node size.
+    </p>
+    <div id="mynetwork"></div>
+
+    <div id="info"></div>
+  </body>
 </html>

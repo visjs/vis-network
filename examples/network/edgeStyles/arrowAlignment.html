@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Vis Network | Edge Styles | Arrow Alignment</title>
 
@@ -50,8 +50,11 @@
           "horizontal",
           "straightCross",
           "vertical",
-          "curvedCCW"
-        ].map(type => [{ type, scaleFactor: 1 }, { type, scaleFactor: -1 }])
+          "curvedCCW",
+        ].map((type) => [
+          { type, scaleFactor: 1 },
+          { type, scaleFactor: -1 },
+        ])
       );
 
       // create an array with nodes
@@ -66,26 +69,26 @@
             id: 10 * i + 1,
             label: type,
             x: 0,
-            y: i * 60
+            y: i * 60,
           },
           {
             id: 10 * i + 2,
             label: type,
             x: 800,
-            y: i * 60
+            y: i * 60,
           },
           {
             id: 10 * i + 3,
             label: type,
             x: 1000,
-            y: i * 60
+            y: i * 60,
           },
           {
             id: 10 * i + 4,
             label: type,
             x: 1200 + (i % 5) * 250,
-            y: 200 + Math.floor(i / 5) * 5 * 50
-          }
+            y: 200 + Math.floor(i / 5) * 5 * 50,
+          },
         ]);
         edges.add([
           {
@@ -95,8 +98,8 @@
             arrows: {
               from: { enabled: true, scaleFactor },
               middle: { enabled: true, scaleFactor },
-              to: { enabled: true, scaleFactor }
-            }
+              to: { enabled: true, scaleFactor },
+            },
           },
           {
             from: 10 * i + 3,
@@ -105,8 +108,8 @@
             arrows: {
               from: { enabled: true, scaleFactor },
               middle: { enabled: true, scaleFactor },
-              to: { enabled: true, scaleFactor }
-            }
+              to: { enabled: true, scaleFactor },
+            },
           },
           {
             from: 10 * i + 4,
@@ -116,9 +119,9 @@
             arrows: {
               from: { enabled: true, scaleFactor },
               middle: { enabled: true, scaleFactor },
-              to: { enabled: true, scaleFactor }
-            }
-          }
+              to: { enabled: true, scaleFactor },
+            },
+          },
         ]);
       });
 
@@ -128,12 +131,12 @@
       // provide the data in the vis format
       var data = {
         nodes: nodes,
-        edges: edges
+        edges: edges,
       };
       var options = {
         physics: {
-          enabled: false
-        }
+          enabled: false,
+        },
       };
 
       // initialize your network!

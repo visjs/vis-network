@@ -7,7 +7,7 @@ import {
   PointT,
   SelectiveRequired,
   VBody,
-  VNode
+  VNode,
 } from "./util/types";
 
 /**
@@ -25,7 +25,7 @@ export class StraightEdge extends EdgeBase {
     super(options, body, labelModule);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _line(
     ctx: CanvasRenderingContext2D,
     values: SelectiveRequired<
@@ -43,20 +43,20 @@ export class StraightEdge extends EdgeBase {
     this.disableShadow(ctx, values);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getViaNode(): undefined {
     return undefined;
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getPoint(position: number): Point {
     return {
       x: (1 - position) * this.fromPoint.x + position * this.toPoint.x,
-      y: (1 - position) * this.fromPoint.y + position * this.toPoint.y
+      y: (1 - position) * this.fromPoint.y + position * this.toPoint.y,
     };
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _findBorderPosition(
     nearNode: VNode,
     ctx: CanvasRenderingContext2D
@@ -79,11 +79,11 @@ export class StraightEdge extends EdgeBase {
     return {
       x: (1 - toBorderPoint) * node2.x + toBorderPoint * node1.x,
       y: (1 - toBorderPoint) * node2.y + toBorderPoint * node1.y,
-      t: 0
+      t: 0,
     };
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _getDistanceToEdge(
     x1: number,
     y1: number,

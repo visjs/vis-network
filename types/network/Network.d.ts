@@ -1,4 +1,4 @@
-// Type definitions for vis.js 4.21
+// Type definitions for vis.js 8.3.2
 // Project: https://github.com/almende/vis, http://visjs.org
 // Definitions by: Michaël Bitard <https://github.com/MichaelBitard>
 //                 MacLeod Broad <https://github.com/macleodbroad-wf>
@@ -48,6 +48,8 @@ export type NetworkEvents =
   'dragStart' |
   'dragging' |
   'dragEnd' |
+  'controlNodeDragging' |
+  'controlNodeDragEnd' |
   'hoverNode' |
   'blurNode' |
   'hoverEdge' |
@@ -356,7 +358,7 @@ export class Network {
    * @returns A an object containing the x y positions in canvas space of the nodes in the network, keyed by id.
    */
   getPositions(nodeIds?: IdType[] | IdType): { [nodeId: string]: Position };
-  
+
   /**
    * Retrieves the x y position of a specific id.
    * 
@@ -496,7 +498,7 @@ export class Network {
    * You can also pass only nodes or edges in selection object.
    *
    */
-  setSelection(selection: { nodes: IdType[], edges: IdType[] }, options?: SelectionOptions): void;
+  setSelection(selection: { nodes?: IdType[], edges?: IdType[] }, options?: SelectionOptions): void;
 
   /**
    * Unselect all objects.
@@ -640,13 +642,29 @@ export interface FitOptions {
   /**
    * The nodes can be used to zoom to fit only specific nodes in the view.
    */
-  nodes?: string[];
+  nodes?: IdType[];
+
+  /**
+   * How far away can be zoomed out, the default is just above 0.
+   *
+   * @remarks
+   * Values less than 1 mean zooming out, more than 1 means zooming in.
+   */
+  minZoomLevel?: number;
+
+  /**
+   * How close can be zoomed in, the default is 1.
+   *
+   * @remarks
+   * Values less than 1 mean zooming out, more than 1 means zooming in.
+   */
+  maxZoomLevel?: number;
 
   /**
    * For animation you can either use a Boolean to use it with the default options or
    * disable it or you can define the duration (in milliseconds) and easing function manually.
    */
-  animation: TimelineAnimationType;
+  animation?: TimelineAnimationType;
 }
 
 export interface SelectionOptions {
@@ -834,6 +852,47 @@ export interface Color {
   };
 }
 
+export interface ChosenLabelValues {
+  color: string;
+  face: string;
+  mod: string;
+  size: number;
+  strokeColor: string;
+  strokeWidth: number;
+  vadjust: number;
+}
+export type NodeChosenLabelFunction = (
+  values: ChosenLabelValues,
+  id: IdType,
+  selected: boolean,
+  hovered: boolean
+) => void;
+
+export interface ChosenNodeValues {
+  borderColor: string;
+  borderDashes: boolean | number[];
+  borderRadius: number;
+  borderWidth: number;
+  color: string;
+  shadow: boolean;
+  shadowColor: string;
+  shadowSize: number;
+  shadowX: number;
+  shadowY: number;
+  size: number;
+}
+export type NodeChosenNodeFunction = (
+  values: ChosenNodeValues,
+  id: IdType,
+  selected: boolean,
+  hovered: boolean
+) => void;
+
+export interface NodeChosen {
+  node: boolean | NodeChosenNodeFunction;
+  label: boolean | NodeChosenLabelFunction;
+}
+
 export interface NodeOptions {
   borderWidth?: number;
 
@@ -843,6 +902,8 @@ export interface NodeOptions {
 
   color?: string | Color;
 
+  chosen?: boolean | NodeChosen;
+
   opacity?: number;
 
   fixed?: boolean | {
@@ -850,21 +911,7 @@ export interface NodeOptions {
     y?: boolean,
   };
 
-  font?: string | {
-    color?: string,
-    size?: number, // px
-    face?: string,
-    background?: string,
-    strokeWidth?: number, // px
-    strokeColor?: string,
-    align?: string,
-    vadjust?: number,
-    multi?: string,
-    bold?: string | FontOptions,
-    ital?: string | FontOptions,
-    boldital?: string | FontOptions,
-    mono?: string | FontOptions,
-  };
+  font?: string | Font;
 
   group?: string;
 
@@ -879,7 +926,7 @@ export interface NodeOptions {
   };
 
   image?: string | Image;
-  
+
   imagePadding?: number | ImagePadding;
 
   label?: string;
@@ -910,12 +957,13 @@ export interface NodeOptions {
     borderRadius?: number,     // only for box shape
     interpolation?: boolean,  // only for image and circularImage shapes
     useImageSize?: boolean,  // only for image and circularImage shapes
-    useBorderWithImage?: boolean  // only for image shape
+    useBorderWithImage?: boolean,  // only for image shape
+    coordinateOrigin?: string  // only for image and circularImage shapes
   };
 
   size?: number;
 
-  title?: string;
+  title?: string | HTMLElement;
 
   value?: number;
 
@@ -933,24 +981,17 @@ export interface NodeOptions {
 
 export interface EdgeOptions {
   arrows?: string | {
-    to?: boolean | {
-      enabled?: boolean,
-      scaleFactor?: number,
-      type?: string
-    },
-    middle?: boolean | {
-      enabled?: boolean,
-      scaleFactor?: number,
-      type?: string
-    },
-    from?: boolean | {
-      enabled?: boolean,
-      scaleFactor?: number,
-      type?: string
-    }
+    to?: boolean | ArrowHead
+    middle?: boolean | ArrowHead
+    from?: boolean | ArrowHead
   };
 
   arrowStrikethrough?: boolean;
+
+  chosen?: boolean | {
+    edge?: boolean, // please note, chosen.edge could be also a function. This case is not represented here
+    label?: boolean, // please note, chosen.label could be also a function. This case is not represented here
+  };
 
   color?: string | {
     color?: string,
@@ -962,21 +1003,7 @@ export interface EdgeOptions {
 
   dashes?: boolean | number[];
 
-  font?: string | {
-    color?: string,
-    size?: number, // px
-    face?: string,
-    background?: string,
-    strokeWidth?: number, // px
-    strokeColor?: string,
-    align?: string,
-    vadjust?: number,
-    multi?: string,
-    bold?: string | FontOptions,
-    ital?: string | FontOptions,
-    boldital?: string | FontOptions,
-    mono?: string | FontOptions,
-  };
+  font?: string | Font;
 
   hidden?: boolean;
 
@@ -1011,14 +1038,43 @@ export interface EdgeOptions {
     roundness: number,
   };
 
-  title?: string;
+  title?: string | HTMLElement;
 
   value?: number;
 
   width?: number;
+
+  widthConstraint?: number | boolean | {
+    maximum?: number;
+  };
 }
 
-export interface FontOptions {
+export interface ArrowHead {
+  enabled?: boolean,
+  imageHeight?: number,
+  imageWidth?: number,
+  scaleFactor?: number,
+  src?: string,
+  type?: string;
+}
+
+export interface Font {
+  color?: string,
+  size?: number, // px
+  face?: string,
+  background?: string,
+  strokeWidth?: number, // px
+  strokeColor?: string,
+  align?: string,
+  vadjust?: number,
+  multi?: boolean | string,
+  bold?: string | FontStyles,
+  ital?: string | FontStyles,
+  boldital?: string | FontStyles,
+  mono?: string | FontStyles,
+}
+
+export interface FontStyles {
   color?: string;
   size?: number;
   face?: string;
@@ -1040,9 +1096,9 @@ export interface OptionsScaling {
 }
 
 export interface OptionsShadow {
-  enabled: boolean;
-  color: string;
-  size: number;
-  x: number;
-  y: number;
+  enabled?: boolean;
+  color?: string;
+  size?: number;
+  x?: number;
+  y?: number;
 }

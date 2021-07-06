@@ -7,7 +7,7 @@ import {
   PointT,
   SelectiveRequired,
   VBody,
-  VNode
+  VNode,
 } from "./util/types";
 
 /**
@@ -15,7 +15,7 @@ import {
  * curves in paths between nodes. The Dynamic piece refers to how the curve
  * reacts to physics changes.
  *
- * @extends BezierEdgeBase
+ * @augments BezierEdgeBase
  */
 export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
   public via: VNode = this.via; // constructor → super → super → setOptions → setupSupportNode
@@ -37,7 +37,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     this._body.emitter.on("_repositionBezierNodes", this._boundFunction);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public setOptions(options: EdgeOptions): void {
     super.setOptions(options);
 
@@ -64,7 +64,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     }
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public connect(): void {
     this.from = this._body.nodes[this.options.from];
     this.to = this._body.nodes[this.options.to];
@@ -84,7 +84,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     }
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public cleanup(): boolean {
     this._body.emitter.off("_repositionBezierNodes", this._boundFunction);
     if (this.via !== undefined) {
@@ -112,7 +112,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
         id: nodeId,
         shape: "circle",
         physics: true,
-        hidden: true
+        hidden: true,
       });
       this._body.nodes[nodeId] = node;
       this.via = node;
@@ -138,7 +138,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     }
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _line(
     ctx: CanvasRenderingContext2D,
     values: SelectiveRequired<
@@ -155,24 +155,24 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     this._bezierCurve(ctx, values, viaNode);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _getViaCoordinates(): Point {
     return this.via;
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getViaNode(): Point {
     return this.via;
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getPoint(position: number, viaNode: Point = this.via): Point {
     if (this.from === this.to) {
       const [cx, cy, cr] = this._getCircleData();
       const a = 2 * Math.PI * (1 - position);
       return {
         x: cx + cr * Math.sin(a),
-        y: cy + cr - cr * (1 - Math.cos(a))
+        y: cy + cr - cr * (1 - Math.cos(a)),
       };
     } else {
       return {
@@ -183,12 +183,12 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
         y:
           Math.pow(1 - position, 2) * this.fromPoint.y +
           2 * position * (1 - position) * viaNode.y +
-          Math.pow(position, 2) * this.toPoint.y
+          Math.pow(position, 2) * this.toPoint.y,
       };
     }
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _findBorderPosition(
     nearNode: VNode,
     ctx: CanvasRenderingContext2D
@@ -196,7 +196,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     return this._findBorderPositionBezier(nearNode, ctx, this.via);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _getDistanceToEdge(
     x1: number,
     y1: number,

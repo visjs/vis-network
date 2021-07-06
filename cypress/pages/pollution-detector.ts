@@ -54,13 +54,20 @@ export class PollutionDetector {
   /**
    * Traverses the provided object ommiting whitelisted paths, getters and
    * ignoring exceptions.
+   *
+   * @param root0
+   * @param root0.callback
+   * @param root0.done
+   * @param root0.prefix
+   * @param root0.root
+   * @param root0.whitelist
    */
   private async _traverse({
     callback,
     done,
     prefix,
     root,
-    whitelist
+    whitelist,
   }: TraverseParameters): Promise<void> {
     if (done.has(root)) {
       return;
@@ -91,7 +98,7 @@ export class PollutionDetector {
             done,
             prefix: path,
             root: value,
-            whitelist
+            whitelist,
           });
         }
       } catch (_error) {
@@ -129,7 +136,7 @@ export class PollutionDetector {
         this._originalValues.set(path, { path, root, value });
         saved.add(path);
         return true;
-      }
+      },
     });
     return saved;
   }
@@ -176,7 +183,7 @@ export class PollutionDetector {
         done: new Set(),
         prefix,
         root,
-        whitelist
+        whitelist,
       });
     }
 

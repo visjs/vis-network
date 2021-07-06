@@ -1,45 +1,49 @@
-<!doctype html>
-<html>
-<head>
-    <title>Vis Network | Layouts | User Defined Hierarchical Layout (Big)</title>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+      Vis Network | Layouts | User Defined Hierarchical Layout (Big)
+    </title>
 
     <style type="text/css">
-        body {
-            font: 10pt sans;
-        }
+      body {
+        font: 10pt sans;
+      }
 
-        #mynetwork {
-            width: 600px;
-            height: 600px;
-            border: 1px solid lightgray;
-        }
+      #mynetwork {
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
+      }
     </style>
 
-    <script type="text/javascript" src="../../../standalone/umd/vis-network.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
 
     <script type="text/javascript">
-        var network = null;
+      var network = null;
 
-        function p(data) {
-            var container = document.getElementById('mynetwork');
-            var options = {
-                layout: {
-                    hierarchical: {},
-                },
-            };
-            console.log("starting layout");
-            network = new vis.Network(container, data, options);
-            console.log("layout complete");
-        }
+      function p(data) {
+        var container = document.getElementById("mynetwork");
+        var options = {
+          layout: {
+            hierarchical: {},
+          },
+        };
+        console.log("starting layout");
+        network = new vis.Network(container, data, options);
+        console.log("layout complete");
+      }
     </script>
-</head>
+  </head>
 
-<body>
-<h2>Hierarchical Layout</h2>
+  <body>
+    <h2>Hierarchical Layout</h2>
 
-<div id="mynetwork"></div>
+    <div id="mynetwork"></div>
 
-<script type="text/javascript" src="./demo.jsonp"></script>
-
-</body>
+    <script type="text/javascript" src="./demo.jsonp"></script>
+  </body>
 </html>

@@ -3,6 +3,7 @@ export interface Locale {
   addEdge: string;
   addNode: string;
   back: string;
+  close: string;
   createEdgeError: string;
   del: string;
   deleteClusterError: string;
@@ -21,6 +22,7 @@ export const en: Locale = {
   addEdge: "Add Edge",
   addNode: "Add Node",
   back: "Back",
+  close: "Close",
   createEdgeError: "Cannot link edges to a cluster.",
   del: "Delete selected",
   deleteClusterError: "Clusters cannot be deleted.",
@@ -31,7 +33,7 @@ export const en: Locale = {
   editEdge: "Edit Edge",
   editEdgeDescription:
     "Click on the control points and drag them to a node to connect to it.",
-  editNode: "Edit Node"
+  editNode: "Edit Node",
 };
 
 // German
@@ -41,6 +43,7 @@ export const de: Locale = {
   addEdge: "Kante hinzuf\u00fcgen",
   addNode: "Knoten hinzuf\u00fcgen",
   back: "Zur\u00fcck",
+  close: "Schließen",
   createEdgeError:
     "Es ist nicht m\u00f6glich, Kanten mit Clustern zu verbinden.",
   del: "L\u00f6sche Auswahl",
@@ -52,7 +55,7 @@ export const de: Locale = {
   editEdge: "Kante editieren",
   editEdgeDescription:
     "Klicke auf die Verbindungspunkte und ziehe diese auf einen Knoten, um sie zu verbinden.",
-  editNode: "Knoten editieren"
+  editNode: "Knoten editieren",
 };
 
 // Spanish
@@ -62,6 +65,7 @@ export const es: Locale = {
   addEdge: "A\u00f1adir arista",
   addNode: "A\u00f1adir nodo",
   back: "Atr\u00e1s",
+  close: "Cerrar",
   createEdgeError: "No se puede conectar una arista a un grupo.",
   del: "Eliminar selecci\u00f3n",
   deleteClusterError: "No es posible eliminar grupos.",
@@ -72,7 +76,7 @@ export const es: Locale = {
   editEdge: "Editar arista",
   editEdgeDescription:
     "Haga clic en un punto de control y arrastrelo a un nodo para conectarlo.",
-  editNode: "Editar nodo"
+  editNode: "Editar nodo",
 };
 
 //Italiano
@@ -81,6 +85,7 @@ export const it: Locale = {
   addEdge: "Aggiungi un vertice",
   addNode: "Aggiungi un nodo",
   back: "Indietro",
+  close: "Chiudere",
   createEdgeError: "Non si possono collegare vertici ad un cluster",
   del: "Cancella la selezione",
   deleteClusterError: "I cluster non possono essere cancellati",
@@ -91,7 +96,7 @@ export const it: Locale = {
   editEdge: "Modifica il vertice",
   editEdgeDescription:
     "Clicca sui Punti di controllo e trascinali ad un nodo per connetterli.",
-  editNode: "Modifica il nodo"
+  editNode: "Modifica il nodo",
 };
 
 // Dutch
@@ -100,6 +105,7 @@ export const nl: Locale = {
   addEdge: "Link toevoegen",
   addNode: "Node toevoegen",
   back: "Terug",
+  close: "Sluiten",
   createEdgeError: "Kan geen link maken naar een cluster.",
   del: "Selectie verwijderen",
   deleteClusterError: "Clusters kunnen niet worden verwijderd.",
@@ -110,7 +116,7 @@ export const nl: Locale = {
   editEdge: "Link wijzigen",
   editEdgeDescription:
     "Klik op de verbindingspunten en sleep ze naar een node om daarmee te verbinden.",
-  editNode: "Node wijzigen"
+  editNode: "Node wijzigen",
 };
 
 // Portuguese Brazil
@@ -119,6 +125,7 @@ export const pt: Locale = {
   addEdge: "Adicionar aresta",
   addNode: "Adicionar nó",
   back: "Voltar",
+  close: "Fechar",
   createEdgeError: "Não foi possível linkar arestas a um cluster.",
   del: "Remover selecionado",
   deleteClusterError: "Clusters não puderam ser removidos.",
@@ -129,7 +136,7 @@ export const pt: Locale = {
   editEdge: "Editar aresta",
   editEdgeDescription:
     "Clique nos pontos de controle e os arraste para um nó para conectá-los",
-  editNode: "Editar nó"
+  editNode: "Editar nó",
 };
 
 // Russian
@@ -138,6 +145,7 @@ export const ru: Locale = {
   addEdge: "Добавить ребро",
   addNode: "Добавить узел",
   back: "Назад",
+  close: "Закрывать",
   createEdgeError: "Невозможно соединить ребра в кластер.",
   del: "Удалить выбранное",
   deleteClusterError: "Кластеры не могут быть удалены",
@@ -148,7 +156,7 @@ export const ru: Locale = {
   editEdge: "Редактировать ребро",
   editEdgeDescription:
     "Кликните на контрольные точки и перетащите их в узел, чтобы подключиться к нему.",
-  editNode: "Редактировать узел"
+  editNode: "Редактировать узел",
 };
 
 // Chinese
@@ -157,6 +165,7 @@ export const cn: Locale = {
   addEdge: "添加连接线",
   addNode: "添加节点",
   back: "返回",
+  close: "關閉",
   createEdgeError: "无法将连接线连接到群集。",
   del: "删除选定",
   deleteClusterError: "无法删除群集。",
@@ -165,7 +174,7 @@ export const cn: Locale = {
   editClusterError: "无法编辑群集。",
   editEdge: "编辑连接线",
   editEdgeDescription: "单击控制节点并将它们拖到节点上连接。",
-  editNode: "编辑节点"
+  editNode: "编辑节点",
 };
 
 // Ukrainian
@@ -174,6 +183,7 @@ export const uk: Locale = {
   addEdge: "Додати край",
   addNode: "Додати вузол",
   back: "Назад",
+  close: "Закрити",
   createEdgeError: "Не можливо об'єднати краї в групу.",
   del: "Видалити обране",
   deleteClusterError: "Групи не можуть бути видалені.",
@@ -184,7 +194,7 @@ export const uk: Locale = {
   editEdge: "Редагувати край",
   editEdgeDescription:
     "Клікніть на контрольні точки і перетягніть їх у вузол, щоб підключитися до нього.",
-  editNode: "Редагувати вузол"
+  editNode: "Редагувати вузол",
 };
 
 // French
@@ -193,6 +203,7 @@ export const fr: Locale = {
   addEdge: "Ajouter un lien",
   addNode: "Ajouter un nœud",
   back: "Retour",
+  close: "Fermer",
   createEdgeError: "Impossible de créer un lien vers un cluster.",
   del: "Effacer la sélection",
   deleteClusterError: "Les clusters ne peuvent pas être effacés.",
@@ -203,7 +214,7 @@ export const fr: Locale = {
   editEdge: "Éditer le lien",
   editEdgeDescription:
     "Cliquez sur les points de contrôle et glissez-les pour connecter un nœud.",
-  editNode: "Éditer le nœud"
+  editNode: "Éditer le nœud",
 };
 
 // Czech
@@ -212,6 +223,7 @@ export const cs: Locale = {
   addEdge: "Přidat hranu",
   addNode: "Přidat vrchol",
   back: "Zpět",
+  close: "Zavřít",
   createEdgeError: "Nelze připojit hranu ke shluku.",
   del: "Smazat výběr",
   deleteClusterError: "Nelze mazat shluky.",
@@ -222,5 +234,5 @@ export const cs: Locale = {
   editEdge: "Upravit hranu",
   editEdgeDescription:
     "Přetažením kontrolního vrcholu hrany ji můžete připojit k jinému vrcholu.",
-  editNode: "Upravit vrchol"
+  editNode: "Upravit vrchol",
 };

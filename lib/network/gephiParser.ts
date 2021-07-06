@@ -1,79 +1,79 @@
-export type Id = number | string
+export type Id = number | string;
 
 export interface ColorObject {
-  background: string
-  border: string
+  background: string;
+  border: string;
   highlight: {
-    background: string
-    border: string
-  }
+    background: string;
+    border: string;
+  };
   hover: {
-    background: string
-    border: string
-  }
+    background: string;
+    border: string;
+  };
 }
 
 export interface GephiData {
-  nodes: GephiNode[]
-  edges: GephiEdge[]
+  nodes: GephiNode[];
+  edges: GephiEdge[];
 }
 export interface GephiParseOptions {
-  fixed?: boolean
-  inheritColor?: boolean
-  parseColor?: boolean
+  fixed?: boolean;
+  inheritColor?: boolean;
+  parseColor?: boolean;
 }
 
 export interface GephiNode {
-  id: Id
+  id: Id;
 
-  attributes?: { title?: string }
-  color?: string
-  label?: string
-  size?: number
-  title?: string
-  x?: number
-  y?: number
+  attributes?: { title?: string };
+  color?: string;
+  label?: string;
+  size?: number;
+  title?: string;
+  x?: number;
+  y?: number;
 }
 export interface GephiEdge {
-  id: Id
-  source: Id
-  target: Id
+  id: Id;
+  source: Id;
+  target: Id;
 
-  attributes?: { title?: string }
-  color?: string
-  label?: string
-  type?: string
+  attributes?: { title?: string };
+  color?: string;
+  label?: string;
+  type?: string;
 }
 
 export interface VisData {
-  nodes: VisNode[]
-  edges: VisEdge[]
+  nodes: VisNode[];
+  edges: VisEdge[];
 }
 
 export interface VisNode {
-  id: Id
-  fixed: boolean
+  id: Id;
+  fixed: boolean;
 
-  color?: string | ColorObject
-  label?: string
-  size?: number
-  title?: string
-  x?: number
-  y?: number
+  color?: string | ColorObject;
+  label?: string;
+  size?: number;
+  title?: string;
+  x?: number;
+  y?: number;
 
-  attributes?: unknown
+  attributes?: unknown;
 }
 export interface VisEdge {
-  id: Id
-  from: Id
-  to: Id
+  id: Id;
+  from: Id;
+  to: Id;
 
-  arrows?: 'to'
-  color?: string
-  label?: string
-  title?: string
+  arrows?: "to";
+  color?: string;
+  label?: string;
+  title?: string;
 
-  attributes?: unknown
+  attributes?: unknown;
 }
 
 /**
@@ -96,82 +96,82 @@ export function parseGephi(
       fixed: false,
       parseColor: false,
     },
-  }
+  };
 
   if (optionsObj != null) {
     if (optionsObj.fixed != null) {
-      options.nodes.fixed = optionsObj.fixed
+      options.nodes.fixed = optionsObj.fixed;
     }
     if (optionsObj.parseColor != null) {
-      options.nodes.parseColor = optionsObj.parseColor
+      options.nodes.parseColor = optionsObj.parseColor;
     }
     if (optionsObj.inheritColor != null) {
-      options.edges.inheritColor = optionsObj.inheritColor
+      options.edges.inheritColor = optionsObj.inheritColor;
     }
   }
 
-  const gEdges = gephiJSON.edges
+  const gEdges = gephiJSON.edges;
   const vEdges = gEdges.map(
     (gEdge): VisEdge => {
       const vEdge: VisEdge = {
         from: gEdge.source,
         id: gEdge.id,
         to: gEdge.target,
-      }
+      };
 
       if (gEdge.attributes != null) {
-        vEdge.attributes = gEdge.attributes
+        vEdge.attributes = gEdge.attributes;
       }
       if (gEdge.label != null) {
-        vEdge.label = gEdge.label
+        vEdge.label = gEdge.label;
       }
       if (gEdge.attributes != null && gEdge.attributes.title != null) {
-        vEdge.title = gEdge.attributes.title
+        vEdge.title = gEdge.attributes.title;
       }
-      if (gEdge.type === 'Directed') {
-        vEdge.arrows = 'to'
+      if (gEdge.type === "Directed") {
+        vEdge.arrows = "to";
       }
       // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
       // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
       if (gEdge.color && options.edges.inheritColor === false) {
-        vEdge.color = gEdge.color
+        vEdge.color = gEdge.color;
       }
 
-      return vEdge
+      return vEdge;
     }
-  )
+  );
 
   const vNodes = gephiJSON.nodes.map(
     (gNode): VisNode => {
       const vNode: VisNode = {
         id: gNode.id,
         fixed: options.nodes.fixed && gNode.x != null && gNode.y != null,
-      }
+      };
 
       if (gNode.attributes != null) {
-        vNode.attributes = gNode.attributes
+        vNode.attributes = gNode.attributes;
       }
       if (gNode.label != null) {
-        vNode.label = gNode.label
+        vNode.label = gNode.label;
       }
       if (gNode.size != null) {
-        vNode.size = gNode.size
+        vNode.size = gNode.size;
       }
       if (gNode.attributes != null && gNode.attributes.title != null) {
-        vNode.title = gNode.attributes.title
+        vNode.title = gNode.attributes.title;
       }
       if (gNode.title != null) {
-        vNode.title = gNode.title
+        vNode.title = gNode.title;
       }
       if (gNode.x != null) {
-        vNode.x = gNode.x
+        vNode.x = gNode.x;
       }
       if (gNode.y != null) {
-        vNode.y = gNode.y
+        vNode.y = gNode.y;
       }
       if (gNode.color != null) {
         if (options.nodes.parseColor === true) {
-          vNode.color = gNode.color
+          vNode.color = gNode.color;
         } else {
           vNode.color = {
             background: gNode.color,
@@ -184,13 +184,13 @@ export function parseGephi(
               background: gNode.color,
               border: gNode.color,
             },
-          }
+          };
         }
       }
 
-      return vNode
+      return vNode;
     }
-  )
+  );
 
-  return { nodes: vNodes, edges: vEdges }
+  return { nodes: vNodes, edges: vEdges };
 }

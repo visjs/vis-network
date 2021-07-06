@@ -1,13 +1,13 @@
-import { expect } from 'chai'
-import { spy } from 'sinon'
+import { expect } from "chai";
+import { spy } from "sinon";
 
-import { EndPoints } from '../../lib/network/modules/components/edges'
+import { EndPoints } from "../../lib/network/modules/components/edges";
 
-describe('EndPoints', function(): void {
-  describe('methods called', function(): void {
-    ;[
+describe("EndPoints", function (): void {
+  describe("methods called", function (): void {
+    [
       {
-        type: 'circle',
+        type: "circle",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -24,7 +24,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'box',
+        type: "box",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -33,7 +33,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'crow',
+        type: "crow",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -42,7 +42,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'curve',
+        type: "curve",
         methods: {
           arc: [
             [
@@ -59,7 +59,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'inv_curve',
+        type: "inv_curve",
         methods: {
           arc: [
             [
@@ -76,7 +76,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'diamond',
+        type: "diamond",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -85,7 +85,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'triangle',
+        type: "triangle",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -94,7 +94,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'inv_triangle',
+        type: "inv_triangle",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -103,7 +103,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'bar',
+        type: "bar",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -112,7 +112,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'vee',
+        type: "vee",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -121,7 +121,7 @@ describe('EndPoints', function(): void {
         },
       },
       {
-        type: 'arrow',
+        type: "arrow",
         methods: {
           beginPath: [[]],
           closePath: [[]],
@@ -139,32 +139,32 @@ describe('EndPoints', function(): void {
         },
       },
     ].forEach(({ methods, type }): void => {
-      describe(`${type}`, function(): void {
+      describe(`${type}`, function (): void {
         const ctx = Object.keys(methods).reduce((acc, method): any => {
-          acc[method] = spy()
-          return acc
-        }, {} as any)
+          acc[method] = spy();
+          return acc;
+        }, {} as any);
 
         const arrowData = {
           type,
           point: { x: 42, y: -37 },
           angle: 44,
           length: 16,
-        }
+        };
 
-        it('draw', function(): void {
-          EndPoints.draw(ctx, arrowData)
-        })
+        it("draw", function (): void {
+          EndPoints.draw(ctx, arrowData);
+        });
 
         Object.entries(methods).forEach(([method, expected]): void => {
-          it(`${method}`, function(): void {
-            expect(ctx[method].callCount, 'call count').to.be.at.least(1)
+          it(`${method}`, function (): void {
+            expect(ctx[method].callCount, "call count").to.be.at.least(1);
             expected!.forEach((args, i): void => {
-              expect(ctx[method].getCall(i).args).to.deep.equal(args)
-            })
-          })
-        })
-      })
-    })
-  })
-})
+              expect(ctx[method].getCall(i).args).to.deep.equal(args);
+            });
+          });
+        });
+      });
+    });
+  });
+});

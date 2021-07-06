@@ -10,13 +10,12 @@ export default generateRollupConfiguration({
     "vis-data": "vis",
     "vis-util": "vis",
     keycharm: "keycharm",
-    moment: "moment",
     timsort: "timsort",
-    uuid: "uuid"
+    uuid: "uuid",
   },
   header: { name: "vis-network" },
   libraryFilename: "vis-network",
   entryPoints: "./lib",
   packageJSON,
-  tsconfig: "tsconfig.code.json"
+  tsconfig: "tsconfig.code.json",
 });

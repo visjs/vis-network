@@ -9,6 +9,7 @@ npm-debug.log
 .project
 .settings/
 .directory
+.vscode
 
 # temporary files
 .*.sw[op]
@@ -26,6 +27,7 @@ coverage/
 /cypress/pages/**/*.js
 /cypress/pages/**/*.js.map
 /cypress/screenshots/
+/cypress/snapshots/
 /cypress/support/**/*.js
 /cypress/support/**/*.js.map
 /cypress/videos/

@@ -1,20 +1,20 @@
-<html>
-<head>
-  <title>Vis Network | Data | DOT Language</title>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Data | DOT Language</title>
 
-  <script src="../../../../standalone/umd/vis-network.min.js"></script>
-</head>
-<body>
-<p>
-  Network supports the DOT language.
-</p>
-<div id="mynetwork"></div>
+    <script src="../../../../standalone/umd/vis-network.min.js"></script>
+  </head>
+  <body>
+    <p>Network supports the DOT language.</p>
+    <div id="mynetwork"></div>
 
-<script type="text/javascript">
-  var container = document.getElementById('mynetwork');
-  var dot = 'dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }';
-  var data = vis.parseDOTNetwork(dot);
-  var network = new vis.Network(container, data);
-</script>
-</body>
+    <script type="text/javascript">
+      var container = document.getElementById("mynetwork");
+      var dot =
+        "dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }";
+      var data = vis.parseDOTNetwork(dot);
+      var network = new vis.Network(container, data);
+    </script>
+  </body>
 </html>

@@ -1,11 +1,11 @@
 {
-    "extends": "./tsconfig",
-    "compilerOptions": {
-        "declaration": true,
-        "declarationDir": "dist/types",
-        "declarationMap": true,
-        "emitDeclarationOnly": true,
-        "noImplicitAny": false
-    },
-    "exclude": ["cypress", "test"]
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "noImplicitAny": false
+  },
+  "include": ["lib"]
 }

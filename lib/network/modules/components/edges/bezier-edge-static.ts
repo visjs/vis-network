@@ -7,7 +7,7 @@ import {
   PointT,
   SelectiveRequired,
   VBody,
-  VNode
+  VNode,
 } from "./util/types";
 
 /**
@@ -25,7 +25,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
     super(options, body, labelModule);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _line(
     ctx: CanvasRenderingContext2D,
     values: SelectiveRequired<
@@ -42,7 +42,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
     this._bezierCurve(ctx, values, viaNode);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getViaNode(): Point {
     return this._getViaCoordinates();
   }
@@ -110,7 +110,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
 
       return {
         x: this.to.x + stepX,
-        y: this.to.y + stepY
+        y: this.to.y + stepY,
       };
     } else if (type === "horizontal") {
       let stepX = (1 - factor) * dx;
@@ -120,7 +120,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
 
       return {
         x: this.to.x + stepX,
-        y: this.from.y
+        y: this.from.y,
       };
     } else if (type === "vertical") {
       let stepY = (1 - factor) * dy;
@@ -130,7 +130,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
 
       return {
         x: this.from.x,
-        y: this.to.y + stepY
+        y: this.to.y + stepY,
       };
     } else if (type === "curvedCW") {
       dx = this.to.x - this.from.x;
@@ -143,7 +143,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
 
       return {
         x: this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle),
-        y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle)
+        y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle),
       };
     } else if (type === "curvedCCW") {
       dx = this.to.x - this.from.x;
@@ -156,7 +156,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
 
       return {
         x: this.from.x + (factor * 0.5 + 0.5) * radius * Math.sin(myAngle),
-        y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle)
+        y: this.from.y + (factor * 0.5 + 0.5) * radius * Math.cos(myAngle),
       };
     } else {
       // continuous
@@ -197,7 +197,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
     }
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _findBorderPosition(
     nearNode: VNode,
     ctx: CanvasRenderingContext2D,
@@ -206,7 +206,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
     return this._findBorderPositionBezier(nearNode, ctx, options.via);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   protected _getDistanceToEdge(
     x1: number,
     y1: number,
@@ -220,7 +220,7 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
     return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, viaNode);
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   public getPoint(
     position: number,
     viaNode: Point = this._getViaCoordinates()

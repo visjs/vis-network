@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Vis Network | Cypress | Pollution</title>
 
@@ -36,7 +36,7 @@
     <script type="module">
       import { PollutionDetector } from "./pollution-detector.js";
 
-      (async function() {
+      (async function () {
         const waitTime = 4000;
         const whitelist = [
           // These are created by Babel. I would prefer if they didn't exist
@@ -48,7 +48,10 @@
           "window.vis",
           // This is Cypress stuff. We don't care about that as it doesn't
           // occur outside of E2E tests.
-          "window.parent.__mobxGlobals"
+          "window.Cypress",
+          "window.parent.Cypress",
+          "window.parent.__mobxGlobals",
+          "window.parent.runnerWs",
         ];
 
         const pollutionDetector = new PollutionDetector();
@@ -67,10 +70,12 @@
           );
 
           const root = document.getElementById(id);
-          root.innerText = "";
+          while (root.firstChild) {
+            root.removeChild(root.firstChild);
+          }
 
           const table = document.createElement("table");
-          ["added", "changed", "missing"].forEach(key => {
+          ["added", "changed", "missing"].forEach((key) => {
             const tr = document.createElement("tr");
             tr.className = key;
 
@@ -87,14 +92,16 @@
             table.appendChild(tr);
           });
           root.appendChild(table);
+
+          root.classList.add("done");
         }
 
         // save current state
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
         await save();
 
         // check for pollution
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
         await check("results-before-loading");
         await save();
 
@@ -103,7 +110,7 @@
         library.src = "../../standalone/umd/vis-network.js";
         library.onload = async () => {
           // check for pollution
-          await new Promise(resolve => setTimeout(resolve, waitTime));
+          await new Promise((resolve) => setTimeout(resolve, waitTime));
           await check("results-after-loading");
           await save();
 
@@ -114,7 +121,7 @@
           document.body.appendChild(code);
 
           // check for pollution
-          await new Promise(resolve => setTimeout(resolve, waitTime));
+          await new Promise((resolve) => setTimeout(resolve, waitTime));
           await check("results-after-rendering");
         };
         document.body.appendChild(library);
@@ -143,7 +150,7 @@
     </div>
 
     <div id="mynetwork"></div>
-    <pre id="code" style="display: none;">
+    <pre id="code" style="display: none">
       /*
        * create a network
        */

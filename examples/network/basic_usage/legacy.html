@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>
-      Network | Basic Usage | Legacy Build
-    </title>
+    <title>Network | Basic Usage | Legacy Build</title>
 
     <style type="text/css">
       html,
@@ -55,9 +53,7 @@
         <h3>Legacy Build</h3>
       </div>
 
-      <p>
-        Create a simple network with some nodes and edges.
-      </p>
+      <p>Create a simple network with some nodes and edges.</p>
 
       <p>
         This is kept only for backwards compatibility as this build is broken.
@@ -98,7 +94,6 @@
         <li>Vis Util</li>
         <li>DOMUtil</li>
         <li>Hammer</li>
-        <li>Moment</li>
         <li>keycharm</li>
       </ul>
 
@@ -185,7 +180,7 @@ const network = new Network(container, data, options);
         { id: 2, label: "Node 2" },
         { id: 3, label: "Node 3" },
         { id: 4, label: "Node 4" },
-        { id: 5, label: "Node 5" }
+        { id: 5, label: "Node 5" },
       ]);
 
       // create an array with edges
@@ -194,14 +189,14 @@ const network = new Network(container, data, options);
         { from: 1, to: 2 },
         { from: 2, to: 4 },
         { from: 2, to: 5 },
-        { from: 3, to: 3 }
+        { from: 3, to: 3 },
       ]);
 
       // create a network
       var container = document.getElementById("mynetwork");
       var data = {
         nodes: nodes,
-        edges: edges
+        edges: edges,
       };
       var options = {};
       var network = new vis.Network(container, data, options);

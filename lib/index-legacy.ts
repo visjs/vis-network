@@ -12,7 +12,7 @@ export const network = {
   gephiParser,
   allOptions,
   convertDot: dotparser.DOTToGraph,
-  convertGephi: parseGephi
+  convertGephi: parseGephi,
 };
 
 // utils
@@ -29,9 +29,7 @@ export { data };
 export { DataSet, DataView, Queue } from "vis-data/esnext";
 
 // bundled external libraries
-import * as moment from "./module/moment";
-export { moment };
-import * as Hammer from "./module/hammer";
+import { Hammer } from "vis-util/esnext";
 export { Hammer };
 import * as keycharm from "keycharm";
 export { keycharm };

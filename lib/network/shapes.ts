@@ -305,8 +305,8 @@ export function drawDatabase(
  * @param pattern - List of lengths starting with line and then alternating between space and line.
  *
  * @author David Jordan
- * @date 2012-08-08
  * @remarks
+ * date 2012-08-08
  * http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
  */
 export function drawDashedLine(
@@ -388,7 +388,7 @@ const shapeMap = {
   square: drawSquare,
   star: drawStar,
   triangle: drawTriangle,
-  triangleDown: drawTriangleDown
+  triangleDown: drawTriangleDown,
 };
 
 /**
@@ -408,7 +408,7 @@ export function getShape(
   if (Object.prototype.hasOwnProperty.call(shapeMap, name)) {
     return (shapeMap as any)[name];
   } else {
-    return function(ctx: CanvasRenderingContext2D, ...args: any[]): void {
+    return function (ctx: CanvasRenderingContext2D, ...args: any[]): void {
       (CanvasRenderingContext2D.prototype as any)[name].call(ctx, args);
     };
   }

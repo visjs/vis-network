@@ -18,7 +18,7 @@ export interface VBody {
   };
 }
 
-export interface Label {}
+export type Label = {};
 
 // TODO: ↑↑↑↑ Import these in the future.
 
