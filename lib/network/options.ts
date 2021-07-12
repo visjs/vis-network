@@ -203,6 +203,7 @@ const nodeOptions: OptionsConfig = {
     __type__: { object },
   },
   size: { number },
+  touchPadding: { number },
   title: { string, dom, undefined: "undefined" },
   value: { number, undefined: "undefined" },
   widthConstraint: {

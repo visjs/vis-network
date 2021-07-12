@@ -963,6 +963,8 @@ export interface NodeOptions {
 
   size?: number;
 
+  touchPadding?: number;
+
   title?: string | HTMLElement;
 
   value?: number;
