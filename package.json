@@ -134,6 +134,7 @@
     "lint-staged": "11.0.1",
     "mocha": "9.0.2",
     "nyc": "15.1.0",
+    "postcss": "8.3.6",
     "prettier": "2.3.2",
     "rimraf": "3.0.2",
     "rollup": "2.53.3",
