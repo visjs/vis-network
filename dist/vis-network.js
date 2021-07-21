@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-07-19T22:21:29.280Z
+ * @date    2021-07-21T00:18:22.302Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -237,9 +237,7 @@
 	      };
 	  }
 
-	  return function ()
-	  /* ...args */
-	  {
+	  return function () {
 	    return fn.apply(that, arguments);
 	  };
 	};
@@ -346,8 +344,8 @@
 
 	    if (options.bind && USE_NATIVE) resultProperty = functionBindContext(sourceProperty, global_1); // wrap global constructors for prevent changs in this version
 	    else if (options.wrap && USE_NATIVE) resultProperty = wrapConstructor(sourceProperty); // make static versions for prototype methods
-	      else if (PROTO && typeof sourceProperty == 'function') resultProperty = functionBindContext(Function.call, sourceProperty); // default case
-	        else resultProperty = sourceProperty; // add a flag to not completely full polyfills
+	    else if (PROTO && typeof sourceProperty == 'function') resultProperty = functionBindContext(Function.call, sourceProperty); // default case
+	    else resultProperty = sourceProperty; // add a flag to not completely full polyfills
 
 	    if (options.sham || sourceProperty && sourceProperty.sham || targetProperty && targetProperty.sham) {
 	      createNonEnumerableProperty(resultProperty, 'sham', true);
@@ -555,9 +553,7 @@
 	  var fn = aFunction$1(this);
 	  var partArgs = slice$6.call(arguments, 1);
 
-	  var boundFunction = function bound()
-	  /* args... */
-	  {
+	  var boundFunction = function bound() {
 	    var args = partArgs.concat(slice$6.call(arguments));
 	    return this instanceof boundFunction ? construct$3(fn, args.length, args) : fn.apply(that, args);
 	  };
@@ -1176,7 +1172,7 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.15.0',
+	    version: '3.15.2',
 	    mode: 'pure' ,
 	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
@@ -2080,30 +2076,30 @@
 	      if (TYPE) {
 	        if (IS_MAP) target[index] = result; // map
 	        else if (result) switch (TYPE) {
-	            case 3:
-	              return true;
-	            // some
+	          case 3:
+	            return true;
+	          // some
 
-	            case 5:
-	              return value;
-	            // find
+	          case 5:
+	            return value;
+	          // find
 
-	            case 6:
-	              return index;
-	            // findIndex
+	          case 6:
+	            return index;
+	          // findIndex
 
-	            case 2:
-	              push.call(target, value);
-	            // filter
-	          } else switch (TYPE) {
-	            case 4:
-	              return false;
-	            // every
+	          case 2:
+	            push.call(target, value);
+	          // filter
+	        } else switch (TYPE) {
+	          case 4:
+	            return false;
+	          // every
 
-	            case 7:
-	              push.call(target, value);
-	            // filterOut
-	          }
+	          case 7:
+	            push.call(target, value);
+	          // filterOut
+	        }
 	      }
 	    }
 
@@ -7102,8 +7098,8 @@
 	    if ("key" in event ? event.key === "Escape" : event.keyCode === 27
 	    /* the keyCode is for IE11 */
 	    ) {
-	        _this.deactivate();
-	      }
+	      _this.deactivate();
+	    }
 	  };
 	} // turn into an event emitter
 
@@ -13519,7 +13515,7 @@
 	  var setMetadata = function (it) {
 	    defineProperty(it, METADATA, {
 	      value: {
-	        objectID: 'O' + ++id,
+	        objectID: 'O' + id++,
 	        // object ID
 	        weakData: {} // weak collections IDs
 
@@ -28682,9 +28678,9 @@
 	        maxY += 0.5 * sizeDiff;
 	      } // xSize > ySize
 	      else {
-	          minX += 0.5 * sizeDiff;
-	          maxX -= 0.5 * sizeDiff;
-	        } // xSize < ySize
+	        minX += 0.5 * sizeDiff;
+	        maxX -= 0.5 * sizeDiff;
+	      } // xSize < ySize
 
 
 	      var minimumTreeSize = 1e-5;
@@ -36493,10 +36489,10 @@
 	          } // if the blur remains the same and the object is undefined (mouse off) or another
 	          // edge has been hovered, or another node has been hovered we blur the edge.
 	          else if (object === undefined || object instanceof Edge && object.id != edgeId || object instanceof Node && !object.hover) {
-	              this.emitBlurEvent(event, pointer, this.hoverObj.edges[edgeId]);
-	              delete this.hoverObj.edges[edgeId];
-	              hoverChanged = true;
-	            }
+	            this.emitBlurEvent(event, pointer, this.hoverObj.edges[edgeId]);
+	            delete this.hoverObj.edges[edgeId];
+	            hoverChanged = true;
+	          }
 	        }
 	      }
 
