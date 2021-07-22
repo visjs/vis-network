@@ -132,7 +132,7 @@
     "lint-staged": "10.5.4",
     "mocha": "8.4.0",
     "nyc": "15.1.0",
-    "prettier": "2.1.2",
+    "prettier": "2.3.2",
     "rimraf": "3.0.2",
     "rollup": "2.50.4",
     "rollup-plugin-commonjs": "10.1.0",
