@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-07-22T17:03:45.710Z
+ * @date    2021-07-24T15:14:59.237Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,10 +25,10 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm'), require('timsort')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'timsort'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.timsort));
-}(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, TimSort) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm'), require('tslib'), require('timsort')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'tslib', 'timsort'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.tslib, global.timsort));
+}(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, tslib, TimSort) {
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var Emitter__default = /*#__PURE__*/_interopDefaultLegacy(Emitter);
@@ -15801,7 +15801,7 @@
           nodes: allNodeIds,
           minZoomLevel: Number.MIN_VALUE,
           maxZoomLevel: 1,
-      }, rawOptions !== null && rawOptions !== void 0 ? rawOptions : {});
+      }, rawOptions ?? {});
       if (!Array.isArray(options.nodes)) {
           throw new TypeError("Nodes has to be an array of ids.");
       }
@@ -15862,6 +15862,7 @@
      * This function zooms out to fit all data on screen based on amount of nodes
      *
      * @param {object} [options={{nodes=Array}}]
+     * @param options
      * @param {boolean} [initialZoom=false]  | zoom based on fitted formula or range, true = fitted, default = false;
      */
     fit(options, initialZoom = false) {
@@ -17271,9 +17272,8 @@
         this.body.view.translation = { x: tx, y: ty };
 
         if (preScaleDragPointer != undefined) {
-          const postScaleDragPointer = this.canvas.canvasToDOM(
-            preScaleDragPointer
-          );
+          const postScaleDragPointer =
+            this.canvas.canvasToDOM(preScaleDragPointer);
           this.drag.pointer.x = postScaleDragPointer.x;
           this.drag.pointer.y = postScaleDragPointer.y;
         }
@@ -17487,9 +17487,10 @@
       let stillOnObj = false;
       if (this.popup.popupTargetType === "node") {
         if (this.body.nodes[this.popup.popupTargetId] !== undefined) {
-          stillOnObj = this.body.nodes[
-            this.popup.popupTargetId
-          ].isOverlappingWith(pointerObj);
+          stillOnObj =
+            this.body.nodes[this.popup.popupTargetId].isOverlappingWith(
+              pointerObj
+            );
 
           // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
           // we initially only check stillOnObj because this is much faster.
@@ -17504,9 +17505,10 @@
       } else {
         if (this.selectionHandler.getNodeAt(pointer) === undefined) {
           if (this.body.edges[this.popup.popupTargetId] !== undefined) {
-            stillOnObj = this.body.edges[
-              this.popup.popupTargetId
-            ].isOverlappingWith(pointerObj);
+            stillOnObj =
+              this.body.edges[this.popup.popupTargetId].isOverlappingWith(
+                pointerObj
+              );
           }
         }
       }
@@ -17519,37 +17521,7 @@
     }
   }
 
-  /*! *****************************************************************************
-  Copyright (c) Microsoft Corporation.
-
-  Permission to use, copy, modify, and/or distribute this software for any
-  purpose with or without fee is hereby granted.
-
-  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-  PERFORMANCE OF THIS SOFTWARE.
-  ***************************************************************************** */
-
-  function __classPrivateFieldGet(receiver, privateMap) {
-      if (!privateMap.has(receiver)) {
-          throw new TypeError("attempted to get private field on non-instance");
-      }
-      return privateMap.get(receiver);
-  }
-
-  function __classPrivateFieldSet(receiver, privateMap, value) {
-      if (!privateMap.has(receiver)) {
-          throw new TypeError("attempted to set private field on non-instance");
-      }
-      privateMap.set(receiver, value);
-      return value;
-  }
-
-  var _previousSelection, _selection, _nodes, _edges, _commitHandler;
+  var _SingleTypeSelectionAccumulator_previousSelection, _SingleTypeSelectionAccumulator_selection, _SelectionAccumulator_nodes, _SelectionAccumulator_edges, _SelectionAccumulator_commitHandler;
   /**
    * @param prev
    * @param next
@@ -17565,40 +17537,40 @@
   }
   class SingleTypeSelectionAccumulator {
       constructor() {
-          _previousSelection.set(this, new Set());
-          _selection.set(this, new Set());
+          _SingleTypeSelectionAccumulator_previousSelection.set(this, new Set());
+          _SingleTypeSelectionAccumulator_selection.set(this, new Set());
       }
       get size() {
-          return __classPrivateFieldGet(this, _selection).size;
+          return tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").size;
       }
       add(...items) {
           for (const item of items) {
-              __classPrivateFieldGet(this, _selection).add(item);
+              tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").add(item);
           }
       }
       delete(...items) {
           for (const item of items) {
-              __classPrivateFieldGet(this, _selection).delete(item);
+              tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").delete(item);
           }
       }
       clear() {
-          __classPrivateFieldGet(this, _selection).clear();
+          tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").clear();
       }
       getSelection() {
-          return [...__classPrivateFieldGet(this, _selection)];
+          return [...tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")];
       }
       getChanges() {
           return {
-              added: [...diffSets(__classPrivateFieldGet(this, _previousSelection), __classPrivateFieldGet(this, _selection))],
-              deleted: [...diffSets(__classPrivateFieldGet(this, _selection), __classPrivateFieldGet(this, _previousSelection))],
-              previous: [...new Set(__classPrivateFieldGet(this, _previousSelection))],
-              current: [...new Set(__classPrivateFieldGet(this, _selection))],
+              added: [...diffSets(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"), tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
+              deleted: [...diffSets(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
+              previous: [...new Set(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
+              current: [...new Set(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
           };
       }
       commit() {
           const changes = this.getChanges();
-          __classPrivateFieldSet(this, _previousSelection, __classPrivateFieldGet(this, _selection));
-          __classPrivateFieldSet(this, _selection, new Set(__classPrivateFieldGet(this, _previousSelection)));
+          tslib.__classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_previousSelection, tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), "f");
+          tslib.__classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new Set(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
           for (const item of changes.added) {
               item.select();
           }
@@ -17608,52 +17580,52 @@
           return changes;
       }
   }
-  _previousSelection = new WeakMap(), _selection = new WeakMap();
+  _SingleTypeSelectionAccumulator_previousSelection = new WeakMap(), _SingleTypeSelectionAccumulator_selection = new WeakMap();
   class SelectionAccumulator {
       constructor(commitHandler = () => { }) {
-          _nodes.set(this, new SingleTypeSelectionAccumulator());
-          _edges.set(this, new SingleTypeSelectionAccumulator());
-          _commitHandler.set(this, void 0);
-          __classPrivateFieldSet(this, _commitHandler, commitHandler);
+          _SelectionAccumulator_nodes.set(this, new SingleTypeSelectionAccumulator());
+          _SelectionAccumulator_edges.set(this, new SingleTypeSelectionAccumulator());
+          _SelectionAccumulator_commitHandler.set(this, void 0);
+          tslib.__classPrivateFieldSet(this, _SelectionAccumulator_commitHandler, commitHandler, "f");
       }
       get sizeNodes() {
-          return __classPrivateFieldGet(this, _nodes).size;
+          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").size;
       }
       get sizeEdges() {
-          return __classPrivateFieldGet(this, _edges).size;
+          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").size;
       }
       getNodes() {
-          return __classPrivateFieldGet(this, _nodes).getSelection();
+          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").getSelection();
       }
       getEdges() {
-          return __classPrivateFieldGet(this, _edges).getSelection();
+          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").getSelection();
       }
       addNodes(...nodes) {
-          __classPrivateFieldGet(this, _nodes).add(...nodes);
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").add(...nodes);
       }
       addEdges(...edges) {
-          __classPrivateFieldGet(this, _edges).add(...edges);
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").add(...edges);
       }
       deleteNodes(node) {
-          __classPrivateFieldGet(this, _nodes).delete(node);
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").delete(node);
       }
       deleteEdges(edge) {
-          __classPrivateFieldGet(this, _edges).delete(edge);
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").delete(edge);
       }
       clear() {
-          __classPrivateFieldGet(this, _nodes).clear();
-          __classPrivateFieldGet(this, _edges).clear();
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").clear();
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").clear();
       }
       commit(...rest) {
           const summary = {
-              nodes: __classPrivateFieldGet(this, _nodes).commit(),
-              edges: __classPrivateFieldGet(this, _edges).commit(),
+              nodes: tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").commit(),
+              edges: tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").commit(),
           };
-          __classPrivateFieldGet(this, _commitHandler).call(this, summary, ...rest);
+          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f").call(this, summary, ...rest);
           return summary;
       }
   }
-  _nodes = new WeakMap(), _edges = new WeakMap(), _commitHandler = new WeakMap();
+  _SelectionAccumulator_nodes = new WeakMap(), _SelectionAccumulator_edges = new WeakMap(), _SelectionAccumulator_commitHandler = new WeakMap();
 
   /**
    * The handler for selections
@@ -21342,9 +21314,8 @@
      * @private
      */
     _createSeperator(index = 1) {
-      this.manipulationDOM["seperatorLineDiv" + index] = document.createElement(
-        "div"
-      );
+      this.manipulationDOM["seperatorLineDiv" + index] =
+        document.createElement("div");
       this.manipulationDOM["seperatorLineDiv" + index].className =
         "vis-separator-line";
       this.manipulationDiv.appendChild(
@@ -21509,9 +21480,8 @@
      */
     _temporaryBindUI(UIfunctionName, newFunction) {
       if (this.body.eventListeners[UIfunctionName] !== undefined) {
-        this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[
-          UIfunctionName
-        ];
+        this.temporaryUIFunctions[UIfunctionName] =
+          this.body.eventListeners[UIfunctionName];
         this.body.eventListeners[UIfunctionName] = newFunction;
       } else {
         throw new Error(
@@ -21536,9 +21506,8 @@
             functionName
           )
         ) {
-          this.body.eventListeners[functionName] = this.temporaryUIFunctions[
-            functionName
-          ];
+          this.body.eventListeners[functionName] =
+            this.temporaryUIFunctions[functionName];
           delete this.temporaryUIFunctions[functionName];
         }
       }
@@ -21699,9 +21668,8 @@
 
       // we use the selection to find the node that is being dragged. We explicitly DEselect the control node here.
       this.selectionHandler.unselectAll();
-      const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-        pointerObj
-      );
+      const overlappingNodeIds =
+        this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
       let node = undefined;
       for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
         if (overlappingNodeIds[i] !== this.selectedControlNode.id) {
@@ -21808,9 +21776,8 @@
       }
 
       // get the overlapping node but NOT the temporary node;
-      const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-        pointerObj
-      );
+      const overlappingNodeIds =
+        this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
       let node = undefined;
       for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
         // if the node id is NOT a temporary node, accept the node.
@@ -21854,9 +21821,8 @@
       }
 
       // get the overlapping node but NOT the temporary node;
-      const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-        pointerObj
-      );
+      const overlappingNodeIds =
+        this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
       let node = undefined;
       for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
         // if the node id is NOT a temporary node, accept the node.
@@ -23025,9 +22991,8 @@
 
       while (maxEnergy > threshold && iterations < maxIterations) {
         iterations += 1;
-        [highE_nodeId, maxEnergy, dE_dx, dE_dy] = this._getHighestEnergyNode(
-          ignoreClusters
-        );
+        [highE_nodeId, maxEnergy, dE_dx, dE_dy] =
+          this._getHighestEnergyNode(ignoreClusters);
         delta_m = maxEnergy;
         subIterations = 0;
         while (delta_m > innerThreshold && subIterations < maxInnerIterations) {

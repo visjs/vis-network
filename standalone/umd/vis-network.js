@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-07-22T17:03:45.710Z
+ * @date    2021-07-24T15:14:59.237Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -32668,6 +32668,7 @@
 	     * This function zooms out to fit all data on screen based on amount of nodes
 	     *
 	     * @param {object} [options={{nodes=Array}}]
+	     * @param options
 	     * @param {boolean} [initialZoom=false]  | zoom based on fitted formula or range, true = fitted, default = false;
 	     */
 
@@ -34780,20 +34781,16 @@
 	OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 	PERFORMANCE OF THIS SOFTWARE.
 	***************************************************************************** */
-	function __classPrivateFieldGet(receiver, privateMap) {
-	  if (!privateMap.has(receiver)) {
-	    throw new TypeError("attempted to get private field on non-instance");
-	  }
-
-	  return privateMap.get(receiver);
+	function __classPrivateFieldGet(receiver, state, kind, f) {
+	  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+	  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+	  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 	}
-	function __classPrivateFieldSet(receiver, privateMap, value) {
-	  if (!privateMap.has(receiver)) {
-	    throw new TypeError("attempted to set private field on non-instance");
-	  }
-
-	  privateMap.set(receiver, value);
-	  return value;
+	function __classPrivateFieldSet(receiver, state, value, kind, f) {
+	  if (kind === "m") throw new TypeError("Private method is not writable");
+	  if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+	  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+	  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 	}
 
 	function _createForOfIteratorHelper$3(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (isArray(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
@@ -34802,7 +34799,7 @@
 
 	function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-	var _previousSelection, _selection, _nodes, _edges, _commitHandler;
+	var _SingleTypeSelectionAccumulator_previousSelection, _SingleTypeSelectionAccumulator_selection, _SelectionAccumulator_nodes, _SelectionAccumulator_edges, _SelectionAccumulator_commitHandler;
 	/**
 	 * @param prev
 	 * @param next
@@ -34835,15 +34832,15 @@
 	  function SingleTypeSelectionAccumulator() {
 	    _classCallCheck(this, SingleTypeSelectionAccumulator);
 
-	    _previousSelection.set(this, new set());
+	    _SingleTypeSelectionAccumulator_previousSelection.set(this, new set());
 
-	    _selection.set(this, new set());
+	    _SingleTypeSelectionAccumulator_selection.set(this, new set());
 	  }
 
 	  _createClass(SingleTypeSelectionAccumulator, [{
 	    key: "size",
 	    get: function get() {
-	      return __classPrivateFieldGet(this, _selection).size;
+	      return __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").size;
 	    }
 	  }, {
 	    key: "add",
@@ -34855,7 +34852,7 @@
 	      for (var _i = 0, _items = items; _i < _items.length; _i++) {
 	        var item = _items[_i];
 
-	        __classPrivateFieldGet(this, _selection).add(item);
+	        __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").add(item);
 	      }
 	    }
 	  }, {
@@ -34868,27 +34865,27 @@
 	      for (var _i2 = 0, _items2 = items; _i2 < _items2.length; _i2++) {
 	        var item = _items2[_i2];
 
-	        __classPrivateFieldGet(this, _selection).delete(item);
+	        __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").delete(item);
 	      }
 	    }
 	  }, {
 	    key: "clear",
 	    value: function clear() {
-	      __classPrivateFieldGet(this, _selection).clear();
+	      __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").clear();
 	    }
 	  }, {
 	    key: "getSelection",
 	    value: function getSelection() {
-	      return _toConsumableArray(__classPrivateFieldGet(this, _selection));
+	      return _toConsumableArray(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"));
 	    }
 	  }, {
 	    key: "getChanges",
 	    value: function getChanges() {
 	      return {
-	        added: _toConsumableArray(diffSets(__classPrivateFieldGet(this, _previousSelection), __classPrivateFieldGet(this, _selection))),
-	        deleted: _toConsumableArray(diffSets(__classPrivateFieldGet(this, _selection), __classPrivateFieldGet(this, _previousSelection))),
-	        previous: _toConsumableArray(new set(__classPrivateFieldGet(this, _previousSelection))),
-	        current: _toConsumableArray(new set(__classPrivateFieldGet(this, _selection)))
+	        added: _toConsumableArray(diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))),
+	        deleted: _toConsumableArray(diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))),
+	        previous: _toConsumableArray(new set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))),
+	        current: _toConsumableArray(new set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")))
 	      };
 	    }
 	  }, {
@@ -34896,9 +34893,9 @@
 	    value: function commit() {
 	      var changes = this.getChanges();
 
-	      __classPrivateFieldSet(this, _previousSelection, __classPrivateFieldGet(this, _selection));
+	      __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_previousSelection, __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), "f");
 
-	      __classPrivateFieldSet(this, _selection, new set(__classPrivateFieldGet(this, _previousSelection)));
+	      __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
 
 	      var _iterator2 = _createForOfIteratorHelper$3(changes.added),
 	          _step2;
@@ -34936,72 +34933,72 @@
 	  return SingleTypeSelectionAccumulator;
 	}();
 
-	_previousSelection = new weakMap(), _selection = new weakMap();
+	_SingleTypeSelectionAccumulator_previousSelection = new weakMap(), _SingleTypeSelectionAccumulator_selection = new weakMap();
 	var SelectionAccumulator = /*#__PURE__*/function () {
 	  function SelectionAccumulator() {
 	    var commitHandler = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
 
 	    _classCallCheck(this, SelectionAccumulator);
 
-	    _nodes.set(this, new SingleTypeSelectionAccumulator());
+	    _SelectionAccumulator_nodes.set(this, new SingleTypeSelectionAccumulator());
 
-	    _edges.set(this, new SingleTypeSelectionAccumulator());
+	    _SelectionAccumulator_edges.set(this, new SingleTypeSelectionAccumulator());
 
-	    _commitHandler.set(this, void 0);
+	    _SelectionAccumulator_commitHandler.set(this, void 0);
 
-	    __classPrivateFieldSet(this, _commitHandler, commitHandler);
+	    __classPrivateFieldSet(this, _SelectionAccumulator_commitHandler, commitHandler, "f");
 	  }
 
 	  _createClass(SelectionAccumulator, [{
 	    key: "sizeNodes",
 	    get: function get() {
-	      return __classPrivateFieldGet(this, _nodes).size;
+	      return __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").size;
 	    }
 	  }, {
 	    key: "sizeEdges",
 	    get: function get() {
-	      return __classPrivateFieldGet(this, _edges).size;
+	      return __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").size;
 	    }
 	  }, {
 	    key: "getNodes",
 	    value: function getNodes() {
-	      return __classPrivateFieldGet(this, _nodes).getSelection();
+	      return __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").getSelection();
 	    }
 	  }, {
 	    key: "getEdges",
 	    value: function getEdges() {
-	      return __classPrivateFieldGet(this, _edges).getSelection();
+	      return __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").getSelection();
 	    }
 	  }, {
 	    key: "addNodes",
 	    value: function addNodes() {
 	      var _classPrivateFieldGe;
 
-	      (_classPrivateFieldGe = __classPrivateFieldGet(this, _nodes)).add.apply(_classPrivateFieldGe, arguments);
+	      (_classPrivateFieldGe = __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f")).add.apply(_classPrivateFieldGe, arguments);
 	    }
 	  }, {
 	    key: "addEdges",
 	    value: function addEdges() {
 	      var _classPrivateFieldGe2;
 
-	      (_classPrivateFieldGe2 = __classPrivateFieldGet(this, _edges)).add.apply(_classPrivateFieldGe2, arguments);
+	      (_classPrivateFieldGe2 = __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f")).add.apply(_classPrivateFieldGe2, arguments);
 	    }
 	  }, {
 	    key: "deleteNodes",
 	    value: function deleteNodes(node) {
-	      __classPrivateFieldGet(this, _nodes).delete(node);
+	      __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").delete(node);
 	    }
 	  }, {
 	    key: "deleteEdges",
 	    value: function deleteEdges(edge) {
-	      __classPrivateFieldGet(this, _edges).delete(edge);
+	      __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").delete(edge);
 	    }
 	  }, {
 	    key: "clear",
 	    value: function clear() {
-	      __classPrivateFieldGet(this, _nodes).clear();
+	      __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").clear();
 
-	      __classPrivateFieldGet(this, _edges).clear();
+	      __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").clear();
 	    }
 	  }, {
 	    key: "commit",
@@ -35009,15 +35006,15 @@
 	      var _classPrivateFieldGe3, _context;
 
 	      var summary = {
-	        nodes: __classPrivateFieldGet(this, _nodes).commit(),
-	        edges: __classPrivateFieldGet(this, _edges).commit()
+	        nodes: __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").commit(),
+	        edges: __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").commit()
 	      };
 
 	      for (var _len3 = arguments.length, rest = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
 	        rest[_key3] = arguments[_key3];
 	      }
 
-	      (_classPrivateFieldGe3 = __classPrivateFieldGet(this, _commitHandler)).call.apply(_classPrivateFieldGe3, concat(_context = [this, summary]).call(_context, rest));
+	      (_classPrivateFieldGe3 = __classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f")).call.apply(_classPrivateFieldGe3, concat(_context = [this, summary]).call(_context, rest));
 
 	      return summary;
 	    }
@@ -35025,7 +35022,7 @@
 
 	  return SelectionAccumulator;
 	}();
-	_nodes = new weakMap(), _edges = new weakMap(), _commitHandler = new weakMap();
+	_SelectionAccumulator_nodes = new weakMap(), _SelectionAccumulator_edges = new weakMap(), _SelectionAccumulator_commitHandler = new weakMap();
 
 	function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
