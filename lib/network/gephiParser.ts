@@ -111,86 +111,82 @@ export function parseGephi(
   }
 
   const gEdges = gephiJSON.edges;
-  const vEdges = gEdges.map(
-    (gEdge): VisEdge => {
-      const vEdge: VisEdge = {
-        from: gEdge.source,
-        id: gEdge.id,
-        to: gEdge.target,
-      };
+  const vEdges = gEdges.map((gEdge): VisEdge => {
+    const vEdge: VisEdge = {
+      from: gEdge.source,
+      id: gEdge.id,
+      to: gEdge.target,
+    };
 
-      if (gEdge.attributes != null) {
-        vEdge.attributes = gEdge.attributes;
-      }
-      if (gEdge.label != null) {
-        vEdge.label = gEdge.label;
-      }
-      if (gEdge.attributes != null && gEdge.attributes.title != null) {
-        vEdge.title = gEdge.attributes.title;
-      }
-      if (gEdge.type === "Directed") {
-        vEdge.arrows = "to";
-      }
-      // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
-      // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
-      if (gEdge.color && options.edges.inheritColor === false) {
-        vEdge.color = gEdge.color;
-      }
-
-      return vEdge;
+    if (gEdge.attributes != null) {
+      vEdge.attributes = gEdge.attributes;
     }
-  );
+    if (gEdge.label != null) {
+      vEdge.label = gEdge.label;
+    }
+    if (gEdge.attributes != null && gEdge.attributes.title != null) {
+      vEdge.title = gEdge.attributes.title;
+    }
+    if (gEdge.type === "Directed") {
+      vEdge.arrows = "to";
+    }
+    // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
+    // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
+    if (gEdge.color && options.edges.inheritColor === false) {
+      vEdge.color = gEdge.color;
+    }
 
-  const vNodes = gephiJSON.nodes.map(
-    (gNode): VisNode => {
-      const vNode: VisNode = {
-        id: gNode.id,
-        fixed: options.nodes.fixed && gNode.x != null && gNode.y != null,
-      };
+    return vEdge;
+  });
 
-      if (gNode.attributes != null) {
-        vNode.attributes = gNode.attributes;
-      }
-      if (gNode.label != null) {
-        vNode.label = gNode.label;
-      }
-      if (gNode.size != null) {
-        vNode.size = gNode.size;
-      }
-      if (gNode.attributes != null && gNode.attributes.title != null) {
-        vNode.title = gNode.attributes.title;
-      }
-      if (gNode.title != null) {
-        vNode.title = gNode.title;
-      }
-      if (gNode.x != null) {
-        vNode.x = gNode.x;
-      }
-      if (gNode.y != null) {
-        vNode.y = gNode.y;
-      }
-      if (gNode.color != null) {
-        if (options.nodes.parseColor === true) {
-          vNode.color = gNode.color;
-        } else {
-          vNode.color = {
+  const vNodes = gephiJSON.nodes.map((gNode): VisNode => {
+    const vNode: VisNode = {
+      id: gNode.id,
+      fixed: options.nodes.fixed && gNode.x != null && gNode.y != null,
+    };
+
+    if (gNode.attributes != null) {
+      vNode.attributes = gNode.attributes;
+    }
+    if (gNode.label != null) {
+      vNode.label = gNode.label;
+    }
+    if (gNode.size != null) {
+      vNode.size = gNode.size;
+    }
+    if (gNode.attributes != null && gNode.attributes.title != null) {
+      vNode.title = gNode.attributes.title;
+    }
+    if (gNode.title != null) {
+      vNode.title = gNode.title;
+    }
+    if (gNode.x != null) {
+      vNode.x = gNode.x;
+    }
+    if (gNode.y != null) {
+      vNode.y = gNode.y;
+    }
+    if (gNode.color != null) {
+      if (options.nodes.parseColor === true) {
+        vNode.color = gNode.color;
+      } else {
+        vNode.color = {
+          background: gNode.color,
+          border: gNode.color,
+          highlight: {
             background: gNode.color,
             border: gNode.color,
-            highlight: {
-              background: gNode.color,
-              border: gNode.color,
-            },
-            hover: {
-              background: gNode.color,
-              border: gNode.color,
-            },
-          };
-        }
+          },
+          hover: {
+            background: gNode.color,
+            border: gNode.color,
+          },
+        };
       }
-
-      return vNode;
     }
-  );
+
+    return vNode;
+  });
 
   return { nodes: vNodes, edges: vEdges };
 }

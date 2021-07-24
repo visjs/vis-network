@@ -60,11 +60,9 @@ function traverseCO(root: any, rootPath: string[] = []): void {
             "There has to be an initial color after the color keyword."
           ).to.to.have.lengthOf(2);
 
-          expect(
-            value,
-            "All values have to be color strings."
-          ).to.satisfy((value: unknown[]): boolean =>
-            value.every((v): boolean => typeof v === "string")
+          expect(value, "All values have to be color strings.").to.satisfy(
+            (value: unknown[]): boolean =>
+              value.every((v): boolean => typeof v === "string")
           );
         } else if (Array.isArray(value) && typeof value[0] === "string") {
           expect(
