@@ -159,7 +159,7 @@ describe("EndPoints", function (): void {
         Object.entries(methods).forEach(([method, expected]): void => {
           it(`${method}`, function (): void {
             expect(ctx[method].callCount, "call count").to.be.at.least(1);
-            expected!.forEach((args, i): void => {
+            expected.forEach((args, i): void => {
               expect(ctx[method].getCall(i).args).to.deep.equal(args);
             });
           });

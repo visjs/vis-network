@@ -30,23 +30,20 @@ export function visRun(
   callback: (props: VisGlobals) => void | Promise<void>,
   { timeout = VIS_DEFAULT_RUN_TIMEOUT }: VisRunOptions = {}
 ): void {
-  cy.window().then(
-    { timeout },
-    async (win: any): Promise<void> => {
-      const {
-        visEdges: edges,
-        visEventQueue: eventQueue,
-        visLastEvents: lastEvents,
-        visNetwork: network,
-        visNodes: nodes,
-      }: VisWindow = win;
+  cy.window().then({ timeout }, async (win: any): Promise<void> => {
+    const {
+      visEdges: edges,
+      visEventQueue: eventQueue,
+      visLastEvents: lastEvents,
+      visNetwork: network,
+      visNodes: nodes,
+    }: VisWindow = win;
 
-      if (edges && lastEvents && network && nodes) {
-        await callback({ edges, eventQueue, lastEvents, network, nodes });
-      } else {
-        throw new Error("No page globals were found.");
-      }
+    if (edges && lastEvents && network && nodes) {
+      await callback({ edges, eventQueue, lastEvents, network, nodes });
+    } else {
+      throw new Error("No page globals were found.");
     }
-  );
+  });
 }
 Cypress.Commands.add("visRun", visRun);

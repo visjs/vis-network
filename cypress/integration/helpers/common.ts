@@ -29,16 +29,14 @@ export function createGridPoints(
   const offset = (size * ((perRowOrCol - 1) / perRowOrCol)) / 2;
 
   return Object.freeze<Point[]>(
-    new Array(amount).fill(null).map(
-      (_, i): Point => {
-        const col = Math.floor(i / perRowOrCol);
-        const row = i - col * perRowOrCol;
+    new Array(amount).fill(null).map((_, i): Point => {
+      const col = Math.floor(i / perRowOrCol);
+      const row = i - col * perRowOrCol;
 
-        return Object.freeze<Point>({
-          x: (row / perRowOrCol) * size - offset,
-          y: (col / perRowOrCol) * size - offset,
-        });
-      }
-    )
+      return Object.freeze<Point>({
+        x: (row / perRowOrCol) * size - offset,
+        y: (col / perRowOrCol) * size - offset,
+      });
+    })
   );
 }

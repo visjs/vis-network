@@ -101,9 +101,7 @@ export class SelectionAccumulator<CommitArgs extends readonly any[]> {
   readonly #commitHandler: SelectionAccumulatorCommitHandler<CommitArgs>;
 
   public constructor(
-    commitHandler: SelectionAccumulatorCommitHandler<
-      CommitArgs
-    > = (): void => {}
+    commitHandler: SelectionAccumulatorCommitHandler<CommitArgs> = (): void => {}
   ) {
     this.#commitHandler = commitHandler;
   }
