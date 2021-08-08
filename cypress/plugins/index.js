@@ -34,7 +34,7 @@ module.exports = (on, config) => {
       config.screenshotsFolder = "./cypress/snapshots/actual";
     }
 
-    getCompareSnapshotsPlugin(on);
+    getCompareSnapshotsPlugin(on, config);
   }
 
   if (all || config.env.FUNCTIONAL) {

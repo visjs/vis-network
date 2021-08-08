@@ -277,9 +277,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   }
 
   /** @inheritDoc */
-  public findBorderPositions(
-    ctx: CanvasRenderingContext2D
-  ): {
+  public findBorderPositions(ctx: CanvasRenderingContext2D): {
     from: Point;
     to: Point;
   } {
