@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-08-08T16:28:28.915Z
+ * @date    2021-08-08T18:47:46.478Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -6774,6 +6774,7 @@ var Hammer$2 = /*#__PURE__*/function () {
   });
   return Hammer;
 }(); //  style loader but by script tag, not by the loader.
+var RealHammer = Hammer$2;
 
 function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -7067,7 +7068,7 @@ function hammerMock() {
   };
 }
 
-var Hammer = typeof window !== "undefined" ? window.Hammer || Hammer$2 : function () {
+var Hammer = typeof window !== "undefined" ? window.Hammer || RealHammer : function () {
   // hammer.js is only available in a browser, not in node.js. Replacing it with a mock object.
   return hammerMock();
 };
@@ -44790,6 +44791,5 @@ var indexLegacy = /*#__PURE__*/Object.freeze({
 	Network: Network
 });
 
-export default indexLegacy;
-export { DOMutil, DataSet, DataView, Hammer$1 as Hammer, Network, Queue, index as data, keycharm$1 as keycharm, network, index$2 as util };
+export { DOMutil, DataSet, DataView, Hammer$1 as Hammer, Network, Queue, index as data, indexLegacy as default, keycharm$1 as keycharm, network, index$2 as util };
 //# sourceMappingURL=vis-network.esm.js.map

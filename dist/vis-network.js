@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-08-08T16:28:28.915Z
+ * @date    2021-08-08T18:47:46.478Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -6780,6 +6780,7 @@
 	  });
 	  return Hammer;
 	}(); //  style loader but by script tag, not by the loader.
+	var RealHammer = Hammer$2;
 
 	function ownKeys$5(object, enumerableOnly) { var keys = keys$3(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); if (enumerableOnly) { symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$2(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -7073,7 +7074,7 @@
 	  };
 	}
 
-	var Hammer = typeof window !== "undefined" ? window.Hammer || Hammer$2 : function () {
+	var Hammer = typeof window !== "undefined" ? window.Hammer || RealHammer : function () {
 	  // hammer.js is only available in a browser, not in node.js. Replacing it with a mock object.
 	  return hammerMock();
 	};
@@ -44803,7 +44804,7 @@
 	exports.Network = Network;
 	exports.Queue = Queue;
 	exports.data = index;
-	exports.default = indexLegacy;
+	exports['default'] = indexLegacy;
 	exports.keycharm = keycharm$1;
 	exports.network = network;
 	exports.util = index$2;
