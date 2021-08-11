@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-08-10T09:43:18.333Z
+ * @date    2021-08-11T11:50:23.265Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -207,7 +207,7 @@
 	  (module.exports = function (key, value) {
 	    return sharedStore[key] || (sharedStore[key] = value !== undefined ? value : {});
 	  })('versions', []).push({
-	    version: '3.16.0',
+	    version: '3.16.1',
 	    mode: 'pure' ,
 	    copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 	  });
@@ -1288,17 +1288,17 @@
 
 	var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
 	var WeakMap = global$1.WeakMap;
-	var set$3, get$4, has;
+	var set$3, get$5, has;
 
 	var enforce = function (it) {
-	  return has(it) ? get$4(it) : set$3(it, {});
+	  return has(it) ? get$5(it) : set$3(it, {});
 	};
 
 	var getterFor = function (TYPE) {
 	  return function (it) {
 	    var state;
 
-	    if (!isObject$1(it) || (state = get$4(it)).type !== TYPE) {
+	    if (!isObject$1(it) || (state = get$5(it)).type !== TYPE) {
 	      throw TypeError('Incompatible receiver, ' + TYPE + ' required');
 	    }
 
@@ -1319,7 +1319,7 @@
 	    return metadata;
 	  };
 
-	  get$4 = function (it) {
+	  get$5 = function (it) {
 	    return wmget.call(store, it) || {};
 	  };
 
@@ -1337,7 +1337,7 @@
 	    return metadata;
 	  };
 
-	  get$4 = function (it) {
+	  get$5 = function (it) {
 	    return has$1(it, STATE) ? it[STATE] : {};
 	  };
 
@@ -1348,7 +1348,7 @@
 
 	var internalState = {
 	  set: set$3,
-	  get: get$4,
+	  get: get$5,
 	  has: has,
 	  enforce: enforce,
 	  getterFor: getterFor
@@ -1789,7 +1789,7 @@
 
 	var ITERATOR$1 = wellKnownSymbol('iterator');
 
-	var getIteratorMethod$1 = function (it) {
+	var getIteratorMethod$3 = function (it) {
 	  if (it != undefined) return it[ITERATOR$1] || it['@@iterator'] || iterators[classof(it)];
 	};
 
@@ -1804,7 +1804,7 @@
 	  var argumentsLength = arguments.length;
 	  var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
 	  var mapping = mapfn !== undefined;
-	  var iteratorMethod = getIteratorMethod$1(O);
+	  var iteratorMethod = getIteratorMethod$3(O);
 	  var index = 0;
 	  var length, result, step, iterator, next, value;
 	  if (mapping) mapfn = functionBindContext(mapfn, argumentsLength > 2 ? arguments[2] : undefined, 2); // if the target is not iterable or it's an array with the default iterator - use a simple case
@@ -1961,6 +1961,8 @@
 
 	iterators.Arguments = iterators.Array; // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
+	var getIteratorMethod_1 = getIteratorMethod$3;
+
 	// iterable DOM collections
 	// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
 	var domIterables = {
@@ -2010,9 +2012,11 @@
 	  iterators[COLLECTION_NAME] = iterators.Array;
 	}
 
-	var getIteratorMethod_1 = getIteratorMethod$1;
+	var getIteratorMethod$2 = getIteratorMethod_1;
 
-	var getIteratorMethod = getIteratorMethod_1;
+	var getIteratorMethod$1 = getIteratorMethod$2;
+
+	var getIteratorMethod = getIteratorMethod$1;
 
 	// https://tc39.es/ecma262/#sec-isarray
 	// eslint-disable-next-line es/no-array-isarray -- safe
@@ -2618,7 +2622,7 @@
 	  }
 	}
 
-	var defineProperty$3 = defineProperty_1;
+	var defineProperty$3 = defineProperty$5;
 
 	var defineProperty$2 = defineProperty$3;
 
@@ -2669,8 +2673,10 @@
 
 	var isArray$2 = isArray$3;
 
+	var isArray$1 = isArray$2;
+
 	function _arrayWithHoles(arr) {
-	  if (isArray$2(arr)) return arr;
+	  if (isArray$1(arr)) return arr;
 	}
 
 	var SPECIES$2 = wellKnownSymbol('species');
@@ -2805,6 +2811,8 @@
 
 	var symbol$4 = path.Symbol;
 
+	var symbol$3 = symbol$4;
+
 	// https://github.com/tc39/proposal-using-statement
 
 	defineWellKnownSymbol('asyncDispose');
@@ -2834,12 +2842,12 @@
 
 	// TODO: Remove from `core-js@4`
 
-	var symbol$3 = symbol$4;
-
 	var symbol$2 = symbol$3;
 
+	var symbol$1 = symbol$2;
+
 	function _iterableToArrayLimit(arr, i) {
-	  var _i = arr == null ? null : typeof symbol$2 !== "undefined" && getIteratorMethod(arr) || arr["@@iterator"];
+	  var _i = arr == null ? null : typeof symbol$1 !== "undefined" && getIteratorMethod(arr) || arr["@@iterator"];
 
 	  if (_i == null) return;
 	  var _arr = [];
@@ -2925,7 +2933,9 @@
 
 	var slice$3 = slice$4;
 
-	var from$1 = from$4;
+	var slice$2 = slice$3;
+
+	var from$1 = from$3;
 
 	var from = from$1;
 
@@ -2945,7 +2955,7 @@
 	  if (!o) return;
 	  if (typeof o === "string") return _arrayLikeToArray$8(o, minLen);
 
-	  var n = slice$3(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
+	  var n = slice$2(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 
 	  if (n === "Object" && o.constructor) n = o.constructor.name;
 	  if (n === "Map" || n === "Set") return from(o);
@@ -2960,7 +2970,9 @@
 	  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$8(arr, i) || _nonIterableRest();
 	}
 
-	var iterator$2 = wellKnownSymbolWrapped.f('iterator');
+	var iterator$3 = wellKnownSymbolWrapped.f('iterator');
+
+	var iterator$2 = iterator$3;
 
 	var iterator$1 = iterator$2;
 
@@ -2969,13 +2981,13 @@
 	function _typeof(obj) {
 	  "@babel/helpers - typeof";
 
-	  if (typeof symbol$2 === "function" && typeof iterator === "symbol") {
+	  if (typeof symbol$1 === "function" && typeof iterator === "symbol") {
 	    _typeof = function _typeof(obj) {
 	      return typeof obj;
 	    };
 	  } else {
 	    _typeof = function _typeof(obj) {
-	      return obj && typeof symbol$2 === "function" && obj.constructor === symbol$2 && obj !== symbol$2.prototype ? "symbol" : typeof obj;
+	      return obj && typeof symbol$1 === "function" && obj.constructor === symbol$1 && obj !== symbol$1.prototype ? "symbol" : typeof obj;
 	    };
 	  }
 
@@ -2983,11 +2995,11 @@
 	}
 
 	function _arrayWithoutHoles(arr) {
-	  if (isArray$2(arr)) return _arrayLikeToArray$8(arr);
+	  if (isArray$1(arr)) return _arrayLikeToArray$8(arr);
 	}
 
 	function _iterableToArray(iter) {
-	  if (typeof symbol$2 !== "undefined" && getIteratorMethod(iter) != null || iter["@@iterator"] != null) return from(iter);
+	  if (typeof symbol$1 !== "undefined" && getIteratorMethod(iter) != null || iter["@@iterator"] != null) return from(iter);
 	}
 
 	function _nonIterableSpread() {
@@ -2998,9 +3010,7 @@
 	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$8(arr) || _nonIterableSpread();
 	}
 
-	var symbol$1 = symbol$4;
-
-	var symbol = symbol$1;
+	var symbol = symbol$3;
 
 	var concat$2 = entryVirtual('Array').concat;
 
@@ -3015,9 +3025,7 @@
 
 	var concat = concat$1;
 
-	var slice$2 = slice_1;
-
-	var slice$1 = slice$2;
+	var slice$1 = slice$4;
 
 	// https://tc39.es/ecma262/#sec-reflect.ownkeys
 
@@ -3030,9 +3038,7 @@
 
 	path.Reflect.ownKeys;
 
-	var isArray$1 = isArray$4;
-
-	var isArray = isArray$1;
+	var isArray = isArray$3;
 
 	var $map = arrayIteration.map;
 	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport('map'); // `Array.prototype.map` method
@@ -12673,7 +12679,7 @@
 	  if (IS_ITERATOR) {
 	    iterator = iterable;
 	  } else {
-	    iterFn = getIteratorMethod$1(iterable);
+	    iterFn = getIteratorMethod$3(iterable);
 	    if (typeof iterFn != 'function') throw TypeError('Target is not iterable'); // optimisation for array iterators
 
 	    if (isArrayIteratorMethod(iterFn)) {
@@ -15558,7 +15564,7 @@
 
 	var construct = construct$1;
 
-	var create$1 = create$4;
+	var create$1 = create$3;
 
 	var create = create$1;
 
@@ -15571,7 +15577,9 @@
 	  setPrototypeOf: objectSetPrototypeOf
 	});
 
-	var setPrototypeOf$2 = path.Object.setPrototypeOf;
+	var setPrototypeOf$3 = path.Object.setPrototypeOf;
+
+	var setPrototypeOf$2 = setPrototypeOf$3;
 
 	var setPrototypeOf$1 = setPrototypeOf$2;
 
@@ -15612,12 +15620,14 @@
 	function _possibleConstructorReturn(self, call) {
 	  if (call && (_typeof(call) === "object" || typeof call === "function")) {
 	    return call;
+	  } else if (call !== void 0) {
+	    throw new TypeError("Derived constructors may only return object or undefined");
 	  }
 
 	  return _assertThisInitialized(self);
 	}
 
-	var getPrototypeOf$1 = getPrototypeOf$4;
+	var getPrototypeOf$1 = getPrototypeOf$3;
 
 	var getPrototypeOf = getPrototypeOf$1;
 
@@ -19308,30 +19318,32 @@
 
 	// https://tc39.es/ecma262/#sec-reflect.get
 
-	function get$3(target, propertyKey
+	function get$4(target, propertyKey
 	/* , receiver */
 	) {
 	  var receiver = arguments.length < 3 ? target : arguments[2];
 	  var descriptor, prototype;
 	  if (anObject(target) === receiver) return target[propertyKey];
 	  if (descriptor = objectGetOwnPropertyDescriptor.f(target, propertyKey)) return has$1(descriptor, 'value') ? descriptor.value : descriptor.get === undefined ? undefined : descriptor.get.call(receiver);
-	  if (isObject$1(prototype = objectGetPrototypeOf(target))) return get$3(prototype, propertyKey, receiver);
+	  if (isObject$1(prototype = objectGetPrototypeOf(target))) return get$4(prototype, propertyKey, receiver);
 	}
 
 	_export({
 	  target: 'Reflect',
 	  stat: true
 	}, {
-	  get: get$3
+	  get: get$4
 	});
 
-	var get$2 = path.Reflect.get;
+	var get$3 = path.Reflect.get;
+
+	var get$2 = get$3;
 
 	var get$1 = get$2;
 
 	var get = get$1;
 
-	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor_1;
+	var getOwnPropertyDescriptor$1 = getOwnPropertyDescriptor$3;
 
 	var getOwnPropertyDescriptor = getOwnPropertyDescriptor$1;
 
