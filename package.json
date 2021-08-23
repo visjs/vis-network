@@ -137,7 +137,7 @@
     "postcss": "8.3.6",
     "prettier": "2.3.2",
     "rimraf": "3.0.2",
-    "rollup": "2.56.2",
+    "rollup": "2.56.3",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-postcss": "4.0.1",
