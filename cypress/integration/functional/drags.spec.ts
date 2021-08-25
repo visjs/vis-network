@@ -18,9 +18,11 @@ function drag(
 ): { name: string; event: VisEvent }[] {
   const events: { name: string; event: VisEvent }[] = [];
 
-  const eventListener = (name: string) => (event: VisEvent): void => {
-    events.push({ name, event });
-  };
+  const eventListener =
+    (name: string) =>
+    (event: VisEvent): void => {
+      events.push({ name, event });
+    };
 
   cy.visRunWithWindow(({ network }): void => {
     network.on("dragStart", eventListener("dragStart"));

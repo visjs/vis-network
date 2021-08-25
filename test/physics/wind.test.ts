@@ -15,9 +15,7 @@ describe("wind", function (): void {
     delete this.container;
   });
 
-  it("All nodes are on the correct side of the fixed node", async function (): Promise<
-    void
-  > {
+  it("All nodes are on the correct side of the fixed node", async function (): Promise<void> {
     const network = new Network(
       this.container,
       {
