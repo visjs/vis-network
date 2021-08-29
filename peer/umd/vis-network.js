@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-08-28T16:03:34.543Z
+ * @date    2021-08-29T08:16:52.973Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -30165,7 +30165,8 @@
 	          y: 10,
 	          zoom: 0.02
 	        },
-	        bindToWindow: true
+	        bindToWindow: true,
+	        autoFocus: true
 	      },
 	      navigationButtons: false,
 	      tooltipDelay: 300,
@@ -30746,7 +30747,7 @@
 	      } // if we bind the keyboard to the div, we have to highlight it to use it. This highlights it on mouse over.
 
 
-	      if (this.options.keyboard.bindToWindow === false && this.options.keyboard.enabled === true) {
+	      if (this.options.keyboard.autoFocus && this.options.keyboard.bindToWindow === false && this.options.keyboard.enabled === true) {
 	        this.canvas.frame.focus();
 	      } // start a timeout that will check if the mouse is positioned above an element
 
@@ -38445,6 +38446,9 @@
 	      bindToWindow: {
 	        boolean: bool
 	      },
+	      autoFocus: {
+	        boolean: bool
+	      },
 	      __type__: {
 	        object: object,
 	        boolean: bool
@@ -38954,7 +38958,8 @@
 	        y: [10, 0, 40, 1],
 	        zoom: [0.02, 0, 0.1, 0.005]
 	      },
-	      bindToWindow: true
+	      bindToWindow: true,
+	      autoFocus: true
 	    },
 	    multiselect: false,
 	    navigationButtons: false,
