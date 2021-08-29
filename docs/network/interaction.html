@@ -156,7 +156,8 @@ var options = {
     keyboard: {
       enabled: false,
       speed: {x: 10, y: 10, zoom: 0.02},
-      bindToWindow: true
+      bindToWindow: true,
+      autoFocus: true,
     },
     multiselect: false,
     navigationButtons: false,
@@ -315,6 +316,15 @@ network.setOptions(options);
             regardless of which DOM object has the focus. If you have multiple
             networks on your page, you could set this to false, making sure the
             keyboard shortcuts only work on the network that has the focus.
+          </td>
+        </tr>
+        <tr parent="keyboard" class="hidden">
+          <td class="indent">keyboard.autoFocus</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            When <code>keyboard.bindToWindow=false</code> this option allows you
+            to skip auto focusing the network on hover.
           </td>
         </tr>
         <tr>
