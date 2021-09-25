@@ -132,7 +132,7 @@
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
     "lint-staged": "11.1.2",
-    "mocha": "9.1.1",
+    "mocha": "9.1.2",
     "nyc": "15.1.0",
     "postcss": "8.3.8",
     "prettier": "2.4.1",
