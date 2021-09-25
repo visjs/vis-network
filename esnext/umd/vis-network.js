@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-09-22T09:58:23.012Z
+ * @date    2021-09-25T03:14:40.892Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28,7 +28,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm'), require('tslib'), require('timsort')) :
   typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'tslib', 'timsort'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.tslib, global.timsort));
-}(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, tslib, TimSort) {
+})(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, tslib, TimSort) {
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var Emitter__default = /*#__PURE__*/_interopDefaultLegacy(Emitter);
@@ -16529,9 +16529,9 @@
 
       if (this.options.keyboard.enabled === true) {
         if (this.options.keyboard.bindToWindow === true) {
-          this.keycharm = keycharm__default['default']({ container: window, preventDefault: true });
+          this.keycharm = keycharm__default["default"]({ container: window, preventDefault: true });
         } else {
-          this.keycharm = keycharm__default['default']({
+          this.keycharm = keycharm__default["default"]({
             container: this.canvas.frame,
             preventDefault: true,
           });
@@ -20304,7 +20304,7 @@
         result.push(Number(size));
       });
 
-      TimSort__default['default'].sort(result, function (a, b) {
+      TimSort__default["default"].sort(result, function (a, b) {
         return b - a;
       });
 
@@ -23378,7 +23378,7 @@
   }
 
   // Extend Network with an Emitter mixin
-  Emitter__default['default'](Network.prototype);
+  Emitter__default["default"](Network.prototype);
 
   /**
    * Set options
@@ -23979,5 +23979,5 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=vis-network.js.map
