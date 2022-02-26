@@ -12,7 +12,6 @@ import {
  *
  * @param first - Number of the first id to generate.
  * @param last - Number of the last id to generate.
- *
  * @returns An array of ids for example `"node0"` or `"node789"`.
  */
 function nodeIdRange(first: number, last: number): IdType[] {
@@ -167,23 +166,17 @@ describe("Directed hierarchical layout", (): void => {
     const configs = [
       { nodes: [], swallowsEdges: 0 },
       ...(clusterConfigs || []),
-    ].map(
-      (
-        { nodes },
-        i,
+    ].map(({ nodes }, i, arr): {
+      expectedVisibleEdges: number;
+      nodesToCluster: Set<IdType>;
+    } => ({
+      expectedVisibleEdges:
+        data.edges.length -
         arr
-      ): {
-        expectedVisibleEdges: number;
-        nodesToCluster: Set<IdType>;
-      } => ({
-        expectedVisibleEdges:
-          data.edges.length -
-          arr
-            .slice(0, i + 1)
-            .reduce((acc, { swallowsEdges }): number => acc + swallowsEdges, 0),
-        nodesToCluster: new Set(nodes),
-      })
-    );
+          .slice(0, i + 1)
+          .reduce((acc, { swallowsEdges }): number => acc + swallowsEdges, 0),
+      nodesToCluster: new Set(nodes),
+    }));
 
     describe(name, (): void => {
       it("Preparation", (): void => {
@@ -251,16 +244,14 @@ describe("Directed hierarchical layout", (): void => {
                  * assertions are indeed necessary.
                  */
                 const visibleEdges = Object.values(
-                  (
-                    network as unknown as {
-                      body: {
-                        edges: {
-                          fromId: string;
-                          toId: string;
-                        }[];
-                      };
-                    }
-                  ).body.edges
+                  ((network as unknown) as {
+                    body: {
+                      edges: {
+                        fromId: string;
+                        toId: string;
+                      }[];
+                    };
+                  }).body.edges
                 ).filter(
                   (edge): boolean =>
                     visibleNodeIds.has(edge.fromId) &&
@@ -268,22 +259,17 @@ describe("Directed hierarchical layout", (): void => {
                 );
 
                 const invalidEdges = visibleEdges
-                  .map(
-                    ({
-                      fromId,
-                      toId,
-                    }): {
-                      fromId: IdType;
-                      fromPosition: Point;
-                      toId: IdType;
-                      toPosition: Point;
-                    } => ({
-                      fromId,
-                      fromPosition: network.getPositions([fromId])[fromId],
-                      toId,
-                      toPosition: network.getPositions([toId])[toId],
-                    })
-                  )
+                  .map(({ fromId, toId }): {
+                    fromId: IdType;
+                    fromPosition: Point;
+                    toId: IdType;
+                    toPosition: Point;
+                  } => ({
+                    fromId,
+                    fromPosition: network.getPositions([fromId])[fromId],
+                    toId,
+                    toPosition: network.getPositions([toId])[toId],
+                  }))
                   .filter(({ fromPosition, toPosition }): boolean => {
                     return !(fromPosition.y < toPosition.y);
                   });

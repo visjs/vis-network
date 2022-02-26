@@ -215,7 +215,8 @@ describe("Network Label", function () {
         {
           blocks: [
             {
-              text: "OnereallylongwordthatshouldgooverwidthConstraint.maximumifdefined",
+              text:
+                "OnereallylongwordthatshouldgooverwidthConstraint.maximumifdefined",
             },
           ],
         },
@@ -226,7 +227,8 @@ describe("Network Label", function () {
         {
           blocks: [
             {
-              text: "One really long sentence that should go over widthConstraint.maximum if defined",
+              text:
+                "One really long sentence that should go over widthConstraint.maximum if defined",
             },
           ],
         },
@@ -237,7 +239,8 @@ describe("Network Label", function () {
         {
           blocks: [
             {
-              text: "Reallyoneenormouslylargelabel withtwobigwordsgoingoverwayovermax",
+              text:
+                "Reallyoneenormouslylargelabel withtwobigwordsgoingoverwayovermax",
             },
           ],
         },
@@ -308,7 +311,8 @@ describe("Network Label", function () {
         {
           blocks: [
             {
-              text: "label <b>with</b> <code>some</code> <i>multi <b>tags</b></i>",
+              text:
+                "label <b>with</b> <code>some</code> <i>multi <b>tags</b></i>",
             },
           ],
         },

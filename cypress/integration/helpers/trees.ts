@@ -8,7 +8,6 @@ import { Edge, Node, TestData } from "./common";
  *
  * @param amount - The amount of nodes in the tree.
  * @param m - The maximum amount of child nodes per parent node.
- *
  * @returns Nodes and edges that can be directly supplied to Vis Network.
  */
 export function generateMaryTree(amount = 63, m = 2): TestData {
@@ -41,7 +40,6 @@ export function generateMaryTree(amount = 63, m = 2): TestData {
  * output of `generateMaryTree` it gets turned into acyclic graph.
  *
  * @param data - The data to be altered.
- *
  * @returns The same objects as the argument data.
  */
 export function addMoreEdges(data: TestData): TestData {

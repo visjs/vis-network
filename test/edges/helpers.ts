@@ -1,7 +1,9 @@
 import { spy, stub } from "sinon";
 import { deepFreeze } from "../helpers";
 
-const generateColor = function (id: number): {
+const generateColor = function (
+  id: number
+): {
   background: string;
   border: string;
   highlight: {

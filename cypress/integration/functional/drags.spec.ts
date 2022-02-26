@@ -5,7 +5,6 @@ import { Point, VisEvent } from "../helpers";
  *
  * @param coords - Defined the path and the names of events to be triggered
  * along the way.
- *
  * @returns An array that will be filled with events once Cypress decides to
  * run it.
  */
@@ -18,11 +17,9 @@ function drag(
 ): { name: string; event: VisEvent }[] {
   const events: { name: string; event: VisEvent }[] = [];
 
-  const eventListener =
-    (name: string) =>
-    (event: VisEvent): void => {
-      events.push({ name, event });
-    };
+  const eventListener = (name: string) => (event: VisEvent): void => {
+    events.push({ name, event });
+  };
 
   cy.visRunWithWindow(({ network }): void => {
     network.on("dragStart", eventListener("dragStart"));

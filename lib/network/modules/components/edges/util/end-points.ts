@@ -1,4 +1,5 @@
-/** ============================================================================
+/**
+ * ============================================================================
  * Location of all the endpoint drawing routines.
  *
  * Every endpoint has its own drawing routine, which contains an endpoint definition.
@@ -23,7 +24,8 @@
  *   Scan for 'arrows.to.type` and add it to the description.
  * - Add the endpoint to the examples. At the very least, add it to example
  *   `edgeStyles/arrowTypes`.
- * ============================================================================= */
+ * =============================================================================
+ */
 
 import { ArrowData, Point } from "./types";
 import { drawCircle } from "./shapes";
@@ -90,7 +92,6 @@ class Image extends EndPoint {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns False as there is no way to fill an image.
    */
   public static draw(
@@ -137,7 +138,6 @@ class Arrow extends EndPoint {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -169,7 +169,6 @@ class Crow {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -201,7 +200,6 @@ class Curve {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -245,7 +243,6 @@ class InvertedCurve {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -289,7 +286,6 @@ class Triangle {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -320,7 +316,6 @@ class InvertedTriangle {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -351,7 +346,6 @@ class Circle {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -376,7 +370,6 @@ class Bar {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -419,7 +412,6 @@ class Box {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -449,7 +441,6 @@ class Diamond {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -479,7 +470,6 @@ class Vee {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True because ctx.fill() can be used to fill the arrow.
    */
   public static draw(
@@ -511,7 +501,6 @@ export class EndPoints {
    *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
-   *
    * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
    */
   public static draw(

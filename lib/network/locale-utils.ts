@@ -3,7 +3,6 @@
  *
  * @param locales - All the available locales.
  * @param rawCode - The original code as supplied by the user.
- *
  * @returns Language code in the format language-COUNTRY or language, eventually
  * fallbacks to en.
  */

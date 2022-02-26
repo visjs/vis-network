@@ -16,7 +16,10 @@ declare global {
   }
 }
 
-function sortSelection(selection: { nodes: IdType[]; edges: IdType[] }): {
+function sortSelection(selection: {
+  nodes: IdType[];
+  edges: IdType[];
+}): {
   nodes: IdType[];
   edges: IdType[];
 } {
