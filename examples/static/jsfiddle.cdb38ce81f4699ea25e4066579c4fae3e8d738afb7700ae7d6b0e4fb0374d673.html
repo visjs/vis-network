@@ -45,53 +45,53 @@ body,
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="text"&gt;
-  &lt;div id="title"&gt;
-    &lt;h1&gt;Vis Network&lt;/h1&gt;
-    &lt;h2&gt;Other&lt;/h2&gt;
-    &lt;h3&gt;Popups&lt;/h3&gt;
-  &lt;/div&gt;
+        value='<div id="text">
+  <div id="title">
+    <h1>Vis Network</h1>
+    <h2>Other</h2>
+    <h3>Popups</h3>
+  </div>
 
-  &lt;p&gt;Both nodes and edges can have popup shown when hovered by a cursor.&lt;/p&gt;
+  <p>Both nodes and edges can have popup shown when hovered by a cursor.</p>
 
-  &lt;p&gt;It is possible to use plain text:&lt;/p&gt;
-  &lt;pre&gt;&lt;code&gt;
+  <p>It is possible to use plain text:</p>
+  <pre><code>
 const nodes = [{
   id: 1,
-  title: &amp;quot;Popup text&amp;quot;,
+  title: "Popup text",
 }];
-      &lt;/code&gt;&lt;/pre&gt;
+      </code></pre>
 
-  &lt;p&gt;Alternatively an element can be supplied:&lt;/p&gt;
-  &lt;pre&gt;&lt;code&gt;
-const element = document.createElement(&amp;quot;div&amp;quot;);
-// Add child nodes, change styles&amp;#x2026;
+  <p>Alternatively an element can be supplied:</p>
+  <pre><code>
+const element = document.createElement("div");
+// Add child nodes, change styles…
 
 const nodes = [{
   id: 1,
   title: element,
 }];
-      &lt;/code&gt;&lt;/pre&gt;
+      </code></pre>
 
-  &lt;h4&gt;XSS&lt;/h4&gt;
-  &lt;p&gt;
+  <h4>XSS</h4>
+  <p>
     In the past the popup was filled using innerHTML. It is still possible to
     achieve similar behavior via an element.
-  &lt;/p&gt;
-  &lt;pre&gt;&lt;code&gt;
+  </p>
+  <pre><code>
 function createHTMLTitle(html) {
-  var element = document.createElement(&amp;quot;div&amp;quot;);
+  var element = document.createElement("div");
   element.innerHTML = html;
   return element;
 }
-      &lt;/code&gt;&lt;/pre&gt;
-  &lt;p&gt;
+      </code></pre>
+  <p>
     Keep in mind though that this can lead to XSS attacks:
-    &lt;input type="button" onclick="addXSSNode()" value="add XSS node." /&gt;
-  &lt;/p&gt;
-&lt;/div&gt;
+    <input type="button" onclick="addXSSNode()" value="add XSS node." />
+  </p>
+</div>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -121,7 +121,7 @@ var nodes = new vis.DataSet([
   {
     id: 1,
     label: "Text",
-    title: "Plain text with no chance of &lt;script&gt;alert(&apos;XSS&apos;)&lt;/scr" + "ipt&gt;!",
+    title: "Plain text with no chance of <script>alert(&apos;XSS&apos;)</scr" + "ipt>!",
   },
   { id: 2, label: "Element", title: titleElement },
 ]);
@@ -150,15 +150,15 @@ function createHTMLTitle(html) {
   return element;
 }
 
-// You can run this function by clicking the &#x201C;add XSS node&#x201D; button above.
+// You can run this function by clicking the “add XSS node” button above.
 function addXSSNode() {
   nodes.add({
     label: "XSS",
     title: createHTMLTitle(
       "HTML with a chance of " +
-        &apos;&lt;script&gt;alert("Up to the specs, scripts shouldn\&apos;t execute.");&lt;/scr&apos; +
-        "ipt&gt;" +
-        &apos;&lt;img src="But that doesn\&apos;t mean you\&apos;re safe!" onerror="alert(\&apos;You\\\&apos;ve been hacked, muhehehe!\&apos;);" alt="XSS" /&gt;.&apos;
+        &apos;<script>alert("Up to the specs, scripts shouldn\&apos;t execute.");</scr&apos; +
+        "ipt>" +
+        &apos;<img src="But that doesn\&apos;t mean you\&apos;re safe!" onerror="alert(\&apos;You\\\&apos;ve been hacked, muhehehe!\&apos;);" alt="XSS" />.&apos;
     ),
   });
 }

@@ -71,24 +71,24 @@ body,
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="text"&gt;
-  &lt;div id="title"&gt;
-    &lt;h1&gt;Vis Network&lt;/h1&gt;
-    &lt;h2&gt;Other&lt;/h2&gt;
-    &lt;h3&gt;HTML in titles&lt;/h3&gt;
-  &lt;/div&gt;
+        value='<div id="text">
+  <div id="title">
+    <h1>Vis Network</h1>
+    <h2>Other</h2>
+    <h3>HTML in titles</h3>
+  </div>
 
-  &lt;p&gt;
+  <p>
     HTML parsing in titles has been disabled due to covert XSS issues (i.e. it
     was really easy to introduce XSS vulnerability into your project by
     accident). If you want to parse HTML anyway, you can still do it as the
     title accepts HTML elements.
-  &lt;/p&gt;
+  </p>
 
-  &lt;h4&gt;But I just want to maintain white space&lt;/h4&gt;
-  &lt;pre&gt;&lt;code&gt;
+  <h4>But I just want to maintain white space</h4>
+  <pre><code>
 function preTitle(text) {
-  const container = document.createElement(&amp;quot;pre&amp;quot;);
+  const container = document.createElement("pre");
   container.innerText = text;
   return container;
 }
@@ -97,16 +97,16 @@ function preTitle(text) {
 var nodes = new vis.DataSet([
   {
     id: 1,
-    label: &amp;quot;PRE&amp;quot;,
-    title: preTitle(&amp;quot;ASCII\n    art&amp;quot;),
+    label: "PRE",
+    title: preTitle("ASCII\n    art"),
   },
 ]);
-      &lt;/code&gt;&lt;/pre&gt;
+      </code></pre>
 
-  &lt;h4&gt;But I just want my HTML to be parsed as it used to be&lt;/h4&gt;
-  &lt;pre&gt;&lt;code&gt;
+  <h4>But I just want my HTML to be parsed as it used to be</h4>
+  <pre><code>
 function htmlTitle(html) {
-  const container = document.createElement(&amp;quot;div&amp;quot;);
+  const container = document.createElement("div");
   container.innerHTML = html;
   return container;
 }
@@ -115,16 +115,16 @@ function htmlTitle(html) {
 var nodes = new vis.DataSet([
   {
     id: 1,
-    label: &amp;quot;HTML&amp;quot;,
+    label: "HTML",
     title: htmlTitle(
-      &amp;quot;Go wild &amp;lt;&amp;apos;span style=&amp;apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&amp;apos;&amp;gt;!&amp;lt;&amp;apos;/span&amp;gt;&amp;quot;
+      "Go wild &amp;lt;&apos;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&amp;gt;!&amp;lt;&apos;/span&amp;gt;"
     ),
   },
 ]);
-      &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+      </code></pre>
+</div>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -151,7 +151,7 @@ var nodes = new vis.DataSet([
     id: 2,
     label: "HTML",
     title: htmlTitle(
-      "Go wild &lt;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&gt;!&lt;/span&gt;"
+      "Go wild <span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;>!</span>"
     ),
   },
   { id: 3, label: "PRE", title: preTitle("ASCII\n    art") },
@@ -165,7 +165,7 @@ var edges = new vis.DataSet([
     to: 3,
     label: "HTML",
     title: htmlTitle(
-      "Go wild &lt;span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;&gt;!&lt;/span&gt;"
+      "Go wild <span style=&apos;display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;&apos;>!</span>"
     ),
   },
 ]);

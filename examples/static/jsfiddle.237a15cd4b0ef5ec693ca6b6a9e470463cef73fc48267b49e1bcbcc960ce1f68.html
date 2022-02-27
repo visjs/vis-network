@@ -27,11 +27,11 @@ body {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   Scale nodes and edges depending on their value. Hover over edges to get a
   popup with more information.
-&lt;/p&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+</p>
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -93,7 +93,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

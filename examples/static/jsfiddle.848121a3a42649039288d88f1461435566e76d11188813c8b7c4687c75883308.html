@@ -67,47 +67,47 @@ div.table_description {
       <input
         type="hidden"
         name="html"
-        value='&lt;h2&gt;Editing the nodes and edges (localized)&lt;/h2&gt;
-&lt;p style="width: 700px; font-size: 14px; text-align: justify"&gt;
+        value='<h2>Editing the nodes and edges (localized)</h2>
+<p style="width: 700px; font-size: 14px; text-align: justify">
   The localization is only relevant to the manipulation buttons.
-&lt;/p&gt;
+</p>
 
-&lt;p&gt;
-  &lt;label for="locale"&gt;Select a locale:&lt;/label&gt;
-  &lt;select id="locale" onchange="draw();"&gt;
-    &lt;option value="en"&gt;en&lt;/option&gt;
-    &lt;option value="cn"&gt;cn&lt;/option&gt;
-    &lt;option value="cs"&gt;cs&lt;/option&gt;
-    &lt;option value="de"&gt;de&lt;/option&gt;
-    &lt;option value="es"&gt;es&lt;/option&gt;
-    &lt;option value="fr"&gt;fr&lt;/option&gt;
-    &lt;option value="it"&gt;it&lt;/option&gt;
-    &lt;option value="nl"&gt;nl&lt;/option&gt;
-    &lt;option value="pt-br"&gt;pt&lt;/option&gt;
-    &lt;option value="ru"&gt;ru&lt;/option&gt;
-    &lt;option value="uk"&gt;uk&lt;/option&gt;
-  &lt;/select&gt;
-&lt;/p&gt;
+<p>
+  <label for="locale">Select a locale:</label>
+  <select id="locale" onchange="draw();">
+    <option value="en">en</option>
+    <option value="cn">cn</option>
+    <option value="cs">cs</option>
+    <option value="de">de</option>
+    <option value="es">es</option>
+    <option value="fr">fr</option>
+    <option value="it">it</option>
+    <option value="nl">nl</option>
+    <option value="pt-br">pt</option>
+    <option value="ru">ru</option>
+    <option value="uk">uk</option>
+  </select>
+</p>
 
-&lt;div id="network-popUp"&gt;
-  &lt;span id="operation"&gt;node&lt;/span&gt; &lt;br /&gt;
-  &lt;table style="margin: auto"&gt;
-    &lt;tbody&gt;
-      &lt;tr&gt;
-        &lt;td&gt;id&lt;/td&gt;
-        &lt;td&gt;&lt;input id="node-id" value="new value" /&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;td&gt;label&lt;/td&gt;
-        &lt;td&gt;&lt;input id="node-label" value="new value" /&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-  &lt;input type="button" value="save" id="saveButton" /&gt;
-  &lt;input type="button" value="cancel" id="cancelButton" /&gt;
-&lt;/div&gt;
-&lt;br /&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="network-popUp">
+  <span id="operation">node</span> <br />
+  <table style="margin: auto">
+    <tbody>
+      <tr>
+        <td>id</td>
+        <td><input id="node-id" value="new value" /></td>
+      </tr>
+      <tr>
+        <td>label</td>
+        <td><input id="node-label" value="new value" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="button" value="save" id="saveButton" />
+  <input type="button" value="cancel" id="cancelButton" />
+</div>
+<br />
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -124,7 +124,7 @@ function setDefaultLocale() {
   var defaultLocal = navigator.language;
   var select = document.getElementById("locale");
   select.selectedIndex = 0; // set fallback value
-  for (var i = 0, j = select.options.length; i &lt; j; ++i) {
+  for (var i = 0, j = select.options.length; i < j; ++i) {
     if (select.options[i].getAttribute("value") === defaultLocal) {
       select.selectedIndex = i;
       break;
@@ -218,7 +218,7 @@ function init() {
   draw();
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   init();
 });
 '

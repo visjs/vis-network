@@ -30,54 +30,54 @@ table {
       <input
         type="hidden"
         name="html"
-        value='&lt;h1&gt;Hierarchical Layout without Physics&lt;/h1&gt;
+        value='<h1>Hierarchical Layout without Physics</h1>
 The hierarchical layout can now be controlled without the use of physics. This
-is much quicker. The options for this are: &lt;br /&gt;&lt;br /&gt;
+is much quicker. The options for this are: <br /><br />
 
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td width="150px"&gt;&lt;code&gt;levelSeparation&lt;/code&gt;&lt;/td&gt;
-      &lt;td width="400px"&gt;Distance between levels.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code&gt;nodeSpacing&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;Minimum distance between nodes on the free axis.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code&gt;treeSpacing&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;Distance between different trees (independent networks).&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code&gt;blockShifting&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;
+<table>
+  <tbody>
+    <tr>
+      <td width="150px"><code>levelSeparation</code></td>
+      <td width="400px">Distance between levels.</td>
+    </tr>
+    <tr>
+      <td><code>nodeSpacing</code></td>
+      <td>Minimum distance between nodes on the free axis.</td>
+    </tr>
+    <tr>
+      <td><code>treeSpacing</code></td>
+      <td>Distance between different trees (independent networks).</td>
+    </tr>
+    <tr>
+      <td><code>blockShifting</code></td>
+      <td>
         Method for reducing whitespace. Can be used alone or together with edge
-        minimization. Each node will check for whitespace and will shift
-        it&amp;apos;s branch along with it for as far as it can, respecting the
-        nodeSpacing on any level.
-      &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code&gt;edgeMinimization&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;
+        minimization. Each node will check for whitespace and will shift it&apos;s
+        branch along with it for as far as it can, respecting the nodeSpacing on
+        any level.
+      </td>
+    </tr>
+    <tr>
+      <td><code>edgeMinimization</code></td>
+      <td>
         Method for reducing whitespace. Can be used alone or together with block
         shifting. Enabling block shifting will usually speed up the layout
         process. Each node will try to move along its free axis to reduce the
-        total length of it&amp;apos;s edges.
-      &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;code&gt;parentCentralization&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;
+        total length of it&apos;s edges.
+      </td>
+    </tr>
+    <tr>
+      <td><code>parentCentralization</code></td>
+      <td>
         When true, the parents nodes will be centered again after the the layout
         algorithm has been finished.
-      &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;br /&gt;&lt;br /&gt;
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br /><br />
 Play with the settings below the network and see how the layout changes!
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input

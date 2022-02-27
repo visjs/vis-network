@@ -25,8 +25,8 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;h2&gt;Dynamic Data - Neighbourhood Highlight&lt;/h2&gt;
-&lt;div style="width: 800px; font-size: 14px"&gt;
+        value='<h2>Dynamic Data - Neighbourhood Highlight</h2>
+<div style="width: 800px; font-size: 14px">
   This example shows the power of the DataSet. Once a node is clicked, all nodes
   are greyed out except for the first and second order connected nodes. In this
   example we show how you can determine the order of connection per node as well
@@ -34,10 +34,10 @@
   connected to the selected node. The code doing the highlighting only takes
   about 1ms, the rest of the time is the redrawing of the network (9200
   edges..).
-  &lt;br /&gt;&lt;br /&gt;
-&lt;/div&gt;
+  <br /><br />
+</div>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -96,7 +96,7 @@ function redrawAll() {
 
 function neighbourhoodHighlight(params) {
   // if something is selected:
-  if (params.nodes.length &gt; 0) {
+  if (params.nodes.length > 0) {
     highlightActive = true;
     var i, j;
     var selectedNode = params.nodes[0];
@@ -114,8 +114,8 @@ function neighbourhoodHighlight(params) {
     var allConnectedNodes = [];
 
     // get the second degree nodes
-    for (i = 1; i &lt; degrees; i++) {
-      for (j = 0; j &lt; connectedNodes.length; j++) {
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
         allConnectedNodes = allConnectedNodes.concat(
           network.getConnectedNodes(connectedNodes[j])
         );
@@ -123,7 +123,7 @@ function neighbourhoodHighlight(params) {
     }
 
     // all second degree nodes get a different color and their label back
-    for (i = 0; i &lt; allConnectedNodes.length; i++) {
+    for (i = 0; i < allConnectedNodes.length; i++) {
       allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
       if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
         allNodes[allConnectedNodes[i]].label =
@@ -133,7 +133,7 @@ function neighbourhoodHighlight(params) {
     }
 
     // all first degree nodes get their own color and their label back
-    for (i = 0; i &lt; connectedNodes.length; i++) {
+    for (i = 0; i < connectedNodes.length; i++) {
       allNodes[connectedNodes[i]].color = undefined;
       if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
         allNodes[connectedNodes[i]].label =

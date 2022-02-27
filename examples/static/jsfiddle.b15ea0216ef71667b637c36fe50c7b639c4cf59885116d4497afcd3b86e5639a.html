@@ -39,9 +39,9 @@ body {
       <input
         type="hidden"
         name="html"
-        value='&lt;div class=".mycontainer"&gt;
-  &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;/div&gt;
+        value='<div class=".mycontainer">
+  <div id="mynetwork"></div>
+</div>
 '
       />
       <input
@@ -73,7 +73,7 @@ var nodes = [
   { id: 10, label: "Node: 10\nGroup: 3", group: 3 },
   { id: 11, label: "Node: 11\nGroup: 3", group: 3 },
   { id: 12, label: "Node: 12\nGroup: 3", group: 3 },
-].map((node, index, arr) =&gt; {
+].map((node, index, arr) => {
   const angle = 2 * Math.PI * (index / arr.length + 0.75);
   node.x = 400 * Math.cos(angle);
   node.y = 400 * Math.sin(angle);

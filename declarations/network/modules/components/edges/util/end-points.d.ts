@@ -1,4 +1,5 @@
-/** ============================================================================
+/**
+ * ============================================================================
  * Location of all the endpoint drawing routines.
  *
  * Every endpoint has its own drawing routine, which contains an endpoint definition.
@@ -23,7 +24,8 @@
  *   Scan for 'arrows.to.type` and add it to the description.
  * - Add the endpoint to the examples. At the very least, add it to example
  *   `edgeStyles/arrowTypes`.
- * ============================================================================= */
+ * =============================================================================
+ */
 import { ArrowData } from "./types";
 /**
  * Drawing methods for the endpoints.
@@ -34,7 +36,6 @@ export declare class EndPoints {
      *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
-     *
      * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
      */
     static draw(ctx: CanvasRenderingContext2D, arrowData: ArrowData): boolean;

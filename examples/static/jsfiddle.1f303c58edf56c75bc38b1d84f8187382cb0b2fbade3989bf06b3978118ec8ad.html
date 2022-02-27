@@ -46,85 +46,85 @@ td {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;Node and edge labels may be marked up to be drawn with multiple fonts.&lt;/p&gt;
+        value='<p>Node and edge labels may be marked up to be drawn with multiple fonts.</p>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 
-&lt;p&gt;
-  The value of the &lt;code&gt;font.multi&lt;/code&gt; property may be set to
-  &lt;code&gt;&amp;apos;html&amp;apos;&lt;/code&gt;, &lt;code&gt;&amp;apos;markdown&amp;apos;&lt;/code&gt; or a boolean.
-&lt;/p&gt;
-&lt;table class="indented"&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th colspan="4"&gt;Embedded Font Markup&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th rowspan="2"&gt;font mod&lt;/th&gt;
-      &lt;th colspan="3"&gt;&lt;code&gt;font.multi&lt;/code&gt; setting&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;&lt;code&gt;&amp;apos;html&amp;apos;&lt;/code&gt; or &lt;code&gt;true&lt;/code&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;code&gt;&amp;apos;markdown&amp;apos;&lt;/code&gt; or &lt;code&gt;&amp;apos;md&amp;apos;&lt;/code&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;code&gt;false&lt;/code&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;bold&lt;/th&gt;
-      &lt;td&gt;&lt;code&gt;&amp;lt;b&amp;gt;&lt;/code&gt; ... &lt;code&gt;&amp;lt;/b&amp;gt;&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code&gt;&amp;#xA0;*&lt;/code&gt; ... &lt;code&gt;*&amp;#xA0;&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;n/a&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;italic&lt;/th&gt;
-      &lt;td&gt;&lt;code&gt;&amp;lt;i&amp;gt;&lt;/code&gt; ... &lt;code&gt;&amp;lt;/i&amp;gt;&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code&gt;&amp;#xA0;_&lt;/code&gt; ... &lt;code&gt;_&amp;#xA0;&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;n/a&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;mono-spaced&lt;/th&gt;
-      &lt;td&gt;&lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; ... &lt;code&gt;&amp;lt;/code&amp;gt;&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;code&gt;&amp;#xA0;`&lt;/code&gt; ... &lt;code&gt;`&amp;#xA0;&lt;/code&gt;&lt;/td&gt;
-      &lt;td&gt;n/a&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+<p>
+  The value of the <code>font.multi</code> property may be set to
+  <code>&apos;html&apos;</code>, <code>&apos;markdown&apos;</code> or a boolean.
+</p>
+<table class="indented">
+  <tbody>
+    <tr>
+      <th colspan="4">Embedded Font Markup</th>
+    </tr>
+    <tr>
+      <th rowspan="2">font mod</th>
+      <th colspan="3"><code>font.multi</code> setting</th>
+    </tr>
+    <tr>
+      <th><code>&apos;html&apos;</code> or <code>true</code></th>
+      <th><code>&apos;markdown&apos;</code> or <code>&apos;md&apos;</code></th>
+      <th><code>false</code></th>
+    </tr>
+    <tr>
+      <th>bold</th>
+      <td><code>&amp;lt;b&amp;gt;</code> ... <code>&amp;lt;/b&amp;gt;</code></td>
+      <td><code>&amp;nbsp;*</code> ... <code>*&amp;nbsp;</code></td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <th>italic</th>
+      <td><code>&amp;lt;i&amp;gt;</code> ... <code>&amp;lt;/i&amp;gt;</code></td>
+      <td><code>&amp;nbsp;_</code> ... <code>_&amp;nbsp;</code></td>
+      <td>n/a</td>
+    </tr>
+    <tr>
+      <th>mono-spaced</th>
+      <td><code>&amp;lt;code&amp;gt;</code> ... <code>&amp;lt;/code&amp;gt;</code></td>
+      <td><code>&amp;nbsp;`</code> ... <code>`&amp;nbsp;</code></td>
+      <td>n/a</td>
+    </tr>
+  </tbody>
+</table>
 
-&lt;p&gt;
-  The &lt;code&gt;html&lt;/code&gt; and &lt;code&gt;markdown&lt;/code&gt; rendering is limited: bolds
+<p>
+  The <code>html</code> and <code>markdown</code> rendering is limited: bolds
   may be embedded in italics, italics may be embedded in bolds, and mono-spaced
   may be embedded in bold or italic, but will not be altered by those font mods,
   nor will embedded bolds or italics be handled. The only entities that will be
-  observed in html are &lt;code&gt;&amp;amp;lt;&lt;/code&gt; and &lt;code&gt;&amp;amp;amp;&lt;/code&gt; and in
-  &lt;code&gt;markdown&lt;/code&gt; a backslash will escape the following character
+  observed in html are <code>&amp;amp;lt;</code> and <code>&amp;amp;amp;</code> and in
+  <code>markdown</code> a backslash will escape the following character
   (including a backslash) from special processing. Any font mod that is started
   in a label line will be implicitly terminated at the end of that line. While
-  this interpretation may not exactly match &lt;i&gt;official&lt;/i&gt; rendering standards,
+  this interpretation may not exactly match <i>official</i> rendering standards,
   it is a consistent compromise for drawing multifont strings in the
   non-multifont html canvas element underlying vis.
-&lt;/p&gt;
+</p>
 
-&lt;p&gt;
+<p>
   This implies that four additional sets of font properties will be recognized
   in label processing.
-&lt;/p&gt;
-&lt;p class="indented"&gt;
-  &lt;code&gt;font.bold&lt;/code&gt; designates the font used for rendering bold font mods.
-  &lt;br /&gt;&lt;code&gt;font.ital&lt;/code&gt; designates the font used for rendering italic
-  font mods. &lt;br /&gt;&lt;code&gt;font.boldital&lt;/code&gt; designates the font used for
-  rendering bold-&lt;b&gt;&lt;i&gt;and&lt;/i&gt;&lt;/b
-  &gt;-italic font mods. &lt;br /&gt;&lt;code&gt;font.mono&lt;/code&gt; designates the font used for
+</p>
+<p class="indented">
+  <code>font.bold</code> designates the font used for rendering bold font mods.
+  <br /><code>font.ital</code> designates the font used for rendering italic
+  font mods. <br /><code>font.boldital</code> designates the font used for
+  rendering bold-<b><i>and</i></b
+  >-italic font mods. <br /><code>font.mono</code> designates the font used for
   rendering monospaced font mods.
-&lt;/p&gt;
-&lt;p&gt;
+</p>
+<p>
   Any font mod without a matching font will be rendered using the normal
-  &lt;code&gt;font&lt;/code&gt; (or default) value.
-&lt;/p&gt;
+  <code>font</code> (or default) value.
+</p>
 
-&lt;p&gt;
-  The &lt;code&gt;font.multi&lt;/code&gt; and extended font settings may be set in the
-  network&amp;apos;s &lt;code&gt;nodes&lt;/code&gt; or &lt;code&gt;edges&lt;/code&gt; properties, or on
+<p>
+  The <code>font.multi</code> and extended font settings may be set in the
+  network&apos;s <code>nodes</code> or <code>edges</code> properties, or on
   individual nodes and edges. Node and edge label fonts are separate.
-&lt;/p&gt;
+</p>
 '
       />
       <input
@@ -136,7 +136,7 @@ td {
     id: 2,
     font: { multi: true },
     label:
-      "&lt;b&gt;This&lt;/b&gt; is a\n&lt;i&gt;default&lt;/i&gt; &lt;b&gt;&lt;i&gt;multi-&lt;/i&gt;font&lt;/b&gt; &lt;code&gt;label&lt;/code&gt;",
+      "<b>This</b> is a\n<i>default</i> <b><i>multi-</i>font</b> <code>label</code>",
     x: -40,
     y: -40,
   },
@@ -144,7 +144,7 @@ td {
     id: 3,
     font: { multi: "html", size: 20 },
     label:
-      "&lt;b&gt;This&lt;/b&gt; is an\n&lt;i&gt;html&lt;/i&gt; &lt;b&gt;&lt;i&gt;multi-&lt;/i&gt;font&lt;/b&gt; &lt;code&gt;label&lt;/code&gt;",
+      "<b>This</b> is an\n<i>html</i> <b><i>multi-</i>font</b> <code>label</code>",
     x: 40,
     y: 40,
   },
@@ -163,7 +163,7 @@ var edges = [
     from: 2,
     to: 3,
     font: { multi: true },
-    label: "default to &lt;b&gt;html&lt;/b&gt;",
+    label: "default to <b>html</b>",
   },
   { from: 3, to: 4, font: { multi: "md" }, label: "*html* to _md_" },
 ];

@@ -122,22 +122,22 @@ div.outerBorder {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   With the new stabilization events you can implement your own custom loading
   bar for all those long loading times!
-&lt;/p&gt;
+</p>
 
-&lt;div id="wrapper"&gt;
-  &lt;div id="mynetwork"&gt;&lt;/div&gt;
-  &lt;div id="loadingBar"&gt;
-    &lt;div class="outerBorder"&gt;
-      &lt;div id="text"&gt;0%&lt;/div&gt;
-      &lt;div id="border"&gt;
-        &lt;div id="bar"&gt;&lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+<div id="wrapper">
+  <div id="mynetwork"></div>
+  <div id="loadingBar">
+    <div class="outerBorder">
+      <div id="text">0%</div>
+      <div id="border">
+        <div id="bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
 '
       />
       <input
@@ -537,7 +537,7 @@ div.outerBorder {
   });
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

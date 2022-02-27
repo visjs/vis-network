@@ -23,10 +23,10 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;The types of endpoints. The default is &lt;code&gt;&amp;apos;arrow&amp;apos;&lt;/code&gt;.&lt;/p&gt;
-&lt;p id="arrow_type_list"&gt;&lt;/p&gt;
+        value='<p>The types of endpoints. The default is <code>&apos;arrow&apos;</code>.</p>
+<p id="arrow_type_list"></p>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -52,8 +52,8 @@ var mylist = document.getElementById("arrow_type_list");
 while (mylist.firstChild) {
   mylist.removeChild(mylist.firstChild);
 }
-for (var i = 0; i &lt; nof_types; i++) {
-  if (i &gt; 0) {
+for (var i = 0; i < nof_types; i++) {
+  if (i > 0) {
     mylist.appendChild(document.createTextNode(", "));
   }
   const code = document.createElement("code");
@@ -67,7 +67,7 @@ var nodes = arrow_types.slice();
 nodes.push("end");
 console.log(nodes);
 var nof_nodes = nodes.length;
-for (var i = 0; i &lt; nof_nodes; i++) {
+for (var i = 0; i < nof_nodes; i++) {
   node_attrs[i] = {
     id: i + 1,
     label: nodes[i],
@@ -79,7 +79,7 @@ var nodes = new vis.DataSet(node_attrs);
 // create an array with edges
 var edge_attrs = new Array();
 var nof_edges = nof_nodes - 1;
-for (var i = 0; i &lt; nof_edges; i++) {
+for (var i = 0; i < nof_edges; i++) {
   edge_attrs[i] = {
     from: i + 1,
     to: i + 2,

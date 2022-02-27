@@ -42,36 +42,36 @@ p {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   In this example, the network data can be exported to JSON and imported back
   into the network. Try this out by exporting the network to JSON, clearing the
   network and then importing it again. The nodes will all appear in the same
   position as they were before the network was destroyed.
-&lt;/p&gt;
+</p>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 
-&lt;div&gt;
-  &lt;textarea id="input_output"&gt;&lt;/textarea&gt;
-  &lt;input
+<div>
+  <textarea id="input_output"></textarea>
+  <input
     type="button"
     id="import_button"
     onclick="importNetwork()"
     value="import"
-  /&gt;
-  &lt;input
+  />
+  <input
     type="button"
     id="export_button"
     onclick="exportNetwork()"
     value="export"
-  /&gt;
-  &lt;input
+  />
+  <input
     type="button"
     id="destroy_button"
     onclick="destroyNetwork()"
     value="destroy"
-  /&gt;
-&lt;/div&gt;
+  />
+</div>
 '
       />
       <input
@@ -161,7 +161,7 @@ function getNodeData(data) {
 }
 
 function getNodeById(data, id) {
-  for (var n = 0; n &lt; data.length; n++) {
+  for (var n = 0; n < data.length; n++) {
     if (data[n].id == id) {
       // double equals since id can be numeric or string
       return data[n];

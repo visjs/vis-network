@@ -26,32 +26,32 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;Generate a random network with nodes and edges.&lt;/p&gt;
-&lt;form onsubmit="draw(); return false;"&gt;
-  &lt;label for="nodeCount"&gt;Number of nodes:&lt;/label&gt;
-  &lt;input id="nodeCount" type="text" value="25" style="width: 50px" /&gt;
-  &lt;input type="button" value="Go" onclick="draw()" /&gt;
-&lt;/form&gt;
+        value='<p>Generate a random network with nodes and edges.</p>
+<form onsubmit="draw(); return false;">
+  <label for="nodeCount">Number of nodes:</label>
+  <input id="nodeCount" type="text" value="25" style="width: 50px" />
+  <input type="button" value="Go" onclick="draw()" />
+</form>
 
-&lt;a
+<a
   id="disable-smooth-curves"
   style="display: none"
   href="#"
   onclick="disableSmoothCurves()"
-&gt;
+>
   You may want to disable dynamic smooth curves for better performance with a
   large amount of nodes and edges. Click here to disable them.
-&lt;/a&gt;
-&lt;a
+</a>
+<a
   id="enable-smooth-curves"
   style="display: none"
   href="#"
   onclick="enableSmoothCurves()"
-&gt;
+>
   Click here to reenable the dynamic smooth curves.
-&lt;/a&gt;
+</a>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -72,7 +72,7 @@ function destroy() {
 function draw() {
   destroy();
   var nodeCount = document.getElementById("nodeCount").value;
-  if (nodeCount &gt; 100) {
+  if (nodeCount > 100) {
     document.getElementById("disable-smooth-curves").style.display = "inline";
     document.getElementById("enable-smooth-curves").style.display = "none";
   } else if (setSmooth === false) {
@@ -102,7 +102,7 @@ function enableSmoothCurves() {
   network.setOptions({ edges: { smooth: { type: "dynamic" } } });
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

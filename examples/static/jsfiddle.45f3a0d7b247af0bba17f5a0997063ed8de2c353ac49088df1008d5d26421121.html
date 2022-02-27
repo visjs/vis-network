@@ -29,26 +29,26 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;h2&gt;Hierarchical Layout - User-defined&lt;/h2&gt;
+        value='<h2>Hierarchical Layout - User-defined</h2>
 
-&lt;div style="width: 700px; font-size: 14px; text-align: justify"&gt;
+<div style="width: 700px; font-size: 14px; text-align: justify">
   This example shows a user-defined hierarchical layout. If the user defines
   levels for nodes but does not do so for all nodes, an alert will show up and
   hierarchical layout will be disabled. Either all or none can be defined. If
   the smooth curves appear to be inverted, the direction of the edge is not in
   the same direction as the network.
-&lt;/div&gt;
-&lt;p&gt;
-  &lt;input type="button" id="btn-UD" value="Up-Down" /&gt;
-  &lt;input type="button" id="btn-DU" value="Down-Up" /&gt;
-  &lt;input type="button" id="btn-LR" value="Left-Right" /&gt;
-  &lt;input type="button" id="btn-RL" value="Right-Left" /&gt;
-  &lt;input type="hidden" id="direction" value="UD" /&gt;
-&lt;/p&gt;
+</div>
+<p>
+  <input type="button" id="btn-UD" value="Up-Down" />
+  <input type="button" id="btn-DU" value="Down-Up" />
+  <input type="button" id="btn-LR" value="Left-Right" />
+  <input type="button" id="btn-RL" value="Right-Left" />
+  <input type="hidden" id="direction" value="UD" />
+</p>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 
-&lt;p id="selection"&gt;&lt;/p&gt;
+<p id="selection"></p>
 '
       />
       <input
@@ -73,7 +73,7 @@ function draw() {
   var connectionCount = [];
 
   // randomly create some nodes and edges
-  for (var i = 0; i &lt; 15; i++) {
+  for (var i = 0; i < 15; i++) {
     nodes.push({ id: i, label: String(i) });
   }
   edges.push({ from: 0, to: 1 });
@@ -162,7 +162,7 @@ btnRL.onclick = function () {
   draw();
 };
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

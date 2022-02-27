@@ -39,66 +39,66 @@ table.legend_table td {
       <input
         type="hidden"
         name="html"
-        value='&lt;h2&gt;Navigation controls and keyboard navigation&lt;/h2&gt;
-&lt;div style="width: 800px; font-size: 14px; text-align: justify"&gt;
+        value='<h2>Navigation controls and keyboard navigation</h2>
+<div style="width: 800px; font-size: 14px; text-align: justify">
   This example is the same as example 2, except for the navigation controls that
   have been activated. The navigation controls are described below.
-  &lt;br /&gt;&lt;br /&gt;
-  &lt;table class="legend_table"&gt;
-    &lt;tbody&gt;
-      &lt;tr&gt;
-        &lt;th&gt;Icons:&lt;/th&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/upArrow.png" /&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/downArrow.png" /&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/leftArrow.png" /&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/rightArrow.png" /&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/plus.png" /&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/minus.png" /&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;img src="../../../dist/img/network/zoomExtends.png" /&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;th&gt;Keyboard shortcuts:&lt;/th&gt;
-        &lt;td&gt;&lt;div&gt;Up arrow&lt;/div&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;div&gt;Down arrow&lt;/div&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;div&gt;Left arrow&lt;/div&gt;&lt;/td&gt;
-        &lt;td&gt;&lt;div&gt;Right arrow&lt;/div&gt;&lt;/td&gt;
-        &lt;td&gt;
-          &lt;div&gt;=&lt;br /&gt;[&lt;br /&gt;Page up&lt;/div&gt;
-        &lt;/td&gt;
-        &lt;td&gt;
-          &lt;div&gt;-&lt;br /&gt;]&lt;br /&gt;Page down&lt;/div&gt;
-        &lt;/td&gt;
-        &lt;td&gt;&lt;div&gt;None&lt;/div&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-        &lt;th&gt;Description:&lt;/th&gt;
-        &lt;td&gt;Move up&lt;/td&gt;
-        &lt;td&gt;Move down&lt;/td&gt;
-        &lt;td&gt;Move left&lt;/td&gt;
-        &lt;td&gt;Move right&lt;/td&gt;
-        &lt;td&gt;Zoom in&lt;/td&gt;
-        &lt;td&gt;Zoom out&lt;/td&gt;
-        &lt;td&gt;Zoom extent&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-  &lt;br /&gt;
+  <br /><br />
+  <table class="legend_table">
+    <tbody>
+      <tr>
+        <th>Icons:</th>
+        <td><img src="../../../dist/img/network/upArrow.png" /></td>
+        <td><img src="../../../dist/img/network/downArrow.png" /></td>
+        <td><img src="../../../dist/img/network/leftArrow.png" /></td>
+        <td><img src="../../../dist/img/network/rightArrow.png" /></td>
+        <td><img src="../../../dist/img/network/plus.png" /></td>
+        <td><img src="../../../dist/img/network/minus.png" /></td>
+        <td><img src="../../../dist/img/network/zoomExtends.png" /></td>
+      </tr>
+      <tr>
+        <th>Keyboard shortcuts:</th>
+        <td><div>Up arrow</div></td>
+        <td><div>Down arrow</div></td>
+        <td><div>Left arrow</div></td>
+        <td><div>Right arrow</div></td>
+        <td>
+          <div>=<br />[<br />Page up</div>
+        </td>
+        <td>
+          <div>-<br />]<br />Page down</div>
+        </td>
+        <td><div>None</div></td>
+      </tr>
+      <tr>
+        <th>Description:</th>
+        <td>Move up</td>
+        <td>Move down</td>
+        <td>Move left</td>
+        <td>Move right</td>
+        <td>Zoom in</td>
+        <td>Zoom out</td>
+        <td>Zoom extent</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
   Apart from clicking the icons, you can also navigate using the keyboard. The
   buttons are in table above. Zoom Extends changes the zoom and position of the
   camera to encompass all visible nodes.
-  &lt;u&gt;
+  <u>
     Styles have to be loaded to correctly display the icons. Standalone build
     includes necessary styles and automatically injects them into the page but
-    for peer and legacy builds it&amp;apos;s necessry to manually load
-    &lt;b&gt;vis-network.css&lt;/b&gt;.
-  &lt;/u&gt;
+    for peer and legacy builds it&apos;s necessry to manually load
+    <b>vis-network.css</b>.
+  </u>
   The user is free to alter or overload the CSS classes but without them the
   navigation icons are not visible.
-&lt;/div&gt;
+</div>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 
-&lt;p id="selection"&gt;&lt;/p&gt;
+<p id="selection"></p>
 '
       />
       <input
@@ -156,7 +156,7 @@ function draw() {
   });
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

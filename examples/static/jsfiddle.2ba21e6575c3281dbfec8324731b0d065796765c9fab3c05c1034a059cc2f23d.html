@@ -38,9 +38,9 @@ body {
       <input
         type="hidden"
         name="html"
-        value='&lt;div class=".mycontainer"&gt;
-  &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;/div&gt;
+        value='<div class=".mycontainer">
+  <div id="mynetwork"></div>
+</div>
 '
       />
       <input
@@ -59,7 +59,7 @@ body {
     "straightCross",
     "vertical",
     "curvedCCW",
-  ].map((type) =&gt; [
+  ].map((type) => [
     { type, scaleFactor: 1 },
     { type, scaleFactor: -1 },
   ])
@@ -71,7 +71,7 @@ var nodes = new vis.DataSet();
 // create an array with edges
 var edges = new vis.DataSet();
 
-types.forEach(({ type, scaleFactor }, i) =&gt; {
+types.forEach(({ type, scaleFactor }, i) => {
   nodes.add([
     {
       id: 10 * i + 1,

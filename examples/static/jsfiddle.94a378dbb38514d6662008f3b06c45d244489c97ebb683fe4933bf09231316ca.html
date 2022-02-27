@@ -45,72 +45,72 @@ body,
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="text"&gt;
-  &lt;div id="title"&gt;
-    &lt;h1&gt;Vis Network&lt;/h1&gt;
-    &lt;h2&gt;Basic Usage&lt;/h2&gt;
-    &lt;h3&gt;ESNext Build&lt;/h3&gt;
-  &lt;/div&gt;
+        value='<div id="text">
+  <div id="title">
+    <h1>Vis Network</h1>
+    <h2>Basic Usage</h2>
+    <h3>ESNext Build</h3>
+  </div>
 
-  &lt;p&gt;Create a simple network with some nodes and edges.&lt;/p&gt;
+  <p>Create a simple network with some nodes and edges.</p>
 
-  &lt;p&gt;
+  <p>
     ESNext build is designed to be used in combination with bundlers and
-    transpillers. It doesn&amp;apos;t bundle any dependencies or polyfills, you have
-    to provide them yourself. This is handy if you already have polyfills and
+    transpillers. It doesn&apos;t bundle any dependencies or polyfills, you have to
+    provide them yourself. This is handy if you already have polyfills and
     potentionally also the same dependencies in your app, you can use them for
     Vis projects too instead of having multiple copies of the same polyfills in
     your bundle from different packages.
-  &lt;/p&gt;
+  </p>
 
-  &lt;p&gt;Otherwise it can be used the same way as the peer build.&lt;/p&gt;
+  <p>Otherwise it can be used the same way as the peer build.</p>
 
-  &lt;h4&gt;When to use&lt;/h4&gt;
-  &lt;p&gt;
+  <h4>When to use</h4>
+  <p>
     When you need to optimize bundle size or finer control over what gets
     loaded.
-  &lt;/p&gt;
+  </p>
 
-  &lt;h4&gt;Content&lt;/h4&gt;
-  &lt;ul&gt;
-    &lt;li&gt;
+  <h4>Content</h4>
+  <ul>
+    <li>
       Vis Network
-      &lt;ul&gt;
-        &lt;li&gt;Network&amp;quot;&lt;/li&gt;
-        &lt;li&gt;NetworkDOTParser&amp;quot;&lt;/li&gt;
-        &lt;li&gt;NetworkImages&amp;quot;&lt;/li&gt;
-        &lt;li&gt;NetworkOptions&amp;quot;&lt;/li&gt;
-        &lt;li&gt;networkGephiParser&amp;quot;&lt;/li&gt;
-        &lt;li&gt;parseDOTNetwork&amp;quot;&lt;/li&gt;
-        &lt;li&gt;parseGephiNetwork&amp;quot;&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-  &lt;/ul&gt;
+      <ul>
+        <li>Network"</li>
+        <li>NetworkDOTParser"</li>
+        <li>NetworkImages"</li>
+        <li>NetworkOptions"</li>
+        <li>networkGephiParser"</li>
+        <li>parseDOTNetwork"</li>
+        <li>parseGephiNetwork"</li>
+      </ul>
+    </li>
+  </ul>
 
-  &lt;h4&gt;How to use&lt;/h4&gt;
+  <h4>How to use</h4>
 
-  &lt;h5&gt;Browser UMD&lt;/h5&gt;
-  &lt;p&gt;
+  <h5>Browser UMD</h5>
+  <p>
     Even though UMD builds are a part of the package, this is very unlikely to
     work. You generally need some polyfills and transpilation even in the most
     modern browsers.
-  &lt;/p&gt;
+  </p>
 
-  &lt;h5&gt;Bundled ESM&lt;/h5&gt;
-  &lt;pre&gt;&lt;code&gt;
+  <h5>Bundled ESM</h5>
+  <pre><code>
 // all peer dependencies have to be installed
-// even if you don&amp;apos;t import them yourself
-import { DataSet } from &amp;quot;vis-data/esnext&amp;quot;;
-import { Network } from &amp;quot;vis-network/esnext&amp;quot;;
-import &amp;quot;vis-network/styles/vis-network.css&amp;quot;;
+// even if you don&apos;t import them yourself
+import { DataSet } from "vis-data/esnext";
+import { Network } from "vis-network/esnext";
+import "vis-network/styles/vis-network.css";
 
 // create an array with nodes
 const nodes = new DataSet([
-  { id: 1, label: &amp;quot;Node 1&amp;quot; },
-  { id: 2, label: &amp;quot;Node 2&amp;quot; },
-  { id: 3, label: &amp;quot;Node 3&amp;quot; },
-  { id: 4, label: &amp;quot;Node 4&amp;quot; },
-  { id: 5, label: &amp;quot;Node 5&amp;quot; }
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" }
 ]);
 
 // create an array with edges
@@ -123,27 +123,27 @@ const edges = new DataSet([
 ]);
 
 // create a network
-const container = document.getElementById(&amp;quot;mynetwork&amp;quot;);
+const container = document.getElementById("mynetwork");
 const data = {
   nodes: nodes,
   edges: edges
 };
 const options = {};
 const network = new Network(container, data, options);
-      &lt;/code&gt;&lt;/pre&gt;
+      </code></pre>
 
   The code above has to be injected into a page which contains an element with
-  &lt;code&gt;mynetwork&lt;/code&gt; id. Like for example:
-  &lt;pre&gt;&lt;code&gt;
-&amp;lt;div id=&amp;quot;mynetwork&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-      &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+  <code>mynetwork</code> id. Like for example:
+  <pre><code>
+&amp;lt;div id="mynetwork"&amp;gt;&amp;lt;/div&amp;gt;
+      </code></pre>
+</div>
 
-&lt;div id="mynetwork"&gt;N/A&lt;/div&gt;
+<div id="mynetwork">N/A</div>
 '
       />
-      <input type="hidden" name="js" value />
-      <input type="hidden" name="resources" value />
+      <input type="hidden" name="js" value="" />
+      <input type="hidden" name="resources" value="" />
       <input
         type="hidden"
         name="title"

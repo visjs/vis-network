@@ -23,14 +23,14 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   Nodes can have all sorts of shapes. Note the exception where the nodes with
-  text inside and the text type&amp;apos;s size are determined by the font size, not
-  the node size.
-&lt;/p&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+  text inside and the text type&apos;s size are determined by the font size, not the
+  node size.
+</p>
+<div id="mynetwork"></div>
 
-&lt;div id="info"&gt;&lt;/div&gt;
+<div id="info"></div>
 '
       />
       <input
@@ -151,7 +151,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

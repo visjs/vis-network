@@ -95,73 +95,68 @@ a:hover {
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="header"&gt;
-  &lt;h1&gt;DOT edge styles&lt;/h1&gt;
+        value='<div id="header">
+  <h1>DOT edge styles</h1>
 
-  &lt;div&gt;
-    &lt;p&gt;Example of edge styles support.&lt;/p&gt;
+  <div>
+    <p>Example of edge styles support.</p>
 
-    &lt;table border="1"&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;th&gt;Attributes&lt;/th&gt;
-          &lt;th&gt;Desriptions&lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td align="center"&gt;label&lt;/td&gt;
-          &lt;td&gt;Text displayed on the edge&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td align="center"&gt;color&lt;/td&gt;
-          &lt;td&gt;Edge color&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td align="center"&gt;style&lt;/td&gt;
-          &lt;td&gt;
-            Edge style (&amp;quot;solid&amp;quot;, &amp;quot;dashed&amp;quot;,
-            &amp;quot;dotted&amp;quot;)
-          &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td align="center"&gt;dir&lt;/td&gt;
-          &lt;td&gt;
-            Arrow direction (&amp;quot;forward&amp;quot;, &amp;quot;both&amp;quot;,
-            &amp;quot;back&amp;quot;, &amp;quot;none&amp;quot;), default is &amp;quot;forward&amp;quot;
-          &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td align="center"&gt;arrowhead, arrowtail&lt;/td&gt;
-          &lt;td&gt;
-            Arrow style (&amp;quot;dot&amp;quot;, &amp;quot;box&amp;quot;, &amp;quot;crow&amp;quot;,
-            &amp;quot;curve&amp;quot;, &amp;quot;icurve&amp;quot;, &amp;quot;normal&amp;quot;,
-            &amp;quot;inv&amp;quot;, &amp;quot;diamond&amp;quot;, &amp;quot;tee&amp;quot;,
-            &amp;quot;vee&amp;quot;)
-          &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-          &lt;td align="center"&gt;width or penwidth&lt;/td&gt;
-          &lt;td&gt;Edge width&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+    <table border="1">
+      <tbody>
+        <tr>
+          <th>Attributes</th>
+          <th>Desriptions</th>
+        </tr>
+        <tr>
+          <td align="center">label</td>
+          <td>Text displayed on the edge</td>
+        </tr>
+        <tr>
+          <td align="center">color</td>
+          <td>Edge color</td>
+        </tr>
+        <tr>
+          <td align="center">style</td>
+          <td>Edge style ("solid", "dashed", "dotted")</td>
+        </tr>
+        <tr>
+          <td align="center">dir</td>
+          <td>
+            Arrow direction ("forward", "both", "back", "none"), default is
+            "forward"
+          </td>
+        </tr>
+        <tr>
+          <td align="center">arrowhead, arrowtail</td>
+          <td>
+            Arrow style ("dot", "box", "crow", "curve", "icurve", "normal",
+            "inv", "diamond", "tee", "vee")
+          </td>
+        </tr>
+        <tr>
+          <td align="center">width or penwidth</td>
+          <td>Edge width</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-&lt;div id="contents"&gt;
-  &lt;div id="left"&gt;
-    &lt;textarea id="data"&gt; &lt;/textarea&gt;
-    &lt;div&gt;
-      &lt;button id="draw" title="Draw the DOT graph (Ctrl+Enter)"&gt;Draw&lt;/button&gt;
-      &lt;button id="reset" title="Reset the DOT graph"&gt;Reset&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
-      &lt;span id="error"&gt;&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div id="right"&gt;
-    &lt;div id="mynetwork"&gt;&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+<div id="contents">
+  <div id="left">
+    <textarea id="data"> </textarea>
+    <div>
+      <button id="draw" title="Draw the DOT graph (Ctrl+Enter)">Draw</button>
+      <button id="reset" title="Reset the DOT graph">Reset</button>
+    </div>
+    <div>
+      <span id="error"></span>
+    </div>
+  </div>
+  <div id="right">
+    <div id="mynetwork"></div>
+  </div>
+</div>
 '
       />
       <input
@@ -185,16 +180,16 @@ a:hover {
   &apos; lines -- dotted[label="dotted purple", style="dotted", color="purple"]; \n&apos; +
   "\n" +
   " // Arrowhead styles\n" +
-  &apos; ahs -&gt; box[label="box", arrowhead=box]; \n&apos; +
-  &apos; ahs -&gt; crow[label="crow", arrowhead=crow]; \n&apos; +
-  &apos; ahs -&gt; curve[label="curve", arrowhead=curve]; \n&apos; +
-  &apos; ahs -&gt; icurve[label="icurve", arrowhead=icurve]; \n&apos; +
-  &apos; ahs -&gt; normal[label="normal", arrowhead=normal]; \n&apos; +
-  &apos; ahs -&gt; inv[label="inv", arrowhead=inv]; \n&apos; +
-  &apos; ahs -&gt; diamond[label="diamond and box", dir=both, arrowhead=diamond, arrowtail=box]; \n&apos; +
-  &apos; ahs -&gt; dot[label="both dot", dir=both, arrowhead=dot, arrowtail=dot]; \n&apos; +
-  &apos; ahs -&gt; tee[label="tee", arrowhead=tee]; \n&apos; +
-  &apos; ahs -&gt; vee[label="back vee", dir=back, arrowtail=vee]; \n&apos; +
+  &apos; ahs -> box[label="box", arrowhead=box]; \n&apos; +
+  &apos; ahs -> crow[label="crow", arrowhead=crow]; \n&apos; +
+  &apos; ahs -> curve[label="curve", arrowhead=curve]; \n&apos; +
+  &apos; ahs -> icurve[label="icurve", arrowhead=icurve]; \n&apos; +
+  &apos; ahs -> normal[label="normal", arrowhead=normal]; \n&apos; +
+  &apos; ahs -> inv[label="inv", arrowhead=inv]; \n&apos; +
+  &apos; ahs -> diamond[label="diamond and box", dir=both, arrowhead=diamond, arrowtail=box]; \n&apos; +
+  &apos; ahs -> dot[label="both dot", dir=both, arrowhead=dot, arrowtail=dot]; \n&apos; +
+  &apos; ahs -> tee[label="tee", arrowhead=tee]; \n&apos; +
+  &apos; ahs -> vee[label="back vee", dir=back, arrowtail=vee]; \n&apos; +
   "}";
 
 // create a network

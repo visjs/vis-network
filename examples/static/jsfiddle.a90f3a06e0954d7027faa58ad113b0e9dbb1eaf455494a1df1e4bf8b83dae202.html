@@ -66,103 +66,103 @@ pre {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   This example demonstrates dynamically adding, updating and removing nodes and
   edges using a DataSet.
-&lt;/p&gt;
+</p>
 
-&lt;h1&gt;Adjust&lt;/h1&gt;
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;
-        &lt;h2&gt;Node&lt;/h2&gt;
-        &lt;table&gt;
-          &lt;tbody&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;label for="node-id"&gt;Id&lt;/label&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;input id="node-id" type="text" value="6" /&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;label for="node-label"&gt;Label&lt;/label&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;input id="node-label" type="text" value="Node 6" /&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;Action&lt;/td&gt;
-              &lt;td&gt;
-                &lt;button id="node-add" onclick="addNode();"&gt;Add&lt;/button&gt;
-                &lt;button id="node-update" onclick="updateNode();"&gt;Update&lt;/button&gt;
-                &lt;button id="node-remove" onclick="removeNode();"&gt;Remove&lt;/button&gt;
-              &lt;/td&gt;
-            &lt;/tr&gt;
-          &lt;/tbody&gt;
-        &lt;/table&gt;
-      &lt;/td&gt;
-      &lt;td&gt;
-        &lt;h2&gt;Edge&lt;/h2&gt;
-        &lt;table&gt;
-          &lt;tbody&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;label for="edge-id"&gt;Id&lt;/label&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;input id="edge-id" type="text" value="5" /&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;label for="edge-from"&gt;From&lt;/label&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;input id="edge-from" type="text" value="3" /&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;label for="edge-to"&gt;To&lt;/label&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;input id="edge-to" type="text" value="4" /&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;/td&gt;
-              &lt;td&gt;Action&lt;/td&gt;
-              &lt;td&gt;
-                &lt;button id="edge-add" onclick="addEdge();"&gt;Add&lt;/button&gt;
-                &lt;button id="edge-update" onclick="updateEdge();"&gt;Update&lt;/button&gt;
-                &lt;button id="edge-remove" onclick="removeEdge();"&gt;Remove&lt;/button&gt;
-              &lt;/td&gt;
-            &lt;/tr&gt;
-          &lt;/tbody&gt;
-        &lt;/table&gt;
-      &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+<h1>Adjust</h1>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <h2>Node</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td></td>
+              <td><label for="node-id">Id</label></td>
+              <td><input id="node-id" type="text" value="6" /></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><label for="node-label">Label</label></td>
+              <td><input id="node-label" type="text" value="Node 6" /></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Action</td>
+              <td>
+                <button id="node-add" onclick="addNode();">Add</button>
+                <button id="node-update" onclick="updateNode();">Update</button>
+                <button id="node-remove" onclick="removeNode();">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <h2>Edge</h2>
+        <table>
+          <tbody>
+            <tr>
+              <td></td>
+              <td><label for="edge-id">Id</label></td>
+              <td><input id="edge-id" type="text" value="5" /></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><label for="edge-from">From</label></td>
+              <td><input id="edge-from" type="text" value="3" /></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><label for="edge-to">To</label></td>
+              <td><input id="edge-to" type="text" value="4" /></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Action</td>
+              <td>
+                <button id="edge-add" onclick="addEdge();">Add</button>
+                <button id="edge-update" onclick="updateEdge();">Update</button>
+                <button id="edge-remove" onclick="removeEdge();">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-&lt;h1&gt;View&lt;/h1&gt;
-&lt;table class="view"&gt;
-  &lt;colgroup&gt;
-    &lt;col width="25%" /&gt;
-    &lt;col width="25%" /&gt;
-    &lt;col width="50%" /&gt;
-  &lt;/colgroup&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;
-        &lt;h2&gt;Nodes&lt;/h2&gt;
-        &lt;pre id="nodes"&gt;&lt;/pre&gt;
-      &lt;/td&gt;
+<h1>View</h1>
+<table class="view">
+  <colgroup>
+    <col width="25%" />
+    <col width="25%" />
+    <col width="50%" />
+  </colgroup>
+  <tbody>
+    <tr>
+      <td>
+        <h2>Nodes</h2>
+        <pre id="nodes"></pre>
+      </td>
 
-      &lt;td&gt;
-        &lt;h2&gt;Edges&lt;/h2&gt;
-        &lt;pre id="edges"&gt;&lt;/pre&gt;
-      &lt;/td&gt;
+      <td>
+        <h2>Edges</h2>
+        <pre id="edges"></pre>
+      </td>
 
-      &lt;td&gt;
-        &lt;h2&gt;Network&lt;/h2&gt;
+      <td>
+        <h2>Network</h2>
 
-        &lt;div id="mynetwork"&gt;&lt;/div&gt;
-      &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+        <div id="mynetwork"></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
 '
       />
       <input
@@ -278,7 +278,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

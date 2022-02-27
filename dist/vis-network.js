@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2021-12-07T21:46:47.440Z
+ * @date    2022-02-27T17:18:28.613Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -749,7 +749,6 @@
 	 * @param x - The position of the center on the x axis.
 	 * @param y - The position of the center on the y axis.
 	 * @param r - Half of the length of the sides.
-	 *
 	 * @remarks
 	 * http://en.wikipedia.org/wiki/Equilateral_triangle
 	 */
@@ -778,7 +777,6 @@
 	 * @param x - The position of the center on the x axis.
 	 * @param y - The position of the center on the y axis.
 	 * @param r - Half of the length of the sides.
-	 *
 	 * @remarks
 	 * http://en.wikipedia.org/wiki/Equilateral_triangle
 	 */
@@ -830,7 +828,6 @@
 	 * @param x - The position of the center on the x axis.
 	 * @param y - The position of the center on the y axis.
 	 * @param r - Half of the width and height of the diamond.
-	 *
 	 * @remarks
 	 * http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
 	 */
@@ -852,7 +849,6 @@
 	 * @param w - The width of the rectangle.
 	 * @param h - The height of the rectangle.
 	 * @param r - The radius of the corners.
-	 *
 	 * @remarks
 	 * http://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
 	 */
@@ -890,7 +886,6 @@
 	 * @param y - The position of the center on the y axis.
 	 * @param w - The width of the ellipse.
 	 * @param h - The height of the ellipse.
-	 *
 	 * @remarks
 	 * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
 	 *
@@ -927,7 +922,6 @@
 	 * @param y - The position of the center on the y axis.
 	 * @param w - The width of the database.
 	 * @param h - The height of the database.
-	 *
 	 * @remarks
 	 * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
 	 */
@@ -973,7 +967,6 @@
 	 * @param x2 - The end position on the x axis.
 	 * @param y2 - The end position on the y axis.
 	 * @param pattern - List of lengths starting with line and then alternating between space and line.
-	 *
 	 * @author David Jordan
 	 * @remarks
 	 * date 2012-08-08
@@ -1056,7 +1049,6 @@
 	 * @param name - The name of the function. Either the name of a
 	 * CanvasRenderingContext2D property or an export from shapes.ts without the
 	 * draw prefix.
-	 *
 	 * @returns The function that can be used for rendering. In case of native
 	 * CanvasRenderingContext2D function the API is normalized to
 	 * `(ctx: CanvasRenderingContext2D, ...originalArgs) => void`.
@@ -12895,7 +12887,6 @@
 	 *
 	 * @param gephiJSON - The parsed JSON data in Gephi format.
 	 * @param optionsObj - Additional options.
-	 *
 	 * @returns The converted data ready to be used in Vis.
 	 */
 	function parseGephi(gephiJSON, optionsObj) {
@@ -13234,7 +13225,6 @@
 	 *
 	 * @param locales - All the available locales.
 	 * @param rawCode - The original code as supplied by the user.
-	 *
 	 * @returns Language code in the format language-COUNTRY or language, eventually
 	 * fallbacks to en.
 	 */
@@ -18982,7 +18972,6 @@
 	 *
 	 * @param {string}  subOption  option within object 'chosen' to consider; either 'node', 'edge' or 'label'
 	 * @param {object}  pile       array of options objects to consider
-	 *
 	 * @returns {boolean | Function}  value for passed subOption of 'chosen' to use
 	 */
 
@@ -19069,7 +19058,6 @@
 	 * @param {number} angle
 	 * @param {number} radius
 	 * @param {VisNode} node
-	 *
 	 * @returns {object} x and y coordinates
 	 */
 
@@ -21955,7 +21943,6 @@
 	     * @param {boolean} hover
 	     * @param {ArrowOptions} values
 	     * @private
-	     *
 	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
@@ -22045,7 +22032,6 @@
 	   * @param {object} body
 	   * @param {Label} labelModule
 	   * @param {Function} ctxRenderer
-	   
 	   */
 	  function CustomShape(options, body, labelModule, ctxRenderer) {
 	    var _this;
@@ -22064,7 +22050,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on different layers.
 	   */
 
@@ -22251,7 +22236,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -22310,7 +22294,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -22491,7 +22474,6 @@
 	     * @param {boolean} selected
 	     * @param {boolean} hover
 	     * @param {ArrowOptions} values
-	     *
 	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
@@ -22789,7 +22771,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -22848,7 +22829,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -22907,7 +22887,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -23054,7 +23033,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -23113,7 +23091,6 @@
 	   * @param {boolean} selected
 	   * @param {boolean} hover
 	   * @param {ArrowOptions} values
-	   *
 	   * @returns {object} Callbacks to draw later on higher layers.
 	   */
 
@@ -23160,7 +23137,6 @@
 	   *                              {string} image  An image url
 	   *                              {string} title  A title text, can be HTML
 	   *                              {anytype} group A group name or number
-	   *
 	   * @param {object} body               Shared state of current network instance
 	   * @param {Network.Images} imagelist  A list with images. Only needed when the node has an image
 	   * @param {Groups} grouplist          A list with groups. Needed for retrieving group options
@@ -23676,7 +23652,6 @@
 	     * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
 	     *
 	     * @param {CanvasRenderingContext2D}   ctx
-	     *
 	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
@@ -24432,10 +24407,8 @@
 	     * Retrieves the x y position of a specific id.
 	     *
 	     * @param {string} id The id to retrieve.
-	     *
 	     * @throws {TypeError} If no id is included.
 	     * @throws {ReferenceError} If an invalid id is provided.
-	     *
 	     * @returns {{ x: number, y: number }} Returns X, Y canvas position of the node with given id.
 	     */
 
@@ -24810,7 +24783,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns False as there is no way to fill an image.
 	     */
 	    function draw(ctx, arrowData) {
@@ -24857,7 +24829,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -24902,7 +24873,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -24947,7 +24917,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -24992,7 +24961,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25037,7 +25005,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25079,7 +25046,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25121,7 +25087,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25155,7 +25120,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25209,7 +25173,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25252,7 +25215,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25295,7 +25257,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True because ctx.fill() can be used to fill the arrow.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25340,7 +25301,6 @@
 	     *
 	     * @param ctx - The shape will be rendered into this context.
 	     * @param arrowData - The data determining the shape.
-	     *
 	     * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
 	     */
 	    function draw(ctx, arrowData) {
@@ -25562,7 +25522,6 @@
 	     * @param node - The node (either from or to node of the edge).
 	     * @param ctx - The context that will be used for rendering.
 	     * @param options - Additional options.
-	     *
 	     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
 	     */
 
@@ -25615,7 +25574,6 @@
 	     * Compute the center point and radius of an edge connected to the same node at both ends.
 	     *
 	     * @param ctx - The context that will be used for rendering.
-	     *
 	     * @returns `[x, y, radius]`
 	     */
 
@@ -25641,7 +25599,6 @@
 	     * @param y - Center of the circle on the y axis.
 	     * @param radius - Radius of the circle.
 	     * @param position - Value between 0 (line start) and 1 (line end).
-	     *
 	     * @returns Cartesian coordinates of requested point on the circle.
 	     */
 
@@ -25659,11 +25616,9 @@
 	     *
 	     * @remarks
 	     * This function uses binary search to look for the point where the circle crosses the border of the node.
-	     *
 	     * @param nearNode - The node (either from or to node of the edge).
 	     * @param ctx - The context that will be used for rendering.
 	     * @param options - Additional options.
-	     *
 	     * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
 	     */
 
@@ -25729,7 +25684,6 @@
 	     *
 	     * @param selected - Determines wheter the line is selected.
 	     * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
-	     *
 	     * @returns The width of the line.
 	     */
 
@@ -25751,7 +25705,6 @@
 	     * @param values - Formatting values like color, opacity or shadow.
 	     * @param _selected - Ignored (TODO: remove in the future).
 	     * @param _hover - Ignored (TODO: remove in the future).
-	     *
 	     * @returns Color string if single color is inherited or gradient if two.
 	     */
 
@@ -25845,7 +25798,6 @@
 	    }
 	    /**
 	     * @inheritDoc
-	     *
 	     * @remarks
 	     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
 	     */
@@ -25876,7 +25828,6 @@
 	     * @param y2 - Second end of the line segment on the y axis.
 	     * @param x3 - Position of the point on the x axis.
 	     * @param y3 - Position of the point on the y axis.
-	     *
 	     * @returns The distance between the line segment and the point.
 	     */
 
@@ -26175,11 +26126,9 @@
 	   *
 	   * @remarks
 	   * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
-	   *
 	   * @param nearNode - The node (either from or to node of the edge).
 	   * @param ctx - The context that will be used for rendering.
 	   * @param viaNode - Additional node(s) the edge passes through.
-	   *
 	   * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
 	   */
 
@@ -26247,7 +26196,6 @@
 	     *
 	     * @remarks
 	     * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-	     *
 	     * @param x1 - First end of the line segment on the x axis.
 	     * @param y1 - First end of the line segment on the y axis.
 	     * @param x2 - Second end of the line segment on the x axis.
@@ -26255,7 +26203,6 @@
 	     * @param x3 - Position of the point on the x axis.
 	     * @param y3 - Position of the point on the y axis.
 	     * @param via - The control point for the edge.
-	     *
 	     * @returns The distance between the line segment and the point.
 	     */
 
@@ -26291,7 +26238,6 @@
 	     * @remarks
 	     * The method accepts zero, one or two control points.
 	     * Passing zero control points just draws a straight line.
-	     *
 	     * @param ctx - The context that will be used for rendering.
 	     * @param values - Style options for edge drawing.
 	     * @param viaNode1 - First control point for curve drawing.
@@ -26602,7 +26548,6 @@
 	     *
 	     * @remarks
 	     * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
-	     *
 	     * @returns Cartesian coordinates of the via node.
 	     */
 
@@ -26835,7 +26780,6 @@
 	   * @remarks
 	   * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
 	   * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
-	   *
 	   * @param x1 - First end of the line segment on the x axis.
 	   * @param y1 - First end of the line segment on the y axis.
 	   * @param x2 - Second end of the line segment on the x axis.
@@ -26844,7 +26788,6 @@
 	   * @param y3 - Position of the point on the y axis.
 	   * @param via1 - The first point this edge passes through.
 	   * @param via2 - The second point this edge passes through.
-	   *
 	   * @returns The distance between the line segment and the point.
 	   */
 
@@ -32376,15 +32319,15 @@
 	 *
 	 * NOTES:
 	 *
-	 * * On node.js, when calling this directly outside of this class, `window` is not defined.
+	 * On node.js, when calling this directly outside of this class, `window` is not defined.
 	 *   This happens even if jsdom is used.
-	 * * For node.js + jsdom, `window` is available at the moment the constructor is called.
+	 * For node.js + jsdom, `window` is available at the moment the constructor is called.
 	 *   For this reason, the called is placed within the constructor.
-	 * * Even then, `window.requestAnimationFrame()` is not defined, so it still needs to be added.
-	 * * During unit testing, it happens that the window object is reset during execution, causing
+	 * Even then, `window.requestAnimationFrame()` is not defined, so it still needs to be added.
+	 * During unit testing, it happens that the window object is reset during execution, causing
 	 *   a runtime error due to missing `requestAnimationFrame()`. This needs to be compensated for,
 	 *   see `_requestNextFrame()`.
-	 * * Since this is a global object, it may affect other modules besides `Network`. With normal
+	 * Since this is a global object, it may affect other modules besides `Network`. With normal
 	 *   usage, this does not cause any problems. During unit testing, errors may occur. These have
 	 *   been compensated for, see comment block in _requestNextFrame().
 	 *
@@ -32760,7 +32703,6 @@
 	     * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
 	     * @param {boolean} [alwaysShow]
 	     * @private
-	     *
 	     * @returns {object} Callbacks to draw later on higher layers.
 	     */
 
@@ -33579,7 +33521,6 @@
 	 * @param rawOptions - The raw options.
 	 * @param allNodeIds - All node ids that will be used if nodes are omitted in
 	 * the raw options.
-	 *
 	 * @returns Options with everything filled in and validated.
 	 */
 	function normalizeFitOptions(rawOptions, allNodeIds) {
@@ -37784,7 +37725,7 @@
 	     *   "'param' is assigned a value but never used"
 	     *
 	     * @ignore
-	     **/
+	     */
 
 	  }, {
 	    key: "fake_use",
@@ -37851,7 +37792,7 @@
 	    /**
 	     * Sort array of nodes on the unfixed coordinates.
 	     *
-	     * **Note:** chrome has non-stable sorting implementation, which
+	     * Note:** chrome has non-stable sorting implementation, which
 	     * has a tendency to change the order of the array items,
 	     * even if the custom sort function returns 0.
 	     *
@@ -38132,7 +38073,6 @@
 	 *
 	 * @param nodes - Visible nodes of the graph.
 	 * @param levels - If present levels will be added to it, if not a new object will be created.
-	 *
 	 * @returns Populated node levels.
 	 */
 	function fillLevelsByDirectionCyclic(nodes, levels) {
@@ -38167,7 +38107,6 @@
 	 * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
 	 *
 	 * @param nodes - Visible nodes of the graph.
-	 *
 	 * @returns Populated node levels.
 	 */
 
@@ -38194,7 +38133,6 @@
 	 * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
 	 *
 	 * @param nodes - Visible nodes of the graph.
-	 *
 	 * @returns Populated node levels.
 	 */
 
@@ -38223,7 +38161,6 @@
 	 * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
 	 * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
 	 * @param nodes - Visible nodes of the graph.
-	 *
 	 * @returns Populated node levels.
 	 */
 

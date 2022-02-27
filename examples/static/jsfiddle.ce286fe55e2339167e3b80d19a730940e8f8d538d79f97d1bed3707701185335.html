@@ -30,31 +30,31 @@ h4 {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   Click any of the buttons below to cluster the network. On every push the
   network will be reinitialized first. You can click on a cluster to open it.
-&lt;/p&gt;
+</p>
 
-&lt;input
+<input
   type="button"
   onclick="clusterByCid()"
   value="Cluster all nodes with CID = 1"
-/&gt;
-&lt;br /&gt;
-&lt;input type="button" onclick="clusterByColor()" value="Cluster by color" /&gt;
-&lt;br /&gt;
-&lt;input
+/>
+<br />
+<input type="button" onclick="clusterByColor()" value="Cluster by color" />
+<br />
+<input
   type="button"
   onclick="clusterByConnection()"
   value="Cluster &apos;node 1&apos; by connections"
-/&gt;
-&lt;br /&gt;
-&lt;input type="button" onclick="clusterOutliers()" value="Cluster outliers" /&gt;
-&lt;br /&gt;
-&lt;input type="button" onclick="clusterByHubsize()" value="Cluster by hubsize" /&gt;
-&lt;br /&gt;
+/>
+<br />
+<input type="button" onclick="clusterOutliers()" value="Cluster outliers" />
+<br />
+<input type="button" onclick="clusterByHubsize()" value="Cluster by hubsize" />
+<br />
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -137,7 +137,7 @@ function clusterByColor() {
   network.setData(data);
   var colors = ["orange", "lime", "DarkViolet"];
   var clusterOptionsByData;
-  for (var i = 0; i &lt; colors.length; i++) {
+  for (var i = 0; i < colors.length; i++) {
     var color = colors[i];
     clusterOptionsByData = {
       joinCondition: function (childOptions) {
@@ -145,7 +145,7 @@ function clusterByColor() {
       },
       processProperties: function (clusterOptions, childNodes, childEdges) {
         var totalMass = 0;
-        for (var i = 0; i &lt; childNodes.length; i++) {
+        for (var i = 0; i < childNodes.length; i++) {
           totalMass += childNodes[i].mass;
         }
         clusterOptions.mass = totalMass;

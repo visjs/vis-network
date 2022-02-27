@@ -33,20 +33,20 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;h2&gt;Playing with Physics&lt;/h2&gt;
-&lt;div style="width: 700px; font-size: 14px; text-align: justify"&gt;
+        value='<h2>Playing with Physics</h2>
+<div style="width: 700px; font-size: 14px; text-align: justify">
   Every dataset is different. Nodes can have different sizes based on content,
   interconnectivity can be high or low etc. Because of this, the network
   configurator can be used to explore which settings may be good for him or her.
   This is ment to be used during the development phase when you are implementing
   vis.js. Once you have found settings you are happy with, you can supply them
   to network using the documented physics options.
-&lt;/div&gt;
-&lt;br /&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;div id="config"&gt;&lt;/div&gt;
+</div>
+<br />
+<div id="mynetwork"></div>
+<div id="config"></div>
 
-&lt;p id="selection"&gt;&lt;/p&gt;
+<p id="selection"></p>
 '
       />
       <input
@@ -86,7 +86,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

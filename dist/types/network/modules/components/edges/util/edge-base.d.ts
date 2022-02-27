@@ -40,7 +40,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param node - The node (either from or to node of the edge).
      * @param ctx - The context that will be used for rendering.
      * @param options - Additional options.
-     *
      * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
     protected abstract _findBorderPosition(node: VNode, ctx: CanvasRenderingContext2D, options?: FindBorderPositionOptions<Via>): PointT;
@@ -100,7 +99,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param node - The node (either from or to node of the edge).
      * @param ctx - The context that will be used for rendering.
      * @param options - Additional options.
-     *
      * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
     findBorderPosition(node: VNode, ctx: CanvasRenderingContext2D, options?: FindBorderPositionOptions<Via> | FindBorderPositionCircleOptions): PointT;
@@ -113,7 +111,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * Compute the center point and radius of an edge connected to the same node at both ends.
      *
      * @param ctx - The context that will be used for rendering.
-     *
      * @returns `[x, y, radius]`
      */
     protected _getCircleData(ctx?: CanvasRenderingContext2D): [number, number, number];
@@ -124,7 +121,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param y - Center of the circle on the y axis.
      * @param radius - Radius of the circle.
      * @param position - Value between 0 (line start) and 1 (line end).
-     *
      * @returns Cartesian coordinates of requested point on the circle.
      */
     private _pointOnCircle;
@@ -133,11 +129,9 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      *
      * @remarks
      * This function uses binary search to look for the point where the circle crosses the border of the node.
-     *
      * @param nearNode - The node (either from or to node of the edge).
      * @param ctx - The context that will be used for rendering.
      * @param options - Additional options.
-     *
      * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
      */
     private _findBorderPositionCircle;
@@ -146,7 +140,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      *
      * @param selected - Determines wheter the line is selected.
      * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
-     *
      * @returns The width of the line.
      */
     getLineWidth(selected: boolean, hover: boolean): number;
@@ -157,7 +150,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param values - Formatting values like color, opacity or shadow.
      * @param _selected - Ignored (TODO: remove in the future).
      * @param _hover - Ignored (TODO: remove in the future).
-     *
      * @returns Color string if single color is inherited or gradient if two.
      */
     getColor(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity">): string | CanvasGradient;
@@ -173,7 +165,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     private _circle;
     /**
      * @inheritDoc
-     *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
      */
@@ -183,7 +174,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-     *
      * @param x1 - First end of the line segment on the x axis.
      * @param y1 - First end of the line segment on the y axis.
      * @param x2 - Second end of the line segment on the x axis.
@@ -191,7 +181,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param x3 - Position of the point on the x axis.
      * @param y3 - Position of the point on the y axis.
      * @param via - Additional control point(s) for the edge.
-     *
      * @returns The distance between the line segment and the point.
      */
     protected abstract _getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, via?: Via): number;
@@ -204,7 +193,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
      * @param y2 - Second end of the line segment on the y axis.
      * @param x3 - Position of the point on the x axis.
      * @param y3 - Position of the point on the y axis.
-     *
      * @returns The distance between the line segment and the point.
      */
     protected _getDistanceToLine(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): number;

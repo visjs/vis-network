@@ -39,66 +39,65 @@ p {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value="<p>
   Nodes may be set to have fixed, minimum and maximum widths and minimum
   heights. Nodes with minimum heights may also have a vertical alignment set.
-&lt;/p&gt;
+</p>
 
-&lt;p&gt;Edges may be set to have maximum widths.&lt;/p&gt;
+<p>Edges may be set to have maximum widths.</p>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id=&quot;mynetwork&quot;></div>
 
-&lt;p&gt;
-  The &lt;code&gt;widthConstraint: value&lt;/code&gt; option means a fixed width, the
+<p>
+  The <code>widthConstraint: value</code> option means a fixed width, the
   minimum and maximum width of the element are set to the value (respecting left
   and right margins). Lines exceeding the maximum width will be broken at space
   boundaries to fit.
-&lt;/p&gt;
-&lt;p&gt;
-  The &lt;code&gt;widthConstraint: { minimum: value }&lt;/code&gt; option sets the minimum
+</p>
+<p>
+  The <code>widthConstraint: { minimum: value }</code> option sets the minimum
   width of the element to the value.
-&lt;/p&gt;
-&lt;p&gt;
-  The &lt;code&gt;widthConstraint: { maximum: value }&lt;/code&gt; option sets the maximum
+</p>
+<p>
+  The <code>widthConstraint: { maximum: value }</code> option sets the maximum
   width of the element to the value (respecting left and right margins). Lines
   exceeding the maximum width will be broken at space boundaries to fit.
-&lt;/p&gt;
-&lt;p&gt;
+</p>
+<p>
   Minimum width line sizing is applied after maximum width line breaking, so
   counterintuitively, the minimum being greater than the maximum has a
   meaningful interpretation.
-&lt;/p&gt;
+</p>
 
-&lt;div class="sep"&gt;&lt;/div&gt;
+<div class=&quot;sep&quot;></div>
 
-&lt;p&gt;
-  The &lt;code&gt;heightConstraint: value&lt;/code&gt; option sets the minimum height of the
+<p>
+  The <code>heightConstraint: value</code> option sets the minimum height of the
   element to the value (respecting top and bottom margins).
-&lt;/p&gt;
-&lt;p&gt;
-  The &lt;code&gt;heightConstraint: { minimum: value }&lt;/code&gt; option also sets the
+</p>
+<p>
+  The <code>heightConstraint: { minimum: value }</code> option also sets the
   minimum height of the element to the value (respecting top and bottom
   margins).
-&lt;/p&gt;
-&lt;p&gt;
-  The &lt;code&gt;heightConstraint: { valign: value }&lt;/code&gt; option (with value
-  &lt;code&gt;&amp;apos;top&amp;apos;&lt;/code&gt;, &lt;code&gt;&amp;apos;middle&amp;apos;&lt;/code&gt;, or
-  &lt;code&gt;&amp;apos;bottom&amp;apos;&lt;/code&gt;, sets the alignment of the text in the
-  element&amp;apos;s label to the elements top, middle or bottom (respecting top and
-  bottom margins) when it&amp;apos;s height is less than the minimum. The middle
-  value is the default.
-&lt;/p&gt;
+</p>
+<p>
+  The <code>heightConstraint: { valign: value }</code> option (with value
+  <code>'top'</code>, <code>'middle'</code>, or <code>'bottom'</code>, sets the
+  alignment of the text in the element's label to the elements top, middle or
+  bottom (respecting top and bottom margins) when it's height is less than the
+  minimum. The middle value is the default.
+</p>
 
-&lt;div class="sep"&gt;&lt;/div&gt;
+<div class=&quot;sep&quot;></div>
 
-&lt;p&gt;
+<p>
   Node width and height constraints may both be applied together, of course.
-&lt;/p&gt;
-&lt;p&gt;
+</p>
+<p>
   The constraint options may be applied to elements individually, or at the
   whole-set level. Whole-set node and edge constraints are exclusive.
-&lt;/p&gt;
-'
+</p>
+"
       />
       <input
         type="hidden"
@@ -144,7 +143,7 @@ p {
     font: { multi: true },
     widthConstraint: 150,
     label:
-      "&lt;b&gt;This&lt;/b&gt; node has a fixed width and breaks have been automatically inserted into the label",
+      "<b>This</b> node has a fixed width and breaks have been automatically inserted into the label",
     x: -300,
     y: 50,
   },

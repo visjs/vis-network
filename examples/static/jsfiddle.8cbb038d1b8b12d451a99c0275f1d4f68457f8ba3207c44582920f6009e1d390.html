@@ -31,9 +31,9 @@ h4 {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;You can zoom in and out to cluster/decluster.&lt;/p&gt;
-Stabilize when clustering:&lt;input type="checkbox" id="stabilizeCheckbox" /&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+        value='<p>You can zoom in and out to cluster/decluster.</p>
+Stabilize when clustering:<input type="checkbox" id="stabilizeCheckbox" />
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -93,7 +93,7 @@ network.once("initRedraw", function () {
 // we use the zoom event for our clustering
 network.on("zoom", function (params) {
   if (params.direction == "-") {
-    if (params.scale &lt; lastClusterZoomLevel * clusterFactor) {
+    if (params.scale < lastClusterZoomLevel * clusterFactor) {
       makeClusters(params.scale);
       lastClusterZoomLevel = params.scale;
     }
@@ -117,7 +117,7 @@ function makeClusters(scale) {
     processProperties: function (clusterOptions, childNodes) {
       clusterIndex = clusterIndex + 1;
       var childrenCount = 0;
-      for (var i = 0; i &lt; childNodes.length; i++) {
+      for (var i = 0; i < childNodes.length; i++) {
         childrenCount += childNodes[i].childrenCount || 1;
       }
       clusterOptions.childrenCount = childrenCount;
@@ -145,8 +145,8 @@ function makeClusters(scale) {
 function openClusters(scale) {
   var newClusters = [];
   var declustered = false;
-  for (var i = 0; i &lt; clusters.length; i++) {
-    if (clusters[i].scale &lt; scale) {
+  for (var i = 0; i < clusters.length; i++) {
+    if (clusters[i].scale < scale) {
       network.openCluster(clusters[i].id);
       lastClusterZoomLevel = scale;
       declustered = true;

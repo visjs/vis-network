@@ -23,10 +23,10 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   Display nodes with global opacity, individual opacity, and opacity in a group.
-&lt;/p&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+</p>
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -72,7 +72,7 @@ function draw() {
   edges.push({ from: 1, to: 3, length: EDGE_LENGTH_MAIN });
   edges.push({ from: 1, to: 22, length: EDGE_LENGTH_MAIN });
 
-  for (var i = 4; i &lt;= 7; i++) {
+  for (var i = 4; i <= 7; i++) {
     nodes.push({
       id: i,
       label: "Computer",
@@ -116,7 +116,7 @@ function draw() {
   });
   edges.push({ from: 1, to: 104, length: EDGE_LENGTH_SUB });
 
-  for (var i = 200; i &lt;= 201; i++) {
+  for (var i = 200; i <= 201; i++) {
     nodes.push({
       id: i,
       label: "Smartphone",
@@ -145,7 +145,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

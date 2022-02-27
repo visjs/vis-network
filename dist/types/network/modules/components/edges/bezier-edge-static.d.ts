@@ -21,7 +21,6 @@ export declare class BezierEdgeStatic extends BezierEdgeBase<Point> {
      *
      * @remarks
      * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
-     *
      * @returns Cartesian coordinates of the via node.
      */
     protected _getViaCoordinates(): Point;

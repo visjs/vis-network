@@ -10,7 +10,6 @@ export interface ViewFitOptions {
  * @param rawOptions - The raw options.
  * @param allNodeIds - All node ids that will be used if nodes are omitted in
  * the raw options.
- *
  * @returns Options with everything filled in and validated.
  */
 export declare function normalizeFitOptions(rawOptions: Partial<ViewFitOptions>, allNodeIds: IdType[]): ViewFitOptions;

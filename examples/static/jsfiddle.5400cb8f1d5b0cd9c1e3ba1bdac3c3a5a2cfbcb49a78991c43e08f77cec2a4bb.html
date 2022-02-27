@@ -45,34 +45,34 @@ body,
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="text"&gt;
-  &lt;div id="title"&gt;
-    &lt;h1&gt;Vis Network&lt;/h1&gt;
-    &lt;h2&gt;Layouts&lt;/h2&gt;
-    &lt;h3&gt;Hierarchical Layout Overlap Avoidance&lt;/h3&gt;
-  &lt;/div&gt;
+        value='<div id="text">
+  <div id="title">
+    <h1>Vis Network</h1>
+    <h2>Layouts</h2>
+    <h3>Hierarchical Layout Overlap Avoidance</h3>
+  </div>
 
-  &lt;p&gt;
+  <p>
     Overlap avoidance increases the space between nodes depending on their size
     in order to prevent big nodes from overlapping. The value can be set from 0
     which is the default and means no overlap avoidance at all to 1 which puts
     the most space around nodes. Any value in between is also valid.
-  &lt;/p&gt;
+  </p>
 
   Avoid ovelap:
-  &lt;input
+  <input
     type="number"
     value="1"
     min="0"
     max="1"
     step="0.01"
     id="avoid-overlap"
-  /&gt;
-&lt;/div&gt;
+  />
+</div>
 
-&lt;!-- Redraw the network when avoid overlap is changed. --&gt;
+<!-- Redraw the network when avoid overlap is changed. -->
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -133,7 +133,7 @@ var nodes = [
   { id: 46 },
 ].map(
   // Make the nodes wide, the higher the id the wider, except for every third.
-  (node) =&gt; (
+  (node) => (
     (node.label =
       node.id % 3 === 0
         ? `${node.id}`
@@ -223,7 +223,7 @@ function draw() {
   });
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

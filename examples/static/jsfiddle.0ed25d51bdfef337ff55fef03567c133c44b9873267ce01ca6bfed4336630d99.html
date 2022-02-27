@@ -38,9 +38,9 @@ body {
       <input
         type="hidden"
         name="html"
-        value='&lt;div class=".mycontainer"&gt;
-  &lt;div id="mynetwork"&gt;&lt;/div&gt;
-&lt;/div&gt;
+        value='<div class=".mycontainer">
+  <div id="mynetwork"></div>
+</div>
 '
       />
       <input
@@ -48,7 +48,7 @@ body {
         name="js"
         value='var nodes = Array(31)
   .fill(null)
-  .map((_, i) =&gt; ({ id: i + 1, label: `${i + 1}` }));
+  .map((_, i) => ({ id: i + 1, label: `${i + 1}` }));
 var edges = [
   { from: 1, to: 2 },
   { from: 1, to: 3 },
@@ -103,12 +103,12 @@ network = new vis.Network(container, data, options);
 
 // periodically change the layout
 let i = 0;
-setInterval(() =&gt; {
-  var leaves = data.nodes.get().filter((node) =&gt;
+setInterval(() => {
+  var leaves = data.nodes.get().filter((node) =>
     network
       .getConnectedEdges(node.id)
-      .map((edgeId) =&gt; data.edges.get(edgeId))
-      .every((edge) =&gt; edge.to === node.id)
+      .map((edgeId) => data.edges.get(edgeId))
+      .every((edge) => edge.to === node.id)
   );
   var leaf = leaves[i++ % leaves.length];
 

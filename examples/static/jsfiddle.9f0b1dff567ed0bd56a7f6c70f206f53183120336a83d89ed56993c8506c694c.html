@@ -50,48 +50,48 @@ pre {
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="text"&gt;
-  &lt;div id="title"&gt;
-    &lt;h1&gt;Vis Network&lt;/h1&gt;
-    &lt;h2&gt;Edge Styles&lt;/h2&gt;
-    &lt;h3&gt;Image Arrow Heads&lt;/h3&gt;
-  &lt;/div&gt;
+        value="<div id=&quot;text&quot;>
+  <div id=&quot;title&quot;>
+    <h1>Vis Network</h1>
+    <h2>Edge Styles</h2>
+    <h3>Image Arrow Heads</h3>
+  </div>
 
-  &lt;ul&gt;
-    &lt;li&gt;
+  <ul>
+    <li>
       All formats supported by canvas are supported here (like SVG, PNG, JPG).
-    &lt;/li&gt;
-    &lt;li&gt;Image can be specified using any URL including data URLs.&lt;/li&gt;
-    &lt;li&gt;
+    </li>
+    <li>Image can be specified using any URL including data URLs.</li>
+    <li>
       Width and height can be set explicitly to scale the image to the desired
       size.
-    &lt;/li&gt;
-    &lt;li&gt;
+    </li>
+    <li>
       The arrow head points to the top with the point in the middle of the top
       edge of the image.
-    &lt;/li&gt;
-  &lt;/ul&gt;
+    </li>
+  </ul>
 
-  &lt;pre&gt;&lt;code&gt;
+  <pre><code>
 const options = {
   edges: {
     arrows: {
       to: {
         enabled: true,
-        type: &amp;quot;image&amp;quot;,
+        type: &quot;image&quot;,
         imageWidth: 24,
         imageHeight: 24,
         src:
-          &amp;quot;data:image/svg+xml,%3Csvg xmlns=&amp;apos;http://www.w3.org/2000/svg&amp;apos; style=&amp;apos;width:24px;height:24px&amp;apos; viewBox=&amp;apos;0 0 24 24&amp;apos;%3E%3Cpath fill=&amp;apos;%23000000&amp;apos; d=&amp;apos;M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z&amp;apos; /%3E%3C/svg%3E&amp;quot;
+          &quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23000000' d='M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3H9.18C9.6,1.84 10.7,1 12,1C13.3,1 14.4,1.84 14.82,3H19M12,8L7,13H10V17H14V13H17L12,8M12,3A1,1 0 0,0 11,4A1,1 0 0,0 12,5A1,1 0 0,0 13,4A1,1 0 0,0 12,3Z' /%3E%3C/svg%3E&quot;
       }
     }
   }
 };
-      &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+      </code></pre>
+</div>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
-'
+<div id=&quot;mynetwork&quot;></div>
+"
       />
       <input
         type="hidden"

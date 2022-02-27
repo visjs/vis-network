@@ -34,50 +34,50 @@ code {
       <input
         type="hidden"
         name="html"
-        value='&lt;h1&gt;Dynamic filtering&lt;/h1&gt;
-&lt;p&gt;
+        value='<h1>Dynamic filtering</h1>
+<p>
   With
-  &lt;a href="https://visjs.github.io/vis-data/data/dataview.html" target="_blank"&gt;
-    &lt;code&gt;vis.DataView&lt;/code&gt;&lt;/a
-  &gt;
+  <a href="https://visjs.github.io/vis-data/data/dataview.html" target="_blank">
+    <code>vis.DataView</code></a
+  >
   on top of vis.DataSet you can filter displayed data without modifying the data
   source.
-&lt;/p&gt;
-&lt;label&gt;
+</p>
+<label>
   Filter nodes
-  &lt;select id="nodeFilterSelect"&gt;
-    &lt;option value&gt;All characters&lt;/option&gt;
-    &lt;option value="kid"&gt;kids&lt;/option&gt;
-    &lt;option value="adult"&gt;adults&lt;/option&gt;
-    &lt;option value="male"&gt;male&lt;/option&gt;
-    &lt;option value="female"&gt;female&lt;/option&gt;
-  &lt;/select&gt;
-&lt;/label&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;label&gt;
+  <select id="nodeFilterSelect">
+    <option value="">All characters</option>
+    <option value="kid">kids</option>
+    <option value="adult">adults</option>
+    <option value="male">male</option>
+    <option value="female">female</option>
+  </select>
+</label>
+<br />
+<br />
+<label>
   Filter edges
-  &lt;div&gt;
-    &lt;label&gt;
-      &lt;input type="checkbox" name="edgesFilter" value="parent" checked /&gt;
-      Is &lt;span style="color: green"&gt;parent&lt;/span&gt; of
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div&gt;
-    &lt;label&gt;
-      &lt;input type="checkbox" name="edgesFilter" value="teacher" checked /&gt;
-      Is &lt;span style="color: blue"&gt;teacher&lt;/span&gt; of
-    &lt;/label&gt;
-  &lt;/div&gt;
-  &lt;div&gt;
-    &lt;label&gt;
-      &lt;input type="checkbox" name="edgesFilter" value="friend" checked /&gt;
-      Is &lt;span style="color: red"&gt;friend&lt;/span&gt; of
-    &lt;/label&gt;
-  &lt;/div&gt;
-&lt;/label&gt;
-&lt;br /&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+  <div>
+    <label>
+      <input type="checkbox" name="edgesFilter" value="parent" checked="" />
+      Is <span style="color: green">parent</span> of
+    </label>
+  </div>
+  <div>
+    <label>
+      <input type="checkbox" name="edgesFilter" value="teacher" checked="" />
+      Is <span style="color: blue">teacher</span> of
+    </label>
+  </div>
+  <div>
+    <label>
+      <input type="checkbox" name="edgesFilter" value="friend" checked="" />
+      Is <span style="color: red">friend</span> of
+    </label>
+  </div>
+</label>
+<br />
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -170,7 +170,7 @@ const edgesFilterValues = {
       filter function should return true or false
       based on whether item in DataView satisfies a given condition.
     */
-const nodesFilter = (node) =&gt; {
+const nodesFilter = (node) => {
   if (nodeFilterValue === "") {
     return true;
   }
@@ -188,14 +188,14 @@ const nodesFilter = (node) =&gt; {
   }
 };
 
-const edgesFilter = (edge) =&gt; {
+const edgesFilter = (edge) => {
   return edgesFilterValues[edge.relation];
 };
 
 const nodesView = new vis.DataView(nodes, { filter: nodesFilter });
 const edgesView = new vis.DataView(edges, { filter: edgesFilter });
 
-nodeFilterSelector.addEventListener("change", (e) =&gt; {
+nodeFilterSelector.addEventListener("change", (e) => {
   // set new value to filter variable
   nodeFilterValue = e.target.value;
   /*
@@ -205,8 +205,8 @@ nodeFilterSelector.addEventListener("change", (e) =&gt; {
   nodesView.refresh();
 });
 
-edgeFilters.forEach((filter) =&gt;
-  filter.addEventListener("change", (e) =&gt; {
+edgeFilters.forEach((filter) =>
+  filter.addEventListener("change", (e) => {
     const { value, checked } = e.target;
     edgesFilterValues[value] = checked;
     edgesView.refresh();

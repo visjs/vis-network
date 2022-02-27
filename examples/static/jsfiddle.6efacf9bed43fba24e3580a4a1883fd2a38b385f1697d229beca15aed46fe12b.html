@@ -31,7 +31,7 @@ body {
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="mynetwork"&gt;&lt;/div&gt;
+        value='<div id="mynetwork"></div>
 '
       />
       <input
@@ -79,7 +79,7 @@ function draw() {
   });
 
   // group around 2
-  for (var i = 100; i &lt;= 104; i++) {
+  for (var i = 100; i <= 104; i++) {
     var value = 1;
     var width = WIDTH_SCALE * 2;
     var color = GRAY;
@@ -138,7 +138,7 @@ function draw() {
     color: GRAY,
     width: WIDTH_SCALE * 2,
   });
-  for (var i = 230; i &lt;= 231; i++) {
+  for (var i = 230; i <= 231; i++) {
     nodes.push({
       id: i,
       label: "192.168.0." + i,
@@ -316,7 +316,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

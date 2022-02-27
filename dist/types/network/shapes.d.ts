@@ -23,7 +23,6 @@ export declare function drawSquare(ctx: CanvasRenderingContext2D, x: number, y: 
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
  * @param r - Half of the length of the sides.
- *
  * @remarks
  * http://en.wikipedia.org/wiki/Equilateral_triangle
  */
@@ -35,7 +34,6 @@ export declare function drawTriangle(ctx: CanvasRenderingContext2D, x: number, y
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
  * @param r - Half of the length of the sides.
- *
  * @remarks
  * http://en.wikipedia.org/wiki/Equilateral_triangle
  */
@@ -56,7 +54,6 @@ export declare function drawStar(ctx: CanvasRenderingContext2D, x: number, y: nu
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
  * @param r - Half of the width and height of the diamond.
- *
  * @remarks
  * http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
  */
@@ -70,7 +67,6 @@ export declare function drawDiamond(ctx: CanvasRenderingContext2D, x: number, y:
  * @param w - The width of the rectangle.
  * @param h - The height of the rectangle.
  * @param r - The radius of the corners.
- *
  * @remarks
  * http://stackoverflow.com/questions/1255512/how-to-draw-a-rounded-rectangle-on-html-canvas
  */
@@ -83,7 +79,6 @@ export declare function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, 
  * @param y - The position of the center on the y axis.
  * @param w - The width of the ellipse.
  * @param h - The height of the ellipse.
- *
  * @remarks
  * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
  *
@@ -98,7 +93,6 @@ export declare function drawEllipse(ctx: CanvasRenderingContext2D, x: number, y:
  * @param y - The position of the center on the y axis.
  * @param w - The width of the database.
  * @param h - The height of the database.
- *
  * @remarks
  * http://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
  */
@@ -112,7 +106,6 @@ export declare function drawDatabase(ctx: CanvasRenderingContext2D, x: number, y
  * @param x2 - The end position on the x axis.
  * @param y2 - The end position on the y axis.
  * @param pattern - List of lengths starting with line and then alternating between space and line.
- *
  * @author David Jordan
  * @remarks
  * date 2012-08-08
@@ -148,7 +141,6 @@ declare const shapeMap: {
  * @param name - The name of the function. Either the name of a
  * CanvasRenderingContext2D property or an export from shapes.ts without the
  * draw prefix.
- *
  * @returns The function that can be used for rendering. In case of native
  * CanvasRenderingContext2D function the API is normalized to
  * `(ctx: CanvasRenderingContext2D, ...originalArgs) => void`.

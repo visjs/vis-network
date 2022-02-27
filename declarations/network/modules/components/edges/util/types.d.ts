@@ -85,7 +85,6 @@ export interface EdgeType {
      * Find the intersection between the borders of the nodes and the edge.
      *
      * @param ctx - The context that will be used for rendering.
-     *
      * @returns Cartesian coordinates of the intersections between the borders of the nodes and the edge.
      */
     findBorderPositions(ctx: CanvasRenderingContext2D): {
@@ -107,7 +106,6 @@ export interface EdgeType {
      *
      * @param position - The position on the edge (0 is from and 1 is to node).
      * @param viaNode - Additional control point(s) for the edge.
-     *
      * @returns Cartesian coordinates of the requested point on the edge.
      */
     getPoint(percentage: number): Point;
@@ -126,7 +124,6 @@ export interface EdgeType {
      * @param y2 - Second end of the line segment on the y axis.
      * @param x3 - Position of the point on the x axis.
      * @param y3 - Position of the point on the y axis.
-     *
      * @returns The distance between the line segment and the point.
      */
     getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): number;
@@ -161,7 +158,6 @@ export interface EdgeType {
      * @param _selected - Ignored (TODO: remove in the future).
      * @param _hover - Ignored (TODO: remove in the future).
      * @param values - Formatting values determining the style of the edge.
-     *
      * @returns Data that can be used to render the requested arrows.
      */
     getArrowData(ctx: CanvasRenderingContext2D, position: "middle", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "middleArrowType" | "middleArrowScale" | "width">): ArrowDataWithCore;
@@ -174,7 +170,6 @@ export interface EdgeType {
      * @param _selected - Ignored (TODO: remove in the future).
      * @param _hover - Ignored (TODO: remove in the future).
      * @param values - Formatting values determining the style of the edge.
-     *
      * @returns Data that can be used to render the requested arrows.
      */
     getArrowData(ctx: CanvasRenderingContext2D, position: "to", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "toArrowType" | "toArrowScale" | "width">): ArrowDataWithCore;
@@ -187,7 +182,6 @@ export interface EdgeType {
      * @param _selected - Ignored (TODO: remove in the future).
      * @param _hover - Ignored (TODO: remove in the future).
      * @param values - Formatting values determining the style of the edge.
-     *
      * @returns Data that can be used to render the requested arrows.
      */
     getArrowData(ctx: CanvasRenderingContext2D, position: "from", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "fromArrowType" | "fromArrowScale" | "width">): ArrowDataWithCore;

@@ -23,7 +23,7 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;div id="mynetwork"&gt;&lt;/div&gt;
+        value='<div id="mynetwork"></div>
 '
       />
       <input
@@ -131,11 +131,11 @@ var options = {
 };
 var network = new vis.Network(container, data, options);
 
-(async () =&gt; {
+(async () => {
   let angle = -100;
 
   for (;;) {
-    await new Promise((resolve) =&gt; setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     ++angle;
     console.log("set self reference angle to", angle / 10);

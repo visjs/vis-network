@@ -26,14 +26,14 @@
         value='Resizing is immediate in all decent browsers but in IE11 it may take up to a
 second to take effect.
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id="mynetwork"></div>
 '
       />
       <input
         type="hidden"
         name="js"
         value='// resize the canvas
-setInterval(() =&gt; {
+setInterval(() => {
   document.querySelector("#mynetwork").style.width =
     Math.ceil(300 + 200 * Math.random()) + "px";
   document.querySelector("#mynetwork").style.height =

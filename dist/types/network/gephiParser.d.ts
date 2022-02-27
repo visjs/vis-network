@@ -73,7 +73,6 @@ export interface VisEdge {
  *
  * @param gephiJSON - The parsed JSON data in Gephi format.
  * @param optionsObj - Additional options.
- *
  * @returns The converted data ready to be used in Vis.
  */
 export declare function parseGephi(gephiJSON: GephiData, optionsObj?: GephiParseOptions): VisData;

@@ -38,23 +38,23 @@ p {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   The configurator can be used to play with the options. In this example, all
   options that can be configured with this tool are shown. You can also supply a
   custom filter function or filter string. You can press the generate options
   button below to have an options object printed. You can then use this in the
   network.
-&lt;/p&gt;
-&lt;p&gt;
-  &lt;b&gt;Note:&lt;/b&gt; The configurator is recreated in the dom tree on input change.
+</p>
+<p>
+  <b>Note:</b> The configurator is recreated in the dom tree on input change.
   This may cause undesired scrolls in your application. In order to avoid this,
-  explicitly set the height of the configurator (see this example&amp;apos;s source
+  explicitly set the height of the configurator (see this example&apos;s source
   code).
-&lt;/p&gt;
-&lt;br /&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+</p>
+<br />
+<div id="mynetwork"></div>
 
-&lt;p id="selection"&gt;&lt;/p&gt;
+<p id="selection"></p>
 '
       />
       <input
@@ -90,7 +90,7 @@ function draw() {
   });
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

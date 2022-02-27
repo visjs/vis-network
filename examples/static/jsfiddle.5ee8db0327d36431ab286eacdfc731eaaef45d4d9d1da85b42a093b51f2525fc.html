@@ -23,14 +23,14 @@
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value='<p>
   Nodes can have all sorts of shapes. Note the exception where the nodes with
-  text inside and the text type&amp;apos;s size are determined by the font size, not
-  the node size.
-&lt;/p&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+  text inside and the text type&apos;s size are determined by the font size, not the
+  node size.
+</p>
+<div id="mynetwork"></div>
 
-&lt;div id="info"&gt;&lt;/div&gt;
+<div id="info"></div>
 '
       />
       <input
@@ -142,14 +142,14 @@ function draw() {
       id: 36,
       label: "custom",
       shape: "custom",
-      ctxRenderer: ({ ctx, id, x, y, state: { selected, hover }, style }) =&gt; {
+      ctxRenderer: ({ ctx, id, x, y, state: { selected, hover }, style }) => {
         const r = style.size;
-        const drawNode = () =&gt; {
+        const drawNode = () => {
           ctx.beginPath();
           const sides = 6;
           const a = (Math.PI * 2) / sides;
           ctx.moveTo(x, y + r);
-          for (let i = 1; i &lt; sides; i++) {
+          for (let i = 1; i < sides; i++) {
             ctx.lineTo(x + r * Math.sin(a * i), y + r * Math.cos(a * i));
           }
           ctx.closePath();
@@ -181,7 +181,7 @@ function draw() {
         state: { selected, hover },
         style,
         label,
-      }) =&gt; {
+      }) => {
         const splittedLabel = label.split("---");
         ctx.save();
         ctx.restore();
@@ -197,12 +197,12 @@ function draw() {
 
         const w = 200;
         const h = 60;
-        const drawNode = () =&gt; {
+        const drawNode = () => {
           const r2d = Math.PI / 180;
-          if (w - 2 * r &lt; 0) {
+          if (w - 2 * r < 0) {
             r = w / 2;
           } //ensure that the radius isn&apos;t too large for x
-          if (h - 2 * r &lt; 0) {
+          if (h - 2 * r < 0) {
             r = h / 2;
           } //ensure that the radius isn&apos;t too large for y
 
@@ -272,7 +272,7 @@ function draw() {
   network = new vis.Network(container, data, options);
 }
 
-window.addEventListener("load", () =&gt; {
+window.addEventListener("load", () => {
   draw();
 });
 '

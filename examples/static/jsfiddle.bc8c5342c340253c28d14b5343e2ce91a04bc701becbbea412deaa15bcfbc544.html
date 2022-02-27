@@ -39,32 +39,32 @@ p {
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;
+        value="<p>
   When a node or edge is selected or hovered its visible characteristics can be
   changed.
-&lt;/p&gt;
+</p>
 
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+<div id=&quot;mynetwork&quot;></div>
 
-&lt;p&gt;
+<p>
   In this network, an element (node, edge or label) will change a characteristic
   when hovered, and it will be locked in when selected. This is managed by
-  setting up a &amp;apos;chosen&amp;apos; function that will be called when the element
-  containing the function is chosen. These functions may be set on nodes, edges
-  and labels, at the individual or group level.
-&lt;/p&gt;
+  setting up a 'chosen' function that will be called when the element containing
+  the function is chosen. These functions may be set on nodes, edges and labels,
+  at the individual or group level.
+</p>
 
-&lt;p&gt;
+<p>
   All states (unselected, hover-over-unselected, selected, and hover-over
   selected) may be handled as needed by the application using vis, as the select
   and hover states are passed to the chosen function when called. Additionally,
   the id of the element is passed to allow context-specific characteristic
   adjustment on select or hover as needed.
-&lt;/p&gt;
+</p>
 
-&lt;p&gt;
-  &lt;i
-    &gt;It should be noted that the characteristics which might affect the position
+<p>
+  <i
+    >It should be noted that the characteristics which might affect the position
     of elements have been left out on purpose. While it might be interesting to
     make them changeable, this is problematic on hovering. Consider that the
     user hovers over an object. If it changed characteristics that moved it
@@ -72,12 +72,12 @@ p {
     would be moved back to its original prosition, within the hover-distance and
     then again be hovering over the object. This hysteresis loop is kept from
     occurring by leaving out the characteristics that could cause it. Some
-    seemingly innocuous changes (such as resizing a node&amp;apos;s label on hover
-    that would in turn cause the node to resize and move out of hover-distance)
-    may still cause hysteresis, but with care they should be avoidable.&lt;/i
-  &gt;
-&lt;/p&gt;
-'
+    seemingly innocuous changes (such as resizing a node's label on hover that
+    would in turn cause the node to resize and move out of hover-distance) may
+    still cause hysteresis, but with care they should be avoidable.</i
+  >
+</p>
+"
       />
       <input
         type="hidden"

@@ -10,12 +10,12 @@
       method="post"
       target="_self"
     >
-      <input type="hidden" name="css" value />
+      <input type="hidden" name="css" value="" />
       <input
         type="hidden"
         name="html"
-        value='&lt;p&gt;Network supports the DOT language.&lt;/p&gt;
-&lt;div id="mynetwork"&gt;&lt;/div&gt;
+        value='<p>Network supports the DOT language.</p>
+<div id="mynetwork"></div>
 '
       />
       <input
@@ -23,7 +23,7 @@
         name="js"
         value='var container = document.getElementById("mynetwork");
 var dot =
-  "dinetwork {node[shape=circle]; 1 -&gt; 1 -&gt; 2; 2 -&gt; 3; 2 -- 4; 2 -&gt; 1 }";
+  "dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }";
 var data = vis.parseDOTNetwork(dot);
 var network = new vis.Network(container, data);
 '
