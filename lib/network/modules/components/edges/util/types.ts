@@ -120,10 +120,11 @@ export interface EdgeType {
    * Find the intersection between the borders of the nodes and the edge.
    *
    * @param ctx - The context that will be used for rendering.
-   *
    * @returns Cartesian coordinates of the intersections between the borders of the nodes and the edge.
    */
-  findBorderPositions(ctx: CanvasRenderingContext2D): {
+  findBorderPositions(
+    ctx: CanvasRenderingContext2D
+  ): {
     from: Point;
     to: Point;
   };
@@ -145,7 +146,6 @@ export interface EdgeType {
    *
    * @param position - The position on the edge (0 is from and 1 is to node).
    * @param viaNode - Additional control point(s) for the edge.
-   *
    * @returns Cartesian coordinates of the requested point on the edge.
    */
   getPoint(percentage: number): Point;
@@ -166,7 +166,6 @@ export interface EdgeType {
    * @param y2 - Second end of the line segment on the y axis.
    * @param x3 - Position of the point on the x axis.
    * @param y3 - Position of the point on the y axis.
-   *
    * @returns The distance between the line segment and the point.
    */
   getDistanceToEdge(
@@ -232,7 +231,6 @@ export interface EdgeType {
    * @param _selected - Ignored (TODO: remove in the future).
    * @param _hover - Ignored (TODO: remove in the future).
    * @param values - Formatting values determining the style of the edge.
-   *
    * @returns Data that can be used to render the requested arrows.
    */
   getArrowData(
@@ -255,7 +253,6 @@ export interface EdgeType {
    * @param _selected - Ignored (TODO: remove in the future).
    * @param _hover - Ignored (TODO: remove in the future).
    * @param values - Formatting values determining the style of the edge.
-   *
    * @returns Data that can be used to render the requested arrows.
    */
   getArrowData(
@@ -278,7 +275,6 @@ export interface EdgeType {
    * @param _selected - Ignored (TODO: remove in the future).
    * @param _hover - Ignored (TODO: remove in the future).
    * @param values - Formatting values determining the style of the edge.
-   *
    * @returns Data that can be used to render the requested arrows.
    */
   getArrowData(

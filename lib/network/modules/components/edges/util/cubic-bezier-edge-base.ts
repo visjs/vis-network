@@ -25,7 +25,6 @@ export abstract class CubicBezierEdgeBase<Via> extends BezierEdgeBase<Via> {
    * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
    * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
-   *
    * @param x1 - First end of the line segment on the x axis.
    * @param y1 - First end of the line segment on the y axis.
    * @param x2 - Second end of the line segment on the x axis.
@@ -34,7 +33,6 @@ export abstract class CubicBezierEdgeBase<Via> extends BezierEdgeBase<Via> {
    * @param y3 - Position of the point on the y axis.
    * @param via1 - The first point this edge passes through.
    * @param via2 - The second point this edge passes through.
-   *
    * @returns The distance between the line segment and the point.
    */
   protected _getDistanceToBezierEdge2(

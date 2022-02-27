@@ -4,7 +4,6 @@ interface TraverseParameters {
    *
    * @param value - Current value.
    * @param path - Path to the value in dot notation.
-   *
    * @returns True to investigate this value further, false to ignore this
    * value's descendants.
    */
@@ -114,7 +113,6 @@ export class PollutionDetector {
    * @param root - The object to be traversed from.
    * @param whitelist - A set of paths to be ignored during traversal. This
    * includes all descendants of given paths.
-   *
    * @returns A set of all saved paths.
    */
   public async save(

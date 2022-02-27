@@ -38,11 +38,9 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
    *
    * @remarks
    * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
-   *
    * @param nearNode - The node (either from or to node of the edge).
    * @param ctx - The context that will be used for rendering.
    * @param viaNode - Additional node(s) the edge passes through.
-   *
    * @returns Cartesian coordinates of the intersection between the border of the node and the edge.
    */
   protected _findBorderPositionBezier(
@@ -121,7 +119,6 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
    *
    * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
-   *
    * @param x1 - First end of the line segment on the x axis.
    * @param y1 - First end of the line segment on the y axis.
    * @param x2 - Second end of the line segment on the x axis.
@@ -129,7 +126,6 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
    * @param x3 - Position of the point on the x axis.
    * @param y3 - Position of the point on the y axis.
    * @param via - The control point for the edge.
-   *
    * @returns The distance between the line segment and the point.
    */
   protected _getDistanceToBezierEdge(
@@ -170,7 +166,6 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
    * @remarks
    * The method accepts zero, one or two control points.
    * Passing zero control points just draws a straight line.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Style options for edge drawing.
    * @param viaNode1 - First control point for curve drawing.
