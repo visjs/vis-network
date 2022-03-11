@@ -122,9 +122,7 @@ export interface EdgeType {
    * @param ctx - The context that will be used for rendering.
    * @returns Cartesian coordinates of the intersections between the borders of the nodes and the edge.
    */
-  findBorderPositions(
-    ctx: CanvasRenderingContext2D
-  ): {
+  findBorderPositions(ctx: CanvasRenderingContext2D): {
     from: Point;
     to: Point;
   };

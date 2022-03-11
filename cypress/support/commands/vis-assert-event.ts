@@ -32,12 +32,10 @@ declare global {
 }
 
 export function visShiftAndAssertEventFired(name: NetworkEvents): void {
-  cy.visRun(
-    async ({ eventQueue }): Promise<void> => {
-      expect(eventQueue[name], `${name} event queue`).to.not.be.empty;
-      eventQueue[name].shift();
-    }
-  );
+  cy.visRun(async ({ eventQueue }): Promise<void> => {
+    expect(eventQueue[name], `${name} event queue`).to.not.be.empty;
+    eventQueue[name].shift();
+  });
 }
 Cypress.Commands.add(
   "visShiftAndAssertEventFired",
@@ -48,15 +46,13 @@ export function visShiftAndAssertEventFiredWithParams(
   name: NetworkEvents,
   params: any
 ): void {
-  cy.visRun(
-    async ({ eventQueue }): Promise<void> => {
-      expect(eventQueue[name], `${name} event queue`).to.not.be.empty;
-      const event = eventQueue[name].shift();
-      expect(event, `${name} event`)
-        .to.have.ownProperty("params")
-        .that.deep.equals(params);
-    }
-  );
+  cy.visRun(async ({ eventQueue }): Promise<void> => {
+    expect(eventQueue[name], `${name} event queue`).to.not.be.empty;
+    const event = eventQueue[name].shift();
+    expect(event, `${name} event`)
+      .to.have.ownProperty("params")
+      .that.deep.equals(params);
+  });
 }
 Cypress.Commands.add(
   "visShiftAndAssertEventFiredWithParams",
@@ -66,12 +62,10 @@ Cypress.Commands.add(
 export function visShiftAndAssertEventNone(
   ...names: readonly NetworkEvents[]
 ): void {
-  cy.visRun(
-    async ({ eventQueue }): Promise<void> => {
-      for (const name of names) {
-        expect(eventQueue[name], `${name} event queue`).to.be.empty;
-      }
+  cy.visRun(async ({ eventQueue }): Promise<void> => {
+    for (const name of names) {
+      expect(eventQueue[name], `${name} event queue`).to.be.empty;
     }
-  );
+  });
 }
 Cypress.Commands.add("visShiftAndAssertEventNone", visShiftAndAssertEventNone);

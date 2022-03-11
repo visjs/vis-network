@@ -160,9 +160,8 @@
           data,
           callback
         );
-        document.getElementById(
-          "node-cancelButton"
-        ).onclick = cancelAction.bind(this, callback);
+        document.getElementById("node-cancelButton").onclick =
+          cancelAction.bind(this, callback);
         document.getElementById("node-popUp").style.display = "block";
       }
 
@@ -192,9 +191,8 @@
           data,
           callback
         );
-        document.getElementById(
-          "edge-cancelButton"
-        ).onclick = cancelEdgeEdit.bind(this, callback);
+        document.getElementById("edge-cancelButton").onclick =
+          cancelEdgeEdit.bind(this, callback);
         document.getElementById("edge-popUp").style.display = "block";
       }
 
