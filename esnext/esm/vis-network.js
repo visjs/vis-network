@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-03-11T16:36:55.645Z
+ * @date    2022-03-11T21:04:38.328Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -29,7 +29,6 @@ import { topMost, forEach, deepExtend, overrideOpacity, bridgeObject, selectiveN
 import { isDataViewLike, DataSet } from 'vis-data/esnext/esm/vis-data.js';
 import { v4 } from 'uuid';
 import keycharm from 'keycharm';
-import { __classPrivateFieldSet, __classPrivateFieldGet } from 'tslib';
 import TimSort, { sort } from 'timsort';
 
 /**
@@ -17213,9 +17212,8 @@ class InteractionHandler {
       this.body.view.translation = { x: tx, y: ty };
 
       if (preScaleDragPointer != undefined) {
-        const postScaleDragPointer = this.canvas.canvasToDOM(
-          preScaleDragPointer
-        );
+        const postScaleDragPointer =
+          this.canvas.canvasToDOM(preScaleDragPointer);
         this.drag.pointer.x = postScaleDragPointer.x;
         this.drag.pointer.y = postScaleDragPointer.y;
       }
@@ -17430,9 +17428,10 @@ class InteractionHandler {
     let stillOnObj = false;
     if (this.popup.popupTargetType === "node") {
       if (this.body.nodes[this.popup.popupTargetId] !== undefined) {
-        stillOnObj = this.body.nodes[
-          this.popup.popupTargetId
-        ].isOverlappingWith(pointerObj);
+        stillOnObj =
+          this.body.nodes[this.popup.popupTargetId].isOverlappingWith(
+            pointerObj
+          );
 
         // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
         // we initially only check stillOnObj because this is much faster.
@@ -17447,9 +17446,10 @@ class InteractionHandler {
     } else {
       if (this.selectionHandler.getNodeAt(pointer) === undefined) {
         if (this.body.edges[this.popup.popupTargetId] !== undefined) {
-          stillOnObj = this.body.edges[
-            this.popup.popupTargetId
-          ].isOverlappingWith(pointerObj);
+          stillOnObj =
+            this.body.edges[this.popup.popupTargetId].isOverlappingWith(
+              pointerObj
+            );
         }
       }
     }
@@ -17460,6 +17460,34 @@ class InteractionHandler {
       this.body.emitter.emit("hidePopup");
     }
   }
+}
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 
 var _SingleTypeSelectionAccumulator_previousSelection, _SingleTypeSelectionAccumulator_selection, _SelectionAccumulator_nodes, _SelectionAccumulator_edges, _SelectionAccumulator_commitHandler;
@@ -21251,9 +21279,8 @@ class ManipulationSystem {
    * @private
    */
   _createSeperator(index = 1) {
-    this.manipulationDOM["seperatorLineDiv" + index] = document.createElement(
-      "div"
-    );
+    this.manipulationDOM["seperatorLineDiv" + index] =
+      document.createElement("div");
     this.manipulationDOM["seperatorLineDiv" + index].className =
       "vis-separator-line";
     this.manipulationDiv.appendChild(
@@ -21418,9 +21445,8 @@ class ManipulationSystem {
    */
   _temporaryBindUI(UIfunctionName, newFunction) {
     if (this.body.eventListeners[UIfunctionName] !== undefined) {
-      this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[
-        UIfunctionName
-      ];
+      this.temporaryUIFunctions[UIfunctionName] =
+        this.body.eventListeners[UIfunctionName];
       this.body.eventListeners[UIfunctionName] = newFunction;
     } else {
       throw new Error(
@@ -21445,9 +21471,8 @@ class ManipulationSystem {
           functionName
         )
       ) {
-        this.body.eventListeners[functionName] = this.temporaryUIFunctions[
-          functionName
-        ];
+        this.body.eventListeners[functionName] =
+          this.temporaryUIFunctions[functionName];
         delete this.temporaryUIFunctions[functionName];
       }
     }
@@ -21608,9 +21633,8 @@ class ManipulationSystem {
 
     // we use the selection to find the node that is being dragged. We explicitly DEselect the control node here.
     this.selectionHandler.unselectAll();
-    const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-      pointerObj
-    );
+    const overlappingNodeIds =
+      this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
       if (overlappingNodeIds[i] !== this.selectedControlNode.id) {
@@ -21717,9 +21741,8 @@ class ManipulationSystem {
     }
 
     // get the overlapping node but NOT the temporary node;
-    const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-      pointerObj
-    );
+    const overlappingNodeIds =
+      this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
       // if the node id is NOT a temporary node, accept the node.
@@ -21763,9 +21786,8 @@ class ManipulationSystem {
     }
 
     // get the overlapping node but NOT the temporary node;
-    const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-      pointerObj
-    );
+    const overlappingNodeIds =
+      this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
       // if the node id is NOT a temporary node, accept the node.
@@ -22936,9 +22958,8 @@ class KamadaKawai {
 
     while (maxEnergy > threshold && iterations < maxIterations) {
       iterations += 1;
-      [highE_nodeId, maxEnergy, dE_dx, dE_dy] = this._getHighestEnergyNode(
-        ignoreClusters
-      );
+      [highE_nodeId, maxEnergy, dE_dx, dE_dy] =
+        this._getHighestEnergyNode(ignoreClusters);
       delta_m = maxEnergy;
       subIterations = 0;
       while (delta_m > innerThreshold && subIterations < maxInnerIterations) {

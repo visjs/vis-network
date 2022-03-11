@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-03-11T16:36:55.645Z
+ * @date    2022-03-11T21:04:38.328Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,10 +25,10 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm'), require('tslib'), require('timsort')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'tslib', 'timsort'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.tslib, global.timsort));
-})(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, tslib, TimSort) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm'), require('timsort')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'timsort'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.timsort));
+})(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, TimSort) {
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var Emitter__default = /*#__PURE__*/_interopDefaultLegacy(Emitter);
@@ -17216,9 +17216,8 @@
         this.body.view.translation = { x: tx, y: ty };
 
         if (preScaleDragPointer != undefined) {
-          const postScaleDragPointer = this.canvas.canvasToDOM(
-            preScaleDragPointer
-          );
+          const postScaleDragPointer =
+            this.canvas.canvasToDOM(preScaleDragPointer);
           this.drag.pointer.x = postScaleDragPointer.x;
           this.drag.pointer.y = postScaleDragPointer.y;
         }
@@ -17433,9 +17432,10 @@
       let stillOnObj = false;
       if (this.popup.popupTargetType === "node") {
         if (this.body.nodes[this.popup.popupTargetId] !== undefined) {
-          stillOnObj = this.body.nodes[
-            this.popup.popupTargetId
-          ].isOverlappingWith(pointerObj);
+          stillOnObj =
+            this.body.nodes[this.popup.popupTargetId].isOverlappingWith(
+              pointerObj
+            );
 
           // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
           // we initially only check stillOnObj because this is much faster.
@@ -17450,9 +17450,10 @@
       } else {
         if (this.selectionHandler.getNodeAt(pointer) === undefined) {
           if (this.body.edges[this.popup.popupTargetId] !== undefined) {
-            stillOnObj = this.body.edges[
-              this.popup.popupTargetId
-            ].isOverlappingWith(pointerObj);
+            stillOnObj =
+              this.body.edges[this.popup.popupTargetId].isOverlappingWith(
+                pointerObj
+              );
           }
         }
       }
@@ -17463,6 +17464,34 @@
         this.body.emitter.emit("hidePopup");
       }
     }
+  }
+
+  /*! *****************************************************************************
+  Copyright (c) Microsoft Corporation.
+
+  Permission to use, copy, modify, and/or distribute this software for any
+  purpose with or without fee is hereby granted.
+
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+  AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+  INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+  LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+  PERFORMANCE OF THIS SOFTWARE.
+  ***************************************************************************** */
+
+  function __classPrivateFieldGet(receiver, state, kind, f) {
+      if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+      if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+      return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+  }
+
+  function __classPrivateFieldSet(receiver, state, value, kind, f) {
+      if (kind === "m") throw new TypeError("Private method is not writable");
+      if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+      if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+      return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
   }
 
   var _SingleTypeSelectionAccumulator_previousSelection, _SingleTypeSelectionAccumulator_selection, _SelectionAccumulator_nodes, _SelectionAccumulator_edges, _SelectionAccumulator_commitHandler;
@@ -17485,36 +17514,36 @@
           _SingleTypeSelectionAccumulator_selection.set(this, new Set());
       }
       get size() {
-          return tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").size;
+          return __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").size;
       }
       add(...items) {
           for (const item of items) {
-              tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").add(item);
+              __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").add(item);
           }
       }
       delete(...items) {
           for (const item of items) {
-              tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").delete(item);
+              __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").delete(item);
           }
       }
       clear() {
-          tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").clear();
+          __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").clear();
       }
       getSelection() {
-          return [...tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")];
+          return [...__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")];
       }
       getChanges() {
           return {
-              added: [...diffSets(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"), tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
-              deleted: [...diffSets(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
-              previous: [...new Set(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
-              current: [...new Set(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
+              added: [...diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
+              deleted: [...diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
+              previous: [...new Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
+              current: [...new Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
           };
       }
       commit() {
           const changes = this.getChanges();
-          tslib.__classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_previousSelection, tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), "f");
-          tslib.__classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new Set(tslib.__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
+          __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_previousSelection, __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), "f");
+          __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
           for (const item of changes.added) {
               item.select();
           }
@@ -17530,42 +17559,42 @@
           _SelectionAccumulator_nodes.set(this, new SingleTypeSelectionAccumulator());
           _SelectionAccumulator_edges.set(this, new SingleTypeSelectionAccumulator());
           _SelectionAccumulator_commitHandler.set(this, void 0);
-          tslib.__classPrivateFieldSet(this, _SelectionAccumulator_commitHandler, commitHandler, "f");
+          __classPrivateFieldSet(this, _SelectionAccumulator_commitHandler, commitHandler, "f");
       }
       get sizeNodes() {
-          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").size;
+          return __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").size;
       }
       get sizeEdges() {
-          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").size;
+          return __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").size;
       }
       getNodes() {
-          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").getSelection();
+          return __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").getSelection();
       }
       getEdges() {
-          return tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").getSelection();
+          return __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").getSelection();
       }
       addNodes(...nodes) {
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").add(...nodes);
+          __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").add(...nodes);
       }
       addEdges(...edges) {
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").add(...edges);
+          __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").add(...edges);
       }
       deleteNodes(node) {
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").delete(node);
+          __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").delete(node);
       }
       deleteEdges(edge) {
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").delete(edge);
+          __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").delete(edge);
       }
       clear() {
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").clear();
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").clear();
+          __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").clear();
+          __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").clear();
       }
       commit(...rest) {
           const summary = {
-              nodes: tslib.__classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").commit(),
-              edges: tslib.__classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").commit(),
+              nodes: __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").commit(),
+              edges: __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").commit(),
           };
-          tslib.__classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f").call(this, summary, ...rest);
+          __classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f").call(this, summary, ...rest);
           return summary;
       }
   }
@@ -21254,9 +21283,8 @@
      * @private
      */
     _createSeperator(index = 1) {
-      this.manipulationDOM["seperatorLineDiv" + index] = document.createElement(
-        "div"
-      );
+      this.manipulationDOM["seperatorLineDiv" + index] =
+        document.createElement("div");
       this.manipulationDOM["seperatorLineDiv" + index].className =
         "vis-separator-line";
       this.manipulationDiv.appendChild(
@@ -21421,9 +21449,8 @@
      */
     _temporaryBindUI(UIfunctionName, newFunction) {
       if (this.body.eventListeners[UIfunctionName] !== undefined) {
-        this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[
-          UIfunctionName
-        ];
+        this.temporaryUIFunctions[UIfunctionName] =
+          this.body.eventListeners[UIfunctionName];
         this.body.eventListeners[UIfunctionName] = newFunction;
       } else {
         throw new Error(
@@ -21448,9 +21475,8 @@
             functionName
           )
         ) {
-          this.body.eventListeners[functionName] = this.temporaryUIFunctions[
-            functionName
-          ];
+          this.body.eventListeners[functionName] =
+            this.temporaryUIFunctions[functionName];
           delete this.temporaryUIFunctions[functionName];
         }
       }
@@ -21611,9 +21637,8 @@
 
       // we use the selection to find the node that is being dragged. We explicitly DEselect the control node here.
       this.selectionHandler.unselectAll();
-      const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-        pointerObj
-      );
+      const overlappingNodeIds =
+        this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
       let node = undefined;
       for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
         if (overlappingNodeIds[i] !== this.selectedControlNode.id) {
@@ -21720,9 +21745,8 @@
       }
 
       // get the overlapping node but NOT the temporary node;
-      const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-        pointerObj
-      );
+      const overlappingNodeIds =
+        this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
       let node = undefined;
       for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
         // if the node id is NOT a temporary node, accept the node.
@@ -21766,9 +21790,8 @@
       }
 
       // get the overlapping node but NOT the temporary node;
-      const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(
-        pointerObj
-      );
+      const overlappingNodeIds =
+        this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
       let node = undefined;
       for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
         // if the node id is NOT a temporary node, accept the node.
@@ -22939,9 +22962,8 @@
 
       while (maxEnergy > threshold && iterations < maxIterations) {
         iterations += 1;
-        [highE_nodeId, maxEnergy, dE_dx, dE_dy] = this._getHighestEnergyNode(
-          ignoreClusters
-        );
+        [highE_nodeId, maxEnergy, dE_dx, dE_dy] =
+          this._getHighestEnergyNode(ignoreClusters);
         delta_m = maxEnergy;
         subIterations = 0;
         while (delta_m > innerThreshold && subIterations < maxInnerIterations) {
