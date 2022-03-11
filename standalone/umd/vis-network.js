@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-03-10T18:24:00.024Z
+ * @date    2022-03-11T16:36:55.645Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15588,7 +15588,6 @@
 	 * Create new data pipe.
 	 *
 	 * @param from - The source data set or data view.
-	 *
 	 * @remarks
 	 * Example usage:
 	 * ```typescript
@@ -15615,7 +15614,6 @@
 	 *
 	 * pipe.start();
 	 * ```
-	 *
 	 * @returns A factory whose methods can be used to configure the pipe.
 	 */
 
@@ -15700,7 +15698,6 @@
 	     * Apply the transformers to the items.
 	     *
 	     * @param items - The items to be transformed.
-	     *
 	     * @returns The transformed items.
 	     */
 
@@ -15797,7 +15794,6 @@
 	   *
 	   * @param callback - A filtering function that returns true if given item
 	   * should be piped and false if not.
-	   *
 	   * @returns This factory for further configuration.
 	   */
 
@@ -15816,10 +15812,8 @@
 	     *
 	     * @param callback - A mapping function that takes a source item and returns
 	     * corresponding mapped item.
-	     *
 	     * @typeParam TI - Target item type.
 	     * @typeParam TP - Target item type's id property name.
-	     *
 	     * @returns This factory for further configuration.
 	     */
 
@@ -15837,10 +15831,8 @@
 	     *
 	     * @param callback - A mapping function that takes a source item and returns
 	     * an array of corresponding mapped items.
-	     *
 	     * @typeParam TI - Target item type.
 	     * @typeParam TP - Target item type's id property name.
-	     *
 	     * @returns This factory for further configuration.
 	     */
 
@@ -15857,7 +15849,6 @@
 	     * Connect this pipe to given data set.
 	     *
 	     * @param target - The data set that will receive the items from this pipe.
-	     *
 	     * @returns The pipe connected between given data sets and performing
 	     * configured transformation on the processed items.
 	     */
@@ -15875,7 +15866,6 @@
 	 * Determine whether a value can be used as an id.
 	 *
 	 * @param value - Input value of unknown type.
-	 *
 	 * @returns True if the value is valid id, false otherwise.
 	 */
 
@@ -15933,7 +15923,6 @@
 	     *
 	     * @param object - The object to be extended.
 	     * @param options - Additional options.
-	     *
 	     * @returns The created queue.
 	     */
 
@@ -16150,7 +16139,6 @@
 	     * Subscribe to an event, add an event listener.
 	     *
 	     * @remarks Non-function callbacks are ignored.
-	     *
 	     * @param event - Event name.
 	     * @param callback - Callback method.
 	     */
@@ -16167,7 +16155,6 @@
 	     * Unsubscribe from an event, remove an event listener.
 	     *
 	     * @remarks If the same callback was subscribed more than once **all** occurences will be removed.
-	     *
 	     * @param event - Event name.
 	     * @param callback - Callback method.
 	     */
@@ -16192,7 +16179,6 @@
 	 * [[DataStream]] offers an always up to date stream of items from a [[DataSet]] or [[DataView]].
 	 * That means that the stream is evaluated at the time of iteration, conversion to another data type or when [[cache]] is called, not when the [[DataStream]] was created.
 	 * Multiple invocations of for example [[toItemArray]] may yield different results (if the data source like for example [[DataSet]] gets modified).
-	 *
 	 * @typeParam Item - The item type this stream is going to work with.
 	 */
 
@@ -16446,7 +16432,6 @@
 	     *
 	     * @remarks
 	     * The array may contain duplicities.
-	     *
 	     * @returns The array with all ids from this stream.
 	     */
 
@@ -16464,7 +16449,6 @@
 	     *
 	     * @remarks
 	     * The array may contain duplicities.
-	     *
 	     * @returns The array with all items from this stream.
 	     */
 
@@ -16482,7 +16466,6 @@
 	     *
 	     * @remarks
 	     * The array may contain duplicities.
-	     *
 	     * @returns The array with all entries from this stream.
 	     */
 
@@ -16496,7 +16479,6 @@
 	     *
 	     * @remarks
 	     * In case of duplicate ids (coerced to string so `7 == '7'`) the last encoutered appears in the returned object.
-	     *
 	     * @returns The object map of all id → item pairs from this stream.
 	     */
 
@@ -16577,7 +16559,6 @@
 	     * ds.clear()
 	     * chachedStream // Still has all the items.
 	     * ```
-	     *
 	     * @returns A new [[DataStream]] with cached items (detached from the original [[DataSet]]).
 	     */
 
@@ -16590,9 +16571,7 @@
 	     * Get the distinct values of given property.
 	     *
 	     * @param callback - The function that picks and possibly converts the property.
-	     *
 	     * @typeParam T - The type of the distinct value.
-	     *
 	     * @returns A set of all distinct properties.
 	     */
 
@@ -16624,7 +16603,6 @@
 	     * Filter the items of the stream.
 	     *
 	     * @param callback - The function that decides whether an item will be included.
-	     *
 	     * @returns A new data stream with the filtered items.
 	     */
 
@@ -16719,9 +16697,7 @@
 	     * Map the items into a different type.
 	     *
 	     * @param callback - The function that does the conversion.
-	     *
 	     * @typeParam Mapped - The type of the item after mapping.
-	     *
 	     * @returns A new data stream with the mapped items.
 	     */
 
@@ -16784,7 +16760,6 @@
 	     * Get the item with the maximum value of given property.
 	     *
 	     * @param callback - The function that picks and possibly converts the property.
-	     *
 	     * @returns The item with the maximum if found otherwise null.
 	     */
 
@@ -16821,7 +16796,6 @@
 	     * Get the item with the minimum value of given property.
 	     *
 	     * @param callback - The function that picks and possibly converts the property.
-	     *
 	     * @returns The item with the minimum if found otherwise null.
 	     */
 
@@ -16859,9 +16833,7 @@
 	     *
 	     * @param callback - The function that does the reduction.
 	     * @param accumulator - The initial value of the accumulator.
-	     *
 	     * @typeParam T - The type of the accumulated value.
-	     *
 	     * @returns The reduced value.
 	     */
 
@@ -16891,7 +16863,6 @@
 	     * Sort the items.
 	     *
 	     * @param callback - Item comparator.
-	     *
 	     * @returns A new stream with sorted items.
 	     */
 
@@ -16925,13 +16896,10 @@
 	 *
 	 * @remarks
 	 * The item will be modified.
-	 *
 	 * @param item - The item that will have an id after a call to this function.
 	 * @param idProp - The key of the id property.
-	 *
 	 * @typeParam Item - Item type that may or may not have an id.
 	 * @typeParam IdProp - Name of the property that contains the id.
-	 *
 	 * @returns true
 	 */
 
@@ -17107,9 +17075,7 @@
 	     *
 	     * @param data - Items to be added (ids will be generated if missing).
 	     * @param senderId - Sender id.
-	     *
 	     * @returns addedIds - Array with the ids (generated if not present) of the added items.
-	     *
 	     * @throws When an item with the same id as any of the added items already exists.
 	     */
 
@@ -17182,12 +17148,9 @@
 	     *
 	     * ## Warning for TypeScript users
 	     * This method may introduce partial items into the data set. Use add or updateOnly instead for better type safety.
-	     *
 	     * @param data - Items to be updated (if the id is already present) or added (if the id is missing).
 	     * @param senderId - Sender id.
-	     *
 	     * @returns updatedIds - The ids of the added (these may be newly generated if there was no id in the item from the data) or updated items.
-	     *
 	     * @throws When the supplied data is neither an item nor an array of items.
 	     */
 
@@ -17293,12 +17256,9 @@
 	     *
 	     * console.log(ids) // [2]
 	     * ```
-	     *
 	     * @param data - Updates (the id and optionally other props) to the items in this data set.
 	     * @param senderId - Sender id.
-	     *
 	     * @returns updatedIds - The ids of the updated items.
-	     *
 	     * @throws When the supplied data is neither an item nor an array of items, when the ids are missing.
 	     */
 
@@ -17640,9 +17600,7 @@
 	     *
 	     * @param item - The item whose fields should be filtered.
 	     * @param fields - The names of the fields that will be kept.
-	     *
 	     * @typeParam K - Field name type.
-	     *
 	     * @returns The item without any additional fields.
 	     */
 
@@ -17668,7 +17626,6 @@
 	     *
 	     * @param items - Items to be sorted in place.
 	     * @param order - A field name or custom sort function.
-	     *
 	     * @typeParam T - The type of the items in the items array.
 	     */
 
@@ -17718,7 +17675,6 @@
 	     *
 	     * @param id - One or more items or ids of items to be removed.
 	     * @param senderId - Sender id.
-	     *
 	     * @returns The ids of the removed items.
 	     */
 
@@ -17756,7 +17712,6 @@
 	     * Remove an item by its id or reference.
 	     *
 	     * @param id - Id of an item or the item itself.
-	     *
 	     * @returns The removed item if removed, null otherwise.
 	     */
 
@@ -17791,7 +17746,6 @@
 	     * After the items are removed, the [[DataSet]] will trigger an event `remove` for all removed items. When a `senderId` is provided, this id will be passed with the triggered event to all subscribers.
 	     *
 	     * @param senderId - Sender id.
-	     *
 	     * @returns removedIds - The ids of all removed items.
 	     */
 
@@ -17823,7 +17777,6 @@
 	     * Find the item with maximum value of a specified field.
 	     *
 	     * @param field - Name of the property that should be searched for max value.
-	     *
 	     * @returns Item containing max value, or null if no items.
 	     */
 
@@ -17860,7 +17813,6 @@
 	     * Find the item with minimum value of a specified field.
 	     *
 	     * @param field - Name of the property that should be searched for min value.
-	     *
 	     * @returns Item containing min value, or null if no items.
 	     */
 
@@ -17897,7 +17849,6 @@
 	     * Find all distinct values of a specified field
 	     *
 	     * @param prop - The property name whose distinct values should be returned.
-	     *
 	     * @returns Unordered array containing all distinct values. Items without specified property are ignored.
 	     */
 
@@ -17936,7 +17887,6 @@
 	     * Add a single item. Will fail when an item with the same id already exists.
 	     *
 	     * @param item - A new item to be added.
-	     *
 	     * @returns Added item's id. An id is generated when it is not present in the item.
 	     */
 
@@ -17961,7 +17911,6 @@
 	     * Will fail when the item has no id, or when there does not exist an item with the same id.
 	     *
 	     * @param update - The new item
-	     *
 	     * @returns The id of the updated item.
 	     */
 
@@ -18151,7 +18100,6 @@
 	     * Set a data source for the view.
 	     *
 	     * @param data - The instance containing data (directly or indirectly).
-	     *
 	     * @remarks
 	     * Note that when the data view is bound to a data set it won't be garbage
 	     * collected unless the data set is too. Use `dataView.setData(null)` or
@@ -18591,7 +18539,6 @@
 	 *
 	 * @param idProp - The expected property to contain item id.
 	 * @param v - The value to be tested.
-	 *
 	 * @returns True if all expected values and methods match, false otherwise.
 	 */
 
@@ -18604,7 +18551,6 @@
 	 *
 	 * @param idProp - The expected property to contain item id.
 	 * @param v - The value to be tested.
-	 *
 	 * @returns True if all expected values and methods match, false otherwise.
 	 */
 
