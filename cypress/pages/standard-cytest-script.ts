@@ -205,13 +205,15 @@ type VisUtil = typeof visUtil;
   updateSelectionJSON();
 
   // Selection events:
-  ([
-    "deselectEdge",
-    "deselectNode",
-    "select",
-    "selectEdge",
-    "selectNode",
-  ] as const).forEach((eventName): void => {
+  (
+    [
+      "deselectEdge",
+      "deselectNode",
+      "select",
+      "selectEdge",
+      "selectNode",
+    ] as const
+  ).forEach((eventName): void => {
     network.on(eventName, updateSelectionJSON);
 
     network.on(eventName, (): void => {
@@ -239,40 +241,42 @@ type VisUtil = typeof visUtil;
 
   // Event queue:
   const eventQueue: VisWindow["visEventQueue"] = {} as any;
-  ([
-    "afterDrawing",
-    "animationFinished",
-    "beforeDrawing",
-    "blurEdge",
-    "blurNode",
-    "click",
-    "configChange",
-    "controlNodeDragEnd",
-    "controlNodeDragging",
-    "deselectEdge",
-    "deselectNode",
-    "doubleClick",
-    "dragEnd",
-    "dragStart",
-    "dragging",
-    "hidePopup",
-    "hold",
-    "hoverEdge",
-    "hoverNode",
-    "initRedraw",
-    "oncontext",
-    "release",
-    "resize",
-    "select",
-    "selectEdge",
-    "selectNode",
-    "showPopup",
-    "stabilizationIterationsDone",
-    "stabilizationProgress",
-    "stabilized",
-    "startStabilizing",
-    "zoom",
-  ] as const).forEach((eventName): void => {
+  (
+    [
+      "afterDrawing",
+      "animationFinished",
+      "beforeDrawing",
+      "blurEdge",
+      "blurNode",
+      "click",
+      "configChange",
+      "controlNodeDragEnd",
+      "controlNodeDragging",
+      "deselectEdge",
+      "deselectNode",
+      "doubleClick",
+      "dragEnd",
+      "dragStart",
+      "dragging",
+      "hidePopup",
+      "hold",
+      "hoverEdge",
+      "hoverNode",
+      "initRedraw",
+      "oncontext",
+      "release",
+      "resize",
+      "select",
+      "selectEdge",
+      "selectNode",
+      "showPopup",
+      "stabilizationIterationsDone",
+      "stabilizationProgress",
+      "stabilized",
+      "startStabilizing",
+      "zoom",
+    ] as const
+  ).forEach((eventName): void => {
     eventQueue[eventName] = [];
     network.on(eventName, (params: any): void => {
       eventQueue[eventName].push({ params });
