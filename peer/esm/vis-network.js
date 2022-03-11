@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-03-11T21:04:38.328Z
+ * @date    2022-03-11T23:10:59.083Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7578,7 +7578,6 @@ symbol("DELETE");
  *
  * @param seed - All supplied arguments will be used as a seed. In case nothing
  * is supplied the current time will be used to seed the generator.
- *
  * @returns A ready to use seeded generator.
  */
 
@@ -7594,7 +7593,6 @@ function Alea() {
  * An implementation of [[Alea]] without user input validation.
  *
  * @param seed - The data that will be used to seed the generator.
- *
  * @returns A ready to use seeded generator.
  */
 
@@ -7636,7 +7634,6 @@ function AleaImplementation(seed) {
  * random numbers.
  *
  * @param seed - Arbitrary data that will be used as the seed.
- *
  * @returns Three numbers to use as initial values for [[AleaImplementation]].
  */
 
@@ -7721,7 +7718,7 @@ function hammerMock() {
   };
 }
 
-var Hammer = typeof window !== "undefined" ? window.Hammer || RealHammer : function () {
+var Hammer$1 = typeof window !== "undefined" ? window.Hammer || RealHammer : function () {
   // hammer.js is only available in a browser, not in node.js. Replacing it with a mock object.
   return hammerMock();
 };
@@ -7737,7 +7734,7 @@ var Hammer = typeof window !== "undefined" ? window.Hammer || RealHammer : funct
  * @class Activator
  */
 
-function Activator(container) {
+function Activator$1(container) {
   var _this = this,
       _context3;
 
@@ -7756,7 +7753,7 @@ function Activator(container) {
     _this._dom.overlay.parentNode.removeChild(_this._dom.overlay);
   });
 
-  var hammer = Hammer(this._dom.overlay);
+  var hammer = Hammer$1(this._dom.overlay);
   hammer.on("tap", bind$5(_context3 = this._onTapOverlay).call(_context3, this));
 
   this._cleanupQueue.push(function () {
@@ -7799,14 +7796,14 @@ function Activator(container) {
 } // turn into an event emitter
 
 
-Emitter(Activator.prototype); // The currently active activator
+Emitter(Activator$1.prototype); // The currently active activator
 
-Activator.current = null;
+Activator$1.current = null;
 /**
  * Destroy the activator. Cleans up all created DOM and event listeners
  */
 
-Activator.prototype.destroy = function () {
+Activator$1.prototype.destroy = function () {
   var _context4, _context5;
 
   this.deactivate();
@@ -7831,13 +7828,13 @@ Activator.prototype.destroy = function () {
  */
 
 
-Activator.prototype.activate = function () {
+Activator$1.prototype.activate = function () {
   // we allow only one active activator at a time
-  if (Activator.current) {
-    Activator.current.deactivate();
+  if (Activator$1.current) {
+    Activator$1.current.deactivate();
   }
 
-  Activator.current = this;
+  Activator$1.current = this;
   this.active = true;
   this._dom.overlay.style.display = "none";
 
@@ -7855,7 +7852,7 @@ Activator.prototype.activate = function () {
  */
 
 
-Activator.prototype.deactivate = function () {
+Activator$1.prototype.deactivate = function () {
   this.active = false;
   this._dom.overlay.style.display = "block";
 
@@ -7873,7 +7870,7 @@ Activator.prototype.deactivate = function () {
  */
 
 
-Activator.prototype._onTapOverlay = function (event) {
+Activator$1.prototype._onTapOverlay = function (event) {
   // activate the container
   this.activate();
   event.srcEvent.stopPropagation();
@@ -7929,7 +7926,6 @@ function recursiveDOMDelete(DOMobject) {
  * Test whether given object is a string.
  *
  * @param value - Input value of unknown type.
- *
  * @returns True if string, false otherwise.
  */
 
@@ -7941,7 +7937,6 @@ function isString(value) {
  * Test whether given object is a object (not primitive or null).
  *
  * @param value - Input value of unknown type.
- *
  * @returns True if not null object, false otherwise.
  */
 
@@ -8016,12 +8011,10 @@ function fillIfDefined(a, b) {
  * Previous version of this routine implied that multiple source objects could
  * be used; however, the implementation was **wrong**. Since multiple (\>1)
  * sources weren't used anywhere in the `vis.js` code, this has been removed
- *
  * @param props - Names of first-level properties to copy over.
  * @param a - Target object.
  * @param b - Source object.
  * @param allowDeletion - If true, delete property in a if explicitly set to null in b.
- *
  * @returns Argument a.
  */
 
@@ -8066,13 +8059,11 @@ function selectiveDeepExtend(props, a, b) {
  * The properties of `b` are considered for copying. Properties which are
  * themselves objects are are also extended. Only properties with defined
  * values are copied.
- *
  * @param propsToExclude - Names of properties which should *not* be copied.
  * @param a - Object to extend.
  * @param b - Object to take properties from for extension.
  * @param allowDeletion - If true, delete properties in a that are explicitly
  * set to null in b.
- *
  * @returns Argument a.
  */
 
@@ -8129,7 +8120,6 @@ function selectiveNotDeepExtend(propsToExclude, a, b) {
  * (That is the options objects that inherit from others will also get the
  * inherited options).
  * @param allowDeletion - If true, the values of fields that are null will be deleted.
- *
  * @returns Argument a.
  */
 
@@ -8165,7 +8155,6 @@ function deepExtend(a, b) {
  *
  * @param arr - First part.
  * @param newValue - The value to be aadded into the array.
- *
  * @returns A new array with all items from arr and newValue (which is last).
  */
 
@@ -8179,7 +8168,6 @@ function copyAndExtendArray(arr, newValue) {
  * Used to extend an array and copy it. This is used to propagate paths recursively.
  *
  * @param arr - The array to be copied.
- *
  * @returns Shallow copy of arr.
  */
 
@@ -8191,7 +8179,6 @@ function copyArray(arr) {
  * Retrieve the absolute left value of a DOM element.
  *
  * @param elem - A dom element, for example a div.
- *
  * @returns The absolute left position of this element in the browser page.
  */
 
@@ -8203,7 +8190,6 @@ function getAbsoluteLeft(elem) {
  * Retrieve the absolute top value of a DOM element.
  *
  * @param elem - A dom element, for example a div.
- *
  * @returns The absolute top position of this element in the browser page.
  */
 
@@ -8300,9 +8286,7 @@ function removeEventListener(element, action, listener, useCapture) {
  *
  * @remarks
  * {@link http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb}
- *
  * @param hex - Hex color string (3 or 6 digits, with or without #).
- *
  * @returns RGB color object.
  */
 
@@ -8337,7 +8321,6 @@ function hexToRGB(hex) {
  *
  * @param color - The color string (hex, RGB, RGBA).
  * @param opacity - The new opacity.
- *
  * @returns RGBA string, for example 'rgba(255, 0, 127, 0.3)'.
  */
 
@@ -8364,7 +8347,6 @@ function overrideOpacity(color, opacity) {
  * @param red - Red channel.
  * @param green - Green channel.
  * @param blue - Blue channel.
- *
  * @returns Hex color string (for example: '#0acdc0').
  */
 
@@ -8379,7 +8361,6 @@ function RGBToHex(red, green, blue) {
  *
  * @param inputColor - Shorthand color string or input color object.
  * @param defaultColor - Full color object to fill in missing values in inputColor.
- *
  * @returns Color object.
  */
 
@@ -8487,11 +8468,9 @@ function parseColor(inputColor, defaultColor) {
  *
  * @remarks
  * {@link http://www.javascripter.net/faq/rgb2hsv.htm}
- *
  * @param red - Red channel.
  * @param green - Green channel.
  * @param blue - Blue channel.
- *
  * @returns HSV color object.
  */
 
@@ -8528,11 +8507,9 @@ function RGBToHSV(red, green, blue) {
  *
  * @remarks
  * {@link https://gist.github.com/mjijackson/5311256}
- *
  * @param h - Hue.
  * @param s - Saturation.
  * @param v - Value.
- *
  * @returns RGB color object.
  */
 
@@ -8585,7 +8562,6 @@ function HSVToRGB(h, s, v) {
  * @param h - Hue.
  * @param s - Saturation.
  * @param v - Value.
- *
  * @returns Hex color string.
  */
 
@@ -8598,7 +8574,6 @@ function HSVToHex(h, s, v) {
  * Convert hex color string into HSV \<0, 1\>.
  *
  * @param hex - Hex color string.
- *
  * @returns HSV color object.
  */
 
@@ -8616,7 +8591,6 @@ function hexToHSV(hex) {
  * Validate hex color string.
  *
  * @param hex - Unknown string that may contain a color.
- *
  * @returns True if the string is valid, false otherwise.
  */
 
@@ -8629,7 +8603,6 @@ function isValidHex(hex) {
  * Validate RGB color string.
  *
  * @param rgb - Unknown string that may contain a color.
- *
  * @returns True if the string is valid, false otherwise.
  */
 
@@ -8641,7 +8614,6 @@ function isValidRGB(rgb) {
  * Validate RGBA color string.
  *
  * @param rgba - Unknown string that may contain a color.
- *
  * @returns True if the string is valid, false otherwise.
  */
 
@@ -8654,7 +8626,6 @@ function isValidRGBA(rgba) {
  * This is used for default options.
  *
  * @param referenceObject - The original object.
- *
  * @returns The Element if the referenceObject is an Element, or a new object inheriting from the referenceObject.
  */
 
@@ -8821,7 +8792,6 @@ var easingFunctions = {
    * Provides no easing and no acceleration.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   linear: function linear(t) {
@@ -8832,7 +8802,6 @@ var easingFunctions = {
    * Accelerate from zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInQuad: function easeInQuad(t) {
@@ -8843,7 +8812,6 @@ var easingFunctions = {
    * Decelerate to zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeOutQuad: function easeOutQuad(t) {
@@ -8854,7 +8822,6 @@ var easingFunctions = {
    * Accelerate until halfway, then decelerate.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInOutQuad: function easeInOutQuad(t) {
@@ -8865,7 +8832,6 @@ var easingFunctions = {
    * Accelerate from zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInCubic: function easeInCubic(t) {
@@ -8876,7 +8842,6 @@ var easingFunctions = {
    * Decelerate to zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeOutCubic: function easeOutCubic(t) {
@@ -8887,7 +8852,6 @@ var easingFunctions = {
    * Accelerate until halfway, then decelerate.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInOutCubic: function easeInOutCubic(t) {
@@ -8898,7 +8862,6 @@ var easingFunctions = {
    * Accelerate from zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInQuart: function easeInQuart(t) {
@@ -8909,7 +8872,6 @@ var easingFunctions = {
    * Decelerate to zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeOutQuart: function easeOutQuart(t) {
@@ -8920,7 +8882,6 @@ var easingFunctions = {
    * Accelerate until halfway, then decelerate.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInOutQuart: function easeInOutQuart(t) {
@@ -8931,7 +8892,6 @@ var easingFunctions = {
    * Accelerate from zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInQuint: function easeInQuint(t) {
@@ -8942,7 +8902,6 @@ var easingFunctions = {
    * Decelerate to zero velocity.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeOutQuint: function easeOutQuint(t) {
@@ -8953,7 +8912,6 @@ var easingFunctions = {
    * Accelerate until halfway, then decelerate.
    *
    * @param t - Time.
-   *
    * @returns Value at time t.
    */
   easeInOutQuint: function easeInOutQuint(t) {
@@ -8981,7 +8939,6 @@ var easingFunctions = {
  * @param pile - Array of objects, no required format.
  * @param accessors - Array of property names.
  * For example `object['foo']['bar']` → `['foo', 'bar']`.
- *
  * @returns Value of the property with given accessors path from the first pile item where it's not undefined.
  */
 
@@ -9169,14 +9126,14 @@ var htmlColors = {
  * @param {number} [pixelRatio=1]
  */
 
-var ColorPicker = /*#__PURE__*/function () {
+var ColorPicker$1 = /*#__PURE__*/function () {
   /**
    * @param {number} [pixelRatio=1]
    */
-  function ColorPicker() {
+  function ColorPicker$1() {
     var pixelRatio = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
-    _classCallCheck(this, ColorPicker);
+    _classCallCheck(this, ColorPicker$1);
 
     this.pixelRatio = pixelRatio;
     this.generated = false;
@@ -9215,7 +9172,7 @@ var ColorPicker = /*#__PURE__*/function () {
    */
 
 
-  _createClass(ColorPicker, [{
+  _createClass(ColorPicker$1, [{
     key: "insertTo",
     value: function insertTo(container) {
       if (this.hammer !== undefined) {
@@ -9699,7 +9656,7 @@ var ColorPicker = /*#__PURE__*/function () {
 
       this.drag = {};
       this.pinch = {};
-      this.hammer = new Hammer(this.colorPickerCanvas);
+      this.hammer = new Hammer$1(this.colorPickerCanvas);
       this.hammer.get("pinch").set({
         enable: true
       });
@@ -9811,13 +9768,12 @@ var ColorPicker = /*#__PURE__*/function () {
     }
   }]);
 
-  return ColorPicker;
+  return ColorPicker$1;
 }();
 /**
  * Wrap given text (last argument) in HTML elements (all preceding arguments).
  *
  * @param {...any} rest - List of tag names followed by inner text.
- *
  * @returns An element or a text node.
  */
 
@@ -9848,7 +9804,7 @@ function wrapInTag() {
  */
 
 
-var Configurator = /*#__PURE__*/function () {
+var Configurator$1 = /*#__PURE__*/function () {
   /**
    * @param {object} parentModule        | the location where parentModule.setOptions() can be called
    * @param {object} defaultContainer    | the default container of the module
@@ -9856,13 +9812,13 @@ var Configurator = /*#__PURE__*/function () {
    * @param {number} pixelRatio          | canvas pixel ratio
    * @param {Function} hideOption        | custom logic to dynamically hide options
    */
-  function Configurator(parentModule, defaultContainer, configureOptions) {
+  function Configurator$1(parentModule, defaultContainer, configureOptions) {
     var pixelRatio = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
     var hideOption = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : function () {
       return false;
     };
 
-    _classCallCheck(this, Configurator);
+    _classCallCheck(this, Configurator$1);
 
     this.parent = parentModule;
     this.changedOptions = [];
@@ -9887,7 +9843,7 @@ var Configurator = /*#__PURE__*/function () {
     this.popupDiv = {};
     this.popupLimit = 5;
     this.popupHistory = {};
-    this.colorPicker = new ColorPicker(pixelRatio);
+    this.colorPicker = new ColorPicker$1(pixelRatio);
     this.wrapper = undefined;
   }
   /**
@@ -9898,7 +9854,7 @@ var Configurator = /*#__PURE__*/function () {
    */
 
 
-  _createClass(Configurator, [{
+  _createClass(Configurator$1, [{
     key: "setOptions",
     value: function setOptions(options) {
       if (options !== undefined) {
@@ -10758,20 +10714,20 @@ var Configurator = /*#__PURE__*/function () {
     }
   }]);
 
-  return Configurator;
+  return Configurator$1;
 }();
 /**
  * Popup is a class to create a popup window with some text
  */
 
 
-var Popup = /*#__PURE__*/function () {
+var Popup$1 = /*#__PURE__*/function () {
   /**
    * @param {Element} container       The container object.
    * @param {string}  overflowMethod  How the popup should act to overflowing ('flip' or 'cap')
    */
-  function Popup(container, overflowMethod) {
-    _classCallCheck(this, Popup);
+  function Popup$1(container, overflowMethod) {
+    _classCallCheck(this, Popup$1);
 
     this.container = container;
     this.overflowMethod = overflowMethod || "cap";
@@ -10790,7 +10746,7 @@ var Popup = /*#__PURE__*/function () {
    */
 
 
-  _createClass(Popup, [{
+  _createClass(Popup$1, [{
     key: "setPosition",
     value: function setPosition(x, y) {
       this.x = _parseInt(x);
@@ -10914,22 +10870,22 @@ var Popup = /*#__PURE__*/function () {
     }
   }]);
 
-  return Popup;
+  return Popup$1;
 }();
 
 var errorFound = false;
 var allOptions$1;
-var VALIDATOR_PRINT_STYLE = "background: #FFeeee; color: #dd0000";
+var VALIDATOR_PRINT_STYLE$1 = "background: #FFeeee; color: #dd0000";
 /**
  *  Used to validate options.
  */
 
-var Validator = /*#__PURE__*/function () {
-  function Validator() {
-    _classCallCheck(this, Validator);
+var Validator$1 = /*#__PURE__*/function () {
+  function Validator$1() {
+    _classCallCheck(this, Validator$1);
   }
 
-  _createClass(Validator, null, [{
+  _createClass(Validator$1, null, [{
     key: "validate",
     value:
     /**
@@ -10950,7 +10906,7 @@ var Validator = /*#__PURE__*/function () {
         usedOptions = referenceOptions[subObject];
       }
 
-      Validator.parse(options, usedOptions, []);
+      Validator$1.parse(options, usedOptions, []);
       return errorFound;
     }
     /**
@@ -10967,7 +10923,7 @@ var Validator = /*#__PURE__*/function () {
     value: function parse(options, referenceOptions, path) {
       for (var _option3 in options) {
         if (Object.prototype.hasOwnProperty.call(options, _option3)) {
-          Validator.check(_option3, options, referenceOptions, path);
+          Validator$1.check(_option3, options, referenceOptions, path);
         }
       }
     }
@@ -10985,7 +10941,7 @@ var Validator = /*#__PURE__*/function () {
     key: "check",
     value: function check(option, options, referenceOptions, path) {
       if (referenceOptions[option] === undefined && referenceOptions.__any__ === undefined) {
-        Validator.getSuggestion(option, referenceOptions, path);
+        Validator$1.getSuggestion(option, referenceOptions, path);
         return;
       }
 
@@ -11000,7 +10956,7 @@ var Validator = /*#__PURE__*/function () {
         referenceOption = "__any__"; // if the any-subgroup is not a predefined object in the configurator,
         // we do not look deeper into the object.
 
-        is_object = Validator.getType(options[option]) === "object";
+        is_object = Validator$1.getType(options[option]) === "object";
       }
 
       var refOptionObj = referenceOptions[referenceOption];
@@ -11009,7 +10965,7 @@ var Validator = /*#__PURE__*/function () {
         refOptionObj = refOptionObj.__type__;
       }
 
-      Validator.checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path);
+      Validator$1.checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path);
     }
     /**
      *
@@ -11026,24 +10982,24 @@ var Validator = /*#__PURE__*/function () {
     key: "checkFields",
     value: function checkFields(option, options, referenceOptions, referenceOption, refOptionObj, path) {
       var log = function log(message) {
-        console.error("%c" + message + Validator.printLocation(path, option), VALIDATOR_PRINT_STYLE);
+        console.error("%c" + message + Validator$1.printLocation(path, option), VALIDATOR_PRINT_STYLE$1);
       };
 
-      var optionType = Validator.getType(options[option]);
+      var optionType = Validator$1.getType(options[option]);
       var refOptionType = refOptionObj[optionType];
 
       if (refOptionType !== undefined) {
         // if the type is correct, we check if it is supposed to be one of a few select values
-        if (Validator.getType(refOptionType) === "array" && indexOf(refOptionType).call(refOptionType, options[option]) === -1) {
-          log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator.print(refOptionType) + ' not "' + options[option] + '". ');
+        if (Validator$1.getType(refOptionType) === "array" && indexOf(refOptionType).call(refOptionType, options[option]) === -1) {
+          log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator$1.print(refOptionType) + ' not "' + options[option] + '". ');
           errorFound = true;
         } else if (optionType === "object" && referenceOption !== "__any__") {
           path = copyAndExtendArray(path, option);
-          Validator.parse(options[option], referenceOptions[referenceOption], path);
+          Validator$1.parse(options[option], referenceOptions[referenceOption], path);
         }
       } else if (refOptionObj["any"] === undefined) {
         // type of the field is incorrect and the field cannot be any
-        log('Invalid type received for "' + option + '". Expected: ' + Validator.print(keys(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
+        log('Invalid type received for "' + option + '". Expected: ' + Validator$1.print(keys(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
         errorFound = true;
       }
     }
@@ -11115,23 +11071,23 @@ var Validator = /*#__PURE__*/function () {
   }, {
     key: "getSuggestion",
     value: function getSuggestion(option, options, path) {
-      var localSearch = Validator.findInOptions(option, options, path, false);
-      var globalSearch = Validator.findInOptions(option, allOptions$1, [], true);
+      var localSearch = Validator$1.findInOptions(option, options, path, false);
+      var globalSearch = Validator$1.findInOptions(option, allOptions$1, [], true);
       var localSearchThreshold = 8;
       var globalSearchThreshold = 4;
       var msg;
 
       if (localSearch.indexMatch !== undefined) {
-        msg = " in " + Validator.printLocation(localSearch.path, option, "") + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
+        msg = " in " + Validator$1.printLocation(localSearch.path, option, "") + 'Perhaps it was incomplete? Did you mean: "' + localSearch.indexMatch + '"?\n\n';
       } else if (globalSearch.distance <= globalSearchThreshold && localSearch.distance > globalSearch.distance) {
-        msg = " in " + Validator.printLocation(localSearch.path, option, "") + "Perhaps it was misplaced? Matching option found at: " + Validator.printLocation(globalSearch.path, globalSearch.closestMatch, "");
+        msg = " in " + Validator$1.printLocation(localSearch.path, option, "") + "Perhaps it was misplaced? Matching option found at: " + Validator$1.printLocation(globalSearch.path, globalSearch.closestMatch, "");
       } else if (localSearch.distance <= localSearchThreshold) {
-        msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator.printLocation(localSearch.path, option);
+        msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator$1.printLocation(localSearch.path, option);
       } else {
-        msg = ". Did you mean one of these: " + Validator.print(keys(options)) + Validator.printLocation(path, option);
+        msg = ". Did you mean one of these: " + Validator$1.print(keys(options)) + Validator$1.printLocation(path, option);
       }
 
-      console.error('%cUnknown option detected: "' + option + '"' + msg, VALIDATOR_PRINT_STYLE);
+      console.error('%cUnknown option detected: "' + option + '"' + msg, VALIDATOR_PRINT_STYLE$1);
       errorFound = true;
     }
     /**
@@ -11159,7 +11115,7 @@ var Validator = /*#__PURE__*/function () {
         var distance = void 0;
 
         if (options[op].__type__ !== undefined && recursive === true) {
-          var result = Validator.findInOptions(option, options[op], copyAndExtendArray(path, op));
+          var result = Validator$1.findInOptions(option, options[op], copyAndExtendArray(path, op));
 
           if (min > result.distance) {
             closestMatch = result.closestMatch;
@@ -11174,7 +11130,7 @@ var Validator = /*#__PURE__*/function () {
             indexMatch = op;
           }
 
-          distance = Validator.levenshteinDistance(option, op);
+          distance = Validator$1.levenshteinDistance(option, op);
 
           if (min > distance) {
             closestMatch = op;
@@ -11295,15 +11251,15 @@ var Validator = /*#__PURE__*/function () {
     }
   }]);
 
-  return Validator;
+  return Validator$1;
 }();
 
-var Activator$1 = Activator;
-var Configurator$1 = Configurator;
-var Hammer$1 = Hammer;
-var Popup$1 = Popup;
-var VALIDATOR_PRINT_STYLE$1 = VALIDATOR_PRINT_STYLE;
-var Validator$1 = Validator;
+var Activator = Activator$1;
+var Configurator = Configurator$1;
+var Hammer = Hammer$1;
+var Popup = Popup$1;
+var VALIDATOR_PRINT_STYLE = VALIDATOR_PRINT_STYLE$1;
+var Validator = Validator$1;
 
 /* eslint-disable no-prototype-builtins */
 
@@ -19676,7 +19632,7 @@ var Node = /*#__PURE__*/function () {
           strId = " in node id: " + id;
         }
 
-        console.error("%cNegative or zero mass disallowed" + strId + ", setting mass to 1.", VALIDATOR_PRINT_STYLE$1);
+        console.error("%cNegative or zero mass disallowed" + strId + ", setting mass to 1.", VALIDATOR_PRINT_STYLE);
         options.mass = 1;
       }
     }
@@ -29090,14 +29046,14 @@ var Canvas = /*#__PURE__*/function () {
       this.drag = {};
       this.pinch = {}; // init hammer
 
-      this.hammer = new Hammer$1(this.frame.canvas);
+      this.hammer = new Hammer(this.frame.canvas);
       this.hammer.get("pinch").set({
         enable: true
       }); // enable to get better response, todo: test on mobile.
 
       this.hammer.get("pan").set({
         threshold: 5,
-        direction: Hammer$1.DIRECTION_ALL
+        direction: Hammer.DIRECTION_ALL
       });
       onTouch(this.hammer, function (event) {
         _this3.body.eventListeners.onTouch(event);
@@ -29133,7 +29089,7 @@ var Canvas = /*#__PURE__*/function () {
       this.frame.canvas.addEventListener("contextmenu", function (event) {
         _this3.body.eventListeners.onContext(event);
       });
-      this.hammerFrame = new Hammer$1(this.frame);
+      this.hammerFrame = new Hammer(this.frame);
       onRelease(this.hammerFrame, function (event) {
         _this3.body.eventListeners.onRelease(event);
       });
@@ -30251,7 +30207,7 @@ var NavigationHandler = /*#__PURE__*/function () {
         this.navigationDOM[navigationDivs[i]] = document.createElement("div");
         this.navigationDOM[navigationDivs[i]].className = "vis-button vis-" + navigationDivs[i];
         this.navigationDOM["wrapper"].appendChild(this.navigationDOM[navigationDivs[i]]);
-        var hammer = new Hammer$1(this.navigationDOM[navigationDivs[i]]);
+        var hammer = new Hammer(this.navigationDOM[navigationDivs[i]]);
 
         if (navigationDivActions[i] === "_fit") {
           var _context;
@@ -30268,7 +30224,7 @@ var NavigationHandler = /*#__PURE__*/function () {
       // the one the rest uses can be overloaded by the manipulation system.
 
 
-      var hammerFrame = new Hammer$1(this.canvas.frame);
+      var hammerFrame = new Hammer(this.canvas.frame);
       onRelease(hammerFrame, function () {
         _this2._stopMovement();
       });
@@ -31306,7 +31262,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         // show popup message window
         if (this.popupObj.id !== previousPopupObjId) {
           if (this.popup === undefined) {
-            this.popup = new Popup$1(this.canvas.frame);
+            this.popup = new Popup(this.canvas.frame);
           }
 
           this.popup.popupTargetType = popupType;
@@ -37461,7 +37417,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     key: "_bindElementEvents",
     value: function _bindElementEvents(domElement, boundFunction) {
       // Bind touch events.
-      var hammer = new Hammer$1(domElement, {});
+      var hammer = new Hammer(domElement, {});
       onTouch(hammer, boundFunction);
 
       this._domEventListenerCleanupQueue.push(function () {
@@ -40091,10 +40047,10 @@ Network.prototype.setOptions = function (options) {
   }
 
   if (options !== undefined) {
-    var errorFound = Validator$1.validate(options, allOptions);
+    var errorFound = Validator.validate(options, allOptions);
 
     if (errorFound === true) {
-      console.error("%cErrors have been found in the supplied options object.", VALIDATOR_PRINT_STYLE$1);
+      console.error("%cErrors have been found in the supplied options object.", VALIDATOR_PRINT_STYLE);
     } // copy the global fields over
 
 
@@ -40131,7 +40087,7 @@ Network.prototype.setOptions = function (options) {
 
     if ("configure" in options) {
       if (!this.configurator) {
-        this.configurator = new Configurator$1(this, this.body.container, configureOptions, this.canvas.pixelRatio, configuratorHideOption);
+        this.configurator = new Configurator(this, this.body.container, configureOptions, this.canvas.pixelRatio, configuratorHideOption);
       }
 
       this.configurator.setOptions(options.configure);
@@ -40167,7 +40123,7 @@ Network.prototype.setOptions = function (options) {
     if (options.clickToUse !== undefined) {
       if (options.clickToUse === true) {
         if (this.activator === undefined) {
-          this.activator = new Activator$1(this.canvas.frame);
+          this.activator = new Activator(this.canvas.frame);
           this.activator.on("change", function () {
             _this2.body.emitter.emit("activate");
           });
