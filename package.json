@@ -134,7 +134,7 @@
     "lint-staged": "12.3.5",
     "mocha": "9.2.2",
     "nyc": "15.1.0",
-    "postcss": "8.4.8",
+    "postcss": "8.4.11",
     "rimraf": "3.0.2",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-node-resolve": "5.2.0",
