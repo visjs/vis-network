@@ -1,5 +1,5 @@
-import commonjs from "rollup-plugin-commonjs";
-import nodeResolve from "rollup-plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "rollup-plugin-babel";
 import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
@@ -20,11 +20,7 @@ const plugins = {
   typescript: typescript({
     tsconfig: "tsconfig.code.json",
   }),
-  commonjs: commonjs({
-    namedExports: {
-      timsort: ["sort"],
-    },
-  }),
+  commonjs: commonjs(),
   babel: babel({
     extensions: [".ts", ".js"],
     runtimeHelpers: true,
