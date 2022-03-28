@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-03-28T18:48:15.076Z
+ * @date    2022-03-28T19:50:13.061Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -30837,8 +30837,9 @@ var InteractionHandler = /*#__PURE__*/function () {
         this.drag.nodeId = node.id; // select the clicked node if not yet selected
 
         if (node.isSelected() === false) {
-          this.selectionHandler.unselectAll();
-          this.selectionHandler.selectObject(node);
+          this.selectionHandler.setSelection({
+            nodes: [node.id]
+          });
         } // after select to contain the node
 
 
