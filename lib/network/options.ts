@@ -352,7 +352,7 @@ const allOptions: OptionsConfig = {
       __type__: { object },
     },
     selectionWidth: { function: "function", number },
-    selfReferenceSize: { number, boolean: false },
+    selfReferenceSize: { number, boolean: bool },
     selfReference: {
       size: { number },
       angle: { number },
