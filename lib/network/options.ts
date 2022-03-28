@@ -247,7 +247,7 @@ const allOptions: OptionsConfig = {
         scaleFactor: { number },
         type: { string: endPoints },
         imageWidth: { number, undefined: "undefined" },
-        imageHeight: { numbe, undefined: "undefined"r },
+        imageHeight: { numbe, undefined: "undefined" },
         src: { string, undefined: "undefined" },
         __type__: { object, boolean: bool },
       },
