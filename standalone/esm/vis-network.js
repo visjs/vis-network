@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-05-01T15:08:11.384Z
+ * @date    2022-05-03T01:41:35.091Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,6 +25,12 @@
  */
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
+
+var assign$5 = {exports: {}};
 
 var check = function (it) {
   return it && it.Math == Math && it;
@@ -240,14 +246,14 @@ var useSymbolAsUid = NATIVE_SYMBOL$2 && !Symbol.sham && typeof Symbol.iterator =
 var global$K = global$P;
 var getBuiltIn$7 = getBuiltIn$9;
 var isCallable$e = isCallable$h;
-var isPrototypeOf$m = objectIsPrototypeOf;
+var isPrototypeOf$n = objectIsPrototypeOf;
 var USE_SYMBOL_AS_UID$1 = useSymbolAsUid;
 var Object$9 = global$K.Object;
 var isSymbol$3 = USE_SYMBOL_AS_UID$1 ? function (it) {
   return typeof it == 'symbol';
 } : function (it) {
   var $Symbol = getBuiltIn$7('Symbol');
-  return isCallable$e($Symbol) && isPrototypeOf$m($Symbol.prototype, Object$9(it));
+  return isCallable$e($Symbol) && isPrototypeOf$n($Symbol.prototype, Object$9(it));
 };
 
 var global$J = global$P;
@@ -862,25 +868,31 @@ var objectAssign = !$assign || fails$l(function () {
 } : $assign;
 
 var $$J = _export;
-var assign$5 = objectAssign; // `Object.assign` method
+var assign$4 = objectAssign; // `Object.assign` method
 // https://tc39.es/ecma262/#sec-object.assign
 // eslint-disable-next-line es/no-object-assign -- required for testing
 
 $$J({
   target: 'Object',
   stat: true,
-  forced: Object.assign !== assign$5
+  forced: Object.assign !== assign$4
 }, {
-  assign: assign$5
+  assign: assign$4
 });
 
 var path$v = path$y;
-var assign$4 = path$v.Object.assign;
+var assign$3 = path$v.Object.assign;
 
-var parent$1a = assign$4;
-var assign$3 = parent$1a;
+var parent$1c = assign$3;
+var assign$2 = parent$1c;
 
-var assign$2 = assign$3;
+(function (module) {
+  module.exports = assign$2;
+})(assign$5);
+
+var _Object$assign = /*@__PURE__*/getDefaultExportFromCjs(assign$5.exports);
+
+var bind$a = {exports: {}};
 
 var uncurryThis$m = functionUncurryThis;
 var arraySlice$5 = uncurryThis$m([].slice);
@@ -928,15 +940,15 @@ var functionBind = NATIVE_BIND ? Function$2.bind : function bind(that
 };
 
 var $$I = _export;
-var bind$a = functionBind; // `Function.prototype.bind` method
+var bind$9 = functionBind; // `Function.prototype.bind` method
 // https://tc39.es/ecma262/#sec-function.prototype.bind
 
 $$I({
   target: 'Function',
   proto: true,
-  forced: Function.bind !== bind$a
+  forced: Function.bind !== bind$9
 }, {
-  bind: bind$a
+  bind: bind$9
 });
 
 var path$u = path$y;
@@ -946,21 +958,25 @@ var entryVirtual$l = function (CONSTRUCTOR) {
 };
 
 var entryVirtual$k = entryVirtual$l;
-var bind$9 = entryVirtual$k('Function').bind;
+var bind$8 = entryVirtual$k('Function').bind;
 
-var isPrototypeOf$l = objectIsPrototypeOf;
-var method$h = bind$9;
+var isPrototypeOf$m = objectIsPrototypeOf;
+var method$i = bind$8;
 var FunctionPrototype$1 = Function.prototype;
 
-var bind$8 = function (it) {
+var bind$7 = function (it) {
   var own = it.bind;
-  return it === FunctionPrototype$1 || isPrototypeOf$l(FunctionPrototype$1, it) && own === FunctionPrototype$1.bind ? method$h : own;
+  return it === FunctionPrototype$1 || isPrototypeOf$m(FunctionPrototype$1, it) && own === FunctionPrototype$1.bind ? method$i : own;
 };
 
-var parent$19 = bind$8;
-var bind$7 = parent$19;
+var parent$1b = bind$7;
+var bind$6 = parent$1b;
 
-var bind$6 = bind$7;
+(function (module) {
+  module.exports = bind$6;
+})(bind$a);
+
+var _bindInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(bind$a.exports);
 
 /**
  * Draw a circle.
@@ -1533,6 +1549,8 @@ var componentEmitter = {exports: {}};
 })(componentEmitter);
 
 var Emitter = componentEmitter.exports;
+
+var from$6 = {exports: {}};
 
 var wellKnownSymbol$h = wellKnownSymbol$j;
 var TO_STRING_TAG$3 = wellKnownSymbol$h('toStringTag');
@@ -2409,7 +2427,7 @@ var checkCorrectnessOfIteration$1 = function (exec, SKIP_CLOSING) {
 };
 
 var $$G = _export;
-var from$6 = arrayFrom;
+var from$5 = arrayFrom;
 var checkCorrectnessOfIteration = checkCorrectnessOfIteration$1;
 var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
   // eslint-disable-next-line es/no-array-from -- required for testing
@@ -2422,16 +2440,22 @@ $$G({
   stat: true,
   forced: INCORRECT_ITERATION
 }, {
-  from: from$6
+  from: from$5
 });
 
 var path$t = path$y;
-var from$5 = path$t.Array.from;
+var from$4 = path$t.Array.from;
 
-var parent$18 = from$5;
-var from$4 = parent$18;
+var parent$1a = from$4;
+var from$3 = parent$1a;
 
-var from$3 = from$4;
+(function (module) {
+  module.exports = from$3;
+})(from$6);
+
+var _Array$from$1 = /*@__PURE__*/getDefaultExportFromCjs(from$6.exports);
+
+var getIteratorMethod$5 = {exports: {}};
 
 var toIndexedObject$6 = toIndexedObject$b;
 var Iterators$1 = iterators;
@@ -2494,8 +2518,8 @@ defineIterator$1(Array, 'Array', function (iterated, kind) {
 
 Iterators$1.Arguments = Iterators$1.Array; // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
-var getIteratorMethod$5 = getIteratorMethod$8;
-var getIteratorMethod_1 = getIteratorMethod$5;
+var getIteratorMethod$4 = getIteratorMethod$8;
+var getIteratorMethod_1 = getIteratorMethod$4;
 
 // flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
 
@@ -2552,16 +2576,22 @@ for (var COLLECTION_NAME in DOMIterables$4) {
   Iterators[COLLECTION_NAME] = Iterators.Array;
 }
 
-var parent$17 = getIteratorMethod_1;
-var getIteratorMethod$4 = parent$17;
+var parent$19 = getIteratorMethod_1;
+var getIteratorMethod$3 = parent$19;
 
-var parent$16 = getIteratorMethod$4;
-var getIteratorMethod$3 = parent$16;
+var parent$18 = getIteratorMethod$3;
+var getIteratorMethod$2 = parent$18;
 
-var parent$15 = getIteratorMethod$3;
-var getIteratorMethod$2 = parent$15;
+var parent$17 = getIteratorMethod$2;
+var getIteratorMethod$1 = parent$17;
 
-var getIteratorMethod$1 = getIteratorMethod$2;
+(function (module) {
+  module.exports = getIteratorMethod$1;
+})(getIteratorMethod$5);
+
+var _getIteratorMethod = /*@__PURE__*/getDefaultExportFromCjs(getIteratorMethod$5.exports);
+
+var getOwnPropertySymbols$2 = {exports: {}};
 
 var classof$8 = classofRaw$1; // `IsArray` abstract operation
 // https://tc39.es/ecma262/#sec-isarray
@@ -2776,7 +2806,7 @@ var hasOwn$7 = hasOwnProperty_1;
 var isArray$b = isArray$d;
 var isCallable$2 = isCallable$h;
 var isObject$b = isObject$j;
-var isPrototypeOf$k = objectIsPrototypeOf;
+var isPrototypeOf$l = objectIsPrototypeOf;
 var isSymbol = isSymbol$3;
 var anObject$5 = anObject$d;
 var toObject$8 = toObject$e;
@@ -2941,7 +2971,7 @@ var $getOwnPropertySymbols = function getOwnPropertySymbols(O) {
 
 if (!NATIVE_SYMBOL) {
   $Symbol = function Symbol() {
-    if (isPrototypeOf$k(SymbolPrototype, this)) throw TypeError$a('Symbol is not a constructor');
+    if (isPrototypeOf$l(SymbolPrototype, this)) throw TypeError$a('Symbol is not a constructor');
     var description = !arguments.length || arguments[0] === undefined ? undefined : $toString(arguments[0]);
     var tag = uid$1(description);
 
@@ -3120,14 +3150,20 @@ setToStringTag$2($Symbol, SYMBOL);
 hiddenKeys$1[HIDDEN] = true;
 
 var path$r = path$y;
-var getOwnPropertySymbols$2 = path$r.Object.getOwnPropertySymbols;
+var getOwnPropertySymbols$1 = path$r.Object.getOwnPropertySymbols;
 
-var parent$14 = getOwnPropertySymbols$2;
-var getOwnPropertySymbols$1 = parent$14;
+var parent$16 = getOwnPropertySymbols$1;
+var getOwnPropertySymbols = parent$16;
 
-var getOwnPropertySymbols = getOwnPropertySymbols$1;
+(function (module) {
+  module.exports = getOwnPropertySymbols;
+})(getOwnPropertySymbols$2);
+
+var _Object$getOwnPropertySymbols = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertySymbols$2.exports);
 
 var getOwnPropertyDescriptor$6 = {exports: {}};
+
+var getOwnPropertyDescriptor$5 = {exports: {}};
 
 var $$E = _export;
 var fails$g = fails$t;
@@ -3154,16 +3190,22 @@ $$E({
 var path$q = path$y;
 var Object$5 = path$q.Object;
 
-var getOwnPropertyDescriptor$5 = getOwnPropertyDescriptor$6.exports = function getOwnPropertyDescriptor(it, key) {
+var getOwnPropertyDescriptor$4 = getOwnPropertyDescriptor$5.exports = function getOwnPropertyDescriptor(it, key) {
   return Object$5.getOwnPropertyDescriptor(it, key);
 };
 
-if (Object$5.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$5.sham = true;
+if (Object$5.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor$4.sham = true;
 
-var parent$13 = getOwnPropertyDescriptor$6.exports;
-var getOwnPropertyDescriptor$4 = parent$13;
+var parent$15 = getOwnPropertyDescriptor$5.exports;
+var getOwnPropertyDescriptor$3 = parent$15;
 
-var getOwnPropertyDescriptor$3 = getOwnPropertyDescriptor$4;
+(function (module) {
+  module.exports = getOwnPropertyDescriptor$3;
+})(getOwnPropertyDescriptor$6);
+
+var _Object$getOwnPropertyDescriptor$1 = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$6.exports);
+
+var getOwnPropertyDescriptors$2 = {exports: {}};
 
 var getBuiltIn$3 = getBuiltIn$9;
 var uncurryThis$d = functionUncurryThis;
@@ -3209,74 +3251,90 @@ $$D({
 });
 
 var path$p = path$y;
-var getOwnPropertyDescriptors$2 = path$p.Object.getOwnPropertyDescriptors;
+var getOwnPropertyDescriptors$1 = path$p.Object.getOwnPropertyDescriptors;
 
-var parent$12 = getOwnPropertyDescriptors$2;
-var getOwnPropertyDescriptors$1 = parent$12;
+var parent$14 = getOwnPropertyDescriptors$1;
+var getOwnPropertyDescriptors = parent$14;
 
-var getOwnPropertyDescriptors = getOwnPropertyDescriptors$1;
+(function (module) {
+  module.exports = getOwnPropertyDescriptors;
+})(getOwnPropertyDescriptors$2);
+
+var _Object$getOwnPropertyDescriptors = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptors$2.exports);
 
 var defineProperties$4 = {exports: {}};
 
+var defineProperties$3 = {exports: {}};
+
 var $$C = _export;
 var DESCRIPTORS$6 = descriptors;
-var defineProperties$3 = objectDefineProperties.f; // `Object.defineProperties` method
+var defineProperties$2 = objectDefineProperties.f; // `Object.defineProperties` method
 // https://tc39.es/ecma262/#sec-object.defineproperties
 // eslint-disable-next-line es/no-object-defineproperties -- safe
 
 $$C({
   target: 'Object',
   stat: true,
-  forced: Object.defineProperties !== defineProperties$3,
+  forced: Object.defineProperties !== defineProperties$2,
   sham: !DESCRIPTORS$6
 }, {
-  defineProperties: defineProperties$3
+  defineProperties: defineProperties$2
 });
 
 var path$o = path$y;
 var Object$4 = path$o.Object;
 
-var defineProperties$2 = defineProperties$4.exports = function defineProperties(T, D) {
+var defineProperties$1 = defineProperties$3.exports = function defineProperties(T, D) {
   return Object$4.defineProperties(T, D);
 };
 
-if (Object$4.defineProperties.sham) defineProperties$2.sham = true;
+if (Object$4.defineProperties.sham) defineProperties$1.sham = true;
 
-var parent$11 = defineProperties$4.exports;
-var defineProperties$1 = parent$11;
+var parent$13 = defineProperties$3.exports;
+var defineProperties = parent$13;
 
-var defineProperties = defineProperties$1;
+(function (module) {
+  module.exports = defineProperties;
+})(defineProperties$4);
+
+var _Object$defineProperties = /*@__PURE__*/getDefaultExportFromCjs(defineProperties$4.exports);
 
 var defineProperty$a = {exports: {}};
 
+var defineProperty$9 = {exports: {}};
+
 var $$B = _export;
 var DESCRIPTORS$5 = descriptors;
-var defineProperty$9 = objectDefineProperty.f; // `Object.defineProperty` method
+var defineProperty$8 = objectDefineProperty.f; // `Object.defineProperty` method
 // https://tc39.es/ecma262/#sec-object.defineproperty
 // eslint-disable-next-line es/no-object-defineproperty -- safe
 
 $$B({
   target: 'Object',
   stat: true,
-  forced: Object.defineProperty !== defineProperty$9,
+  forced: Object.defineProperty !== defineProperty$8,
   sham: !DESCRIPTORS$5
 }, {
-  defineProperty: defineProperty$9
+  defineProperty: defineProperty$8
 });
 
 var path$n = path$y;
 var Object$3 = path$n.Object;
 
-var defineProperty$8 = defineProperty$a.exports = function defineProperty(it, key, desc) {
+var defineProperty$7 = defineProperty$9.exports = function defineProperty(it, key, desc) {
   return Object$3.defineProperty(it, key, desc);
 };
 
-if (Object$3.defineProperty.sham) defineProperty$8.sham = true;
+if (Object$3.defineProperty.sham) defineProperty$7.sham = true;
 
-var parent$10 = defineProperty$a.exports;
-var defineProperty$7 = parent$10;
+var parent$12 = defineProperty$9.exports;
+var defineProperty$6 = parent$12;
 
-var defineProperty$6 = defineProperty$7;
+(function (module) {
+  module.exports = defineProperty$6;
+})(defineProperty$a);
+
+var _Object$defineProperty$1 = /*@__PURE__*/getDefaultExportFromCjs(defineProperty$a.exports);
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -3284,13 +3342,19 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 
-var parent$$ = defineProperty$7;
-var defineProperty$5 = parent$$;
+var defineProperty$5 = {exports: {}};
 
-var parent$_ = defineProperty$5;
-var defineProperty$4 = parent$_;
+var parent$11 = defineProperty$6;
+var defineProperty$4 = parent$11;
 
-var defineProperty$3 = defineProperty$4;
+var parent$10 = defineProperty$4;
+var defineProperty$3 = parent$10;
+
+(function (module) {
+  module.exports = defineProperty$3;
+})(defineProperty$5);
+
+var _Object$defineProperty = /*@__PURE__*/getDefaultExportFromCjs(defineProperty$5.exports);
 
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
@@ -3299,7 +3363,7 @@ function _defineProperties(target, props) {
     descriptor.configurable = true;
     if ("value" in descriptor) descriptor.writable = true;
 
-    defineProperty$3(target, descriptor.key, descriptor);
+    _Object$defineProperty(target, descriptor.key, descriptor);
   }
 }
 
@@ -3307,7 +3371,7 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
 
-  defineProperty$3(Constructor, "prototype", {
+  _Object$defineProperty(Constructor, "prototype", {
     writable: false
   });
 
@@ -3316,7 +3380,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
-    defineProperty$3(obj, key, {
+    _Object$defineProperty(obj, key, {
       value: value,
       enumerable: true,
       configurable: true,
@@ -3329,34 +3393,42 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
+var isArray$a = {exports: {}};
+
 var $$A = _export;
-var isArray$a = isArray$d; // `Array.isArray` method
+var isArray$9 = isArray$d; // `Array.isArray` method
 // https://tc39.es/ecma262/#sec-array.isarray
 
 $$A({
   target: 'Array',
   stat: true
 }, {
-  isArray: isArray$a
+  isArray: isArray$9
 });
 
 var path$m = path$y;
-var isArray$9 = path$m.Array.isArray;
+var isArray$8 = path$m.Array.isArray;
 
-var parent$Z = isArray$9;
-var isArray$8 = parent$Z;
+var parent$$ = isArray$8;
+var isArray$7 = parent$$;
 
-var parent$Y = isArray$8;
-var isArray$7 = parent$Y;
+var parent$_ = isArray$7;
+var isArray$6 = parent$_;
 
-var parent$X = isArray$7;
-var isArray$6 = parent$X;
+var parent$Z = isArray$6;
+var isArray$5 = parent$Z;
 
-var isArray$5 = isArray$6;
+(function (module) {
+  module.exports = isArray$5;
+})(isArray$a);
+
+var _Array$isArray$1 = /*@__PURE__*/getDefaultExportFromCjs(isArray$a.exports);
 
 function _arrayWithHoles(arr) {
-  if (isArray$5(arr)) return arr;
+  if (_Array$isArray$1(arr)) return arr;
 }
+
+var symbol$5 = {exports: {}};
 
 var fails$f = fails$t;
 var wellKnownSymbol$5 = wellKnownSymbol$j;
@@ -3520,13 +3592,13 @@ var setToStringTag$1 = setToStringTag$5; // JSON[@@toStringTag] property
 setToStringTag$1(global$j.JSON, 'JSON', true);
 
 var path$l = path$y;
-var symbol$5 = path$l.Symbol;
+var symbol$4 = path$l.Symbol;
 
-var parent$W = symbol$5;
-var symbol$4 = parent$W;
+var parent$Y = symbol$4;
+var symbol$3 = parent$Y;
 
-var parent$V = symbol$4;
-var symbol$3 = parent$V;
+var parent$X = symbol$3;
+var symbol$2 = parent$X;
 
 var defineWellKnownSymbol$6 = defineWellKnownSymbol$l; // `Symbol.asyncDispose` well-known symbol
 // https://github.com/tc39/proposal-using-statement
@@ -3561,15 +3633,19 @@ defineWellKnownSymbol$1('patternMatch');
 var defineWellKnownSymbol = defineWellKnownSymbol$l;
 defineWellKnownSymbol('replaceAll');
 
-var parent$U = symbol$3; // TODO: Remove from `core-js@4`
+var parent$W = symbol$2; // TODO: Remove from `core-js@4`
 // TODO: Remove from `core-js@4`
 
-var symbol$2 = parent$U;
+var symbol$1 = parent$W;
 
-var symbol$1 = symbol$2;
+(function (module) {
+  module.exports = symbol$1;
+})(symbol$5);
+
+var _Symbol$1 = /*@__PURE__*/getDefaultExportFromCjs(symbol$5.exports);
 
 function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof symbol$1 !== "undefined" && getIteratorMethod$1(arr) || arr["@@iterator"];
+  var _i = arr == null ? null : typeof _Symbol$1 !== "undefined" && _getIteratorMethod(arr) || arr["@@iterator"];
 
   if (_i == null) return;
   var _arr = [];
@@ -3597,6 +3673,8 @@ function _iterableToArrayLimit(arr, i) {
 
   return _arr;
 }
+
+var slice$6 = {exports: {}};
 
 var $$y = _export;
 var global$i = global$P;
@@ -3655,35 +3733,45 @@ $$y({
 });
 
 var entryVirtual$j = entryVirtual$l;
-var slice$6 = entryVirtual$j('Array').slice;
+var slice$5 = entryVirtual$j('Array').slice;
 
-var isPrototypeOf$j = objectIsPrototypeOf;
-var method$g = slice$6;
+var isPrototypeOf$k = objectIsPrototypeOf;
+var method$h = slice$5;
 var ArrayPrototype$h = Array.prototype;
 
-var slice$5 = function (it) {
+var slice$4 = function (it) {
   var own = it.slice;
-  return it === ArrayPrototype$h || isPrototypeOf$j(ArrayPrototype$h, it) && own === ArrayPrototype$h.slice ? method$g : own;
+  return it === ArrayPrototype$h || isPrototypeOf$k(ArrayPrototype$h, it) && own === ArrayPrototype$h.slice ? method$h : own;
 };
 
-var parent$T = slice$5;
-var slice$4 = parent$T;
+var parent$V = slice$4;
+var slice$3 = parent$V;
 
-var parent$S = slice$4;
-var slice$3 = parent$S;
+var parent$U = slice$3;
+var slice$2 = parent$U;
 
-var parent$R = slice$3;
-var slice$2 = parent$R;
+var parent$T = slice$2;
+var slice$1 = parent$T;
 
-var slice$1 = slice$2;
+(function (module) {
+  module.exports = slice$1;
+})(slice$6);
 
-var parent$Q = from$4;
-var from$2 = parent$Q;
+var _sliceInstanceProperty$1 = /*@__PURE__*/getDefaultExportFromCjs(slice$6.exports);
 
-var parent$P = from$2;
-var from$1 = parent$P;
+var from$2 = {exports: {}};
 
-var from = from$1;
+var parent$S = from$3;
+var from$1 = parent$S;
+
+var parent$R = from$1;
+var from = parent$R;
+
+(function (module) {
+  module.exports = from;
+})(from$2);
+
+var _Array$from = /*@__PURE__*/getDefaultExportFromCjs(from$2.exports);
 
 function _arrayLikeToArray$9(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
@@ -3701,10 +3789,10 @@ function _unsupportedIterableToArray$9(o, minLen) {
   if (!o) return;
   if (typeof o === "string") return _arrayLikeToArray$9(o, minLen);
 
-  var n = slice$1(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
+  var n = _sliceInstanceProperty$1(_context = Object.prototype.toString.call(o)).call(_context, 8, -1);
 
   if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return from(o);
+  if (n === "Map" || n === "Set") return _Array$from(o);
   if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$9(o, minLen);
 }
 
@@ -3716,36 +3804,42 @@ function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$9(arr, i) || _nonIterableRest();
 }
 
+var iterator$5 = {exports: {}};
+
 var WrappedWellKnownSymbolModule = wellKnownSymbolWrapped;
-var iterator$5 = WrappedWellKnownSymbolModule.f('iterator');
+var iterator$4 = WrappedWellKnownSymbolModule.f('iterator');
 
-var parent$O = iterator$5;
-var iterator$4 = parent$O;
+var parent$Q = iterator$4;
+var iterator$3 = parent$Q;
 
-var parent$N = iterator$4;
-var iterator$3 = parent$N;
+var parent$P = iterator$3;
+var iterator$2 = parent$P;
 
-var parent$M = iterator$3;
-var iterator$2 = parent$M;
+var parent$O = iterator$2;
+var iterator$1 = parent$O;
 
-var iterator$1 = iterator$2;
+(function (module) {
+  module.exports = iterator$1;
+})(iterator$5);
+
+var _Symbol$iterator$1 = /*@__PURE__*/getDefaultExportFromCjs(iterator$5.exports);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
-  return _typeof = "function" == typeof symbol$1 && "symbol" == typeof iterator$1 ? function (obj) {
+  return _typeof = "function" == typeof _Symbol$1 && "symbol" == typeof _Symbol$iterator$1 ? function (obj) {
     return typeof obj;
   } : function (obj) {
-    return obj && "function" == typeof symbol$1 && obj.constructor === symbol$1 && obj !== symbol$1.prototype ? "symbol" : typeof obj;
+    return obj && "function" == typeof _Symbol$1 && obj.constructor === _Symbol$1 && obj !== _Symbol$1.prototype ? "symbol" : typeof obj;
   }, _typeof(obj);
 }
 
 function _arrayWithoutHoles(arr) {
-  if (isArray$5(arr)) return _arrayLikeToArray$9(arr);
+  if (_Array$isArray$1(arr)) return _arrayLikeToArray$9(arr);
 }
 
 function _iterableToArray(iter) {
-  if (typeof symbol$1 !== "undefined" && getIteratorMethod$1(iter) != null || iter["@@iterator"] != null) return from(iter);
+  if (typeof _Symbol$1 !== "undefined" && _getIteratorMethod(iter) != null || iter["@@iterator"] != null) return _Array$from(iter);
 }
 
 function _nonIterableSpread() {
@@ -3756,47 +3850,79 @@ function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$9(arr) || _nonIterableSpread();
 }
 
-var symbol = symbol$4;
+var symbol = {exports: {}};
+
+(function (module) {
+  module.exports = symbol$3;
+})(symbol);
+
+var _Symbol = /*@__PURE__*/getDefaultExportFromCjs(symbol.exports);
+
+var concat$3 = {exports: {}};
 
 var entryVirtual$i = entryVirtual$l;
-var concat$3 = entryVirtual$i('Array').concat;
+var concat$2 = entryVirtual$i('Array').concat;
 
-var isPrototypeOf$i = objectIsPrototypeOf;
-var method$f = concat$3;
+var isPrototypeOf$j = objectIsPrototypeOf;
+var method$g = concat$2;
 var ArrayPrototype$g = Array.prototype;
 
-var concat$2 = function (it) {
+var concat$1 = function (it) {
   var own = it.concat;
-  return it === ArrayPrototype$g || isPrototypeOf$i(ArrayPrototype$g, it) && own === ArrayPrototype$g.concat ? method$f : own;
+  return it === ArrayPrototype$g || isPrototypeOf$j(ArrayPrototype$g, it) && own === ArrayPrototype$g.concat ? method$g : own;
 };
 
-var parent$L = concat$2;
-var concat$1 = parent$L;
+var parent$N = concat$1;
+var concat = parent$N;
 
-var concat = concat$1;
+(function (module) {
+  module.exports = concat;
+})(concat$3);
 
-var slice = slice$4;
+var _concatInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(concat$3.exports);
+
+var slice = {exports: {}};
+
+(function (module) {
+  module.exports = slice$3;
+})(slice);
+
+var _sliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(slice.exports);
+
+var ownKeys$8 = {exports: {}};
 
 var $$x = _export;
-var ownKeys$8 = ownKeys$a; // `Reflect.ownKeys` method
+var ownKeys$7 = ownKeys$a; // `Reflect.ownKeys` method
 // https://tc39.es/ecma262/#sec-reflect.ownkeys
 
 $$x({
   target: 'Reflect',
   stat: true
 }, {
-  ownKeys: ownKeys$8
+  ownKeys: ownKeys$7
 });
 
 var path$k = path$y;
-var ownKeys$7 = path$k.Reflect.ownKeys;
+var ownKeys$6 = path$k.Reflect.ownKeys;
 
-var parent$K = ownKeys$7;
-var ownKeys$6 = parent$K;
+var parent$M = ownKeys$6;
+var ownKeys$5 = parent$M;
 
-var ownKeys$5 = ownKeys$6;
+(function (module) {
+  module.exports = ownKeys$5;
+})(ownKeys$8);
 
-var isArray$2 = isArray$8;
+var _Reflect$ownKeys = /*@__PURE__*/getDefaultExportFromCjs(ownKeys$8.exports);
+
+var isArray$2 = {exports: {}};
+
+(function (module) {
+  module.exports = isArray$7;
+})(isArray$2);
+
+var _Array$isArray = /*@__PURE__*/getDefaultExportFromCjs(isArray$2.exports);
+
+var map$6 = {exports: {}};
 
 var $$w = _export;
 var $map = arrayIteration.map;
@@ -3818,21 +3944,27 @@ $$w({
 });
 
 var entryVirtual$h = entryVirtual$l;
-var map$6 = entryVirtual$h('Array').map;
+var map$5 = entryVirtual$h('Array').map;
 
-var isPrototypeOf$h = objectIsPrototypeOf;
-var method$e = map$6;
+var isPrototypeOf$i = objectIsPrototypeOf;
+var method$f = map$5;
 var ArrayPrototype$f = Array.prototype;
 
-var map$5 = function (it) {
+var map$4 = function (it) {
   var own = it.map;
-  return it === ArrayPrototype$f || isPrototypeOf$h(ArrayPrototype$f, it) && own === ArrayPrototype$f.map ? method$e : own;
+  return it === ArrayPrototype$f || isPrototypeOf$i(ArrayPrototype$f, it) && own === ArrayPrototype$f.map ? method$f : own;
 };
 
-var parent$J = map$5;
-var map$4 = parent$J;
+var parent$L = map$4;
+var map$3 = parent$L;
 
-var map$3 = map$4;
+(function (module) {
+  module.exports = map$3;
+})(map$6);
+
+var _mapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(map$6.exports);
+
+var keys$6 = {exports: {}};
 
 var $$v = _export;
 var toObject$6 = toObject$e;
@@ -3854,12 +3986,18 @@ $$v({
 });
 
 var path$j = path$y;
-var keys$6 = path$j.Object.keys;
+var keys$5 = path$j.Object.keys;
 
-var parent$I = keys$6;
-var keys$5 = parent$I;
+var parent$K = keys$5;
+var keys$4 = parent$K;
 
-var keys$4 = keys$5;
+(function (module) {
+  module.exports = keys$4;
+})(keys$6);
+
+var _Object$keys = /*@__PURE__*/getDefaultExportFromCjs(keys$6.exports);
+
+var now$3 = {exports: {}};
 
 var $$u = _export;
 var global$h = global$P;
@@ -3878,12 +4016,18 @@ $$u({
 });
 
 var path$i = path$y;
-var now$3 = path$i.Date.now;
+var now$2 = path$i.Date.now;
 
-var parent$H = now$3;
-var now$2 = parent$H;
+var parent$J = now$2;
+var now$1 = parent$J;
 
-var now$1 = now$2;
+(function (module) {
+  module.exports = now$1;
+})(now$3);
+
+var _Date$now = /*@__PURE__*/getDefaultExportFromCjs(now$3.exports);
+
+var forEach$6 = {exports: {}};
 
 var fails$c = fails$t;
 
@@ -3909,40 +4053,46 @@ var arrayForEach = !STRICT_METHOD$5 ? function forEach(callbackfn
 } : [].forEach;
 
 var $$t = _export;
-var forEach$6 = arrayForEach; // `Array.prototype.forEach` method
+var forEach$5 = arrayForEach; // `Array.prototype.forEach` method
 // https://tc39.es/ecma262/#sec-array.prototype.foreach
 // eslint-disable-next-line es/no-array-prototype-foreach -- safe
 
 $$t({
   target: 'Array',
   proto: true,
-  forced: [].forEach != forEach$6
+  forced: [].forEach != forEach$5
 }, {
-  forEach: forEach$6
+  forEach: forEach$5
 });
 
 var entryVirtual$g = entryVirtual$l;
-var forEach$5 = entryVirtual$g('Array').forEach;
+var forEach$4 = entryVirtual$g('Array').forEach;
 
-var parent$G = forEach$5;
-var forEach$4 = parent$G;
+var parent$I = forEach$4;
+var forEach$3 = parent$I;
 
 var classof$6 = classof$e;
 var hasOwn$6 = hasOwnProperty_1;
-var isPrototypeOf$g = objectIsPrototypeOf;
-var method$d = forEach$4;
+var isPrototypeOf$h = objectIsPrototypeOf;
+var method$e = forEach$3;
 var ArrayPrototype$e = Array.prototype;
 var DOMIterables$3 = {
   DOMTokenList: true,
   NodeList: true
 };
 
-var forEach$3 = function (it) {
+var forEach$2 = function (it) {
   var own = it.forEach;
-  return it === ArrayPrototype$e || isPrototypeOf$g(ArrayPrototype$e, it) && own === ArrayPrototype$e.forEach || hasOwn$6(DOMIterables$3, classof$6(it)) ? method$d : own;
+  return it === ArrayPrototype$e || isPrototypeOf$h(ArrayPrototype$e, it) && own === ArrayPrototype$e.forEach || hasOwn$6(DOMIterables$3, classof$6(it)) ? method$e : own;
 };
 
-var forEach$2 = forEach$3;
+(function (module) {
+  module.exports = forEach$2;
+})(forEach$6);
+
+var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEach$6.exports);
+
+var reverse$3 = {exports: {}};
 
 var $$s = _export;
 var uncurryThis$b = functionUncurryThis;
@@ -3966,21 +4116,27 @@ $$s({
 });
 
 var entryVirtual$f = entryVirtual$l;
-var reverse$3 = entryVirtual$f('Array').reverse;
+var reverse$2 = entryVirtual$f('Array').reverse;
 
-var isPrototypeOf$f = objectIsPrototypeOf;
-var method$c = reverse$3;
+var isPrototypeOf$g = objectIsPrototypeOf;
+var method$d = reverse$2;
 var ArrayPrototype$d = Array.prototype;
 
-var reverse$2 = function (it) {
+var reverse$1 = function (it) {
   var own = it.reverse;
-  return it === ArrayPrototype$d || isPrototypeOf$f(ArrayPrototype$d, it) && own === ArrayPrototype$d.reverse ? method$c : own;
+  return it === ArrayPrototype$d || isPrototypeOf$g(ArrayPrototype$d, it) && own === ArrayPrototype$d.reverse ? method$d : own;
 };
 
-var parent$F = reverse$2;
-var reverse$1 = parent$F;
+var parent$H = reverse$1;
+var reverse = parent$H;
 
-var reverse = reverse$1;
+(function (module) {
+  module.exports = reverse;
+})(reverse$3);
+
+var _reverseInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(reverse$3.exports);
+
+var splice$4 = {exports: {}};
 
 var $$r = _export;
 var global$g = global$P;
@@ -4063,21 +4219,27 @@ $$r({
 });
 
 var entryVirtual$e = entryVirtual$l;
-var splice$4 = entryVirtual$e('Array').splice;
+var splice$3 = entryVirtual$e('Array').splice;
 
-var isPrototypeOf$e = objectIsPrototypeOf;
-var method$b = splice$4;
+var isPrototypeOf$f = objectIsPrototypeOf;
+var method$c = splice$3;
 var ArrayPrototype$c = Array.prototype;
 
-var splice$3 = function (it) {
+var splice$2 = function (it) {
   var own = it.splice;
-  return it === ArrayPrototype$c || isPrototypeOf$e(ArrayPrototype$c, it) && own === ArrayPrototype$c.splice ? method$b : own;
+  return it === ArrayPrototype$c || isPrototypeOf$f(ArrayPrototype$c, it) && own === ArrayPrototype$c.splice ? method$c : own;
 };
 
-var parent$E = splice$3;
-var splice$2 = parent$E;
+var parent$G = splice$2;
+var splice$1 = parent$G;
 
-var splice$1 = splice$2;
+(function (module) {
+  module.exports = splice$1;
+})(splice$4);
+
+var _spliceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(splice$4.exports);
+
+var includes$4 = {exports: {}};
 
 var $$q = _export;
 var $includes = arrayIncludes.includes;
@@ -4095,7 +4257,7 @@ $$q({
 }); // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 var entryVirtual$d = entryVirtual$l;
-var includes$4 = entryVirtual$d('Array').includes;
+var includes$3 = entryVirtual$d('Array').includes;
 
 var isObject$8 = isObject$j;
 var classof$5 = classofRaw$1;
@@ -4162,29 +4324,35 @@ $$p({
 });
 
 var entryVirtual$c = entryVirtual$l;
-var includes$3 = entryVirtual$c('String').includes;
+var includes$2 = entryVirtual$c('String').includes;
 
-var isPrototypeOf$d = objectIsPrototypeOf;
-var arrayMethod = includes$4;
-var stringMethod = includes$3;
+var isPrototypeOf$e = objectIsPrototypeOf;
+var arrayMethod = includes$3;
+var stringMethod = includes$2;
 var ArrayPrototype$b = Array.prototype;
-var StringPrototype = String.prototype;
+var StringPrototype$1 = String.prototype;
 
-var includes$2 = function (it) {
+var includes$1 = function (it) {
   var own = it.includes;
-  if (it === ArrayPrototype$b || isPrototypeOf$d(ArrayPrototype$b, it) && own === ArrayPrototype$b.includes) return arrayMethod;
+  if (it === ArrayPrototype$b || isPrototypeOf$e(ArrayPrototype$b, it) && own === ArrayPrototype$b.includes) return arrayMethod;
 
-  if (typeof it == 'string' || it === StringPrototype || isPrototypeOf$d(StringPrototype, it) && own === StringPrototype.includes) {
+  if (typeof it == 'string' || it === StringPrototype$1 || isPrototypeOf$e(StringPrototype$1, it) && own === StringPrototype$1.includes) {
     return stringMethod;
   }
 
   return own;
 };
 
-var parent$D = includes$2;
-var includes$1 = parent$D;
+var parent$F = includes$1;
+var includes = parent$F;
 
-var includes = includes$1;
+(function (module) {
+  module.exports = includes;
+})(includes$4);
+
+var _includesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(includes$4.exports);
+
+var getPrototypeOf$6 = {exports: {}};
 
 var $$o = _export;
 var fails$b = fails$t;
@@ -4208,12 +4376,18 @@ $$o({
 });
 
 var path$h = path$y;
-var getPrototypeOf$6 = path$h.Object.getPrototypeOf;
+var getPrototypeOf$5 = path$h.Object.getPrototypeOf;
 
-var parent$C = getPrototypeOf$6;
-var getPrototypeOf$5 = parent$C;
+var parent$E = getPrototypeOf$5;
+var getPrototypeOf$4 = parent$E;
 
-var getPrototypeOf$4 = getPrototypeOf$5;
+(function (module) {
+  module.exports = getPrototypeOf$4;
+})(getPrototypeOf$6);
+
+var _Object$getPrototypeOf$1 = /*@__PURE__*/getDefaultExportFromCjs(getPrototypeOf$6.exports);
+
+var filter$3 = {exports: {}};
 
 var $$n = _export;
 var $filter = arrayIteration.filter;
@@ -4235,21 +4409,27 @@ $$n({
 });
 
 var entryVirtual$b = entryVirtual$l;
-var filter$3 = entryVirtual$b('Array').filter;
+var filter$2 = entryVirtual$b('Array').filter;
 
-var isPrototypeOf$c = objectIsPrototypeOf;
-var method$a = filter$3;
+var isPrototypeOf$d = objectIsPrototypeOf;
+var method$b = filter$2;
 var ArrayPrototype$a = Array.prototype;
 
-var filter$2 = function (it) {
+var filter$1 = function (it) {
   var own = it.filter;
-  return it === ArrayPrototype$a || isPrototypeOf$c(ArrayPrototype$a, it) && own === ArrayPrototype$a.filter ? method$a : own;
+  return it === ArrayPrototype$a || isPrototypeOf$d(ArrayPrototype$a, it) && own === ArrayPrototype$a.filter ? method$b : own;
 };
 
-var parent$B = filter$2;
-var filter$1 = parent$B;
+var parent$D = filter$1;
+var filter = parent$D;
 
-var filter = filter$1;
+(function (module) {
+  module.exports = filter;
+})(filter$3);
+
+var _filterInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(filter$3.exports);
+
+var values$6 = {exports: {}};
 
 var DESCRIPTORS$4 = descriptors;
 var uncurryThis$9 = functionUncurryThis;
@@ -4303,7 +4483,16 @@ $$m({
 });
 
 var path$g = path$y;
-path$g.Object.values;
+var values$5 = path$g.Object.values;
+
+var parent$C = values$5;
+var values$4 = parent$C;
+
+(function (module) {
+  module.exports = values$4;
+})(values$6);
+
+var _parseInt$3 = {exports: {}};
 
 var whitespaces$4 = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' + '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
@@ -4341,7 +4530,7 @@ var global$e = global$P;
 var fails$a = fails$t;
 var uncurryThis$7 = functionUncurryThis;
 var toString$2 = toString$8;
-var trim$1 = stringTrim.trim;
+var trim$5 = stringTrim.trim;
 var whitespaces$2 = whitespaces$4;
 var $parseInt$1 = global$e.parseInt;
 var Symbol$2 = global$e.Symbol;
@@ -4355,7 +4544,7 @@ var FORCED$4 = $parseInt$1(whitespaces$2 + '08') !== 8 || $parseInt$1(whitespace
 // https://tc39.es/ecma262/#sec-parseint-string-radix
 
 var numberParseInt = FORCED$4 ? function parseInt(string, radix) {
-  var S = trim$1(toString$2(string));
+  var S = trim$5(toString$2(string));
   return $parseInt$1(S, radix >>> 0 || (exec$1(hex, S) ? 16 : 10));
 } : $parseInt$1;
 
@@ -4373,10 +4562,16 @@ $$l({
 var path$f = path$y;
 var _parseInt$2 = path$f.parseInt;
 
-var parent$A = _parseInt$2;
-var _parseInt$1 = parent$A;
+var parent$B = _parseInt$2;
+var _parseInt$1 = parent$B;
 
-var _parseInt = _parseInt$1;
+(function (module) {
+  module.exports = _parseInt$1;
+})(_parseInt$3);
+
+var _parseInt = /*@__PURE__*/getDefaultExportFromCjs(_parseInt$3.exports);
+
+var indexOf$3 = {exports: {}};
 
 /* eslint-disable es/no-array-prototype-indexof -- required for testing */
 
@@ -4405,21 +4600,27 @@ $$k({
 });
 
 var entryVirtual$a = entryVirtual$l;
-var indexOf$3 = entryVirtual$a('Array').indexOf;
+var indexOf$2 = entryVirtual$a('Array').indexOf;
 
-var isPrototypeOf$b = objectIsPrototypeOf;
-var method$9 = indexOf$3;
+var isPrototypeOf$c = objectIsPrototypeOf;
+var method$a = indexOf$2;
 var ArrayPrototype$9 = Array.prototype;
 
-var indexOf$2 = function (it) {
+var indexOf$1 = function (it) {
   var own = it.indexOf;
-  return it === ArrayPrototype$9 || isPrototypeOf$b(ArrayPrototype$9, it) && own === ArrayPrototype$9.indexOf ? method$9 : own;
+  return it === ArrayPrototype$9 || isPrototypeOf$c(ArrayPrototype$9, it) && own === ArrayPrototype$9.indexOf ? method$a : own;
 };
 
-var parent$z = indexOf$2;
-var indexOf$1 = parent$z;
+var parent$A = indexOf$1;
+var indexOf = parent$A;
 
-var indexOf = indexOf$1;
+(function (module) {
+  module.exports = indexOf;
+})(indexOf$3);
+
+var _indexOfInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(indexOf$3.exports);
+
+var trim$4 = {exports: {}};
 
 var PROPER_FUNCTION_NAME = functionName.PROPER;
 var fails$9 = fails$t;
@@ -4449,11 +4650,29 @@ $$j({
 });
 
 var entryVirtual$9 = entryVirtual$l;
-entryVirtual$9('String').trim;
+var trim$3 = entryVirtual$9('String').trim;
+
+var isPrototypeOf$b = objectIsPrototypeOf;
+var method$9 = trim$3;
+var StringPrototype = String.prototype;
+
+var trim$2 = function (it) {
+  var own = it.trim;
+  return typeof it == 'string' || it === StringPrototype || isPrototypeOf$b(StringPrototype, it) && own === StringPrototype.trim ? method$9 : own;
+};
+
+var parent$z = trim$2;
+var trim$1 = parent$z;
+
+(function (module) {
+  module.exports = trim$1;
+})(trim$4);
+
+var create$8 = {exports: {}};
 
 var $$i = _export;
 var DESCRIPTORS$3 = descriptors;
-var create$8 = objectCreate; // `Object.create` method
+var create$7 = objectCreate; // `Object.create` method
 // https://tc39.es/ecma262/#sec-object.create
 
 $$i({
@@ -4461,20 +4680,26 @@ $$i({
   stat: true,
   sham: !DESCRIPTORS$3
 }, {
-  create: create$8
+  create: create$7
 });
 
 var path$e = path$y;
 var Object$2 = path$e.Object;
 
-var create$7 = function create(P, D) {
+var create$6 = function create(P, D) {
   return Object$2.create(P, D);
 };
 
-var parent$y = create$7;
-var create$6 = parent$y;
+var parent$y = create$6;
+var create$5 = parent$y;
 
-var create$5 = create$6;
+(function (module) {
+  module.exports = create$5;
+})(create$8);
+
+var _Object$create$1 = /*@__PURE__*/getDefaultExportFromCjs(create$8.exports);
+
+var stringify$3 = {exports: {}};
 
 var $$h = _export;
 var global$d = global$P;
@@ -4534,14 +4759,20 @@ if (!path$d.JSON) path$d.JSON = {
   stringify: JSON.stringify
 }; // eslint-disable-next-line no-unused-vars -- required for `.length`
 
-var stringify$3 = function stringify(it, replacer, space) {
+var stringify$2 = function stringify(it, replacer, space) {
   return apply$2(path$d.JSON.stringify, null, arguments);
 };
 
-var parent$x = stringify$3;
-var stringify$2 = parent$x;
+var parent$x = stringify$2;
+var stringify$1 = parent$x;
 
-var stringify$1 = stringify$2;
+(function (module) {
+  module.exports = stringify$1;
+})(stringify$3);
+
+var _JSON$stringify = /*@__PURE__*/getDefaultExportFromCjs(stringify$3.exports);
+
+var setTimeout$2 = {exports: {}};
 
 var global$c = global$P;
 var TypeError$6 = global$c.TypeError;
@@ -4591,9 +4822,15 @@ $$g({
 });
 
 var path$c = path$y;
-var setTimeout$2 = path$c.setTimeout;
+var setTimeout$1 = path$c.setTimeout;
 
-var setTimeout$1 = setTimeout$2;
+(function (module) {
+  module.exports = setTimeout$1;
+})(setTimeout$2);
+
+var _setTimeout = /*@__PURE__*/getDefaultExportFromCjs(setTimeout$2.exports);
+
+var fill$4 = {exports: {}};
 
 var toObject$3 = toObject$e;
 var toAbsoluteIndex = toAbsoluteIndex$5;
@@ -4616,32 +4853,36 @@ var arrayFill = function fill(value
 };
 
 var $$f = _export;
-var fill$4 = arrayFill;
+var fill$3 = arrayFill;
 // https://tc39.es/ecma262/#sec-array.prototype.fill
 
 $$f({
   target: 'Array',
   proto: true
 }, {
-  fill: fill$4
+  fill: fill$3
 }); // https://tc39.es/ecma262/#sec-array.prototype-@@unscopables
 
 var entryVirtual$8 = entryVirtual$l;
-var fill$3 = entryVirtual$8('Array').fill;
+var fill$2 = entryVirtual$8('Array').fill;
 
 var isPrototypeOf$a = objectIsPrototypeOf;
-var method$8 = fill$3;
+var method$8 = fill$2;
 var ArrayPrototype$8 = Array.prototype;
 
-var fill$2 = function (it) {
+var fill$1 = function (it) {
   var own = it.fill;
   return it === ArrayPrototype$8 || isPrototypeOf$a(ArrayPrototype$8, it) && own === ArrayPrototype$8.fill ? method$8 : own;
 };
 
-var parent$w = fill$2;
-var fill$1 = parent$w;
+var parent$w = fill$1;
+var fill = parent$w;
 
-var fill = fill$1;
+(function (module) {
+  module.exports = fill;
+})(fill$4);
+
+var _fillInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(fill$4.exports);
 
 /*! Hammer.JS - v2.0.17-rc - 2019-12-16
  * http://naver.github.io/egjs
@@ -7599,18 +7840,20 @@ var Hammer$2 = /*#__PURE__*/function () {
   });
   return Hammer;
 }(); //  style loader but by script tag, not by the loader.
-var RealHammer = Hammer$2;
 
-function _createForOfIteratorHelper$8(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$8(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$8(o, minLen) { var _context21; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$8(o, minLen); var n = slice(_context21 = Object.prototype.toString.call(o)).call(_context21, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$8(o, minLen); }
+Hammer$2.defaults;
+
+function _createForOfIteratorHelper$8(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$8(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray$8(o, minLen) { var _context21; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$8(o, minLen); var n = _sliceInstanceProperty(_context21 = Object.prototype.toString.call(o)).call(_context21, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$8(o, minLen); }
 
 function _arrayLikeToArray$8(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
  * Use this symbol to delete properies in deepObjectAssign.
  */
 
-var DELETE = symbol("DELETE");
+var DELETE = _Symbol("DELETE");
 /**
  * Pure version of deepObjectAssign, it doesn't modify any of it's arguments.
  *
@@ -7627,7 +7870,7 @@ function pureDeepObjectAssign(base) {
     updates[_key - 1] = arguments[_key];
   }
 
-  return deepObjectAssign.apply(void 0, concat(_context = [{}, base]).call(_context, updates));
+  return deepObjectAssign.apply(void 0, _concatInstanceProperty(_context = [{}, base]).call(_context, updates));
 }
 /**
  * Deep version of object assign with additional deleting by the DELETE symbol.
@@ -7662,13 +7905,13 @@ function deepObjectAssignNonentry() {
   } else if (values.length > 2) {
     var _context2;
 
-    return deepObjectAssignNonentry.apply(void 0, concat(_context2 = [deepObjectAssign(values[0], values[1])]).call(_context2, _toConsumableArray(slice(values).call(values, 2))));
+    return deepObjectAssignNonentry.apply(void 0, _concatInstanceProperty(_context2 = [deepObjectAssign(values[0], values[1])]).call(_context2, _toConsumableArray(_sliceInstanceProperty(values).call(values, 2))));
   }
 
   var a = values[0];
   var b = values[1];
 
-  var _iterator = _createForOfIteratorHelper$8(ownKeys$5(b)),
+  var _iterator = _createForOfIteratorHelper$8(_Reflect$ownKeys(b)),
       _step;
 
   try {
@@ -7676,7 +7919,7 @@ function deepObjectAssignNonentry() {
       var prop = _step.value;
       if (!Object.prototype.propertyIsEnumerable.call(b, prop)) ;else if (b[prop] === DELETE) {
         delete a[prop];
-      } else if (a[prop] !== null && b[prop] !== null && _typeof(a[prop]) === "object" && _typeof(b[prop]) === "object" && !isArray$2(a[prop]) && !isArray$2(b[prop])) {
+      } else if (a[prop] !== null && b[prop] !== null && _typeof(a[prop]) === "object" && _typeof(b[prop]) === "object" && !_Array$isArray(a[prop]) && !_Array$isArray(b[prop])) {
         a[prop] = deepObjectAssignNonentry(a[prop], b[prop]);
       } else {
         a[prop] = clone(b[prop]);
@@ -7699,8 +7942,8 @@ function deepObjectAssignNonentry() {
 
 
 function clone(a) {
-  if (isArray$2(a)) {
-    return map$3(a).call(a, function (value) {
+  if (_Array$isArray(a)) {
+    return _mapInstanceProperty(a).call(a, function (value) {
       return clone(value);
     });
   } else if (_typeof(a) === "object" && a !== null) {
@@ -7717,8 +7960,8 @@ function clone(a) {
 
 
 function stripDelete(a) {
-  for (var _i = 0, _Object$keys = keys$4(a); _i < _Object$keys.length; _i++) {
-    var prop = _Object$keys[_i];
+  for (var _i = 0, _Object$keys$1 = _Object$keys(a); _i < _Object$keys$1.length; _i++) {
+    var prop = _Object$keys$1[_i];
 
     if (a[prop] === DELETE) {
       delete a[prop];
@@ -7750,7 +7993,7 @@ function Alea() {
     seed[_key3] = arguments[_key3];
   }
 
-  return AleaImplementation(seed.length ? seed : [now$1()]);
+  return AleaImplementation(seed.length ? seed : [_Date$now()]);
 }
 /**
  * An implementation of [[Alea]] without user input validation.
@@ -7881,7 +8124,7 @@ function hammerMock() {
   };
 }
 
-var Hammer$1 = typeof window !== "undefined" ? window.Hammer || RealHammer : function () {
+var Hammer$1 = typeof window !== "undefined" ? window.Hammer || Hammer$2 : function () {
   // hammer.js is only available in a browser, not in node.js. Replacing it with a mock object.
   return hammerMock();
 };
@@ -7917,7 +8160,7 @@ function Activator$1(container) {
   });
 
   var hammer = Hammer$1(this._dom.overlay);
-  hammer.on("tap", bind$6(_context3 = this._onTapOverlay).call(_context3, this));
+  hammer.on("tap", _bindInstanceProperty(_context3 = this._onTapOverlay).call(_context3, this));
 
   this._cleanupQueue.push(function () {
     hammer.destroy(); // FIXME: cleaning up hammer instances doesn't work (Timeline not removed
@@ -7927,7 +8170,7 @@ function Activator$1(container) {
 
   var events = ["tap", "doubletap", "press", "pinch", "pan", "panstart", "panmove", "panend"];
 
-  forEach$2(events).call(events, function (event) {
+  _forEachInstanceProperty(events).call(events, function (event) {
     hammer.on(event, function (event) {
       event.srcEvent.stopPropagation();
     });
@@ -7971,7 +8214,7 @@ Activator$1.prototype.destroy = function () {
 
   this.deactivate();
 
-  var _iterator2 = _createForOfIteratorHelper$8(reverse(_context4 = splice$1(_context5 = this._cleanupQueue).call(_context5, 0)).call(_context4)),
+  var _iterator2 = _createForOfIteratorHelper$8(_reverseInstanceProperty(_context4 = _spliceInstanceProperty(_context5 = this._cleanupQueue).call(_context5, 0)).call(_context4)),
       _step2;
 
   try {
@@ -8186,7 +8429,7 @@ function selectiveDeepExtend(props, a, b) {
   var allowDeletion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
   // TODO: add support for Arrays to deepExtend
-  if (isArray$2(b)) {
+  if (_Array$isArray(b)) {
     throw new TypeError("Arrays are not supported by deepExtend");
   }
 
@@ -8204,7 +8447,7 @@ function selectiveDeepExtend(props, a, b) {
         } else {
           copyOrDelete(a, b, prop, allowDeletion);
         }
-      } else if (isArray$2(b[prop])) {
+      } else if (_Array$isArray(b[prop])) {
         throw new TypeError("Arrays are not supported by deepExtend");
       } else {
         copyOrDelete(a, b, prop, allowDeletion);
@@ -8236,7 +8479,7 @@ function selectiveNotDeepExtend(propsToExclude, a, b) {
 
   // TODO: add support for Arrays to deepExtend
   // NOTE: array properties have an else-below; apparently, there is a problem here.
-  if (isArray$2(b)) {
+  if (_Array$isArray(b)) {
     throw new TypeError("Arrays are not supported by deepExtend");
   }
 
@@ -8246,7 +8489,7 @@ function selectiveNotDeepExtend(propsToExclude, a, b) {
     } // Handle local properties only
 
 
-    if (includes(propsToExclude).call(propsToExclude, prop)) {
+    if (_includesInstanceProperty(propsToExclude).call(propsToExclude, prop)) {
       continue;
     } // In exclusion list, skip
 
@@ -8261,7 +8504,7 @@ function selectiveNotDeepExtend(propsToExclude, a, b) {
       } else {
         copyOrDelete(a, b, prop, allowDeletion);
       }
-    } else if (isArray$2(b[prop])) {
+    } else if (_Array$isArray(b[prop])) {
       a[prop] = [];
 
       for (var i = 0; i < b[prop].length; i++) {
@@ -8293,18 +8536,18 @@ function deepExtend(a, b) {
 
   for (var prop in b) {
     if (Object.prototype.hasOwnProperty.call(b, prop) || protoExtend === true) {
-      if (_typeof(b[prop]) === "object" && b[prop] !== null && getPrototypeOf$4(b[prop]) === Object.prototype) {
+      if (_typeof(b[prop]) === "object" && b[prop] !== null && _Object$getPrototypeOf$1(b[prop]) === Object.prototype) {
         if (a[prop] === undefined) {
           a[prop] = deepExtend({}, b[prop], protoExtend); // NOTE: allowDeletion not propagated!
-        } else if (_typeof(a[prop]) === "object" && a[prop] !== null && getPrototypeOf$4(a[prop]) === Object.prototype) {
+        } else if (_typeof(a[prop]) === "object" && a[prop] !== null && _Object$getPrototypeOf$1(a[prop]) === Object.prototype) {
           deepExtend(a[prop], b[prop], protoExtend); // NOTE: allowDeletion not propagated!
         } else {
           copyOrDelete(a, b, prop, allowDeletion);
         }
-      } else if (isArray$2(b[prop])) {
+      } else if (_Array$isArray(b[prop])) {
         var _context6;
 
-        a[prop] = slice(_context6 = b[prop]).call(_context6);
+        a[prop] = _sliceInstanceProperty(_context6 = b[prop]).call(_context6);
       } else {
         copyOrDelete(a, b, prop, allowDeletion);
       }
@@ -8325,7 +8568,7 @@ function deepExtend(a, b) {
 function copyAndExtendArray(arr, newValue) {
   var _context7;
 
-  return concat(_context7 = []).call(_context7, _toConsumableArray(arr), [newValue]);
+  return _concatInstanceProperty(_context7 = []).call(_context7, _toConsumableArray(arr), [newValue]);
 }
 /**
  * Used to extend an array and copy it. This is used to propagate paths recursively.
@@ -8336,7 +8579,7 @@ function copyAndExtendArray(arr, newValue) {
 
 
 function copyArray(arr) {
-  return slice(arr).call(arr);
+  return _sliceInstanceProperty(arr).call(arr);
 }
 /**
  * Retrieve the absolute left value of a DOM element.
@@ -8371,7 +8614,7 @@ function getAbsoluteTop(elem) {
 
 
 function forEach$1(object, callback) {
-  if (isArray$2(object)) {
+  if (_Array$isArray(object)) {
     // array
     var len = object.length;
 
@@ -8405,7 +8648,7 @@ function addEventListener(element, action, listener, useCapture) {
       useCapture = false;
     }
 
-    if (action === "mousewheel" && includes(_context8 = navigator.userAgent).call(_context8, "Firefox")) {
+    if (action === "mousewheel" && _includesInstanceProperty(_context8 = navigator.userAgent).call(_context8, "Firefox")) {
       action = "DOMMouseScroll"; // For Firefox
     }
 
@@ -8434,7 +8677,7 @@ function removeEventListener(element, action, listener, useCapture) {
       useCapture = false;
     }
 
-    if (action === "mousewheel" && includes(_context9 = navigator.userAgent).call(_context9, "Firefox")) {
+    if (action === "mousewheel" && _includesInstanceProperty(_context9 = navigator.userAgent).call(_context9, "Firefox")) {
       action = "DOMMouseScroll"; // For Firefox
     }
 
@@ -8489,10 +8732,10 @@ function hexToRGB(hex) {
 
 
 function overrideOpacity(color, opacity) {
-  if (includes(color).call(color, "rgba")) {
+  if (_includesInstanceProperty(color).call(color, "rgba")) {
     return color;
-  } else if (includes(color).call(color, "rgb")) {
-    var rgb = color.substr(indexOf(color).call(color, "(") + 1).replace(")", "").split(",");
+  } else if (_includesInstanceProperty(color).call(color, "rgb")) {
+    var rgb = color.substr(_indexOfInstanceProperty(color).call(color, "(") + 1).replace(")", "").split(",");
     return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + opacity + ")";
   } else {
     var _rgb = hexToRGB(color);
@@ -8517,7 +8760,7 @@ function overrideOpacity(color, opacity) {
 function RGBToHex(red, green, blue) {
   var _context10;
 
-  return "#" + slice(_context10 = ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16)).call(_context10, 1);
+  return "#" + _sliceInstanceProperty(_context10 = ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16)).call(_context10, 1);
 }
 /**
  * Parse a color property into an object with border, background, and highlight colors.
@@ -8535,7 +8778,7 @@ function parseColor(inputColor, defaultColor) {
     if (isValidRGB(colorStr)) {
       var _context11;
 
-      var rgb = map$3(_context11 = colorStr.substr(4).substr(0, colorStr.length - 5).split(",")).call(_context11, function (value) {
+      var rgb = _mapInstanceProperty(_context11 = colorStr.substr(4).substr(0, colorStr.length - 5).split(",")).call(_context11, function (value) {
         return _parseInt(value);
       });
 
@@ -8803,7 +9046,7 @@ function bridgeObject(referenceObject) {
     return referenceObject;
   }
 
-  var objectTo = create$5(referenceObject);
+  var objectTo = _Object$create$1(referenceObject);
 
   for (var i in referenceObject) {
     if (Object.prototype.hasOwnProperty.call(referenceObject, i)) {
@@ -8913,7 +9156,7 @@ function mergeOptions(mergeTarget, options, option) {
   if (srcOption === null && !isObject(mergeTarget[option])) {
     // If possible, explicit copy from globals
     if (isPresent(globalOption)) {
-      mergeTarget[option] = create$5(globalOption);
+      mergeTarget[option] = _Object$create$1(globalOption);
     } else {
       return; // Nothing to do
     }
@@ -9109,7 +9352,7 @@ var easingFunctions = {
 function topMost(pile, accessors) {
   var candidate;
 
-  if (!isArray$2(accessors)) {
+  if (!_Array$isArray(accessors)) {
     accessors = [accessors];
   }
 
@@ -9469,7 +9712,7 @@ var ColorPicker$1 = /*#__PURE__*/function () {
 
 
       if (rgba === undefined) {
-        throw new Error("Unknown color passed to the colorPicker. Supported are strings: rgb, hex, rgba. Object: rgb ({r:r,g:g,b:b,[a:a]}). Supplied: " + stringify$1(color));
+        throw new Error("Unknown color passed to the colorPicker. Supported are strings: rgb, hex, rgba. Object: rgb ({r:r,g:g,b:b,[a:a]}). Supplied: " + _JSON$stringify(color));
       } else {
         this._setColor(rgba, setInitial);
       }
@@ -9510,7 +9753,7 @@ var ColorPicker$1 = /*#__PURE__*/function () {
 
       // store the previous color for next time;
       if (storePrevious === true) {
-        this.previousColor = assign$2({}, this.color);
+        this.previousColor = _Object$assign({}, this.color);
       }
 
       if (this.applied === true) {
@@ -9520,7 +9763,7 @@ var ColorPicker$1 = /*#__PURE__*/function () {
       this.frame.style.display = "none"; // call the closing callback, restoring the onclick method.
       // this is in a setTimeout because it will trigger the show again before the click is done.
 
-      setTimeout$1(function () {
+      _setTimeout(function () {
         if (_this2.closeCallback !== undefined) {
           _this2.closeCallback();
 
@@ -9586,7 +9829,7 @@ var ColorPicker$1 = /*#__PURE__*/function () {
 
       // store the initial color
       if (setInitial === true) {
-        this.initialColor = assign$2({}, rgba);
+        this.initialColor = _Object$assign({}, rgba);
       }
 
       this.color = rgba;
@@ -9659,7 +9902,7 @@ var ColorPicker$1 = /*#__PURE__*/function () {
       ctx.fillStyle = "rgba(0,0,0," + (1 - hsv.v) + ")";
       ctx.circle(this.centerCoordinates.x, this.centerCoordinates.y, this.r);
 
-      fill(ctx).call(ctx);
+      _fillInstanceProperty(ctx).call(ctx);
 
       this.brightnessRange.value = 100 * hsv.v;
       this.opacityRange.value = 100 * rgba.a;
@@ -9780,19 +10023,19 @@ var ColorPicker$1 = /*#__PURE__*/function () {
       this.cancelButton = document.createElement("div");
       this.cancelButton.className = "vis-button vis-cancel";
       this.cancelButton.innerText = "cancel";
-      this.cancelButton.onclick = bind$6(_context16 = this._hide).call(_context16, this, false);
+      this.cancelButton.onclick = _bindInstanceProperty(_context16 = this._hide).call(_context16, this, false);
       this.applyButton = document.createElement("div");
       this.applyButton.className = "vis-button vis-apply";
       this.applyButton.innerText = "apply";
-      this.applyButton.onclick = bind$6(_context17 = this._apply).call(_context17, this);
+      this.applyButton.onclick = _bindInstanceProperty(_context17 = this._apply).call(_context17, this);
       this.saveButton = document.createElement("div");
       this.saveButton.className = "vis-button vis-save";
       this.saveButton.innerText = "save";
-      this.saveButton.onclick = bind$6(_context18 = this._save).call(_context18, this);
+      this.saveButton.onclick = _bindInstanceProperty(_context18 = this._save).call(_context18, this);
       this.loadButton = document.createElement("div");
       this.loadButton.className = "vis-button vis-load";
       this.loadButton.innerText = "load last";
-      this.loadButton.onclick = bind$6(_context19 = this._loadLast).call(_context19, this);
+      this.loadButton.onclick = _bindInstanceProperty(_context19 = this._loadLast).call(_context19, this);
       this.frame.appendChild(this.colorPickerDiv);
       this.frame.appendChild(this.arrowDiv);
       this.frame.appendChild(this.brightnessLabel);
@@ -9952,7 +10195,7 @@ function wrapInTag() {
     return document.createTextNode(rest[0]);
   } else {
     var element = document.createElement(rest[0]);
-    element.appendChild(wrapInTag.apply(void 0, _toConsumableArray(slice(rest).call(rest, 1))));
+    element.appendChild(wrapInTag.apply(void 0, _toConsumableArray(_sliceInstanceProperty(rest).call(rest, 1))));
     return element;
   }
 }
@@ -9998,7 +10241,7 @@ var Configurator$1 = /*#__PURE__*/function () {
       showButton: true
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.configureOptions = configureOptions;
     this.moduleOptions = {};
@@ -10030,7 +10273,7 @@ var Configurator$1 = /*#__PURE__*/function () {
 
         if (typeof options === "string") {
           this.options.filter = options;
-        } else if (isArray$2(options)) {
+        } else if (_Array$isArray(options)) {
           this.options.filter = options.join();
         } else if (_typeof(options) === "object") {
           if (options == null) {
@@ -10041,8 +10284,8 @@ var Configurator$1 = /*#__PURE__*/function () {
             this.options.container = options.container;
           }
 
-          if (filter(options) !== undefined) {
-            this.options.filter = filter(options);
+          if (_filterInstanceProperty(options) !== undefined) {
+            this.options.filter = _filterInstanceProperty(options);
           }
 
           if (options.showButton !== undefined) {
@@ -10060,7 +10303,7 @@ var Configurator$1 = /*#__PURE__*/function () {
           enabled = true;
         }
 
-        if (filter(this.options) === false) {
+        if (_filterInstanceProperty(this.options) === false) {
           enabled = false;
         }
 
@@ -10102,7 +10345,7 @@ var Configurator$1 = /*#__PURE__*/function () {
 
       this.changedOptions = [];
 
-      var filter$1 = filter(this.options);
+      var filter = _filterInstanceProperty(this.options);
 
       var counter = 0;
       var show = false;
@@ -10112,10 +10355,10 @@ var Configurator$1 = /*#__PURE__*/function () {
           this.allowCreation = false;
           show = false;
 
-          if (typeof filter$1 === "function") {
-            show = filter$1(_option, []);
+          if (typeof filter === "function") {
+            show = filter(_option, []);
             show = show || this._handleObject(this.configureOptions[_option], [_option], true);
-          } else if (filter$1 === true || indexOf(filter$1).call(filter$1, _option) !== -1) {
+          } else if (filter === true || _indexOfInstanceProperty(filter).call(filter, _option) !== -1) {
             show = true;
           }
 
@@ -10227,7 +10470,7 @@ var Configurator$1 = /*#__PURE__*/function () {
           domElements[_key6 - 1] = arguments[_key6];
         }
 
-        forEach$2(domElements).call(domElements, function (element) {
+        _forEachInstanceProperty(domElements).call(domElements, function (element) {
           item.appendChild(element);
         });
 
@@ -10299,8 +10542,8 @@ var Configurator$1 = /*#__PURE__*/function () {
       var selectedValue = 0;
 
       if (value !== undefined) {
-        if (indexOf(arr).call(arr, value) !== -1) {
-          selectedValue = indexOf(arr).call(arr, value);
+        if (_indexOfInstanceProperty(arr).call(arr, value) !== -1) {
+          selectedValue = _indexOfInstanceProperty(arr).call(arr, value);
         }
       }
 
@@ -10507,10 +10750,10 @@ var Configurator$1 = /*#__PURE__*/function () {
         this.popupDiv.html.style.top = rect.top - 30 + "px"; // 30 is the height;
 
         document.body.appendChild(this.popupDiv.html);
-        this.popupDiv.hideTimeout = setTimeout$1(function () {
+        this.popupDiv.hideTimeout = _setTimeout(function () {
           _this6.popupDiv.html.style.opacity = 0;
         }, 1500);
-        this.popupDiv.deleteTimeout = setTimeout$1(function () {
+        this.popupDiv.deleteTimeout = _setTimeout(function () {
           _this6._removePopup();
         }, 1800);
       }
@@ -10681,7 +10924,7 @@ var Configurator$1 = /*#__PURE__*/function () {
       var checkOnly = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var show = false;
 
-      var filter$1 = filter(this.options);
+      var filter = _filterInstanceProperty(this.options);
 
       var visibleInSet = false;
 
@@ -10691,11 +10934,11 @@ var Configurator$1 = /*#__PURE__*/function () {
           var item = obj[subObj];
           var newPath = copyAndExtendArray(path, subObj);
 
-          if (typeof filter$1 === "function") {
-            show = filter$1(subObj, path); // if needed we must go deeper into the object.
+          if (typeof filter === "function") {
+            show = filter(subObj, path); // if needed we must go deeper into the object.
 
             if (show === false) {
-              if (!isArray$2(item) && typeof item !== "string" && typeof item !== "boolean" && item instanceof Object) {
+              if (!_Array$isArray(item) && typeof item !== "string" && typeof item !== "boolean" && item instanceof Object) {
                 this.allowCreation = false;
                 show = this._handleObject(item, newPath, true);
                 this.allowCreation = checkOnly === false;
@@ -10708,7 +10951,7 @@ var Configurator$1 = /*#__PURE__*/function () {
 
             var value = this._getValue(newPath);
 
-            if (isArray$2(item)) {
+            if (_Array$isArray(item)) {
               this._handleArray(item, value, newPath);
             } else if (typeof item === "string") {
               this._makeTextInput(item, value, newPath);
@@ -10857,7 +11100,7 @@ var Configurator$1 = /*#__PURE__*/function () {
         this.optionsContainer.removeChild(this.optionsContainer.firstChild);
       }
 
-      this.optionsContainer.appendChild(wrapInTag("pre", "const options = " + stringify$1(options, null, 2)));
+      this.optionsContainer.appendChild(wrapInTag("pre", "const options = " + _JSON$stringify(options, null, 2)));
     }
     /**
      *
@@ -11153,7 +11396,7 @@ var Validator$1 = /*#__PURE__*/function () {
 
       if (refOptionType !== undefined) {
         // if the type is correct, we check if it is supposed to be one of a few select values
-        if (Validator$1.getType(refOptionType) === "array" && indexOf(refOptionType).call(refOptionType, options[option]) === -1) {
+        if (Validator$1.getType(refOptionType) === "array" && _indexOfInstanceProperty(refOptionType).call(refOptionType, options[option]) === -1) {
           log('Invalid option detected in "' + option + '".' + " Allowed values are:" + Validator$1.print(refOptionType) + ' not "' + options[option] + '". ');
           errorFound = true;
         } else if (optionType === "object" && referenceOption !== "__any__") {
@@ -11162,7 +11405,7 @@ var Validator$1 = /*#__PURE__*/function () {
         }
       } else if (refOptionObj["any"] === undefined) {
         // type of the field is incorrect and the field cannot be any
-        log('Invalid type received for "' + option + '". Expected: ' + Validator$1.print(keys$4(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
+        log('Invalid type received for "' + option + '". Expected: ' + Validator$1.print(_Object$keys(refOptionObj)) + ". Received [" + optionType + '] "' + options[option] + '"');
         errorFound = true;
       }
     }
@@ -11195,7 +11438,7 @@ var Validator$1 = /*#__PURE__*/function () {
           return "string";
         }
 
-        if (isArray$2(object)) {
+        if (_Array$isArray(object)) {
           return "array";
         }
 
@@ -11247,7 +11490,7 @@ var Validator$1 = /*#__PURE__*/function () {
       } else if (localSearch.distance <= localSearchThreshold) {
         msg = '. Did you mean "' + localSearch.closestMatch + '"?' + Validator$1.printLocation(localSearch.path, option);
       } else {
-        msg = ". Did you mean one of these: " + Validator$1.print(keys$4(options)) + Validator$1.printLocation(path, option);
+        msg = ". Did you mean one of these: " + Validator$1.print(_Object$keys(options)) + Validator$1.printLocation(path, option);
       }
 
       console.error('%cUnknown option detected: "' + option + '"' + msg, VALIDATOR_PRINT_STYLE$1);
@@ -11289,7 +11532,7 @@ var Validator$1 = /*#__PURE__*/function () {
         } else {
           var _context20;
 
-          if (indexOf(_context20 = op.toLowerCase()).call(_context20, lowerCaseOption) !== -1) {
+          if (_indexOfInstanceProperty(_context20 = op.toLowerCase()).call(_context20, lowerCaseOption) !== -1) {
             indexMatch = op;
           }
 
@@ -11357,7 +11600,7 @@ var Validator$1 = /*#__PURE__*/function () {
   }, {
     key: "print",
     value: function print(options) {
-      return stringify$1(options).replace(/(")|(\[)|(\])|(,"__type__")/g, "").replace(/(,)/g, ", ");
+      return _JSON$stringify(options).replace(/(")|(\[)|(\])|(,"__type__")/g, "").replace(/(,)/g, ", ");
     }
     /**
      *  Compute the edit distance between the two given strings
@@ -11482,7 +11725,7 @@ var NODE_ATTR_MAPPING = {
   labeltooltip: "title"
 };
 
-var EDGE_ATTR_MAPPING = create$5(NODE_ATTR_MAPPING);
+var EDGE_ATTR_MAPPING = _Object$create$1(NODE_ATTR_MAPPING);
 
 EDGE_ATTR_MAPPING.color = "color.color";
 EDGE_ATTR_MAPPING.style = "dashes"; // token types enumeration
@@ -11696,7 +11939,7 @@ function addNode(graph, node) {
       g.nodes = [];
     }
 
-    if (indexOf(_context = g.nodes).call(_context, current) === -1) {
+    if (_indexOfInstanceProperty(_context = g.nodes).call(_context, current) === -1) {
       g.nodes.push(current);
     }
   } // merge attributes
@@ -12322,7 +12565,7 @@ function parseAttributeList() {
    */
 
 
-  if (includes(attr_names).call(attr_names, "dir")) {
+  if (_includesInstanceProperty(attr_names).call(attr_names, "dir")) {
     var idx = {}; // get index of 'arrows' and 'dir'
 
     idx.arrows = {};
@@ -12344,7 +12587,7 @@ function parseAttributeList() {
 
     var dir_type = attr_list[idx.dir].value;
 
-    if (!includes(attr_names).call(attr_names, "arrows")) {
+    if (!_includesInstanceProperty(attr_names).call(attr_names, "arrows")) {
       if (dir_type === "both") {
         attr_list.push({
           attr: attr_list[idx.dir].attr,
@@ -12423,7 +12666,7 @@ function parseAttributeList() {
           }
         };
 
-        splice$1(attr_list).call(attr_list, idx.arrows.from, 1); // shape of 'to' is assigned and use default to 'from'
+        _spliceInstanceProperty(attr_list).call(attr_list, idx.arrows.from, 1); // shape of 'to' is assigned and use default to 'from'
 
       } else if (idx.arrows.to) {
         to_type = attr_list[idx.arrows.to].value.to.type;
@@ -12611,13 +12854,13 @@ function parseAttributeList() {
     } // remove 'dir' attribute no need anymore
 
 
-    splice$1(attr_list).call(attr_list, idx.dir, 1);
+    _spliceInstanceProperty(attr_list).call(attr_list, idx.dir, 1);
   } // parse 'penwidth'
 
 
   var nof_attr_list;
 
-  if (includes(attr_names).call(attr_names, "penwidth")) {
+  if (_includesInstanceProperty(attr_names).call(attr_names, "penwidth")) {
     var tmp_attr_list = [];
     nof_attr_list = attr_list.length;
 
@@ -12676,10 +12919,10 @@ function chop(text, maxLength) {
 
 
 function forEach2(array1, array2, fn) {
-  if (isArray$2(array1)) {
-    forEach$2(array1).call(array1, function (elem1) {
-      if (isArray$2(array2)) {
-        forEach$2(array2).call(array2, function (elem2) {
+  if (_Array$isArray(array1)) {
+    _forEachInstanceProperty(array1).call(array1, function (elem1) {
+      if (_Array$isArray(array2)) {
+        _forEachInstanceProperty(array2).call(array2, function (elem2) {
           fn(elem1, elem2);
         });
       } else {
@@ -12687,8 +12930,8 @@ function forEach2(array1, array2, fn) {
       }
     });
   } else {
-    if (isArray$2(array2)) {
-      forEach$2(array2).call(array2, function (elem2) {
+    if (_Array$isArray(array2)) {
+      _forEachInstanceProperty(array2).call(array2, function (elem2) {
         fn(array1, elem2);
       });
     } else {
@@ -12744,8 +12987,8 @@ function convertAttr(attr, mapping) {
     if (attr.hasOwnProperty(prop)) {
       var visProp = mapping[prop];
 
-      if (isArray$2(visProp)) {
-        forEach$2(visProp).call(visProp, function (visPropI) {
+      if (_Array$isArray(visProp)) {
+        _forEachInstanceProperty(visProp).call(visProp, function (visPropI) {
           setProp(converted, visPropI, attr[prop]);
         });
       } else if (typeof visProp === "string") {
@@ -12779,7 +13022,7 @@ function DOTToGraph(data) {
   if (dotData.nodes) {
     var _context2;
 
-    forEach$2(_context2 = dotData.nodes).call(_context2, function (dotNode) {
+    _forEachInstanceProperty(_context2 = dotData.nodes).call(_context2, function (dotNode) {
       var graphNode = {
         id: dotNode.id,
         label: String(dotNode.label || dotNode.id)
@@ -12820,7 +13063,7 @@ function DOTToGraph(data) {
       return graphEdge;
     };
 
-    forEach$2(_context3 = dotData.edges).call(_context3, function (dotEdge) {
+    _forEachInstanceProperty(_context3 = dotData.edges).call(_context3, function (dotEdge) {
       var from, to;
 
       if (dotEdge.from instanceof Object) {
@@ -12842,7 +13085,7 @@ function DOTToGraph(data) {
       if (dotEdge.from instanceof Object && dotEdge.from.edges) {
         var _context4;
 
-        forEach$2(_context4 = dotEdge.from.edges).call(_context4, function (subEdge) {
+        _forEachInstanceProperty(_context4 = dotEdge.from.edges).call(_context4, function (subEdge) {
           var graphEdge = convertEdge(subEdge);
           graphData.edges.push(graphEdge);
         });
@@ -12857,7 +13100,7 @@ function DOTToGraph(data) {
       if (dotEdge.to instanceof Object && dotEdge.to.edges) {
         var _context5;
 
-        forEach$2(_context5 = dotEdge.to.edges).call(_context5, function (subEdge) {
+        _forEachInstanceProperty(_context5 = dotEdge.to.edges).call(_context5, function (subEdge) {
           var graphEdge = convertEdge(subEdge);
           graphData.edges.push(graphEdge);
         });
@@ -12920,7 +13163,7 @@ function parseGephi(gephiJSON, optionsObj) {
 
   var gEdges = gephiJSON.edges;
 
-  var vEdges = map$3(gEdges).call(gEdges, function (gEdge) {
+  var vEdges = _mapInstanceProperty(gEdges).call(gEdges, function (gEdge) {
     var vEdge = {
       from: gEdge.source,
       id: gEdge.id,
@@ -12952,7 +13195,7 @@ function parseGephi(gephiJSON, optionsObj) {
     return vEdge;
   });
 
-  var vNodes = map$3(_context = gephiJSON.nodes).call(_context, function (gNode) {
+  var vNodes = _mapInstanceProperty(_context = gephiJSON.nodes).call(_context, function (gNode) {
     var vNode = {
       id: gNode.id,
       fixed: options.nodes.fixed && gNode.x != null && gNode.y != null
@@ -13248,7 +13491,7 @@ function normalizeLanguageCode(locales, rawCode) {
       } else {
         var _context;
 
-        console.warn(concat(_context = "Unknown variant ".concat(country, " of language ")).call(_context, language, "."));
+        console.warn(_concatInstanceProperty(_context = "Unknown variant ".concat(country, " of language ")).call(_context, language, "."));
       }
     }
 
@@ -13543,6 +13786,8 @@ var Images = /*#__PURE__*/function () {
 
   return Images;
 }();
+
+var map$2 = {exports: {}};
 
 var internalMetadata = {exports: {}};
 
@@ -14105,12 +14350,16 @@ collection$2('Map', function (init) {
 }, collectionStrong$1);
 
 var path$b = path$y;
-var map$2 = path$b.Map;
+var map$1 = path$b.Map;
 
-var parent$v = map$2;
-var map$1 = parent$v;
+var parent$v = map$1;
+var map = parent$v;
 
-var map = map$1;
+(function (module) {
+  module.exports = map;
+})(map$2);
+
+var _Map = /*@__PURE__*/getDefaultExportFromCjs(map$2.exports);
 
 /**
  * This class can store groups and options specific for groups.
@@ -14371,7 +14620,7 @@ var Groups = /*#__PURE__*/function () {
       useDefaultGroups: true
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
   }
   /**
    *
@@ -14387,7 +14636,7 @@ var Groups = /*#__PURE__*/function () {
       if (options !== undefined) {
         for (var groupName in options) {
           if (Object.prototype.hasOwnProperty.call(options, groupName)) {
-            if (indexOf(optionFields).call(optionFields, groupName) === -1) {
+            if (_indexOfInstanceProperty(optionFields).call(optionFields, groupName) === -1) {
               var group = options[groupName];
               this.add(groupName, group);
             }
@@ -14402,7 +14651,7 @@ var Groups = /*#__PURE__*/function () {
   }, {
     key: "clear",
     value: function clear() {
-      this._groups = new map();
+      this._groups = new _Map();
       this._groupNames = [];
     }
     /**
@@ -14474,6 +14723,8 @@ var Groups = /*#__PURE__*/function () {
   return Groups;
 }();
 
+var isNan$2 = {exports: {}};
+
 var $$c = _export; // `Number.isNaN` method
 // https://tc39.es/ecma262/#sec-number.isnan
 
@@ -14488,12 +14739,18 @@ $$c({
 });
 
 var path$a = path$y;
-var isNan$2 = path$a.Number.isNaN;
+var isNan$1 = path$a.Number.isNaN;
 
-var parent$u = isNan$2;
-var isNan$1 = parent$u;
+var parent$u = isNan$1;
+var isNan = parent$u;
 
-var isNan = isNan$1;
+(function (module) {
+  module.exports = isNan;
+})(isNan$2);
+
+var _Number$isNaN = /*@__PURE__*/getDefaultExportFromCjs(isNan$2.exports);
+
+var _isFinite$2 = {exports: {}};
 
 var global$7 = global$P;
 var globalIsFinite = global$7.isFinite; // `Number.isFinite` method
@@ -14516,12 +14773,18 @@ $$b({
 });
 
 var path$9 = path$y;
-var _isFinite$2 = path$9.Number.isFinite;
+var _isFinite$1 = path$9.Number.isFinite;
 
-var parent$t = _isFinite$2;
-var _isFinite$1 = parent$t;
+var parent$t = _isFinite$1;
+var _isFinite = parent$t;
 
-var _isFinite = _isFinite$1;
+(function (module) {
+  module.exports = _isFinite;
+})(_isFinite$2);
+
+var _Number$isFinite = /*@__PURE__*/getDefaultExportFromCjs(_isFinite$2.exports);
+
+var some$3 = {exports: {}};
 
 var $$a = _export;
 var $some = arrayIteration.some;
@@ -14542,21 +14805,27 @@ $$a({
 });
 
 var entryVirtual$7 = entryVirtual$l;
-var some$3 = entryVirtual$7('Array').some;
+var some$2 = entryVirtual$7('Array').some;
 
 var isPrototypeOf$7 = objectIsPrototypeOf;
-var method$7 = some$3;
+var method$7 = some$2;
 var ArrayPrototype$7 = Array.prototype;
 
-var some$2 = function (it) {
+var some$1 = function (it) {
   var own = it.some;
   return it === ArrayPrototype$7 || isPrototypeOf$7(ArrayPrototype$7, it) && own === ArrayPrototype$7.some ? method$7 : own;
 };
 
-var parent$s = some$2;
-var some$1 = parent$s;
+var parent$s = some$1;
+var some = parent$s;
 
-var some = some$1;
+(function (module) {
+  module.exports = some;
+})(some$3);
+
+var _someInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(some$3.exports);
+
+var construct$2 = {exports: {}};
 
 var global$6 = global$P;
 var isConstructor = isConstructor$4;
@@ -14647,12 +14916,16 @@ $$9({
 });
 
 var path$8 = path$y;
-var construct$2 = path$8.Reflect.construct;
+var construct$1 = path$8.Reflect.construct;
 
-var parent$r = construct$2;
-var construct$1 = parent$r;
+var parent$r = construct$1;
+var construct = parent$r;
 
-var construct = construct$1;
+(function (module) {
+  module.exports = construct;
+})(construct$2);
+
+var _Reflect$construct = /*@__PURE__*/getDefaultExportFromCjs(construct$2.exports);
 
 function _assertThisInitialized(self) {
   if (self === void 0) {
@@ -14662,41 +14935,53 @@ function _assertThisInitialized(self) {
   return self;
 }
 
-var parent$q = create$6;
-var create$2 = parent$q;
+var create$2 = {exports: {}};
 
-var parent$p = create$2;
-var create$1 = parent$p;
+var parent$q = create$5;
+var create$1 = parent$q;
 
-var create = create$1;
+var parent$p = create$1;
+var create = parent$p;
+
+(function (module) {
+  module.exports = create;
+})(create$2);
+
+var _Object$create = /*@__PURE__*/getDefaultExportFromCjs(create$2.exports);
+
+var setPrototypeOf$5 = {exports: {}};
 
 var $$8 = _export;
-var setPrototypeOf$5 = objectSetPrototypeOf; // `Object.setPrototypeOf` method
+var setPrototypeOf$4 = objectSetPrototypeOf; // `Object.setPrototypeOf` method
 // https://tc39.es/ecma262/#sec-object.setprototypeof
 
 $$8({
   target: 'Object',
   stat: true
 }, {
-  setPrototypeOf: setPrototypeOf$5
+  setPrototypeOf: setPrototypeOf$4
 });
 
 var path$7 = path$y;
-var setPrototypeOf$4 = path$7.Object.setPrototypeOf;
+var setPrototypeOf$3 = path$7.Object.setPrototypeOf;
 
-var parent$o = setPrototypeOf$4;
-var setPrototypeOf$3 = parent$o;
+var parent$o = setPrototypeOf$3;
+var setPrototypeOf$2 = parent$o;
 
-var parent$n = setPrototypeOf$3;
-var setPrototypeOf$2 = parent$n;
+var parent$n = setPrototypeOf$2;
+var setPrototypeOf$1 = parent$n;
 
-var parent$m = setPrototypeOf$2;
-var setPrototypeOf$1 = parent$m;
+var parent$m = setPrototypeOf$1;
+var setPrototypeOf = parent$m;
 
-var setPrototypeOf = setPrototypeOf$1;
+(function (module) {
+  module.exports = setPrototypeOf;
+})(setPrototypeOf$5);
+
+var _Object$setPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(setPrototypeOf$5.exports);
 
 function _setPrototypeOf(o, p) {
-  _setPrototypeOf = setPrototypeOf || function _setPrototypeOf(o, p) {
+  _setPrototypeOf = _Object$setPrototypeOf || function _setPrototypeOf(o, p) {
     o.__proto__ = p;
     return o;
   };
@@ -14709,7 +14994,7 @@ function _inherits(subClass, superClass) {
     throw new TypeError("Super expression must either be null or a function");
   }
 
-  subClass.prototype = create(superClass && superClass.prototype, {
+  subClass.prototype = _Object$create(superClass && superClass.prototype, {
     constructor: {
       value: subClass,
       writable: true,
@@ -14717,7 +15002,7 @@ function _inherits(subClass, superClass) {
     }
   });
 
-  defineProperty$3(subClass, "prototype", {
+  _Object$defineProperty(subClass, "prototype", {
     writable: false
   });
 
@@ -14734,20 +15019,28 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
-var parent$l = getPrototypeOf$5;
-var getPrototypeOf$3 = parent$l;
+var getPrototypeOf$3 = {exports: {}};
 
-var parent$k = getPrototypeOf$3;
-var getPrototypeOf$2 = parent$k;
+var parent$l = getPrototypeOf$4;
+var getPrototypeOf$2 = parent$l;
 
-var getPrototypeOf$1 = getPrototypeOf$2;
+var parent$k = getPrototypeOf$2;
+var getPrototypeOf$1 = parent$k;
+
+(function (module) {
+  module.exports = getPrototypeOf$1;
+})(getPrototypeOf$3);
+
+var _Object$getPrototypeOf = /*@__PURE__*/getDefaultExportFromCjs(getPrototypeOf$3.exports);
 
 function _getPrototypeOf(o) {
-  _getPrototypeOf = setPrototypeOf ? getPrototypeOf$1 : function _getPrototypeOf(o) {
-    return o.__proto__ || getPrototypeOf$1(o);
+  _getPrototypeOf = _Object$setPrototypeOf ? _Object$getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || _Object$getPrototypeOf(o);
   };
   return _getPrototypeOf(o);
 }
+
+var regenerator = {exports: {}};
 
 var runtime = {exports: {}};
 
@@ -15477,7 +15770,13 @@ var runtime = {exports: {}};
   }
 })(runtime);
 
-var regenerator = runtime.exports;
+(function (module) {
+  module.exports = runtime.exports;
+})(regenerator);
+
+var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator.exports);
+
+var reduce$3 = {exports: {}};
 
 var global$5 = global$P;
 var aCallable$2 = aCallable$7;
@@ -15554,21 +15853,27 @@ $$7({
 });
 
 var entryVirtual$6 = entryVirtual$l;
-var reduce$3 = entryVirtual$6('Array').reduce;
+var reduce$2 = entryVirtual$6('Array').reduce;
 
 var isPrototypeOf$6 = objectIsPrototypeOf;
-var method$6 = reduce$3;
+var method$6 = reduce$2;
 var ArrayPrototype$6 = Array.prototype;
 
-var reduce$2 = function (it) {
+var reduce$1 = function (it) {
   var own = it.reduce;
   return it === ArrayPrototype$6 || isPrototypeOf$6(ArrayPrototype$6, it) && own === ArrayPrototype$6.reduce ? method$6 : own;
 };
 
-var parent$j = reduce$2;
-var reduce$1 = parent$j;
+var parent$j = reduce$1;
+var reduce = parent$j;
 
-var reduce = reduce$1;
+(function (module) {
+  module.exports = reduce;
+})(reduce$3);
+
+var _reduceInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(reduce$3.exports);
+
+var flatMap$3 = {exports: {}};
 
 var global$3 = global$P;
 var isArray = isArray$d;
@@ -15632,21 +15937,27 @@ $$6({
 });
 
 var entryVirtual$5 = entryVirtual$l;
-var flatMap$3 = entryVirtual$5('Array').flatMap;
+var flatMap$2 = entryVirtual$5('Array').flatMap;
 
 var isPrototypeOf$5 = objectIsPrototypeOf;
-var method$5 = flatMap$3;
+var method$5 = flatMap$2;
 var ArrayPrototype$5 = Array.prototype;
 
-var flatMap$2 = function (it) {
+var flatMap$1 = function (it) {
   var own = it.flatMap;
   return it === ArrayPrototype$5 || isPrototypeOf$5(ArrayPrototype$5, it) && own === ArrayPrototype$5.flatMap ? method$5 : own;
 };
 
-var parent$i = flatMap$2;
-var flatMap$1 = parent$i;
+var parent$i = flatMap$1;
+var flatMap = parent$i;
 
-var flatMap = flatMap$1;
+(function (module) {
+  module.exports = flatMap;
+})(flatMap$3);
+
+var _flatMapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(flatMap$3.exports);
+
+var set$2 = {exports: {}};
 
 var collection$1 = collection$3;
 var collectionStrong = collectionStrong$2; // `Set` constructor
@@ -15659,28 +15970,46 @@ collection$1('Set', function (init) {
 }, collectionStrong);
 
 var path$6 = path$y;
-var set$2 = path$6.Set;
+var set$1 = path$6.Set;
 
-var parent$h = set$2;
-var set$1 = parent$h;
+var parent$h = set$1;
+var set = parent$h;
 
-var set = set$1;
+(function (module) {
+  module.exports = set;
+})(set$2);
 
-var iterator = iterator$4;
+var _Set = /*@__PURE__*/getDefaultExportFromCjs(set$2.exports);
 
-var getIterator$4 = getIterator$7;
-var getIterator_1 = getIterator$4;
+var iterator = {exports: {}};
+
+(function (module) {
+  module.exports = iterator$3;
+})(iterator);
+
+var _Symbol$iterator2 = /*@__PURE__*/getDefaultExportFromCjs(iterator.exports);
+
+var getIterator$4 = {exports: {}};
+
+var getIterator$3 = getIterator$7;
+var getIterator_1 = getIterator$3;
 
 var parent$g = getIterator_1;
-var getIterator$3 = parent$g;
+var getIterator$2 = parent$g;
 
-var parent$f = getIterator$3;
-var getIterator$2 = parent$f;
+var parent$f = getIterator$2;
+var getIterator$1 = parent$f;
 
-var parent$e = getIterator$2;
-var getIterator$1 = parent$e;
+var parent$e = getIterator$1;
+var getIterator = parent$e;
 
-var getIterator = getIterator$1;
+(function (module) {
+  module.exports = getIterator;
+})(getIterator$4);
+
+var _getIterator = /*@__PURE__*/getDefaultExportFromCjs(getIterator$4.exports);
+
+var sort$3 = {exports: {}};
 
 var arraySlice = arraySliceSimple;
 var floor = Math.floor;
@@ -15853,90 +16182,112 @@ $$5({
 });
 
 var entryVirtual$4 = entryVirtual$l;
-var sort$3 = entryVirtual$4('Array').sort;
+var sort$2 = entryVirtual$4('Array').sort;
 
 var isPrototypeOf$4 = objectIsPrototypeOf;
-var method$4 = sort$3;
+var method$4 = sort$2;
 var ArrayPrototype$4 = Array.prototype;
 
-var sort$2 = function (it) {
+var sort$1 = function (it) {
   var own = it.sort;
   return it === ArrayPrototype$4 || isPrototypeOf$4(ArrayPrototype$4, it) && own === ArrayPrototype$4.sort ? method$4 : own;
 };
 
-var parent$d = sort$2;
-var sort$1 = parent$d;
+var parent$d = sort$1;
+var sort = parent$d;
 
-var sort = sort$1;
+(function (module) {
+  module.exports = sort;
+})(sort$3);
+
+var _sortInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(sort$3.exports);
+
+var keys$3 = {exports: {}};
 
 var entryVirtual$3 = entryVirtual$l;
-var keys$3 = entryVirtual$3('Array').keys;
+var keys$2 = entryVirtual$3('Array').keys;
 
-var parent$c = keys$3;
-var keys$2 = parent$c;
+var parent$c = keys$2;
+var keys$1 = parent$c;
 
 var classof$2 = classof$e;
 var hasOwn$4 = hasOwnProperty_1;
 var isPrototypeOf$3 = objectIsPrototypeOf;
-var method$3 = keys$2;
+var method$3 = keys$1;
 var ArrayPrototype$3 = Array.prototype;
 var DOMIterables$2 = {
   DOMTokenList: true,
   NodeList: true
 };
 
-var keys$1 = function (it) {
+var keys = function (it) {
   var own = it.keys;
   return it === ArrayPrototype$3 || isPrototypeOf$3(ArrayPrototype$3, it) && own === ArrayPrototype$3.keys || hasOwn$4(DOMIterables$2, classof$2(it)) ? method$3 : own;
 };
 
-var keys = keys$1;
+(function (module) {
+  module.exports = keys;
+})(keys$3);
+
+var _keysInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(keys$3.exports);
+
+var values$3 = {exports: {}};
 
 var entryVirtual$2 = entryVirtual$l;
-var values$3 = entryVirtual$2('Array').values;
+var values$2 = entryVirtual$2('Array').values;
 
-var parent$b = values$3;
-var values$2 = parent$b;
+var parent$b = values$2;
+var values$1 = parent$b;
 
 var classof$1 = classof$e;
 var hasOwn$3 = hasOwnProperty_1;
 var isPrototypeOf$2 = objectIsPrototypeOf;
-var method$2 = values$2;
+var method$2 = values$1;
 var ArrayPrototype$2 = Array.prototype;
 var DOMIterables$1 = {
   DOMTokenList: true,
   NodeList: true
 };
 
-var values$1 = function (it) {
+var values = function (it) {
   var own = it.values;
   return it === ArrayPrototype$2 || isPrototypeOf$2(ArrayPrototype$2, it) && own === ArrayPrototype$2.values || hasOwn$3(DOMIterables$1, classof$1(it)) ? method$2 : own;
 };
 
-var values = values$1;
+(function (module) {
+  module.exports = values;
+})(values$3);
+
+var _valuesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(values$3.exports);
+
+var entries$3 = {exports: {}};
 
 var entryVirtual$1 = entryVirtual$l;
-var entries$3 = entryVirtual$1('Array').entries;
+var entries$2 = entryVirtual$1('Array').entries;
 
-var parent$a = entries$3;
-var entries$2 = parent$a;
+var parent$a = entries$2;
+var entries$1 = parent$a;
 
 var classof = classof$e;
 var hasOwn$2 = hasOwnProperty_1;
 var isPrototypeOf$1 = objectIsPrototypeOf;
-var method$1 = entries$2;
+var method$1 = entries$1;
 var ArrayPrototype$1 = Array.prototype;
 var DOMIterables = {
   DOMTokenList: true,
   NodeList: true
 };
 
-var entries$1 = function (it) {
+var entries = function (it) {
   var own = it.entries;
   return it === ArrayPrototype$1 || isPrototypeOf$1(ArrayPrototype$1, it) && own === ArrayPrototype$1.entries || hasOwn$2(DOMIterables, classof(it)) ? method$1 : own;
 };
 
-var entries = entries$1;
+(function (module) {
+  module.exports = entries;
+})(entries$3);
+
+var _entriesInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(entries$3.exports);
 
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
@@ -15992,6 +16343,316 @@ function stringify(arr) {
   return uuid;
 }
 
+function parse(uuid) {
+  if (!validate(uuid)) {
+    throw TypeError('Invalid UUID');
+  }
+
+  var v;
+  var arr = new Uint8Array(16); // Parse ########-....-....-....-............
+
+  arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[1] = v >>> 16 & 0xff;
+  arr[2] = v >>> 8 & 0xff;
+  arr[3] = v & 0xff; // Parse ........-####-....-....-............
+
+  arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[5] = v & 0xff; // Parse ........-....-####-....-............
+
+  arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[7] = v & 0xff; // Parse ........-....-....-####-............
+
+  arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[9] = v & 0xff; // Parse ........-....-....-....-############
+  // (Use "/" to avoid 32-bit truncation when bit-shifting high-order bytes)
+
+  arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 0x10000000000 & 0xff;
+  arr[11] = v / 0x100000000 & 0xff;
+  arr[12] = v >>> 24 & 0xff;
+  arr[13] = v >>> 16 & 0xff;
+  arr[14] = v >>> 8 & 0xff;
+  arr[15] = v & 0xff;
+  return arr;
+}
+
+function stringToBytes(str) {
+  str = unescape(encodeURIComponent(str)); // UTF8 escape
+
+  var bytes = [];
+
+  for (var i = 0; i < str.length; ++i) {
+    bytes.push(str.charCodeAt(i));
+  }
+
+  return bytes;
+}
+
+var DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+var URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
+function v35 (name, version, hashfunc) {
+  function generateUUID(value, namespace, buf, offset) {
+    if (typeof value === 'string') {
+      value = stringToBytes(value);
+    }
+
+    if (typeof namespace === 'string') {
+      namespace = parse(namespace);
+    }
+
+    if (namespace.length !== 16) {
+      throw TypeError('Namespace must be array-like (16 iterable integer values, 0-255)');
+    } // Compute hash of namespace and value, Per 4.3
+    // Future: Use spread syntax when supported on all platforms, e.g. `bytes =
+    // hashfunc([...namespace, ... value])`
+
+
+    var bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = hashfunc(bytes);
+    bytes[6] = bytes[6] & 0x0f | version;
+    bytes[8] = bytes[8] & 0x3f | 0x80;
+
+    if (buf) {
+      offset = offset || 0;
+
+      for (var i = 0; i < 16; ++i) {
+        buf[offset + i] = bytes[i];
+      }
+
+      return buf;
+    }
+
+    return stringify(bytes);
+  } // Function#name is not settable on some platforms (#270)
+
+
+  try {
+    generateUUID.name = name; // eslint-disable-next-line no-empty
+  } catch (err) {} // For CommonJS default export support
+
+
+  generateUUID.DNS = DNS;
+  generateUUID.URL = URL;
+  return generateUUID;
+}
+
+/*
+ * Browser-compatible JavaScript MD5
+ *
+ * Modification of JavaScript MD5
+ * https://github.com/blueimp/JavaScript-MD5
+ *
+ * Copyright 2011, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * https://opensource.org/licenses/MIT
+ *
+ * Based on
+ * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
+ * Digest Algorithm, as defined in RFC 1321.
+ * Version 2.2 Copyright (C) Paul Johnston 1999 - 2009
+ * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+ * Distributed under the BSD License
+ * See http://pajhome.org.uk/crypt/md5 for more info.
+ */
+function md5(bytes) {
+  if (typeof bytes === 'string') {
+    var msg = unescape(encodeURIComponent(bytes)); // UTF8 escape
+
+    bytes = new Uint8Array(msg.length);
+
+    for (var i = 0; i < msg.length; ++i) {
+      bytes[i] = msg.charCodeAt(i);
+    }
+  }
+
+  return md5ToHexEncodedArray(wordsToMd5(bytesToWords(bytes), bytes.length * 8));
+}
+/*
+ * Convert an array of little-endian words to an array of bytes
+ */
+
+
+function md5ToHexEncodedArray(input) {
+  var output = [];
+  var length32 = input.length * 32;
+  var hexTab = '0123456789abcdef';
+
+  for (var i = 0; i < length32; i += 8) {
+    var x = input[i >> 5] >>> i % 32 & 0xff;
+    var hex = parseInt(hexTab.charAt(x >>> 4 & 0x0f) + hexTab.charAt(x & 0x0f), 16);
+    output.push(hex);
+  }
+
+  return output;
+}
+/**
+ * Calculate output length with padding and bit length
+ */
+
+
+function getOutputLength(inputLength8) {
+  return (inputLength8 + 64 >>> 9 << 4) + 14 + 1;
+}
+/*
+ * Calculate the MD5 of an array of little-endian words, and a bit length.
+ */
+
+
+function wordsToMd5(x, len) {
+  /* append padding */
+  x[len >> 5] |= 0x80 << len % 32;
+  x[getOutputLength(len) - 1] = len;
+  var a = 1732584193;
+  var b = -271733879;
+  var c = -1732584194;
+  var d = 271733878;
+
+  for (var i = 0; i < x.length; i += 16) {
+    var olda = a;
+    var oldb = b;
+    var oldc = c;
+    var oldd = d;
+    a = md5ff(a, b, c, d, x[i], 7, -680876936);
+    d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);
+    c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);
+    b = md5ff(b, c, d, a, x[i + 3], 22, -1044525330);
+    a = md5ff(a, b, c, d, x[i + 4], 7, -176418897);
+    d = md5ff(d, a, b, c, x[i + 5], 12, 1200080426);
+    c = md5ff(c, d, a, b, x[i + 6], 17, -1473231341);
+    b = md5ff(b, c, d, a, x[i + 7], 22, -45705983);
+    a = md5ff(a, b, c, d, x[i + 8], 7, 1770035416);
+    d = md5ff(d, a, b, c, x[i + 9], 12, -1958414417);
+    c = md5ff(c, d, a, b, x[i + 10], 17, -42063);
+    b = md5ff(b, c, d, a, x[i + 11], 22, -1990404162);
+    a = md5ff(a, b, c, d, x[i + 12], 7, 1804603682);
+    d = md5ff(d, a, b, c, x[i + 13], 12, -40341101);
+    c = md5ff(c, d, a, b, x[i + 14], 17, -1502002290);
+    b = md5ff(b, c, d, a, x[i + 15], 22, 1236535329);
+    a = md5gg(a, b, c, d, x[i + 1], 5, -165796510);
+    d = md5gg(d, a, b, c, x[i + 6], 9, -1069501632);
+    c = md5gg(c, d, a, b, x[i + 11], 14, 643717713);
+    b = md5gg(b, c, d, a, x[i], 20, -373897302);
+    a = md5gg(a, b, c, d, x[i + 5], 5, -701558691);
+    d = md5gg(d, a, b, c, x[i + 10], 9, 38016083);
+    c = md5gg(c, d, a, b, x[i + 15], 14, -660478335);
+    b = md5gg(b, c, d, a, x[i + 4], 20, -405537848);
+    a = md5gg(a, b, c, d, x[i + 9], 5, 568446438);
+    d = md5gg(d, a, b, c, x[i + 14], 9, -1019803690);
+    c = md5gg(c, d, a, b, x[i + 3], 14, -187363961);
+    b = md5gg(b, c, d, a, x[i + 8], 20, 1163531501);
+    a = md5gg(a, b, c, d, x[i + 13], 5, -1444681467);
+    d = md5gg(d, a, b, c, x[i + 2], 9, -51403784);
+    c = md5gg(c, d, a, b, x[i + 7], 14, 1735328473);
+    b = md5gg(b, c, d, a, x[i + 12], 20, -1926607734);
+    a = md5hh(a, b, c, d, x[i + 5], 4, -378558);
+    d = md5hh(d, a, b, c, x[i + 8], 11, -2022574463);
+    c = md5hh(c, d, a, b, x[i + 11], 16, 1839030562);
+    b = md5hh(b, c, d, a, x[i + 14], 23, -35309556);
+    a = md5hh(a, b, c, d, x[i + 1], 4, -1530992060);
+    d = md5hh(d, a, b, c, x[i + 4], 11, 1272893353);
+    c = md5hh(c, d, a, b, x[i + 7], 16, -155497632);
+    b = md5hh(b, c, d, a, x[i + 10], 23, -1094730640);
+    a = md5hh(a, b, c, d, x[i + 13], 4, 681279174);
+    d = md5hh(d, a, b, c, x[i], 11, -358537222);
+    c = md5hh(c, d, a, b, x[i + 3], 16, -722521979);
+    b = md5hh(b, c, d, a, x[i + 6], 23, 76029189);
+    a = md5hh(a, b, c, d, x[i + 9], 4, -640364487);
+    d = md5hh(d, a, b, c, x[i + 12], 11, -421815835);
+    c = md5hh(c, d, a, b, x[i + 15], 16, 530742520);
+    b = md5hh(b, c, d, a, x[i + 2], 23, -995338651);
+    a = md5ii(a, b, c, d, x[i], 6, -198630844);
+    d = md5ii(d, a, b, c, x[i + 7], 10, 1126891415);
+    c = md5ii(c, d, a, b, x[i + 14], 15, -1416354905);
+    b = md5ii(b, c, d, a, x[i + 5], 21, -57434055);
+    a = md5ii(a, b, c, d, x[i + 12], 6, 1700485571);
+    d = md5ii(d, a, b, c, x[i + 3], 10, -1894986606);
+    c = md5ii(c, d, a, b, x[i + 10], 15, -1051523);
+    b = md5ii(b, c, d, a, x[i + 1], 21, -2054922799);
+    a = md5ii(a, b, c, d, x[i + 8], 6, 1873313359);
+    d = md5ii(d, a, b, c, x[i + 15], 10, -30611744);
+    c = md5ii(c, d, a, b, x[i + 6], 15, -1560198380);
+    b = md5ii(b, c, d, a, x[i + 13], 21, 1309151649);
+    a = md5ii(a, b, c, d, x[i + 4], 6, -145523070);
+    d = md5ii(d, a, b, c, x[i + 11], 10, -1120210379);
+    c = md5ii(c, d, a, b, x[i + 2], 15, 718787259);
+    b = md5ii(b, c, d, a, x[i + 9], 21, -343485551);
+    a = safeAdd(a, olda);
+    b = safeAdd(b, oldb);
+    c = safeAdd(c, oldc);
+    d = safeAdd(d, oldd);
+  }
+
+  return [a, b, c, d];
+}
+/*
+ * Convert an array bytes to an array of little-endian words
+ * Characters >255 have their high-byte silently ignored.
+ */
+
+
+function bytesToWords(input) {
+  if (input.length === 0) {
+    return [];
+  }
+
+  var length8 = input.length * 8;
+  var output = new Uint32Array(getOutputLength(length8));
+
+  for (var i = 0; i < length8; i += 8) {
+    output[i >> 5] |= (input[i / 8] & 0xff) << i % 32;
+  }
+
+  return output;
+}
+/*
+ * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+ * to work around bugs in some JS interpreters.
+ */
+
+
+function safeAdd(x, y) {
+  var lsw = (x & 0xffff) + (y & 0xffff);
+  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+  return msw << 16 | lsw & 0xffff;
+}
+/*
+ * Bitwise rotate a 32-bit number to the left.
+ */
+
+
+function bitRotateLeft(num, cnt) {
+  return num << cnt | num >>> 32 - cnt;
+}
+/*
+ * These functions implement the four basic operations the algorithm uses.
+ */
+
+
+function md5cmn(q, a, b, x, s, t) {
+  return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);
+}
+
+function md5ff(a, b, c, d, x, s, t) {
+  return md5cmn(b & c | ~b & d, a, b, x, s, t);
+}
+
+function md5gg(a, b, c, d, x, s, t) {
+  return md5cmn(b & d | c & ~d, a, b, x, s, t);
+}
+
+function md5hh(a, b, c, d, x, s, t) {
+  return md5cmn(b ^ c ^ d, a, b, x, s, t);
+}
+
+function md5ii(a, b, c, d, x, s, t) {
+  return md5cmn(c ^ (b | ~d), a, b, x, s, t);
+}
+
+v35('v3', 0x30, md5);
+
 function v4(options, buf, offset) {
   options = options || {};
   var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
@@ -16012,19 +16673,116 @@ function v4(options, buf, offset) {
   return stringify(rnds);
 }
 
+// Adapted from Chris Veness' SHA1 code at
+// http://www.movable-type.co.uk/scripts/sha1.html
+function f(s, x, y, z) {
+  switch (s) {
+    case 0:
+      return x & y ^ ~x & z;
+
+    case 1:
+      return x ^ y ^ z;
+
+    case 2:
+      return x & y ^ x & z ^ y & z;
+
+    case 3:
+      return x ^ y ^ z;
+  }
+}
+
+function ROTL(x, n) {
+  return x << n | x >>> 32 - n;
+}
+
+function sha1(bytes) {
+  var K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];
+  var H = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];
+
+  if (typeof bytes === 'string') {
+    var msg = unescape(encodeURIComponent(bytes)); // UTF8 escape
+
+    bytes = [];
+
+    for (var i = 0; i < msg.length; ++i) {
+      bytes.push(msg.charCodeAt(i));
+    }
+  } else if (!Array.isArray(bytes)) {
+    // Convert Array-like to Array
+    bytes = Array.prototype.slice.call(bytes);
+  }
+
+  bytes.push(0x80);
+  var l = bytes.length / 4 + 2;
+  var N = Math.ceil(l / 16);
+  var M = new Array(N);
+
+  for (var _i = 0; _i < N; ++_i) {
+    var arr = new Uint32Array(16);
+
+    for (var j = 0; j < 16; ++j) {
+      arr[j] = bytes[_i * 64 + j * 4] << 24 | bytes[_i * 64 + j * 4 + 1] << 16 | bytes[_i * 64 + j * 4 + 2] << 8 | bytes[_i * 64 + j * 4 + 3];
+    }
+
+    M[_i] = arr;
+  }
+
+  M[N - 1][14] = (bytes.length - 1) * 8 / Math.pow(2, 32);
+  M[N - 1][14] = Math.floor(M[N - 1][14]);
+  M[N - 1][15] = (bytes.length - 1) * 8 & 0xffffffff;
+
+  for (var _i2 = 0; _i2 < N; ++_i2) {
+    var W = new Uint32Array(80);
+
+    for (var t = 0; t < 16; ++t) {
+      W[t] = M[_i2][t];
+    }
+
+    for (var _t = 16; _t < 80; ++_t) {
+      W[_t] = ROTL(W[_t - 3] ^ W[_t - 8] ^ W[_t - 14] ^ W[_t - 16], 1);
+    }
+
+    var a = H[0];
+    var b = H[1];
+    var c = H[2];
+    var d = H[3];
+    var e = H[4];
+
+    for (var _t2 = 0; _t2 < 80; ++_t2) {
+      var s = Math.floor(_t2 / 20);
+      var T = ROTL(a, 5) + f(s, b, c, d) + e + K[s] + W[_t2] >>> 0;
+      e = d;
+      d = c;
+      c = ROTL(b, 30) >>> 0;
+      b = a;
+      a = T;
+    }
+
+    H[0] = H[0] + a >>> 0;
+    H[1] = H[1] + b >>> 0;
+    H[2] = H[2] + c >>> 0;
+    H[3] = H[3] + d >>> 0;
+    H[4] = H[4] + e >>> 0;
+  }
+
+  return [H[0] >> 24 & 0xff, H[0] >> 16 & 0xff, H[0] >> 8 & 0xff, H[0] & 0xff, H[1] >> 24 & 0xff, H[1] >> 16 & 0xff, H[1] >> 8 & 0xff, H[1] & 0xff, H[2] >> 24 & 0xff, H[2] >> 16 & 0xff, H[2] >> 8 & 0xff, H[2] & 0xff, H[3] >> 24 & 0xff, H[3] >> 16 & 0xff, H[3] >> 8 & 0xff, H[3] & 0xff, H[4] >> 24 & 0xff, H[4] >> 16 & 0xff, H[4] >> 8 & 0xff, H[4] & 0xff];
+}
+
+v35('v5', 0x50, sha1);
+
 var _Symbol$iterator;
 
-function ownKeys$4(object, enumerableOnly) { var keys = keys$4(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); enumerableOnly && (symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$4(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor$1(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var _context32, _context33; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? forEach$2(_context32 = ownKeys$4(Object(source), !0)).call(_context32, function (key) { _defineProperty(target, key, source[key]); }) : getOwnPropertyDescriptors ? defineProperties(target, getOwnPropertyDescriptors(source)) : forEach$2(_context33 = ownKeys$4(Object(source))).call(_context33, function (key) { defineProperty$6(target, key, getOwnPropertyDescriptor$3(source, key)); }); } return target; }
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var _context32, _context33; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context32 = ownKeys$4(Object(source), !0)).call(_context32, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context33 = ownKeys$4(Object(source))).call(_context33, function (key) { _Object$defineProperty$1(target, key, _Object$getOwnPropertyDescriptor$1(source, key)); }); } return target; }
 
-function _createSuper$t(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$t(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$t(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$t(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$t() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$t() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-function _createForOfIteratorHelper$7(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$7(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$7(o, minLen) { var _context31; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = slice(_context31 = Object.prototype.toString.call(o)).call(_context31, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
+function _unsupportedIterableToArray$7(o, minLen) { var _context31; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = _sliceInstanceProperty(_context31 = Object.prototype.toString.call(o)).call(_context31, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
 
 function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
@@ -16099,9 +16857,9 @@ var SimpleDataPipe = /*#__PURE__*/function () {
     _defineProperty(this, "_target", void 0);
 
     _defineProperty(this, "_listeners", {
-      add: bind$6(_context = this._add).call(_context, this),
-      remove: bind$6(_context2 = this._remove).call(_context2, this),
-      update: bind$6(_context3 = this._update).call(_context3, this)
+      add: _bindInstanceProperty(_context = this._add).call(_context, this),
+      remove: _bindInstanceProperty(_context2 = this._remove).call(_context2, this),
+      update: _bindInstanceProperty(_context3 = this._update).call(_context3, this)
     });
 
     this._source = _source;
@@ -16156,7 +16914,7 @@ var SimpleDataPipe = /*#__PURE__*/function () {
     value: function _transformItems(items) {
       var _context4;
 
-      return reduce(_context4 = this._transformers).call(_context4, function (items, transform) {
+      return _reduceInstanceProperty(_context4 = this._transformers).call(_context4, function (items, transform) {
         return transform(items);
       }, items);
     }
@@ -16253,9 +17011,9 @@ var DataPipeUnderConstruction = /*#__PURE__*/function () {
 
   _createClass(DataPipeUnderConstruction, [{
     key: "filter",
-    value: function filter$1(callback) {
+    value: function filter(callback) {
       this._transformers.push(function (input) {
-        return filter(input).call(input, callback);
+        return _filterInstanceProperty(input).call(input, callback);
       });
 
       return this;
@@ -16274,7 +17032,7 @@ var DataPipeUnderConstruction = /*#__PURE__*/function () {
     key: "map",
     value: function map(callback) {
       this._transformers.push(function (input) {
-        return map$3(input).call(input, callback);
+        return _mapInstanceProperty(input).call(input, callback);
       });
 
       return this;
@@ -16291,9 +17049,9 @@ var DataPipeUnderConstruction = /*#__PURE__*/function () {
 
   }, {
     key: "flatMap",
-    value: function flatMap$1(callback) {
+    value: function flatMap(callback) {
       this._transformers.push(function (input) {
-        return flatMap(input).call(input, callback);
+        return _flatMapInstanceProperty(input).call(input, callback);
       });
 
       return this;
@@ -16489,7 +17247,7 @@ var Queue = /*#__PURE__*/function () {
       }
 
       if (this.queue.length > 0 && typeof this.delay === "number") {
-        this._timeout = setTimeout$1(function () {
+        this._timeout = _setTimeout(function () {
           _this.flush();
         }, this.delay);
       }
@@ -16503,7 +17261,7 @@ var Queue = /*#__PURE__*/function () {
     value: function flush() {
       var _context5, _context6;
 
-      forEach$2(_context5 = splice$1(_context6 = this._queue).call(_context6, 0)).call(_context5, function (entry) {
+      _forEachInstanceProperty(_context5 = _spliceInstanceProperty(_context6 = this._queue).call(_context6, 0)).call(_context5, function (entry) {
         entry.fn.apply(entry.context || entry.fn, entry.args || []);
       });
     }
@@ -16589,7 +17347,7 @@ var DataSetPart = /*#__PURE__*/function () {
         throw new Error("Cannot trigger event *");
       }
 
-      forEach$2(_context7 = concat(_context8 = []).call(_context8, _toConsumableArray(this._subscribers[event]), _toConsumableArray(this._subscribers["*"]))).call(_context7, function (subscriber) {
+      _forEachInstanceProperty(_context7 = _concatInstanceProperty(_context8 = []).call(_context8, _toConsumableArray(this._subscribers[event]), _toConsumableArray(this._subscribers["*"]))).call(_context7, function (subscriber) {
         subscriber(event, payload, senderId != null ? senderId : null);
       });
     }
@@ -16622,7 +17380,7 @@ var DataSetPart = /*#__PURE__*/function () {
     value: function off(event, callback) {
       var _context9;
 
-      this._subscribers[event] = filter(_context9 = this._subscribers[event]).call(_context9, function (subscriber) {
+      this._subscribers[event] = _filterInstanceProperty(_context9 = this._subscribers[event]).call(_context9, function (subscriber) {
         return subscriber !== callback;
       });
     }
@@ -16645,7 +17403,7 @@ var DataSetPart = /*#__PURE__*/function () {
  */
 
 
-_Symbol$iterator = iterator;
+_Symbol$iterator = _Symbol$iterator2;
 
 var DataStream = /*#__PURE__*/function () {
   /**
@@ -16669,10 +17427,10 @@ var DataStream = /*#__PURE__*/function () {
     key: _Symbol$iterator,
     value:
     /*#__PURE__*/
-    regenerator.mark(function value() {
+    _regeneratorRuntime.mark(function value() {
       var _iterator, _step, _step$value, id, item;
 
-      return regenerator.wrap(function value$(_context10) {
+      return _regeneratorRuntime.wrap(function value$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
@@ -16727,10 +17485,10 @@ var DataStream = /*#__PURE__*/function () {
     key: "entries",
     value:
     /*#__PURE__*/
-    regenerator.mark(function entries() {
+    _regeneratorRuntime.mark(function entries() {
       var _iterator2, _step2, _step2$value, id, item;
 
-      return regenerator.wrap(function entries$(_context11) {
+      return _regeneratorRuntime.wrap(function entries$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
@@ -16785,10 +17543,10 @@ var DataStream = /*#__PURE__*/function () {
     key: "keys",
     value:
     /*#__PURE__*/
-    regenerator.mark(function keys() {
+    _regeneratorRuntime.mark(function keys() {
       var _iterator3, _step3, _step3$value, id;
 
-      return regenerator.wrap(function keys$(_context12) {
+      return _regeneratorRuntime.wrap(function keys$(_context12) {
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
@@ -16843,10 +17601,10 @@ var DataStream = /*#__PURE__*/function () {
     key: "values",
     value:
     /*#__PURE__*/
-    regenerator.mark(function values() {
+    _regeneratorRuntime.mark(function values() {
       var _iterator4, _step4, _step4$value, item;
 
-      return regenerator.wrap(function values$(_context13) {
+      return _regeneratorRuntime.wrap(function values$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
@@ -16906,7 +17664,7 @@ var DataStream = /*#__PURE__*/function () {
     value: function toIdArray() {
       var _context14;
 
-      return map$3(_context14 = _toConsumableArray(this._pairs)).call(_context14, function (pair) {
+      return _mapInstanceProperty(_context14 = _toConsumableArray(this._pairs)).call(_context14, function (pair) {
         return pair[0];
       });
     }
@@ -16923,7 +17681,7 @@ var DataStream = /*#__PURE__*/function () {
     value: function toItemArray() {
       var _context15;
 
-      return map$3(_context15 = _toConsumableArray(this._pairs)).call(_context15, function (pair) {
+      return _mapInstanceProperty(_context15 = _toConsumableArray(this._pairs)).call(_context15, function (pair) {
         return pair[1];
       });
     }
@@ -16951,7 +17709,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "toObjectMap",
     value: function toObjectMap() {
-      var map = create$5(null);
+      var map = _Object$create$1(null);
 
       var _iterator5 = _createForOfIteratorHelper$7(this._pairs),
           _step5;
@@ -16981,7 +17739,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "toMap",
     value: function toMap() {
-      return new map(this._pairs);
+      return new _Map(this._pairs);
     }
     /**
      * Return a set containing all the (unique) ids in this stream.
@@ -16992,7 +17750,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "toIdSet",
     value: function toIdSet() {
-      return new set(this.toIdArray());
+      return new _Set(this.toIdArray());
     }
     /**
      * Return a set containing all the (unique) items in this stream.
@@ -17003,7 +17761,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "toItemSet",
     value: function toItemSet() {
-      return new set(this.toItemArray());
+      return new _Set(this.toItemArray());
     }
     /**
      * Cache the items from this stream.
@@ -17044,7 +17802,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "distinct",
     value: function distinct(callback) {
-      var set$1 = new set();
+      var set = new _Set();
 
       var _iterator6 = _createForOfIteratorHelper$7(this._pairs),
           _step6;
@@ -17055,7 +17813,7 @@ var DataStream = /*#__PURE__*/function () {
               id = _step6$value[0],
               item = _step6$value[1];
 
-          set$1.add(callback(item, id));
+          set.add(callback(item, id));
         }
       } catch (err) {
         _iterator6.e(err);
@@ -17063,7 +17821,7 @@ var DataStream = /*#__PURE__*/function () {
         _iterator6.f();
       }
 
-      return set$1;
+      return set;
     }
     /**
      * Filter the items of the stream.
@@ -17076,10 +17834,10 @@ var DataStream = /*#__PURE__*/function () {
     key: "filter",
     value: function filter(callback) {
       var pairs = this._pairs;
-      return new DataStream(_defineProperty({}, iterator, /*#__PURE__*/regenerator.mark(function _callee() {
+      return new DataStream(_defineProperty({}, _Symbol$iterator2, /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
         var _iterator7, _step7, _step7$value, id, item;
 
-        return regenerator.wrap(function _callee$(_context16) {
+        return _regeneratorRuntime.wrap(function _callee$(_context16) {
           while (1) {
             switch (_context16.prev = _context16.next) {
               case 0:
@@ -17171,10 +17929,10 @@ var DataStream = /*#__PURE__*/function () {
     key: "map",
     value: function map(callback) {
       var pairs = this._pairs;
-      return new DataStream(_defineProperty({}, iterator, /*#__PURE__*/regenerator.mark(function _callee2() {
+      return new DataStream(_defineProperty({}, _Symbol$iterator2, /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
         var _iterator9, _step9, _step9$value, id, item;
 
-        return regenerator.wrap(function _callee2$(_context17) {
+        return _regeneratorRuntime.wrap(function _callee2$(_context17) {
           while (1) {
             switch (_context17.prev = _context17.next) {
               case 0:
@@ -17232,7 +17990,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "max",
     value: function max(callback) {
-      var iter = getIterator(this._pairs);
+      var iter = _getIterator(this._pairs);
 
       var curr = iter.next();
 
@@ -17268,7 +18026,7 @@ var DataStream = /*#__PURE__*/function () {
   }, {
     key: "min",
     value: function min(callback) {
-      var iter = getIterator(this._pairs);
+      var iter = _getIterator(this._pairs);
 
       var curr = iter.next();
 
@@ -17334,13 +18092,13 @@ var DataStream = /*#__PURE__*/function () {
 
   }, {
     key: "sort",
-    value: function sort$1(callback) {
+    value: function sort(callback) {
       var _this2 = this;
 
-      return new DataStream(_defineProperty({}, iterator, function () {
+      return new DataStream(_defineProperty({}, _Symbol$iterator2, function () {
         var _context18;
 
-        return getIterator(sort(_context18 = _toConsumableArray(_this2._pairs)).call(_context18, function (_ref, _ref2) {
+        return _getIterator(_sortInstanceProperty(_context18 = _toConsumableArray(_this2._pairs)).call(_context18, function (_ref, _ref2) {
           var _ref3 = _slicedToArray(_ref, 2),
               idA = _ref3[0],
               itemA = _ref3[1];
@@ -17469,13 +18227,13 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
     _defineProperty(_assertThisInitialized(_this3), "_queue", null);
 
-    if (data && !isArray$2(data)) {
+    if (data && !_Array$isArray(data)) {
       options = data;
       data = [];
     }
 
     _this3._options = options || {};
-    _this3._data = new map(); // map with data indexed by id
+    _this3._data = new _Map(); // map with data indexed by id
 
     _this3.length = 0; // number of items in the DataSet
 
@@ -17568,13 +18326,13 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var addedIds = [];
       var id;
 
-      if (isArray$2(data)) {
+      if (_Array$isArray(data)) {
         // Array
-        var idsToAdd = map$3(data).call(data, function (d) {
+        var idsToAdd = _mapInstanceProperty(data).call(data, function (d) {
           return d[_this4._idProp];
         });
 
-        if (some(idsToAdd).call(idsToAdd, function (id) {
+        if (_someInstanceProperty(idsToAdd).call(idsToAdd, function (id) {
           return _this4._data.has(id);
         })) {
           throw new Error("A duplicate id was found in the parameter array.");
@@ -17652,7 +18410,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         if (origId != null && _this5._data.has(origId)) {
           var fullItem = item; // it has an id, therefore it is a fullitem
 
-          var oldItem = assign$2({}, _this5._data.get(origId)); // update item
+          var oldItem = _Object$assign({}, _this5._data.get(origId)); // update item
 
 
           var id = _this5._updateItem(fullItem);
@@ -17668,7 +18426,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         }
       };
 
-      if (isArray$2(data)) {
+      if (_Array$isArray(data)) {
         // Array
         for (var i = 0, len = data.length; i < len; i++) {
           if (data[i] && _typeof(data[i]) === "object") {
@@ -17706,7 +18464,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         this._trigger("update", props, senderId);
       }
 
-      return concat(addedIds).call(addedIds, updatedIds);
+      return _concatInstanceProperty(addedIds).call(addedIds, updatedIds);
     }
     /**
      * Update existing items. When an item does not exist, an error will be thrown.
@@ -17749,11 +18507,11 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var _context19,
           _this6 = this;
 
-      if (!isArray$2(data)) {
+      if (!_Array$isArray(data)) {
         data = [data];
       }
 
-      var updateEventData = map$3(_context19 = map$3(data).call(data, function (update) {
+      var updateEventData = _mapInstanceProperty(_context19 = _mapInstanceProperty(data).call(data, function (update) {
         var oldData = _this6._data.get(update[_this6._idProp]);
 
         if (oldData == null) {
@@ -17781,13 +18539,13 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
       if (updateEventData.length) {
         var props = {
-          items: map$3(updateEventData).call(updateEventData, function (value) {
+          items: _mapInstanceProperty(updateEventData).call(updateEventData, function (value) {
             return value.id;
           }),
-          oldData: map$3(updateEventData).call(updateEventData, function (value) {
+          oldData: _mapInstanceProperty(updateEventData).call(updateEventData, function (value) {
             return value.oldData;
           }),
-          data: map$3(updateEventData).call(updateEventData, function (value) {
+          data: _mapInstanceProperty(updateEventData).call(updateEventData, function (value) {
             return value.updatedData;
           })
         }; // TODO: remove deprecated property 'data' some day
@@ -17820,7 +18578,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         // get(id [, options])
         id = first;
         options = second;
-      } else if (isArray$2(first)) {
+      } else if (_Array$isArray(first)) {
         // get(ids [, options])
         ids = first;
         options = second;
@@ -17843,7 +18601,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       // }
       // build options
 
-      var filter$1 = options && filter(options);
+      var filter = options && _filterInstanceProperty(options);
 
       var items = [];
       var item = undefined;
@@ -17854,7 +18612,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         // return a single item
         item = this._data.get(id);
 
-        if (item && filter$1 && !filter$1(item)) {
+        if (item && filter && !filter(item)) {
           item = undefined;
         }
       } else if (ids != null) {
@@ -17862,7 +18620,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         for (var i = 0, len = ids.length; i < len; i++) {
           item = this._data.get(ids[i]);
 
-          if (item != null && (!filter$1 || filter$1(item))) {
+          if (item != null && (!filter || filter(item))) {
             items.push(item);
           }
         }
@@ -17870,13 +18628,13 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         var _context20;
 
         // return all items
-        itemIds = _toConsumableArray(keys(_context20 = this._data).call(_context20));
+        itemIds = _toConsumableArray(_keysInstanceProperty(_context20 = this._data).call(_context20));
 
         for (var _i = 0, _len2 = itemIds.length; _i < _len2; _i++) {
           itemId = itemIds[_i];
           item = this._data.get(itemId);
 
-          if (item != null && (!filter$1 || filter$1(item))) {
+          if (item != null && (!filter || filter(item))) {
             items.push(item);
           }
         }
@@ -17932,15 +18690,15 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
     value: function getIds(options) {
       var data = this._data;
 
-      var filter$1 = options && filter(options);
+      var filter = options && _filterInstanceProperty(options);
 
       var order = options && options.order;
 
-      var itemIds = _toConsumableArray(keys(data).call(data));
+      var itemIds = _toConsumableArray(_keysInstanceProperty(data).call(data));
 
       var ids = [];
 
-      if (filter$1) {
+      if (filter) {
         // get filtered items
         if (order) {
           // create ordered list
@@ -17951,7 +18709,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
             var item = this._data.get(id);
 
-            if (item != null && filter$1(item)) {
+            if (item != null && filter(item)) {
               items.push(item);
             }
           }
@@ -17968,7 +18726,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
             var _item2 = this._data.get(_id3);
 
-            if (_item2 != null && filter$1(_item2)) {
+            if (_item2 != null && filter(_item2)) {
               ids.push(_item2[this._idProp]);
             }
           }
@@ -18018,11 +18776,11 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
   }, {
     key: "forEach",
     value: function forEach(callback, options) {
-      var filter$1 = options && filter(options);
+      var filter = options && _filterInstanceProperty(options);
 
       var data = this._data;
 
-      var itemIds = _toConsumableArray(keys(data).call(data));
+      var itemIds = _toConsumableArray(_keysInstanceProperty(data).call(data));
 
       if (options && options.order) {
         // execute forEach on ordered list
@@ -18040,7 +18798,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
           var _item4 = this._data.get(_id6);
 
-          if (_item4 != null && (!filter$1 || filter$1(_item4))) {
+          if (_item4 != null && (!filter || filter(_item4))) {
             callback(_item4, _id6);
           }
         }
@@ -18051,12 +18809,12 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
   }, {
     key: "map",
     value: function map(callback, options) {
-      var filter$1 = options && filter(options);
+      var filter = options && _filterInstanceProperty(options);
 
       var mappedItems = [];
       var data = this._data;
 
-      var itemIds = _toConsumableArray(keys(data).call(data)); // convert and filter items
+      var itemIds = _toConsumableArray(_keysInstanceProperty(data).call(data)); // convert and filter items
 
 
       for (var i = 0, len = itemIds.length; i < len; i++) {
@@ -18064,7 +18822,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
 
         var item = this._data.get(id);
 
-        if (item != null && (!filter$1 || filter$1(item))) {
+        if (item != null && (!filter || filter(item))) {
           mappedItems.push(callback(item, id));
         }
       } // order items
@@ -18095,9 +18853,9 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         return item;
       }
 
-      return reduce(_context21 = isArray$2(fields) ? // Use the supplied array
+      return _reduceInstanceProperty(_context21 = _Array$isArray(fields) ? // Use the supplied array
       fields : // Use the keys of the supplied object
-      keys$4(fields)).call(_context21, function (filteredItem, field) {
+      _Object$keys(fields)).call(_context21, function (filteredItem, field) {
         filteredItem[field] = item[field];
         return filteredItem;
       }, {});
@@ -18117,7 +18875,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         // order by provided field name
         var name = order; // field name
 
-        sort(items).call(items, function (a, b) {
+        _sortInstanceProperty(items).call(items, function (a, b) {
           // @TODO: How to treat missing properties?
           var av = a[name];
           var bv = b[name];
@@ -18125,7 +18883,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
         });
       } else if (typeof order === "function") {
         // order by sort function
-        sort(items).call(items, order);
+        _sortInstanceProperty(items).call(items, order);
       } else {
         // TODO: extend order by an Object {field:string, direction:string}
         //       where direction can be 'asc' or 'desc'
@@ -18165,7 +18923,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var removedIds = [];
       var removedItems = []; // force everything to be an array for simplicity
 
-      var ids = isArray$2(id) ? id : [id];
+      var ids = _Array$isArray(id) ? id : [id];
 
       for (var i = 0, len = ids.length; i < len; i++) {
         var item = this._remove(ids[i]);
@@ -18235,7 +18993,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
     value: function clear(senderId) {
       var _context22;
 
-      var ids = _toConsumableArray(keys(_context22 = this._data).call(_context22));
+      var ids = _toConsumableArray(_keysInstanceProperty(_context22 = this._data).call(_context22));
 
       var items = [];
 
@@ -18269,7 +19027,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var max = null;
       var maxField = null;
 
-      var _iterator11 = _createForOfIteratorHelper$7(values(_context23 = this._data).call(_context23)),
+      var _iterator11 = _createForOfIteratorHelper$7(_valuesInstanceProperty(_context23 = this._data).call(_context23)),
           _step11;
 
       try {
@@ -18305,7 +19063,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var min = null;
       var minField = null;
 
-      var _iterator12 = _createForOfIteratorHelper$7(values(_context24 = this._data).call(_context24)),
+      var _iterator12 = _createForOfIteratorHelper$7(_valuesInstanceProperty(_context24 = this._data).call(_context24)),
           _step12;
 
       try {
@@ -18338,7 +19096,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
     value: function distinct(prop) {
       var data = this._data;
 
-      var itemIds = _toConsumableArray(keys(data).call(data));
+      var itemIds = _toConsumableArray(_keysInstanceProperty(data).call(data));
 
       var values = [];
       var count = 0;
@@ -18401,7 +19159,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       var id = update[this._idProp];
 
       if (id == null) {
-        throw new Error("Cannot update item: item has no id (item: " + stringify$1(update) + ")");
+        throw new Error("Cannot update item: item has no id (item: " + _JSON$stringify(update) + ")");
       }
 
       var item = this._data.get(id);
@@ -18422,10 +19180,10 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
     value: function stream(ids) {
       if (ids) {
         var data = this._data;
-        return new DataStream(_defineProperty({}, iterator, /*#__PURE__*/regenerator.mark(function _callee3() {
+        return new DataStream(_defineProperty({}, _Symbol$iterator2, /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
           var _iterator13, _step13, id, item;
 
-          return regenerator.wrap(function _callee3$(_context25) {
+          return _regeneratorRuntime.wrap(function _callee3$(_context25) {
             while (1) {
               switch (_context25.prev = _context25.next) {
                 case 0:
@@ -18482,7 +19240,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
       } else {
         var _context26;
 
-        return new DataStream(_defineProperty({}, iterator, bind$6(_context26 = entries(this._data)).call(_context26, this._data)));
+        return new DataStream(_defineProperty({}, _Symbol$iterator2, _bindInstanceProperty(_context26 = _entriesInstanceProperty(this._data)).call(_context26, this._data)));
       }
     }
   }]);
@@ -18562,12 +19320,12 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
 
     _defineProperty(_assertThisInitialized(_this7), "_data", void 0);
 
-    _defineProperty(_assertThisInitialized(_this7), "_ids", new set());
+    _defineProperty(_assertThisInitialized(_this7), "_ids", new _Set());
 
     _defineProperty(_assertThisInitialized(_this7), "_options", void 0);
 
     _this7._options = options || {};
-    _this7._listener = bind$6(_context27 = _this7._onEvent).call(_context27, _assertThisInitialized(_this7));
+    _this7._listener = _bindInstanceProperty(_context27 = _this7._onEvent).call(_context27, _assertThisInitialized(_this7));
 
     _this7.setData(data);
 
@@ -18607,7 +19365,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
 
 
         var ids = this._data.getIds({
-          filter: filter(this._options)
+          filter: _filterInstanceProperty(this._options)
         });
 
         var items = this._data.get(ids);
@@ -18626,7 +19384,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
         this._data = data; // trigger an add of all added items
 
         var _ids = this._data.getIds({
-          filter: filter(this._options)
+          filter: _filterInstanceProperty(this._options)
         });
 
         for (var i = 0, len = _ids.length; i < len; i++) {
@@ -18658,7 +19416,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
     key: "refresh",
     value: function refresh() {
       var ids = this._data.getIds({
-        filter: filter(this._options)
+        filter: _filterInstanceProperty(this._options)
       });
 
       var oldIds = _toConsumableArray(this._ids);
@@ -18727,7 +19485,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
       var ids = null;
       var options;
 
-      if (isId(first) || isArray$2(first)) {
+      if (isId(first) || _Array$isArray(first)) {
         ids = first;
         options = second;
       } else {
@@ -18735,12 +19493,12 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
       } // extend the options with the default options and provided options
 
 
-      var viewOptions = assign$2({}, this._options, options); // create a combined filter method when needed
+      var viewOptions = _Object$assign({}, this._options, options); // create a combined filter method when needed
 
 
-      var thisFilter = filter(this._options);
+      var thisFilter = _filterInstanceProperty(this._options);
 
-      var optionsFilter = options && filter(options);
+      var optionsFilter = options && _filterInstanceProperty(options);
 
       if (thisFilter && optionsFilter) {
         viewOptions.filter = function (item) {
@@ -18760,25 +19518,25 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
     key: "getIds",
     value: function getIds(options) {
       if (this._data.length) {
-        var defaultFilter = filter(this._options);
+        var defaultFilter = _filterInstanceProperty(this._options);
 
-        var optionsFilter = options != null ? filter(options) : null;
-        var filter$1;
+        var optionsFilter = options != null ? _filterInstanceProperty(options) : null;
+        var filter;
 
         if (optionsFilter) {
           if (defaultFilter) {
-            filter$1 = function filter(item) {
+            filter = function filter(item) {
               return defaultFilter(item) && optionsFilter(item);
             };
           } else {
-            filter$1 = optionsFilter;
+            filter = optionsFilter;
           }
         } else {
-          filter$1 = defaultFilter;
+          filter = defaultFilter;
         }
 
         return this._data.getIds({
-          filter: filter$1,
+          filter: filter,
           order: options && options.order
         });
       } else {
@@ -18793,26 +19551,26 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
       if (this._data) {
         var _context28;
 
-        var defaultFilter = filter(this._options);
+        var defaultFilter = _filterInstanceProperty(this._options);
 
-        var optionsFilter = options && filter(options);
+        var optionsFilter = options && _filterInstanceProperty(options);
 
-        var filter$1;
+        var filter;
 
         if (optionsFilter) {
           if (defaultFilter) {
-            filter$1 = function filter(item) {
+            filter = function filter(item) {
               return defaultFilter(item) && optionsFilter(item);
             };
           } else {
-            filter$1 = optionsFilter;
+            filter = optionsFilter;
           }
         } else {
-          filter$1 = defaultFilter;
+          filter = defaultFilter;
         }
 
-        forEach$2(_context28 = this._data).call(_context28, callback, {
-          filter: filter$1,
+        _forEachInstanceProperty(_context28 = this._data).call(_context28, callback, {
+          filter: filter,
           order: options && options.order
         });
       }
@@ -18825,26 +19583,26 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
       if (this._data) {
         var _context29;
 
-        var defaultFilter = filter(this._options);
+        var defaultFilter = _filterInstanceProperty(this._options);
 
-        var optionsFilter = options && filter(options);
+        var optionsFilter = options && _filterInstanceProperty(options);
 
-        var filter$1;
+        var filter;
 
         if (optionsFilter) {
           if (defaultFilter) {
-            filter$1 = function filter(item) {
+            filter = function filter(item) {
               return defaultFilter(item) && optionsFilter(item);
             };
           } else {
-            filter$1 = optionsFilter;
+            filter = optionsFilter;
           }
         } else {
-          filter$1 = defaultFilter;
+          filter = defaultFilter;
         }
 
-        return map$3(_context29 = this._data).call(_context29, callback, {
-          filter: filter$1,
+        return _mapInstanceProperty(_context29 = this._data).call(_context29, callback, {
+          filter: filter,
           order: options && options.order
         });
       } else {
@@ -18865,7 +19623,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
     value: function stream(ids) {
       var _context30;
 
-      return this._data.stream(ids || _defineProperty({}, iterator, bind$6(_context30 = keys(this._ids)).call(_context30, this._ids)));
+      return this._data.stream(ids || _defineProperty({}, _Symbol$iterator2, _bindInstanceProperty(_context30 = _keysInstanceProperty(this._ids)).call(_context30, this._ids)));
     }
     /**
      * Render the instance unusable prior to garbage collection.
@@ -18896,14 +19654,14 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
         configurable: false
       };
 
-      var _iterator14 = _createForOfIteratorHelper$7(ownKeys$5(DataView.prototype)),
+      var _iterator14 = _createForOfIteratorHelper$7(_Reflect$ownKeys(DataView.prototype)),
           _step14;
 
       try {
         for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
           var key = _step14.value;
 
-          defineProperty$6(this, key, replacement);
+          _Object$defineProperty$1(this, key, replacement);
         }
       } catch (err) {
         _iterator14.e(err);
@@ -19033,7 +19791,7 @@ var DataView = /*#__PURE__*/function (_DataSetPart2) {
 
 
 function isDataSetLike(idProp, v) {
-  return _typeof(v) === "object" && v !== null && idProp === v.idProp && typeof v.add === "function" && typeof v.clear === "function" && typeof v.distinct === "function" && typeof forEach$2(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof map$3(v) === "function" && typeof v.max === "function" && typeof v.min === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.remove === "function" && typeof v.setOptions === "function" && typeof v.stream === "function" && typeof v.update === "function" && typeof v.updateOnly === "function";
+  return _typeof(v) === "object" && v !== null && idProp === v.idProp && typeof v.add === "function" && typeof v.clear === "function" && typeof v.distinct === "function" && typeof _forEachInstanceProperty(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof _mapInstanceProperty(v) === "function" && typeof v.max === "function" && typeof v.min === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.remove === "function" && typeof v.setOptions === "function" && typeof v.stream === "function" && typeof v.update === "function" && typeof v.updateOnly === "function";
 }
 /**
  * Check that given value is compatible with Vis Data View interface.
@@ -19045,7 +19803,7 @@ function isDataSetLike(idProp, v) {
 
 
 function isDataViewLike(idProp, v) {
-  return _typeof(v) === "object" && v !== null && idProp === v.idProp && typeof forEach$2(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof map$3(v) === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.stream === "function" && isDataSetLike(idProp, v.getDataSet());
+  return _typeof(v) === "object" && v !== null && idProp === v.idProp && typeof _forEachInstanceProperty(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof _mapInstanceProperty(v) === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.stream === "function" && isDataSetLike(idProp, v.getDataSet());
 }
 
 var index = /*#__PURE__*/Object.freeze({
@@ -19059,6 +19817,8 @@ var index = /*#__PURE__*/Object.freeze({
 	isDataSetLike: isDataSetLike,
 	isDataViewLike: isDataViewLike
 });
+
+var _parseFloat$3 = {exports: {}};
 
 var global$2 = global$P;
 var fails$1 = fails$t;
@@ -19099,11 +19859,17 @@ var _parseFloat$2 = path$5.parseFloat;
 var parent$9 = _parseFloat$2;
 var _parseFloat$1 = parent$9;
 
-var _parseFloat = _parseFloat$1;
+(function (module) {
+  module.exports = _parseFloat$1;
+})(_parseFloat$3);
+
+var _parseFloat = /*@__PURE__*/getDefaultExportFromCjs(_parseFloat$3.exports);
+
+var getOwnPropertyNames$3 = {exports: {}};
 
 var $$3 = _export;
 var fails = fails$t;
-var getOwnPropertyNames$3 = objectGetOwnPropertyNamesExternal.f; // eslint-disable-next-line es/no-object-getownpropertynames -- required for testing
+var getOwnPropertyNames$2 = objectGetOwnPropertyNamesExternal.f; // eslint-disable-next-line es/no-object-getownpropertynames -- required for testing
 
 var FAILS_ON_PRIMITIVES = fails(function () {
   return !Object.getOwnPropertyNames(1);
@@ -19115,20 +19881,24 @@ $$3({
   stat: true,
   forced: FAILS_ON_PRIMITIVES
 }, {
-  getOwnPropertyNames: getOwnPropertyNames$3
+  getOwnPropertyNames: getOwnPropertyNames$2
 });
 
 var path$4 = path$y;
 var Object$1 = path$4.Object;
 
-var getOwnPropertyNames$2 = function getOwnPropertyNames(it) {
+var getOwnPropertyNames$1 = function getOwnPropertyNames(it) {
   return Object$1.getOwnPropertyNames(it);
 };
 
-var parent$8 = getOwnPropertyNames$2;
-var getOwnPropertyNames$1 = parent$8;
+var parent$8 = getOwnPropertyNames$1;
+var getOwnPropertyNames = parent$8;
 
-var getOwnPropertyNames = getOwnPropertyNames$1;
+(function (module) {
+  module.exports = getOwnPropertyNames;
+})(getOwnPropertyNames$3);
+
+var _Object$getOwnPropertyNames = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyNames$3.exports);
 
 /**
  * Helper functions for components
@@ -19165,7 +19935,7 @@ function choosify(subOption, pile) {
   if (typeof chosen === "boolean") {
     value = chosen;
   } else if (_typeof(chosen) === "object") {
-    if (indexOf(allowed).call(allowed, subOption) === -1) {
+    if (_indexOfInstanceProperty(allowed).call(allowed, subOption) === -1) {
       throw new Error("choosify: subOption '" + subOption + "' should be one of " + "'" + allowed.join("', '") + "'");
     }
 
@@ -19342,7 +20112,7 @@ var LabelAccumulator = /*#__PURE__*/function () {
 
       var result = this.measureText(tmpText, mod);
 
-      var block = assign$2({}, values(result));
+      var block = _Object$assign({}, _valuesInstanceProperty(result));
 
       block.text = text;
       block.width = result.width;
@@ -19481,7 +20251,7 @@ var LabelAccumulator = /*#__PURE__*/function () {
 
         var tmpLine = {};
 
-        assign$2(tmpLine, line);
+        _Object$assign(tmpLine, line);
 
         tmpLine.blocks = [];
         var firstEmptyBlock = void 0;
@@ -20159,7 +20929,7 @@ var LabelSplitter = /*#__PURE__*/function () {
       var w = 0;
 
       while (w < words.length) {
-        if (this.overMaxWidth(slice(words).call(words, 0, w))) break;
+        if (this.overMaxWidth(_sliceInstanceProperty(words).call(words, 0, w))) break;
         w++;
       }
 
@@ -20202,9 +20972,9 @@ var LabelSplitter = /*#__PURE__*/function () {
           var word = words[0]; // Break the word to the largest part that fits the line
 
           var x = this.getLongestFitWord(word);
-          this.lines.newLine(slice(word).call(word, 0, x), mod); // Adjust the word, so that the rest will be done next iteration
+          this.lines.newLine(_sliceInstanceProperty(word).call(word, 0, x), mod); // Adjust the word, so that the rest will be done next iteration
 
-          words[0] = slice(word).call(word, x);
+          words[0] = _sliceInstanceProperty(word).call(word, x);
         } else {
           // skip any space that is replaced by a newline
           var newW = w;
@@ -20215,7 +20985,7 @@ var LabelSplitter = /*#__PURE__*/function () {
             newW++;
           }
 
-          var text = slice(words).call(words, 0, w).join("");
+          var text = _sliceInstanceProperty(words).call(words, 0, w).join("");
 
           if (w == words.length && appendLast) {
             this.lines.append(text, mod);
@@ -20224,7 +20994,7 @@ var LabelSplitter = /*#__PURE__*/function () {
           } // Adjust the word, so that the rest will be done next iteration
 
 
-          words = slice(words).call(words, newW);
+          words = _sliceInstanceProperty(words).call(words, newW);
         }
       }
     }
@@ -20511,7 +21281,7 @@ var Label = /*#__PURE__*/function () {
 
           if (Object.prototype.hasOwnProperty.call(ret, name)) return; // Keep first value we encounter
 
-          if (indexOf(multiFontStyle).call(multiFontStyle, name) !== -1) {
+          if (_indexOfInstanceProperty(multiFontStyle).call(multiFontStyle, name) !== -1) {
             // Skip multi-font properties but we do need the structure
             ret[name] = {};
           } else {
@@ -21322,7 +22092,7 @@ var NodeBase = /*#__PURE__*/function () {
 
       this.enableShadow(ctx, values); // draw the background
 
-      fill(ctx).call(ctx); // disable shadows for other elements.
+      _fillInstanceProperty(ctx).call(ctx); // disable shadows for other elements.
 
 
       this.disableShadow(ctx, values);
@@ -21428,9 +22198,9 @@ var NodeBase = /*#__PURE__*/function () {
   return NodeBase;
 }();
 
-function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$s(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$s(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$s() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Box Node/Cluster shape.
  *
@@ -21541,9 +22311,9 @@ var Box$1 = /*#__PURE__*/function (_NodeBase) {
   return Box;
 }(NodeBase);
 
-function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$r(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$r(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$r() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * NOTE: This is a bad base class
  *
@@ -21799,9 +22569,9 @@ var CircleImageBase = /*#__PURE__*/function (_NodeBase) {
   return CircleImageBase;
 }(NodeBase);
 
-function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$q(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$q(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$q() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Circle Node/Cluster shape.
  *
@@ -21909,9 +22679,9 @@ var Circle$1 = /*#__PURE__*/function (_CircleImageBase) {
   return Circle;
 }(CircleImageBase);
 
-function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$p(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$p(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$p() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A CircularImage Node/Cluster shape.
  *
@@ -22061,9 +22831,9 @@ var CircularImage = /*#__PURE__*/function (_CircleImageBase) {
   return CircularImage;
 }(CircleImageBase);
 
-function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$o(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$o(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$o() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Base class for constructing Node/Cluster Shapes.
  *
@@ -22190,13 +22960,13 @@ var ShapeBase = /*#__PURE__*/function (_NodeBase) {
   return ShapeBase;
 }(NodeBase);
 
-function ownKeys$3(object, enumerableOnly) { var keys = keys$4(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); enumerableOnly && (symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$3(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor$1(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? forEach$2(_context = ownKeys$3(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : getOwnPropertyDescriptors ? defineProperties(target, getOwnPropertyDescriptors(source)) : forEach$2(_context2 = ownKeys$3(Object(source))).call(_context2, function (key) { defineProperty$6(target, key, getOwnPropertyDescriptor$3(source, key)); }); } return target; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys$3(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys$3(Object(source))).call(_context2, function (key) { _Object$defineProperty$1(target, key, _Object$getOwnPropertyDescriptor$1(source, key)); }); } return target; }
 
-function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$n(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$n(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$n() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A CustomShape Node/Cluster shape.
  *
@@ -22297,9 +23067,9 @@ var CustomShape = /*#__PURE__*/function (_ShapeBase) {
   return CustomShape;
 }(ShapeBase);
 
-function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$m(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$m(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$m() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Database Node/Cluster shape.
  *
@@ -22385,9 +23155,9 @@ var Database = /*#__PURE__*/function (_NodeBase) {
   return Database;
 }(NodeBase);
 
-function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$l(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$l(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$l() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Diamond Node/Cluster shape.
  *
@@ -22443,9 +23213,9 @@ var Diamond$1 = /*#__PURE__*/function (_ShapeBase) {
   return Diamond;
 }(ShapeBase);
 
-function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$k(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$k(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$k() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Dot Node/Cluster shape.
  *
@@ -22504,9 +23274,9 @@ var Dot = /*#__PURE__*/function (_ShapeBase) {
   return Dot;
 }(ShapeBase);
 
-function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$j(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$j(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$j() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Am Ellipse Node/Cluster shape.
  *
@@ -22596,9 +23366,9 @@ var Ellipse = /*#__PURE__*/function (_NodeBase) {
   return Ellipse;
 }(NodeBase);
 
-function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$i(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$i(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$i() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * An icon replacement for the default Node shape.
  *
@@ -22752,9 +23522,9 @@ var Icon = /*#__PURE__*/function (_NodeBase) {
   return Icon;
 }(NodeBase);
 
-function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$h(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$h(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$h() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * An image-based replacement for the default Node shape.
  *
@@ -22860,7 +23630,7 @@ var Image$2 = /*#__PURE__*/function (_CircleImageBase) {
 
         ctx.rect(this.left - 0.5 * ctx.lineWidth, this.top - 0.5 * ctx.lineWidth, this.width + ctx.lineWidth, this.height + ctx.lineWidth);
 
-        fill(ctx).call(ctx);
+        _fillInstanceProperty(ctx).call(ctx);
 
         this.performStroke(ctx, values);
         ctx.closePath();
@@ -22920,9 +23690,9 @@ var Image$2 = /*#__PURE__*/function (_CircleImageBase) {
   return Image;
 }(CircleImageBase);
 
-function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$g(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$g(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$g() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Square Node/Cluster shape.
  *
@@ -22978,9 +23748,9 @@ var Square = /*#__PURE__*/function (_ShapeBase) {
   return Square;
 }(ShapeBase);
 
-function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$f(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$f(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$f() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Hexagon Node/Cluster shape.
  *
@@ -23036,9 +23806,9 @@ var Hexagon = /*#__PURE__*/function (_ShapeBase) {
   return Hexagon;
 }(ShapeBase);
 
-function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$e(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$e(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$e() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Star Node/Cluster shape.
  *
@@ -23094,9 +23864,9 @@ var Star = /*#__PURE__*/function (_ShapeBase) {
   return Star;
 }(ShapeBase);
 
-function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$d(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$d(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$d() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A text-based replacement for the default Node shape.
  *
@@ -23182,9 +23952,9 @@ var Text = /*#__PURE__*/function (_NodeBase) {
   return Text;
 }(NodeBase);
 
-function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$c(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$c(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$c() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Triangle Node/Cluster shape.
  *
@@ -23240,9 +24010,9 @@ var Triangle$1 = /*#__PURE__*/function (_ShapeBase) {
   return Triangle;
 }(ShapeBase);
 
-function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$b(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$b(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$b() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A downward facing Triangle Node/Cluster shape.
  *
@@ -23298,9 +24068,9 @@ var TriangleDown = /*#__PURE__*/function (_ShapeBase) {
   return TriangleDown;
 }(ShapeBase);
 
-function ownKeys$2(object, enumerableOnly) { var keys = keys$4(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); enumerableOnly && (symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$2(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor$1(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var _context5, _context6; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? forEach$2(_context5 = ownKeys$2(Object(source), !0)).call(_context5, function (key) { _defineProperty(target, key, source[key]); }) : getOwnPropertyDescriptors ? defineProperties(target, getOwnPropertyDescriptors(source)) : forEach$2(_context6 = ownKeys$2(Object(source))).call(_context6, function (key) { defineProperty$6(target, key, getOwnPropertyDescriptor$3(source, key)); }); } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var _context5, _context6; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context5 = ownKeys$2(Object(source), !0)).call(_context5, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context6 = ownKeys$2(Object(source))).call(_context6, function (key) { _Object$defineProperty$1(target, key, _Object$getOwnPropertyDescriptor$1(source, key)); }); } return target; }
 /**
  * A node. A node can be connected to other nodes via one or multiple edges.
  */
@@ -23364,7 +24134,7 @@ var Node = /*#__PURE__*/function () {
     value: function attachEdge(edge) {
       var _context;
 
-      if (indexOf(_context = this.edges).call(_context, edge) === -1) {
+      if (_indexOfInstanceProperty(_context = this.edges).call(_context, edge) === -1) {
         this.edges.push(edge);
       }
     }
@@ -23379,12 +24149,12 @@ var Node = /*#__PURE__*/function () {
     value: function detachEdge(edge) {
       var _context2;
 
-      var index = indexOf(_context2 = this.edges).call(_context2, edge);
+      var index = _indexOfInstanceProperty(_context2 = this.edges).call(_context2, edge);
 
       if (index != -1) {
         var _context3;
 
-        splice$1(_context3 = this.edges).call(_context3, index, 1);
+        _spliceInstanceProperty(_context3 = this.edges).call(_context3, index, 1);
       }
     }
     /**
@@ -23986,7 +24756,7 @@ var Node = /*#__PURE__*/function () {
       } // Skip any new option to avoid them being overridden by the group options.
 
 
-      var skipProperties = filter(_context4 = getOwnPropertyNames(newOptions)).call(_context4, function (p) {
+      var skipProperties = _filterInstanceProperty(_context4 = _Object$getOwnPropertyNames(newOptions)).call(_context4, function (p) {
         return newOptions[p] != null;
       }); // Always skip merging group font options into parent; these are required to be distinct for labels
 
@@ -24092,9 +24862,9 @@ var Node = /*#__PURE__*/function () {
   return Node;
 }();
 
-function _createForOfIteratorHelper$6(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$6(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$6(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$6(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = slice(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
+function _unsupportedIterableToArray$6(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$6(o, minLen); var n = _sliceInstanceProperty(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$6(o, minLen); }
 
 function _arrayLikeToArray$6(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
@@ -24119,7 +24889,7 @@ var NodesHandler = /*#__PURE__*/function () {
     this.groups = groups;
     this.layoutEngine = layoutEngine; // create the node API in the body container
 
-    this.body.functions.createNode = bind$6(_context = this.create).call(_context, this);
+    this.body.functions.createNode = _bindInstanceProperty(_context = this.create).call(_context, this);
     this.nodesListeners = {
       add: function add(event, params) {
         _this.add(params.items);
@@ -24282,8 +25052,8 @@ var NodesHandler = /*#__PURE__*/function () {
           _this2 = this;
 
       // refresh the nodes. Used when reverting from hierarchical layout
-      this.body.emitter.on("refreshNodes", bind$6(_context2 = this.refresh).call(_context2, this));
-      this.body.emitter.on("refresh", bind$6(_context3 = this.refresh).call(_context3, this));
+      this.body.emitter.on("refreshNodes", _bindInstanceProperty(_context2 = this.refresh).call(_context2, this));
+      this.body.emitter.on("refresh", _bindInstanceProperty(_context3 = this.refresh).call(_context3, this));
       this.body.emitter.on("destroy", function () {
         forEach$1(_this2.nodesListeners, function (callback, event) {
           if (_this2.body.data.nodes) _this2.body.data.nodes.off(event, callback);
@@ -24308,7 +25078,7 @@ var NodesHandler = /*#__PURE__*/function () {
         // if you set opacity in Node.parseOptions it overwrites group opacity.
 
         if (options.opacity !== undefined) {
-          if (isNan(options.opacity) || !_isFinite(options.opacity) || options.opacity < 0 || options.opacity > 1) {
+          if (_Number$isNaN(options.opacity) || !_Number$isFinite(options.opacity) || options.opacity < 0 || options.opacity > 1) {
             console.error("Invalid option for node opacity. Value must be between 0 and 1, found: " + options.opacity);
           } else {
             this.options.opacity = options.opacity;
@@ -24326,8 +25096,8 @@ var NodesHandler = /*#__PURE__*/function () {
 
 
         if (typeof options.font !== "undefined" || typeof options.widthConstraint !== "undefined" || typeof options.heightConstraint !== "undefined") {
-          for (var _i = 0, _Object$keys = keys$4(this.body.nodes); _i < _Object$keys.length; _i++) {
-            var _nodeId = _Object$keys[_i];
+          for (var _i = 0, _Object$keys$1 = _Object$keys(this.body.nodes); _i < _Object$keys$1.length; _i++) {
+            var _nodeId = _Object$keys$1[_i];
 
             this.body.nodes[_nodeId].updateLabelModule();
 
@@ -24366,7 +25136,7 @@ var NodesHandler = /*#__PURE__*/function () {
 
       if (isDataViewLike("id", nodes)) {
         this.body.data.nodes = nodes;
-      } else if (isArray$2(nodes)) {
+      } else if (_Array$isArray(nodes)) {
         this.body.data.nodes = new DataSet();
         this.body.data.nodes.add(nodes);
       } else if (!nodes) {
@@ -24466,7 +25236,7 @@ var NodesHandler = /*#__PURE__*/function () {
         // Check for any changes which should trigger a layout recalculation
         // For now, this is just 'level' for hierarchical layout
         // Assumption: old and new data arranged in same order; at time of writing, this holds.
-        dataChanged = some(changedData).call(changedData, function (newValue, index) {
+        dataChanged = _someInstanceProperty(changedData).call(changedData, function (newValue, index) {
           var oldValue = oldData[index];
           return oldValue && oldValue.level !== newValue.level;
         });
@@ -24553,7 +25323,7 @@ var NodesHandler = /*#__PURE__*/function () {
       var dataArray = {};
 
       if (ids !== undefined) {
-        if (isArray$2(ids) === true) {
+        if (_Array$isArray(ids) === true) {
           for (var i = 0; i < ids.length; i++) {
             if (this.body.nodes[ids[i]] !== undefined) {
               var node = this.body.nodes[ids[i]];
@@ -24739,7 +25509,7 @@ var NodesHandler = /*#__PURE__*/function () {
         this.body.nodes[nodeId].x = Number(x);
         this.body.nodes[nodeId].y = Number(y);
 
-        setTimeout$1(function () {
+        _setTimeout(function () {
           _this4.body.emitter.emit("startSimulation");
         }, 0);
       } else {
@@ -24750,6 +25520,8 @@ var NodesHandler = /*#__PURE__*/function () {
 
   return NodesHandler;
 }();
+
+var get$5 = {exports: {}};
 
 var hasOwn$1 = hasOwnProperty_1;
 
@@ -24766,7 +25538,7 @@ var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
 var getPrototypeOf = objectGetPrototypeOf; // `Reflect.get` method
 // https://tc39.es/ecma262/#sec-reflect.get
 
-function get$5(target, propertyKey
+function get$4(target, propertyKey
 /* , receiver */
 ) {
   var receiver = arguments.length < 3 ? target : arguments[2];
@@ -24774,37 +25546,47 @@ function get$5(target, propertyKey
   if (anObject$1(target) === receiver) return target[propertyKey];
   descriptor = getOwnPropertyDescriptorModule.f(target, propertyKey);
   if (descriptor) return isDataDescriptor(descriptor) ? descriptor.value : descriptor.get === undefined ? undefined : call(descriptor.get, receiver);
-  if (isObject$2(prototype = getPrototypeOf(target))) return get$5(prototype, propertyKey, receiver);
+  if (isObject$2(prototype = getPrototypeOf(target))) return get$4(prototype, propertyKey, receiver);
 }
 
 $$2({
   target: 'Reflect',
   stat: true
 }, {
-  get: get$5
+  get: get$4
 });
 
 var path$3 = path$y;
-var get$4 = path$3.Reflect.get;
+var get$3 = path$3.Reflect.get;
 
-var parent$7 = get$4;
-var get$3 = parent$7;
+var parent$7 = get$3;
+var get$2 = parent$7;
 
-var parent$6 = get$3;
-var get$2 = parent$6;
+var parent$6 = get$2;
+var get$1 = parent$6;
 
-var parent$5 = get$2;
-var get$1 = parent$5;
+var parent$5 = get$1;
+var get = parent$5;
 
-var get = get$1;
+(function (module) {
+  module.exports = get;
+})(get$5);
 
-var parent$4 = getOwnPropertyDescriptor$4;
-var getOwnPropertyDescriptor$2 = parent$4;
+var _Reflect$get = /*@__PURE__*/getDefaultExportFromCjs(get$5.exports);
 
-var parent$3 = getOwnPropertyDescriptor$2;
-var getOwnPropertyDescriptor$1 = parent$3;
+var getOwnPropertyDescriptor$2 = {exports: {}};
 
-var getOwnPropertyDescriptor = getOwnPropertyDescriptor$1;
+var parent$4 = getOwnPropertyDescriptor$3;
+var getOwnPropertyDescriptor$1 = parent$4;
+
+var parent$3 = getOwnPropertyDescriptor$1;
+var getOwnPropertyDescriptor = parent$3;
+
+(function (module) {
+  module.exports = getOwnPropertyDescriptor;
+})(getOwnPropertyDescriptor$2);
+
+var _Object$getOwnPropertyDescriptor = /*@__PURE__*/getDefaultExportFromCjs(getOwnPropertyDescriptor$2.exports);
 
 function _superPropBase(object, property) {
   while (!Object.prototype.hasOwnProperty.call(object, property)) {
@@ -24816,14 +25598,14 @@ function _superPropBase(object, property) {
 }
 
 function _get() {
-  if (typeof Reflect !== "undefined" && get) {
-    _get = get;
+  if (typeof Reflect !== "undefined" && _Reflect$get) {
+    _get = _Reflect$get;
   } else {
     _get = function _get(target, property, receiver) {
       var base = _superPropBase(target, property);
       if (!base) return;
 
-      var desc = getOwnPropertyDescriptor(base, property);
+      var desc = _Object$getOwnPropertyDescriptor(base, property);
 
       if (desc.get) {
         return desc.get.call(arguments.length < 3 ? target : receiver);
@@ -24835,6 +25617,8 @@ function _get() {
 
   return _get.apply(this, arguments);
 }
+
+var hypot$2 = {exports: {}};
 
 var $$1 = _export; // eslint-disable-next-line es/no-math-hypot -- required for testing
 
@@ -24877,16 +25661,20 @@ $$1({
 });
 
 var path$2 = path$y;
-var hypot$2 = path$2.Math.hypot;
+var hypot$1 = path$2.Math.hypot;
 
-var parent$2 = hypot$2;
-var hypot$1 = parent$2;
+var parent$2 = hypot$1;
+var hypot = parent$2;
 
-var hypot = hypot$1;
+(function (module) {
+  module.exports = hypot;
+})(hypot$2);
 
-function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+var _Math$hypot = /*@__PURE__*/getDefaultExportFromCjs(hypot$2.exports);
 
-function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _createSuper$a(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$a(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct$a() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Common methods for endpoints
  *
@@ -24913,7 +25701,7 @@ var EndPoint = /*#__PURE__*/function () {
      * @param arrowData - The data determining the result of the transformation.
      */
     function transform(points, arrowData) {
-      if (!isArray$2(points)) {
+      if (!_Array$isArray(points)) {
         points = [points];
       }
 
@@ -25549,9 +26337,9 @@ var EndPoints = /*#__PURE__*/function () {
   return EndPoints;
 }();
 
-function ownKeys$1(object, enumerableOnly) { var keys = keys$4(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); enumerableOnly && (symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys$1(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor$1(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? forEach$2(_context2 = ownKeys$1(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : getOwnPropertyDescriptors ? defineProperties(target, getOwnPropertyDescriptors(source)) : forEach$2(_context3 = ownKeys$1(Object(source))).call(_context3, function (key) { defineProperty$6(target, key, getOwnPropertyDescriptor$3(source, key)); }); } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys$1(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys$1(Object(source))).call(_context3, function (key) { _Object$defineProperty$1(target, key, _Object$getOwnPropertyDescriptor$1(source, key)); }); } return target; }
 /**
  * The Base Class for all edges.
  */
@@ -25663,7 +26451,7 @@ var EdgeBase = /*#__PURE__*/function () {
     key: "_drawDashedLine",
     value: function _drawDashedLine(ctx, values, viaNode, _fromPoint, _toPoint) {
       ctx.lineCap = "round";
-      var pattern = isArray$2(values.dashes) ? values.dashes : [5, 5]; // only firefox and chrome support this method, else we use the legacy one.
+      var pattern = _Array$isArray(values.dashes) ? values.dashes : [5, 5]; // only firefox and chrome support this method, else we use the legacy one.
 
       if (ctx.setLineDash !== undefined) {
         ctx.save(); // set dash settings for chrome or firefox
@@ -25741,7 +26529,7 @@ var EdgeBase = /*#__PURE__*/function () {
       } else {
         var _context;
 
-        var _this$_getCircleData$ = slice(_context = this._getCircleData(ctx)).call(_context, 0, 2),
+        var _this$_getCircleData$ = _sliceInstanceProperty(_context = this._getCircleData(ctx)).call(_context, 0, 2),
             _this$_getCircleData$2 = _slicedToArray(_this$_getCircleData$, 2),
             x = _this$_getCircleData$2[0],
             y = _this$_getCircleData$2[1];
@@ -26089,7 +26877,7 @@ var EdgeBase = /*#__PURE__*/function () {
       // if not connected to itself
 
       if (node1 != node2) {
-        var approximateEdgeLength = hypot(node1.x - node2.x, node1.y - node2.y);
+        var approximateEdgeLength = _Math$hypot(node1.x - node2.x, node1.y - node2.y);
 
         var relativeLength = length / approximateEdgeLength;
 
@@ -26188,7 +26976,7 @@ var EdgeBase = /*#__PURE__*/function () {
         // draw shadow if enabled
         this.enableShadow(ctx, values);
 
-        fill(ctx).call(ctx); // disable shadows for other elements.
+        _fillInstanceProperty(ctx).call(ctx); // disable shadows for other elements.
 
 
         this.disableShadow(ctx, values);
@@ -26268,7 +27056,7 @@ var EdgeBase = /*#__PURE__*/function () {
     value: function setStrokeDashed(ctx, dashes) {
       if (dashes !== false) {
         if (ctx.setLineDash !== undefined) {
-          var pattern = isArray$2(dashes) ? dashes : [5, 5];
+          var pattern = _Array$isArray(dashes) ? dashes : [5, 5];
           ctx.setLineDash(pattern);
         } else {
           console.warn("setLineDash is not supported in this browser. The dashed stroke cannot be used.");
@@ -26286,13 +27074,13 @@ var EdgeBase = /*#__PURE__*/function () {
   return EdgeBase;
 }();
 
-function ownKeys(object, enumerableOnly) { var keys = keys$4(object); if (getOwnPropertySymbols) { var symbols = getOwnPropertySymbols(object); enumerableOnly && (symbols = filter(symbols).call(symbols, function (sym) { return getOwnPropertyDescriptor$3(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor$1(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? forEach$2(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : getOwnPropertyDescriptors ? defineProperties(target, getOwnPropertyDescriptors(source)) : forEach$2(_context2 = ownKeys(Object(source))).call(_context2, function (key) { defineProperty$6(target, key, getOwnPropertyDescriptor$3(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty$1(target, key, _Object$getOwnPropertyDescriptor$1(source, key)); }); } return target; }
 
-function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$9(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$9(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$9() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * The Base Class for all Bezier edges.
  * Bezier curves are used to model smooth gradual curves in paths between nodes.
@@ -26474,9 +27262,9 @@ var BezierEdgeBase = /*#__PURE__*/function (_EdgeBase) {
   return BezierEdgeBase;
 }(EdgeBase);
 
-function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$8(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$8(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$8() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
  * curves in paths between nodes. The Dynamic piece refers to how the curve
@@ -26698,9 +27486,9 @@ var BezierEdgeDynamic = /*#__PURE__*/function (_BezierEdgeBase) {
   return BezierEdgeDynamic;
 }(BezierEdgeBase);
 
-function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$7(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$7(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$7() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
@@ -26941,9 +27729,9 @@ var BezierEdgeStatic = /*#__PURE__*/function (_BezierEdgeBase) {
   return BezierEdgeStatic;
 }(BezierEdgeBase);
 
-function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$6(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$6(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$6() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
  * smooth gradual curves in paths between nodes.
@@ -27021,9 +27809,9 @@ var CubicBezierEdgeBase = /*#__PURE__*/function (_BezierEdgeBase) {
   return CubicBezierEdgeBase;
 }(BezierEdgeBase);
 
-function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$5(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$5(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$5() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
@@ -27145,9 +27933,9 @@ var CubicBezierEdge = /*#__PURE__*/function (_CubicBezierEdgeBase) {
   return CubicBezierEdge;
 }(CubicBezierEdgeBase);
 
-function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$4(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$4(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$4() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Straight Edge.
  */
@@ -27984,7 +28772,7 @@ var Edge = /*#__PURE__*/function () {
       selectiveDeepExtend(fields, parentOptions, newOptions, allowDeletion); // Only use endPointOffset values (from and to) if it's valid values
 
       if (newOptions.endPointOffset !== undefined && newOptions.endPointOffset.from !== undefined) {
-        if (_isFinite(newOptions.endPointOffset.from)) {
+        if (_Number$isFinite(newOptions.endPointOffset.from)) {
           parentOptions.endPointOffset.from = newOptions.endPointOffset.from;
         } else {
           parentOptions.endPointOffset.from = globalOptions.endPointOffset.from !== undefined ? globalOptions.endPointOffset.from : 0;
@@ -27993,7 +28781,7 @@ var Edge = /*#__PURE__*/function () {
       }
 
       if (newOptions.endPointOffset !== undefined && newOptions.endPointOffset.to !== undefined) {
-        if (_isFinite(newOptions.endPointOffset.to)) {
+        if (_Number$isFinite(newOptions.endPointOffset.to)) {
           parentOptions.endPointOffset.to = newOptions.endPointOffset.to;
         } else {
           parentOptions.endPointOffset.to = globalOptions.endPointOffset.to !== undefined ? globalOptions.endPointOffset.to : 0;
@@ -28015,7 +28803,7 @@ var Edge = /*#__PURE__*/function () {
       if (newOptions.dashes !== undefined && newOptions.dashes !== null) {
         parentOptions.dashes = newOptions.dashes;
       } else if (allowDeletion === true && newOptions.dashes === null) {
-        parentOptions.dashes = create$5(globalOptions.dashes); // this sets the pointer of the option back to the global option.
+        parentOptions.dashes = _Object$create$1(globalOptions.dashes); // this sets the pointer of the option back to the global option.
       } // set the scaling newOptions
 
 
@@ -28030,25 +28818,25 @@ var Edge = /*#__PURE__*/function () {
 
         mergeOptions(parentOptions.scaling, newOptions.scaling, "label", globalOptions.scaling);
       } else if (allowDeletion === true && newOptions.scaling === null) {
-        parentOptions.scaling = create$5(globalOptions.scaling); // this sets the pointer of the option back to the global option.
+        parentOptions.scaling = _Object$create$1(globalOptions.scaling); // this sets the pointer of the option back to the global option.
       } // handle multiple input cases for arrows
 
 
       if (newOptions.arrows !== undefined && newOptions.arrows !== null) {
         if (typeof newOptions.arrows === "string") {
           var arrows = newOptions.arrows.toLowerCase();
-          parentOptions.arrows.to.enabled = indexOf(arrows).call(arrows, "to") != -1;
-          parentOptions.arrows.middle.enabled = indexOf(arrows).call(arrows, "middle") != -1;
-          parentOptions.arrows.from.enabled = indexOf(arrows).call(arrows, "from") != -1;
+          parentOptions.arrows.to.enabled = _indexOfInstanceProperty(arrows).call(arrows, "to") != -1;
+          parentOptions.arrows.middle.enabled = _indexOfInstanceProperty(arrows).call(arrows, "middle") != -1;
+          parentOptions.arrows.from.enabled = _indexOfInstanceProperty(arrows).call(arrows, "from") != -1;
         } else if (_typeof(newOptions.arrows) === "object") {
           mergeOptions(parentOptions.arrows, newOptions.arrows, "to", globalOptions.arrows);
           mergeOptions(parentOptions.arrows, newOptions.arrows, "middle", globalOptions.arrows);
           mergeOptions(parentOptions.arrows, newOptions.arrows, "from", globalOptions.arrows);
         } else {
-          throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + stringify$1(newOptions.arrows));
+          throw new Error("The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" + _JSON$stringify(newOptions.arrows));
         }
       } else if (allowDeletion === true && newOptions.arrows === null) {
-        parentOptions.arrows = create$5(globalOptions.arrows); // this sets the pointer of the option back to the global option.
+        parentOptions.arrows = _Object$create$1(globalOptions.arrows); // this sets the pointer of the option back to the global option.
       } // handle multiple input cases for color
 
 
@@ -28154,7 +28942,7 @@ var EdgesHandler = /*#__PURE__*/function () {
     this.images = images;
     this.groups = groups; // create the edge API in the body container
 
-    this.body.functions.createEdge = bind$6(_context = this.create).call(_context, this);
+    this.body.functions.createEdge = _bindInstanceProperty(_context = this.create).call(_context, this);
     this.edgesListeners = {
       add: function add(event, params) {
         _this.add(params.items);
@@ -28355,8 +29143,8 @@ var EdgesHandler = /*#__PURE__*/function () {
         _this2.reconnectEdges();
       }); // refresh the edges. Used when reverting from hierarchical layout
 
-      this.body.emitter.on("refreshEdges", bind$6(_context2 = this.refresh).call(_context2, this));
-      this.body.emitter.on("refresh", bind$6(_context3 = this.refresh).call(_context3, this));
+      this.body.emitter.on("refreshEdges", _bindInstanceProperty(_context2 = this.refresh).call(_context2, this));
+      this.body.emitter.on("refresh", _bindInstanceProperty(_context3 = this.refresh).call(_context3, this));
       this.body.emitter.on("destroy", function () {
         forEach$1(_this2.edgesListeners, function (callback, event) {
           if (_this2.body.data.edges) _this2.body.data.edges.off(event, callback);
@@ -28423,7 +29211,7 @@ var EdgesHandler = /*#__PURE__*/function () {
 
       if (isDataViewLike("id", edges)) {
         this.body.data.edges = edges;
-      } else if (isArray$2(edges)) {
+      } else if (_Array$isArray(edges)) {
         this.body.data.edges = new DataSet();
         this.body.data.edges.add(edges);
       } else if (!edges) {
@@ -28697,7 +29485,7 @@ var EdgesHandler = /*#__PURE__*/function () {
       var edges = this.body.edges;
       var addIds = [];
 
-      forEach$2(edgesData).call(edgesData, function (edgeData, edgeId) {
+      _forEachInstanceProperty(edgesData).call(edgesData, function (edgeData, edgeId) {
         var edge = edges[edgeId];
 
         if (edge === undefined) {
@@ -29716,9 +30504,9 @@ var CentralGravitySolver = /*#__PURE__*/function () {
   return CentralGravitySolver;
 }();
 
-function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$3(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$3(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$3() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * @augments BarnesHutSolver
  */
@@ -29780,9 +30568,9 @@ var ForceAtlas2BasedRepulsionSolver = /*#__PURE__*/function (_BarnesHutSolver) {
   return ForceAtlas2BasedRepulsionSolver;
 }(BarnesHutSolver);
 
-function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$2(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$2(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$2() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * @augments CentralGravitySolver
  */
@@ -29921,7 +30709,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       }
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.timestep = 0.5;
     this.layoutFailed = false;
@@ -30014,11 +30802,11 @@ var PhysicsEngine = /*#__PURE__*/function () {
           var wind = this.options.wind;
 
           if (wind) {
-            if (typeof wind.x !== "number" || isNan(wind.x)) {
+            if (typeof wind.x !== "number" || _Number$isNaN(wind.x)) {
               wind.x = 0;
             }
 
-            if (typeof wind.y !== "number" || isNan(wind.y)) {
+            if (typeof wind.y !== "number" || _Number$isNaN(wind.y)) {
               wind.y = 0;
             }
           } // set the timestep
@@ -30103,7 +30891,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
         if (this.viewFunction === undefined) {
           var _context;
 
-          this.viewFunction = bind$6(_context = this.simulationStep).call(_context, this);
+          this.viewFunction = _bindInstanceProperty(_context = this.simulationStep).call(_context, this);
           this.body.emitter.on("initRedraw", this.viewFunction);
           this.body.emitter.emit("_startRendering");
         }
@@ -30145,10 +30933,10 @@ var PhysicsEngine = /*#__PURE__*/function () {
     key: "simulationStep",
     value: function simulationStep() {
       // check if the physics have settled
-      var startTime = now$1();
+      var startTime = _Date$now();
 
       this.physicsTick();
-      var physicsTime = now$1() - startTime; // run double speed if it is a little graph
+      var physicsTime = _Date$now() - startTime; // run double speed if it is a little graph
 
       if ((physicsTime < 0.4 * this.simulationInterval || this.runDoubleSpeed === true) && this.stabilized === false) {
         this.physicsTick(); // this makes sure there is no jitter. The decision is taken once to run it at double speed.
@@ -30175,7 +30963,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       var amountOfIterations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.stabilizationIterations;
 
       if (this.stabilizationIterations > 1 || this.startedStabilization === true) {
-        setTimeout$1(function () {
+        _setTimeout(function () {
           _this2.body.emitter.emit("stabilized", {
             iterations: amountOfIterations
           });
@@ -30336,7 +31124,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
   }, {
     key: "revert",
     value: function revert() {
-      var nodeIds = keys$4(this.previousStates);
+      var nodeIds = _Object$keys(this.previousStates);
 
       var nodes = this.body.nodes;
       var velocities = this.physicsBody.velocities;
@@ -30581,7 +31369,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
 
       this.stabilizationIterations = 0;
 
-      setTimeout$1(function () {
+      _setTimeout(function () {
         return _this3._stabilizationBatch();
       }, 0);
     }
@@ -30638,7 +31426,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
       if (running()) {
         var _context2;
 
-        setTimeout$1(bind$6(_context2 = this._stabilizationBatch).call(_context2, this), 0);
+        _setTimeout(_bindInstanceProperty(_context2 = this._stabilizationBatch).call(_context2, this), 0);
       } else {
         this._finalizeStabilization();
       }
@@ -30715,7 +31503,7 @@ var PhysicsEngine = /*#__PURE__*/function () {
           length: arrowSize
         });
 
-        fill(ctx).call(ctx);
+        _fillInstanceProperty(ctx).call(ctx);
       }
     }
   }]);
@@ -30887,9 +31675,9 @@ var NetworkUtil = /*#__PURE__*/function () {
   return NetworkUtil;
 }();
 
-function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * A Cluster is a special Node that allows a group of Nodes positioned closely together
  * to be represented by a single Cluster Node.
@@ -30966,7 +31754,7 @@ var Cluster = /*#__PURE__*/function (_Node) {
 
           // Assumption: a clustered edge can only be present in a single clustering edge
           // Not tested here
-          var index = indexOf(_context = parentClusterEdge.clusteringEdgeReplacingIds).call(_context, clusterEdge.id);
+          var index = _indexOfInstanceProperty(_context = parentClusterEdge.clusteringEdgeReplacingIds).call(_context, clusterEdge.id);
 
           if (index === -1) return;
           forEach$1(clusterEdge.clusteringEdgeReplacingIds, function (srcId) {
@@ -30975,7 +31763,7 @@ var Cluster = /*#__PURE__*/function (_Node) {
             _this2.body.edges[srcId].edgeReplacedById = parentClusterEdge.id;
           }); // Remove cluster edge from parent cluster edge
 
-          splice$1(_context2 = parentClusterEdge.clusteringEdgeReplacingIds).call(_context2, index, 1);
+          _spliceInstanceProperty(_context2 = parentClusterEdge.clusteringEdgeReplacingIds).call(_context2, index, 1);
         });
       });
       childCluster.edges = [];
@@ -31006,7 +31794,7 @@ var ClusterEngine = /*#__PURE__*/function () {
     this.options = {};
     this.defaultOptions = {};
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.body.emitter.on("_resetData", function () {
       _this.clusteredNodes = {};
@@ -31157,7 +31945,7 @@ var ClusterEngine = /*#__PURE__*/function () {
             } // add to the cluster queue
 
 
-            if (keys$4(childNodesObj).length > 0 && keys$4(childEdgesObj).length > 0 && gatheringSuccessful === true) {
+            if (_Object$keys(childNodesObj).length > 0 && _Object$keys(childEdgesObj).length > 0 && gatheringSuccessful === true) {
               /**
                * Search for cluster data that contains any of the node id's
                *
@@ -31320,7 +32108,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         }
       }
 
-      var childNodeIDs = map$3(_context = keys$4(childNodesObj)).call(_context, function (childNode) {
+      var childNodeIDs = _mapInstanceProperty(_context = _Object$keys(childNodesObj)).call(_context, function (childNode) {
         return childNodesObj[childNode].id;
       });
 
@@ -31331,7 +32119,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         for (var y = 0; y < childNode.edges.length; y++) {
           var childEdge = childNode.edges[y];
 
-          if (indexOf(childNodeIDs).call(childNodeIDs, this._getConnectedId(childEdge, childNode.id)) > -1) {
+          if (_indexOfInstanceProperty(childNodeIDs).call(childNodeIDs, this._getConnectedId(childEdge, childNode.id)) > -1) {
             childEdgesObj[childEdge.id] = childEdge;
           }
         }
@@ -31356,7 +32144,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       var edge, childNodeId, childNode, toId, fromId, otherNodeId; // loop over all child nodes and their edges to find edges going out of the cluster
       // these edges will be replaced by clusterEdges.
 
-      var childKeys = keys$4(childNodesObj);
+      var childKeys = _Object$keys(childNodesObj);
 
       var createEdges = [];
 
@@ -31504,12 +32292,12 @@ var ClusterEngine = /*#__PURE__*/function () {
       } // kill condition: no nodes don't bother
 
 
-      if (keys$4(childNodesObj).length == 0) {
+      if (_Object$keys(childNodesObj).length == 0) {
         return;
       } // allow clusters of 1 if options allow
 
 
-      if (keys$4(childNodesObj).length == 1 && options.clusterNodeProperties.allowSingleNodeCluster != true) {
+      if (_Object$keys(childNodesObj).length == 1 && options.clusterNodeProperties.allowSingleNodeCluster != true) {
         return;
       }
 
@@ -31656,7 +32444,7 @@ var ClusterEngine = /*#__PURE__*/function () {
   }, {
     key: "_getClusterPosition",
     value: function _getClusterPosition(childNodesObj) {
-      var childKeys = keys$4(childNodesObj);
+      var childKeys = _Object$keys(childNodesObj);
 
       var minX = childNodesObj[childKeys[0]].x;
       var maxX = childNodesObj[childKeys[0]].x;
@@ -31707,7 +32495,7 @@ var ClusterEngine = /*#__PURE__*/function () {
 
 
       var stack = this.findNode(clusterNodeId);
-      var parentIndex = indexOf(stack).call(stack, clusterNodeId) - 1;
+      var parentIndex = _indexOfInstanceProperty(stack).call(stack, clusterNodeId) - 1;
 
       if (parentIndex >= 0) {
         // Current cluster is clustered; transfer contained nodes and edges to parent
@@ -31904,7 +32692,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       if (node === undefined) return [];
       stack.push(node.id);
 
-      reverse(stack).call(stack);
+      _reverseInstanceProperty(stack).call(stack);
 
       return stack;
     }
@@ -31984,7 +32772,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         counter++;
       }
 
-      reverse(stack).call(stack);
+      _reverseInstanceProperty(stack).call(stack);
 
       return stack;
     }
@@ -32037,7 +32825,7 @@ var ClusterEngine = /*#__PURE__*/function () {
             var replacingId = replacingIds[i]; // Don't add if already handled
             // TODO: never triggers; find a test-case which does
 
-            if (indexOf(IdsToHandle).call(IdsToHandle, replacingIds) !== -1 || indexOf(doneIds).call(doneIds, replacingIds) !== -1) {
+            if (_indexOfInstanceProperty(IdsToHandle).call(IdsToHandle, replacingIds) !== -1 || _indexOfInstanceProperty(doneIds).call(doneIds, replacingIds) !== -1) {
               continue;
             }
 
@@ -32394,7 +33182,7 @@ var ClusterEngine = /*#__PURE__*/function () {
       //
       // Iterating over keys here, because edges may be removed in the loop
 
-      var ids = keys$4(this.body.edges);
+      var ids = _Object$keys(this.body.edges);
 
       forEach$1(ids, function (edgeId) {
         var edge = _this4.body.edges[edgeId];
@@ -32440,7 +33228,7 @@ var ClusterEngine = /*#__PURE__*/function () {
         var clustersToOpen = []; // Determine the id's of clusters that need opening
 
         eachClusterNode(function (clusterNode) {
-          var numNodes = keys$4(clusterNode.containedNodes).length;
+          var numNodes = _Object$keys(clusterNode.containedNodes).length;
 
           var allowSingle = clusterNode.options.allowSingleNodeCluster === true;
 
@@ -32501,9 +33289,9 @@ var ClusterEngine = /*#__PURE__*/function () {
   return ClusterEngine;
 }();
 
-function _createForOfIteratorHelper$5(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$5(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$5(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$5(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = slice(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
+function _unsupportedIterableToArray$5(o, minLen) { var _context4; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$5(o, minLen); var n = _sliceInstanceProperty(_context4 = Object.prototype.toString.call(o)).call(_context4, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$5(o, minLen); }
 
 function _arrayLikeToArray$5(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
@@ -32577,7 +33365,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
       hideNodesOnDrag: false
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this._determineBrowserMethod();
 
@@ -32603,12 +33391,12 @@ var CanvasRenderer = /*#__PURE__*/function () {
       this.body.emitter.on("zoom", function () {
         _this.zooming = true;
         window.clearTimeout(_this.zoomTimeoutId);
-        _this.zoomTimeoutId = setTimeout$1(function () {
+        _this.zoomTimeoutId = _setTimeout(function () {
           var _context;
 
           _this.zooming = false;
 
-          bind$6(_context = _this._requestRedraw).call(_context, _this)();
+          _bindInstanceProperty(_context = _this._requestRedraw).call(_context, _this)();
         }, 250);
       });
       this.body.emitter.on("_resizeNodes", function () {
@@ -32626,7 +33414,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
         _this.allowRedraw = true;
         _this.redrawRequested = false;
       });
-      this.body.emitter.on("_requestRedraw", bind$6(_context2 = this._requestRedraw).call(_context2, this));
+      this.body.emitter.on("_requestRedraw", _bindInstanceProperty(_context2 = this._requestRedraw).call(_context2, this));
       this.body.emitter.on("_startRendering", function () {
         _this.renderRequests += 1;
         _this.renderingActive = true;
@@ -32698,7 +33486,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
 
       if (this.requiresTimeout === true) {
         // wait given number of milliseconds and perform the animation step function
-        timer = setTimeout$1(callback, delay);
+        timer = _setTimeout(callback, delay);
       } else {
         if (myWindow.requestAnimationFrame) {
           timer = myWindow.requestAnimationFrame(callback);
@@ -32719,7 +33507,7 @@ var CanvasRenderer = /*#__PURE__*/function () {
         if (this.renderTimer === undefined) {
           var _context3;
 
-          this.renderTimer = this._requestNextFrame(bind$6(_context3 = this._renderStep).call(_context3, this), this.simulationInterval);
+          this.renderTimer = this._requestNextFrame(_bindInstanceProperty(_context3 = this._renderStep).call(_context3, this), this.simulationInterval);
         }
       }
     }
@@ -33051,12 +33839,12 @@ var CanvasRenderer = /*#__PURE__*/function () {
         var browserType = navigator.userAgent.toLowerCase();
         this.requiresTimeout = false;
 
-        if (indexOf(browserType).call(browserType, "msie 9.0") != -1) {
+        if (_indexOfInstanceProperty(browserType).call(browserType, "msie 9.0") != -1) {
           // IE 9
           this.requiresTimeout = true;
-        } else if (indexOf(browserType).call(browserType, "safari") != -1) {
+        } else if (_indexOfInstanceProperty(browserType).call(browserType, "safari") != -1) {
           // safari
-          if (indexOf(browserType).call(browserType, "chrome") <= -1) {
+          if (_indexOfInstanceProperty(browserType).call(browserType, "chrome") <= -1) {
             this.requiresTimeout = true;
           }
         }
@@ -33092,10 +33880,16 @@ var CanvasRenderer = /*#__PURE__*/function () {
   return CanvasRenderer;
 }();
 
-var path$1 = path$y;
-var setInterval$1 = path$1.setInterval;
+var setInterval$1 = {exports: {}};
 
-var setInterval = setInterval$1;
+var path$1 = path$y;
+var setInterval = path$1.setInterval;
+
+(function (module) {
+  module.exports = setInterval;
+})(setInterval$1);
+
+var _setInterval = /*@__PURE__*/getDefaultExportFromCjs(setInterval$1.exports);
 
 /**
  * Register a touch event, taking place before a gesture
@@ -33157,7 +33951,7 @@ var Canvas = /*#__PURE__*/function () {
       width: "100%"
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.bindEventListeners();
   }
@@ -33182,7 +33976,7 @@ var Canvas = /*#__PURE__*/function () {
           _this.body.view.translation.y = obj.height * 0.5;
         }
       });
-      this.body.emitter.on("setSize", bind$6(_context = this.setSize).call(_context, this));
+      this.body.emitter.on("setSize", _bindInstanceProperty(_context = this.setSize).call(_context, this));
       this.body.emitter.on("destroy", function () {
         _this.hammerFrame.destroy();
 
@@ -33228,7 +34022,7 @@ var Canvas = /*#__PURE__*/function () {
           });
         } else {
           // IE11, continous polling
-          var resizeTimer = setInterval(function () {
+          var resizeTimer = _setInterval(function () {
             var changed = _this2.setSize();
 
             if (changed === true) {
@@ -33242,7 +34036,7 @@ var Canvas = /*#__PURE__*/function () {
         } // Automatically adapt to changing size of the browser.
 
 
-        var resizeFunction = bind$6(_context2 = this._onResize).call(_context2, this);
+        var resizeFunction = _bindInstanceProperty(_context2 = this._onResize).call(_context2, this);
 
         addEventListener(window, "resize", resizeFunction);
 
@@ -33260,7 +34054,7 @@ var Canvas = /*#__PURE__*/function () {
     value: function _cleanUp() {
       var _context3, _context4, _context5;
 
-      forEach$2(_context3 = reverse(_context4 = splice$1(_context5 = this._cleanupCallbacks).call(_context5, 0)).call(_context4)).call(_context3, function (callback) {
+      _forEachInstanceProperty(_context3 = _reverseInstanceProperty(_context4 = _spliceInstanceProperty(_context5 = this._cleanupCallbacks).call(_context5, 0)).call(_context4)).call(_context3, function (callback) {
         try {
           callback();
         } catch (error) {
@@ -33350,9 +34144,9 @@ var Canvas = /*#__PURE__*/function () {
       if (typeof value === "number") {
         return value + "px";
       } else if (typeof value === "string") {
-        if (indexOf(value).call(value, "%") !== -1 || indexOf(value).call(value, "px") !== -1) {
+        if (_indexOfInstanceProperty(value).call(value, "%") !== -1 || _indexOfInstanceProperty(value).call(value, "px") !== -1) {
           return value;
-        } else if (indexOf(value).call(value, "%") === -1) {
+        } else if (_indexOfInstanceProperty(value).call(value, "%") === -1) {
           return value + "px";
         }
       }
@@ -33719,13 +34513,13 @@ var Canvas = /*#__PURE__*/function () {
  * @returns Options with everything filled in and validated.
  */
 function normalizeFitOptions(rawOptions, allNodeIds) {
-  var options = assign$2({
+  var options = _Object$assign({
     nodes: allNodeIds,
     minZoomLevel: Number.MIN_VALUE,
     maxZoomLevel: 1
   }, rawOptions !== null && rawOptions !== void 0 ? rawOptions : {});
 
-  if (!isArray$2(options.nodes)) {
+  if (!_Array$isArray(options.nodes)) {
     throw new TypeError("Nodes has to be an array of ids.");
   }
 
@@ -33773,11 +34567,11 @@ var View = /*#__PURE__*/function () {
     this.lockedOnNodeOffset = undefined;
     this.touchTime = 0;
     this.viewFunction = undefined;
-    this.body.emitter.on("fit", bind$6(_context = this.fit).call(_context, this));
+    this.body.emitter.on("fit", _bindInstanceProperty(_context = this.fit).call(_context, this));
     this.body.emitter.on("animationFinished", function () {
       _this.body.emitter.emit("_stopRendering");
     });
-    this.body.emitter.on("unlockNode", bind$6(_context2 = this.releaseNode).call(_context2, this));
+    this.body.emitter.on("unlockNode", _bindInstanceProperty(_context2 = this.releaseNode).call(_context2, this));
   }
   /**
    *
@@ -33913,7 +34707,7 @@ var View = /*#__PURE__*/function () {
           // Coerce and verify that x is valid.
           options.offset.x = +options.offset.x;
 
-          if (!_isFinite(options.offset.x)) {
+          if (!_Number$isFinite(options.offset.x)) {
             throw new TypeError('The option "offset.x" has to be a finite number.');
           }
         } else {
@@ -33924,7 +34718,7 @@ var View = /*#__PURE__*/function () {
           // Coerce and verify that y is valid.
           options.offset.y = +options.offset.y;
 
-          if (!_isFinite(options.offset.y)) {
+          if (!_Number$isFinite(options.offset.y)) {
             throw new TypeError('The option "offset.y" has to be a finite number.');
           }
         } else {
@@ -33942,7 +34736,7 @@ var View = /*#__PURE__*/function () {
           // Coerce and verify that x is valid.
           options.position.x = +options.position.x;
 
-          if (!_isFinite(options.position.x)) {
+          if (!_Number$isFinite(options.position.x)) {
             throw new TypeError('The option "position.x" has to be a finite number.');
           }
         } else {
@@ -33953,7 +34747,7 @@ var View = /*#__PURE__*/function () {
           // Coerce and verify that y is valid.
           options.position.y = +options.position.y;
 
-          if (!_isFinite(options.position.y)) {
+          if (!_Number$isFinite(options.position.y)) {
             throw new TypeError('The option "position.y" has to be a finite number.');
           }
         } else {
@@ -34060,7 +34854,7 @@ var View = /*#__PURE__*/function () {
         if (this.lockedOnNodeId != undefined) {
           var _context3;
 
-          this.viewFunction = bind$6(_context3 = this._lockedRedraw).call(_context3, this);
+          this.viewFunction = _bindInstanceProperty(_context3 = this._lockedRedraw).call(_context3, this);
           this.body.emitter.on("initRedraw", this.viewFunction);
         } else {
           this.body.view.scale = this.targetScale;
@@ -34073,7 +34867,7 @@ var View = /*#__PURE__*/function () {
         this.animationSpeed = 1 / (60 * options.animation.duration * 0.001) || 1 / 60; // 60 for 60 seconds, 0.001 for milli's
 
         this.animationEasingFunction = options.animation.easingFunction;
-        this.viewFunction = bind$6(_context4 = this._transitionRedraw).call(_context4, this);
+        this.viewFunction = _bindInstanceProperty(_context4 = this._transitionRedraw).call(_context4, this);
         this.body.emitter.on("initRedraw", this.viewFunction);
         this.body.emitter.emit("_startRendering");
       }
@@ -34145,7 +34939,7 @@ var View = /*#__PURE__*/function () {
         if (this.lockedOnNodeId != undefined) {
           var _context5;
 
-          this.viewFunction = bind$6(_context5 = this._lockedRedraw).call(_context5, this);
+          this.viewFunction = _bindInstanceProperty(_context5 = this._lockedRedraw).call(_context5, this);
           this.body.emitter.on("initRedraw", this.viewFunction);
         }
 
@@ -34592,11 +35386,11 @@ var NavigationHandler = /*#__PURE__*/function () {
         if (navigationDivActions[i] === "_fit") {
           var _context;
 
-          onTouch(hammer, bind$6(_context = this._fit).call(_context, this));
+          onTouch(hammer, _bindInstanceProperty(_context = this._fit).call(_context, this));
         } else {
           var _context2;
 
-          onTouch(hammer, bind$6(_context2 = this.bindToRedraw).call(_context2, this, navigationDivActions[i]));
+          onTouch(hammer, _bindInstanceProperty(_context2 = this.bindToRedraw).call(_context2, this, navigationDivActions[i]));
         }
 
         this.navigationHammers.push(hammer);
@@ -34622,7 +35416,7 @@ var NavigationHandler = /*#__PURE__*/function () {
       if (this.boundFunctions[action] === undefined) {
         var _context3;
 
-        this.boundFunctions[action] = bind$6(_context3 = this[action]).call(_context3, this);
+        this.boundFunctions[action] = _bindInstanceProperty(_context3 = this[action]).call(_context3, this);
         this.body.emitter.on("initRedraw", this.boundFunctions[action]);
         this.body.emitter.emit("_startRendering");
       }
@@ -34797,99 +35591,99 @@ var NavigationHandler = /*#__PURE__*/function () {
         if (this.activated === true) {
           var _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18, _context19, _context20, _context21, _context22, _context23, _context24, _context25, _context26, _context27;
 
-          bind$6(_context4 = this.keycharm).call(_context4, "up", function () {
+          _bindInstanceProperty(_context4 = this.keycharm).call(_context4, "up", function () {
             _this3.bindToRedraw("_moveUp");
           }, "keydown");
 
-          bind$6(_context5 = this.keycharm).call(_context5, "down", function () {
+          _bindInstanceProperty(_context5 = this.keycharm).call(_context5, "down", function () {
             _this3.bindToRedraw("_moveDown");
           }, "keydown");
 
-          bind$6(_context6 = this.keycharm).call(_context6, "left", function () {
+          _bindInstanceProperty(_context6 = this.keycharm).call(_context6, "left", function () {
             _this3.bindToRedraw("_moveLeft");
           }, "keydown");
 
-          bind$6(_context7 = this.keycharm).call(_context7, "right", function () {
+          _bindInstanceProperty(_context7 = this.keycharm).call(_context7, "right", function () {
             _this3.bindToRedraw("_moveRight");
           }, "keydown");
 
-          bind$6(_context8 = this.keycharm).call(_context8, "=", function () {
+          _bindInstanceProperty(_context8 = this.keycharm).call(_context8, "=", function () {
             _this3.bindToRedraw("_zoomIn");
           }, "keydown");
 
-          bind$6(_context9 = this.keycharm).call(_context9, "num+", function () {
+          _bindInstanceProperty(_context9 = this.keycharm).call(_context9, "num+", function () {
             _this3.bindToRedraw("_zoomIn");
           }, "keydown");
 
-          bind$6(_context10 = this.keycharm).call(_context10, "num-", function () {
+          _bindInstanceProperty(_context10 = this.keycharm).call(_context10, "num-", function () {
             _this3.bindToRedraw("_zoomOut");
           }, "keydown");
 
-          bind$6(_context11 = this.keycharm).call(_context11, "-", function () {
+          _bindInstanceProperty(_context11 = this.keycharm).call(_context11, "-", function () {
             _this3.bindToRedraw("_zoomOut");
           }, "keydown");
 
-          bind$6(_context12 = this.keycharm).call(_context12, "[", function () {
+          _bindInstanceProperty(_context12 = this.keycharm).call(_context12, "[", function () {
             _this3.bindToRedraw("_zoomOut");
           }, "keydown");
 
-          bind$6(_context13 = this.keycharm).call(_context13, "]", function () {
+          _bindInstanceProperty(_context13 = this.keycharm).call(_context13, "]", function () {
             _this3.bindToRedraw("_zoomIn");
           }, "keydown");
 
-          bind$6(_context14 = this.keycharm).call(_context14, "pageup", function () {
+          _bindInstanceProperty(_context14 = this.keycharm).call(_context14, "pageup", function () {
             _this3.bindToRedraw("_zoomIn");
           }, "keydown");
 
-          bind$6(_context15 = this.keycharm).call(_context15, "pagedown", function () {
+          _bindInstanceProperty(_context15 = this.keycharm).call(_context15, "pagedown", function () {
             _this3.bindToRedraw("_zoomOut");
           }, "keydown");
 
-          bind$6(_context16 = this.keycharm).call(_context16, "up", function () {
+          _bindInstanceProperty(_context16 = this.keycharm).call(_context16, "up", function () {
             _this3.unbindFromRedraw("_moveUp");
           }, "keyup");
 
-          bind$6(_context17 = this.keycharm).call(_context17, "down", function () {
+          _bindInstanceProperty(_context17 = this.keycharm).call(_context17, "down", function () {
             _this3.unbindFromRedraw("_moveDown");
           }, "keyup");
 
-          bind$6(_context18 = this.keycharm).call(_context18, "left", function () {
+          _bindInstanceProperty(_context18 = this.keycharm).call(_context18, "left", function () {
             _this3.unbindFromRedraw("_moveLeft");
           }, "keyup");
 
-          bind$6(_context19 = this.keycharm).call(_context19, "right", function () {
+          _bindInstanceProperty(_context19 = this.keycharm).call(_context19, "right", function () {
             _this3.unbindFromRedraw("_moveRight");
           }, "keyup");
 
-          bind$6(_context20 = this.keycharm).call(_context20, "=", function () {
+          _bindInstanceProperty(_context20 = this.keycharm).call(_context20, "=", function () {
             _this3.unbindFromRedraw("_zoomIn");
           }, "keyup");
 
-          bind$6(_context21 = this.keycharm).call(_context21, "num+", function () {
+          _bindInstanceProperty(_context21 = this.keycharm).call(_context21, "num+", function () {
             _this3.unbindFromRedraw("_zoomIn");
           }, "keyup");
 
-          bind$6(_context22 = this.keycharm).call(_context22, "num-", function () {
+          _bindInstanceProperty(_context22 = this.keycharm).call(_context22, "num-", function () {
             _this3.unbindFromRedraw("_zoomOut");
           }, "keyup");
 
-          bind$6(_context23 = this.keycharm).call(_context23, "-", function () {
+          _bindInstanceProperty(_context23 = this.keycharm).call(_context23, "-", function () {
             _this3.unbindFromRedraw("_zoomOut");
           }, "keyup");
 
-          bind$6(_context24 = this.keycharm).call(_context24, "[", function () {
+          _bindInstanceProperty(_context24 = this.keycharm).call(_context24, "[", function () {
             _this3.unbindFromRedraw("_zoomOut");
           }, "keyup");
 
-          bind$6(_context25 = this.keycharm).call(_context25, "]", function () {
+          _bindInstanceProperty(_context25 = this.keycharm).call(_context25, "]", function () {
             _this3.unbindFromRedraw("_zoomIn");
           }, "keyup");
 
-          bind$6(_context26 = this.keycharm).call(_context26, "pageup", function () {
+          _bindInstanceProperty(_context26 = this.keycharm).call(_context26, "pageup", function () {
             _this3.unbindFromRedraw("_zoomIn");
           }, "keyup");
 
-          bind$6(_context27 = this.keycharm).call(_context27, "pagedown", function () {
+          _bindInstanceProperty(_context27 = this.keycharm).call(_context27, "pagedown", function () {
             _this3.unbindFromRedraw("_zoomOut");
           }, "keyup");
         }
@@ -34900,9 +35694,9 @@ var NavigationHandler = /*#__PURE__*/function () {
   return NavigationHandler;
 }();
 
-function _createForOfIteratorHelper$4(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$4(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$4(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$4(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = slice(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
+function _unsupportedIterableToArray$4(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$4(o, minLen); var n = _sliceInstanceProperty(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$4(o, minLen); }
 
 function _arrayLikeToArray$4(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
@@ -34925,25 +35719,25 @@ var InteractionHandler = /*#__PURE__*/function () {
     this.selectionHandler = selectionHandler;
     this.navigationHandler = new NavigationHandler(body, canvas); // bind the events from hammer to functions in this object
 
-    this.body.eventListeners.onTap = bind$6(_context = this.onTap).call(_context, this);
-    this.body.eventListeners.onTouch = bind$6(_context2 = this.onTouch).call(_context2, this);
-    this.body.eventListeners.onDoubleTap = bind$6(_context3 = this.onDoubleTap).call(_context3, this);
-    this.body.eventListeners.onHold = bind$6(_context4 = this.onHold).call(_context4, this);
-    this.body.eventListeners.onDragStart = bind$6(_context5 = this.onDragStart).call(_context5, this);
-    this.body.eventListeners.onDrag = bind$6(_context6 = this.onDrag).call(_context6, this);
-    this.body.eventListeners.onDragEnd = bind$6(_context7 = this.onDragEnd).call(_context7, this);
-    this.body.eventListeners.onMouseWheel = bind$6(_context8 = this.onMouseWheel).call(_context8, this);
-    this.body.eventListeners.onPinch = bind$6(_context9 = this.onPinch).call(_context9, this);
-    this.body.eventListeners.onMouseMove = bind$6(_context10 = this.onMouseMove).call(_context10, this);
-    this.body.eventListeners.onRelease = bind$6(_context11 = this.onRelease).call(_context11, this);
-    this.body.eventListeners.onContext = bind$6(_context12 = this.onContext).call(_context12, this);
+    this.body.eventListeners.onTap = _bindInstanceProperty(_context = this.onTap).call(_context, this);
+    this.body.eventListeners.onTouch = _bindInstanceProperty(_context2 = this.onTouch).call(_context2, this);
+    this.body.eventListeners.onDoubleTap = _bindInstanceProperty(_context3 = this.onDoubleTap).call(_context3, this);
+    this.body.eventListeners.onHold = _bindInstanceProperty(_context4 = this.onHold).call(_context4, this);
+    this.body.eventListeners.onDragStart = _bindInstanceProperty(_context5 = this.onDragStart).call(_context5, this);
+    this.body.eventListeners.onDrag = _bindInstanceProperty(_context6 = this.onDrag).call(_context6, this);
+    this.body.eventListeners.onDragEnd = _bindInstanceProperty(_context7 = this.onDragEnd).call(_context7, this);
+    this.body.eventListeners.onMouseWheel = _bindInstanceProperty(_context8 = this.onMouseWheel).call(_context8, this);
+    this.body.eventListeners.onPinch = _bindInstanceProperty(_context9 = this.onPinch).call(_context9, this);
+    this.body.eventListeners.onMouseMove = _bindInstanceProperty(_context10 = this.onMouseMove).call(_context10, this);
+    this.body.eventListeners.onRelease = _bindInstanceProperty(_context11 = this.onRelease).call(_context11, this);
+    this.body.eventListeners.onContext = _bindInstanceProperty(_context12 = this.onContext).call(_context12, this);
     this.touchTime = 0;
     this.drag = {};
     this.pinch = {};
     this.popup = undefined;
     this.popupObj = undefined;
     this.popupTimer = undefined;
-    this.body.functions.getPointer = bind$6(_context13 = this.getPointer).call(_context13, this);
+    this.body.functions.getPointer = _bindInstanceProperty(_context13 = this.getPointer).call(_context13, this);
     this.options = {};
     this.defaultOptions = {
       dragNodes: true,
@@ -34965,7 +35759,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       zoomSpeed: 1
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.bindEventListeners();
   }
@@ -35000,7 +35794,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         mergeOptions(this.options, options, "keyboard");
 
         if (options.tooltip) {
-          assign$2(this.options.tooltip, options.tooltip);
+          _Object$assign(this.options.tooltip, options.tooltip);
 
           if (options.tooltip.color) {
             this.options.tooltip.color = parseColor(options.tooltip.color);
@@ -35157,7 +35951,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         for (var i = 0; i < firstArr.length; i++) {
           var value = firstArr[i];
 
-          if (indexOf(secondArr).call(secondArr, value) === -1) {
+          if (_indexOfInstanceProperty(secondArr).call(secondArr, value) === -1) {
             result.push(value);
           }
         }
@@ -35196,7 +35990,7 @@ var InteractionHandler = /*#__PURE__*/function () {
       var node = this.selectionHandler.getNodeAt(this.drag.pointer);
       this.drag.dragging = true;
       this.drag.selection = [];
-      this.drag.translation = assign$2({}, this.body.view.translation); // copy the object
+      this.drag.translation = _Object$assign({}, this.body.view.translation); // copy the object
 
       this.drag.nodeId = undefined;
 
@@ -35281,7 +36075,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         var deltaX = pointer.x - this.drag.pointer.x;
         var deltaY = pointer.y - this.drag.pointer.y; // update position of all selected nodes
 
-        forEach$2(selection).call(selection, function (selection) {
+        _forEachInstanceProperty(selection).call(selection, function (selection) {
           var node = selection.node; // only move the node if it was not fixed initially
 
           if (selection.xFixed === false) {
@@ -35358,12 +36152,12 @@ var InteractionHandler = /*#__PURE__*/function () {
           maxY: Math.max(selectionBoxPosition.start.y, selectionBoxPosition.end.y)
         };
 
-        var toBeSelectedNodes = filter(_context14 = this.body.nodeIndices).call(_context14, function (nodeId) {
+        var toBeSelectedNodes = _filterInstanceProperty(_context14 = this.body.nodeIndices).call(_context14, function (nodeId) {
           var node = _this3.body.nodes[nodeId];
           return node.x >= selectionBoxPositionMinMax.minX && node.x <= selectionBoxPositionMinMax.maxX && node.y >= selectionBoxPositionMinMax.minY && node.y <= selectionBoxPositionMinMax.maxY;
         });
 
-        forEach$2(toBeSelectedNodes).call(toBeSelectedNodes, function (nodeId) {
+        _forEachInstanceProperty(toBeSelectedNodes).call(toBeSelectedNodes, function (nodeId) {
           return _this3.selectionHandler.selectObject(_this3.body.nodes[nodeId]);
         });
 
@@ -35375,7 +36169,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         var selection = this.drag.selection;
 
         if (selection && selection.length) {
-          forEach$2(selection).call(selection, function (s) {
+          _forEachInstanceProperty(selection).call(selection, function (s) {
             // restore original xFixed and yFixed
             s.node.options.fixed.x = s.xFixed;
             s.node.options.fixed.y = s.yFixed;
@@ -35552,7 +36346,7 @@ var InteractionHandler = /*#__PURE__*/function () {
         }
 
         if (!this.drag.dragging) {
-          this.popupTimer = setTimeout$1(function () {
+          this.popupTimer = _setTimeout(function () {
             return _this4._checkShowPopup(pointer);
           }, this.options.tooltipDelay);
         }
@@ -35706,6 +36500,8 @@ var InteractionHandler = /*#__PURE__*/function () {
 
   return InteractionHandler;
 }();
+
+var weakMap$2 = {exports: {}};
 
 var uncurryThis$1 = functionUncurryThis;
 var redefineAll$1 = redefineAll$3;
@@ -35906,12 +36702,16 @@ if (NATIVE_WEAK_MAP && IS_IE11) {
 }
 
 var path = path$y;
-var weakMap$2 = path.WeakMap;
+var weakMap$1 = path.WeakMap;
 
-var parent$1 = weakMap$2;
-var weakMap$1 = parent$1;
+var parent$1 = weakMap$1;
+var weakMap = parent$1;
 
-var weakMap = weakMap$1;
+(function (module) {
+  module.exports = weakMap;
+})(weakMap$2);
+
+var _WeakMap = /*@__PURE__*/getDefaultExportFromCjs(weakMap$2.exports);
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -35939,9 +36739,9 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
   return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
 }
 
-function _createForOfIteratorHelper$3(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$3(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$3(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$3(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = slice(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
+function _unsupportedIterableToArray$3(o, minLen) { var _context2; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$3(o, minLen); var n = _sliceInstanceProperty(_context2 = Object.prototype.toString.call(o)).call(_context2, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen); }
 
 function _arrayLikeToArray$3(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -35952,7 +36752,7 @@ var _SingleTypeSelectionAccumulator_previousSelection, _SingleTypeSelectionAccum
  */
 
 function diffSets(prev, next) {
-  var diff = new set();
+  var diff = new _Set();
 
   var _iterator = _createForOfIteratorHelper$3(next),
       _step;
@@ -35978,9 +36778,9 @@ var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
   function SingleTypeSelectionAccumulator() {
     _classCallCheck(this, SingleTypeSelectionAccumulator);
 
-    _SingleTypeSelectionAccumulator_previousSelection.set(this, new set());
+    _SingleTypeSelectionAccumulator_previousSelection.set(this, new _Set());
 
-    _SingleTypeSelectionAccumulator_selection.set(this, new set());
+    _SingleTypeSelectionAccumulator_selection.set(this, new _Set());
   }
 
   _createClass(SingleTypeSelectionAccumulator, [{
@@ -36030,8 +36830,8 @@ var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
       return {
         added: _toConsumableArray(diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))),
         deleted: _toConsumableArray(diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))),
-        previous: _toConsumableArray(new set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))),
-        current: _toConsumableArray(new set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")))
+        previous: _toConsumableArray(new _Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))),
+        current: _toConsumableArray(new _Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")))
       };
     }
   }, {
@@ -36041,7 +36841,7 @@ var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
 
       __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_previousSelection, __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), "f");
 
-      __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
+      __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new _Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
 
       var _iterator2 = _createForOfIteratorHelper$3(changes.added),
           _step2;
@@ -36079,7 +36879,7 @@ var SingleTypeSelectionAccumulator = /*#__PURE__*/function () {
   return SingleTypeSelectionAccumulator;
 }();
 
-_SingleTypeSelectionAccumulator_previousSelection = new weakMap(), _SingleTypeSelectionAccumulator_selection = new weakMap();
+_SingleTypeSelectionAccumulator_previousSelection = new _WeakMap(), _SingleTypeSelectionAccumulator_selection = new _WeakMap();
 var SelectionAccumulator = /*#__PURE__*/function () {
   function SelectionAccumulator() {
     var commitHandler = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
@@ -36160,7 +36960,7 @@ var SelectionAccumulator = /*#__PURE__*/function () {
         rest[_key3] = arguments[_key3];
       }
 
-      (_classPrivateFieldGe3 = __classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f")).call.apply(_classPrivateFieldGe3, concat(_context = [this, summary]).call(_context, rest));
+      (_classPrivateFieldGe3 = __classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f")).call.apply(_classPrivateFieldGe3, _concatInstanceProperty(_context = [this, summary]).call(_context, rest));
 
       return summary;
     }
@@ -36168,11 +36968,11 @@ var SelectionAccumulator = /*#__PURE__*/function () {
 
   return SelectionAccumulator;
 }();
-_SelectionAccumulator_nodes = new weakMap(), _SelectionAccumulator_edges = new weakMap(), _SelectionAccumulator_commitHandler = new weakMap();
+_SelectionAccumulator_nodes = new _WeakMap(), _SelectionAccumulator_edges = new _WeakMap(), _SelectionAccumulator_commitHandler = new _WeakMap();
 
-function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray$2(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = slice(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
+function _unsupportedIterableToArray$2(o, minLen) { var _context3; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = _sliceInstanceProperty(_context3 = Object.prototype.toString.call(o)).call(_context3, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 
 function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
@@ -36208,7 +37008,7 @@ var SelectionHandler = /*#__PURE__*/function () {
       hoverConnectedEdges: true
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.body.emitter.on("_dataChanged", function () {
       _this.updateSelection();
@@ -36744,9 +37544,9 @@ var SelectionHandler = /*#__PURE__*/function () {
       }
 
       if (object !== undefined) {
-        var hoveredEdgesCount = keys$4(this.hoverObj.edges).length;
+        var hoveredEdgesCount = _Object$keys(this.hoverObj.edges).length;
 
-        var hoveredNodesCount = keys$4(this.hoverObj.nodes).length;
+        var hoveredNodesCount = _Object$keys(this.hoverObj.nodes).length;
 
         var newOnlyHoveredEdge = object instanceof Edge && hoveredEdgesCount === 0 && hoveredNodesCount === 0;
         var newOnlyHoveredNode = object instanceof Node && hoveredEdgesCount === 0 && hoveredNodesCount === 0;
@@ -36873,7 +37673,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     value: function getSelectedNodeIds() {
       var _context;
 
-      return map$3(_context = this._selectionAccumulator.getNodes()).call(_context, function (node) {
+      return _mapInstanceProperty(_context = this._selectionAccumulator.getNodes()).call(_context, function (node) {
         return node.id;
       });
     }
@@ -36888,7 +37688,7 @@ var SelectionHandler = /*#__PURE__*/function () {
     value: function getSelectedEdgeIds() {
       var _context2;
 
-      return map$3(_context2 = this._selectionAccumulator.getEdges()).call(_context2, function (edge) {
+      return _mapInstanceProperty(_context2 = this._selectionAccumulator.getEdges()).call(_context2, function (edge) {
         return edge.id;
       });
     }
@@ -37077,7 +37877,9 @@ var SelectionHandler = /*#__PURE__*/function () {
   return SelectionHandler;
 }();
 
-var timsort$1 = {};
+var timsort$1 = {exports: {}};
+
+var timsort = {};
 
 /****
  * The MIT License
@@ -37888,13 +38690,17 @@ var timsort$1 = {};
       ts.forceMergeRuns();
     }
   });
+})(timsort);
+
+(function (module) {
+  module.exports = timsort;
 })(timsort$1);
 
-var timsort = timsort$1;
+var TimSort = /*@__PURE__*/getDefaultExportFromCjs(timsort$1.exports);
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !construct) return false; if (construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 /**
  * Interface definition for direction strategy classes.
  *
@@ -38124,7 +38930,7 @@ var VerticalStrategy = /*#__PURE__*/function (_DirectionInterface) {
   }, {
     key: "sort",
     value: function sort(nodeArray) {
-      timsort.sort(nodeArray, function (a, b) {
+      timsort$1.exports.sort(nodeArray, function (a, b) {
         return a.x - b.x;
       });
     }
@@ -38220,7 +39026,7 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
   }, {
     key: "sort",
     value: function sort(nodeArray) {
-      timsort.sort(nodeArray, function (a, b) {
+      timsort$1.exports.sort(nodeArray, function (a, b) {
         return a.y - b.y;
       });
     }
@@ -38244,6 +39050,8 @@ var HorizontalStrategy = /*#__PURE__*/function (_DirectionInterface2) {
   return HorizontalStrategy;
 }(DirectionInterface);
 
+var every$3 = {exports: {}};
+
 var $ = _export;
 var $every = arrayIteration.every;
 var arrayMethodIsStrict = arrayMethodIsStrict$6;
@@ -38263,25 +39071,29 @@ $({
 });
 
 var entryVirtual = entryVirtual$l;
-var every$3 = entryVirtual('Array').every;
+var every$2 = entryVirtual('Array').every;
 
 var isPrototypeOf = objectIsPrototypeOf;
-var method = every$3;
+var method = every$2;
 var ArrayPrototype = Array.prototype;
 
-var every$2 = function (it) {
+var every$1 = function (it) {
   var own = it.every;
   return it === ArrayPrototype || isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.every ? method : own;
 };
 
-var parent = every$2;
-var every$1 = parent;
+var parent = every$1;
+var every = parent;
 
-var every = every$1;
+(function (module) {
+  module.exports = every;
+})(every$3);
 
-function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+var _everyInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(every$3.exports);
 
-function _unsupportedIterableToArray$1(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = slice(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray$1(o, minLen) { var _context9; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = _sliceInstanceProperty(_context9 = Object.prototype.toString.call(o)).call(_context9, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -38293,19 +39105,19 @@ function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) le
  * @returns Populated node levels.
  */
 function fillLevelsByDirectionCyclic(nodes, levels) {
-  var edges = new set();
+  var edges = new _Set();
 
-  forEach$2(nodes).call(nodes, function (node) {
+  _forEachInstanceProperty(nodes).call(nodes, function (node) {
     var _context;
 
-    forEach$2(_context = node.edges).call(_context, function (edge) {
+    _forEachInstanceProperty(_context = node.edges).call(_context, function (edge) {
       if (edge.connected) {
         edges.add(edge);
       }
     });
   });
 
-  forEach$2(edges).call(edges, function (edge) {
+  _forEachInstanceProperty(edges).call(edges, function (edge) {
     var fromId = edge.from.id;
     var toId = edge.to.id;
 
@@ -38333,7 +39145,7 @@ function fillLevelsByDirectionLeaves(nodes) {
   function (node) {
     var _context2, _context3;
 
-    return every(_context2 = filter(_context3 = node.edges // Take only visible nodes into account.
+    return _everyInstanceProperty(_context2 = _filterInstanceProperty(_context3 = node.edges // Take only visible nodes into account.
     ).call(_context3, function (edge) {
       return nodes.has(edge.toId);
     }) // Check that all edges lead to this node (leaf).
@@ -38358,7 +39170,7 @@ function fillLevelsByDirectionRoots(nodes) {
   function (node) {
     var _context4, _context5;
 
-    return every(_context4 = filter(_context5 = node.edges // Take only visible nodes into account.
+    return _everyInstanceProperty(_context4 = _filterInstanceProperty(_context5 = node.edges // Take only visible nodes into account.
     ).call(_context5, function (edge) {
       return nodes.has(edge.toId);
     }) // Check that all edges lead from this node (root).
@@ -38384,7 +39196,7 @@ function fillLevelsByDirectionRoots(nodes) {
 function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, nodes) {
   var _context6;
 
-  var levels = create$5(null); // If acyclic, the graph can be walked through with (most likely way) fewer
+  var levels = _Object$create$1(null); // If acyclic, the graph can be walked through with (most likely way) fewer
   // steps than the number bellow. The exact value isn't too important as long
   // as it's quick to compute (doesn't impact acyclic graphs too much), is
   // higher than the number of steps actually needed (doesn't cut off before
@@ -38392,7 +39204,7 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
   // cyclic graphs).
 
 
-  var limit = reduce(_context6 = _toConsumableArray(values(nodes).call(nodes))).call(_context6, function (acc, node) {
+  var limit = _reduceInstanceProperty(_context6 = _toConsumableArray(_valuesInstanceProperty(nodes).call(nodes))).call(_context6, function (acc, node) {
     return acc + 1 + node.edges.length;
   }, 0);
 
@@ -38430,7 +39242,7 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
 
         var newLevel = levels[node.id] + newLevelDiff;
 
-        forEach$2(_context7 = filter(_context8 = node.edges).call(_context8, function (edge) {
+        _forEachInstanceProperty(_context7 = _filterInstanceProperty(_context8 = node.edges).call(_context8, function (edge) {
           return (// Ignore disconnected edges.
             edge.connected && // Ignore circular edges.
             edge.to !== edge.from && // Ignore edges leading to the node that's currently being processed.
@@ -38800,7 +39612,7 @@ var HierarchicalStatus = /*#__PURE__*/function () {
   }, {
     key: "getLevels",
     value: function getLevels() {
-      return keys$4(this.distributionOrdering);
+      return _Object$keys(this.distributionOrdering);
     }
     /**
      * Add a node to the ordering per level
@@ -38851,7 +39663,7 @@ var LayoutEngine = /*#__PURE__*/function () {
     this.body = body; // Make sure there always is some RNG because the setOptions method won't
     // set it unless there's a seed for it.
 
-    this._resetRNG(Math.random() + ":" + now$1());
+    this._resetRNG(Math.random() + ":" + _Date$now());
 
     this.setPhysics = false;
     this.options = {};
@@ -38877,7 +39689,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       }
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.bindEventListeners();
   }
@@ -39692,7 +40504,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       var minimizeEdgeLengthBottomUp = function minimizeEdgeLengthBottomUp(iterations) {
         var levels = _this3.hierarchical.getLevels();
 
-        levels = reverse(levels).call(levels);
+        levels = _reverseInstanceProperty(levels).call(levels);
 
         for (var i = 0; i < iterations; i++) {
           stillShifting = false;
@@ -39717,7 +40529,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       var shiftBranchesCloserBottomUp = function shiftBranchesCloserBottomUp(iterations) {
         var levels = _this3.hierarchical.getLevels();
 
-        levels = reverse(levels).call(levels);
+        levels = _reverseInstanceProperty(levels).call(levels);
 
         for (var i = 0; i < iterations; i++) {
           stillShifting = false;
@@ -39741,7 +40553,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       var centerAllParentsBottomUp = function centerAllParentsBottomUp() {
         var levels = _this3.hierarchical.getLevels();
 
-        levels = reverse(levels).call(levels);
+        levels = _reverseInstanceProperty(levels).call(levels);
 
         for (var i = 0; i < levels.length; i++) {
           var level = levels[i];
@@ -39876,11 +40688,11 @@ var LayoutEngine = /*#__PURE__*/function () {
           var _context;
 
           // sort nodes in level by position:
-          var nodeArray = keys$4(distribution[level]);
+          var nodeArray = _Object$keys(distribution[level]);
 
           nodeArray = this._indexArrayToNodes(nodeArray);
 
-          sort(_context = this.direction).call(_context, nodeArray);
+          _sortInstanceProperty(_context = this.direction).call(_context, nodeArray);
 
           var handledNodeCount = 0;
 
@@ -39934,7 +40746,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       } // use the positions to order the nodes.
 
 
-      sort(_context2 = this.direction).call(_context2, childNodes); // position the childNodes
+      _sortInstanceProperty(_context2 = this.direction).call(_context2, childNodes); // position the childNodes
 
 
       for (var _i5 = 0; _i5 < childNodes.length; _i5++) {
@@ -40068,7 +40880,7 @@ var LayoutEngine = /*#__PURE__*/function () {
       forEach$1(node.edges, function (edge) {
         var _context3;
 
-        if (indexOf(_context3 = _this4.body.edgeIndices).call(_context3, edge.id) !== -1) {
+        if (_indexOfInstanceProperty(_context3 = _this4.body.edgeIndices).call(_context3, edge.id) !== -1) {
           result.push(edge);
         }
       });
@@ -40101,7 +40913,7 @@ var LayoutEngine = /*#__PURE__*/function () {
         result.push(Number(size));
       });
 
-      sort(timsort).call(timsort, result, function (a, b) {
+      _sortInstanceProperty(TimSort).call(TimSort, result, function (a, b) {
         return b - a;
       });
 
@@ -40188,10 +41000,10 @@ var LayoutEngine = /*#__PURE__*/function () {
       var _context4,
           _this8 = this;
 
-      var nodes = reduce(_context4 = this.body.nodeIndices).call(_context4, function (acc, id) {
+      var nodes = _reduceInstanceProperty(_context4 = this.body.nodeIndices).call(_context4, function (acc, id) {
         acc.set(id, _this8.body.nodes[id]);
         return acc;
-      }, new map());
+      }, new _Map());
 
       if (this.options.hierarchical.shakeTowards === "roots") {
         this.hierarchical.levels = fillLevelsByDirectionRoots(nodes);
@@ -40452,9 +41264,9 @@ var LayoutEngine = /*#__PURE__*/function () {
 var css_248z = "div.vis-network div.vis-manipulation {\n  box-sizing: content-box;\n\n  border-width: 0;\n  border-bottom: 1px;\n  border-style: solid;\n  border-color: #d6d9d8;\n  background: #ffffff; /* Old browsers */\n  background: -moz-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* FF3.6+ */\n  background: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0%, #ffffff),\n    color-stop(48%, #fcfcfc),\n    color-stop(50%, #fafafa),\n    color-stop(100%, #fcfcfc)\n  ); /* Chrome,Safari4+ */\n  background: -webkit-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* Opera 11.10+ */\n  background: -ms-linear-gradient(\n    top,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* IE10+ */\n  background: linear-gradient(\n    to bottom,\n    #ffffff 0%,\n    #fcfcfc 48%,\n    #fafafa 50%,\n    #fcfcfc 100%\n  ); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fcfcfc',GradientType=0 ); /* IE6-9 */\n\n  padding-top: 4px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 28px;\n}\n\ndiv.vis-network div.vis-edit-mode,\ndiv.vis-network button.vis-edit-mode {\n  position: absolute;\n  left: 0;\n  top: 5px;\n  height: 30px;\n}\n\n/* FIXME: shouldn't the vis-close button be a child of the vis-manipulation div? */\n\ndiv.vis-network button.vis-close {\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 30px;\n  height: 30px;\n\n  background-color: transparent;\n  background-position: 20px 3px;\n  background-repeat: no-repeat;\n  background-image: url('data:image/png;base64,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/GMzLdsAADvGaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICAgICAgICAgIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHhtcDpDcmVhdGVEYXRlPjIwMTQtMDItMTRUMTE6NTU6MzUrMDE6MDA8L3htcDpDcmVhdGVEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE0LTAyLTE0VDEyOjA1OjE3KzAxOjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNC0wMi0xNFQxMjowNToxNyswMTowMDwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXBNTTpJbnN0YW5jZUlEPnhtcC5paWQ6NjU0YmM5YmQtMWI2Yi1jYjRhLTllOWQtNWY2MzgxNDVjZjk0PC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD54bXAuZGlkOjk4MmM2MGIwLWUzZjMtMDk0MC04MjU0LTFiZTliNWE0ZTE4MzwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjk4MmM2MGIwLWUzZjMtMDk0MC04MjU0LTFiZTliNWE0ZTE4MzwveG1wTU06T3JpZ2luYWxEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06SGlzdG9yeT4KICAgICAgICAgICAgPHJkZjpTZXE+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmNyZWF0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo5ODJjNjBiMC1lM2YzLTA5NDAtODI1NC0xYmU5YjVhNGUxODM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMTRUMTE6NTU6MzUrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjIxODYxNmM2LTM1MWMtNDI0OS04YWFkLWJkZDQ2ZTczNWE0NDwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0xNFQxMTo1NTozNSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NjU0YmM5YmQtMWI2Yi1jYjRhLTllOWQtNWY2MzgxNDVjZjk0PC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAyLTE0VDEyOjA1OjE3KzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6U2VxPgogICAgICAgICA8L3htcE1NOkhpc3Rvcnk+CiAgICAgICAgIDxkYzpmb3JtYXQ+aW1hZ2UvcG5nPC9kYzpmb3JtYXQ+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDAwMC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjc8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+NzwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+cZUZMwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAA2ElEQVR42gDLADT/AS0tLUQFBQUVFxcXtPHx8fPl5eUNCAgITCkpKesEHx8fGgYGBjH+/v4a+Pj4qgQEBFU6OjodMTExzwQUFBSvEBAQEfX19SD19fVqNDQ0CElJSd/9/f2vAwEBAfrn5+fkBwcHLRYWFgsXFxfz29vbo9LS0uwDDQ0NDfPz81orKysXIyMj+ODg4Avh4eEa/f391gMkJCRYPz8/KUhISOMCAgKh8fHxHRsbGx4UFBQQBDk5OeY7Ozv7CAgItPb29vMEBASaJSUlTQ0NDesDAEwpT0Ko8Ri2AAAAAElFTkSuQmCC');\n  border: none;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network button.vis-close:hover {\n  opacity: 0.6;\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button,\ndiv.vis-network div.vis-edit-mode button.vis-button {\n  float: left;\n  font-family: verdana;\n  font-size: 12px;\n  border: none;\n  box-sizing: content-box;\n  -moz-border-radius: 15px;\n  border-radius: 15px;\n  background-color: transparent;\n  background-position: 0px 0px;\n  background-repeat: no-repeat;\n  height: 24px;\n  margin-left: 10px;\n  cursor: pointer;\n  padding: 0px 8px 0px 8px;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button:hover {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button:active {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button.vis-back {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNTowMTowOSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTU6MDE6MDkrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOmI2YjQwMjVkLTAxNjQtMzU0OC1hOTdlLTQ4ZmYxMWM3NTYzMzwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDpmOWQ3OGY4ZC1lNzY0LTc1NDgtODZiNy1iNmQ1OGMzZDg2OTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTU6MDE6MDkrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOmI2YjQwMjVkLTAxNjQtMzU0OC1hOTdlLTQ4ZmYxMWM3NTYzMzwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNTowMTowOSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOmY5ZDc4ZjhkLWU3NjQtNzU0OC04NmI3LWI2ZDU4YzNkODY5Nzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4jq1U/AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAVTSURBVHjanFVfTFNnFP+d77ve8qeVFbBrpcVgRrCRFikFByLxwSAaE32oRCHD6JMxxhhn8G2RxxH3MsOTbyYsmCAxPMmMMYtkIUYmK60OO0qAK23BFlNob0uh3x7WS5jLZPpLbm6+k/P9zrm5v9855PF4UFhYCABgjIExBgAgIqRSqRIi6gDQRkQ1RGTB3wgR0e8AHgH4Sa/XR/EBiAiJRAJ04cIF5Ofng4g2n0gkUkxENwF0c843LzHGQEQQQkCLExEA9ALotVgsUQAQQmgNQhJCbF5kjCEUCl0moj4t5na7fTU1NUpVVVXUYrEkASAcDhe8efOmxOfzWScmJqoBdBNR99LS0hWz2dynNSSEAF28eBGFhYVgjCEcDn9HRD1EhIMHD3o9Hs9kWVlZAh9BKBQqGB4edr58+dKZ+6JbJpOpBwBWV1fB6+rqIMsyIpHIFcZYL2MMra2tY5cuXRrfuXNnBtvAYDBk3G63oqpqZm5uzgrgSDKZjBoMhueZTAbc5XIhFouVEtFTxhiOHTs2dv78eS8+Efv374+oqpqZnZ21cs5PJJPJPlmWkyynnBuMMTQ0NHi7uro+mVyDx+Pxulwu71ZOlkqlSonoJhGhvb39s8k1nDx50ss5hyRJN9PpdKlERB2aWjSVaEilUvzBgwcORVEs5eXloXPnzk1sV8BkMiUdDofP7/dXZ7PZDilnIhw4cGBeS1pbW2P37t1zBwKBikQiUUREWFhYsHHO0d7evm0Ru90+/+rVq2rO+XGJiJxEhMrKyhgAjI6OWoeHh5tWVla+4JzDZrO9bW5unhwcHGzz+/32np4e+xaDbfoHAMxmc6ijo2O0oqIiJkkSNjY2HBIRmRljMJvNyWfPnln7+/tPMMZQXl6+0NbW9qK2tjYcj8floaEhqKpq+HCkbD3PzMwYBgYG0NXV9UuusFna2kEgELAQEQ4dOvSis7PzN41Ar9dnrl27NqCNkv/C3bt3zy4tLVmICJxzEBFJRBQmorLFxcWCqqqq0Pj4eO3Y2JhbUZTdra2tL2pra8OJRGLHnTt3zkqS9K+huHU4EhHMZnMoGo0W5OIh7nK5jjLGKq1W69vDhw8rRqMxMjc3t2t5eXnX5ORklc/nM+fl5SWnpqa+0uv1K/n5+Ws6nW5NluXNd15e3ppOp1uz2WyzZ86cGQ0Gg6ZAIFCZzWZ/lYjokRDiuN/vt7W0tMw3NTUpbrd78P79++5gMFgRiUTKHj58WMYYQ3V19etTp05tq6Lp6Wkb5xxCiEfc7XZPM8a6FxcXTfX19a/1en2Gcy5qamreNjY2/qGq6joRZe12+9Tp06e3JY/FYgWPHz8+mhvr3/CWlpbk+vp6PmOseWVlBS6XS9GSJUkSdrs93NDQ8Oe+ffvC/8fJIyMjddFo9Esi6pVleVjT2m0A8Hq9zqGhIefnjoknT544A4GAM/eDbxMReFNTE0pKSpKqqsaI6Pj8/LxVVdWM3W6PfCr5xMTE1zllXS0uLn6aSqXAGxsbodPpoNfrn6uqCs75EUVRrJFIZMfevXsXdTrdxseIE4mEPDIyUu/3++tynd8yGo29RIR0Og26fv06ioqKwBgD5xzv3r27zBjrIyJIkgSHwzFZWVmp7NmzJ1ZaWpoAgGg0WqgoSvHMzIw1GAw6tvjhitFo7NPW5fv370Hd3d0oKCgA53zTQMvLy+VCiKuSJH0rSdLmztZytIWv5RPRD0T0Y3Fx8dzWfby6ugopHo//w4mcc8iyPMc5v5FOp7/PZrOdQohWInIC2C2EgBBigYi8Qoifs9lsv06nWyIiaFxagXg8jr8GAGxuIe7LBeWhAAAAAElFTkSuQmCC');\n}\n\ndiv.vis-network div.vis-manipulation div.vis-none:hover {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0);\n  cursor: default;\n}\ndiv.vis-network div.vis-manipulation div.vis-none:active {\n  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0);\n}\ndiv.vis-network div.vis-manipulation div.vis-none {\n  padding: 0px;\n  line-height: 23px;\n}\ndiv.vis-network div.vis-manipulation div.notification {\n  margin: 2px;\n  font-weight: bold;\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button.vis-add {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDo0MDoyOSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6NDA6MjkrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjVkNWIwNmQwLTVmMjAtOGE0NC1hMzIwLWZmMTEzMzQwNDc0YjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo2OWVmYWE1NS01ZTI5LTIzNGUtYTUzMy0xNDkxYjM1NDNmYmE8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6NDA6MjkrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjVkNWIwNmQwLTVmMjAtOGE0NC1hMzIwLWZmMTEzMzQwNDc0Yjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDo0MDoyOSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjY5ZWZhYTU1LTVlMjktMjM0ZS1hNTMzLTE0OTFiMzU0M2ZiYTwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz5WKqp9AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYXSURBVHjafFZtUFTXGX7e9z27sveuMCwYV8ElrA7YSFYHtJUPkaaI0aRqG8wP00zUzljDINNSA/2ROtpO24SxnahlxjYd7SSjmUkymcxYlDhQPzHGisEVp8HwYWCVVVgEsrsuLnL74+5uqTF9Z+7cO/d8PO95zvO851BlZSV0XQcAMDOYGQBARDhX3JRmMDYZwLPMWAzGHACYIgwS46oBNBNwtOL8CwE8EkSEUCgE2rJlC2w2G4go8Zwo/bMDgnoG6gxLfAAAYvPDMCCszKTAMIAGAhrWnf15AAAMwwARIRKJgDZv3gy73Q4iAjPjxIr9VVOMRhbAYKB8zvrO0llrfEsdKwLZek6YAPSFvtSu3GtLawu0ZJ6625SHGBQB1T88t6MxvopgMAjaunUrdF0HM+P4yv27DMYeJmB1RqW3Jnf3tQX2p0L4P9EXuqEd7PmDp+XuMU9sRbvXnnt1TxxACgoKYLVacbzsQDUJGkSATe6qi28uPtzusM6Kxie6NHLGUX3lxVUNX9StPHnn4wy3njuUYcu6n2pNi66avcEXnByP/nv8aiaIyrqz2gO5A9+9FI1GIfn5+WhZdTAdjFMkwMvZOy7uWnTAOz3L4Yk71m3t69fdfTDoUGTBeHTUfiHQ6lo7Z2OXJvpDAChKe+aOCdKRKWxZ2+1qb3yyd3GYmRkQ7GQBVs99wfv6on3eR2k4PdTkDEbH7IuS8/svld/561PJS/pDk1/bzwx94pze7xc5v/H+YPY6r5BAkdrJzODTK46lE6PeYEJt7u+8j+OZwCBiEAgAoNgKJoEQf6PvNvdrXgtZoNhSf7q0KZ3B2AQmVMze0Jmt54S/DcDCVig2NcvEUGxJAE4Pl+YOr0iv6BRSIPAmBeBZAmHlE2sH4p1uhrq1s0MnnEQMBsf8wRASAICQQCCITN1X7/sOuc0kgOVp3/fPs2WHv+coG7gQOJUnLGsUCTxEjPzUohEA+NfIWUdtx0+efzA1kSSkIGyBAQNCKgHAEBAJ3u79U7kiAcWoem/gb5Fd33nrH3kp+SMWtuAB+GllMJxMjCx9QRgA3uiqL5kwHiTlpxb3smlfMDGYGPP1hcMAkJvs8ScpfdJspdj+MK6Pf+5+u29vyb4lR4+BGEziVESAkEpw6Av1OhUpHCz4qOXbzFWz4Ncdj/v/o08Lt92ODDgZDCEFJYoUGH4mzugP92puPTf0pD3H7wvfdFZdqSxnMtWjoGAAmG9fOLxjwesdjT2/XzIQ7ks3sycYMSEwGHNtWf5bkX5NkYCJBxUBXiGV0XHvosOt54Zey33j/K+8P33++vjnbiGJbbLE+J9SANAb6nJ2B79wcUwETAwQQ7fMjPzMvfP8ja87HUIKMOiaAqMZhrGmLdAy78eZrwwsTS0eObTs+IdtgVanxBUExqGbb5VzrIISGIoUXsmqbgEhJldCQWqRf27SvPAn/o8XmgLhZsUkR4ll37mhk3n94Z4OlzY/7NLcYZfm7o1z2zT4vsvUNSXqprBCkmiTFbPX90/fh8GIT2sf+zTPdDMf4dVnNg4z+E0ixsGeBs9jd5ViSgLHjCb/peaR+MD3d4/ZJg2llyuG2Vwy7QWAs8PNnn1f7vkGSGxAzE6mk+kxkx/p/4unffSCR0hAoL1EBCYiPNdWNcwkNQTCR7feWX6g+7f/A7I8rcw/U6UEe0Ndrhc/W7mtL9ztmqlSgstSS/zTJ28dalpOpkRryrwbhwBACgsLMWPGDOT4ll3qyeqAkJTdCF7P/CrUY/GkLL1rE+2hTbSH8+0Lb/WEuhzhyaA905blf9Vd/895WnZwLHrPevir/cvOB1oLYpTtLrm6oYGIMDExAaqtrUVKSgqYGSKCk0WHq5ikkWEWtNL0imv5qUW+RclLRjJsrhBAuH1/QL8R7HR4xy5nescuP23E6hOA6mLv+sb4uTw6Ogqqq6uDpmkQkcStorX4XRcM1FjZ+kvFFjCJKU1WpkNJJUqIMtX1RyLeX3JtQ0JRhmGYZ/L27duRnJycuFGISOJ9pqh5lrB6iYgqGOxRrOaa54DcZmKvkJxk8JHC9rKh+KVhOsD4+Dj+MwADIf8n5m4xGwAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button.vis-edit,\ndiv.vis-network div.vis-edit-mode button.vis-button.vis-edit {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNVQxNDoxMjoyNSswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDVUMTQ6MTI6MjUrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjY5OTM3ZGZjLTJjNzQtYTU0YS05OTIzLTQyMmZhNDNkMjljNDwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDozOWNhNzE5ZC03YzNlLTUyNGEtYmY1NS03NGVmMmM1MzE0YTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDVUMTQ6MTI6MjUrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjY5OTM3ZGZjLTJjNzQtYTU0YS05OTIzLTQyMmZhNDNkMjljNDwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNVQxNDoxMjoyNSswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjM5Y2E3MTlkLTdjM2UtNTI0YS1iZjU1LTc0ZWYyYzUzMTRhNzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4ykninAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYpSURBVHjafFZtTFvnFX7Oea+NudiY2Hwam4CBlgQwXdKREDKUoYg0jbRJ29RJ2VZ1mjRFUxSpA3VTfkzJfkQbS7spU6rtx5Z2UtppScjaHxvLuiatWi2jLEoMIUDCh23g2gbj7+tPuPvhOurawPl1dc99n+c55z33fV46ceIEZFkGADAziAgAQERoe/9ZK4GPM/AcgbsIXAcABCgMvkfAqAa89eDoJyF8LogIqqqChoaGYDAYHr8kItS8uc8iIH6iAa9IkAo5EAQX8pqmgUVBCBggYFgDhv0/GAsBgKZpICJkMhnQ4OAgZFkGEYGZUXmp+0cS+CKBwWA0DVRPOg5Zl2q6zaHyJlnVAMQXVTkwHrUqH0Xsvn+tdQAAMQDgpPLS2MViFY8rkGUZzIzaS/t/xqCzGggtz9e697zsnKhoLUtim4jOq/LE6x7X0nsh16dEZ5a/O3a2SCAOHjwInU6Hujd6ThJ4mCDQ+b2G232v7v6vwarPbQn8MGlMr+X0kpE3Wr5Zt5hL5HPhqYSdQIfKJ+yhxDPKWC6Xg+jt7UXD5b5KBt1kCHS85Ljd8/On3NupfnhFaZj4rWff1B98B1R/hnUmKd36bdtCNl4g0en4edNE/cXwLq8qMTMIPAQwmo/WuHvObA8+9c58k/dKtD0TyZWXN5YGA7ej7epKxspM//7SoNOdWc/Jyq2wiwhDzPxT8cP0jys3VMM7OmL0/77zn4Ydui3b8uiK0jD7RrA77c9Wd57cefPpF+2T6bWsFPWkaiPTCWvTsZpHFU+XrS+8G3AR08F6X+1FJvBxQQzHQOWk2SmrW4FPX/U2LVwPuDZj+fJKl2khPpeyAqA9rzR/YqwuiWXX8taN/CabGkrVuq9YJlkQQDjOAJ5jAhz9Vt9W4N5/rNp8I+vtMV/aZm4zLnUNNt0urdYnF68HWoJj4Wo1mLGUNRr8LEgDgNqeCh8xQIKOsgC7iAjVe83rT9zQa8uNM28u70kspessu8q8zq/V3NcZpVzb9+0zmVhOvvvrhaMVzrJg0zeq7xMVCCwdpnWSGBqjUyJwLTFgbvxie3w31uoWR1Y74r60rdxZqrR8q85t2W2MGCp12bm/KC3hyaSTiMhxuGrKcahqpbjOaDOoEhOEoFqJQCCJvqA85I6bfTdDjQlf2lbxVNlS6wt19yy7jRHZZlDnrinNj/6sHMhnNw2Ogco7O79e5fm/xQywRBBCEAuwn4gQ96bkYj4Vyuq9N1Z3Bj4Od5bs0MXt/dZZ21ctiqFan174q985P+Lfp+U1g7XDON/1ctP458WlVjLyJhOISZE0wM0S1QfuRC3lTjkJAKKEtNC9eIOhSh9xHLZOJRZTFuXDsEoStLkR/768ummsaJG9Pb9oe+9J+xaeSVokiQDSJphAo5uaBuWjiKP4QTqS1cUWU7ayesN66wu22frD1vmVW6GW6T8u9eVjGyZzs+w78Nqu0a2mbvVu1KEJQAgeZRL0liQYyx+GOmKeQpu0rMYsAJPNEFGD2dLodLIy6c9Ys7G8yeSUl3tf2/X3rcBVJSOv34l3sCBogi7z1LH/rBHjl4IJ93/ncQFAnjeImJD0Z8zuCwu9q3djDXqTlAKID5xv+9t2R8n8VcUFBljQ8Gyfe40BYBM4DwDLt8Kue79ZcFkbzfEdbUbv+oN4c9KTtsfm1MbYQqqh+2zrVZYKs/7Ef+byimt1POYiJhDhPBFBIiIEXhxfs7/dfYoIF+auBfYTE/pebx/V8hqBP2ODvD34yvuh/WCAmU75Bx6sIgaI/v5+6PV6JLqUsYr7dpDAoehs0h73pHTWrvKgThYbRSt9UmSjef3MpaUvBz4O72UmADgTOPJguGiZor+/HyUlJWBmJFz+D8xTtlUiOpbwpmrmrweeSXrT+g11k4SBN3RGKUcAVCVdFhyP1nreDbY//NPyEXUlU/Pp4XYycGT6V0Ux2WwWdO7cOZSWlkII8diX7SPPNgDaKdbxoNAxwATBAEkEEgSWCEQAqPAMwqvMdCEwMO0tVqZpWsGTT58+DaPR+PhGIYQAAAgh0P7B3ioW/B0iGiCGiwXbCuOHFSJys6AbYFye2T+xWhT3WYJEIoH/DQBMw3kes8OJPgAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-edit-mode button.vis-button.vis-edit.vis-edit-mode {\n  background-color: #fcfcfc;\n  border: 1px solid #cccccc;\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button.vis-connect {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDozODo1NyswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6Mzg6NTcrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjlmYjUwMDU0LWE3ODEtMWQ0OC05ZTllLTU2ZWQ5YzhlYjdjNjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo3ZWRhMjI0MC0yYTQxLTNlNDQtYWM2My1iNzNiYTE5OWI3Y2E8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6Mzg6NTcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjlmYjUwMDU0LWE3ODEtMWQ0OC05ZTllLTU2ZWQ5YzhlYjdjNjwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDozODo1NyswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjdlZGEyMjQwLTJhNDEtM2U0NC1hYzYzLWI3M2JhMTk5YjdjYTwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4ubxs+AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAUtSURBVHjajJZ/bNT1Gcdfz/P53PV6B4W7VltLqdAaplIOiMOoyxxJCSs/Gv/yB4gzJroAosmmDklwkYWR0bQsdmkykoojTpcsWYLxD/lRZdMQkTHRtkLZRqG0tIVe7662vTu43n32x/VKZ/jh89cn38/zvN7P5/l88zwf2blzJz6fDwARQUSm1n8s31CM0/VAnbNmsUPuAsDpgEO+Bg4C7//iyv5hvmMiQiqVQpqamvB6vVNwEeG1JZtCBrYi/MrkAwDNgjhwAlbzICBLA0rDb0+/839C6XQaaWxspLCw8Dp86cbNmqVFJQddE6KzdjZ9D89g+B6fSyCOcyn1nxil+O9xKg5HqWFSHGXLjrP7W/ICqVQK2bNnDz6fDxFh65KNvxbHDhF4rJj2bXPo+IGfcW5h5xL4f99P+FCEMIAob75x9t0dAMlkElNXV4e1lteXbNqiQoMaeOFOjrdU868SD2luYyEP6dUh+sYmSHeOU6GO5Z8VLx5+NNZxIpPJ5AS2L3upROCoCvz8Lo7vnkf77cAHhpiz/zIL9vWz8L8p/NvupmM0Q7pjnAoLqz8tDrc8MnQqYVUVhVdF4LEg7b+rvDn8wDDlH0WoPpukLJImSBaMwjcJqmwWts2jPZLG/8kwYVFeVdXXZcFf4yVDc2cNKfBFmD9X+0ncCP58F48eG+Feo2CAUkvs4dl0V/uJvdXLiiV+ut++n7YLSfxPfMMG54ChzB3WIesVWB2i82bw1AR6fJR7C4VsfYiv6u/k3A9nEgP4zXke8DiYHyAOMK+QxPIgnZ9GqSHr1itQJ8DK2fTerDQ+S/bHRXQJaHSCwNIZ2Xh+7+S3VAmwNMBA/tuPZtErgKquUmdMWIFlRURvdamRNEXGwIWrlP47pTMzLiunxghGMwTLvcTWlHAp77s4QNSrYMQtss6ZMgWqCm5cHoDHO1nbk6K8zEN8+3zatv2Hn1b59EqJZdxmYUERg9P9KwpIiAOTdWUWBXuLzB/vZG3P1Un4PNp2d1MbmyD45TWCxuCsQm0x56bHGHFYEZwxok7toAA9Sfw3hCcoL/NOwi9QO5wmWO1j4JEgZxTkodmcWRGkf3pcX0r8xoAaBixKu4U5/xwndM+0tpAvS6mP+PZK2nb1UBvPEKwKMLDvPj4ESGc55lGy303sdJKQdZB2rkMdctAB/4gzN+/Q2ENNd4LyUi/xN+bTtquX2thk5nk4wI3gAF+OMNcA1nFQDfK+BY5GqbkwWabTY5QZhXWlnNx1ntrY1Rz87fuvw29m/Sn8J+PUGAFj5T19baA1IspuBZp7cx1x4SwG1cEf+lgRSROs8jGwb+Ht4QB/GSSsAhYano39LWIBxNEIbP14hPDuiyS2VtJuHXQlKKvxM/jiXDq/D/xPlwifGMkJZB2NIoKpr69nxeiZxLHicFSFVWfGqBidIP3LSjrWltD94CyufF/4kQgPuVz2Lz93+dDRa9eu5QQ8Hg8/iXee+Dy4CKMs7xqn4nwKz9IirhQqmVuB42m8ey+x7LMoD6iAON782eChhqmRuXfvXgKBAKqKqtI0/8nNKrQI4BVYXkzHgzPpC88gWuHL/caXrhLoGiN0apSKr0ZZRBZM7q2w5ZnLR1oAnHOMjY0hra2tFBQUYIyZmstvVT1Z6eDlAuEVq7merxmwueNPDXy9PvybjKP5mctHLk4/XTKZRJqbm/H7/VNw1VyEMYbW4FN3WNWnnchKoy5sHeVGBRX6VWi3ymFx7r11Ix8MTX/y5C2RSPC/AQB61erowbpqSwAAAABJRU5ErkJggg==');\n}\n\ndiv.vis-network div.vis-manipulation button.vis-button.vis-delete {\n  background-image: url('data:image/png;base64,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/GMzLdsAAEEOaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6NDc6MTYgICAgICAgICI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiCiAgICAgICAgICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAxNC0wMi0wNFQxNDo0MTowNCswMTowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTQtMDItMDRUMTQ6NDE6MDQrMDE6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8ZGM6Zm9ybWF0PmltYWdlL3BuZzwvZGM6Zm9ybWF0PgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjc3NDkzYmUxLTEyZGItOTg0NC1iNDYyLTg2NGVmNGIzMzM3MTwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+Y3JlYXRlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE0LTAxLTIyVDE5OjI0OjUxKzAxOjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6RUE2MEEyNEUxOTg0RTMxMUFEQUZFRkU2RUMzMzNFMDM8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDEtMjNUMTk6MTg6MDcrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDUzYgKFdpbmRvd3MpPC9zdEV2dDpzb2Z0d2FyZUFnZW50PgogICAgICAgICAgICAgICAgICA8c3RFdnQ6Y2hhbmdlZD4vPC9zdEV2dDpjaGFuZ2VkPgogICAgICAgICAgICAgICA8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDowNmE3NWYwMy04MDdhLWUzNGYtYjk1Zi1jZGU2MjM0Mzg4OGY8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTQtMDItMDRUMTQ6NDE6MDQrMDE6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jb252ZXJ0ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+ZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZzwvc3RFdnQ6cGFyYW1ldGVycz4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPmRlcml2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnBhcmFtZXRlcnM+Y29udmVydGVkIGZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmc8L3N0RXZ0OnBhcmFtZXRlcnM+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5zYXZlZDwvc3RFdnQ6YWN0aW9uPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6aW5zdGFuY2VJRD54bXAuaWlkOjc3NDkzYmUxLTEyZGItOTg0NC1iNDYyLTg2NGVmNGIzMzM3MTwvc3RFdnQ6aW5zdGFuY2VJRD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OndoZW4+MjAxNC0wMi0wNFQxNDo0MTowNCswMTowMDwvc3RFdnQ6d2hlbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OnNvZnR3YXJlQWdlbnQ+QWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8eG1wTU06RGVyaXZlZEZyb20gcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICA8c3RSZWY6aW5zdGFuY2VJRD54bXAuaWlkOjA2YTc1ZjAzLTgwN2EtZTM0Zi1iOTVmLWNkZTYyMzQzODg4Zjwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDpFQTc2MkY5Njc0ODNFMzExOTQ4QkQxM0UyQkU3OTlBMTwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgICAgPHN0UmVmOm9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjczQjYyQUFEOTE4M0UzMTE5NDhCRDEzRTJCRTc5OUExPC9zdFJlZjpvcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDwveG1wTU06RGVyaXZlZEZyb20+CiAgICAgICAgIDxwaG90b3Nob3A6Q29sb3JNb2RlPjM8L3Bob3Rvc2hvcDpDb2xvck1vZGU+CiAgICAgICAgIDxwaG90b3Nob3A6SUNDUHJvZmlsZT5zUkdCIElFQzYxOTY2LTIuMTwvcGhvdG9zaG9wOklDQ1Byb2ZpbGU+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyMDA5MC8xMDAwMDwvdGlmZjpYUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzIwMDkwLzEwMDAwPC90aWZmOllSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI0PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz4aYJzYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAYGSURBVHjalJZ7UJTnFcZ/73m/72PdJY1RbhoQp6lkXRAvmIYxdCUadLVOozPNtGObap1JsKipjiShbdoRbeKEiQHpQK3xj0xa03aamTbaTGyAYV1QGeqFi+JyiZFLAlmESBkWRmS3fyzslGkmnZ5/v/M873Oe75zzvqqoqAibzQaAiKCUAkApRdHIK/NFsx2NR91nOSILADDoJyzNaM4xxbtvPHh0iC+JiYkJ1OHDh4mJiUEpFSXPv/ziPC28TIiXDCOSrAClQDSEpsCwJPIhrEBRQpiSytXlQwDhcBilFPfu3UMVFxdjt9ujFTzfcLBADCoEEAFr1ZbrrNjch2vtEImPBgHob7fTcWE+bVXJNJ/NiFQlEGLvieXHKmYqGB8fRx05cgSbzYaIsPvywV8pKFaA7fGtLTzz61YWpo/xVTHQbufsq5lcez9zWuWhk5mvFwMEg0H0+vXrMU2Tn1wp3CtCiQ5DjGd3A/m/v8IDCZP8r4iNmyRrWx/j/5qktykZpXKzAjVDVxPzGqemptDr1q1jX3NRnIJarcDKK2hgR2ULXRfncv7UYv7xpovhnhiW5Mz+kefeSKO6LJ1A1xzEuk/Ojm4mRibpuZaMZW3OCtRUND60NmiICCIUShisx7a2sLMiQn4s77uEQgIabnqdfHIlgT1/qQeg8vs5dHhdCNB1wYn3RIiC995j26stjAbsNH+YiZJCESnS1Y/XxIXu8r4YIPv/VkVs3CTnTy2ms34xro1+sp9po6sxlTu34ultmsPVvy6is86FCHgO+DDs49zpjufBpCG+seYOC9OHaTidieicb9ouVAhKtouAseI710ma7pLuqwmgYfHqAFt+6WdLoQ/LBl11Lm7VudAa8vb72PCin9TlAWIsGGhLACD+kSAZnusYBii1XQAPYWDllt6ov2lrBkDBR2+6Ofuak2//3M+G/T4wAAPW7fPhKfRTVeqk9qQbFKRmDUTxS3N7QYGYmwzCkqklBGlPDEcTNv+sg9tNCbTXuvBWujE0bHrZj9JE1B/wU1Pm5PwJN6YBS9a2kVvQEcWnrh5GTFD3lxkYkqRMgYQlwVldUvDnen73LHTUuqitdKM0eAr9AFQfd1J/yo2aJn+2sn4Wdn5qEFODJskgBIjx5T0uCrQA08pnIjS9PERDjPnfOKXAMEBECUoGEIHBj+2zkt76UQ6dXheGAev3+cg74Kf6uJPqcicbfuond7cPy4SOiy7+tD9nFvZurx00KOk3CNEC+mE+vjSPBc7IWqgqTaPT60IMcO/xsXGa3HfKjRgRdbl7/KDg0jtubje6aHj7c7J3dgLQ2zoPwwQ91SooOQdAW1VKVMHty0kA5Bb48BycJn/LjWFGbLv4thvvb53kFvjJ+XEdWkPfjQVR/CcNKYgGMc8JWt5Fa2j+MIPPuyI2pa4IoHSkt6vLIuRaQ9q32khzt4GCxtNu6k46GeiIR2lIfDQQsafPzq1LGRGL9Gk9d+vrwewvfHPQOoexQVjxdB/auk/zmaUMdsfz6bVUtIalT7bxveP1ZHh6GPDPYeSzeD69kcpIfxymFWLNrka+ljhBTWkWwz2JiJT84YHnz2iPx0P20PkmRF5i6HYiwZFJsn/YzdezbzE3cQibY5xV266z6RfXohakb+xB9CjanCD9qTbW7Grk4WV38VZm0l6dhQiEw9taHSuDqrS0FIfDwXM3X9mHMsvRAk/sauDpQy38P+GtzOTGB9mEpkD0C2dS8n8zOjqK9ng8WJZFU+JTjasGvaCNXPpvJBPoMlm0OoDNMfWVxONfWNSUPUZ7TUQ56tCZlPwSgMnJSVRpaSmxsbFE1raw82ZxAZZRQUiBYUKGp5UlOX2krBzmoUVjiIKhHge9rfPo+Wcy3ZeXIYASgL1/X5RfMXMvj46OosrLy7HZbGitUUohIuzoem0RofALaOsghgWGjky0MiJTL8b0lOvI8hN1DKXKP0jd3TNTWDgcJhgMoo4ePYrD4Yi+KmaeLlprnrtXFo9h/AAlG1AqE8yFmBrC+jO0bgH9EVpO/1F2Dc5g//OAsbEx/j0Af+USsQynL1UAAAAASUVORK5CYII=');\n}\n/* top right bottom left */\ndiv.vis-network div.vis-manipulation div.vis-label,\ndiv.vis-network div.vis-edit-mode div.vis-label {\n  margin: 0 0 0 23px;\n  line-height: 25px;\n}\ndiv.vis-network div.vis-manipulation div.vis-separator-line {\n  float: left;\n  display: inline-block;\n  width: 1px;\n  height: 21px;\n  background-color: #bdbdbd;\n  margin: 0px 7px 0 15px; /*top right bottom left*/\n}\n\n/* TODO: is this redundant?\ndiv.network-navigation_wrapper {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n}\n*/\n";
 styleInject(css_248z);
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof symbol !== "undefined" && getIteratorMethod$1(o) || o["@@iterator"]; if (!it) { if (isArray$2(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray(o, minLen) { var _context32; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = slice(_context32 = Object.prototype.toString.call(o)).call(_context32, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return from$3(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { var _context32; if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = _sliceInstanceProperty(_context32 = Object.prototype.toString.call(o)).call(_context32, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 /**
@@ -40522,13 +41334,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
       }
     };
 
-    assign$2(this.options, this.defaultOptions);
+    _Object$assign(this.options, this.defaultOptions);
 
     this.body.emitter.on("destroy", function () {
       _this._clean();
     });
-    this.body.emitter.on("_dataChanged", bind$6(_context = this._restore).call(_context, this));
-    this.body.emitter.on("_resetData", bind$6(_context2 = this._restore).call(_context2, this));
+    this.body.emitter.on("_dataChanged", _bindInstanceProperty(_context = this._restore).call(_context, this));
+    this.body.emitter.on("_resetData", _bindInstanceProperty(_context2 = this._restore).call(_context2, this));
   }
   /**
    * If something changes in the data during editing, switch back to the initial datamanipulation state and close all edit modes.
@@ -40720,10 +41532,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
         } // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$6(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
+        this._bindElementEvents(this.closeDiv, _bindInstanceProperty(_context3 = this.toggleEditMode).call(_context3, this)); // refresh this bar based on what has been selected
 
 
-        this._temporaryBindEvent("select", bind$6(_context4 = this.showManipulatorToolbar).call(_context4, this));
+        this._temporaryBindEvent("select", _bindInstanceProperty(_context4 = this.showManipulatorToolbar).call(_context4, this));
       } // redraw to show any possible changes
 
 
@@ -40761,10 +41573,10 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["addDescription"] || this.options.locales["en"]["addDescription"]); // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$6(_context5 = this.toggleEditMode).call(_context5, this));
+        this._bindElementEvents(this.closeDiv, _bindInstanceProperty(_context5 = this.toggleEditMode).call(_context5, this));
       }
 
-      this._temporaryBindEvent("click", bind$6(_context6 = this._performAddNode).call(_context6, this));
+      this._temporaryBindEvent("click", _bindInstanceProperty(_context6 = this._performAddNode).call(_context6, this));
     }
     /**
      * call the bound function to handle the editing of the node. The node has to be selected.
@@ -40848,19 +41660,19 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["edgeDescription"] || this.options.locales["en"]["edgeDescription"]); // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$6(_context7 = this.toggleEditMode).call(_context7, this));
+        this._bindElementEvents(this.closeDiv, _bindInstanceProperty(_context7 = this.toggleEditMode).call(_context7, this));
       } // temporarily overload functions
 
 
-      this._temporaryBindUI("onTouch", bind$6(_context8 = this._handleConnect).call(_context8, this));
+      this._temporaryBindUI("onTouch", _bindInstanceProperty(_context8 = this._handleConnect).call(_context8, this));
 
-      this._temporaryBindUI("onDragEnd", bind$6(_context9 = this._finishConnect).call(_context9, this));
+      this._temporaryBindUI("onDragEnd", _bindInstanceProperty(_context9 = this._finishConnect).call(_context9, this));
 
-      this._temporaryBindUI("onDrag", bind$6(_context10 = this._dragControlNode).call(_context10, this));
+      this._temporaryBindUI("onDrag", _bindInstanceProperty(_context10 = this._dragControlNode).call(_context10, this));
 
-      this._temporaryBindUI("onRelease", bind$6(_context11 = this._finishConnect).call(_context11, this));
+      this._temporaryBindUI("onRelease", _bindInstanceProperty(_context11 = this._finishConnect).call(_context11, this));
 
-      this._temporaryBindUI("onDragStart", bind$6(_context12 = this._dragStartEdge).call(_context12, this));
+      this._temporaryBindUI("onDragStart", _bindInstanceProperty(_context12 = this._dragStartEdge).call(_context12, this));
 
       this._temporaryBindUI("onHold", function () {});
     }
@@ -40906,7 +41718,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._createDescription(locale["editEdgeDescription"] || this.options.locales["en"]["editEdgeDescription"]); // bind the close button
 
 
-        this._bindElementEvents(this.closeDiv, bind$6(_context13 = this.toggleEditMode).call(_context13, this));
+        this._bindElementEvents(this.closeDiv, _bindInstanceProperty(_context13 = this.toggleEditMode).call(_context13, this));
       }
 
       this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
@@ -40927,7 +41739,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.body.nodes[controlNodeTo.id] = controlNodeTo;
         this.body.nodeIndices.push(controlNodeTo.id); // temporarily overload UI functions, cleaned up automatically because of _temporaryBindUI
 
-        this._temporaryBindUI("onTouch", bind$6(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
+        this._temporaryBindUI("onTouch", _bindInstanceProperty(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
 
 
         this._temporaryBindUI("onTap", function () {}); // disabled
@@ -40936,13 +41748,13 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this._temporaryBindUI("onHold", function () {}); // disabled
 
 
-        this._temporaryBindUI("onDragStart", bind$6(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
+        this._temporaryBindUI("onDragStart", _bindInstanceProperty(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
 
 
-        this._temporaryBindUI("onDrag", bind$6(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
+        this._temporaryBindUI("onDrag", _bindInstanceProperty(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
 
 
-        this._temporaryBindUI("onDragEnd", bind$6(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
+        this._temporaryBindUI("onDragEnd", _bindInstanceProperty(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
 
 
         this._temporaryBindUI("onMouseMove", function () {}); // disabled
@@ -41168,7 +41980,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.editModeDiv.appendChild(button); // bind a hammer listener to the button, calling the function toggleEditMode.
 
-      this._bindElementEvents(button, bind$6(_context18 = this.toggleEditMode).call(_context18, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context18 = this.toggleEditMode).call(_context18, this));
     }
     /**
      * this function cleans up after everything this module does. Temporary elements, functions and events are removed, physics restored, hammers removed.
@@ -41213,7 +42025,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
       var _context19;
 
       // _clean DOM event listener bindings
-      var _iterator = _createForOfIteratorHelper(splice$1(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)),
+      var _iterator = _createForOfIteratorHelper(_spliceInstanceProperty(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)),
           _step;
 
       try {
@@ -41292,7 +42104,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$6(_context20 = this.addNodeMode).call(_context20, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context20 = this.addNodeMode).call(_context20, this));
     }
     /**
      *
@@ -41309,7 +42121,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$6(_context21 = this.addEdgeMode).call(_context21, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context21 = this.addEdgeMode).call(_context21, this));
     }
     /**
      *
@@ -41326,7 +42138,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$6(_context22 = this.editNode).call(_context22, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context22 = this.editNode).call(_context22, this));
     }
     /**
      *
@@ -41343,7 +42155,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$6(_context23 = this.editEdgeMode).call(_context23, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context23 = this.editEdgeMode).call(_context23, this));
     }
     /**
      *
@@ -41368,7 +42180,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$6(_context24 = this.deleteSelected).call(_context24, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context24 = this.deleteSelected).call(_context24, this));
     }
     /**
      *
@@ -41385,7 +42197,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
       this.manipulationDiv.appendChild(button);
 
-      this._bindElementEvents(button, bind$6(_context25 = this.showManipulatorToolbar).call(_context25, this));
+      this._bindElementEvents(button, _bindInstanceProperty(_context25 = this.showManipulatorToolbar).call(_context25, this));
     }
     /**
      *
@@ -41456,7 +42268,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.temporaryUIFunctions[UIfunctionName] = this.body.eventListeners[UIfunctionName];
         this.body.eventListeners[UIfunctionName] = newFunction;
       } else {
-        throw new Error("This UI function does not exist. Typo? You tried: " + UIfunctionName + " possible are: " + stringify$1(keys$4(this.body.eventListeners)));
+        throw new Error("This UI function does not exist. Typo? You tried: " + UIfunctionName + " possible are: " + _JSON$stringify(_Object$keys(this.body.eventListeners)));
       }
     }
     /**
@@ -41544,12 +42356,12 @@ var ManipulationSystem = /*#__PURE__*/function () {
         this.body.edges[this.temporaryIds.edges[i]].disconnect();
         delete this.body.edges[this.temporaryIds.edges[i]];
 
-        var indexTempEdge = indexOf(_context26 = this.body.edgeIndices).call(_context26, this.temporaryIds.edges[i]);
+        var indexTempEdge = _indexOfInstanceProperty(_context26 = this.body.edgeIndices).call(_context26, this.temporaryIds.edges[i]);
 
         if (indexTempEdge !== -1) {
           var _context27;
 
-          splice$1(_context27 = this.body.edgeIndices).call(_context27, indexTempEdge, 1);
+          _spliceInstanceProperty(_context27 = this.body.edgeIndices).call(_context27, indexTempEdge, 1);
         }
       } // _clean temporary nodes
 
@@ -41559,12 +42371,12 @@ var ManipulationSystem = /*#__PURE__*/function () {
 
         delete this.body.nodes[this.temporaryIds.nodes[_i]];
 
-        var indexTempNode = indexOf(_context28 = this.body.nodeIndices).call(_context28, this.temporaryIds.nodes[_i]);
+        var indexTempNode = _indexOfInstanceProperty(_context28 = this.body.nodeIndices).call(_context28, this.temporaryIds.nodes[_i]);
 
         if (indexTempNode !== -1) {
           var _context29;
 
-          splice$1(_context29 = this.body.nodeIndices).call(_context29, indexTempNode, 1);
+          _spliceInstanceProperty(_context29 = this.body.nodeIndices).call(_context29, indexTempNode, 1);
         }
       }
 
@@ -41586,7 +42398,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
     value: function _controlNodeTouch(event) {
       this.selectionHandler.unselectAll();
       this.lastTouch = this.body.functions.getPointer(event.center);
-      this.lastTouch.translation = assign$2({}, this.body.view.translation); // copy the object
+      this.lastTouch.translation = _Object$assign({}, this.body.view.translation); // copy the object
     }
     /**
      * the drag start is used to mark one of the control nodes as selected.
@@ -41716,7 +42528,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
       // check to avoid double fireing of this function.
       if (new Date().valueOf() - this.touchTime > 100) {
         this.lastTouch = this.body.functions.getPointer(event.center);
-        this.lastTouch.translation = assign$2({}, this.body.view.translation); // copy the object
+        this.lastTouch.translation = _Object$assign({}, this.body.view.translation); // copy the object
 
         this.interactionHandler.drag.pointer = this.lastTouch; // Drag pointer is not updated when adding edges
 
@@ -41784,7 +42596,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         var _context30;
 
         // if the node id is NOT a temporary node, accept the node.
-        if (indexOf(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
+        if (_indexOfInstanceProperty(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
           node = this.body.nodes[overlappingNodeIds[i]];
           break;
         }
@@ -41836,7 +42648,7 @@ var ManipulationSystem = /*#__PURE__*/function () {
         var _context31;
 
         // if the node id is NOT a temporary node, accept the node.
-        if (indexOf(_context31 = this.temporaryIds.nodes).call(_context31, overlappingNodeIds[i]) === -1) {
+        if (_indexOfInstanceProperty(_context31 = this.temporaryIds.nodes).call(_context31, overlappingNodeIds[i]) === -1) {
           node = this.body.nodes[overlappingNodeIds[i]];
           break;
         }
@@ -43525,7 +44337,7 @@ var configureOptions = {
 var configuratorHideOption = function configuratorHideOption(parentPath, optionName, options) {
   var _context;
 
-  if (includes(parentPath).call(parentPath, "physics") && includes(_context = configureOptions.physics.solver).call(_context, optionName) && options.physics.solver !== optionName && optionName !== "wind") {
+  if (_includesInstanceProperty(parentPath).call(parentPath, "physics") && _includesInstanceProperty(_context = configureOptions.physics.solver).call(_context, optionName) && options.physics.solver !== optionName && optionName !== "wind") {
     return true;
   }
 
@@ -44002,7 +44814,7 @@ function Network(container, data, options) {
     clickToUse: false
   };
 
-  assign$2(this.options, this.defaultOptions);
+  _Object$assign(this.options, this.defaultOptions);
   /**
    * Containers for nodes and edges.
    *
@@ -44025,10 +44837,10 @@ function Network(container, data, options) {
     edges: {},
     edgeIndices: [],
     emitter: {
-      on: bind$6(_context = this.on).call(_context, this),
-      off: bind$6(_context2 = this.off).call(_context2, this),
-      emit: bind$6(_context3 = this.emit).call(_context3, this),
-      once: bind$6(_context4 = this.once).call(_context4, this)
+      on: _bindInstanceProperty(_context = this.on).call(_context, this),
+      off: _bindInstanceProperty(_context2 = this.off).call(_context2, this),
+      emit: _bindInstanceProperty(_context3 = this.emit).call(_context3, this),
+      once: _bindInstanceProperty(_context4 = this.once).call(_context4, this)
     },
     eventListeners: {
       onTap: function onTap() {},
