@@ -107,7 +107,7 @@
     "vis-util": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "7.17.3",
+    "@babel/plugin-proposal-object-rest-spread": "7.17.12",
     "@egjs/hammerjs": "2.0.17",
     "@mdi/font": "6.6.96",
     "@semantic-release/commit-analyzer": "9.0.2",
