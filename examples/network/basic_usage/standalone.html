@@ -194,7 +194,35 @@ const network = new Network(container, data, options);
         nodes: nodes,
         edges: edges,
       };
-      var options = {};
+      var options = {
+        
+      nodes:{
+        opacity:0.5,
+        },
+  
+      edges:{
+        arrowStrikethrough : false,
+        arrows :{  
+          from:{
+            enabled: true,
+            imageHeight: 3,
+            imageWidth: 1,
+            scaleFactor : 0.01,
+            src: "https://c1.wallpaperflare.com/preview/378/592/929/sky-blue-color-raindrop.jpg",
+            type: "image"
+              },
+          to:{
+            enabled: true,
+            imageHeight: 3,
+            imageWidth: 1,
+            scaleFactor : 0.01,
+            src: "https://c1.wallpaperflare.com/preview/378/592/929/sky-blue-color-raindrop.jpg",
+            type: "image" },
+              },
+              
+              
+      },
+      };
       var network = new vis.Network(container, data, options);
     </script>
   </body>
