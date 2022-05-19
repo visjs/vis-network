@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-05-18T06:27:48.520Z
+ * @date    2022-05-19T21:46:09.707Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3547,7 +3547,7 @@ class Label {
    * @param {object} options
    * @param {boolean} [edgelabel=false]
    */
-  constructor(body, options, edgelabel = false) {
+  constructor(body, options, edgelabel) {
     this.body = body;
     this.pointToSelf = false;
     this.baseSize = undefined;
@@ -9511,7 +9511,7 @@ class Edge {
   static parseOptions(
     parentOptions,
     newOptions,
-    allowDeletion = false,
+    allowDeletion,
     globalOptions = {},
     copyFromGlobals = false
   ) {
