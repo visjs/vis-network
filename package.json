@@ -145,7 +145,7 @@
     "tmp-promise": "3.0.2",
     "uuid": "8.3.2",
     "vis-data": "7.1.4",
-    "vis-dev-utils": "3.0.66",
+    "vis-dev-utils": "3.0.68",
     "vis-util": "5.0.3"
   },
   "collective": {
