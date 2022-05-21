@@ -124,7 +124,7 @@
     "cross-env": "7.0.3",
     "cypress": "9.6.1",
     "cypress-visual-regression": "1.7.0",
-    "eslint": "8.15.0",
+    "eslint": "8.16.0",
     "gh-pages": "3.2.3",
     "husky": "7.0.4",
     "jsdom": "19.0.0",
