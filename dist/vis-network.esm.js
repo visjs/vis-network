@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-05-20T05:54:26.305Z
+ * @date    2022-05-21T00:13:48.265Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -38134,7 +38134,7 @@ var weakMap = parent$1;
 
 var _WeakMap = /*@__PURE__*/getDefaultExportFromCjs(weakMap$2.exports);
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
