@@ -125,7 +125,7 @@
     "cypress": "9.6.1",
     "cypress-visual-regression": "1.7.0",
     "eslint": "8.16.0",
-    "gh-pages": "3.2.3",
+    "gh-pages": "4.0.0",
     "husky": "8.0.1",
     "jsdom": "19.0.0",
     "jsdom-global": "3.0.2",
