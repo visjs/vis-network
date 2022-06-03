@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-06-02T23:45:48.392Z
+ * @date    2022-06-03T20:29:05.660Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -31596,9 +31596,7 @@
 	          x: this.canvas._XconvertDOMtoCanvas(pointer.x),
 	          y: this.canvas._YconvertDOMtoCanvas(pointer.y)
 	        };
-	      }
-
-	      if (node !== undefined && this.options.dragNodes === true) {
+	      } else if (node !== undefined && this.options.dragNodes === true) {
 	        this.drag.nodeId = node.id; // select the clicked node if not yet selected
 
 	        if (node.isSelected() === false) {
