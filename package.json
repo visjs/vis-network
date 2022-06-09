@@ -135,7 +135,7 @@
     "nyc": "15.1.0",
     "postcss": "8.4.14",
     "sazerac": "2.0.0",
-    "semantic-release": "19.0.2",
+    "semantic-release": "19.0.3",
     "serve": "13.0.2",
     "shx": "0.3.4",
     "sinon": "14.0.0",
