@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2022-06-18T05:40:18.378Z
+ * @date    2023-02-24T18:01:21.463Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -31936,7 +31936,7 @@ var CentralGravitySolver = /*#__PURE__*/function () {
      * @param {number} distance
      * @param {number} dx
      * @param {number} dy
-     * @param {object<Node.id, vis.Node>} forces
+     * @param {Object<Node.id, vis.Node>} forces
      * @param {Node} node
      * @private
      */
@@ -32045,7 +32045,7 @@ var ForceAtlas2BasedCentralGravitySolver = /*#__PURE__*/function (_CentralGravit
    * @param {number} distance
    * @param {number} dx
    * @param {number} dy
-   * @param {object<Node.id, Node>} forces
+   * @param {Object<Node.id, Node>} forces
    * @param {Node} node
    * @private
    */
