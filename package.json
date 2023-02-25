@@ -138,7 +138,7 @@
     "semantic-release": "19.0.3",
     "serve": "13.0.4",
     "shx": "0.3.4",
-    "sinon": "14.0.0",
+    "sinon": "14.0.2",
     "snap-shot-it": "7.9.6",
     "start-server-and-test": "1.14.0",
     "timsort": "0.3.0",
