@@ -136,7 +136,7 @@
     "postcss": "8.4.21",
     "sazerac": "2.0.0",
     "semantic-release": "19.0.3",
-    "serve": "13.0.2",
+    "serve": "13.0.4",
     "shx": "0.3.4",
     "sinon": "14.0.0",
     "snap-shot-it": "7.9.6",
