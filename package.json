@@ -126,7 +126,7 @@
     "cypress-visual-regression": "1.7.0",
     "eslint": "8.18.0",
     "gh-pages": "4.0.0",
-    "husky": "8.0.1",
+    "husky": "8.0.3",
     "jsdom": "19.0.0",
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
