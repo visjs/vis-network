@@ -1,11 +1,12 @@
 import commonjs from "@rollup/plugin-commonjs";
 import nodeResolve from "@rollup/plugin-node-resolve";
-import babel from "rollup-plugin-babel";
+import babel from "@rollup/plugin-babel";
 import typescript from "rollup-plugin-typescript2";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import { generateHeader } from "vis-dev-utils";
 import assets from "postcss-assets";
 import postcss from "rollup-plugin-postcss";
+import { BABEL_IGNORE_RE } from "vis-dev-utils";
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
 // CommonJS because Babel is not 100 % ESM.
@@ -23,7 +24,8 @@ const plugins = {
   commonjs: commonjs(),
   babel: babel({
     extensions: [".ts", ".js"],
-    runtimeHelpers: true,
+    babelHelpers: "runtime",
+    exclude: BABEL_IGNORE_RE,
   }),
   minify: terser({
     output: {
