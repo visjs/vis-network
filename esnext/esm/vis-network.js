@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-03-04T12:31:13.900Z
+ * @date    2023-03-04T22:05:03.007Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -1640,8 +1640,8 @@ function DOTToGraph(data) {
 
 var dotparser = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  parseDOT: parseDOT,
-  DOTToGraph: DOTToGraph
+  DOTToGraph: DOTToGraph,
+  parseDOT: parseDOT
 });
 
 /**
@@ -1943,17 +1943,17 @@ const cs = {
 
 var locales = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  en: en,
+  cn: cn,
+  cs: cs,
   de: de,
+  en: en,
   es: es,
+  fr: fr,
   it: it,
   nl: nl,
   pt: pt,
   ru: ru,
-  cn: cn,
-  uk: uk,
-  fr: fr,
-  cs: cs
+  uk: uk
 });
 
 /**
@@ -4638,7 +4638,7 @@ class NodeBase {
  *
  * @augments NodeBase
  */
-class Box$1 extends NodeBase {
+let Box$1 = class Box extends NodeBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -4734,7 +4734,7 @@ class Box$1 extends NodeBase {
       ) + borderWidth
     );
   }
-}
+};
 
 /**
  * NOTE: This is a bad base class
@@ -4971,7 +4971,7 @@ class CircleImageBase extends NodeBase {
  *
  * @augments CircleImageBase
  */
-class Circle$1 extends CircleImageBase {
+let Circle$1 = class Circle extends CircleImageBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -5053,7 +5053,7 @@ class Circle$1 extends CircleImageBase {
     }
     return this.width * 0.5;
   }
-}
+};
 
 /**
  * A CircularImage Node/Cluster shape.
@@ -5474,7 +5474,7 @@ class Database extends NodeBase {
  *
  * @augments ShapeBase
  */
-class Diamond$1 extends ShapeBase {
+let Diamond$1 = class Diamond extends ShapeBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -5507,7 +5507,7 @@ class Diamond$1 extends ShapeBase {
   distanceToBorder(ctx, angle) {
     return this._distanceToBorder(ctx, angle);
   }
-}
+};
 
 /**
  * A Dot Node/Cluster shape.
@@ -5780,7 +5780,7 @@ class Icon extends NodeBase {
  *
  * @augments CircleImageBase
  */
-class Image$2 extends CircleImageBase {
+let Image$2 = class Image extends CircleImageBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -5944,7 +5944,7 @@ class Image$2 extends CircleImageBase {
   distanceToBorder(ctx, angle) {
     return this._distanceToBorder(ctx, angle);
   }
-}
+};
 
 /**
  * A Square Node/Cluster shape.
@@ -6143,7 +6143,7 @@ class Text extends NodeBase {
  *
  * @augments ShapeBase
  */
-class Triangle$1 extends ShapeBase {
+let Triangle$1 = class Triangle extends ShapeBase {
   /**
    * @param {object} options
    * @param {object} body
@@ -6176,7 +6176,7 @@ class Triangle$1 extends ShapeBase {
   distanceToBorder(ctx, angle) {
     return this._distanceToBorder(ctx, angle);
   }
-}
+};
 
 /**
  * A downward facing Triangle Node/Cluster shape.
@@ -7706,7 +7706,7 @@ class EndPoint {
 /**
  * Drawing methods for the arrow endpoint.
  */
-class Image$1 extends EndPoint {
+let Image$1 = class Image extends EndPoint {
     /**
      * Draw this shape at the end of a line.
      *
@@ -7733,7 +7733,7 @@ class Image$1 extends EndPoint {
         }
         return false;
     }
-}
+};
 /**
  * Drawing methods for the arrow endpoint.
  */
@@ -22798,8 +22798,8 @@ const configuratorHideOption = (parentPath, optionName, options) => {
 
 var options = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  configuratorHideOption: configuratorHideOption,
   allOptions: allOptions,
+  configuratorHideOption: configuratorHideOption,
   configureOptions: configureOptions
 });
 

@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-03-04T12:31:13.900Z
+ * @date    2023-03-04T22:05:03.007Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -29,12 +29,6 @@
   typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'timsort'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.timsort));
 })(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, TimSort) {
-  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-  var Emitter__default = /*#__PURE__*/_interopDefaultLegacy(Emitter);
-  var keycharm__default = /*#__PURE__*/_interopDefaultLegacy(keycharm);
-  var TimSort__default = /*#__PURE__*/_interopDefaultLegacy(TimSort);
-
   /**
    * Draw a circle.
    *
@@ -1644,8 +1638,8 @@
 
   var dotparser = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    parseDOT: parseDOT,
-    DOTToGraph: DOTToGraph
+    DOTToGraph: DOTToGraph,
+    parseDOT: parseDOT
   });
 
   /**
@@ -1947,17 +1941,17 @@
 
   var locales = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    en: en,
+    cn: cn,
+    cs: cs,
     de: de,
+    en: en,
     es: es,
+    fr: fr,
     it: it,
     nl: nl,
     pt: pt,
     ru: ru,
-    cn: cn,
-    uk: uk,
-    fr: fr,
-    cs: cs
+    uk: uk
   });
 
   /**
@@ -4642,7 +4636,7 @@
    *
    * @augments NodeBase
    */
-  class Box$1 extends NodeBase {
+  let Box$1 = class Box extends NodeBase {
     /**
      * @param {object} options
      * @param {object} body
@@ -4738,7 +4732,7 @@
         ) + borderWidth
       );
     }
-  }
+  };
 
   /**
    * NOTE: This is a bad base class
@@ -4975,7 +4969,7 @@
    *
    * @augments CircleImageBase
    */
-  class Circle$1 extends CircleImageBase {
+  let Circle$1 = class Circle extends CircleImageBase {
     /**
      * @param {object} options
      * @param {object} body
@@ -5057,7 +5051,7 @@
       }
       return this.width * 0.5;
     }
-  }
+  };
 
   /**
    * A CircularImage Node/Cluster shape.
@@ -5478,7 +5472,7 @@
    *
    * @augments ShapeBase
    */
-  class Diamond$1 extends ShapeBase {
+  let Diamond$1 = class Diamond extends ShapeBase {
     /**
      * @param {object} options
      * @param {object} body
@@ -5511,7 +5505,7 @@
     distanceToBorder(ctx, angle) {
       return this._distanceToBorder(ctx, angle);
     }
-  }
+  };
 
   /**
    * A Dot Node/Cluster shape.
@@ -5784,7 +5778,7 @@
    *
    * @augments CircleImageBase
    */
-  class Image$2 extends CircleImageBase {
+  let Image$2 = class Image extends CircleImageBase {
     /**
      * @param {object} options
      * @param {object} body
@@ -5948,7 +5942,7 @@
     distanceToBorder(ctx, angle) {
       return this._distanceToBorder(ctx, angle);
     }
-  }
+  };
 
   /**
    * A Square Node/Cluster shape.
@@ -6147,7 +6141,7 @@
    *
    * @augments ShapeBase
    */
-  class Triangle$1 extends ShapeBase {
+  let Triangle$1 = class Triangle extends ShapeBase {
     /**
      * @param {object} options
      * @param {object} body
@@ -6180,7 +6174,7 @@
     distanceToBorder(ctx, angle) {
       return this._distanceToBorder(ctx, angle);
     }
-  }
+  };
 
   /**
    * A downward facing Triangle Node/Cluster shape.
@@ -7710,7 +7704,7 @@
   /**
    * Drawing methods for the arrow endpoint.
    */
-  class Image$1 extends EndPoint {
+  let Image$1 = class Image extends EndPoint {
       /**
        * Draw this shape at the end of a line.
        *
@@ -7737,7 +7731,7 @@
           }
           return false;
       }
-  }
+  };
   /**
    * Drawing methods for the arrow endpoint.
    */
@@ -16472,9 +16466,9 @@
 
       if (this.options.keyboard.enabled === true) {
         if (this.options.keyboard.bindToWindow === true) {
-          this.keycharm = keycharm__default["default"]({ container: window, preventDefault: true });
+          this.keycharm = keycharm({ container: window, preventDefault: true });
         } else {
-          this.keycharm = keycharm__default["default"]({
+          this.keycharm = keycharm({
             container: this.canvas.frame,
             preventDefault: true,
           });
@@ -20268,7 +20262,7 @@
         result.push(Number(size));
       });
 
-      TimSort__default["default"].sort(result, function (a, b) {
+      TimSort.sort(result, function (a, b) {
         return b - a;
       });
 
@@ -22802,8 +22796,8 @@
 
   var options = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    configuratorHideOption: configuratorHideOption,
     allOptions: allOptions,
+    configuratorHideOption: configuratorHideOption,
     configureOptions: configureOptions
   });
 
@@ -23342,7 +23336,7 @@
   }
 
   // Extend Network with an Emitter mixin
-  Emitter__default["default"](Network.prototype);
+  Emitter(Network.prototype);
 
   /**
    * Set options
@@ -23940,8 +23934,6 @@
   exports.networkOptions = options;
   exports.parseDOTNetwork = parseDOTNetwork;
   exports.parseGephiNetwork = parseGephi;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
 //# sourceMappingURL=vis-network.js.map
