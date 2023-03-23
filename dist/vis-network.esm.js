@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-03-21T17:17:10.969Z
+ * @date    2023-03-23T20:26:49.106Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -3719,10 +3719,10 @@ var getOwnPropertyNames$4 = getBuiltIn$5('Object', 'getOwnPropertyNames');
 var thisSymbolValue = uncurryThis$d(Symbol$3.prototype.valueOf);
 var WellKnownSymbolsStore = shared('wks');
 
-for (var i$1 = 0, symbolKeys = getOwnPropertyNames$4(Symbol$3), symbolKeysLength = symbolKeys.length; i$1 < symbolKeysLength; i$1++) {
+for (var i = 0, symbolKeys = getOwnPropertyNames$4(Symbol$3), symbolKeysLength = symbolKeys.length; i < symbolKeysLength; i++) {
   // some old engines throws on access to some keys like `arguments` or `caller`
   try {
-    var symbolKey = symbolKeys[i$1];
+    var symbolKey = symbolKeys[i];
     if (isSymbol(Symbol$3[symbolKey])) wellKnownSymbol$7(symbolKey);
   } catch (error) { /* empty */ }
 }
@@ -5148,7 +5148,7 @@ var create$7 = parent$H;
 var _Object$create$1 = /*@__PURE__*/getDefaultExportFromCjs(createExports$2);
 
 var stringifyExports = {};
-var stringify$3 = {
+var stringify$2 = {
   get exports(){ return stringifyExports; },
   set exports(v){ stringifyExports = v; },
 };
@@ -5160,17 +5160,17 @@ var apply$3 = functionApply;
 if (!path$e.JSON) path$e.JSON = { stringify: JSON.stringify };
 
 // eslint-disable-next-line no-unused-vars -- required for `.length`
-var stringify$2 = function stringify(it, replacer, space) {
+var stringify$1 = function stringify(it, replacer, space) {
   return apply$3(path$e.JSON.stringify, null, arguments);
 };
 
-var parent$G = stringify$2;
+var parent$G = stringify$1;
 
-var stringify$1 = parent$G;
+var stringify = parent$G;
 
 (function (module) {
-	module.exports = stringify$1;
-} (stringify$3));
+	module.exports = stringify;
+} (stringify$2));
 
 var _JSON$stringify = /*@__PURE__*/getDefaultExportFromCjs(stringifyExports);
 
@@ -17670,14 +17670,13 @@ var _Reflect$construct = /*@__PURE__*/getDefaultExportFromCjs(constructExports);
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
 // generators (like Math.random()).
-var getRandomValues;
-var rnds8 = new Uint8Array(16);
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
 function rng() {
   // lazy load so that environments that need to polyfill have a chance to do so
   if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
-    // find the complete implementation of crypto (msCrypto) on IE11.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
 
     if (!getRandomValues) {
       throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
@@ -17687,43 +17686,35 @@ function rng() {
   return getRandomValues(rnds8);
 }
 
-var REGEX = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
-
-function validate(uuid) {
-  return typeof uuid === 'string' && REGEX.test(uuid);
-}
-
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
  */
 
-var byteToHex = [];
+const byteToHex = [];
 
-for (var i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).substr(1));
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
 }
 
-function stringify(arr) {
-  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+function unsafeStringify(arr, offset = 0) {
   // Note: Be careful editing this code!  It's been tuned for performance
   // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
-  // of the following:
-  // - One or more input array values don't map to a hex octet (leading to
-  // "undefined" in the uuid)
-  // - Invalid input values for the RFC `version` or `variant` fields
-
-  if (!validate(uuid)) {
-    throw TypeError('Stringified UUID is invalid');
-  }
-
-  return uuid;
+  return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
 }
 
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+var native = {
+  randomUUID
+};
+
 function v4(options, buf, offset) {
+  if (native.randomUUID && !buf && !options) {
+    return native.randomUUID();
+  }
+
   options = options || {};
-  var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
 
   rnds[6] = rnds[6] & 0x0f | 0x40;
   rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
@@ -17731,14 +17722,14 @@ function v4(options, buf, offset) {
   if (buf) {
     offset = offset || 0;
 
-    for (var i = 0; i < 16; ++i) {
+    for (let i = 0; i < 16; ++i) {
       buf[offset + i] = rnds[i];
     }
 
     return buf;
   }
 
-  return stringify(rnds);
+  return unsafeStringify(rnds);
 }
 
 var _Symbol$iterator;
@@ -18193,7 +18184,7 @@ var Queue = /*#__PURE__*/function () {
   return Queue;
 }();
 /**
- * [[DataSet]] code that can be reused in [[DataView]] or other similar implementations of [[DataInterface]].
+ * {@link DataSet} code that can be reused in {@link DataView} or other similar implementations of {@link DataInterface}.
  *
  * @typeParam Item - Item type that may or may not have an id.
  * @typeParam IdProp - Name of the property that contains the id.
@@ -18272,9 +18263,9 @@ var DataSetPart = /*#__PURE__*/function () {
  * Data stream
  *
  * @remarks
- * [[DataStream]] offers an always up to date stream of items from a [[DataSet]] or [[DataView]].
- * That means that the stream is evaluated at the time of iteration, conversion to another data type or when [[cache]] is called, not when the [[DataStream]] was created.
- * Multiple invocations of for example [[toItemArray]] may yield different results (if the data source like for example [[DataSet]] gets modified).
+ * {@link DataStream} offers an always up to date stream of items from a {@link DataSet} or {@link DataView}.
+ * That means that the stream is evaluated at the time of iteration, conversion to another data type or when {@link cache} is called, not when the {@link DataStream} was created.
+ * Multiple invocations of for example {@link toItemArray} may yield different results (if the data source like for example {@link DataSet} gets modified).
  * @typeParam Item - The item type this stream is going to work with.
  */
 _Symbol$iterator = _Symbol$iterator2;
@@ -18565,7 +18556,7 @@ var DataStream = /*#__PURE__*/function () {
      *
      * @remarks
      * This method allows for items to be fetched immediatelly and used (possibly multiple times) later.
-     * It can also be used to optimize performance as [[DataStream]] would otherwise reevaluate everything upon each iteration.
+     * It can also be used to optimize performance as {@link DataStream} would otherwise reevaluate everything upon each iteration.
      *
      * ## Example
      * ```javascript
@@ -18580,7 +18571,7 @@ var DataStream = /*#__PURE__*/function () {
      * ds.clear()
      * chachedStream // Still has all the items.
      * ```
-     * @returns A new [[DataStream]] with cached items (detached from the original [[DataSet]]).
+     * @returns A new {@link DataStream} with cached items (detached from the original {@link DataSet}).
      */
   }, {
     key: "cache",
@@ -19591,7 +19582,7 @@ var DataSet = /*#__PURE__*/function (_DataSetPart) {
     /**
      * Clear the entire data set.
      *
-     * After the items are removed, the [[DataSet]] will trigger an event `remove` for all removed items. When a `senderId` is provided, this id will be passed with the triggered event to all subscribers.
+     * After the items are removed, the {@link DataSet} will trigger an event `remove` for all removed items. When a `senderId` is provided, this id will be passed with the triggered event to all subscribers.
      *
      * @param senderId - Sender id.
      * @returns removedIds - The ids of all removed items.
