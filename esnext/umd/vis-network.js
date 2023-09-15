@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-09-15T07:37:05.183Z
+ * @date    2023-09-15T09:50:50.330Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -17471,6 +17471,8 @@
   OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
   PERFORMANCE OF THIS SOFTWARE.
   ***************************************************************************** */
+  /* global Reflect, Promise */
+
 
   function __classPrivateFieldGet(receiver, state, kind, f) {
       if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
@@ -18374,6 +18376,7 @@
    *
    * Strategy pattern for usage of direction methods for hierarchical layouts.
    */
+
 
   /**
    * Interface definition for direction strategy classes.
