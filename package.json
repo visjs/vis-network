@@ -136,7 +136,7 @@
     "shx": "0.3.4",
     "sinon": "15.2.0",
     "snap-shot-it": "7.9.10",
-    "start-server-and-test": "2.0.0",
+    "start-server-and-test": "2.0.1",
     "timsort": "0.3.0",
     "tmp-promise": "3.0.2",
     "uuid": "9.0.1",
