@@ -123,7 +123,7 @@
     "eslint": "8.50.0",
     "gh-pages": "5.0.0",
     "husky": "8.0.3",
-    "jsdom": "21.1.2",
+    "jsdom": "22.1.0",
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
     "lint-staged": "13.3.0",
