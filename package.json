@@ -134,7 +134,7 @@
     "semantic-release": "22.0.5",
     "serve": "14.2.1",
     "shx": "0.3.4",
-    "sinon": "16.0.0",
+    "sinon": "16.1.0",
     "snap-shot-it": "7.9.10",
     "start-server-and-test": "2.0.1",
     "timsort": "0.3.0",
