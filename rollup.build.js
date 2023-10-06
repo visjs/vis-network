@@ -10,7 +10,6 @@ export default generateRollupConfiguration({
     "vis-data": "vis",
     "vis-util": "vis",
     keycharm: "keycharm",
-    timsort: "timsort",
     uuid: "uuid",
   },
   header: { name: "vis-network" },
