@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-10-06T05:52:35.987Z
+ * @date    2023-10-06T12:44:00.255Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,10 +25,10 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm'), require('timsort')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm', 'timsort'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm, global.timsort));
-})(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm, TimSort) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('component-emitter'), require('vis-util/esnext/umd/vis-util.js'), require('vis-data/esnext/umd/vis-data.js'), require('uuid'), require('keycharm')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'component-emitter', 'vis-util/esnext/umd/vis-util.js', 'vis-data/esnext/umd/vis-data.js', 'uuid', 'keycharm'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.vis = global.vis || {}, global.Emitter, global.vis, global.vis, global.uuid, global.keycharm));
+})(this, (function (exports, Emitter, esnext, esnext$1, uuid, keycharm) {
   /**
    * Draw a circle.
    *
@@ -18377,7 +18377,6 @@
    * Strategy pattern for usage of direction methods for hierarchical layouts.
    */
 
-
   /**
    * Interface definition for direction strategy classes.
    *
@@ -18556,7 +18555,7 @@
 
     /** @inheritDoc */
     sort(nodeArray) {
-      TimSort.sort(nodeArray, function (a, b) {
+      nodeArray.sort(function (a, b) {
         return a.x - b.x;
       });
     }
@@ -18621,7 +18620,7 @@
 
     /** @inheritDoc */
     sort(nodeArray) {
-      TimSort.sort(nodeArray, function (a, b) {
+      nodeArray(function (a, b) {
         return a.y - b.y;
       });
     }
@@ -20265,7 +20264,7 @@
         result.push(Number(size));
       });
 
-      TimSort.sort(result, function (a, b) {
+      result.sort(function (a, b) {
         return b - a;
       });
 

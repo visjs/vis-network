@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-10-06T05:52:35.987Z
+ * @date    2023-10-06T12:44:00.255Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -29,7 +29,6 @@ import { topMost, forEach, deepExtend, overrideOpacity, bridgeObject, selectiveN
 import { isDataViewLike, DataSet } from 'vis-data/esnext/esm/vis-data.js';
 import { v4 } from 'uuid';
 import keycharm from 'keycharm';
-import TimSort, { sort } from 'timsort';
 
 /**
  * Draw a circle.
@@ -18379,7 +18378,6 @@ class SelectionHandler {
  * Strategy pattern for usage of direction methods for hierarchical layouts.
  */
 
-
 /**
  * Interface definition for direction strategy classes.
  *
@@ -18558,7 +18556,7 @@ class VerticalStrategy extends DirectionInterface {
 
   /** @inheritDoc */
   sort(nodeArray) {
-    sort(nodeArray, function (a, b) {
+    nodeArray.sort(function (a, b) {
       return a.x - b.x;
     });
   }
@@ -18623,7 +18621,7 @@ class HorizontalStrategy extends DirectionInterface {
 
   /** @inheritDoc */
   sort(nodeArray) {
-    sort(nodeArray, function (a, b) {
+    nodeArray(function (a, b) {
       return a.y - b.y;
     });
   }
@@ -20267,7 +20265,7 @@ class LayoutEngine {
       result.push(Number(size));
     });
 
-    TimSort.sort(result, function (a, b) {
+    result.sort(function (a, b) {
       return b - a;
     });
 
