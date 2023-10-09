@@ -20,10 +20,10 @@ coverage/
 .rpt2_cache
 
 # built files
+/cypress/e2e/**/*.js
+/cypress/e2e/**/*.js.map
 /cypress/fixtures/**/*.js
 /cypress/fixtures/**/*.js.map
-/cypress/integration/**/*.js
-/cypress/integration/**/*.js.map
 /cypress/pages/**/*.js
 /cypress/pages/**/*.js.map
 /cypress/screenshots/

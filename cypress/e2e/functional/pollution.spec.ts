@@ -1,4 +1,4 @@
-context("Pollution", (): void => {
+context("Pollution", { testIsolation: false }, (): void => {
   const resultContainerIds = [
     "results-before-loading",
     "results-after-loading",

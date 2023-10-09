@@ -1,6 +1,6 @@
 import { VisEvent } from "../helpers";
 
-context("Clicks", (): void => {
+context("Clicks", { testIsolation: false }, (): void => {
   /*
    * The canvas starts at 200x200 and ends at 400x400.
    */

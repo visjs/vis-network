@@ -184,162 +184,145 @@ describe("Directed hierarchical layout", (): void => {
       })
     );
 
-    describe(name, (): void => {
-      it("Preparation", (): void => {
-        cy.visVisitUniversal();
+    it(name, (): void => {
+      cy.visVisitUniversal();
 
-        cy.visRun(({ network, nodes, edges }): void => {
-          network.setOptions({
-            edges: {
-              arrows: {
-                to: true,
-              },
+      cy.visRun(({ network, nodes, edges }): void => {
+        network.setOptions({
+          edges: {
+            arrows: {
+              to: true,
             },
-            layout: {
-              hierarchical: {
-                enabled: true,
-                sortMethod: "directed",
-              },
+          },
+          layout: {
+            hierarchical: {
+              enabled: true,
+              sortMethod: "directed",
             },
-          });
-
-          nodes.add(data.nodes);
-          edges.add(data.edges);
+          },
         });
+
+        nodes.add(data.nodes);
+        edges.add(data.edges);
       });
 
       configs.forEach(({ expectedVisibleEdges, nodesToCluster }, cid): void => {
         const clusterDescribeName =
           cid === 0 ? "Without clustering" : `With ${cid} clusters`;
 
-        describe(clusterDescribeName, (): void => {
-          if (cid > 0) {
-            it("Cluster", (): void => {
-              cy.visRun(({ network }): void => {
-                network.cluster({
-                  clusterNodeProperties: {
-                    label: `Cluster #${cid}`,
-                  },
-                  joinCondition: ({ id }): boolean => nodesToCluster.has(id),
-                });
-              });
-            });
-          }
-
-          /*
-           * There's no point in testing running this test for cyclic graphs.
-           * Such graphs are always invalid.
-           */
-          if (!cyclic) {
-            /**
-             * Test that children are placed below their parents and parents
-             * above their children.
-             *
-             * This also tests that the required number of edges is visible on
-             * the canvas. Since the number is available there anyway, it can as
-             * well be tested.
-             */
-            it("Hierarchical order of nodes", (): void => {
-              cy.visRun(({ network }): void => {
-                const visibleNodeIds = new Set(
-                  Object.keys(network.getPositions())
-                );
-
-                /*
-                 * No matter how much ESLint think they're unnecessary, these two
-                 * assertions are indeed necessary.
-                 */
-                const visibleEdges = Object.values(
-                  (
-                    network as unknown as {
-                      body: {
-                        edges: {
-                          fromId: string;
-                          toId: string;
-                        }[];
-                      };
-                    }
-                  ).body.edges
-                ).filter(
-                  (edge): boolean =>
-                    visibleNodeIds.has(edge.fromId) &&
-                    visibleNodeIds.has(edge.toId)
-                );
-
-                const invalidEdges = visibleEdges
-                  .map(
-                    ({
-                      fromId,
-                      toId,
-                    }): {
-                      fromId: IdType;
-                      fromPosition: Point;
-                      toId: IdType;
-                      toPosition: Point;
-                    } => ({
-                      fromId,
-                      fromPosition: network.getPositions([fromId])[fromId],
-                      toId,
-                      toPosition: network.getPositions([toId])[toId],
-                    })
-                  )
-                  .filter(({ fromPosition, toPosition }): boolean => {
-                    return !(fromPosition.y < toPosition.y);
-                  });
-
-                expect(invalidEdges).to.deep.equal([]);
-                expect(visibleEdges).to.have.lengthOf(expectedVisibleEdges);
-              });
-            });
-
-            /**
-             * Test that all levels are evenly spaced without gaps.
-             */
-            it("Spacing between levels", (): void => {
-              cy.visRun(({ network }): void => {
-                const levels = Array.from(
-                  new Set(
-                    Object.values(network.getPositions()).map(
-                      ({ y }): number => y
-                    )
-                  )
-                ).sort((a, b): number => a - b);
-
-                const gaps = new Array(levels.length - 1)
-                  .fill(null)
-                  .map((_, i): number => {
-                    return levels[i] - levels[i + 1];
-                  });
-
-                expect(
-                  gaps.every((gap, _i, arr): boolean => {
-                    return gap === arr[0];
-                  }),
-                  "All levels should be evenly spaced without gaps."
-                ).to.be.true;
-              });
-            });
-          }
-
-          /**
-           * Click through the entire network to ensure that:
-           *   - No node is off the canvas.
-           *   - No node is covered behind another node.
-           *   - Each node is selected after being clicked.
-           */
-          it("Click through the network", (): void => {
-            cy.visStabilizeFitAndRun(({ network }): void => {
-              network.unselectAll();
-              expect(network.getSelectedNodes()).to.deep.equal([]);
-
-              const visibleNodeIds = new Set(
-                Object.keys(network.getPositions()).sort()
-              );
-              for (const id of visibleNodeIds) {
-                cy.visClickNode(id);
-              }
+        if (cid > 0) {
+          cy.visRun(({ network }): void => {
+            network.cluster({
+              clusterNodeProperties: {
+                label: `Cluster #${cid}`,
+              },
+              joinCondition: ({ id }): boolean => nodesToCluster.has(id),
             });
           });
+        }
+
+        /*
+         * There's no point in testing running this test for cyclic graphs.
+         * Such graphs are always invalid.
+         */
+        if (!cyclic) {
+          /**
+           * Test that children are placed below their parents and parents
+           * above their children.
+           *
+           * This also tests that the required number of edges is visible on
+           * the canvas. Since the number is available there anyway, it can as
+           * well be tested.
+           */
+          cy.visRun(({ network }): void => {
+            const visibleNodeIds = new Set(Object.keys(network.getPositions()));
+
+            /*
+             * No matter how much ESLint think they're unnecessary, these two
+             * assertions are indeed necessary.
+             */
+            const visibleEdges = Object.values(
+              (
+                network as unknown as {
+                  body: {
+                    edges: {
+                      fromId: string;
+                      toId: string;
+                    }[];
+                  };
+                }
+              ).body.edges
+            ).filter(
+              (edge): boolean =>
+                visibleNodeIds.has(edge.fromId) && visibleNodeIds.has(edge.toId)
+            );
+
+            const invalidEdges = visibleEdges
+              .map(
+                ({
+                  fromId,
+                  toId,
+                }): {
+                  fromId: IdType;
+                  fromPosition: Point;
+                  toId: IdType;
+                  toPosition: Point;
+                } => ({
+                  fromId,
+                  fromPosition: network.getPositions([fromId])[fromId],
+                  toId,
+                  toPosition: network.getPositions([toId])[toId],
+                })
+              )
+              .filter(({ fromPosition, toPosition }): boolean => {
+                return !(fromPosition.y < toPosition.y);
+              });
+
+            expect(invalidEdges).to.deep.equal([]);
+            expect(visibleEdges).to.have.lengthOf(expectedVisibleEdges);
+          });
+
+          /**
+           * Test that all levels are evenly spaced without gaps.
+           */
+          cy.visRun(({ network }): void => {
+            const levels = Array.from(
+              new Set(
+                Object.values(network.getPositions()).map(({ y }): number => y)
+              )
+            ).sort((a, b): number => a - b);
+
+            const gaps = new Array(levels.length - 1)
+              .fill(null)
+              .map((_, i): number => {
+                return levels[i] - levels[i + 1];
+              });
+
+            expect(
+              gaps.every((gap, _i, arr): boolean => {
+                return gap === arr[0];
+              }),
+              "All levels should be evenly spaced without gaps."
+            ).to.be.true;
+          });
+        }
+
+        /**
+         * Click through the entire network to ensure that:
+         *   - No node is off the canvas.
+         *   - No node is covered behind another node.
+         *   - Each node is selected after being clicked.
+         */
+        cy.visStabilizeFitAndRun(({ network }): void => {
+          network.unselectAll();
+          expect(network.getSelectedNodes()).to.deep.equal([]);
+
+          const visibleNodeIds = new Set(
+            Object.keys(network.getPositions()).sort()
+          );
+          for (const id of visibleNodeIds) {
+            cy.visClickNode(id);
+          }
         });
       });
     });
