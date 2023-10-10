@@ -104,7 +104,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-object-rest-spread": "7.18.0",
     "@egjs/hammerjs": "2.0.17",
-    "@mdi/font": "7.2.96",
+    "@mdi/font": "7.3.67",
     "@semantic-release/commit-analyzer": "11.0.0",
     "@semantic-release/github": "9.2.1",
     "@semantic-release/npm": "11.0.0",
