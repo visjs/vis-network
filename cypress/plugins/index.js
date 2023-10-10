@@ -16,13 +16,13 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  config.testFiles = [];
+  config.specPattern = [];
 
   const all = !config.env.VISUAL && !config.env.FUNCTIONAL;
 
   if (all || config.env.VISUAL) {
     // Visual regression screenshot tests.
-    config.testFiles.push("visual/**/*.spec.js");
+    config.specPattern.push("cypress/e2e/visual/**/*.spec.js");
     config.env.failSilently = false;
     config.trashAssetsBeforeRuns = true;
 
@@ -39,7 +39,7 @@ module.exports = (on, config) => {
 
   if (all || config.env.FUNCTIONAL) {
     // Functional tests.
-    config.testFiles.push("functional/**/*.spec.js");
+    config.specPattern.push("cypress/e2e/functional/**/*.spec.js");
   }
 
   return config;
