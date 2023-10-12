@@ -138,7 +138,7 @@
     "tmp-promise": "3.0.2",
     "uuid": "9.0.1",
     "vis-data": "7.1.7",
-    "vis-dev-utils": "4.0.38",
+    "vis-dev-utils": "4.0.41",
     "vis-util": "5.0.5"
   }
 }
