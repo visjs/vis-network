@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-10-12T17:22:34.845Z
+ * @date    2023-10-14T20:03:30.722Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -36581,7 +36581,7 @@
 	  }, {
 	    key: "sort",
 	    value: function sort(nodeArray) {
-	      nodeArray(function (a, b) {
+	      _sortInstanceProperty(nodeArray).call(nodeArray, function (a, b) {
 	        return a.y - b.y;
 	      });
 	    }
