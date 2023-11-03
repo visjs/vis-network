@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-10-21T00:17:06.857Z
+ * @date    2023-11-03T01:14:33.466Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -8348,55 +8348,6 @@ function forEach$1(object, callback) {
         callback(object[key], key, object);
       }
     }
-  }
-}
-/**
- * Add and event listener. Works for all browsers.
- *
- * @param element - The element to bind the event listener to.
- * @param action - Same as Element.addEventListener(action, —, —).
- * @param listener - Same as Element.addEventListener(—, listener, —).
- * @param useCapture - Same as Element.addEventListener(—, —, useCapture).
- */
-function addEventListener(element, action, listener, useCapture) {
-  if (element.addEventListener) {
-    var _context8;
-    if (useCapture === undefined) {
-      useCapture = false;
-    }
-    if (action === "mousewheel" && _includesInstanceProperty(_context8 = navigator.userAgent).call(_context8, "Firefox")) {
-      action = "DOMMouseScroll"; // For Firefox
-    }
-
-    element.addEventListener(action, listener, useCapture);
-  } else {
-    // @TODO: IE types? Does anyone care?
-    element.attachEvent("on" + action, listener); // IE browsers
-  }
-}
-/**
- * Remove an event listener from an element.
- *
- * @param element - The element to bind the event listener to.
- * @param action - Same as Element.removeEventListener(action, —, —).
- * @param listener - Same as Element.removeEventListener(—, listener, —).
- * @param useCapture - Same as Element.removeEventListener(—, —, useCapture).
- */
-function removeEventListener(element, action, listener, useCapture) {
-  if (element.removeEventListener) {
-    var _context9;
-    // non-IE browsers
-    if (useCapture === undefined) {
-      useCapture = false;
-    }
-    if (action === "mousewheel" && _includesInstanceProperty(_context9 = navigator.userAgent).call(_context9, "Firefox")) {
-      action = "DOMMouseScroll"; // For Firefox
-    }
-
-    element.removeEventListener(action, listener, useCapture);
-  } else {
-    // @TODO: IE types? Does anyone care?
-    element.detachEvent("on" + action, listener); // IE browsers
   }
 }
 /**
@@ -27496,9 +27447,9 @@ var Canvas = /*#__PURE__*/function () {
 
         // Automatically adapt to changing size of the browser.
         var resizeFunction = _bindInstanceProperty$1(_context2 = this._onResize).call(_context2, this);
-        addEventListener(window, "resize", resizeFunction);
+        window.addEventListener("resize", resizeFunction);
         this._cleanupCallbacks.push(function () {
-          removeEventListener(window, "resize", resizeFunction);
+          window.removeEventListener("resize", resizeFunction);
         });
       }
     }

@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-10-21T00:17:06.857Z
+ * @date    2023-11-03T01:14:33.466Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15257,9 +15257,9 @@
 
         // Automatically adapt to changing size of the browser.
         const resizeFunction = this._onResize.bind(this);
-        esnext.addEventListener(window, "resize", resizeFunction);
+        window.addEventListener("resize", resizeFunction);
         this._cleanupCallbacks.push(() => {
-          esnext.removeEventListener(window, "resize", resizeFunction);
+          window.removeEventListener("resize", resizeFunction);
         });
       }
     }

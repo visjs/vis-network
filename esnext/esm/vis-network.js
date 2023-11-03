@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-10-21T00:17:06.857Z
+ * @date    2023-11-03T01:14:33.466Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,7 +25,7 @@
  */
 
 import Emitter from 'component-emitter';
-import { topMost, forEach, deepExtend, overrideOpacity, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, VALIDATOR_PRINT_STYLE, selectiveDeepExtend, isString, Alea, HSVToHex, addEventListener, removeEventListener, Hammer, easingFunctions, getAbsoluteLeft, getAbsoluteTop, Popup, recursiveDOMDelete, Validator, Configurator, Activator } from 'vis-util/esnext/esm/vis-util.js';
+import { topMost, forEach, deepExtend, overrideOpacity, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, VALIDATOR_PRINT_STYLE, selectiveDeepExtend, isString, Alea, HSVToHex, Hammer, easingFunctions, getAbsoluteLeft, getAbsoluteTop, Popup, recursiveDOMDelete, Validator, Configurator, Activator } from 'vis-util/esnext/esm/vis-util.js';
 import { isDataViewLike, DataSet } from 'vis-data/esnext/esm/vis-data.js';
 import { v4 } from 'uuid';
 import keycharm from 'keycharm';
@@ -15258,9 +15258,9 @@ class Canvas {
 
       // Automatically adapt to changing size of the browser.
       const resizeFunction = this._onResize.bind(this);
-      addEventListener(window, "resize", resizeFunction);
+      window.addEventListener("resize", resizeFunction);
       this._cleanupCallbacks.push(() => {
-        removeEventListener(window, "resize", resizeFunction);
+        window.removeEventListener("resize", resizeFunction);
       });
     }
   }
