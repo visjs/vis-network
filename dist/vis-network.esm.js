@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2023-11-04T07:39:33.820Z
+ * @date    2023-11-04T09:22:46.843Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7899,7 +7899,7 @@ Hammer$2.defaults;
 var RealHammer = Hammer$2;
 
 function _createForOfIteratorHelper$7(o, allowArrayLike) { var it = typeof _Symbol !== "undefined" && _getIteratorMethod(o) || o["@@iterator"]; if (!it) { if (_Array$isArray(o) || (it = _unsupportedIterableToArray$7(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray$7(o, minLen) { var _context17; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = _sliceInstanceProperty(_context17 = Object.prototype.toString.call(o)).call(_context17, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
+function _unsupportedIterableToArray$7(o, minLen) { var _context15; if (!o) return; if (typeof o === "string") return _arrayLikeToArray$7(o, minLen); var n = _sliceInstanceProperty(_context15 = Object.prototype.toString.call(o)).call(_context15, 8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return _Array$from$1(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$7(o, minLen); }
 function _arrayLikeToArray$7(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 /**
@@ -8782,55 +8782,6 @@ function throttle(fn) {
   };
 }
 /**
- * Add and event listener. Works for all browsers.
- *
- * @param element - The element to bind the event listener to.
- * @param action - Same as Element.addEventListener(action, —, —).
- * @param listener - Same as Element.addEventListener(—, listener, —).
- * @param useCapture - Same as Element.addEventListener(—, —, useCapture).
- */
-function addEventListener(element, action, listener, useCapture) {
-  if (element.addEventListener) {
-    var _context8;
-    if (useCapture === undefined) {
-      useCapture = false;
-    }
-    if (action === "mousewheel" && _includesInstanceProperty(_context8 = navigator.userAgent).call(_context8, "Firefox")) {
-      action = "DOMMouseScroll"; // For Firefox
-    }
-
-    element.addEventListener(action, listener, useCapture);
-  } else {
-    // @TODO: IE types? Does anyone care?
-    element.attachEvent("on" + action, listener); // IE browsers
-  }
-}
-/**
- * Remove an event listener from an element.
- *
- * @param element - The element to bind the event listener to.
- * @param action - Same as Element.removeEventListener(action, —, —).
- * @param listener - Same as Element.removeEventListener(—, listener, —).
- * @param useCapture - Same as Element.removeEventListener(—, —, useCapture).
- */
-function removeEventListener(element, action, listener, useCapture) {
-  if (element.removeEventListener) {
-    var _context9;
-    // non-IE browsers
-    if (useCapture === undefined) {
-      useCapture = false;
-    }
-    if (action === "mousewheel" && _includesInstanceProperty(_context9 = navigator.userAgent).call(_context9, "Firefox")) {
-      action = "DOMMouseScroll"; // For Firefox
-    }
-
-    element.removeEventListener(action, listener, useCapture);
-  } else {
-    // @TODO: IE types? Does anyone care?
-    element.detachEvent("on" + action, listener); // IE browsers
-  }
-}
-/**
  * Cancels the event's default action if it is cancelable, without stopping further propagation of the event.
  *
  * @param event - The event whose default action should be prevented.
@@ -9038,8 +8989,8 @@ function overrideOpacity(color, opacity) {
  * @returns Hex color string (for example: '#0acdc0').
  */
 function RGBToHex(red, green, blue) {
-  var _context10;
-  return "#" + _sliceInstanceProperty(_context10 = ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16)).call(_context10, 1);
+  var _context8;
+  return "#" + _sliceInstanceProperty(_context8 = ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16)).call(_context8, 1);
 }
 /**
  * Parse a color property into an object with border, background, and highlight colors.
@@ -9052,8 +9003,8 @@ function parseColor(inputColor, defaultColor) {
   if (isString(inputColor)) {
     var colorStr = inputColor;
     if (isValidRGB(colorStr)) {
-      var _context11;
-      var rgb = _mapInstanceProperty(_context11 = colorStr.substr(4).substr(0, colorStr.length - 5).split(",")).call(_context11, function (value) {
+      var _context9;
+      var rgb = _mapInstanceProperty(_context9 = colorStr.substr(4).substr(0, colorStr.length - 5).split(",")).call(_context9, function (value) {
         return _parseInt$1(value);
       });
       colorStr = RGBToHex(rgb[0], rgb[1], rgb[2]);
@@ -10311,7 +10262,7 @@ var ColorPicker$1 = /*#__PURE__*/function () {
   }, {
     key: "_create",
     value: function _create() {
-      var _context12, _context13, _context14, _context15;
+      var _context10, _context11, _context12, _context13;
       this.frame = document.createElement("div");
       this.frame.className = "vis-color-picker";
       this.colorPickerDiv = document.createElement("div");
@@ -10389,19 +10340,19 @@ var ColorPicker$1 = /*#__PURE__*/function () {
       this.cancelButton = document.createElement("div");
       this.cancelButton.className = "vis-button vis-cancel";
       this.cancelButton.innerText = "cancel";
-      this.cancelButton.onclick = _bindInstanceProperty$1(_context12 = this._hide).call(_context12, this, false);
+      this.cancelButton.onclick = _bindInstanceProperty$1(_context10 = this._hide).call(_context10, this, false);
       this.applyButton = document.createElement("div");
       this.applyButton.className = "vis-button vis-apply";
       this.applyButton.innerText = "apply";
-      this.applyButton.onclick = _bindInstanceProperty$1(_context13 = this._apply).call(_context13, this);
+      this.applyButton.onclick = _bindInstanceProperty$1(_context11 = this._apply).call(_context11, this);
       this.saveButton = document.createElement("div");
       this.saveButton.className = "vis-button vis-save";
       this.saveButton.innerText = "save";
-      this.saveButton.onclick = _bindInstanceProperty$1(_context14 = this._save).call(_context14, this);
+      this.saveButton.onclick = _bindInstanceProperty$1(_context12 = this._save).call(_context12, this);
       this.loadButton = document.createElement("div");
       this.loadButton.className = "vis-button vis-load";
       this.loadButton.innerText = "load last";
-      this.loadButton.onclick = _bindInstanceProperty$1(_context15 = this._loadLast).call(_context15, this);
+      this.loadButton.onclick = _bindInstanceProperty$1(_context13 = this._loadLast).call(_context13, this);
       this.frame.appendChild(this.colorPickerDiv);
       this.frame.appendChild(this.arrowDiv);
       this.frame.appendChild(this.brightnessLabel);
@@ -11734,8 +11685,8 @@ var Validator$1 = /*#__PURE__*/function () {
             indexMatch = result.indexMatch;
           }
         } else {
-          var _context16;
-          if (_indexOfInstanceProperty(_context16 = op.toLowerCase()).call(_context16, lowerCaseOption) !== -1) {
+          var _context14;
+          if (_indexOfInstanceProperty(_context14 = op.toLowerCase()).call(_context14, lowerCaseOption) !== -1) {
             indexMatch = op;
           }
           distance = Validator.levenshteinDistance(option, op);
@@ -11877,7 +11828,6 @@ var index$2 = /*#__PURE__*/Object.freeze({
 	Validator: Validator,
 	addClassName: addClassName,
 	addCssText: addCssText,
-	addEventListener: addEventListener,
 	binarySearchCustom: binarySearchCustom,
 	binarySearchValue: binarySearchValue,
 	bridgeObject: bridgeObject,
@@ -11916,7 +11866,6 @@ var index$2 = /*#__PURE__*/Object.freeze({
 	recursiveDOMDelete: recursiveDOMDelete,
 	removeClassName: removeClassName,
 	removeCssText: removeCssText,
-	removeEventListener: removeEventListener,
 	selectiveBridgeObject: selectiveBridgeObject,
 	selectiveDeepExtend: selectiveDeepExtend,
 	selectiveExtend: selectiveExtend,
