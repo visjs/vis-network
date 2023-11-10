@@ -1,4 +1,4 @@
-declare type IdType = string | number;
+type IdType = string | number;
 export interface ViewFitOptions {
     nodes: IdType[];
     minZoomLevel: number;

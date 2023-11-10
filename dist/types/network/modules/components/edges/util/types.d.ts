@@ -1,6 +1,6 @@
-export declare type Id = string | number;
-export declare type EdgeOptions = any;
-export declare type VNode = any;
+export type Id = string | number;
+export type EdgeOptions = any;
+export type VNode = any;
 export interface VBody {
     nodes: Record<Id, VNode>;
     functions: {
@@ -14,7 +14,7 @@ export interface VBody {
         scale: number;
     };
 }
-export declare type Label = {};
+export type Label = {};
 export interface Point {
     x: number;
     y: number;
@@ -22,11 +22,11 @@ export interface Point {
 export interface PointT extends Point {
     t: number;
 }
-export declare type SelectiveRequired<T, RequiredKey extends keyof Extract<T, object>> = T & {
+export type SelectiveRequired<T, RequiredKey extends keyof Extract<T, object>> = T & {
     [Key in RequiredKey]-?: NonNullable<Extract<T, object>[Key]>;
 };
-export declare type ArrowType = "arrow" | "bar" | "box" | "circle" | "crow" | "curve" | "diamond" | "image" | "inv_curve" | "inv_triangle" | "triangle" | "vee";
-export declare type ColorInheritance = boolean | "both" | "from" | "to";
+export type ArrowType = "arrow" | "bar" | "box" | "circle" | "crow" | "curve" | "diamond" | "image" | "inv_curve" | "inv_triangle" | "triangle" | "vee";
+export type ColorInheritance = boolean | "both" | "from" | "to";
 export interface CachedImage {
     width: number;
     height: number;

@@ -14,7 +14,7 @@ export interface Locale {
     editEdgeDescription: string;
     editNode: string;
 }
-export declare type Locales = Record<string, Locale>;
+export type Locales = Record<string, Locale>;
 export declare const en: Locale;
 export declare const de: Locale;
 export declare const es: Locale;

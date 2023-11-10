@@ -18,7 +18,7 @@ export interface SelectionAccumulatorCommitSummary {
     nodes: SingleTypeSelectionAccumulatorChanges<Node>;
     edges: SingleTypeSelectionAccumulatorChanges<Edge>;
 }
-export declare type SelectionAccumulatorCommitHandler<CommitArgs extends readonly any[]> = (summary: SelectionAccumulatorCommitSummary, ...rest: CommitArgs) => void;
+export type SelectionAccumulatorCommitHandler<CommitArgs extends readonly any[]> = (summary: SelectionAccumulatorCommitSummary, ...rest: CommitArgs) => void;
 export declare class SelectionAccumulator<CommitArgs extends readonly any[]> {
     #private;
     constructor(commitHandler?: SelectionAccumulatorCommitHandler<CommitArgs>);

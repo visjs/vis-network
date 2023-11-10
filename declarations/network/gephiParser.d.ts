@@ -1,4 +1,4 @@
-export declare type Id = number | string;
+export type Id = number | string;
 export interface ColorObject {
     background: string;
     border: string;

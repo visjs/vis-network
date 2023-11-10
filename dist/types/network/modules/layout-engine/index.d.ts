@@ -1,5 +1,5 @@
-declare type Levels = Record<string | number, number>;
-declare type Id = string | number;
+type Levels = Record<string | number, number>;
+type Id = string | number;
 interface Edge {
     connected: boolean;
     from: Node;
