@@ -13,12 +13,12 @@ export default defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     async setupNodeEvents(on, config) {
-      return (await import("./cypress/plugins/index.js")).default(on, config);
+      return (await import("./cypress/plugins/index.ts")).default(on, config);
     },
     specPattern: [
-      "cypress/e2e/visual/**/*.spec.js",
-      "cypress/e2e/functional/**/*.spec.js",
+      "cypress/e2e/visual/**/*.spec.ts",
+      "cypress/e2e/functional/**/*.spec.ts",
     ],
-    supportFile: "cypress/support/e2e.js",
+    supportFile: "cypress/support/e2e.ts",
   },
 });
