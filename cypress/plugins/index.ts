@@ -7,12 +7,12 @@
 // You can read more here:
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
-const getCompareSnapshotsPlugin = require("cypress-visual-regression/dist/plugin");
+import getCompareSnapshotsPlugin from "cypress-visual-regression/dist/plugin";
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-module.exports = (on, config) => {
+export default (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
@@ -22,7 +22,7 @@ module.exports = (on, config) => {
 
   if (all || config.env.VISUAL) {
     // Visual regression screenshot tests.
-    config.specPattern.push("cypress/e2e/visual/**/*.spec.js");
+    config.specPattern.push("cypress/e2e/visual/**/*.spec.ts");
     config.env.failSilently = false;
     config.trashAssetsBeforeRuns = true;
 
@@ -39,7 +39,7 @@ module.exports = (on, config) => {
 
   if (all || config.env.FUNCTIONAL) {
     // Functional tests.
-    config.specPattern.push("cypress/e2e/functional/**/*.spec.js");
+    config.specPattern.push("cypress/e2e/functional/**/*.spec.ts");
   }
 
   return config;
