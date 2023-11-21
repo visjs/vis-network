@@ -110,7 +110,7 @@
     "@semantic-release/npm": "11.0.1",
     "@semantic-release/release-notes-generator": "12.1.0",
     "@types/chai": "4.3.11",
-    "@types/mocha": "10.0.4",
+    "@types/mocha": "10.0.5",
     "@types/sinon": "17.0.1",
     "@types/uuid": "9.0.7",
     "compare-versions": "6.1.0",
