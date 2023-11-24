@@ -137,7 +137,7 @@
     "start-server-and-test": "2.0.3",
     "tmp-promise": "3.0.2",
     "uuid": "9.0.1",
-    "vis-data": "7.1.8",
+    "vis-data": "7.1.9",
     "vis-dev-utils": "4.0.45",
     "vis-util": "5.0.7"
   }
