@@ -107,7 +107,7 @@
     "@mdi/font": "7.4.47",
     "@semantic-release/commit-analyzer": "11.1.0",
     "@semantic-release/github": "9.2.6",
-    "@semantic-release/npm": "11.0.2",
+    "@semantic-release/npm": "11.0.3",
     "@semantic-release/release-notes-generator": "12.1.0",
     "@types/chai": "4.3.12",
     "@types/mocha": "10.0.6",
