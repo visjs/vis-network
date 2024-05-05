@@ -861,6 +861,7 @@ export interface ChosenLabelValues {
   strokeWidth: number;
   vadjust: number;
 }
+
 export type NodeChosenLabelFunction = (
   values: ChosenLabelValues,
   id: IdType,
@@ -881,6 +882,7 @@ export interface ChosenNodeValues {
   shadowY: number;
   size: number;
 }
+
 export type NodeChosenNodeFunction = (
   values: ChosenNodeValues,
   id: IdType,
@@ -979,6 +981,39 @@ export interface NodeOptions {
   y?: number;
 }
 
+export type EdgeChosenLabelFunction = (
+    values: ChosenLabelValues,
+    id: IdType,
+    selected: boolean,
+    hovered: boolean
+  ) => void;
+
+export interface ChosenEdgeValues {
+    borderColor: string;
+    borderDashes: boolean | number[];
+    borderRadius: number;
+    borderWidth: number;
+    color: string;
+    shadow: boolean;
+    shadowColor: string;
+    shadowSize: number;
+    shadowX: number;
+    shadowY: number;
+    size: number;
+  }
+
+export type EdgeChosenEdgeFunction = (
+    values: ChosenEdgeValues,
+    id: IdType,
+    selected: boolean,
+    hovered: boolean
+  ) => void;
+
+export interface EdgeChosen {
+    edge: boolean | EdgeChosenEdgeFunction;
+    label: boolean | EdgeChosenLabelFunction;
+  }
+
 export interface EdgeOptions {
   arrows?: string | {
     to?: boolean | ArrowHead
@@ -988,10 +1023,7 @@ export interface EdgeOptions {
 
   arrowStrikethrough?: boolean;
 
-  chosen?: boolean | {
-    edge?: boolean, // please note, chosen.edge could be also a function. This case is not represented here
-    label?: boolean, // please note, chosen.label could be also a function. This case is not represented here
-  };
+  chosen?: boolean | EdgeChosen;
 
   color?: string | {
     color?: string,
