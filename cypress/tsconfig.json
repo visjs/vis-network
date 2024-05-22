@@ -3,11 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "lib": ["esnext", "dom"],
-    "module": "es2020",
-    "outDir": ".",
-    "target": "es2015",
-    "types": ["cypress"]
+    "outDir": "."
   },
-  "exclude": ["../node_modules", "./plugins", "./screenshots", "./videos"],
-  "include": ["**/*.ts"]
+  "exclude": ["../node_modules"],
+  "include": ["pages/**/*.ts"]
 }
