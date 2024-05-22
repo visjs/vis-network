@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Network | Basic Usage | Peer Build</title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../../../peer/umd/vis-network.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../styles/vis-network.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Basic Usage</h2>
+        <h3>Peer Build</h3>
+      </div>
+
+      <p>Create a simple network with some nodes and edges.</p>
+
+      <p>
+        Peer build is designed to work well with other packages from the Vis
+        family. Compared to the standalone or legacy builds it doesn't include
+        dependencies which allows the same DataSet (and other dependencies) to
+        be used in Network and other packages (e.g. Timeline). In UMD version
+        this build doesn't suffer from the bug where exported members from
+        different packages get overwritten rendering some functionality
+        unusable.
+      </p>
+
+      <h4>When to use</h4>
+      <p>
+        When you need multiple packages from the Vis family on the same page or
+        finer control over what gets loaded.
+      </p>
+
+      <h4>Content</h4>
+      <ul>
+        <li>
+          Vis Network
+          <ul>
+            <li>Network"</li>
+            <li>NetworkDOTParser"</li>
+            <li>NetworkImages"</li>
+            <li>NetworkOptions"</li>
+            <li>networkGephiParser"</li>
+            <li>parseDOTNetwork"</li>
+            <li>parseGephiNetwork"</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>How to use</h4>
+
+      <h5>Browser UMD</h5>
+      <pre><code>
+&lt;!--
+  In the following URLs you may want to replace &commat;latest by &commat;version
+  to prevent unexpected potentionally breaking updates.
+  For example vis-data&commat;1.0.0 instead of vis-data&commat;latest.
+--&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-data&commat;latest/peer/umd/vis-data.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-network&commat;latest/peer/umd/vis-network.min.js&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://unpkg.com/vis-network/styles/vis-network.min.css&quot; /&gt;
+&lt;!-- You may include other packages like Vis Timeline or Vis Graph3D here. --&gt;
+
+&lt;div id=&quot;mynetwork&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+  // create an array with nodes
+  var nodes = new vis.DataSet([
+    { id: 1, label: "Node 1" },
+    { id: 2, label: "Node 2" },
+    { id: 3, label: "Node 3" },
+    { id: 4, label: "Node 4" },
+    { id: 5, label: "Node 5" }
+  ]);
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+    { from: 1, to: 3 },
+    { from: 1, to: 2 },
+    { from: 2, to: 4 },
+    { from: 2, to: 5 },
+    { from: 3, to: 3 }
+  ]);
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+&lt;/script&gt;
+      </code></pre>
+
+      <h5>Bundled ESM</h5>
+      <pre><code>
+import { DataSet } from "vis-data/peer";
+import { Network } from "vis-network/peer";
+import "vis-network/styles/vis-network.css";
+
+// create an array with nodes
+const nodes = new DataSet([
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" }
+]);
+
+// create an array with edges
+const edges = new DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+const container = document.getElementById("mynetwork");
+const data = {
+  nodes: nodes,
+  edges: edges
+};
+const options = {};
+const network = new Network(container, data, options);
+      </code></pre>
+
+      The code above has to be injected into a page which contains an element
+      with <code>mynetwork</code> id. Like for example:
+      <pre><code>
+&lt;div id=&quot;mynetwork&quot;&gt;&lt;/div&gt;
+      </code></pre>
+    </div>
+
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 },
+      ]);
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {};
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>

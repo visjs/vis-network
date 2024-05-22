@@ -1,0 +1,100 @@
+{
+  "nodes": [
+    {
+      "id": 0,
+      "type": "A",
+      "label": "A Node 1",
+      "color": "orange",
+      "x": -50,
+      "y": -50
+    },
+    {
+      "id": 1,
+      "type": "A",
+      "label": "A node 2",
+      "color": "orange",
+      "x": -50,
+      "y": 50
+    },
+    {
+      "id": 2,
+      "type": "A",
+      "label": "A node 3",
+      "color": "orange",
+      "x": -150,
+      "y": 50
+    },
+    {
+      "id": 3,
+      "type": "A",
+      "label": "A Node 4",
+      "color": "orange",
+      "x": 50,
+      "y": 50
+    },
+    {
+      "id": 4,
+      "type": "A",
+      "label": "A Node 5",
+      "color": "orange",
+      "x": -50,
+      "y": 150
+    },
+
+    {
+      "id": 5,
+      "type": "B",
+      "label": "B Node 1"
+    },
+    {
+      "id": 6,
+      "type": "B",
+      "label": "B Node 2"
+    },
+    {
+      "id": 7,
+      "type": "B",
+      "label": "B Node "
+    },
+    {
+      "id": 8,
+      "type": "B",
+      "label": "B Node "
+    },
+    {
+      "id": 9,
+      "type": "B",
+      "label": "B Node "
+    },
+    {
+      "id": 10,
+      "type": "B",
+      "label": "B Node "
+    },
+    {
+      "id": 11,
+      "type": "B",
+      "label": "B Node "
+    },
+    {
+      "id": 12,
+      "type": "B",
+      "label": "B Node "
+    }
+  ],
+
+  "edges": [
+    { "from": 0, "to": 1 },
+    { "from": 1, "to": 2 },
+    { "from": 1, "to": 3 },
+    { "from": 1, "to": 4 },
+    { "from": 2, "to": 5 },
+    { "from": 3, "to": 6 },
+    { "from": 4, "to": 7 },
+    { "from": 4, "to": 8 },
+    { "from": 4, "to": 9 },
+    { "from": 4, "to": 10 },
+    { "from": 4, "to": 11 },
+    { "from": 4, "to": 12 }
+  ]
+}

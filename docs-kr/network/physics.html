@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>vis.js - Physics 문서</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tipue vendor css -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css"
+      rel="stylesheet"
+    />
+
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet" />
+    <link href="../css/overrides.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/12.1.5/js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+      smoothScroll.init();
+    </script>
+
+    <script
+      type="text/javascript"
+      src="../../common-docs-files/js/toggleTable.js"
+    ></script>
+  </head>
+  <body onload="prettyPrint();">
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand hidden-sm" href="./index.html">vis.js</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav"></ul>
+              <form class="navbar-form navbar-right" role="search">
+                <input
+                  name="q"
+                  id="tipue_search_input"
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Keyword 입력"
+                />
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="vis.initSiteSearch(true);"
+                >
+                  검색
+                </button>
+              </form>
+              <div id="search-results-wrapper" class="panel panel-default">
+                <div class="panel-body">
+                  <div id="tipue_search_content"></div>
+                </div>
+              </div>
+              <div id="keyword-info" class="panel panel-success">
+                <div class="panel-body">
+                  Found <span id="keyword-count"></span> results. Click
+                  <a id="keyword-jumper-button" href="">here</a> to jump to the
+                  first keyword occurence!
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container full">
+      <h1>Network - physics</h1>
+      <p>
+        Node 및 Edge를 이동하여 물리적 시뮬레이션을 처리해 정확하게
+        표현해줍니다.
+      </p>
+      <h3>옵션</h3>
+      <p>physics의 옵션은 'physics' Object에 포함되어 있습니다.</p>
+      <p>전체 옵션 또는 요약 옵션을 클릭하여 사용 방법을 확인하세요.</p>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active" onclick="toggleTab(this)">
+          <a href="#">옵션 숨기기</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="fullOptions"
+        >
+          <a href="#">전체 옵션</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="shortOptions"
+        >
+          <a href="#">요약 옵션</a>
+        </li>
+      </ul>
+      <br />
+      <pre class="prettyprint lang-js options top hidden" id="fullOptions">
+// 모든 옵션들 입니다.
+var options = {
+  physics:{
+    enabled: true,
+    barnesHut: {
+      theta: 0.5,
+      gravitationalConstant: -2000,
+      centralGravity: 0.3,
+      springLength: 95,
+      springConstant: 0.04,
+      damping: 0.09,
+      avoidOverlap: 0
+    },
+    forceAtlas2Based: {
+      theta: 0.5,
+      gravitationalConstant: -50,
+      centralGravity: 0.01,
+      springConstant: 0.08,
+      springLength: 100,
+      damping: 0.4,
+      avoidOverlap: 0
+    },
+    repulsion: {
+      centralGravity: 0.2,
+      springLength: 200,
+      springConstant: 0.05,
+      nodeDistance: 100,
+      damping: 0.09
+    },
+    hierarchicalRepulsion: {
+      centralGravity: 0.0,
+      springLength: 100,
+      springConstant: 0.01,
+      nodeDistance: 120,
+      damping: 0.09,
+      avoidOverlap: 0
+    },
+    maxVelocity: 50,
+    minVelocity: 0.1,
+    solver: 'barnesHut',
+    stabilization: {
+      enabled: true,
+      iterations: 1000,
+      updateInterval: 100,
+      onlyDynamicEdges: false,
+      fit: true
+    },
+    timestep: 0.5,
+    adaptiveTimestep: true
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <pre class="prettyprint lang-js options top hidden" id="shortOptions">
+// 단축 옵션만 표시합니다.
+var options = {
+  physics:{
+    stabilization: false
+  }
+}
+network.setOptions(options);
+</pre
+      >
+      <p>아래는 각각의 옵션들에 대한 설명입니다.</p>
+      <table class="options" id="optionTable">
+        <tr>
+          <th>이름</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>설명</th>
+        </tr>
+        <tr>
+          <td>enabled</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            physics 시스템을 켜거나 끄는 옵션입니다. 이 옵션은 필수가 아닙니다.
+            아래 옵션들을 정의하고 실행된 옵션이 없는 경우 이 옵션은 true로
+            설정됩니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','barnesHut', this);"
+        >
+          <td>
+            <span parent="barnesHut" class="right-caret"></span> barnesHut
+          </td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>
+            BarnesHut은 queadtree 기준으로 중력 모델입니다. 이것은 가장 빠르며,
+            Default와 non-hierarchical 레이아웃에 solver를 추천합니다.
+          </td>
+        </tr>
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.theta</td>
+          <td>Number</td>
+          <td><code>0.5</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.gravitationalConstant</td>
+          <td>Number</td>
+          <td><code>-2000</code></td>
+          <td>
+            중력의 값을 설정하는 옵셥입니다. 중력을 강하게 하려면 값을 줄이면
+            됩니다. (-10000, -50000)
+          </td>
+        </tr>
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.centralGravity</td>
+          <td>Number</td>
+          <td><code>0.3</code></td>
+          <td>
+            전체 Network를 중앙으로 다시 끌어 당기는 중앙 중력 장치에 대한
+            옵션입니다.
+          </td>
+        </tr>
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.springLength</td>
+          <td>Number</td>
+          <td><code>95</code></td>
+          <td>
+            Edge는 스프링으로 모델링됩니다. 스프링의 길이는 스프링의 남은
+            길이입니다.
+          </td>
+        </tr>
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.springConstant</td>
+          <td>Number</td>
+          <td><code>0.04</code></td>
+          <td>스프링의 강함을 조절하는 옵션입니다. 값이 클수록 강합니다.</td>
+        </tr>
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.damping</td>
+          <td>Number</td>
+          <td><code>0.09</code></td>
+          <td>
+            값의 범위: <code>[0 .. 1]</code>. 감속 계수는 물리적 시뮬레이션
+            반복에서 다음 반복까지 전달되는 속도의 값이다.
+          </td>
+        </tr>
+
+        <tr parent="barnesHut" class="hidden">
+          <td class="indent">barnesHut.avoidOverlap</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>
+            값의 범위: <code>[0 .. 1]</code>. 0보다 크면, Node의 크기가
+            고려됩니다. 거리는 두 중력 모델에 대한 Node의 원 반지름에서
+            계산합니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','forceAtlas2Based', this);"
+        >
+          <td>
+            <span parent="forceAtlas2Based" class="right-caret"></span>
+            forceAtlas2Based
+          </td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>
+            Force Atlas 2는
+            <a
+              href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679"
+              target="_blank"
+              >Jacomi <i>et al</i> (2014)</a
+            >께서 Gephi의 사용을 위해 개발하셨습니다. forceAtlas2Based는 방정식
+            중 일부를 사용해 vis barnesHut 구현에 사용됩니다. 주요 차이점은
+            거리에 대한 중심 중력 모델이라는 점입니다. 또한 2D가 아닌
+            직선입니다. 마지막으로, 모든 Node의 weight는 연결된 Edge 개수의 1을
+            더한 값의 배수입니다.
+          </td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.theta</td>
+          <td>Number</td>
+          <td><code>0.5</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.gravitationalConstant</td>
+          <td>Number</td>
+          <td><code>-50</code></td>
+          <td>
+            barnesHut과 비슷합니다. 연결성 또한 한 요소의 질량을 통해
+            고려됩니다. 저항을 더 강하게 하려면 값을 줄이십시오. (-1000, -2000)
+          </td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.centralGravity</td>
+          <td>Number</td>
+          <td><code>0.01</code></td>
+          <td>
+            전체 Network를 중앙으로 다시 끌어 당기는 중앙 중력장치가 있습니다.
+            이것은 거리에 따라 달라지지 않습니다.
+          </td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.springLength</td>
+          <td>Number</td>
+          <td><code>100</code></td>
+          <td>
+            Edge들은 스프링으로 모델링됩니다. 이 스프링의 길이는 나머지
+            길이입니다.
+          </td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.springConstant</td>
+          <td>Number</td>
+          <td><code>0.08</code></td>
+          <td>값이 클수록 스프링이 강해집니다.</td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.damping</td>
+          <td>Number</td>
+          <td><code>0.4</code></td>
+          <td>
+            값의 범위: <code>[0 .. 1]</code>. 감쇠 계수는 이전 물리 시뮬레이션
+            반복에서 다음 반복까지 전달되는 속도입니다.
+          </td>
+        </tr>
+        <tr parent="forceAtlas2Based" class="hidden">
+          <td class="indent">forceAtlas2Based.avoidOverlap</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>
+            값의 범위: <code>[0 .. 1]</code>. Node의 크기가 0보다 크면
+            고려됩니다. 거리는 Node의 중력 모델에 대해 많은 것을 포함하고,
+            반지름에서 계산됩니다. 값이 1이면 최대 중복을 피하는 것입니다.
+          </td>
+        </tr>
+
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','repulsion', this);"
+        >
+          <td>
+            <span parent="repulsion" class="right-caret"></span> repulsion
+          </td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>
+            repulsion 모델은 Node 주위에 단순화 된 repulsion 필드가 있다고
+            가정합니다. 힘은 (0.5 * nodeDistance 이하)에서 0(2 * nodeDistance)로
+            감소합니다.
+          </td>
+        </tr>
+        <tr parent="repulsion" class="hidden">
+          <td class="indent">repulsion.nodeDistance</td>
+          <td>Number</td>
+          <td><code>100</code></td>
+          <td>repulsion에 대한 영향의 범위입니다.</td>
+        </tr>
+        <tr parent="repulsion" class="hidden">
+          <td class="indent">repulsion.centralGravity</td>
+          <td>Number</td>
+          <td><code>0.2</code></td>
+          <td>
+            전체 Network를 중앙으로 다시 끌어당길 수 있는 중력 장치가 있습니다.
+          </td>
+        </tr>
+        <tr parent="repulsion" class="hidden">
+          <td class="indent">repulsion.springLength</td>
+          <td>Number</td>
+          <td><code>200</code></td>
+          <td>
+            Edge들은 스프링으로 모델링됩니다. 이 springLength는 스프링의 나머지
+            길이입니다.
+          </td>
+        </tr>
+        <tr parent="repulsion" class="hidden">
+          <td class="indent">repulsion.springConstant</td>
+          <td>Number</td>
+          <td><code>0.05</code></td>
+          <td>값이 높을 수 록 스프링이 강해집니다.</td>
+        </tr>
+        <tr parent="repulsion" class="hidden">
+          <td class="indent">repulsion.damping</td>
+          <td>Number</td>
+          <td><code>0.09</code></td>
+          <td>
+            값의 범위: <code>[0 .. 1]</code>. 감쇠 계수는 이전 물리학 시뮬레이션
+            반복에서 다음 반복까지 전달되는 속도입니다.
+          </td>
+        </tr>
+
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','hierarchicalRepulsion', this);"
+        >
+          <td>
+            <span parent="hierarchicalRepulsion" class="right-caret"></span>
+            hierarchicalRepulsion
+          </td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>
+            hierarchicalRepulsion은 repulsion solver에 기반하지만, 레벨이
+            고려되고 힘이 정규화됩니다.
+          </td>
+        </tr>
+        <tr parent="hierarchicalRepulsion" class="hidden">
+          <td class="indent">hierarchicalRepulsion.nodeDistance</td>
+          <td>Number</td>
+          <td><code>120</code></td>
+          <td>repulsion에 대한 영향의 범위입니다.</td>
+        </tr>
+        <tr parent="hierarchicalRepulsion" class="hidden">
+          <td class="indent">hierarchicalRepulsion.centralGravity</td>
+          <td>Number</td>
+          <td><code>0.0'</code></td>
+          <td>
+            전체 Network를 중앙으로 다시 끌어당길 수 있는 중앙 중력 장치가
+            있습니다.
+          </td>
+        </tr>
+        <tr parent="hierarchicalRepulsion" class="hidden">
+          <td class="indent">hierarchicalRepulsion.springLength</td>
+          <td>Number</td>
+          <td><code>100</code></td>
+          <td>
+            Edge는 스프링으로 모델링됩니다. springLength는 스프링의 나머지
+            길이입니다.
+          </td>
+        </tr>
+        <tr parent="hierarchicalRepulsion" class="hidden">
+          <td class="indent">hierarchicalRepulsion.springConstant</td>
+          <td>Number</td>
+          <td><code>0.01</code></td>
+          <td>값이 높을 수 록 스프링이 강해집니다.</td>
+        </tr>
+        <tr parent="hierarchicalRepulsion" class="hidden">
+          <td class="indent">hierarchicalRepulsion.damping</td>
+          <td>Number</td>
+          <td><code>0.09</code></td>
+          <td>
+            값의 범위: <code>[0 .. 1]</code>. 감쇠 계수는 이전 물리학 시뮬레이션
+            반복에서 다음 반복까지 전달되는 속도입니다.
+          </td>
+        </tr>
+        <tr parent="hierarchicalRepulsion" class="hidden">
+          <td class="indent">hierarchicalRepulsion.avoidOverlap</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>
+            Accepted range: <code>[0 .. 1]</code>. Node의 크기가 0보다 크면
+            고려됩니다. 거리는 두 중력 모델에 대한 Node를 포함한 원의 반지름에서
+            계산됩니다. 값이 1이면 최대 오버랩 회피입니다.
+          </td>
+        </tr>
+
+        <tr>
+          <td>maxVelocity</td>
+          <td>Number</td>
+          <td><code>50</code></td>
+          <td>
+            physics 모듈은 안정화까지 시간을 증가시키기 위해 Node의 최대 속도를
+            제한합니다. 최댓값은 50입니다.
+          </td>
+        </tr>
+        <tr>
+          <td>minVelocity</td>
+          <td>Number</td>
+          <td><code>0.1</code></td>
+          <td>
+            모든 Node에 대해 최소 속도에 도달하면 Network가 안정화되고
+            시뮬레이션이 중지된 것으로 가정합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>solver</td>
+          <td>String</td>
+          <td><code>'barnesHut'</code></td>
+          <td>
+            직접 solver를 선택할 수 있습니다. 가능한 옵션:
+            <code
+              >'barnesHut', 'repulsion', 'hierarchicalRepulsion',
+              'forceAtlas2Based'</code
+            >. hierarchical layout를 택할 때, hierarchical repulsion solver는
+            기입한 내용에 관계없이 regardless가 자동으로 선택됩니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','stabilization', this);"
+        >
+          <td>
+            <span parent="stabilization" class="right-caret"></span>
+            stabilization
+          </td>
+          <td>Object | Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            True일 때, 기본 설정을 사용하여 불러올 때 Network가 안정화됩니다.
+            False로 설정한다면, 안정화가 비활성화 됩니다. 이 옵션을 사용자가
+            직접 설정할 수 있으며 객체를 제공해야합니다.
+          </td>
+        </tr>
+        <tr parent="stabilization" class="hidden">
+          <td class="indent">stabilization.enabled</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            안정화를 전환합니다. 이것은 필수 옵션이 아닙니다. 정의되지 않은 경우
+            자동으로 true로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="stabilization" class="hidden">
+          <td class="indent">stabilization.iterations</td>
+          <td>Number</td>
+          <td><code>1000</code></td>
+          <td>
+            물리학 모듈은 여기에 정의된 최대 반복 횟수까지 Network를 불러올 때
+            안정화를 시도합니다. Network가 더 적은 숫자로 안정화되면 먼저
+            완료합니다.
+          </td>
+        </tr>
+        <tr parent="stabilization" class="hidden">
+          <td class="indent">stabilization.updateInterval</td>
+          <td>Number</td>
+          <td><code>50</code></td>
+          <td>
+            안정화를 할 때 DOM이 멈출 수 도 있습니다. 예를 들면 하단 바를
+            보여주기 위해 안정화 조각으로 나눌 수 있습니다. 이 간격은
+            <code>stabilizationProgress</code> 이벤트 트리거되는 반복 횟수를
+            결정합니다.
+          </td>
+        </tr>
+        <tr parent="stabilization" class="hidden">
+          <td class="indent">stabilization.onlyDynamicEdges</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            모든 Node들의 위치를 미리 정의하고 동적 Edge만 안정화하려면 이 값을
+            true로 설정합니다. 보이지 않는 동적 곡선인 Edge와 Node를 제외한 모든
+            Node를 멈춥니다. 보여지는 Node들이 이동 및 안정화되도록 하려면 이
+            Node를 사용하지 않습니다.
+          </td>
+        </tr>
+        <tr parent="stabilization" class="hidden">
+          <td class="indent">stabilization.fit</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            안정화가 완료되면 모든 Node에 맞게 확대/축소할지 여부로 전환됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>timestep</td>
+          <td>Number</td>
+          <td><code>0.5</code></td>
+          <td>
+            physics 시뮬레이션은 별개입니다. 즉, 시간이 지나면서 힘을 계산하고,
+            Node를 이동하고, 다른 단계를 밟습니다. 이 수를 늘리면 단계가
+            많아져서 Network가 불안정해질 수 있습니다. Network에서 jittery가
+            많이 이동하면 이 값을 조금 줄일 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>adaptiveTimestep</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            만약 활성화되면
+            <b>(안정화가 활성화되고, 안정화가 진행되는 동안!)</b> 안정화 시간을
+            크게 줄일 수 있습니다. 위에 구성된 timestep은 최소 timestep으로
+            간주됩니다.
+            <a href="layout.html#layout" target="_blank"
+              >이 기능은 개선된 Layout 알고리즘을 사용하여 더욱 개선할 수
+              있습니다.</a
+            >.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','wind', this);"
+        >
+          <td><span parent="wind" class="right-caret"></span> wind</td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="wind" class="hidden">
+          <td class="indent">wind.x</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="wind" class="hidden">
+          <td class="indent">wind.y</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>TODO</td>
+        </tr>
+      </table>
+
+      <div class="flagbar">
+        <a href="../../docs/network/physics.html" title="English"
+          ><span class="flag en"></span
+        ></a>
+        <a href="../../docs-kr/network/physics.html" title="Korean"
+          ><span class="flag kr"></span
+        ></a>
+
+        <br />
+
+        Third party docs:
+        <a href="https://ame.cool/core/frontend-tools/" title="Chinese"
+          ><span class="flag zh"></span
+        ></a>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- jquery extensions -->
+    <script src="../../common-docs-files/js/jquery.highlight.js"></script>
+    <script src="../../common-docs-files/js/jquery.url.min.js"></script>
+    <!-- Tipue vendor js -->
+    <script src="../../common-docs-files/js/tipuesearch.config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
+    <!-- controller -->
+    <script src="../../common-docs-files/js/main.js"></script>
+  </body>
+</html>

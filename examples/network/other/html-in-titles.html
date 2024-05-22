@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Network | Other | HTML in titles</title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        left: 50%;
+        padding: 1em;
+        position: absolute;
+        right: 0%;
+      }
+
+      #text pre {
+        overflow-x: auto;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+
+      @keyframes be-tacky {
+        0% {
+          background: yellow;
+          border-radius: 0px;
+          border: green 2px solid;
+          color: blue;
+          display: inline-block;
+          padding: 5px;
+          transform: rotate(0);
+        }
+        100% {
+          background: pink;
+          border-radius: 50px;
+          border: cyan 5px solid;
+          color: purple;
+          display: inline-block;
+          padding: 2px;
+          transform: rotate(3600deg);
+        }
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.js"
+    ></script>
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Other</h2>
+        <h3>HTML in titles</h3>
+      </div>
+
+      <p>
+        HTML parsing in titles has been disabled due to covert XSS issues (i.e.
+        it was really easy to introduce XSS vulnerability into your project by
+        accident). If you want to parse HTML anyway, you can still do it as the
+        title accepts HTML elements.
+      </p>
+
+      <h4>But I just want to maintain white space</h4>
+      <pre><code>
+function preTitle(text) {
+  const container = document.createElement("pre");
+  container.innerText = text;
+  return container;
+}
+
+// create an array with nodes
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label: "PRE",
+    title: preTitle("ASCII\n    art"),
+  },
+]);
+      </code></pre>
+
+      <h4>But I just want my HTML to be parsed as it used to be</h4>
+      <pre><code>
+function htmlTitle(html) {
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  return container;
+}
+
+// create an array with nodes
+var nodes = new vis.DataSet([
+  {
+    id: 1,
+    label: "HTML",
+    title: htmlTitle(
+      "Go wild &lt'span style='display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;'&gt;!&lt'/span&gt;"
+    ),
+  },
+]);
+      </code></pre>
+    </div>
+
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // just maintain whitespace
+      function preTitle(text) {
+        const container = document.createElement("pre");
+        container.innerText = text;
+        return container;
+      }
+
+      // HTML parsing with all XSS goodness
+      function htmlTitle(html) {
+        const container = document.createElement("div");
+        container.innerHTML = html;
+        return container;
+      }
+
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "PRE", title: preTitle("ASCII\n    art") },
+        {
+          id: 2,
+          label: "HTML",
+          title: htmlTitle(
+            "Go wild <span style='display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;'>!</span>"
+          ),
+        },
+        { id: 3, label: "PRE", title: preTitle("ASCII\n    art") },
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 2, label: "PRE", title: preTitle("ASCII\n    art") },
+        {
+          from: 2,
+          to: 3,
+          label: "HTML",
+          title: htmlTitle(
+            "Go wild <span style='display: inline-block; animation: be-tacky 5s ease-in-out alternate infinite; margin: 5px;'>!</span>"
+          ),
+        },
+      ]);
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {};
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>

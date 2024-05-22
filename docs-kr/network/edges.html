@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>vis.js - Edges documentation.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tipue vendor css -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css"
+      rel="stylesheet"
+    />
+
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet" />
+    <link href="../css/overrides.css" rel="stylesheet" />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"
+    ></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/12.1.5/js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+      smoothScroll.init();
+    </script>
+
+    <style>
+      td.type {
+        width: 90px;
+      }
+    </style>
+    <script
+      type="text/javascript"
+      src="../../common-docs-files/js/toggleTable.js"
+    ></script>
+  </head>
+
+  <body onload="prettyPrint();">
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand hidden-sm" href="./index.html">vis.js</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav"></ul>
+              <form class="navbar-form navbar-right" role="search">
+                <input
+                  name="q"
+                  id="tipue_search_input"
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Keyword 입력"
+                />
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="vis.initSiteSearch(true);"
+                >
+                  검색
+                </button>
+              </form>
+              <div id="search-results-wrapper" class="panel panel-default">
+                <div class="panel-body">
+                  <div id="tipue_search_content"></div>
+                </div>
+              </div>
+              <div id="keyword-info" class="panel panel-success">
+                <div class="panel-body">
+                  Found <span id="keyword-count"></span> results. Click
+                  <a id="keyword-jumper-button" href="">here</a> to jump to the
+                  first keyword occurence!
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container full">
+      <h1>Network - edges</h1>
+
+      <p>
+        Edge의 생성 및 삭제를 처리하고, 전역 Edge 옵션 및 스타일을 포함합니다.
+      </p>
+      <h3>옵션</h3>
+
+      <p>
+        Edge에 대한 옵션들은 'edges'라는 이름의 object에 포함되어야 합니다.
+        이러한 모든 옵션들은 각 Edge별로 정의할 수도 있습니다. 반드시, 'id'는
+        전체적으로 정의하면 안 되고 Edge 별로 정의되어야 합니다. 전역 Edge
+        object에 정의된 옵션들은 모든 Edge들에 적용됩니다. Edge에 자체적인
+        옵션이 있는 경우, 전역 Edge 옵션 대신 그 해당 옵션이 적용이 됩니다.
+      </p>
+      <p>
+        <b
+          ><i
+            >Edge에 옵션을 지정하면, 해당 속성에 대한 전역 옵션을 재정의해야
+            한다. 그런 다음 해당 옵션을 <code>null</code> 로 설정하면,
+            디폴트값으로 되돌아갑니다.</i
+          ></b
+        >
+      </p>
+      <p>
+        전체 옵션 또는 요약 옵션을 클릭하여 이러한 옵션을 사용하는 방법을
+        확인하십시오.
+      </p>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active" onclick="toggleTab(this)">
+          <a href="#">옵션 숨기기</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="fullOptions"
+        >
+          <a href="#">전체 옵션</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="shortOptions"
+        >
+          <a href="#">요약 옵션</a>
+        </li>
+      </ul>
+      <br />
+      <pre class="prettyprint lang-js options top hidden" id="fullOptions">
+// these are all options in full.
+var options = {
+  edges:{
+    arrows: {
+      to: {
+        enabled: false,
+        imageHeight: undefined,
+        imageWidth: undefined,
+        scaleFactor: 1,
+        src: undefined,
+        type: "arrow"
+      },
+      middle: {
+        enabled: false,
+        imageHeight: 32,
+        imageWidth: 32,
+        scaleFactor: 1,
+        src: "https://visjs.org/images/visjs_logo.png",
+        type: "image"
+      },
+      from: {
+        enabled: false,
+        imageHeight: undefined,
+        imageWidth: undefined,
+        scaleFactor: 1,
+        src: undefined,
+        type: "arrow"
+      }
+    },
+    endPointOffset: {
+      from: 0,
+      to: 0
+    },
+    arrowStrikethrough: true,
+    chosen: true,
+    color: {
+      color:'#848484',
+      highlight:'#848484',
+      hover: '#848484',
+      inherit: 'from',
+      opacity:1.0
+    },
+    dashes: false,
+    font: {
+      color: '#343434',
+      size: 14, // px
+      face: 'arial',
+      background: 'none',
+      strokeWidth: 2, // px
+      strokeColor: '#ffffff',
+      align: 'horizontal',
+      multi: false,
+      vadjust: 0,
+      bold: {
+        color: '#343434',
+        size: 14, // px
+        face: 'arial',
+        vadjust: 0,
+        mod: 'bold'
+      },
+      ital: {
+        color: '#343434',
+        size: 14, // px
+        face: 'arial',
+        vadjust: 0,
+        mod: 'italic',
+      },
+      boldital: {
+        color: '#343434',
+        size: 14, // px
+        face: 'arial',
+        vadjust: 0,
+        mod: 'bold italic'
+      },
+      mono: {
+        color: '#343434',
+        size: 15, // px
+        face: 'courier new',
+        vadjust: 2,
+        mod: ''
+      }
+    },
+    hidden: false,
+    hoverWidth: 1.5,
+    label: undefined,
+    labelHighlightBold: true,
+    length: undefined,
+    physics: true,
+    scaling:{
+      min: 1,
+      max: 15,
+      label: {
+        enabled: true,
+        min: 14,
+        max: 30,
+        maxVisible: 30,
+        drawThreshold: 5
+      },
+      customScalingFunction: function (min,max,total,value) {
+        if (max === min) {
+          return 0.5;
+        }
+        else {
+          var scale = 1 / (max - min);
+          return Math.max(0,(value - min)*scale);
+        }
+      }
+    },
+    selectionWidth: 1,
+    selfReferenceSize:20,
+    selfReference:{
+        size: 20,
+        angle: Math.PI / 4,
+        renderBehindTheNode: true
+    },
+    shadow:{
+      enabled: false,
+      color: 'rgba(0,0,0,0.5)',
+      size:10,
+      x:5,
+      y:5
+    },
+    smooth: {
+      enabled: true,
+      type: "dynamic",
+      roundness: 0.5
+    },
+    title:undefined,
+    value: undefined,
+    width: 1,
+    widthConstraint: false
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <pre class="prettyprint lang-js options top hidden" id="shortOptions">
+// here all options that have shorthand notations are shown.
+var options = {
+  edges:{
+    arrows: 'to, from',
+    color: 'red',
+    font: '12px arial #ff0000',
+    scaling:{
+      label: true,
+    },
+    shadow: true,
+    smooth: true,
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <p>이 옵션들은 각 Edge별로 적용시킬 수 있다.</p>
+      <table class="options" id="optionTable">
+        <tr>
+          <th>이름</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>설명</th>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','arrows', this);"
+        >
+          <td><span parent="arrows" class="right-caret"></span> arrows</td>
+          <td>Object or String</td>
+          <td><code>undefined</code></td>
+          <td>
+            디폴트 설정으로 화살표를 그리기 위해서 문자열을 할당할 수 있습니다.
+            예: <code>arrows:'to, from, middle'</code> 또는
+            <code>'to;from'</code>, 구분 기호와의 조합이 괜찮습니다. 화살촉의
+            크기를 제어하려는 경우, object를 할당할 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent">arrows.to</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            true인 경우, Edge의 'to' 쪽에 화살촉이 그려지고, 디폴트 설정으로
+            'to' Node를 가리킵니다. 화살표의 크기를 사용자가 정의하고 싶다면,
+            object를 제공하십시오.
+          </td>
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent2">arrows.to.enabled</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            화살표를 활성화하거나 비활성화합니다. 이 옵션은 선택 사항이며,
+            정의되지 않고 scaleFactor 속성이 설정된 경우, enabled가 true로
+            설정됩니다.
+          </td>
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent2">arrows.to.imageHeight</td>
+          <td>Number</td>
+          <td><code>undefined</code></td>
+          <td>
+            이미지 화살표의 높이입니다. 정의되지 않은 경우 이미지 파일의 높이가
+            사용됩니다.
+          </td>
+          .
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent2">arrows.to.imageWidth</td>
+          <td>Number</td>
+          <td><code>undefined</code></td>
+          <td>
+            이미지 화살표의 너비입니다. 정의되지 않은 경우 이미지 파일의 너비가
+            사용됩니다.
+          </td>
+          .
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent2">arrows.to.scaleFactor</td>
+          <td>Number</td>
+          <td><code>1</code></td>
+          <td>Scale Factor를 사용하면 화살촉의 크기를 변경할 수 있습니다.</td>
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent2">arrows.to.src</td>
+          <td>String</td>
+          <td><code>undefined</code></td>
+          <td>이미지 화살표 타입의 URL입니다.</td>
+          .
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent2">arrows.to.type</td>
+          <td>String</td>
+          <td><code>arrow</code></td>
+          <td>
+            엔드 포인트의 타입입니다. 가능한 값은 다음과 같습니다:
+            <code>arrow</code>, <code>bar</code>, <code>circle</code> 그리고
+            <code>image</code>. 디폴트 값은 <code>arrow</code> 입니다.
+          </td>
+          .
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent">arrows.middle</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            'to' object와 비슷하지만, Edge 중앙에 화살촉이 있습니다.
+            <code>arrows.middle.scaleFactor</code> 에 음수값을 사용하여 화살표
+            방향을 뒤집을 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="arrows" class="hidden">
+          <td class="indent">arrows.from</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            'to' object와 동일하지만 Edge의 'from' Node에 화살촉이 있습니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','endPointOffset', this);"
+        >
+          <td>
+            <span parent="endPointOffset" class="right-caret"></span>
+            endPointOffset
+          </td>
+          <td>Object</td>
+          <td><code>undefined</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="endPointOffset" class="hidden">
+          <td class="indent">endPointOffset.from</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="endPointOffset" class="hidden">
+          <td class="indent">endPointOffset.to</td>
+          <td>Number</td>
+          <td><code>0</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr>
+          <td class="indent">arrowStrikethrough</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            false인 경우, Edge가 화살표에서 끝납니다. 굵은 Edge이고 화살표가
+            포인트에서 끝나기를 원하는 경우에 유용할 수 있습니다. 중간 화살표는
+            영향을 받지 않습니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','chosen', this);"
+        >
+          <td><span parent="chosen" class="right-caret"></span> chosen</td>
+          <td>Object or Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            ture인 경우, Edge를 선택하거나 마우스로 가리키면 해당 label의 특성이
+            디폴트 값에 따라 변경됩니다. false인 경우, Edge를 선택해도 Edge나
+            label이 변경되지 않습니다. object가 할당된 경우, Edge를 선택할 때
+            Edge 및 label의 특성을 세밀하게 조정할 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="chosen" class="hidden">
+          <td class="indent">chosen.edge</td>
+          <td>Function or Boolean</td>
+          <td>undefined</td>
+          <td>
+            true인 경우, Edge를 선택하거나 마우스로 가리키면 디폴트값에 따라
+            특성이 변경됩니다. false인 경우, Edge를 선택해도 Edge가 변경되지
+            않습니다.
+            <p>함수가 할당된 경우, Edge를 선택할 때 함수가 호출됩니다.</p>
+            <pre class="code">
+  function(values, id, selected, hovering) {
+    values.<i>property</i> = <i>chosenValue</i>;
+  }</pre
+            >
+            <p>
+              들어오는 인수 중 하나를 사용하여 특성의 변화를 결정할 수 있습니다.
+              할당된 함수로 속성을 구체적으로 할당하지 않으면, 속성이 변경되지
+              않습니다. 특정 함수는 각 특정 Edge 옵션에, 또는 network의
+              <code>edges</code> 옵션에 모두 할당될 수 있습니다.
+            </p>
+            <p>속성은 다음과 같이 변경될 수 있는 특성들을 정의합니다:</p>
+            <table>
+              <tr>
+                <th>속성</th>
+                <th>Edge 참조</th>
+              </tr>
+              <tr>
+                <td>dashes</td>
+                <td>dashes를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>toArrow</td>
+                <td>arrows.to.enabled를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>toArrowScale</td>
+                <td>arrows.to.scaleFactor를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>toArrowType</td>
+                <td>arrows.to.type를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>middleArrow</td>
+                <td>arrows.middle.enabled를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>middleArrowScale</td>
+                <td>arrows.middle.scaleFactor를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>middleArrowType</td>
+                <td>arrows.middle.type를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>fromArrow</td>
+                <td>arrows.from.enabled를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>fromArrowScale</td>
+                <td>arrows.from.scaleFactor를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>fromArrowType</td>
+                <td>arrows.from.type를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>arrowStrikethrough</td>
+                <td>arrowStrikethrough를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>color</td>
+                <td>color.color를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>inheritsColor</td>
+                <td>color.inherit를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>opacity</td>
+                <td>color.opacity를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>hidden</td>
+                <td>hidden를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>length</td>
+                <td>length를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>shadow</td>
+                <td>shadow.enabled를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>shadowColor</td>
+                <td>shadow.color를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>shadowSize</td>
+                <td>shadow.size를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>shadowX</td>
+                <td>shadow.x를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>shadowY</td>
+                <td>shadow.y를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>width</td>
+                <td>width를 참조하십시오.</td>
+              </tr>
+            </table>
+            <br />
+          </td>
+        </tr>
+        <tr parent="chosen" class="hidden">
+          <td class="indent">chosen.label</td>
+          <td>Function or Boolean</td>
+          <td>undefined</td>
+          <td>
+            true인 경우, Edge를 선택하거나 마우스로 가리키면 디폴트값에 따라
+            label의 특성이 변경됩니다. false인 경우, Edge를 선택해도 Edge의
+            label이 변경되지 않습니다.
+            <p>함수가 할당된 경우, Edge를 선택할 때 함수가 호출됩니다.</p>
+            <pre class="code">
+  function(values, id, selected, hovering) {
+    values.<i>property</i> = <i>chosenValue</i>;
+  }</pre
+            >
+            <p>
+              들어오는 인수 중 하나를 사용하여 특성의 변화를 결정할 수 있습니다.
+              할당된 함수로 속성을 구체적으로 할당하지 않으면, 속성이 변경되지
+              않습니다. 특정 함수는 각 특정 Edge 옵션에, 또는 network의
+              <code>edges</code> 옵션에 모두 할당될 수 있습니다.
+            </p>
+            <p>속성은 다음과 같이 변경될 수 있는 특성들을 정의합니다:</p>
+            <table>
+              <tr>
+                <th>속성</th>
+                <th>Edge 참조</th>
+              </tr>
+              <tr>
+                <td>color</td>
+                <td>font.color를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>size</td>
+                <td>font.size를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>face</td>
+                <td>font.face를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>mod</td>
+                <td>글꼴 수정 ('bold', 'italic', 등.)</td>
+              </tr>
+              <tr>
+                <td>vadjust</td>
+                <td>font.vadjust를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>strokeWidth</td>
+                <td>font.strokeWidth를 참조하십시오.</td>
+              </tr>
+              <tr>
+                <td>strokeColor</td>
+                <td>font.strokeColor를 참조하십시오.</td>
+              </tr>
+            </table>
+            <br />
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','color', this);"
+        >
+          <td><span parent="color" class="right-caret"></span> color</td>
+          <td>Object or String</td>
+          <td><code>Object</code></td>
+          <td>
+            color object에는 모든 상황에서의 Edge의 색상 정보가 포함됩니다.
+            Edge에 단색만 필요한 경우, object 대신
+            <code>'rgb(120,32,14)'</code>, <code>'#ffffff'</code> 또는
+            <code>'red'</code> 와 같은 색상 값을 할당할 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="color" class="hidden">
+          <td class="indent">color.color</td>
+          <td>String</td>
+          <td><code>'#848484'</code></td>
+          <td>
+            Edge를 선택하거나 마우스로 가리키지 않을 때 Edge의 색상입니다.
+            <i>(상호 작용 모듈에서 hover가 활성화되어 있다고 가정할 때)</i>
+          </td>
+        </tr>
+        <tr parent="color" class="hidden">
+          <td class="indent">color.highlight</td>
+          <td>String</td>
+          <td><code>'#848484'</code></td>
+          <td>선택 시 Edge의 색상입니다.</td>
+        </tr>
+        <tr parent="color" class="hidden">
+          <td class="indent">color.hover</td>
+          <td>String</td>
+          <td><code>'#848484'</code></td>
+          <td>
+            마우스로 가리킬 때 Edge의 색상입니다.
+            <i>(상호 작용 모듈에서 hover가 활성화되어 있다고 가정할 때)</i>.
+          </td>
+        </tr>
+        <tr parent="color" class="hidden">
+          <td class="indent">color.inherit</td>
+          <td>String or Boolean</td>
+          <td><code>'from'</code></td>
+          <td>
+            <i
+              >color, highlight 또는 hover가 정의가 된 경우, inherit은 false로
+              설정이 됩니다!</i
+            >
+            <br /><br />지원되는 옵션은 다음과 같습니다:
+            <code>true, false, 'from','to','both'</code> . <br /><br />디폴트
+            값은 'from'이며 true와 동일합니다: Edge는 'from'측 Node 테두리
+            색상을 상속합니다. <br /><br />'to'로 설정한 경우, 'to' Node의
+            테두리 색상이 사용됩니다. <br /><br />'both'로 설정한 경우, 색상은
+            'from'의 색에서 'to'색상으로 흐려집니다. 그라디언트는 그려질 때마다
+            다시 계산되므로 <b>'both'는 계산 집약적입니다</b>. 이것은 Node가
+            움직일 때마다 각도가 바뀌기 때문에 필요합니다.
+          </td>
+        </tr>
+        <tr parent="color" class="hidden">
+          <td class="indent">color.opacity</td>
+          <td>Number</td>
+          <td><code>1.0</code></td>
+          <td>
+            모든 색상을 수동으로 변경하지 않고 Edge의 불투명도를 설정하는 것은
+            유용할 수 있습니다. opacity 옵션은 제공된 불투명도를 준수하기 위해
+            모든 색상 (상속을 할 때도) 을 변환합니다. opacity의 옵션의 허용
+            범위는 <code>0 and 1</code> 사이입니다. 한 번만 실행되기 때문에
+            성능에 미치는 영향이 크지 않습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>dashes</td>
+          <td>Array or Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, Edge가 파선으로 그려집니다. 배열을 할당하면 dashes를
+            사용자 정의 할 수 있습니다. 배열 형식: 숫자 배열, 간격 길이, 파선
+            길이, 간격 길이, 파선 길이, ... 등. 선이 채워질 때까지 배열이
+            반복됩니다.
+            <i
+              >11보다 오래된 IE 버전에서 파선을 사용하면, 선이 매끄럽지 않고
+              직선으로 그려집니다</i
+            >.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','font', this);"
+        >
+          <td><span parent="font" class="right-caret"></span> font</td>
+          <td>Object or String</td>
+          <td><code>false</code></td>
+          <td>
+            이 object는 label의 세부사항을 정의합니다.
+            <code>'size face color'</code> 와 같은 간단한 형식도 지원된다. 예:
+            <code>'14px arial red'</code>.
+          </td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.color</td>
+          <td>String</td>
+          <td><code>'#343434'</code></td>
+          <td>label의 글씨 색상입니다.</td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.size</td>
+          <td>Number</td>
+          <td><code>14</code></td>
+          <td>label의 글씨 크기입니다.</td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.face</td>
+          <td>String</td>
+          <td><code>'arial'</code></td>
+          <td>label의 글씨체 (또는 글꼴 모음)입니다.</td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.background</td>
+          <td>String</td>
+          <td><code>undefined</code></td>
+          <td>
+            <code>undefined</code> 이 아닌 <b>color string</b> 인 경우, label
+            뒤에 배경 사각형이 할당된 색상으로 그려집니다.
+          </td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.strokeWidth</td>
+          <td>Number</td>
+          <td><code>2</code></td>
+          <td>
+            배경 사각형 대신으로, 텍스트 주위에 선을 그릴 수 있습니다. 0보다 큰
+            값이 할당되면, 선이 그려집니다.
+          </td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.strokeColor</td>
+          <td>String</td>
+          <td><code>'#ffffff'</code></td>
+          <td><i>획 값이 0보다 크다고 가정할 때</i> 획의 색상입니다.</td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.align</td>
+          <td>String</td>
+          <td><code>'horizontal'</code></td>
+          <td>
+            가능한 옵션: <code>'horizontal','top','middle','bottom'</code>.
+            label이 Edge에 정렬 방식을 정합니다. 디폴트 값인
+            <code>horizontal</code> 은 Edge 방향에 관계없이 label을 가로로
+            정렬합니다. <code>horizontal</code> 이외의 옵션을 선택한 경우, 그
+            정렬 방법에 따라 label이 Edge에 정렬됩니다.
+          </td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.vadjust</td>
+          <td>String</td>
+          <td><code>0</code></td>
+          <td>
+            label의 텍스트에서 기본 글의 세로 위치에 대한 글꼴 별로의 수정
+            사항입니다. (양수면 아래 방향입니다.)
+          </td>
+        </tr>
+        <tr parent="font" class="hidden">
+          <td class="indent">font.multi</td>
+          <td>Boolean or String</td>
+          <td><code>false</code></td>
+          <td>
+            <code>false</code> 인 경우, label은 기본 글꼴로 순수한 텍스트로
+            처리됩니다. <code>true</code> 또는 <code>'html'</code> 인 경우,
+            label이 굵게, 기울임 및 html 기능을 하는 코드 마크업의 멀티 폰트로
+            표시됩니다. 값이 <code>'markdown'</code> 또는 <code>'md'</code> 인
+            경우, label이 마크다운으로 굵게, 기울임 및 코드 마크업이 섞인 멀티
+            폰트로 표시됩니다. 굵게, 기울임, 굵게 기울임 및 모노 스페이스 글꼴은
+            각각 font.bold, font.ital, font.boldital 및 font.mono 속성에서
+            설정할 수 있습니다.
+          </td>
+        </tr>
+        <tr
+          parent="font"
+          class="hidden toggle collapsible"
+          onclick="toggleTable('optionTable','bold', this);"
+        >
+          <td><span parent="bold" class="right-caret"></span> font.bold</td>
+          <td>Object or String</td>
+          <td><code>false</code></td>
+          <td>
+            이 object는 label에서 굵은 글꼴의 세부 정보를 정의합니다.
+            <code>'size face color'</code> 와 같은 간단한 형식이 지원됩니다. 예:
+            <code>'14px arial red'</code>.
+          </td>
+        </tr>
+        <tr parent="bold" class="hidden">
+          <td class="indent">font.bold.color</td>
+          <td>String</td>
+          <td><code>'#343434'</code></td>
+          <td>
+            label 텍스트에서 굵은 글꼴의 색상입니다. 기본 글꼴의 색상이 디폴트
+            값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="bold" class="hidden">
+          <td class="indent">font.bold.size</td>
+          <td>Number</td>
+          <td><code>14</code></td>
+          <td>
+            label 텍스트에서 굵은 글꼴의 크기입니다. 기본 글꼴의 크기가 디폴트
+            값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="bold" class="hidden">
+          <td class="indent">font.bold.face</td>
+          <td>String</td>
+          <td><code>'arial'</code></td>
+          <td>
+            label 텍스트에서 굵은 글꼴의 글씨체 (또는 글꼴 모음)입니다. 기본
+            글꼴의 글씨체가 디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="bold" class="hidden">
+          <td class="indent">font.bold.mod</td>
+          <td>String</td>
+          <td><code>'bold'</code></td>
+          <td>
+            label 텍스트에서 굵은 글꼴을 결정할 때 face와 size에 추가되는
+            문자열입니다.
+          </td>
+        </tr>
+        <tr parent="bold" class="hidden">
+          <td class="indent">font.bold.vadjust</td>
+          <td>String</td>
+          <td><code>0</code></td>
+          <td>
+            label 텍스트에서 굵은 기울임 글꼴의 세로 위치에 대한 글꼴 별로의
+            수정 사항입니다. (양수는 아래 방향입니다.) 기본 글꼴의 valign이
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr
+          parent="font"
+          class="hidden toggle collapsible"
+          onclick="toggleTable('optionTable','ital', this);"
+        >
+          <td><span parent="ital" class="right-caret"></span> font.ital</td>
+          <td>Object or String</td>
+          <td><code>false</code></td>
+          <td>
+            이 object는 label에서 기울임 글꼴의 세부 정보를 정의합니다.
+            <code>'size face color'</code> 와 같은 간단한 형식이 지원됩니다. 예:
+            <code>'14px arial red'</code>.
+          </td>
+        </tr>
+        <tr parent="ital" class="hidden">
+          <td class="indent">font.ital.color</td>
+          <td>String</td>
+          <td><code>'#343434'</code></td>
+          <td>
+            label 텍스트에서 기울임 글꼴의 색상입니다. 기본 글꼴의 색상이 디폴트
+            값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="ital" class="hidden">
+          <td class="indent">font.ital.size</td>
+          <td>Number</td>
+          <td><code>14</code></td>
+          <td>
+            label 텍스트에서 기울임 글꼴의 크기입니다. 기본 글꼴의 크기가 디폴트
+            값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="ital" class="hidden">
+          <td class="indent">font.ital.face</td>
+          <td>String</td>
+          <td><code>'arial'</code></td>
+          <td>
+            label 텍스트에서 굵은 글꼴의 글씨체 (또는 글꼴 모음)입니다. 기본
+            글꼴의 글씨체가 디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="ital" class="hidden">
+          <td class="indent">font.ital.mod</td>
+          <td>String</td>
+          <td><code>'italic'</code></td>
+          <td>
+            label 텍스트에서 기울임 글꼴을 결정할 때 face와 size에 추가되는
+            문자열입니다.
+          </td>
+        </tr>
+        <tr parent="ital" class="hidden">
+          <td class="indent">font.ital.vadjust</td>
+          <td>String</td>
+          <td><code>0</code></td>
+          <td>
+            label 텍스트에서 기울임 글꼴의 세로 위치에 대한 글꼴 별로의 수정
+            사항입니다. (양수는 아래 뱡향입니다.) 기본 글꼴의 valign이 디폴트
+            값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr
+          parent="font"
+          class="hidden toggle collapsible"
+          onclick="toggleTable('optionTable','boldital', this);"
+        >
+          <td>
+            <span parent="boldital" class="right-caret"></span> font.boldital
+          </td>
+          <td>Object or String</td>
+          <td><code>false</code></td>
+          <td>
+            이 object는 label에서 굵게 기울임 글꼴의 세부 정보를 정의합니다.
+            <code>'size face color'</code> 와 같은 간단한 형식이 지원됩니다. 예:
+            <code>'14px arial red'</code>.
+          </td>
+        </tr>
+        <tr parent="boldital" class="hidden">
+          <td class="indent">font.boldital.color</td>
+          <td>String</td>
+          <td><code>'#343434'</code></td>
+          <td>
+            label 텍스트에서 굵게 기울임 글꼴의 색상입니다. 기본 글꼴의 색상이
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="boldital" class="hidden">
+          <td class="indent">font.boldital.size</td>
+          <td>Number</td>
+          <td><code>14</code></td>
+          <td>
+            label 텍스트에서 굵게 기울임 글꼴의 크기입니다. 기본 글꼴의 크기가
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="boldital" class="hidden">
+          <td class="indent">font.boldital.face</td>
+          <td>String</td>
+          <td><code>'arial'</code></td>
+          <td>
+            label 텍스트에서 굵게 기울임 글꼴의 글씨체 (또는 글꼴 모음)입니다.
+            기본 글꼴의 글씨체가 디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="boldital" class="hidden">
+          <td class="indent">font.boldital.mod</td>
+          <td>String</td>
+          <td><code>'bold'</code></td>
+          <td>
+            label 텍스트에서 굵게 기울임 글꼴을 결정할 때 face와 size에 추가되는
+            문자열입니다.
+          </td>
+        </tr>
+        <tr parent="boldital" class="hidden">
+          <td class="indent">font.boldital.vadjust</td>
+          <td>String</td>
+          <td><code>0</code></td>
+          <td>
+            label 텍스트에서 굵게 기울임 글꼴의 세로 위치에 대한 글꼴 별로의
+            수정 사항입니다. (양수는 아래 방향입니다.) 기본 글꼴의 valign이
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr
+          parent="font"
+          class="hidden toggle collapsible"
+          onclick="toggleTable('optionTable','mono', this);"
+        >
+          <td><span parent="mono" class="right-caret"></span> font.mono</td>
+          <td>Object or String</td>
+          <td><code>false</code></td>
+          <td>
+            이 object는 label에서 모노 스페이스 글꼴의 세부 정보를 정의합니다.
+            <code>'size face color'</code> 와 같은 간단한 형식이 지원됩니다. 예:
+            <code>'15px courier red'</code>.
+          </td>
+        </tr>
+        <tr parent="mono" class="hidden">
+          <td class="indent">font.mono.color</td>
+          <td>String</td>
+          <td><code>'#343434'</code></td>
+          <td>
+            label 텍스트에서 모노 스페이스 글꼴의 색상입니다. 기본 글꼴의 색상이
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="mono" class="hidden">
+          <td class="indent">font.mono.size</td>
+          <td>Number</td>
+          <td><code>15</code></td>
+          <td>
+            label 텍스트에서 모노 스페이스 글꼴의 크기입니다. 기본 글꼴의 크기가
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="mono" class="hidden">
+          <td class="indent">font.mono.face</td>
+          <td>String</td>
+          <td><code>'courier new'</code></td>
+          <td>
+            label 텍스트에서 모노 스페이스 글꼴의 글씨체 (또는 글꼴 모음)입니다.
+          </td>
+        </tr>
+        <tr parent="mono" class="hidden">
+          <td class="indent">font.mono.mod</td>
+          <td>String</td>
+          <td><code>''</code></td>
+          <td>
+            label 텍스트에서 모노 스페이스 글꼴을 결정할 때 face와 size에
+            추가되는 문자열입니다.
+          </td>
+        </tr>
+        <tr parent="mono" class="hidden">
+          <td class="indent">font.mono.vadjust</td>
+          <td>String</td>
+          <td><code>2</code></td>
+          <td>
+            label 텍스트에서 모노 스페이스 글꼴을의 세로 위치에 대한 글꼴 별로의
+            수정 사항입니다. (양수는 아래 방향입니다.) 기본 글꼴의 valign이
+            디폴트 값으로 설정됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>from</td>
+          <td>Number or String</td>
+          <td></td>
+          <td>
+            Edge는 두 Node 사이에 있으며 한 Node에서 시작해서 한 Node 사이를
+            연결합니다. 여기서는 'from' Node에 대해 정의합니다. 그러기 위해서는
+            해당 Node ID를 제공해야 합니다. 이것은 각 Edge에만 적용이 됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>hidden</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, Edge가 그려지지 않습니다. 그러나 물리 시뮬레이션은
+            여전히 적용됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>hoverWidth</td>
+          <td>Number or Function</td>
+          <td><code>0.5</code></td>
+          <td>
+            <a href="./interaction.html">interaction 모듈</a> 에서 hover 동작이
+            활성화되어 있다면, hoverWidth는 사용자가 마우스로 가리킬 때 Edge의
+            너비를 결정합니다. 수가 할당되면, 이 수가 너비에 <b>더해집니다</b>.
+            너비는 값과 스케일링 함수에 의해 변경될 수 있으므로, 상수의 승수나
+            추가되는 값이 좋은 결과를 제공하지 못할 수 있습니다. 이를 해결하기
+            위해, 함수를 제공할 수 있습니다. 예:
+
+            <pre class="code">
+var options: {
+  edges: {
+    hoverWidth: function (width) {return width+1;}
+  }
+}
+</pre
+            >
+            이 함수는 Edge의 <code>Number width</code> 를 받습니다. 이 간단한
+            예제에서는 너비에 1을 더합니다. <code>Number</code> 를 반환하는 한
+            함수의 논리를 테일러할 수 있습니다.
+          </td>
+        </tr>
+
+        <tr>
+          <td>id</td>
+          <td>String</td>
+          <td><code>undefined</code></td>
+          <td>
+            Edge의 id입니다. Edge의 경우 id는 선택 사항입니다. 할당하지 않으면,
+            UUID가 Edge에 할당됩니다. 이것은 각 Edge에만 적용됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>label</td>
+          <td>String</td>
+          <td><code>undefined</code></td>
+          <td>
+            Edge의 label입니다. HTML5 Canvas를 사용하기 때문에 HTML이 작동하지
+            않습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>labelHighlightBold</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            Edge를 선택할 때 label이 굵게 강조 표시되는지 여부를 결정합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>length</td>
+          <td>Number</td>
+          <td><code>undefined</code></td>
+          <td>
+            물리 시뮬레이션이 Edge의 스프링 길이를 제공합니다. 이 값은 정지
+            상태의 스프링 길이를 재정의할 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>physics</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            true인 경우, Edge가 물리 시뮬레이션의 일부가 됩니다. false인 경우,
+            스프링처럼 작동하지 않습니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','scaling', this);"
+        >
+          <td><span parent="scaling" class="right-caret"></span> scaling</td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>
+            <code>value</code> 옵션을 지정하면, 이 object의 속성에 따라 Edge의
+            너비가 스케일링됩니다. 스케일링을 사용할 때는,
+            <code>width</code> 옵션이 무시됩니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent">scaling.min</td>
+          <td>Number</td>
+          <td><code>1</code></td>
+          <td>
+            Edge에 값이 있으면, 값, 스케일링 함수 및 최솟값 / 최댓값에 의해
+            너비가 결정됩니다. 이 값은 최소 허용 값입니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent">scaling.max</td>
+          <td>Number</td>
+          <td><code>15</code></td>
+          <td>
+            value 옵션을 사용하여 Edge를 스케일링할 때 허용되는 최대 너비입니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent">scaling.label</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            false인 경우, label을 Edge에 맞게 스케일링할 수 없습니다. true인
+            경우, 디폴트 설정을 사용하여 스케일링됩니다. 추가로 사용자가
+            정의하기 위해서, object를 제공할 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent2">scaling.label.enabled</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            label의 스케일링 옵션을 활성화하거나 비활성화합니다. 이 옵션이
+            정의되어 있지 않은 경우, 이 object의 속성 중 하나가 정의될 때 true로
+            설정됩니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent2">scaling.label.min</td>
+          <td>Number</td>
+          <td><code>14</code></td>
+          <td>스케일링 시 label에 사용되는 최소 글꼴 크기입니다.</td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent2">scaling.label.max</td>
+          <td>Number</td>
+          <td><code>30</code></td>
+          <td>스케일링 시 label에 사용되는 최대 글꼴 크기입니다.</td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent2">scaling.label.maxVisible</td>
+          <td>Number</td>
+          <td><code>30</code></td>
+          <td>
+            확대하면, 글꼴 또한 같이 그려집니다. 이 옵션을 사용하여 인식된 글꼴
+            크기를 제한할 수 있습니다. 만약 30으로 설정하면, 글꼴이 100%로
+            확대된 크기가 30보다 크게 보이지 않습니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent2">scaling.label.drawThreshold</td>
+          <td>Number</td>
+          <td><code>5</code></td>
+          <td>
+            축소하면, 글꼴이 또한 작게 그려집니다. 글꼴을 그릴 때의 하한을
+            정의합니다. 글꼴 크기 스케일링을 사용하는 경우, 축소할 때 중요한
+            Edge의 label을 표시하고 확대할 때는 나머지만 표시하기 위해서
+            maxVisible과 함께 사용할 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="scaling" class="hidden">
+          <td class="indent">scaling.customScalingFunction</td>
+          <td>Function</td>
+          <td>in description</td>
+          <td>
+            Edge에 <code>value</code> 필드가 있는 경우, 이 함수는 해당 값을
+            기준으로 Node의 크기를 스케일링하는 방법을 결정합니다. 디폴트 함수는
+            다음과 같습니다:
+            <pre>
+function (min,max,total,value) {
+  if (max === min) {
+    return 0.5;
+  }
+  else {
+    var scale = 1 / (max - min);
+    return Math.max(0,(value - min)*scale);
+  }
+}
+</pre
+            >
+            이 함수는 세트의 최솟값, 최댓값, 모든 값의 총합 및 마지막으로
+            작동하는 Node 또는 Edge의 값을 받습니다.
+            <b>0과 1사이의 값을 반환해야 합니다.</b>
+            그런 다음 Node와 Edge는 다음과 같이 크기를 계산합니다:
+            <pre>
+var scale = customScalingFunction(min,max,total,value);
+var diff = maxWidth - minWidth;
+myWidth = minWidth + diff * scale;
+</pre
+            >
+            참고: <code>maxWidth</code> 와 <code>minWidth</code> 는 옵션에
+            제공된 <code>scaling.max</code> 와
+            <code>scaling.min</code> 값입니다.
+          </td>
+        </tr>
+        <tr>
+          <td>selectionWidth</td>
+          <td>Number or Function</td>
+          <td><code>1</code></td>
+          <td>
+            selectionWidth는 Edge를 선택할 때 Edge의 너비를 결정합니다. 숫자를
+            할당한 경우, 이 숫자가 너비에 <b>추가됩니다</b>. 너비는 값과
+            스케일링 함수에 의해 변경될 수 있으므로, 상수 승수 또는 추가된 값이
+            좋은 결과를 제공하지 못할 수 있습니다. 이를 해결하기 위해, 함수를
+            할당할 수 있습니다. 예:
+
+            <pre class="code">
+var options: {
+  edges: {
+    selectionWidth: function (width) {return width*2;}
+  }
+}
+</pre
+            >
+            이 함수는 Edge의 <code>Number width</code> 를 받습니다. 이 간단한
+            예제에서는 너비에 2를 곱합니다. <code>Number</code> 를 반환하는 한
+            함수의 논리를 테일러할 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>selfReferenceSize</td>
+          <td>Number</td>
+          <td><code>false</code></td>
+          <td>
+            to Node와 from Node가 동일한 경우, 원이 그려집니다. 이것은 그 원의
+            반지름입니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','selfReference', this);"
+        >
+          <td>
+            <span parent="arrows" class="right-caret"></span> selfReference
+          </td>
+          <td>Object</td>
+          <td><code>Object</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+          <td class="indent">selfReference.size</td>
+          <td>Number</td>
+          <td><code>20</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+          <td class="indent">selfReference.angle</td>
+          <td>Number</td>
+          <td><code>π / 4</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr parent="selfReference" class="hidden">
+          <td class="indent">selfReference.renderBehindTheNode</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>TODO</td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','shadow', this);"
+        >
+          <td><span parent="shadow" class="right-caret"></span> shadow</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            true인 경우, Edge는 디폴트 설정을 사용하여 그림자를 만들어 냅니다.
+            이것은 object를 할당함으로써 더 세분화될 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="shadow" class="hidden">
+          <td class="indent">shadow.enabled</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            그림자 투사를 활성화하거나 비활성화합니다. 이 옵션이 정의되어 있지
+            않은 경우, object의 속성이 정의되어 있을 때 true로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="shadow" class="hidden">
+          <td class="indent">shadow.color</td>
+          <td>String</td>
+          <td><code>'rgba(0,0,0,0.5)'</code></td>
+          <td>
+            문자열의 그림자 색상입니다. 지원되는 형식은 'rgb(255,255,255)',
+            'rgba(255,255,255,1)' 와 '#FFFFFF' 입니다.
+          </td>
+        </tr>
+        <tr parent="shadow" class="hidden">
+          <td class="indent">shadow.size</td>
+          <td>Number</td>
+          <td><code>10</code></td>
+          <td>그림자의 흐림 크기입니다.</td>
+        </tr>
+        <tr parent="shadow" class="hidden">
+          <td class="indent">shadow.x</td>
+          <td>Number</td>
+          <td><code>5</code></td>
+          <td>그림자의 x좌표의 오프셋입니다.</td>
+        </tr>
+        <tr parent="shadow" class="hidden">
+          <td class="indent">shadow.y</td>
+          <td>Number</td>
+          <td><code>5</code></td>
+          <td>그림자의 y좌표의 오프셋입니다.</td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','smooth', this);"
+        >
+          <td><span parent="smooth" class="right-caret"></span> smooth</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            true인 경우, Edge가 동적 2차 Bezier 곡선으로 그려집니다. 이 곡선은
+            직선으로 만든 곡선의 그림보다 오래 걸리지만 더욱 좋은 곡선을 얻을 수
+            있습니다. 동적인 매끄러운 곡선과 정적인 매끄러운 곡선에는 차이가
+            있습니다. 동적인 매끄러운 곡선에는 물리 시뮬레이션에 도움을 주는
+            보이지 않는 Node가 있습니다. Edge가 많은 경우, 다른 유형의 곡선을
+            선택한 다음 더 나은 성능을 위해 동적 곡선을 선택하는 것이 좋다.
+          </td>
+        </tr>
+        <tr parent="smooth" class="hidden">
+          <td class="indent">smooth.enabled</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            곡선 상태를 활성화하거나 비활성화를 할 수 있습니다. 이것은 선택
+            사항입니다. 이 object의 다른 속성이 설정되어 있으면, 이 옵션이
+            true로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="smooth" class="hidden">
+          <td class="indent">smooth.type</td>
+          <td>String</td>
+          <td><code>'dynamic'</code></td>
+          <td>
+            가능한 옵션:
+            <code
+              >'dynamic', 'continuous', 'discrete', 'diagonalCross',
+              'straightCross', 'horizontal', 'vertical', 'curvedCW',
+              'curvedCCW', 'cubicBezier'</code
+            >.
+            <a href="../../examples/network/edgeStyles/smooth.html">이 예제</a
+            >를 살펴보고 가장 좋아하는 것을 선택하십시오! <br /><br />
+            동적 곡선을 사용할 때, Edge에는 모양을 안내하는 보이지 않는 Node가
+            있습니다. 이 Node는 물리 시뮬레이션의 일부입니다.
+          </td>
+        </tr>
+        <tr parent="smooth" class="hidden">
+          <td class="indent">smooth.forceDirection</td>
+          <td>String or Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            허용되는 옵션: <code>['horizontal', 'vertical', 'none']</code>. 이
+            옵션은 cubicBezier 곡선에서만 사용됩니다. true인 경우, 가로가
+            선택되고, false인 경우, 더 큰 방향 (Node간 x 거리 vs Node간 y
+            거리)이 사용됩니다. x 거리가 더 크면, 수평입니다. 계층적 레이아웃과
+            함께 사용됩니다.
+          </td>
+        </tr>
+        <tr parent="smooth" class="hidden">
+          <td class="indent">smooth.roundness</td>
+          <td>Number</td>
+          <td><code>0.5</code></td>
+          <td>
+            허용되는 범위: <code>0 .. 1.0</code>. 이 매개 변수는 동적을 제외한
+            모든 유형에 대해 부드러운 곡선의 진원도를 조정합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>String</td>
+          <td><code>undefined</code></td>
+          <td>마우스가 Edge 위로 움직일 때 제목이 팝업으로 표시됩니다.</td>
+        </tr>
+        <tr>
+          <td>to</td>
+          <td>Number or String</td>
+          <td></td>
+          <td>
+            Edge는 두 Node 사이에 있으며 한 Node에서 시작해서 한 Node 사이를
+            연결합니다. 여기서는 'to' Node에 대해 정의합니다. 그러기 위해서는
+            해당 Node ID를 제공해야 합니다. 이것은 각 Edge에만 적용이 됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>value</td>
+          <td>Number</td>
+          <td><code>undefined</code></td>
+          <td>
+            값을 설정하면, 위에서 정의한 scaling object의 옵션을 사용하여 Edge의
+            너비가 조절됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>width</td>
+          <td>Number</td>
+          <td><code>1</code></td>
+          <td>Edge의 너비입니다. value가 설정되면, 사용되지 않습니다.</td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','widthConstraint', this);"
+        >
+          <td>
+            <span parent="widthConstraint" class="right-caret"></span>
+            widthConstraint
+          </td>
+          <td>Number, Boolean or Object</td>
+          <td><code>false</code></td>
+          <td>
+            false인 경우, widthConstraint가 적용되지 않습니다. 숫자를 지정하면,
+            Edge의 label의 최대 너비가 값으로 설정됩니다. label의 선이 최댓값
+            이하로 유지되도록 공백에서 끊어집니다.
+          </td>
+        </tr>
+        <tr parent="widthConstraint" class="hidden">
+          <td class="indent">widthConstraint.maximum</td>
+          <td>Number</td>
+          <td><code>undefined</code></td>
+          <td>
+            숫자를 지정하면, Edge의 label의 최대 너비가 값으로 설정됩니다.
+            label의 선이 최댓값 이하로 유지되도록 공백에서 끊어집니다.
+          </td>
+        </tr>
+      </table>
+
+      <div class="flagbar">
+        <a href="../../docs/network/edges.html" title="English"
+          ><span class="flag en"></span
+        ></a>
+        <a href="../../docs-kr/network/edges.html" title="Korean"
+          ><span class="flag kr"></span
+        ></a>
+
+        <br />
+
+        Third party docs:
+        <a href="https://ame.cool/core/frontend-tools/" title="Chinese"
+          ><span class="flag zh"></span
+        ></a>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- jquery extensions -->
+    <script src="../../common-docs-files/js/jquery.highlight.js"></script>
+    <script src="../../common-docs-files/js/jquery.url.min.js"></script>
+    <!-- Tipue vendor js -->
+    <script src="../../common-docs-files/js/tipuesearch.config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
+    <!-- controller -->
+    <script src="../../common-docs-files/js/main.js"></script>
+  </body>
+</html>

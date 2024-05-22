@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>vis.js - 환경 설정 문서.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tipue vendor css -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css"
+      rel="stylesheet"
+    />
+
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet" />
+    <link href="../css/overrides.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="../../common-docs-files/js/toggleTable.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/12.1.5/js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+      smoothScroll.init();
+    </script>
+
+    <style></style>
+  </head>
+
+  <body onload="prettyPrint();">
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand hidden-sm" href="./index.html">vis.js</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav"></ul>
+              <form class="navbar-form navbar-right" role="search">
+                <input
+                  name="q"
+                  id="tipue_search_input"
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Keyword 입력"
+                />
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="vis.initSiteSearch(true);"
+                >
+                  검색
+                </button>
+              </form>
+              <div id="search-results-wrapper" class="panel panel-default">
+                <div class="panel-body">
+                  <div id="tipue_search_content"></div>
+                </div>
+              </div>
+              <div id="keyword-info" class="panel panel-success">
+                <div class="panel-body">
+                  Found <span id="keyword-count"></span> results. Click
+                  <a id="keyword-jumper-button" href="">here</a> to jump to the
+                  first keyword occurence!
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container full">
+      <h1>Network - 환경 설정</h1>
+
+      <p>Canvas의 HTML에 대한 부분입니다.</p>
+      <h3>옵션</h3>
+      <p>Canvas의 옵션은 'configure'라는 object에 있습니다.</p>
+      <p>
+        전체 옵션 혹은 요약 옵션을 클릭하면 옵션에 대한 사용법을 보여줍니다.
+      </p>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active" onclick="toggleTab(this)">
+          <a href="#">옵션 숨기기</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="fullOptions"
+        >
+          <a href="#">전체 옵션</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="shortOptions"
+        >
+          <a href="#">요약 옵션</a>
+        </li>
+      </ul>
+      <br />
+      <pre class="prettyprint lang-js options top hidden" id="fullOptions">
+// 모든 옵션들 입니다.
+var options = {
+  configure: {
+    enabled: true,
+    filter: 'nodes,edges',
+    container: undefined,
+    showButton: true
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <pre class="prettyprint lang-js options top hidden" id="shortOptions">
+// 단축 옵션만 표시합니다.
+var options = {
+  configure: 'nodes,edges'
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <p>
+        object를 통해 지원할 수 있습니다. <code>String</code>,
+        <code>Array</code>, <code>Function</code> 혹은 <code>Boolean</code>.
+        이러한 옵션은 아래에 설명된 필터 옵션과 동일합니다.
+      </p>
+      <table class="options">
+        <tr>
+          <th>이름</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>설명</th>
+        </tr>
+        <tr>
+          <td>enabled</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            구성 인터페이스를 켜거나 끌 수 있습니다. 이 옵션은 선택사항입니다.
+            Default 값은 true로 설정됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>filter</td>
+          <td>String, Array, Boolean, Function</td>
+          <td><code>true</code></td>
+          <td>
+            옵션을 true로 설정한다면, 모든 옵션을 킬 수 있고 false일 경우는
+            아무것도 보이지 않습니다. 문자열이 제공된 경우 Node, Edge, layout,
+            interaction, manipulation, physics, selection, render등의 모든
+            조합이 허용됩니다. 마지막으로 문자열 배열을 제공하면 앞서 언급한
+            필드가 모두 허용됩니다. <br /><br />
+            함수를 제공할때, 2개의 인자를 받습니다. 옵션과 옵션 객체에 대한
+            경로입니다. 이 옵션이 true로 반환되면 설정에 옵션이 표시됩니다.
+            예제:
+            <pre class="prettyprint lang-js">
+function (option, path) {
+  return path.indexOf('physics') !== -1;
+}</pre
+            >
+            이 옵션은 물리 옵션만 표시합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>container</td>
+          <td>DOM element</td>
+          <td><code>undefined</code></td>
+          <td>
+            옵션을 허용한다면, 구성을 Network 아래에 하는 것이 아닌, HTML
+            container에 넣을 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>showButton</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>옵션 하단에 generate options 버튼을 표시합니다.</td>
+        </tr>
+      </table>
+
+      <div class="flagbar">
+        <a href="../../docs/network/configure.html" title="English"
+          ><span class="flag en"></span
+        ></a>
+        <a href="../../docs-kr/network/configure.html" title="Korean"
+          ><span class="flag kr"></span
+        ></a>
+
+        <br />
+
+        Third party docs:
+        <a href="https://ame.cool/core/frontend-tools/" title="Chinese"
+          ><span class="flag zh"></span
+        ></a>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- jquery extensions -->
+    <script src="../../common-docs-files/js/jquery.highlight.js"></script>
+    <script src="../../common-docs-files/js/jquery.url.min.js"></script>
+    <!-- Tipue vendor js -->
+    <script src="../../common-docs-files/js/tipuesearch.config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
+    <!-- controller -->
+    <script src="../../common-docs-files/js/main.js"></script>
+  </body>
+</html>

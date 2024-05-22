@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Cypress | Events Target</title>
+
+    <style type="text/css">
+      html,
+      body {
+        background: #aa0000;
+
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #neigborhood {
+        background: #aaaa00;
+
+        top: 0px;
+        left: 0px;
+
+        margin: 100px;
+        padding: 100px;
+
+        width: 200px;
+        height: 200px;
+      }
+      #mynetwork {
+        background: #00aa00;
+
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="../../standalone/umd/vis-network.js"
+    ></script>
+  </head>
+
+  <body>
+    <div id="neigborhood">
+      <div id="mynetwork"></div>
+    </div>
+    <script type="text/javascript">
+      /*
+       * Create a network
+       */
+      const container = document.getElementById("mynetwork");
+      const nodes = new vis.DataSet();
+      const edges = new vis.DataSet();
+      const data = { nodes, edges };
+      const options = {
+        physics: false,
+      };
+      const network = new vis.Network(container, data, options);
+
+      /*
+       * Expose the variables for test specs.
+       */
+      window.edges = edges;
+      window.nodes = nodes;
+      window.network = network;
+    </script>
+  </body>
+</html>

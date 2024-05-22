@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Edge Styles | Self Reference</title>
+
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.js"
+    ></script>
+
+    <style type="text/css">
+      #mynetwork {
+        width: 800px;
+        height: 600px;
+        border: 1px solid lightgray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+      // create an array with nodes
+
+      var nodes = new vis.DataSet([
+        {
+          id: 1,
+          label: [
+            "I'm an alligator,",
+            "I'm a mama-papa coming for you.",
+            "I'm the space invader,",
+            "I'll be a rock 'n' rollin' bitch for you.",
+          ].join("\n"),
+          x: 0,
+          y: 0,
+          color: {
+            background: "transparent",
+          },
+        },
+        {
+          id: 2,
+          label: [
+            "An edge connected to the same node on both end renders a circle.",
+            "Both from and to arrows point to the same node.",
+            "The radius of the edge can be adjusted using selfReference.size.",
+            "The edge can be positioned using selfReference.angle.",
+            "The part of the edge behind the node can be hidden using selfReference.renderBehindTheNode.",
+          ].join("\n"),
+          widthConstraint: { minimum: 100 },
+          heightConstraint: { minimum: 100 },
+          x: 200,
+          y: 200,
+          color: {
+            background: "transparent",
+          },
+        },
+        {
+          id: 3,
+          label: [
+            "Self reference edge is in the bottom left corner",
+            "with parts rendered behind node",
+          ].join("\n"),
+          widthConstraint: { minimum: 100 },
+          heightConstraint: { minimum: 100 },
+          x: 400,
+          y: 400,
+          color: {
+            background: "transparent",
+          },
+          shape: "box",
+        },
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 1, label: "Moonage Daydream" },
+        {
+          from: 2,
+          to: 2,
+          label: "Testing",
+          arrows: "to, middle, from",
+          selfReference: {
+            size: 40,
+            angle: (Math.PI * 7) / 6,
+            renderBehindTheNode: false,
+          },
+        },
+        {
+          from: 3,
+          to: 3,
+          label: "Testing",
+          arrows: "to, middle, from",
+          selfReference: {
+            size: 40,
+            angle: (Math.PI * 7) / 6,
+            renderBehindTheNode: true,
+          },
+        },
+      ]);
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {
+        edges: {
+          color: {
+            color: "#2B7CE9",
+            highlight: "#2B7CE9",
+            hover: "#2B7CE9",
+          },
+          hoverWidth: function (width) {
+            return width + 2;
+          },
+          shadow: true,
+        },
+        interaction: {
+          hover: true,
+        },
+      };
+      var network = new vis.Network(container, data, options);
+
+      (async () => {
+        let angle = -100;
+
+        for (;;) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+
+          ++angle;
+          console.log("set self reference angle to", angle / 10);
+          network.setOptions({
+            edges: {
+              arrows: { to: true, from: true, middle: true },
+              selfReference: {
+                size: 20,
+                angle: angle / 10,
+                renderBehindTheNode: false,
+              },
+            },
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

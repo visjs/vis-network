@@ -9,6 +9,7 @@ npm-debug.log
 .project
 .settings/
 .directory
+.vscode
 
 # temporary files
 .*.sw[op]
@@ -16,3 +17,28 @@ npm-debug.log
 gen/
 .nyc_output/
 coverage/
+.rpt2_cache
+
+# built files
+/cypress/e2e/**/*.js
+/cypress/e2e/**/*.js.map
+/cypress/fixtures/**/*.js
+/cypress/fixtures/**/*.js.map
+/cypress/pages/**/*.js
+/cypress/pages/**/*.js.map
+/cypress/screenshots/
+/cypress/snapshots/
+/cypress/support/**/*.js
+/cypress/support/**/*.js.map
+/cypress/videos/
+/declarations/
+/dist/
+/esnext/
+/examples/examples.css
+/examples/index.html
+/examples/static/
+/examples/thumbnails/
+/peer/
+/standalone/
+/styles/
+vis-network-*.tgz

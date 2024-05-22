@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Cypress | Universal</title>
+
+    <link
+      rel="stylesheet"
+      href="../../node_modules/@mdi/font/css/materialdesignicons.css"
+    />
+    <style type="text/css">
+      html {
+        background: lightyellow;
+      }
+
+      body {
+        margin: 100px;
+        overflow: scroll;
+        padding: 0px;
+      }
+      body > * {
+        margin: 0px auto;
+      }
+
+      #mynetwork {
+        background: white;
+        border: none;
+        height: 1000px;
+        position: relative;
+        width: 1000px;
+      }
+
+      #info-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+      #info-container > * {
+        flex: 1 0 50%;
+      }
+
+      #selection .node:before {
+        content: "node: ";
+      }
+      #selection .edge:before {
+        content: "edge: ";
+      }
+
+      #events > * > * {
+        margin-left: 2em;
+      }
+
+      #events .click:before {
+        content: "click: ";
+      }
+
+      #events .click .pointer.DOM.x:before {
+        content: "DOM X: ";
+      }
+      #events .click .pointer.DOM.y:before {
+        content: "DOM Y: ";
+      }
+      #events .click .pointer.canvas.x:before {
+        content: "canvas X: ";
+      }
+      #events .click .pointer.canvas.y:before {
+        content: "canvas Y: ";
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="mynetwork"></div>
+
+    <div id="info-container">
+      <div>
+        <h1>Info</h1>
+        <div id="status">Loading…</div>
+        <div id="version">Pending…</div>
+      </div>
+
+      <div>
+        <h1>Selection</h1>
+        <div id="selection"></div>
+        <pre id="selection-json"></pre>
+      </div>
+
+      <div>
+        <h1>Events</h1>
+        <div id="events"></div>
+      </div>
+    </div>
+
+    <script type="module" src="./standard-cytest-script.js"></script>
+  </body>
+</html>

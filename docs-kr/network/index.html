@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>vis.js - Network documentation.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tipue vendor css -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css"
+      rel="stylesheet"
+    />
+
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet" />
+    <link href="../css/overrides.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/12.1.5/js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+      smoothScroll.init();
+    </script>
+
+    <style>
+      tr.subHeader {
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      tr.subHeader td {
+        padding-top: 30px;
+      }
+
+      td.midMethods {
+        width: 150px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+      }
+
+      tr.visible td {
+        padding: 10px;
+      }
+    </style>
+
+    <script>
+      function toggleGettingStarted(aThis) {
+        var gettingStartedDiv = document.getElementById("gettingStarted");
+        if (aThis.innerText.indexOf("Show") !== -1) {
+          gettingStartedDiv.className = "";
+          aThis.innerText = "Hide the getting started again.";
+        } else {
+          gettingStartedDiv.className = "hidden";
+          aThis.innerText = "Show the getting started!";
+        }
+      }
+    </script>
+
+    <script
+      type="text/javascript"
+      src="../../common-docs-files/js/toggleTable.js"
+    ></script>
+  </head>
+  <body onload="prettyPrint();">
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand hidden-sm" href="./index.html">vis.js</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav"></ul>
+              <form class="navbar-form navbar-right" role="search">
+                <input
+                  name="q"
+                  id="tipue_search_input"
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Keyword 입력"
+                />
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="vis.initSiteSearch(true);"
+                >
+                  검색
+                </button>
+              </form>
+              <div id="search-results-wrapper" class="panel panel-default">
+                <div class="panel-body">
+                  <div id="tipue_search_content"></div>
+                </div>
+              </div>
+              <div id="keyword-info" class="panel panel-success">
+                <div class="panel-body">
+                  Found <span id="keyword-count"></span> results. Click
+                  <a id="keyword-jumper-button" href="">here</a> to jump to the
+                  first keyword occurence!
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container full">
+      <h1>Network</h1>
+
+      <p>
+        네트워크는 Node와 가장자리로 구성된 네트워크와 네트워크를 표시하기 위한
+        시각화다. 시각화는 사용하기 쉽고 사용자 지정 모양, 스타일, 색상, 크기,
+        이미지 등을 지원한다. 네트워크 시각화는 현대 브라우저에서 최대 수천 개의
+        Node와 Edge에 대해 원활하게 작동한다. 더 많은 Node를 처리하기 위해,
+        네트워크에는 클러스터링 지원이 있다. 네트워크는 렌더링을 위해 HTML
+        캔버스를 사용한다.
+      </p>
+
+      <p>
+        4.0을 기준으로, 네트워크는 네트워크의 특정 부분을 처리하는 개별 모듈로
+        구성된다. 이들 모듈에는 아래 목록의 모듈을 클릭하면 액세스할 수 있는
+        고유의 문서, 옵션, 방법 및 동작가 있다.
+      </p>
+
+      <a
+        class="btn btn-primary"
+        role="button"
+        onclick="toggleGettingStarted(this)"
+        >Show the getting started!</a
+      >
+      <div id="gettingStarted" class="hidden">
+        <h3>Creating a Network</h3>
+
+        <p>
+          VIS네트워크를 만드는것은 쉽습니다.
+          <a href="https://visjs.org/#download_install" target="_blank"
+            >visjs.org</a
+          >, 에서 다운로드할 수 있는 vis-network.js 및 vis-network.css 파일을
+          포함하거나,
+          <a href="https://unpkg.com/vis-network/" target="_blank">unpkg.com</a>
+          에서 연결하거나
+          <a href="https://www.npmjs.com/package/vis-network" target="_blank"
+            >npm package</a
+          >. 에서 요청/가져오기를 요구하십시오. 응용 프로그램에 추가 한 경우
+          Node와 가장자리를 지정해야합니다. 원한다면 DOT 언어를 사용하거나
+          Gephi에서 Node와 Edge를 내보낼 수 있지만 지금은 이것없이 할 것입니다.
+          이에 대한 자세한 내용을 보려면 아래 탭을 클릭하십시오. 네트워크를
+          초기화 한 후 색상, 레이블 또는 옵션 변경과 같은 동적 데이터 바인딩에
+          vis.DataSets를 사용할 수도 있습니다. <br /><br />
+          데이터가 확보되면 네트워크를 어디에 배치 할 것인지 알려주는 컨테이너
+          div 만 있으면됩니다. 또한 옵션 object를 사용하여 네트워크의 여러
+          측면을 사용자 정의 할 수 있습니다. 코드에서 이것은 다음과 같습니다:
+        </p>
+
+        <p>Vis Network를 가져오는 방법에는 세 가지가 있습니다:</p>
+        <ul>
+          <li>
+            독립형 빌드:
+            <ul>
+              <li>간단한 사용법 (단일 파일 링크 / 요청 / 가져오기),</li>
+              <li>CSS가 포함되어 자동으로 페이지에 삽입,</li>
+              <li>자바 스크립트 의존성 번들,</li>
+              <li>다른 Vis 제품군 패키지에서는 호환되지 않습니다,</li>
+              <li>
+                <a
+                  href="../../examples/network/basic_usage/standalone.html"
+                  target="_blank"
+                  >example usage</a
+                >,
+              </li>
+              <li>
+                <a
+                  href="https://unpkg.com/vis-network/standalone/"
+                  target="_blank"
+                  >linkable files on unpkg</a
+                >.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Peer 빌드:
+            <ul>
+              <li>UMD Vis Data nad Vis Util을 수동으로 로드 해야하는 경우,</li>
+              <li>ESM DataSet, DataView 등을 Vis Data에서로드해야하는 경우,</li>
+              <li>CSS는 별도로 포함되어야합니다,</li>
+              <li>다른 Vis 제품군 패키지와 호환,</li>
+              <li>
+                <a
+                  href="../../examples/network/basic_usage/peer.html"
+                  target="_blank"
+                  >example usage</a
+                >,
+              </li>
+              <li>
+                <a href="https://unpkg.com/vis-network/peer/" target="_blank"
+                  >linkable files on unpkg</a
+                >.
+              </li>
+            </ul>
+          </li>
+          <li>
+            Legacy 빌드:
+            <ul>
+              <li>
+                이전 버전과의 호환성을 위해서만 사용 하십시오, 사용
+                <strong>하지 마십시오</strong> ,
+              </li>
+              <li>
+                Vis Network (일명 bloatware)에서 사용하지 않는 순간을
+                포함합니다,
+              </li>
+              <li>CSS는 별도로 포함되어야합니다,</li>
+              <li>자바 스크립트 의존성 번들,</li>
+              <li>tree를 섞어서 사용하는 것과 잘 어울리지 않습니다,</li>
+              <li>다른 Vis 제품군 패키지에서는 작동하지 않습니다,</li>
+              <li>
+                <a
+                  href="../../examples/network/basic_usage/legacy.html"
+                  target="_blank"
+                  >example usage</a
+                >,
+              </li>
+              <li>
+                <a href="https://unpkg.com/vis-network/dist/" target="_blank"
+                  >linkable files on unpkg</a
+                >.
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4>Simplest example (using standalone build)</h4>
+        <pre class="prettyprint lang-html options">
+&lt;html&gt;
+&lt;head&gt;
+    &lt;script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"&gt;&lt;/script&gt;
+
+    &lt;style type="text/css"&gt;
+        #mynetwork {
+            width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="mynetwork"&gt;&lt;/div&gt;
+
+&lt;script type="text/javascript"&gt;
+    // create an array with nodes
+    var nodes = new vis.DataSet([
+        {id: 1, label: 'Node 1'},
+        {id: 2, label: 'Node 2'},
+        {id: 3, label: 'Node 3'},
+        {id: 4, label: 'Node 4'},
+        {id: 5, label: 'Node 5'}
+    ]);
+
+    // create an array with edges
+    var edges = new vis.DataSet([
+        {from: 1, to: 3},
+        {from: 1, to: 2},
+        {from: 2, to: 4},
+        {from: 2, to: 5}
+    ]);
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+
+    // provide the data in the vis format
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {};
+
+    // initialize your network!
+    var network = new vis.Network(container, data, options);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre
+        >
+        <p>
+          <a href="../../examples/network/basicUsage.html" target="_blank"
+            >The result of the code above will be the basic example which is
+            shown here.</a
+          >
+        </p>
+      </div>
+
+      <h2 id="Contents">Contents</h2>
+      <ul>
+        <li><a href="#modules">모듈</a></li>
+        <li><a href="#options">옵션</a></li>
+        <li>
+          <a href="#methods">참조 기능</a>
+          <ul>
+            <li><a href="#methodGlobal">전역 메소드</a></li>
+            <li><a href="#methodCanvas">캔버스</a></li>
+            <li><a href="#methodClustering">클러스터링</a></li>
+            <li><a href="#methodLayout">레이아웃</a></li>
+            <li><a href="#methodManipulation">조작</a></li>
+            <li><a href="#methodInformation">정보</a></li>
+            <li><a href="#methodPhysics">물리적 기능</a></li>
+            <li><a href="#methodSelection">선택</a></li>
+            <li><a href="#methodViewport">뷰포트</a></li>
+            <li><a href="#methodConfigurator">구성</a></li>
+          </ul>
+        </li>
+        <li><a href="#Events">동작</a></li>
+        <li>
+          <a href="#importing_data">데이터 가져오기</a>
+          <ul>
+            <li><a href="#importGephi">Gephi에서 데이터 가져오기</a></li>
+            <li><a href="#importDot">DOT언어에서 데이터 가져오기</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2 id="modules">모듈</h2>
+      <table class="modules">
+        <tr>
+          <td width="120px"><a href="./configure.html">configure</a></td>
+          <td>필터링으로 대화식 옵션 편집기를 생성합니다.</td>
+        </tr>
+        <tr>
+          <td><a href="./edges.html">edges</a></td>
+          <td>
+            Edge 생성 및 삭제를 처리하고 전역 Edge 옵션 및 스타일을 포함합니다.
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./groups.html">groups</a></td>
+          <td>
+            존재하지 않는 그룹이 있는 Node를 처리하는 방법에 대한 그룹 및 일부
+            옵션을 포함합니다.
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./interaction.html">interaction</a></td>
+          <td>
+            네트워크와의 모든 사용자 상호 작용에 사용됩니다. 탐색 버튼 및
+            팝업뿐만 아니라 마우스 및 터치 동작 및 선택을 처리합니다.
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./layout.html">layout</a></td>
+          <td>초기 및 계층 적 위치를 제어합니다.</td>
+        </tr>
+        <tr>
+          <td><a href="./manipulation.html">manipulation</a></td>
+          <td>
+            네트워크의 데이터를 변경하기위한 API 및 선택적 GUI를 제공합니다.
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./nodes.html">nodes</a></td>
+          <td>
+            Node 작성 및 삭제를 처리하고 글로벌 Node 옵션 및 스타일을
+            포함합니다.
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./physics.html">physics</a></td>
+          <td>
+            모든 시뮬레이션이 Node와 Edge를 최종 위치로 이동하고 안정화도
+            제어합니다.
+          </td>
+        </tr>
+      </table>
+
+      <br />
+
+      <div id="optionsDiv">
+        <h2 id="options">Options</h2>
+        <pre class="prettyprint lang-js options">
+var options = {
+  autoResize: true,
+  height: '100%',
+  width: '100%'
+  locale: 'en',
+  locales: locales,
+  clickToUse: false,
+  configure: {...},    // defined in the configure module.
+  edges: {...},        // defined in the edges module.
+  nodes: {...},        // defined in the nodes module.
+  groups: {...},       // defined in the groups module.
+  layout: {...},       // defined in the layout module.
+  interaction: {...},  // defined in the interaction module.
+  manipulation: {...}, // defined in the manipulation module.
+  physics: {...},      // defined in the physics module.
+}
+
+network.setOptions(options);
+</pre
+        >
+        <p>
+          개별 옵션은 아래에 설명되어 있습니다. 모듈을 참조하는 것은 해당 모듈에
+          설명되어 있습니다.
+        </p>
+        <table class="options">
+          <tr>
+            <th>이름</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>설명</th>
+          </tr>
+          <tr>
+            <td id="event_autoResize">autoResize</td>
+            <td>Boolean</td>
+            <td><code>true</code></td>
+            <td>
+              true 인 경우 네트워크는 컨테이너의 크기가 조정되는시기를 자동으로
+              감지하여 그에 따라 다시 그립니다. false 인 경우, redraw () 및
+              setSize () 함수를 사용하여 컨테이너의 크기를 조정 한 후 네트워크를
+              강제로 다시 페인트 할 수 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_width">width</td>
+            <td>String</td>
+            <td><code>'100%'</code></td>
+            <td>
+              캔버스의 너비. 백분율 또는 픽셀일 수 있습니다 (예.
+              <code>'400px'</code>).
+            </td>
+          </tr>
+          <tr>
+            <td id="event_height">height</td>
+            <td>String</td>
+            <td><code>'100%'</code></td>
+            <td>
+              캔버스의 높이. 백분율 또는 픽셀일 수 있습니다 (예.
+              <code>'400px'</code>).
+            </td>
+          </tr>
+          <tr>
+            <td id="event_locale">locale</td>
+            <td>String</td>
+            <td><code>'en'</code></td>
+            <td>locale을 선택하십시오. 기본적으로 언어는 영어입니다.</td>
+          </tr>
+          <tr>
+            <td id="event_locales">locales</td>
+            <td>Object</td>
+            <td>defaultLocales</td>
+            <td>
+              로케일 Object. 기본적으로 <code>'en'</code>, <code>'de'</code>,
+              <code>'es'</code>, <code>'it'</code>,
+              <code>'nl'</code>
+              <code>'pt-br'</code>,
+              <code>'ru'</code>
+              이 지원됩니다. 사용자 정의 방법에 대한 자세한 방법은
+              <a
+                href="#locales"
+                data-scroll=""
+                data-options='{ "easing": "easeInCubic" }'
+                >locales section below</a
+              >
+              을 참조하세요.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_clickToUse">clickToUse</td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              네트워크가 <code>clickToUse</code>로 구성된 경우, 활성화 된
+              경우에만 마우스 및 터치 동작에 반응합니다. 활성화되면 네트워크
+              주위에 파란색 그림자 테두리가 표시됩니다. 네트워크는 네트워크를
+              클릭하여 활성 상태로 설정되며 네트워크 외부를 클릭하거나 ESC 키를
+              누르면 다시 비활성 상태로 변경됩니다
+            </td>
+          </tr>
+          <tr>
+            <td id="event_configure">configure</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은
+              <a href="./configure.html">configure module</a>에 설명되어
+              있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_edges">edges</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은 <a href="./edges.html">edges module</a>에
+              설명되어 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_nodes">nodes</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은 <a href="./nodes.html">nodes module</a>에
+              설명되어 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_groups">groups</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은 <a href="./groups.html">groups module</a>에
+              설명되어 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_layout">layout</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은 <a href="./layout.html">layout module</a>에
+              설명되어 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_interaction">interaction</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은
+              <a href="./interaction.html">interaction module</a>에 설명되어
+              있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_manipulation">manipulation</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은
+              <a href="./manipulation.html">manipulation module</a>에 설명되어
+              있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_physics">physics</td>
+            <td>Object</td>
+            <td>Object</td>
+            <td>
+              이 object의 옵션은 <a href="./physics.html">physics module</a>에
+              설명되어 있습니다.
+            </td>
+          </tr>
+        </table>
+
+        <br />
+        <br />
+        <h4 id="locales">사용자 지정 로케일</h4>
+
+        <p>로케일 object의 형식은 다음과 같다:</p>
+        <pre class="prettyprint lang-js">
+var locales = {
+  en: {
+    edit: 'Edit',
+    del: 'Delete selected',
+    back: 'Back',
+    addNode: 'Add Node',
+    addEdge: 'Add Edge',
+    editNode: 'Edit Node',
+    editEdge: 'Edit Edge',
+    addDescription: 'Click in an empty space to place a new node.',
+    edgeDescription: 'Click on a node and drag the edge to another node to connect them.',
+    editEdgeDescription: 'Click on the control points and drag them to a node to connect to it.',
+    createEdgeError: 'Cannot link edges to a cluster.',
+    deleteClusterError: 'Clusters cannot be deleted.',
+    editClusterError: 'Clusters cannot be edited.'
+  }
+}</pre
+        >
+        <p>
+          자신의 로케일을 정의하려면 키('en')를 변경하고 모든 문자열을 변경할 수
+          있다. 그러면 로케일 옵션에서 새 키를 사용할 수 있다.
+        </p>
+      </div>
+      <br />
+      <hr />
+      <div id="methodsDiv">
+        <h2 id="methods">메소드</h2>
+
+        <p>
+          이것은 공개 API의 모든 메소드 목록입니다. 이들은 상기 열거 모듈에
+          해당하는 카테고리로 분류되어왔다.
+        </p>
+        <table class="methods-collapsable" id="methodTable">
+          <tr id="methodGlobal" class="subHeader">
+            <td colspan="2">네트워크의 전역적 메소드.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','destroy', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="destroy"
+                class="right-caret"
+                id="method_destroy"
+              ></span>
+              destroy()
+            </td>
+          </tr>
+          <tr class="hidden" parent="destroy">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              DOM에서 네트워크를 제거하고 모든 Hammer 바인딩 및 참조를
+              제거하십시오.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','setData', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="setData"
+                class="right-caret"
+                id="method_setData"
+              ></span>
+              setData({<code><i>nodes: vis DataSet/Array</i></code
+              >,<code><i>edges: vis DataSet/Array</i></code
+              >})
+            </td>
+          </tr>
+          <tr class="hidden" parent="setData">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              네트워크의 모든 데이터를 재정의 하십시오.
+              <a href="physics.html">physics module</a>에서 안정화가 활성화 되면
+              네트워크가 다시 안정화됩니다. 이 방법은 네트워크를 처음 초기화 할
+              때도 수행됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','setOptions', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="setOptions"
+                class="right-caret"
+                id="method_setOptions"
+              ></span>
+              setOptions(<code>Object options</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="setOptions">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              옵션을 설정하십시오. 사용 가능한 모든 옵션은 위 모듈에서 찾을 수
+              있습니다. 각 모듈에는 옵션을 포함하는 모듈 이름을 가진 자체
+              컨테이너가 필요합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','onEvent', this);"
+          >
+            <td colspan="2">
+              <span parent="onEvent" class="right-caret" id="method_on"></span>
+              on(<code>String event name, Function callback</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="onEvent">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              동작 리스너를 설정하십시오. 동작 유형에 따라 콜백 함수에 대해 다른
+              매개 변수를 얻습니다. 자세한 내용은 설명서의 동작 섹션을
+              참조하십시오.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','offEvent', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="offEvent"
+                class="right-caret"
+                id="method_off"
+              ></span>
+              off(<code>String event name, Function callback</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="offEvent">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              동작 리스너를 제거하십시오. 제공하는 기능은 켜짐 기능에서 사용한
+              기능과 동일해야합니다. 기능이 제공되지 않으면 모든 리스너가
+              제거됩니다. 자세한 내용은 설명서의 동작 섹션을 참조하십시오.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','onceEvent', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="onceEvent"
+                class="right-caret"
+                id="method_once"
+              ></span>
+              once(<code>String event name, Function callback</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="onceEvent">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              동작 리스너를 한 번만 설정하십시오. 동작 리스너가 발생하면 동작
+              리스너가 제거됩니다. 동작 유형에 따라 콜백 함수에 대해 다른 매개
+              변수를 얻습니다. 자세한 내용은 설명서의 동작 섹션을 참조하십시오.
+            </td>
+          </tr>
+
+          <tr id="methodCanvas" class="subHeader">
+            <td colspan="2">캔버스와 관련된 기능.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','canvasToDOM', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="canvasToDOM"
+                class="right-caret"
+                id="method_canvasToDOM"
+              ></span>
+              canvasToDOM({<code><i>x: Number</i></code
+              >,<code><i>y: Number</i></code
+              >})
+            </td>
+          </tr>
+          <tr class="hidden" parent="canvasToDOM">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              이 함수는 캔버스 좌표를 DOM의 좌표로 변환합니다. 입력 및 출력
+              형식은 <code>{x:Number,y:Number}</code>입니다. DOM 값은 네트워크
+              컨테이너와 관련이 있습니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','DOMtoCanvas', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="DOMtoCanvas"
+                class="right-caret"
+                id="method_DOMtoCanvas"
+              ></span>
+              DOMtoCanvas({<code><i>x: Number</i></code
+              >,<code><i>y: Number</i></code
+              >})
+            </td>
+          </tr>
+          <tr class="hidden" parent="DOMtoCanvas">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              이 함수는 DOM 좌표를 캔버스의 좌표로 변환합니다. 입력 및 출력
+              형식은 <code>{x:Number,y:Number}</code>입니다. DOM 값은 네트워크
+              컨테이너와 관련이 있습니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','redraw', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="redraw"
+                class="right-caret"
+                id="method_redraw"
+              ></span>
+              redraw()
+            </td>
+          </tr>
+          <tr class="hidden" parent="redraw">
+            <td class="midMethods">반환값: 없음</td>
+            <td>네트워크를 다시 그립니다.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','setSize', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="setSize"
+                class="right-caret"
+                id="method_setSize"
+              ></span>
+              setSize(<code><i>String width</i></code
+              >,<code><i>String height</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="setSize">
+            <td class="midMethods">반환값: none</td>
+            <td>
+              캔버스의 크기를 설정하십시오. 이것은 창 크기 조정시 자동으로
+              수행됩니다.
+            </td>
+          </tr>
+
+          <tr id="methodClustering" class="subHeader">
+            <td colspan="2">클러스터링</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','cluster', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="cluster"
+                class="right-caret"
+                id="method_cluster"
+              ></span>
+              cluster( <code>Object options</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="cluster">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              옵션 object는
+              <a
+                data-scroll=""
+                data-options='{ "easing": "easeInCubic" }'
+                href="#optionsObject"
+                >below</a
+              >에 자세히 설명되어 있습니다. joinCondition 함수는 모든 Node와
+              함께 제공됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','clusterByConnection', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="clusterByConnection"
+                class="right-caret"
+                id="method_clusterByConnection"
+              ></span>
+              clusterByConnection( <code>String nodeId</code>,
+              <code>[Object options]</code>
+              )
+            </td>
+          </tr>
+          <tr class="hidden" parent="clusterByConnection">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              이 방법은 제공된 Node를보고 해당 Node와 연결된 모든 Node를
+              클러스터로 만듭니다. 옵션 Object를 제공하여 동작을 사용자 정의 할
+              수 있습니다. 모든 옵션들은
+              <a
+                data-scroll=""
+                data-options='{ "easing": "easeInCubic" }'
+                href="#optionsObject"
+                >below</a
+              >에 자세히 설명되어 있습니다. The joinCondition에는 연결된 Node만
+              제공됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','clusterByHubsize', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="clusterByHubsize"
+                class="right-caret"
+                id="method_clusterByHubsize"
+              ></span>
+              clusterByHubsize( <code>[Number hubsize]</code>,
+              <code>[Object options]</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="clusterByHubsize">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              이 방법은 네트워크의 모든 Node와 지정된 것보다 더 많은 Edge를 가진
+              Node를 <code>hubsize</code> 조건에 따라 검사한다. 허브 크기가
+              정의되지 않은 경우 허브 크기는 평균값에 2 개의 표준 편차를 더한
+              값으로 결정됩니다. <br /><br />
+
+              모든 적합한 Node에 대해 clusterByConnection이 각 Node에서
+              수행됩니다 옵션 object는 <code>clusterByConnection</code>에서
+              설명하고 동일하게 수행합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','clusterOutliers', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="clusterOutliers"
+                class="right-caret"
+                id="method_clusterOutliers"
+              ></span>
+              clusterOutliers( <code>[Object options]</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="clusterOutliers">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              이 방법은 1 개의 Edge가있는 모든 Node를 각각 연결된 Node로
+              클러스터링합니다. 옵션 개체는
+              <a
+                data-scroll=""
+                data-options='{ "easing": "easeInCubic" }'
+                href="#optionsObject"
+                >below</a
+              >에 자세히 설명되어 있습니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','findNode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="findNode"
+                class="right-caret"
+                id="method_findNode"
+              ></span>
+              findNode( <code>String/Number nodeId</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="findNode">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              Node는 클러스터에있을 수 있습니다. 클러스터는 클러스터에있을 수도
+              있습니다. 이 함수는 Node의 위치를 보여주는 nodeId 배열을
+              반환합니다.
+
+              <br /><br />
+              체인의 nodeId, 특히 첫 번째 매개 변수로 전달 된 nodeId가 현재 Node
+              목록에 없으면 빈 배열이 리턴됩니다.
+
+              <br /><br />
+              예시: 클러스터 'A'는 클러스터 'B'를 포함하고, 클러스터 'B'는
+              클러스터 'C'를 포함하고, 클러스터 'C'는 Node 'fred'를 포함합니다.
+              <code>network.clustering.findNode('fred')</code>는
+              <code>['A','B','C','fred']</code>를 반환합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getClusteredEdges', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getClusteredEdges"
+                class="right-caret"
+                id="method_getClusteredEdges"
+              ></span>
+              getClusteredEdges( <code>String baseEdgeId</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="getClusteredEdges">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              <code>findNode</code>클러스터링 중 제공된 Edge에서 생성 된 모든
+              Edge ID를 반환한다는 점에서 비슷 합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getBaseEdge', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getBaseEdge"
+                class="right-caret"
+                id="method_getBaseEdge"
+              ></span>
+              getBaseEdge( <code>String clusteredEdgeId</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="getBaseEdge">
+            <td class="midMethods">반환값: Value</td>
+            <td>
+              clusteredEdgeId가 사용 가능한 경우 이 메소드는
+              <code>data.edges</code><br />
+              즉, 제공 한 원래 baseEdgeId를 리턴합니다 클러스터링 후
+              'SelectEdge'동작이 발생하지만 클러스터 된 Edge만 제공합니다. 그런
+              다음 이 메소드를 사용하여 baseEdgeId를 리턴 할 수 있습니다.<br /><br />
+              <b
+                >이 방법은 더 이상 사용되지 않습니다. 대신
+                <code>getBaseEdges()</code>를 사용하십시오.</b
+              >
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getBaseEdges', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getBaseEdges"
+                class="right-caret"
+                id="method_getBaseEdges"
+              ></span>
+              getBaseEdges(<code>String clusteredEdgeId</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getBaseEdges">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              주어진 <code>clusteredEdgeId</code>의 경우, 이 메소드는
+              <code>data.edges</code>에 제공된 원래 기본 Edge ID를 모두
+              반환합니다. 클러스터 되지 않은(예: 'base') Edge의 경우,
+              <code>clusteredEdgeId</code>가 반환됩니다.<br /><br />
+              기본 Edge ID만 반환. <code>clusteredEdgeId</code> 아래의 모든
+              클러스터된 Edge ID는 건너뛰지만 기본 ID를 반환하기 위해 다시
+              검색하십시오.<br />
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','updateEdge', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="updateEdge"
+                class="right-caret"
+                id="method_updateEdge"
+              ></span>
+              updateEdge( <code>String startEdgeId, Object options</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="updateEdge">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              클러스터링 된 Node 사이에 표시되는 Edge가 네트워크 생성시
+              <code>data.edges</code>에 전달된 <code>network</code> Edge와
+              같지않다<br />
+              각 클러스터링 계층에서 클러스터가 열릴 때까지 클러스터 사이의 Edge
+              복사본이 생성되고 이전 Edge가 숨겨진다. 이 방법은 edgeId(즉, a
+              base edgeId from <code>data.edges</code>)를 가져와서 옵션을
+              적용하고 클러스터링 중에 생성된 모든 Edge를 적용한다.<br />
+              .<br /><br />
+              예시:
+              <code
+                >network.clustering.updateEdge(originalEdge.id, {color :
+                '#aa0000'});</code
+              ><br />
+              이렇게하면 기본 Edge와 그 이후의 Edge가 빨간색으로 바뀌므로
+              클러스터를 열 때 Edge의 색상이 모두 동일합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','updateClusteredNode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="updateClusteredNode"
+                class="right-caret"
+                id="method_updateClusteredNode"
+              ></span>
+              updateClusteredNode(
+              <code>String clusteredNodeId, Object options</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="updateClusteredNode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              원본에 포함되지 않은 경우 생성 된 클러스터 Node
+              <code>data.nodes</code>에 전달 <code>network</code> 생성<br />
+              이 메소드는 클러스터 Node를 업데이트합니다.<br /><br />
+              예시:
+              <code
+                >network.clustering.updateClusteredNode(clusteredNodeId, {shape
+                : 'star'});</code
+              >
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','isCluster', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="isCluster"
+                class="right-caret"
+                id="method_isCluster"
+              ></span>
+              isCluster( <code>String nodeId</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="isCluster">
+            <td class="midMethods">반환값: Boolean</td>
+            <td>ID가 제공된 Node가 클러스터 인 경우 true를 리턴합니다.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getNodesInCluster', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getNodesInCluster"
+                class="right-caret"
+                id="method_getNodesInCluster"
+              ></span>
+              getNodesInCluster( <code>String clusterNodeId</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="getNodesInCluster">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              클러스터를 열면 해제 될 Node의 모든 NodeId 배열을 반환합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','openCluster', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="openCluster"
+                class="right-caret"
+                id="method_openCluster"
+              ></span>
+              openCluster( <code>String nodeId, Object options</code>)
+            </td>
+          </tr>
+
+          <tr class="hidden" parent="openCluster">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              클러스터를 열고 포함 된 Node와 Edge를 해제하여 클러스터 Node와
+              클러스터 Edge를 제거합니다. options object는 선택 사항이며 현재
+              releaseFunction 옵션을 지원합니다. 이 기능은 클러스터를 연 후
+              Node를 수동으로 배치하는 데 사용할 수 있는 기능입니다. <br />
+              <pre class="code">
+function releaseFunction (clusterPosition, containedNodesPositions) {
+    var newPositions = {};
+    // clusterPosition = {x:clusterX, y:clusterY};
+    // containedNodesPositions = {nodeId:{x:nodeX,y:nodeY}, nodeId2....}
+    newPositions[nodeId] = {x:newPosX, y:newPosY};
+    return newPositions;
+}</pre
+              >
+              includedNodesPositions는 클러스터 된 클러스터의 Node 위치를
+              포함합니다. 이 함수는 포함 된 Node 위치 (변경된) 또는 새 object 일
+              수있는 newPosition을 반환합니다. 이것은 포함 된 NodesPositions에
+              존재하는 nodeId와 같은 키를 가진 object와 <code>{x:x,y:y}</code>에
+              위치한 object여야 합니다. <br /><br />
+
+              이 반환 된 object에 나열되지 않은 모든 NodeId에 대해 클러스터
+              위치에 배치합니다. releaseFunction이 정의되지 않은 경우의 기본
+              동작이기도 합니다.
+            </td>
+          </tr>
+
+          <tr id="methodLayout" class="subHeader">
+            <td colspan="2">Layout</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getSeed', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getSeed"
+                class="right-caret"
+                id="method_getSeed"
+              ></span>
+              getSeed()
+            </td>
+          </tr>
+          <tr class="hidden" parent="clusterByHubsize"></tr>
+          <tr class="hidden" parent="getSeed">
+            <td class="midMethods">반환값: Number or String</td>
+            <td>
+              네트워크 레이아웃을 좋아하고 다음에 같은 방식으로 시작하려면이
+              방법을 사용하여 시드를 요청하고 <code>layout.randomSeed</code>에
+              옵션을 넣으십시오.
+            </td>
+          </tr>
+
+          <tr id="methodManipulation" class="subHeader">
+            <td colspan="2">GUI없이 조작 시스템을 사용하기위한 조작 방법.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','enableEditMode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="enableEditMode"
+                class="right-caret"
+                id="method_enableEditMode"
+              ></span>
+              enableEditMode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="enableEditMode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              프로그래밍 방식으로 편집 모드를 활성화하십시오. 편집 버튼을 누르는
+              것과 비슷한 효과입니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','disableEditMode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="disableEditMode"
+                class="right-caret"
+                id="method_disableEditMode"
+              ></span>
+              disableEditMode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="disableEditMode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              프로그래밍 방식으로 편집 모드를 비활성화합니다. 닫기 아이콘을
+              누르는 것과 유사한 효과 (도구 모음의 Edge에있는 작은 십자가).
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','addNodeMode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="addNodeMode"
+                class="right-caret"
+                id="method_addNodeMode"
+              ></span>
+              addNodeMode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="addNodeMode">
+            <td class="midMethods">Returns: none</td>
+            <td>
+              addNode 모드로 이동하십시오. 편집 모드 나 조작이 가능하지
+              않아도됩니다. 이 모드에서 나오려면
+              <code>disableEditMode()</code>을 호출하십시오.
+              <code>handlerFunctions</code>에 정의된 콜백 함수가 여전히
+              적용됩니다. GUI없이 이러한 방법을 사용하려면
+              <code>enabled</code>를 false로 설정해야 합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','editNode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="editNode"
+                class="right-caret"
+                id="method_editNode"
+              ></span>
+              editNode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="editNode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              선택된 Node를 편집하십시오. <code>addNodeMode</code>의 설명도
+              여기에 적용됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','addEdgeMode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="addEdgeMode"
+                class="right-caret"
+                id="method_addEdgeMode"
+              ></span>
+              addEdgeMode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="addEdgeMode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              addEdge mode로 가십시오. <code>addNodeMode</code>의 설명도 여기에
+              적용됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','editEdgeMode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="editEdgeMode"
+                class="right-caret"
+                id="method_editEdgeMode"
+              ></span>
+              editEdgeMode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="editEdgeMode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              editEdge mode로 가십시오. <code>addNodeMode</code>의 설명도 여기에
+              적용됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','deleteSelected', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="deleteSelected"
+                class="right-caret"
+                id="method_deleteSelected"
+              ></span>
+              deleteSelected()
+            </td>
+          </tr>
+          <tr class="hidden" parent="deleteSelected">
+            <td class="midMethods">반환값: 없음</td>
+            <td>편집 모드 나 조작이 가능하지 않아도 됩니다.</td>
+          </tr>
+
+          <tr id="methodInformation" class="subHeader">
+            <td colspan="2">Node와 Edge의 정보를 얻을 수 있는 방법.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getPositions', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getPositions"
+                class="right-caret"
+                id="method_getPositions"
+              ></span>
+              getPositions(<code><i>[Array of nodeIds]</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getPositions">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              제공된 NodeId를 object로 사용하여 Node의 캔버스 공간에서 x,y
+              위치를 반환합니다.:
+              <pre class="code">
+{
+  nodeId1: {x: xValue, y:yValue},
+  nodeId2: {x: xValue, y:yValue},
+  ...
+}
+</pre
+              >
+              대체 입력은 NodeId를 포함하거나 아무것도 포함하지 않는
+              문자열입니다. 문자열이 제공되면 ID에 해당하는 Node의 위치가
+              리턴됩니다. 아무것도 제공되지 않으면 모든 Node의 위치가
+              반환됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','storePositions', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="storePositions"
+                class="right-caret"
+                id="method_storePositions"
+              ></span>
+              storePositions()
+            </td>
+          </tr>
+          <tr class="hidden" parent="storePositions">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              vis.DataSet을 사용하여 Node를 네트워크에 로드할 때 이 메소드는
+              모든 Node의 X 및 Y 위치를 해당 데이터 세트에 넣습니다.
+              데이터베이스에서 Node를 로드하고이를 DataSet과 동적으로 결합한
+              경우 이를 사용하여 네트워크를 한 번 안정화 한 후 다음에 Node를로드
+              할 때 안정화를 통해 DataSet을 통해 해당 데이터베이스의 위치를
+              저장할 수 있습니다. <br /><br />
+              Node가 여전히 움직이고 동적으로 매끄러운 Edge(기본적으로 켜져
+              있음)를 사용하면,
+              <a href="physics.html">physics module</a>
+              에 있는 <code>stabilization.onlyDynamicEdges</code>옵션을 사용할
+              수 있습니다. <br /><br />
+              <b
+                >이 방법은 클러스터링을 지원하지 않습니다. 현재 위치를 사용하여
+                클러스터를 올바르게 초기화 할 수 없으므로 클러스터를 사용할 때
+                위치를 캐시 할 수 없습니다.</b
+              >
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','moveNode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="moveNode"
+                class="right-caret"
+                id="method_moveNode"
+              ></span>
+              moveNode(<code><i>nodeId, Number x, Number y</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="moveNode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              이것을 사용하여 프로그래밍 방식으로 Node를 이동할 수 있습니다.
+              <i>제공된 x 및 y 위치는 캔버스 공간에 있어야합니다!</i>
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getBoundingBox', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getBoundingBox"
+                class="right-caret"
+                id="method_getBoundingBox"
+              ></span>
+              getBoundingBox(<code><i>String nodeId</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getBoundingBox">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              형식에 label을 포함하여 Node의 경계 상자를 리턴합니다.:
+              <pre class="code">
+{
+  top: Number,
+  left: Number,
+  right: Number,
+  bottom: Number
+}
+</pre
+              >
+              이 값들은 캔버스 공간에 있습니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getConnectedNodes', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getConnectedNodes"
+                class="right-caret"
+                id="method_getConnectedNodes"
+              ></span>
+              getConnectedNodes(<code
+                ><i>String nodeId or edgeId, [String direction]</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getConnectedNodes">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              이 Node 또는 Edge에 직접 연결된 모든 Node의 nodeId 배열을
+              반환합니다.<br /><br />
+              Node ID의 경우 연결된 Node의 ID가있는 배열을 반환합니다.<br />
+              선택적 매개 변수 <code>direction</code>이 문자열 <i>'from'</i>으로
+              설정되면, 상위 Node만 반환합니다.<br />
+              <code>direction</code>이 <i>'to'</i>로 설정되면, 하위 Node만
+              반환합니다.<br />
+              다른값이나 혹은 <code>undefined</code>면 부모와 자식 Node를 모두
+              반환합니다. <br /><br />
+              edge id의 경우 배열을 반환합니다: <code>[fromId, toId]</code>.
+              Edge에 관해서는 매개변수 <i>direction</i>이 무시됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getConnectedEdges', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getConnectedEdges"
+                class="right-caret"
+                id="method_getConnectedEdges"
+              ></span>
+              getConnectedEdges(<code><i>String nodeId</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getConnectedEdges">
+            <td class="midMethods">반환값: Array</td>
+            <td>이 Node에 연결된 Edge의 EdgeId 배열을 리턴합니다.</td>
+          </tr>
+
+          <tr id="methodPhysics" class="subHeader">
+            <td colspan="2">시뮬레이션 실행시기를 제어하는 물리적 방법.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','startSimulation', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="startSimulation"
+                class="right-caret"
+                id="method_startSimulation"
+              ></span>
+              startSimulation()
+            </td>
+          </tr>
+          <tr class="hidden" parent="startSimulation">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              물리 시뮬레이션을 시작하십시오. 이것은 일반적으로 필요할 때마다
+              수행되며 시뮬레이션을 직접 중지하고 나중에 계속하려는 경우에만
+              유용합니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','stopSimulation', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="stopSimulation"
+                class="right-caret"
+                id="method_stopSimulation"
+              ></span>
+              stopSimulation()
+            </td>
+          </tr>
+          <tr class="hidden" parent="stopSimulation">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              물리 시뮬레이션을 중지하고 <code>stabilized</code>동작을
+              트리거합니다. Node를 끌거나 데이터 세트를 변경하거나
+              <code>startSimulation()</code>을 호출함으로서 다시 시작할 수
+              있습니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','stabilize', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="stabilize"
+                class="right-caret"
+                id="method_stabilize"
+              ></span>
+              stabilize([iterations])
+            </td>
+          </tr>
+          <tr class="hidden" parent="stabilize">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              언제든지 수동으로 안정화를 호출할 수 있습니다. 위의 모든 안정화
+              옵션이 사용됩니다. 선택적으로 반복 횟수를 제공 할 수 있습니다.
+            </td>
+          </tr>
+
+          <tr id="methodSelection" class="subHeader">
+            <td colspan="2">Node와 Edge의 선택 방법.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getSelection', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getSelection"
+                class="right-caret"
+                id="method_getSelection"
+              ></span>
+              getSelection()
+            </td>
+          </tr>
+          <tr class="hidden" parent="getSelection">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              다음과 같이 선택된 Node와 Edge ID를 가진 object를 반환합니다.:
+              <pre class="code">
+{
+  nodes: [Array of selected nodeIds],
+  edges: [Array of selected edgeIds]
+}</pre
+              >
+            </td>
+          </tr>
+
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getSelectedNodes', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getSelectedNodes"
+                class="right-caret"
+                id="method_getSelectedNodes"
+              ></span>
+              getSelectedNodes()
+            </td>
+          </tr>
+          <tr class="hidden" parent="getSelectedNodes">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              선택된 NodeID의 배열을 다음과 같이 반환합니다:
+              <code>[nodeId1, nodeId2, ..]</code>.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getSelectedEdges', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getSelectedEdges"
+                class="right-caret"
+                id="method_getSelectedEdges"
+              ></span>
+              getSelectedEdges()
+            </td>
+          </tr>
+          <tr class="hidden" parent="getSelectedEdges">
+            <td class="midMethods">반환값: Array</td>
+            <td>
+              선택된 EdgeID의 배열을 다음과 같이 반환합니다:
+              <code>[edgeId1, edgeId2, ..]</code>.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getNodeAt', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getNodeAt"
+                class="right-caret"
+                id="method_getNodeAt"
+              ></span>
+              getNodeAt(<code><i>{x: xPosition DOM, y: yPosition DOM}</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getNodeAt">
+            <td class="midMethods">반환값: String</td>
+            <td>
+              nodeId 또는 undefined를 반환합니다. DOM 위치는 캔버스의 왼쪽 상단
+              Edge에서 픽셀 단위로 예상됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getEdgeAt', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getEdgeAt"
+                class="right-caret"
+                id="method_getEdgeAt"
+              ></span>
+              getEdgeAt(<code><i>{x: xPosition DOM, y: yPosition DOM}</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="getEdgeAt">
+            <td class="midMethods">반환값: String</td>
+            <td>
+              edgeId 또는 undefined를 반환합니다. DOM 위치는 캔버스의 왼쪽 상단
+              Edge에서 픽셀 단위로 예상됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','selectNodes', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="selectNodes"
+                class="right-caret"
+                id="method_selectNodes"
+              ></span>
+              selectNodes(<code><i>Array with nodeIds</i></code
+              >,<code><i>[Boolean highlightEdges]</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="selectNodes">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              입력 배열에서 ID에 해당하는 Node를 선택합니다. highlightEdges가
+              true이거나 정의되지 않은 경우 인접 Edge도 선택됩니다. 이 방법은
+              자체 object를 선택하기 전에 다른 모든 object를 선택 취소합니다
+              <i>동작을 발생시키지 않습니다.</i>.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','selectEdges', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="selectEdges"
+                class="right-caret"
+                id="method_selectEdges"
+              ></span>
+              selectEdges(<code><i>Array with edgeIds</i></code
+              >)
+            </td>
+          </tr>
+          <tr class="hidden" parent="selectEdges">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              입력 배열에서 id에 해당하는 Edge를 선택합니다. 이 방법은 자체
+              object를 선택하기 전에 다른 모든 object를 선택 취소합니다.
+              <i>동작을 발생시키지 않습니다.</i>.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','setSelection', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="setSelection"
+                class="right-caret"
+                id="method_setSelection"
+              ></span>
+              setSelection( <code>Object selection</code>,
+              <code>[Object options]</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="setSelection">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              다음과 같은 object를 선택 하여야합니다:
+              <pre class="code">
+{
+  nodes: [Array of nodeIds],
+  edges: [Array of edgeIds]
+}</pre
+              >
+              또한 <code>selection</code> object의 <code>nodes</code> 혹은
+              <code>edges</code>만 선택할 수 있습니다. 다음과 같은 옵션들이
+              있습니다:
+              <pre class="code">
+{
+  unselectAll: Boolean,
+  highlightEdges: Boolean
+}</pre
+              >
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','unselectAll', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="unselectAll"
+                class="right-caret"
+                id="method_unselectAll"
+              ></span>
+              unselectAll()
+            </td>
+          </tr>
+          <tr class="hidden" parent="unselectAll">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              모든 objects의 선택을 취소 합니다.
+              <i>동작을 발생시키지 않습니다.</i>.
+            </td>
+          </tr>
+
+          <tr id="methodViewport" class="subHeader">
+            <td colspan="2">
+              뷰포트의 확대축소 와 역동적표현을 조절하는 방법.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getScale', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getScale"
+                class="right-caret"
+                id="method_getScale"
+              ></span>
+              getScale()
+            </td>
+          </tr>
+          <tr class="hidden" parent="getScale">
+            <td class="midMethods">반환값: Number</td>
+            <td>
+              네트워크의 현재 스케일을 반환합니다. 1.0은 100 %에 해당하며 0은
+              무한대로 축소됩니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','clusterByHubsize', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="clusterByHubsize"
+                class="right-caret"
+                id="method_getViewPosition"
+              ></span>
+              getViewPosition()
+            </td>
+          </tr>
+          <tr class="hidden" parent="clusterByHubsize">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              뷰의 현재 중심을 다음 형식으로 반환합니다:
+              <code>{ x: {Number}, y: {Number} }</code>
+            </td>
+          </tr>
+
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','fit', this);"
+          >
+            <td colspan="2">
+              <span parent="fit" class="right-caret" id="method_fit"></span>
+              fit(<code>[Object options]</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="fit">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              모든 Node가 캔버스에 맞도록 축소합니다. 이를 사용자 정의하는
+              옵션을 제공 할 수 있습니다:
+              <pre class="code">
+{
+  nodes?: (string | number)[],
+  minZoomLevel?: number,
+  maxZoomLevel?: number,
+  animation?: boolean | {
+    duration?: number
+    easingFunction?: string
+  }
+}
+</pre
+              >
+              Node를 사용하여 뷰의 특정 Node에만 맞도록 확대 / 축소 할 수
+              있습니다.<br />
+              최소 및 최대 확대 / 축소 수준을 사용하여 주어진 수준 내에서 맞춤을
+              제한 할 수 있습니다. 기본값은 0 (포함되지 않음)에서
+              1까지입니다.<br /><br />
+              다른 옵션들은 <code>moveTo()</code>에 자세히 설명되어 있습니다.
+              모든 방법은 적합한 방법에 대한 선택 사항입니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','focus', this);"
+          >
+            <td colspan="2">
+              <span parent="focus" class="right-caret" id="method_focus"></span>
+              focus( <code>String nodeId</code>, <code>[Object options]</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="focus">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              이 기능으로 Node에 집중할 수 있습니다. 즉, 뷰가 해당 Node에
+              고정되고, 움직이면 뷰도 그에 따라 이동합니다. 사용자가 뷰를
+              드래그하면 포커스가 깨집니다 다음 효과를 사용자 정의하는 옵션을
+              제공할 수 있습니다.:
+              <pre class="code">
+{
+  scale: Number,
+  offset: {x:Number, y:Number}
+  locked: boolean
+  animation: { // -------------------> can be a boolean too!
+    duration: Number
+    easingFunction: String
+  }
+}
+</pre
+              >
+              잠금을 제외한 모든 옵션은 <code>moveTo()</code>에 자세히 설명되어
+              있습니다. 잠김은 확대 애니메이션이 완료된 후 뷰가 Node에 잠긴
+              상태로 유지되는지 여부를 나타냅니다. 기본값은 true입니다. 포커스
+              방법에서 옵션 object는 선택 사항입니다.
+            </td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','moveTo', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="moveTo"
+                class="right-caret"
+                id="method_moveTo"
+              ></span>
+              moveTo(<code>Object options</code>)
+            </td>
+          </tr>
+          <tr class="hidden" parent="moveTo">
+            <td class="midMethods">반환값: 없음</td>
+            <td>
+              moveTo 메서드를 사용하여 카메라에 애니메이션을 적용하거나 이동할
+              수 있습니다. 옵션은 다음과 같습니다:
+              <pre class="code">
+{
+  position: {x:Number, y:Number},
+  scale: Number,
+  offset: {x:Number, y:Number}
+  animation: { // -------------------> can be a boolean too!
+    duration: Number
+    easingFunction: String
+  }
+}
+</pre
+              >
+              위치 (캔버스 단위!)는 카메라의 중앙 초점 위치입니다. 스케일은 대상
+              줌 레벨입니다. 기본값은 1.0입니다. 오프셋 (DOM 단위)은 뷰에서
+              초점이 맞춰진 중심으로부터의 픽셀 수입니다. 기본값은 {x : 0, y :
+              0}입니다. 애니메이션의 경우 부울을 사용하여 기본 옵션과 함께
+              사용하거나 사용하지 않도록 설정하거나 지속 시간 (밀리 초) 및 여유
+              기능을 수동으로 정의 할 수 있습니다. 이용 가능:
+              <code
+                >linear, easeInQuad, easeOutQuad, easeInOutQuad, easeInCubic,
+                easeOutCubic, easeInOutCubic, easeInQuart, easeOutQuart,
+                easeInOutQuart, easeInQuint, easeOutQuint, easeInOutQuint</code
+              >.
+
+              <i
+                >최소한 스케일, 위치 또는 오프셋을 정의해야합니다. 그렇지 않으면
+                이동할 것이 없습니다.</i
+              >
+            </td>
+          </tr>
+
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','releaseNode', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="releaseNode"
+                class="right-caret"
+                id="method_releaseNode"
+              ></span>
+              releaseNode()
+            </td>
+          </tr>
+          <tr class="hidden" parent="releaseNode">
+            <td class="midMethods">반환값: 없음</td>
+            <td>포커스 된 Node를 프로그래밍 방식으로 해제하십시오.</td>
+          </tr>
+          <tr id="methodConfigurator" class="subHeader">
+            <td colspan="2">구성자 모듈과 함께 사용하는 방법.</td>
+          </tr>
+          <tr
+            class="collapsible toggle"
+            onclick="toggleTable('methodTable','getOptionsFromConfigurator', this);"
+          >
+            <td colspan="2">
+              <span
+                parent="getOptionsFromConfigurator"
+                class="right-caret"
+                id="method_getOptionsFromConfigurator"
+              ></span>
+              getOptionsFromConfigurator()
+            </td>
+          </tr>
+          <tr class="hidden" parent="getOptionsFromConfigurator">
+            <td class="midMethods">반환값: Object</td>
+            <td>
+              구성자를 사용하는 경우 이 메소드를 호출하여 사용자가 구성자와 상호
+              작용하여 발생하는 기본 옵션과의 모든 차이점을 포함하는 옵션
+              오브젝트를 얻을 수 있습니다.
+            </td>
+          </tr>
+        </table>
+
+        <br />
+        <br />
+
+        <h4 id="optionsObject">클러스터 메소드 옵션 Object</h4>
+
+        <p>
+          클러스터 기능에 제공된 옵션 개체는 다음과 같은 속성을 포함 할 수
+          있습니다:
+        </p>
+        <table class="methods">
+          <tr>
+            <th>이름</th>
+            <th>Type</th>
+            <th>설명</th>
+          </tr>
+          <tr>
+            <td>
+              joinCondition(<br />&nbsp;&nbsp;<code
+                >nodeOptions:&nbsp;Object</code
+              ><br />)<br />or<br />joinCondition(<br />&nbsp;&nbsp;<code
+                >parentNodeOptions:&nbsp;Object,</code
+              ><br />&nbsp;&nbsp;<code>childNodeOptions:&nbsp;Object</code
+              ><br />)
+            </td>
+            <td>Function</td>
+            <td>
+              <i>클러스터 메소드를 제외한 모든 옵션. </i> <br />
+              <code>clusterByConnection</code>은 2 개의 nodeOptions object를
+              joinCondition 콜백에 인수로 전달하는 유일한 함수입니다. 클러스터
+              모듈은 클러스터에있는 것으로 선택된 모든 Node를 반복하고 데이터를
+              인수로 사용하여이 함수를 호출합니다. 이 함수가 true를 반환하면이
+              Node가 클러스터에 추가됩니다. 클러스터에 포함할지 여부를 결정하기
+              위해 Node에 추가 한 모든 사용자 정의 필드뿐만 아니라 모든 옵션
+              (기본값 포함)에 액세스 할 수 있습니다. 예:
+              <pre class="prettyprint lang-js">
+var nodes = [
+  {id: 4, label: 'Node 4'},
+  {id: 5, label: 'Node 5'},
+  {id: 6, label: 'Node 6', cid:1},
+  {id: 7, label: 'Node 7', cid:1}
+]
+
+var options = {
+  joinCondition:function(nodeOptions) {
+    return nodeOptions.cid === 1;
+  }
+}
+
+network.clustering.cluster(options);
+</pre
+              >
+              <code>clusterByConnection</code
+              ><b
+                >의 2개의 nodeOptions object를 joinCondition 콜백에 인수로
+                전달합니다.</b
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              processProperties(<br />&nbsp;&nbsp;<code>clusterOptions:&nbsp;Object</code>,<br />
+              &nbsp;&nbsp;<code>childNodesOptions:&nbsp;Array</code>,<br />
+              &nbsp;&nbsp;<code>childEdgesOptions:&nbsp;Array</code><br />)
+            </td>
+            <td>Function</td>
+            <td>
+              <i>Optional. </i> 새 클러스터 Node를 작성하기 전에 이
+              (선택적)기능은 사용자가 제공 한 특성
+              (<code>clusterNodeProperties</code>)에 포함된 모든 Node 및 포함 된
+              모든 Edge와 함께 호출됩니다. 이를 사용하여 클러스터에 포함 된
+              항목을 기반으로 클러스터의 속성을 업데이트 할 수 있습니다. 이
+              함수는 속성을 반환하여 클러스터 Node를 생성해야합니다. 아래
+              예에서는 클러스터를 만들 때 질량과 값을 보존합니다:
+              <pre class="prettyprint lang-js">
+var options = {
+  processProperties: function (clusterOptions,
+      childNodes, childEdges) {
+    var totalMass = 0;
+    var totalValue = 0;
+    for (var i = 0; i < childNodes.length; i++) {
+      totalMass += childNodes[i].mass;
+      totalValue = childNodes[i].value
+        ? totalValue + childNodes[i].value
+        : totalValue;
+    }
+    clusterOptions.mass = totalMass;
+    if (totalValue > 0) {
+      clusterOptions.value = totalValue;
+    }
+    return clusterOptions;
+  },
+}
+</pre
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="event_clusterNodeProperties">clusterNodeProperties</td>
+            <td>Object</td>
+            <td>
+              <i>옵션. </i> 이것은 클러스터 Node에 대한 옵션을 포함하는
+              object입니다. All options described
+              <a href="./nodes.html">nodes module</a>에 설명되어 있는 모든
+              옵션들을 허용합니다. 이를 통해 원하는 방식으로 클러스터 Node를
+              스타일링 할 수 있습니다. 미세 조정을 위해 processProperties 함수에
+              제공되는 스타일 object이기도합니다. 정의되지 않은 경우 기본 Node
+              옵션이 사용됩니다.<br /><br />
+              기본 기능은 클러스터에 둘 이상의 Node가 포함 된 경우에만
+              클러스터링을 허용합니다. 단일 Node의 클러스터링을 허용하기 위해
+              <code>allowSingleNodeCluster : true</code> 특성을 사용할 수
+              있습니다.
+              <pre class="prettyprint lang-js">
+    clusterNodeProperties: {
+        allowSingleNodeCluster: true
+    }
+</pre
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="event_clusterEdgeProperties">clusterEdgeProperties</td>
+            <td>Object</td>
+            <td>
+              <i>옵션. </i> 이것은 클러스터에 연결된 Edge에 대한 옵션을 포함하는
+              object입니다. <a href="./edges.html">edges module</a>에 설명되어
+              있는 모든 옵션들을 허용합니다. 이를 사용하여 원하는 방식으로
+              클러스터에 연결하는 모서리의 스타일을 지정할 수 있습니다. 제공되지
+              않은 경우 교체 된 모서리의 옵션이 사용됩니다. 정의되지 않은 경우
+              기본 모서리 옵션이 사용됩니다.
+            </td>
+          </tr>
+        </table>
+      </div>
+      <br />
+      <hr />
+      <div id="eventsDiv">
+        <h2 id="Events">동작</h2>
+
+        <p>공개 API의 모든 동작 목록입니다. 모든 개별 모듈에서 수집됩니다.</p>
+
+        <p>
+          이러한 동작은 상호 작용 모듈에 의해 시작됩니다. 그것들은 사용자 입력과
+          관련이 있습니다.
+        </p>
+        <table class="events">
+          <tr>
+            <th>이름</th>
+            <th>Properties</th>
+            <th>설명</th>
+          </tr>
+          <tr class="subHeader">
+            <td colspan="3">
+              사용자의 상호 작용, 선택, 드래그 등에 의해 유발되는 동작.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_click">click</td>
+            <td>Object</td>
+            <td>
+              사용자가 마우스를 클릭하거나 터치 스크린 장치를 탭하면 시작됩니다.
+              속성이 다음과 같이 구조화 된 object를 전달합니다:
+
+              <pre class="prettyprint lang-js">
+{
+  nodes: [Array of selected nodeIds],
+  edges: [Array of selected edgeIds],
+  event: [Object] original click event,
+  pointer: {
+    DOM: {x:pointer_x, y:pointer_y},
+    canvas: {x:canvas_x, y:canvas_y}
+  }
+}
+</pre
+              >
+
+              이것은 모든 동작에 공통적 인 구조입니다. click 동작의 경우 다음
+              속성이 추가됩니다:
+
+              <pre class="prettyprint lang-js">
+{
+...
+  items: [Array of click items],
+}</pre
+              >
+
+              클릭 항목이 있는 위치:
+              <pre class="prettyprint lang-js">
+  {nodeId:NodeId}            // node with given id clicked on
+  {nodeId:NodeId labelId:0}  // label of node with given id clicked on
+  {edgeId:EdgeId}            // edge with given id clicked on
+  {edge:EdgeId, labelId:0}   // label of edge with given id clicked on
+</pre
+              >
+
+              <code>items</code> 배열 의 순서는 z 순서로 내림차순입니다. 따라서
+              최상위 항목을 얻으려면 인덱스 0에서 값을 가져옵니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_doubleClick">doubleClick</td>
+            <td>same as <code>click</code>.</td>
+            <td>
+              사용자가 마우스를 두 번 클릭하거나 터치 스크린 장치를 두 번 탭하면
+              시작됩니다. 더블 클릭은 실제로 두 번의 클릭이므로 두 번의 클릭
+              동작이 시작되고 그 다음에 더블 클릭 동작이 발생합니다. 더블 클릭
+              동작이 발생한 경우 클릭 동작을 사용하지 않으려면 클릭 동작 사이의
+              시간을 확인한 후 처리하십시오.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_oncontext">oncontext</td>
+            <td>same as <code>click</code>.</td>
+            <td>
+              사용자가 마우스 오른쪽 버튼으로 캔버스를 클릭하면 시작됩니다.
+              마우스 오른쪽 버튼은 기본적으로 선택되지 않습니다. 원하는 경우에
+              <code>getNodeAt</code> 메소드를 이용하여 Node를 선택할 수 있다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_hold">hold</td>
+            <td>same as <code>click</code>.</td>
+            <td>
+              사용자가 마우스를 클릭하거나 잡고 있으면 터치 스크린 장치를 탭하고
+              누르고 있으면 시작됩니다. 이 경우 클릭 이벤트도 시작됩니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_release">release</td>
+            <td>same as <code>click</code>.</td>
+            <td>
+              캔버스에 그리기가 완료되면 시작됩니다. 네트워크 위에 그리는 데
+              사용할 수 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_select">select</td>
+            <td>same as <code>click</code>.</td>
+            <td>
+              사용자 액션으로 선택이 변경되면 시작됩니다. 이는 Node 또는
+              모서리가 선택되었거나 선택에 추가 또는 선택 해제되었음을
+              의미합니다.
+              <b>모든 선택 이벤트는 클릭 한 상태에서만 트리거됩니다</b>.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_selectNode">selectNode</td>
+            <td>same as <code>click</code>.</td>
+            <td>사용자가 Node를 선택하면 시작됩니다.</td>
+          </tr>
+          <tr>
+            <td id="event_selectEdge">selectEdge</td>
+            <td>same as <code>click</code>.</td>
+            <td>사용자가 엣지를 선택하면 시작됩니다.</td>
+          </tr>
+          <tr>
+            <td id="event_deselectNode">deselectNode</td>
+            <td>Object</td>
+            <td>
+              사용자가 Node를 선택 해제했거나 해제했을 때 발생합니다. 이전
+              선택은 마지막 사용자 이벤트 전에 선택된 Node 및 Edge의 목록입니다.
+              속성이 다음과 같이 구조화 된 object를 전달합니다:
+              <pre class="prettyprint lang-js">
+{
+  nodes: [Array of selected nodeIds],
+  edges: [Array of selected edgeIds],
+  event: [Object] original click event,
+  pointer: {
+    DOM: {x:pointer_x, y:pointer_y},
+    canvas: {x:canvas_x, y:canvas_y}
+    }
+  },
+  previousSelection: {
+    nodes: [Array of previously selected nodeIds],
+    edges: [Array of previously selected edgeIds]
+  }
+}
+</pre
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="event_deselectEdge">deselectEdge</td>
+            <td>same as <code>deselectNode</code>.</td>
+            <td>
+              사용자가 엣지 (또는 엣지)를 선택 해제했을 때 발생합니다. 이전
+              선택은 마지막 사용자 이벤트 전에 선택된 Node 및 Edge의 목록입니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_dragStart">dragStart</td>
+            <td>same as <code>click</code>.</td>
+            <td>드래그를 시작할 때 시작됩니다.</td>
+          </tr>
+          <tr>
+            <td id="event_dragging">dragging</td>
+            <td>same as <code>click</code>.</td>
+            <td>Node 또는 뷰를 드래그 할 때 발생합니다.</td>
+          </tr>
+          <tr>
+            <td id="event_dragEnd">dragEnd</td>
+            <td>same as <code>click</code>.</td>
+            <td>드래그가 완료되면 시작됩니다.</td>
+          </tr>
+          <tr>
+            <td id="event_controlNodeDragging">controlNodeDragging</td>
+            <td>Object</td>
+            <td>
+              컨트롤 Node를 드래그 할 때 발생합니다. 제어 Edge는 드래그되는
+              Edge이며 'from'및 'to'Node의 ID를 포함합니다. 제어 Node가 다른
+              Node 위로 끌지 않으면 'to'필드가 정의되지 않습니다. 속성이 다음과
+              같이 구조화 된 object를 전달합니다:
+
+              <pre class="prettyprint lang-js">
+{
+    nodes: [Array of selected nodeIds],
+    edges: [Array of selected edgeIds],
+    event: [Object] original click event,
+    pointer: {
+        DOM: {x:pointer_x, y:pointer_y},
+        canvas: {x:canvas_x, y:canvas_y}
+    },    
+    controlEdge: {from:from_node_id, to:to_node_id}
+}
+</pre
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="event_controlNodeDragEnd">controlNodeDragEnd</td>
+            <td>same as <code>controlNodeDragging</code>.</td>
+            <td>컨트롤 Node 드래그가 완료되면 시작됩니다.</td>
+          </tr>
+          <tr>
+            <td id="event_hoverNode">hoverNode</td>
+            <td><code>{node: nodeId}</code></td>
+            <td>
+              옵션 <code>interaction:{hover:true}</code> 이 활성화되어 있고
+              마우스가 노드 위로 움직이면 시작됩니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_blurNode">blurNode</td>
+            <td><code>{node: nodeId}</code></td>
+            <td>
+              옵션 <code>interaction:{hover:true}</code> 이 활성화되어 있고
+              마우스가 노드 위로 움직이면 시작됩니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_hoverEdge">hoverEdge</td>
+            <td><code>{edge: edgeId}</code></td>
+            <td>
+              옵션 <code>interaction:{hover:true}</code> 이 활성화되어 있고
+              마우스가 에지 위로 움직이면 시작됩니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_blurEdge">blurEdge</td>
+            <td><code>{edge: edgeId}</code></td>
+            <td>
+              옵션 <code>interaction:{hover:true}</code> 이 활성화되어 있고
+              마우스가 노드 위로 움직이면 시작됩니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_zoom">zoom</td>
+            <td>Object</td>
+            <td>
+              사용자가 확대 또는 축소하면 시작됩니다. 속성은 확대 / 축소 방향을
+              알려줍니다. 배율은 0보다 큰 숫자이며 network.getScale ()을 사용할
+              때와 동일합니다. 확대 또는 축소 탐색 버튼을 클릭하여 시작하면 전달
+              된 object의 포인터 속성이 null이됩니다. 속성이 다음과 같이 구조화
+              된 object를 전달합니다:
+              <pre class="prettyprint lang-js">
+{
+  direction: '+'/'-',
+  scale: Number,
+  pointer: {x:pointer_x, y:pointer_y}
+}
+</pre
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="event_showPopup">showPopup</td>
+            <td><code>id of item corresponding to popup</code></td>
+            <td>팝업 (도움말)이 표시되면 시작됩니다.</td>
+          </tr>
+          <tr>
+            <td id="event_hidePopup">hidePopup</td>
+            <td>none</td>
+            <td>팝업 (도움말)이 숨겨지면 시작됩니다.</td>
+          </tr>
+          <tr class="subHeader">
+            <td colspan="3">
+              동작은 물리 시뮬레이션을 트리거했습니다. GUI 업데이트를 트리거하는
+              데 사용할 수 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_startStabilizing">startStabilizing</td>
+            <td>none</td>
+            <td>
+              안정화가 시작되면 시작됩니다. 노드를 끌고 물리 시뮬레이션이 다시
+              시작되어 다시 안정화되는 경우에도 마찬가지입니다. 안정화는 반드시
+              '보이지 않고'를 암시하지 않습니다.
+            </td>
+          </tr>
+
+          <tr>
+            <td id="event_stabilizationProgress">stabilizationProgress</td>
+            <td>Object</td>
+            <td>
+              <code>updateInterval</code> 반복횟수 배수에 도달하면 시작됩니다.
+              이것은 '숨겨진'안정화에서만 발생합니다. 속성이 다음과 같이 구조화
+              된 object를 전달합니다:
+
+              <pre class="prettyprint lang-js">
+{
+  iterations: Number // iterations so far,
+  total: Number      // total iterations in options
+}</pre
+              >
+            </td>
+          </tr>
+          <tr>
+            <td id="event_stabilizationIterationsDone">
+              stabilizationIterationsDone
+            </td>
+            <td>none</td>
+            <td>
+              '숨겨진'안정화가 완료되면 시작됩니다. 반드시 네트워크가 안정화 된
+              것은 아닙니다. 또한 옵션에 정의 된 반복 횟수에 도달했음을 의미 할
+              수도 있습니다.
+            </td>
+          </tr>
+
+          <tr>
+            <td id="event_stabilized">stabilized</td>
+            <td>Object</td>
+            <td>
+              네트워크가 안정되거나 <code>stopSimulation()</code>가 호출되었을때
+              발생합니다. 반복 횟수는 네트워크를 안정화하는 데 필요한 최대 반복
+              횟수를 조정하는데 사용될 수 있습니다. 속성이 다음과 같이 구조화 된
+              객체를 전달합니다:
+              <pre class="prettyprint lang-js">
+{
+  iterations: Number // iterations it took
+}</pre
+              >
+            </td>
+          </tr>
+
+          <tr class="subHeader">
+            <td colspan="3">캔버스에 의해 트리거된 동작.</td>
+          </tr>
+          <tr>
+            <td id="event_resize">resize</td>
+            <td>Object</td>
+            <td>
+              컨테이너 div의 크기가 변경되었을 때 다시 그리기 호출, 새 값으로
+              setSize () 호출 또는 새 너비 및 / 또는 높이 값으로 setOptions ()
+              호출로 캔버스 크기가 조정되면 시작됩니다. 속성이 다음과 같이
+              구조화 된 객체를 전달합니다.:
+
+              <pre class="prettyprint lang-js">
+{
+  width: Number     // the new width  of the canvas
+  height: Number    // the new height of the canvas
+  oldWidth: Number  // the old width  of the canvas
+  oldHeight: Number // the old height of the canvas
+}
+</pre
+              >
+            </td>
+          </tr>
+          <tr class="subHeader">
+            <td colspan="3">
+              렌더링 모듈에 의해 트리거 된 동작 캔버스에 사용자 정의 요소를
+              그리는 데 사용할 수 있습니다.
+            </td>
+          </tr>
+          <tr>
+            <td id="event_initRedraw">initRedraw</td>
+            <td>none</td>
+            <td>
+              다시 그리기가 시작되기 전에 시작됩니다. 이 시점에서 시뮬레이션
+              단계가 완료되었습니다. 새 프레임을 그리기 전에 사용자 정의 요소를
+              이동하는 데 사용할 수 있습니다.
+            </td>
+          </tr>
+
+          <tr>
+            <td id="event_beforeDrawing">beforeDrawing</td>
+            <td><code>canvas context</code></td>
+            <td>
+              캔버스가 지워지고 크기가 조정되고보기 위치로 변환 된 후 모든
+              모서리와 노드가 그려지기 전에 시작됩니다. 네트워크 뒤에 그리는 데
+              사용할 수 있습니다.
+            </td>
+          </tr>
+
+          <tr>
+            <td id="event_afterDrawing">afterDrawing</td>
+            <td><code>canvas context</code></td>
+            <td>
+              캔버스에 그리기가 완료되면 시작됩니다. 네트워크 위에 그리는 데
+              사용할 수 있습니다.
+            </td>
+          </tr>
+          <tr class="subHeader">
+            <td colspan="3">보기 모듈에 의해 트리거 된 동작.</td>
+          </tr>
+          <tr>
+            <td id="event_animationFinished">animationFinished</td>
+            <td>none</td>
+            <td>애니메이션이 완료되면 시작됩니다.</td>
+          </tr>
+          <tr class="subHeader">
+            <td colspan="3">구성 모듈에 의해 트리거되는 동작.</td>
+          </tr>
+          <tr>
+            <td id="event_configChange">configChange</td>
+            <td>Object</td>
+            <td>
+              사용자가 구성 기에서 옵션을 변경하면 시작됩니다. 옵션 객체는
+              setOptions 메소드와 함께 사용하거나 JSON.stringify ()를 사용하여
+              문자열화할 수 있습니다. 옵션을 네트워크에 수동으로 넣을 필요는
+              없습니다. 이 작업은 자동으로 수행됩니다. 이벤트를 사용하여
+              데이터베이스에 사용자 옵션을 저장할 수 있습니다
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <br />
+      <hr />
+      <div id="importDiv">
+        <h2 id="importing_data">데이터 가져오기</h2>
+
+        <p>
+          네트워크에는 <a href="#importGephi">Gephi</a>에서 데이터를 가져오고
+          <a href="#importDot">DOT language</a>언어로 그래프를 가져오는 변환
+          유틸리티가 포함되어 있습니다.
+        </p>
+
+        <h3 id="importGephi">Gephi에서 데이터 가져오기</h3>
+
+        <p>
+          네트워크는 Gephi에서 내보낸 json 파일에서 직접 데이터를 가져올 수
+          있습니다.
+          <a
+            href="https://gephi.org/plugins/#/plugin/jsonexporter-plugin"
+            target="_blank"
+            >https://gephi.org/plugins/#/plugin/jsonexporter-plugin</a
+          >에서 JSON 내보내기를 얻을 수 있습니다. JSON 파일을 Vis로 가져오는
+          방법을 보여주는 예시가 있습니다
+        </p>
+
+        <p>사용 예시:</p>
+
+        <pre class="prettyprint lang-js">
+// load the JSON file containing the Gephi network.
+var gephiJSON = loadJSON("./datasources/WorldCup2014.json"); // code in <a href="../../examples/network/data/importingFromGephi.html">importing_from_gephi</a>.
+
+// you can customize the result like with these options. These are explained below.
+// These are the default options.
+var parserOptions = {
+  edges: {
+    inheritColor: false
+  },
+  nodes: {
+    fixed: true,
+    parseColor: false
+  }
+}
+
+// parse the gephi file to receive an object
+// containing nodes and edges in vis format.
+var parsed = vis.parseGephiNetwork(gephiJSON, parserOptions);
+
+// provide data in the normal fashion
+var data = {
+  nodes: parsed.nodes,
+  edged: parsed.edges
+};
+
+// create a network
+var network = new vis.Network(container, data);
+</pre>
+
+        <br />
+        <h4>Gephi parser 옵션</h4>
+
+        Vis에게 Gephi의 데이터로 수행 할 작업을 알려주는 데 사용할 수 있는 몇
+        가지 옵션이 있습니다.
+        <table class="options">
+          <tr>
+            <th>이름</th>
+            <th>Type</th>
+            <th>Defaul</th>
+            <th>설명</th>
+          </tr>
+          <tr>
+            <td>nodes.fixed</td>
+            <td>Boolean</td>
+            <td><code>true</code></td>
+            <td>
+              False이면 임포트 후 물리 모델에 따라 노드가 이동합니다. true이면
+              노드가 전혀 이동하지 않습니다. true로 설정하면 물리에서 무한 재귀
+              오류를 피하기 위해 노드 위치를 정의해야합니다.
+            </td>
+          </tr>
+          <tr>
+            <td>nodes.parseColor</td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>
+              true이면 vis 파서가 색상을 구문 분석하여 테두리, highlighs 및
+              hover에 추가 색상을 생성합니다. False이면 노드가 제공된
+              색상이됩니다.
+            </td>
+          </tr>
+          <tr>
+            <td>edges.inheritColor</td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>
+              true 인 경우 gephi에서 제공 한 색상이 무시되고 색상 상속 상속이
+              전역 설정과 함께 사용됩니다.
+            </td>
+          </tr>
+        </table>
+
+        <h3 id="importDot">DOT언어로 데이터 가져오기</h3>
+
+        <p>
+          네트워크는
+          <a href="http://en.wikipedia.org/wiki/DOT_language" target="_blank"
+            >DOT language</a
+          >로 데이터 지원합니다. DOT 언어로 데이터를 사용하기 위해
+          vis.convertDOTNetwork 변환기를 사용하여 DOT 언어를 vis.Network 호환
+          노드, 모서리 및 옵션 객체로 변환 할 수 있습니다. 원하는 경우 옵션
+          개체를 다른 옵션으로 확장 할 수 있습니다
+        </p>
+
+        <p>사용 예시:</p>
+
+        <pre class="prettyprint lang-js">
+// provide data in the DOT language
+var DOTstring = 'dinetwork {1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }';
+var parsedData = vis.convertDOTNetwork(DOTstring);
+
+var data = {
+  nodes: parsedData.nodes,
+  edges: parsedData.edges
+}
+
+var options = parsedData.options;
+
+// you can extend the options like a normal JSON variable:
+options.nodes = {
+  color: 'red'
+}
+
+// create a network
+var network = new vis.Network(container, data, options);
+</pre
+        >
+      </div>
+
+      <div class="flagbar">
+        <a href="../../docs/network/index.html" title="English"
+          ><span class="flag en"></span
+        ></a>
+        <a href="../../docs-kr/network/index.html" title="Korean"
+          ><span class="flag kr"></span
+        ></a>
+
+        <br />
+
+        Third party docs:
+        <a href="https://ame.cool/core/frontend-tools/" title="Chinese"
+          ><span class="flag zh"></span
+        ></a>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- jquery extensions -->
+    <script src="../../common-docs-files/js/jquery.highlight.js"></script>
+    <script src="../../common-docs-files/js/jquery.url.min.js"></script>
+    <!-- Tipue vendor js -->
+    <script src="../../common-docs-files/js/tipuesearch.config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
+    <!-- controller -->
+    <script src="../../common-docs-files/js/main.js"></script>
+  </body>
+</html>

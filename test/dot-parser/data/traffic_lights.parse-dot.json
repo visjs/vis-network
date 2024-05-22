@@ -1,207 +1,207 @@
 {
-    "type": "digraph",
-    "id": "TrafficLights",
-    "nodes": [
-        {
-            "id": "gy2",
-            "attr": {
-                "shape": "box"
-            }
-        },
-        {
-            "id": "yr2",
-            "attr": {
-                "shape": "box"
-            }
-        },
-        {
-            "id": "rg2",
-            "attr": {
-                "shape": "box"
-            }
-        },
-        {
-            "id": "gy1",
-            "attr": {
-                "shape": "box"
-            }
-        },
-        {
-            "id": "yr1",
-            "attr": {
-                "shape": "box"
-            }
-        },
-        {
-            "id": "rg1",
-            "attr": {
-                "shape": "box"
-            }
-        },
-        {
-            "id": "green2",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "yellow2",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "red2",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "safe2",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "safe1",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "green1",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "yellow1",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        },
-        {
-            "id": "red1",
-            "attr": {
-                "shape": "circle",
-                "fixedsize": true,
-                "width": 0.9
-            }
-        }
-    ],
-    "edges": [
-        {
-            "from": "gy2",
-            "to": "yellow2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "rg2",
-            "to": "green2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "yr2",
-            "to": "safe1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "yr2",
-            "to": "red2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "safe2",
-            "to": "rg2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "green2",
-            "to": "gy2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "yellow2",
-            "to": "yr2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "red2",
-            "to": "rg2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "gy1",
-            "to": "yellow1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "rg1",
-            "to": "green1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "yr1",
-            "to": "safe2",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "yr1",
-            "to": "red1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "safe1",
-            "to": "rg1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "green1",
-            "to": "gy1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "yellow1",
-            "to": "yr1",
-            "type": "->",
-            "attr": {}
-        },
-        {
-            "from": "red1",
-            "to": "rg1",
-            "type": "->",
-            "attr": {}
-        }
-    ],
-    "overlap": false,
-    "label": "PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz",
-    "fontsize": 12
+  "type": "digraph",
+  "id": "TrafficLights",
+  "nodes": [
+    {
+      "id": "gy2",
+      "attr": {
+        "shape": "box"
+      }
+    },
+    {
+      "id": "yr2",
+      "attr": {
+        "shape": "box"
+      }
+    },
+    {
+      "id": "rg2",
+      "attr": {
+        "shape": "box"
+      }
+    },
+    {
+      "id": "gy1",
+      "attr": {
+        "shape": "box"
+      }
+    },
+    {
+      "id": "yr1",
+      "attr": {
+        "shape": "box"
+      }
+    },
+    {
+      "id": "rg1",
+      "attr": {
+        "shape": "box"
+      }
+    },
+    {
+      "id": "green2",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "yellow2",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "red2",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "safe2",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "safe1",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "green1",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "yellow1",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    },
+    {
+      "id": "red1",
+      "attr": {
+        "shape": "circle",
+        "fixedsize": true,
+        "width": 0.9
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "gy2",
+      "to": "yellow2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "rg2",
+      "to": "green2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "yr2",
+      "to": "safe1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "yr2",
+      "to": "red2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "safe2",
+      "to": "rg2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "green2",
+      "to": "gy2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "yellow2",
+      "to": "yr2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "red2",
+      "to": "rg2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "gy1",
+      "to": "yellow1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "rg1",
+      "to": "green1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "yr1",
+      "to": "safe2",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "yr1",
+      "to": "red1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "safe1",
+      "to": "rg1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "green1",
+      "to": "gy1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "yellow1",
+      "to": "yr1",
+      "type": "->",
+      "attr": {}
+    },
+    {
+      "from": "red1",
+      "to": "rg1",
+      "type": "->",
+      "attr": {}
+    }
+  ],
+  "overlap": false,
+  "label": "PetriNet Model TrafficLights\nExtracted from ConceptBase and layed out by Graphviz",
+  "fontsize": 12
 }

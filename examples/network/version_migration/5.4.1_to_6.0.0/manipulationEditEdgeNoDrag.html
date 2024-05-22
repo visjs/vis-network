@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Vis Network | Migrating from 5.4.1 to 6.0.0 | Edit Edge Without Drag
+    </title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="../../../../standalone/umd/vis-network.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Migrating from 5.4.1 to 6.0.0</h2>
+        <h3>Edit Edge Without Drag</h3>
+      </div>
+
+      <p>
+        The editWithoutDrag function receives from and to ids. According to the
+        documentation it has always been that way. But in 5.4.1 (and for 3 year
+        prio to this release) the manipulation.editEdge.editEdgeWithoutDrag
+        function received internal node objects instead. As of 6.0.0 the
+        behavior is in line with the documentation and other similar methods
+        that is the from and to properties now contain the ids directly.
+      </p>
+
+      <p>Old code that no longer works:</p>
+
+      <pre>
+const options = {
+  manipulation: {
+    editEdge: {
+      editWithoutDrag({ from, to }) {
+        const fromId = from.id
+        const toId = to.id
+        …
+      }
+    }
+  }
+}
+      </pre>
+
+      <p>New code that achieves the same result:</p>
+
+      <pre>
+const options = {
+  manipulation: {
+    editEdge: {
+      editWithoutDrag({ from: fromId, to: toId }) {
+        …
+      }
+    }
+  }
+}
+      </pre>
+    </div>
+
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // prepare nodes and edges
+      var nodes = Array(31)
+        .fill(null)
+        .map((_, i) => ({ id: i + 1, label: `${i + 1}` }));
+      var edges = [
+        { from: 1, to: 2, label: "1 → 2" },
+        { from: 1, to: 3, label: "1 → 3" },
+        { from: 2, to: 4, label: "2 → 4" },
+        { from: 2, to: 5, label: "2 → 5" },
+        { from: 3, to: 6, label: "3 → 6" },
+        { from: 3, to: 7, label: "3 → 7" },
+        { from: 4, to: 8, label: "4 → 8" },
+        { from: 4, to: 9, label: "4 → 9" },
+        { from: 5, to: 10, label: "5 → 10" },
+        { from: 5, to: 11, label: "5 → 11" },
+        { from: 6, to: 12, label: "6 → 12" },
+        { from: 6, to: 13, label: "6 → 13" },
+        { from: 7, to: 14, label: "7 → 14" },
+        { from: 7, to: 15, label: "7 → 15" },
+        { from: 8, to: 16, label: "8 → 16" },
+        { from: 8, to: 17, label: "8 → 17" },
+        { from: 9, to: 18, label: "9 → 18" },
+        { from: 9, to: 19, label: "9 → 19" },
+        { from: 10, to: 20, label: "10 → 20" },
+        { from: 10, to: 21, label: "10 → 21" },
+        { from: 11, to: 22, label: "11 → 22" },
+        { from: 11, to: 23, label: "11 → 23" },
+        { from: 12, to: 24, label: "12 → 24" },
+        { from: 12, to: 25, label: "12 → 25" },
+        { from: 13, to: 26, label: "13 → 26" },
+        { from: 13, to: 27, label: "13 → 27" },
+        { from: 14, to: 28, label: "14 → 28" },
+        { from: 14, to: 29, label: "14 → 29" },
+        { from: 15, to: 30, label: "15 → 30" },
+        { from: 15, to: 31, label: "15 → 31" },
+      ];
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edges),
+      };
+      var options = {
+        manipulation: {
+          editEdge: {
+            editWithoutDrag: function (data, callback) {
+              console.info(data);
+              alert("The callback data has been logged to the console.");
+              // you can do something with the data here
+              callback(data);
+            },
+          },
+        },
+      };
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>

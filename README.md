@@ -1,15 +1,22 @@
 # vis-network
 
-![example chart](docs/img/network.png)
+![example chart](common-docs-files/img/network.png)
 
 Network is a visualization to display networks and networks consisting of nodes and edges. The visualization is easy to use and supports custom shapes, styles, colors, sizes, images, and more. The network visualization works smooth on any modern browser for up to a few thousand nodes and edges. To handle a larger amount of nodes, Network has clustering support. Network uses HTML canvas for rendering.
 
 ## Badges
 
-[![GitHub contributors](https://img.shields.io/github/contributors/visjs/vis-network.svg)](https://github.com/visjs/vis-network/graphs/contributors)
-[![GitHub stars](https://img.shields.io/github/stars/visjs/vis-network.svg)](https://github.com/almende/vis/stargazers)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Renovate](https://badges.renovateapi.com/github/visjs/vis-network)](https://app.renovatebot.com/)
+[![npm](https://img.shields.io/npm/v/vis-network)](https://www.npmjs.com/package/vis-network)
 
-[![Backers on Open Collective](https://opencollective.com/visjs/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors) 
+[![dependencies Status](https://david-dm.org/visjs/vis-network/status.svg)](https://david-dm.org/visjs/vis-network)
+[![devDependencies Status](https://david-dm.org/visjs/vis-network/dev-status.svg)](https://david-dm.org/visjs/vis-network?type=dev)
+[![peerDependencies Status](https://david-dm.org/visjs/vis-network/peer-status.svg)](https://david-dm.org/visjs/vis-network?type=peer)
+
+[![GitHub contributors](https://img.shields.io/github/contributors/visjs/vis-network.svg)](https://github.com/visjs/vis-network/graphs/contributors)
+[![Backers on Open Collective](https://opencollective.com/visjs/backers/badge.svg)](#backers)
+[![Sponsors on Open Collective](https://opencollective.com/visjs/sponsors/badge.svg)](#sponsors)
 
 ## Install
 
@@ -19,56 +26,58 @@ Install via npm:
 
 ## Example
 
-A basic example on loading a Timeline is shown below. More examples can be
+A basic example on loading a Network is shown below. More examples can be
 found in the [examples directory](https://github.com/visjs/vis-network/tree/master/examples/)
 of the project.
 
 ```html
-<!doctype html>
-<html>
-<head>
-  <title>Network</title>
-  <script type="text/javascript" src="https://unpkg.com/vis-network@latest/dist/vis-network.min.js"></script>
-  <link href="https://unpkg.com/vis-network@latest/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
-  <style type="text/css">
-    #mynetwork {
-      width: 600px;
-      height: 400px;
-      border: 1px solid lightgray;
-    }
-  </style>
-</head>
-<body>
-<div id="mynetwork"></div>
-<script type="text/javascript">
-  // create an array with nodes
-  var nodes = new vis.DataSet([
-    {id: 1, label: 'Node 1'},
-    {id: 2, label: 'Node 2'},
-    {id: 3, label: 'Node 3'},
-    {id: 4, label: 'Node 4'},
-    {id: 5, label: 'Node 5'}
-  ]);
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Network</title>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+    ></script>
+    <style type="text/css">
+      #mynetwork {
+        width: 600px;
+        height: 400px;
+        border: 1px solid lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+      ]);
 
-  // create an array with edges
-  var edges = new vis.DataSet([
-    {from: 1, to: 3},
-    {from: 1, to: 2},
-    {from: 2, to: 4},
-    {from: 2, to: 5},
-    {from: 3, to: 3}
-  ]);
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 },
+      ]);
 
-  // create a network
-  var container = document.getElementById('mynetwork');
-  var data = {
-    nodes: nodes,
-    edges: edges
-  };
-  var options = {};
-  var network = new vis.Network(container, data, options);
-</script>
-</body>
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {};
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
 </html>
 ```
 
@@ -127,15 +136,16 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 ## License
 
 Copyright (C) 2010-2018 Almende B.V. and Contributors
+Copyright (c) 2018-2021 Vis.js contributors
 
 Vis.js is dual licensed under both
 
-  * The Apache 2.0 License
-    http://www.apache.org/licenses/LICENSE-2.0
+- The Apache 2.0 License
+  http://www.apache.org/licenses/LICENSE-2.0
 
 and
 
-  * The MIT License
-    http://opensource.org/licenses/MIT
+- The MIT License
+  http://opensource.org/licenses/MIT
 
 Vis.js may be distributed under either license.

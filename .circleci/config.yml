@@ -1,0 +1,216 @@
+version: 2.1
+
+executors:
+  node:
+    docker:
+      - image: cimg/node:21.7.3
+    resource_class: medium
+    working_directory: ~/repo
+    environment:
+      GIT_AUTHOR_EMAIL: visjsbot@gmail.com
+      GIT_AUTHOR_NAME: vis-bot
+      GIT_COMMITTER_EMAIL: visjsbot@gmail.com
+      GIT_COMMITTER_NAME: vis-bot
+
+  node-browsers:
+    docker:
+      - image: cimg/node:21.7.3-browsers
+    resource_class: medium
+    working_directory: ~/repo
+    environment:
+      GIT_AUTHOR_EMAIL: visjsbot@gmail.com
+      GIT_AUTHOR_NAME: vis-bot
+      GIT_COMMITTER_EMAIL: visjsbot@gmail.com
+      GIT_COMMITTER_NAME: vis-bot
+
+jobs:
+  prepare:
+    executor: node
+
+    steps:
+      - checkout
+
+      - run: npm ci
+
+      - persist_to_workspace:
+          root: ..
+          paths:
+            - "repo"
+            - ".cache/Cypress"
+
+  build:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run: npm run build
+
+      - persist_to_workspace:
+          root: ..
+          paths:
+            - "repo/declarations"
+            - "repo/dist"
+            - "repo/esnext"
+            - "repo/peer"
+            - "repo/standalone"
+            - "repo/styles"
+
+  examples:
+    executor: node-browsers
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run:
+          command: npm run generate-examples-index
+          # One of the examples sports really massive network that takes long to
+          # render and would regularly exceed the default timeout of 10 minues.
+          no_output_timeout: 20m
+
+      - persist_to_workspace:
+          root: ..
+          paths:
+            - "repo/examples"
+
+  lint:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run: npm run style
+      - run: npm run lint
+
+  test_unit:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run: npm run test:unit
+
+  test_e2e_functional:
+    executor: node-browsers
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run: npm run test:e2e:functional
+
+  test_e2e_visual:
+    executor: node-browsers
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run: npm run test:e2e:visual
+
+  gh_pages:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run:
+          name: Set Git credentials
+          command: |
+            echo 'machine github.com' >> ~/.netrc
+            echo "        login $GIT_AUTHOR_NAME" >> ~/.netrc
+            echo "        password $GH_TOKEN" >> ~/.netrc
+      - run:
+          name: Publish GitHub Pages
+          command: |
+            npx gh-pages \
+              --dist . \
+              --message "chore: update to $(git rev-parse HEAD) [ci skip]" \
+              --repo "$(node -e 'process.stdout.write(require("./package.json").repository.url)')" \
+              --src "{{common-docs-files,coverage,docs,docs-kr,examples,$(node -e 'process.stdout.write(require("./package.json").files.join(","))')}/**/*,*.{html,md}}"
+
+  release:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run:
+          name: Prepare NPM
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+
+      - run:
+          name: Release
+          command: |
+            npx semantic-release
+
+workflows:
+  version: 2
+
+  build:
+    jobs:
+      - prepare
+
+      - build:
+          requires:
+            - prepare
+
+      - examples:
+          requires:
+            - prepare
+            - build
+
+      - lint:
+          requires:
+            - prepare
+
+      - test_unit:
+          requires:
+            - prepare
+            - build
+
+      - test_e2e_functional:
+          requires:
+            - prepare
+            - build
+
+      - test_e2e_visual:
+          requires:
+            - prepare
+            - build
+
+      - gh_pages:
+          requires:
+            - build
+            - examples
+            - lint
+            - prepare
+            - test_e2e_functional
+            - test_e2e_visual
+            - test_unit
+          filters:
+            branches:
+              only:
+                - master
+
+      - release:
+          requires:
+            - build
+            - examples
+            - gh_pages
+            - lint
+            - prepare
+            - test_e2e_functional
+            - test_e2e_visual
+            - test_unit
+          filters:
+            branches:
+              only:
+                - master

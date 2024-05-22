@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Cypress | Pollution</title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+
+    <script type="module">
+      import { PollutionDetector } from "./pollution-detector.js";
+
+      (async function () {
+        const waitTime = 4000;
+        const whitelist = [
+          // These are created by Babel. I would prefer if they didn't exist
+          // but I have no solution for these at the moment.
+          "window.__core-js_shared__",
+          "window.regeneratorRuntime",
+          // We're not going to report our library as there would be no way to
+          // import it without it.
+          "window.vis",
+          // This is Cypress stuff. We don't care about that as it doesn't
+          // occur outside of E2E tests.
+          "window.Cypress",
+          "window.parent.Cypress",
+          "window.parent.__mobxGlobals",
+          "window.parent.runnerWs",
+        ];
+
+        const pollutionDetector = new PollutionDetector();
+
+        async function save() {
+          pollutionDetector.clear();
+          return pollutionDetector.save("window", window, whitelist);
+        }
+
+        async function check(id) {
+          const results = await pollutionDetector.check();
+
+          console.info(
+            (id.slice(0, 1).toUpperCase() + id.slice(1)).replace(/-/g, " "),
+            results
+          );
+
+          const root = document.getElementById(id);
+          while (root.firstChild) {
+            root.removeChild(root.firstChild);
+          }
+
+          const table = document.createElement("table");
+          ["added", "changed", "missing"].forEach((key) => {
+            const tr = document.createElement("tr");
+            tr.className = key;
+
+            const nameTd = document.createElement("td");
+            nameTd.className = "name";
+            nameTd.innerText = key.slice(0, 1).toUpperCase() + key.slice(1);
+            tr.appendChild(nameTd);
+
+            const valueTd = document.createElement("td");
+            valueTd.className = "value";
+            valueTd.innerText = "" + results[key].size;
+            tr.appendChild(valueTd);
+
+            table.appendChild(tr);
+          });
+          root.appendChild(table);
+
+          root.classList.add("done");
+        }
+
+        // save current state
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        await save();
+
+        // check for pollution
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
+        await check("results-before-loading");
+        await save();
+
+        const library = document.createElement("script");
+        library.type = "text/javascript";
+        library.src = "../../standalone/umd/vis-network.js";
+        library.onload = async () => {
+          // check for pollution
+          await new Promise((resolve) => setTimeout(resolve, waitTime));
+          await check("results-after-loading");
+          await save();
+
+          // run the test code
+          const code = document.createElement("script");
+          code.type = "text/javascript";
+          code.innerText = document.getElementById("code").innerText;
+          document.body.appendChild(code);
+
+          // check for pollution
+          await new Promise((resolve) => setTimeout(resolve, waitTime));
+          await check("results-after-rendering");
+        };
+        document.body.appendChild(library);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Cypress</h2>
+        <h3>Pollution</h3>
+      </div>
+
+      <div id="results">
+        <h4>Before loading the library</h4>
+        <div id="results-before-loading">Pending...</div>
+
+        <h4>After loading the library</h4>
+        <div id="results-after-loading">Pending...</div>
+
+        <h4>After rendering</h4>
+        <div id="results-after-rendering">Pending...</div>
+      </div>
+    </div>
+
+    <div id="mynetwork"></div>
+    <pre id="code" style="display: none">
+      /*
+       * create a network
+       */
+      const container = document.getElementById("mynetwork");
+      const data = {
+        nodes: [
+          { id: 1, label: "1" },
+          { id: 2, label: "2" },
+          { id: 3, label: "3" },
+          { id: 4, label: "4" },
+          { id: 5, label: "5" }
+        ],
+        edges: [
+          { from: 1, to: 2 },
+          { from: 2, to: 3 },
+          { from: 3, to: 4 },
+          { from: 4, to: 5 },
+          { from: 5, to: 1 }
+        ]
+      };
+      const options = {
+        manipulation: true,
+        physics: false
+      };
+      const network = new vis.Network(container, data, options);
+    </pre>
+  </body>
+</html>

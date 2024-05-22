@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>vis.js - Interaction documentation.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tipue vendor css -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css"
+      rel="stylesheet"
+    />
+
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet" />
+    <link href="../css/overrides.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/12.1.5/js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+      smoothScroll.init();
+    </script>
+
+    <script
+      type="text/javascript"
+      src="../../common-docs-files/js/toggleTable.js"
+    ></script>
+  </head>
+  <body onload="prettyPrint();">
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand hidden-sm" href="./index.html">vis.js</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav"></ul>
+              <form class="navbar-form navbar-right" role="search">
+                <input
+                  name="q"
+                  id="tipue_search_input"
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Keyword 입력"
+                />
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="vis.initSiteSearch(true);"
+                >
+                  검색
+                </button>
+              </form>
+              <div id="search-results-wrapper" class="panel panel-default">
+                <div class="panel-body">
+                  <div id="tipue_search_content"></div>
+                </div>
+              </div>
+              <div id="keyword-info" class="panel panel-success">
+                <div class="panel-body">
+                  Found <span id="keyword-count"></span> results. Click
+                  <a id="keyword-jumper-button" href="">here</a> to jump to the
+                  first keyword occurence!
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container full">
+      <h1>Network - interaction</h1>
+      <p>
+        network와의 모든 사용자 상호 작용에 사용됩니다. 내비게이션 버튼 및
+        팝업뿐만 아니라 마우스 및 터치 이벤트를 처리합니다.
+      </p>
+      <h3>옵션</h3>
+      <p>
+        상호 작용 모듈의 옵션은 ‘interaction’이라는 제목의 object에 포함되어야
+        합니다.
+      </p>
+      <p>
+        전체 옵션 또는 요약 옵션을 클릭하여 이러한 옵션들의 사용 방법을
+        확인하십시오.
+      </p>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active" onclick="toggleTab(this)">
+          <a href="#">옵션 숨기기</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="fullOptions"
+        >
+          <a href="#">전체 옵션</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="shortOptions"
+        >
+          <a href="#">요약 옵션</a>
+        </li>
+      </ul>
+      <br />
+      <pre class="prettyprint lang-js options top hidden" id="fullOptions">
+// these are all options in full.
+var options = {
+  interaction:{
+    dragNodes:true,
+    dragView: true,
+    hideEdgesOnDrag: false,
+    hideEdgesOnZoom: false,
+    hideNodesOnDrag: false,
+    hover: false,
+    hoverConnectedEdges: true,
+    keyboard: {
+      enabled: false,
+      speed: {x: 10, y: 10, zoom: 0.02},
+      bindToWindow: true,
+      autoFocus: true,
+    },
+    multiselect: false,
+    navigationButtons: false,
+    selectable: true,
+    selectConnectedEdges: true,
+    tooltipDelay: 300,
+    zoomSpeed: 1,
+    zoomView: true
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <pre class="prettyprint lang-js options top hidden" id="shortOptions">
+// only the options that have shorthand notations are shown.
+var options = {
+  interaction:{
+    keyboard: false
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <p>
+        이것은 공개 API의 모든 메소드 목록입니다. 모든 개별적인 모듈에서
+        수집되었습니다.
+      </p>
+      <table class="options" id="optionTable">
+        <tr>
+          <th>이름</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>설명</th>
+        </tr>
+        <tr>
+          <td>dragNodes</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            true인 경우, 고정되지 않은 노드를 사용자가 드래그할 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>dragView</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>true인 경우, 사용자가 화면을 드래그할 수 있습니다.</td>
+        </tr>
+        <tr>
+          <td>hideEdgesOnDrag</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, 화면을 드래그할 때 Edge가 그려지지 않습니다. 이를 통해
+            드래그 응답 속도가 크게 향상되어 UX가 향상됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>hideEdgesOnZoom</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, 화면을 확대 / 축소할 때 Edge가 그려지지 않습니다. 이를
+            통해 확대 / 축소에 대한 응답 속도가 크게 향상되어 UX가 향상됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>hideNodesOnDrag</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, 화면을 드래그할 때 Node가 그려지지 않습니다. 이를 통해
+            드래그 응답 속도가 크게 향상되어 UX가 향상됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>hover</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, 마우스로 Node 위에서 움직일 때 Node가 hover 색상을
+            사용합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>hoverConnectedEdges</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            true인 경우, Node 위로 마우스를 가져가면 연결 Edge가 강조표시가
+            됩니다.
+          </td>
+        </tr>
+        <tr
+          class="toggle collapsible"
+          onclick="toggleTable('optionTable','keyboard', this);"
+        >
+          <td><span parent="keyboard" class="right-caret"></span> keyboard</td>
+          <td>Object or Boolean</td>
+          <td><code>Object</code></td>
+          <td>
+            true인 경우, 키보드 단축키가 디폴트 설정으로 활성화됩니다. 추가적인
+            사용자 정의를 위해 object를 할당할 수 있습니다.
+          </td>
+        </tr>
+        <tr parent="keyboard" class="hidden">
+          <td class="indent">keyboard.enabled</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            키보드 단축키 사용을 활성화하거나 비활성화합니다. 이 옵션이 정의되어
+            있지 않으면 이 object의 속성이 정의되어 있을 때 true로 설정됩니다.
+          </td>
+        </tr>
+        <tr parent="keyboard" class="hidden">
+          <td class="indent">keyboard.speed.x</td>
+          <td>Number</td>
+          <td><code>1</code></td>
+          <td>
+            키를 누르거나 내비게이션 버튼을 누를 때 뷰가 x 방향으로 이동하는
+            속도입니다.
+          </td>
+        </tr>
+        <tr parent="keyboard" class="hidden">
+          <td class="indent">keyboard.speed.y</td>
+          <td>Number</td>
+          <td><code>1</code></td>
+          <td>
+            키를 누르거나 내비게이션 버튼을 누를 때 뷰가 y 방향으로 이동하는
+            속도입니다.
+          </td>
+        </tr>
+        <tr parent="keyboard" class="hidden">
+          <td class="indent">keyboard.speed.zoom</td>
+          <td>Number</td>
+          <td><code>0.02</code></td>
+          <td>
+            키를 누르거나 내비게이션 버튼을 누르면 뷰가 확대 / 축소되는
+            속도입니다.
+          </td>
+        </tr>
+        <tr parent="keyboard" class="hidden">
+          <td class="indent">keyboard.bindToWindow</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            키보드 단축키를 창에 바인딩하면, 포커스가 있는 DOM object에 관계없이
+            작동합니다. 페이지에 network가 여러 개인 경우, 이 설정을 false로
+            설정하면, 키보드 단축키가 포커스가 있는 network에서만 작동합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>multiselect</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, 길게 누르기 (또는 터치) 와 control-click이 선택 항목에
+            추가된다.
+          </td>
+        </tr>
+        <tr>
+          <td>navigationButtons</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            true인 경우, 내비게이션 버튼이 network 캔버스에 그려집니다. 이들은
+            HTML 버튼이며 CSS를 사용하여 사용자가 정의할 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>selectable</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>true인 경우, 사용자가 노드와 Edge를 선택할 수 있습니다.</td>
+        </tr>
+        <tr>
+          <td>selectConnectedEdges</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>true인 경우, Node를 선택할 때, 연결 Edge가 강조 표시됩니다.</td>
+        </tr>
+        <tr>
+          <td>tooltipDelay</td>
+          <td>Number</td>
+          <td><code>300</code></td>
+          <td>
+            Node나 Edge에 정의된 <code>'title'</code> 필드가 있다면, 팝업
+            툴팁으로 표시될 수 있습니다. 툴팁 자체는 CSS를 사용하여 완전히
+            스타일을 지정할 수 있는 HTML 요소입니다. 지연 시간은 툴팁이
+            표시되기까지 걸리는 시간(밀리 초)입니다.
+          </td>
+        </tr>
+        <tr>
+          <td>zoomSpeed</td>
+          <td>Number</td>
+          <td><code>1</code></td>
+          <td>확대 / 축소가 얼마나 빠르거나 거칠거나 느리고 / 정밀합니다.</td>
+        </tr>
+        <tr>
+          <td>zoomView</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>true인 경우, 사용자가 확대할 수 있습니다.</td>
+        </tr>
+      </table>
+
+      <div class="flagbar">
+        <a href="../../docs/network/interaction.html" title="English"
+          ><span class="flag en"></span
+        ></a>
+        <a href="../../docs-kr/network/interaction.html" title="Korean"
+          ><span class="flag kr"></span
+        ></a>
+
+        <br />
+
+        Third party docs:
+        <a href="https://ame.cool/core/frontend-tools/" title="Chinese"
+          ><span class="flag zh"></span
+        ></a>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- jquery extensions -->
+    <script src="../../common-docs-files/js/jquery.highlight.js"></script>
+    <script src="../../common-docs-files/js/jquery.url.min.js"></script>
+    <!-- Tipue vendor js -->
+    <script src="../../common-docs-files/js/tipuesearch.config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
+    <!-- controller -->
+    <script src="../../common-docs-files/js/main.js"></script>
+  </body>
+</html>

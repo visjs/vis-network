@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Network | Basic Usage | Standalone Build</title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.js"
+    ></script>
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Basic Usage</h2>
+        <h3>Standalone Build</h3>
+      </div>
+
+      <p>Create a simple network with some nodes and edges.</p>
+
+      <p>
+        Standalone build doesn't work with other packages from the Vis family
+        because it bundles all dependencies. This leads to situation where
+        DataSets (and other dependencies) from one package (e.g. Timeline) don't
+        work in Network because Network expects it's own bundled DataSets to be
+        used. It is inteded as a convenience build for cases where multiple
+        packages are not necessary but ease of use is (like JSFiddle MEWs or
+        examples). This build is available in ESM and UMD versions each of them
+        has minified and unminified variant.
+      </p>
+
+      <h4>When to use</h4>
+      <p>
+        When you don't need only Network (no Timeline, Graph3D etc.) and don't
+        want to deal with dependencies and styles (everything is bundled in this
+        build ready to use).
+      </p>
+
+      <h4>Content</h4>
+      <ul>
+        <li>
+          Vis Network
+          <ul>
+            <li>Network"</li>
+            <li>NetworkDOTParser"</li>
+            <li>NetworkImages"</li>
+            <li>NetworkOptions"</li>
+            <li>networkGephiParser"</li>
+            <li>parseDOTNetwork"</li>
+            <li>parseGephiNetwork"</li>
+          </ul>
+        </li>
+        <li>
+          Vis Data
+          <ul>
+            <li>DataSet</li>
+            <li>DataView</li>
+            <li>Queue</li>
+          </ul>
+        </li>
+        <li>Vis Util</li>
+        <li>CSS Styles</li>
+      </ul>
+
+      <h4>How to use</h4>
+
+      <h5>Browser UMD</h5>
+      <pre><code>
+&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vis-network/standalone/umd/vis-network.min.js&quot;&gt;&lt;/script&gt;
+&lt;!--
+  Including other packages like Vis Timeline or Vis Graph3D here won't work.
+  You need the peer build to do that.
+--&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  // create an array with nodes
+  var nodes = new vis.DataSet([
+    { id: 1, label: "Node 1" },
+    { id: 2, label: "Node 2" },
+    { id: 3, label: "Node 3" },
+    { id: 4, label: "Node 4" },
+    { id: 5, label: "Node 5" }
+  ]);
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+    { from: 1, to: 3 },
+    { from: 1, to: 2 },
+    { from: 2, to: 4 },
+    { from: 2, to: 5 },
+    { from: 3, to: 3 }
+  ]);
+
+  // create a network
+  var container = document.getElementById("mynetwork");
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+&lt;/script&gt;
+      </code></pre>
+
+      <h5>Bundled ESM</h5>
+      <pre><code>
+import { DataSet, Network } from "vis-network/standalone";
+// CSS will be automatically injected into the page.
+
+// create an array with nodes
+const nodes = new DataSet([
+  { id: 1, label: "Node 1" },
+  { id: 2, label: "Node 2" },
+  { id: 3, label: "Node 3" },
+  { id: 4, label: "Node 4" },
+  { id: 5, label: "Node 5" }
+]);
+
+// create an array with edges
+const edges = new DataSet([
+  { from: 1, to: 3 },
+  { from: 1, to: 2 },
+  { from: 2, to: 4 },
+  { from: 2, to: 5 },
+  { from: 3, to: 3 }
+]);
+
+// create a network
+const container = document.getElementById("mynetwork");
+const data = {
+  nodes: nodes,
+  edges: edges
+};
+const options = {};
+const network = new Network(container, data, options);
+      </code></pre>
+    </div>
+
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 },
+      ]);
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {};
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>

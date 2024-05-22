@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Edge Styles | Arrow Alignment</title>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+
+      .mycontainer {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      #mynetwork {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <div class=".mycontainer">
+      <div id="mynetwork" />
+    </div>
+
+    <script type="text/javascript">
+      var types = [].concat.apply(
+        [],
+        [
+          "curvedCW",
+          "diagonalCross",
+          "continuous",
+          "cubicBezier",
+          "discrete",
+          "dynamic",
+          "horizontal",
+          "straightCross",
+          "vertical",
+          "curvedCCW",
+        ].map((type) => [
+          { type, scaleFactor: 1 },
+          { type, scaleFactor: -1 },
+        ])
+      );
+
+      // create an array with nodes
+      var nodes = new vis.DataSet();
+
+      // create an array with edges
+      var edges = new vis.DataSet();
+
+      types.forEach(({ type, scaleFactor }, i) => {
+        nodes.add([
+          {
+            id: 10 * i + 1,
+            label: type,
+            x: 0,
+            y: i * 60,
+          },
+          {
+            id: 10 * i + 2,
+            label: type,
+            x: 800,
+            y: i * 60,
+          },
+          {
+            id: 10 * i + 3,
+            label: type,
+            x: 1000,
+            y: i * 60,
+          },
+          {
+            id: 10 * i + 4,
+            label: type,
+            x: 1200 + (i % 5) * 250,
+            y: 200 + Math.floor(i / 5) * 5 * 50,
+          },
+        ]);
+        edges.add([
+          {
+            from: 10 * i + 1,
+            to: 10 * i + 2,
+            smooth: { type },
+            arrows: {
+              from: { enabled: true, scaleFactor },
+              middle: { enabled: true, scaleFactor },
+              to: { enabled: true, scaleFactor },
+            },
+          },
+          {
+            from: 10 * i + 3,
+            to: 10 * i + 3,
+            smooth: { type },
+            arrows: {
+              from: { enabled: true, scaleFactor },
+              middle: { enabled: true, scaleFactor },
+              to: { enabled: true, scaleFactor },
+            },
+          },
+          {
+            from: 10 * i + 4,
+            to: 10 * i + 4,
+            smooth: { type },
+            selfReferenceSize: 100,
+            arrows: {
+              from: { enabled: true, scaleFactor },
+              middle: { enabled: true, scaleFactor },
+              to: { enabled: true, scaleFactor },
+            },
+          },
+        ]);
+      });
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+
+      // provide the data in the vis format
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {
+        physics: {
+          enabled: false,
+        },
+      };
+
+      // initialize your network!
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>

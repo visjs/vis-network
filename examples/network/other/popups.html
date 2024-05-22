@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Other | Popups</title>
+
+    <style type="text/css">
+      html,
+      body,
+      #mynetwork {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #mynetwork {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        right: 50%;
+        min-height: 100vh;
+        border-right: 1px solid lightgray;
+        background: white;
+      }
+
+      #text {
+        position: absolute;
+        left: 50%;
+        padding: 1em;
+      }
+
+      #title {
+        margin-bottom: 5em;
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../../../peer/umd/vis-network.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../../styles/vis-network.min.css"
+    />
+  </head>
+
+  <body>
+    <div id="text">
+      <div id="title">
+        <h1>Vis Network</h1>
+        <h2>Other</h2>
+        <h3>Popups</h3>
+      </div>
+
+      <p>Both nodes and edges can have popup shown when hovered by a cursor.</p>
+
+      <p>It is possible to use plain text:</p>
+      <pre><code>
+const nodes = [{
+  id: 1,
+  title: "Popup text",
+}];
+      </code></pre>
+
+      <p>Alternatively an element can be supplied:</p>
+      <pre><code>
+const element = document.createElement("div");
+// Add child nodes, change styles…
+
+const nodes = [{
+  id: 1,
+  title: element,
+}];
+      </code></pre>
+
+      <h4>XSS</h4>
+      <p>
+        In the past the popup was filled using innerHTML. It is still possible
+        to achieve similar behavior via an element.
+      </p>
+      <pre><code>
+function createHTMLTitle(html) {
+  var element = document.createElement("div");
+  element.innerHTML = html;
+  return element;
+}
+      </code></pre>
+      <p>
+        Keep in mind though that this can lead to XSS attacks:
+        <input type="button" onclick="addXSSNode()" value="add XSS node." />
+      </p>
+    </div>
+
+    <div id="mynetwork"></div>
+    <script id="code-src" type="text/javascript">
+      // You can supply an element as your title.
+      var titleElement = document.createElement("div");
+      titleElement.style.border = "1px solid gray";
+      titleElement.style.height = "10em";
+      titleElement.style.width = "10em";
+
+      // With arbitrary DOM structure underneath.
+      var titleElementInner = document.createElement("div");
+      titleElementInner.style.height = "1em";
+      titleElementInner.style.width = "1em";
+      titleElementInner.style.background = "red";
+      titleElementInner.style.transition = "all 1s ease-in-out";
+      titleElement.appendChild(titleElementInner);
+
+      // Even dynamic behavior is possible.
+      setInterval(function () {
+        titleElementInner.style.marginTop = Math.random() * 9 + "em";
+        titleElementInner.style.marginLeft = Math.random() * 9 + "em";
+      }, 2000);
+
+      var nodes = new vis.DataSet([
+        {
+          id: 1,
+          label: "Text",
+          title:
+            "Plain text with no chance of <script>alert('XSS')</scr" + "ipt>!",
+        },
+        { id: 2, label: "Element", title: titleElement },
+      ]);
+
+      var edges = new vis.DataSet([
+        { from: 1, to: 2, title: "Edges work exactly the same." },
+      ]);
+
+      // Instantiate our network object.
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {
+        nodes: {
+          shape: "dot",
+        },
+      };
+      network = new vis.Network(container, data, options);
+
+      // You can use the element to process HTML and execute JavaScript.
+      function createHTMLTitle(html) {
+        var element = document.createElement("div");
+        element.innerHTML = html;
+        return element;
+      }
+
+      // You can run this function by clicking the “add XSS node” button above.
+      function addXSSNode() {
+        nodes.add({
+          label: "XSS",
+          title: createHTMLTitle(
+            "HTML with a chance of " +
+              '<script>alert("Up to the specs, scripts shouldn\'t execute.");</scr' +
+              "ipt>" +
+              '<img src="But that doesn\'t mean you\'re safe!" onerror="alert(\'You\\\'ve been hacked, muhehehe!\');" alt="XSS" />.'
+          ),
+        });
+      }
+    </script>
+  </body>
+</html>

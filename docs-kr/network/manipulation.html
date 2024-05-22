@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>vis.js - Manipulation 문서.</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Tipue vendor css -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.css"
+      rel="stylesheet"
+    />
+
+    <link href="../../common-docs-files/css/style.css" rel="stylesheet" />
+    <link href="../css/overrides.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/12.1.5/js/smooth-scroll.min.js"></script>
+    <script language="JavaScript">
+      smoothScroll.init();
+    </script>
+
+    <script
+      type="text/javascript"
+      src="../../common-docs-files/js/toggleTable.js"
+    ></script>
+  </head>
+  <body onload="prettyPrint();">
+    <div class="navbar-wrapper">
+      <div class="container">
+        <nav class="navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#navbar"
+                aria-expanded="false"
+                aria-controls="navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand hidden-sm" href="./index.html">vis.js</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav"></ul>
+              <form class="navbar-form navbar-right" role="search">
+                <input
+                  name="q"
+                  id="tipue_search_input"
+                  autocomplete="off"
+                  type="text"
+                  class="form-control"
+                  placeholder="Keyword 입력"
+                />
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  onclick="vis.initSiteSearch(true);"
+                >
+                  검색
+                </button>
+              </form>
+              <div id="search-results-wrapper" class="panel panel-default">
+                <div class="panel-body">
+                  <div id="tipue_search_content"></div>
+                </div>
+              </div>
+              <div id="keyword-info" class="panel panel-success">
+                <div class="panel-body">
+                  Found <span id="keyword-count"></span> results. Click
+                  <a id="keyword-jumper-button" href="">here</a> to jump to the
+                  first keyword occurence!
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container full">
+      <h1>Network - manipulation</h1>
+      <p>
+        canvas 위에서 보는 카메라 역할을 한다. 애니메이션을 확대/축소하고 초점을
+        맞춘다.
+      </p>
+      <h3>옵션</h3>
+      <p>
+        manipulation 모듈 옵션은 'manipulation'이라는 제목의 object에 포함되어야
+        한다.
+      </p>
+      <p>전체 옵션 혹은 요약 옵션을 클릭하여 사용하는 방법을 표시합니다.</p>
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="active" onclick="toggleTab(this)">
+          <a href="#">옵션 숨기기</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="fullOptions"
+        >
+          <a href="#">전체 옵션</a>
+        </li>
+        <li
+          role="presentation"
+          onclick="toggleTab(this);"
+          targetNode="shortOptions"
+        >
+          <a href="#">요약 옵션</a>
+        </li>
+      </ul>
+      <br />
+      <pre class="prettyprint lang-js options top hidden" id="fullOptions">
+// 모든 옵션들 입니다.
+var options = {
+  manipulation: {
+    enabled: false,
+    initiallyActive: false,
+    addNode: true,
+    addEdge: true,
+    editNode: undefined,
+    editEdge: true,
+    deleteNode: true,
+    deleteEdge: true,
+    controlNodeStyle:{
+      // all node options are valid.
+    }
+  }
+}
+
+network.setOptions(options);
+</pre
+      >
+
+      <pre class="prettyprint lang-js options top hidden" id="shortOptions">
+// 단축 옵션만 표시합니다.
+var options = {
+  manipulation: false
+}
+
+network.setOptions(options);
+</pre
+      >
+      <table class="options" id="optionTable">
+        <tr>
+          <th>이름</th>
+          <th>Type</th>
+          <th>Default</th>
+          <td>설명</td>
+        </tr>
+        <tr>
+          <td>enabled</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            manipulation 시스템을 켜거나 끕니다. 만약 False라면, manipulation
+            API를 통해 계속 작동합니다. 이 속성은 선택사항입니다. 만약 아래의
+            옵션을 정의하고 사용하도록 설정된 옵션이 정의되지 않은 경우 이
+            옵션이 true로 설정됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>initiallyActive</td>
+          <td>Boolean</td>
+          <td><code>true</code></td>
+          <td>
+            도구 모음이 처음에 표시되는지 또는 편집 버튼만 처음에 표시되는지
+            전환합니다.
+          </td>
+        </tr>
+        <tr>
+          <td>addNode</td>
+          <td>Boolean or Function</td>
+          <td><code>true</code></td>
+          <td>
+            이 옵션을 사용하여 핸들러 기능을 연결하거나 연결 해제를 할 수
+            있습니다. 이러한 함수는 실행되기 전에 호출됩니다. manipulation
+            시스템을 통해 Node를 추가하려는 경우 addNode 함수가 먼저 호출됩니다.
+            이를 통해 사용자에게 GUI를 제공하거나 프로세스를 중단하거나 원하는
+            모든 작업을 수행할 수 있습니다. EditNode 기능을 제외한 모든
+            사용자에게는 이러한 핸들러 기능이 선택 사항입니다. <br /><br />
+            boolean을 입력한다면, manipulation 시스템에서 GUI에 'add node'
+            버튼만 전환합니다. 처리 기능이 부족하면 메소드를 사용할 때, API에
+            영향을 줄 수 있습니다. 함수가 제공되면, 사용자가 'addNode' 모드에서
+            cavnas를 클릭해 호출할 수 있습니다. 이 함수는 생성할 수 있는 노드의
+            속성 및 콜백 함수라는 두 가지 변수를 수신합니다. 새 Node의 속성을
+            사용하여 콜백 함수를 호출하면 Node가 추가됩니다.
+
+            <br /><br />
+            예시:
+            <pre class="code">
+var options = {
+  manipulation: {
+    addNode: function(nodeData,callback) {
+      nodeData.label = 'hello world';
+      callback(nodeData);
+    }
+  }
+}
+</pre
+            >
+            이 함수는 새 Node의 label을 'hello world'로 변경합니다. Node를
+            생성하지 않으려면 콜백 함수를 호출하거나 콜백 함수를
+            <code>null</code> 또는 인수를 넣지 않습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>addEdge</td>
+          <td>Boolean or Function</td>
+          <td><code>true</code></td>
+          <td>
+            boolean을 입력한다면 GUI에서 'addEdge'버튼의 가용성을 전환하고,
+            처리기 기능이 없이 경우를 제외하고 메소드를 통한 API가 계속
+            작동합니다. 함수가 제공되면 사용자는 'addEdge'모드에서 한 Node에
+            다용 Node로 새 Edge를 끌면 호출됩니다. 이 함수는 생성할 수 있는
+            Edge의 속성과 콜백 함수라는 두 가지 변수를 수신합니다. 새 Edge의
+            속성을 사용하여 콜백 기능을 호출하면 Edge가 추가됩니다. <br /><br />
+            예시:
+            <pre class="code">
+var options = {
+  manipulation: {
+    addEdge: function(edgeData,callback) {
+      if (edgeData.from === edgeData.to) {
+        var r = confirm("Do you want to connect the node to itself?");
+        if (r === true) {
+          callback(edgeData);
+        }
+      }
+      else {
+        callback(edgeData);
+      }
+    }
+  }
+}
+</pre
+            >
+            Node 자체로 연결하여 원하는 것이었는지를 묻는 경우 이 예제 코드는
+            팝업을 표시합니다. Edge를 생성하지 않으려면 콜백 함수를 호출하거나
+            콜백 함수를 null 또는 인자를 넣지 않습니다.
+          </td>
+        </tr>
+        <tr>
+          <td>editNode</td>
+          <td>Function</td>
+          <td><code>undefined</code></td>
+          <td>
+            Node 편집은 핸들링 함수가 제공될 때 가능합니다. 그렇지 않은 경우
+            Node의 편집이 비활성화됩니다. Node를 선택하고 도구 모음에서 'Edit
+            Node'버튼을 누르면 기능이 호출됩니다. 이 함수는 Node의 데이터 및
+            콜백 함수와 함께 <code>addNode</code> 함수와 같이 호출됩니다.
+          </td>
+        </tr>
+        <tr>
+          <td>editEdge</td>
+          <td>Boolean or Function</td>
+          <td><code>true</code></td>
+          <td>
+            boolean인 경우 GUI에서 Edge 편집으로 전환합니다. 함수가 제공된 경우
+            Edge를 선택하고 도구 모음의 'Edit Edge' 버튼을 눌러 호출할 수
+            있습니다. 처음에는 Edge의 끝점을 끌어 다른 Node에 연결한 다음
+            <code>addEdge</code> 함수를 호출하는 것과 동일한 방식으로 함수를
+            호출합니다. 만약 인자로 function가 들어오게 된다면,
+            <code>'editWithoutDrag'</code>옵션이 반환됩니다. 함수는 즉시
+            <code>addEdge</code> 함수가 호출될 같은 방식으로 (어떠한 엔드
+            포인트를 가지지 않고) 호출될 것입니다. 콜백을 수행하지 않으면 Edge가
+            해제된 위치에서 계속 맴돌게 됩니다.
+            <b
+              >취소하려면 <code>null</code> 혹은 인자 없이 콜백 함수를 호출하면
+              됩니다.</b
+            >.
+          </td>
+        </tr>
+        <tr>
+          <td>deleteNode</td>
+          <td>Boolean or Function</td>
+          <td><code>true</code></td>
+          <td>
+            boolean인 경우, GUI에서 Node를 삭제합니다. 함수에서 Node를 선택하고
+            'Delete selected' 버튼을 누르면 호출됩니다. 함수를 사용할 경우
+            선택한 nodeIds 및 선택한 Edge의 Ids의 배열이 있는 콜백 및 object를
+            반환합니다. 콜백을 수행하면 삭제되는 항목입니다.
+          </td>
+        </tr>
+        <tr>
+          <td>deleteEdge</td>
+          <td>Boolean or Function</td>
+          <td><code>true</code></td>
+          <td>
+            boolean인 경우, GUI에서 Edge 삭제합니다. 함수에서 Edge를 선택하고
+            'Delete selected' 버튼을 누르면 호출됩니다. 함수를 사용할 경우
+            선택한 nodeIds(empty) 그리고 선택한 Edge Ids의 배열이 있는 콜백 및
+            object를 반환합니다. 콜백이 수행되면 삭제되는 항목들 입니다.
+          </td>
+        </tr>
+        <tr>
+          <td>controlNodeStyle</td>
+          <td>Object</td>
+          <td>Object</td>
+          <td>
+            원하는 스타일의 정보를 여기에서 볼 수 있습니다.
+            <a href="./nodes.html">Node 모듈</a>에 설명된 모든 필드는 id, x, y
+            및 고정 필드를 제외하고 허용됩니다. <br /><br />기본:
+            <pre class="code">
+{
+  shape:'dot',
+  size:6,
+  color: {
+    background: '#ff0000',
+    border: '#3c3c3c',
+    highlight: {
+      background: '#07f968',
+      border: '#3c3c3c'
+    }
+  },
+  borderWidth: 2,
+  borderWidthSelected: 2
+}
+</pre
+            >
+          </td>
+        </tr>
+      </table>
+
+      <div class="flagbar">
+        <a href="../../docs/network/manipulation.html" title="English"
+          ><span class="flag en"></span
+        ></a>
+        <a href="../../docs-kr/network/manipulation.html" title="Korean"
+          ><span class="flag kr"></span
+        ></a>
+
+        <br />
+
+        Third party docs:
+        <a href="https://ame.cool/core/frontend-tools/" title="Chinese"
+          ><span class="flag zh"></span
+        ></a>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../common-docs-files/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- jquery extensions -->
+    <script src="../../common-docs-files/js/jquery.highlight.js"></script>
+    <script src="../../common-docs-files/js/jquery.url.min.js"></script>
+    <!-- Tipue vendor js -->
+    <script src="../../common-docs-files/js/tipuesearch.config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tipue-Search/5.0.0/tipuesearch.min.js"></script>
+    <!-- controller -->
+    <script src="../../common-docs-files/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vis Network | Tests | Hidden Edge Test</title>
+
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
+
+    <style type="text/css">
+      #mynetwork {
+        width: 1200px;
+        height: 800px;
+        border: 1px solid lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="explanation">
+      <h4>
+        Click on node 3. Drag it to the right. Release the mouse. Then hover
+        over it. The graph will reset (it shouldn't). This addresses
+        visjs-network issue #67
+      </h4>
+    </div>
+
+    <div id="mynetwork"></div>
+
+    <script>
+      var nodes = null;
+      var edges = null;
+      var network = null;
+      //
+      nodes = [];
+      edges = [];
+      nodes.push({
+        id: 1,
+        label: "node 1",
+      });
+      nodes.push({
+        id: 2,
+        label: "node 2",
+      });
+      nodes.push({
+        id: 3,
+        label: "node 3",
+      });
+      edges.push({
+        from: 1,
+        to: 1,
+        label: "Edge label 1",
+        hidden: true,
+      });
+      edges.push({
+        from: 2,
+        to: 3,
+        label: "Edge label 2",
+        hidden: false,
+      });
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+      var options = {
+        nodes: {
+          scaling: {
+            min: 16,
+            max: 32,
+          },
+        },
+
+        width: "100%",
+        height: "100%",
+        interaction: {
+          hover: true,
+        },
+        layout: {
+          hierarchical: {
+            enabled: true,
+            levelSeparation: 160,
+            nodeSpacing: 10,
+            blockShifting: true,
+            edgeMinimization: true,
+            sortMethod: "directed",
+          },
+        },
+        edges: {
+          smooth: false,
+        },
+      };
+
+      network = new vis.Network(container, data, options);
+
+      network.on("hoverEdge", function (e) {
+        this.body.data.edges.update({
+          id: e.edge,
+          font: {
+            size: 14,
+          },
+        });
+      });
+
+      network.on("blurEdge", function (e) {
+        this.body.data.edges.update({
+          id: e.edge,
+          font: {
+            size: 0,
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
