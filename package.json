@@ -1,15 +1,15 @@
 {
-  "name": "vis-network",
-  "version": "0.0.0-no-version",
+  "name": "@teddriggs/vis-network",
+  "version": "9.1.10",
   "description": "A dynamic, browser-based visualization library.",
   "homepage": "https://visjs.github.io/vis-network/",
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/visjs/vis-network.git"
+    "url": "https://github.com/TedDriggs/vis-network.git"
   },
   "bugs": {
-    "url": "https://github.com/visjs/vis-network/issues"
+    "url": "https://github.com/TedDriggs/vis-network/issues"
   },
   "keywords": [
     "vis",
