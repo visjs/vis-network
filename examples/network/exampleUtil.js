@@ -1,10 +1,10 @@
 // These globals will be injected into a page that will use them.
-/* eslint no-unused-vars: "off" */
+/* eslint no-unused-vars: "off" -- old example */
 
 // This is quite old and I don't want to waste too much time here. We probably
 // should stop using this altogether as the examples should be easy and
 // straightforward to understand and this only obscures it.
-/* eslint require-jsdoc: "off" */
+/* eslint require-jsdoc: "off" -- it's an example */
 
 /* global Alea:false seededRandom:true */
 
