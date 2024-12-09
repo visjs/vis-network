@@ -127,7 +127,7 @@
     "lint-staged": "15.2.10",
     "mocha": "10.7.3",
     "nyc": "15.1.0",
-    "postcss": "8.4.38",
+    "postcss": "8.4.49",
     "sazerac": "2.0.0",
     "semantic-release": "22.0.12",
     "serve": "14.2.4",
