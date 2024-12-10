@@ -174,8 +174,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
    * @param viaNode - Additional control point(s) for the edge.
-   * @param _fromPoint - Ignored (TODO: remove in the future).
-   * @param _toPoint - Ignored (TODO: remove in the future).
    */
   private _drawDashedLine(
     ctx: CanvasRenderingContext2D,
@@ -183,9 +181,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       EdgeFormattingValues,
       "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
     >,
-    viaNode: Via,
-    _fromPoint?: Point,
-    _toPoint?: Point
+    viaNode: Via
   ): void {
     ctx.lineCap = "round";
     const pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5];
@@ -455,8 +451,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
-   * @param _selected - Ignored (TODO: remove in the future).
-   * @param _hover - Ignored (TODO: remove in the future).
    * @returns Color string if single color is inherited or gradient if two.
    */
   public getColor(

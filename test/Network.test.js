@@ -45,8 +45,10 @@ function merge(a, b) {
   return a;
 }
 
-/*
+/**
  * Load legacy-style (i.e. not module) javascript files into the given context.
+ * @param {string|ReadonlyArray<string>} list
+ * @param {*} context
  */
 function include(list, context) {
   if (!Array.isArray(list)) {
@@ -60,13 +62,15 @@ function include(list, context) {
   }
 }
 
-/*
+/**
  * Defined network consists of two sub-networks:
  *
  * - 1-2-3-4
  * - 11-12-13-14
  *
  * For reference, this is the sample network of issue #1218
+ *
+ * @param options
  */
 function createSampleNetwork(options) {
   const NumInitialNodes = 8;
@@ -119,13 +123,15 @@ function createSampleNetwork(options) {
   return [network, data, NumInitialNodes, NumInitialEdges];
 }
 
-/*
+/**
  * Create a cluster for the dynamic data change cases.
  *
  * Works on the network created by createSampleNetwork().
  *
  * This is actually a pathological case; there are two separate sub-networks and
  * a cluster is made of two nodes, each from one of the sub-networks.
+ *
+ * @param {Network} network
  */
 function createCluster(network) {
   const clusterOptionsByData = {
@@ -138,8 +144,10 @@ function createCluster(network) {
   network.cluster(clusterOptionsByData);
 }
 
-/*
+/**
  * Display node/edge state, useful during debugging
+ *
+ * @param {Network} network
  */
 // eslint-disable-next-line no-unused-vars -- This is useful for debugging.
 function log(network) {
@@ -149,9 +157,13 @@ function log(network) {
   console.debug(network.body.edgeIndices);
 }
 
-/*
+/**
  * Note that only the node and edges counts are asserted.
  * This might be done more thoroughly by explicitly checking the id's
+ *
+ * @param {Network} network
+ * @param {number} expectedPresent
+ * @param {number} [expectedVisible]
  */
 function assertNumNodes(network, expectedPresent, expectedVisible) {
   if (expectedVisible === undefined) expectedVisible = expectedPresent;
@@ -168,8 +180,12 @@ function assertNumNodes(network, expectedPresent, expectedVisible) {
   );
 }
 
-/*
+/**
  * Comment at assertNumNodes() also applies.
+ *
+ * @param {Network} network
+ * @param {number} expectedPresent
+ * @param {number} [expectedVisible]
  */
 function assertNumEdges(network, expectedPresent, expectedVisible) {
   if (expectedVisible === undefined) expectedVisible = expectedPresent;
@@ -186,6 +202,12 @@ function assertNumEdges(network, expectedPresent, expectedVisible) {
   );
 }
 
+/**
+ *
+ * @param {Network} network
+ * @param {*} originalEdgesDataSet
+ * @param {*} assertMessagePrefix
+ */
 function assertEdgeLabels(network, originalEdgesDataSet, assertMessagePrefix) {
   const originalIds = originalEdgesDataSet.getIds();
 
@@ -203,12 +225,15 @@ function assertEdgeLabels(network, originalEdgesDataSet, assertMessagePrefix) {
   }
 }
 
-/*
+/**
  * Check if the font options haven't changed.
  *
  * This is to guard against future code changes; a lot of the code deals with particular properties of
  * the font options.
  * If any assertion fails here, all code in Network handling fonts should be checked.
+ *
+ * @param {*} fontItem
+ * @param {boolean} checkStrict
  */
 function checkFontProperties(fontItem, checkStrict = true) {
   const knownProperties = [
@@ -264,8 +289,10 @@ describe("Network", function () {
   // Local helper methods for Edge and Node testing
   /////////////////////////////////////////////////////
 
-  /*
+  /**
    * Simplify network creation for local tests
+   *
+   * @param options
    */
   function createNetwork(options) {
     const [network] = createSampleNetwork(options);
@@ -273,6 +300,9 @@ describe("Network", function () {
     return network;
   }
 
+  /**
+   * @param {Network} network
+   */
   function firstNode(network) {
     for (const id in network.body.nodes) {
       return network.body.nodes[id];
@@ -281,6 +311,9 @@ describe("Network", function () {
     return undefined;
   }
 
+  /**
+   * @param {Network} network
+   */
   function firstEdge(network) {
     for (const id in network.body.edges) {
       return network.body.edges[id];
@@ -289,6 +322,12 @@ describe("Network", function () {
     return undefined;
   }
 
+  /**
+   *
+   * @param {*} item
+   * @param {*} chooser
+   * @param {*} labelChooser
+   */
   function checkChooserValues(item, chooser, labelChooser) {
     if (chooser === "function") {
       assert.equal(typeof item.chooser, "function");
@@ -307,8 +346,13 @@ describe("Network", function () {
   // End Local helper methods for Edge and Node testing
   /////////////////////////////////////////////////////
 
-  /*
+  /**
    * Helper function for clustering
+   *
+   * @param {Network} network
+   * @param clusterId
+   * @param nodeList
+   * @param allowSingle
    */
   function clusterTo(network, clusterId, nodeList, allowSingle) {
     const options = {
@@ -521,7 +565,7 @@ describe("Network", function () {
       checkChooserValues(firstEdge(network), "function", false);
     });
 
-    /*
+    /**
      * Support routine for next unit test
      */
     function createDataforColorChange() {
@@ -897,7 +941,7 @@ describe("Network", function () {
       //log(network);
     });
 
-    /*
+    /**
      * Helper function for setting up a graph for testing clusterByEdgeCount()
      */
     function createOutlierGraph() {
@@ -1039,7 +1083,7 @@ describe("Network", function () {
     // Automatic opening of clusters due to dynamic data change
     ///////////////////////////////////////////////////////////////
 
-    /*
+    /**
      * Helper function, created nested clusters, three deep
      */
     function createNetwork1() {
@@ -1354,6 +1398,12 @@ describe("Network", function () {
     });
 
     describe("runs example ", function () {
+      /**
+       *
+       * @param {*} path
+       * @param {boolean} noPhysics
+       * @returns
+       */
       function loadExample(path, noPhysics) {
         include(path, this);
         const container = document.getElementById("mynetwork");
