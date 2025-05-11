@@ -127,7 +127,7 @@ function overrideCreateElementNS(window) {
  * Suppresses a warning from `jsdom` on usage of `getContext()`. A mock definition is added for
  * it, so the message is not relevant.
  *
- * @param {string} [html='']  html definitions which should be added to the jsdom definition
+ * @param {string} html definitions which should be added to the jsdom definition
  * @returns {Function}  function to call in after(), to clean up for `jsdom_global`
  */
 export function canvasMockify(html = "") {
