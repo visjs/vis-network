@@ -14,7 +14,6 @@ interface Node {
 
 /**
  * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
- *
  * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  * @returns Populated node levels.
@@ -50,19 +49,31 @@ function fillLevelsByDirectionCyclic(
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
 export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
+  // Collect valid leaf nodes
+  const entryNodes: Node[] = [];
+  nodes.forEach((node) => {
+    // Pick only leaves (nodes without children).
+    const isLeaf = node.edges
+      // Take only visible nodes into account.
+      .filter((edge) => nodes.has(edge.toId))
+      // Check that all edges lead to this node (leaf).
+      .every((edge) => edge.to === node);
+    if (isLeaf) {
+      entryNodes.push(node);
+    }
+  });
+
+  if (entryNodes.length === 0) {
+    return fillLevelsByDirectionCyclic(nodes, {});
+  }
+
   return fillLevelsByDirection(
     // Pick only leaves (nodes without children).
-    (node): boolean =>
-      node.edges
-        // Take only visible nodes into account.
-        .filter((edge): boolean => nodes.has(edge.toId))
-        // Check that all edges lead to this node (leaf).
-        .every((edge): boolean => edge.to === node),
+    (node): boolean => entryNodes.includes(node),
     // Use the lowest level.
     (newLevel, oldLevel): boolean => oldLevel > newLevel,
     // Go against the direction of the edges.
@@ -73,19 +84,31 @@ export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
 export function fillLevelsByDirectionRoots(nodes: Map<Id, Node>): Levels {
+  // Collect valid root nodes
+  const entryNodes: Node[] = [];
+  nodes.forEach((node) => {
+    // Pick only leaves (nodes without children).
+    const isRoot = node.edges
+      // Take only visible nodes into account.
+      .filter((edge) => nodes.has(edge.toId))
+      // Check that all edges lead from this node (root).
+      .every((edge) => edge.from === node);
+    if (isRoot) {
+      entryNodes.push(node);
+    }
+  });
+
+  if (entryNodes.length === 0) {
+    return fillLevelsByDirectionCyclic(nodes, {});
+  }
+
   return fillLevelsByDirection(
     // Pick only roots (nodes without parents).
-    (node): boolean =>
-      node.edges
-        // Take only visible nodes into account.
-        .filter((edge): boolean => nodes.has(edge.toId))
-        // Check that all edges lead from this node (root).
-        .every((edge): boolean => edge.from === node),
+    (node): boolean => entryNodes.includes(node),
     // Use the highest level.
     (newLevel, oldLevel): boolean => oldLevel < newLevel,
     // Go in the direction of the edges.
@@ -96,7 +119,6 @@ export function fillLevelsByDirectionRoots(nodes: Map<Id, Node>): Levels {
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy.
- *
  * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
  * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
  * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
