@@ -125,7 +125,7 @@
     "keycharm": "0.4.0",
     "lint-staged": "15.2.10",
     "mocha": "10.8.2",
-    "nyc": "15.1.0",
+    "nyc": "17.1.0",
     "postcss": "8.4.49",
     "sazerac": "2.0.0",
     "semantic-release": "24.2.5",
