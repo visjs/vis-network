@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-06-08T10:45:44.605Z
+ * @date    2025-06-08T12:14:45.558Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -7196,7 +7196,6 @@ function Mash() {
       h -= n;
       n += h * 0x100000000; // 2^32
     }
-
     return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
   };
 }
@@ -8041,7 +8040,6 @@ function mergeOptions(mergeTarget, options, option) {
   if (srcOption === undefined) {
     return; // Nothing to do
   }
-
   if (typeof srcOption === "boolean") {
     if (!isObject(mergeTarget[option])) {
       mergeTarget[option] = {};
@@ -8057,7 +8055,6 @@ function mergeOptions(mergeTarget, options, option) {
       return; // Nothing to do
     }
   }
-
   if (!isObject(srcOption)) {
     return;
   }
@@ -8735,7 +8732,7 @@ let ColorPicker$1 = class ColorPicker {
    * @private
    */
   _create() {
-    var _context7, _context8, _context9, _context10;
+    var _context7, _context8, _context9, _context0;
     this.frame = document.createElement("div");
     this.frame.className = "vis-color-picker";
     this.colorPickerDiv = document.createElement("div");
@@ -8825,7 +8822,7 @@ let ColorPicker$1 = class ColorPicker {
     this.loadButton = document.createElement("div");
     this.loadButton.className = "vis-button vis-load";
     this.loadButton.innerText = "load last";
-    this.loadButton.onclick = _bindInstanceProperty(_context10 = this._loadLast).call(_context10, this);
+    this.loadButton.onclick = _bindInstanceProperty(_context0 = this._loadLast).call(_context0, this);
     this.frame.appendChild(this.colorPickerDiv);
     this.frame.appendChild(this.arrowDiv);
     this.frame.appendChild(this.brightnessLabel);
@@ -9848,7 +9845,6 @@ let Popup$1 = class Popup {
     this.frame.parentNode.removeChild(this.frame); // Remove element from DOM
   }
 };
-
 let errorFound = false;
 let allOptions$1;
 const VALIDATOR_PRINT_STYLE$1 = "background: #FFeeee; color: #dd0000";
@@ -10059,8 +10055,8 @@ let Validator$1 = class Validator {
           indexMatch = result.indexMatch;
         }
       } else {
-        var _context11;
-        if (_indexOfInstanceProperty(_context11 = op.toLowerCase()).call(_context11, lowerCaseOption) !== -1) {
+        var _context1;
+        if (_indexOfInstanceProperty(_context1 = op.toLowerCase()).call(_context1, lowerCaseOption) !== -1) {
           indexMatch = op;
         }
         distance = Validator.levenshteinDistance(option, op);
@@ -10165,7 +10161,6 @@ let Validator$1 = class Validator {
         }
       }
     }
-
     return matrix[b.length][a.length];
   }
 };
@@ -10458,7 +10453,6 @@ function createEdge(graph, from, to, type, attr) {
   if (graph.edge) {
     edge.attr = merge$1({}, graph.edge); // clone default attributes
   }
-
   edge.attr = merge$1(edge.attr || {}, attr); // merge attributes
 
   // Move arrows attribute from attr to edge temporally created in
@@ -10578,7 +10572,6 @@ function getToken() {
     } else if (!isNaN(Number(token))) {
       token = Number(token); // convert to number
     }
-
     tokenType = TOKENTYPE.IDENTIFIER;
     return;
   }
@@ -13045,7 +13038,6 @@ class Groups {
       }
     } // 20:bright red
     ];
-
     this.options = {};
     this.defaultOptions = {
       useDefaultGroups: true
@@ -13809,6 +13801,10 @@ var flatMap = flatMap$1;
 
 var _flatMapInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(flatMap);
 
+var iterator = iterator$4;
+
+var _Symbol$iterator = /*@__PURE__*/getDefaultExportFromCjs(iterator);
+
 var collection$1 = collection$3;
 var collectionStrong = collectionStrong$2;
 
@@ -13830,10 +13826,6 @@ var set$1 = parent$c;
 var set = set$1;
 
 var _Set = /*@__PURE__*/getDefaultExportFromCjs(set);
-
-var iterator = iterator$4;
-
-var _Symbol$iterator2 = /*@__PURE__*/getDefaultExportFromCjs(iterator);
 
 var getIterator$5 = getIterator$7;
 
@@ -14206,9 +14198,8 @@ function v4(options, buf, offset) {
   return unsafeStringify(rnds);
 }
 
-let _Symbol$iterator;
 function ownKeys$4(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var _context23, _context24; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context23 = ownKeys$4(Object(t), !0)).call(_context23, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context24 = ownKeys$4(Object(t))).call(_context24, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _objectSpread$4(e) { for (var r = 1; r < arguments.length; r++) { var _context21, _context22; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context21 = ownKeys$4(Object(t), !0)).call(_context21, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context22 = ownKeys$4(Object(t))).call(_context22, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 
 /**
  * Create new data pipe.
@@ -14671,7 +14662,6 @@ class DataSetPart {
  * Multiple invocations of for example {@link toItemArray} may yield different results (if the data source like for example {@link DataSet} gets modified).
  * @typeParam Item - The item type this stream is going to work with.
  */
-_Symbol$iterator = _Symbol$iterator2;
 class DataStream {
   /**
    * Create a new data stream.
@@ -14733,8 +14723,8 @@ class DataStream {
    * @returns The array with all items from this stream.
    */
   toItemArray() {
-    var _context10;
-    return _mapInstanceProperty(_context10 = [...this._pairs]).call(_context10, pair => pair[1]);
+    var _context0;
+    return _mapInstanceProperty(_context0 = [...this._pairs]).call(_context0, pair => pair[1]);
   }
   /**
    * Return an array containing all the entries in this stream.
@@ -14832,7 +14822,7 @@ class DataStream {
   filter(callback) {
     const pairs = this._pairs;
     return new DataStream({
-      *[_Symbol$iterator2]() {
+      *[_Symbol$iterator]() {
         for (const [id, item] of pairs) {
           if (callback(item, id)) {
             yield [id, item];
@@ -14861,7 +14851,7 @@ class DataStream {
   map(callback) {
     const pairs = this._pairs;
     return new DataStream({
-      *[_Symbol$iterator2]() {
+      *[_Symbol$iterator]() {
         for (const [id, item] of pairs) {
           yield [id, callback(item, id)];
         }
@@ -14938,9 +14928,9 @@ class DataStream {
    */
   sort(callback) {
     return new DataStream({
-      [_Symbol$iterator2]: () => {
-        var _context11;
-        return _getIterator(_sortInstanceProperty(_context11 = [...this._pairs]).call(_context11, (_ref, _ref2) => {
+      [_Symbol$iterator]: () => {
+        var _context1;
+        return _getIterator(_sortInstanceProperty(_context1 = [...this._pairs]).call(_context1, (_ref, _ref2) => {
           let [idA, itemA] = _ref;
           let [idB, itemB] = _ref2;
           return callback(itemA, itemB, idA, idB);
@@ -15270,11 +15260,11 @@ class DataSet extends DataSetPart {
    * @throws When the supplied data is neither an item nor an array of items, when the ids are missing.
    */
   updateOnly(data, senderId) {
-    var _context12;
+    var _context10;
     if (!_Array$isArray(data)) {
       data = [data];
     }
-    const updateEventData = _mapInstanceProperty(_context12 = _mapInstanceProperty(data).call(data, update => {
+    const updateEventData = _mapInstanceProperty(_context10 = _mapInstanceProperty(data).call(data, update => {
       const oldData = this._data.get(update[this._idProp]);
       if (oldData == null) {
         throw new Error("Updating non-existent items is not allowed.");
@@ -15283,7 +15273,7 @@ class DataSet extends DataSetPart {
         oldData,
         update
       };
-    })).call(_context12, _ref3 => {
+    })).call(_context10, _ref3 => {
       let {
         oldData,
         update
@@ -15370,9 +15360,9 @@ class DataSet extends DataSetPart {
         }
       }
     } else {
-      var _context13;
+      var _context11;
       // return all items
-      itemIds = [..._keysInstanceProperty(_context13 = this._data).call(_context13)];
+      itemIds = [..._keysInstanceProperty(_context11 = this._data).call(_context11)];
       for (let i = 0, len = itemIds.length; i < len; i++) {
         itemId = itemIds[i];
         item = this._data.get(itemId);
@@ -15534,16 +15524,16 @@ class DataSet extends DataSetPart {
    * @returns The item without any additional fields.
    */
   _filterFields(item, fields) {
-    var _context14;
+    var _context12;
     if (!item) {
       // item is null
       return item;
     }
-    return _reduceInstanceProperty(_context14 = _Array$isArray(fields) ?
+    return _reduceInstanceProperty(_context12 = _Array$isArray(fields) ?
     // Use the supplied array
     fields :
     // Use the keys of the supplied object
-    _Object$keys(fields)).call(_context14, (filteredItem, field) => {
+    _Object$keys(fields)).call(_context12, (filteredItem, field) => {
       filteredItem[field] = item[field];
       return filteredItem;
     }, {});
@@ -15657,8 +15647,8 @@ class DataSet extends DataSetPart {
    * @returns removedIds - The ids of all removed items.
    */
   clear(senderId) {
-    var _context15;
-    const ids = [..._keysInstanceProperty(_context15 = this._data).call(_context15)];
+    var _context13;
+    const ids = [..._keysInstanceProperty(_context13 = this._data).call(_context13)];
     const items = [];
     for (let i = 0, len = ids.length; i < len; i++) {
       items.push(this._data.get(ids[i]));
@@ -15680,8 +15670,8 @@ class DataSet extends DataSetPart {
   max(field) {
     let max = null;
     let maxField = null;
-    for (const item of _valuesInstanceProperty(_context16 = this._data).call(_context16)) {
-      var _context16;
+    for (const item of _valuesInstanceProperty(_context14 = this._data).call(_context14)) {
+      var _context14;
       const itemField = item[field];
       if (typeof itemField === "number" && (maxField == null || itemField > maxField)) {
         max = item;
@@ -15699,8 +15689,8 @@ class DataSet extends DataSetPart {
   min(field) {
     let min = null;
     let minField = null;
-    for (const item of _valuesInstanceProperty(_context17 = this._data).call(_context17)) {
-      var _context17;
+    for (const item of _valuesInstanceProperty(_context15 = this._data).call(_context15)) {
+      var _context15;
       const itemField = item[field];
       if (typeof itemField === "number" && (minField == null || itemField < minField)) {
         min = item;
@@ -15781,7 +15771,7 @@ class DataSet extends DataSetPart {
     if (ids) {
       const data = this._data;
       return new DataStream({
-        *[_Symbol$iterator2]() {
+        *[_Symbol$iterator]() {
           for (const id of ids) {
             const item = data.get(id);
             if (item != null) {
@@ -15791,9 +15781,9 @@ class DataSet extends DataSetPart {
         }
       });
     } else {
-      var _context18;
+      var _context16;
       return new DataStream({
-        [_Symbol$iterator2]: _bindInstanceProperty(_context18 = _entriesInstanceProperty(this._data)).call(_context18, this._data)
+        [_Symbol$iterator]: _bindInstanceProperty(_context16 = _entriesInstanceProperty(this._data)).call(_context16, this._data)
       });
     }
   }
@@ -15856,7 +15846,7 @@ class DataView extends DataSetPart {
    * @param options - Options to configure this data view.
    */
   constructor(data, options) {
-    var _context19;
+    var _context17;
     super();
     /** @inheritDoc */
     _defineProperty(this, "length", 0);
@@ -15867,7 +15857,7 @@ class DataView extends DataSetPart {
     // ids of the items currently in memory (just contains a boolean true)
     _defineProperty(this, "_options", void 0);
     this._options = options || {};
-    this._listener = _bindInstanceProperty(_context19 = this._onEvent).call(_context19, this);
+    this._listener = _bindInstanceProperty(_context17 = this._onEvent).call(_context17, this);
     this.setData(data);
   }
   // TODO: implement a function .config() to dynamically update things like configured filter
@@ -16032,7 +16022,7 @@ class DataView extends DataSetPart {
   /** @inheritDoc */
   forEach(callback, options) {
     if (this._data) {
-      var _context20;
+      var _context18;
       const defaultFilter = _filterInstanceProperty(this._options);
       const optionsFilter = options && _filterInstanceProperty(options);
       let filter;
@@ -16047,7 +16037,7 @@ class DataView extends DataSetPart {
       } else {
         filter = defaultFilter;
       }
-      _forEachInstanceProperty(_context20 = this._data).call(_context20, callback, {
+      _forEachInstanceProperty(_context18 = this._data).call(_context18, callback, {
         filter: filter,
         order: options && options.order
       });
@@ -16056,7 +16046,7 @@ class DataView extends DataSetPart {
   /** @inheritDoc */
   map(callback, options) {
     if (this._data) {
-      var _context21;
+      var _context19;
       const defaultFilter = _filterInstanceProperty(this._options);
       const optionsFilter = options && _filterInstanceProperty(options);
       let filter;
@@ -16071,7 +16061,7 @@ class DataView extends DataSetPart {
       } else {
         filter = defaultFilter;
       }
-      return _mapInstanceProperty(_context21 = this._data).call(_context21, callback, {
+      return _mapInstanceProperty(_context19 = this._data).call(_context19, callback, {
         filter: filter,
         order: options && options.order
       });
@@ -16085,9 +16075,9 @@ class DataView extends DataSetPart {
   }
   /** @inheritDoc */
   stream(ids) {
-    var _context22;
+    var _context20;
     return this._data.stream(ids || {
-      [_Symbol$iterator2]: _bindInstanceProperty(_context22 = _keysInstanceProperty(this._ids)).call(_context22, this._ids)
+      [_Symbol$iterator]: _bindInstanceProperty(_context20 = _keysInstanceProperty(this._ids)).call(_context20, this._ids)
     });
   }
   /**
@@ -16366,7 +16356,6 @@ function pointInRect(rect, point, rotationPoint) {
   if (rect.width <= 0 || rect.height <= 0) {
     return false; // early out
   }
-
   if (rotationPoint !== undefined) {
     // Rotate the point the same amount as the rectangle
     const tmp = {
@@ -16391,7 +16380,6 @@ function pointInRect(rect, point, rotationPoint) {
     // rotationPoint. Hence, the point coordinates need not be translated
     // back in this case.
   }
-
   const right = rect.x + rect.width;
   const bottom = rect.y + rect.width;
   return rect.left < point.x && right > point.x && rect.top < point.y && bottom > point.y;
@@ -17924,12 +17912,10 @@ class Label {
     if (this.size.width === 0 || this.size.height === 0 || this.elementOptions.label === undefined) {
       return false; // nothing to display
     }
-
     const viewFontSize = this.fontOptions.size * this.body.view.scale;
     if (viewFontSize < this.elementOptions.scaling.label.drawThreshold - 1) {
       return false; // Too small or too far away to show
     }
-
     return true;
   }
 }
@@ -18215,7 +18201,6 @@ class NodeBase {
       width = DEFAULT_SIZE; // use a decent default
       height = DEFAULT_SIZE; // if width zero, then height also always zero
     }
-
     return {
       width: width,
       height: height
@@ -19651,7 +19636,6 @@ class Node {
     this.selected = false;
     this.hover = false;
     this.labelModule = new Label(this.body, this.options, false /* Not edge label */);
-
     this.setOptions(options);
   }
 
@@ -19905,7 +19889,6 @@ class Node {
     if (allowDeletion === true && newOptions.font === null) {
       parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
     }
-
     Node.updateGroupOptions(parentOptions, newOptions, groupList);
 
     // handle the scaling options, specifically the label part
@@ -20002,7 +19985,6 @@ class Node {
     // Currently set global node options
     this.defaultOptions // Default global node options
     ];
-
     this.labelModule.update(this.options, pile);
     if (this.labelModule.baseSize !== undefined) {
       this.baseFontSize = this.labelModule.baseSize;
@@ -20355,7 +20337,6 @@ class NodesHandler {
         //50,
         color: "#2B7CE9" //'#aa00ff'
       },
-
       image: undefined,
       // --> URL
       imagePadding: {
@@ -20416,7 +20397,6 @@ class NodesHandler {
         // only for image shape
         coordinateOrigin: "center" // only for image and circularImage shapes
       },
-
       size: 25,
       title: undefined,
       value: undefined,
@@ -20564,7 +20544,6 @@ class NodesHandler {
       newNodes.push(node);
       this.body.nodes[id] = node; // note: this may replace an existing node
     }
-
     this.layoutEngine.positionInitially(newNodes);
     if (doNotEmit === false) {
       this.body.emitter.emit("_dataChanged");
@@ -22613,7 +22592,6 @@ class Edge {
     this.edgeType = undefined;
     this.connected = false;
     this.labelModule = new Label(this.body, this.options, true /* It's an edge label */);
-
     this.setOptions(options);
   }
 
@@ -22804,11 +22782,9 @@ class Edge {
     } else if (allowDeletion === true && newOptions.color === null) {
       parentOptions.color = bridgeObject(globalOptions.color); // set the object back to the global options
     }
-
     if (allowDeletion === true && newOptions.font === null) {
       parentOptions.font = bridgeObject(globalOptions.font); // set the object back to the global options
     }
-
     if (Object.prototype.hasOwnProperty.call(newOptions, "selfReferenceSize")) {
       console.warn("The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}");
       parentOptions.selfReference.size = newOptions.selfReferenceSize;
@@ -23266,11 +23242,9 @@ class Edge {
     if (!this.labelModule.visible()) {
       return ret; // Don't even bother doing the atan2, there's nothing to draw
     }
-
     if (this.options.font.align === "horizontal") {
       return ret; // No need to calculate angle
     }
-
     const dy = this.from.y - this.to.y;
     const dx = this.from.x - this.to.x;
     let angle = Math.atan2(dy, dx); // radians
@@ -23827,7 +23801,6 @@ class EdgesHandler {
     if (edgesData === undefined || edgesData === null) {
       return; // No edges DataSet yet; can happen on startup
     }
-
     const edges = this.body.edges;
     const addIds = [];
     _forEachInstanceProperty(edgesData).call(edgesData, (edgeData, edgeId) => {
@@ -24359,7 +24332,6 @@ class RepulsionSolver {
           } else {
             repulsingForce = a * distance + b; // linear approx of  1 / (1 + Math.exp((distance / nodeDistance - 1) * steepness))
           }
-
           repulsingForce = repulsingForce / distance;
           fx = dx * repulsingForce;
           fy = dy * repulsingForce;
@@ -25150,7 +25122,6 @@ class PhysicsEngine {
       } else {
         this.physicsStep(); // normal step, keeping timestep constant
       }
-
       this.adaptiveCounter += 1;
     } else {
       // case for the static timestep, we reset it to the one in options and take a normal step.
@@ -25453,7 +25424,6 @@ class PhysicsEngine {
     if (this._startStabilizing()) {
       sendProgress(); // Ensure that there is at least one start event.
     }
-
     let count = 0;
     while (running() && count < this.options.stabilization.updateInterval) {
       this.physicsTick();
@@ -25573,7 +25543,6 @@ class NetworkUtil {
         } // top is negative, bottom is positive
       }
     }
-
     if (minX === 1e9 && maxX === -1e9 && minY === 1e9 && maxY === -1e9) {
       minY = 0, maxY = 0, minX = 0, maxX = 0;
     }
@@ -25616,7 +25585,6 @@ class NetworkUtil {
         } // top is negative, bottom is positive
       }
     }
-
     if (minX === 1e9 && maxX === -1e9 && minY === 1e9 && maxY === -1e9) {
       minY = 0, maxY = 0, minX = 0, maxX = 0;
     }
@@ -26963,7 +26931,6 @@ class ClusterEngine {
       if (shouldBeClustered === this._isClusteredEdge(edge.id)) {
         return; // all is well
       }
-
       if (shouldBeClustered) {
         // add edge to clustering
         const clusterFrom = this._getClusterNodeForNode(edge.fromId);
@@ -27008,7 +26975,6 @@ class ClusterEngine {
       for (let n = 0; n < clustersToOpen.length; ++n) {
         this.openCluster(clustersToOpen[n], {}, false /* Don't refresh, we're in an refresh/update already */);
       }
-
       continueLoop = clustersToOpen.length > 0;
       changed = changed || continueLoop;
     }
@@ -28335,7 +28301,6 @@ class View {
     if (this.easingTime != 0) {
       this._transitionRedraw(true); // by setting easingtime to 1, we finish the animation.
     }
-
     this.sourceScale = this.body.view.scale;
     this.sourceTranslation = this.body.view.translation;
     this.targetScale = options.scale;
@@ -28899,7 +28864,7 @@ class NavigationHandler {
       }
       this.keycharm.reset();
       if (this.activated === true) {
-        var _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18, _context19, _context20, _context21, _context22, _context23, _context24, _context25, _context26, _context27;
+        var _context4, _context5, _context6, _context7, _context8, _context9, _context0, _context1, _context10, _context11, _context12, _context13, _context14, _context15, _context16, _context17, _context18, _context19, _context20, _context21, _context22, _context23, _context24, _context25;
         _bindInstanceProperty(_context4 = this.keycharm).call(_context4, "up", () => {
           this.bindToRedraw("_moveUp");
         }, "keydown");
@@ -28918,58 +28883,58 @@ class NavigationHandler {
         _bindInstanceProperty(_context9 = this.keycharm).call(_context9, "num+", () => {
           this.bindToRedraw("_zoomIn");
         }, "keydown");
-        _bindInstanceProperty(_context10 = this.keycharm).call(_context10, "num-", () => {
+        _bindInstanceProperty(_context0 = this.keycharm).call(_context0, "num-", () => {
           this.bindToRedraw("_zoomOut");
         }, "keydown");
-        _bindInstanceProperty(_context11 = this.keycharm).call(_context11, "-", () => {
+        _bindInstanceProperty(_context1 = this.keycharm).call(_context1, "-", () => {
           this.bindToRedraw("_zoomOut");
         }, "keydown");
-        _bindInstanceProperty(_context12 = this.keycharm).call(_context12, "[", () => {
+        _bindInstanceProperty(_context10 = this.keycharm).call(_context10, "[", () => {
           this.bindToRedraw("_zoomOut");
         }, "keydown");
-        _bindInstanceProperty(_context13 = this.keycharm).call(_context13, "]", () => {
+        _bindInstanceProperty(_context11 = this.keycharm).call(_context11, "]", () => {
           this.bindToRedraw("_zoomIn");
         }, "keydown");
-        _bindInstanceProperty(_context14 = this.keycharm).call(_context14, "pageup", () => {
+        _bindInstanceProperty(_context12 = this.keycharm).call(_context12, "pageup", () => {
           this.bindToRedraw("_zoomIn");
         }, "keydown");
-        _bindInstanceProperty(_context15 = this.keycharm).call(_context15, "pagedown", () => {
+        _bindInstanceProperty(_context13 = this.keycharm).call(_context13, "pagedown", () => {
           this.bindToRedraw("_zoomOut");
         }, "keydown");
-        _bindInstanceProperty(_context16 = this.keycharm).call(_context16, "up", () => {
+        _bindInstanceProperty(_context14 = this.keycharm).call(_context14, "up", () => {
           this.unbindFromRedraw("_moveUp");
         }, "keyup");
-        _bindInstanceProperty(_context17 = this.keycharm).call(_context17, "down", () => {
+        _bindInstanceProperty(_context15 = this.keycharm).call(_context15, "down", () => {
           this.unbindFromRedraw("_moveDown");
         }, "keyup");
-        _bindInstanceProperty(_context18 = this.keycharm).call(_context18, "left", () => {
+        _bindInstanceProperty(_context16 = this.keycharm).call(_context16, "left", () => {
           this.unbindFromRedraw("_moveLeft");
         }, "keyup");
-        _bindInstanceProperty(_context19 = this.keycharm).call(_context19, "right", () => {
+        _bindInstanceProperty(_context17 = this.keycharm).call(_context17, "right", () => {
           this.unbindFromRedraw("_moveRight");
         }, "keyup");
-        _bindInstanceProperty(_context20 = this.keycharm).call(_context20, "=", () => {
+        _bindInstanceProperty(_context18 = this.keycharm).call(_context18, "=", () => {
           this.unbindFromRedraw("_zoomIn");
         }, "keyup");
-        _bindInstanceProperty(_context21 = this.keycharm).call(_context21, "num+", () => {
+        _bindInstanceProperty(_context19 = this.keycharm).call(_context19, "num+", () => {
           this.unbindFromRedraw("_zoomIn");
         }, "keyup");
-        _bindInstanceProperty(_context22 = this.keycharm).call(_context22, "num-", () => {
+        _bindInstanceProperty(_context20 = this.keycharm).call(_context20, "num-", () => {
           this.unbindFromRedraw("_zoomOut");
         }, "keyup");
-        _bindInstanceProperty(_context23 = this.keycharm).call(_context23, "-", () => {
+        _bindInstanceProperty(_context21 = this.keycharm).call(_context21, "-", () => {
           this.unbindFromRedraw("_zoomOut");
         }, "keyup");
-        _bindInstanceProperty(_context24 = this.keycharm).call(_context24, "[", () => {
+        _bindInstanceProperty(_context22 = this.keycharm).call(_context22, "[", () => {
           this.unbindFromRedraw("_zoomOut");
         }, "keyup");
-        _bindInstanceProperty(_context25 = this.keycharm).call(_context25, "]", () => {
+        _bindInstanceProperty(_context23 = this.keycharm).call(_context23, "]", () => {
           this.unbindFromRedraw("_zoomIn");
         }, "keyup");
-        _bindInstanceProperty(_context26 = this.keycharm).call(_context26, "pageup", () => {
+        _bindInstanceProperty(_context24 = this.keycharm).call(_context24, "pageup", () => {
           this.unbindFromRedraw("_zoomIn");
         }, "keyup");
-        _bindInstanceProperty(_context27 = this.keycharm).call(_context27, "pagedown", () => {
+        _bindInstanceProperty(_context25 = this.keycharm).call(_context25, "pagedown", () => {
           this.unbindFromRedraw("_zoomOut");
         }, "keyup");
       }
@@ -28987,7 +28952,7 @@ class InteractionHandler {
    * @param {SelectionHandler} selectionHandler
    */
   constructor(body, canvas, selectionHandler) {
-    var _context, _context2, _context3, _context4, _context5, _context6, _context7, _context8, _context9, _context10, _context11, _context12, _context13;
+    var _context, _context2, _context3, _context4, _context5, _context6, _context7, _context8, _context9, _context0, _context1, _context10, _context11;
     this.body = body;
     this.canvas = canvas;
     this.selectionHandler = selectionHandler;
@@ -29003,16 +28968,16 @@ class InteractionHandler {
     this.body.eventListeners.onDragEnd = _bindInstanceProperty(_context7 = this.onDragEnd).call(_context7, this);
     this.body.eventListeners.onMouseWheel = _bindInstanceProperty(_context8 = this.onMouseWheel).call(_context8, this);
     this.body.eventListeners.onPinch = _bindInstanceProperty(_context9 = this.onPinch).call(_context9, this);
-    this.body.eventListeners.onMouseMove = _bindInstanceProperty(_context10 = this.onMouseMove).call(_context10, this);
-    this.body.eventListeners.onRelease = _bindInstanceProperty(_context11 = this.onRelease).call(_context11, this);
-    this.body.eventListeners.onContext = _bindInstanceProperty(_context12 = this.onContext).call(_context12, this);
+    this.body.eventListeners.onMouseMove = _bindInstanceProperty(_context0 = this.onMouseMove).call(_context0, this);
+    this.body.eventListeners.onRelease = _bindInstanceProperty(_context1 = this.onRelease).call(_context1, this);
+    this.body.eventListeners.onContext = _bindInstanceProperty(_context10 = this.onContext).call(_context10, this);
     this.touchTime = 0;
     this.drag = {};
     this.pinch = {};
     this.popup = undefined;
     this.popupObj = undefined;
     this.popupTimer = undefined;
-    this.body.functions.getPointer = _bindInstanceProperty(_context13 = this.getPointer).call(_context13, this);
+    this.body.functions.getPointer = _bindInstanceProperty(_context11 = this.getPointer).call(_context11, this);
     this.options = {};
     this.defaultOptions = {
       dragNodes: true,
@@ -29347,7 +29312,7 @@ class InteractionHandler {
   onDragEnd(event) {
     this.drag.dragging = false;
     if (this.body.selectionBox.show) {
-      var _context14;
+      var _context12;
       this.body.selectionBox.show = false;
       const selectionBoxPosition = this.body.selectionBox.position;
       const selectionBoxPositionMinMax = {
@@ -29356,7 +29321,7 @@ class InteractionHandler {
         maxX: Math.max(selectionBoxPosition.start.x, selectionBoxPosition.end.x),
         maxY: Math.max(selectionBoxPosition.start.y, selectionBoxPosition.end.y)
       };
-      const toBeSelectedNodes = _filterInstanceProperty(_context14 = this.body.nodeIndices).call(_context14, nodeId => {
+      const toBeSelectedNodes = _filterInstanceProperty(_context12 = this.body.nodeIndices).call(_context12, nodeId => {
         const node = this.body.nodes[nodeId];
         return node.x >= selectionBoxPositionMinMax.minX && node.x <= selectionBoxPositionMinMax.maxX && node.y >= selectionBoxPositionMinMax.minY && node.y <= selectionBoxPositionMinMax.maxY;
       });
@@ -30741,7 +30706,6 @@ class SelectionHandler {
       const ret = node.getItemsOnPoint(point);
       items.push.apply(items, ret); // Append the return value to the running list.
     }
-
     const edgeIndices = this.body.edgeIndices;
     const edges = this.body.edges;
     for (let i = edgeIndices.length - 1; i >= 0; i--) {
@@ -30749,7 +30713,6 @@ class SelectionHandler {
       const ret = edge.getItemsOnPoint(point);
       items.push.apply(items, ret); // Append the return value to the running list.
     }
-
     return items;
   }
 }
@@ -31504,7 +31467,6 @@ class LayoutEngine {
         sortMethod: "hubsize" // hubsize, directed
       }
     };
-
     _Object$assign(this.options, this.defaultOptions);
     this.bindEventListeners();
   }
@@ -31754,7 +31716,6 @@ class LayoutEngine {
               multi: false
             } // avoid font propagation
           },
-
           clusterEdgeProperties: {
             label: "",
             // avoid label handling
@@ -32087,7 +32048,6 @@ class LayoutEngine {
             offset = -minSpace2 + nodeSpacing;
             //console.log("RESETTING OFFSET", max1 - min2 + this.options.hierarchical.nodeSpacing, -minSpace2, offset);
           }
-
           if (offset < 0) {
             //console.log("SHIFTING", node2.id, offset);
             _this._shiftBlock(node2.id, offset);
@@ -32098,7 +32058,6 @@ class LayoutEngine {
       }
       //this.body.emitter.emit("_redraw");})
     };
-
     const minimizeEdgeLength = (iterations, node) => {
       //window.CALLBACKS.push(() => {
       //  console.log("ts",node.id);
@@ -33110,7 +33069,7 @@ class ManipulationSystem {
    * create the toolbar to connect nodes
    */
   addEdgeMode() {
-    var _context8, _context9, _context10, _context11, _context12;
+    var _context8, _context9, _context0, _context1, _context10;
     // when using the gui, enable edit mode if it wasnt already.
     if (this.editMode !== true) {
       this.enableEditMode();
@@ -33134,9 +33093,9 @@ class ManipulationSystem {
     // temporarily overload functions
     this._temporaryBindUI("onTouch", _bindInstanceProperty(_context8 = this._handleConnect).call(_context8, this));
     this._temporaryBindUI("onDragEnd", _bindInstanceProperty(_context9 = this._finishConnect).call(_context9, this));
-    this._temporaryBindUI("onDrag", _bindInstanceProperty(_context10 = this._dragControlNode).call(_context10, this));
-    this._temporaryBindUI("onRelease", _bindInstanceProperty(_context11 = this._finishConnect).call(_context11, this));
-    this._temporaryBindUI("onDragStart", _bindInstanceProperty(_context12 = this._dragStartEdge).call(_context12, this));
+    this._temporaryBindUI("onDrag", _bindInstanceProperty(_context0 = this._dragControlNode).call(_context0, this));
+    this._temporaryBindUI("onRelease", _bindInstanceProperty(_context1 = this._finishConnect).call(_context1, this));
+    this._temporaryBindUI("onDragStart", _bindInstanceProperty(_context10 = this._dragStartEdge).call(_context10, this));
     this._temporaryBindUI("onHold", () => {});
   }
 
@@ -33161,7 +33120,7 @@ class ManipulationSystem {
       }
     }
     if (this.guiEnabled === true) {
-      var _context13;
+      var _context11;
       const locale = this.options.locales[this.options.locale];
       this.manipulationDOM = {};
       this._createBackButton(locale);
@@ -33169,11 +33128,11 @@ class ManipulationSystem {
       this._createDescription(locale["editEdgeDescription"] || this.options.locales["en"]["editEdgeDescription"]);
 
       // bind the close button
-      this._bindElementEvents(this.closeDiv, _bindInstanceProperty(_context13 = this.toggleEditMode).call(_context13, this));
+      this._bindElementEvents(this.closeDiv, _bindInstanceProperty(_context11 = this.toggleEditMode).call(_context11, this));
     }
     this.edgeBeingEditedId = this.selectionHandler.getSelectedEdgeIds()[0];
     if (this.edgeBeingEditedId !== undefined) {
-      var _context14, _context15, _context16, _context17;
+      var _context12, _context13, _context14, _context15;
       const edge = this.body.edges[this.edgeBeingEditedId];
 
       // create control nodes
@@ -33187,12 +33146,12 @@ class ManipulationSystem {
       this.body.nodeIndices.push(controlNodeTo.id);
 
       // temporarily overload UI functions, cleaned up automatically because of _temporaryBindUI
-      this._temporaryBindUI("onTouch", _bindInstanceProperty(_context14 = this._controlNodeTouch).call(_context14, this)); // used to get the position
+      this._temporaryBindUI("onTouch", _bindInstanceProperty(_context12 = this._controlNodeTouch).call(_context12, this)); // used to get the position
       this._temporaryBindUI("onTap", () => {}); // disabled
       this._temporaryBindUI("onHold", () => {}); // disabled
-      this._temporaryBindUI("onDragStart", _bindInstanceProperty(_context15 = this._controlNodeDragStart).call(_context15, this)); // used to select control node
-      this._temporaryBindUI("onDrag", _bindInstanceProperty(_context16 = this._controlNodeDrag).call(_context16, this)); // used to drag control node
-      this._temporaryBindUI("onDragEnd", _bindInstanceProperty(_context17 = this._controlNodeDragEnd).call(_context17, this)); // used to connect or revert control nodes
+      this._temporaryBindUI("onDragStart", _bindInstanceProperty(_context13 = this._controlNodeDragStart).call(_context13, this)); // used to select control node
+      this._temporaryBindUI("onDrag", _bindInstanceProperty(_context14 = this._controlNodeDrag).call(_context14, this)); // used to drag control node
+      this._temporaryBindUI("onDragEnd", _bindInstanceProperty(_context15 = this._controlNodeDragEnd).call(_context15, this)); // used to connect or revert control nodes
       this._temporaryBindUI("onMouseMove", () => {}); // disabled
 
       // create function to position control nodes correctly on movement
@@ -33367,7 +33326,7 @@ class ManipulationSystem {
    * Create the edit button
    */
   _createEditButton() {
-    var _context18;
+    var _context16;
     // restore everything to it's original state (if applicable)
     this._clean();
 
@@ -33383,7 +33342,7 @@ class ManipulationSystem {
     this.editModeDiv.appendChild(button);
 
     // bind a hammer listener to the button, calling the function toggleEditMode.
-    this._bindElementEvents(button, _bindInstanceProperty(_context18 = this.toggleEditMode).call(_context18, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context16 = this.toggleEditMode).call(_context16, this));
   }
 
   /**
@@ -33422,8 +33381,8 @@ class ManipulationSystem {
    */
   _cleanupDOMEventListeners() {
     // _clean DOM event listener bindings
-    for (const callback of _spliceInstanceProperty(_context19 = this._domEventListenerCleanupQueue).call(_context19, 0)) {
-      var _context19;
+    for (const callback of _spliceInstanceProperty(_context17 = this._domEventListenerCleanupQueue).call(_context17, 0)) {
+      var _context17;
       callback();
     }
   }
@@ -33478,10 +33437,10 @@ class ManipulationSystem {
    * @private
    */
   _createAddNodeButton(locale) {
-    var _context20;
+    var _context18;
     const button = this._createButton("addNode", "vis-add", locale["addNode"] || this.options.locales["en"]["addNode"]);
     this.manipulationDiv.appendChild(button);
-    this._bindElementEvents(button, _bindInstanceProperty(_context20 = this.addNodeMode).call(_context20, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context18 = this.addNodeMode).call(_context18, this));
   }
 
   /**
@@ -33490,10 +33449,10 @@ class ManipulationSystem {
    * @private
    */
   _createAddEdgeButton(locale) {
-    var _context21;
+    var _context19;
     const button = this._createButton("addEdge", "vis-connect", locale["addEdge"] || this.options.locales["en"]["addEdge"]);
     this.manipulationDiv.appendChild(button);
-    this._bindElementEvents(button, _bindInstanceProperty(_context21 = this.addEdgeMode).call(_context21, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context19 = this.addEdgeMode).call(_context19, this));
   }
 
   /**
@@ -33502,10 +33461,10 @@ class ManipulationSystem {
    * @private
    */
   _createEditNodeButton(locale) {
-    var _context22;
+    var _context20;
     const button = this._createButton("editNode", "vis-edit", locale["editNode"] || this.options.locales["en"]["editNode"]);
     this.manipulationDiv.appendChild(button);
-    this._bindElementEvents(button, _bindInstanceProperty(_context22 = this.editNode).call(_context22, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context20 = this.editNode).call(_context20, this));
   }
 
   /**
@@ -33514,10 +33473,10 @@ class ManipulationSystem {
    * @private
    */
   _createEditEdgeButton(locale) {
-    var _context23;
+    var _context21;
     const button = this._createButton("editEdge", "vis-edit", locale["editEdge"] || this.options.locales["en"]["editEdge"]);
     this.manipulationDiv.appendChild(button);
-    this._bindElementEvents(button, _bindInstanceProperty(_context23 = this.editEdgeMode).call(_context23, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context21 = this.editEdgeMode).call(_context21, this));
   }
 
   /**
@@ -33526,7 +33485,7 @@ class ManipulationSystem {
    * @private
    */
   _createDeleteButton(locale) {
-    var _context24;
+    var _context22;
     let deleteBtnClass;
     if (this.options.rtl) {
       deleteBtnClass = "vis-delete-rtl";
@@ -33535,7 +33494,7 @@ class ManipulationSystem {
     }
     const button = this._createButton("delete", deleteBtnClass, locale["del"] || this.options.locales["en"]["del"]);
     this.manipulationDiv.appendChild(button);
-    this._bindElementEvents(button, _bindInstanceProperty(_context24 = this.deleteSelected).call(_context24, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context22 = this.deleteSelected).call(_context22, this));
   }
 
   /**
@@ -33544,10 +33503,10 @@ class ManipulationSystem {
    * @private
    */
   _createBackButton(locale) {
-    var _context25;
+    var _context23;
     const button = this._createButton("back", "vis-back", locale["back"] || this.options.locales["en"]["back"]);
     this.manipulationDiv.appendChild(button);
-    this._bindElementEvents(button, _bindInstanceProperty(_context25 = this.showManipulatorToolbar).call(_context25, this));
+    this._bindElementEvents(button, _bindInstanceProperty(_context23 = this.showManipulatorToolbar).call(_context23, this));
   }
 
   /**
@@ -33676,24 +33635,24 @@ class ManipulationSystem {
   _cleanupTemporaryNodesAndEdges() {
     // _clean temporary edges
     for (let i = 0; i < this.temporaryIds.edges.length; i++) {
-      var _context26;
+      var _context24;
       this.body.edges[this.temporaryIds.edges[i]].disconnect();
       delete this.body.edges[this.temporaryIds.edges[i]];
-      const indexTempEdge = _indexOfInstanceProperty(_context26 = this.body.edgeIndices).call(_context26, this.temporaryIds.edges[i]);
+      const indexTempEdge = _indexOfInstanceProperty(_context24 = this.body.edgeIndices).call(_context24, this.temporaryIds.edges[i]);
       if (indexTempEdge !== -1) {
-        var _context27;
-        _spliceInstanceProperty(_context27 = this.body.edgeIndices).call(_context27, indexTempEdge, 1);
+        var _context25;
+        _spliceInstanceProperty(_context25 = this.body.edgeIndices).call(_context25, indexTempEdge, 1);
       }
     }
 
     // _clean temporary nodes
     for (let i = 0; i < this.temporaryIds.nodes.length; i++) {
-      var _context28;
+      var _context26;
       delete this.body.nodes[this.temporaryIds.nodes[i]];
-      const indexTempNode = _indexOfInstanceProperty(_context28 = this.body.nodeIndices).call(_context28, this.temporaryIds.nodes[i]);
+      const indexTempNode = _indexOfInstanceProperty(_context26 = this.body.nodeIndices).call(_context26, this.temporaryIds.nodes[i]);
       if (indexTempNode !== -1) {
-        var _context29;
-        _spliceInstanceProperty(_context29 = this.body.nodeIndices).call(_context29, indexTempNode, 1);
+        var _context27;
+        _spliceInstanceProperty(_context27 = this.body.nodeIndices).call(_context27, indexTempNode, 1);
       }
     }
     this.temporaryIds = {
@@ -33872,9 +33831,9 @@ class ManipulationSystem {
     const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
-      var _context30;
+      var _context28;
       // if the node id is NOT a temporary node, accept the node.
-      if (_indexOfInstanceProperty(_context30 = this.temporaryIds.nodes).call(_context30, overlappingNodeIds[i]) === -1) {
+      if (_indexOfInstanceProperty(_context28 = this.temporaryIds.nodes).call(_context28, overlappingNodeIds[i]) === -1) {
         node = this.body.nodes[overlappingNodeIds[i]];
         break;
       }
@@ -33913,9 +33872,9 @@ class ManipulationSystem {
     const overlappingNodeIds = this.selectionHandler._getAllNodesOverlappingWith(pointerObj);
     let node = undefined;
     for (let i = overlappingNodeIds.length - 1; i >= 0; i--) {
-      var _context31;
+      var _context29;
       // if the node id is NOT a temporary node, accept the node.
-      if (_indexOfInstanceProperty(_context31 = this.temporaryIds.nodes).call(_context31, overlappingNodeIds[i]) === -1) {
+      if (_indexOfInstanceProperty(_context29 = this.temporaryIds.nodes).call(_context29, overlappingNodeIds[i]) === -1) {
         node = this.body.nodes[overlappingNodeIds[i]];
         break;
       }
@@ -35490,7 +35449,6 @@ const configureOptions = {
       shakeTowards: ["leaves", "roots"] // leaves, roots
     }
   },
-
   interaction: {
     dragNodes: true,
     dragView: true,
@@ -35567,7 +35525,6 @@ const configureOptions = {
     //adaptiveTimestep: true
   }
 };
-
 const configuratorHideOption = (parentPath, optionName, options) => {
   var _context;
   if (_includesInstanceProperty(parentPath).call(parentPath, "physics") && _includesInstanceProperty(_context = configureOptions.physics.solver).call(_context, optionName) && options.physics.solver !== optionName && optionName !== "wind") {
@@ -36002,7 +35959,6 @@ function Network(container, data, options) {
       // A DataSet or DataView
       edges: null // A DataSet or DataView
     },
-
     functions: {
       createNode: function () {},
       createEdge: function () {},
@@ -36074,7 +36030,6 @@ Network.prototype.setOptions = function (options) {
   if (options === null) {
     options = undefined; // This ensures that options handling doesn't crash in the handling
   }
-
   if (options !== undefined) {
     const errorFound = Validator.validate(options, allOptions);
     if (errorFound === true) {
