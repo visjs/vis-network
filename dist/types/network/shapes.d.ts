@@ -1,6 +1,5 @@
 /**
  * Draw a circle.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -9,7 +8,6 @@
 export declare function drawCircle(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void;
 /**
  * Draw a square.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -18,7 +16,6 @@ export declare function drawCircle(ctx: CanvasRenderingContext2D, x: number, y: 
 export declare function drawSquare(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void;
 /**
  * Draw an equilateral triangle standing on a side.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -29,7 +26,6 @@ export declare function drawSquare(ctx: CanvasRenderingContext2D, x: number, y: 
 export declare function drawTriangle(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void;
 /**
  * Draw an equilateral triangle standing on a vertex.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -40,7 +36,6 @@ export declare function drawTriangle(ctx: CanvasRenderingContext2D, x: number, y
 export declare function drawTriangleDown(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void;
 /**
  * Draw a star.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -49,7 +44,6 @@ export declare function drawTriangleDown(ctx: CanvasRenderingContext2D, x: numbe
 export declare function drawStar(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void;
 /**
  * Draw a diamond.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -60,7 +54,6 @@ export declare function drawStar(ctx: CanvasRenderingContext2D, x: number, y: nu
 export declare function drawDiamond(ctx: CanvasRenderingContext2D, x: number, y: number, r: number): void;
 /**
  * Draw a rectangle with rounded corners.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -73,7 +66,6 @@ export declare function drawDiamond(ctx: CanvasRenderingContext2D, x: number, y:
 export declare function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number): void;
 /**
  * Draw an ellipse.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -87,7 +79,6 @@ export declare function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, 
 export declare function drawEllipse(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): void;
 /**
  * Draw an isometric cylinder.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -99,7 +90,6 @@ export declare function drawEllipse(ctx: CanvasRenderingContext2D, x: number, y:
 export declare function drawDatabase(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): void;
 /**
  * Draw a dashed line.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The start position on the x axis.
  * @param y - The start position on the y axis.
@@ -114,7 +104,6 @@ export declare function drawDatabase(ctx: CanvasRenderingContext2D, x: number, y
 export declare function drawDashedLine(ctx: CanvasRenderingContext2D, x: number, y: number, x2: number, y2: number, pattern: number[]): void;
 /**
  * Draw a hexagon.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -137,7 +126,6 @@ declare const shapeMap: {
 };
 /**
  * Returns either custom or native drawing function base on supplied name.
- *
  * @param name - The name of the function. Either the name of a
  * CanvasRenderingContext2D property or an export from shapes.ts without the
  * draw prefix.

@@ -33,7 +33,6 @@ import { ArrowData } from "./types";
 export declare class EndPoints {
     /**
      * Draw an endpoint.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.

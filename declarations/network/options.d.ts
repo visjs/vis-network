@@ -3,7 +3,6 @@ declare const allOptions: OptionsConfig;
 /**
  * This provides ranges, initial values, steps and dropdown menu choices for the
  * configuration.
- *
  * @remarks
  * Checkbox: `boolean`
  *   The value supllied will be used as the initial value.

@@ -6,7 +6,6 @@ import { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequi
 export declare class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -16,7 +15,6 @@ export declare class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]>
     protected _line(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY">, viaNodes: [Point, Point]): void;
     /**
      * Compute the additional points the edge passes through.
-     *
      * @returns Cartesian coordinates of the points the edge passes through.
      */
     protected _getViaCoordinates(): [Point, Point];

@@ -28,7 +28,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     selectionWidth: number;
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param _body - The body of the network.
      * @param _labelModule - Label module.
@@ -36,7 +35,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     constructor(options: EdgeOptions, _body: VBody, _labelModule: Label);
     /**
      * Find the intersection between the border of the node and the edge.
-     *
      * @param node - The node (either from or to node of the edge).
      * @param ctx - The context that will be used for rendering.
      * @param options - Additional options.
@@ -45,7 +43,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     protected abstract _findBorderPosition(node: VNode, ctx: CanvasRenderingContext2D, options?: FindBorderPositionOptions<Via>): PointT;
     /**
      * Return additional point(s) the edge passes through.
-     *
      * @returns Cartesian coordinates of the point(s) the edge passes through.
      */
     abstract getViaNode(): Via;
@@ -57,7 +54,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     cleanup(): boolean;
     /**
      * Set new edge options.
-     *
      * @param options - The new edge options object.
      */
     setOptions(options: EdgeOptions): void;
@@ -65,7 +61,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     drawLine(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY" | "width">, _selected?: boolean, _hover?: boolean, viaNode?: Via): void;
     /**
      * Draw a line with given style between two nodes through supplied node(s).
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param viaNode - Additional control point(s) for the edge.
@@ -75,7 +70,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     private _drawLine;
     /**
      * Draw a dashed line with given style between two nodes through supplied node(s).
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param viaNode - Additional control point(s) for the edge.
@@ -85,7 +79,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     private _drawDashedLine;
     /**
      * Draw a line with given style between two nodes through supplied node(s).
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param viaNode - Additional control point(s) for the edge.
@@ -95,7 +88,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     protected abstract _line(ctx: CanvasRenderingContext2D, values: EdgeFormattingValues, viaNode: Via, fromPoint?: Point, toPoint?: Point): void;
     /**
      * Find the intersection between the border of the node and the edge.
-     *
      * @param node - The node (either from or to node of the edge).
      * @param ctx - The context that will be used for rendering.
      * @param options - Additional options.
@@ -109,14 +101,12 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     };
     /**
      * Compute the center point and radius of an edge connected to the same node at both ends.
-     *
      * @param ctx - The context that will be used for rendering.
      * @returns `[x, y, radius]`
      */
     protected _getCircleData(ctx?: CanvasRenderingContext2D): [number, number, number];
     /**
      * Get a point on a circle.
-     *
      * @param x - Center of the circle on the x axis.
      * @param y - Center of the circle on the y axis.
      * @param radius - Radius of the circle.
@@ -126,7 +116,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     private _pointOnCircle;
     /**
      * Find the intersection between the border of the node and the edge.
-     *
      * @remarks
      * This function uses binary search to look for the point where the circle crosses the border of the node.
      * @param nearNode - The node (either from or to node of the edge).
@@ -137,7 +126,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     private _findBorderPositionCircle;
     /**
      * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
-     *
      * @param selected - Determines wheter the line is selected.
      * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
      * @returns The width of the line.
@@ -145,7 +133,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     getLineWidth(selected: boolean, hover: boolean): number;
     /**
      * Compute the color or gradient for given edge.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param _selected - Ignored (TODO: remove in the future).
@@ -155,7 +142,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     getColor(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity">): string | CanvasGradient;
     /**
      * Draw a line from a node to itself, a circle.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param x - Center of the circle on the x axis.
@@ -171,7 +157,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number): number;
     /**
      * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
-     *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
      * @param x1 - First end of the line segment on the x axis.
@@ -186,7 +171,6 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     protected abstract _getDistanceToEdge(x1: number, y1: number, x2: number, y2: number, x3: number, y3: number, via?: Via): number;
     /**
      * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
-     *
      * @param x1 - First end of the line segment on the x axis.
      * @param y1 - First end of the line segment on the y axis.
      * @param x2 - Second end of the line segment on the x axis.
@@ -206,28 +190,24 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     drawArrowHead(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY" | "width">, _selected: boolean, _hover: boolean, arrowData: ArrowData): void;
     /**
      * Set the shadow formatting values in the context if enabled, do nothing otherwise.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values for the shadow.
      */
     enableShadow(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "shadowColor" | "shadowSize" | "shadowX" | "shadowY">): void;
     /**
      * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values for the shadow.
      */
     disableShadow(ctx: CanvasRenderingContext2D, values: EdgeFormattingValues): void;
     /**
      * Render the background according to the formatting values.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values for the background.
      */
     drawBackground(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize">): void;
     /**
      * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
      */

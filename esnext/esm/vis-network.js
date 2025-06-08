@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-05-11T06:36:03.212Z
+ * @date    2025-06-08T10:04:24.906Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -32,7 +32,6 @@ import keycharm from 'keycharm';
 
 /**
  * Draw a circle.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -45,7 +44,6 @@ function drawCircle(ctx, x, y, r) {
 }
 /**
  * Draw a square.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -58,7 +56,6 @@ function drawSquare(ctx, x, y, r) {
 }
 /**
  * Draw an equilateral triangle standing on a side.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -83,7 +80,6 @@ function drawTriangle(ctx, x, y, r) {
 }
 /**
  * Draw an equilateral triangle standing on a vertex.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -108,7 +104,6 @@ function drawTriangleDown(ctx, x, y, r) {
 }
 /**
  * Draw a star.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -128,7 +123,6 @@ function drawStar(ctx, x, y, r) {
 }
 /**
  * Draw a diamond.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -146,7 +140,6 @@ function drawDiamond(ctx, x, y, r) {
 }
 /**
  * Draw a rectangle with rounded corners.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -178,7 +171,6 @@ function drawRoundRect(ctx, x, y, w, h, r) {
 }
 /**
  * Draw an ellipse.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -206,7 +198,6 @@ function drawEllipse(ctx, x, y, w, h) {
 }
 /**
  * Draw an isometric cylinder.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -240,7 +231,6 @@ function drawDatabase(ctx, x, y, w, h) {
 }
 /**
  * Draw a dashed line.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The start position on the x axis.
  * @param y - The start position on the y axis.
@@ -285,7 +275,6 @@ function drawDashedLine(ctx, x, y, x2, y2, pattern) {
 }
 /**
  * Draw a hexagon.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -317,7 +306,6 @@ const shapeMap = {
 };
 /**
  * Returns either custom or native drawing function base on supplied name.
- *
  * @param name - The name of the function. Either the name of a
  * CanvasRenderingContext2D property or an export from shapes.ts without the
  * draw prefix.
@@ -347,7 +335,6 @@ function getShape(name) {
  * DOT language reference: http://www.graphviz.org/doc/info/lang.html
  *
  * DOT language attributes: http://graphviz.org/content/attrs
- *
  * @param {string} data     Text containing a graph in DOT-notation
  * @returns {object} graph   An object containing two parameters:
  *                          {Object[]} nodes
@@ -446,7 +433,6 @@ function next() {
 
 /**
  * Preview the next character from the dot file.
- *
  * @returns {string} cNext
  */
 function nextPreview() {
@@ -455,7 +441,6 @@ function nextPreview() {
 
 /**
  * Test whether given character is alphabetic or numeric ( a-zA-Z_0-9.:# )
- *
  * @param {string} c
  * @returns {boolean} isAlphaNumeric
  */
@@ -488,7 +473,6 @@ function isAlphaNumeric(c) {
 
 /**
  * Merge all options of object b into object b
- *
  * @param {object} a
  * @param {object} b
  * @returns {object} a
@@ -512,9 +496,8 @@ function merge(a, b) {
  * Set a value in an object, where the provided parameter name can be a
  * path with nested parameters. For example:
  *
- *     var obj = {a: 2};
- *     setValue(obj, 'b.c', 3);     // obj = {a: 2, b: {c: 3}}
- *
+ * var obj = {a: 2};
+ * setValue(obj, 'b.c', 3);     // obj = {a: 2, b: {c: 3}}
  * @param {object} obj
  * @param {string} path  A parameter name or dot-separated parameter path,
  *                      like "color.highlight.border".
@@ -541,7 +524,6 @@ function setValue(obj, path, value) {
 /**
  * Add a node to a graph object. If there is already a node with
  * the same id, their attributes will be merged.
- *
  * @param {object} graph
  * @param {object} node
  */
@@ -598,7 +580,6 @@ function addNode(graph, node) {
 
 /**
  * Add an edge to a graph object
- *
  * @param {object} graph
  * @param {object} edge
  */
@@ -615,7 +596,6 @@ function addEdge(graph, edge) {
 
 /**
  * Create an edge to a graph object
- *
  * @param {object} graph
  * @param {string | number | object} from
  * @param {string | number | object} to
@@ -789,7 +769,6 @@ function getToken() {
 
 /**
  * Parse a graph.
- *
  * @returns {object} graph
  */
 function parseGraph() {
@@ -847,7 +826,6 @@ function parseGraph() {
 
 /**
  * Parse a list with statements.
- *
  * @param {object} graph
  */
 function parseStatements(graph) {
@@ -863,7 +841,6 @@ function parseStatements(graph) {
  * Parse a single statement. Can be a an attribute statement, node
  * statement, a series of node statements and edge statements, or a
  * parameter.
- *
  * @param {object} graph
  */
 function parseStatement(graph) {
@@ -905,7 +882,6 @@ function parseStatement(graph) {
 
 /**
  * Parse a subgraph
- *
  * @param {object} graph    parent graph object
  * @returns {object | null} subgraph
  */
@@ -966,7 +942,6 @@ function parseSubgraph(graph) {
  * parse an attribute statement like "node [shape=circle fontSize=16]".
  * Available keywords are 'node', 'edge', 'graph'.
  * The previous list with default attributes will be replaced
- *
  * @param {object} graph
  * @returns {string | null} keyword Returns the name of the parsed attribute
  *                                  (node, edge, graph), or null if nothing
@@ -999,7 +974,6 @@ function parseAttributeStatement(graph) {
 
 /**
  * parse a node statement
- *
  * @param {object} graph
  * @param {string | number} id
  */
@@ -1020,7 +994,6 @@ function parseNodeStatement(graph, id) {
 
 /**
  * Parse an edge or a series of edges
- *
  * @param {object} graph
  * @param {string | number} from        Id of the from node
  */
@@ -1058,7 +1031,6 @@ function parseEdge(graph, from) {
 /**
  * Parse a set with attributes,
  * for example [label="1.000", shape=solid]
- *
  * @returns {object | null} attr
  */
 function parseAttributeList() {
@@ -1415,7 +1387,6 @@ function parseAttributeList() {
 
 /**
  * Create a syntax error with extra information on current token and index.
- *
  * @param {string} message
  * @returns {SyntaxError} err
  */
@@ -1427,7 +1398,6 @@ function newSyntaxError(message) {
 
 /**
  * Chop off text after a maximum length
- *
  * @param {string} text
  * @param {number} maxLength
  * @returns {string}
@@ -1438,7 +1408,6 @@ function chop(text, maxLength) {
 
 /**
  * Execute a function fn for each pair of elements in two arrays
- *
  * @param {Array | *} array1
  * @param {Array | *} array2
  * @param {Function} fn
@@ -1469,7 +1438,6 @@ function forEach2(array1, array2, fn) {
  * Set a nested property on an object
  * When nested objects are missing, they will be created.
  * For example setProp({}, 'font.color', 'red') will return {font: {color: 'red'}}
- *
  * @param {object} object
  * @param {string} path   A dot separated string like 'font.color'
  * @param {*} value       Value for the property
@@ -1497,7 +1465,6 @@ function setProp(object, path, value) {
 
 /**
  * Convert an object with DOT attributes to their vis.js equivalents.
- *
  * @param {object} attr     Object with DOT attributes
  * @param {object} mapping
  * @returns {object}         Returns an object with vis.js attributes
@@ -1526,7 +1493,6 @@ function convertAttr(attr, mapping) {
 /**
  * Convert a string containing a graph in DOT language into a map containing
  * with nodes and edges in the format of graph.
- *
  * @param {string} data         Text containing a graph in DOT-notation
  * @returns {object} graphData
  */
@@ -1558,7 +1524,6 @@ function DOTToGraph(data) {
   if (dotData.edges) {
     /**
      * Convert an edge in DOT format to an edge with VisGraph format
-     *
      * @param {object} dotEdge
      * @returns {object} graphEdge
      */
@@ -1645,7 +1610,6 @@ var dotparser = /*#__PURE__*/Object.freeze({
 
 /**
  * Convert Gephi to Vis.
- *
  * @param gephiJSON - The parsed JSON data in Gephi format.
  * @param optionsObj - Additional options.
  * @returns The converted data ready to be used in Vis.
@@ -1957,7 +1921,6 @@ var locales = /*#__PURE__*/Object.freeze({
 
 /**
  * Normalizes language code into the format used internally.
- *
  * @param locales - All the available locales.
  * @param rawCode - The original code as supplied by the user.
  * @returns Language code in the format language-COUNTRY or language, eventually
@@ -2003,8 +1966,7 @@ function normalizeLanguageCode(locales, rawCode) {
  * This technique is known as 'mipmapping'.
  *
  * NOTE: Images can also be of type 'data:svg+xml`. This code also works
- *       for svg, but the mipmapping may not be necessary.
- *
+ * for svg, but the mipmapping may not be necessary.
  * @param {Image} image
  */
 class CachedImage {
@@ -2078,9 +2040,8 @@ class CachedImage {
    * reduce performance overhead.
    *
    * TODO: The code assumes that a 2D context can always be gotten. This is
-   *       not necessarily true! OTOH, if not true then usage of this class
-   *       is senseless.
-   *
+   * not necessarily true! OTOH, if not true then usage of this class
+   * is senseless.
    * @private
    */
   _fillMipMap() {
@@ -2116,7 +2077,6 @@ class CachedImage {
    * is resized. This is also used to skip mipmap usage, e.g. by setting factor = 1
    *
    * Credits to 'Alex de Mulder' for original implementation.
-   *
    * @param {CanvasRenderingContext2D} ctx  context on which to draw zoomed image
    * @param {Float} factor scale factor at which to draw
    * @param {number} left
@@ -2162,14 +2122,12 @@ class CachedImage {
 
 /**
  * This callback is a callback that accepts an Image.
- *
  * @callback ImageCallback
  * @param {Image} image
  */
 
 /**
  * This class loads images and keeps them stored.
- *
  * @param {ImageCallback} callback
  */
 class Images {
@@ -2259,7 +2217,6 @@ class Images {
    * IE11 fix -- thanks dponch!
    *
    * Local helper function
-   *
    * @param {vis.Image} imageToCache
    * @private
    */
@@ -2448,9 +2405,8 @@ class Groups {
   /**
    * Get group options of a groupname.
    * If groupname is not found, a new group may be created.
-   *
    * @param {*}       groupname     Can be a number, string, Date, etc.
-   * @param {boolean} [shouldCreate=true] If true, create a new group
+   * @param {boolean} [shouldCreate] If true, create a new group
    * @returns {object} The found or created group
    */
   get(groupname, shouldCreate = true) {
@@ -2482,7 +2438,6 @@ class Groups {
 
   /**
    * Add custom group style.
-   *
    * @param {string} groupName - The name of the group, a new group will be
    * created if a group with the same name doesn't exist, otherwise the old
    * groups style will be overwritten.
@@ -2521,8 +2476,7 @@ class Groups {
  * Since most properties are either bridged or merged into the local options objects, there
  * is not much point in handling them separately.
  * TODO: examine if 'most' in previous sentence can be replaced with 'all'. In that case, we
- *       should be able to get rid of this method.
- *
+ * should be able to get rid of this method.
  * @param {string}  subOption  option within object 'chosen' to consider; either 'node', 'edge' or 'label'
  * @param {object}  pile       array of options objects to consider
  * @returns {boolean | Function}  value for passed subOption of 'chosen' to use
@@ -2558,7 +2512,6 @@ function choosify(subOption, pile) {
 
 /**
  * Check if the point falls within the given rectangle.
- *
  * @param {rect} rect
  * @param {point} point
  * @param {rotationPoint} [rotationPoint] if specified, the rotation that applies to the rectangle.
@@ -2609,7 +2562,6 @@ function pointInRect(rect, point, rotationPoint) {
 
 /**
  * Check if given value is acceptable as a label text.
- *
  * @param {*} text value to check; can be anything at this point
  * @returns {boolean} true if valid label value, false otherwise
  */
@@ -2620,7 +2572,6 @@ function isValidLabel(text) {
 
 /**
  * Returns x, y of self reference circle based on provided angle
- *
  * @param {object} ctx
  * @param {number} angle
  * @param {number} radius
@@ -2665,7 +2616,6 @@ function getSelfRefCoordinates(ctx, angle, radius, node) {
 
 /**
  * Callback to determine text dimensions, using the parent label settings.
- *
  * @callback MeasureText
  * @param {text} text
  * @param {text} mod
@@ -2674,7 +2624,6 @@ function getSelfRefCoordinates(ctx, angle, radius, node) {
 
 /**
  * Helper class for Label which collects results of splitting labels into lines and blocks.
- *
  * @private
  */
 class LabelAccumulator {
@@ -2691,10 +2640,9 @@ class LabelAccumulator {
 
   /**
    * Append given text to the given line.
-   *
    * @param {number}  l    index of line to add to
    * @param {string}  text string to append to line
-   * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod='normal']
+   * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod]
    * @private
    */
   _add(l, text, mod = "normal") {
@@ -2734,7 +2682,6 @@ class LabelAccumulator {
 
   /**
    * Returns the width in pixels of the current line.
-   *
    * @returns {number}
    */
   curWidth() {
@@ -2746,9 +2693,8 @@ class LabelAccumulator {
 
   /**
    * Add text in block to current line
-   *
    * @param {string} text
-   * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod='normal']
+   * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod]
    */
   append(text, mod = "normal") {
     this._add(this.current, text, mod);
@@ -2756,9 +2702,8 @@ class LabelAccumulator {
 
   /**
    * Add text in block to current line and start a new line
-   *
    * @param {string} text
-   * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod='normal']
+   * @param {'bold'|'ital'|'boldital'|'mono'|'normal'} [mod]
    */
   newLine(text, mod = "normal") {
     this._add(this.current, text, mod);
@@ -2769,7 +2714,6 @@ class LabelAccumulator {
    * Determine and set the heights of all the lines currently contained in this instance
    *
    * Note that width has already been set.
-   *
    * @private
    */
   determineLineHeights() {
@@ -2796,7 +2740,6 @@ class LabelAccumulator {
 
   /**
    * Determine the full size of the label text, as determined by current lines and blocks
-   *
    * @private
    */
   determineLabelSize() {
@@ -2820,7 +2763,6 @@ class LabelAccumulator {
    *
    * This must be done after the width/height determination,
    * so that these are set properly for processing here.
-   *
    * @returns {Array<Line>} Lines with empty blocks (and some empty lines) removed
    * @private
    */
@@ -2870,7 +2812,6 @@ class LabelAccumulator {
 
   /**
    * Set the sizes for all lines and the whole thing.
-   *
    * @returns {{width: (number|*), height: (number|*), lines: Array}}
    */
   finalize() {
@@ -2916,7 +2857,6 @@ const tagPattern = {
 class MarkupAccumulator {
   /**
    * Create an instance
-   *
    * @param {string} text  text to parse for markup
    */
   constructor(text) {
@@ -2934,7 +2874,6 @@ class MarkupAccumulator {
 
   /**
    * Return the mod label currently on the top of the stack
-   *
    * @returns {string}  label of topmost mod
    * @private
    */
@@ -2944,7 +2883,6 @@ class MarkupAccumulator {
 
   /**
    * Return the mod label currently active
-   *
    * @returns {string}  label of active mod
    * @private
    */
@@ -2978,7 +2916,6 @@ class MarkupAccumulator {
 
   /**
    * Output text to buffer
-   *
    * @param {string} text  text to add
    * @private
    */
@@ -2997,7 +2934,6 @@ class MarkupAccumulator {
 
   /**
    * Handle parsing of whitespace
-   *
    * @param {string} ch  the character to check
    * @returns {boolean} true if the character was processed as whitespace, false otherwise
    */
@@ -3051,7 +2987,7 @@ class MarkupAccumulator {
 
   /**
    * @param {string|RegExp} tag
-   * @param {number} [advance=true] if set, advance current position in text
+   * @param {number} [advance] if set, advance current position in text
    * @returns {boolean} true if match at given position, false otherwise
    * @private
    */
@@ -3120,9 +3056,8 @@ class MarkupAccumulator {
    * Create a regular expression for the tag if it isn't already one.
    *
    * The return value is an array `[RegExp, number]`, with exactly two value, where:
-   *  - RegExp is the regular expression to use
-   *  - number is the lenth of the input string to match
-   *
+   * - RegExp is the regular expression to use
+   * - number is the lenth of the input string to match
    * @param {string|RegExp} tag  string to match in text
    * @returns {Array}  regular expression to use and length of input string to match
    * @private
@@ -3151,7 +3086,6 @@ class MarkupAccumulator {
 
 /**
  * Helper class for Label which explodes the label text into lines and blocks within lines
- *
  * @private
  */
 class LabelSplitter {
@@ -3169,7 +3103,6 @@ class LabelSplitter {
 
     /**
      * Callback to determine text width; passed to LabelAccumulator instance
-     *
      * @param  {string} text string to determine width of
      * @param  {string} mod  font type to use for this text
      * @returns {object} { width, values} width in pixels and font attributes
@@ -3206,7 +3139,6 @@ class LabelSplitter {
    * This might not be the best way to do it, but this is as it has been working till now.
    * In order not to break existing functionality, for the time being this behaviour will
    * be retained in any code changes.
-   *
    * @param {string} text  text to split
    * @returns {Array<line>}
    */
@@ -3280,7 +3212,6 @@ class LabelSplitter {
 
   /**
    * normalize the markup system
-   *
    * @param {boolean|'md'|'markdown'|'html'} markupSystem
    * @returns {string}
    */
@@ -3394,7 +3325,6 @@ class LabelSplitter {
 
   /**
    * Explodes a piece of text into single-font blocks using a given markup
-   *
    * @param {string} text
    * @param {boolean|'md'|'markdown'|'html'} markupSystem
    * @returns {Array.<{text: string, mod: string}>}
@@ -3429,7 +3359,6 @@ class LabelSplitter {
   /**
    * Determine the longest part of the sentence which still fits in the
    * current max width.
-   *
    * @param {Array} words  Array of strings signifying a text lines
    * @returns {number}      index of first item in string making string go over max
    * @private
@@ -3453,7 +3382,6 @@ class LabelSplitter {
   /**
    * Determine the longest part of the string which still fits in the
    * current max width.
-   *
    * @param {Array} words Array of strings signifying a text lines
    * @returns {number} index of first item in string making string go over max
    */
@@ -3476,10 +3404,9 @@ class LabelSplitter {
    * This method retains spaces, if still present (case `font.multi: false`).
    * A space which falls on an internal line break, will be replaced by a newline.
    * There is no special handling of tabs; these go along with the flow.
-   *
    * @param {string} str
-   * @param {string} [mod='normal']
-   * @param {boolean} [appendLast=false]
+   * @param {string} [mod]
+   * @param {boolean} [appendLast]
    * @private
    */
   splitStringIntoLines(str, mod = "normal", appendLast = false) {
@@ -3532,7 +3459,6 @@ class LabelSplitter {
 
 /**
  * List of special styles for multi-fonts
- *
  * @private
  */
 const multiFontStyle = ["bold", "ital", "boldital", "mono"];
@@ -3544,7 +3470,7 @@ class Label {
   /**
    * @param {object} body
    * @param {object} options
-   * @param {boolean} [edgelabel=false]
+   * @param {boolean} [edgelabel]
    */
   constructor(body, options, edgelabel = false) {
     this.body = body;
@@ -3590,7 +3516,6 @@ class Label {
    *
    * Member fontOptions serves as an accumulator for the current font options.
    * As such, it needs to be completely separated from the node options.
-   *
    * @param {object} newFontOptions the new font options to process
    * @private
    */
@@ -3620,7 +3545,6 @@ class Label {
    *
    * Note that following is not done here and have to be done after the call:
    * - Not all font options are set (vadjust, mod)
-   *
    * @param {object} outOptions  out-parameter, object in which to store the parse results (if any)
    * @param {object} inOptions  font options to parse
    * @returns {boolean} true if font parsed as string, false otherwise
@@ -3640,7 +3564,6 @@ class Label {
 
   /**
    * Set the width and height constraints based on 'nearest' value
-   *
    * @param {Array} pile array of option objects to consider
    * @returns {object} the actual constraint values to use
    * @private
@@ -3709,7 +3632,6 @@ class Label {
 
   /**
    * Set options and update internal state
-   *
    * @param {object} options  options to set
    * @param {Array}  pile     array of option objects to consider for option 'chosen'
    */
@@ -3723,7 +3645,6 @@ class Label {
   /**
    * When margins are set in an element, adjust sizes is called to remove them
    * from the width/height constraints. This must be done prior to label sizing.
-   *
    * @param {{top: number, right: number, bottom: number, left: number}} margins
    */
   adjustSizes(margins) {
@@ -3745,7 +3666,6 @@ class Label {
 
   /**
    * Add the font members of the passed list of option objects to the pile.
-   *
    * @param {Pile} dstPile  pile of option objects add to
    * @param {Pile} srcPile  pile of option objects to take font options from
    * @private
@@ -3759,7 +3679,6 @@ class Label {
   /**
    * Add given font option object to the list of objects (the 'pile') to consider for determining
    * multi-font option values.
-   *
    * @param {Pile} pile  pile of option objects to use
    * @param {object} options  instance to add to pile
    * @private
@@ -3774,7 +3693,6 @@ class Label {
 
   /**
    * Collect all own-property values from the font pile that aren't multi-font option objectss.
-   *
    * @param {Pile} pile  pile of option objects to use
    * @returns {object} object with all current own basic font properties
    * @private
@@ -3824,11 +3742,10 @@ class Label {
    *
    * 'bold' used as example:
    *
-   *   - search in option group 'bold' in local properties
-   *   - search in main font option group in local properties
+   * - search in option group 'bold' in local properties
+   * - search in main font option group in local properties
    *
    * ---------------------------------------------------------------------
-   *
    * @param {Pile} pile  pile of option objects to use
    * @param {MultiFontStyle} multiName sub path for the multi-font
    * @param {string} option  the option to search for, for the given multi-font
@@ -3875,7 +3792,6 @@ class Label {
    * Return all options values for the given multi-font.
    *
    * All available option objects are trawled in the set order to construct the option values.
-   *
    * @param {Pile} pile  pile of option objects to use
    * @param {MultiFontStyle} multiName sub path for the mod-font
    * @returns {MultiFontOptions}
@@ -3900,7 +3816,6 @@ class Label {
   /**
    * Collapse the font options for the multi-font to single objects, from
    * the chain of option objects passed (the 'pile').
-   *
    * @param {Pile} pile  sequence of option objects to consider.
    *                     First item in list assumed to be the newly set options.
    */
@@ -3929,13 +3844,12 @@ class Label {
 
   /**
    * Main function. This is called from anything that wants to draw a label.
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @param {number} x
    * @param {number} y
    * @param {boolean} selected
    * @param {boolean} hover
-   * @param {string} [baseline='middle']
+   * @param {string} [baseline]
    */
   draw(ctx, x, y, selected, hover, baseline = "middle") {
     // if no label, return
@@ -3965,7 +3879,6 @@ class Label {
 
   /**
    * Draws the label background
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @private
    */
@@ -3985,7 +3898,7 @@ class Label {
    * @param {CanvasRenderingContext2D} ctx
    * @param {number} x
    * @param {number} y
-   * @param {string} [baseline='middle']
+   * @param {string} [baseline]
    * @param {number} viewFontSize
    * @private
    */
@@ -4078,7 +3991,6 @@ class Label {
   /**
    * fade in when relative scale is between threshold and threshold - 1.
    * If the relative scale would be smaller than threshold -1 the draw function would have returned before coming here.
-   *
    * @param {string} color  The font color to use
    * @param {number} viewFontSize
    * @param {string} initialStrokeColor
@@ -4120,7 +4032,6 @@ class Label {
 
   /**
    * Get the current dimensions of the label
-   *
    * @returns {rect}
    */
   getSize() {
@@ -4162,9 +4073,9 @@ class Label {
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} selected
    * @param {boolean} hover
-   * @param {number} [x=0]
-   * @param {number} [y=0]
-   * @param {'middle'|'hanging'} [baseline='middle']
+   * @param {number} [x]
+   * @param {number} [y]
+   * @param {'middle'|'hanging'} [baseline]
    */
   calculateLabelSize(ctx, selected, hover, x = 0, y = 0, baseline = "middle") {
     this._processLabel(ctx, selected, hover);
@@ -4255,7 +4166,6 @@ class Label {
 
   /**
    * This explodes the passed text into lines and determines the width, height and number of lines.
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} selected
    * @param {boolean} hover
@@ -4270,7 +4180,6 @@ class Label {
 
   /**
    * This explodes the label string into lines and sets the width, height and number of lines.
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} selected
    * @param {boolean} hover
@@ -4308,7 +4217,6 @@ class Label {
 
   /**
    * Check if this label is visible
-   *
    * @returns {boolean} true if this label will be show, false otherwise
    */
   visible() {
@@ -4475,7 +4383,6 @@ class NodeBase {
 
   /**
    * Determine if the shape of a node needs to be recalculated.
-   *
    * @param {boolean} selected
    * @param {boolean} hover
    * @returns {boolean}
@@ -4565,7 +4472,6 @@ class NodeBase {
    *
    * Doing it like this makes it easier to override
    * in the child classes.
-   *
    * @param {number} x width
    * @param {number} y height
    * @param {CanvasRenderingContext2D} ctx
@@ -4590,7 +4496,6 @@ class NodeBase {
   /**
    * Default implementation of this method call.
    * This acts as a stub which can be overridden.
-   *
    * @param {number} x width
    * @param {number} y height
    * @param {CanvasRenderingContext2D} ctx
@@ -4608,7 +4513,6 @@ class NodeBase {
    * The other nodes have external labels, and will not call this method
    *
    * If there is no label, decent default values are supplied.
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} [selected]
    * @param {boolean} [hover]
@@ -4634,7 +4538,6 @@ class NodeBase {
 
 /**
  * A Box Node/Cluster shape.
- *
  * @augments NodeBase
  */
 let Box$1 = class Box extends NodeBase {
@@ -4740,14 +4643,13 @@ let Box$1 = class Box extends NodeBase {
  *
  * Child classes are:
  *
- *   Image       - uses *only* image methods
- *   Circle      - uses *only* _drawRawCircle
- *   CircleImage - uses all
+ * Image       - uses *only* image methods
+ * Circle      - uses *only* _drawRawCircle
+ * CircleImage - uses all
  *
  * TODO: Refactor, move _drawRawCircle to different module, derive Circle from NodeBase
- *       Rename this to ImageBase
- *       Consolidate common code in Image and CircleImage to base class
- *
+ * Rename this to ImageBase
+ * Consolidate common code in Image and CircleImage to base class
  * @augments NodeBase
  */
 class CircleImageBase extends NodeBase {
@@ -4784,7 +4686,6 @@ class CircleImageBase extends NodeBase {
    *
    * For correct working in error cases, it is necessary to properly set
    * field 'nodes.brokenImage' in the options.
-   *
    * @param {Image} imageObj  required; main image to show for this node
    * @param {Image|undefined} imageObjAlt optional; image to show when node is selected
    */
@@ -4802,7 +4703,6 @@ class CircleImageBase extends NodeBase {
    * Set selection and switch between the base and the selected image.
    *
    * Do the switch only if imageObjAlt exists.
-   *
    * @param {boolean} selected value of new selected state for current node
    */
   switchImages(selected) {
@@ -4819,7 +4719,6 @@ class CircleImageBase extends NodeBase {
 
   /**
    * Returns Image Padding from node options
-   *
    * @returns {{top: number,left: number,bottom: number,right: number}} image padding inside this shape
    * @private
    */
@@ -4967,7 +4866,6 @@ class CircleImageBase extends NodeBase {
 
 /**
  * A Circle Node/Cluster shape.
- *
  * @augments CircleImageBase
  */
 let Circle$1 = class Circle extends CircleImageBase {
@@ -5056,7 +4954,6 @@ let Circle$1 = class Circle extends CircleImageBase {
 
 /**
  * A CircularImage Node/Cluster shape.
- *
  * @augments CircleImageBase
  */
 class CircularImage extends CircleImageBase {
@@ -5191,7 +5088,6 @@ class CircularImage extends CircleImageBase {
 
 /**
  * Base class for constructing Node/Cluster Shapes.
- *
  * @augments NodeBase
  */
 class ShapeBase extends NodeBase {
@@ -5209,7 +5105,7 @@ class ShapeBase extends NodeBase {
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} [selected]
    * @param {boolean} [hover]
-   * @param {object} [values={size: this.options.size}]
+   * @param {object} [values]
    */
   resize(
     ctx,
@@ -5315,7 +5211,6 @@ class ShapeBase extends NodeBase {
 
 /**
  * A CustomShape Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 class CustomShape extends ShapeBase {
@@ -5393,7 +5288,6 @@ class CustomShape extends ShapeBase {
 
 /**
  * A Database Node/Cluster shape.
- *
  * @augments NodeBase
  */
 class Database extends NodeBase {
@@ -5470,7 +5364,6 @@ class Database extends NodeBase {
 
 /**
  * A Diamond Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 let Diamond$1 = class Diamond extends ShapeBase {
@@ -5510,7 +5403,6 @@ let Diamond$1 = class Diamond extends ShapeBase {
 
 /**
  * A Dot Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 class Dot extends ShapeBase {
@@ -5552,7 +5444,6 @@ class Dot extends ShapeBase {
 
 /**
  * Am Ellipse Node/Cluster shape.
- *
  * @augments NodeBase
  */
 class Ellipse extends NodeBase {
@@ -5623,7 +5514,6 @@ class Ellipse extends NodeBase {
 
 /**
  * An icon replacement for the default Node shape.
- *
  * @augments NodeBase
  */
 class Icon extends NodeBase {
@@ -5776,7 +5666,6 @@ class Icon extends NodeBase {
 
 /**
  * An image-based replacement for the default Node shape.
- *
  * @augments CircleImageBase
  */
 let Image$2 = class Image extends CircleImageBase {
@@ -5947,7 +5836,6 @@ let Image$2 = class Image extends CircleImageBase {
 
 /**
  * A Square Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 class Square extends ShapeBase {
@@ -5987,7 +5875,6 @@ class Square extends ShapeBase {
 
 /**
  * A Hexagon Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 class Hexagon extends ShapeBase {
@@ -6027,7 +5914,6 @@ class Hexagon extends ShapeBase {
 
 /**
  * A Star Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 class Star extends ShapeBase {
@@ -6067,7 +5953,6 @@ class Star extends ShapeBase {
 
 /**
  * A text-based replacement for the default Node shape.
- *
  * @augments NodeBase
  */
 class Text extends NodeBase {
@@ -6139,7 +6024,6 @@ class Text extends NodeBase {
 
 /**
  * A Triangle Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 let Triangle$1 = class Triangle extends ShapeBase {
@@ -6179,7 +6063,6 @@ let Triangle$1 = class Triangle extends ShapeBase {
 
 /**
  * A downward facing Triangle Node/Cluster shape.
- *
  * @augments ShapeBase
  */
 class TriangleDown extends ShapeBase {
@@ -6288,7 +6171,6 @@ class Node {
 
   /**
    * Attach a edge to the node
-   *
    * @param {Edge} edge
    */
   attachEdge(edge) {
@@ -6299,7 +6181,6 @@ class Node {
 
   /**
    * Detach a edge from the node
-   *
    * @param {Edge} edge
    */
   detachEdge(edge) {
@@ -6311,7 +6192,6 @@ class Node {
 
   /**
    * Set or overwrite options for the node
-   *
    * @param {object} options an object with options
    * @returns {null|boolean}
    */
@@ -6398,7 +6278,6 @@ class Node {
    *
    * Images are always loaded, even if they are not used in the current shape.
    * The user may switch to an image shape later on.
-   *
    * @private
    */
   _load_images() {
@@ -6454,7 +6333,6 @@ class Node {
 
   /**
    * Check that opacity is only between 0 and 1
-   *
    * @param {number} opacity
    * @returns {boolean}
    */
@@ -6464,7 +6342,6 @@ class Node {
 
   /**
    * Check that origin is 'center' or 'top-left'
-   *
    * @param {string} origin
    * @returns {boolean}
    */
@@ -6476,10 +6353,9 @@ class Node {
    * Copy group option values into the node options.
    *
    * The group options override the global node options, so the copy of group options
-   *  must happen *after* the global node options have been set.
+   * must happen *after* the global node options have been set.
    *
    * This method must also be called also if the global node options have changed and the group options did not.
-   *
    * @param {object} parentOptions
    * @param {object} newOptions  new values for the options, currently only passed in for check
    * @param {object} groupList
@@ -6532,11 +6408,10 @@ class Node {
   /**
    * This process all possible shorthands in the new options and makes sure that the parentOptions are fully defined.
    * Static so it can also be used by the handler.
-   *
    * @param {object} parentOptions
    * @param {object} newOptions
-   * @param {boolean} [allowDeletion=false]
-   * @param {object} [globalOptions={}]
+   * @param {boolean} [allowDeletion]
+   * @param {object} [globalOptions]
    * @param {object} [groupList]
    * @static
    */
@@ -6846,7 +6721,6 @@ class Node {
 
   /**
    * get the title of this node.
-   *
    * @returns {string} title    The title of the node, or undefined when no title
    *                           has been set.
    */
@@ -6856,7 +6730,6 @@ class Node {
 
   /**
    * Calculate the distance to the border of the Node
-   *
    * @param {CanvasRenderingContext2D}   ctx
    * @param {number} angle        Angle in radians
    * @returns {number} distance   Distance to the border in pixels
@@ -6867,7 +6740,6 @@ class Node {
 
   /**
    * Check if this node has a fixed x and y position
-   *
    * @returns {boolean}      true if fixed, false if not
    */
   isFixed() {
@@ -6876,7 +6748,6 @@ class Node {
 
   /**
    * check if this node is selecte
-   *
    * @returns {boolean} selected   True if node is selected, else false
    */
   isSelected() {
@@ -6885,7 +6756,6 @@ class Node {
 
   /**
    * Retrieve the value of the node. Can be undefined
-   *
    * @returns {number} value
    */
   getValue() {
@@ -6894,7 +6764,6 @@ class Node {
 
   /**
    * Get the current dimensions of the label
-   *
    * @returns {rect}
    */
   getLabelSize() {
@@ -6904,7 +6773,6 @@ class Node {
   /**
    * Adjust the value range of the node. The node will adjust it's size
    * based on its value.
-   *
    * @param {number} min
    * @param {number} max
    * @param {number} total
@@ -6936,7 +6804,6 @@ class Node {
   /**
    * Draw this node in the given canvas
    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-   *
    * @param {CanvasRenderingContext2D}   ctx
    * @returns {object} Callbacks to draw later on higher layers.
    */
@@ -6950,7 +6817,6 @@ class Node {
 
   /**
    * Update the bounding box of the shape
-   *
    * @param {CanvasRenderingContext2D}   ctx
    */
   updateBoundingBox(ctx) {
@@ -6960,7 +6826,6 @@ class Node {
   /**
    * Recalculate the size of this node in the given canvas
    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-   *
    * @param {CanvasRenderingContext2D}   ctx
    */
   resize(ctx) {
@@ -6971,7 +6836,6 @@ class Node {
   /**
    * Determine all visual elements of this node instance, in which the given
    * point falls within the bounding shape.
-   *
    * @param {point} point
    * @returns {Array.<nodeClickItem|nodeLabelClickItem>} list with the items which are on the point
    */
@@ -6993,7 +6857,6 @@ class Node {
 
   /**
    * Check if this object is overlapping with the provided object
-   *
    * @param {object} obj   an object with parameters left, top, right, bottom
    * @returns {boolean}     True if location is located on node
    */
@@ -7008,7 +6871,6 @@ class Node {
 
   /**
    * Check if this object is overlapping with the provided object
-   *
    * @param {object} obj   an object with parameters left, top, right, bottom
    * @returns {boolean}     True if location is located on node
    */
@@ -7025,7 +6887,6 @@ class Node {
    * Check valid values for mass
    *
    * The mass may not be negative or zero. If it is, reset to 1
-   *
    * @param {object} options
    * @param {Node.id} id
    * @static
@@ -7286,9 +7147,8 @@ class NodesHandler {
 
   /**
    * Set a data set with nodes for the network
-   *
    * @param {Array | DataSet | DataView} nodes         The data containing the nodes.
-   * @param {boolean} [doNotEmit=false] - Suppress data changed event.
+   * @param {boolean} [doNotEmit] - Suppress data changed event.
    * @private
    */
   setData(nodes, doNotEmit = false) {
@@ -7334,9 +7194,8 @@ class NodesHandler {
 
   /**
    * Add nodes
-   *
    * @param {number[] | string[]} ids
-   * @param {boolean} [doNotEmit=false]
+   * @param {boolean} [doNotEmit]
    * @private
    */
   add(ids, doNotEmit = false) {
@@ -7359,7 +7218,6 @@ class NodesHandler {
 
   /**
    * Update existing nodes, or create them when not yet existing
-   *
    * @param {number[] | string[]} ids id's of changed nodes
    * @param {Array} changedData array with changed data
    * @param {Array|undefined} oldData optional; array with previous data
@@ -7404,7 +7262,6 @@ class NodesHandler {
 
   /**
    * Remove existing nodes. If nodes do not exist, the method will just ignore it.
-   *
    * @param {number[] | string[]} ids
    * @private
    */
@@ -7421,9 +7278,8 @@ class NodesHandler {
 
   /**
    * create a node
-   *
    * @param {object} properties
-   * @param {class} [constructorClass=Node.default]
+   * @param {class} [constructorClass]
    * @returns {*}
    */
   create(properties, constructorClass = Node) {
@@ -7439,7 +7295,7 @@ class NodesHandler {
 
   /**
    *
-   * @param {boolean} [clearPositions=false]
+   * @param {boolean} [clearPositions]
    */
   refresh(clearPositions = false) {
     forEach(this.body.nodes, (node, nodeId) => {
@@ -7456,7 +7312,6 @@ class NodesHandler {
 
   /**
    * Returns the positions of the nodes.
-   *
    * @param {Array.<Node.id> | string} [ids]  --> optional, can be array of nodeIds, can be string
    * @returns {{}}
    */
@@ -7493,7 +7348,6 @@ class NodesHandler {
 
   /**
    * Retrieves the x y position of a specific id.
-   *
    * @param {string} id The id to retrieve.
    * @throws {TypeError} If no id is included.
    * @throws {ReferenceError} If an invalid id is provided.
@@ -7538,7 +7392,6 @@ class NodesHandler {
 
   /**
    * get the bounding box of a node.
-   *
    * @param {Node.id} nodeId
    * @returns {j|*}
    */
@@ -7550,7 +7403,6 @@ class NodesHandler {
 
   /**
    * Get the Ids of nodes connected to this node.
-   *
    * @param {Node.id} nodeId
    * @param {'to'|'from'|undefined} direction values 'from' and 'to' select respectively parent and child nodes only.
    *                                          Any other value returns both parent and child nodes.
@@ -7583,7 +7435,6 @@ class NodesHandler {
 
   /**
    * Get the ids of the edges connected to this node.
-   *
    * @param {Node.id} nodeId
    * @returns {*}
    */
@@ -7605,7 +7456,6 @@ class NodesHandler {
 
   /**
    * Move a node.
-   *
    * @param {Node.id} nodeId
    * @param {number} x
    * @param {number} y
@@ -7656,7 +7506,6 @@ class NodesHandler {
  */
 /**
  * Common methods for endpoints
- *
  * @class
  */
 class EndPoint {
@@ -7667,7 +7516,6 @@ class EndPoint {
      * - rotate by the specified angle
      * - multiply the (normalized) coordinates by the passed length
      * - offset by the target coordinates
-     *
      * @param points - The point(s) to be transformed.
      * @param arrowData - The data determining the result of the transformation.
      */
@@ -7689,7 +7537,6 @@ class EndPoint {
     }
     /**
      * Draw a closed path using the given real coordinates.
-     *
      * @param ctx - The path will be rendered into this context.
      * @param points - The points of the path.
      */
@@ -7708,7 +7555,6 @@ class EndPoint {
 let Image$1 = class Image extends EndPoint {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns False as there is no way to fill an image.
@@ -7739,7 +7585,6 @@ let Image$1 = class Image extends EndPoint {
 class Arrow extends EndPoint {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7764,7 +7609,6 @@ class Arrow extends EndPoint {
 class Crow {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7789,7 +7633,6 @@ class Crow {
 class Curve {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7818,7 +7661,6 @@ class Curve {
 class InvertedCurve {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7847,7 +7689,6 @@ class InvertedCurve {
 class Triangle {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7871,7 +7712,6 @@ class Triangle {
 class InvertedTriangle {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7895,7 +7735,6 @@ class InvertedTriangle {
 class Circle {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7913,7 +7752,6 @@ class Circle {
 class Bar {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7948,7 +7786,6 @@ class Bar {
 class Box {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7971,7 +7808,6 @@ class Box {
 class Diamond {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -7994,7 +7830,6 @@ class Diamond {
 class Vee {
     /**
      * Draw this shape at the end of a line.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True because ctx.fill() can be used to fill the arrow.
@@ -8019,7 +7854,6 @@ class Vee {
 class EndPoints {
     /**
      * Draw an endpoint.
-     *
      * @param ctx - The shape will be rendered into this context.
      * @param arrowData - The data determining the shape.
      * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.
@@ -8065,7 +7899,6 @@ class EndPoints {
 class EdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param _body - The body of the network.
      * @param _labelModule - Label module.
@@ -8092,7 +7925,6 @@ class EdgeBase {
     }
     /**
      * Set new edge options.
-     *
      * @param options - The new edge options object.
      */
     setOptions(options) {
@@ -8115,7 +7947,6 @@ class EdgeBase {
     }
     /**
      * Draw a line with given style between two nodes through supplied node(s).
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param viaNode - Additional control point(s) for the edge.
@@ -8134,7 +7965,6 @@ class EdgeBase {
     }
     /**
      * Draw a dashed line with given style between two nodes through supplied node(s).
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param viaNode - Additional control point(s) for the edge.
@@ -8183,7 +8013,6 @@ class EdgeBase {
     }
     /**
      * Find the intersection between the border of the node and the edge.
-     *
      * @param node - The node (either from or to node of the edge).
      * @param ctx - The context that will be used for rendering.
      * @param options - Additional options.
@@ -8227,7 +8056,6 @@ class EdgeBase {
     }
     /**
      * Compute the center point and radius of an edge connected to the same node at both ends.
-     *
      * @param ctx - The context that will be used for rendering.
      * @returns `[x, y, radius]`
      */
@@ -8244,7 +8072,6 @@ class EdgeBase {
     }
     /**
      * Get a point on a circle.
-     *
      * @param x - Center of the circle on the x axis.
      * @param y - Center of the circle on the y axis.
      * @param radius - Radius of the circle.
@@ -8260,7 +8087,6 @@ class EdgeBase {
     }
     /**
      * Find the intersection between the border of the node and the edge.
-     *
      * @remarks
      * This function uses binary search to look for the point where the circle crosses the border of the node.
      * @param nearNode - The node (either from or to node of the edge).
@@ -8325,7 +8151,6 @@ class EdgeBase {
     }
     /**
      * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
-     *
      * @param selected - Determines wheter the line is selected.
      * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
      * @returns The width of the line.
@@ -8343,7 +8168,6 @@ class EdgeBase {
     }
     /**
      * Compute the color or gradient for given edge.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param _selected - Ignored (TODO: remove in the future).
@@ -8386,7 +8210,6 @@ class EdgeBase {
     }
     /**
      * Draw a line from a node to itself, a circle.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param x - Center of the circle on the x axis.
@@ -8447,7 +8270,6 @@ class EdgeBase {
     }
     /**
      * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
-     *
      * @param x1 - First end of the line segment on the x axis.
      * @param y1 - First end of the line segment on the y axis.
      * @param x2 - Second end of the line segment on the x axis.
@@ -8600,7 +8422,6 @@ class EdgeBase {
     }
     /**
      * Set the shadow formatting values in the context if enabled, do nothing otherwise.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values for the shadow.
      */
@@ -8614,7 +8435,6 @@ class EdgeBase {
     }
     /**
      * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values for the shadow.
      */
@@ -8628,7 +8448,6 @@ class EdgeBase {
     }
     /**
      * Render the background according to the formatting values.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values for the background.
      */
@@ -8653,7 +8472,6 @@ class EdgeBase {
     }
     /**
      * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
      */
@@ -8685,7 +8503,6 @@ class EdgeBase {
 class BezierEdgeBase extends EdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -8695,7 +8512,6 @@ class BezierEdgeBase extends EdgeBase {
     }
     /**
      * Find the intersection between the border of the node and the edge.
-     *
      * @remarks
      * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
      * @param nearNode - The node (either from or to node of the edge).
@@ -8762,7 +8578,6 @@ class BezierEdgeBase extends EdgeBase {
     }
     /**
      * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-     *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
      * @param x1 - First end of the line segment on the x axis.
@@ -8798,7 +8613,6 @@ class BezierEdgeBase extends EdgeBase {
     }
     /**
      * Render a bezier curve between two nodes.
-     *
      * @remarks
      * The method accepts zero, one or two control points.
      * Passing zero control points just draws a straight line.
@@ -8839,13 +8653,11 @@ class BezierEdgeBase extends EdgeBase {
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
  * curves in paths between nodes. The Dynamic piece refers to how the curve
  * reacts to physics changes.
- *
  * @augments BezierEdgeBase
  */
 class BezierEdgeDynamic extends BezierEdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -8912,7 +8724,6 @@ class BezierEdgeDynamic extends BezierEdgeBase {
     }
     /**
      * Create and add a support node if not already present.
-     *
      * @remarks
      * Bezier curves require an anchor point to calculate the smooth flow.
      * These points are nodes.
@@ -9000,7 +8811,6 @@ class BezierEdgeDynamic extends BezierEdgeBase {
 class BezierEdgeStatic extends BezierEdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -9018,7 +8828,6 @@ class BezierEdgeStatic extends BezierEdgeBase {
     }
     /**
      * Compute the coordinates of the via node.
-     *
      * @remarks
      * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
      * @returns Cartesian coordinates of the via node.
@@ -9184,13 +8993,11 @@ class BezierEdgeStatic extends BezierEdgeBase {
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
  * smooth gradual curves in paths between nodes.
- *
  * @augments BezierEdgeBase
  */
 class CubicBezierEdgeBase extends BezierEdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -9200,7 +9007,6 @@ class CubicBezierEdgeBase extends BezierEdgeBase {
     }
     /**
      * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-     *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
      * https://en.wikipedia.org/wiki/B%C3%A9zier_curve
@@ -9245,7 +9051,6 @@ class CubicBezierEdgeBase extends BezierEdgeBase {
 class CubicBezierEdge extends CubicBezierEdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -9262,7 +9067,6 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
     }
     /**
      * Compute the additional points the edge passes through.
-     *
      * @returns Cartesian coordinates of the points the edge passes through.
      */
     _getViaCoordinates() {
@@ -9334,7 +9138,6 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
 class StraightEdge extends EdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -9444,7 +9247,6 @@ class Edge {
 
   /**
    * Set or overwrite options for the edge
-   *
    * @param {object} options  an object with options
    * @returns {undefined|boolean} undefined if no options, true if layout affecting data changed, false otherwise.
    */
@@ -9503,9 +9305,9 @@ class Edge {
    *
    * @param {object} parentOptions
    * @param {object} newOptions
-   * @param {boolean} [allowDeletion=false]
-   * @param {object} [globalOptions={}]
-   * @param {boolean} [copyFromGlobals=false]
+   * @param {boolean} [allowDeletion]
+   * @param {object} [globalOptions]
+   * @param {boolean} [copyFromGlobals]
    */
   static parseOptions(
     parentOptions,
@@ -9822,7 +9624,6 @@ class Edge {
 
   /**
    * update the options in the label module
-   *
    * @param {object} options
    */
   updateLabelModule(options) {
@@ -9842,7 +9643,6 @@ class Edge {
 
   /**
    * update the edge type, set the options
-   *
    * @returns {boolean}
    */
   updateEdgeType() {
@@ -9948,7 +9748,6 @@ class Edge {
 
   /**
    * get the title of this edge.
-   *
    * @returns {string} title    The title of the edge, or undefined when no title
    *                           has been set.
    */
@@ -9958,7 +9757,6 @@ class Edge {
 
   /**
    * check if this node is selecte
-   *
    * @returns {boolean} selected   True if node is selected, else false
    */
   isSelected() {
@@ -9967,7 +9765,6 @@ class Edge {
 
   /**
    * Retrieve the value of the edge. Can be undefined
-   *
    * @returns {number} value
    */
   getValue() {
@@ -9977,7 +9774,6 @@ class Edge {
   /**
    * Adjust the value range of the edge. The edge will adjust it's width
    * based on its value.
-   *
    * @param {number} min
    * @param {number} max
    * @param {number} total
@@ -10031,7 +9827,6 @@ class Edge {
    * Redraw a edge
    * Draw this edge in the given canvas
    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-   *
    * @param {CanvasRenderingContext2D}   ctx
    */
   draw(ctx) {
@@ -10052,7 +9847,6 @@ class Edge {
    * Redraw arrows
    * Draw this arrows in the given canvas
    * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-   *
    * @param {CanvasRenderingContext2D}   ctx
    */
   drawArrows(ctx) {
@@ -10231,7 +10025,6 @@ class Edge {
   /**
    * Determine all visual elements of this edge instance, in which the given
    * point falls within the bounding shape.
-   *
    * @param {point} point
    * @returns {Array.<edgeClickItem|edgeLabelClickItem>} list with the items which are on the point
    */
@@ -10259,7 +10052,6 @@ class Edge {
 
   /**
    * Check if this object is overlapping with the provided object
-   *
    * @param {object} obj   an object with parameters left, top
    * @returns {boolean}     True if location is located on the edge
    */
@@ -10290,7 +10082,6 @@ class Edge {
 
   /**
    * Determine the rotation point, if any.
-   *
    * @param {CanvasRenderingContext2D} [ctx] if passed, do a recalculation of the label size
    * @returns {rotationPoint} the point to rotate around and the angle in radians to rotate
    * @private
@@ -10338,7 +10129,6 @@ class Edge {
 
   /**
    * Get a point on a circle
-   *
    * @param {number} x
    * @param {number} y
    * @param {number} radius
@@ -10369,7 +10159,6 @@ class Edge {
 
   /**
    * cleans all required things on delete
-   *
    * @returns {*}
    */
   cleanup() {
@@ -10387,7 +10176,6 @@ class Edge {
 
   /**
    * Check if both connecting nodes exist
-   *
    * @returns {boolean}
    */
   endPointsValid() {
@@ -10642,9 +10430,8 @@ class EdgesHandler {
 
   /**
    * Load edges by reading the data table
-   *
    * @param {Array | DataSet | DataView} edges    The data containing the edges.
-   * @param {boolean} [doNotEmit=false] - Suppress data changed event.
+   * @param {boolean} [doNotEmit] - Suppress data changed event.
    * @private
    */
   setData(edges, doNotEmit = false) {
@@ -10692,9 +10479,8 @@ class EdgesHandler {
 
   /**
    * Add edges
-   *
    * @param {number[] | string[]} ids
-   * @param {boolean} [doNotEmit=false]
+   * @param {boolean} [doNotEmit]
    * @private
    */
   add(ids, doNotEmit = false) {
@@ -10722,7 +10508,6 @@ class EdgesHandler {
 
   /**
    * Update existing edges, or create them when not yet existing
-   *
    * @param {number[] | string[]} ids
    * @private
    */
@@ -10756,9 +10541,8 @@ class EdgesHandler {
 
   /**
    * Remove existing edges. Non existing ids will be ignored
-   *
    * @param {number[] | string[]} ids
-   * @param {boolean} [emit=true]
+   * @param {boolean} [emit]
    * @private
    */
   remove(ids, emit = true) {
@@ -10806,7 +10590,6 @@ class EdgesHandler {
 
   /**
    * Reconnect all edges
-   *
    * @private
    */
   reconnectEdges() {
@@ -10860,7 +10643,6 @@ class EdgesHandler {
 
   /**
    * Scan for missing nodes and remove corresponding edges, if any.
-   *
    * @private
    */
   _removeInvalidEdges() {
@@ -10888,7 +10670,6 @@ class EdgesHandler {
 
   /**
    * add all edges from dataset that are not in the cached state
-   *
    * @private
    */
   _addMissingEdges() {
@@ -10947,7 +10728,6 @@ class BarnesHutSolver {
   /**
    * This function calculates the forces the nodes apply on each other based on a gravitational model.
    * The Barnes Hut method is used to speed up this N-body simulation.
-   *
    * @private
    */
   solve() {
@@ -10992,7 +10772,6 @@ class BarnesHutSolver {
   /**
    * This function traverses the barnesHutTree. It checks when it can approximate distant nodes with their center of mass.
    * If a region contains a single node, we check if it is not itself, then we apply the force.
-   *
    * @param {object} parentBranch
    * @param {Node} node
    * @private
@@ -11027,7 +10806,6 @@ class BarnesHutSolver {
 
   /**
    * Calculate the forces based on the distance.
-   *
    * @param {number} distance
    * @param {number} dx
    * @param {number} dy
@@ -11064,7 +10842,6 @@ class BarnesHutSolver {
 
   /**
    * This function constructs the barnesHut tree recursively. It creates the root, splits it and starts placing the nodes.
-   *
    * @param {Array.<Node>} nodes
    * @param {Array.<number>} nodeIndices
    * @returns {{root: {centerOfMass: {x: number, y: number}, mass: number, range: {minX: number, maxX: number, minY: number, maxY: number}, size: number, calcSize: number, children: {data: null}, maxWidth: number, level: number, childrenCount: number}}} BarnesHutTree
@@ -11151,7 +10928,6 @@ class BarnesHutSolver {
 
   /**
    * this updates the mass of a branch. this is increased by adding a node.
-   *
    * @param {object} parentBranch
    * @param {Node} node
    * @private
@@ -11180,7 +10956,6 @@ class BarnesHutSolver {
 
   /**
    * determine in which branch the node will be placed.
-   *
    * @param {object} parentBranch
    * @param {Node} node
    * @param {boolean} skipMassUpdate
@@ -11215,7 +10990,6 @@ class BarnesHutSolver {
 
   /**
    * actually place the node in a region (or branch)
-   *
    * @param {object} parentBranch
    * @param {Node} node
    * @param {'NW'| 'NE' | 'SW' | 'SE'} region
@@ -11253,7 +11027,6 @@ class BarnesHutSolver {
   /**
    * this function splits a branch into 4 sub branches. If the branch contained a node, we place it in the subbranch
    * after the split is complete.
-   *
    * @param {object} parentBranch
    * @private
    */
@@ -11282,7 +11055,6 @@ class BarnesHutSolver {
    * This function subdivides the region into four new segments.
    * Specifically, this inserts a single new segment.
    * It fills the children section of the parentBranch
-   *
    * @param {object} parentBranch
    * @param {'NW'| 'NE' | 'SW' | 'SE'} region
    * @private
@@ -11334,7 +11106,6 @@ class BarnesHutSolver {
 
   /**
    * This function is for debugging purposed, it draws the tree.
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @param {string} color
    * @private
@@ -11349,7 +11120,6 @@ class BarnesHutSolver {
 
   /**
    * This function is for debugging purposes. It draws the branches recursively.
-   *
    * @param {object} branch
    * @param {CanvasRenderingContext2D} ctx
    * @param {string} color
@@ -11424,7 +11194,6 @@ class RepulsionSolver {
   /**
    * Calculate the forces the nodes apply on each other based on a repulsion field.
    * This field is linearly approximated.
-   *
    * @private
    */
   solve() {
@@ -11509,7 +11278,6 @@ class HierarchicalRepulsionSolver {
   /**
    * Calculate the forces the nodes apply on each other based on a repulsion field.
    * This field is linearly approximated.
-   *
    * @private
    */
   solve() {
@@ -11589,7 +11357,6 @@ class SpringSolver {
 
   /**
    * This function calculates the springforces on the nodes, accounting for the support nodes.
-   *
    * @private
    */
   solve() {
@@ -11634,7 +11401,6 @@ class SpringSolver {
 
   /**
    * This is the code actually performing the calculation for the function above.
-   *
    * @param {Node} node1
    * @param {Node} node2
    * @param {number} edgeLength
@@ -11690,7 +11456,6 @@ class HierarchicalSpringSolver {
 
   /**
    * This function calculates the springforces on the nodes, accounting for the support nodes.
-   *
    * @private
    */
   solve() {
@@ -11835,7 +11600,6 @@ class CentralGravitySolver {
 
   /**
    * Calculate the forces based on the distance.
-   *
    * @param {number} distance
    * @param {number} dx
    * @param {number} dy
@@ -11868,7 +11632,6 @@ class ForceAtlas2BasedRepulsionSolver extends BarnesHutSolver {
 
   /**
    * Calculate the forces based on the distance.
-   *
    * @param {number} distance
    * @param {number} dx
    * @param {number} dy
@@ -11921,7 +11684,6 @@ class ForceAtlas2BasedCentralGravitySolver extends CentralGravitySolver {
 
   /**
    * Calculate the forces based on the distance.
-   *
    * @param {number} distance
    * @param {number} dx
    * @param {number} dy
@@ -12080,7 +11842,6 @@ class PhysicsEngine {
 
   /**
    * set the physics options
-   *
    * @param {object} options
    */
   setOptions(options) {
@@ -12230,8 +11991,7 @@ class PhysicsEngine {
 
   /**
    * Stop the simulation, force stabilization.
-   *
-   * @param {boolean} [emit=true]
+   * @param {boolean} [emit]
    */
   stopSimulation(emit = true) {
     this.stabilized = true;
@@ -12276,8 +12036,7 @@ class PhysicsEngine {
 
   /**
    * trigger the stabilized event.
-   *
-   * @param {number} [amountOfIterations=this.stabilizationIterations]
+   * @param {number} [amountOfIterations]
    * @private
    */
   _emitStabilized(amountOfIterations = this.stabilizationIterations) {
@@ -12297,7 +12056,6 @@ class PhysicsEngine {
 
   /**
    * Calculate the forces for one physics iteration and move the nodes.
-   *
    * @private
    */
   physicsStep() {
@@ -12311,7 +12069,6 @@ class PhysicsEngine {
    * Make dynamic adjustments to the timestep, based on current state.
    *
    * Helper function for physicsTick().
-   *
    * @private
    */
   adjustTimeStep() {
@@ -12337,7 +12094,6 @@ class PhysicsEngine {
 
   /**
    * A single simulation step (or 'tick') in the physics simulation
-   *
    * @private
    */
   physicsTick() {
@@ -12383,7 +12139,6 @@ class PhysicsEngine {
 
   /**
    * Nodes and edges can have the physics toggles on or off. A collection of indices is created here so we can skip the check all the time.
-   *
    * @private
    */
   updatePhysicsData() {
@@ -12459,7 +12214,6 @@ class PhysicsEngine {
 
   /**
    * This compares the reference state to the current state
-   *
    * @returns {boolean}
    * @private
    */
@@ -12514,7 +12268,6 @@ class PhysicsEngine {
 
   /**
    * Calculate new velocity for a coordinate direction
-   *
    * @param {number} v  velocity for current coordinate
    * @param {number} f  regular force for current coordinate
    * @param {number} m  mass of current node
@@ -12538,7 +12291,6 @@ class PhysicsEngine {
 
   /**
    * Perform the actual step
-   *
    * @param {Node.id} nodeId
    * @returns {number} the new velocity of given node
    * @private
@@ -12595,7 +12347,6 @@ class PhysicsEngine {
   /**
    * When initializing and stabilizing, we can freeze nodes with a predefined position.
    * This greatly speeds up stabilization because only the supportnodes for the smoothCurves have to settle.
-   *
    * @private
    */
   _freezeNodes() {
@@ -12614,7 +12365,6 @@ class PhysicsEngine {
 
   /**
    * Unfreezes the nodes that have been frozen by _freezeDefinedNodes.
-   *
    * @private
    */
   _restoreFrozenNodes() {
@@ -12632,8 +12382,7 @@ class PhysicsEngine {
 
   /**
    * Find a stable position for all nodes
-   *
-   * @param {number} [iterations=this.options.stabilization.iterations]
+   * @param {number} [iterations]
    */
   stabilize(iterations = this.options.stabilization.iterations) {
     if (typeof iterations !== "number") {
@@ -12673,7 +12422,6 @@ class PhysicsEngine {
 
   /**
    * If not already stabilizing, start it and emit a start event.
-   *
    * @returns {boolean} true if stabilization started with this call
    * @private
    */
@@ -12687,7 +12435,6 @@ class PhysicsEngine {
 
   /**
    * One batch of stabilization
-   *
    * @private
    */
   _stabilizationBatch() {
@@ -12723,7 +12470,6 @@ class PhysicsEngine {
 
   /**
    * Wrap up the stabilization, fit and emit the events.
-   *
    * @private
    */
   _finalizeStabilization() {
@@ -12754,7 +12500,6 @@ class PhysicsEngine {
    * Debug function that display arrows for the forces currently active in the network.
    *
    * Use this when debugging only.
-   *
    * @param {CanvasRenderingContext2D} ctx
    * @private
    */
@@ -12812,9 +12557,8 @@ class NetworkUtil {
 
   /**
    * Find the center position of the network considering the bounding boxes
-   *
    * @param {Array.<Node>} allNodes
-   * @param {Array.<Node>} [specificNodes=[]]
+   * @param {Array.<Node>} [specificNodes]
    * @returns {{minX: number, maxX: number, minY: number, maxY: number}}
    * @static
    */
@@ -12850,9 +12594,8 @@ class NetworkUtil {
 
   /**
    * Find the center position of the network
-   *
    * @param {Array.<Node>} allNodes
-   * @param {Array.<Node>} [specificNodes=[]]
+   * @param {Array.<Node>} [specificNodes]
    * @returns {{minX: number, maxX: number, minY: number, maxY: number}}
    * @static
    */
@@ -12900,7 +12643,6 @@ class NetworkUtil {
 
   /**
    * This returns a clone of the options or options of the edge or node to be used for construction of new edges or check functions for new nodes.
-   *
    * @param {vis.Item} item
    * @param {'node'|undefined} type
    * @returns {{}}
@@ -12923,7 +12665,6 @@ class NetworkUtil {
 /**
  * A Cluster is a special Node that allows a group of Nodes positioned closely together
  * to be represented by a single Cluster Node.
- *
  * @augments Node
  */
 class Cluster extends Node {
@@ -12954,7 +12695,6 @@ class Cluster extends Node {
    * Transfer child cluster data to current and disconnect the child cluster.
    *
    * Please consult the header comment in 'Clustering.js' for the fields set here.
-   *
    * @param {string|number} childClusterId  id of child cluster to open
    */
   _openChildCluster(childClusterId) {
@@ -13155,9 +12895,8 @@ class ClusterEngine {
 
   /**
    * loop over all nodes, check if they adhere to the condition and cluster if needed.
-   *
    * @param {object} options
-   * @param {boolean} [refreshData=true]
+   * @param {boolean} [refreshData]
    */
   cluster(options = {}, refreshData = true) {
     if (options.joinCondition === undefined) {
@@ -13191,10 +12930,9 @@ class ClusterEngine {
 
   /**
    * Cluster all nodes in the network that have only X edges
-   *
    * @param {number} edgeCount
    * @param {object} options
-   * @param {boolean} [refreshData=true]
+   * @param {boolean} [refreshData]
    */
   clusterByEdgeCount(edgeCount, options, refreshData = true) {
     options = this._checkOptions(options);
@@ -13261,7 +12999,6 @@ class ClusterEngine {
           ) {
             /**
              * Search for cluster data that contains any of the node id's
-             *
              * @returns {boolean} true if no joinCondition, otherwise return value of joinCondition
              */
             const findClusterData = function () {
@@ -13314,9 +13051,8 @@ class ClusterEngine {
 
   /**
    * Cluster all nodes in the network that have only 1 edge
-   *
    * @param {object} options
-   * @param {boolean} [refreshData=true]
+   * @param {boolean} [refreshData]
    */
   clusterOutliers(options, refreshData = true) {
     this.clusterByEdgeCount(1, options, refreshData);
@@ -13324,9 +13060,8 @@ class ClusterEngine {
 
   /**
    * Cluster all nodes in the network that have only 2 edge
-   *
    * @param {object} options
-   * @param {boolean} [refreshData=true]
+   * @param {boolean} [refreshData]
    */
   clusterBridges(options, refreshData = true) {
     this.clusterByEdgeCount(2, options, refreshData);
@@ -13334,10 +13069,9 @@ class ClusterEngine {
 
   /**
    * suck all connected nodes of a node into the node.
-   *
    * @param {Node.id} nodeId
    * @param {object} options
-   * @param {boolean} [refreshData=true]
+   * @param {boolean} [refreshData]
    */
   clusterByConnection(nodeId, options, refreshData = true) {
     // kill conditions
@@ -13429,7 +13163,6 @@ class ClusterEngine {
   /**
    * This function creates the edges that will be attached to the cluster
    * It looks for edges that are connected to the nodes from the "outside' of the cluster.
-   *
    * @param {{Node.id: vis.Node}} childNodesObj
    * @param {{vis.Edge.id: vis.Edge}} childEdgesObj
    * @param {object} clusterNodeProperties
@@ -13494,7 +13227,6 @@ class ClusterEngine {
 
     /**
      * Find a cluster edge which matches the given created edge.
-     *
      * @param {vis.Edge} createdEdge
      * @returns {vis.Edge}
      */
@@ -13549,7 +13281,6 @@ class ClusterEngine {
   /**
    * This function checks the options that can be supplied to the different cluster functions
    * for certain fields and inserts defaults if needed
-   *
    * @param {object} options
    * @returns {*}
    * @private
@@ -13723,7 +13454,6 @@ class ClusterEngine {
 
   /**
    * Check if a node is a cluster.
-   *
    * @param {Node.id} nodeId
    * @returns {*}
    */
@@ -13738,7 +13468,6 @@ class ClusterEngine {
 
   /**
    * get the position of the cluster node based on what's inside
-   *
    * @param {object} childNodesObj    | object with node objects, id as keys
    * @returns {{x: number, y: number}}
    * @private
@@ -13763,7 +13492,6 @@ class ClusterEngine {
 
   /**
    * Open a cluster by calling this function.
-   *
    * @param {vis.Edge.id}  clusterNodeId | the ID of the cluster node
    * @param {object} options
    * @param {boolean} refreshData | wrap up afterwards if not true
@@ -13961,7 +13689,6 @@ class ClusterEngine {
    * Get the stack clusterId's that a certain node resides in. cluster A -> cluster B -> cluster C -> node
    *
    * If a node can't be found in the chain, return an empty array.
-   *
    * @param {string|number} nodeId
    * @returns {Array}
    */
@@ -13990,7 +13717,6 @@ class ClusterEngine {
 
   /**
    * Using a clustered nodeId, update with the new options
-   *
    * @param {Node.id} clusteredNodeId
    * @param {object} newOptions
    */
@@ -14013,7 +13739,6 @@ class ClusterEngine {
 
   /**
    * Using a base edgeId, update all related clustered edges with the new options
-   *
    * @param {vis.Edge.id} startEdgeId
    * @param {object} newOptions
    */
@@ -14038,7 +13763,6 @@ class ClusterEngine {
 
   /**
    * Get a stack of clusterEdgeId's (+base edgeid) that a base edge is the same as. cluster edge C -> cluster edge B -> cluster edge A -> base edge(edgeId)
-   *
    * @param {vis.Edge.id} edgeId
    * @returns {Array.<vis.Edge.id>}
    */
@@ -14062,7 +13786,6 @@ class ClusterEngine {
 
   /**
    * Get the base edge id of clusterEdgeId. cluster edge (clusteredEdgeId) -> cluster edge B -> cluster edge C -> base edge
-   *
    * @param {vis.Edge.id} clusteredEdgeId
    * @returns {vis.Edge.id} baseEdgeId
    *
@@ -14075,7 +13798,6 @@ class ClusterEngine {
 
   /**
    * Get all regular edges for this clustered edge id.
-   *
    * @param {vis.Edge.id} clusteredEdgeId
    * @returns {Array.<vis.Edge.id>} all baseEdgeId's under this clustered edge
    */
@@ -14123,7 +13845,6 @@ class ClusterEngine {
 
   /**
    * Get the Id the node is connected to
-   *
    * @param {vis.Edge} edge
    * @param {Node.id} nodeId
    * @returns {*}
@@ -14142,7 +13863,6 @@ class ClusterEngine {
   /**
    * We determine how many connections denote an important hub.
    * We take the mean + 2*std as the important hub size. (Assuming a normal distribution of data, ~2.2%)
-   *
    * @returns {number}
    * @private
    */
@@ -14179,7 +13899,6 @@ class ClusterEngine {
 
   /**
    * Create an edge for the cluster representation.
-   *
    * @param {Node.id} fromId
    * @param {Node.id} toId
    * @param {vis.Edge} baseEdge
@@ -14222,7 +13941,6 @@ class ClusterEngine {
 
   /**
    * Add the passed child nodes and edges to the given cluster node.
-   *
    * @param {object | Node} childNodes  hash of nodes or single node to add in cluster
    * @param {object | Edge} childEdges  hash of edges or single edge to take into account when clustering
    * @param {Node} clusterNode  cluster node to add nodes and edges to
@@ -14293,7 +14011,6 @@ class ClusterEngine {
    * If not in cluster, return undefined.
    *
    * NOTE: If you know a cleaner way to do this, please enlighten me (wimrijnders).
-   *
    * @param {Node.id} nodeId
    * @returns {Node|undefined} Node instance for cluster, if present
    * @private
@@ -14314,7 +14031,6 @@ class ClusterEngine {
    * Internal helper function for conditionally removing items in array
    *
    * Done like this because Array.filter() is not fully supported by all IE's.
-   *
    * @param {Array} arr
    * @param {Function} callback
    * @returns {Array}
@@ -14348,7 +14064,6 @@ class ClusterEngine {
 
     /**
      * Utility function to iterate over clustering nodes only
-     *
      * @param {Function} callback  function to call for each cluster node
      */
     const eachClusterNode = (callback) => {
@@ -14548,7 +14263,6 @@ class ClusterEngine {
 
   /**
    * Determine if node with given id is part of a cluster.
-   *
    * @param {Node.id} nodeId
    * @returns {boolean} true if part of a cluster.
    */
@@ -14562,7 +14276,6 @@ class ClusterEngine {
    * An edge is considered clustered if:
    * - it is directly replaced by a clustering edge
    * - any of its connecting nodes is in a cluster
-   *
    * @param {vis.Edge.id} edgeId
    * @returns {boolean} true if part of a cluster.
    */
@@ -14579,17 +14292,16 @@ class ClusterEngine {
  * NOTES:
  *
  * On node.js, when calling this directly outside of this class, `window` is not defined.
- *   This happens even if jsdom is used.
+ * This happens even if jsdom is used.
  * For node.js + jsdom, `window` is available at the moment the constructor is called.
- *   For this reason, the called is placed within the constructor.
+ * For this reason, the called is placed within the constructor.
  * Even then, `window.requestAnimationFrame()` is not defined, so it still needs to be added.
  * During unit testing, it happens that the window object is reset during execution, causing
- *   a runtime error due to missing `requestAnimationFrame()`. This needs to be compensated for,
- *   see `_requestNextFrame()`.
+ * a runtime error due to missing `requestAnimationFrame()`. This needs to be compensated for,
+ * see `_requestNextFrame()`.
  * Since this is a global object, it may affect other modules besides `Network`. With normal
- *   usage, this does not cause any problems. During unit testing, errors may occur. These have
- *   been compensated for, see comment block in _requestNextFrame().
- *
+ * usage, this does not cause any problems. During unit testing, errors may occur. These have
+ * been compensated for, see comment block in _requestNextFrame().
  * @private
  */
 function _initRequestAnimationFrame() {
@@ -14720,7 +14432,6 @@ class CanvasRenderer {
    * Prepare the drawing of the next frame.
    *
    * Calls the callback when the next frame can or will be drawn.
-   *
    * @param {Function} callback
    * @param {number} delay - timeout case only, wait this number of milliseconds
    * @returns {Function | undefined}
@@ -14806,7 +14517,6 @@ class CanvasRenderer {
 
   /**
    * Redraw the network with the current data
-   *
    * @private
    */
   _requestRedraw() {
@@ -14824,8 +14534,7 @@ class CanvasRenderer {
 
   /**
    * Redraw the network with the current data
-   *
-   * @param {boolean} [hidden=false] | Used to get the first estimate of the node sizes.
+   * @param {boolean} [hidden] | Used to get the first estimate of the node sizes.
    *                                   Only the nodes are drawn after which they are quickly drawn over.
    * @private
    */
@@ -14925,7 +14634,6 @@ class CanvasRenderer {
 
   /**
    * Redraw all nodes
-   *
    * @param {CanvasRenderingContext2D}   ctx
    * @param {boolean} [alwaysShow]
    * @private
@@ -14955,7 +14663,6 @@ class CanvasRenderer {
 
   /**
    * Redraw all nodes
-   *
    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
    * @param {boolean} [alwaysShow]
    * @private
@@ -15040,7 +14747,6 @@ class CanvasRenderer {
 
   /**
    * Redraw all edges
-   *
    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
    * @private
    */
@@ -15058,7 +14764,6 @@ class CanvasRenderer {
 
   /**
    * Redraw all arrows
-   *
    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
    * @private
    */
@@ -15077,7 +14782,6 @@ class CanvasRenderer {
   /**
    * Determine if the browser requires a setTimeout or a requestAnimationFrame. This was required because
    * some implementations (safari and IE9) did not support requestAnimationFrame
-   *
    * @private
    */
   _determineBrowserMethod() {
@@ -15100,7 +14804,6 @@ class CanvasRenderer {
 
   /**
    * Redraw selection box
-   *
    * @param {CanvasRenderingContext2D} ctx  2D context of a HTML canvas
    * @private
    */
@@ -15136,7 +14839,6 @@ class CanvasRenderer {
 
 /**
  * Register a touch event, taking place before a gesture
- *
  * @param {Hammer} hammer       A hammer instance
  * @param {Function} callback   Callback, called as callback(event)
  */
@@ -15152,7 +14854,6 @@ function onTouch(hammer, callback) {
 
 /**
  * Register a release event, taking place after a gesture
- *
  * @param {Hammer} hammer       A hammer instance
  * @param {Function} callback   Callback, called as callback(event)
  * @returns {*}
@@ -15291,8 +14992,7 @@ class Canvas {
 
   /**
    * Get and store the cameraState
-   *
-   * @param {number} [pixelRatio=this.pixelRatio]
+   * @param {number} [pixelRatio]
    * @private
    */
   _getCameraState(pixelRatio = this.pixelRatio) {
@@ -15309,7 +15009,6 @@ class Canvas {
 
   /**
    * Set the cameraState
-   *
    * @private
    */
   _setCameraState() {
@@ -15426,7 +15125,6 @@ class Canvas {
 
   /**
    * This function binds hammer, it can be repeated over and over due to the uniqueness check.
-   *
    * @private
    */
   _bindHammer() {
@@ -15489,7 +15187,6 @@ class Canvas {
 
   /**
    * Set a new size for the network
-   *
    * @param {string} width   Width in pixels or percentage (for example '800px'
    *                         or '50%')
    * @param {string} height  Height in pixels or percentage  (for example '400px'
@@ -15605,7 +15302,6 @@ class Canvas {
 
   /**
    * Determine the pixel ratio for various browsers.
-   *
    * @returns {number}
    * @private
    */
@@ -15635,7 +15331,6 @@ class Canvas {
 
   /**
    * Lazy determination of pixel ratio.
-   *
    * @private
    */
   _setPixelRatio() {
@@ -15657,7 +15352,6 @@ class Canvas {
   /**
    * Convert the X coordinate in DOM-space (coordinate point in browser relative to the container div) to
    * the X coordinate in canvas-space (the simulation sandbox, which the camera looks upon)
-   *
    * @param {number} x
    * @returns {number}
    * @private
@@ -15669,7 +15363,6 @@ class Canvas {
   /**
    * Convert the X coordinate in canvas-space (the simulation sandbox, which the camera looks upon) to
    * the X coordinate in DOM-space (coordinate point in browser relative to the container div)
-   *
    * @param {number} x
    * @returns {number}
    * @private
@@ -15681,7 +15374,6 @@ class Canvas {
   /**
    * Convert the Y coordinate in DOM-space (coordinate point in browser relative to the container div) to
    * the Y coordinate in canvas-space (the simulation sandbox, which the camera looks upon)
-   *
    * @param {number} y
    * @returns {number}
    * @private
@@ -15693,7 +15385,6 @@ class Canvas {
   /**
    * Convert the Y coordinate in canvas-space (the simulation sandbox, which the camera looks upon) to
    * the Y coordinate in DOM-space (coordinate point in browser relative to the container div)
-   *
    * @param {number} y
    * @returns {number}
    * @private
@@ -15728,7 +15419,6 @@ class Canvas {
 
 /**
  * Validate the fit options, replace missing optional values by defaults etc.
- *
  * @param rawOptions - The raw options.
  * @param allNodeIds - All node ids that will be used if nodes are omitted in
  * the raw options.
@@ -15790,7 +15480,7 @@ class View {
 
   /**
    *
-   * @param {object} [options={}]
+   * @param {object} [options]
    */
   setOptions(options = {}) {
     this.options = options;
@@ -15798,10 +15488,9 @@ class View {
 
   /**
    * This function zooms out to fit all data on screen based on amount of nodes
-   *
    * @param {object} [options={{nodes=Array}}]
    * @param options
-   * @param {boolean} [initialZoom=false]  | zoom based on fitted formula or range, true = fitted, default = false;
+   * @param {boolean} [initialZoom]  | zoom based on fitted formula or range, true = fitted, default = false;
    */
   fit(options, initialZoom = false) {
     options = normalizeFitOptions(options, this.body.nodeIndices);
@@ -15876,7 +15565,6 @@ class View {
 
   /**
    * Center a node in view.
-   *
    * @param {number} nodeId
    * @param {number} [options]
    */
@@ -16077,7 +15765,6 @@ class View {
 
   /**
    * used to animate smoothly by hijacking the redraw function.
-   *
    * @private
    */
   _lockedRedraw() {
@@ -16121,7 +15808,7 @@ class View {
   }
 
   /**
-   * @param {boolean} [finished=false]
+   * @param {boolean} [finished]
    * @private
    */
   _transitionRedraw(finished = false) {
@@ -16267,7 +15954,6 @@ class NavigationHandler {
    * they have a triggerFunction which is called on click. If the position of the navigation controls is dependent
    * on this.frame.canvas.clientWidth or this.frame.canvas.clientHeight, we flag horizontalAlignLeft and verticalAlignTop false.
    * This means that the location will be corrected by the _relocateNavigation function on a size change of the canvas.
-   *
    * @private
    */
   loadNavigationElements() {
@@ -16352,7 +16038,6 @@ class NavigationHandler {
 
   /**
    * this stops all movement induced by the navigation buttons
-   *
    * @private
    */
   _fit() {
@@ -16365,7 +16050,6 @@ class NavigationHandler {
 
   /**
    * this stops all movement induced by the navigation buttons
-   *
    * @private
    */
   _stopMovement() {
@@ -16755,7 +16439,6 @@ class InteractionHandler {
 
   /**
    * Get the pointer location from a touch location
-   *
    * @param {{x: number, y: number}} touch
    * @returns {{x: number, y: number}} pointer
    * @private
@@ -16769,7 +16452,6 @@ class InteractionHandler {
 
   /**
    * On start of a touch gesture, store the pointer
-   *
    * @param {Event}  event   The event
    * @private
    */
@@ -16785,7 +16467,6 @@ class InteractionHandler {
 
   /**
    * handle tap/click event: select/unselect a node
-   *
    * @param {Event} event
    * @private
    */
@@ -16803,7 +16484,6 @@ class InteractionHandler {
 
   /**
    * handle doubletap event
-   *
    * @param {Event} event
    * @private
    */
@@ -16814,7 +16494,6 @@ class InteractionHandler {
 
   /**
    * handle long tap event: multi select nodes
-   *
    * @param {Event} event
    * @private
    */
@@ -16831,7 +16510,6 @@ class InteractionHandler {
 
   /**
    * handle the release of the screen
-   *
    * @param {Event} event
    * @private
    */
@@ -16855,9 +16533,8 @@ class InteractionHandler {
 
   /**
    * Select and deselect nodes depending current selection change.
-   *
    * @param {{x: number, y: number}} pointer
-   * @param {boolean} [add=false]
+   * @param {boolean} [add]
    */
   checkSelectionChanges(pointer, add = false) {
     if (add === true) {
@@ -16869,7 +16546,6 @@ class InteractionHandler {
 
   /**
    * Remove all node and edge id's from the first set that are present in the second one.
-   *
    * @param {{nodes: Array.<Node>, edges: Array.<vis.Edge>}} firstSet
    * @param {{nodes: Array.<Node>, edges: Array.<vis.Edge>}} secondSet
    * @returns {{nodes: Array.<Node>, edges: Array.<vis.Edge>}}
@@ -16898,7 +16574,6 @@ class InteractionHandler {
   /**
    * This function is called by onDragStart.
    * It is separated out because we can then overload it for the datamanipulation system.
-   *
    * @param {Event} event
    * @private
    */
@@ -16980,7 +16655,6 @@ class InteractionHandler {
 
   /**
    * handle drag event
-   *
    * @param {Event} event
    * @private
    */
@@ -17075,7 +16749,6 @@ class InteractionHandler {
 
   /**
    * handle drag start event
-   *
    * @param {Event} event
    * @private
    */
@@ -17157,7 +16830,6 @@ class InteractionHandler {
 
   /**
    * Handle pinch event
-   *
    * @param {Event}  event   The event
    * @private
    */
@@ -17176,7 +16848,6 @@ class InteractionHandler {
 
   /**
    * Zoom the network in or out
-   *
    * @param {number} scale a number around 1, and between 0.01 and 10
    * @param {{x: number, y: number}} pointer    Position on screen
    * @private
@@ -17235,8 +16906,7 @@ class InteractionHandler {
   /**
    * Event handler for mouse wheel event, used to zoom the timeline
    * See http://adomas.org/javascript-mouse-wheel/
-   *     https://github.com/EightMedia/hammer.js/issues/256
-   *
+   * https://github.com/EightMedia/hammer.js/issues/256
    * @param {MouseEvent}  event
    * @private
    */
@@ -17265,7 +16935,6 @@ class InteractionHandler {
 
   /**
    * Mouse move handler for checking whether the title moves over a node with a title.
-   *
    * @param  {Event} event
    * @private
    */
@@ -17320,7 +16989,6 @@ class InteractionHandler {
    * Check if there is an element on the given position in the network
    * (a node or edge). If so, and if this element has a title,
    * show a popup window with its title.
-   *
    * @param {{x:number, y:number}} pointer
    * @private
    */
@@ -17414,7 +17082,6 @@ class InteractionHandler {
   /**
    * Check if the popup must be hidden, which is the case when the mouse is no
    * longer hovering on the object
-   *
    * @param {{x:number, y:number}} pointer
    * @private
    */
@@ -17649,7 +17316,6 @@ class SelectionHandler {
 
   /**
    * handles the selection part of the tap;
-   *
    * @param {{x: number, y: number}} pointer
    * @returns {boolean}
    */
@@ -17695,7 +17361,6 @@ class SelectionHandler {
 
   /**
    * Create an object containing the standard fields for an event.
-   *
    * @param {Event} event
    * @param {{x: number, y: number}} pointer Object with the x and y screen coordinates of the mouse
    * @returns {{}}
@@ -17718,12 +17383,11 @@ class SelectionHandler {
    *
    * This adds some extra data to the event with respect to cursor position and
    * selected nodes and edges.
-   *
    * @param {string} eventType                          Name of event to send
    * @param {Event}  event
    * @param {{x: number, y: number}} pointer            Object with the x and y screen coordinates of the mouse
    * @param {object | undefined} oldSelection             If present, selection state before event occured
-   * @param {boolean|undefined} [emptySelection=false]  Indicate if selection data should be passed
+   * @param {boolean|undefined} [emptySelection]  Indicate if selection data should be passed
    */
   generateClickEvent(
     eventType,
@@ -17763,7 +17427,7 @@ class SelectionHandler {
   /**
    *
    * @param {object} obj
-   * @param {boolean} [highlightEdges=this.options.selectConnectedEdges]
+   * @param {boolean} [highlightEdges]
    * @returns {boolean}
    */
   selectObject(obj, highlightEdges = this.options.selectConnectedEdges) {
@@ -17794,7 +17458,6 @@ class SelectionHandler {
 
   /**
    * retrieve all nodes overlapping with given object
-   *
    * @param {object} object  An object with parameters left, top, right, bottom
    * @returns {number[]}   An array with id's of the overlapping nodes
    * @private
@@ -17813,7 +17476,6 @@ class SelectionHandler {
 
   /**
    * Return a position object in canvasspace from a single point in screenspace
-   *
    * @param {{x: number, y: number}} pointer
    * @returns {{left: number, top: number, right: number, bottom: number}}
    * @private
@@ -17830,9 +17492,8 @@ class SelectionHandler {
 
   /**
    * Get the top node at the passed point (like a click)
-   *
    * @param {{x: number, y: number}} pointer
-   * @param {boolean} [returnNode=true]
+   * @param {boolean} [returnNode]
    * @returns {Node | undefined} node
    */
   getNodeAt(pointer, returnNode = true) {
@@ -17854,7 +17515,6 @@ class SelectionHandler {
 
   /**
    * retrieve all edges overlapping with given object, selector is around center
-   *
    * @param {object} object  An object with parameters left, top, right, bottom
    * @param {number[]} overlappingEdges An array with id's of the overlapping nodes
    * @private
@@ -17871,7 +17531,6 @@ class SelectionHandler {
 
   /**
    * retrieve all nodes overlapping with given object
-   *
    * @param {object} object  An object with parameters left, top, right, bottom
    * @returns {number[]}   An array with id's of the overlapping nodes
    * @private
@@ -17884,9 +17543,8 @@ class SelectionHandler {
 
   /**
    * Get the edges nearest to the passed point (like a click)
-   *
    * @param {{x: number, y: number}} pointer
-   * @param {boolean} [returnEdge=true]
+   * @param {boolean} [returnEdge]
    * @returns {Edge | undefined} node
    */
   getEdgeAt(pointer, returnEdge = true) {
@@ -17930,7 +17588,6 @@ class SelectionHandler {
 
   /**
    * Add object to the selection array.
-   *
    * @param {object} obj
    * @private
    */
@@ -17944,7 +17601,6 @@ class SelectionHandler {
 
   /**
    * Remove a single option from selection.
-   *
    * @param {object} obj
    * @private
    */
@@ -17966,7 +17622,6 @@ class SelectionHandler {
 
   /**
    * return the number of selected nodes
-   *
    * @returns {number}
    */
   getSelectedNodeCount() {
@@ -17975,7 +17630,6 @@ class SelectionHandler {
 
   /**
    * return the number of selected edges
-   *
    * @returns {number}
    */
   getSelectedEdgeCount() {
@@ -17984,7 +17638,6 @@ class SelectionHandler {
 
   /**
    * select the edges connected to the node that is being selected
-   *
    * @param {Node} node
    * @private
    */
@@ -17998,7 +17651,6 @@ class SelectionHandler {
 
   /**
    * Remove the highlight from a node or edge, in response to mouse movement
-   *
    * @param {Event}  event
    * @param {{x: number, y: number}} pointer object with the x and y screen coordinates of the mouse
    * @param {Node|vis.Edge} object
@@ -18021,7 +17673,6 @@ class SelectionHandler {
 
   /**
    * Create the highlight for a node or edge, in response to mouse movement
-   *
    * @param {Event}  event
    * @param {{x: number, y: number}} pointer object with the x and y screen coordinates of the mouse
    * @param {Node|vis.Edge} object
@@ -18050,7 +17701,6 @@ class SelectionHandler {
 
   /**
    * Perform actions in response to a mouse movement.
-   *
    * @param {Event}  event
    * @param {{x: number, y: number}} pointer | object with the x and y screen coordinates of the mouse
    */
@@ -18140,7 +17790,6 @@ class SelectionHandler {
    * NOTE: For a given edge, if one connecting node is deselected and with the
    * same click the other node is selected, no events for the edge will fire. It
    * was selected and it will remain selected.
-   *
    * @param {{x: number, y: number}} pointer - The x and y coordinates of the
    * click, tap, dragend… that triggered this.
    * @param {UIEvent} event - The event that triggered this.
@@ -18193,7 +17842,6 @@ class SelectionHandler {
 
   /**
    * Retrieve the currently selected node and edge ids.
-   *
    * @returns {{nodes: Array.<string>, edges: Array.<string>}} Arrays with the
    * ids of the selected nodes and edges.
    */
@@ -18206,7 +17854,6 @@ class SelectionHandler {
 
   /**
    * Retrieve the currently selected nodes.
-   *
    * @returns {Array} An array with selected nodes.
    */
   getSelectedNodes() {
@@ -18215,7 +17862,6 @@ class SelectionHandler {
 
   /**
    * Retrieve the currently selected edges.
-   *
    * @returns {Array} An array with selected edges.
    */
   getSelectedEdges() {
@@ -18224,7 +17870,6 @@ class SelectionHandler {
 
   /**
    * Retrieve the currently selected node ids.
-   *
    * @returns {Array} An array with the ids of the selected nodes.
    */
   getSelectedNodeIds() {
@@ -18233,7 +17878,6 @@ class SelectionHandler {
 
   /**
    * Retrieve the currently selected edge ids.
-   *
    * @returns {Array} An array with the ids of the selected edges.
    */
   getSelectedEdgeIds() {
@@ -18242,7 +17886,6 @@ class SelectionHandler {
 
   /**
    * Updates the current selection
-   *
    * @param {{nodes: Array.<string>, edges: Array.<string>}} selection
    * @param {object} options                                 Options
    */
@@ -18283,7 +17926,6 @@ class SelectionHandler {
 
   /**
    * select zero or more nodes with the option to highlight edges
-   *
    * @param {number[] | string[]} selection     An array with the ids of the
    *                                            selected nodes.
    * @param {boolean} [highlightEdges]
@@ -18297,7 +17939,6 @@ class SelectionHandler {
 
   /**
    * select zero or more edges
-   *
    * @param {number[] | string[]} selection     An array with the ids of the
    *                                            selected nodes.
    */
@@ -18310,7 +17951,6 @@ class SelectionHandler {
 
   /**
    * Validate the selection: remove ids of nodes which no longer exist
-   *
    * @private
    */
   updateSelection() {
@@ -18343,10 +17983,9 @@ class SelectionHandler {
    * ## NOTES
    *
    * - Currently, there is only one label associated with a node or an edge,
-   *   but this is expected to change somewhere in the future.
+   * but this is expected to change somewhere in the future.
    * - Since there is no z-indexing yet, it is not really possible to set the nodes and
-   *   edges in the correct order. For the time being, nodes come first.
-   *
+   * edges in the correct order. For the time being, nodes come first.
    * @param {point} pointer  mouse position in screen coordinates
    * @returns {Array.<nodeClickItem|nodeLabelClickItem|edgeClickItem|edgeLabelClickItem>}
    * @private
@@ -18400,7 +18039,6 @@ class SelectionHandler {
  *
  * The local methods are stubs and should be regarded as abstract.
  * Derived classes **must** implement all the methods themselves.
- *
  * @private
  */
 class DirectionInterface {
@@ -18414,8 +18052,7 @@ class DirectionInterface {
   /**
    * This is a dummy call which is used to suppress the jsdoc errors of type:
    *
-   *   "'param' is assigned a value but never used"
-   *
+   * "'param' is assigned a value but never used"
    * @ignore
    */
   fake_use() {
@@ -18427,7 +18064,6 @@ class DirectionInterface {
    * Dynamic curves do not work for these.
    *
    * The value should be perpendicular to the actual direction of the layout.
-   *
    * @returns {string} Direction, either 'vertical' or 'horizontal'
    */
   curveType() {
@@ -18436,7 +18072,6 @@ class DirectionInterface {
 
   /**
    * Return the value of the coordinate that is not fixed for this direction.
-   *
    * @param {Node} node The node to read
    * @returns {number} Value of the unfixed coordinate
    */
@@ -18447,7 +18082,6 @@ class DirectionInterface {
 
   /**
    * Set the value of the coordinate that is not fixed for this direction.
-   *
    * @param {Node} node The node to adjust
    * @param {number} position
    * @param {number} [level] if specified, the hierarchy level that this node should be fixed to
@@ -18462,7 +18096,6 @@ class DirectionInterface {
    *
    * A `tree` here is a subset of nodes within the network which are not connected to other nodes,
    * only among themselves. In essence, it is a sub-network.
-   *
    * @param {number} index The index number of a tree
    * @returns {number} the width of a tree in the view coordinates
    */
@@ -18482,7 +18115,6 @@ class DirectionInterface {
    * which has the added benefit of being faster than the standard
    * platforms implementation. This has been verified on `node.js`,
    * `firefox` and `chrome` (all linux).
-   *
    * @param {Array.<Node>} nodeArray array of nodes to sort
    */
   sort(nodeArray) {
@@ -18492,7 +18124,6 @@ class DirectionInterface {
 
   /**
    * Assign the fixed coordinate of the node to the given level
-   *
    * @param {Node} node The node to adjust
    * @param {number} level The level to fix to
    */
@@ -18503,7 +18134,6 @@ class DirectionInterface {
 
   /**
    * Add an offset to the unfixed coordinate of the given node.
-   *
    * @param {NodeId} nodeId Id of the node to adjust
    * @param {number} diff Offset to add to the unfixed coordinate
    */
@@ -18517,14 +18147,12 @@ class DirectionInterface {
  * Vertical Strategy
  *
  * Coordinate `y` is fixed on levels, coordinate `x` is unfixed.
- *
  * @augments DirectionInterface
  * @private
  */
 class VerticalStrategy extends DirectionInterface {
   /**
    * Constructor
-   *
    * @param {object} layout reference to the parent LayoutEngine instance.
    */
   constructor(layout) {
@@ -18582,14 +18210,12 @@ class VerticalStrategy extends DirectionInterface {
  * Horizontal Strategy
  *
  * Coordinate `x` is fixed on levels, coordinate `y` is unfixed.
- *
  * @augments DirectionInterface
  * @private
  */
 class HorizontalStrategy extends DirectionInterface {
   /**
    * Constructor
-   *
    * @param {object} layout reference to the parent LayoutEngine instance.
    */
   constructor(layout) {
@@ -18645,7 +18271,6 @@ class HorizontalStrategy extends DirectionInterface {
 
 /**
  * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
- *
  * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  * @returns Populated node levels.
@@ -18673,7 +18298,6 @@ function fillLevelsByDirectionCyclic(nodes, levels) {
 }
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
@@ -18692,7 +18316,6 @@ function fillLevelsByDirectionLeaves(nodes) {
 }
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
@@ -18711,7 +18334,6 @@ function fillLevelsByDirectionRoots(nodes) {
 }
 /**
  * Assign levels to nodes according to their positions in the hierarchy.
- *
  * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
  * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
  * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.
@@ -18814,7 +18436,6 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
 
 /**
  * Container for derived data on current network, relating to hierarchy.
- *
  * @private
  */
 class HierarchicalStatus {
@@ -18836,7 +18457,6 @@ class HierarchicalStatus {
 
   /**
    * Add the relation between given nodes to the current state.
-   *
    * @param {Node.id} parentNodeId
    * @param {Node.id} childNodeId
    */
@@ -18872,7 +18492,6 @@ class HierarchicalStatus {
 
   /**
    * Return the number of separate trees in the current network.
-   *
    * @returns {number}
    */
   numTrees() {
@@ -18881,7 +18500,6 @@ class HierarchicalStatus {
 
   /**
    * Assign a tree id to a node
-   *
    * @param {Node} node
    * @param {string|number} treeId
    */
@@ -18898,7 +18516,6 @@ class HierarchicalStatus {
    * Ensure level for given id is defined.
    *
    * Sets level to zero for given node id if not already present
-   *
    * @param {Node.id} nodeId
    */
   ensureLevel(nodeId) {
@@ -18911,7 +18528,6 @@ class HierarchicalStatus {
    * get the maximum level of a branch.
    *
    * TODO: Never entered; find a test case to test this!
-   *
    * @param {Node.id} nodeId
    * @returns {number}
    */
@@ -18956,7 +18572,6 @@ class HierarchicalStatus {
 
   /**
    * Small util method to set the minimum levels of the nodes to zero.
-   *
    * @param {Array.<Node>} nodes
    */
   setMinLevelToZero(nodes) {
@@ -18982,7 +18597,6 @@ class HierarchicalStatus {
 
   /**
    * Get the min and max xy-coordinates of a given tree
-   *
    * @param {Array.<Node>} nodes
    * @param {number} index
    * @returns {{min_x: number, max_x: number, min_y: number, max_y: number}}
@@ -19015,7 +18629,6 @@ class HierarchicalStatus {
 
   /**
    * Check if two nodes have the same parent(s)
-   *
    * @param {Node} node1
    * @param {Node} node2
    * @returns {boolean} true if the two nodes have a same ancestor node, false otherwise
@@ -19039,7 +18652,6 @@ class HierarchicalStatus {
 
   /**
    * Check if two nodes are in the same tree.
-   *
    * @param {Node} node1
    * @param {Node} node2
    * @returns {boolean} true if this is so, false otherwise
@@ -19050,7 +18662,6 @@ class HierarchicalStatus {
 
   /**
    * Get a list of the distinct levels in the current network
-   *
    * @returns {Array}
    */
   getLevels() {
@@ -19059,7 +18670,6 @@ class HierarchicalStatus {
 
   /**
    * Add a node to the ordering per level
-   *
    * @param {Node} node
    * @param {number} level
    */
@@ -19209,7 +18819,6 @@ class LayoutEngine {
 
   /**
    * Reset the random number generator with given seed.
-   *
    * @param {any} seed - The seed that will be forwarded the the RNG.
    */
   _resetRNG(seed) {
@@ -19462,7 +19071,6 @@ class LayoutEngine {
 
   /**
    * Move all the nodes towards to the center so gravitational pull wil not move the nodes away from view
-   *
    * @private
    */
   _shiftToCenter() {
@@ -19480,7 +19088,6 @@ class LayoutEngine {
 
   /**
    * Expands all clusters
-   *
    * @private
    */
   _declusterAll() {
@@ -19514,7 +19121,6 @@ class LayoutEngine {
   /**
    * This is the main function to layout the nodes in a hierarchical way.
    * It checks if the node details are supplied correctly
-   *
    * @private
    */
   setupHierarchicalLayout() {
@@ -19682,7 +19288,6 @@ class LayoutEngine {
 
     /**
      * Condense elements. These can be nodes or branches depending on the callback.
-     *
      * @param {Function} callback
      * @param {Array.<number>} levels
      * @param {*} centerParents
@@ -19975,7 +19580,6 @@ class LayoutEngine {
   /**
    * This gives the space around the node. IF a map is supplied, it will only check against nodes NOT in the map.
    * This is used to only get the distances to nodes outside of a branch.
-   *
    * @param {Node} node
    * @param {{Node.id: vis.Node}} map
    * @returns {number[]}
@@ -20023,7 +19627,6 @@ class LayoutEngine {
 
   /**
    * We use this method to center a parent node and check if it does not cross other nodes when it does.
-   *
    * @param {Node} node
    * @private
    */
@@ -20058,7 +19661,6 @@ class LayoutEngine {
 
   /**
    * This function places the nodes on the canvas based on the hierarchial distribution.
-   *
    * @param {object} distribution | obtained by the function this._getDistribution()
    * @private
    */
@@ -20096,7 +19698,6 @@ class LayoutEngine {
   /**
    * This is a recursively called function to enumerate the branches from the largest hubs and place the nodes
    * on a X position that ensures there will be no overlap.
-   *
    * @param {Node.id} parentId
    * @param {number} parentLevel
    * @private
@@ -20153,7 +19754,6 @@ class LayoutEngine {
   /**
    * This method checks for overlap and if required shifts the branch. It also keeps records of positioned nodes.
    * Finally it will call _placeBranchNodes to place the branch nodes.
-   *
    * @param {Node} node
    * @param {number} level
    * @param {number} pos
@@ -20187,7 +19787,6 @@ class LayoutEngine {
   /**
    * Receives an array with node indices and returns an array with the actual node references.
    * Used for sorting based on node properties.
-   *
    * @param {Array.<Node.id>} idArray
    * @returns {Array.<Node>}
    */
@@ -20201,7 +19800,6 @@ class LayoutEngine {
 
   /**
    * This function get the distribution of levels based on hubsize
-   *
    * @returns {object}
    * @private
    */
@@ -20231,7 +19829,6 @@ class LayoutEngine {
 
   /**
    * Return the active (i.e. visible) edges for this node
-   *
    * @param {Node} node
    * @returns {Array.<vis.Edge>} Array of edge instances
    * @private
@@ -20250,7 +19847,6 @@ class LayoutEngine {
 
   /**
    * Get the hubsizes for all active nodes.
-   *
    * @returns {number}
    * @private
    */
@@ -20279,7 +19875,6 @@ class LayoutEngine {
 
   /**
    * this function allocates nodes in levels based on the recursive branching from the largest hubs.
-   *
    * @private
    */
   _determineLevelsByHubsize() {
@@ -20306,7 +19901,6 @@ class LayoutEngine {
   /**
    * TODO: release feature
    * TODO: Determine if this feature is needed at all
-   *
    * @private
    */
   _determineLevelsCustomCallback() {
@@ -20340,7 +19934,6 @@ class LayoutEngine {
 
   /**
    * Allocate nodes in levels based on the direction of the edges.
-   *
    * @private
    */
   _determineLevelsDirected() {
@@ -20360,7 +19953,6 @@ class LayoutEngine {
 
   /**
    * Update the bookkeeping of parent and child.
-   *
    * @private
    */
   _generateMap() {
@@ -20379,8 +19971,7 @@ class LayoutEngine {
 
   /**
    * Crawl over the entire network and use a callback on each node couple that is connected to each other.
-   *
-   * @param {Function} [callback=function(){}]          | will receive nodeA, nodeB and the connecting edge. A and B are distinct.
+   * @param {Function} [callback]          | will receive nodeA, nodeB and the connecting edge. A and B are distinct.
    * @param {Node.id} startingNodeId
    * @private
    */
@@ -20440,7 +20031,6 @@ class LayoutEngine {
 
   /**
    * Shift a branch a certain distance
-   *
    * @param {Node.id} parentId
    * @param {number} diff
    * @private
@@ -20466,7 +20056,6 @@ class LayoutEngine {
 
   /**
    * Find a common parent between branches.
-   *
    * @param {Node.id} childA
    * @param {Node.id} childB
    * @returns {{foundParent, withChild}}
@@ -20509,11 +20098,10 @@ class LayoutEngine {
    * Set the strategy pattern for handling the coordinates given the current direction.
    *
    * The individual instances contain all the operations and data specific to a layout direction.
-   *
    * @param {Node} node
    * @param {{x: number, y: number}} position
    * @param {number} level
-   * @param {boolean} [doNotUpdate=false]
+   * @param {boolean} [doNotUpdate]
    * @private
    */
   setDirectionStrategy() {
@@ -20532,7 +20120,6 @@ class LayoutEngine {
    * Determine the center position of a branch from the passed list of child nodes
    *
    * This takes into account the positions of all the child nodes.
-   *
    * @param {Array.<Node|vis.Node.id>} childNodes  Array of either child nodes or node id's
    * @returns {number}
    * @private
@@ -20561,7 +20148,6 @@ class LayoutEngine {
 
 /**
  * Clears the toolbar div element of children
- *
  * @private
  */
 class ManipulationSystem {
@@ -20625,7 +20211,6 @@ class ManipulationSystem {
 
   /**
    * If something changes in the data during editing, switch back to the initial datamanipulation state and close all edit modes.
-   *
    * @private
    */
   _restore() {
@@ -20640,7 +20225,6 @@ class ManipulationSystem {
 
   /**
    * Set the Options
-   *
    * @param {object} options
    * @param {object} allOptions
    * @param {object} globalOptions
@@ -20675,7 +20259,6 @@ class ManipulationSystem {
 
   /**
    * Enable or disable edit-mode. Draws the DOM required and cleans up after itself.
-   *
    * @private
    */
   toggleEditMode() {
@@ -20718,7 +20301,6 @@ class ManipulationSystem {
 
   /**
    * Creates the main toolbar. Removes functions bound to the select event. Binds all the buttons of the toolbar.
-   *
    * @private
    */
   showManipulatorToolbar() {
@@ -21085,7 +20667,6 @@ class ManipulationSystem {
 
   /**
    * draw or remove the DOM
-   *
    * @private
    */
   _setup() {
@@ -21109,7 +20690,6 @@ class ManipulationSystem {
 
   /**
    * create the div overlays that contain the DOM
-   *
    * @private
    */
   _createWrappers() {
@@ -21153,7 +20733,6 @@ class ManipulationSystem {
 
   /**
    * generate a new target node. Used for creating new edges and editing edges
-   *
    * @param {number} x
    * @param {number} y
    * @returns {Node}
@@ -21203,7 +20782,6 @@ class ManipulationSystem {
 
   /**
    * this function cleans up after everything this module does. Temporary elements, functions and events are removed, physics restored, hammers removed.
-   *
    * @private
    */
   _clean() {
@@ -21234,7 +20812,6 @@ class ManipulationSystem {
 
   /**
    * Each dom element has it's own hammer. They are stored in this.manipulationHammers. This cleans them up.
-   *
    * @private
    */
   _cleanupDOMEventListeners() {
@@ -21246,7 +20823,6 @@ class ManipulationSystem {
 
   /**
    * Remove all DOM elements created by this module.
-   *
    * @private
    */
   _removeManipulationDOM() {
@@ -21277,8 +20853,7 @@ class ManipulationSystem {
 
   /**
    * create a seperator line. the index is to differentiate in the manipulation dom
-   *
-   * @param {number} [index=1]
+   * @param {number} [index]
    * @private
    */
   _createSeperator(index = 1) {
@@ -21426,7 +21001,6 @@ class ManipulationSystem {
 
   /**
    * this binds an event until cleanup by the clean functions.
-   *
    * @param {Event}  event   The event
    * @param {Function} newFunction
    * @private
@@ -21441,7 +21015,6 @@ class ManipulationSystem {
 
   /**
    * this overrides an UI function until cleanup by the clean function
-   *
    * @param {string} UIfunctionName
    * @param {Function} newFunction
    * @private
@@ -21463,7 +21036,6 @@ class ManipulationSystem {
 
   /**
    * Restore the overridden UI functions to their original state.
-   *
    * @private
    */
   _unbindTemporaryUIs() {
@@ -21484,7 +21056,6 @@ class ManipulationSystem {
 
   /**
    * Unbind the events created by _temporaryBindEvent
-   *
    * @private
    */
   _unbindTemporaryEvents() {
@@ -21498,7 +21069,6 @@ class ManipulationSystem {
 
   /**
    * Bind an hammer instance to a DOM element.
-   *
    * @param {Element} domElement
    * @param {Function} boundFunction
    */
@@ -21524,7 +21094,6 @@ class ManipulationSystem {
 
   /**
    * Neatly clean up temporary edges and nodes
-   *
    * @private
    */
   _cleanupTemporaryNodesAndEdges() {
@@ -21558,7 +21127,6 @@ class ManipulationSystem {
 
   /**
    * the touch is used to get the position of the initial click
-   *
    * @param {Event}  event   The event
    * @private
    */
@@ -21570,7 +21138,6 @@ class ManipulationSystem {
 
   /**
    * the drag start is used to mark one of the control nodes as selected.
-   *
    * @private
    */
   _controlNodeDragStart() {
@@ -21602,7 +21169,6 @@ class ManipulationSystem {
 
   /**
    * dragging the control nodes or the canvas
-   *
    * @param {Event}  event   The event
    * @private
    */
@@ -21621,7 +21187,6 @@ class ManipulationSystem {
 
   /**
    * connecting or restoring the control nodes.
-   *
    * @param {Event}  event   The event
    * @private
    */
@@ -21674,7 +21239,6 @@ class ManipulationSystem {
   /**
    * the function bound to the selection event. It checks if you want to connect a cluster and changes the description
    * to walk the user through the process.
-   *
    * @param {Event} event
    * @private
    */
@@ -21774,7 +21338,6 @@ class ManipulationSystem {
 
   /**
    * Connect the new edge to the target if one exists, otherwise remove temp line
-   *
    * @param {Event}  event   The event
    * @private
    */
@@ -21853,7 +21416,6 @@ class ManipulationSystem {
 
   /**
    * Adds a node on the specified location
-   *
    * @param {object} clickData
    * @private
    */
@@ -21892,7 +21454,6 @@ class ManipulationSystem {
 
   /**
    * connect two nodes with a new edge.
-   *
    * @param {Node.id} sourceNodeId
    * @param {Node.id} targetNodeId
    * @private
@@ -21927,7 +21488,6 @@ class ManipulationSystem {
 
   /**
    * connect two nodes with a new edge.
-   *
    * @param {Node.id} sourceNodeId
    * @param {Node.id} targetNodeId
    * @private
@@ -22518,7 +22078,6 @@ const allOptions = {
 /**
  * This provides ranges, initial values, steps and dropdown menu choices for the
  * configuration.
- *
  * @remarks
  * Checkbox: `boolean`
  *   The value supllied will be used as the initial value.
@@ -22904,7 +22463,6 @@ class KamadaKawai {
 
   /**
    * Not sure if needed but can be used to update the spring length and spring constant
-   *
    * @param {object} options
    */
   setOptions(options) {
@@ -22920,10 +22478,9 @@ class KamadaKawai {
 
   /**
    * Position the system
-   *
    * @param {Array.<Node>} nodesArray
    * @param {Array.<vis.Edge>} edgesArray
-   * @param {boolean} [ignoreClusters=false]
+   * @param {boolean} [ignoreClusters]
    */
   solve(nodesArray, edgesArray, ignoreClusters = false) {
     // get distance matrix
@@ -22975,7 +22532,6 @@ class KamadaKawai {
 
   /**
    * get the node with the highest energy
-   *
    * @param {boolean} ignoreClusters
    * @returns {number[]}
    * @private
@@ -23012,7 +22568,6 @@ class KamadaKawai {
 
   /**
    * calculate the energy of a single node
-   *
    * @param {Node.id} m
    * @returns {number[]}
    * @private
@@ -23026,7 +22581,6 @@ class KamadaKawai {
   /**
    * move the node based on it's energy
    * the dx and dy are calculated from the linear system proposed by Kamada and Kawai
-   *
    * @param {number} m
    * @param {number} dE_dx
    * @param {number} dE_dy
@@ -23078,7 +22632,6 @@ class KamadaKawai {
 
   /**
    * Create the L matrix: edge length times shortest path
-   *
    * @param {object} D_matrix
    * @private
    */
@@ -23098,7 +22651,6 @@ class KamadaKawai {
 
   /**
    * Create the K matrix: spring constants times shortest path
-   *
    * @param {object} D_matrix
    * @private
    */
@@ -23118,7 +22670,6 @@ class KamadaKawai {
 
   /**
    *  Create matrix with all energies between nodes
-   *
    *  @private
    */
   _createE_matrix() {
@@ -23160,7 +22711,6 @@ class KamadaKawai {
 
   /**
    * Update method, just doing single column (rows are auto-updated) (update all sums)
-   *
    * @param {number} m
    * @private
    */
@@ -23210,7 +22760,6 @@ class KamadaKawai {
 
 /**
  * Create a network visualization, displaying nodes and edges.
- *
  * @param {Element} container   The DOM element in which the Network will
  *                                  be created. Normally a div element.
  * @param {object} data         An object containing parameters
@@ -23348,7 +22897,6 @@ Emitter(Network.prototype);
 
 /**
  * Set options
- *
  * @param {object} options
  */
 Network.prototype.setOptions = function (options) {
@@ -23476,7 +23024,6 @@ Network.prototype.setOptions = function (options) {
  * Visible nodes are stored in this.body.nodeIndices.
  * Visible edges are stored in this.body.edgeIndices.
  * A node or edges is visible if it is not hidden or clustered.
- *
  * @private
  */
 Network.prototype._updateVisibleIndices = function () {
@@ -23547,7 +23094,6 @@ Network.prototype.bindEventListeners = function () {
 
 /**
  * Set nodes and edges, and optionally options as well.
- *
  * @param {object} data              Object containing parameters:
  *                                   {Array | DataSet | DataView} [nodes] Array with nodes
  *                                   {Array | DataSet | DataView} [edges] Array with edges
@@ -23651,7 +23197,6 @@ Network.prototype.destroy = function () {
 /**
  * Update the values of all object in the given array according to the current
  * value range of the objects in the array.
- *
  * @param {object} obj    An object containing a set of Edges or Nodes
  *                        The objects must have a method getValue() and
  *                        setValueRange(min, max).
@@ -23687,7 +23232,6 @@ Network.prototype._updateValueRange = function (obj) {
 
 /**
  * Returns true when the Network is active.
- *
  * @returns {boolean}
  */
 Network.prototype.isActive = function () {
@@ -23716,7 +23260,6 @@ Network.prototype.DOMtoCanvas = function () {
  * cluster 'B' contains cluster 'C',
  * cluster 'C' contains node 'fred'.
  * `jsnetwork.clustering.findNode('fred')` will return `['A','B','C','fred']`.
- *
  * @param {string|number} nodeId
  * @returns {Array}
  */
@@ -23761,7 +23304,6 @@ Network.prototype.updateEdge = function () {
 /**
  * This method will cluster all nodes with 1 edge with their respective connected node.
  * The options object is explained in full <a data-scroll="" data-options="{ &quot;easing&quot;: &quot;easeInCubic&quot; }" href="#optionsObject">below</a>.
- *
  * @param {object} [options]
  * @returns {undefined}
  */

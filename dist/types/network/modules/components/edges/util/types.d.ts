@@ -83,7 +83,6 @@ export interface EdgeType {
     viaPoint?: Point;
     /**
      * Find the intersection between the borders of the nodes and the edge.
-     *
      * @param ctx - The context that will be used for rendering.
      * @returns Cartesian coordinates of the intersections between the borders of the nodes and the edge.
      */
@@ -93,7 +92,6 @@ export interface EdgeType {
     };
     /**
      * Remove additional nodes if some were created.
-     *
      * @returns True if something was cleared, false otherwise.
      */
     cleanup(): boolean;
@@ -103,7 +101,6 @@ export interface EdgeType {
     connect(): void;
     /**
      * Find a point on the edge corresponding to given position on the edge.
-     *
      * @param position - The position on the edge (0 is from and 1 is to node).
      * @param viaNode - Additional control point(s) for the edge.
      * @returns Cartesian coordinates of the requested point on the edge.
@@ -111,13 +108,11 @@ export interface EdgeType {
     getPoint(percentage: number): Point;
     /**
      * Set new edge options.
-     *
      * @param options - The new edge options object.
      */
     setOptions(options: EdgeOptions): void;
     /**
      * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
-     *
      * @param x1 - First end of the line segment on the x axis.
      * @param y1 - First end of the line segment on the y axis.
      * @param x2 - Second end of the line segment on the x axis.
@@ -131,7 +126,6 @@ export interface EdgeType {
      * Redraw a edge as a line
      * Draw this edge in the given canvas
      * The 2d context of a HTML canvas can be retrieved by canvas.getContext("2d");
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values like color, opacity or shadow.
      * @param _selected - Ignored (TODO: remove in the future).
@@ -141,7 +135,6 @@ export interface EdgeType {
     drawLine(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY" | "width">): void;
     /**
      * Reander an arrow head.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param values - Formatting values with color, opacity, etc.
      * @param _selected - Ignored (TODO: remove in the future).
@@ -151,7 +144,6 @@ export interface EdgeType {
     drawArrowHead(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "opacity" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY" | "width">, selected: boolean, hover: boolean, arrowData: ArrowData): void;
     /**
      * Prepare data that can be used to render a middle arrow.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param position - Determines where on the edge should the arrow be rendered.
      * @param viaNode - Additional control point(s) for the edge.
@@ -163,7 +155,6 @@ export interface EdgeType {
     getArrowData(ctx: CanvasRenderingContext2D, position: "middle", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "middleArrowType" | "middleArrowScale" | "width">): ArrowDataWithCore;
     /**
      * Prepare data that can be used to render a to arrow.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param position - Determines where on the edge should the arrow be rendered.
      * @param viaNode - Additional control point(s) for the edge.
@@ -175,7 +166,6 @@ export interface EdgeType {
     getArrowData(ctx: CanvasRenderingContext2D, position: "to", viaNode: VNode, selected: boolean, hover: boolean, values: SelectiveRequired<EdgeFormattingValues, "toArrowType" | "toArrowScale" | "width">): ArrowDataWithCore;
     /**
      * Prepare data that can be used to render a from arrow.
-     *
      * @param ctx - The context that will be used for rendering.
      * @param position - Determines where on the edge should the arrow be rendered.
      * @param viaNode - Additional control point(s) for the edge.

@@ -3,13 +3,11 @@ import { Label, EdgeOptions, Point, VBody } from "./types";
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
  * smooth gradual curves in paths between nodes.
- *
  * @augments BezierEdgeBase
  */
 export declare abstract class CubicBezierEdgeBase<Via> extends BezierEdgeBase<Via> {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -17,7 +15,6 @@ export declare abstract class CubicBezierEdgeBase<Via> extends BezierEdgeBase<Vi
     constructor(options: EdgeOptions, body: VBody, labelModule: Label);
     /**
      * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-     *
      * @remarks
      * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
      * https://en.wikipedia.org/wiki/B%C3%A9zier_curve

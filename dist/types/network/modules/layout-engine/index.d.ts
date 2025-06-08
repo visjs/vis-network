@@ -13,14 +13,12 @@ interface Node {
 }
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
 export declare function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels;
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */

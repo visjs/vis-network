@@ -4,7 +4,6 @@ import { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequi
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
  * curves in paths between nodes. The Dynamic piece refers to how the curve
  * reacts to physics changes.
- *
  * @augments BezierEdgeBase
  */
 export declare class BezierEdgeDynamic extends BezierEdgeBase<Point> {
@@ -12,7 +11,6 @@ export declare class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     private readonly _boundFunction;
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.
@@ -26,7 +24,6 @@ export declare class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     cleanup(): boolean;
     /**
      * Create and add a support node if not already present.
-     *
      * @remarks
      * Bezier curves require an anchor point to calculate the smooth flow.
      * These points are nodes.

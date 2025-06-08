@@ -6,7 +6,6 @@ import { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequi
 export declare class StraightEdge extends EdgeBase {
     /**
      * Create a new instance.
-     *
      * @param options - The options object of given edge.
      * @param body - The body of the network.
      * @param labelModule - Label module.

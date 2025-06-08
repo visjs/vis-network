@@ -6,7 +6,6 @@ export interface ViewFitOptions {
 }
 /**
  * Validate the fit options, replace missing optional values by defaults etc.
- *
  * @param rawOptions - The raw options.
  * @param allNodeIds - All node ids that will be used if nodes are omitted in
  * the raw options.
