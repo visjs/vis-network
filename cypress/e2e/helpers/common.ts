@@ -15,7 +15,6 @@ export interface Point {
 
 /**
  * Generate points to evenly space nodes into a grid around the center (0x0).
- *
  * @param amount - How many nodes.
  * @param size - How big is the (square) canvas.
  * @returns The points that can be spread into node options.

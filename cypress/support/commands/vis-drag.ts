@@ -5,7 +5,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Drag along paths.
-       *
        * @param paths - The paths to drag along.
        */
       visDrag(paths: readonly DragPath[]): Chainable<Subject>;

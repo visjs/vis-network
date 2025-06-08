@@ -48,7 +48,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Create a new instance.
-   *
    * @param options - The options object of given edge.
    * @param _body - The body of the network.
    * @param _labelModule - Label module.
@@ -66,7 +65,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Find the intersection between the border of the node and the edge.
-   *
    * @param node - The node (either from or to node of the edge).
    * @param ctx - The context that will be used for rendering.
    * @param options - Additional options.
@@ -80,7 +78,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Return additional point(s) the edge passes through.
-   *
    * @returns Cartesian coordinates of the point(s) the edge passes through.
    */
   public abstract getViaNode(): Via;
@@ -101,7 +98,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Set new edge options.
-   *
    * @param options - The new edge options object.
    */
   public setOptions(options: EdgeOptions): void {
@@ -142,7 +138,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Draw a line with given style between two nodes through supplied node(s).
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
    * @param viaNode - Additional control point(s) for the edge.
@@ -170,7 +165,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Draw a dashed line with given style between two nodes through supplied node(s).
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
    * @param viaNode - Additional control point(s) for the edge.
@@ -239,7 +233,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Draw a line with given style between two nodes through supplied node(s).
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
    * @param viaNode - Additional control point(s) for the edge.
@@ -256,7 +249,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Find the intersection between the border of the node and the edge.
-   *
    * @param node - The node (either from or to node of the edge).
    * @param ctx - The context that will be used for rendering.
    * @param options - Additional options.
@@ -308,7 +300,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Compute the center point and radius of an edge connected to the same node at both ends.
-   *
    * @param ctx - The context that will be used for rendering.
    * @returns `[x, y, radius]`
    */
@@ -336,7 +327,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Get a point on a circle.
-   *
    * @param x - Center of the circle on the x axis.
    * @param y - Center of the circle on the y axis.
    * @param radius - Radius of the circle.
@@ -358,7 +348,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Find the intersection between the border of the node and the edge.
-   *
    * @remarks
    * This function uses binary search to look for the point where the circle crosses the border of the node.
    * @param nearNode - The node (either from or to node of the edge).
@@ -435,7 +424,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Get the line width of the edge. Depends on width and whether one of the connected nodes is selected.
-   *
    * @param selected - Determines wheter the line is selected.
    * @param hover - Determines wheter the line is being hovered, only applies if selected is false.
    * @returns The width of the line.
@@ -452,7 +440,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Compute the color or gradient for given edge.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
    * @param _selected - Ignored (TODO: remove in the future).
@@ -509,7 +496,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Draw a line from a node to itself, a circle.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values like color, opacity or shadow.
    * @param x - Center of the circle on the x axis.
@@ -591,7 +577,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
-   *
    * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
    * @param x1 - First end of the line segment on the x axis.
@@ -615,7 +600,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Calculate the distance between a point (x3, y3) and a line segment from (x1, y1) to (x2, y2).
-   *
    * @param x1 - First end of the line segment on the x axis.
    * @param y1 - First end of the line segment on the y axis.
    * @param x2 - Second end of the line segment on the x axis.
@@ -852,7 +836,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Set the shadow formatting values in the context if enabled, do nothing otherwise.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values for the shadow.
    */
@@ -873,7 +856,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Reset the shadow formatting values in the context if enabled, do nothing otherwise.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values for the shadow.
    */
@@ -891,7 +873,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Render the background according to the formatting values.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param values - Formatting values for the background.
    */
@@ -926,7 +907,6 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
 
   /**
    * Set the line dash pattern if supported. Logs a warning to the console if it isn't supported.
-   *
    * @param ctx - The context that will be used for rendering.
    * @param dashes - The pattern [line, space, line…], true for default dashed line or false for normal line.
    */

@@ -20,7 +20,6 @@ declare global {
       /**
        * Runs custom code with the network instance and data sets available
        * after it has been stabilized and fitted.
-       *
        * @param callback - The callback that will be executed within
        * `cy.window().then` environment.
        * @param options - Additional options.

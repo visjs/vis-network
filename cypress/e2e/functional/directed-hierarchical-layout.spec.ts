@@ -9,7 +9,6 @@ import {
 /**
  * Generate a consecutive list of ids starting with first and ending with last
  * including both.
- *
  * @param first - Number of the first id to generate.
  * @param last - Number of the last id to generate.
  * @returns An array of ids for example `"node0"` or `"node789"`.
@@ -34,7 +33,6 @@ describe("Directed hierarchical layout", (): void => {
      * Each member of this list clusters more nodes. Swallows edges refers to
      * how many edges disappear from the network thanks to the newly created
      * cluster.
-     *
      * @remarks The result of this is accumulated. For example for three lists
      * of node ids four tests will be run: One with no clusters, one with first
      * cluster, one with first and second and one with first through third

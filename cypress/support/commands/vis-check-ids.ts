@@ -5,7 +5,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Check ids after some actions.
-       *
        * @param before -
        * @param between -
        * @param after -

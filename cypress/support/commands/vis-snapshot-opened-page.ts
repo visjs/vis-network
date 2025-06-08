@@ -7,7 +7,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Take a screenshot of the canvas of opened page.
-       *
        * @param label - Snapshot file label. Numbers will be padded by zeros.
        * @param options - Passed to cy.visVisitUniversal.
        */

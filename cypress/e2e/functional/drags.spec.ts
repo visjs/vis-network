@@ -2,7 +2,6 @@ import { Point, VisEvent } from "../helpers";
 
 /**
  * Create drag events according to given path.
- *
  * @param coords - Defined the path and the names of events to be triggered
  * along the way.
  * @returns An array that will be filled with events once Cypress decides to

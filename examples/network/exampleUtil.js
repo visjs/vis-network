@@ -10,7 +10,6 @@
 
 /**
  * Created by Alex on 5/20/2015.
- *
  * @remarks
  * This depends on Alea from https://unpkg.com/alea@1.0.0/alea.js.
  */

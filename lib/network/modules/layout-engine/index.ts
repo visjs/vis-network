@@ -14,7 +14,6 @@ interface Node {
 
 /**
  * Try to assign levels to nodes according to their positions in the cyclic “hierarchy”.
- *
  * @param nodes - Visible nodes of the graph.
  * @param levels - If present levels will be added to it, if not a new object will be created.
  * @returns Populated node levels.
@@ -50,7 +49,6 @@ function fillLevelsByDirectionCyclic(
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Leaves will be lined up at the bottom and all other nodes as close to their children as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
@@ -73,7 +71,6 @@ export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy. Roots will be lined up at the top and all nodes as close to their parents as possible.
- *
  * @param nodes - Visible nodes of the graph.
  * @returns Populated node levels.
  */
@@ -96,7 +93,6 @@ export function fillLevelsByDirectionRoots(nodes: Map<Id, Node>): Levels {
 
 /**
  * Assign levels to nodes according to their positions in the hierarchy.
- *
  * @param isEntryNode - Checks and return true if the graph should be traversed from this node.
  * @param shouldLevelBeReplaced - Checks and returns true if the level of given node should be updated to the new value.
  * @param direction - Wheter the graph should be traversed in the direction of the edges `"to"` or in the other way `"from"`.

@@ -5,13 +5,11 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Check that given event was fired.
-       *
        * @param name - The name of the event as used by Network.on().
        */
       visShiftAndAssertEventFired(name: NetworkEvents): Chainable<Subject>;
       /**
        * Check that given event was fired.
-       *
        * @param name - The name of the event as used by Network.on().
        * @param params - The params of the event as supplied by Network.on().
        */
@@ -21,7 +19,6 @@ declare global {
       ): Chainable<Subject>;
       /**
        * Check that given event was not fired.
-       *
        * @param name - The name of the event as used by Network.on().
        */
       visShiftAndAssertEventNone(

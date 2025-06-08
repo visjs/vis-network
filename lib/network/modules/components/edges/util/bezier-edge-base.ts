@@ -17,7 +17,6 @@ import {
 export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
   /**
    * Create a new instance.
-   *
    * @param options - The options object of given edge.
    * @param body - The body of the network.
    * @param labelModule - Label module.
@@ -28,14 +27,12 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
 
   /**
    * Compute additional point(s) the edge passes through.
-   *
    * @returns Cartesian coordinates of the point(s) the edge passes through.
    */
   protected abstract _getViaCoordinates(): Via;
 
   /**
    * Find the intersection between the border of the node and the edge.
-   *
    * @remarks
    * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
    * @param nearNode - The node (either from or to node of the edge).
@@ -116,7 +113,6 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
 
   /**
    * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
-   *
    * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
    * @param x1 - First end of the line segment on the x axis.
@@ -162,7 +158,6 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
 
   /**
    * Render a bezier curve between two nodes.
-   *
    * @remarks
    * The method accepts zero, one or two control points.
    * Passing zero control points just draws a straight line.

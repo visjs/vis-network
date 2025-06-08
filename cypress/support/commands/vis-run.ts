@@ -13,7 +13,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Runs custom code with the network instance and data sets available.
-       *
        * @param callback - The callback that will be executed within
        * `cy.window().then` environment.
        * @param options - Additional options.

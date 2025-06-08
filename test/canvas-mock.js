@@ -10,7 +10,6 @@ let canvasMock; // Use one canvas instance for all calls to createElement('canva
 
 /**
  * Replace element's getContext method with a do nothing mock.
- *
  * @param {HTMLElement} el - The element whose getContext will be mocked.
  */
 function replaceCanvasContext(el) {
@@ -67,7 +66,6 @@ function replaceCanvasContext(el) {
  *
  * The override is only done if there is no 2D context already present.
  * This allows for normal running in a browser, and for node.js the usage of 'canvas'.
- *
  * @param {object} window - current global window object. This can possibly come from module 'jsdom',
  *                 when running under node.js.
  * @private
@@ -101,7 +99,6 @@ function overrideCreateElement(window) {
  * The override is only done if there is no 2D context already present.
  * This allows for normal running in a browser, and for node.js the usage of 'style'
  * property on a newly created svg element.
- *
  * @param {object} window - current global window object. This can possibly come from module 'jsdom',
  *                 when running under node.js.
  * @private
@@ -126,8 +123,7 @@ function overrideCreateElementNS(window) {
  *
  * Suppresses a warning from `jsdom` on usage of `getContext()`. A mock definition is added for
  * it, so the message is not relevant.
- *
- * @param {string} [html='']  html definitions which should be added to the jsdom definition
+ * @param {string} [html]  html definitions which should be added to the jsdom definition
  * @returns {Function}  function to call in after(), to clean up for `jsdom_global`
  */
 export function canvasMockify(html = "") {
