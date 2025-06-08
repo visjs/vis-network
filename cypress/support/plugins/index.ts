@@ -1,1 +1,1 @@
-export * from "./cypress-visual-regression";
+import "./cypress-visual-regression";
