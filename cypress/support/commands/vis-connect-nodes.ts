@@ -6,7 +6,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Connect nodes at given positions with a new edge.
-       *
        * @param from - DOM from node coords.
        * @param to - DOM to node coords.
        */

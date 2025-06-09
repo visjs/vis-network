@@ -16,7 +16,6 @@ import {
 export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
   /**
    * Create a new instance.
-   *
    * @param options - The options object of given edge.
    * @param body - The body of the network.
    * @param labelModule - Label module.
@@ -47,7 +46,6 @@ export class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
 
   /**
    * Compute the additional points the edge passes through.
-   *
    * @returns Cartesian coordinates of the points the edge passes through.
    */
   protected _getViaCoordinates(): [Point, Point] {

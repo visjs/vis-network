@@ -5,7 +5,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Place a new node on the canvas.
-       *
        * @param x - DOM x coord.
        * @param y - DOM y coord.
        */

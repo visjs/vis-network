@@ -19,7 +19,6 @@ import { allOptions, configureOptions } from "../lib/network/options";
 
 /**
  * Merge all options of object b into object b
- *
  * @param {object} a - The object to be modified and returned.
  * @param {object} b - The source of properties.
  * @returns {object} a

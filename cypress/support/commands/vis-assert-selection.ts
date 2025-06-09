@@ -5,7 +5,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Check selected nodes and edges.
-       *
        * @param selection - The same format as in Network.getSelection().
        */
       visAssertSelection(selection: {

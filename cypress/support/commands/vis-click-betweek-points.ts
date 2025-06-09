@@ -5,7 +5,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Click between two points.
-       *
        * @param a - DOM x, y coords.
        * @param b - DOM x, y coords.
        */

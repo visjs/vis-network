@@ -32,7 +32,6 @@ import { drawCircle } from "./shapes";
 
 /**
  * Common methods for endpoints
- *
  * @class
  */
 class EndPoint {
@@ -43,7 +42,6 @@ class EndPoint {
    * - rotate by the specified angle
    * - multiply the (normalized) coordinates by the passed length
    * - offset by the target coordinates
-   *
    * @param points - The point(s) to be transformed.
    * @param arrowData - The data determining the result of the transformation.
    */
@@ -69,7 +67,6 @@ class EndPoint {
 
   /**
    * Draw a closed path using the given real coordinates.
-   *
    * @param ctx - The path will be rendered into this context.
    * @param points - The points of the path.
    */
@@ -89,7 +86,6 @@ class EndPoint {
 class Image extends EndPoint {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns False as there is no way to fill an image.
@@ -135,7 +131,6 @@ class Image extends EndPoint {
 class Arrow extends EndPoint {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -166,7 +161,6 @@ class Arrow extends EndPoint {
 class Crow {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -197,7 +191,6 @@ class Crow {
 class Curve {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -240,7 +233,6 @@ class Curve {
 class InvertedCurve {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -283,7 +275,6 @@ class InvertedCurve {
 class Triangle {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -313,7 +304,6 @@ class Triangle {
 class InvertedTriangle {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -343,7 +333,6 @@ class InvertedTriangle {
 class Circle {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -367,7 +356,6 @@ class Circle {
 class Bar {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -409,7 +397,6 @@ class Bar {
 class Box {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -438,7 +425,6 @@ class Box {
 class Diamond {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -467,7 +453,6 @@ class Diamond {
 class Vee {
   /**
    * Draw this shape at the end of a line.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True because ctx.fill() can be used to fill the arrow.
@@ -498,7 +483,6 @@ class Vee {
 export class EndPoints {
   /**
    * Draw an endpoint.
-   *
    * @param ctx - The shape will be rendered into this context.
    * @param arrowData - The data determining the shape.
    * @returns True if ctx.fill() can be used to fill the arrow, false otherwise.

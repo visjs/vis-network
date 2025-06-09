@@ -6,7 +6,6 @@ declare global {
       /**
        * Click a node based on given node id.
        * Fails if the node doesn't end up in the selection.
-       *
        * @param id - Id of the node to be clicked.
        */
       visClickNode<S>(id: IdType): Chainable<S>;

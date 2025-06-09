@@ -11,7 +11,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Stabilizes and fits the network.
-       *
        * @param options - Additional options.
        */
       visStabilizeAndFit<S>(options?: VisStabilizeAndFitOptions): Chainable<S>;

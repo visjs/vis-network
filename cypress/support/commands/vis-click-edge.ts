@@ -6,7 +6,6 @@ declare global {
       /**
        * Click an edge based on given edge id.
        * Fails if the edge doesn't end up in the selection.
-       *
        * @param id - Id of the edge to be clicked.
        */
       visClickEdge(id: IdType): Chainable<Subject>;

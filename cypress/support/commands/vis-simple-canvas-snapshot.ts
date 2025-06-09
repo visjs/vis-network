@@ -7,7 +7,6 @@ declare global {
       /**
        * Open universal page with given configuration and take a screenshot of
        * the canvas.
-       *
        * @param label - Snapshot file label. Numbers will be padded by zeros.
        * @param config - Passed to cy.visVisitUniversal.
        * @param options - Passed to cy.visVisitUniversal and

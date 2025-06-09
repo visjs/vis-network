@@ -49,7 +49,6 @@ describe("Network Label", function () {
    * Retrieve options object from a NodesHandler instance
    *
    * NOTE: these are options at the node-level
-   *
    * @param options
    */
   function getOptions(options = {}) {
@@ -76,7 +75,6 @@ describe("Network Label", function () {
    *
    * All width/height fields and font info are ignored.
    * Within blocks, only the text is compared
-   *
    * @param returned
    * @param expected
    */
@@ -1195,7 +1193,6 @@ describe("Network Label", function () {
     it("sets and uses font.multi in group options", function (done) {
       /**
        * Helper function for easily accessing font options in a node
-       *
        * @param index
        */
       const fontOption = (index) => {
@@ -1205,7 +1202,6 @@ describe("Network Label", function () {
 
       /**
        * Helper function for easily accessing bold options in a node
-       *
        * @param index
        */
       const modBold = (index) => {
@@ -1505,7 +1501,6 @@ describe("Network Label", function () {
      * Split a string at the given location, return either first or last part
      *
      * Allows negative indexing, counting from back (ruby style)
-     *
      * @param text
      * @param pos
      * @param getFirst

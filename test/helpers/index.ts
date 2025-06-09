@@ -1,6 +1,5 @@
 /**
  * Prevents supplied object from being modified.
- *
  * @remarks
  * Has no problem with cycles.
  * Can receive frozen or parially frozen objects.
@@ -17,7 +16,6 @@ export function deepFreeze<T extends object>(
 
   /**
    * Recursivelly freezes objects using alreadyFrozen to prevent infinite cycles.
-   *
    * @param object - The object to be recursively frozen.
    * @returns The frozen object (the same instance as object param).
    */
@@ -50,7 +48,6 @@ export function deepFreeze<T extends object>(
 
 /**
  * Sort arrays in given input.
- *
  * @remarks
  * This is intended to be used with assertions when the order doesn't matter.
  * @param input - The input whose arrays should be sorted (in-place).

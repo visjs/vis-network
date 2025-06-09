@@ -5,7 +5,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Click point.
-       *
        * @param a - DOM x, y coords.
        */
       visClickPoint(a: Point): Chainable<Subject>;

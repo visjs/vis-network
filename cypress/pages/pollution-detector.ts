@@ -1,7 +1,6 @@
 interface TraverseParameters {
   /**
    * Callback that is executed for each value found during traversal.
-   *
    * @param value - Current value.
    * @param path - Path to the value in dot notation.
    * @returns True to investigate this value further, false to ignore this
@@ -53,7 +52,6 @@ export class PollutionDetector {
   /**
    * Traverses the provided object ommiting whitelisted paths, getters and
    * ignoring exceptions.
-   *
    * @param root0
    * @param root0.callback
    * @param root0.done
@@ -108,7 +106,6 @@ export class PollutionDetector {
 
   /**
    * Recursively save current state.
-   *
    * @param prefix - The path to the root in dot notation.
    * @param root - The object to be traversed from.
    * @param whitelist - A set of paths to be ignored during traversal. This
@@ -141,7 +138,6 @@ export class PollutionDetector {
 
   /**
    * Recursively check the differences between current state and saved state.
-   *
    * @returns Sets listing paths of found differences (additions, changes and deletions).
    */
   public async check(): Promise<{

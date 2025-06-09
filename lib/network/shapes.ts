@@ -1,6 +1,5 @@
 /**
  * Draw a circle.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -19,7 +18,6 @@ export function drawCircle(
 
 /**
  * Draw a square.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -38,7 +36,6 @@ export function drawSquare(
 
 /**
  * Draw an equilateral triangle standing on a side.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -72,7 +69,6 @@ export function drawTriangle(
 
 /**
  * Draw an equilateral triangle standing on a vertex.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -106,7 +102,6 @@ export function drawTriangleDown(
 
 /**
  * Draw a star.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -138,7 +133,6 @@ export function drawStar(
 
 /**
  * Draw a diamond.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -164,7 +158,6 @@ export function drawDiamond(
 
 /**
  * Draw a rectangle with rounded corners.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -204,7 +197,6 @@ export function drawRoundRect(
 
 /**
  * Draw an ellipse.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -241,7 +233,6 @@ export function drawEllipse(
 
 /**
  * Draw an isometric cylinder.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -290,7 +281,6 @@ export function drawDatabase(
 
 /**
  * Draw a dashed line.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The start position on the x axis.
  * @param y - The start position on the y axis.
@@ -347,7 +337,6 @@ export function drawDashedLine(
 
 /**
  * Draw a hexagon.
- *
  * @param ctx - The context this shape will be rendered to.
  * @param x - The position of the center on the x axis.
  * @param y - The position of the center on the y axis.
@@ -386,7 +375,6 @@ const shapeMap = {
 
 /**
  * Returns either custom or native drawing function base on supplied name.
- *
  * @param name - The name of the function. Either the name of a
  * CanvasRenderingContext2D property or an export from shapes.ts without the
  * draw prefix.

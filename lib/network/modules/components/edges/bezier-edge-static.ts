@@ -16,7 +16,6 @@ import {
 export class BezierEdgeStatic extends BezierEdgeBase<Point> {
   /**
    * Create a new instance.
-   *
    * @param options - The options object of given edge.
    * @param body - The body of the network.
    * @param labelModule - Label module.
@@ -49,7 +48,6 @@ export class BezierEdgeStatic extends BezierEdgeBase<Point> {
 
   /**
    * Compute the coordinates of the via node.
-   *
    * @remarks
    * We do not use the to and fromPoints here to make the via nodes the same as edges without arrows.
    * @returns Cartesian coordinates of the via node.

@@ -6,7 +6,6 @@ declare global {
     interface Chainable<Subject> {
       /**
        * Open the universal page.
-       *
        * @param config - Network nodes, edges, options…
        * @param options - Version constrains.
        */
@@ -24,7 +23,6 @@ export interface VisVisitPageOptions extends UniversalNetworkConfig {
 
 /**
  * Load universal page with given version of Vis Network.
- *
  * @param config - Network nodes, edges, options…
  */
 function visitPage(config: UniversalConfig): void {

@@ -4,7 +4,6 @@ import { configureOptions } from "../lib/network/options";
 
 /**
  * Traverse the root and test all the nested options.
- *
  * @param root - An object containing potentially nested configure options.
  * @param rootPath - The path that was used to get to the root. Can be omitted
  * if the root is the top level object.
