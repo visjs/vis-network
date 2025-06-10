@@ -1,12 +1,12 @@
 {
-  "name": "vis-network",
-  "version": "0.0.0-no-version",
-  "description": "A dynamic, browser-based visualization library.",
-  "homepage": "https://visjs.github.io/vis-network/",
+  "name": "vis-network-moneyflow",
+  "version": "1.0.0",
+  "description": "A dynamic, browser-based visualization library (forked from vis-network).",
+  "homepage": "https://github.com/beatriceev/vis-network",
   "license": "(Apache-2.0 OR MIT)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/visjs/vis-network.git"
+    "url": "https://github.com/beatriceev/vis-network.git"
   },
   "bugs": {
     "url": "https://github.com/visjs/vis-network/issues"
@@ -21,7 +21,9 @@
     "chart",
     "graph",
     "network",
-    "browser"
+    "browser",
+    "fork",
+    "custom"
   ],
   "browser": "peer/umd/vis-network.min.js",
   "jsnext": "esnext/esm/vis-network.js",
