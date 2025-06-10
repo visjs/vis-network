@@ -53,27 +53,14 @@ function fillLevelsByDirectionCyclic(
  * @returns Populated node levels.
  */
 export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
-  // Collect valid leaf nodes
-  const entryNodes: Node[] = [];
-  nodes.forEach((node) => {
-    // Pick only leaves (nodes without children).
-    const isLeaf = node.edges
-      // Take only visible nodes into account.
-      .filter((edge) => nodes.has(edge.toId))
-      // Check that all edges lead to this node (leaf).
-      .every((edge) => edge.to === node);
-    if (isLeaf) {
-      entryNodes.push(node);
-    }
-  });
-
-  if (entryNodes.length === 0) {
-    return fillLevelsByDirectionCyclic(nodes, {});
-  }
-
   return fillLevelsByDirection(
     // Pick only leaves (nodes without children).
-    (node): boolean => entryNodes.includes(node),
+    (node): boolean =>
+      node.edges
+        // Take only visible nodes into account.
+        .filter((edge): boolean => nodes.has(edge.toId))
+        // Check that all edges lead to this node (leaf).
+        .every((edge): boolean => edge.to === node),
     // Use the lowest level.
     (newLevel, oldLevel): boolean => oldLevel > newLevel,
     // Go against the direction of the edges.
@@ -88,27 +75,14 @@ export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
  * @returns Populated node levels.
  */
 export function fillLevelsByDirectionRoots(nodes: Map<Id, Node>): Levels {
-  // Collect valid root nodes
-  const entryNodes: Node[] = [];
-  nodes.forEach((node) => {
-    // Pick only leaves (nodes without children).
-    const isRoot = node.edges
-      // Take only visible nodes into account.
-      .filter((edge) => nodes.has(edge.toId))
-      // Check that all edges lead from this node (root).
-      .every((edge) => edge.from === node);
-    if (isRoot) {
-      entryNodes.push(node);
-    }
-  });
-
-  if (entryNodes.length === 0) {
-    return fillLevelsByDirectionCyclic(nodes, {});
-  }
-
   return fillLevelsByDirection(
     // Pick only roots (nodes without parents).
-    (node): boolean => entryNodes.includes(node),
+    (node): boolean =>
+      node.edges
+        // Take only visible nodes into account.
+        .filter((edge): boolean => nodes.has(edge.toId))
+        // Check that all edges lead from this node (root).
+        .every((edge): boolean => edge.from === node),
     // Use the highest level.
     (newLevel, oldLevel): boolean => oldLevel < newLevel,
     // Go in the direction of the edges.
