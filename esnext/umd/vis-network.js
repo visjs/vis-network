@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-06-09T06:34:26.008Z
+ * @date    2025-06-10T17:24:16.262Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18570,26 +18570,23 @@
     }
 
     /**
-     * Small util method to set the minimum levels of the nodes to zero.
-     * @param {Array.<Node>} nodes
+     * Small util method to set the minimum levels of the nodes to zero and
+     * eliminate gaps (for cyclic).
      */
-    setMinLevelToZero(nodes) {
-      let minLevel = 1e9;
-      // get the minimum level
-      for (const nodeId in nodes) {
-        if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
-          if (this.levels[nodeId] !== undefined) {
-            minLevel = Math.min(this.levels[nodeId], minLevel);
-          }
-        }
+    setMinLevelToZero() {
+      const remap = new Map();
+      let newLevel = 0;
+      const uniqueSortedLevels = [...new Set(Object.values(this.levels))].sort(
+        (a, b) => a - b
+      );
+
+      for (const level of uniqueSortedLevels) {
+        remap.set(level, newLevel++);
       }
 
-      // subtract the minimum from the set so we have a range starting from 0
-      for (const nodeId in nodes) {
-        if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
-          if (this.levels[nodeId] !== undefined) {
-            this.levels[nodeId] -= minLevel;
-          }
+      for (const nodeId in this.levels) {
+        if (Object.prototype.hasOwnProperty.call(this.levels, nodeId)) {
+          this.levels[nodeId] = remap.get(this.levels[nodeId]);
         }
       }
     }
@@ -19928,7 +19925,7 @@
       };
 
       this._crawlNetwork(levelByDirection);
-      this.hierarchical.setMinLevelToZero(this.body.nodes);
+      this.hierarchical.setMinLevelToZero();
     }
 
     /**
@@ -19947,7 +19944,7 @@
         this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes);
       }
 
-      this.hierarchical.setMinLevelToZero(this.body.nodes);
+      this.hierarchical.setMinLevelToZero();
     }
 
     /**

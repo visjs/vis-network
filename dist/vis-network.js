@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-06-09T06:35:42.026Z
+ * @date    2025-06-10T17:25:35.263Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -31994,26 +31994,20 @@
 	  }
 
 	  /**
-	   * Small util method to set the minimum levels of the nodes to zero.
-	   * @param {Array.<Node>} nodes
+	   * Small util method to set the minimum levels of the nodes to zero and
+	   * eliminate gaps (for cyclic).
 	   */
-	  setMinLevelToZero(nodes) {
-	    let minLevel = 1e9;
-	    // get the minimum level
-	    for (const nodeId in nodes) {
-	      if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
-	        if (this.levels[nodeId] !== undefined) {
-	          minLevel = Math.min(this.levels[nodeId], minLevel);
-	        }
-	      }
+	  setMinLevelToZero() {
+	    var _context;
+	    const remap = new _Map();
+	    let newLevel = 0;
+	    const uniqueSortedLevels = _sortInstanceProperty(_context = [...new _Set(_Object$values(this.levels))]).call(_context, (a, b) => a - b);
+	    for (const level of uniqueSortedLevels) {
+	      remap.set(level, newLevel++);
 	    }
-
-	    // subtract the minimum from the set so we have a range starting from 0
-	    for (const nodeId in nodes) {
-	      if (Object.prototype.hasOwnProperty.call(nodes, nodeId)) {
-	        if (this.levels[nodeId] !== undefined) {
-	          this.levels[nodeId] -= minLevel;
-	        }
+	    for (const nodeId in this.levels) {
+	      if (Object.prototype.hasOwnProperty.call(this.levels, nodeId)) {
+	        this.levels[nodeId] = remap.get(this.levels[nodeId]);
 	      }
 	    }
 	  }
@@ -33006,11 +33000,11 @@
 	    // start placing all the level 0 nodes first. Then recursively position their branches.
 	    for (const level in distribution) {
 	      if (Object.prototype.hasOwnProperty.call(distribution, level)) {
-	        var _context;
+	        var _context2;
 	        // sort nodes in level by position:
 	        let nodeArray = _Object$keys(distribution[level]);
 	        nodeArray = this._indexArrayToNodes(nodeArray);
-	        _sortInstanceProperty(_context = this.direction).call(_context, nodeArray);
+	        _sortInstanceProperty(_context2 = this.direction).call(_context2, nodeArray);
 	        let handledNodeCount = 0;
 	        for (let i = 0; i < nodeArray.length; i++) {
 	          const node = nodeArray[i];
@@ -33039,7 +33033,7 @@
 	   * @private
 	   */
 	  _placeBranchNodes(parentId, parentLevel) {
-	    var _context2;
+	    var _context3;
 	    const childRef = this.hierarchical.childrenReference[parentId];
 
 	    // if this is not a parent, cancel the placing. This can happen with multiple parents to one child.
@@ -33054,7 +33048,7 @@
 	    }
 
 	    // use the positions to order the nodes.
-	    _sortInstanceProperty(_context2 = this.direction).call(_context2, childNodes);
+	    _sortInstanceProperty(_context3 = this.direction).call(_context3, childNodes);
 
 	    // position the childNodes
 	    for (let i = 0; i < childNodes.length; i++) {
@@ -33161,8 +33155,8 @@
 	  _getActiveEdges(node) {
 	    const result = [];
 	    forEach$1(node.edges, edge => {
-	      var _context3;
-	      if (_indexOfInstanceProperty(_context3 = this.body.edgeIndices).call(_context3, edge.id) !== -1) {
+	      var _context4;
+	      if (_indexOfInstanceProperty(_context4 = this.body.edgeIndices).call(_context4, edge.id) !== -1) {
 	        result.push(edge);
 	      }
 	    });
@@ -33239,7 +33233,7 @@
 	      this.hierarchical.levels[nodeB.id] = levelA + diff;
 	    };
 	    this._crawlNetwork(levelByDirection);
-	    this.hierarchical.setMinLevelToZero(this.body.nodes);
+	    this.hierarchical.setMinLevelToZero();
 	  }
 
 	  /**
@@ -33247,8 +33241,8 @@
 	   * @private
 	   */
 	  _determineLevelsDirected() {
-	    var _context4;
-	    const nodes = _reduceInstanceProperty(_context4 = this.body.nodeIndices).call(_context4, (acc, id) => {
+	    var _context5;
+	    const nodes = _reduceInstanceProperty(_context5 = this.body.nodeIndices).call(_context5, (acc, id) => {
 	      acc.set(id, this.body.nodes[id]);
 	      return acc;
 	    }, new _Map());
@@ -33257,7 +33251,7 @@
 	    } else {
 	      this.hierarchical.levels = fillLevelsByDirectionLeaves(nodes);
 	    }
-	    this.hierarchical.setMinLevelToZero(this.body.nodes);
+	    this.hierarchical.setMinLevelToZero();
 	  }
 
 	  /**
