@@ -108,7 +108,7 @@
     "@semantic-release/github": "11.0.3",
     "@semantic-release/npm": "12.0.1",
     "@semantic-release/release-notes-generator": "14.0.3",
-    "@types/chai": "4.3.20",
+    "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",
     "@types/sinon": "17.0.4",
     "@types/uuid": "9.0.8",
