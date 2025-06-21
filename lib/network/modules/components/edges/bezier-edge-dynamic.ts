@@ -1,5 +1,5 @@
-import { BezierEdgeBase } from "./util/bezier-edge-base";
-import {
+import { BezierEdgeBase } from "./util/bezier-edge-base.ts";
+import type {
   EdgeFormattingValues,
   Label,
   EdgeOptions,
@@ -8,7 +8,7 @@ import {
   SelectiveRequired,
   VBody,
   VNode,
-} from "./util/types";
+} from "./util/types.ts";
 
 /**
  * A Dynamic Bezier Edge. Bezier curves are used to model smooth gradual
@@ -17,7 +17,8 @@ import {
  * @augments BezierEdgeBase
  */
 export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
-  public via: VNode = this.via; // constructor → super → super → setOptions → setupSupportNode
+  // @ts-expect-error constructor → super → super → setOptions → setupSupportNode
+  public via: VNode = this.via;
   private readonly _boundFunction: () => void;
 
   /**

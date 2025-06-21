@@ -1,17 +1,20 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "baseUrl": ".",
     "declaration": false,
     "declarationMap": false,
     "esModuleInterop": true,
-    "module": "es2015",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "dist/src",
+    "noEmit": true,
+    "outDir": "dist",
     "paths": {},
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2020"
+    "target": "ESNext"
   },
   "exclude": ["node_modules", "**/__tests__/*"]
 }

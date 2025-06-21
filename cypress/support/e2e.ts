@@ -18,9 +18,6 @@ import "./commands";
 
 import "./plugins";
 
-// Alternatively you can use CommonJS syntax:
-// require("./commands");
-
 /*
  * Cypress for some reason doesn't accept TS support files. Transpile them by
  * invoking `tsc` in this dir (`cypress/support`).

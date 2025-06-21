@@ -27,8 +27,8 @@
  * =============================================================================
  */
 
-import { ArrowData, Point } from "./types";
-import { drawCircle } from "./shapes";
+import type { ArrowData, Point } from "./types.ts";
+import { drawCircle } from "./shapes.ts";
 
 /**
  * Common methods for endpoints

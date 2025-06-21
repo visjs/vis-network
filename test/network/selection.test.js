@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import Network from "../../lib/network/Network";
-import { canvasMockify } from "../canvas-mock";
-import { sortArrays } from "../helpers";
+import Network from "../../lib/network/Network.js";
+import { canvasMockify } from "../canvas-mock.js";
+import { sortArrays } from "../helpers/index.ts";
 
 describe("Network", function () {
   before(function () {

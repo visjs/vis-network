@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import Edge from "../lib/network/modules/components/Edge";
+import Edge from "../lib/network/modules/components/Edge.js";
 
 describe("Edge color", function (): void {
   const setOptions = Edge.prototype.setOptions;

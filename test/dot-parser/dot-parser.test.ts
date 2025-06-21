@@ -2,7 +2,7 @@ import { expect } from "chai";
 
 import { readFileSync, readdirSync } from "fs";
 
-import { DOTToGraph, parseDOT } from "../../lib/network/dotparser";
+import { DOTToGraph, parseDOT } from "../../lib/network/dotparser.js";
 
 describe("DOT", function (): void {
   const dotRE = /\.gv\.txt$/i;

@@ -1,6 +1,6 @@
 import { overrideOpacity } from "vis-util/esnext";
-import { EndPoints } from "./end-points";
-import {
+import { EndPoints } from "./end-points.ts";
+import type {
   ArrowData,
   ArrowDataWithCore,
   ArrowType,
@@ -14,9 +14,9 @@ import {
   SelectiveRequired,
   VBody,
   VNode,
-} from "./types";
-import { drawDashedLine } from "./shapes";
-import { getSelfRefCoordinates } from "../../shared/ComponentUtil";
+} from "./types.ts";
+import { drawDashedLine } from "./shapes.ts";
+import { getSelfRefCoordinates } from "../../shared/ComponentUtil.js";
 
 export interface FindBorderPositionOptions<Via> {
   via: Via;
@@ -46,17 +46,19 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   public hoverWidth = 1.5;
   public selectionWidth = 2;
 
+  protected _body: VBody;
+  protected _labelModule: Label;
+
   /**
    * Create a new instance.
    * @param options - The options object of given edge.
-   * @param _body - The body of the network.
-   * @param _labelModule - Label module.
+   * @param body - The body of the network.
+   * @param labelModule - Label module.
    */
-  public constructor(
-    options: EdgeOptions,
-    protected _body: VBody,
-    protected _labelModule: Label,
-  ) {
+  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
+    this._body = body;
+    this._labelModule = labelModule;
+
     this.setOptions(options);
 
     this.fromPoint = this.from;

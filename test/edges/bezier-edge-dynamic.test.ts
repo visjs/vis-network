@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { assert, spy, stub } from "sinon";
-import { deepFreeze } from "../helpers";
-import { body, mockedBody } from "./helpers";
+import { deepFreeze } from "../helpers/index.ts";
+import { body, mockedBody } from "./helpers.ts";
 
-import { BezierEdgeDynamic } from "../../lib/network/modules/components/edges";
+import { BezierEdgeDynamic } from "../../lib/network/modules/components/edges/index.ts";
 
 describe("BezierEdgeDynamic", function (): void {
   describe("constructor", function (): void {

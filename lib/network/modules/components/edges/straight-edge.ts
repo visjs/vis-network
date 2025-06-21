@@ -1,5 +1,5 @@
-import { EdgeBase } from "./util/edge-base";
-import {
+import { EdgeBase } from "./util/edge-base.ts";
+import type {
   EdgeFormattingValues,
   Label,
   EdgeOptions,
@@ -8,7 +8,7 @@ import {
   SelectiveRequired,
   VBody,
   VNode,
-} from "./util/types";
+} from "./util/types.ts";
 
 /**
  * A Straight Edge.

@@ -1,22 +1,22 @@
 import { expect } from "chai";
 import { assert, spy, stub } from "sinon";
-import { deepFreeze } from "./helpers";
+import { deepFreeze } from "./helpers/index.ts";
 
-import Box from "../lib/network/modules/components/nodes/shapes/Box";
-import Circle from "../lib/network/modules/components/nodes/shapes/Circle";
-import CircularImage from "../lib/network/modules/components/nodes/shapes/CircularImage";
-import Database from "../lib/network/modules/components/nodes/shapes/Database";
-import Diamond from "../lib/network/modules/components/nodes/shapes/Diamond";
-import Dot from "../lib/network/modules/components/nodes/shapes/Dot";
-import Ellipse from "../lib/network/modules/components/nodes/shapes/Ellipse";
-import Hexagon from "../lib/network/modules/components/nodes/shapes/Hexagon";
-import Icon from "../lib/network/modules/components/nodes/shapes/Icon";
-import Image from "../lib/network/modules/components/nodes/shapes/Image";
-import Square from "../lib/network/modules/components/nodes/shapes/Square";
-import Star from "../lib/network/modules/components/nodes/shapes/Star";
-import Text from "../lib/network/modules/components/nodes/shapes/Text";
-import Triangle from "../lib/network/modules/components/nodes/shapes/Triangle";
-import TriangleDown from "../lib/network/modules/components/nodes/shapes/TriangleDown";
+import Box from "../lib/network/modules/components/nodes/shapes/Box.js";
+import Circle from "../lib/network/modules/components/nodes/shapes/Circle.js";
+import CircularImage from "../lib/network/modules/components/nodes/shapes/CircularImage.js";
+import Database from "../lib/network/modules/components/nodes/shapes/Database.js";
+import Diamond from "../lib/network/modules/components/nodes/shapes/Diamond.js";
+import Dot from "../lib/network/modules/components/nodes/shapes/Dot.js";
+import Ellipse from "../lib/network/modules/components/nodes/shapes/Ellipse.js";
+import Hexagon from "../lib/network/modules/components/nodes/shapes/Hexagon.js";
+import Icon from "../lib/network/modules/components/nodes/shapes/Icon.js";
+import Image from "../lib/network/modules/components/nodes/shapes/Image.js";
+import Square from "../lib/network/modules/components/nodes/shapes/Square.js";
+import Star from "../lib/network/modules/components/nodes/shapes/Star.js";
+import Text from "../lib/network/modules/components/nodes/shapes/Text.js";
+import Triangle from "../lib/network/modules/components/nodes/shapes/Triangle.js";
+import TriangleDown from "../lib/network/modules/components/nodes/shapes/TriangleDown.js";
 
 describe("Node Shapes", function (): void {
   const generateOptions = (): any => ({

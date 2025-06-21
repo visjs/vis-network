@@ -1,5 +1,5 @@
-import { EdgeBase } from "./edge-base";
-import {
+import { EdgeBase } from "./edge-base.ts";
+import type {
   EdgeFormattingValues,
   Label,
   EdgeOptions,
@@ -8,7 +8,7 @@ import {
   SelectiveRequired,
   VBody,
   VNode,
-} from "./types";
+} from "./types.ts";
 
 /**
  * The Base Class for all Bezier edges.

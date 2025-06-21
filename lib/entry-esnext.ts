@@ -6,19 +6,19 @@ import "vis-util/esnext/styles/color-picker.css";
 import "vis-util/esnext/styles/configurator.css";
 import "vis-util/esnext/styles/popup.css";
 
-export * from "./network/Network";
+export * from "./network/Network.js";
 
-export { default as NetworkImages } from "./network/Images";
+export { default as NetworkImages } from "./network/Images.js";
 
-import * as dotparser from "./network/dotparser";
+import * as dotparser from "./network/dotparser.js";
 export { dotparser as networkDOTParser };
 export const parseDOTNetwork = dotparser.DOTToGraph;
 
-import * as gephiParser from "./network/gephiParser";
-export { parseGephi as parseGephiNetwork } from "./network/gephiParser";
+import * as gephiParser from "./network/gephiParser.js";
+export { parseGephi as parseGephiNetwork } from "./network/gephiParser.js";
 export { gephiParser as networkGephiParser };
 
-import * as allOptions from "./network/options";
+import * as allOptions from "./network/options.js";
 export { allOptions as networkOptions };
 
 // DataSet, utils etc. can't be reexported here because that would cause stack

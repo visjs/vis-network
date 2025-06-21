@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { assert, spy, stub } from "sinon";
-import { deepFreeze } from "../helpers";
-import { body } from "./helpers";
+import { deepFreeze } from "../helpers/index.ts";
+import { body } from "./helpers.ts";
 
-import { StraightEdge } from "../../lib/network/modules/components/edges";
+import { StraightEdge } from "../../lib/network/modules/components/edges/index.ts";
 
 describe("StraightEdge", function (): void {
   it("constructor", function (): void {

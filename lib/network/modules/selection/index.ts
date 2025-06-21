@@ -1,1 +1,1 @@
-export * from "./selection-accumulator";
+export * from "./selection-accumulator.ts";

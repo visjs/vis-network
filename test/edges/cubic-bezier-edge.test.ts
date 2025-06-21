@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { assert, spy, stub } from "sinon";
-import { deepFreeze } from "../helpers";
-import { body, mockedBody } from "./helpers";
+import { deepFreeze } from "../helpers/index.ts";
+import { body, mockedBody } from "./helpers.ts";
 
-import { CubicBezierEdge } from "../../lib/network/modules/components/edges";
+import { CubicBezierEdge } from "../../lib/network/modules/components/edges/index.ts";
 
 describe("CubicBezierEdge", function (): void {
   it("constructor", function (): void {

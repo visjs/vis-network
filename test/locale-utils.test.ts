@@ -1,7 +1,7 @@
 import { test, given } from "sazerac";
-import { deepFreeze } from "./helpers";
+import { deepFreeze } from "./helpers/index.ts";
 
-import { normalizeLanguageCode } from "../lib/network/locale-utils";
+import { normalizeLanguageCode } from "../lib/network/locale-utils.ts";
 
 const noLocales = deepFreeze({});
 const someLocales = deepFreeze({

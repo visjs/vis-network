@@ -1,4 +1,7 @@
-module.exports = {
-  exclude: require("vis-dev-utils").BABEL_IGNORE_RE,
-  presets: [["vis-dev-utils/babel-preset", { css: true, ts: true }]],
+import { BABEL_IGNORE_RE } from "vis-dev-utils";
+import babelPreset from "vis-dev-utils/babel-preset";
+
+export default {
+  exclude: BABEL_IGNORE_RE,
+  presets: [[babelPreset, { css: true, ts: true }]],
 };

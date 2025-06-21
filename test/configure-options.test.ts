@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { configureOptions } from "../lib/network/options";
+import { configureOptions } from "../lib/network/options.ts";
 
 /**
  * Traverse the root and test all the nested options.

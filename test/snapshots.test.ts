@@ -4,8 +4,8 @@
  * <https://github.com/visjs/vis-network/issues/new?title=Pinning%20tests%20fail%20in%20my%20environment&body=The%20pinning%20tests%20fail%20for%20no%20reason.%0A%0A%23%23%23%20Environment%0A-%20Operating%20system%3A%20e.g.%20%60Windows%2010%20build%2017134.1184%60%20%20or%20%60Arch%20Linux%20up%20to%20date%20to%202020%2F01%2F13%60%0A-%20Interpreter%3A%20e.g.%20%60Node%2013.7.1%60%0A%0A%23%23%23%20Interesting%20part%20of%20%60npm%20test%60%20output%0A%60%60%60%0A%0A%60%60%60%0A%0A%23%23%23%20Additional%20info%0AIf%20you%20have%20something%20that%20might%20help%20debug%20this%20issue%20place%20it%20here%2C%20if%20not%20no%20problem%20simply%20delete%20this.>
  */
 
-import Network from "../lib/network/Network";
-import { canvasMockify } from "./canvas-mock";
+import Network from "../lib/network/Network.js";
+import { canvasMockify } from "./canvas-mock.js";
 import snapshot from "snap-shot-it";
 
 const optionsConfigs = [

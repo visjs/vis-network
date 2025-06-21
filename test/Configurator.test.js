@@ -1,9 +1,9 @@
 import { expect } from "chai";
 
-import { canvasMockify } from "./canvas-mock";
+import { canvasMockify } from "./canvas-mock.js";
 import { Configurator } from "vis-util/esnext";
-import Network from "../lib/network/Network";
-import { configureOptions } from "../lib/network/options";
+import Network from "../lib/network/Network.js";
+import { configureOptions } from "../lib/network/options.ts";
 
 describe("Configurator", function () {
   beforeEach(function () {

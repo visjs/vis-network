@@ -1,4 +1,4 @@
-import { IdType, Point } from "../helpers";
+import { IdType, Point } from "../helpers/index.ts";
 
 function selectEditAndCheck(
   before: number,

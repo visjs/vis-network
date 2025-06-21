@@ -1,9 +1,9 @@
 // These imports are there only for their types. Their values can't be used as
 // this will be loaded in a web browser without bundling.
-import type * as visNetworkStandalone from "../../standalone";
 import type * as visUtil from "vis-util";
-import type { Options } from "../../standalone";
-import type { UniversalConfig, VisWindow } from "../support/commands/types";
+import type * as visNetworkStandalone from "../../declarations/entry-standalone.js";
+import type { Options } from "../../declarations/entry-standalone.js";
+import type { UniversalConfig, VisWindow } from "../support/commands/types.ts";
 type VisNetworkStandalone = typeof visNetworkStandalone;
 type VisUtil = typeof visUtil;
 

@@ -1,8 +1,8 @@
-import { deepFreeze } from "./helpers";
+import { deepFreeze } from "./helpers/index.ts";
 import { expect } from "chai";
 import { spy, stub } from "sinon";
 
-import NodesHandler from "../lib/network/modules/NodesHandler";
+import NodesHandler from "../lib/network/modules/NodesHandler.js";
 
 type Id = number | string;
 

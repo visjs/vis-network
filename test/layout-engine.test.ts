@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { spy } from "sinon";
 
-import LayoutEngine from "../lib/network/modules/LayoutEngine";
+import LayoutEngine from "../lib/network/modules/LayoutEngine.js";
 
 describe("LayoutEngine", function (): void {
   describe("setupHierarchicalLayout", function (): void {

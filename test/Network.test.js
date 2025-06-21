@@ -13,9 +13,9 @@
 import fs from "fs";
 import { expect } from "chai";
 import { DataSet } from "vis-data/esnext";
-import Network from "../lib/network/Network";
-import { canvasMockify } from "./canvas-mock";
-import { allOptions, configureOptions } from "../lib/network/options";
+import Network from "../lib/network/Network.js";
+import { canvasMockify } from "./canvas-mock.js";
+import { allOptions, configureOptions } from "../lib/network/options.ts";
 
 /**
  * Merge all options of object b into object b
@@ -706,7 +706,11 @@ describe("Network", function () {
     });
   }); // Edge
 
-  describe("Clustering", function () {
+  describe.only("Clustering", function () {
+    afterEach(async () => {
+      await new Promise((resolve) => void setTimeout(resolve, 1_000));
+    });
+
     it("properly handles options allowSingleNodeCluster", function () {
       const sampleNetwork = createSampleNetwork();
       const [network, data] = sampleNetwork;

@@ -16,12 +16,12 @@ import { expect } from "chai";
 import * as util from "vis-util/esnext";
 import { DataSet } from "vis-data/esnext";
 
-import { canvasMockify } from "./canvas-mock";
+import { canvasMockify } from "./canvas-mock.js";
 
-import Label from "../lib/network/modules/components/shared/Label";
-import NodesHandler from "../lib/network/modules/NodesHandler";
-import Network from "../lib/network/Network";
-import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil";
+import Label from "../lib/network/modules/components/shared/Label.js";
+import NodesHandler from "../lib/network/modules/NodesHandler.js";
+import Network from "../lib/network/Network.js";
+import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil.js";
 
 /**************************************************************
  * Dummy class definitions for minimal required functionality.

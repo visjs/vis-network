@@ -1,4 +1,4 @@
-import { VisEvent } from "../helpers";
+import { VisEvent } from "../helpers/index.ts";
 
 context("Clicks", { testIsolation: false }, (): void => {
   /*

@@ -1,1 +1,1 @@
-export * from "./entry-esnext";
+export * from "./entry-esnext.js";

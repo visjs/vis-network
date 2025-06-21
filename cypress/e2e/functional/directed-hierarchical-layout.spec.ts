@@ -4,7 +4,7 @@ import {
   TestData,
   addMoreEdges,
   generateMaryTree,
-} from "../helpers";
+} from "../helpers/index.ts";
 
 /**
  * Generate a consecutive list of ids starting with first and ending with last

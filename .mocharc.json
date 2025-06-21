@@ -1,5 +1,4 @@
 {
   "extension": ["ts", "js"],
-  "require": ["vis-dev-utils/babel-register"],
   "spec": ["./test/**/*.test.js", "./test/**/*.test.ts"]
 }
