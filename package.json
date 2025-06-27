@@ -135,7 +135,7 @@
     "semantic-release": "24.2.5",
     "serve": "14.2.4",
     "shx": "0.4.0",
-    "sinon": "17.0.2",
+    "sinon": "21.0.0",
     "snap-shot-it": "7.9.10",
     "start-server-and-test": "2.0.12",
     "tmp-promise": "3.0.2",
