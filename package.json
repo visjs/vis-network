@@ -128,7 +128,7 @@
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
     "lint-staged": "15.5.2",
-    "mocha": "10.8.2",
+    "mocha": "11.7.1",
     "nyc": "17.1.0",
     "postcss": "8.5.4",
     "sazerac": "2.0.0",
