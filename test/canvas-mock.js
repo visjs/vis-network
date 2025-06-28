@@ -155,6 +155,12 @@ export function canvasMockify(html = "") {
     virtualConsole: virtualConsole,
   });
 
+  // TODO: JSDOM doesn't polyfill this. Find a better solution, maybe switch to
+  // Happy DOM or Vitest browser mode?
+  window.requestAnimationFrame = (callback) =>
+    setTimeout(() => callback(Date.now()), 0);
+  window.cancelAnimationFrame = (id) => clearTimeout(id);
+
   overrideCreateElement(window); // The actual initialization of canvas-mock
 
   overrideCreateElementNS(window);
