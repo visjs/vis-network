@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-06-28T10:56:41.917Z
+ * @date    2025-06-28T12:33:11.185Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -24435,42 +24435,6 @@
 	}
 
 	/**
-	 * Initializes window.requestAnimationFrame() to a usable form.
-	 *
-	 * Specifically, set up this method for the case of running on node.js with jsdom enabled.
-	 *
-	 * NOTES:
-	 *
-	 * On node.js, when calling this directly outside of this class, `window` is not defined.
-	 * This happens even if jsdom is used.
-	 * For node.js + jsdom, `window` is available at the moment the constructor is called.
-	 * For this reason, the called is placed within the constructor.
-	 * Even then, `window.requestAnimationFrame()` is not defined, so it still needs to be added.
-	 * During unit testing, it happens that the window object is reset during execution, causing
-	 * a runtime error due to missing `requestAnimationFrame()`. This needs to be compensated for,
-	 * see `_requestNextFrame()`.
-	 * Since this is a global object, it may affect other modules besides `Network`. With normal
-	 * usage, this does not cause any problems. During unit testing, errors may occur. These have
-	 * been compensated for, see comment block in _requestNextFrame().
-	 * @private
-	 */
-	function _initRequestAnimationFrame() {
-	  let func;
-	  if (window !== undefined) {
-	    func = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-	  }
-	  if (func === undefined) {
-	    // window or method not present, setting mock requestAnimationFrame
-	    window.requestAnimationFrame = function (callback) {
-	      //console.log("Called mock requestAnimationFrame");
-	      callback();
-	    };
-	  } else {
-	    window.requestAnimationFrame = func;
-	  }
-	}
-
-	/**
 	 * The canvas renderer
 	 */
 	class CanvasRenderer {
@@ -24479,12 +24443,10 @@
 	   * @param {Canvas} canvas
 	   */
 	  constructor(body, canvas) {
-	    _initRequestAnimationFrame();
 	    this.body = body;
 	    this.canvas = canvas;
 	    this.redrawRequested = false;
-	    this.renderTimer = undefined;
-	    this.requiresTimeout = true;
+	    this.requestAnimationFrameRequestId = undefined;
 	    this.renderingActive = false;
 	    this.renderRequests = 0;
 	    this.allowRedraw = true;
@@ -24497,7 +24459,6 @@
 	      hideNodesOnDrag: false
 	    };
 	    _Object$assign(this.options, this.defaultOptions);
-	    this._determineBrowserMethod();
 	    this.bindEventListeners();
 	  }
 
@@ -24545,17 +24506,13 @@
 	    this.body.emitter.on("_stopRendering", () => {
 	      this.renderRequests -= 1;
 	      this.renderingActive = this.renderRequests > 0;
-	      this.renderTimer = undefined;
+	      this.requestAnimationFrameRequestId = undefined;
 	    });
 	    this.body.emitter.on("destroy", () => {
 	      this.renderRequests = 0;
 	      this.allowRedraw = false;
 	      this.renderingActive = false;
-	      if (this.requiresTimeout === true) {
-	        clearTimeout(this.renderTimer);
-	      } else {
-	        window.cancelAnimationFrame(this.renderTimer);
-	      }
+	      window.cancelAnimationFrame(this.requestAnimationFrameRequestId);
 	      this.body.emitter.off();
 	    });
 	  }
@@ -24572,52 +24529,14 @@
 	  }
 
 	  /**
-	   * Prepare the drawing of the next frame.
-	   *
-	   * Calls the callback when the next frame can or will be drawn.
-	   * @param {Function} callback
-	   * @param {number} delay - timeout case only, wait this number of milliseconds
-	   * @returns {Function | undefined}
-	   * @private
-	   */
-	  _requestNextFrame(callback, delay) {
-	    // During unit testing, it happens that the mock window object is reset while
-	    // the next frame is still pending. Then, either 'window' is not present, or
-	    // 'requestAnimationFrame()' is not present because it is not defined on the
-	    // mock window object.
-	    //
-	    // As a consequence, unrelated unit tests may appear to fail, even if the problem
-	    // described happens in the current unit test.
-	    //
-	    // This is not something that will happen in normal operation, but we still need
-	    // to take it into account.
-	    //
-	    if (typeof window === "undefined") return; // Doing `if (window === undefined)` does not work here!
-
-	    let timer;
-	    const myWindow = window; // Grab a reference to reduce the possibility that 'window' is reset
-	    // while running this method.
-
-	    if (this.requiresTimeout === true) {
-	      // wait given number of milliseconds and perform the animation step function
-	      timer = _setTimeout(callback, delay);
-	    } else {
-	      if (myWindow.requestAnimationFrame) {
-	        timer = myWindow.requestAnimationFrame(callback);
-	      }
-	    }
-	    return timer;
-	  }
-
-	  /**
 	   *
 	   * @private
 	   */
 	  _startRendering() {
 	    if (this.renderingActive === true) {
-	      if (this.renderTimer === undefined) {
+	      if (this.requestAnimationFrameRequestId === undefined) {
 	        var _context3;
-	        this.renderTimer = this._requestNextFrame(_bindInstanceProperty(_context3 = this._renderStep).call(_context3, this), this.simulationInterval);
+	        this.requestAnimationFrameRequestId = window.requestAnimationFrame(_bindInstanceProperty(_context3 = this._renderStep).call(_context3, this), this.simulationInterval);
 	      }
 	    }
 	  }
@@ -24628,17 +24547,12 @@
 	   */
 	  _renderStep() {
 	    if (this.renderingActive === true) {
-	      // reset the renderTimer so a new scheduled animation step can be set
-	      this.renderTimer = undefined;
-	      if (this.requiresTimeout === true) {
-	        // this schedules a new simulation step
-	        this._startRendering();
-	      }
+	      // reset the requestAnimationFrameRequestId so a new scheduled animation step can be set
+	      this.requestAnimationFrameRequestId = undefined;
+
+	      // this schedules a new simulation step
+	      this._startRendering();
 	      this._redraw();
-	      if (this.requiresTimeout === false) {
-	        // this schedules a new simulation step
-	        this._startRendering();
-	      }
 	    }
 	  }
 
@@ -24658,9 +24572,9 @@
 	  _requestRedraw() {
 	    if (this.redrawRequested !== true && this.renderingActive === false && this.allowRedraw === true) {
 	      this.redrawRequested = true;
-	      this._requestNextFrame(() => {
+	      window.requestAnimationFrame(() => {
 	        this._redraw(false);
-	      }, 0);
+	      });
 	    }
 	  }
 
@@ -24881,29 +24795,6 @@
 	      if (edge.connected === true) {
 	        edge.drawArrows(ctx);
 	      }
-	    }
-	  }
-
-	  /**
-	   * Determine if the browser requires a setTimeout or a requestAnimationFrame. This was required because
-	   * some implementations (safari and IE9) did not support requestAnimationFrame
-	   * @private
-	   */
-	  _determineBrowserMethod() {
-	    if (typeof window !== "undefined") {
-	      const browserType = navigator.userAgent.toLowerCase();
-	      this.requiresTimeout = false;
-	      if (_indexOfInstanceProperty(browserType).call(browserType, "msie 9.0") != -1) {
-	        // IE 9
-	        this.requiresTimeout = true;
-	      } else if (_indexOfInstanceProperty(browserType).call(browserType, "safari") != -1) {
-	        // safari
-	        if (_indexOfInstanceProperty(browserType).call(browserType, "chrome") <= -1) {
-	          this.requiresTimeout = true;
-	        }
-	      }
-	    } else {
-	      this.requiresTimeout = true;
 	    }
 	  }
 
