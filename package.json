@@ -74,12 +74,7 @@
     "lint": "eslint --ext .js,.ts .",
     "lint-fix": "eslint --fix --ext .js,.ts .",
     "clean": "shx rm -rf \"declarations\" \"dist\" \"examples/index.html\" \"examples/static/*\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
@@ -123,7 +118,7 @@
     "cypress-visual-regression": "5.3.0",
     "eslint": "8.57.1",
     "gh-pages": "6.3.0",
-    "husky": "8.0.3",
+    "husky": "9.1.7",
     "jsdom": "26.1.0",
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
