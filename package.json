@@ -133,7 +133,7 @@
     "sinon": "21.0.0",
     "snap-shot-it": "7.9.10",
     "start-server-and-test": "2.0.12",
-    "tmp-promise": "3.0.2",
+    "tmp-promise": "3.0.3",
     "uuid": "9.0.1",
     "vis-data": "7.1.10",
     "vis-dev-utils": "4.0.45",
