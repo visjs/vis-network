@@ -331,7 +331,7 @@ describe("Network", function () {
    * At time of writing, this test detected 22 out of 33 'illegal' loops.
    * The real deterrent is eslint rule 'guard-for-in`.
    */
-  it("can deal with added fields in Array.prototype", function (done) {
+  it("can deal with added fields in Array.prototype", function () {
     window.document.createElement("canvas");
     Array.prototype.foo = 1; // Just add anything to the prototype
     Object.prototype.bar = 2; // Let's screw up hashes as well
@@ -356,7 +356,6 @@ describe("Network", function () {
 
     delete Array.prototype.foo; // Remove it again so as not to confuse other tests.
     delete Object.prototype.bar;
-    done();
   });
 
   /**
@@ -683,7 +682,7 @@ describe("Network", function () {
      * Unit test for fix of #3500
      * Checking to make sure edges that become unconnected due to node removal get reconnected
      */
-    it.skip("has reconnected edges (problems since mocha 4)", function (done) {
+    it.skip("has reconnected edges (problems since mocha 4)", function () {
       const node1 = { id: 1, label: "test1" };
       const node2 = { id: 2, label: "test2" };
       const nodes = new DataSet([node1, node2]);
@@ -712,7 +711,6 @@ describe("Network", function () {
       foundEdge = network.body.edges[edge.id];
 
       assert.ok(foundEdge !== undefined, "edge is missing from state cache");
-      done();
     });
   }); // Edge
 
@@ -1386,7 +1384,7 @@ describe("Network", function () {
         assert.equal(Object.keys(network.body.edges).length, 5);
       });
 
-      it("WorlCup2014", function (done) {
+      it("WorlCup2014", function () {
         // This is a huge example (which is why it's tested here!), so it takes a long time to load.
         this.timeout(15000);
 
@@ -1398,7 +1396,6 @@ describe("Network", function () {
         // Count in following also contains the helper nodes for dynamic edges
         assert.equal(Object.keys(network.body.nodes).length, 9964);
         assert.equal(Object.keys(network.body.edges).length, 9228);
-        done();
       });
 
       // This actually failed to load, added for this reason

@@ -468,17 +468,15 @@ describe("Network Label", function () {
     this.jsdom_global();
   });
 
-  it("parses normal text labels", function (done) {
+  it("parses normal text labels", function () {
     const label = new Label({}, getOptions());
 
     checkProcessedLabels(label, normal_text, normal_expected);
     checkProcessedLabels(label, html_text, html_unchanged_expected); // html unchanged
     checkProcessedLabels(label, markdown_text, markdown_unchanged_expected); // markdown unchanged
-
-    done();
   });
 
-  it("parses html labels", function (done) {
+  it("parses html labels", function () {
     const options = getOptions();
     options.font.multi = true; // TODO: also test 'html', also test illegal value here
 
@@ -487,11 +485,9 @@ describe("Network Label", function () {
     checkProcessedLabels(label, normal_text, normal_expected); // normal as usual
     checkProcessedLabels(label, html_text, multi_expected);
     checkProcessedLabels(label, markdown_text, markdown_unchanged_expected); // markdown unchanged
-
-    done();
   });
 
-  it("parses markdown labels", function (done) {
+  it("parses markdown labels", function () {
     const options = getOptions();
     options.font.multi = "markdown"; // TODO: also test 'md', also test illegal value here
 
@@ -500,11 +496,9 @@ describe("Network Label", function () {
     checkProcessedLabels(label, normal_text, normal_expected); // normal as usual
     checkProcessedLabels(label, html_text, html_unchanged_expected); // html unchanged
     checkProcessedLabels(label, markdown_text, multi_expected);
-
-    done();
   });
 
-  it("handles normal text with widthConstraint.maximum", function (done) {
+  it("handles normal text with widthConstraint.maximum", function () {
     const options = getOptions();
 
     //
@@ -532,11 +526,9 @@ describe("Network Label", function () {
       markdown_text,
       markdown_widthConstraint_expected
     ); // markdown unchanged
-
-    done();
   });
 
-  it("handles html tags with widthConstraint.maximum", function (done) {
+  it("handles html tags with widthConstraint.maximum", function () {
     const options = getOptions();
     options.font.multi = true;
     options.font.maxWdt = 300;
@@ -555,11 +547,9 @@ describe("Network Label", function () {
       markdown_text,
       markdown_widthConstraint_expected
     );
-
-    done();
   });
 
-  it("handles markdown tags with widthConstraint.maximum", function (done) {
+  it("handles markdown tags with widthConstraint.maximum", function () {
     const options = getOptions();
     options.font.multi = "markdown";
     options.font.maxWdt = 300;
@@ -569,8 +559,6 @@ describe("Network Label", function () {
     checkProcessedLabels(label, normal_text, normal_widthConstraint_expected);
     checkProcessedLabels(label, html_text, html_widthConstraint_unchanged);
     checkProcessedLabels(label, markdown_text, multi_expected);
-
-    done();
   });
 
   describe("Multi-Fonts", function () {
@@ -648,7 +636,7 @@ describe("Network Label", function () {
        * - using multi-font 'bold' for test, the rest should work analogously
        * - using multi-font option 'color' for test, the rest should work analogously
        */
-      it("respects the font option precedence", function (done) {
+      it("respects the font option precedence", function () {
         const [network] = createNodeNetwork();
         const h = new HelperNode(network);
 
@@ -657,11 +645,9 @@ describe("Network Label", function () {
         assert.equal(h.modBold(2).color, "red"); // Group value overrides default
         assert.equal(h.modBold(3).color, "green"); // Local value overrides default
         assert.equal(h.modBold(4).color, "green"); // Local value overrides group
-
-        done();
       });
 
-      it("handles dynamic data and option updates", function (done) {
+      it("handles dynamic data and option updates", function () {
         const [network, data] = createNodeNetwork();
         const h = new HelperNode(network);
 
@@ -725,11 +711,9 @@ describe("Network Label", function () {
         assert.equal(h.modBold(2).color, "brown"); // bold group value overrides bold node value
         assert.equal(h.modBold(3).color, "green"); // unchanged
         assert.equal(h.modBold(4).color, "orange"); // unchanged
-
-        done();
       });
 
-      it("handles normal font values in default options", function (done) {
+      it("handles normal font values in default options", function () {
         const newOptions = {
           nodes: {
             font: {
@@ -745,11 +729,9 @@ describe("Network Label", function () {
         assert.equal(h.modBold(2).color, "red"); // Group value overrides nodes
         assert.equal(h.modBold(3).color, "green"); // Local value overrides all
         assert.equal(h.modBold(4).color, "green"); // Idem
-
-        done();
       });
 
-      it("handles multi-font values in default options/groups", function (done) {
+      it("handles multi-font values in default options/groups", function () {
         const newOptions = {
           nodes: {
             font: {
@@ -774,8 +756,6 @@ describe("Network Label", function () {
         assert.equal(h.modBold(2).color, "red"); // Group value overrides nodes
         assert.equal(h.modBold(3).color, "green"); // Local value overrides all
         assert.equal(h.modBold(4).color, "green"); // Idem
-
-        done();
       });
     }); // Node Labels
 
@@ -854,18 +834,16 @@ describe("Network Label", function () {
        * - using multi-font option 'color' for test, the rest should work analogously
        * - edges have no groups
        */
-      it("respects the font option precedence", function (done) {
+      it("respects the font option precedence", function () {
         const [network] = createEdgeNetwork();
         const h = new HelperEdge(network);
 
         assert.equal(h.modBold(1).color, "#343434"); // Default value
         assert.equal(h.modBold(2).color, "green"); // Local value overrides default
         assert.equal(h.modBold(3).color, "green"); // Local value overrides group
-
-        done();
       });
 
-      it("handles dynamic data and option updates", function (done) {
+      it("handles dynamic data and option updates", function () {
         const [network, data] = createEdgeNetwork();
         const h = new HelperEdge(network);
 
@@ -889,11 +867,9 @@ describe("Network Label", function () {
         assert.equal(h.modBold(1).color, "black"); // more specific bold value overrides group value
         assert.equal(h.modBold(2).color, "green"); // unchanged
         assert.equal(h.modBold(3).color, "orange"); // unchanged
-
-        done();
       });
 
-      it("handles font values in default options", function (done) {
+      it("handles font values in default options", function () {
         const newOptions = {
           edges: {
             font: {
@@ -907,8 +883,6 @@ describe("Network Label", function () {
         assert.equal(h.modBold(1).color, "purple"); // Nodes value
         assert.equal(h.modBold(2).color, "green"); // Local value overrides all
         assert.equal(h.modBold(3).color, "green"); // Idem
-
-        done();
       });
     }); // Edge Labels
 
@@ -974,7 +948,7 @@ describe("Network Label", function () {
         return [network, data];
       }
 
-      it("handles shorthand options correctly", function (done) {
+      it("handles shorthand options correctly", function () {
         const [network] = createNetwork();
         const h = new HelperNode(network);
 
@@ -1011,8 +985,6 @@ describe("Network Label", function () {
         assert.equal(opt.mono.color, "#050505"); // New color
         assert.equal(opt.mono.face, "monospace");
         assert.equal(opt.mono.size, 15);
-
-        done();
       });
 
       function dynamicAdd1(network, data) {
@@ -1050,7 +1022,7 @@ describe("Network Label", function () {
         });
       }
 
-      it("deals with dynamic data and option updates for shorthand", function (done) {
+      it("deals with dynamic data and option updates for shorthand", function () {
         const [network, data] = createNetwork();
         const h = new HelperNode(network);
         dynamicAdd1(network, data);
@@ -1083,11 +1055,9 @@ describe("Network Label", function () {
         checkFont(opt.ital, "font4");
         assert.equal(opt.mono.face, "monospace");
         assert.equal(opt.mono.size, 15);
-
-        done();
       });
 
-      it("deals with dynamic change of global node default", function (done) {
+      it("deals with dynamic change of global node default", function () {
         const [network, data] = createNetwork();
         const h = new HelperNode(network);
         dynamicAdd1(network, data); // Accumulate data of dynamic add
@@ -1124,11 +1094,9 @@ describe("Network Label", function () {
         assert.equal(opt.mono.color, "#070707"); // idem
         assert.equal(opt.mono.face, "monospace");
         assert.equal(opt.mono.size, 15);
-
-        done();
       });
 
-      it("deals with dynamic delete of shorthand options", function (done) {
+      it("deals with dynamic delete of shorthand options", function () {
         const [network, data] = createNetwork();
         const h = new HelperNode(network);
         dynamicAdd1(network, data); // Accumulate data of previous dynamic steps
@@ -1185,12 +1153,10 @@ describe("Network Label", function () {
       },
     });
 */
-
-        done();
       });
     }); // Shorthand Font Options
 
-    it("sets and uses font.multi in group options", function (done) {
+    it("sets and uses font.multi in group options", function () {
       /**
        * Helper function for easily accessing font options in a node
        * @param index
@@ -1294,11 +1260,9 @@ describe("Network Label", function () {
       assert(!fontOption(1).multi); // idem
       assert.equal(modBold(6).color, "blue"); // unchanged
       assert(fontOption(6).multi); // unchanged
-
-      done();
     });
 
-    it("compresses spaces for Multi-Font", function (done) {
+    it("compresses spaces for Multi-Font", function () {
       let options = getOptions();
 
       const text = [
@@ -1487,12 +1451,10 @@ describe("Network Label", function () {
       ];
 
       checkProcessedLabels(label, text, expected_multifont_maxwidth);
-
-      done();
     });
   }); // Multi-Fonts
 
-  it("parses single huge word on line with preceding whitespace when max width set", function (done) {
+  it("parses single huge word on line with preceding whitespace when max width set", function () {
     const options = getOptions();
     options.font.maxWdt = 300;
     assert.equal(options.font.multi, false);
@@ -1589,8 +1551,6 @@ describe("Network Label", function () {
     options.font.multi = true;
     label = new Label({}, options);
     checkProcessedLabels(label, text, expected);
-
-    done();
   });
 
   /**
@@ -1600,7 +1560,7 @@ describe("Network Label", function () {
    *
    * NOTE: boolean shorthand values for widthConstraint and heightConstraint do nothing.
    */
-  it("Sets the width/height constraints in the font label options", function (done) {
+  it("Sets the width/height constraints in the font label options", function () {
     const nodes = [
       { id: 100, label: "node 100" },
       { id: 210, group: "group1", label: "node 210" },
@@ -1780,11 +1740,9 @@ describe("Network Label", function () {
       const fontOptions = networkEdge.labelModule.fontOptions;
       assertConstraints(expected, fontOptions, label);
     });
-
-    done();
   });
 
-  it("deals with null labels and other awkward values", function (done) {
+  it("deals with null labels and other awkward values", function () {
     const ctx = new DummyContext();
     let options = getOptions({});
 
@@ -1852,12 +1810,10 @@ describe("Network Label", function () {
 
     options = {};
     new Network(container, data, options);
-
-    done();
   });
 
   describe("visible function", function () {
-    it("correctly determines label is not visible when label is invalid", function (done) {
+    it("correctly determines label is not visible when label is invalid", function () {
       const invalidLabel = "";
       assert(
         !isValidLabel(invalidLabel),
@@ -1890,8 +1846,6 @@ describe("Network Label", function () {
         !label.visible(),
         "Label should not be visible because the label text is invalid"
       );
-
-      done();
     });
   });
 });

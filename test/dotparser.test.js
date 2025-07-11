@@ -3,7 +3,7 @@ import fs from "fs";
 import { parseDOT } from "../lib/network/dotparser.js";
 
 describe("dotparser", function () {
-  it("should parse a DOT file into JSON", function (done) {
+  it("should parse a DOT file into JSON", function () {
     fs.readFile("test/dot.txt", function (err, data) {
       data = String(data);
 
@@ -177,15 +177,13 @@ describe("dotparser", function () {
           },
         ],
       });
-
-      done();
     });
   });
 
   /**
    * DOT-format examples taken from #3015
    */
-  it("properly handles newline escape sequences in strings", function (done) {
+  it("properly handles newline escape sequences in strings", function () {
     let data = 'dinetwork {1 [label="new\\nline"];}';
 
     data = String(data);
@@ -256,7 +254,5 @@ describe("dotparser", function () {
         },
       ],
     });
-
-    done();
   });
 });
