@@ -21,7 +21,7 @@ export function visDrag(paths: readonly DragPath[]): void {
     for (const relativeDistance of new Array(10).fill(null).map(
       (_v, i, array): number =>
         // Note: This shouldn't be 0 nor 1, only values in between.
-        (i + 1) / (array.length + 1)
+        (i + 1) / (array.length + 1),
     )) {
       cy.get("#mynetwork canvas").trigger(
         "pointermove",
@@ -30,7 +30,7 @@ export function visDrag(paths: readonly DragPath[]): void {
         {
           button,
           shiftKey,
-        }
+        },
       );
     }
     cy.get("#mynetwork canvas").trigger("pointerup", to.x, to.y, {

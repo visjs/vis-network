@@ -40,7 +40,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.via).to.deep.include({
@@ -96,7 +96,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(
@@ -104,7 +104,7 @@ describe("BezierEdgeDynamic", function (): void {
         { dashes: false, backgroundDashes: false },
         false,
         false,
-        body.nodes[2]
+        body.nodes[2],
       );
 
       assert.calledOnce(ctx.beginPath);
@@ -122,7 +122,7 @@ describe("BezierEdgeDynamic", function (): void {
         200,
         -200,
         300,
-        -300
+        -300,
       );
 
       assert.calledTwice(ctx.setLineDash);
@@ -154,7 +154,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(
@@ -162,7 +162,7 @@ describe("BezierEdgeDynamic", function (): void {
         { dashes: [1, 2, 3] } as any,
         false,
         false,
-        body.nodes[2]
+        body.nodes[2],
       );
 
       assert.calledOnce(ctx.beginPath);
@@ -194,7 +194,7 @@ describe("BezierEdgeDynamic", function (): void {
         },
       },
       body,
-      {} as any
+      {} as any,
     );
 
     const { x, y } = edge.getViaNode();
@@ -217,7 +217,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.getPoint(0.5)).to.deep.equal({
@@ -244,7 +244,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.getPoint(0.5)).to.deep.equal({
@@ -268,7 +268,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes.O, null);
@@ -290,7 +290,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes[1], null);
@@ -312,7 +312,7 @@ describe("BezierEdgeDynamic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes[3], null);
@@ -335,7 +335,7 @@ describe("BezierEdgeDynamic", function (): void {
         },
       },
       body,
-      {} as any
+      {} as any,
     );
 
     expect(edge._getDistanceToEdge(10, -10, 20, -20, 10, 20)).to.equal(30);

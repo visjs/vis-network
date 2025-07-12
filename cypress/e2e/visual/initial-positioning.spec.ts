@@ -7,7 +7,7 @@ context("Initial positioning", (): void => {
     cy.visSimpleCanvasSnapshot(
       "no-fixed-no-positions",
       { ...NO_FIXED_NO_POSITIONS },
-      { requireNewerVersionThan: "8.3.0" }
+      { requireNewerVersionThan: "8.3.0" },
     );
   });
 
@@ -15,7 +15,7 @@ context("Initial positioning", (): void => {
     cy.visSimpleCanvasSnapshot(
       "no-fixed-some-positions",
       { ...NO_FIXED_SOME_POSITIONS },
-      { requireNewerVersionThan: "8.3.0" }
+      { requireNewerVersionThan: "8.3.0" },
     );
   });
 
@@ -23,7 +23,7 @@ context("Initial positioning", (): void => {
     cy.visSimpleCanvasSnapshot(
       "some-fixed-some-positions",
       { ...SOME_FIXED_SOME_POSITIONS },
-      { requireNewerVersionThan: "8.3.0" }
+      { requireNewerVersionThan: "8.3.0" },
     );
   });
 });

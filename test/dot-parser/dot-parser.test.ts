@@ -11,7 +11,7 @@ describe("DOT", function (): void {
     .filter((dotName): boolean => dotRE.test(dotName))
     .map(
       (
-        dotName
+        dotName,
       ): {
         name: string;
         dot: string;
@@ -47,7 +47,7 @@ describe("DOT", function (): void {
           parseDOTObject: JSON.parse(readFileSync(parseDOTPath, "utf8")),
           dotToGraphObject: JSON.parse(readFileSync(dotToGraphPath, "utf8")),
         };
-      }
+      },
     )
     .forEach(({ name, dot, parseDOTObject, dotToGraphObject }): void => {
       describe(name, function (): void {

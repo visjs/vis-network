@@ -31,7 +31,7 @@ export function visAssertSelection(expectedSelection: {
 }): void {
   cy.get("#selection-json").should(
     "have.text",
-    JSON.stringify(sortSelection(expectedSelection))
+    JSON.stringify(sortSelection(expectedSelection)),
   );
 }
 Cypress.Commands.add("visAssertSelection", visAssertSelection);

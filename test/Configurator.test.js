@@ -8,7 +8,7 @@ import { configureOptions } from "../lib/network/options";
 describe("Configurator", function () {
   beforeEach(function () {
     this.jsdomGlobalCleanup = canvasMockify(
-      "<div id='mynetwork'></div><div id='other'></div>"
+      "<div id='mynetwork'></div><div id='other'></div>",
     );
     this.container = document.getElementById("mynetwork");
   });
@@ -112,7 +112,9 @@ describe("Configurator", function () {
       config.options.enabled = true;
       config.setModuleOptions();
       expect(this.container.children.length).to.equal(1);
-      expect(this.container.children[0].className).to.equal("vis-configuration-wrapper");
+      expect(this.container.children[0].className).to.equal(
+        "vis-configuration-wrapper",
+      );
     });
 
     it("overwrites config.container with config.options.container", function () {
@@ -121,7 +123,9 @@ describe("Configurator", function () {
       config.options.container = document.getElementById("other");
       config.setModuleOptions();
       expect(config.container).to.equal(config.options.container);
-      expect(config.container.children[0].className).to.equal("vis-configuration-wrapper");
+      expect(config.container.children[0].className).to.equal(
+        "vis-configuration-wrapper",
+      );
     });
   });
 
@@ -131,7 +135,7 @@ describe("Configurator", function () {
       const config = new Configurator(
         Network,
         this.container,
-        configureOptions
+        configureOptions,
       );
       config.getOptions();
     });

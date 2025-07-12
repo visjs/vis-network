@@ -91,7 +91,7 @@ export interface SelectionAccumulatorCommitSummary {
 }
 
 export type SelectionAccumulatorCommitHandler<
-  CommitArgs extends readonly any[]
+  CommitArgs extends readonly any[],
 > = (summary: SelectionAccumulatorCommitSummary, ...rest: CommitArgs) => void;
 
 export class SelectionAccumulator<CommitArgs extends readonly any[]> {
@@ -101,7 +101,7 @@ export class SelectionAccumulator<CommitArgs extends readonly any[]> {
   readonly #commitHandler: SelectionAccumulatorCommitHandler<CommitArgs>;
 
   public constructor(
-    commitHandler: SelectionAccumulatorCommitHandler<CommitArgs> = (): void => {}
+    commitHandler: SelectionAccumulatorCommitHandler<CommitArgs> = (): void => {},
   ) {
     this.#commitHandler = commitHandler;
   }

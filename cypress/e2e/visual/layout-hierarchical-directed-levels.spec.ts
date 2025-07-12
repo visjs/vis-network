@@ -66,7 +66,7 @@ context("Hierarchical layout directed levels", (): void => {
   it("Without clusters", (): void => {
     cy.visVisitUniversal(CONFIG);
     cy.visSnapshotOpenedPage(
-      "layout-hierarchical-directed-levels-without-clusters"
+      "layout-hierarchical-directed-levels-without-clusters",
     );
   });
 
@@ -87,7 +87,7 @@ context("Hierarchical layout directed levels", (): void => {
       network.cluster(clusterOptionsByData);
     });
     cy.visSnapshotOpenedPage(
-      "layout-hierarchical-directed-levels-with-clusters"
+      "layout-hierarchical-directed-levels-with-clusters",
     );
   });
 });

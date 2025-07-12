@@ -37,10 +37,10 @@ export function visConnectNodes(from: Point, to: Point): void {
     ({ addedEdgeIds, removedEdgeIds }): void => {
       // Check that exactly one new edge was added.
       expect(addedEdgeIds, "There should be only one new edge.").to.have.length(
-        1
+        1,
       );
       expect(removedEdgeIds, "There should no edges removed.").to.have.length(
-        0
+        0,
       );
 
       const newId = [...addedEdgeIds][0];
@@ -53,7 +53,7 @@ export function visConnectNodes(from: Point, to: Point): void {
 
       // The added node should be selected now.
       cy.get("#events .click .edge." + newId).should("have.length", 1);
-    }
+    },
   );
 }
 Cypress.Commands.add("visConnectNodes", visConnectNodes);

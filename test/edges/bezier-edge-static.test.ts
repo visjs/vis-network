@@ -43,7 +43,7 @@ describe("BezierEdgeStatic", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(ctx, { dashes: false }, false, false, body.nodes[2]);
@@ -63,7 +63,7 @@ describe("BezierEdgeStatic", function (): void {
         200,
         -200,
         300,
-        -300
+        -300,
       );
 
       assert.calledTwice(ctx.stroke);
@@ -89,7 +89,7 @@ describe("BezierEdgeStatic", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(
@@ -97,7 +97,7 @@ describe("BezierEdgeStatic", function (): void {
         { dashes: [1, 2, 3] } as any,
         false,
         false,
-        body.nodes[2]
+        body.nodes[2],
       );
 
       assert.calledOnce(ctx.beginPath);
@@ -148,7 +148,7 @@ describe("BezierEdgeStatic", function (): void {
             },
           },
           body as any,
-          {} as any
+          {} as any,
         );
 
         const viaNode = edge.getViaNode();
@@ -175,7 +175,7 @@ describe("BezierEdgeStatic", function (): void {
         },
       },
       body as any,
-      {} as any
+      {} as any,
     );
 
     expect(edge.getPoint(0.5)).to.deep.equal({
@@ -198,7 +198,7 @@ describe("BezierEdgeStatic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes.O, null);
@@ -220,7 +220,7 @@ describe("BezierEdgeStatic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes[1], null);
@@ -242,7 +242,7 @@ describe("BezierEdgeStatic", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes[3], null);
@@ -263,7 +263,7 @@ describe("BezierEdgeStatic", function (): void {
         },
       },
       body as any,
-      {} as any
+      {} as any,
     );
 
     expect(edge._getDistanceToEdge(10, -10, 20, -20, 10, 20)).to.equal(30);

@@ -157,11 +157,11 @@ function assertNumNodes(network, expectedPresent, expectedVisible) {
 
   expect(Object.keys(network.body.nodes).length).to.equal(
     expectedPresent,
-    "Total number of nodes does not match"
+    "Total number of nodes does not match",
   );
   expect(network.body.nodeIndices.length).to.equal(
     expectedVisible,
-    "Number of visible nodes does not match"
+    "Number of visible nodes does not match",
   );
 }
 
@@ -173,11 +173,11 @@ function assertNumEdges(network, expectedPresent, expectedVisible) {
 
   expect(Object.keys(network.body.edges).length).to.equal(
     expectedPresent,
-    "Total number of edges does not match"
+    "Total number of edges does not match",
   );
   expect(network.body.edgeIndices.length).to.equal(
     expectedVisible,
-    "Number of visible edges does not match"
+    "Number of visible edges does not match",
   );
 }
 
@@ -192,7 +192,7 @@ function assertEdgeLabels(network, originalEdgesDataSet, assertMessagePrefix) {
     expect(currentNetworkEdge.options.label).to.equal(
       expectedOriginalEdge.label,
       assertMessagePrefix +
-        " - current edge labels do not match the original edge labels"
+        " - current edge labels do not match the original edge labels",
     );
   }
 }
@@ -227,7 +227,7 @@ function checkFontProperties(fontItem, checkStrict = true) {
     if (!Object.prototype.hasOwnProperty.call(fontItem, prop)) continue;
     expect(knownProperties).to.include(
       prop,
-      "Unknown font option '" + prop + "'"
+      "Unknown font option '" + prop + "'",
     );
   }
 
@@ -364,7 +364,8 @@ describe("Network", function () {
     for (const prop in options) {
       expect(options).to.not.have.property(
         prop,
-        "No properties should be present in options, detected property: " + prop
+        "No properties should be present in options, detected property: " +
+          prop,
       );
     }
   });
@@ -561,7 +562,7 @@ describe("Network", function () {
 
       // Sanity check: colors should still be defaults
       expect(edges[1].options.color.color).to.equal(
-        network.edgesHandler.options.color.color
+        network.edgesHandler.options.color.color,
       );
 
       // Override the color value - inherit returns to default
@@ -997,7 +998,7 @@ describe("Network", function () {
             JSON.stringify(recieved) +
             "; " +
             "expected: " +
-            JSON.stringify(expected)
+            JSON.stringify(expected),
         ).to.be.true;
       };
 
@@ -1139,7 +1140,7 @@ describe("Network", function () {
       assertEdgeLabels(
         network,
         data.edges,
-        "c1(14-13-12-11 1-2-3-4) cluster opened"
+        "c1(14-13-12-11 1-2-3-4) cluster opened",
       );
 
       // One external connection
@@ -1181,7 +1182,7 @@ describe("Network", function () {
       assertEdgeLabels(
         network,
         data.edges,
-        "c1(1-2) c2(3-4) c1 cluster opened"
+        "c1(1-2) c2(3-4) c1 cluster opened",
       );
 
       clusterTo(network, "c1", [1, 2]);
@@ -1209,7 +1210,7 @@ describe("Network", function () {
       assertEdgeLabels(
         network,
         data.edges,
-        "14-13-c3(-12-11-)-1-2-c2(-3-4) c1 cluster opened"
+        "14-13-c3(-12-11-)-1-2-c2(-3-4) c1 cluster opened",
       );
     });
 
@@ -1304,7 +1305,7 @@ describe("Network", function () {
       assertEdgeLabels(
         network,
         data.edges,
-        "One external connection c2 middle clustered cluster opened"
+        "One external connection c2 middle clustered cluster opened",
       );
 
       // Open the top cluster
@@ -1325,7 +1326,7 @@ describe("Network", function () {
       assertEdgeLabels(
         network,
         data.edges,
-        "One external connection c3 top clustered cluster opened"
+        "One external connection c3 top clustered cluster opened",
       );
     });
   }); // Clustering
@@ -1381,7 +1382,7 @@ describe("Network", function () {
 
         const network = loadExample(
           "./examples/network/datasources/WorldCup2014.js",
-          true
+          true,
         );
 
         // Count in following also contains the helper nodes for dynamic edges
@@ -1392,7 +1393,7 @@ describe("Network", function () {
       // This actually failed to load, added for this reason
       it.skip("disassemblerExample (problems since mocha 4)", function () {
         const network = loadExample(
-          "./examples/network/exampleApplications/disassemblerExample.js"
+          "./examples/network/exampleApplications/disassemblerExample.js",
         );
         // console.log(Object.keys(network.body.nodes));
         // console.log(Object.keys(network.body.edges));

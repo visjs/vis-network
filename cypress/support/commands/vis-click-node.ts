@@ -20,7 +20,7 @@ export function visClickNode(id: IdType): void {
     cy.visRun(({ network }): void => {
       expect(
         network.getSelectedNodes(),
-        "The node should be selected after it was clicked."
+        "The node should be selected after it was clicked.",
       ).to.deep.equal([id]);
     });
   });

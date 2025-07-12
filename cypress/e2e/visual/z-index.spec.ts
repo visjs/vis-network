@@ -83,7 +83,7 @@ context("Z-index", (): void => {
                   .fill(null)
                   .map(
                     (): string =>
-                      "This label should be above edge labels but bellow arrows."
+                      "This label should be above edge labels but bellow arrows.",
                   )
                   .join("\n"),
                 font: {
@@ -101,7 +101,7 @@ context("Z-index", (): void => {
                   .fill(null)
                   .map(
                     (): string =>
-                      "This label should be bellow nodes and their labels but above edge arrows."
+                      "This label should be bellow nodes and their labels but above edge arrows.",
                   )
                   .join("\n"),
                 font: {
@@ -129,7 +129,7 @@ context("Z-index", (): void => {
               },
             ],
           },
-          { requireNewerVersionThan: "8.0.2" }
+          { requireNewerVersionThan: "8.0.2" },
         );
       });
     }

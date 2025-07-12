@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Vis Network | Events | Interaction events</title>
@@ -67,11 +67,11 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
         console.log(
           "click event, getNodeAt returns: " +
-            this.getNodeAt(params.pointer.DOM)
+            this.getNodeAt(params.pointer.DOM),
         );
       });
       network.on("doubleClick", function (params) {
@@ -81,7 +81,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
       });
       network.on("oncontext", function (params) {
@@ -91,7 +91,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
       });
       network.on("dragStart", function (params) {
@@ -100,7 +100,7 @@
         console.log("dragStart Event:", params);
         console.log(
           "dragStart event, getNodeAt returns: " +
-            this.getNodeAt(params.pointer.DOM)
+            this.getNodeAt(params.pointer.DOM),
         );
       });
       network.on("dragging", function (params) {
@@ -110,7 +110,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
       });
       network.on("dragEnd", function (params) {
@@ -120,12 +120,12 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
         console.log("dragEnd Event:", params);
         console.log(
           "dragEnd event, getNodeAt returns: " +
-            this.getNodeAt(params.pointer.DOM)
+            this.getNodeAt(params.pointer.DOM),
         );
       });
       network.on("controlNodeDragging", function (params) {
@@ -135,7 +135,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
       });
       network.on("controlNodeDragEnd", function (params) {
@@ -145,7 +145,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
         console.log("controlNodeDragEnd Event:", params);
       });
@@ -154,7 +154,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
       });
       network.on("showPopup", function (params) {
@@ -163,7 +163,7 @@
         document.getElementById("eventSpanContent").innerText = JSON.stringify(
           params,
           null,
-          4
+          4,
         );
       });
       network.on("hidePopup", function () {

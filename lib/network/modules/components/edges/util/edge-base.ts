@@ -55,7 +55,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   public constructor(
     options: EdgeOptions,
     protected _body: VBody,
-    protected _labelModule: Label
+    protected _labelModule: Label,
   ) {
     this.setOptions(options);
 
@@ -73,7 +73,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   protected abstract _findBorderPosition(
     node: VNode,
     ctx: CanvasRenderingContext2D,
-    options?: FindBorderPositionOptions<Via>
+    options?: FindBorderPositionOptions<Via>,
   ): PointT;
 
   /**
@@ -123,7 +123,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     >,
     _selected?: boolean,
     _hover?: boolean,
-    viaNode: Via = this.getViaNode()
+    viaNode: Via = this.getViaNode(),
   ): void {
     // set style
     ctx.strokeStyle = this.getColor(ctx, values);
@@ -152,7 +152,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     >,
     viaNode: Via,
     fromPoint?: Point,
-    toPoint?: Point
+    toPoint?: Point,
   ): void {
     if (this.from != this.to) {
       // draw line
@@ -179,7 +179,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     >,
     viaNode: Via,
     _fromPoint?: Point,
-    _toPoint?: Point
+    _toPoint?: Point,
   ): void {
     ctx.lineCap = "round";
     const pattern = Array.isArray(values.dashes) ? values.dashes : [5, 5];
@@ -215,7 +215,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           this.from.y,
           this.to.x,
           this.to.y,
-          pattern
+          pattern,
         );
       } else {
         const [x, y, radius] = this._getCircleData(ctx);
@@ -244,7 +244,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     values: EdgeFormattingValues,
     viaNode: Via,
     fromPoint?: Point,
-    toPoint?: Point
+    toPoint?: Point,
   ): void;
 
   /**
@@ -257,7 +257,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   public findBorderPosition(
     node: VNode,
     ctx: CanvasRenderingContext2D,
-    options?: FindBorderPositionOptions<Via> | FindBorderPositionCircleOptions
+    options?: FindBorderPositionOptions<Via> | FindBorderPositionCircleOptions,
   ): PointT {
     if (this.from != this.to) {
       return this._findBorderPosition(node, ctx, options as any);
@@ -304,7 +304,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    * @returns `[x, y, radius]`
    */
   protected _getCircleData(
-    ctx?: CanvasRenderingContext2D
+    ctx?: CanvasRenderingContext2D,
   ): [number, number, number] {
     const radius = this.options.selfReference.size;
 
@@ -319,7 +319,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
       ctx,
       this.options.selfReference.angle,
       radius,
-      this.from
+      this.from,
     );
 
     return [coordinates.x, coordinates.y, radius];
@@ -337,7 +337,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     x: number,
     y: number,
     radius: number,
-    position: number
+    position: number,
   ): Point {
     const angle = position * 2 * Math.PI;
     return {
@@ -358,7 +358,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
   private _findBorderPositionCircle(
     nearNode: VNode,
     ctx: CanvasRenderingContext2D,
-    options: FindBorderPositionCircleOptions
+    options: FindBorderPositionCircleOptions,
   ): PointT {
     const x = options.x;
     const y = options.y;
@@ -393,7 +393,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         nearNode.distanceToBorder(ctx, angle) + endPointOffset;
 
       const distanceToPoint = Math.sqrt(
-        Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2)
+        Math.pow(pos.x - nearNode.x, 2) + Math.pow(pos.y - nearNode.y, 2),
       );
       const difference = distanceToBorder - distanceToPoint;
       if (Math.abs(difference) < threshold) {
@@ -448,7 +448,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public getColor(
     ctx: CanvasRenderingContext2D,
-    values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity">
+    values: SelectiveRequired<EdgeFormattingValues, "color" | "opacity">,
   ): string | CanvasGradient {
     if (values.inheritsColor !== false) {
       // when this is a loop edge, just use the 'from' method
@@ -457,7 +457,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           this.from.x,
           this.from.y,
           this.to.x,
-          this.to.y
+          this.to.y,
         );
         let fromColor = this.from.options.color.highlight.border;
         let toColor = this.to.options.color.highlight.border;
@@ -465,11 +465,11 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         if (this.from.selected === false && this.to.selected === false) {
           fromColor = overrideOpacity(
             this.from.options.color.border,
-            values.opacity
+            values.opacity,
           );
           toColor = overrideOpacity(
             this.to.options.color.border,
-            values.opacity
+            values.opacity,
           );
         } else if (this.from.selected === true && this.to.selected === false) {
           toColor = this.to.options.color.border;
@@ -510,7 +510,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     >,
     x: number,
     y: number,
-    radius: number
+    radius: number,
   ): void {
     // draw shadow if enabled
     this.enableShadow(ctx, values);
@@ -563,7 +563,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     x2: number,
     y2: number,
     x3: number,
-    y3: number
+    y3: number,
   ): number {
     if (this.from != this.to) {
       return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
@@ -595,7 +595,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     y2: number,
     x3: number,
     y3: number,
-    via?: Via
+    via?: Via,
   ): number;
 
   /**
@@ -614,7 +614,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     x2: number,
     y2: number,
     x3: number,
-    y3: number
+    y3: number,
   ): number {
     const px = x2 - x1;
     const py = y2 - y1;
@@ -651,7 +651,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "middleArrowType" | "middleArrowScale" | "width"
-    >
+    >,
   ): ArrowDataWithCore;
   /** @inheritDoc */
   public getArrowData(
@@ -663,7 +663,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "toArrowType" | "toArrowScale" | "width"
-    >
+    >,
   ): ArrowDataWithCore;
   /** @inheritDoc */
   public getArrowData(
@@ -675,7 +675,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "fromArrowType" | "fromArrowScale" | "width"
-    >
+    >,
   ): ArrowDataWithCore;
   /** @inheritDoc */
   public getArrowData(
@@ -684,7 +684,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     viaNode: VNode,
     _selected: boolean,
     _hover: boolean,
-    values: SelectiveRequired<EdgeFormattingValues, "width">
+    values: SelectiveRequired<EdgeFormattingValues, "width">,
   ): ArrowDataWithCore {
     // set lets
     let angle: number;
@@ -722,7 +722,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     if (node1 != node2) {
       const approximateEdgeLength = Math.hypot(
         node1.x - node2.x,
-        node1.y - node2.y
+        node1.y - node2.y,
       );
       const relativeLength = length / approximateEdgeLength;
 
@@ -732,7 +732,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
           const pointT = this._findBorderPosition(node1, ctx, { via: viaNode });
           const guidePos = this.getPoint(
             pointT.t + relativeLength * (position === "from" ? 1 : -1),
-            viaNode
+            viaNode,
           );
           angle = Math.atan2(pointT.y - guidePos.y, pointT.x - guidePos.x);
           arrowPoint = pointT;
@@ -747,7 +747,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         const guidePos2 = this.getPoint(0.5 - halfLength, viaNode);
         angle = Math.atan2(
           guidePos1.y - guidePos2.y,
-          guidePos1.x - guidePos2.x
+          guidePos1.x - guidePos2.x,
         );
         arrowPoint = this.getPoint(0.5, viaNode);
       }
@@ -816,7 +816,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     >,
     _selected: boolean,
     _hover: boolean,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): void {
     // set style
     ctx.strokeStyle = this.getColor(ctx, values);
@@ -844,7 +844,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
-    >
+    >,
   ): void {
     if (values.shadow === true) {
       ctx.shadowColor = values.shadowColor;
@@ -861,7 +861,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public disableShadow(
     ctx: CanvasRenderingContext2D,
-    values: EdgeFormattingValues
+    values: EdgeFormattingValues,
   ): void {
     if (values.shadow === true) {
       ctx.shadowColor = "rgba(0,0,0,0)";
@@ -881,7 +881,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "backgroundColor" | "backgroundSize"
-    >
+    >,
   ): void {
     if (values.background !== false) {
       // save original line attrs
@@ -912,7 +912,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
    */
   public setStrokeDashed(
     ctx: CanvasRenderingContext2D,
-    dashes?: boolean | number[]
+    dashes?: boolean | number[],
   ): void {
     if (dashes !== false) {
       if (ctx.setLineDash !== undefined) {
@@ -920,7 +920,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         ctx.setLineDash(pattern);
       } else {
         console.warn(
-          "setLineDash is not supported in this browser. The dashed stroke cannot be used."
+          "setLineDash is not supported in this browser. The dashed stroke cannot be used.",
         );
       }
     } else {
@@ -928,7 +928,7 @@ export abstract class EdgeBase<Via = undefined> implements EdgeType {
         ctx.setLineDash([]);
       } else {
         console.warn(
-          "setLineDash is not supported in this browser. The dashed stroke cannot be used."
+          "setLineDash is not supported in this browser. The dashed stroke cannot be used.",
         );
       }
     }

@@ -54,20 +54,20 @@ context("Node shapes", (): void => {
     // Each variant from each group on it's own.
     for (const group of variantGroups) {
       configs.push(
-        ...group.map((variant): any => pureDeepObjectAssign(variant))
+        ...group.map((variant): any => pureDeepObjectAssign(variant)),
       );
     }
 
     // All groups combined.
     const longest = Math.max(
-      ...variantGroups.map((variant): number => variant.length)
+      ...variantGroups.map((variant): number => variant.length),
     );
     for (let i = 0; i < longest; ++i) {
       configs.push(
         pureDeepObjectAssign(
           {},
-          ...variantGroups.map((group): any => group[i % group.length])
-        )
+          ...variantGroups.map((group): any => group[i % group.length]),
+        ),
       );
     }
 
@@ -139,7 +139,7 @@ context("Node shapes", (): void => {
           })),
           edges: [],
         },
-        { requireNewerVersionThan: "8.5.1" }
+        { requireNewerVersionThan: "8.5.1" },
       );
       cy.visSnapshotOpenedPage("border-widths-custom-widths-unselected");
 

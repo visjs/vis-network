@@ -43,7 +43,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(ctx, { dashes: false }, false, false, body.nodes[2]);
@@ -86,7 +86,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(ctx, { dashes: [1, 2, 3] }, false, false, body.nodes[2]);
@@ -145,7 +145,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       edge.drawLine(ctx, { dashes: false }, false, false, body.nodes[2]);
@@ -159,7 +159,7 @@ describe("CubicBezierEdge", function (): void {
         42,
         0,
         6.283185307179586,
-        false
+        false,
       );
 
       assert.calledOnce(ctx.beginPath);
@@ -184,7 +184,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       const viaNode = edge.getViaNode();
@@ -214,7 +214,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body as any,
-        {} as any
+        {} as any,
       );
 
       const viaNode = edge.getViaNode();
@@ -244,7 +244,7 @@ describe("CubicBezierEdge", function (): void {
         },
       },
       body as any,
-      {} as any
+      {} as any,
     );
 
     expect(edge.getPoint(0.5)).to.deep.equal({
@@ -267,7 +267,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes.O, null);
@@ -289,7 +289,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes[1], null);
@@ -311,7 +311,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       const { x, y } = edge._findBorderPosition(body.nodes[3], null);
@@ -332,7 +332,7 @@ describe("CubicBezierEdge", function (): void {
         },
       },
       body as any,
-      {} as any
+      {} as any,
     );
 
     expect(edge._getDistanceToEdge(10, -10, 20, -20, 10, 20)).to.equal(30);
@@ -354,11 +354,11 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.getColor(ctx, values, false, false)).to.equal(
-        "rgba(0,0,17,0.5)"
+        "rgba(0,0,17,0.5)",
       );
     });
 
@@ -377,11 +377,11 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.getColor(ctx, values, false, false)).to.equal(
-        "rgba(0,0,17,0.5)"
+        "rgba(0,0,17,0.5)",
       );
     });
 
@@ -400,11 +400,11 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.getColor(ctx, values, false, false)).to.equal(
-        "rgba(0,0,49,0.5)"
+        "rgba(0,0,49,0.5)",
       );
     });
 
@@ -429,7 +429,7 @@ describe("CubicBezierEdge", function (): void {
           },
         },
         body,
-        {} as any
+        {} as any,
       );
 
       expect(edge.getColor(ctx, values, false, false)).to.equal(adsklgh);
@@ -460,7 +460,7 @@ describe("CubicBezierEdge", function (): void {
             width: 3,
           },
           body,
-          {} as any
+          {} as any,
         );
 
         expect(edge.getLineWidth(selected, hover)).to.equal(expected);
@@ -538,7 +538,7 @@ describe("CubicBezierEdge", function (): void {
             },
           },
           body,
-          {} as any
+          {} as any,
         );
 
         expect(edge.findBorderPositions(ctx)).to.deep.equal(expected);
@@ -748,13 +748,13 @@ describe("CubicBezierEdge", function (): void {
               },
             },
             body,
-            {} as any
+            {} as any,
           );
 
           expect(
-            edge.getArrowData(ctx, position, viaNode, selected, hover, values)
+            edge.getArrowData(ctx, position, viaNode, selected, hover, values),
           ).to.deep.equal(expected);
-        }
+        },
       );
     });
   });

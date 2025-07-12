@@ -26,7 +26,7 @@ declare global {
        */
       visStabilizeFitAndRun<S>(
         callback: (props: VisGlobals) => void,
-        options?: VisStabilizeFitAndRunOptions
+        options?: VisStabilizeFitAndRunOptions,
       ): Chainable<S>;
     }
   }
@@ -37,7 +37,7 @@ export function visStabilizeFitAndRun(
   {
     stabilizationTimeout = VIS_DEFAULT_STABILIZE_AND_FIT_TIMEOUT,
     runTimeout = VIS_DEFAULT_RUN_TIMEOUT,
-  }: VisStabilizeFitAndRunOptions = {}
+  }: VisStabilizeFitAndRunOptions = {},
 ): void {
   cy.visStabilizeAndFit({ timeout: stabilizationTimeout });
   cy.visRun(callback, {

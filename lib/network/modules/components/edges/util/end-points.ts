@@ -92,7 +92,7 @@ class Image extends EndPoint {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): false {
     if (arrowData.image) {
       ctx.save();
@@ -115,7 +115,7 @@ class Image extends EndPoint {
         -width / 2, // x
         0, // y
         width,
-        height
+        height,
       );
 
       ctx.restore();
@@ -137,7 +137,7 @@ class Arrow extends EndPoint {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -167,7 +167,7 @@ class Crow {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -197,7 +197,7 @@ class Curve {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -219,7 +219,7 @@ class Curve {
       arrowData.length * 0.4,
       startAngle,
       endAngle,
-      false
+      false,
     );
     ctx.stroke();
 
@@ -239,7 +239,7 @@ class InvertedCurve {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -261,7 +261,7 @@ class InvertedCurve {
       arrowData.length * 0.4,
       startAngle,
       endAngle,
-      false
+      false,
     );
     ctx.stroke();
 
@@ -281,7 +281,7 @@ class Triangle {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -310,7 +310,7 @@ class InvertedTriangle {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -339,7 +339,7 @@ class Circle {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     const point = { x: -0.4, y: 0 };
 
@@ -362,7 +362,7 @@ class Bar {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     /*
     var points = [
@@ -403,7 +403,7 @@ class Box {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     const points = [
       { x: 0, y: 0.3 },
@@ -431,7 +431,7 @@ class Diamond {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     const points = [
       { x: 0, y: 0 },
@@ -459,7 +459,7 @@ class Vee {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): true {
     // Normalized points of closed path, in the order that they should be drawn.
     // (0, 0) is the attachment point, and the point around which should be rotated
@@ -489,7 +489,7 @@ export class EndPoints {
    */
   public static draw(
     ctx: CanvasRenderingContext2D,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): boolean {
     let type;
     if (arrowData.type) {

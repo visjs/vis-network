@@ -30,7 +30,7 @@ export class StraightEdge extends EdgeBase {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "shadowColor" | "shadowSize" | "shadowX" | "shadowY"
-    >
+    >,
   ): void {
     // draw a straight line
     ctx.beginPath();
@@ -58,7 +58,7 @@ export class StraightEdge extends EdgeBase {
   /** @inheritDoc */
   protected _findBorderPosition(
     nearNode: VNode,
-    ctx: CanvasRenderingContext2D
+    ctx: CanvasRenderingContext2D,
   ): PointT {
     let node1 = this.to;
     let node2 = this.from;
@@ -89,7 +89,7 @@ export class StraightEdge extends EdgeBase {
     x2: number,
     y2: number,
     x3: number,
-    y3: number
+    y3: number,
   ): number {
     // x3,y3 is the point
     return this._getDistanceToLine(x1, y1, x2, y2, x3, y3);

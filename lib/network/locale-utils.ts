@@ -7,7 +7,7 @@
  */
 export function normalizeLanguageCode(
   locales: Record<string, undefined | object>,
-  rawCode: string
+  rawCode: string,
 ): string {
   try {
     const [rawLanguage, rawCountry] = rawCode.split(/[-_ /]/, 2);
@@ -38,7 +38,7 @@ export function normalizeLanguageCode(
   } catch (error) {
     console.error(error);
     console.warn(
-      `Unexpected error while normalizing locale ${rawCode}, falling back to English.`
+      `Unexpected error while normalizing locale ${rawCode}, falling back to English.`,
     );
 
     return "en";

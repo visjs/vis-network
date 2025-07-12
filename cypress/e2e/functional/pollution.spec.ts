@@ -25,11 +25,11 @@ context("Pollution", { testIsolation: false }, (): void => {
             it(type.slice(0, 1).toUpperCase() + type.slice(1), () => {
               cy.get(`#${resultContainerId}.done .${type} .value`).should(
                 "have.text",
-                "0"
+                "0",
               );
             });
           });
-        }
+        },
       );
     }
   });

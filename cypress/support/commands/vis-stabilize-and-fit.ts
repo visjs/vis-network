@@ -52,7 +52,7 @@ export function visStabilizeAndFit({
       // Stabilization can take really long time depenging on the CPU power
       // available and the amount of nodes and edges used.
       timeout,
-    }
+    },
   );
 
   // It seems that waiting for the animation to finish is not enough and ends up

@@ -15,7 +15,7 @@ declare global {
       visSimpleCanvasSnapshot(
         label: number | string,
         config?: UniversalNetworkConfig,
-        options?: VisSnapshotOpenedPageOptions
+        options?: VisSnapshotOpenedPageOptions,
       ): Chainable<Subject>;
     }
   }
@@ -24,7 +24,7 @@ declare global {
 export function visSimpleCanvasSnapshot(
   label: number | string,
   config: UniversalNetworkConfig = {},
-  options: VisSnapshotOpenedPageOptions = {}
+  options: VisSnapshotOpenedPageOptions = {},
 ): void {
   cy.visVisitUniversal(config, options);
   cy.visSnapshotOpenedPage(label, options);

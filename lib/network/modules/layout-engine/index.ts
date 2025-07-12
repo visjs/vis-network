@@ -20,7 +20,7 @@ interface Node {
  */
 function fillLevelsByDirectionCyclic(
   nodes: Map<Id, Node>,
-  levels: Levels
+  levels: Levels,
 ): Levels {
   const edges = new Set<Edge>();
   nodes.forEach((node): void => {
@@ -65,7 +65,7 @@ export function fillLevelsByDirectionLeaves(nodes: Map<Id, Node>): Levels {
     (newLevel, oldLevel): boolean => oldLevel > newLevel,
     // Go against the direction of the edges.
     "from",
-    nodes
+    nodes,
   );
 }
 
@@ -87,7 +87,7 @@ export function fillLevelsByDirectionRoots(nodes: Map<Id, Node>): Levels {
     (newLevel, oldLevel): boolean => oldLevel < newLevel,
     // Go in the direction of the edges.
     "to",
-    nodes
+    nodes,
   );
 }
 
@@ -103,7 +103,7 @@ function fillLevelsByDirection(
   isEntryNode: (node: Node) => boolean,
   shouldLevelBeReplaced: (newLevel: number, oldLevel: number) => boolean,
   direction: "to" | "from",
-  nodes: Map<Id, Node>
+  nodes: Map<Id, Node>,
 ): Levels {
   const levels = Object.create(null);
 
@@ -115,7 +115,7 @@ function fillLevelsByDirection(
   // cyclic graphs).
   const limit = [...nodes.values()].reduce<number>(
     (acc, node): number => acc + 1 + node.edges.length,
-    0
+    0,
   );
 
   const edgeIdProp: "fromId" | "toId" = (direction + "Id") as "fromId" | "toId";
@@ -157,7 +157,7 @@ function fillLevelsByDirection(
             // Ignore edges connecting to an invisible node.
             nodes.has(edge.toId) &&
             // Ignore edges connecting from an invisible node.
-            nodes.has(edge.fromId)
+            nodes.has(edge.fromId),
         )
         .forEach((edge): void => {
           const targetNodeId = edge[edgeIdProp];

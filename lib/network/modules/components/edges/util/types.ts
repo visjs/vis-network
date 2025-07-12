@@ -32,7 +32,7 @@ export interface PointT extends Point {
 
 export type SelectiveRequired<
   T,
-  RequiredKey extends keyof Extract<T, object>
+  RequiredKey extends keyof Extract<T, object>,
 > = T & { [Key in RequiredKey]-?: NonNullable<Extract<T, object>[Key]> };
 
 export type ArrowType =
@@ -60,7 +60,7 @@ export interface CachedImage {
     left: number,
     top: number,
     width?: number,
-    height?: number
+    height?: number,
   ): void;
 }
 export interface ArrowData {
@@ -167,7 +167,7 @@ export interface EdgeType {
     x2: number,
     y2: number,
     x3: number,
-    y3: number
+    y3: number,
   ): number;
 
   /**
@@ -191,7 +191,7 @@ export interface EdgeType {
       | "shadowX"
       | "shadowY"
       | "width"
-    >
+    >,
   ): void;
 
   /**
@@ -210,7 +210,7 @@ export interface EdgeType {
     >,
     selected: boolean,
     hover: boolean,
-    arrowData: ArrowData
+    arrowData: ArrowData,
   ): void;
 
   /**
@@ -232,7 +232,7 @@ export interface EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "middleArrowType" | "middleArrowScale" | "width"
-    >
+    >,
   ): ArrowDataWithCore;
   /**
    * Prepare data that can be used to render a to arrow.
@@ -253,7 +253,7 @@ export interface EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "toArrowType" | "toArrowScale" | "width"
-    >
+    >,
   ): ArrowDataWithCore;
   /**
    * Prepare data that can be used to render a from arrow.
@@ -274,6 +274,6 @@ export interface EdgeType {
     values: SelectiveRequired<
       EdgeFormattingValues,
       "fromArrowType" | "fromArrowScale" | "width"
-    >
+    >,
   ): ArrowDataWithCore;
 }

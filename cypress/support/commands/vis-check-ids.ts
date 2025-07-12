@@ -21,7 +21,7 @@ declare global {
           oldNodeIds: Set<IdType>;
           removedEdgeIds: Set<IdType>;
           removedNodeIds: Set<IdType>;
-        }) => void
+        }) => void,
       ): Chainable<Subject>;
     }
   }
@@ -39,7 +39,7 @@ export function visCheckIds(
     oldNodeIds: Set<IdType>;
     removedEdgeIds: Set<IdType>;
     removedNodeIds: Set<IdType>;
-  }) => void
+  }) => void,
 ): void {
   before();
 
@@ -60,17 +60,17 @@ export function visCheckIds(
       const newEdgeIds = new Set<IdType>(edges.getIds());
 
       const addedNodeIds = new Set<IdType>(
-        [...newNodeIds].filter((id: IdType): boolean => !oldNodeIds.has(id))
+        [...newNodeIds].filter((id: IdType): boolean => !oldNodeIds.has(id)),
       );
       const addedEdgeIds = new Set<IdType>(
-        [...newEdgeIds].filter((id: IdType): boolean => !oldEdgeIds.has(id))
+        [...newEdgeIds].filter((id: IdType): boolean => !oldEdgeIds.has(id)),
       );
 
       const removedNodeIds = new Set<IdType>(
-        [...oldNodeIds].filter((id: IdType): boolean => !newNodeIds.has(id))
+        [...oldNodeIds].filter((id: IdType): boolean => !newNodeIds.has(id)),
       );
       const removedEdgeIds = new Set<IdType>(
-        [...oldEdgeIds].filter((id: IdType): boolean => !newEdgeIds.has(id))
+        [...oldEdgeIds].filter((id: IdType): boolean => !newEdgeIds.has(id)),
       );
 
       after({

@@ -143,10 +143,10 @@ context("Clicks", { testIsolation: false }, (): void => {
             expect(events[0].pointer.DOM).to.have.ownProperty("y");
 
             expect(events[0].pointer.DOM.x).to.equal(
-              x - canvasOffsetFromHTML.x
+              x - canvasOffsetFromHTML.x,
             );
             expect(events[0].pointer.DOM.y).to.equal(
-              y - canvasOffsetFromHTML.y
+              y - canvasOffsetFromHTML.y,
             );
 
             if (name) {
@@ -166,17 +166,19 @@ context("Clicks", { testIsolation: false }, (): void => {
         ["x" as const, "y" as const].forEach((axis): void => {
           it(axis, function (): void {
             const axis0 = namedEvents.get(
-              config.find(({ position }): boolean => position[axis] === 0)!.name
+              config.find(({ position }): boolean => position[axis] === 0)!
+                .name,
             ).pointer.canvas[axis];
             const axis1 = namedEvents.get(
-              config.find(({ position }): boolean => position[axis] === 1)!.name
+              config.find(({ position }): boolean => position[axis] === 1)!
+                .name,
             ).pointer.canvas[axis];
 
             config.forEach(({ name, position }): void => {
               const canvas = namedEvents.get(name).pointer.canvas;
               expect(canvas[axis]).to.be.approximately(
                 axis0 + position[axis] * (axis1 - axis0),
-                0.0000000001 // Let minor rounding errors be forgiven.
+                0.0000000001, // Let minor rounding errors be forgiven.
               );
             });
           });

@@ -21,7 +21,7 @@ export interface Point {
  */
 export function createGridPoints(
   amount: number,
-  size = 1000
+  size = 1000,
 ): readonly Point[] {
   const perRowOrCol = Math.ceil(Math.sqrt(amount));
   const offset = (size * ((perRowOrCol - 1) / perRowOrCol)) / 2;
@@ -35,6 +35,6 @@ export function createGridPoints(
         x: (row / perRowOrCol) * size - offset,
         y: (col / perRowOrCol) * size - offset,
       });
-    })
+    }),
   );
 }

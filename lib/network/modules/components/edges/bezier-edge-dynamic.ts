@@ -147,7 +147,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
       | "shadowX"
       | "shadowY"
     >,
-    viaNode: VNode
+    viaNode: VNode,
   ): void {
     this._bezierCurve(ctx, values, viaNode);
   }
@@ -188,7 +188,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
   /** @inheritDoc */
   protected _findBorderPosition(
     nearNode: VNode,
-    ctx: CanvasRenderingContext2D
+    ctx: CanvasRenderingContext2D,
   ): PointT {
     return this._findBorderPositionBezier(nearNode, ctx, this.via);
   }
@@ -200,7 +200,7 @@ export class BezierEdgeDynamic extends BezierEdgeBase<Point> {
     x2: number,
     y2: number,
     x3: number,
-    y3: number
+    y3: number,
   ): number {
     // x3,y3 is the point
     return this._getDistanceToBezierEdge(x1, y1, x2, y2, x3, y3, this.via);

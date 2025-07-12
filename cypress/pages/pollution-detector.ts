@@ -115,7 +115,7 @@ export class PollutionDetector {
   public async save(
     prefix: string,
     root: any,
-    whitelist: string[] | Set<string> = []
+    whitelist: string[] | Set<string> = [],
   ): Promise<Set<string>> {
     whitelist = whitelist instanceof Set ? whitelist : new Set(whitelist);
     this._saved.push({ prefix, root, whitelist });

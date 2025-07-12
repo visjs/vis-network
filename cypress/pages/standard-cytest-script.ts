@@ -53,7 +53,7 @@ type VisUtil = typeof visUtil;
   }
 
   const config: UniversalConfig = JSON.parse(
-    decodeURIComponent(location.hash.slice(1)) || "{}"
+    decodeURIComponent(location.hash.slice(1)) || "{}",
   );
   console.info("config", config);
 
@@ -66,7 +66,7 @@ type VisUtil = typeof visUtil;
           '"use strict";',
           "",
           "return (" + node.ctxRenderer + ")(payload);",
-        ].join("\n")
+        ].join("\n"),
       );
     }
   }
@@ -105,7 +105,7 @@ type VisUtil = typeof visUtil;
         resolve((window as any).vis);
       };
       document.head.append(script);
-    }
+    },
   );
 
   let editNumber = 0;
@@ -126,7 +126,7 @@ type VisUtil = typeof visUtil;
             initiallyActive: true,
             editNode: (
               nodeData: any,
-              callback: (nodeData: any) => void
+              callback: (nodeData: any) => void,
             ): void => {
               callback({
                 ...nodeData,
@@ -136,7 +136,7 @@ type VisUtil = typeof visUtil;
             editEdge: {
               editWithoutDrag: (
                 edgeData: any,
-                callback: (edgeData: any) => void
+                callback: (edgeData: any) => void,
               ): void => {
                 callback({
                   ...edgeData,
@@ -149,7 +149,7 @@ type VisUtil = typeof visUtil;
       physics: config.physics ? true : false,
     },
     // Raw options to override anything set above.
-    config.options ?? {}
+    config.options ?? {},
   );
 
   console.info("new Network", [$mynetwork, data, options]);
@@ -158,7 +158,7 @@ type VisUtil = typeof visUtil;
   const add = (
     root: HTMLElement,
     names: readonly (string | number)[],
-    content: string | number
+    content: string | number,
   ): void => {
     const elem = document.createElement("pre");
     elem.classList.add(...names.map((value): string => "" + value));

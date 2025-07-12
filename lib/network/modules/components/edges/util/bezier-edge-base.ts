@@ -43,7 +43,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
   protected _findBorderPositionBezier(
     nearNode: VNode,
     ctx: CanvasRenderingContext2D,
-    viaNode: Via = this._getViaCoordinates()
+    viaNode: Via = this._getViaCoordinates(),
   ): PointT {
     const maxIterations = 10;
     const threshold = 0.2;
@@ -82,7 +82,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
         node.distanceToBorder(ctx, angle) + endPointOffset;
 
       const distanceToPoint = Math.sqrt(
-        Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2)
+        Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2),
       );
       const difference = distanceToBorder - distanceToPoint;
       if (Math.abs(difference) < threshold) {
@@ -131,7 +131,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
     y2: number,
     x3: number,
     y3: number,
-    via: Point
+    via: Point,
   ): number {
     // x3,y3 is the point
     let minDistance = 1e9;
@@ -178,7 +178,7 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
       | "shadowY"
     >,
     viaNode1?: Point,
-    viaNode2?: Point
+    viaNode2?: Point,
   ): void {
     ctx.beginPath();
     ctx.moveTo(this.fromPoint.x, this.fromPoint.y);
@@ -191,14 +191,14 @@ export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
           viaNode2.x,
           viaNode2.y,
           this.toPoint.x,
-          this.toPoint.y
+          this.toPoint.y,
         );
       } else {
         ctx.quadraticCurveTo(
           viaNode1.x,
           viaNode1.y,
           this.toPoint.x,
-          this.toPoint.y
+          this.toPoint.y,
         );
       }
     } else {

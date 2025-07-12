@@ -19,7 +19,7 @@ declare global {
        */
       visRun<S>(
         callback: (props: VisGlobals) => void | Promise<void>,
-        options?: VisRunOptions
+        options?: VisRunOptions,
       ): Chainable<S>;
     }
   }
@@ -27,7 +27,7 @@ declare global {
 
 export function visRun(
   callback: (props: VisGlobals) => void | Promise<void>,
-  { timeout = VIS_DEFAULT_RUN_TIMEOUT }: VisRunOptions = {}
+  { timeout = VIS_DEFAULT_RUN_TIMEOUT }: VisRunOptions = {},
 ): void {
   cy.window().then({ timeout }, async (win: any): Promise<void> => {
     const {

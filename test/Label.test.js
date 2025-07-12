@@ -63,7 +63,7 @@ describe("Network Label", function () {
       body,
       {},
       options,
-      new DummyLayoutEngine()
+      new DummyLayoutEngine(),
     );
     //console.log(JSON.stringify(nodesHandler.options, null, 2));
 
@@ -91,7 +91,7 @@ describe("Network Label", function () {
 
     expect(expected.lines.length).to.equal(
       returned.lines.length,
-      "Number of lines does not match, " + showBlocks()
+      "Number of lines does not match, " + showBlocks(),
     );
 
     for (let i = 0; i < returned.lines.length; ++i) {
@@ -100,7 +100,7 @@ describe("Network Label", function () {
 
       expect(retLine.blocks.length).to.equal(
         expLine.blocks.length,
-        "Number of blocks does not match, " + showBlocks()
+        "Number of blocks does not match, " + showBlocks(),
       );
       for (let j = 0; j < retLine.blocks.length; ++j) {
         const retBlock = retLine.blocks[j];
@@ -108,14 +108,14 @@ describe("Network Label", function () {
 
         expect(retBlock.text).to.equal(
           expBlock.text,
-          "Text does not match, " + showBlocks()
+          "Text does not match, " + showBlocks(),
         );
 
         expect(retBlock.mod).to.not.be.undefined;
         if (retBlock.mod === "normal" || retBlock.mod === "") {
           expect(
             expBlock.mod,
-            "No mod field expected in returned, " + showBlocks()
+            "No mod field expected in returned, " + showBlocks(),
           ).to.be.oneOf([undefined, "normal", ""]);
         } else {
           expect(retBlock.mod).to.equal(
@@ -129,7 +129,7 @@ describe("Network Label", function () {
               ", exp: " +
               expBlock.mod +
               "\n" +
-              showBlocks()
+              showBlocks(),
           );
         }
       }
@@ -244,7 +244,7 @@ describe("Network Label", function () {
 
   const normal_widthConstraint_expected = normal_expected.slice(
     0,
-    indexWidthConstrained
+    indexWidthConstrained,
   );
   Array.prototype.push.apply(normal_widthConstraint_expected, [
     {
@@ -521,7 +521,7 @@ describe("Network Label", function () {
     checkProcessedLabels(
       label,
       markdown_text,
-      markdown_widthConstraint_expected
+      markdown_widthConstraint_expected,
     ); // markdown unchanged
   });
 
@@ -542,7 +542,7 @@ describe("Network Label", function () {
     checkProcessedLabels(
       label,
       markdown_text,
-      markdown_widthConstraint_expected
+      markdown_widthConstraint_expected,
     );
   });
 
@@ -1694,29 +1694,27 @@ describe("Network Label", function () {
     const assertConstraints = (expected, fontOptions, label) => {
       expect(expected.minWdt).to.equal(
         fontOptions.minWdt,
-        "Incorrect min width" + label
+        "Incorrect min width" + label,
       );
       expect(expected.maxWdt).to.equal(
         fontOptions.maxWdt,
-        "Incorrect max width" + label
+        "Incorrect max width" + label,
       );
       expect(expected.minHgt).to.equal(
         fontOptions.minHgt,
-        "Incorrect min height" + label
+        "Incorrect min height" + label,
       );
       expect(expected.valign).to.equal(
         fontOptions.valign,
-        "Incorrect valign" + label
+        "Incorrect valign" + label,
       );
     };
 
     // Check nodes
     util.forEach(nodes_expected, function (expected) {
       const networkNode = network.body.nodes[expected.nodeId];
-      expect(
-        networkNode,
-        "node not found for id: " + expected.nodeId
-      ).to.not.be.undefined.and.not.be.null;
+      expect(networkNode, "node not found for id: " + expected.nodeId).to.not.be
+        .undefined.and.not.be.null;
       const fontOptions = networkNode.labelModule.fontOptions;
 
       const label = " for node id: " + expected.nodeId;
@@ -1751,7 +1749,7 @@ describe("Network Label", function () {
       const validLabel = typeof labelVal === "string" && labelVal !== "";
       expect(
         !validLabel,
-        "Unexpected label value '" + labelVal + "' for " + text + " " + index
+        "Unexpected label value '" + labelVal + "' for " + text + " " + index,
       ).to.be.true;
     };
 
@@ -1811,7 +1809,7 @@ describe("Network Label", function () {
       expect(
         isValidLabel(invalidLabel),
 
-        "An empty string should be identified as an invalid label"
+        "An empty string should be identified as an invalid label",
       ).to.be.false;
 
       const body = {
@@ -1838,7 +1836,7 @@ describe("Network Label", function () {
 
       expect(
         label.visible(),
-        "Label should not be visible because the label text is invalid"
+        "Label should not be visible because the label text is invalid",
       ).to.be.false;
     });
   });

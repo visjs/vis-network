@@ -336,7 +336,7 @@ describe("Node Shapes", function (): void {
             editOptions ? editOptions(generateOptions()) : generateOptions(),
             generateBody(),
             generateLabelModule(),
-            ...(overrideArgs || args || [])
+            ...(overrideArgs || args || []),
           );
 
         it("Distance to Border", function (): void {
@@ -344,7 +344,7 @@ describe("Node Shapes", function (): void {
 
           expect(instance.distanceToBorder({}, 0.77)).to.be.approximately(
             distanceToBorder,
-            1
+            1,
           );
         });
 
@@ -383,7 +383,7 @@ describe("Node Shapes", function (): void {
 
             expect(
               ctx,
-              "Nothing should be configured if the shadow isn't enabled."
+              "Nothing should be configured if the shadow isn't enabled.",
             ).to.deep.equal({});
           });
 
@@ -413,7 +413,7 @@ describe("Node Shapes", function (): void {
 
             expect(
               ctx,
-              "Nothing should be configured if the shadow isn't enabled."
+              "Nothing should be configured if the shadow isn't enabled.",
             ).to.deep.equal({});
           });
         });
@@ -512,19 +512,19 @@ describe("Node Shapes", function (): void {
             expect(instance.boundingBox).to.be.an("object");
             expect(instance.boundingBox.top, "top").to.be.approximately(
               boundingBox.top,
-              1
+              1,
             );
             expect(instance.boundingBox.right, "right").to.be.approximately(
               boundingBox.right,
-              1
+              1,
             );
             expect(instance.boundingBox.bottom, "bottom").to.be.approximately(
               boundingBox.bottom,
-              1
+              1,
             );
             expect(instance.boundingBox.left, "left").to.be.approximately(
               boundingBox.left,
-              1
+              1,
             );
           });
         });
@@ -590,6 +590,6 @@ describe("Node Shapes", function (): void {
           });
         }
       });
-    }
+    },
   );
 });

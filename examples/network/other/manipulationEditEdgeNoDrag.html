@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -158,7 +158,7 @@
         document.getElementById("node-saveButton").onclick = saveNodeData.bind(
           this,
           data,
-          callback
+          callback,
         );
         document.getElementById("node-cancelButton").onclick =
           cancelAction.bind(this, callback);
@@ -189,7 +189,7 @@
         document.getElementById("edge-saveButton").onclick = saveEdgeData.bind(
           this,
           data,
-          callback
+          callback,
         );
         document.getElementById("edge-cancelButton").onclick =
           cancelEdgeEdit.bind(this, callback);

@@ -4,7 +4,7 @@ function selectEditAndCheck(
   before: number,
   after: number,
   a: Point,
-  b?: Point
+  b?: Point,
 ): void {
   if (b) {
     let id: IdType;
@@ -110,9 +110,9 @@ context("Manipulation GUI", () => {
         expect(addedEdgeIds, "There should be no new edges.").to.have.length(0);
         expect(
           removedEdgeIds,
-          "There should be exactly one edge removed."
+          "There should be exactly one edge removed.",
         ).to.have.length(1);
-      }
+      },
     );
   });
 

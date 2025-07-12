@@ -9,7 +9,7 @@ type Id = number | string;
 describe("NodesHandler", function (): void {
   const createNode = (
     id: number,
-    edges: { id: Id; fromId: Id; toId: Id }[] = []
+    edges: { id: Id; fromId: Id; toId: Id }[] = [],
   ): any => ({
     id,
     shape: {
@@ -23,7 +23,7 @@ describe("NodesHandler", function (): void {
 
   const createThis = (): any => {
     const inheritedStub = stub().throws(
-      "Methods of inherited objects shoudn’t be called."
+      "Methods of inherited objects shoudn’t be called.",
     );
 
     const nodes = Object.create({
@@ -64,7 +64,7 @@ describe("NodesHandler", function (): void {
 
     it("should be able to locate a position for a node that exists", function () {
       expect(
-        NodesHandler.prototype.getPosition.call(mockThis, 3)
+        NodesHandler.prototype.getPosition.call(mockThis, 3),
       ).to.deep.equal(mockThis.body.nodes[3]);
     });
 
@@ -73,7 +73,7 @@ describe("NodesHandler", function (): void {
         NodesHandler.prototype.getPosition.call(mockThis);
       } catch (e) {
         expect(e.message).to.equal(
-          "No id was specified for getPosition method."
+          "No id was specified for getPosition method.",
         );
       }
     });
@@ -83,7 +83,7 @@ describe("NodesHandler", function (): void {
         NodesHandler.prototype.getPosition.call(mockThis, "not here");
       } catch (e) {
         expect(e.message).to.equal(
-          "NodeId provided for getPosition does not exist. Provided: not here"
+          "NodeId provided for getPosition does not exist. Provided: not here",
         );
       }
     });
@@ -113,7 +113,7 @@ describe("NodesHandler", function (): void {
 
     it("An Id → Point dictionary with requested item but nothing more should be returned", function (): void {
       expect(
-        NodesHandler.prototype.getPositions.call(mockThis, 1)
+        NodesHandler.prototype.getPositions.call(mockThis, 1),
       ).to.deep.equal({
         1: { x: 2401, y: 2501 },
       });
@@ -121,19 +121,19 @@ describe("NodesHandler", function (): void {
 
     it("An empty Id → Point dictionary should be returned if the item wasn’t found", function (): void {
       expect(
-        NodesHandler.prototype.getPositions.call(mockThis, "missing")
+        NodesHandler.prototype.getPositions.call(mockThis, "missing"),
       ).to.deep.equal({});
     });
 
     it("An empty Id → Point dictionary should be returned for empty array", function (): void {
       expect(
-        NodesHandler.prototype.getPositions.call(mockThis, [])
+        NodesHandler.prototype.getPositions.call(mockThis, []),
       ).to.deep.equal({});
     });
 
     it("An Id → Point dictionary with all requested items but nothing more should be returned", function (): void {
       expect(
-        NodesHandler.prototype.getPositions.call(mockThis, [0, 2, 3])
+        NodesHandler.prototype.getPositions.call(mockThis, [0, 2, 3]),
       ).to.deep.equal({
         0: { x: 2400, y: 2500 },
         2: { x: 2402, y: 2502 },
@@ -148,7 +148,7 @@ describe("NodesHandler", function (): void {
           "missing",
           0,
           -77,
-        ])
+        ]),
       ).to.deep.equal({
         0: { x: 2400, y: 2500 },
         1: { x: 2401, y: 2501 },
@@ -163,7 +163,7 @@ describe("NodesHandler", function (): void {
 
       expect(
         mockThis.options,
-        "The supplied shape should be saved into the options."
+        "The supplied shape should be saved into the options.",
       )
         .to.have.ownProperty("shape")
         .that.equals("test-shape");
@@ -175,7 +175,7 @@ describe("NodesHandler", function (): void {
       ].forEach((node): void => {
         expect(
           node.updateShape.callCount,
-          "The shape of all nodes should be updated."
+          "The shape of all nodes should be updated.",
         ).to.equal(1);
       });
     });
@@ -188,7 +188,7 @@ describe("NodesHandler", function (): void {
 
       expect(
         mockThis.options,
-        "The supplied font should be saved into the options."
+        "The supplied font should be saved into the options.",
       )
         .to.have.ownProperty("font")
         .that.equals("13px fira code cyan");
@@ -200,11 +200,11 @@ describe("NodesHandler", function (): void {
       ].forEach((node): void => {
         expect(
           node.updateLabelModule.callCount,
-          "The label module of all nodes should be updated."
+          "The label module of all nodes should be updated.",
         ).to.equal(1);
         expect(
           node.needsRefresh.callCount,
-          "All nodes should be marked for refresh."
+          "All nodes should be marked for refresh.",
         ).to.equal(1);
       });
     });
@@ -217,7 +217,7 @@ describe("NodesHandler", function (): void {
 
       expect(
         mockThis.options,
-        "The supplied size should be saved into the options."
+        "The supplied size should be saved into the options.",
       )
         .to.have.ownProperty("size")
         .that.equals(13);
@@ -229,7 +229,7 @@ describe("NodesHandler", function (): void {
       ].forEach((node): void => {
         expect(
           node.needsRefresh.callCount,
-          "All nodes should be marked for refresh."
+          "All nodes should be marked for refresh.",
         ).to.equal(1);
       });
     });
@@ -241,7 +241,7 @@ describe("NodesHandler", function (): void {
 
       for (let id = 0; id < 4; ++id) {
         expect(
-          NodesHandler.prototype.getBoundingBox.call(mockThis, id)
+          NodesHandler.prototype.getBoundingBox.call(mockThis, id),
         ).to.deep.equal({
           top: id,
           right: id + 1,
@@ -268,15 +268,15 @@ describe("NodesHandler", function (): void {
       const mockThis = createThis();
 
       expect(
-        NodesHandler.prototype.getConnectedNodes.call(mockThis, 1)
+        NodesHandler.prototype.getConnectedNodes.call(mockThis, 1),
       ).to.deep.equal(["X"]);
 
       expect(
-        NodesHandler.prototype.getConnectedNodes.call(mockThis, 2)
+        NodesHandler.prototype.getConnectedNodes.call(mockThis, 2),
       ).to.deep.equal([3]);
 
       expect(
-        NodesHandler.prototype.getConnectedNodes.call(mockThis, 3).sort()
+        NodesHandler.prototype.getConnectedNodes.call(mockThis, 3).sort(),
       ).to.deep.equal([2, 3].sort());
     });
 
@@ -284,7 +284,7 @@ describe("NodesHandler", function (): void {
       const mockThis = createThis();
       expect(
         NodesHandler.prototype.getConnectedNodes.call(mockThis, 0),
-        "Empty array should be returned if there are no connected nodes."
+        "Empty array should be returned if there are no connected nodes.",
       )
         .to.be.an("array")
         .that.has.lengthOf(0);
@@ -307,15 +307,15 @@ describe("NodesHandler", function (): void {
       const mockThis = createThis();
 
       expect(
-        NodesHandler.prototype.getConnectedEdges.call(mockThis, 1)
+        NodesHandler.prototype.getConnectedEdges.call(mockThis, 1),
       ).to.deep.equal(["e1-X"]);
 
       expect(
-        NodesHandler.prototype.getConnectedEdges.call(mockThis, 2)
+        NodesHandler.prototype.getConnectedEdges.call(mockThis, 2),
       ).to.deep.equal(["e2-3"]);
 
       expect(
-        NodesHandler.prototype.getConnectedEdges.call(mockThis, 3).sort()
+        NodesHandler.prototype.getConnectedEdges.call(mockThis, 3).sort(),
       ).to.deep.equal(["e2-3", "e3-3"].sort());
     });
 
@@ -323,7 +323,7 @@ describe("NodesHandler", function (): void {
       const mockThis = createThis();
       expect(
         NodesHandler.prototype.getConnectedEdges.call(mockThis, 0),
-        "Empty array should be returned if there are no connected edges."
+        "Empty array should be returned if there are no connected edges.",
       )
         .to.be.an("array")
         .that.has.lengthOf(0);

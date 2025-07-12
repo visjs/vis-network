@@ -18,10 +18,10 @@ export function visClickEdge(id: IdType): void {
     const [fromId, toId] = network.getConnectedNodes(id) as [IdType, IdType];
 
     const { x: x1, y: y1 } = network.canvasToDOM(
-      network.getPositions([fromId])[fromId]
+      network.getPositions([fromId])[fromId],
     );
     const { x: x2, y: y2 } = network.canvasToDOM(
-      network.getPositions([toId])[toId]
+      network.getPositions([toId])[toId],
     );
 
     const x = (x1 + x2) / 2;
@@ -31,7 +31,7 @@ export function visClickEdge(id: IdType): void {
     cy.visRun(({ network }): void => {
       expect(
         network.getSelectedEdges(),
-        "The edge should be selected after it was clicked."
+        "The edge should be selected after it was clicked.",
       ).to.deep.equal([id]);
     });
   });

@@ -26,10 +26,10 @@ export function visPlaceNode(x: number, y: number): void {
     ({ addedNodeIds, removedNodeIds }): void => {
       // Check that exactly one new node was added.
       expect(addedNodeIds, "There should be only one new edge.").to.have.length(
-        1
+        1,
       );
       expect(removedNodeIds, "There should no edges removed.").to.have.length(
-        0
+        0,
       );
 
       const newId = [...addedNodeIds][0];
@@ -42,7 +42,7 @@ export function visPlaceNode(x: number, y: number): void {
 
       // The added node should be selected now.
       cy.get("#events .click .node." + newId).should("have.length", 1);
-    }
+    },
   );
 }
 Cypress.Commands.add("visPlaceNode", visPlaceNode);

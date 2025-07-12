@@ -31,7 +31,7 @@ describe("wind", function (): void {
           { from: 3, to: 4 },
         ],
       },
-      { physics: { wind: { x: 10, y: 0 }, stabilization: { iterations: 10 } } }
+      { physics: { wind: { x: 10, y: 0 }, stabilization: { iterations: 10 } } },
     );
 
     // Wait for the physics to stabilize.

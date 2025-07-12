@@ -9,7 +9,7 @@ export function drawCircle(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   ctx.beginPath();
   ctx.arc(x, y, r, 0, 2 * Math.PI, false);
@@ -27,7 +27,7 @@ export function drawSquare(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   ctx.beginPath();
   ctx.rect(x - r, y - r, r * 2, r * 2);
@@ -47,7 +47,7 @@ export function drawTriangle(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   ctx.beginPath();
 
@@ -80,7 +80,7 @@ export function drawTriangleDown(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   ctx.beginPath();
 
@@ -111,7 +111,7 @@ export function drawStar(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   // http://www.html5canvastutorials.com/labs/html5-canvas-star-spinner/
   ctx.beginPath();
@@ -124,7 +124,7 @@ export function drawStar(
     const radius = n % 2 === 0 ? r * 1.3 : r * 0.5;
     ctx.lineTo(
       x + radius * Math.sin((n * 2 * Math.PI) / 10),
-      y - radius * Math.cos((n * 2 * Math.PI) / 10)
+      y - radius * Math.cos((n * 2 * Math.PI) / 10),
     );
   }
 
@@ -144,7 +144,7 @@ export function drawDiamond(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   ctx.beginPath();
 
@@ -173,7 +173,7 @@ export function drawRoundRect(
   y: number,
   w: number,
   h: number,
-  r: number
+  r: number,
 ): void {
   const r2d = Math.PI / 180;
   if (w - 2 * r < 0) {
@@ -212,7 +212,7 @@ export function drawEllipse(
   x: number,
   y: number,
   w: number,
-  h: number
+  h: number,
 ): void {
   const kappa = 0.5522848,
     ox = (w / 2) * kappa, // control point offset horizontal
@@ -246,7 +246,7 @@ export function drawDatabase(
   x: number,
   y: number,
   w: number,
-  h: number
+  h: number,
 ): void {
   const f = 1 / 3;
   const wEllipse = w;
@@ -298,7 +298,7 @@ export function drawDashedLine(
   y: number,
   x2: number,
   y2: number,
-  pattern: number[]
+  pattern: number[],
 ): void {
   ctx.beginPath();
   ctx.moveTo(x, y);
@@ -346,7 +346,7 @@ export function drawHexagon(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  r: number
+  r: number,
 ): void {
   ctx.beginPath();
   const sides = 6;
@@ -383,7 +383,7 @@ const shapeMap = {
  * `(ctx: CanvasRenderingContext2D, ...originalArgs) => void`.
  */
 export function getShape(
-  name: keyof CanvasRenderingContext2D | keyof typeof shapeMap
+  name: keyof CanvasRenderingContext2D | keyof typeof shapeMap,
 ): any {
   if (Object.prototype.hasOwnProperty.call(shapeMap, name)) {
     return (shapeMap as any)[name];

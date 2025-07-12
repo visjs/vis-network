@@ -34,7 +34,7 @@ describe("Edge color", function (): void {
         newOptions,
         allowDeletion,
         globalOptions,
-        copyFromGlobals
+        copyFromGlobals,
       );
 
       expect(parentOptions).to.have.ownProperty("color").that.deep.equals({
@@ -66,7 +66,7 @@ describe("Edge color", function (): void {
         newOptions,
         allowDeletion,
         globalOptions,
-        copyFromGlobals
+        copyFromGlobals,
       );
 
       expect(parentOptions).to.have.ownProperty("color").that.deep.equals({

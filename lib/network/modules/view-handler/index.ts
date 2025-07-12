@@ -15,7 +15,7 @@ export interface ViewFitOptions {
  */
 export function normalizeFitOptions(
   rawOptions: Partial<ViewFitOptions>,
-  allNodeIds: IdType[]
+  allNodeIds: IdType[],
 ): ViewFitOptions {
   const options = Object.assign<ViewFitOptions, Partial<ViewFitOptions>>(
     {
@@ -23,7 +23,7 @@ export function normalizeFitOptions(
       minZoomLevel: Number.MIN_VALUE,
       maxZoomLevel: 1,
     },
-    rawOptions ?? {}
+    rawOptions ?? {},
   );
 
   if (!Array.isArray(options.nodes)) {
@@ -44,7 +44,7 @@ export function normalizeFitOptions(
     )
   ) {
     throw new TypeError(
-      "Max zoom level has to be a number higher than min zoom level."
+      "Max zoom level has to be a number higher than min zoom level.",
     );
   }
 

@@ -12,7 +12,7 @@ function drag(
     name: "pointerover" | "pointermove" | "pointerdown" | "pointerup";
     x: number;
     y: number;
-  }[]
+  }[],
 ): { name: string; event: VisEvent }[] {
   const events: { name: string; event: VisEvent }[] = [];
 
@@ -82,7 +82,7 @@ context("Drags", (): void => {
           { x: 120, y: 145 },
           { x: 140, y: 170 },
           { x: 160, y: 195 },
-        ]
+        ],
       );
     });
   });
@@ -130,7 +130,7 @@ context("Drags", (): void => {
           { x: 120, y: 250 },
           { x: 140, y: 300 },
           { x: 160, y: 300 },
-        ]
+        ],
       );
     });
   });

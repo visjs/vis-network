@@ -12,7 +12,7 @@ declare global {
        */
       visSnapshotOpenedPage(
         label: number | string,
-        options?: VisSnapshotOpenedPageOptions
+        options?: VisSnapshotOpenedPageOptions,
       ): Chainable<Subject>;
     }
   }
@@ -29,7 +29,7 @@ export interface VisSnapshotOpenedPageOptions extends VisVisitPageOptions {
 
 export function visSnapshotOpenedPage(
   label: number | string,
-  options: VisSnapshotOpenedPageOptions = {}
+  options: VisSnapshotOpenedPageOptions = {},
 ): void {
   const moveTo = options.moveTo;
   if (moveTo !== false) {
@@ -40,14 +40,14 @@ export function visSnapshotOpenedPage(
             position: { x: 0, y: 0 },
             scale: 1,
           },
-          moveTo ?? {}
-        )
+          moveTo ?? {},
+        ),
       );
     });
   }
 
   cy.get("#mynetwork canvas").compareSnapshot(
-    typeof label === "string" ? label : ("" + label).padStart(3, "0")
+    typeof label === "string" ? label : ("" + label).padStart(3, "0"),
   );
 }
 Cypress.Commands.add("visSnapshotOpenedPage", visSnapshotOpenedPage);

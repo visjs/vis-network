@@ -80,7 +80,7 @@ context("Label rendering", (): void => {
           ]) {
             it(
               JSON.stringify(
-                label.replace(/\t/g, "<HT>").replace(/\n/g, "<LF>")
+                label.replace(/\t/g, "<HT>").replace(/\n/g, "<LF>"),
               ),
               (): void => {
                 cy.visSimpleCanvasSnapshot(
@@ -113,9 +113,9 @@ context("Label rendering", (): void => {
                         font: { background, color, multi, size },
                       },
                     },
-                  }
+                  },
                 );
-              }
+              },
             );
           }
         });

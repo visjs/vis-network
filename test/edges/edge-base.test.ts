@@ -37,7 +37,7 @@ describe("EdgeBase", function (): void {
           shadowSize: 123,
           shadowX: 456,
           shadowY: 789,
-        })
+        }),
       );
 
       expect(ctx).to.deep.equal({
@@ -60,7 +60,7 @@ describe("EdgeBase", function (): void {
         ctx,
         deepFreeze({
           shadow: true,
-        })
+        }),
       );
 
       expect(ctx).to.deep.equal({

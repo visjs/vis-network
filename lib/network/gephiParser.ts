@@ -84,7 +84,7 @@ export interface VisEdge {
  */
 export function parseGephi(
   gephiJSON: GephiData,
-  optionsObj?: GephiParseOptions
+  optionsObj?: GephiParseOptions,
 ): VisData {
   const options = {
     edges: {

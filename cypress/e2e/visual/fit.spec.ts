@@ -17,7 +17,7 @@ context("Fit", (): void => {
           { from: 3, to: 3 },
         ],
       },
-      { requireNewerVersionThan: "8.4.2" }
+      { requireNewerVersionThan: "8.4.2" },
     );
   });
 

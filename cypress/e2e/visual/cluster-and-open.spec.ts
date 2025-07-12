@@ -103,7 +103,7 @@ context("Cluster and opening", (): void => {
       cy.visRun(({ network }): void => {
         network.openCluster(
           Object.keys(network.getPositions())[0],
-          openClusterOptions
+          openClusterOptions,
         );
       });
       cy.wait(1000);

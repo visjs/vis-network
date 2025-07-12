@@ -168,7 +168,7 @@ describe("Directed hierarchical layout", (): void => {
       (
         { nodes },
         i,
-        arr
+        arr,
       ): {
         expectedVisibleEdges: number;
         nodesToCluster: Set<IdType>;
@@ -179,7 +179,7 @@ describe("Directed hierarchical layout", (): void => {
             .slice(0, i + 1)
             .reduce((acc, { swallowsEdges }): number => acc + swallowsEdges, 0),
         nodesToCluster: new Set(nodes),
-      })
+      }),
     );
 
     it(name, (): void => {
@@ -249,10 +249,11 @@ describe("Directed hierarchical layout", (): void => {
                     }[];
                   };
                 }
-              ).body.edges
+              ).body.edges,
             ).filter(
               (edge): boolean =>
-                visibleNodeIds.has(edge.fromId) && visibleNodeIds.has(edge.toId)
+                visibleNodeIds.has(edge.fromId) &&
+                visibleNodeIds.has(edge.toId),
             );
 
             const invalidEdges = visibleEdges
@@ -270,7 +271,7 @@ describe("Directed hierarchical layout", (): void => {
                   fromPosition: network.getPositions([fromId])[fromId],
                   toId,
                   toPosition: network.getPositions([toId])[toId],
-                })
+                }),
               )
               .filter(({ fromPosition, toPosition }): boolean => {
                 return !(fromPosition.y < toPosition.y);
@@ -286,8 +287,8 @@ describe("Directed hierarchical layout", (): void => {
           cy.visRun(({ network }): void => {
             const levels = Array.from(
               new Set(
-                Object.values(network.getPositions()).map(({ y }): number => y)
-              )
+                Object.values(network.getPositions()).map(({ y }): number => y),
+              ),
             ).sort((a, b): number => a - b);
 
             const gaps = new Array(levels.length - 1)
@@ -300,7 +301,7 @@ describe("Directed hierarchical layout", (): void => {
               gaps.every((gap, _i, arr): boolean => {
                 return gap === arr[0];
               }),
-              "All levels should be evenly spaced without gaps."
+              "All levels should be evenly spaced without gaps.",
             ).to.be.true;
           });
         }
@@ -316,7 +317,7 @@ describe("Directed hierarchical layout", (): void => {
           expect(network.getSelectedNodes()).to.deep.equal([]);
 
           const visibleNodeIds = new Set(
-            Object.keys(network.getPositions()).sort()
+            Object.keys(network.getPositions()).sort(),
           );
           for (const id of visibleNodeIds) {
             cy.visClickNode(id);

@@ -11,7 +11,7 @@ declare global {
        */
       visVisitUniversal(
         config?: UniversalNetworkConfig,
-        options?: VisVisitPageOptions
+        options?: VisVisitPageOptions,
       ): Chainable<Subject>;
     }
   }
@@ -28,7 +28,7 @@ export interface VisVisitPageOptions extends UniversalNetworkConfig {
 function visitPage(config: UniversalConfig): void {
   expect(
     config.version,
-    "The version has to be a valid break.add.fix version or null (current code)."
+    "The version has to be a valid break.add.fix version or null (current code).",
   ).to.satisfy((version: unknown): boolean => {
     return (
       version === null ||
@@ -38,7 +38,7 @@ function visitPage(config: UniversalConfig): void {
 
   cy.visit(
     "http://localhost:58253/cypress/pages/universal.html#" +
-      encodeURIComponent(JSON.stringify(config))
+      encodeURIComponent(JSON.stringify(config)),
   );
   cy.get("#status").contains("Ready", {
     timeout: Cypress.config("pageLoadTimeout"),
@@ -47,7 +47,7 @@ function visitPage(config: UniversalConfig): void {
 
 export function visVisitUniversal(
   config: UniversalNetworkConfig = {},
-  { requireNewerVersionThan }: VisVisitPageOptions = {}
+  { requireNewerVersionThan }: VisVisitPageOptions = {},
 ): void {
   const tag = Cypress.env("VIS_NETWORK_TAG") ?? null;
 
@@ -76,7 +76,7 @@ export function visVisitUniversal(
         // current branch instead.
         visitPage({ ...config, version: null });
       }
-    }
+    },
   );
 }
 Cypress.Commands.add("visVisitUniversal", visVisitUniversal);

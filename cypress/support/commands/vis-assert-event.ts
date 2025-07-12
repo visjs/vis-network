@@ -15,7 +15,7 @@ declare global {
        */
       visShiftAndAssertEventFiredWithParams(
         name: NetworkEvents,
-        params: any
+        params: any,
       ): Chainable<Subject>;
       /**
        * Check that given event was not fired.
@@ -36,12 +36,12 @@ export function visShiftAndAssertEventFired(name: NetworkEvents): void {
 }
 Cypress.Commands.add(
   "visShiftAndAssertEventFired",
-  visShiftAndAssertEventFired
+  visShiftAndAssertEventFired,
 );
 
 export function visShiftAndAssertEventFiredWithParams(
   name: NetworkEvents,
-  params: any
+  params: any,
 ): void {
   cy.visRun(async ({ eventQueue }): Promise<void> => {
     expect(eventQueue[name], `${name} event queue`).to.not.be.empty;
@@ -53,7 +53,7 @@ export function visShiftAndAssertEventFiredWithParams(
 }
 Cypress.Commands.add(
   "visShiftAndAssertEventFiredWithParams",
-  visShiftAndAssertEventFiredWithParams
+  visShiftAndAssertEventFiredWithParams,
 );
 
 export function visShiftAndAssertEventNone(
