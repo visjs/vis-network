@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
@@ -183,11 +183,11 @@
             var elementConnections = cNode.connections;
 
             // remove the connection from the other node to prevent duplicate connections
-            var duplicateIndex = elementConnections.findIndex(function (
-              connection
-            ) {
-              return connection == node.id; // double equals since id can be numeric or string
-            });
+            var duplicateIndex = elementConnections.findIndex(
+              function (connection) {
+                return connection == node.id; // double equals since id can be numeric or string
+              },
+            );
 
             if (duplicateIndex != -1) {
               elementConnections.splice(duplicateIndex, 1);

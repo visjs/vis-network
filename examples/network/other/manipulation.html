@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -114,7 +114,7 @@
               document.getElementById("saveButton").onclick = saveData.bind(
                 this,
                 data,
-                callback
+                callback,
               );
               document.getElementById("cancelButton").onclick =
                 clearPopUp.bind();
@@ -128,11 +128,11 @@
               document.getElementById("saveButton").onclick = saveData.bind(
                 this,
                 data,
-                callback
+                callback,
               );
               document.getElementById("cancelButton").onclick = cancelEdit.bind(
                 this,
-                callback
+                callback,
               );
               document.getElementById("network-popUp").style.display = "block";
             },

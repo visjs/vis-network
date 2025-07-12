@@ -217,11 +217,11 @@ function editNode(data, cancelAction, callback) {
   document.getElementById("node-saveButton").onclick = saveNodeData.bind(
     this,
     data,
-    callback
+    callback,
   );
   document.getElementById("node-cancelButton").onclick = cancelAction.bind(
     this,
-    callback
+    callback,
   );
   document.getElementById("node-popUp").style.display = "block";
 }
@@ -250,11 +250,11 @@ function editEdgeWithoutDrag(data, callback) {
   document.getElementById("edge-saveButton").onclick = saveEdgeData.bind(
     this,
     data,
-    callback
+    callback,
   );
   document.getElementById("edge-cancelButton").onclick = cancelEdgeEdit.bind(
     this,
-    callback
+    callback,
   );
   document.getElementById("edge-popUp").style.display = "block";
 }

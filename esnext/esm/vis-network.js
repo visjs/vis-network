@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-07-11T18:04:34.591Z
+ * @date    2025-07-12T19:04:36.080Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -25,7 +25,7 @@
  */
 
 import Emitter from 'component-emitter';
-import { topMost, forEach, deepExtend, overrideOpacity, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, VALIDATOR_PRINT_STYLE, selectiveDeepExtend, isString, Alea, HSVToHex, Hammer, easingFunctions, getAbsoluteLeft, getAbsoluteTop, Popup, recursiveDOMDelete, Validator, Configurator, Activator } from 'vis-util/esnext/esm/vis-util.js';
+import { topMost, forEach, deepExtend, overrideOpacity, bridgeObject, selectiveNotDeepExtend, parseColor, mergeOptions, fillIfDefined, VALIDATOR_PRINT_STYLE, selectiveDeepExtend, isString, Alea, HSVToHex, Hammer, easingFunctions, getAbsoluteTop, getAbsoluteLeft, Popup, recursiveDOMDelete, Validator, Configurator, Activator } from 'vis-util/esnext/esm/vis-util.js';
 import { isDataViewLike, DataSet } from 'vis-data/esnext/esm/vis-data.js';
 import { v4 } from 'uuid';
 import keycharm from 'keycharm';
@@ -1392,7 +1392,7 @@ function parseAttributeList() {
  */
 function newSyntaxError(message) {
   return new SyntaxError(
-    message + ', got "' + chop(token, 30) + '" (char ' + index + ")"
+    message + ', got "' + chop(token, 30) + '" (char ' + index + ")",
   );
 }
 
@@ -1575,7 +1575,7 @@ function DOTToGraph(data) {
           from.id,
           to.id,
           dotEdge.type,
-          dotEdge.attr
+          dotEdge.attr,
         );
         var graphEdge = convertEdge(subEdge);
         graphData.edges.push(graphEdge);
@@ -1603,9 +1603,9 @@ function DOTToGraph(data) {
 /* eslint-enable no-prototype-builtins */
 
 var dotparser = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  DOTToGraph: DOTToGraph,
-  parseDOT: parseDOT
+    __proto__: null,
+    DOTToGraph: DOTToGraph,
+    parseDOT: parseDOT
 });
 
 /**
@@ -1712,8 +1712,8 @@ function parseGephi(gephiJSON, optionsObj) {
 }
 
 var gephiParser = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  parseGephi: parseGephi
+    __proto__: null,
+    parseGephi: parseGephi
 });
 
 // English
@@ -1905,18 +1905,18 @@ const cs = {
 };
 
 var locales = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  cn: cn,
-  cs: cs,
-  de: de,
-  en: en,
-  es: es,
-  fr: fr,
-  it: it,
-  nl: nl,
-  pt: pt,
-  ru: ru,
-  uk: uk
+    __proto__: null,
+    cn: cn,
+    cs: cs,
+    de: de,
+    en: en,
+    es: es,
+    fr: fr,
+    it: it,
+    nl: nl,
+    pt: pt,
+    ru: ru,
+    uk: uk
 });
 
 /**
@@ -2065,7 +2065,7 @@ class CachedImage {
         to[0],
         to[1],
         to[2],
-        to[3]
+        to[3],
       );
     }
   }
@@ -2111,7 +2111,7 @@ class CachedImage {
         left,
         top,
         width,
-        height
+        height,
       );
     } else {
       // Draw image directly
@@ -2497,7 +2497,7 @@ function choosify(subOption, pile) {
           "' should be one of " +
           "'" +
           allowed.join("', '") +
-          "'"
+          "'",
       );
     }
 
@@ -3784,7 +3784,7 @@ class Label {
 
     // A value **must** be found; you should never get here.
     throw new Error(
-      "Did not find value for multi-font for property: '" + option + "'"
+      "Did not find value for multi-font for property: '" + option + "'",
     );
   }
 
@@ -3932,7 +3932,7 @@ class Label {
           const [fontColor, strokeColor] = this._getColor(
             block.color,
             viewFontSize,
-            block.strokeColor
+            block.strokeColor,
           );
           if (block.strokeWidth > 0) {
             ctx.lineWidth = block.strokeWidth;
@@ -4005,8 +4005,8 @@ class Label {
         0,
         Math.min(
           1,
-          1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize)
-        )
+          1 - (this.elementOptions.scaling.label.drawThreshold - viewFontSize),
+        ),
       );
       fontColor = overrideOpacity(fontColor, opacity);
       strokeColor = overrideOpacity(strokeColor, opacity);
@@ -4135,7 +4135,7 @@ class Label {
             values,
             this.elementOptions.id,
             selected,
-            hover
+            hover,
           );
         }
       }
@@ -4193,7 +4193,7 @@ class Label {
       ctx,
       selected,
       hover,
-      this.elementOptions.label
+      this.elementOptions.label,
     );
 
     if (this.fontOptions.minWdt > 0 && state.width < this.fontOptions.minWdt) {
@@ -4306,7 +4306,7 @@ class NodeBase {
     return (
       Math.min(
         Math.abs(this.width / 2 / Math.cos(angle)),
-        Math.abs(this.height / 2 / Math.sin(angle))
+        Math.abs(this.height / 2 / Math.sin(angle)),
       ) + borderWidth
     );
   }
@@ -4354,7 +4354,7 @@ class NodeBase {
         ctx.setLineDash(dashes);
       } else {
         console.warn(
-          "setLineDash is not supported in this browser. The dashed borders cannot be used."
+          "setLineDash is not supported in this browser. The dashed borders cannot be used.",
         );
         this.options.shapeProperties.borderDashes = false;
         values.borderDashes = false;
@@ -4373,7 +4373,7 @@ class NodeBase {
         ctx.setLineDash([0]);
       } else {
         console.warn(
-          "setLineDash is not supported in this browser. The dashed borders cannot be used."
+          "setLineDash is not supported in this browser. The dashed borders cannot be used.",
         );
         this.options.shapeProperties.borderDashes = false;
         values.borderDashes = false;
@@ -4588,7 +4588,7 @@ let Box$1 = class Box extends NodeBase {
       this.top,
       this.width,
       this.height,
-      values.borderRadius
+      values.borderRadius,
     );
     this.performFill(ctx, values);
 
@@ -4598,7 +4598,7 @@ let Box$1 = class Box extends NodeBase {
       this.left + this.textSize.width / 2 + this.margin.left,
       this.top + this.textSize.height / 2 + this.margin.top,
       selected,
-      hover
+      hover,
     );
   }
 
@@ -4632,7 +4632,7 @@ let Box$1 = class Box extends NodeBase {
     return (
       Math.min(
         Math.abs(this.width / 2 / Math.cos(angle)),
-        Math.abs(this.height / 2 / Math.sin(angle))
+        Math.abs(this.height / 2 / Math.sin(angle)),
       ) + borderWidth
     );
   }
@@ -4823,7 +4823,7 @@ class CircleImageBase extends NodeBase {
         imgPosLeft,
         imgPosTop,
         imgWidth,
-        imgHeight
+        imgHeight,
       );
 
       // disable shadows for other elements.
@@ -4848,7 +4848,7 @@ class CircleImageBase extends NodeBase {
       const labelDimensions = this.labelModule.getTextSize(
         ctx,
         selected,
-        hover
+        hover,
       );
       if (labelDimensions.lineCount >= 1) {
         offset += labelDimensions.height / 2;
@@ -4891,7 +4891,7 @@ let Circle$1 = class Circle extends CircleImageBase {
 
       const diameter = Math.max(
         dimensions.width + this.margin.right + this.margin.left,
-        dimensions.height + this.margin.top + this.margin.bottom
+        dimensions.height + this.margin.top + this.margin.bottom,
       );
 
       this.options.size = diameter / 2; // NOTE: this size field only set here, not in Ellipse, Database, Box
@@ -4923,7 +4923,7 @@ let Circle$1 = class Circle extends CircleImageBase {
       this.left + this.textSize.width / 2 + this.margin.left,
       y,
       selected,
-      hover
+      hover,
     );
   }
 
@@ -5061,15 +5061,15 @@ class CircularImage extends CircleImageBase {
     // TODO: compare with Image.updateBoundingBox(), consolidate?
     this.boundingBox.left = Math.min(
       this.boundingBox.left,
-      this.labelModule.size.left
+      this.labelModule.size.left,
     );
     this.boundingBox.right = Math.max(
       this.boundingBox.right,
-      this.labelModule.size.left + this.labelModule.size.width
+      this.labelModule.size.left + this.labelModule.size.width,
     );
     this.boundingBox.bottom = Math.max(
       this.boundingBox.bottom,
-      this.boundingBox.bottom + this.labelOffset
+      this.boundingBox.bottom + this.labelOffset,
     );
   }
 
@@ -5111,7 +5111,7 @@ class ShapeBase extends NodeBase {
     ctx,
     selected = this.selected,
     hover = this.hover,
-    values = { size: this.options.size }
+    values = { size: this.options.size },
   ) {
     if (this.needsRefresh(selected, hover)) {
       this.labelModule.getTextSize(ctx, selected, hover);
@@ -5169,7 +5169,7 @@ class ShapeBase extends NodeBase {
             hover,
             x,
             y,
-            "hanging"
+            "hanging",
           );
           const yLabel =
             y + 0.5 * this.height + 0.5 * this.labelModule.size.height;
@@ -5195,15 +5195,15 @@ class ShapeBase extends NodeBase {
     if (this.options.label !== undefined && this.labelModule.size.width > 0) {
       this.boundingBox.left = Math.min(
         this.boundingBox.left,
-        this.labelModule.size.left
+        this.labelModule.size.left,
       );
       this.boundingBox.right = Math.max(
         this.boundingBox.right,
-        this.labelModule.size.left + this.labelModule.size.width
+        this.labelModule.size.left + this.labelModule.size.width,
       );
       this.boundingBox.bottom = Math.max(
         this.boundingBox.bottom,
-        this.boundingBox.bottom + this.labelModule.size.height
+        this.boundingBox.bottom + this.labelModule.size.height,
       );
     }
   }
@@ -5338,7 +5338,7 @@ class Database extends NodeBase {
       x - this.width / 2,
       y - this.height / 2,
       this.width,
-      this.height
+      this.height,
     );
     this.performFill(ctx, values);
 
@@ -5348,7 +5348,7 @@ class Database extends NodeBase {
       this.left + this.textSize.width / 2 + this.margin.left,
       this.top + this.textSize.height / 2 + this.margin.top,
       selected,
-      hover
+      hover,
     );
   }
   /**
@@ -5571,7 +5571,7 @@ class Icon extends NodeBase {
             ctx,
             this.left + this.iconSize.width / 2 + this.margin.left,
             y + this.height / 2 + iconTextSpacing,
-            selected
+            selected,
           );
         }
 
@@ -5595,15 +5595,17 @@ class Icon extends NodeBase {
       const iconTextSpacing = 5;
       this.boundingBox.left = Math.min(
         this.boundingBox.left,
-        this.labelModule.size.left
+        this.labelModule.size.left,
       );
       this.boundingBox.right = Math.max(
         this.boundingBox.right,
-        this.labelModule.size.left + this.labelModule.size.width
+        this.labelModule.size.left + this.labelModule.size.width,
       );
       this.boundingBox.bottom = Math.max(
         this.boundingBox.bottom,
-        this.boundingBox.bottom + this.labelModule.size.height + iconTextSpacing
+        this.boundingBox.bottom +
+          this.labelModule.size.height +
+          iconTextSpacing,
       );
     }
   }
@@ -5625,8 +5627,8 @@ class Icon extends NodeBase {
         this.options.icon.weight != null
           ? this.options.icon.weight
           : selected
-          ? "bold"
-          : "",
+            ? "bold"
+            : "",
         // If the weight is forced (for example to make Font Awesome 5 work
         // properly) substitute slightly bigger size for bold font face.
         (this.options.icon.weight != null && selected ? 5 : 0) +
@@ -5648,7 +5650,7 @@ class Icon extends NodeBase {
       this.disableShadow(ctx, values);
     } else {
       console.error(
-        "When using the icon shape, you need to define the code in the icon options object. This can be done per node or globally."
+        "When using the icon shape, you need to define the code in the icon options object. This can be done per node or globally.",
       );
     }
   }
@@ -5746,13 +5748,13 @@ let Image$2 = class Image extends CircleImageBase {
       let strokeStyle = selected
         ? this.options.color.highlight.border
         : hover
-        ? this.options.color.hover.border
-        : this.options.color.border;
+          ? this.options.color.hover.border
+          : this.options.color.border;
       let fillStyle = selected
         ? this.options.color.highlight.background
         : hover
-        ? this.options.color.hover.background
-        : this.options.color.background;
+          ? this.options.color.hover.background
+          : this.options.color.background;
 
       if (values.opacity !== undefined) {
         strokeStyle = overrideOpacity(strokeStyle, values.opacity);
@@ -5769,7 +5771,7 @@ let Image$2 = class Image extends CircleImageBase {
         this.left - 0.5 * ctx.lineWidth,
         this.top - 0.5 * ctx.lineWidth,
         this.width + ctx.lineWidth,
-        this.height + ctx.lineWidth
+        this.height + ctx.lineWidth,
       );
       ctx.fill();
 
@@ -5810,15 +5812,15 @@ let Image$2 = class Image extends CircleImageBase {
     if (this.options.label !== undefined && this.labelModule.size.width > 0) {
       this.boundingBox.left = Math.min(
         this.boundingBox.left,
-        this.labelModule.size.left
+        this.labelModule.size.left,
       );
       this.boundingBox.right = Math.max(
         this.boundingBox.right,
-        this.labelModule.size.left + this.labelModule.size.width
+        this.labelModule.size.left + this.labelModule.size.width,
       );
       this.boundingBox.bottom = Math.max(
         this.boundingBox.bottom,
-        this.boundingBox.bottom + this.labelOffset
+        this.boundingBox.bottom + this.labelOffset,
       );
     }
   }
@@ -6002,7 +6004,7 @@ class Text extends NodeBase {
       this.left + this.textSize.width / 2 + this.margin.left,
       this.top + this.textSize.height / 2 + this.margin.top,
       selected,
-      hover
+      hover,
     );
 
     // disable shadows for other elements.
@@ -6094,7 +6096,7 @@ class TriangleDown extends ShapeBase {
       y,
       selected,
       hover,
-      values
+      values,
     );
   }
 
@@ -6138,7 +6140,7 @@ class Node {
     imagelist,
     grouplist,
     globalOptions,
-    defaultOptions
+    defaultOptions,
   ) {
     this.options = bridgeObject(globalOptions);
     this.globalOptions = globalOptions;
@@ -6164,7 +6166,7 @@ class Node {
     this.labelModule = new Label(
       this.body,
       this.options,
-      false /* Not edge label */
+      false /* Not edge label */,
     );
     this.setOptions(options);
   }
@@ -6254,7 +6256,7 @@ class Node {
       options,
       true,
       this.globalOptions,
-      this.grouplist
+      this.grouplist,
     );
 
     const pile = [options, this.options, this.defaultOptions];
@@ -6289,7 +6291,7 @@ class Node {
         throw new Error(
           "Option image must be defined for node type '" +
             this.options.shape +
-            "'"
+            "'",
         );
       }
     }
@@ -6306,7 +6308,7 @@ class Node {
       this.imageObj = this.imagelist.load(
         this.options.image,
         this.options.brokenImage,
-        this.id
+        this.id,
       );
     } else {
       if (this.options.image.unselected === undefined) {
@@ -6316,14 +6318,14 @@ class Node {
       this.imageObj = this.imagelist.load(
         this.options.image.unselected,
         this.options.brokenImage,
-        this.id
+        this.id,
       );
 
       if (this.options.image.selected !== undefined) {
         this.imageObjAlt = this.imagelist.load(
           this.options.image.selected,
           this.options.brokenImage,
-          this.id
+          this.id,
         );
       } else {
         this.imageObjAlt = undefined;
@@ -6372,7 +6374,7 @@ class Node {
       group !== newOptions.group
     ) {
       throw new Error(
-        "updateGroupOptions: group values in options don't match."
+        "updateGroupOptions: group values in options don't match.",
       );
     }
 
@@ -6386,7 +6388,7 @@ class Node {
       if (!Node.checkOpacity(groupObj.opacity)) {
         console.error(
           "Invalid option for node opacity. Value must be between 0 and 1, found: " +
-            groupObj.opacity
+            groupObj.opacity,
         );
         groupObj.opacity = undefined;
       }
@@ -6394,7 +6396,7 @@ class Node {
 
     // Skip any new option to avoid them being overridden by the group options.
     const skipProperties = Object.getOwnPropertyNames(newOptions).filter(
-      (p) => newOptions[p] != null
+      (p) => newOptions[p] != null,
     );
     // Always skip merging group font options into parent; these are required to be distinct for labels
     skipProperties.push("font");
@@ -6420,7 +6422,7 @@ class Node {
     newOptions,
     allowDeletion = false,
     globalOptions = {},
-    groupList
+    groupList,
   ) {
     const fields = ["color", "fixed", "shadow"];
     selectiveNotDeepExtend(fields, parentOptions, newOptions, allowDeletion);
@@ -6431,7 +6433,7 @@ class Node {
       if (!Node.checkOpacity(parentOptions.opacity)) {
         console.error(
           "Invalid option for node opacity. Value must be between 0 and 1, found: " +
-            parentOptions.opacity
+            parentOptions.opacity,
         );
         parentOptions.opacity = undefined;
       }
@@ -6441,7 +6443,7 @@ class Node {
       if (!Node.checkOpacity(newOptions.opacity)) {
         console.error(
           "Invalid option for node opacity. Value must be between 0 and 1, found: " +
-            newOptions.opacity
+            newOptions.opacity,
         );
         newOptions.opacity = undefined;
       }
@@ -6453,7 +6455,7 @@ class Node {
     ) {
       console.error(
         "Invalid option for node coordinateOrigin, found: " +
-          newOptions.shapeProperties.coordinateOrigin
+          newOptions.shapeProperties.coordinateOrigin,
       );
     }
 
@@ -6501,7 +6503,7 @@ class Node {
         parentOptions.scaling,
         newOptions.scaling,
         "label",
-        globalOptions.scaling
+        globalOptions.scaling,
       );
     }
   }
@@ -6581,7 +6583,7 @@ class Node {
         ...options,
         color: (options && options.color) || this._localColor || undefined,
       },
-      this.grouplist
+      this.grouplist,
     );
 
     //
@@ -6631,7 +6633,7 @@ class Node {
             this.body,
             this.labelModule,
             this.imageObj,
-            this.imageObjAlt
+            this.imageObjAlt,
           );
           break;
         case "custom":
@@ -6639,7 +6641,7 @@ class Node {
             this.options,
             this.body,
             this.labelModule,
-            this.options.ctxRenderer
+            this.options.ctxRenderer,
           );
           break;
         case "database":
@@ -6663,7 +6665,7 @@ class Node {
             this.body,
             this.labelModule,
             this.imageObj,
-            this.imageObjAlt
+            this.imageObjAlt,
           );
           break;
         case "square":
@@ -6685,7 +6687,7 @@ class Node {
           this.shape = new TriangleDown(
             this.options,
             this.body,
-            this.labelModule
+            this.labelModule,
           );
           break;
         default:
@@ -6783,7 +6785,7 @@ class Node {
         min,
         max,
         total,
-        this.options.value
+        this.options.value,
       );
       const sizeDiff = this.options.scaling.max - this.options.scaling.min;
       if (this.options.scaling.label.enabled === true) {
@@ -6899,7 +6901,7 @@ class Node {
       }
       console.error(
         "%cNegative or zero mass disallowed" + strId + ", setting mass to 1.",
-        VALIDATOR_PRINT_STYLE
+        VALIDATOR_PRINT_STYLE,
       );
       options.mass = 1;
     }
@@ -7101,7 +7103,7 @@ class NodesHandler {
         ) {
           console.error(
             "Invalid option for node opacity. Value must be between 0 and 1, found: " +
-              options.opacity
+              options.opacity,
           );
         } else {
           this.options.opacity = options.opacity;
@@ -7289,7 +7291,7 @@ class NodesHandler {
       this.images,
       this.groups,
       this.options,
-      this.defaultOptions
+      this.defaultOptions,
     );
   }
 
@@ -7358,7 +7360,7 @@ class NodesHandler {
       throw new TypeError("No id was specified for getPosition method.");
     } else if (this.body.nodes[id] == undefined) {
       throw new ReferenceError(
-        `NodeId provided for getPosition does not exist. Provided: ${id}`
+        `NodeId provided for getPosition does not exist. Provided: ${id}`,
       );
     } else {
       return {
@@ -7448,7 +7450,7 @@ class NodesHandler {
     } else {
       console.error(
         "NodeId provided for getConnectedEdges does not exist. Provided: ",
-        nodeId
+        nodeId,
       );
     }
     return edgeList;
@@ -7470,7 +7472,7 @@ class NodesHandler {
     } else {
       console.error(
         "Node id supplied to moveNode does not exist. Provided: ",
-        nodeId
+        nodeId,
       );
     }
   }
@@ -7897,19 +7899,28 @@ class EndPoints {
  * The Base Class for all edges.
  */
 class EdgeBase {
+    from; // Initialized in setOptions
+    fromPoint;
+    to; // Initialized in setOptions
+    toPoint;
+    via;
+    color = {};
+    colorDirty = true;
+    id; // Initialized in setOptions
+    options; // Initialized in setOptions
+    hoverWidth = 1.5;
+    selectionWidth = 2;
+    _body;
+    _labelModule;
     /**
      * Create a new instance.
      * @param options - The options object of given edge.
-     * @param _body - The body of the network.
-     * @param _labelModule - Label module.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
-    constructor(options, _body, _labelModule) {
-        this._body = _body;
-        this._labelModule = _labelModule;
-        this.color = {};
-        this.colorDirty = true;
-        this.hoverWidth = 1.5;
-        this.selectionWidth = 2;
+    constructor(options, body, labelModule) {
+        this._body = body;
+        this._labelModule = labelModule;
         this.setOptions(options);
         this.fromPoint = this.from;
         this.toPoint = this.to;
@@ -8656,6 +8667,9 @@ class BezierEdgeBase extends EdgeBase {
  * @augments BezierEdgeBase
  */
 class BezierEdgeDynamic extends BezierEdgeBase {
+    // @ts-expect-error constructor → super → super → setOptions → setupSupportNode
+    via = this.via;
+    _boundFunction;
     /**
      * Create a new instance.
      * @param options - The options object of given edge.
@@ -8665,7 +8679,6 @@ class BezierEdgeDynamic extends BezierEdgeBase {
     constructor(options, body, labelModule) {
         //this.via = undefined; // Here for completeness but not allowed to defined before super() is invoked.
         super(options, body, labelModule); // --> this calls the setOptions below
-        this.via = this.via; // constructor → super → super → setOptions → setupSupportNode
         this._boundFunction = () => {
             this.positionBezierNode();
         };
@@ -9240,7 +9253,7 @@ class Edge {
     this.labelModule = new Label(
       this.body,
       this.options,
-      true /* It's an edge label */
+      true /* It's an edge label */,
     );
     this.setOptions(options);
   }
@@ -9314,7 +9327,7 @@ class Edge {
     newOptions,
     allowDeletion = false,
     globalOptions = {},
-    copyFromGlobals = false
+    copyFromGlobals = false,
   ) {
     const fields = [
       "endPointOffset",
@@ -9404,7 +9417,7 @@ class Edge {
         parentOptions.scaling,
         newOptions.scaling,
         "label",
-        globalOptions.scaling
+        globalOptions.scaling,
       );
     } else if (allowDeletion === true && newOptions.scaling === null) {
       parentOptions.scaling = Object.create(globalOptions.scaling); // this sets the pointer of the option back to the global option.
@@ -9422,24 +9435,24 @@ class Edge {
           parentOptions.arrows,
           newOptions.arrows,
           "to",
-          globalOptions.arrows
+          globalOptions.arrows,
         );
         mergeOptions(
           parentOptions.arrows,
           newOptions.arrows,
           "middle",
-          globalOptions.arrows
+          globalOptions.arrows,
         );
         mergeOptions(
           parentOptions.arrows,
           newOptions.arrows,
           "from",
-          globalOptions.arrows
+          globalOptions.arrows,
         );
       } else {
         throw new Error(
           "The arrow newOptions can only be an object or a string. Refer to the documentation. You used:" +
-            JSON.stringify(newOptions.arrows)
+            JSON.stringify(newOptions.arrows),
         );
       }
     } else if (allowDeletion === true && newOptions.arrows === null) {
@@ -9518,7 +9531,7 @@ class Edge {
 
     if (Object.prototype.hasOwnProperty.call(newOptions, "selfReferenceSize")) {
       console.warn(
-        "The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}"
+        "The selfReferenceSize property has been deprecated. Please use selfReference property instead. The selfReference can be set like thise selfReference:{size:30, angle:Math.PI / 4}",
       );
       parentOptions.selfReference.size = newOptions.selfReferenceSize;
     }
@@ -9676,26 +9689,26 @@ class Edge {
           this.edgeType = new BezierEdgeDynamic(
             this.options,
             this.body,
-            this.labelModule
+            this.labelModule,
           );
         } else if (smooth.type === "cubicBezier") {
           this.edgeType = new CubicBezierEdge(
             this.options,
             this.body,
-            this.labelModule
+            this.labelModule,
           );
         } else {
           this.edgeType = new BezierEdgeStatic(
             this.options,
             this.body,
-            this.labelModule
+            this.labelModule,
           );
         }
       } else {
         this.edgeType = new StraightEdge(
           this.options,
           this.body,
-          this.labelModule
+          this.labelModule,
         );
       }
     } else {
@@ -9784,7 +9797,7 @@ class Edge {
         min,
         max,
         total,
-        this.options.value
+        this.options.value,
       );
       const widthDiff = this.options.scaling.max - this.options.scaling.min;
       if (this.options.scaling.label.enabled === true) {
@@ -9815,7 +9828,7 @@ class Edge {
     }
     if (typeof this.options.selectionWidth === "function") {
       this.edgeType.selectionWidth = this.options.selectionWidth(
-        this.options.width
+        this.options.width,
       );
     } else {
       this.edgeType.selectionWidth =
@@ -9871,7 +9884,7 @@ class Edge {
         viaNode,
         this.selected,
         this.hover,
-        values
+        values,
       );
       if (values.arrowStrikethrough === false)
         this.edgeType.fromPoint = arrowData.from.core;
@@ -9892,7 +9905,7 @@ class Edge {
         viaNode,
         this.selected,
         this.hover,
-        values
+        values,
       );
       if (values.arrowStrikethrough === false)
         this.edgeType.toPoint = arrowData.to.core;
@@ -9915,7 +9928,7 @@ class Edge {
         viaNode,
         this.selected,
         this.hover,
-        values
+        values,
       );
 
       if (values.middleArrowSrc) {
@@ -9935,7 +9948,7 @@ class Edge {
         values,
         this.selected,
         this.hover,
-        arrowData.from
+        arrowData.from,
       );
     }
     if (values.middleArrow) {
@@ -9944,7 +9957,7 @@ class Edge {
         values,
         this.selected,
         this.hover,
-        arrowData.middle
+        arrowData.middle,
       );
     }
     if (values.toArrow) {
@@ -9953,7 +9966,7 @@ class Edge {
         values,
         this.selected,
         this.hover,
-        arrowData.to
+        arrowData.to,
       );
     }
   }
@@ -10007,14 +10020,14 @@ class Edge {
           ctx,
           this.options.selfReference.angle,
           this.options.selfReference.size,
-          node1
+          node1,
         );
 
         point = this._pointOnCircle(
           coordinates.x,
           coordinates.y,
           this.options.selfReference.size,
-          this.options.selfReference.angle
+          this.options.selfReference.angle,
         );
 
         this.labelModule.draw(ctx, point.x, point.y, this.selected, this.hover);
@@ -10071,7 +10084,7 @@ class Edge {
         xTo,
         yTo,
         xObj,
-        yObj
+        yObj,
       );
 
       return dist < distMax;
@@ -10096,7 +10109,7 @@ class Edge {
         this.selected,
         this.hover,
         point.x,
-        point.y
+        point.y,
       );
     }
 
@@ -10584,7 +10597,7 @@ class EdgesHandler {
       this.body,
       this.images,
       this.options,
-      this.defaultOptions
+      this.defaultOptions,
     );
   }
 
@@ -10822,7 +10835,7 @@ class BarnesHutSolver {
     if (this.overlapAvoidanceFactor < 1 && node.shape.radius) {
       distance = Math.max(
         0.1 + this.overlapAvoidanceFactor * node.shape.radius,
-        distance - node.shape.radius
+        distance - node.shape.radius,
       );
     }
 
@@ -10948,7 +10961,7 @@ class BarnesHutSolver {
     parentBranch.mass = totalMass;
     const biggestSize = Math.max(
       Math.max(node.height, node.radius),
-      node.width
+      node.width,
     );
     parentBranch.maxWidth =
       parentBranch.maxWidth < biggestSize ? biggestSize : parentBranch.maxWidth;
@@ -11271,7 +11284,7 @@ class HierarchicalRepulsionSolver {
     this.options = options;
     this.overlapAvoidanceFactor = Math.max(
       0,
-      Math.min(1, this.options.avoidOverlap || 0)
+      Math.min(1, this.options.avoidOverlap || 0),
     );
   }
 
@@ -11525,11 +11538,11 @@ class HierarchicalSpringSolver {
       const nodeId = nodeIndices[i];
       springFx = Math.min(
         springForce,
-        Math.max(-springForce, forces[nodeId].springFx)
+        Math.max(-springForce, forces[nodeId].springFx),
       );
       springFy = Math.min(
         springForce,
-        Math.max(-springForce, forces[nodeId].springFy)
+        Math.max(-springForce, forces[nodeId].springFy),
       );
 
       forces[nodeId].x += springFx;
@@ -11648,7 +11661,7 @@ class ForceAtlas2BasedRepulsionSolver extends BarnesHutSolver {
     if (this.overlapAvoidanceFactor < 1 && node.shape.radius) {
       distance = Math.max(
         0.1 + this.overlapAvoidanceFactor * node.shape.radius,
-        distance - node.shape.radius
+        distance - node.shape.radius,
       );
     }
 
@@ -11743,7 +11756,7 @@ class PhysicsEngine {
       enabled: true,
       barnesHut: {
         theta: 0.5,
-        gravitationalConstant: -2000,
+        gravitationalConstant: -2e3,
         centralGravity: 0.3,
         springLength: 95,
         springConstant: 0.04,
@@ -11895,13 +11908,13 @@ class PhysicsEngine {
       this.nodesSolver = new ForceAtlas2BasedRepulsionSolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
       this.edgesSolver = new SpringSolver(this.body, this.physicsBody, options);
       this.gravitySolver = new ForceAtlas2BasedCentralGravitySolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
     } else if (this.options.solver === "repulsion") {
       options = this.options.repulsion;
@@ -11910,24 +11923,24 @@ class PhysicsEngine {
       this.gravitySolver = new CentralGravitySolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
     } else if (this.options.solver === "hierarchicalRepulsion") {
       options = this.options.hierarchicalRepulsion;
       this.nodesSolver = new HierarchicalRepulsionSolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
       this.edgesSolver = new HierarchicalSpringSolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
       this.gravitySolver = new CentralGravitySolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
     } else {
       // barnesHut
@@ -11935,13 +11948,13 @@ class PhysicsEngine {
       this.nodesSolver = new BarnesHutSolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
       this.edgesSolver = new SpringSolver(this.body, this.physicsBody, options);
       this.gravitySolver = new CentralGravitySolver(
         this.body,
         this.physicsBody,
-        options
+        options,
       );
     }
 
@@ -12318,7 +12331,7 @@ class PhysicsEngine {
       velocity.x = this.calculateComponentVelocity(
         velocity.x,
         force.x,
-        node.options.mass
+        node.options.mass,
       );
       node.x += velocity.x * this.timestep;
     } else {
@@ -12330,7 +12343,7 @@ class PhysicsEngine {
       velocity.y = this.calculateComponentVelocity(
         velocity.y,
         force.y,
-        node.options.mass
+        node.options.mass,
       );
       node.y += velocity.y * this.timestep;
     } else {
@@ -12339,7 +12352,7 @@ class PhysicsEngine {
     }
 
     const totalVelocity = Math.sqrt(
-      Math.pow(velocity.x, 2) + Math.pow(velocity.y, 2)
+      Math.pow(velocity.x, 2) + Math.pow(velocity.y, 2),
     );
     return totalVelocity;
   }
@@ -12389,7 +12402,7 @@ class PhysicsEngine {
       iterations = this.options.stabilization.iterations;
       console.error(
         "The stabilize method needs a numeric amount of iterations. Switching to default: ",
-        iterations
+        iterations,
       );
     }
 
@@ -12518,7 +12531,7 @@ class PhysicsEngine {
       const color = HSVToHex(
         (180 - Math.min(1, Math.max(0, colorFactor * forceSize)) * 180) / 360,
         1,
-        1
+        1,
       );
 
       const point = {
@@ -12587,7 +12600,7 @@ class NetworkUtil {
     }
 
     if (minX === 1e9 && maxX === -1e9 && minY === 1e9 && maxY === -1e9) {
-      (minY = 0), (maxY = 0), (minX = 0), (maxX = 0);
+      ((minY = 0), (maxY = 0), (minX = 0), (maxX = 0));
     }
     return { minX: minX, maxX: maxX, minY: minY, maxY: maxY };
   }
@@ -12624,7 +12637,7 @@ class NetworkUtil {
     }
 
     if (minX === 1e9 && maxX === -1e9 && minY === 1e9 && maxY === -1e9) {
-      (minY = 0), (maxY = 0), (minX = 0), (maxX = 0);
+      ((minY = 0), (maxY = 0), (minX = 0), (maxX = 0));
     }
     return { minX: minX, maxX: maxX, minY: minY, maxY: maxY };
   }
@@ -12682,7 +12695,7 @@ class Cluster extends Node {
     imagelist,
     grouplist,
     globalOptions,
-    defaultOptions
+    defaultOptions,
   ) {
     super(options, body, imagelist, grouplist, globalOptions, defaultOptions);
 
@@ -12701,7 +12714,7 @@ class Cluster extends Node {
     const childCluster = this.body.nodes[childClusterId];
     if (this.containedNodes[childClusterId] === undefined) {
       throw new Error(
-        "node with id: " + childClusterId + " not in current cluster"
+        "node with id: " + childClusterId + " not in current cluster",
       );
     }
     if (!childCluster.isCluster) {
@@ -12731,7 +12744,7 @@ class Cluster extends Node {
         // Assumption: a clustered edge can only be present in a single clustering edge
         // Not tested here
         const index = parentClusterEdge.clusteringEdgeReplacingIds.indexOf(
-          clusterEdge.id
+          clusterEdge.id,
         );
         if (index === -1) return;
 
@@ -12901,7 +12914,7 @@ class ClusterEngine {
   cluster(options = {}, refreshData = true) {
     if (options.joinCondition === undefined) {
       throw new Error(
-        "Cannot call clusterByNodeData without a joinCondition function in the options."
+        "Cannot call clusterByNodeData without a joinCondition function in the options.",
       );
     }
 
@@ -13080,7 +13093,7 @@ class ClusterEngine {
     }
     if (this.body.nodes[nodeId] === undefined) {
       throw new Error(
-        "The nodeId given to clusterByConnection does not exist!"
+        "The nodeId given to clusterByConnection does not exist!",
       );
     }
 
@@ -13119,12 +13132,12 @@ class ClusterEngine {
             } else {
               // clone the options and insert some additional parameters that could be interesting.
               const childClonedOptions = NetworkUtil.cloneOptions(
-                this.body.nodes[childNodeId]
+                this.body.nodes[childNodeId],
               );
               if (
                 options.joinCondition(
                   parentClonedOptions,
-                  childClonedOptions
+                  childClonedOptions,
                 ) === true
               ) {
                 childEdgesObj[edge.id] = edge;
@@ -13173,7 +13186,7 @@ class ClusterEngine {
     childNodesObj,
     childEdgesObj,
     clusterNodeProperties,
-    clusterEdgeProperties
+    clusterEdgeProperties,
   ) {
     let edge, childNodeId, childNode, toId, fromId, otherNodeId;
 
@@ -13261,7 +13274,7 @@ class ClusterEngine {
           createdEdge.fromId,
           createdEdge.toId,
           edge,
-          clusterEdgeProperties
+          clusterEdgeProperties,
         );
 
         newEdges.push(newEdge);
@@ -13353,7 +13366,7 @@ class ClusterEngine {
           if (edgeId.substr(0, 12) !== "clusterEdge:") {
             const clonedOptions = NetworkUtil.cloneOptions(
               childEdgesObj[edgeId],
-              "edge"
+              "edge",
             );
             childEdgesOptions.push(clonedOptions);
           }
@@ -13363,11 +13376,11 @@ class ClusterEngine {
       clusterNodeProperties = options.processProperties(
         clusterNodeProperties,
         childNodesOptions,
-        childEdgesOptions
+        childEdgesOptions,
       );
       if (!clusterNodeProperties) {
         throw new Error(
-          "The processProperties function does not return properties!"
+          "The processProperties function does not return properties!",
         );
       }
     }
@@ -13402,7 +13415,7 @@ class ClusterEngine {
     // Note that allowSingleNodeCluster, if present, is stored in the options as well
     const clusterNode = this.body.functions.createNode(
       clusterNodeProperties,
-      Cluster
+      Cluster,
     );
     clusterNode.containedNodes = childNodesObj;
     clusterNode.containedEdges = childEdgesObj;
@@ -13416,7 +13429,7 @@ class ClusterEngine {
       childNodesObj,
       childEdgesObj,
       clusterNodeProperties,
-      options.clusterEdgeProperties
+      options.clusterEdgeProperties,
     );
 
     // set ID to undefined so no duplicates arise
@@ -13506,7 +13519,7 @@ class ClusterEngine {
 
     if (clusterNode === undefined) {
       throw new Error(
-        "The clusterNodeId supplied to openCluster does not exist."
+        "The clusterNodeId supplied to openCluster does not exist.",
       );
     }
     if (
@@ -13641,7 +13654,7 @@ class ClusterEngine {
             toId,
             transferEdge,
             otherCluster.clusterEdgeProperties,
-            { hidden: false, physics: true }
+            { hidden: false, physics: true },
           );
         } else {
           this._restoreEdge(transferEdge);
@@ -13729,7 +13742,7 @@ class ClusterEngine {
     }
     if (this.body.nodes[clusteredNodeId] === undefined) {
       throw new Error(
-        "The clusteredNodeId supplied to updateClusteredNode does not exist."
+        "The clusteredNodeId supplied to updateClusteredNode does not exist.",
       );
     }
 
@@ -13912,7 +13925,7 @@ class ClusterEngine {
     toId,
     baseEdge,
     clusterEdgeProperties,
-    extraOptions
+    extraOptions,
   ) {
     // copy the options of the edge we will replace
     const clonedOptions = NetworkUtil.cloneOptions(baseEdge, "edge");
@@ -13977,7 +13990,7 @@ class ClusterEngine {
       childNodes,
       childEdges,
       clusterNode,
-      clusterEdgeProperties
+      clusterEdgeProperties,
     );
 
     // disable the childEdges
@@ -14164,7 +14177,7 @@ class ClusterEngine {
             edge.clusteringEdgeReplacingIds,
             function (id) {
               return !deletedEdgeIds[id];
-            }
+            },
           );
         });
 
@@ -14248,7 +14261,7 @@ class ClusterEngine {
         this.openCluster(
           clustersToOpen[n],
           {},
-          false /* Don't refresh, we're in an refresh/update already */
+          false /* Don't refresh, we're in an refresh/update already */,
         );
       }
 
@@ -14388,7 +14401,7 @@ class CanvasRenderer {
       if (this.requestAnimationFrameRequestId === undefined) {
         this.requestAnimationFrameRequestId = window.requestAnimationFrame(
           this._renderStep.bind(this),
-          this.simulationInterval
+          this.simulationInterval,
         );
       }
     }
@@ -14701,14 +14714,14 @@ class CanvasRenderer {
         this.body.selectionBox.position.start.x,
         this.body.selectionBox.position.start.y,
         width,
-        height
+        height,
       );
       ctx.fillStyle = "rgba(151, 194, 252, 0.2)";
       ctx.fillRect(
         this.body.selectionBox.position.start.x,
         this.body.selectionBox.position.start.y,
         width,
-        height
+        height,
       );
       ctx.strokeStyle = "rgba(151, 194, 252, 1)";
       ctx.stroke();
@@ -14955,7 +14968,7 @@ class Canvas {
       }
     }
     throw new Error(
-      "Could not use the value supplied for width or height:" + value
+      "Could not use the value supplied for width or height:" + value,
     );
   }
 
@@ -15112,10 +15125,10 @@ class Canvas {
       this.frame.canvas.style.height = "100%";
 
       this.frame.canvas.width = Math.round(
-        this.frame.canvas.clientWidth * this.pixelRatio
+        this.frame.canvas.clientWidth * this.pixelRatio,
       );
       this.frame.canvas.height = Math.round(
-        this.frame.canvas.clientHeight * this.pixelRatio
+        this.frame.canvas.clientHeight * this.pixelRatio,
       );
 
       this.options.width = width;
@@ -15132,10 +15145,10 @@ class Canvas {
       // there is a change.
 
       const newWidth = Math.round(
-        this.frame.canvas.clientWidth * this.pixelRatio
+        this.frame.canvas.clientWidth * this.pixelRatio,
       );
       const newHeight = Math.round(
-        this.frame.canvas.clientHeight * this.pixelRatio
+        this.frame.canvas.clientHeight * this.pixelRatio,
       );
 
       // store the camera if there is a change in size.
@@ -15483,7 +15496,7 @@ class View {
         options.offset.x = +options.offset.x;
         if (!Number.isFinite(options.offset.x)) {
           throw new TypeError(
-            'The option "offset.x" has to be a finite number.'
+            'The option "offset.x" has to be a finite number.',
           );
         }
       } else {
@@ -15495,7 +15508,7 @@ class View {
         options.offset.y = +options.offset.y;
         if (!Number.isFinite(options.offset.y)) {
           throw new TypeError(
-            'The option "offset.y" has to be a finite number.'
+            'The option "offset.y" has to be a finite number.',
           );
         }
       } else {
@@ -15514,7 +15527,7 @@ class View {
         options.position.x = +options.position.x;
         if (!Number.isFinite(options.position.x)) {
           throw new TypeError(
-            'The option "position.x" has to be a finite number.'
+            'The option "position.x" has to be a finite number.',
           );
         }
       } else {
@@ -15526,7 +15539,7 @@ class View {
         options.position.y = +options.position.y;
         if (!Number.isFinite(options.position.y)) {
           throw new TypeError(
-            'The option "position.y" has to be a finite number.'
+            'The option "position.y" has to be a finite number.',
           );
         }
       } else {
@@ -15541,7 +15554,7 @@ class View {
       options.scale = +options.scale;
       if (!(options.scale > 0)) {
         throw new TypeError(
-          'The option "scale" has to be a number greater than zero.'
+          'The option "scale" has to be a number greater than zero.',
         );
       }
     } else {
@@ -15697,7 +15710,7 @@ class View {
     this.easingTime = finished === true ? 1.0 : this.easingTime;
 
     const progress = easingFunctions[this.animationEasingFunction](
-      this.easingTime
+      this.easingTime,
     );
 
     this.body.view.scale =
@@ -15823,7 +15836,7 @@ class NavigationHandler {
       this.navigationDOM["wrapper"].parentNode
     ) {
       this.navigationDOM["wrapper"].parentNode.removeChild(
-        this.navigationDOM["wrapper"]
+        this.navigationDOM["wrapper"],
       );
     }
 
@@ -15869,7 +15882,7 @@ class NavigationHandler {
       this.navigationDOM[navigationDivs[i]].className =
         "vis-button vis-" + navigationDivs[i];
       this.navigationDOM["wrapper"].appendChild(
-        this.navigationDOM[navigationDivs[i]]
+        this.navigationDOM[navigationDivs[i]],
       );
 
       const hammer = new Hammer(this.navigationDOM[navigationDivs[i]]);
@@ -16048,84 +16061,84 @@ class NavigationHandler {
           () => {
             this.bindToRedraw("_moveUp");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "down",
           () => {
             this.bindToRedraw("_moveDown");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "left",
           () => {
             this.bindToRedraw("_moveLeft");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "right",
           () => {
             this.bindToRedraw("_moveRight");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "=",
           () => {
             this.bindToRedraw("_zoomIn");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "num+",
           () => {
             this.bindToRedraw("_zoomIn");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "num-",
           () => {
             this.bindToRedraw("_zoomOut");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "-",
           () => {
             this.bindToRedraw("_zoomOut");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "[",
           () => {
             this.bindToRedraw("_zoomOut");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "]",
           () => {
             this.bindToRedraw("_zoomIn");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "pageup",
           () => {
             this.bindToRedraw("_zoomIn");
           },
-          "keydown"
+          "keydown",
         );
         this.keycharm.bind(
           "pagedown",
           () => {
             this.bindToRedraw("_zoomOut");
           },
-          "keydown"
+          "keydown",
         );
 
         this.keycharm.bind(
@@ -16133,84 +16146,84 @@ class NavigationHandler {
           () => {
             this.unbindFromRedraw("_moveUp");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "down",
           () => {
             this.unbindFromRedraw("_moveDown");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "left",
           () => {
             this.unbindFromRedraw("_moveLeft");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "right",
           () => {
             this.unbindFromRedraw("_moveRight");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "=",
           () => {
             this.unbindFromRedraw("_zoomIn");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "num+",
           () => {
             this.unbindFromRedraw("_zoomIn");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "num-",
           () => {
             this.unbindFromRedraw("_zoomOut");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "-",
           () => {
             this.unbindFromRedraw("_zoomOut");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "[",
           () => {
             this.unbindFromRedraw("_zoomOut");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "]",
           () => {
             this.unbindFromRedraw("_zoomIn");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "pageup",
           () => {
             this.unbindFromRedraw("_zoomIn");
           },
-          "keyup"
+          "keyup",
         );
         this.keycharm.bind(
           "pagedown",
           () => {
             this.unbindFromRedraw("_zoomOut");
           },
-          "keyup"
+          "keyup",
         );
       }
     }
@@ -16501,7 +16514,7 @@ class InteractionHandler {
       this.selectionHandler.generateClickEvent(
         "dragStart",
         event,
-        this.drag.pointer
+        this.drag.pointer,
       );
 
       // create an array with the selected nodes and their original location and status
@@ -16529,7 +16542,7 @@ class InteractionHandler {
         event,
         this.drag.pointer,
         undefined,
-        true
+        true,
       );
     }
   }
@@ -16563,13 +16576,13 @@ class InteractionHandler {
         // only move the node if it was not fixed initially
         if (selection.xFixed === false) {
           node.x = this.canvas._XconvertDOMtoCanvas(
-            this.canvas._XconvertCanvasToDOM(selection.x) + deltaX
+            this.canvas._XconvertCanvasToDOM(selection.x) + deltaX,
           );
         }
         // only move the node if it was not fixed initially
         if (selection.yFixed === false) {
           node.y = this.canvas._YconvertDOMtoCanvas(
-            this.canvas._YconvertCanvasToDOM(selection.y) + deltaY
+            this.canvas._YconvertCanvasToDOM(selection.y) + deltaY,
           );
         }
       });
@@ -16584,7 +16597,7 @@ class InteractionHandler {
           event,
           pointer,
           undefined,
-          true
+          true,
         );
 
         // if the drag was not started properly because the click started outside the network div, start it now.
@@ -16607,7 +16620,7 @@ class InteractionHandler {
           event,
           pointer,
           undefined,
-          true
+          true,
         );
 
         // if the drag was not started properly because the click started outside the network div, start it now.
@@ -16642,19 +16655,19 @@ class InteractionHandler {
       const selectionBoxPositionMinMax = {
         minX: Math.min(
           selectionBoxPosition.start.x,
-          selectionBoxPosition.end.x
+          selectionBoxPosition.end.x,
         ),
         minY: Math.min(
           selectionBoxPosition.start.y,
-          selectionBoxPosition.end.y
+          selectionBoxPosition.end.y,
         ),
         maxX: Math.max(
           selectionBoxPosition.start.x,
-          selectionBoxPosition.end.x
+          selectionBoxPosition.end.x,
         ),
         maxY: Math.max(
           selectionBoxPosition.start.y,
-          selectionBoxPosition.end.y
+          selectionBoxPosition.end.y,
         ),
       };
 
@@ -16669,7 +16682,7 @@ class InteractionHandler {
       });
 
       toBeSelectedNodes.forEach((nodeId) =>
-        this.selectionHandler.selectObject(this.body.nodes[nodeId])
+        this.selectionHandler.selectObject(this.body.nodes[nodeId]),
       );
 
       const pointer = this.getPointer(event.center);
@@ -16679,7 +16692,7 @@ class InteractionHandler {
         event,
         this.getPointer(event.center),
         undefined,
-        true
+        true,
       );
       this.body.emitter.emit("_requestRedraw");
     } else {
@@ -16693,7 +16706,7 @@ class InteractionHandler {
         this.selectionHandler.generateClickEvent(
           "dragEnd",
           event,
-          this.getPointer(event.center)
+          this.getPointer(event.center),
         );
         this.body.emitter.emit("startSimulation");
       } else {
@@ -16702,7 +16715,7 @@ class InteractionHandler {
           event,
           this.getPointer(event.center),
           undefined,
-          true
+          true,
         );
         this.body.emitter.emit("_requestRedraw");
       }
@@ -16855,7 +16868,7 @@ class InteractionHandler {
       if (!this.drag.dragging) {
         this.popupTimer = setTimeout(
           () => this._checkShowPopup(pointer),
-          this.options.tooltipDelay
+          this.options.tooltipDelay,
         );
       }
     }
@@ -16974,7 +16987,7 @@ class InteractionHandler {
       if (this.body.nodes[this.popup.popupTargetId] !== undefined) {
         stillOnObj =
           this.body.nodes[this.popup.popupTargetId].isOverlappingWith(
-            pointerObj
+            pointerObj,
           );
 
         // if the mouse is still one the node, we have to check if it is not also on one that is drawn on top of it.
@@ -16992,7 +17005,7 @@ class InteractionHandler {
         if (this.body.edges[this.popup.popupTargetId] !== undefined) {
           stillOnObj =
             this.body.edges[this.popup.popupTargetId].isOverlappingWith(
-              pointerObj
+              pointerObj,
             );
         }
       }
@@ -17006,42 +17019,6 @@ class InteractionHandler {
   }
 }
 
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
-
-
-function __classPrivateFieldGet(receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-}
-
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
-    if (kind === "m") throw new TypeError("Private method is not writable");
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-    var e = new Error(message);
-    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-var _SingleTypeSelectionAccumulator_previousSelection, _SingleTypeSelectionAccumulator_selection, _SelectionAccumulator_nodes, _SelectionAccumulator_edges, _SelectionAccumulator_commitHandler;
 /**
  * @param prev
  * @param next
@@ -17056,41 +17033,39 @@ function diffSets(prev, next) {
     return diff;
 }
 class SingleTypeSelectionAccumulator {
-    constructor() {
-        _SingleTypeSelectionAccumulator_previousSelection.set(this, new Set());
-        _SingleTypeSelectionAccumulator_selection.set(this, new Set());
-    }
+    #previousSelection = new Set();
+    #selection = new Set();
     get size() {
-        return __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").size;
+        return this.#selection.size;
     }
     add(...items) {
         for (const item of items) {
-            __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").add(item);
+            this.#selection.add(item);
         }
     }
     delete(...items) {
         for (const item of items) {
-            __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").delete(item);
+            this.#selection.delete(item);
         }
     }
     clear() {
-        __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f").clear();
+        this.#selection.clear();
     }
     getSelection() {
-        return [...__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f")];
+        return [...this.#selection];
     }
     getChanges() {
         return {
-            added: [...diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
-            deleted: [...diffSets(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
-            previous: [...new Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f"))],
-            current: [...new Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"))],
+            added: [...diffSets(this.#previousSelection, this.#selection)],
+            deleted: [...diffSets(this.#selection, this.#previousSelection)],
+            previous: [...new Set(this.#previousSelection)],
+            current: [...new Set(this.#selection)],
         };
     }
     commit() {
         const changes = this.getChanges();
-        __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_previousSelection, __classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_selection, "f"), "f");
-        __classPrivateFieldSet(this, _SingleTypeSelectionAccumulator_selection, new Set(__classPrivateFieldGet(this, _SingleTypeSelectionAccumulator_previousSelection, "f")), "f");
+        this.#previousSelection = this.#selection;
+        this.#selection = new Set(this.#previousSelection);
         for (const item of changes.added) {
             item.select();
         }
@@ -17100,52 +17075,50 @@ class SingleTypeSelectionAccumulator {
         return changes;
     }
 }
-_SingleTypeSelectionAccumulator_previousSelection = new WeakMap(), _SingleTypeSelectionAccumulator_selection = new WeakMap();
 class SelectionAccumulator {
+    #nodes = new SingleTypeSelectionAccumulator();
+    #edges = new SingleTypeSelectionAccumulator();
+    #commitHandler;
     constructor(commitHandler = () => { }) {
-        _SelectionAccumulator_nodes.set(this, new SingleTypeSelectionAccumulator());
-        _SelectionAccumulator_edges.set(this, new SingleTypeSelectionAccumulator());
-        _SelectionAccumulator_commitHandler.set(this, void 0);
-        __classPrivateFieldSet(this, _SelectionAccumulator_commitHandler, commitHandler, "f");
+        this.#commitHandler = commitHandler;
     }
     get sizeNodes() {
-        return __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").size;
+        return this.#nodes.size;
     }
     get sizeEdges() {
-        return __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").size;
+        return this.#edges.size;
     }
     getNodes() {
-        return __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").getSelection();
+        return this.#nodes.getSelection();
     }
     getEdges() {
-        return __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").getSelection();
+        return this.#edges.getSelection();
     }
     addNodes(...nodes) {
-        __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").add(...nodes);
+        this.#nodes.add(...nodes);
     }
     addEdges(...edges) {
-        __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").add(...edges);
+        this.#edges.add(...edges);
     }
     deleteNodes(node) {
-        __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").delete(node);
+        this.#nodes.delete(node);
     }
     deleteEdges(edge) {
-        __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").delete(edge);
+        this.#edges.delete(edge);
     }
     clear() {
-        __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").clear();
-        __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").clear();
+        this.#nodes.clear();
+        this.#edges.clear();
     }
     commit(...rest) {
         const summary = {
-            nodes: __classPrivateFieldGet(this, _SelectionAccumulator_nodes, "f").commit(),
-            edges: __classPrivateFieldGet(this, _SelectionAccumulator_edges, "f").commit(),
+            nodes: this.#nodes.commit(),
+            edges: this.#edges.commit(),
         };
-        __classPrivateFieldGet(this, _SelectionAccumulator_commitHandler, "f").call(this, summary, ...rest);
+        this.#commitHandler(summary, ...rest);
         return summary;
     }
 }
-_SelectionAccumulator_nodes = new WeakMap(), _SelectionAccumulator_edges = new WeakMap(), _SelectionAccumulator_commitHandler = new WeakMap();
 
 /**
  * The handler for selections
@@ -17275,7 +17248,7 @@ class SelectionHandler {
     event,
     pointer,
     oldSelection,
-    emptySelection = false
+    emptySelection = false,
   ) {
     const properties = this._initBaseEvent(event, pointer);
 
@@ -17448,7 +17421,7 @@ class SelectionHandler {
           xTo,
           yTo,
           canvasPos.x,
-          canvasPos.y
+          canvasPos.y,
         );
         if (dist < mindist) {
           overlappingEdge = edgeId;
@@ -17689,7 +17662,7 @@ class SelectionHandler {
         "deselectEdge",
         event,
         pointer,
-        previousSelection
+        previousSelection,
       );
       selected = true;
     }
@@ -17699,7 +17672,7 @@ class SelectionHandler {
         "deselectNode",
         event,
         pointer,
-        previousSelection
+        previousSelection,
       );
       selected = true;
     }
@@ -17773,7 +17746,7 @@ class SelectionHandler {
   setSelection(selection, options = {}) {
     if (!selection || (!selection.nodes && !selection.edges)) {
       throw new TypeError(
-        "Selection must be an object with nodes and/or edges properties"
+        "Selection must be an object with nodes and/or edges properties",
       );
     }
 
@@ -18063,7 +18036,7 @@ class VerticalStrategy extends DirectionInterface {
   getTreeSize(index) {
     const res = this.layout.hierarchical.getTreeSize(
       this.layout.body.nodes,
-      index
+      index,
     );
     return { min: res.min_x, max: res.max_x };
   }
@@ -18126,7 +18099,7 @@ class HorizontalStrategy extends DirectionInterface {
   getTreeSize(index) {
     const res = this.layout.hierarchical.getTreeSize(
       this.layout.body.nodes,
-      index
+      index,
     );
     return { min: res.min_y, max: res.max_y };
   }
@@ -18459,7 +18432,7 @@ class HierarchicalStatus {
     const remap = new Map();
     let newLevel = 0;
     const uniqueSortedLevels = [...new Set(Object.values(this.levels))].sort(
-      (a, b) => a - b
+      (a, b) => a - b,
     );
 
     for (const level of uniqueSortedLevels) {
@@ -18650,7 +18623,7 @@ class LayoutEngine {
       selectiveDeepExtend(
         ["randomSeed", "improvedLayout", "clusterThreshold"],
         this.options,
-        options
+        options,
       );
       mergeOptions(this.options, options, "hierarchical");
 
@@ -18898,7 +18871,7 @@ class LayoutEngine {
               this.body.emitter.emit("_layoutFailed");
               console.info(
                 "This network could not be positioned by this version of the improved layout algorithm." +
-                  " Please disable improvedLayout for better performance."
+                  " Please disable improvedLayout for better performance.",
               );
               return;
             }
@@ -18913,7 +18886,7 @@ class LayoutEngine {
         if (level > MAX_LEVELS) {
           console.info(
             "The clustering didn't succeed within the amount of interations allowed," +
-              " progressing with partial result."
+              " progressing with partial result.",
           );
         }
 
@@ -18921,7 +18894,7 @@ class LayoutEngine {
         this.body.modules.kamadaKawai.solve(
           indices,
           this.body.edgeIndices,
-          true
+          true,
         );
 
         // shift to center point
@@ -18954,7 +18927,7 @@ class LayoutEngine {
   _shiftToCenter() {
     const range = NetworkUtil.getRangeCore(
       this.body.nodes,
-      this.body.nodeIndices
+      this.body.nodeIndices,
     );
     const center = NetworkUtil.findCenter(range);
     for (let i = 0; i < this.body.nodeIndices.length; i++) {
@@ -18978,7 +18951,7 @@ class LayoutEngine {
           this.body.modules.clustering.openCluster(
             this.body.nodeIndices[i],
             {},
-            false
+            false,
           );
         }
       }
@@ -19029,7 +19002,7 @@ class LayoutEngine {
       if (undefinedLevel === true && definedLevel === true) {
         throw new Error(
           "To use the hierarchical layout, nodes require either no predefined levels" +
-            " or levels have to be defined for all nodes."
+            " or levels have to be defined for all nodes.",
         );
       } else {
         // define levels if undefined by the users. Based on hubsize.
@@ -19141,7 +19114,7 @@ class LayoutEngine {
           // get the space around the node.
           const [minSpaceNode, maxSpaceNode] = this._getSpaceAroundNode(
             node,
-            branchMap
+            branchMap,
           );
           minSpace = Math.min(minSpaceNode, minSpace);
           maxSpace = Math.min(maxSpaceNode, maxSpace);
@@ -19330,12 +19303,12 @@ class LayoutEngine {
         if (diff > 0) {
           branchOffset = Math.min(
             diff,
-            maxSpaceBranch - this.options.hierarchical.nodeSpacing
+            maxSpaceBranch - this.options.hierarchical.nodeSpacing,
           );
         } else if (diff < 0) {
           branchOffset = -Math.min(
             -diff,
-            minSpaceBranch - this.options.hierarchical.nodeSpacing
+            minSpaceBranch - this.options.hierarchical.nodeSpacing,
           );
         }
 
@@ -19358,12 +19331,12 @@ class LayoutEngine {
         if (diff > 0) {
           newPosition = Math.min(
             nodePosition + (maxSpace - this.options.hierarchical.nodeSpacing),
-            guess
+            guess,
           );
         } else if (diff < 0) {
           newPosition = Math.max(
             nodePosition - (minSpace - this.options.hierarchical.nodeSpacing),
-            guess
+            guess,
           );
         }
 
@@ -19645,13 +19618,13 @@ class LayoutEngine {
     // if overlap has been detected, we shift the branch
     if (this.lastNodeOnLevel[level] !== undefined) {
       const previousPos = this.direction.getPosition(
-        this.body.nodes[this.lastNodeOnLevel[level]]
+        this.body.nodes[this.lastNodeOnLevel[level]],
       );
       if (pos - previousPos < this.options.hierarchical.nodeSpacing) {
         const diff = previousPos + this.options.hierarchical.nodeSpacing - pos;
         const sharedParent = this._findCommonParent(
           this.lastNodeOnLevel[level],
-          node.id
+          node.id,
         );
         this._shiftBlock(sharedParent.withChild, diff);
       }
@@ -19800,7 +19773,7 @@ class LayoutEngine {
       const diff = customCallback(
         NetworkUtil.cloneOptions(nodeA, "node"),
         NetworkUtil.cloneOptions(nodeB, "node"),
-        NetworkUtil.cloneOptions(edge, "edge")
+        NetworkUtil.cloneOptions(edge, "edge"),
       );
 
       this.hierarchical.levels[nodeB.id] = levelA + diff;
@@ -20261,7 +20234,7 @@ class ManipulationSystem {
       // refresh this bar based on what has been selected
       this._temporaryBindEvent(
         "select",
-        this.showManipulatorToolbar.bind(this)
+        this.showManipulatorToolbar.bind(this),
       );
     }
 
@@ -20288,7 +20261,8 @@ class ManipulationSystem {
       this._createBackButton(locale);
       this._createSeperator();
       this._createDescription(
-        locale["addDescription"] || this.options.locales["en"]["addDescription"]
+        locale["addDescription"] ||
+          this.options.locales["en"]["addDescription"],
       );
 
       // bind the close button
@@ -20332,18 +20306,18 @@ class ManipulationSystem {
             });
           } else {
             throw new Error(
-              "The function for edit does not support two arguments (data, callback)"
+              "The function for edit does not support two arguments (data, callback)",
             );
           }
         } else {
           alert(
             this.options.locales[this.options.locale]["editClusterError"] ||
-              this.options.locales["en"]["editClusterError"]
+              this.options.locales["en"]["editClusterError"],
           );
         }
       } else {
         throw new Error(
-          "No function has been configured to handle the editing of nodes."
+          "No function has been configured to handle the editing of nodes.",
         );
       }
     } else {
@@ -20371,7 +20345,7 @@ class ManipulationSystem {
       this._createSeperator();
       this._createDescription(
         locale["edgeDescription"] ||
-          this.options.locales["en"]["edgeDescription"]
+          this.options.locales["en"]["edgeDescription"],
       );
 
       // bind the close button
@@ -20418,7 +20392,7 @@ class ManipulationSystem {
       this._createSeperator();
       this._createDescription(
         locale["editEdgeDescription"] ||
-          this.options.locales["en"]["editEdgeDescription"]
+          this.options.locales["en"]["editEdgeDescription"],
       );
 
       // bind the close button
@@ -20447,7 +20421,7 @@ class ManipulationSystem {
       this._temporaryBindUI("onHold", () => {}); // disabled
       this._temporaryBindUI(
         "onDragStart",
-        this._controlNodeDragStart.bind(this)
+        this._controlNodeDragStart.bind(this),
       ); // used to select control node
       this._temporaryBindUI("onDrag", this._controlNodeDrag.bind(this)); // used to drag control node
       this._temporaryBindUI("onDragEnd", this._controlNodeDragEnd.bind(this)); // used to connect or revert control nodes
@@ -20494,7 +20468,7 @@ class ManipulationSystem {
         if (this.body.nodes[selectedNodes[i]].isCluster === true) {
           alert(
             this.options.locales[this.options.locale]["deleteClusterError"] ||
-              this.options.locales["en"]["deleteClusterError"]
+              this.options.locales["en"]["deleteClusterError"],
           );
           return;
         }
@@ -20530,7 +20504,7 @@ class ManipulationSystem {
         });
       } else {
         throw new Error(
-          "The function for delete does not support two arguments (data, callback)"
+          "The function for delete does not support two arguments (data, callback)",
         );
       }
     } else {
@@ -20602,7 +20576,7 @@ class ManipulationSystem {
       this.closeDiv.setAttribute(
         "aria-label",
         this.options.locales[this.options.locale]?.["close"] ??
-          this.options.locales["en"]["close"]
+          this.options.locales["en"]["close"],
       );
       this.closeDiv.style.display = this.manipulationDiv.style.display;
       this.canvas.frame.appendChild(this.closeDiv);
@@ -20650,7 +20624,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "editMode",
       "vis-edit vis-edit-mode",
-      locale["edit"] || this.options.locales["en"]["edit"]
+      locale["edit"] || this.options.locales["en"]["edit"],
     );
     this.editModeDiv.appendChild(button);
 
@@ -20740,7 +20714,7 @@ class ManipulationSystem {
     this.manipulationDOM["seperatorLineDiv" + index].className =
       "vis-separator-line";
     this.manipulationDiv.appendChild(
-      this.manipulationDOM["seperatorLineDiv" + index]
+      this.manipulationDOM["seperatorLineDiv" + index],
     );
   }
 
@@ -20755,7 +20729,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "addNode",
       "vis-add",
-      locale["addNode"] || this.options.locales["en"]["addNode"]
+      locale["addNode"] || this.options.locales["en"]["addNode"],
     );
     this.manipulationDiv.appendChild(button);
     this._bindElementEvents(button, this.addNodeMode.bind(this));
@@ -20770,7 +20744,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "addEdge",
       "vis-connect",
-      locale["addEdge"] || this.options.locales["en"]["addEdge"]
+      locale["addEdge"] || this.options.locales["en"]["addEdge"],
     );
     this.manipulationDiv.appendChild(button);
     this._bindElementEvents(button, this.addEdgeMode.bind(this));
@@ -20785,7 +20759,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "editNode",
       "vis-edit",
-      locale["editNode"] || this.options.locales["en"]["editNode"]
+      locale["editNode"] || this.options.locales["en"]["editNode"],
     );
     this.manipulationDiv.appendChild(button);
     this._bindElementEvents(button, this.editNode.bind(this));
@@ -20800,7 +20774,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "editEdge",
       "vis-edit",
-      locale["editEdge"] || this.options.locales["en"]["editEdge"]
+      locale["editEdge"] || this.options.locales["en"]["editEdge"],
     );
     this.manipulationDiv.appendChild(button);
     this._bindElementEvents(button, this.editEdgeMode.bind(this));
@@ -20821,7 +20795,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "delete",
       deleteBtnClass,
-      locale["del"] || this.options.locales["en"]["del"]
+      locale["del"] || this.options.locales["en"]["del"],
     );
     this.manipulationDiv.appendChild(button);
     this._bindElementEvents(button, this.deleteSelected.bind(this));
@@ -20836,7 +20810,7 @@ class ManipulationSystem {
     const button = this._createButton(
       "back",
       "vis-back",
-      locale["back"] || this.options.locales["en"]["back"]
+      locale["back"] || this.options.locales["en"]["back"],
     );
     this.manipulationDiv.appendChild(button);
     this._bindElementEvents(button, this.showManipulatorToolbar.bind(this));
@@ -20858,7 +20832,7 @@ class ManipulationSystem {
     this.manipulationDOM[id + "Label"].className = labelClassName;
     this.manipulationDOM[id + "Label"].innerText = label;
     this.manipulationDOM[id + "Div"].appendChild(
-      this.manipulationDOM[id + "Label"]
+      this.manipulationDOM[id + "Label"],
     );
     return this.manipulationDOM[id + "Div"];
   }
@@ -20907,7 +20881,7 @@ class ManipulationSystem {
         "This UI function does not exist. Typo? You tried: " +
           UIfunctionName +
           " possible are: " +
-          JSON.stringify(Object.keys(this.body.eventListeners))
+          JSON.stringify(Object.keys(this.body.eventListeners)),
       );
     }
   }
@@ -20921,7 +20895,7 @@ class ManipulationSystem {
       if (
         Object.prototype.hasOwnProperty.call(
           this.temporaryUIFunctions,
-          functionName
+          functionName,
         )
       ) {
         this.body.eventListeners[functionName] =
@@ -20980,7 +20954,7 @@ class ManipulationSystem {
       this.body.edges[this.temporaryIds.edges[i]].disconnect();
       delete this.body.edges[this.temporaryIds.edges[i]];
       const indexTempEdge = this.body.edgeIndices.indexOf(
-        this.temporaryIds.edges[i]
+        this.temporaryIds.edges[i],
       );
       if (indexTempEdge !== -1) {
         this.body.edgeIndices.splice(indexTempEdge, 1);
@@ -20991,7 +20965,7 @@ class ManipulationSystem {
     for (let i = 0; i < this.temporaryIds.nodes.length; i++) {
       delete this.body.nodes[this.temporaryIds.nodes[i]];
       const indexTempNode = this.body.nodeIndices.indexOf(
-        this.temporaryIds.nodes[i]
+        this.temporaryIds.nodes[i],
       );
       if (indexTempNode !== -1) {
         this.body.nodeIndices.splice(indexTempNode, 1);
@@ -21093,7 +21067,7 @@ class ManipulationSystem {
       if (node.isCluster === true) {
         alert(
           this.options.locales[this.options.locale]["createEdgeError"] ||
-            this.options.locales["en"]["createEdgeError"]
+            this.options.locales["en"]["createEdgeError"],
         );
       } else {
         const from = this.body.nodes[this.temporaryIds.nodes[0]];
@@ -21126,7 +21100,7 @@ class ManipulationSystem {
       this.lastTouch = this.body.functions.getPointer(event.center);
       this.lastTouch.translation = Object.assign(
         {},
-        this.body.view.translation
+        this.body.view.translation,
       ); // copy the object
 
       this.interactionHandler.drag.pointer = this.lastTouch; // Drag pointer is not updated when adding edges
@@ -21139,7 +21113,7 @@ class ManipulationSystem {
         if (node.isCluster === true) {
           alert(
             this.options.locales[this.options.locale]["createEdgeError"] ||
-              this.options.locales["en"]["createEdgeError"]
+              this.options.locales["en"]["createEdgeError"],
           );
         } else {
           // create a node the temporary line can look at
@@ -21201,7 +21175,7 @@ class ManipulationSystem {
     this.selectionHandler.generateClickEvent(
       "controlNodeDragging",
       event,
-      pointer
+      pointer,
     );
 
     if (this.temporaryIds.nodes[0] !== undefined) {
@@ -21249,7 +21223,7 @@ class ManipulationSystem {
       if (node.isCluster === true) {
         alert(
           this.options.locales[this.options.locale]["createEdgeError"] ||
-            this.options.locales["en"]["createEdgeError"]
+            this.options.locales["en"]["createEdgeError"],
         );
       } else {
         if (
@@ -21265,7 +21239,7 @@ class ManipulationSystem {
     this.selectionHandler.generateClickEvent(
       "controlNodeDragEnd",
       event,
-      pointer
+      pointer,
     );
 
     // No need to do _generateclickevent('dragEnd') here, the regular dragEnd event fires.
@@ -21284,7 +21258,7 @@ class ManipulationSystem {
       event,
       pointer,
       undefined,
-      true
+      true,
     );
   }
 
@@ -21321,7 +21295,7 @@ class ManipulationSystem {
       } else {
         this.showManipulatorToolbar();
         throw new Error(
-          "The function for add does not support two arguments (data,callback)"
+          "The function for add does not support two arguments (data,callback)",
         );
       }
     } else {
@@ -21354,7 +21328,7 @@ class ManipulationSystem {
         });
       } else {
         throw new Error(
-          "The function for connect does not support two arguments (data,callback)"
+          "The function for connect does not support two arguments (data,callback)",
         );
       }
     } else {
@@ -21401,7 +21375,7 @@ class ManipulationSystem {
         });
       } else {
         throw new Error(
-          "The function for edit does not support two arguments (data, callback)"
+          "The function for edit does not support two arguments (data, callback)",
         );
       }
     } else {
@@ -21475,16 +21449,16 @@ const nodeOptions = {
     font: {
         align: { string },
         color: { string },
-        size: { number },
+        size: { number }, // px
         face: { string },
         background: { string },
-        strokeWidth: { number },
+        strokeWidth: { number }, // px
         strokeColor: { string },
         vadjust: { number },
         multi: { boolean: bool, string },
         bold: {
             color: { string },
-            size: { number },
+            size: { number }, // px
             face: { string },
             mod: { string },
             vadjust: { number },
@@ -21492,7 +21466,7 @@ const nodeOptions = {
         },
         boldital: {
             color: { string },
-            size: { number },
+            size: { number }, // px
             face: { string },
             mod: { string },
             vadjust: { number },
@@ -21500,7 +21474,7 @@ const nodeOptions = {
         },
         ital: {
             color: { string },
-            size: { number },
+            size: { number }, // px
             face: { string },
             mod: { string },
             vadjust: { number },
@@ -21508,7 +21482,7 @@ const nodeOptions = {
         },
         mono: {
             color: { string },
-            size: { number },
+            size: { number }, // px
             face: { string },
             mod: { string },
             vadjust: { number },
@@ -21525,16 +21499,16 @@ const nodeOptions = {
     hidden: { boolean: bool },
     icon: {
         face: { string },
-        code: { string },
-        size: { number },
+        code: { string }, //'\uf007',
+        size: { number }, //50,
         color: { string },
         weight: { string, number },
         __type__: { object },
     },
     id: { string, number },
     image: {
-        selected: { string, undefined: "undefined" },
-        unselected: { string, undefined: "undefined" },
+        selected: { string, undefined: "undefined" }, // --> URL
+        unselected: { string, undefined: "undefined" }, // --> URL
         __type__: { object, string },
     },
     imagePadding: {
@@ -21695,17 +21669,17 @@ const allOptions = {
         dashes: { boolean: bool, array },
         font: {
             color: { string },
-            size: { number },
+            size: { number }, // px
             face: { string },
             background: { string },
-            strokeWidth: { number },
+            strokeWidth: { number }, // px
             strokeColor: { string },
             align: { string: ["horizontal", "top", "middle", "bottom"] },
             vadjust: { number },
             multi: { boolean: bool, string },
             bold: {
                 color: { string },
-                size: { number },
+                size: { number }, // px
                 face: { string },
                 mod: { string },
                 vadjust: { number },
@@ -21713,7 +21687,7 @@ const allOptions = {
             },
             boldital: {
                 color: { string },
-                size: { number },
+                size: { number }, // px
                 face: { string },
                 mod: { string },
                 vadjust: { number },
@@ -21721,7 +21695,7 @@ const allOptions = {
             },
             ital: {
                 color: { string },
-                size: { number },
+                size: { number }, // px
                 face: { string },
                 mod: { string },
                 vadjust: { number },
@@ -21729,7 +21703,7 @@ const allOptions = {
             },
             mono: {
                 color: { string },
-                size: { number },
+                size: { number }, // px
                 face: { string },
                 mod: { string },
                 vadjust: { number },
@@ -21851,9 +21825,9 @@ const allOptions = {
             blockShifting: { boolean: bool },
             edgeMinimization: { boolean: bool },
             parentCentralization: { boolean: bool },
-            direction: { string: ["UD", "DU", "LR", "RL"] },
-            sortMethod: { string: ["hubsize", "directed"] },
-            shakeTowards: { string: ["leaves", "roots"] },
+            direction: { string: ["UD", "DU", "LR", "RL"] }, // UD, DU, LR, RL
+            sortMethod: { string: ["hubsize", "directed"] }, // hubsize, directed
+            shakeTowards: { string: ["leaves", "roots"] }, // leaves, roots
             __type__: { object, boolean: bool },
         },
         __type__: { object },
@@ -21914,7 +21888,7 @@ const allOptions = {
             __type__: { object },
         },
         maxVelocity: { number },
-        minVelocity: { number },
+        minVelocity: { number }, // px/s
         solver: {
             string: [
                 "barnesHut",
@@ -21925,7 +21899,7 @@ const allOptions = {
         },
         stabilization: {
             enabled: { boolean: bool },
-            iterations: { number },
+            iterations: { number }, // maximum number of iteration to stabilize
             updateInterval: { number },
             onlyDynamicEdges: { boolean: bool },
             fit: { boolean: bool },
@@ -21999,10 +21973,10 @@ const configureOptions = {
         },
         font: {
             color: ["color", "#343434"],
-            size: [14, 0, 100, 1],
+            size: [14, 0, 100, 1], // px
             face: ["arial", "verdana", "tahoma"],
             background: ["color", "none"],
-            strokeWidth: [0, 0, 50, 1],
+            strokeWidth: [0, 0, 50, 1], // px
             strokeColor: ["color", "#ffffff"],
         },
         //group: 'string',
@@ -22077,10 +22051,10 @@ const configureOptions = {
         dashes: false,
         font: {
             color: ["color", "#343434"],
-            size: [14, 0, 100, 1],
+            size: [14, 0, 100, 1], // px
             face: ["arial", "verdana", "tahoma"],
             background: ["color", "none"],
-            strokeWidth: [2, 0, 50, 1],
+            strokeWidth: [2, 0, 50, 1], // px
             strokeColor: ["color", "#ffffff"],
             align: ["horizontal", "top", "middle", "bottom"],
         },
@@ -22143,8 +22117,8 @@ const configureOptions = {
             blockShifting: true,
             edgeMinimization: true,
             parentCentralization: true,
-            direction: ["UD", "DU", "LR", "RL"],
-            sortMethod: ["hubsize", "directed"],
+            direction: ["UD", "DU", "LR", "RL"], // UD, DU, LR, RL
+            sortMethod: ["hubsize", "directed"], // hubsize, directed
             shakeTowards: ["leaves", "roots"], // leaves, roots
         },
     },
@@ -22182,7 +22156,7 @@ const configureOptions = {
         enabled: true,
         barnesHut: {
             theta: [0.5, 0.1, 1, 0.05],
-            gravitationalConstant: [-2000, -30000, 0, 50],
+            gravitationalConstant: [-2e3, -3e4, 0, 50],
             centralGravity: [0.3, 0, 10, 0.05],
             springLength: [95, 0, 500, 5],
             springConstant: [0.04, 0, 1.2, 0.005],
@@ -22240,10 +22214,10 @@ const configuratorHideOption = (parentPath, optionName, options) => {
 };
 
 var options = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  allOptions: allOptions,
-  configuratorHideOption: configuratorHideOption,
-  configureOptions: configureOptions
+    __proto__: null,
+    allOptions: allOptions,
+    configuratorHideOption: configuratorHideOption,
+    configureOptions: configureOptions
 });
 
 /**
@@ -22365,7 +22339,7 @@ class KamadaKawai {
     const D_matrix = this.distanceSolver.getDistances(
       this.body,
       nodesArray,
-      edgesArray
+      edgesArray,
     ); // distance matrix
 
     // get the L Matrix
@@ -22383,7 +22357,7 @@ class KamadaKawai {
     let iterations = 0;
     const maxIterations = Math.max(
       1000,
-      Math.min(10 * this.body.nodeIndices.length, 6000)
+      Math.min(10 * this.body.nodeIndices.length, 6000),
     );
     const maxInnerIterations = 5;
 
@@ -22735,7 +22709,7 @@ function Network(container, data, options) {
   this.interactionHandler = new InteractionHandler(
     this.body,
     this.canvas,
-    this.selectionHandler
+    this.selectionHandler,
   ); // Interaction handler handles all the hammer bindings (that are bound by canvas), key
   this.view = new View(this.body, this.canvas); // camera handler, does animations and zooms
   this.renderer = new CanvasRenderer(this.body, this.canvas); // renderer, starts renderloop, has events that modules can hook into
@@ -22746,14 +22720,14 @@ function Network(container, data, options) {
     this.body,
     this.canvas,
     this.selectionHandler,
-    this.interactionHandler
+    this.interactionHandler,
   ); // data manipulation system
 
   this.nodesHandler = new NodesHandler(
     this.body,
     this.images,
     this.groups,
-    this.layoutEngine
+    this.layoutEngine,
   ); // Handle adding, deleting and updating of nodes as well as global options
   this.edgesHandler = new EdgesHandler(this.body, this.images, this.groups); // Handle adding, deleting and updating of edges as well as global options
 
@@ -22787,7 +22761,7 @@ Network.prototype.setOptions = function (options) {
     if (errorFound === true) {
       console.error(
         "%cErrors have been found in the supplied options object.",
-        VALIDATOR_PRINT_STYLE
+        VALIDATOR_PRINT_STYLE,
       );
     }
 
@@ -22799,7 +22773,7 @@ Network.prototype.setOptions = function (options) {
     if (options.locale !== undefined) {
       options.locale = normalizeLanguageCode(
         options.locales || this.options.locales,
-        options.locale
+        options.locale,
       );
     }
 
@@ -22834,7 +22808,7 @@ Network.prototype.setOptions = function (options) {
           this.body.container,
           configureOptions,
           this.canvas.pixelRatio,
-          configuratorHideOption
+          configuratorHideOption,
         );
       }
 
@@ -22990,7 +22964,7 @@ Network.prototype.setData = function (data) {
   if (data && data.dot && (data.nodes || data.edges)) {
     throw new SyntaxError(
       'Data must contain either parameter "dot" or ' +
-        ' parameter pair "nodes" and "edges", but not both.'
+        ' parameter pair "nodes" and "edges", but not both.',
     );
   }
 
@@ -22999,7 +22973,7 @@ Network.prototype.setData = function (data) {
   // set all data
   if (data && data.dot) {
     console.warn(
-      "The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);"
+      "The dot property has been deprecated. Please use the static convertDot method to convert DOT into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertDot(dotString);",
     );
     // parse DOT file
     const dotData = DOTToGraph(data.dot);
@@ -23008,7 +22982,7 @@ Network.prototype.setData = function (data) {
   } else if (data && data.gephi) {
     // parse DOT file
     console.warn(
-      "The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);"
+      "The gephi property has been deprecated. Please use the static convertGephi method to convert gephi into vis.network format and use the normal data format with nodes and edges. This converter is used like this: var data = vis.network.convertGephi(gephiJson);",
     );
     const gephiData = parseGephi(data.gephi);
     this.setData(gephiData);
@@ -23236,19 +23210,19 @@ Network.prototype.getConnectedNodes = function (objectId) {
   if (this.body.nodes[objectId] !== undefined) {
     return this.nodesHandler.getConnectedNodes.apply(
       this.nodesHandler,
-      arguments
+      arguments,
     );
   } else {
     return this.edgesHandler.getConnectedNodes.apply(
       this.edgesHandler,
-      arguments
+      arguments,
     );
   }
 };
 Network.prototype.getConnectedEdges = function () {
   return this.nodesHandler.getConnectedEdges.apply(
     this.nodesHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.startSimulation = function () {
@@ -23263,31 +23237,31 @@ Network.prototype.stabilize = function () {
 Network.prototype.getSelection = function () {
   return this.selectionHandler.getSelection.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.setSelection = function () {
   return this.selectionHandler.setSelection.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.getSelectedNodes = function () {
   return this.selectionHandler.getSelectedNodeIds.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.getSelectedEdges = function () {
   return this.selectionHandler.getSelectedEdgeIds.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.getNodeAt = function () {
   const node = this.selectionHandler.getNodeAt.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
   if (node !== undefined && node.id !== undefined) {
     return node.id;
@@ -23297,7 +23271,7 @@ Network.prototype.getNodeAt = function () {
 Network.prototype.getEdgeAt = function () {
   const edge = this.selectionHandler.getEdgeAt.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
   if (edge !== undefined && edge.id !== undefined) {
     return edge.id;
@@ -23307,13 +23281,13 @@ Network.prototype.getEdgeAt = function () {
 Network.prototype.selectNodes = function () {
   return this.selectionHandler.selectNodes.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.selectEdges = function () {
   return this.selectionHandler.selectEdges.apply(
     this.selectionHandler,
-    arguments
+    arguments,
   );
 };
 Network.prototype.unselectAll = function () {

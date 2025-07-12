@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Vis Network | Data | Dynamic filtering</title>
@@ -15,15 +15,16 @@
         border: 1px solid lightgray;
       }
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-          "Helvetica Neue", sans-serif;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+          "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+          sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
       code {
-        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-          monospace;
+        font-family:
+          source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
       }
     </style>
   </head>
@@ -203,7 +204,7 @@
           const { value, checked } = e.target;
           edgesFilterValues[value] = checked;
           edgesView.refresh();
-        })
+        }),
       );
 
       startNetwork({ nodes: nodesView, edges: edgesView });

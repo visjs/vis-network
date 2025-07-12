@@ -37,7 +37,9 @@
   border: 1px solid #2b7ce9;
   color: #ffffff;
 
-  transition: transform 0.5s ease 0s, z-index 0.5s linear 0s;
+  transition:
+    transform 0.5s ease 0s,
+    z-index 0.5s linear 0s;
   z-index: 1;
 }
 .examples-root .example-link:hover .example-image > img {

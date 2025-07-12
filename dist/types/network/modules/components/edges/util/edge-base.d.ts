@@ -1,4 +1,4 @@
-import { ArrowData, ArrowDataWithCore, EdgeFormattingValues, EdgeType, Id, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./types";
+import type { ArrowData, ArrowDataWithCore, EdgeFormattingValues, EdgeType, Id, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./types.ts";
 export interface FindBorderPositionOptions<Via> {
     via: Via;
 }
@@ -13,8 +13,6 @@ export interface FindBorderPositionCircleOptions {
  * The Base Class for all edges.
  */
 export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
-    protected _body: VBody;
-    protected _labelModule: Label;
     from: VNode;
     fromPoint: Point;
     to: VNode;
@@ -26,13 +24,15 @@ export declare abstract class EdgeBase<Via = undefined> implements EdgeType {
     options: EdgeOptions;
     hoverWidth: number;
     selectionWidth: number;
+    protected _body: VBody;
+    protected _labelModule: Label;
     /**
      * Create a new instance.
      * @param options - The options object of given edge.
-     * @param _body - The body of the network.
-     * @param _labelModule - Label module.
+     * @param body - The body of the network.
+     * @param labelModule - Label module.
      */
-    constructor(options: EdgeOptions, _body: VBody, _labelModule: Label);
+    constructor(options: EdgeOptions, body: VBody, labelModule: Label);
     /**
      * Find the intersection between the border of the node and the edge.
      * @param node - The node (either from or to node of the edge).

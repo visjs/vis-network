@@ -1,5 +1,5 @@
-import { EdgeBase } from "./edge-base";
-import { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./types";
+import { EdgeBase } from "./edge-base.ts";
+import type { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./types.ts";
 /**
  * The Base Class for all Bezier edges.
  * Bezier curves are used to model smooth gradual curves in paths between nodes.

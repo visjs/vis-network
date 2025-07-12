@@ -159,7 +159,7 @@ function draw() {
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
-          callback
+          callback,
         );
         document.getElementById("cancelButton").onclick = clearPopUp.bind();
         document.getElementById("network-popUp").style.display = "block";
@@ -172,11 +172,11 @@ function draw() {
         document.getElementById("saveButton").onclick = saveData.bind(
           this,
           data,
-          callback
+          callback,
         );
         document.getElementById("cancelButton").onclick = cancelEdit.bind(
           this,
-          callback
+          callback,
         );
         document.getElementById("network-popUp").style.display = "block";
       },

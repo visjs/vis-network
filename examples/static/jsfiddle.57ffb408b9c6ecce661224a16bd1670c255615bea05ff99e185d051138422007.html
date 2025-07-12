@@ -138,13 +138,13 @@ network.on("selectEdge", function (params) {
     network.clustering.updateEdge(params.edges[0], { color: "#aa0000" });
     obj.base_edges = network.clustering.getBaseEdges(params.edges[0]);
     obj.all_clustered_edges = network.clustering.getClusteredEdges(
-      params.edges[0]
+      params.edges[0],
     );
     document.getElementById("eventSpanHeading").innerText = "selectEdge event:";
     document.getElementById("eventSpanContent").innerText = JSON.stringify(
       obj,
       null,
-      4
+      4,
     );
   }
 });

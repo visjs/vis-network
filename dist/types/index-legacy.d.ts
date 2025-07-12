@@ -5,9 +5,9 @@ import "vis-util/esnext/styles/bootstrap.css";
 import "vis-util/esnext/styles/color-picker.css";
 import "vis-util/esnext/styles/configurator.css";
 import "vis-util/esnext/styles/popup.css";
-export * from "./network/Network";
-import * as gephiParser from "./network/gephiParser";
-import * as allOptions from "./network/options";
+export * from "./network/Network.js";
+import * as gephiParser from "./network/gephiParser.js";
+import * as allOptions from "./network/options.js";
 export declare const network: {
     Images: any;
     dotparser: any;
@@ -16,7 +16,7 @@ export declare const network: {
     convertDot: any;
     convertGephi: typeof gephiParser.parseGephi;
 };
-import * as DOMutil from "./DOMutil";
+import * as DOMutil from "./DOMutil.js";
 export { DOMutil };
 import * as util from "vis-util/esnext";
 export { util };

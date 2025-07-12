@@ -1,4 +1,4 @@
-import { ConfiguratorConfig, ConfiguratorHideOption, OptionsConfig } from "vis-util/esnext";
+import type { ConfiguratorConfig, ConfiguratorHideOption, OptionsConfig } from "vis-util/esnext";
 declare const allOptions: OptionsConfig;
 /**
  * This provides ranges, initial values, steps and dropdown menu choices for the

@@ -1,5 +1,5 @@
-import { CubicBezierEdgeBase } from "./util/cubic-bezier-edge-base";
-import { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./util/types";
+import { CubicBezierEdgeBase } from "./util/cubic-bezier-edge-base.ts";
+import type { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./util/types.ts";
 /**
  * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */

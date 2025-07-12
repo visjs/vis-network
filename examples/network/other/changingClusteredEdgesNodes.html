@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Vis Network | Other | Changing Clustered Edges and Nodes</title>
@@ -130,7 +130,7 @@
           network.clustering.updateEdge(params.edges[0], { color: "#aa0000" });
           obj.base_edges = network.clustering.getBaseEdges(params.edges[0]);
           obj.all_clustered_edges = network.clustering.getClusteredEdges(
-            params.edges[0]
+            params.edges[0],
           );
           document.getElementById("eventSpanHeading").innerText =
             "selectEdge event:";

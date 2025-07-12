@@ -108,7 +108,7 @@ setInterval(() => {
     network
       .getConnectedEdges(node.id)
       .map((edgeId) => data.edges.get(edgeId))
-      .every((edge) => edge.to === node.id)
+      .every((edge) => edge.to === node.id),
   );
   var leaf = leaves[i++ % leaves.length];
 
@@ -130,7 +130,7 @@ setInterval(() => {
   });
 
   console.info(
-    `Node ${leaf.id} was reconnected from it&apos;s former parent node ${oldParent.id} to node ${newParent.id}.`
+    `Node ${leaf.id} was reconnected from it&apos;s former parent node ${oldParent.id} to node ${newParent.id}.`,
   );
 }, 1000);
 '

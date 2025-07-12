@@ -26,7 +26,7 @@
  *   `edgeStyles/arrowTypes`.
  * =============================================================================
  */
-import { ArrowData } from "./types";
+import type { ArrowData } from "./types.ts";
 /**
  * Drawing methods for the endpoints.
  */

@@ -117,7 +117,7 @@ function neighbourhoodHighlight(params) {
     for (i = 1; i < degrees; i++) {
       for (j = 0; j < connectedNodes.length; j++) {
         allConnectedNodes = allConnectedNodes.concat(
-          network.getConnectedNodes(connectedNodes[j])
+          network.getConnectedNodes(connectedNodes[j]),
         );
       }
     }

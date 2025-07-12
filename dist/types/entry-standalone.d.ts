@@ -1,4 +1,4 @@
-export * from "./entry-esnext";
+export * from "./entry-esnext.js";
 import * as data from "vis-data/esnext";
 export { data };
 export { DataSet, DataView, Queue } from "vis-data/esnext";

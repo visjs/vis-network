@@ -1,2 +1,2 @@
-export * from "./entry-esnext";
+export * from "./entry-esnext.js";
 //# sourceMappingURL=entry-peer.d.ts.map

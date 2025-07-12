@@ -72,7 +72,7 @@ network.on("stabilizationProgress", function (params) {
   document.getElementById("eventSpanContent").innerText = JSON.stringify(
     params,
     null,
-    4
+    4,
   );
   console.log("progress:", params);
 });
@@ -87,7 +87,7 @@ network.on("stabilized", function (params) {
   document.getElementById("eventSpanContent").innerText = JSON.stringify(
     params,
     null,
-    4
+    4,
   );
   console.log("stabilized!", params);
 });
