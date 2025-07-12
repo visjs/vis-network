@@ -35,8 +35,8 @@ jobs:
       - persist_to_workspace:
           root: ..
           paths:
+            - ".cache"
             - "repo"
-            - ".cache/Cypress"
 
   build:
     executor: node
