@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-07-13T08:07:26.092Z
+ * @date    2025-07-13T10:48:52.368Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -56,8 +56,8 @@ const ts=Symbol("DELETE");function es(t,...e){return is({},t,...e)}function is(.
 	 *
 	 * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
 	 *
-	 * @version 8.0.0
-	 * @date    2025-07-12T18:33:36.028Z
+	 * @version 8.0.1
+	 * @date    2025-07-13T02:52:37.151Z
 	 *
 	 * @copyright (c) 2011-2017 Almende B.V, http://almende.com
 	 * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
