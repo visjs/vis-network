@@ -262,7 +262,7 @@
     "@egjs/hammerjs": "2.0.17",
     "@mdi/font": "7.4.47",
     "@semantic-release/commit-analyzer": "13.0.1",
-    "@semantic-release/github": "11.0.4",
+    "@semantic-release/github": "11.0.5",
     "@semantic-release/npm": "12.0.2",
     "@semantic-release/release-notes-generator": "14.0.3",
     "@types/chai": "5.2.2",
