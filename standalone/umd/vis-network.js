@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-09-06T13:20:28.706Z
+ * @date    2025-09-10T22:05:39.187Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18815,10 +18815,6 @@
       var _context8;
       this._subscribers[event] = _filterInstanceProperty(_context8 = this._subscribers[event]).call(_context8, subscriber => subscriber !== callback);
     }
-    /* develblock:start */
-    get testLeakSubscribers() {
-      return this._subscribers;
-    }
   }
 
   /**
@@ -19919,22 +19915,6 @@
         });
       }
     }
-    /* develblock:start */
-    get testLeakData() {
-      return this._data;
-    }
-    get testLeakIdProp() {
-      return this._idProp;
-    }
-    get testLeakOptions() {
-      return this._options;
-    }
-    get testLeakQueue() {
-      return this._queue;
-    }
-    set testLeakQueue(v) {
-      this._queue = v;
-    }
   }
 
   /**
@@ -20357,9 +20337,6 @@
   function isDataViewLike(idProp, v) {
     return typeof v === "object" && v !== null && idProp === v.idProp && typeof _forEachInstanceProperty(v) === "function" && typeof v.get === "function" && typeof v.getDataSet === "function" && typeof v.getIds === "function" && typeof v.length === "number" && typeof _mapInstanceProperty(v) === "function" && typeof v.off === "function" && typeof v.on === "function" && typeof v.stream === "function" && isDataSetLike(idProp, v.getDataSet());
   }
-
-  /* develblock:start */
-  console.warn("You're running a development build.");
 
   var visData = /*#__PURE__*/Object.freeze({
     __proto__: null,

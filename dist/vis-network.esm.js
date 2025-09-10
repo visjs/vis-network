@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-09-06T13:21:49.807Z
+ * @date    2025-09-10T22:07:05.159Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -14975,8 +14975,8 @@ function v4(options, buf, offset) {
  *
  * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
  *
- * @version 8.0.1
- * @date    2025-07-13T02:52:37.151Z
+ * @version 8.0.3
+ * @date    2025-09-10T16:22:00.613Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -15414,10 +15414,6 @@ class DataSetPart {
      * @deprecated Use off instead (PS: DataView.unsubscribe === DataView.off).
      */
     unsubscribe = DataSetPart.prototype.off;
-    /* develblock:start */
-    get testLeakSubscribers() {
-        return this._subscribers;
-    }
 }
 
 /**
@@ -16511,22 +16507,6 @@ class DataSet extends DataSetPart {
             });
         }
     }
-    /* develblock:start */
-    get testLeakData() {
-        return this._data;
-    }
-    get testLeakIdProp() {
-        return this._idProp;
-    }
-    get testLeakOptions() {
-        return this._options;
-    }
-    get testLeakQueue() {
-        return this._queue;
-    }
-    set testLeakQueue(v) {
-        this._queue = v;
-    }
 }
 
 /**
@@ -16965,9 +16945,6 @@ function isDataViewLike(idProp, v) {
         typeof v.stream === "function" &&
         isDataSetLike(idProp, v.getDataSet()));
 }
-
-/* develblock:start */
-console.warn("You're running a development build.");
 
 var visData = /*#__PURE__*/Object.freeze({
 	__proto__: null,
