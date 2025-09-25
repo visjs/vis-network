@@ -247,7 +247,7 @@
   },
   "volta": {
     "node": "24.8.0",
-    "npm": "11.4.2",
+    "npm": "11.6.1",
     "pnpm": "10.17.1"
   },
   "peerDependencies": {
