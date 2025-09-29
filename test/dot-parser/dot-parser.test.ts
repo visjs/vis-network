@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+
 import { expect } from "chai";
 
 import { readFileSync, readdirSync } from "fs";
@@ -7,7 +9,7 @@ import { DOTToGraph, parseDOT } from "../../lib/network/dotparser.js";
 describe("DOT", function (): void {
   const dotRE = /\.gv\.txt$/i;
 
-  readdirSync(`${__dirname}/data`)
+  readdirSync(fileURLToPath(new URL("./data", import.meta.url)))
     .filter((dotName): boolean => dotRE.test(dotName))
     .map(
       (
@@ -19,7 +21,9 @@ describe("DOT", function (): void {
         dotToGraphObject: any;
       } => {
         const name = dotName.slice(0, -7);
-        const pathHead = `${__dirname}/data/${name}`;
+        const pathHead = fileURLToPath(
+          new URL(`./data/${name}`, import.meta.url),
+        );
 
         const dotPath = `${pathHead}.gv.txt`;
         const parseDOTPath = `${pathHead}.parse-dot.json`;
