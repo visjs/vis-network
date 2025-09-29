@@ -80,34 +80,19 @@ export interface VisEdge {
  * Convert Gephi to Vis.
  * @param gephiJSON - The parsed JSON data in Gephi format.
  * @param optionsObj - Additional options.
+ * @param optionsObj.fixed - If true, nodes will be fixed at the positions defined in Gephi.
+ * @param optionsObj.inheritColor - If true, colors from Gephi will be ignored.
+ * @param optionsObj.parseColor - If true, the single Gephi color will be parsed into different shades for border, highlight, and hover.
  * @returns The converted data ready to be used in Vis.
  */
 export function parseGephi(
   gephiJSON: GephiData,
-  optionsObj?: GephiParseOptions,
+  {
+    fixed: isNodePositionFixed = false,
+    inheritColor: isEdgeColorInherited = false,
+    parseColor: isNodeColorParsed = false,
+  }: GephiParseOptions = {},
 ): VisData {
-  const options = {
-    edges: {
-      inheritColor: false,
-    },
-    nodes: {
-      fixed: false,
-      parseColor: false,
-    },
-  };
-
-  if (optionsObj != null) {
-    if (optionsObj.fixed != null) {
-      options.nodes.fixed = optionsObj.fixed;
-    }
-    if (optionsObj.parseColor != null) {
-      options.nodes.parseColor = optionsObj.parseColor;
-    }
-    if (optionsObj.inheritColor != null) {
-      options.edges.inheritColor = optionsObj.inheritColor;
-    }
-  }
-
   const gEdges = gephiJSON.edges;
   const vEdges = gEdges.map((gEdge): VisEdge => {
     const vEdge: VisEdge = {
@@ -130,7 +115,7 @@ export function parseGephi(
     }
     // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
     // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
-    if (gEdge.color && options.edges.inheritColor === false) {
+    if (gEdge.color && isEdgeColorInherited === false) {
       vEdge.color = gEdge.color;
     }
 
@@ -140,7 +125,7 @@ export function parseGephi(
   const vNodes = gephiJSON.nodes.map((gNode): VisNode => {
     const vNode: VisNode = {
       id: gNode.id,
-      fixed: options.nodes.fixed && gNode.x != null && gNode.y != null,
+      fixed: isNodePositionFixed && gNode.x != null && gNode.y != null,
     };
 
     if (gNode.attributes != null) {
@@ -165,7 +150,7 @@ export function parseGephi(
       vNode.y = gNode.y;
     }
     if (gNode.color != null) {
-      if (options.nodes.parseColor === true) {
+      if (isNodeColorParsed === true) {
         vNode.color = gNode.color;
       } else {
         vNode.color = {
