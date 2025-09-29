@@ -706,7 +706,7 @@ describe("Network", function () {
     });
   }); // Edge
 
-  describe.only("Clustering", function () {
+  describe("Clustering", function () {
     afterEach(async () => {
       await new Promise((resolve) => void setTimeout(resolve, 1_000));
     });
