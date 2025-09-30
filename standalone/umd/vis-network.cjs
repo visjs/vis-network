@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-09-28T16:45:25.792Z
+ * @date    2025-09-30T15:32:35.105Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -13847,30 +13847,18 @@
    * Convert Gephi to Vis.
    * @param gephiJSON - The parsed JSON data in Gephi format.
    * @param optionsObj - Additional options.
+   * @param optionsObj.fixed - If true, nodes will be fixed at the positions defined in Gephi.
+   * @param optionsObj.inheritColor - If true, colors from Gephi will be ignored.
+   * @param optionsObj.parseColor - If true, the single Gephi color will be parsed into different shades for border, highlight, and hover.
    * @returns The converted data ready to be used in Vis.
    */
-  function parseGephi(gephiJSON, optionsObj) {
+  function parseGephi(gephiJSON) {
     var _context;
-    const options = {
-      edges: {
-        inheritColor: false
-      },
-      nodes: {
-        fixed: false,
-        parseColor: false
-      }
-    };
-    if (optionsObj != null) {
-      if (optionsObj.fixed != null) {
-        options.nodes.fixed = optionsObj.fixed;
-      }
-      if (optionsObj.parseColor != null) {
-        options.nodes.parseColor = optionsObj.parseColor;
-      }
-      if (optionsObj.inheritColor != null) {
-        options.edges.inheritColor = optionsObj.inheritColor;
-      }
-    }
+    let {
+      fixed: isNodePositionFixed = false,
+      inheritColor: isEdgeColorInherited = false,
+      parseColor: isNodeColorParsed = false
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     const gEdges = gephiJSON.edges;
     const vEdges = _mapInstanceProperty(gEdges).call(gEdges, gEdge => {
       const vEdge = {
@@ -13892,7 +13880,7 @@
       }
       // edge['value'] = gEdge.attributes != null ? gEdge.attributes.Weight : undefined;
       // edge['width'] = edge['value'] != null ? undefined : edgegEdge.size;
-      if (gEdge.color && options.edges.inheritColor === false) {
+      if (gEdge.color && isEdgeColorInherited === false) {
         vEdge.color = gEdge.color;
       }
       return vEdge;
@@ -13900,7 +13888,7 @@
     const vNodes = _mapInstanceProperty(_context = gephiJSON.nodes).call(_context, gNode => {
       const vNode = {
         id: gNode.id,
-        fixed: options.nodes.fixed && gNode.x != null && gNode.y != null
+        fixed: isNodePositionFixed && gNode.x != null && gNode.y != null
       };
       if (gNode.attributes != null) {
         vNode.attributes = gNode.attributes;
@@ -13924,7 +13912,7 @@
         vNode.y = gNode.y;
       }
       if (gNode.color != null) {
-        if (options.nodes.parseColor === true) {
+        if (isNodeColorParsed === true) {
           vNode.color = gNode.color;
         } else {
           vNode.color = {

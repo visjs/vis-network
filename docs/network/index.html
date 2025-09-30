@@ -2700,13 +2700,9 @@ var gephiJSON = loadJSON("./datasources/WorldCup2014.json"); // code in <a href=
 // you can customize the result like with these options. These are explained below.
 // These are the default options.
 var parserOptions = {
-  edges: {
-    inheritColor: false
-  },
-  nodes: {
-    fixed: true,
-    parseColor: false
-  }
+  fixed: true,
+  parseColor: false,
+  inheritColor: false
 }
 
 // parse the gephi file to receive an object
@@ -2736,7 +2732,7 @@ var network = new vis.Network(container, data);
             <th>Description</th>
           </tr>
           <tr>
-            <td>nodes.fixed</td>
+            <td>fixed</td>
             <td>Boolean</td>
             <td><code>true</code></td>
             <td>
@@ -2747,7 +2743,7 @@ var network = new vis.Network(container, data);
             </td>
           </tr>
           <tr>
-            <td>nodes.parseColor</td>
+            <td>parseColor</td>
             <td>Boolean</td>
             <td><code>false</code></td>
             <td>
@@ -2757,7 +2753,7 @@ var network = new vis.Network(container, data);
             </td>
           </tr>
           <tr>
-            <td>edges.inheritColor</td>
+            <td>inheritColor</td>
             <td>Boolean</td>
             <td><code>false</code></td>
             <td>

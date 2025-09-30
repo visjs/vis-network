@@ -72,7 +72,10 @@ export interface VisEdge {
  * Convert Gephi to Vis.
  * @param gephiJSON - The parsed JSON data in Gephi format.
  * @param optionsObj - Additional options.
+ * @param optionsObj.fixed - If true, nodes will be fixed at the positions defined in Gephi.
+ * @param optionsObj.inheritColor - If true, colors from Gephi will be ignored.
+ * @param optionsObj.parseColor - If true, the single Gephi color will be parsed into different shades for border, highlight, and hover.
  * @returns The converted data ready to be used in Vis.
  */
-export declare function parseGephi(gephiJSON: GephiData, optionsObj?: GephiParseOptions): VisData;
+export declare function parseGephi(gephiJSON: GephiData, { fixed: isNodePositionFixed, inheritColor: isEdgeColorInherited, parseColor: isNodeColorParsed, }?: GephiParseOptions): VisData;
 //# sourceMappingURL=gephiParser.d.ts.map
