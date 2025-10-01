@@ -136,19 +136,15 @@ export function canvasMockify(html = "") {
   const virtualConsole = new jsdom.VirtualConsole();
 
   // Set up a simple 'mock' console output. Only 'error' needs to be overridden
-  const myConsole = {
-    error: (message) => {
-      if (message.indexOf(consoleErrorMessageToSuppress) === 0) {
-        //console.error('all is well');
-      } else {
-        // All other messages pass through
-        console.error(consoleErrorMessageToSuppress);
-      }
-    },
-  };
-
-  // Using the global catch instead of specific event handler, because I couldn't get them to work
-  virtualConsole.sendTo(myConsole);
+  virtualConsole.on("error", (message) => {
+    if (message.indexOf(consoleErrorMessageToSuppress) === 0) {
+      // Suppress this specific error
+      //console.error('all is well');
+    } else {
+      // All other messages pass through
+      console.error(message);
+    }
+  });
 
   const cleanupFunction = jsdom_global(html, {
     skipWindowCheck: true,
