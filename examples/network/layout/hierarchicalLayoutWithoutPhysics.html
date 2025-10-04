@@ -8,11 +8,6 @@
       src="../../../standalone/umd/vis-network.min.js"
     ></script>
 
-    <script
-      type="text/javascript"
-      src="../datasources/largeHierarchicalDataset.js"
-    ></script>
-
     <style type="text/css">
       #mynetwork {
         width: 1000px;
@@ -75,7 +70,9 @@
     <br /><br />
     Play with the settings below the network and see how the layout changes!
     <div id="mynetwork"></div>
-    <script>
+    <script type="module">
+      import { nodes, edges } from "../datasources/largeHierarchicalDataset.js";
+
       var data = {
         nodes: nodes,
         edges: edges,
@@ -103,7 +100,7 @@
           showButton: false,
         },
       };
-      var network = new vis.Network(container, data, options);
+      globalThis.network = new vis.Network(container, data, options);
     </script>
   </body>
 </html>

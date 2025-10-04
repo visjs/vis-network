@@ -12,8 +12,6 @@
       src="../../../standalone/umd/vis-network.min.js"
     ></script>
 
-    <script src="../datasources/WorldCup2014.js"></script>
-
     <style type="text/css">
       #mynetwork {
         width: 800px;
@@ -44,8 +42,8 @@
 
     <div id="mynetwork"></div>
 
-    <script type="text/javascript">
-      var network;
+    <script type="module">
+      import { nodes, edges } from "../datasources/WorldCup2014.js";
 
       function redrawAll() {
         var container = document.getElementById("mynetwork");
@@ -99,7 +97,7 @@
 
         var data = { nodes: nodes, edges: edges };
         // Note: data is coming from ./data/WorldCup2014.js
-        network = new vis.Network(container, data, options);
+        globalThis.network = new vis.Network(container, data, options);
       }
 
       redrawAll();

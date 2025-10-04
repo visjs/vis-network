@@ -1,9 +1,4 @@
-// These variables will be injected into a page that will use them.
-/* eslint no-unused-vars: "off" */
-// Const won't work here, only var.
-/* eslint no-var: "off" */
-
-var nodes = [
+export const nodes = [
   {
     id: 1,
     label: "Abdelmoumene Djabou",
@@ -6765,8 +6760,9 @@ var nodes = [
     y: -479.12265,
   },
 ];
+
 // create an array with edges
-var edges = [
+export const edges = [
   { from: 1, to: 15 },
   { from: 1, to: 97 },
   { from: 1, to: 108 },

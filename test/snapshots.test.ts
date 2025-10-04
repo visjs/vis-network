@@ -179,7 +179,7 @@ describe("Physics snapshots", function (): void {
           const optionsWithSeed = {
             ...options,
             layout: {
-              ...((options as any).layout || {}),
+              ...(options as any).layout,
               // Set the seed to always get the same layout.
               randomSeed: 159,
             },

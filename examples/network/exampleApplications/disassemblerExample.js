@@ -1,7 +1,4 @@
-// These variables will be injected into a page that will use them.
-/* eslint no-unused-vars: "off" */
-
-const options = {
+export const options = {
   manipulation: false,
   height: "90%",
   layout: {
@@ -17,7 +14,7 @@ const options = {
   },
 };
 
-const nodes = [
+export const nodes = [
   {
     id: "cfg_0x00405a2e",
     size: 150,
@@ -107,7 +104,7 @@ const nodes = [
 //
 // The edges with these id's will not load into the Network instance.
 //
-const edges = [
+export const edges = [
   {
     from: "cfg_0x00405a2e",
     to: "cfg_0x00405a39",
