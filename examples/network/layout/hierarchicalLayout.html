@@ -24,17 +24,17 @@
       type="text/javascript"
       src="https://unpkg.com/alea@1.0.0/alea.js"
     ></script>
-    <script type="text/javascript" src="../exampleUtil.js"></script>
 
-    <script type="text/javascript">
+    <script type="module">
+      import { generateRandomNodesAndEdges } from "../exampleUtil.js";
+
       var nodes = null;
       var edges = null;
-      var network = null;
 
       function destroy() {
-        if (network !== null) {
-          network.destroy();
-          network = null;
+        if (globalThis.network != null) {
+          globalThis.network.destroy();
+          globalThis.network = null;
         }
       }
 
@@ -42,7 +42,7 @@
         destroy();
         // randomly create some nodes and edges
         var nodeCount = document.getElementById("nodeCount").value;
-        var data = getScaleFreeNetwork(nodeCount);
+        var data = generateRandomNodesAndEdges(nodeCount);
 
         // create a network
         var container = document.getElementById("mynetwork");
@@ -54,18 +54,42 @@
             },
           },
         };
-        network = new vis.Network(container, data, options);
+        globalThis.network = new vis.Network(container, data, options);
 
         // add event listeners
-        network.on("select", function (params) {
+        globalThis.network.on("select", function (params) {
           document.getElementById("selection").innerText =
             "Selection: " + params.nodes;
         });
       }
+
+      var directionInput = document.getElementById("direction");
+      var btnUD = document.getElementById("btn-UD");
+      btnUD.onclick = function () {
+        directionInput.value = "UD";
+        draw();
+      };
+      var btnDU = document.getElementById("btn-DU");
+      btnDU.onclick = function () {
+        directionInput.value = "DU";
+        draw();
+      };
+      var btnLR = document.getElementById("btn-LR");
+      btnLR.onclick = function () {
+        directionInput.value = "LR";
+        draw();
+      };
+      var btnRL = document.getElementById("btn-RL");
+      btnRL.onclick = function () {
+        directionInput.value = "RL";
+        draw();
+      };
+
+      draw();
     </script>
   </head>
 
-  <body onload="draw();">
+  <body>
     <h2>Hierarchical Layout - Scale-Free-Network</h2>
 
     <div style="width: 700px; font-size: 14px; text-align: justify">
@@ -89,29 +113,6 @@
       <input type="hidden" id="direction" value="UD" />
     </p>
 
-    <script language="javascript">
-      var directionInput = document.getElementById("direction");
-      var btnUD = document.getElementById("btn-UD");
-      btnUD.onclick = function () {
-        directionInput.value = "UD";
-        draw();
-      };
-      var btnDU = document.getElementById("btn-DU");
-      btnDU.onclick = function () {
-        directionInput.value = "DU";
-        draw();
-      };
-      var btnLR = document.getElementById("btn-LR");
-      btnLR.onclick = function () {
-        directionInput.value = "LR";
-        draw();
-      };
-      var btnRL = document.getElementById("btn-RL");
-      btnRL.onclick = function () {
-        directionInput.value = "RL";
-        draw();
-      };
-    </script>
     <br />
 
     <div id="mynetwork"></div>

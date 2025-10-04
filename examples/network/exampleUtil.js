@@ -1,12 +1,9 @@
-// These globals will be injected into a page that will use them.
-/* eslint no-unused-vars: "off" */
-
 // This is quite old and I don't want to waste too much time here. We probably
 // should stop using this altogether as the examples should be easy and
 // straightforward to understand and this only obscures it.
-/* eslint require-jsdoc: "off" */
+/* eslint jsdoc/require-jsdoc: "off" */
 
-/* global Alea:false seededRandom:true */
+/* global Alea:false */
 
 /**
  * Created by Alex on 5/20/2015.
@@ -14,10 +11,9 @@
  * This depends on Alea from https://unpkg.com/alea@1.0.0/alea.js.
  */
 
-/**
- * @param nodeCount
- */
-function getScaleFreeNetwork(nodeCount) {
+const seededRandom = Alea("SEED");
+
+export function generateRandomNodesAndEdges(nodeCount) {
   const nodes = [];
   const edges = [];
   const connectionCount = [];
@@ -64,5 +60,3 @@ function getScaleFreeNetwork(nodeCount) {
 
   return { nodes: nodes, edges: edges };
 }
-
-seededRandom = Alea("SEED");
