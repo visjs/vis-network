@@ -15,26 +15,6 @@
  */
 
 /**
- * @param path
- * @param success
- * @param error
- */
-function loadJSON(path, success, error) {
-  const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        success(JSON.parse(xhr.responseText));
-      } else {
-        error(xhr);
-      }
-    }
-  };
-  xhr.open("GET", path, true);
-  xhr.send();
-}
-
-/**
  * @param nodeCount
  */
 function getScaleFreeNetwork(nodeCount) {
