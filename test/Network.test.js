@@ -10,12 +10,24 @@
  *     console.log("" + i + ": from: " + edge.fromId + ", to: " + edge.toId);
  *   }
  */
-import fs from "fs";
 import { expect } from "chai";
 import { DataSet } from "vis-data/esnext";
 import Network from "../lib/network/Network.js";
 import { canvasMockify } from "./canvas-mock.js";
 import { allOptions, configureOptions } from "../lib/network/options.ts";
+import {
+  nodes as basicUsageNodes,
+  edges as basicUsageEdges,
+} from "./network/basicUsage.js";
+import {
+  nodes as worldCup2014Nodes,
+  edges as worldCup2014Edges,
+} from "../examples/network/datasources/WorldCup2014.js";
+import {
+  nodes as disassemblerExampleNodes,
+  edges as disassemblerExampleEdges,
+  options as disassemblerExampleOptions,
+} from "../examples/network/exampleApplications/disassemblerExample.js";
 
 /**
  * Merge all options of object b into object b
@@ -42,21 +54,6 @@ function merge(a, b) {
     }
   }
   return a;
-}
-
-/*
- * Load legacy-style (i.e. not module) javascript files into the given context.
- */
-function include(list, context) {
-  if (!Array.isArray(list)) {
-    list = [list];
-  }
-
-  for (const n in list) {
-    const path = list[n];
-    const arr = [fs.readFileSync(path) + ""];
-    eval.apply(context, arr);
-  }
 }
 
 /*
@@ -137,16 +134,18 @@ function createCluster(network) {
   network.cluster(clusterOptionsByData);
 }
 
-/*
- * Display node/edge state, useful during debugging
- */
-// eslint-disable-next-line no-unused-vars -- This is useful for debugging.
-function log(network) {
-  console.debug(Object.keys(network.body.nodes));
-  console.debug(network.body.nodeIndices);
-  console.debug(Object.keys(network.body.edges));
-  console.debug(network.body.edgeIndices);
-}
+// /*
+//  * Display node/edge state, useful during debugging
+//  *
+//  * @remarks
+//  * Useful for debugging
+//  */
+// function log(network) {
+//   console.debug(Object.keys(network.body.nodes));
+//   console.debug(network.body.nodeIndices);
+//   console.debug(Object.keys(network.body.edges));
+//   console.debug(network.body.edgeIndices);
+// }
 
 /*
  * Note that only the node and edges counts are asserted.
@@ -1347,32 +1346,31 @@ describe("Network", function () {
     });
 
     describe("runs example ", function () {
-      function loadExample(path, noPhysics) {
-        include(path, this);
+      function loadExample(
+        nodes,
+        edges,
+        options,
+        { disablePhysics = false } = {},
+      ) {
         const container = document.getElementById("mynetwork");
 
         // create a network
         const data = {
-          // eslint-disable-next-line no-undef -- Imported via legacy methods.
           nodes: new DataSet(nodes),
-          // eslint-disable-next-line no-undef -- Imported via legacy methods.
           edges: new DataSet(edges),
         };
 
-        if (noPhysics) {
+        if (disablePhysics) {
           // Avoid excessive processor time due to load.
           // We're just interested that the load itself is good
-          // eslint-disable-next-line no-undef -- Imported via legacy methods.
           options.physics = false;
         }
 
-        // eslint-disable-next-line no-undef -- Imported via legacy methods.
-        const network = new Network(container, data, options);
-        return network;
+        return new Network(container, data, options);
       }
 
       it("basicUsage", function () {
-        const network = loadExample("./test/network/basicUsage.js");
+        const network = loadExample(basicUsageNodes, basicUsageEdges, {});
         //console.log(Object.keys(network.body.edges));
 
         // Count in following also contains the helper nodes for dynamic edges
@@ -1385,8 +1383,10 @@ describe("Network", function () {
         this.timeout(15000);
 
         const network = loadExample(
-          "./examples/network/datasources/WorldCup2014.js",
-          true,
+          worldCup2014Nodes,
+          worldCup2014Edges,
+          {},
+          { disablePhysics: true },
         );
 
         // Count in following also contains the helper nodes for dynamic edges
@@ -1397,7 +1397,9 @@ describe("Network", function () {
       // This actually failed to load, added for this reason
       it.skip("disassemblerExample (problems since mocha 4)", function () {
         const network = loadExample(
-          "./examples/network/exampleApplications/disassemblerExample.js",
+          disassemblerExampleNodes,
+          disassemblerExampleEdges,
+          disassemblerExampleOptions,
         );
         // console.log(Object.keys(network.body.nodes));
         // console.log(Object.keys(network.body.edges));
