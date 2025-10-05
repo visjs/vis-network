@@ -2695,7 +2695,10 @@ var options = {
 
         <pre class="prettyprint lang-js">
 // load the JSON file containing the Gephi network.
-var gephiJSON = loadJSON("./datasources/WorldCup2014.json"); // code in <a href="../../examples/network/data/importingFromGephi.html">importing_from_gephi</a>.
+const { default: gephiJSON } = await import(
+  "./datasources/WorldCup2014.json",
+  { with: { type: "json" } }
+);
 
 // you can customize the result like with these options. These are explained below.
 // These are the default options.
@@ -2717,7 +2720,8 @@ var data = {
 
 // create a network
 var network = new vis.Network(container, data);
-</pre>
+</pre
+        >
 
         <br />
         <h4>Gephi parser options</h4>

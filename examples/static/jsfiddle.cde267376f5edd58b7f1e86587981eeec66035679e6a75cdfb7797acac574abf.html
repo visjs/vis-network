@@ -83,7 +83,9 @@ Play with the settings below the network and see how the layout changes!
       <input
         type="hidden"
         name="js"
-        value='var data = {
+        value='import { nodes, edges } from "../datasources/largeHierarchicalDataset.js";
+
+var data = {
   nodes: nodes,
   edges: edges,
 };
@@ -110,13 +112,13 @@ var options = {
     showButton: false,
   },
 };
-var network = new vis.Network(container, data, options);
+globalThis.network = new vis.Network(container, data, options);
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/datasources/largeHierarchicalDataset.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
       <input
         type="hidden"

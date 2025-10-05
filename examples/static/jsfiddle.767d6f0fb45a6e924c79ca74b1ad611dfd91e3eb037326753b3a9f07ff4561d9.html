@@ -57,15 +57,16 @@
       <input
         type="hidden"
         name="js"
-        value='var nodes = null;
+        value='import { generateRandomNodesAndEdges } from "../exampleUtil.js";
+
+var nodes = null;
 var edges = null;
-var network = null;
 var setSmooth = false;
 
 function destroy() {
-  if (network !== null) {
-    network.destroy();
-    network = null;
+  if (globalThis.network != null) {
+    globalThis.network.destroy();
+    globalThis.network = null;
   }
 }
 
@@ -81,16 +82,18 @@ function draw() {
   }
   // create a network
   var container = document.getElementById("mynetwork");
-  var data = getScaleFreeNetwork(nodeCount);
+  var data = generateRandomNodesAndEdges(nodeCount);
   var options = {
     physics: { stabilization: false },
   };
-  network = new vis.Network(container, data, options);
+  globalThis.network = new vis.Network(container, data, options);
 }
 
 function disableSmoothCurves() {
   setSmooth = true;
-  network.setOptions({ edges: { smooth: { type: "continuous" } } });
+  globalThis.network.setOptions({
+    edges: { smooth: { type: "continuous" } },
+  });
   document.getElementById("disable-smooth-curves").style.display = "none";
   document.getElementById("enable-smooth-curves").style.display = "inline";
 }
@@ -99,18 +102,18 @@ function enableSmoothCurves() {
   setSmooth = false;
   document.getElementById("disable-smooth-curves").style.display = "inline";
   document.getElementById("enable-smooth-curves").style.display = "none";
-  network.setOptions({ edges: { smooth: { type: "dynamic" } } });
+  globalThis.network.setOptions({
+    edges: { smooth: { type: "dynamic" } },
+  });
 }
 
-window.addEventListener("load", () => {
-  draw();
-});
+draw();
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
       <input
         type="hidden"

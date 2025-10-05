@@ -44,7 +44,7 @@
       <input
         type="hidden"
         name="js"
-        value='var network;
+        value='import { nodes, edges } from "../datasources/WorldCup2014.js";
 
 function redrawAll() {
   // remove positoins
@@ -93,7 +93,7 @@ function redrawAll() {
   };
 
   // Note: data is coming from ./datasources/WorldCup2014.js
-  network = new vis.Network(container, data, options);
+  globalThis.network = new vis.Network(container, data, options);
 }
 
 redrawAll();
@@ -102,7 +102,7 @@ redrawAll();
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/datasources/WorldCup2014.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
       <input
         type="hidden"

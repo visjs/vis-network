@@ -34,15 +34,17 @@
       <input
         type="hidden"
         name="js"
-        value='var container = document.getElementById("mynetwork");
+        value='import { nodes, edges, options } from "./disassemblerExample.js";
+
+var container = document.getElementById("mynetwork");
 var data = { nodes: nodes, edges: edges };
-var gph = new vis.Network(container, data, options);
+globalThis.network = new vis.Network(container, data, options);
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/exampleApplications/disassemblerExample.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
       <input
         type="hidden"

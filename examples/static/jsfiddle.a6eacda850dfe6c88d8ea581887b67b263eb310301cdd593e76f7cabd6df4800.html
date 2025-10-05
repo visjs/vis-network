@@ -43,7 +43,8 @@
       <input
         type="hidden"
         name="js"
-        value='var network;
+        value='import { nodes, edges } from "../datasources/WorldCup2014.js";
+
 var allNodes;
 var highlightActive = false;
 
@@ -86,12 +87,12 @@ function redrawAll() {
   };
   var data = { nodes: nodesDataset, edges: edgesDataset }; // Note: data is coming from ./datasources/WorldCup2014.js
 
-  network = new vis.Network(container, data, options);
+  globalThis.network = new vis.Network(container, data, options);
 
   // get a JSON object
   allNodes = nodesDataset.get({ returnType: "Object" });
 
-  network.on("click", neighbourhoodHighlight);
+  globalThis.network.on("click", neighbourhoodHighlight);
 }
 
 function neighbourhoodHighlight(params) {
@@ -110,14 +111,14 @@ function neighbourhoodHighlight(params) {
         allNodes[nodeId].label = undefined;
       }
     }
-    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var connectedNodes = globalThis.network.getConnectedNodes(selectedNode);
     var allConnectedNodes = [];
 
     // get the second degree nodes
     for (i = 1; i < degrees; i++) {
       for (j = 0; j < connectedNodes.length; j++) {
         allConnectedNodes = allConnectedNodes.concat(
-          network.getConnectedNodes(connectedNodes[j]),
+          globalThis.network.getConnectedNodes(connectedNodes[j]),
         );
       }
     }
@@ -176,7 +177,7 @@ redrawAll();
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://visjs.github.io/vis-network/examples/network/datasources/WorldCup2014.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
       <input
         type="hidden"

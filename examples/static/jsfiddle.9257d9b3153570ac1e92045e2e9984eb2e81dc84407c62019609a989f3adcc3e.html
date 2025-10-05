@@ -60,45 +60,35 @@ p {
       <input
         type="hidden"
         name="js"
-        value='var nodes = null;
-var edges = null;
-var network = null;
+        value='import { generateRandomNodesAndEdges } from "../exampleUtil.js";
 
-function draw() {
-  nodes = [];
-  edges = [];
-  // randomly create some nodes and edges
-  var data = getScaleFreeNetwork(25);
+// randomly create some nodes and edges
+var data = generateRandomNodesAndEdges(25);
 
-  // create a network
-  var container = document.getElementById("mynetwork");
+// create a network
+var container = document.getElementById("mynetwork");
 
-  var options = {
-    physics: {
-      stabilization: false,
-    },
-    configure: true,
-  };
-  network = new vis.Network(container, data, options);
+var options = {
+  physics: {
+    stabilization: false,
+  },
+  configure: true,
+};
+globalThis.network = new vis.Network(container, data, options);
 
-  network.on("configChange", function () {
-    // this will immediately fix the height of the configuration
-    // wrapper to prevent unecessary scrolls in chrome.
-    // see https://github.com/almende/vis/issues/1568
-    var div = container.getElementsByClassName("vis-configuration-wrapper")[0];
-    div.style["height"] = div.getBoundingClientRect().height + "px";
-  });
-}
-
-window.addEventListener("load", () => {
-  draw();
+globalThis.network.on("configChange", function () {
+  // this will immediately fix the height of the configuration
+  // wrapper to prevent unecessary scrolls in chrome.
+  // see https://github.com/almende/vis/issues/1568
+  var div = container.getElementsByClassName("vis-configuration-wrapper")[0];
+  div.style["height"] = div.getBoundingClientRect().height + "px";
 });
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
       <input
         type="hidden"

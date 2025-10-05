@@ -1,7 +1,4 @@
-// These variables will be injected into a page that will use them.
-/* eslint no-unused-vars: "off" */
-
-const nodes = [
+export const nodes = [
   { id: 0, label: "0" },
   { id: 1, label: "1" },
   { id: 2, label: "2" },
@@ -351,7 +348,7 @@ const nodes = [
   { id: 346, label: "346" },
   { id: 347, label: "347" },
 ];
-const edges = [
+export const edges = [
   { from: 331, to: 0, id: "e0" },
   { from: 331, to: 1, id: "e1" },
   { from: 302, to: 2, id: "e2" },

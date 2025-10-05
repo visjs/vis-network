@@ -12,8 +12,6 @@
       src="../../../standalone/umd/vis-network.min.js"
     ></script>
 
-    <script src="../datasources/WorldCup2014.js"></script>
-
     <style type="text/css">
       #mynetwork {
         width: 800px;
@@ -38,8 +36,9 @@
 
     <div id="mynetwork"></div>
 
-    <script type="text/javascript">
-      var network;
+    <script type="module">
+      import { nodes, edges } from "../datasources/WorldCup2014.js";
+
       var allNodes;
       var highlightActive = false;
 
@@ -82,12 +81,12 @@
         };
         var data = { nodes: nodesDataset, edges: edgesDataset }; // Note: data is coming from ./datasources/WorldCup2014.js
 
-        network = new vis.Network(container, data, options);
+        globalThis.network = new vis.Network(container, data, options);
 
         // get a JSON object
         allNodes = nodesDataset.get({ returnType: "Object" });
 
-        network.on("click", neighbourhoodHighlight);
+        globalThis.network.on("click", neighbourhoodHighlight);
       }
 
       function neighbourhoodHighlight(params) {
@@ -106,14 +105,15 @@
               allNodes[nodeId].label = undefined;
             }
           }
-          var connectedNodes = network.getConnectedNodes(selectedNode);
+          var connectedNodes =
+            globalThis.network.getConnectedNodes(selectedNode);
           var allConnectedNodes = [];
 
           // get the second degree nodes
           for (i = 1; i < degrees; i++) {
             for (j = 0; j < connectedNodes.length; j++) {
               allConnectedNodes = allConnectedNodes.concat(
-                network.getConnectedNodes(connectedNodes[j]),
+                globalThis.network.getConnectedNodes(connectedNodes[j]),
               );
             }
           }

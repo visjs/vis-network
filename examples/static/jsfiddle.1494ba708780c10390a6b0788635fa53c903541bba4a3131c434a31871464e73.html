@@ -52,49 +52,39 @@
       <input
         type="hidden"
         name="js"
-        value='var nodes = null;
-var edges = null;
-var network = null;
+        value='import { generateRandomNodesAndEdges } from "../exampleUtil.js";
 
-function draw() {
-  nodes = [];
-  edges = [];
-  // randomly create some nodes and edges
-  var data = getScaleFreeNetwork(60);
+// randomly create some nodes and edges
+var data = generateRandomNodesAndEdges(60);
 
-  // create a network
-  var container = document.getElementById("mynetwork");
+// create a network
+var container = document.getElementById("mynetwork");
 
-  var options = {
-    physics: {
-      stabilization: false,
-      wind: { x: 0, y: 0 },
+var options = {
+  physics: {
+    stabilization: false,
+    wind: { x: 0, y: 0 },
+  },
+  configure: {
+    filter: function (option, path) {
+      if (path.indexOf("physics") !== -1) {
+        return true;
+      }
+      if (path.indexOf("smooth") !== -1 || option === "smooth") {
+        return true;
+      }
+      return false;
     },
-    configure: {
-      filter: function (option, path) {
-        if (path.indexOf("physics") !== -1) {
-          return true;
-        }
-        if (path.indexOf("smooth") !== -1 || option === "smooth") {
-          return true;
-        }
-        return false;
-      },
-      container: document.getElementById("config"),
-    },
-  };
-  network = new vis.Network(container, data, options);
-}
-
-window.addEventListener("load", () => {
-  draw();
-});
+    container: document.getElementById("config"),
+  },
+};
+globalThis.network = new vis.Network(container, data, options);
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
       <input
         type="hidden"

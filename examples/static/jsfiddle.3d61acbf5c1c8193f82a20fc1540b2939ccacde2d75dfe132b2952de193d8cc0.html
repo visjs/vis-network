@@ -143,11 +143,12 @@ div.table_description {
       <input
         type="hidden"
         name="js"
-        value='var nodes = null;
+        value='import { generateRandomNodesAndEdges } from "../exampleUtil.js";
+
+var nodes = null;
 var edges = null;
-var network = null;
 // randomly create some nodes and edges
-var data = getScaleFreeNetwork(25);
+var data = generateRandomNodesAndEdges(25);
 var seed = 2;
 
 function setDefaultLocale() {
@@ -163,9 +164,9 @@ function setDefaultLocale() {
 }
 
 function destroy() {
-  if (network !== null) {
-    network.destroy();
-    network = null;
+  if (globalThis.network != null) {
+    globalThis.network.destroy();
+    globalThis.network = null;
   }
 }
 
@@ -209,7 +210,7 @@ function draw() {
       },
     },
   };
-  network = new vis.Network(container, data, options);
+  globalThis.network = new vis.Network(container, data, options);
 }
 
 function editNode(data, cancelAction, callback) {
@@ -283,15 +284,13 @@ function init() {
   draw();
 }
 
-window.addEventListener("load", () => {
-  init();
-});
+init();
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
       <input
         type="hidden"

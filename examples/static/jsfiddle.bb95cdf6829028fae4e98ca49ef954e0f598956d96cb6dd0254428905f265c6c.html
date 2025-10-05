@@ -92,9 +92,7 @@ pre {
       <input
         type="hidden"
         name="js"
-        value='var network;
-
-var nodes = new vis.DataSet();
+        value='var nodes = new vis.DataSet();
 var edges = new vis.DataSet();
 var gephiImported;
 var fixedCheckbox = document.getElementById("fixed");
@@ -104,10 +102,6 @@ var parseColorCheckbox = document.getElementById("parseColor");
 parseColorCheckbox.onchange = redrawAll;
 
 var nodeContent = document.getElementById("nodeContent");
-
-loadJSON("../datasources/WorldCup2014.json", redrawAll, function (err) {
-  console.log("error");
-});
 
 var container = document.getElementById("mynetwork");
 var data = {
@@ -141,8 +135,8 @@ var options = {
   },
 };
 
-network = new vis.Network(container, data, options);
-network.on("click", function (params) {
+globalThis.network = new vis.Network(container, data, options);
+globalThis.network.on("click", function (params) {
   if (params.nodes.length > 0) {
     var data = nodes.get(params.nodes[0]); // get the data from selected node
     nodeContent.innerText = JSON.stringify(data, undefined, 3); // show the data in the div
@@ -176,14 +170,24 @@ function redrawAll(gephiJSON) {
 
   var data = nodes.get(2); // get the data from node 2 as example
   nodeContent.innerText = JSON.stringify(data, undefined, 3); // show the data in the div
-  network.fit(); // zoom to fit
+  globalThis.network.fit(); // zoom to fit
+}
+
+try {
+  const { default: gephiJSON } = await import(
+    "../datasources/WorldCup2014.json",
+    { with: { type: "json" } }
+  );
+  redrawAll(gephiJSON);
+} catch (error) {
+  console.error(error, "Import of Gephi JSON failed");
 }
 '
       />
       <input
         type="hidden"
         name="resources"
-        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js,https://visjs.github.io/vis-network/examples/network/exampleUtil.js"
+        value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
       <input
         type="hidden"

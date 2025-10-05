@@ -43,12 +43,12 @@
       type="text/javascript"
       src="https://unpkg.com/alea@1.0.0/alea.js"
     ></script>
-    <script type="text/javascript" src="../exampleUtil.js"></script>
 
-    <script type="text/javascript">
+    <script type="module">
+      import { generateRandomNodesAndEdges } from "../exampleUtil.js";
+
       var nodes = null;
       var edges = null;
-      var network = null;
       var offsetx,
         offsety,
         scale,
@@ -66,9 +66,9 @@
       var amountOfNodes = 25;
 
       function destroy() {
-        if (network !== null) {
-          network.destroy();
-          network = null;
+        if (globalThis.network != null) {
+          globalThis.network.destroy();
+          globalThis.network = null;
         }
       }
 
@@ -90,7 +90,7 @@
         showButton = document.getElementById("btnShow");
 
         // randomly create some nodes and edges
-        var data = getScaleFreeNetwork(amountOfNodes);
+        var data = generateRandomNodesAndEdges(amountOfNodes);
 
         // create a network
         var container = document.getElementById("mynetwork");
@@ -101,18 +101,18 @@
             },
           },
         };
-        network = new vis.Network(container, data, options);
+        globalThis.network = new vis.Network(container, data, options);
 
         // add event listeners
-        network.on("select", function (params) {
+        globalThis.network.on("select", function (params) {
           document.getElementById("selection").innerText =
             "Selection: " + params.nodes;
         });
-        network.on("stabilized", function (params) {
+        globalThis.network.on("stabilized", function (params) {
           document.getElementById("stabilization").innerText =
             "Stabilization took " + params.iterations + " iterations.";
         });
-        network.on("animationFinished", function () {
+        globalThis.network.on("animationFinished", function () {
           statusUpdateSpan.innerText = finishMessage;
         });
       }
@@ -127,7 +127,7 @@
         };
         statusUpdateSpan.innerText = "Doing fit() Animation.";
         finishMessage = "Animation finished.";
-        network.fit({ animation: options });
+        globalThis.network.fit({ animation: options });
       }
 
       function doDefaultAnimation() {
@@ -141,7 +141,7 @@
         };
         statusUpdateSpan.innerText = "Doing Animation.";
         finishMessage = "Animation finished.";
-        network.moveTo(options);
+        globalThis.network.moveTo(options);
       }
 
       function doAnimation() {
@@ -158,7 +158,7 @@
         };
         statusUpdateSpan.innerText = "Doing Animation.";
         finishMessage = "Animation finished.";
-        network.moveTo(options);
+        globalThis.network.moveTo(options);
       }
 
       function focusRandom() {
@@ -176,7 +176,7 @@
         };
         statusUpdateSpan.innerText = "Focusing on node: " + nodeId;
         finishMessage = "Node: " + nodeId + " in focus.";
-        network.focus(nodeId, options);
+        globalThis.network.focus(nodeId, options);
       }
 
       function startShow() {
@@ -184,7 +184,7 @@
         if (showInterval !== false) {
           showInterval = false;
           showButton.value = "Start a show!";
-          network.fit();
+          globalThis.network.fit();
         } else {
           showButton.value = "Stop the show!";
           focusRandom();
@@ -206,10 +206,12 @@
           setTimeout(doTheShow, duration);
         }
       }
+
+      draw();
     </script>
   </head>
 
-  <body onload="draw();">
+  <body>
     <h2>Camera animations</h2>
     <div style="width: 700px; font-size: 14px">
       You can move the view around programmatically using the .moveTo(options)

@@ -41,7 +41,6 @@
       type="text/javascript"
       src="https://unpkg.com/alea@1.0.0/alea.js"
     ></script>
-    <script type="text/javascript" src="../exampleUtil.js"></script>
   </head>
 
   <body>
@@ -76,8 +75,9 @@
       />
     </div>
 
-    <script type="text/javascript">
-      var network;
+    <script type="module">
+      import { generateRandomNodesAndEdges } from "../exampleUtil.js";
+
       var container;
       var exportArea;
       var importButton;
@@ -94,11 +94,11 @@
 
       function addConnections(elem, index) {
         // need to replace this with a tree of the network, then get child direct children of the element
-        elem.connections = network.getConnectedNodes(index);
+        elem.connections = globalThis.network.getConnectedNodes(index);
       }
 
       function destroyNetwork() {
-        network.destroy();
+        globalThis.network.destroy();
       }
 
       function clearOutputArea() {
@@ -107,9 +107,9 @@
 
       function draw() {
         // create a network of nodes
-        var data = getScaleFreeNetwork(5);
+        var data = generateRandomNodesAndEdges(5);
 
-        network = new vis.Network(container, data, {
+        globalThis.network = new vis.Network(container, data, {
           manipulation: { enabled: true },
         });
 
@@ -119,7 +119,7 @@
       function exportNetwork() {
         clearOutputArea();
 
-        var nodes = objectToArray(network.getPositions());
+        var nodes = objectToArray(globalThis.network.getPositions());
 
         nodes.forEach(addConnections);
 
@@ -140,7 +140,7 @@
           edges: getEdgeData(inputData),
         };
 
-        network = new vis.Network(container, data, {});
+        globalThis.network = new vis.Network(container, data, {});
 
         resizeExportArea();
       }

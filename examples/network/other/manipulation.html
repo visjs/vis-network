@@ -65,14 +65,14 @@
       type="text/javascript"
       src="https://unpkg.com/alea@1.0.0/alea.js"
     ></script>
-    <script type="text/javascript" src="../exampleUtil.js"></script>
 
-    <script type="text/javascript">
+    <script type="module">
+      import { generateRandomNodesAndEdges } from "../exampleUtil.js";
+
       var nodes = null;
       var edges = null;
-      var network = null;
       // randomly create some nodes and edges
-      var data = getScaleFreeNetwork(25);
+      var data = generateRandomNodesAndEdges(25);
       var seed = 2;
 
       function setDefaultLocale() {
@@ -88,9 +88,9 @@
       }
 
       function destroy() {
-        if (network !== null) {
-          network.destroy();
-          network = null;
+        if (globalThis.network != null) {
+          globalThis.network.destroy();
+          globalThis.network = null;
         }
       }
 
@@ -148,7 +148,7 @@
             },
           },
         };
-        network = new vis.Network(container, data, options);
+        globalThis.network = new vis.Network(container, data, options);
       }
 
       function clearPopUp() {
@@ -173,10 +173,12 @@
         setDefaultLocale();
         draw();
       }
+
+      init();
     </script>
   </head>
 
-  <body onload="init();">
+  <body>
     <h2>Editing the nodes and edges (localized)</h2>
     <p style="width: 700px; font-size: 14px; text-align: justify">
       The localization is only relevant to the manipulation buttons.
