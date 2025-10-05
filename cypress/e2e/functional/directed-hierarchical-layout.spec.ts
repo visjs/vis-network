@@ -205,9 +205,6 @@ describe("Directed hierarchical layout", (): void => {
       });
 
       configs.forEach(({ expectedVisibleEdges, nodesToCluster }, cid): void => {
-        const clusterDescribeName =
-          cid === 0 ? "Without clustering" : `With ${cid} clusters`;
-
         if (cid > 0) {
           cy.visRun(({ network }): void => {
             network.cluster({

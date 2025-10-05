@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { assert, spy, stub } from "sinon";
+import { assert, spy } from "sinon";
 import { deepFreeze } from "../helpers/index.ts";
-import { body, mockedBody } from "./helpers.ts";
+import { mockedBody } from "./helpers.ts";
 
 import { BezierEdgeDynamic } from "../../lib/network/modules/components/edges/index.ts";
 

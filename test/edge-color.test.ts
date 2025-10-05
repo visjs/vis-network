@@ -3,8 +3,6 @@ import { expect } from "chai";
 import Edge from "../lib/network/modules/components/Edge.js";
 
 describe("Edge color", function (): void {
-  const setOptions = Edge.prototype.setOptions;
-
   describe("parse options", function (): void {
     it("object", function (): void {
       const parentOptions = {
