@@ -98,7 +98,7 @@ export class PollutionDetector {
             whitelist,
           });
         }
-      } catch (_error) {
+      } catch {
         // If it throws there's nothing that can be done about it.
       }
     }
