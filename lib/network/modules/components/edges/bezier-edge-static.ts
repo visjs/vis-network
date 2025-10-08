@@ -1,12 +1,9 @@
 import { BezierEdgeBase } from "./util/bezier-edge-base.ts";
 import type {
   EdgeFormattingValues,
-  Label,
-  EdgeOptions,
   Point,
   PointT,
   SelectiveRequired,
-  VBody,
   VNode,
 } from "./util/types.ts";
 
@@ -14,16 +11,6 @@ import type {
  * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 export class BezierEdgeStatic extends BezierEdgeBase<Point> {
-  /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
-    super(options, body, labelModule);
-  }
-
   /** @inheritDoc */
   protected _line(
     ctx: CanvasRenderingContext2D,

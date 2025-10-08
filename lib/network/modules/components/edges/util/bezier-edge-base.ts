@@ -1,12 +1,9 @@
 import { EdgeBase } from "./edge-base.ts";
 import type {
   EdgeFormattingValues,
-  Label,
-  EdgeOptions,
   Point,
   PointT,
   SelectiveRequired,
-  VBody,
   VNode,
 } from "./types.ts";
 
@@ -15,16 +12,6 @@ import type {
  * Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 export abstract class BezierEdgeBase<Via> extends EdgeBase<Via> {
-  /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
-    super(options, body, labelModule);
-  }
-
   /**
    * Compute additional point(s) the edge passes through.
    * @returns Cartesian coordinates of the point(s) the edge passes through.

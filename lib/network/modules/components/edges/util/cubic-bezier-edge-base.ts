@@ -1,5 +1,5 @@
 import { BezierEdgeBase } from "./bezier-edge-base.ts";
-import type { Label, EdgeOptions, Point, VBody } from "./types.ts";
+import type { Point } from "./types.ts";
 
 /**
  * A Base Class for all Cubic Bezier Edges. Bezier curves are used to model
@@ -7,16 +7,6 @@ import type { Label, EdgeOptions, Point, VBody } from "./types.ts";
  * @augments BezierEdgeBase
  */
 export abstract class CubicBezierEdgeBase<Via> extends BezierEdgeBase<Via> {
-  /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  public constructor(options: EdgeOptions, body: VBody, labelModule: Label) {
-    super(options, body, labelModule);
-  }
-
   /**
    * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
    * @remarks
