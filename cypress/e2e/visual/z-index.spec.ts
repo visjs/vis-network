@@ -16,7 +16,7 @@ const INTERNAL_LABEL_SHAPES = new Set<string>([
   "text",
 ]);
 
-const EXTERNAL_LABEL = new Array(15)
+const EXTERNAL_LABEL = Array.from({ length: 15 })
   .fill(null)
   .map((): string => "This label should be above edge labels and arrows.")
   .join("\n");
@@ -79,7 +79,7 @@ context("Z-index", (): void => {
                 x: 100,
                 y: 300,
                 shape: "box",
-                label: new Array(5)
+                label: Array.from({ length: 5 })
                   .fill(null)
                   .map(
                     (): string =>
@@ -97,7 +97,7 @@ context("Z-index", (): void => {
                 id: 2,
                 from: 1,
                 to: 3,
-                label: new Array(80)
+                label: Array.from({ length: 80 })
                   .fill(null)
                   .map(
                     (): string =>

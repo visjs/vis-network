@@ -14,7 +14,7 @@ import {
  * @returns An array of ids for example `"node0"` or `"node789"`.
  */
 function nodeIdRange(first: number, last: number): IdType[] {
-  return new Array(1 + last - first)
+  return Array.from({ length: 1 + last - first })
     .fill(null)
     .map((_, i): IdType => `node${first + i}`);
 }
@@ -288,7 +288,7 @@ describe("Directed hierarchical layout", (): void => {
               ),
             ).sort((a, b): number => a - b);
 
-            const gaps = new Array(levels.length - 1)
+            const gaps = Array.from({ length: levels.length - 1 })
               .fill(null)
               .map((_, i): number => {
                 return levels[i] - levels[i + 1];

@@ -19,7 +19,7 @@ function replaceCanvasContext(el) {
       clearRect: function () {},
       getImageData: function (x, y, w, h) {
         return {
-          data: new Array(w * h * 4),
+          data: Array.from({ length: w * h * 4 }),
         };
       },
       putImageData: function () {},

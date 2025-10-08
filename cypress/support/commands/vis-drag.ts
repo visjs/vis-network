@@ -18,11 +18,13 @@ export function visDrag(paths: readonly DragPath[]): void {
       button,
       shiftKey,
     });
-    for (const relativeDistance of new Array(10).fill(null).map(
-      (_v, i, array): number =>
-        // Note: This shouldn't be 0 nor 1, only values in between.
-        (i + 1) / (array.length + 1),
-    )) {
+    for (const relativeDistance of Array.from({ length: 10 })
+      .fill(null)
+      .map(
+        (_v, i, array): number =>
+          // Note: This shouldn't be 0 nor 1, only values in between.
+          (i + 1) / (array.length + 1),
+      )) {
       cy.get("#mynetwork canvas").trigger(
         "pointermove",
         from.x + (to.x - from.x) * relativeDistance,
