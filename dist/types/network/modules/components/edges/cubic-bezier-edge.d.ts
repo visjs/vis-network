@@ -1,16 +1,9 @@
 import { CubicBezierEdgeBase } from "./util/cubic-bezier-edge-base.ts";
-import type { EdgeFormattingValues, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./util/types.ts";
+import type { EdgeFormattingValues, Point, PointT, SelectiveRequired, VNode } from "./util/types.ts";
 /**
  * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 export declare class CubicBezierEdge extends CubicBezierEdgeBase<[Point, Point]> {
-    /**
-     * Create a new instance.
-     * @param options - The options object of given edge.
-     * @param body - The body of the network.
-     * @param labelModule - Label module.
-     */
-    constructor(options: EdgeOptions, body: VBody, labelModule: Label);
     /** @inheritDoc */
     protected _line(ctx: CanvasRenderingContext2D, values: SelectiveRequired<EdgeFormattingValues, "backgroundColor" | "backgroundSize" | "shadowColor" | "shadowSize" | "shadowX" | "shadowY">, viaNodes: [Point, Point]): void;
     /**

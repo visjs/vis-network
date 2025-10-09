@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-10-05T09:04:20.146Z
+ * @date    2025-10-09T02:11:59.315Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -22883,15 +22883,6 @@ class CircularImage extends CircleImageBase {
  */
 class ShapeBase extends NodeBase {
   /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
-  /**
    *
    * @param {CanvasRenderingContext2D} ctx
    * @param {boolean} [selected]
@@ -23122,15 +23113,6 @@ class Database extends NodeBase {
  */
 let Diamond$1 = class Diamond extends ShapeBase {
   /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
-  /**
    *
    * @param {CanvasRenderingContext2D} ctx
    * @param {number} x width
@@ -23160,15 +23142,6 @@ let Diamond$1 = class Diamond extends ShapeBase {
  * @augments ShapeBase
  */
 class Dot extends ShapeBase {
-  /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
   /**
    *
    * @param {CanvasRenderingContext2D} ctx
@@ -23201,15 +23174,6 @@ class Dot extends ShapeBase {
  * @augments NodeBase
  */
 class Ellipse extends NodeBase {
-  /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
   /**
    *
    * @param {CanvasRenderingContext2D} ctx
@@ -23521,15 +23485,6 @@ let Image$2 = class Image extends CircleImageBase {
  */
 class Square extends ShapeBase {
   /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
-  /**
    *
    * @param {CanvasRenderingContext2D} ctx
    * @param {number} x width
@@ -23560,15 +23515,6 @@ class Square extends ShapeBase {
  */
 class Hexagon extends ShapeBase {
   /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
-  /**
    *
    * @param {CanvasRenderingContext2D} ctx
    * @param {number} x width
@@ -23598,15 +23544,6 @@ class Hexagon extends ShapeBase {
  * @augments ShapeBase
  */
 class Star extends ShapeBase {
-  /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
   /**
    *
    * @param {CanvasRenderingContext2D} ctx
@@ -23702,15 +23639,6 @@ class Text extends NodeBase {
  */
 let Triangle$1 = class Triangle extends ShapeBase {
   /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
-  /**
    *
    * @param {CanvasRenderingContext2D} ctx
    * @param {number} x
@@ -23740,15 +23668,6 @@ let Triangle$1 = class Triangle extends ShapeBase {
  * @augments ShapeBase
  */
 class TriangleDown extends ShapeBase {
-  /**
-   * @param {object} options
-   * @param {object} body
-   * @param {Label} labelModule
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-
   /**
    *
    * @param {CanvasRenderingContext2D} ctx
@@ -26110,15 +26029,6 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _co
  */
 class BezierEdgeBase extends EdgeBase {
   /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-  /**
    * Find the intersection between the border of the node and the edge.
    * @remarks
    * This function uses binary search to look for the point where the bezier curve crosses the border of the node.
@@ -26403,15 +26313,6 @@ class BezierEdgeDynamic extends BezierEdgeBase {
  * A Static Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 class BezierEdgeStatic extends BezierEdgeBase {
-  /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
   /** @inheritDoc */
   _line(ctx, values, viaNode) {
     this._bezierCurve(ctx, values, viaNode);
@@ -26586,15 +26487,6 @@ class BezierEdgeStatic extends BezierEdgeBase {
  */
 class CubicBezierEdgeBase extends BezierEdgeBase {
   /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
-  /**
    * Calculate the distance between a point (x3,y3) and a line segment from (x1,y1) to (x2,y2).
    * @remarks
    * http://stackoverflow.com/questions/849211/shortest-distancae-between-a-point-and-a-line-segment
@@ -26638,15 +26530,6 @@ class CubicBezierEdgeBase extends BezierEdgeBase {
  * A Cubic Bezier Edge. Bezier curves are used to model smooth gradual curves in paths between nodes.
  */
 class CubicBezierEdge extends CubicBezierEdgeBase {
-  /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
   /** @inheritDoc */
   _line(ctx, values, viaNodes) {
     // get the coordinates of the support points.
@@ -26718,15 +26601,6 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
  * A Straight Edge.
  */
 class StraightEdge extends EdgeBase {
-  /**
-   * Create a new instance.
-   * @param options - The options object of given edge.
-   * @param body - The body of the network.
-   * @param labelModule - Label module.
-   */
-  constructor(options, body, labelModule) {
-    super(options, body, labelModule);
-  }
   /** @inheritDoc */
   _line(ctx, values) {
     // draw a straight line
@@ -28049,7 +27923,6 @@ class BarnesHutSolver {
   constructor(body, physicsBody, options) {
     this.body = body;
     this.physicsBody = physicsBody;
-    this.barnesHutTree;
     this.setOptions(options);
     this._rng = Alea("BARNES HUT SOLVER");
 
@@ -28940,15 +28813,6 @@ class ForceAtlas2BasedRepulsionSolver extends BarnesHutSolver {
  */
 class ForceAtlas2BasedCentralGravitySolver extends CentralGravitySolver {
   /**
-   * @param {object} body
-   * @param {{physicsNodeIndices: Array, physicsEdgeIndices: Array, forces: {}, velocities: {}}} physicsBody
-   * @param {object} options
-   */
-  constructor(body, physicsBody, options) {
-    super(body, physicsBody, options);
-  }
-
-  /**
    * Calculate the forces based on the distance.
    * @param {number} distance
    * @param {number} dx
@@ -29732,11 +29596,6 @@ class PhysicsEngine {
  */
 class NetworkUtil {
   /**
-   * @ignore
-   */
-  constructor() {}
-
-  /**
    * Find the center position of the network considering the bounding boxes
    * @param {Array.<Node>} allNodes
    * @param {Array.<Node>} [specificNodes]
@@ -29768,7 +29627,10 @@ class NetworkUtil {
       }
     }
     if (minX === 1e9 && maxX === -1e9 && minY === 1e9 && maxY === -1e9) {
-      minY = 0, maxY = 0, minX = 0, maxX = 0;
+      minY = 0;
+      maxY = 0;
+      minX = 0;
+      maxX = 0;
     }
     return {
       minX: minX,
@@ -29810,7 +29672,10 @@ class NetworkUtil {
       }
     }
     if (minX === 1e9 && maxX === -1e9 && minY === 1e9 && maxY === -1e9) {
-      minY = 0, maxY = 0, minX = 0, maxX = 0;
+      minY = 0;
+      maxY = 0;
+      minX = 0;
+      maxX = 0;
     }
     return {
       minX: minX,
@@ -39762,11 +39627,6 @@ var options = /*#__PURE__*/Object.freeze({
  *  cycles). - https://en.wikipedia.org/wiki/Floyd–Warshall_algorithm
  */
 class FloydWarshall {
-  /**
-   * @ignore
-   */
-  constructor() {}
-
   /**
    *
    * @param {object} body
