@@ -279,7 +279,7 @@
     "jsdom": "27.0.0",
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
-    "lint-staged": "16.2.3",
+    "lint-staged": "16.2.4",
     "mocha": "11.7.4",
     "nyc": "17.1.0",
     "postcss": "8.5.6",
