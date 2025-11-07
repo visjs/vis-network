@@ -108,6 +108,10 @@ function enableSmoothCurves() {
 }
 
 draw();
+
+globalThis.draw = draw;
+globalThis.disableSmoothCurves = disableSmoothCurves;
+globalThis.enableSmoothCurves = enableSmoothCurves;
 '
       />
       <input
