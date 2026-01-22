@@ -545,6 +545,7 @@ const allOptions: OptionsConfig = {
   },
   height: { string },
   width: { string },
+  fieldZIndex: { string },
   __type__: { object },
 };
 /* eslint-enable @typescript-eslint/naming-convention */
