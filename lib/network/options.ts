@@ -545,6 +545,8 @@ const allOptions: OptionsConfig = {
   },
   height: { string },
   width: { string },
+	zIndexField: { string },
+	zIndexCompare : { function: "function" },
   __type__: { object },
 };
 /* eslint-enable @typescript-eslint/naming-convention */
