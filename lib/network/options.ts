@@ -72,6 +72,9 @@ const nodeOptions: OptionsConfig = {
     size: { number }, // px
     face: { string },
     background: { string },
+    borderColor: { string },
+    borderWidth: { number }, // px
+    padding: { number },  // px
     strokeWidth: { number }, // px
     strokeColor: { string },
     vadjust: { number },
@@ -292,6 +295,9 @@ const allOptions: OptionsConfig = {
       size: { number }, // px
       face: { string },
       background: { string },
+      borderColor: { string },
+      borderWidth: { number }, // px
+      padding: { number },  // px
       strokeWidth: { number }, // px
       strokeColor: { string },
       align: { string: ["horizontal", "top", "middle", "bottom"] },
@@ -598,6 +604,9 @@ const configureOptions: ConfiguratorConfig = {
       size: [14, 0, 100, 1], // px
       face: ["arial", "verdana", "tahoma"],
       background: ["color", "none"],
+      borderColor: ["color", "none"],
+      borderWidth: [0, 0, 10, 1], // px
+      padding: [0, 0, 10, 1], // px
       strokeWidth: [0, 0, 50, 1], // px
       strokeColor: ["color", "#ffffff"],
     },
@@ -676,6 +685,9 @@ const configureOptions: ConfiguratorConfig = {
       size: [14, 0, 100, 1], // px
       face: ["arial", "verdana", "tahoma"],
       background: ["color", "none"],
+      borderColor: ["color", "none"],
+      borderWidth: [0, 0, 10, 1], // px
+      padding: [0, 0, 10, 1], // px
       strokeWidth: [2, 0, 50, 1], // px
       strokeColor: ["color", "#ffffff"],
       align: ["horizontal", "top", "middle", "bottom"],
