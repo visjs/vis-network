@@ -248,7 +248,7 @@
   "volta": {
     "node": "24.14.0",
     "npm": "11.10.1",
-    "pnpm": "10.30.2"
+    "pnpm": "10.30.3"
   },
   "peerDependencies": {
     "@egjs/hammerjs": "^2.0.0",
