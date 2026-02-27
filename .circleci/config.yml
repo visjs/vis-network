@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node:
     docker:
-      - image: cimg/node:24.13.1
+      - image: cimg/node:24.14.0
     resource_class: medium
     working_directory: ~/repo
     environment:
@@ -14,7 +14,7 @@ executors:
 
   node-browsers:
     docker:
-      - image: cimg/node:24.13.1-browsers
+      - image: cimg/node:24.14.0-browsers
     resource_class: medium
     working_directory: ~/repo
     environment:
