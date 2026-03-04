@@ -285,7 +285,7 @@
     "postcss": "8.5.8",
     "sazerac": "2.0.0",
     "semantic-release": "24.2.9",
-    "serve": "14.2.5",
+    "serve": "14.2.6",
     "shx": "0.4.0",
     "sinon": "21.0.0",
     "snap-shot-it": "7.9.10",
