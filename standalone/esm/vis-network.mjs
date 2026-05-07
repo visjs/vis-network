@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-12-31T05:03:01.037Z
+ * @date    2026-05-07T14:38:42.903Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -18340,21 +18340,17 @@ function unsafeStringify(arr, offset = 0) {
         byteToHex[arr[offset + 15]]).toLowerCase();
 }
 
-let getRandomValues;
 const rnds8 = new Uint8Array(16);
 function rng() {
-    if (!getRandomValues) {
-        if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
-            throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
-        }
-        getRandomValues = crypto.getRandomValues.bind(crypto);
-    }
-    return getRandomValues(rnds8);
+    return crypto.getRandomValues(rnds8);
 }
 
-const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-var native = { randomUUID };
-
+function v4(options, buf, offset) {
+    if (crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    return _v4(options);
+}
 function _v4(options, buf, offset) {
     options = options || {};
     const rnds = options.random ?? options.rng?.() ?? rng();
@@ -18364,12 +18360,6 @@ function _v4(options, buf, offset) {
     rnds[6] = (rnds[6] & 0x0f) | 0x40;
     rnds[8] = (rnds[8] & 0x3f) | 0x80;
     return unsafeStringify(rnds);
-}
-function v4(options, buf, offset) {
-    if (native.randomUUID && true && !options) {
-        return native.randomUUID();
-    }
-    return _v4(options);
 }
 
 function ownKeys$4(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }

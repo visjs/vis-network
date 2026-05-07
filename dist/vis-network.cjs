@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2025-12-31T05:04:09.362Z
+ * @date    2026-05-07T14:39:51.686Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -14934,21 +14934,17 @@
 	        byteToHex[arr[offset + 15]]).toLowerCase();
 	}
 
-	let getRandomValues;
 	const rnds8 = new Uint8Array(16);
 	function rng() {
-	    if (!getRandomValues) {
-	        if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
-	            throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
-	        }
-	        getRandomValues = crypto.getRandomValues.bind(crypto);
-	    }
-	    return getRandomValues(rnds8);
+	    return crypto.getRandomValues(rnds8);
 	}
 
-	const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-	var native = { randomUUID };
-
+	function v4(options, buf, offset) {
+	    if (crypto.randomUUID) {
+	        return crypto.randomUUID();
+	    }
+	    return _v4(options);
+	}
 	function _v4(options, buf, offset) {
 	    options = options || {};
 	    const rnds = options.random ?? options.rng?.() ?? rng();
@@ -14959,12 +14955,6 @@
 	    rnds[8] = (rnds[8] & 0x3f) | 0x80;
 	    return unsafeStringify(rnds);
 	}
-	function v4(options, buf, offset) {
-	    if (native.randomUUID && true && !options) {
-	        return native.randomUUID();
-	    }
-	    return _v4(options);
-	}
 
 	/**
 	 * vis-data
@@ -14972,8 +14962,8 @@
 	 *
 	 * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
 	 *
-	 * @version 8.0.3
-	 * @date    2025-09-10T16:22:00.613Z
+	 * @version 8.0.4
+	 * @date    2026-05-07T14:01:00.852Z
 	 *
 	 * @copyright (c) 2011-2017 Almende B.V, http://almende.com
 	 * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
