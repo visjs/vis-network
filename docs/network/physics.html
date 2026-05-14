@@ -667,12 +667,20 @@ network.setOptions(options);
           onclick="toggleTable('optionTable','wind', this);"
         >
           <td><span parent="wind" class="right-caret"></span> wind</td>
-          <td>Object</td>
+          <td>Object | Function</td>
           <td><code>Object</code></td>
           <td>
             A force that pushes all non-fixed nodes in the given direction.<br />Requires
             all nodes are connected to nodes which are `fixed`, otherwise
-            non-attached nodes will keep moving indefinitely.
+            non-attached nodes will keep moving indefinitely. When supplying a
+            function, you receive one argument, the node id. The function should
+            return an object with x and y values. Example:
+            <pre class="prettyprint lang-js">
+function (nodeId) {
+  return { x: 0, y: 10 };
+}
+</pre
+            >
           </td>
         </tr>
         <tr parent="wind" class="hidden">

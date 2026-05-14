@@ -530,7 +530,7 @@ const allOptions: OptionsConfig = {
     wind: {
       x: { number },
       y: { number },
-      __type__: { object },
+      __type__: { object, function: "function" },
     },
     __type__: { object, boolean: bool },
   },
@@ -836,6 +836,15 @@ export const configuratorHideOption: ConfiguratorHideOption = (
     (configureOptions as any).physics.solver.includes(optionName) &&
     options.physics.solver !== optionName &&
     optionName !== "wind"
+  ) {
+    return true;
+  }
+
+  if (
+    parentPath.includes("physics") &&
+    parentPath.includes("wind") &&
+    (optionName === "x" || optionName === "y") &&
+    typeof options?.physics?.wind === "function"
   ) {
     return true;
   }
