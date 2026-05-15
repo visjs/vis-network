@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-05-07T21:01:23.503Z
+ * @date    2026-05-15T16:37:30.205Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -11729,7 +11729,7 @@ class PhysicsEngine {
         }
 
         const wind = this.options.wind;
-        if (wind) {
+        if (wind && typeof wind !== "function") {
           if (typeof wind.x !== "number" || Number.isNaN(wind.x)) {
             wind.x = 0;
           }
@@ -12160,8 +12160,20 @@ class PhysicsEngine {
     const force = this.physicsBody.forces[nodeId];
 
     if (this.options.wind) {
-      force.x += this.options.wind.x;
-      force.y += this.options.wind.y;
+      if (typeof this.options.wind === "function") {
+        const wind = this.options.wind(nodeId);
+        if (wind && typeof wind === "object") {
+          if (typeof wind.x === "number" && !Number.isNaN(wind.x)) {
+            force.x += wind.x;
+          }
+          if (typeof wind.y === "number" && !Number.isNaN(wind.y)) {
+            force.y += wind.y;
+          }
+        }
+      } else {
+        force.x += this.options.wind.x;
+        force.y += this.options.wind.y;
+      }
     }
 
     const velocity = this.physicsBody.velocities[nodeId];
@@ -21758,7 +21770,7 @@ const allOptions = {
         wind: {
             x: { number },
             y: { number },
-            __type__: { object },
+            __type__: { object, function: "function" },
         },
         __type__: { object, boolean: bool },
     },
@@ -22056,6 +22068,12 @@ const configuratorHideOption = (parentPath, optionName, options) => {
         configureOptions.physics.solver.includes(optionName) &&
         options.physics.solver !== optionName &&
         optionName !== "wind") {
+        return true;
+    }
+    if (parentPath.includes("physics") &&
+        parentPath.includes("wind") &&
+        (optionName === "x" || optionName === "y") &&
+        typeof options?.physics?.wind === "function") {
         return true;
     }
     return false;

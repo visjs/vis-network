@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-05-07T21:01:23.503Z
+ * @date    2026-05-15T16:37:30.205Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -28987,7 +28987,7 @@ class PhysicsEngine {
           this.stopSimulation();
         }
         const wind = this.options.wind;
-        if (wind) {
+        if (wind && typeof wind !== "function") {
           if (typeof wind.x !== "number" || _Number$isNaN(wind.x)) {
             wind.x = 0;
           }
@@ -29371,8 +29371,20 @@ class PhysicsEngine {
     const node = this.body.nodes[nodeId];
     const force = this.physicsBody.forces[nodeId];
     if (this.options.wind) {
-      force.x += this.options.wind.x;
-      force.y += this.options.wind.y;
+      if (typeof this.options.wind === "function") {
+        const wind = this.options.wind(nodeId);
+        if (wind && typeof wind === "object") {
+          if (typeof wind.x === "number" && !_Number$isNaN(wind.x)) {
+            force.x += wind.x;
+          }
+          if (typeof wind.y === "number" && !_Number$isNaN(wind.y)) {
+            force.y += wind.y;
+          }
+        }
+      } else {
+        force.x += this.options.wind.x;
+        force.y += this.options.wind.y;
+      }
     }
     const velocity = this.physicsBody.velocities[nodeId];
 
@@ -39294,7 +39306,8 @@ const allOptions = {
         number
       },
       __type__: {
-        object
+        object,
+        function: "function"
       }
     },
     __type__: {
@@ -39597,8 +39610,11 @@ const configureOptions = {
   }
 };
 const configuratorHideOption = (parentPath, optionName, options) => {
-  var _context;
+  var _context, _options$physics;
   if (_includesInstanceProperty(parentPath).call(parentPath, "physics") && _includesInstanceProperty(_context = configureOptions.physics.solver).call(_context, optionName) && options.physics.solver !== optionName && optionName !== "wind") {
+    return true;
+  }
+  if (_includesInstanceProperty(parentPath).call(parentPath, "physics") && _includesInstanceProperty(parentPath).call(parentPath, "wind") && (optionName === "x" || optionName === "y") && typeof (options === null || options === void 0 || (_options$physics = options.physics) === null || _options$physics === void 0 ? void 0 : _options$physics.wind) === "function") {
     return true;
   }
   return false;

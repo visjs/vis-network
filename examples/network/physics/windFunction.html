@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Vis Network | Physics | Wind Function</title>
+
+    <script
+      type="text/javascript"
+      src="../../../standalone/umd/vis-network.min.js"
+    ></script>
+
+    <style type="text/css">
+      #mynetwork {
+        width: 600px;
+        height: 400px;
+        border: 1px solid lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Node 1 is fixed, while a "wind" force pushes blue nodes to the right, and
+      green nodes down.
+    </p>
+
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+      const GREEN = "#9FE2BF";
+
+      // create an array with nodes
+      var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1", fixed: true },
+        { id: 2, label: "Node 2", color: GREEN },
+        { id: 3, label: "Node 3", color: GREEN },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+      ]);
+
+      // create an array with edges
+      var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 },
+      ]);
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges,
+      };
+
+      function wind(nodeId) {
+        if (typeof nodeId === "string" && nodeId.startsWith("edgeId:")) {
+          // Bezier control point.  You can inspect the corresponding edge with
+          // let edge = edges.get(nodeId.substring("edgeId:".length));
+
+          return { x: -0.3, y: -0.3 };
+        }
+
+        var node = nodes.get(nodeId);
+
+        return node && node.color === GREEN ? { x: 0, y: 1.1 } : { x: 1, y: 0 };
+      }
+
+      var options = { physics: { enabled: true, wind } };
+      var network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>
