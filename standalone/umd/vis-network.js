@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-05-15T16:37:30.205Z
+ * @date    2026-05-17T11:27:23.559Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -12515,50 +12515,9 @@
 
   /* eslint-disable no-prototype-builtins */
   /* eslint-disable no-unused-vars */
-  /* eslint-disable no-var */
-
-  /**
-   * Parse a text source containing data in DOT language into a JSON object.
-   * The object contains two lists: one with nodes and one with edges.
-   *
-   * DOT language reference: http://www.graphviz.org/doc/info/lang.html
-   *
-   * DOT language attributes: http://graphviz.org/content/attrs
-   * @param {string} data     Text containing a graph in DOT-notation
-   * @returns {object} graph   An object containing two parameters:
-   *                          {Object[]} nodes
-   *                          {Object[]} edges
-   *
-   * -------------------------------------------
-   * TODO
-   * ====
-   *
-   * For label handling, this is an incomplete implementation. From docs (quote #3015):
-   *
-   * > the escape sequences "\n", "\l" and "\r" divide the label into lines, centered,
-   * > left-justified, and right-justified, respectively.
-   *
-   * Source: http://www.graphviz.org/content/attrs#kescString
-   *
-   * > As another aid for readability, dot allows double-quoted strings to span multiple physical
-   * > lines using the standard C convention of a backslash immediately preceding a newline
-   * > character
-   * > In addition, double-quoted strings can be concatenated using a '+' operator.
-   * > As HTML strings can contain newline characters, which are used solely for formatting,
-   * > the language does not allow escaped newlines or concatenation operators to be used
-   * > within them.
-   *
-   * - Currently, only '\\n' is handled
-   * - Note that text explicitly says 'labels'; the dot parser currently handles escape
-   *   sequences in **all** strings.
-   */
-  function parseDOT(data) {
-    dot = data;
-    return parseGraph();
-  }
 
   // mapping of attributes from DOT (the keys) to vis.js (the values)
-  var NODE_ATTR_MAPPING = {
+  const NODE_ATTR_MAPPING = {
     fontsize: "font.size",
     fontcolor: "font.color",
     labelfontcolor: "font.color",
@@ -12568,12 +12527,12 @@
     tooltip: "title",
     labeltooltip: "title"
   };
-  var EDGE_ATTR_MAPPING = _Object$create(NODE_ATTR_MAPPING);
+  const EDGE_ATTR_MAPPING = _Object$create(NODE_ATTR_MAPPING);
   EDGE_ATTR_MAPPING.color = "color.color";
   EDGE_ATTR_MAPPING.style = "dashes";
 
   // token types enumeration
-  var TOKENTYPE = {
+  const TOKENTYPE = {
     NULL: 0,
     DELIMITER: 1,
     IDENTIFIER: 2,
@@ -12581,7 +12540,7 @@
   };
 
   // map with all delimiters
-  var DELIMITERS = {
+  const DELIMITERS = {
     "{": true,
     "}": true,
     "[": true,
@@ -12592,11 +12551,11 @@
     "->": true,
     "--": true
   };
-  var dot = ""; // current dot file
-  var index = 0; // current index in dot file
-  var c = ""; // current token character in expr
-  var token = ""; // current token
-  var tokenType = TOKENTYPE.NULL; // type of the token
+  let dot = ""; // current dot file
+  let index = 0; // current index in dot file
+  let c = ""; // current token character in expr
+  let token = ""; // current token
+  let tokenType = TOKENTYPE.NULL; // type of the token
 
   /**
    * Get the first character from the dot file.
@@ -12632,7 +12591,7 @@
    * @returns {boolean} isAlphaNumeric
    */
   function isAlphaNumeric(c) {
-    var charCode = c.charCodeAt(0);
+    const charCode = c.charCodeAt(0);
     if (charCode < 47) {
       // #.
       return charCode === 35 || charCode === 46;
@@ -12667,7 +12626,7 @@
       a = {};
     }
     if (b) {
-      for (var name in b) {
+      for (const name in b) {
         if (b.hasOwnProperty(name)) {
           a[name] = b[name];
         }
@@ -12680,7 +12639,7 @@
    * Set a value in an object, where the provided parameter name can be a
    * path with nested parameters. For example:
    *
-   * var obj = {a: 2};
+   * const obj = {a: 2};
    * setValue(obj, 'b.c', 3);     // obj = {a: 2, b: {c: 3}}
    * @param {object} obj
    * @param {string} path  A parameter name or dot-separated parameter path,
@@ -12688,10 +12647,10 @@
    * @param {*} value
    */
   function setValue(obj, path, value) {
-    var keys = path.split(".");
-    var o = obj;
+    const keys = path.split(".");
+    let o = obj;
     while (keys.length) {
-      var key = keys.shift();
+      const key = keys.shift();
       if (keys.length) {
         // this isn't the end point
         if (!o[key]) {
@@ -12712,12 +12671,12 @@
    * @param {object} node
    */
   function addNode(graph, node) {
-    var i, len;
-    var current = null;
+    let i, len;
+    let current = null;
 
     // find root graph (in case of subgraph)
-    var graphs = [graph]; // list with all graphs from current graph to root graph
-    var root = graph;
+    const graphs = [graph]; // list with all graphs from current graph to root graph
+    let root = graph;
     while (root.parent) {
       graphs.push(root.parent);
       root = root.parent;
@@ -12746,7 +12705,7 @@
     // add node to this (sub)graph and all its parent graphs
     for (i = graphs.length - 1; i >= 0; i--) {
       var _context;
-      var g = graphs[i];
+      const g = graphs[i];
       if (!g.nodes) {
         g.nodes = [];
       }
@@ -12772,7 +12731,7 @@
     }
     graph.edges.push(edge);
     if (graph.edge) {
-      var attr = merge({}, graph.edge); // clone default attributes
+      const attr = merge({}, graph.edge); // clone default attributes
       edge.attr = merge(attr, edge.attr); // merge attributes
     }
   }
@@ -12787,7 +12746,7 @@
    * @returns {object} edge
    */
   function createEdge(graph, from, to, type, attr) {
-    var edge = {
+    const edge = {
       from: from,
       to: to,
       type: type
@@ -12826,13 +12785,14 @@
       // space, tab, enter
       next();
     }
+    let isComment;
     do {
-      var isComment = false;
+      isComment = false;
 
       // skip comment
       if (c === "#") {
         // find the previous non-space character
-        var i = index - 1;
+        let i = index - 1;
         while (dot.charAt(i) === " " || dot.charAt(i) === "\t") {
           i--;
         }
@@ -12881,7 +12841,7 @@
     }
 
     // check for delimiters consisting of 2 characters
-    var c2 = c + nextPreview();
+    const c2 = c + nextPreview();
     if (DELIMITERS[c2]) {
       tokenType = TOKENTYPE.DELIMITER;
       token = c2;
@@ -12957,7 +12917,7 @@
    * @returns {object} graph
    */
   function parseGraph() {
-    var graph = {};
+    const graph = {};
     first();
     getToken();
 
@@ -13028,7 +12988,7 @@
    */
   function parseStatement(graph) {
     // parse subgraph
-    var subgraph = parseSubgraph(graph);
+    const subgraph = parseSubgraph(graph);
     if (subgraph) {
       // edge statements
       parseEdge(graph, subgraph);
@@ -13036,7 +12996,7 @@
     }
 
     // parse an attribute statement
-    var attr = parseAttributeStatement(graph);
+    const attr = parseAttributeStatement(graph);
     if (attr) {
       return;
     }
@@ -13045,7 +13005,7 @@
     if (tokenType != TOKENTYPE.IDENTIFIER) {
       throw newSyntaxError("Identifier expected");
     }
-    var id = token; // id can be a string or a number
+    const id = token; // id can be a string or a number
     getToken();
     if (token === "=") {
       // id statement
@@ -13067,7 +13027,7 @@
    * @returns {object | null} subgraph
    */
   function parseSubgraph(graph) {
-    var subgraph = null;
+    let subgraph = null;
 
     // optional subgraph keyword
     if (token === "subgraph") {
@@ -13157,10 +13117,10 @@
    */
   function parseNodeStatement(graph, id) {
     // node statement
-    var node = {
+    const node = {
       id: id
     };
-    var attr = parseAttributeList();
+    const attr = parseAttributeList();
     if (attr) {
       node.attr = attr;
     }
@@ -13177,10 +13137,10 @@
    */
   function parseEdge(graph, from) {
     while (token === "->" || token === "--") {
-      var to;
-      var type = token;
+      let to;
+      const type = token;
       getToken();
-      var subgraph = parseSubgraph(graph);
+      const subgraph = parseSubgraph(graph);
       if (subgraph) {
         to = subgraph;
       } else {
@@ -13195,10 +13155,10 @@
       }
 
       // parse edge attributes
-      var attr = parseAttributeList();
+      const attr = parseAttributeList();
 
       // create edge
-      var edge = createEdge(graph, from, to, type, attr);
+      const edge = createEdge(graph, from, to, type, attr);
       addEdge(graph, edge);
       from = to;
     }
@@ -13210,11 +13170,11 @@
    * @returns {object | null} attr
    */
   function parseAttributeList() {
-    var i;
-    var attr = null;
+    let i;
+    let attr = null;
 
     // edge styles of dot and vis
-    var edgeStyles = {
+    const edgeStyles = {
       dashed: true,
       solid: false,
       dotted: [1, 5]
@@ -13226,7 +13186,7 @@
      * Details of arrow shapes are described in
      * http://www.graphviz.org/content/arrow-shapes
      */
-    var arrowTypes = {
+    const arrowTypes = {
       dot: "circle",
       box: "box",
       crow: "crow",
@@ -13244,8 +13204,8 @@
      * later. For instance, both of 'arrowhead' and 'dir' (edge style defined
      * in DOT) make changes to 'arrows' attribute in vis.
      */
-    var attr_list = new Array();
-    var attr_names = new Array(); // used for checking the case.
+    let attr_list = new Array();
+    const attr_names = new Array(); // used for checking the case.
 
     // parse attributes
     while (token === "[") {
@@ -13255,7 +13215,7 @@
         if (tokenType != TOKENTYPE.IDENTIFIER) {
           throw newSyntaxError("Attribute name expected");
         }
-        var name = token;
+        let name = token;
         getToken();
         if (token != "=") {
           throw newSyntaxError("Equal sign = expected");
@@ -13264,13 +13224,13 @@
         if (tokenType != TOKENTYPE.IDENTIFIER) {
           throw newSyntaxError("Attribute value expected");
         }
-        var value = token;
+        let value = token;
 
         // convert from dot style to vis
         if (name === "style") {
           value = edgeStyles[value];
         }
-        var arrowType;
+        let arrowType;
         if (name === "arrowhead") {
           arrowType = arrowTypes[value];
           name = "arrows";
@@ -13318,9 +13278,9 @@
      * [1] https://www.graphviz.org/doc/info/attrs.html#h:undir_note
      */
     if (_includesInstanceProperty(attr_names).call(attr_names, "dir")) {
-      var idx = {}; // get index of 'arrows' and 'dir'
+      const idx = {}; // get index of 'arrows' and 'dir'
       idx.arrows = {};
-      for (i = 0; i < attr_list.length; i++) {
+      for (let i = 0; i < attr_list.length; i++) {
         if (attr_list[i].name === "arrows") {
           if (attr_list[i].value.to != null) {
             idx.arrows.to = i;
@@ -13335,7 +13295,7 @@
       }
 
       // first, add default arrow shape if it is not assigned to avoid error
-      var dir_type = attr_list[idx.dir].value;
+      const dir_type = attr_list[idx.dir].value;
       if (!_includesInstanceProperty(attr_names).call(attr_names, "arrows")) {
         if (dir_type === "both") {
           attr_list.push({
@@ -13391,8 +13351,8 @@
           throw newSyntaxError('Invalid dir type "' + dir_type + '"');
         }
       }
-      var from_type;
-      var to_type;
+      let from_type;
+      let to_type;
       // update 'arrows' attribute from 'dir'.
       if (dir_type === "both") {
         // both of shapes of 'from' and 'to' are given
@@ -13523,7 +13483,7 @@
           }
         };
       } else if (dir_type === "none") {
-        var idx_arrow;
+        let idx_arrow;
         if (idx.arrows.to) {
           idx_arrow = idx.arrows.to;
         } else {
@@ -13612,9 +13572,9 @@
     }
 
     // parse 'penwidth'
-    var nof_attr_list;
+    let nof_attr_list;
     if (_includesInstanceProperty(attr_names).call(attr_names, "penwidth")) {
-      var tmp_attr_list = [];
+      const tmp_attr_list = [];
       nof_attr_list = attr_list.length;
       for (i = 0; i < nof_attr_list; i++) {
         // exclude 'width' from attr_list if 'penwidth' exists
@@ -13691,13 +13651,13 @@
    * @returns {object} Returns the original object, allows for chaining.
    */
   function setProp(object, path, value) {
-    var names = path.split(".");
-    var prop = names.pop();
+    const names = path.split(".");
+    const prop = names.pop();
 
     // traverse over the nested objects
-    var obj = object;
-    for (var i = 0; i < names.length; i++) {
-      var name = names[i];
+    let obj = object;
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i];
       if (!(name in obj)) {
         obj[name] = {};
       }
@@ -13716,10 +13676,10 @@
    * @returns {object}         Returns an object with vis.js attributes
    */
   function convertAttr(attr, mapping) {
-    var converted = {};
-    for (var prop in attr) {
+    const converted = {};
+    for (const prop in attr) {
       if (attr.hasOwnProperty(prop)) {
-        var visProp = mapping[prop];
+        const visProp = mapping[prop];
         if (_Array$isArray(visProp)) {
           _forEachInstanceProperty(visProp).call(visProp, function (visPropI) {
             setProp(converted, visPropI, attr[prop]);
@@ -13742,8 +13702,8 @@
    */
   function DOTToGraph(data) {
     // parse the DOT file
-    var dotData = parseDOT(data);
-    var graphData = {
+    const dotData = parseDOT(data);
+    const graphData = {
       nodes: [],
       edges: [],
       options: {}
@@ -13753,7 +13713,7 @@
     if (dotData.nodes) {
       var _context2;
       _forEachInstanceProperty(_context2 = dotData.nodes).call(_context2, function (dotNode) {
-        var graphNode = {
+        const graphNode = {
           id: dotNode.id,
           label: String(dotNode.label || dotNode.id)
         };
@@ -13773,8 +13733,8 @@
        * @param {object} dotEdge
        * @returns {object} graphEdge
        */
-      var convertEdge = function (dotEdge) {
-        var graphEdge = {
+      const convertEdge = function (dotEdge) {
+        const graphEdge = {
           from: dotEdge.from,
           to: dotEdge.to
         };
@@ -13789,7 +13749,7 @@
         return graphEdge;
       };
       _forEachInstanceProperty(_context3 = dotData.edges).call(_context3, function (dotEdge) {
-        var from, to;
+        let from, to;
         if (dotEdge.from instanceof Object) {
           from = dotEdge.from.nodes;
         } else {
@@ -13807,19 +13767,19 @@
         if (dotEdge.from instanceof Object && dotEdge.from.edges) {
           var _context4;
           _forEachInstanceProperty(_context4 = dotEdge.from.edges).call(_context4, function (subEdge) {
-            var graphEdge = convertEdge(subEdge);
+            const graphEdge = convertEdge(subEdge);
             graphData.edges.push(graphEdge);
           });
         }
         forEach2(from, to, function (from, to) {
-          var subEdge = createEdge(graphData, from.id, to.id, dotEdge.type, dotEdge.attr);
-          var graphEdge = convertEdge(subEdge);
+          const subEdge = createEdge(graphData, from.id, to.id, dotEdge.type, dotEdge.attr);
+          const graphEdge = convertEdge(subEdge);
           graphData.edges.push(graphEdge);
         });
         if (dotEdge.to instanceof Object && dotEdge.to.edges) {
           var _context5;
           _forEachInstanceProperty(_context5 = dotEdge.to.edges).call(_context5, function (subEdge) {
-            var graphEdge = convertEdge(subEdge);
+            const graphEdge = convertEdge(subEdge);
             graphData.edges.push(graphEdge);
           });
         }
@@ -13833,7 +13793,46 @@
     return graphData;
   }
 
-  /* eslint-enable no-var */
+  /**
+   * Parse a text source containing data in DOT language into a JSON object.
+   * The object contains two lists: one with nodes and one with edges.
+   *
+   * DOT language reference: http://www.graphviz.org/doc/info/lang.html
+   *
+   * DOT language attributes: http://graphviz.org/content/attrs
+   * @param {string} data     Text containing a graph in DOT-notation
+   * @returns {object} graph   An object containing two parameters:
+   *                          {Object[]} nodes
+   *                          {Object[]} edges
+   *
+   * -------------------------------------------
+   * TODO
+   * ====
+   *
+   * For label handling, this is an incomplete implementation. From docs (quote #3015):
+   *
+   * > the escape sequences "\n", "\l" and "\r" divide the label into lines, centered,
+   * > left-justified, and right-justified, respectively.
+   *
+   * Source: http://www.graphviz.org/content/attrs#kescString
+   *
+   * > As another aid for readability, dot allows double-quoted strings to span multiple physical
+   * > lines using the standard C convention of a backslash immediately preceding a newline
+   * > character
+   * > In addition, double-quoted strings can be concatenated using a '+' operator.
+   * > As HTML strings can contain newline characters, which are used solely for formatting,
+   * > the language does not allow escaped newlines or concatenation operators to be used
+   * > within them.
+   *
+   * - Currently, only '\\n' is handled
+   * - Note that text explicitly says 'labels'; the dot parser currently handles escape
+   *   sequences in **all** strings.
+   */
+  function parseDOT(data) {
+    dot = data;
+    return parseGraph();
+  }
+
   /* eslint-enable no-unused-vars */
   /* eslint-enable no-prototype-builtins */
 
