@@ -282,7 +282,7 @@
     "semantic-release": "25.0.3",
     "serve": "14.2.6",
     "shx": "0.4.0",
-    "sinon": "21.0.0",
+    "sinon": "22.0.0",
     "snap-shot-it": "7.9.10",
     "start-server-and-test": "2.1.5",
     "uuid": "14.0.0",
