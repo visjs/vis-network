@@ -287,7 +287,7 @@
     "start-server-and-test": "2.1.5",
     "uuid": "14.0.0",
     "vis-data": "8.0.4",
-    "vis-dev-utils": "6.0.1",
+    "vis-dev-utils": "6.0.2",
     "vis-util": "6.0.0"
   }
 }
