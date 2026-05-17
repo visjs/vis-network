@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-05-17T17:41:09.560Z
+ * @date    2026-05-17T21:46:21.593Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -2171,7 +2171,65 @@ function requireComponentEmitter () {
 var componentEmitterExports = requireComponentEmitter();
 var Emitter = /*@__PURE__*/getDefaultExportFromCjs(componentEmitterExports);
 
-var es_array_concat = {};
+var es_array_isArray = {};
+
+var isArray$6;
+var hasRequiredIsArray$6;
+
+function requireIsArray$6 () {
+	if (hasRequiredIsArray$6) return isArray$6;
+	hasRequiredIsArray$6 = 1;
+	var classof = /*@__PURE__*/ requireClassofRaw();
+
+	// `IsArray` abstract operation
+	// https://tc39.es/ecma262/#sec-isarray
+	// eslint-disable-next-line es/no-array-isarray -- safe
+	isArray$6 = Array.isArray || function isArray(argument) {
+	  return classof(argument) === 'Array';
+	};
+	return isArray$6;
+}
+
+var hasRequiredEs_array_isArray;
+
+function requireEs_array_isArray () {
+	if (hasRequiredEs_array_isArray) return es_array_isArray;
+	hasRequiredEs_array_isArray = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
+
+	// `Array.isArray` method
+	// https://tc39.es/ecma262/#sec-array.isarray
+	$({ target: 'Array', stat: true }, {
+	  isArray: isArray
+	});
+	return es_array_isArray;
+}
+
+var isArray$5;
+var hasRequiredIsArray$5;
+
+function requireIsArray$5 () {
+	if (hasRequiredIsArray$5) return isArray$5;
+	hasRequiredIsArray$5 = 1;
+	requireEs_array_isArray();
+	var path = /*@__PURE__*/ requirePath();
+
+	isArray$5 = path.Array.isArray;
+	return isArray$5;
+}
+
+var isArray$4;
+var hasRequiredIsArray$4;
+
+function requireIsArray$4 () {
+	if (hasRequiredIsArray$4) return isArray$4;
+	hasRequiredIsArray$4 = 1;
+	var parent = /*@__PURE__*/ requireIsArray$5();
+
+	isArray$4 = parent;
+	return isArray$4;
+}
 
 var isArray$3;
 var hasRequiredIsArray$3;
@@ -2179,16 +2237,42 @@ var hasRequiredIsArray$3;
 function requireIsArray$3 () {
 	if (hasRequiredIsArray$3) return isArray$3;
 	hasRequiredIsArray$3 = 1;
-	var classof = /*@__PURE__*/ requireClassofRaw();
+	var parent = /*@__PURE__*/ requireIsArray$4();
 
-	// `IsArray` abstract operation
-	// https://tc39.es/ecma262/#sec-isarray
-	// eslint-disable-next-line es/no-array-isarray -- safe
-	isArray$3 = Array.isArray || function isArray(argument) {
-	  return classof(argument) === 'Array';
-	};
+	isArray$3 = parent;
 	return isArray$3;
 }
+
+var isArray$2;
+var hasRequiredIsArray$2;
+
+function requireIsArray$2 () {
+	if (hasRequiredIsArray$2) return isArray$2;
+	hasRequiredIsArray$2 = 1;
+	var parent = /*@__PURE__*/ requireIsArray$3();
+
+	isArray$2 = parent;
+	return isArray$2;
+}
+
+var isArray$1;
+var hasRequiredIsArray$1;
+
+function requireIsArray$1 () {
+	if (hasRequiredIsArray$1) return isArray$1;
+	hasRequiredIsArray$1 = 1;
+	isArray$1 = /*@__PURE__*/ requireIsArray$2();
+	return isArray$1;
+}
+
+var isArrayExports$1 = /*@__PURE__*/ requireIsArray$1();
+var _Array$isArray$1 = /*@__PURE__*/getDefaultExportFromCjs(isArrayExports$1);
+
+function _arrayWithHoles(r) {
+  if (_Array$isArray$1(r)) return r;
+}
+
+var es_array_concat = {};
 
 var doesNotExceedSafeInteger;
 var hasRequiredDoesNotExceedSafeInteger;
@@ -2367,7 +2451,7 @@ var hasRequiredArraySpeciesConstructor;
 function requireArraySpeciesConstructor () {
 	if (hasRequiredArraySpeciesConstructor) return arraySpeciesConstructor;
 	hasRequiredArraySpeciesConstructor = 1;
-	var isArray = /*@__PURE__*/ requireIsArray$3();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var isConstructor = /*@__PURE__*/ requireIsConstructor();
 	var isObject = /*@__PURE__*/ requireIsObject();
 	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
@@ -2443,7 +2527,7 @@ function requireEs_array_concat () {
 	hasRequiredEs_array_concat = 1;
 	var $ = /*@__PURE__*/ require_export();
 	var fails = /*@__PURE__*/ requireFails();
-	var isArray = /*@__PURE__*/ requireIsArray$3();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var isObject = /*@__PURE__*/ requireIsObject();
 	var toObject = /*@__PURE__*/ requireToObject();
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
@@ -3393,7 +3477,7 @@ function requireGetJsonReplacerFunction () {
 	if (hasRequiredGetJsonReplacerFunction) return getJsonReplacerFunction;
 	hasRequiredGetJsonReplacerFunction = 1;
 	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-	var isArray = /*@__PURE__*/ requireIsArray$3();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var isCallable = /*@__PURE__*/ requireIsCallable();
 	var classof = /*@__PURE__*/ requireClassofRaw();
 	var toString = /*@__PURE__*/ requireToString();
@@ -4360,18 +4444,718 @@ function requireSymbol$4 () {
 	return symbol$4;
 }
 
+var esnext_function_metadata = {};
+
+var hasRequiredEsnext_function_metadata;
+
+function requireEsnext_function_metadata () {
+	if (hasRequiredEsnext_function_metadata) return esnext_function_metadata;
+	hasRequiredEsnext_function_metadata = 1;
+	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
+	var defineProperty = /*@__PURE__*/ requireObjectDefineProperty().f;
+
+	var METADATA = wellKnownSymbol('metadata');
+	var FunctionPrototype = Function.prototype;
+
+	// Function.prototype[@@metadata]
+	// https://github.com/tc39/proposal-decorator-metadata
+	if (FunctionPrototype[METADATA] === undefined) {
+	  defineProperty(FunctionPrototype, METADATA, {
+	    value: null
+	  });
+	}
+	return esnext_function_metadata;
+}
+
+var esnext_symbol_asyncDispose = {};
+
+var hasRequiredEsnext_symbol_asyncDispose;
+
+function requireEsnext_symbol_asyncDispose () {
+	if (hasRequiredEsnext_symbol_asyncDispose) return esnext_symbol_asyncDispose;
+	hasRequiredEsnext_symbol_asyncDispose = 1;
+	// TODO: Remove from `core-js@4`
+	requireEs_symbol_asyncDispose();
+	return esnext_symbol_asyncDispose;
+}
+
+var esnext_symbol_dispose = {};
+
+var hasRequiredEsnext_symbol_dispose;
+
+function requireEsnext_symbol_dispose () {
+	if (hasRequiredEsnext_symbol_dispose) return esnext_symbol_dispose;
+	hasRequiredEsnext_symbol_dispose = 1;
+	// TODO: Remove from `core-js@4`
+	requireEs_symbol_dispose();
+	return esnext_symbol_dispose;
+}
+
+var esnext_symbol_metadata = {};
+
+var hasRequiredEsnext_symbol_metadata;
+
+function requireEsnext_symbol_metadata () {
+	if (hasRequiredEsnext_symbol_metadata) return esnext_symbol_metadata;
+	hasRequiredEsnext_symbol_metadata = 1;
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	// `Symbol.metadata` well-known symbol
+	// https://github.com/tc39/proposal-decorators
+	defineWellKnownSymbol('metadata');
+	return esnext_symbol_metadata;
+}
+
 var symbol$3;
 var hasRequiredSymbol$3;
 
 function requireSymbol$3 () {
 	if (hasRequiredSymbol$3) return symbol$3;
 	hasRequiredSymbol$3 = 1;
-	symbol$3 = /*@__PURE__*/ requireSymbol$4();
+	var parent = /*@__PURE__*/ requireSymbol$4();
+
+	requireEsnext_function_metadata();
+	requireEsnext_symbol_asyncDispose();
+	requireEsnext_symbol_dispose();
+	requireEsnext_symbol_metadata();
+
+	symbol$3 = parent;
 	return symbol$3;
 }
 
-var symbolExports$1 = requireSymbol$3();
+var esnext_symbol_isRegisteredSymbol = {};
+
+var symbolIsRegistered;
+var hasRequiredSymbolIsRegistered;
+
+function requireSymbolIsRegistered () {
+	if (hasRequiredSymbolIsRegistered) return symbolIsRegistered;
+	hasRequiredSymbolIsRegistered = 1;
+	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
+	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+
+	var Symbol = getBuiltIn('Symbol');
+	var keyFor = Symbol.keyFor;
+	var thisSymbolValue = uncurryThis(Symbol.prototype.valueOf);
+
+	// `Symbol.isRegisteredSymbol` method
+	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregisteredsymbol
+	symbolIsRegistered = Symbol.isRegisteredSymbol || function isRegisteredSymbol(value) {
+	  try {
+	    return keyFor(thisSymbolValue(value)) !== undefined;
+	  } catch (error) {
+	    return false;
+	  }
+	};
+	return symbolIsRegistered;
+}
+
+var hasRequiredEsnext_symbol_isRegisteredSymbol;
+
+function requireEsnext_symbol_isRegisteredSymbol () {
+	if (hasRequiredEsnext_symbol_isRegisteredSymbol) return esnext_symbol_isRegisteredSymbol;
+	hasRequiredEsnext_symbol_isRegisteredSymbol = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var isRegisteredSymbol = /*@__PURE__*/ requireSymbolIsRegistered();
+
+	// `Symbol.isRegisteredSymbol` method
+	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregisteredsymbol
+	$({ target: 'Symbol', stat: true }, {
+	  isRegisteredSymbol: isRegisteredSymbol
+	});
+	return esnext_symbol_isRegisteredSymbol;
+}
+
+var esnext_symbol_isWellKnownSymbol = {};
+
+var symbolIsWellKnown;
+var hasRequiredSymbolIsWellKnown;
+
+function requireSymbolIsWellKnown () {
+	if (hasRequiredSymbolIsWellKnown) return symbolIsWellKnown;
+	hasRequiredSymbolIsWellKnown = 1;
+	var shared = /*@__PURE__*/ requireShared();
+	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
+	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+	var isSymbol = /*@__PURE__*/ requireIsSymbol();
+	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
+
+	var Symbol = getBuiltIn('Symbol');
+	var $isWellKnownSymbol = Symbol.isWellKnownSymbol;
+	var getOwnPropertyNames = getBuiltIn('Object', 'getOwnPropertyNames');
+	var thisSymbolValue = uncurryThis(Symbol.prototype.valueOf);
+	var WellKnownSymbolsStore = shared('wks');
+
+	for (var i = 0, symbolKeys = getOwnPropertyNames(Symbol), symbolKeysLength = symbolKeys.length; i < symbolKeysLength; i++) {
+	  // some old engines throws on access to some keys like `arguments` or `caller`
+	  try {
+	    var symbolKey = symbolKeys[i];
+	    if (isSymbol(Symbol[symbolKey])) wellKnownSymbol(symbolKey);
+	  } catch (error) { /* empty */ }
+	}
+
+	// `Symbol.isWellKnownSymbol` method
+	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknownsymbol
+	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
+	symbolIsWellKnown = function isWellKnownSymbol(value) {
+	  if ($isWellKnownSymbol && $isWellKnownSymbol(value)) return true;
+	  try {
+	    var symbol = thisSymbolValue(value);
+	    for (var j = 0, keys = getOwnPropertyNames(WellKnownSymbolsStore), keysLength = keys.length; j < keysLength; j++) {
+	      // eslint-disable-next-line eqeqeq -- polyfilled symbols case
+	      if (WellKnownSymbolsStore[keys[j]] == symbol) return true;
+	    }
+	  } catch (error) { /* empty */ }
+	  return false;
+	};
+	return symbolIsWellKnown;
+}
+
+var hasRequiredEsnext_symbol_isWellKnownSymbol;
+
+function requireEsnext_symbol_isWellKnownSymbol () {
+	if (hasRequiredEsnext_symbol_isWellKnownSymbol) return esnext_symbol_isWellKnownSymbol;
+	hasRequiredEsnext_symbol_isWellKnownSymbol = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var isWellKnownSymbol = /*@__PURE__*/ requireSymbolIsWellKnown();
+
+	// `Symbol.isWellKnownSymbol` method
+	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknownsymbol
+	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
+	$({ target: 'Symbol', stat: true, forced: true }, {
+	  isWellKnownSymbol: isWellKnownSymbol
+	});
+	return esnext_symbol_isWellKnownSymbol;
+}
+
+var esnext_symbol_customMatcher = {};
+
+var hasRequiredEsnext_symbol_customMatcher;
+
+function requireEsnext_symbol_customMatcher () {
+	if (hasRequiredEsnext_symbol_customMatcher) return esnext_symbol_customMatcher;
+	hasRequiredEsnext_symbol_customMatcher = 1;
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	// `Symbol.customMatcher` well-known symbol
+	// https://github.com/tc39/proposal-pattern-matching
+	defineWellKnownSymbol('customMatcher');
+	return esnext_symbol_customMatcher;
+}
+
+var esnext_symbol_observable = {};
+
+var hasRequiredEsnext_symbol_observable;
+
+function requireEsnext_symbol_observable () {
+	if (hasRequiredEsnext_symbol_observable) return esnext_symbol_observable;
+	hasRequiredEsnext_symbol_observable = 1;
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	// `Symbol.observable` well-known symbol
+	// https://github.com/tc39/proposal-observable
+	defineWellKnownSymbol('observable');
+	return esnext_symbol_observable;
+}
+
+var esnext_symbol_isRegistered = {};
+
+var hasRequiredEsnext_symbol_isRegistered;
+
+function requireEsnext_symbol_isRegistered () {
+	if (hasRequiredEsnext_symbol_isRegistered) return esnext_symbol_isRegistered;
+	hasRequiredEsnext_symbol_isRegistered = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var isRegisteredSymbol = /*@__PURE__*/ requireSymbolIsRegistered();
+
+	// `Symbol.isRegistered` method
+	// obsolete version of https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregisteredsymbol
+	$({ target: 'Symbol', stat: true, name: 'isRegisteredSymbol' }, {
+	  isRegistered: isRegisteredSymbol
+	});
+	return esnext_symbol_isRegistered;
+}
+
+var esnext_symbol_isWellKnown = {};
+
+var hasRequiredEsnext_symbol_isWellKnown;
+
+function requireEsnext_symbol_isWellKnown () {
+	if (hasRequiredEsnext_symbol_isWellKnown) return esnext_symbol_isWellKnown;
+	hasRequiredEsnext_symbol_isWellKnown = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var isWellKnownSymbol = /*@__PURE__*/ requireSymbolIsWellKnown();
+
+	// `Symbol.isWellKnown` method
+	// obsolete version of https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknownsymbol
+	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
+	$({ target: 'Symbol', stat: true, name: 'isWellKnownSymbol', forced: true }, {
+	  isWellKnown: isWellKnownSymbol
+	});
+	return esnext_symbol_isWellKnown;
+}
+
+var esnext_symbol_matcher = {};
+
+var hasRequiredEsnext_symbol_matcher;
+
+function requireEsnext_symbol_matcher () {
+	if (hasRequiredEsnext_symbol_matcher) return esnext_symbol_matcher;
+	hasRequiredEsnext_symbol_matcher = 1;
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	// `Symbol.matcher` well-known symbol
+	// https://github.com/tc39/proposal-pattern-matching
+	defineWellKnownSymbol('matcher');
+	return esnext_symbol_matcher;
+}
+
+var esnext_symbol_metadataKey = {};
+
+var hasRequiredEsnext_symbol_metadataKey;
+
+function requireEsnext_symbol_metadataKey () {
+	if (hasRequiredEsnext_symbol_metadataKey) return esnext_symbol_metadataKey;
+	hasRequiredEsnext_symbol_metadataKey = 1;
+	// TODO: Remove from `core-js@4`
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	// `Symbol.metadataKey` well-known symbol
+	// https://github.com/tc39/proposal-decorator-metadata
+	defineWellKnownSymbol('metadataKey');
+	return esnext_symbol_metadataKey;
+}
+
+var esnext_symbol_patternMatch = {};
+
+var hasRequiredEsnext_symbol_patternMatch;
+
+function requireEsnext_symbol_patternMatch () {
+	if (hasRequiredEsnext_symbol_patternMatch) return esnext_symbol_patternMatch;
+	hasRequiredEsnext_symbol_patternMatch = 1;
+	// TODO: remove from `core-js@4`
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	// `Symbol.patternMatch` well-known symbol
+	// https://github.com/tc39/proposal-pattern-matching
+	defineWellKnownSymbol('patternMatch');
+	return esnext_symbol_patternMatch;
+}
+
+var esnext_symbol_replaceAll = {};
+
+var hasRequiredEsnext_symbol_replaceAll;
+
+function requireEsnext_symbol_replaceAll () {
+	if (hasRequiredEsnext_symbol_replaceAll) return esnext_symbol_replaceAll;
+	hasRequiredEsnext_symbol_replaceAll = 1;
+	// TODO: remove from `core-js@4`
+	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
+
+	defineWellKnownSymbol('replaceAll');
+	return esnext_symbol_replaceAll;
+}
+
+var symbol$2;
+var hasRequiredSymbol$2;
+
+function requireSymbol$2 () {
+	if (hasRequiredSymbol$2) return symbol$2;
+	hasRequiredSymbol$2 = 1;
+	var parent = /*@__PURE__*/ requireSymbol$3();
+	requireEsnext_symbol_isRegisteredSymbol();
+	requireEsnext_symbol_isWellKnownSymbol();
+	requireEsnext_symbol_customMatcher();
+	requireEsnext_symbol_observable();
+	// TODO: Remove from `core-js@4`
+	requireEsnext_symbol_isRegistered();
+	requireEsnext_symbol_isWellKnown();
+	requireEsnext_symbol_matcher();
+	requireEsnext_symbol_metadataKey();
+	requireEsnext_symbol_patternMatch();
+	requireEsnext_symbol_replaceAll();
+
+	symbol$2 = parent;
+	return symbol$2;
+}
+
+var symbol$1;
+var hasRequiredSymbol$1;
+
+function requireSymbol$1 () {
+	if (hasRequiredSymbol$1) return symbol$1;
+	hasRequiredSymbol$1 = 1;
+	symbol$1 = /*@__PURE__*/ requireSymbol$2();
+	return symbol$1;
+}
+
+var symbolExports$1 = /*@__PURE__*/ requireSymbol$1();
 var _Symbol$1 = /*@__PURE__*/getDefaultExportFromCjs(symbolExports$1);
+
+var es_string_iterator = {};
+
+var stringMultibyte;
+var hasRequiredStringMultibyte;
+
+function requireStringMultibyte () {
+	if (hasRequiredStringMultibyte) return stringMultibyte;
+	hasRequiredStringMultibyte = 1;
+	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+	var toIntegerOrInfinity = /*@__PURE__*/ requireToIntegerOrInfinity();
+	var toString = /*@__PURE__*/ requireToString();
+	var requireObjectCoercible = /*@__PURE__*/ requireRequireObjectCoercible();
+
+	var charAt = uncurryThis(''.charAt);
+	var charCodeAt = uncurryThis(''.charCodeAt);
+	var stringSlice = uncurryThis(''.slice);
+
+	var createMethod = function (CONVERT_TO_STRING) {
+	  return function ($this, pos) {
+	    var S = toString(requireObjectCoercible($this));
+	    var position = toIntegerOrInfinity(pos);
+	    var size = S.length;
+	    var first, second;
+	    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
+	    first = charCodeAt(S, position);
+	    return first < 0xD800 || first > 0xDBFF || position + 1 === size
+	      || (second = charCodeAt(S, position + 1)) < 0xDC00 || second > 0xDFFF
+	        ? CONVERT_TO_STRING
+	          ? charAt(S, position)
+	          : first
+	        : CONVERT_TO_STRING
+	          ? stringSlice(S, position, position + 2)
+	          : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+	  };
+	};
+
+	stringMultibyte = {
+	  // `String.prototype.codePointAt` method
+	  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
+	  codeAt: createMethod(false),
+	  // `String.prototype.at` method
+	  // https://github.com/mathiasbynens/String.prototype.at
+	  charAt: createMethod(true)
+	};
+	return stringMultibyte;
+}
+
+var hasRequiredEs_string_iterator;
+
+function requireEs_string_iterator () {
+	if (hasRequiredEs_string_iterator) return es_string_iterator;
+	hasRequiredEs_string_iterator = 1;
+	var charAt = /*@__PURE__*/ requireStringMultibyte().charAt;
+	var toString = /*@__PURE__*/ requireToString();
+	var InternalStateModule = /*@__PURE__*/ requireInternalState();
+	var defineIterator = /*@__PURE__*/ requireIteratorDefine();
+	var createIterResultObject = /*@__PURE__*/ requireCreateIterResultObject();
+
+	var STRING_ITERATOR = 'String Iterator';
+	var setInternalState = InternalStateModule.set;
+	var getInternalState = InternalStateModule.getterFor(STRING_ITERATOR);
+
+	// `String.prototype[@@iterator]` method
+	// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
+	defineIterator(String, 'String', function (iterated) {
+	  setInternalState(this, {
+	    type: STRING_ITERATOR,
+	    string: toString(iterated),
+	    index: 0
+	  });
+	// `%StringIteratorPrototype%.next` method
+	// https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
+	}, function next() {
+	  var state = getInternalState(this);
+	  var string = state.string;
+	  var index = state.index;
+	  var point;
+	  if (index >= string.length) return createIterResultObject(undefined, true);
+	  point = charAt(string, index);
+	  state.index += point.length;
+	  return createIterResultObject(point, false);
+	});
+	return es_string_iterator;
+}
+
+var getIteratorMethod$4;
+var hasRequiredGetIteratorMethod$5;
+
+function requireGetIteratorMethod$5 () {
+	if (hasRequiredGetIteratorMethod$5) return getIteratorMethod$4;
+	hasRequiredGetIteratorMethod$5 = 1;
+	var classof = /*@__PURE__*/ requireClassof();
+	var getMethod = /*@__PURE__*/ requireGetMethod();
+	var isNullOrUndefined = /*@__PURE__*/ requireIsNullOrUndefined();
+	var Iterators = /*@__PURE__*/ requireIterators();
+	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
+
+	var ITERATOR = wellKnownSymbol('iterator');
+
+	getIteratorMethod$4 = function (it) {
+	  if (!isNullOrUndefined(it)) return getMethod(it, ITERATOR)
+	    || getMethod(it, '@@iterator')
+	    || Iterators[classof(it)];
+	};
+	return getIteratorMethod$4;
+}
+
+var getIteratorMethod_1;
+var hasRequiredGetIteratorMethod$4;
+
+function requireGetIteratorMethod$4 () {
+	if (hasRequiredGetIteratorMethod$4) return getIteratorMethod_1;
+	hasRequiredGetIteratorMethod$4 = 1;
+	requireEs_array_iterator();
+	requireEs_string_iterator();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+
+	getIteratorMethod_1 = getIteratorMethod;
+	return getIteratorMethod_1;
+}
+
+var getIteratorMethod$3;
+var hasRequiredGetIteratorMethod$3;
+
+function requireGetIteratorMethod$3 () {
+	if (hasRequiredGetIteratorMethod$3) return getIteratorMethod$3;
+	hasRequiredGetIteratorMethod$3 = 1;
+	var parent = /*@__PURE__*/ requireGetIteratorMethod$4();
+	requireWeb_domCollections_iterator();
+
+	getIteratorMethod$3 = parent;
+	return getIteratorMethod$3;
+}
+
+var getIteratorMethod$2;
+var hasRequiredGetIteratorMethod$2;
+
+function requireGetIteratorMethod$2 () {
+	if (hasRequiredGetIteratorMethod$2) return getIteratorMethod$2;
+	hasRequiredGetIteratorMethod$2 = 1;
+	var parent = /*@__PURE__*/ requireGetIteratorMethod$3();
+
+	getIteratorMethod$2 = parent;
+	return getIteratorMethod$2;
+}
+
+var getIteratorMethod$1;
+var hasRequiredGetIteratorMethod$1;
+
+function requireGetIteratorMethod$1 () {
+	if (hasRequiredGetIteratorMethod$1) return getIteratorMethod$1;
+	hasRequiredGetIteratorMethod$1 = 1;
+	var parent = /*@__PURE__*/ requireGetIteratorMethod$2();
+
+	getIteratorMethod$1 = parent;
+	return getIteratorMethod$1;
+}
+
+var getIteratorMethod;
+var hasRequiredGetIteratorMethod;
+
+function requireGetIteratorMethod () {
+	if (hasRequiredGetIteratorMethod) return getIteratorMethod;
+	hasRequiredGetIteratorMethod = 1;
+	getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$1();
+	return getIteratorMethod;
+}
+
+var getIteratorMethodExports = /*@__PURE__*/ requireGetIteratorMethod();
+var _getIteratorMethod = /*@__PURE__*/getDefaultExportFromCjs(getIteratorMethodExports);
+
+var es_array_push = {};
+
+var arraySetLength;
+var hasRequiredArraySetLength;
+
+function requireArraySetLength () {
+	if (hasRequiredArraySetLength) return arraySetLength;
+	hasRequiredArraySetLength = 1;
+	var DESCRIPTORS = /*@__PURE__*/ requireDescriptors();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
+
+	var $TypeError = TypeError;
+	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
+	var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+	// Safari < 13 does not throw an error in this case
+	var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS && !function () {
+	  // makes no sense without proper strict mode support
+	  if (this !== undefined) return true;
+	  try {
+	    // eslint-disable-next-line es/no-object-defineproperty -- safe
+	    Object.defineProperty([], 'length', { writable: false }).length = 1;
+	  } catch (error) {
+	    return error instanceof TypeError;
+	  }
+	}();
+
+	arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
+	  if (isArray(O) && !getOwnPropertyDescriptor(O, 'length').writable) {
+	    throw new $TypeError('Cannot set read only .length');
+	  } return O.length = length;
+	} : function (O, length) {
+	  return O.length = length;
+	};
+	return arraySetLength;
+}
+
+var hasRequiredEs_array_push;
+
+function requireEs_array_push () {
+	if (hasRequiredEs_array_push) return es_array_push;
+	hasRequiredEs_array_push = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var toObject = /*@__PURE__*/ requireToObject();
+	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
+	var setArrayLength = /*@__PURE__*/ requireArraySetLength();
+	var doesNotExceedSafeInteger = /*@__PURE__*/ requireDoesNotExceedSafeInteger();
+	var fails = /*@__PURE__*/ requireFails();
+
+	var INCORRECT_TO_LENGTH = fails(function () {
+	  return [].push.call({ length: 0x100000000 }, 1) !== 4294967297;
+	});
+
+	// V8 <= 121 and Safari <= 15.4; FF < 23 throws InternalError
+	// https://bugs.chromium.org/p/v8/issues/detail?id=12681
+	var properErrorOnNonWritableLength = function () {
+	  try {
+	    // eslint-disable-next-line es/no-object-defineproperty -- safe
+	    Object.defineProperty([], 'length', { writable: false }).push();
+	  } catch (error) {
+	    return error instanceof TypeError;
+	  }
+	};
+
+	var FORCED = INCORRECT_TO_LENGTH || !properErrorOnNonWritableLength();
+
+	// `Array.prototype.push` method
+	// https://tc39.es/ecma262/#sec-array.prototype.push
+	$({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
+	  // eslint-disable-next-line no-unused-vars -- required for `.length`
+	  push: function push(item) {
+	    var O = toObject(this);
+	    var len = lengthOfArrayLike(O);
+	    var argCount = arguments.length;
+	    doesNotExceedSafeInteger(len + argCount);
+	    for (var i = 0; i < argCount; i++) {
+	      O[len] = arguments[i];
+	      len++;
+	    }
+	    setArrayLength(O, len);
+	    return len;
+	  }
+	});
+	return es_array_push;
+}
+
+var push$5;
+var hasRequiredPush$5;
+
+function requirePush$5 () {
+	if (hasRequiredPush$5) return push$5;
+	hasRequiredPush$5 = 1;
+	requireEs_array_push();
+	var getBuiltInPrototypeMethod = /*@__PURE__*/ requireGetBuiltInPrototypeMethod();
+
+	push$5 = getBuiltInPrototypeMethod('Array', 'push');
+	return push$5;
+}
+
+var push$4;
+var hasRequiredPush$4;
+
+function requirePush$4 () {
+	if (hasRequiredPush$4) return push$4;
+	hasRequiredPush$4 = 1;
+	var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
+	var method = /*@__PURE__*/ requirePush$5();
+
+	var ArrayPrototype = Array.prototype;
+
+	push$4 = function (it) {
+	  var own = it.push;
+	  return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.push) ? method : own;
+	};
+	return push$4;
+}
+
+var push$3;
+var hasRequiredPush$3;
+
+function requirePush$3 () {
+	if (hasRequiredPush$3) return push$3;
+	hasRequiredPush$3 = 1;
+	var parent = /*@__PURE__*/ requirePush$4();
+
+	push$3 = parent;
+	return push$3;
+}
+
+var push$2;
+var hasRequiredPush$2;
+
+function requirePush$2 () {
+	if (hasRequiredPush$2) return push$2;
+	hasRequiredPush$2 = 1;
+	var parent = /*@__PURE__*/ requirePush$3();
+
+	push$2 = parent;
+	return push$2;
+}
+
+var push$1;
+var hasRequiredPush$1;
+
+function requirePush$1 () {
+	if (hasRequiredPush$1) return push$1;
+	hasRequiredPush$1 = 1;
+	var parent = /*@__PURE__*/ requirePush$2();
+
+	push$1 = parent;
+	return push$1;
+}
+
+var push;
+var hasRequiredPush;
+
+function requirePush () {
+	if (hasRequiredPush) return push;
+	hasRequiredPush = 1;
+	push = /*@__PURE__*/ requirePush$1();
+	return push;
+}
+
+var pushExports = /*@__PURE__*/ requirePush();
+var _pushInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(pushExports);
+
+function _iterableToArrayLimit(r, l) {
+  var t = null == r ? null : "undefined" != typeof _Symbol$1 && _getIteratorMethod(r) || r["@@iterator"];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = true,
+      o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (_pushInstanceProperty(a).call(a, e.value), a.length !== l); f = !0);
+    } catch (r) {
+      o = true, n = r;
+    } finally {
+      try {
+        if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
 
 var es_array_slice = {};
 
@@ -4381,7 +5165,7 @@ function requireEs_array_slice () {
 	if (hasRequiredEs_array_slice) return es_array_slice;
 	hasRequiredEs_array_slice = 1;
 	var $ = /*@__PURE__*/ require_export();
-	var isArray = /*@__PURE__*/ requireIsArray$3();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var isConstructor = /*@__PURE__*/ requireIsConstructor();
 	var isObject = /*@__PURE__*/ requireIsObject();
 	var toAbsoluteIndex = /*@__PURE__*/ requireToAbsoluteIndex();
@@ -4431,16 +5215,58 @@ function requireEs_array_slice () {
 	return es_array_slice;
 }
 
+var slice$6;
+var hasRequiredSlice$6;
+
+function requireSlice$6 () {
+	if (hasRequiredSlice$6) return slice$6;
+	hasRequiredSlice$6 = 1;
+	requireEs_array_slice();
+	var getBuiltInPrototypeMethod = /*@__PURE__*/ requireGetBuiltInPrototypeMethod();
+
+	slice$6 = getBuiltInPrototypeMethod('Array', 'slice');
+	return slice$6;
+}
+
+var slice$5;
+var hasRequiredSlice$5;
+
+function requireSlice$5 () {
+	if (hasRequiredSlice$5) return slice$5;
+	hasRequiredSlice$5 = 1;
+	var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
+	var method = /*@__PURE__*/ requireSlice$6();
+
+	var ArrayPrototype = Array.prototype;
+
+	slice$5 = function (it) {
+	  var own = it.slice;
+	  return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.slice) ? method : own;
+	};
+	return slice$5;
+}
+
+var slice$4;
+var hasRequiredSlice$4;
+
+function requireSlice$4 () {
+	if (hasRequiredSlice$4) return slice$4;
+	hasRequiredSlice$4 = 1;
+	var parent = /*@__PURE__*/ requireSlice$5();
+
+	slice$4 = parent;
+	return slice$4;
+}
+
 var slice$3;
 var hasRequiredSlice$3;
 
 function requireSlice$3 () {
 	if (hasRequiredSlice$3) return slice$3;
 	hasRequiredSlice$3 = 1;
-	requireEs_array_slice();
-	var getBuiltInPrototypeMethod = /*@__PURE__*/ requireGetBuiltInPrototypeMethod();
+	var parent = /*@__PURE__*/ requireSlice$4();
 
-	slice$3 = getBuiltInPrototypeMethod('Array', 'slice');
+	slice$3 = parent;
 	return slice$3;
 }
 
@@ -4450,15 +5276,9 @@ var hasRequiredSlice$2;
 function requireSlice$2 () {
 	if (hasRequiredSlice$2) return slice$2;
 	hasRequiredSlice$2 = 1;
-	var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
-	var method = /*@__PURE__*/ requireSlice$3();
+	var parent = /*@__PURE__*/ requireSlice$3();
 
-	var ArrayPrototype = Array.prototype;
-
-	slice$2 = function (it) {
-	  var own = it.slice;
-	  return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.slice) ? method : own;
-	};
+	slice$2 = parent;
 	return slice$2;
 }
 
@@ -4468,11 +5288,331 @@ var hasRequiredSlice$1;
 function requireSlice$1 () {
 	if (hasRequiredSlice$1) return slice$1;
 	hasRequiredSlice$1 = 1;
-	var parent = /*@__PURE__*/ requireSlice$2();
-
-	slice$1 = parent;
+	slice$1 = /*@__PURE__*/ requireSlice$2();
 	return slice$1;
 }
+
+var sliceExports$1 = /*@__PURE__*/ requireSlice$1();
+var _sliceInstanceProperty$1 = /*@__PURE__*/getDefaultExportFromCjs(sliceExports$1);
+
+var es_array_from = {};
+
+var iteratorClose;
+var hasRequiredIteratorClose;
+
+function requireIteratorClose () {
+	if (hasRequiredIteratorClose) return iteratorClose;
+	hasRequiredIteratorClose = 1;
+	var call = /*@__PURE__*/ requireFunctionCall();
+	var anObject = /*@__PURE__*/ requireAnObject();
+	var getMethod = /*@__PURE__*/ requireGetMethod();
+
+	iteratorClose = function (iterator, kind, value) {
+	  var innerResult, innerError;
+	  anObject(iterator);
+	  try {
+	    innerResult = getMethod(iterator, 'return');
+	    if (!innerResult) {
+	      if (kind === 'throw') throw value;
+	      return value;
+	    }
+	    innerResult = call(innerResult, iterator);
+	  } catch (error) {
+	    innerError = true;
+	    innerResult = error;
+	  }
+	  if (kind === 'throw') throw value;
+	  if (innerError) throw innerResult;
+	  anObject(innerResult);
+	  return value;
+	};
+	return iteratorClose;
+}
+
+var callWithSafeIterationClosing;
+var hasRequiredCallWithSafeIterationClosing;
+
+function requireCallWithSafeIterationClosing () {
+	if (hasRequiredCallWithSafeIterationClosing) return callWithSafeIterationClosing;
+	hasRequiredCallWithSafeIterationClosing = 1;
+	var anObject = /*@__PURE__*/ requireAnObject();
+	var iteratorClose = /*@__PURE__*/ requireIteratorClose();
+
+	// call something on iterator step with safe closing on error
+	callWithSafeIterationClosing = function (iterator, fn, value, ENTRIES) {
+	  try {
+	    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
+	  } catch (error) {
+	    iteratorClose(iterator, 'throw', error);
+	  }
+	};
+	return callWithSafeIterationClosing;
+}
+
+var isArrayIteratorMethod;
+var hasRequiredIsArrayIteratorMethod;
+
+function requireIsArrayIteratorMethod () {
+	if (hasRequiredIsArrayIteratorMethod) return isArrayIteratorMethod;
+	hasRequiredIsArrayIteratorMethod = 1;
+	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
+	var Iterators = /*@__PURE__*/ requireIterators();
+
+	var ITERATOR = wellKnownSymbol('iterator');
+	var ArrayPrototype = Array.prototype;
+
+	// check on default Array iterator
+	isArrayIteratorMethod = function (it) {
+	  return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
+	};
+	return isArrayIteratorMethod;
+}
+
+var getIterator$5;
+var hasRequiredGetIterator$6;
+
+function requireGetIterator$6 () {
+	if (hasRequiredGetIterator$6) return getIterator$5;
+	hasRequiredGetIterator$6 = 1;
+	var call = /*@__PURE__*/ requireFunctionCall();
+	var aCallable = /*@__PURE__*/ requireACallable();
+	var anObject = /*@__PURE__*/ requireAnObject();
+	var tryToString = /*@__PURE__*/ requireTryToString();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+
+	var $TypeError = TypeError;
+
+	getIterator$5 = function (argument, usingIterator) {
+	  var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
+	  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
+	  throw new $TypeError(tryToString(argument) + ' is not iterable');
+	};
+	return getIterator$5;
+}
+
+var arrayFrom;
+var hasRequiredArrayFrom;
+
+function requireArrayFrom () {
+	if (hasRequiredArrayFrom) return arrayFrom;
+	hasRequiredArrayFrom = 1;
+	var bind = /*@__PURE__*/ requireFunctionBindContext();
+	var call = /*@__PURE__*/ requireFunctionCall();
+	var toObject = /*@__PURE__*/ requireToObject();
+	var callWithSafeIterationClosing = /*@__PURE__*/ requireCallWithSafeIterationClosing();
+	var isArrayIteratorMethod = /*@__PURE__*/ requireIsArrayIteratorMethod();
+	var isConstructor = /*@__PURE__*/ requireIsConstructor();
+	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
+	var createProperty = /*@__PURE__*/ requireCreateProperty();
+	var getIterator = /*@__PURE__*/ requireGetIterator$6();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+
+	var $Array = Array;
+
+	// `Array.from` method implementation
+	// https://tc39.es/ecma262/#sec-array.from
+	arrayFrom = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
+	  var O = toObject(arrayLike);
+	  var IS_CONSTRUCTOR = isConstructor(this);
+	  var argumentsLength = arguments.length;
+	  var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
+	  var mapping = mapfn !== undefined;
+	  if (mapping) mapfn = bind(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
+	  var iteratorMethod = getIteratorMethod(O);
+	  var index = 0;
+	  var length, result, step, iterator, next, value;
+	  // if the target is not iterable or it's an array with the default iterator - use a simple case
+	  if (iteratorMethod && !(this === $Array && isArrayIteratorMethod(iteratorMethod))) {
+	    result = IS_CONSTRUCTOR ? new this() : [];
+	    iterator = getIterator(O, iteratorMethod);
+	    next = iterator.next;
+	    for (;!(step = call(next, iterator)).done; index++) {
+	      value = mapping ? callWithSafeIterationClosing(iterator, mapfn, [step.value, index], true) : step.value;
+	      createProperty(result, index, value);
+	    }
+	  } else {
+	    length = lengthOfArrayLike(O);
+	    result = IS_CONSTRUCTOR ? new this(length) : $Array(length);
+	    for (;length > index; index++) {
+	      value = mapping ? mapfn(O[index], index) : O[index];
+	      createProperty(result, index, value);
+	    }
+	  }
+	  result.length = index;
+	  return result;
+	};
+	return arrayFrom;
+}
+
+var checkCorrectnessOfIteration;
+var hasRequiredCheckCorrectnessOfIteration;
+
+function requireCheckCorrectnessOfIteration () {
+	if (hasRequiredCheckCorrectnessOfIteration) return checkCorrectnessOfIteration;
+	hasRequiredCheckCorrectnessOfIteration = 1;
+	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
+
+	var ITERATOR = wellKnownSymbol('iterator');
+	var SAFE_CLOSING = false;
+
+	try {
+	  var called = 0;
+	  var iteratorWithReturn = {
+	    next: function () {
+	      return { done: !!called++ };
+	    },
+	    'return': function () {
+	      SAFE_CLOSING = true;
+	    }
+	  };
+	  iteratorWithReturn[ITERATOR] = function () {
+	    return this;
+	  };
+	  // eslint-disable-next-line es/no-array-from, no-throw-literal -- required for testing
+	  Array.from(iteratorWithReturn, function () { throw 2; });
+	} catch (error) { /* empty */ }
+
+	checkCorrectnessOfIteration = function (exec, SKIP_CLOSING) {
+	  try {
+	    if (!SKIP_CLOSING && !SAFE_CLOSING) return false;
+	  } catch (error) { return false; } // workaround of old WebKit + `eval` bug
+	  var ITERATION_SUPPORT = false;
+	  try {
+	    var object = {};
+	    object[ITERATOR] = function () {
+	      return {
+	        next: function () {
+	          return { done: ITERATION_SUPPORT = true };
+	        }
+	      };
+	    };
+	    exec(object);
+	  } catch (error) { /* empty */ }
+	  return ITERATION_SUPPORT;
+	};
+	return checkCorrectnessOfIteration;
+}
+
+var hasRequiredEs_array_from;
+
+function requireEs_array_from () {
+	if (hasRequiredEs_array_from) return es_array_from;
+	hasRequiredEs_array_from = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var from = /*@__PURE__*/ requireArrayFrom();
+	var checkCorrectnessOfIteration = /*@__PURE__*/ requireCheckCorrectnessOfIteration();
+
+	var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
+	  // eslint-disable-next-line es/no-array-from -- required for testing
+	  Array.from(iterable);
+	});
+
+	// `Array.from` method
+	// https://tc39.es/ecma262/#sec-array.from
+	$({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+	  from: from
+	});
+	return es_array_from;
+}
+
+var from$4;
+var hasRequiredFrom$4;
+
+function requireFrom$4 () {
+	if (hasRequiredFrom$4) return from$4;
+	hasRequiredFrom$4 = 1;
+	requireEs_string_iterator();
+	requireEs_array_from();
+	var path = /*@__PURE__*/ requirePath();
+
+	from$4 = path.Array.from;
+	return from$4;
+}
+
+var from$3;
+var hasRequiredFrom$3;
+
+function requireFrom$3 () {
+	if (hasRequiredFrom$3) return from$3;
+	hasRequiredFrom$3 = 1;
+	var parent = /*@__PURE__*/ requireFrom$4();
+
+	from$3 = parent;
+	return from$3;
+}
+
+var from$2;
+var hasRequiredFrom$2;
+
+function requireFrom$2 () {
+	if (hasRequiredFrom$2) return from$2;
+	hasRequiredFrom$2 = 1;
+	var parent = /*@__PURE__*/ requireFrom$3();
+
+	from$2 = parent;
+	return from$2;
+}
+
+var from$1;
+var hasRequiredFrom$1;
+
+function requireFrom$1 () {
+	if (hasRequiredFrom$1) return from$1;
+	hasRequiredFrom$1 = 1;
+	var parent = /*@__PURE__*/ requireFrom$2();
+
+	from$1 = parent;
+	return from$1;
+}
+
+var from;
+var hasRequiredFrom;
+
+function requireFrom () {
+	if (hasRequiredFrom) return from;
+	hasRequiredFrom = 1;
+	from = /*@__PURE__*/ requireFrom$1();
+	return from;
+}
+
+var fromExports = /*@__PURE__*/ requireFrom();
+var _Array$from = /*@__PURE__*/getDefaultExportFromCjs(fromExports);
+
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    var _context;
+    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+    var t = _sliceInstanceProperty$1(_context = {}.toString.call(r)).call(_context, 8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? _Array$from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+  }
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(r, e) {
+  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+}
+
+var symbol;
+var hasRequiredSymbol;
+
+function requireSymbol () {
+	if (hasRequiredSymbol) return symbol;
+	hasRequiredSymbol = 1;
+	symbol = /*@__PURE__*/ requireSymbol$4();
+	return symbol;
+}
+
+var symbolExports = requireSymbol();
+var _Symbol = /*@__PURE__*/getDefaultExportFromCjs(symbolExports);
 
 var slice;
 var hasRequiredSlice;
@@ -4480,7 +5620,7 @@ var hasRequiredSlice;
 function requireSlice () {
 	if (hasRequiredSlice) return slice;
 	hasRequiredSlice = 1;
-	slice = /*@__PURE__*/ requireSlice$1();
+	slice = /*@__PURE__*/ requireSlice$4();
 	return slice;
 }
 
@@ -4566,56 +5706,13 @@ function requireOwnKeys () {
 var ownKeysExports = requireOwnKeys();
 var _Reflect$ownKeys = /*@__PURE__*/getDefaultExportFromCjs(ownKeysExports);
 
-var es_array_isArray = {};
-
-var hasRequiredEs_array_isArray;
-
-function requireEs_array_isArray () {
-	if (hasRequiredEs_array_isArray) return es_array_isArray;
-	hasRequiredEs_array_isArray = 1;
-	var $ = /*@__PURE__*/ require_export();
-	var isArray = /*@__PURE__*/ requireIsArray$3();
-
-	// `Array.isArray` method
-	// https://tc39.es/ecma262/#sec-array.isarray
-	$({ target: 'Array', stat: true }, {
-	  isArray: isArray
-	});
-	return es_array_isArray;
-}
-
-var isArray$2;
-var hasRequiredIsArray$2;
-
-function requireIsArray$2 () {
-	if (hasRequiredIsArray$2) return isArray$2;
-	hasRequiredIsArray$2 = 1;
-	requireEs_array_isArray();
-	var path = /*@__PURE__*/ requirePath();
-
-	isArray$2 = path.Array.isArray;
-	return isArray$2;
-}
-
-var isArray$1;
-var hasRequiredIsArray$1;
-
-function requireIsArray$1 () {
-	if (hasRequiredIsArray$1) return isArray$1;
-	hasRequiredIsArray$1 = 1;
-	var parent = /*@__PURE__*/ requireIsArray$2();
-
-	isArray$1 = parent;
-	return isArray$1;
-}
-
 var isArray;
 var hasRequiredIsArray;
 
 function requireIsArray () {
 	if (hasRequiredIsArray) return isArray;
 	hasRequiredIsArray = 1;
-	isArray = /*@__PURE__*/ requireIsArray$1();
+	isArray = /*@__PURE__*/ requireIsArray$4();
 	return isArray;
 }
 
@@ -4956,7 +6053,7 @@ function requireEs_array_reverse () {
 	hasRequiredEs_array_reverse = 1;
 	var $ = /*@__PURE__*/ require_export();
 	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-	var isArray = /*@__PURE__*/ requireIsArray$3();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
 
 	var nativeReverse = uncurryThis([].reverse);
 	var test = [1, 2];
@@ -5032,41 +6129,6 @@ var reverseExports = requireReverse();
 var _reverseInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(reverseExports);
 
 var es_array_splice = {};
-
-var arraySetLength;
-var hasRequiredArraySetLength;
-
-function requireArraySetLength () {
-	if (hasRequiredArraySetLength) return arraySetLength;
-	hasRequiredArraySetLength = 1;
-	var DESCRIPTORS = /*@__PURE__*/ requireDescriptors();
-	var isArray = /*@__PURE__*/ requireIsArray$3();
-
-	var $TypeError = TypeError;
-	// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe
-	var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-	// Safari < 13 does not throw an error in this case
-	var SILENT_ON_NON_WRITABLE_LENGTH_SET = DESCRIPTORS && !function () {
-	  // makes no sense without proper strict mode support
-	  if (this !== undefined) return true;
-	  try {
-	    // eslint-disable-next-line es/no-object-defineproperty -- safe
-	    Object.defineProperty([], 'length', { writable: false }).length = 1;
-	  } catch (error) {
-	    return error instanceof TypeError;
-	  }
-	}();
-
-	arraySetLength = SILENT_ON_NON_WRITABLE_LENGTH_SET ? function (O, length) {
-	  if (isArray(O) && !getOwnPropertyDescriptor(O, 'length').writable) {
-	    throw new $TypeError('Cannot set read only .length');
-	  } return O.length = length;
-	} : function (O, length) {
-	  return O.length = length;
-	};
-	return arraySetLength;
-}
 
 var deletePropertyOrThrow;
 var hasRequiredDeletePropertyOrThrow;
@@ -9470,7 +10532,7 @@ Hammer$2.defaults;
 /**
  * Use this symbol to delete properies in deepObjectAssign.
  */
-const DELETE = _Symbol$1("DELETE");
+const DELETE = _Symbol("DELETE");
 /**
  * Pure version of deepObjectAssign, it doesn't modify any of it's arguments.
  * @param base - The base object that fullfils the whole interface T.
@@ -9582,7 +10644,11 @@ function Alea() {
  * @returns A ready to use seeded generator.
  */
 function AleaImplementation(seed) {
-  let [s0, s1, s2] = mashSeed(seed);
+  let _mashSeed = mashSeed(seed),
+    _mashSeed2 = _slicedToArray(_mashSeed, 3),
+    s0 = _mashSeed2[0],
+    s1 = _mashSeed2[1],
+    s2 = _mashSeed2[2];
   let c = 1;
   const random = () => {
     const t = 2091639 * s0 + c * 2.3283064365386963e-10; // 2^-32
@@ -13848,11 +14914,13 @@ var dotparser = /*#__PURE__*/Object.freeze({
  */
 function parseGephi(gephiJSON) {
   var _context;
-  let {
-    fixed: isNodePositionFixed = false,
-    inheritColor: isEdgeColorInherited = false,
-    parseColor: isNodeColorParsed = false
-  } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  let _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    _ref$fixed = _ref.fixed,
+    isNodePositionFixed = _ref$fixed === void 0 ? false : _ref$fixed,
+    _ref$inheritColor = _ref.inheritColor,
+    isEdgeColorInherited = _ref$inheritColor === void 0 ? false : _ref$inheritColor,
+    _ref$parseColor = _ref.parseColor,
+    isNodeColorParsed = _ref$parseColor === void 0 ? false : _ref$parseColor;
   const gEdges = gephiJSON.edges;
   const vEdges = _mapInstanceProperty(gEdges).call(gEdges, gEdge => {
     const vEdge = {
@@ -14148,7 +15216,10 @@ var locales = /*#__PURE__*/Object.freeze({
  */
 function normalizeLanguageCode(locales, rawCode) {
   try {
-    const [rawLanguage, rawCountry] = rawCode.split(/[-_ /]/, 2);
+    const _rawCode$split = rawCode.split(/[-_ /]/, 2),
+      _rawCode$split2 = _slicedToArray(_rawCode$split, 2),
+      rawLanguage = _rawCode$split2[0],
+      rawCountry = _rawCode$split2[1];
     const language = rawLanguage != null ? rawLanguage.toLowerCase() : null;
     const country = rawCountry != null ? rawCountry.toUpperCase() : null;
     if (language && country) {
@@ -14579,101 +15650,6 @@ function requireInternalMetadata () {
 	return internalMetadata.exports;
 }
 
-var isArrayIteratorMethod;
-var hasRequiredIsArrayIteratorMethod;
-
-function requireIsArrayIteratorMethod () {
-	if (hasRequiredIsArrayIteratorMethod) return isArrayIteratorMethod;
-	hasRequiredIsArrayIteratorMethod = 1;
-	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
-	var Iterators = /*@__PURE__*/ requireIterators();
-
-	var ITERATOR = wellKnownSymbol('iterator');
-	var ArrayPrototype = Array.prototype;
-
-	// check on default Array iterator
-	isArrayIteratorMethod = function (it) {
-	  return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
-	};
-	return isArrayIteratorMethod;
-}
-
-var getIteratorMethod;
-var hasRequiredGetIteratorMethod;
-
-function requireGetIteratorMethod () {
-	if (hasRequiredGetIteratorMethod) return getIteratorMethod;
-	hasRequiredGetIteratorMethod = 1;
-	var classof = /*@__PURE__*/ requireClassof();
-	var getMethod = /*@__PURE__*/ requireGetMethod();
-	var isNullOrUndefined = /*@__PURE__*/ requireIsNullOrUndefined();
-	var Iterators = /*@__PURE__*/ requireIterators();
-	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
-
-	var ITERATOR = wellKnownSymbol('iterator');
-
-	getIteratorMethod = function (it) {
-	  if (!isNullOrUndefined(it)) return getMethod(it, ITERATOR)
-	    || getMethod(it, '@@iterator')
-	    || Iterators[classof(it)];
-	};
-	return getIteratorMethod;
-}
-
-var getIterator$5;
-var hasRequiredGetIterator$6;
-
-function requireGetIterator$6 () {
-	if (hasRequiredGetIterator$6) return getIterator$5;
-	hasRequiredGetIterator$6 = 1;
-	var call = /*@__PURE__*/ requireFunctionCall();
-	var aCallable = /*@__PURE__*/ requireACallable();
-	var anObject = /*@__PURE__*/ requireAnObject();
-	var tryToString = /*@__PURE__*/ requireTryToString();
-	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod();
-
-	var $TypeError = TypeError;
-
-	getIterator$5 = function (argument, usingIterator) {
-	  var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
-	  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
-	  throw new $TypeError(tryToString(argument) + ' is not iterable');
-	};
-	return getIterator$5;
-}
-
-var iteratorClose;
-var hasRequiredIteratorClose;
-
-function requireIteratorClose () {
-	if (hasRequiredIteratorClose) return iteratorClose;
-	hasRequiredIteratorClose = 1;
-	var call = /*@__PURE__*/ requireFunctionCall();
-	var anObject = /*@__PURE__*/ requireAnObject();
-	var getMethod = /*@__PURE__*/ requireGetMethod();
-
-	iteratorClose = function (iterator, kind, value) {
-	  var innerResult, innerError;
-	  anObject(iterator);
-	  try {
-	    innerResult = getMethod(iterator, 'return');
-	    if (!innerResult) {
-	      if (kind === 'throw') throw value;
-	      return value;
-	    }
-	    innerResult = call(innerResult, iterator);
-	  } catch (error) {
-	    innerError = true;
-	    innerResult = error;
-	  }
-	  if (kind === 'throw') throw value;
-	  if (innerError) throw innerResult;
-	  anObject(innerResult);
-	  return value;
-	};
-	return iteratorClose;
-}
-
 var iterate;
 var hasRequiredIterate;
 
@@ -14688,7 +15664,7 @@ function requireIterate () {
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
 	var getIterator = /*@__PURE__*/ requireGetIterator$6();
-	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
 	var iteratorClose = /*@__PURE__*/ requireIteratorClose();
 
 	var $TypeError = TypeError;
@@ -15220,91 +16196,6 @@ function requireEs_map_groupBy () {
 	  }
 	});
 	return es_map_groupBy;
-}
-
-var es_string_iterator = {};
-
-var stringMultibyte;
-var hasRequiredStringMultibyte;
-
-function requireStringMultibyte () {
-	if (hasRequiredStringMultibyte) return stringMultibyte;
-	hasRequiredStringMultibyte = 1;
-	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-	var toIntegerOrInfinity = /*@__PURE__*/ requireToIntegerOrInfinity();
-	var toString = /*@__PURE__*/ requireToString();
-	var requireObjectCoercible = /*@__PURE__*/ requireRequireObjectCoercible();
-
-	var charAt = uncurryThis(''.charAt);
-	var charCodeAt = uncurryThis(''.charCodeAt);
-	var stringSlice = uncurryThis(''.slice);
-
-	var createMethod = function (CONVERT_TO_STRING) {
-	  return function ($this, pos) {
-	    var S = toString(requireObjectCoercible($this));
-	    var position = toIntegerOrInfinity(pos);
-	    var size = S.length;
-	    var first, second;
-	    if (position < 0 || position >= size) return CONVERT_TO_STRING ? '' : undefined;
-	    first = charCodeAt(S, position);
-	    return first < 0xD800 || first > 0xDBFF || position + 1 === size
-	      || (second = charCodeAt(S, position + 1)) < 0xDC00 || second > 0xDFFF
-	        ? CONVERT_TO_STRING
-	          ? charAt(S, position)
-	          : first
-	        : CONVERT_TO_STRING
-	          ? stringSlice(S, position, position + 2)
-	          : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
-	  };
-	};
-
-	stringMultibyte = {
-	  // `String.prototype.codePointAt` method
-	  // https://tc39.es/ecma262/#sec-string.prototype.codepointat
-	  codeAt: createMethod(false),
-	  // `String.prototype.at` method
-	  // https://github.com/mathiasbynens/String.prototype.at
-	  charAt: createMethod(true)
-	};
-	return stringMultibyte;
-}
-
-var hasRequiredEs_string_iterator;
-
-function requireEs_string_iterator () {
-	if (hasRequiredEs_string_iterator) return es_string_iterator;
-	hasRequiredEs_string_iterator = 1;
-	var charAt = /*@__PURE__*/ requireStringMultibyte().charAt;
-	var toString = /*@__PURE__*/ requireToString();
-	var InternalStateModule = /*@__PURE__*/ requireInternalState();
-	var defineIterator = /*@__PURE__*/ requireIteratorDefine();
-	var createIterResultObject = /*@__PURE__*/ requireCreateIterResultObject();
-
-	var STRING_ITERATOR = 'String Iterator';
-	var setInternalState = InternalStateModule.set;
-	var getInternalState = InternalStateModule.getterFor(STRING_ITERATOR);
-
-	// `String.prototype[@@iterator]` method
-	// https://tc39.es/ecma262/#sec-string.prototype-@@iterator
-	defineIterator(String, 'String', function (iterated) {
-	  setInternalState(this, {
-	    type: STRING_ITERATOR,
-	    string: toString(iterated),
-	    index: 0
-	  });
-	// `%StringIteratorPrototype%.next` method
-	// https://tc39.es/ecma262/#sec-%stringiteratorprototype%.next
-	}, function next() {
-	  var state = getInternalState(this);
-	  var string = state.string;
-	  var index = state.index;
-	  var point;
-	  if (index >= string.length) return createIterResultObject(undefined, true);
-	  point = charAt(string, index);
-	  state.index += point.length;
-	  return createIterResultObject(point, false);
-	});
-	return es_string_iterator;
 }
 
 var map$2;
@@ -16251,354 +17142,6 @@ function requireDefineProperty$1 () {
 var definePropertyExports$1 = /*@__PURE__*/ requireDefineProperty$1();
 var _Object$defineProperty$1 = /*@__PURE__*/getDefaultExportFromCjs(definePropertyExports$1);
 
-var esnext_function_metadata = {};
-
-var hasRequiredEsnext_function_metadata;
-
-function requireEsnext_function_metadata () {
-	if (hasRequiredEsnext_function_metadata) return esnext_function_metadata;
-	hasRequiredEsnext_function_metadata = 1;
-	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
-	var defineProperty = /*@__PURE__*/ requireObjectDefineProperty().f;
-
-	var METADATA = wellKnownSymbol('metadata');
-	var FunctionPrototype = Function.prototype;
-
-	// Function.prototype[@@metadata]
-	// https://github.com/tc39/proposal-decorator-metadata
-	if (FunctionPrototype[METADATA] === undefined) {
-	  defineProperty(FunctionPrototype, METADATA, {
-	    value: null
-	  });
-	}
-	return esnext_function_metadata;
-}
-
-var esnext_symbol_asyncDispose = {};
-
-var hasRequiredEsnext_symbol_asyncDispose;
-
-function requireEsnext_symbol_asyncDispose () {
-	if (hasRequiredEsnext_symbol_asyncDispose) return esnext_symbol_asyncDispose;
-	hasRequiredEsnext_symbol_asyncDispose = 1;
-	// TODO: Remove from `core-js@4`
-	requireEs_symbol_asyncDispose();
-	return esnext_symbol_asyncDispose;
-}
-
-var esnext_symbol_dispose = {};
-
-var hasRequiredEsnext_symbol_dispose;
-
-function requireEsnext_symbol_dispose () {
-	if (hasRequiredEsnext_symbol_dispose) return esnext_symbol_dispose;
-	hasRequiredEsnext_symbol_dispose = 1;
-	// TODO: Remove from `core-js@4`
-	requireEs_symbol_dispose();
-	return esnext_symbol_dispose;
-}
-
-var esnext_symbol_metadata = {};
-
-var hasRequiredEsnext_symbol_metadata;
-
-function requireEsnext_symbol_metadata () {
-	if (hasRequiredEsnext_symbol_metadata) return esnext_symbol_metadata;
-	hasRequiredEsnext_symbol_metadata = 1;
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	// `Symbol.metadata` well-known symbol
-	// https://github.com/tc39/proposal-decorators
-	defineWellKnownSymbol('metadata');
-	return esnext_symbol_metadata;
-}
-
-var symbol$2;
-var hasRequiredSymbol$2;
-
-function requireSymbol$2 () {
-	if (hasRequiredSymbol$2) return symbol$2;
-	hasRequiredSymbol$2 = 1;
-	var parent = /*@__PURE__*/ requireSymbol$4();
-
-	requireEsnext_function_metadata();
-	requireEsnext_symbol_asyncDispose();
-	requireEsnext_symbol_dispose();
-	requireEsnext_symbol_metadata();
-
-	symbol$2 = parent;
-	return symbol$2;
-}
-
-var esnext_symbol_isRegisteredSymbol = {};
-
-var symbolIsRegistered;
-var hasRequiredSymbolIsRegistered;
-
-function requireSymbolIsRegistered () {
-	if (hasRequiredSymbolIsRegistered) return symbolIsRegistered;
-	hasRequiredSymbolIsRegistered = 1;
-	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
-	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-
-	var Symbol = getBuiltIn('Symbol');
-	var keyFor = Symbol.keyFor;
-	var thisSymbolValue = uncurryThis(Symbol.prototype.valueOf);
-
-	// `Symbol.isRegisteredSymbol` method
-	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregisteredsymbol
-	symbolIsRegistered = Symbol.isRegisteredSymbol || function isRegisteredSymbol(value) {
-	  try {
-	    return keyFor(thisSymbolValue(value)) !== undefined;
-	  } catch (error) {
-	    return false;
-	  }
-	};
-	return symbolIsRegistered;
-}
-
-var hasRequiredEsnext_symbol_isRegisteredSymbol;
-
-function requireEsnext_symbol_isRegisteredSymbol () {
-	if (hasRequiredEsnext_symbol_isRegisteredSymbol) return esnext_symbol_isRegisteredSymbol;
-	hasRequiredEsnext_symbol_isRegisteredSymbol = 1;
-	var $ = /*@__PURE__*/ require_export();
-	var isRegisteredSymbol = /*@__PURE__*/ requireSymbolIsRegistered();
-
-	// `Symbol.isRegisteredSymbol` method
-	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregisteredsymbol
-	$({ target: 'Symbol', stat: true }, {
-	  isRegisteredSymbol: isRegisteredSymbol
-	});
-	return esnext_symbol_isRegisteredSymbol;
-}
-
-var esnext_symbol_isWellKnownSymbol = {};
-
-var symbolIsWellKnown;
-var hasRequiredSymbolIsWellKnown;
-
-function requireSymbolIsWellKnown () {
-	if (hasRequiredSymbolIsWellKnown) return symbolIsWellKnown;
-	hasRequiredSymbolIsWellKnown = 1;
-	var shared = /*@__PURE__*/ requireShared();
-	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
-	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-	var isSymbol = /*@__PURE__*/ requireIsSymbol();
-	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
-
-	var Symbol = getBuiltIn('Symbol');
-	var $isWellKnownSymbol = Symbol.isWellKnownSymbol;
-	var getOwnPropertyNames = getBuiltIn('Object', 'getOwnPropertyNames');
-	var thisSymbolValue = uncurryThis(Symbol.prototype.valueOf);
-	var WellKnownSymbolsStore = shared('wks');
-
-	for (var i = 0, symbolKeys = getOwnPropertyNames(Symbol), symbolKeysLength = symbolKeys.length; i < symbolKeysLength; i++) {
-	  // some old engines throws on access to some keys like `arguments` or `caller`
-	  try {
-	    var symbolKey = symbolKeys[i];
-	    if (isSymbol(Symbol[symbolKey])) wellKnownSymbol(symbolKey);
-	  } catch (error) { /* empty */ }
-	}
-
-	// `Symbol.isWellKnownSymbol` method
-	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknownsymbol
-	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
-	symbolIsWellKnown = function isWellKnownSymbol(value) {
-	  if ($isWellKnownSymbol && $isWellKnownSymbol(value)) return true;
-	  try {
-	    var symbol = thisSymbolValue(value);
-	    for (var j = 0, keys = getOwnPropertyNames(WellKnownSymbolsStore), keysLength = keys.length; j < keysLength; j++) {
-	      // eslint-disable-next-line eqeqeq -- polyfilled symbols case
-	      if (WellKnownSymbolsStore[keys[j]] == symbol) return true;
-	    }
-	  } catch (error) { /* empty */ }
-	  return false;
-	};
-	return symbolIsWellKnown;
-}
-
-var hasRequiredEsnext_symbol_isWellKnownSymbol;
-
-function requireEsnext_symbol_isWellKnownSymbol () {
-	if (hasRequiredEsnext_symbol_isWellKnownSymbol) return esnext_symbol_isWellKnownSymbol;
-	hasRequiredEsnext_symbol_isWellKnownSymbol = 1;
-	var $ = /*@__PURE__*/ require_export();
-	var isWellKnownSymbol = /*@__PURE__*/ requireSymbolIsWellKnown();
-
-	// `Symbol.isWellKnownSymbol` method
-	// https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknownsymbol
-	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
-	$({ target: 'Symbol', stat: true, forced: true }, {
-	  isWellKnownSymbol: isWellKnownSymbol
-	});
-	return esnext_symbol_isWellKnownSymbol;
-}
-
-var esnext_symbol_customMatcher = {};
-
-var hasRequiredEsnext_symbol_customMatcher;
-
-function requireEsnext_symbol_customMatcher () {
-	if (hasRequiredEsnext_symbol_customMatcher) return esnext_symbol_customMatcher;
-	hasRequiredEsnext_symbol_customMatcher = 1;
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	// `Symbol.customMatcher` well-known symbol
-	// https://github.com/tc39/proposal-pattern-matching
-	defineWellKnownSymbol('customMatcher');
-	return esnext_symbol_customMatcher;
-}
-
-var esnext_symbol_observable = {};
-
-var hasRequiredEsnext_symbol_observable;
-
-function requireEsnext_symbol_observable () {
-	if (hasRequiredEsnext_symbol_observable) return esnext_symbol_observable;
-	hasRequiredEsnext_symbol_observable = 1;
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	// `Symbol.observable` well-known symbol
-	// https://github.com/tc39/proposal-observable
-	defineWellKnownSymbol('observable');
-	return esnext_symbol_observable;
-}
-
-var esnext_symbol_isRegistered = {};
-
-var hasRequiredEsnext_symbol_isRegistered;
-
-function requireEsnext_symbol_isRegistered () {
-	if (hasRequiredEsnext_symbol_isRegistered) return esnext_symbol_isRegistered;
-	hasRequiredEsnext_symbol_isRegistered = 1;
-	var $ = /*@__PURE__*/ require_export();
-	var isRegisteredSymbol = /*@__PURE__*/ requireSymbolIsRegistered();
-
-	// `Symbol.isRegistered` method
-	// obsolete version of https://tc39.es/proposal-symbol-predicates/#sec-symbol-isregisteredsymbol
-	$({ target: 'Symbol', stat: true, name: 'isRegisteredSymbol' }, {
-	  isRegistered: isRegisteredSymbol
-	});
-	return esnext_symbol_isRegistered;
-}
-
-var esnext_symbol_isWellKnown = {};
-
-var hasRequiredEsnext_symbol_isWellKnown;
-
-function requireEsnext_symbol_isWellKnown () {
-	if (hasRequiredEsnext_symbol_isWellKnown) return esnext_symbol_isWellKnown;
-	hasRequiredEsnext_symbol_isWellKnown = 1;
-	var $ = /*@__PURE__*/ require_export();
-	var isWellKnownSymbol = /*@__PURE__*/ requireSymbolIsWellKnown();
-
-	// `Symbol.isWellKnown` method
-	// obsolete version of https://tc39.es/proposal-symbol-predicates/#sec-symbol-iswellknownsymbol
-	// We should patch it for newly added well-known symbols. If it's not required, this module just will not be injected
-	$({ target: 'Symbol', stat: true, name: 'isWellKnownSymbol', forced: true }, {
-	  isWellKnown: isWellKnownSymbol
-	});
-	return esnext_symbol_isWellKnown;
-}
-
-var esnext_symbol_matcher = {};
-
-var hasRequiredEsnext_symbol_matcher;
-
-function requireEsnext_symbol_matcher () {
-	if (hasRequiredEsnext_symbol_matcher) return esnext_symbol_matcher;
-	hasRequiredEsnext_symbol_matcher = 1;
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	// `Symbol.matcher` well-known symbol
-	// https://github.com/tc39/proposal-pattern-matching
-	defineWellKnownSymbol('matcher');
-	return esnext_symbol_matcher;
-}
-
-var esnext_symbol_metadataKey = {};
-
-var hasRequiredEsnext_symbol_metadataKey;
-
-function requireEsnext_symbol_metadataKey () {
-	if (hasRequiredEsnext_symbol_metadataKey) return esnext_symbol_metadataKey;
-	hasRequiredEsnext_symbol_metadataKey = 1;
-	// TODO: Remove from `core-js@4`
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	// `Symbol.metadataKey` well-known symbol
-	// https://github.com/tc39/proposal-decorator-metadata
-	defineWellKnownSymbol('metadataKey');
-	return esnext_symbol_metadataKey;
-}
-
-var esnext_symbol_patternMatch = {};
-
-var hasRequiredEsnext_symbol_patternMatch;
-
-function requireEsnext_symbol_patternMatch () {
-	if (hasRequiredEsnext_symbol_patternMatch) return esnext_symbol_patternMatch;
-	hasRequiredEsnext_symbol_patternMatch = 1;
-	// TODO: remove from `core-js@4`
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	// `Symbol.patternMatch` well-known symbol
-	// https://github.com/tc39/proposal-pattern-matching
-	defineWellKnownSymbol('patternMatch');
-	return esnext_symbol_patternMatch;
-}
-
-var esnext_symbol_replaceAll = {};
-
-var hasRequiredEsnext_symbol_replaceAll;
-
-function requireEsnext_symbol_replaceAll () {
-	if (hasRequiredEsnext_symbol_replaceAll) return esnext_symbol_replaceAll;
-	hasRequiredEsnext_symbol_replaceAll = 1;
-	// TODO: remove from `core-js@4`
-	var defineWellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbolDefine();
-
-	defineWellKnownSymbol('replaceAll');
-	return esnext_symbol_replaceAll;
-}
-
-var symbol$1;
-var hasRequiredSymbol$1;
-
-function requireSymbol$1 () {
-	if (hasRequiredSymbol$1) return symbol$1;
-	hasRequiredSymbol$1 = 1;
-	var parent = /*@__PURE__*/ requireSymbol$2();
-	requireEsnext_symbol_isRegisteredSymbol();
-	requireEsnext_symbol_isWellKnownSymbol();
-	requireEsnext_symbol_customMatcher();
-	requireEsnext_symbol_observable();
-	// TODO: Remove from `core-js@4`
-	requireEsnext_symbol_isRegistered();
-	requireEsnext_symbol_isWellKnown();
-	requireEsnext_symbol_matcher();
-	requireEsnext_symbol_metadataKey();
-	requireEsnext_symbol_patternMatch();
-	requireEsnext_symbol_replaceAll();
-
-	symbol$1 = parent;
-	return symbol$1;
-}
-
-var symbol;
-var hasRequiredSymbol;
-
-function requireSymbol () {
-	if (hasRequiredSymbol) return symbol;
-	hasRequiredSymbol = 1;
-	symbol = /*@__PURE__*/ requireSymbol$1();
-	return symbol;
-}
-
-var symbolExports = /*@__PURE__*/ requireSymbol();
-var _Symbol = /*@__PURE__*/getDefaultExportFromCjs(symbolExports);
-
 var iterator$5;
 var hasRequiredIterator$5;
 
@@ -16667,10 +17210,10 @@ var _Symbol$iterator$1 = /*@__PURE__*/getDefaultExportFromCjs(iteratorExports$1)
 function _typeof(o) {
   "@babel/helpers - typeof";
 
-  return _typeof = "function" == typeof _Symbol && "symbol" == typeof _Symbol$iterator$1 ? function (o) {
+  return _typeof = "function" == typeof _Symbol$1 && "symbol" == typeof _Symbol$iterator$1 ? function (o) {
     return typeof o;
   } : function (o) {
-    return o && "function" == typeof _Symbol && o.constructor === _Symbol && o !== _Symbol.prototype ? "symbol" : typeof o;
+    return o && "function" == typeof _Symbol$1 && o.constructor === _Symbol$1 && o !== _Symbol$1.prototype ? "symbol" : typeof o;
   }, _typeof(o);
 }
 
@@ -16920,7 +17463,7 @@ var hasRequiredFlattenIntoArray;
 function requireFlattenIntoArray () {
 	if (hasRequiredFlattenIntoArray) return flattenIntoArray_1;
 	hasRequiredFlattenIntoArray = 1;
-	var isArray = /*@__PURE__*/ requireIsArray$3();
+	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var doesNotExceedSafeInteger = /*@__PURE__*/ requireDoesNotExceedSafeInteger();
 	var bind = /*@__PURE__*/ requireFunctionBindContext();
@@ -18813,7 +19356,10 @@ class DataStream {
    * Return an iterable of key, value pairs for every entry in the stream.
    */
   *[_Symbol$iterator]() {
-    for (const [id, item] of this._pairs) {
+    for (const _ref of this._pairs) {
+      var _ref2 = _slicedToArray(_ref, 2);
+      const id = _ref2[0];
+      const item = _ref2[1];
       yield [id, item];
     }
   }
@@ -18821,7 +19367,10 @@ class DataStream {
    * Return an iterable of key, value pairs for every entry in the stream.
    */
   *entries() {
-    for (const [id, item] of this._pairs) {
+    for (const _ref3 of this._pairs) {
+      var _ref4 = _slicedToArray(_ref3, 2);
+      const id = _ref4[0];
+      const item = _ref4[1];
       yield [id, item];
     }
   }
@@ -18829,7 +19378,9 @@ class DataStream {
    * Return an iterable of keys in the stream.
    */
   *keys() {
-    for (const [id] of this._pairs) {
+    for (const _ref5 of this._pairs) {
+      var _ref6 = _slicedToArray(_ref5, 1);
+      const id = _ref6[0];
       yield id;
     }
   }
@@ -18837,7 +19388,9 @@ class DataStream {
    * Return an iterable of values in the stream.
    */
   *values() {
-    for (const [, item] of this._pairs) {
+    for (const _ref7 of this._pairs) {
+      var _ref8 = _slicedToArray(_ref7, 2);
+      const item = _ref8[1];
       yield item;
     }
   }
@@ -18878,7 +19431,10 @@ class DataStream {
    */
   toObjectMap() {
     const map = _Object$create(null);
-    for (const [id, item] of this._pairs) {
+    for (const _ref9 of this._pairs) {
+      var _ref0 = _slicedToArray(_ref9, 2);
+      const id = _ref0[0];
+      const item = _ref0[1];
       map[id] = item;
     }
     return map;
@@ -18936,7 +19492,10 @@ class DataStream {
    */
   distinct(callback) {
     const set = new _Set();
-    for (const [id, item] of this._pairs) {
+    for (const _ref1 of this._pairs) {
+      var _ref10 = _slicedToArray(_ref1, 2);
+      const id = _ref10[0];
+      const item = _ref10[1];
       set.add(callback(item, id));
     }
     return set;
@@ -18950,7 +19509,10 @@ class DataStream {
     const pairs = this._pairs;
     return new DataStream({
       *[_Symbol$iterator]() {
-        for (const [id, item] of pairs) {
+        for (const _ref11 of pairs) {
+          var _ref12 = _slicedToArray(_ref11, 2);
+          const id = _ref12[0];
+          const item = _ref12[1];
           if (callback(item, id)) {
             yield [id, item];
           }
@@ -18963,7 +19525,10 @@ class DataStream {
    * @param callback - The function that will be invoked for each item.
    */
   forEach(callback) {
-    for (const [id, item] of this._pairs) {
+    for (const _ref13 of this._pairs) {
+      var _ref14 = _slicedToArray(_ref13, 2);
+      const id = _ref14[0];
+      const item = _ref14[1];
       callback(item, id);
     }
   }
@@ -18977,7 +19542,10 @@ class DataStream {
     const pairs = this._pairs;
     return new DataStream({
       *[_Symbol$iterator]() {
-        for (const [id, item] of pairs) {
+        for (const _ref15 of pairs) {
+          var _ref16 = _slicedToArray(_ref15, 2);
+          const id = _ref16[0];
+          const item = _ref16[1];
           yield [id, callback(item, id)];
         }
       }
@@ -18997,7 +19565,9 @@ class DataStream {
     let maxItem = curr.value[1];
     let maxValue = callback(curr.value[1], curr.value[0]);
     while (!(curr = iter.next()).done) {
-      const [id, item] = curr.value;
+      const _curr$value = _slicedToArray(curr.value, 2),
+        id = _curr$value[0],
+        item = _curr$value[1];
       const value = callback(item, id);
       if (value > maxValue) {
         maxValue = value;
@@ -19020,7 +19590,9 @@ class DataStream {
     let minItem = curr.value[1];
     let minValue = callback(curr.value[1], curr.value[0]);
     while (!(curr = iter.next()).done) {
-      const [id, item] = curr.value;
+      const _curr$value2 = _slicedToArray(curr.value, 2),
+        id = _curr$value2[0],
+        item = _curr$value2[1];
       const value = callback(item, id);
       if (value < minValue) {
         minValue = value;
@@ -19037,7 +19609,10 @@ class DataStream {
    * @returns The reduced value.
    */
   reduce(callback, accumulator) {
-    for (const [id, item] of this._pairs) {
+    for (const _ref17 of this._pairs) {
+      var _ref18 = _slicedToArray(_ref17, 2);
+      const id = _ref18[0];
+      const item = _ref18[1];
       accumulator = callback(accumulator, item, id);
     }
     return accumulator;
@@ -19051,9 +19626,13 @@ class DataStream {
     return new DataStream({
       [_Symbol$iterator]: () => {
         var _context1;
-        return _getIterator(_sortInstanceProperty(_context1 = [...this._pairs]).call(_context1, (_ref, _ref2) => {
-          let [idA, itemA] = _ref;
-          let [idB, itemB] = _ref2;
+        return _getIterator(_sortInstanceProperty(_context1 = [...this._pairs]).call(_context1, (_ref19, _ref20) => {
+          let _ref21 = _slicedToArray(_ref19, 2),
+            idA = _ref21[0],
+            itemA = _ref21[1];
+          let _ref22 = _slicedToArray(_ref20, 2),
+            idB = _ref22[0],
+            itemB = _ref22[1];
           return callback(itemA, itemB, idA, idB);
         }));
       }
@@ -19387,11 +19966,9 @@ class DataSet extends DataSetPart {
         oldData,
         update
       };
-    })).call(_context10, _ref3 => {
-      let {
-        oldData,
-        update
-      } = _ref3;
+    })).call(_context10, _ref23 => {
+      let oldData = _ref23.oldData,
+        update = _ref23.update;
       const id = oldData[this._idProp];
       const updatedData = pureDeepObjectAssign(oldData, update);
       this._data.set(id, updatedData);
@@ -20984,7 +21561,10 @@ class MarkupAccumulator {
    */
   match(tag) {
     let advance = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    const [regExp, length] = this.prepareRegExp(tag);
+    const _this$prepareRegExp = this.prepareRegExp(tag),
+      _this$prepareRegExp2 = _slicedToArray(_this$prepareRegExp, 2),
+      regExp = _this$prepareRegExp2[0],
+      length = _this$prepareRegExp2[1];
     const matched = regExp.test(this.text.substr(this.position, length));
     if (matched && advance) {
       this.position += length - 1;
@@ -21805,7 +22385,10 @@ class Label {
   _drawText(ctx, x, y) {
     let baseline = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "middle";
     let viewFontSize = arguments.length > 4 ? arguments[4] : undefined;
-    [x, y] = this._setAlignment(ctx, x, y, baseline);
+    var _this$_setAlignment = this._setAlignment(ctx, x, y, baseline);
+    var _this$_setAlignment2 = _slicedToArray(_this$_setAlignment, 2);
+    x = _this$_setAlignment2[0];
+    y = _this$_setAlignment2[1];
     ctx.textAlign = "left";
     x = x - this.size.width / 2; // Shift label 1/2-distance to the left
     if (this.fontOptions.valign && this.size.height > this.size.labelHeight) {
@@ -21830,7 +22413,10 @@ class Label {
         for (let j = 0; j < line.blocks.length; j++) {
           const block = line.blocks[j];
           ctx.font = block.font;
-          const [fontColor, strokeColor] = this._getColor(block.color, viewFontSize, block.strokeColor);
+          const _this$_getColor = this._getColor(block.color, viewFontSize, block.strokeColor),
+            _this$_getColor2 = _slicedToArray(_this$_getColor, 2),
+            fontColor = _this$_getColor2[0],
+            strokeColor = _this$_getColor2[1];
           if (block.strokeWidth > 0) {
             ctx.lineWidth = block.strokeWidth;
             ctx.strokeStyle = strokeColor;
@@ -25496,7 +26082,11 @@ class EdgeBase {
       // draw line
       this._line(ctx, values, viaNode, fromPoint, toPoint);
     } else {
-      const [x, y, radius] = this._getCircleData(ctx);
+      const _this$_getCircleData = this._getCircleData(ctx),
+        _this$_getCircleData2 = _slicedToArray(_this$_getCircleData, 3),
+        x = _this$_getCircleData2[0],
+        y = _this$_getCircleData2[1],
+        radius = _this$_getCircleData2[2];
       this._circle(ctx, values, x, y, radius);
     }
   }
@@ -25522,7 +26112,11 @@ class EdgeBase {
         // draw line
         this._line(ctx, values, viaNode);
       } else {
-        const [x, y, radius] = this._getCircleData(ctx);
+        const _this$_getCircleData3 = this._getCircleData(ctx),
+          _this$_getCircleData4 = _slicedToArray(_this$_getCircleData3, 3),
+          x = _this$_getCircleData4[0],
+          y = _this$_getCircleData4[1],
+          radius = _this$_getCircleData4[2];
         this._circle(ctx, values, x, y, radius);
       }
       // restore the dash settings.
@@ -25535,7 +26129,11 @@ class EdgeBase {
         // draw line
         drawDashedLine(ctx, this.from.x, this.from.y, this.to.x, this.to.y, pattern);
       } else {
-        const [x, y, radius] = this._getCircleData(ctx);
+        const _this$_getCircleData5 = this._getCircleData(ctx),
+          _this$_getCircleData6 = _slicedToArray(_this$_getCircleData5, 3),
+          x = _this$_getCircleData6[0],
+          y = _this$_getCircleData6[1],
+          radius = _this$_getCircleData6[2];
         this._circle(ctx, values, x, y, radius);
       }
       // draw shadow if enabled
@@ -25568,7 +26166,10 @@ class EdgeBase {
       };
     } else {
       var _context;
-      const [x, y] = _sliceInstanceProperty(_context = this._getCircleData(ctx)).call(_context, 0, 2);
+      const _this$_getCircleData$ = _sliceInstanceProperty(_context = this._getCircleData(ctx)).call(_context, 0, 2),
+        _this$_getCircleData$2 = _slicedToArray(_this$_getCircleData$, 2),
+        x = _this$_getCircleData$2[0],
+        y = _this$_getCircleData$2[1];
       return {
         from: this._findBorderPositionCircle(this.from, ctx, {
           x,
@@ -25782,7 +26383,11 @@ class EdgeBase {
     if (this.from != this.to) {
       return this._getDistanceToEdge(x1, y1, x2, y2, x3, y3);
     } else {
-      const [x, y, radius] = this._getCircleData(undefined);
+      const _this$_getCircleData7 = this._getCircleData(undefined),
+        _this$_getCircleData8 = _slicedToArray(_this$_getCircleData7, 3),
+        x = _this$_getCircleData8[0],
+        y = _this$_getCircleData8[1],
+        radius = _this$_getCircleData8[2];
       const dx = x - x3;
       const dy = y - y3;
       return Math.abs(Math.sqrt(dx * dx + dy * dy) - radius);
@@ -25877,7 +26482,11 @@ class EdgeBase {
       }
     } else {
       // draw circle
-      const [x, y, radius] = this._getCircleData(ctx);
+      const _this$_getCircleData9 = this._getCircleData(ctx),
+        _this$_getCircleData0 = _slicedToArray(_this$_getCircleData9, 3),
+        x = _this$_getCircleData0[0],
+        y = _this$_getCircleData0[1],
+        radius = _this$_getCircleData0[2];
       if (position === "from") {
         const low = this.options.selfReference.angle;
         const high = this.options.selfReference.angle + Math.PI;
@@ -26274,7 +26883,11 @@ class BezierEdgeDynamic extends BezierEdgeBase {
   getPoint(position) {
     let viaNode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.via;
     if (this.from === this.to) {
-      const [cx, cy, cr] = this._getCircleData();
+      const _this$_getCircleData = this._getCircleData(),
+        _this$_getCircleData2 = _slicedToArray(_this$_getCircleData, 3),
+        cx = _this$_getCircleData2[0],
+        cy = _this$_getCircleData2[1],
+        cr = _this$_getCircleData2[2];
       const a = 2 * Math.PI * (1 - position);
       return {
         x: cx + cr * Math.sin(a),
@@ -26568,13 +27181,19 @@ class CubicBezierEdge extends CubicBezierEdgeBase {
   }
   /** @inheritDoc */
   _getDistanceToEdge(x1, y1, x2, y2, x3, y3) {
-    let [via1, via2] = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates();
+    let _ref = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : this._getViaCoordinates(),
+      _ref2 = _slicedToArray(_ref, 2),
+      via1 = _ref2[0],
+      via2 = _ref2[1];
     // x3,y3 is the point
     return this._getDistanceToBezierEdge2(x1, y1, x2, y2, x3, y3, via1, via2);
   }
   /** @inheritDoc */
   getPoint(position) {
-    let [via1, via2] = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates();
+    let _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._getViaCoordinates(),
+      _ref4 = _slicedToArray(_ref3, 2),
+      via1 = _ref4[0],
+      via2 = _ref4[1];
     const t = position;
     const vec = [Math.pow(1 - t, 3), 3 * t * Math.pow(1 - t, 2), 3 * Math.pow(t, 2) * (1 - t), Math.pow(t, 3)];
     const x = vec[0] * this.fromPoint.x + vec[1] * via1.x + vec[2] * via2.x + vec[3] * this.toPoint.x;
@@ -31285,9 +31904,8 @@ class CanvasRenderer {
         }
       }
       if (this.dragging === false || this.dragging === true && this.options.hideNodesOnDrag === false) {
-        const {
-          drawExternalLabels
-        } = this._drawNodes(ctx, hidden);
+        const _this$_drawNodes = this._drawNodes(ctx, hidden),
+          drawExternalLabels = _this$_drawNodes.drawExternalLabels;
         drawLater.drawExternalLabels = drawExternalLabels;
       }
 
@@ -31606,9 +32224,7 @@ class Canvas {
             this.body.emitter.emit("_requestRedraw");
           }
         });
-        const {
-          frame
-        } = this;
+        const frame = this.frame;
         observer.observe(frame);
         this._cleanupCallbacks.push(() => {
           observer.unobserve(frame);
@@ -35163,7 +35779,10 @@ function fillLevelsByDirection(isEntryNode, shouldLevelBeReplaced, direction, no
   const limit = _reduceInstanceProperty(_context6 = [..._valuesInstanceProperty(nodes).call(nodes)]).call(_context6, (acc, node) => acc + 1 + node.edges.length, 0);
   const edgeIdProp = direction + "Id";
   const newLevelDiff = direction === "to" ? 1 : -1;
-  for (const [entryNodeId, entryNode] of nodes) {
+  for (const _ref of nodes) {
+    var _ref2 = _slicedToArray(_ref, 2);
+    const entryNodeId = _ref2[0];
+    const entryNode = _ref2[1];
     if (
     // Skip if the node is not visible.
     !nodes.has(entryNodeId) ||
@@ -36027,7 +36646,10 @@ class LayoutEngine {
           const position = _this.direction.getPosition(node);
 
           // get the space around the node.
-          const [minSpaceNode, maxSpaceNode] = _this._getSpaceAroundNode(node, branchMap);
+          const _this$_getSpaceAround = _this._getSpaceAroundNode(node, branchMap),
+            _this$_getSpaceAround2 = _slicedToArray(_this$_getSpaceAround, 2),
+            minSpaceNode = _this$_getSpaceAround2[0],
+            maxSpaceNode = _this$_getSpaceAround2[1];
           minSpace = Math.min(minSpaceNode, minSpace);
           maxSpace = Math.min(maxSpaceNode, maxSpace);
 
@@ -36214,7 +36836,10 @@ class LayoutEngine {
         const nodePosition = this.direction.getPosition(node);
 
         // position node if there is space
-        const [minSpace, maxSpace] = this._getSpaceAroundNode(node);
+        const _this$_getSpaceAround3 = this._getSpaceAroundNode(node),
+          _this$_getSpaceAround4 = _slicedToArray(_this$_getSpaceAround3, 2),
+          minSpace = _this$_getSpaceAround4[0],
+          maxSpace = _this$_getSpaceAround4[1];
         const diff = guess - nodePosition;
         // check if we are allowed to move the node:
         let newPosition = nodePosition;
@@ -36363,7 +36988,10 @@ class LayoutEngine {
           // get the range of the children
           const newPosition = this._getCenterPosition(children);
           const position = this.direction.getPosition(parentNode);
-          const [minSpace, maxSpace] = this._getSpaceAroundNode(parentNode);
+          const _this$_getSpaceAround5 = this._getSpaceAroundNode(parentNode),
+            _this$_getSpaceAround6 = _slicedToArray(_this$_getSpaceAround5, 2),
+            minSpace = _this$_getSpaceAround6[0],
+            maxSpace = _this$_getSpaceAround6[1];
           const diff = position - newPosition;
           if (diff < 0 && Math.abs(diff) < maxSpace - this.options.hierarchical.nodeSpacing || diff > 0 && Math.abs(diff) < minSpace - this.options.hierarchical.nodeSpacing) {
             this.direction.setPosition(parentNode, newPosition);
@@ -37669,10 +38297,8 @@ class ManipulationSystem {
 
     // Bind keyboard events.
     const keyupListener = _ref => {
-      let {
-        keyCode,
-        key
-      } = _ref;
+      let keyCode = _ref.keyCode,
+        key = _ref.key;
       if (key === "Enter" || key === " " || keyCode === 13 || keyCode === 32) {
         boundFunction();
       }
@@ -39684,8 +40310,6 @@ class FloydWarshall {
   }
 }
 
-// distance finding algorithm
-
 /**
  * KamadaKawai positions the nodes initially based on
  *
@@ -39756,13 +40380,22 @@ class KamadaKawai {
       subIterations = 0;
     while (maxEnergy > threshold && iterations < maxIterations) {
       iterations += 1;
-      [highE_nodeId, maxEnergy, dE_dx, dE_dy] = this._getHighestEnergyNode(ignoreClusters);
+      var _this$_getHighestEner = this._getHighestEnergyNode(ignoreClusters);
+      var _this$_getHighestEner2 = _slicedToArray(_this$_getHighestEner, 4);
+      highE_nodeId = _this$_getHighestEner2[0];
+      maxEnergy = _this$_getHighestEner2[1];
+      dE_dx = _this$_getHighestEner2[2];
+      dE_dy = _this$_getHighestEner2[3];
       delta_m = maxEnergy;
       subIterations = 0;
       while (delta_m > innerThreshold && subIterations < maxInnerIterations) {
         subIterations += 1;
         this._moveNode(highE_nodeId, dE_dx, dE_dy);
-        [delta_m, dE_dx, dE_dy] = this._getEnergy(highE_nodeId);
+        var _this$_getEnergy = this._getEnergy(highE_nodeId);
+        var _this$_getEnergy2 = _slicedToArray(_this$_getEnergy, 3);
+        delta_m = _this$_getEnergy2[0];
+        dE_dx = _this$_getEnergy2[1];
+        dE_dy = _this$_getEnergy2[2];
       }
     }
   }
@@ -39784,7 +40417,11 @@ class KamadaKawai {
       const m = nodesArray[nodeIdx];
       // by not evaluating nodes with predefined positions we should only move nodes that have no positions.
       if (nodes[m].predefinedPosition !== true || nodes[m].isCluster === true && ignoreClusters === true || nodes[m].options.fixed.x !== true || nodes[m].options.fixed.y !== true) {
-        const [delta_m, dE_dx, dE_dy] = this._getEnergy(m);
+        const _this$_getEnergy3 = this._getEnergy(m),
+          _this$_getEnergy4 = _slicedToArray(_this$_getEnergy3, 3),
+          delta_m = _this$_getEnergy4[0],
+          dE_dx = _this$_getEnergy4[1],
+          dE_dy = _this$_getEnergy4[2];
         if (maxEnergy < delta_m) {
           maxEnergy = delta_m;
           maxEnergyNodeId = m;
@@ -39803,7 +40440,9 @@ class KamadaKawai {
    * @private
    */
   _getEnergy(m) {
-    const [dE_dx, dE_dy] = this.E_sums[m];
+    const _this$E_sums$m = _slicedToArray(this.E_sums[m], 2),
+      dE_dx = _this$E_sums$m[0],
+      dE_dy = _this$E_sums$m[1];
     const delta_m = Math.sqrt(dE_dx ** 2 + dE_dy ** 2);
     return [delta_m, dE_dx, dE_dy];
   }
