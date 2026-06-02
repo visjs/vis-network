@@ -121,6 +121,7 @@ const nodeOptions: OptionsConfig = {
     face: { string },
     code: { string }, //'\uf007',
     size: { number }, //50,
+    inheritSize: { boolean: bool },
     color: { string },
     weight: { string, number },
     __type__: { object },

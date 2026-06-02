@@ -923,6 +923,7 @@ export interface NodeOptions {
     size?: number,  // 50,
     color?: string,
     weight?: number | string,
+    inheritSize?: boolean,
   };
 
   image?: string | Image;
