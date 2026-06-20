@@ -4,29 +4,36 @@ import { canvasMockify } from "../canvas-mock.js";
 
 /**
  * Regression test for issue #2193: with the `forceAtlas2Based` solver an
- * asymmetric graph never settles. After the layout has visually converged the
- * whole graph keeps rotating about its center of mass forever.
+ * asymmetric graph converges to a stable *shape* but the whole layout then
+ * keeps rotating about its center of mass forever.
  *
- * Root cause: `FA2BasedRepulsionSolver._calculateForces` scaled the pairwise
- * repulsion by the *receiving* node's degree only, so the repulsion between two
- * nodes of different degree was non-reciprocal (it violated Newton's third law).
- * Each tick that injected a small net torque into the system; velocity damping
- * caps but never removes it, so the converged layout spins at a terminal
- * angular velocity. The bug only manifests on a degree-heterogeneous,
- * asymmetric graph -- on a symmetric one the per-pair torques cancel, which is
- * why it stayed undiagnosed.
+ * Root cause: `FA2BasedRepulsionSolver` scaled the pairwise repulsion by the
+ * *receiving* node's degree only, so the repulsion between two nodes of
+ * different degree was non-reciprocal -- it violated Newton's third law.
+ * ForceAtlas2's repulsion is defined as `k * (deg(a)+1) * (deg(b)+1) / dist`
+ * (Jacomy et al. 2014): symmetric in the two degrees, hence reciprocal. The
+ * one-sided factor injects a small net torque every tick; velocity damping
+ * removes relative motion but not a rigid rotation, so the converged layout
+ * spins at a terminal rate. The fix folds `(degree+1)` into the Barnes-Hut
+ * effective mass (both when building the tree and when evaluating the force),
+ * which keeps the degree-weighted "hubs to the periphery" behaviour while
+ * making the force reciprocal again. The bug only shows on a
+ * degree-heterogeneous, asymmetric graph -- on a symmetric one the per-pair
+ * torques cancel, which is why it stayed undiagnosed.
  *
- * This test builds an asymmetric, strongly degree-heterogeneous graph (a few
- * hubs in a cycle, each carrying very different numbers of leaves), converges
- * it with a fixed timestep, and then measures the net angular velocity of the
- * whole configuration about its center of mass over a window of steps, where
- * omega = L / I, L = sum(rx*vy - ry*vx), I = sum(rx^2 + ry^2), and
- * r = pos - centerOfMass.
+ * What this test measures: the *actual rotation of the node positions*, not a
+ * velocity proxy. It drives the engine with `minVelocity: 0` so the solver
+ * never reports "stabilized" (the regime in which the live network keeps
+ * ticking and the rotation is visible), converges the shape, then measures the
+ * best-fit rigid rotation angle of the whole configuration over a long window
+ * via the orthogonal Procrustes formula
+ *   angle = atan2( Σ(x0*y1 - y0*x1), Σ(x0*x1 + y0*y1) )
+ * where (x0,y0) and (x1,y1) are node positions relative to the centroid at the
+ * start and end of the window.
  *
- * On the buggy code this is a *sustained* spin (|omega| ~= 1.4e-4 -- the window
- * mean and window max coincide, i.e. it does not decay). With the fix the
- * configuration is genuinely settled and |omega| drops by ~4 orders of
- * magnitude (~1.1e-8). The threshold below sits well clear of both.
+ * On the buggy code the layout rotates ~122 deg over the 20000-step window and
+ * never settles; with the fix it rotates < 0.5 deg and settles. The threshold
+ * below (5 deg) sits more than an order of magnitude clear of both.
  */
 describe("ForceAtlas2 rotation (issue #2193)", function (): void {
   beforeEach(function () {
@@ -79,11 +86,15 @@ describe("ForceAtlas2 rotation (issue #2193)", function (): void {
       {
         physics: {
           solver: "forceAtlas2Based",
-          // Constant timestep -> deterministic, comparable angular-velocity
-          // measurements. Drive the engine ourselves below instead of relying
-          // on the asynchronous, render-loop-based stabilization.
+          // Constant timestep -> deterministic, comparable measurements. Drive
+          // the engine ourselves below instead of relying on the asynchronous,
+          // render-loop-based stabilization.
           adaptiveTimestep: false,
           stabilization: { enabled: false },
+          // Never report "stabilized" so physicsTick keeps integrating; this is
+          // the regime in which the perpetual rotation is observable (a settled
+          // engine would simply freeze and hide it).
+          minVelocity: 0,
         },
       },
     );
@@ -91,43 +102,42 @@ describe("ForceAtlas2 rotation (issue #2193)", function (): void {
     const engine = network.physics;
     engine.updatePhysicsData();
 
-    // Converge the layout.
+    // Converge the shape.
     for (let i = 0; i < 6000; i++) {
       engine.physicsTick();
     }
 
-    // Measure the net rotation over a window of further steps. Averaging cancels
-    // the small transient settling motion and isolates *sustained* rotation;
-    // the per-step maximum is also tracked to confirm the value is steady (a
-    // terminal spin) rather than a decaying transient.
-    let omegaSum = 0;
-    let omegaAbsMax = 0;
-    const window = 200;
-    for (let i = 0; i < window; i++) {
+    // Snapshot positions relative to the centroid, advance a long window, then
+    // measure the net rigid rotation between the two snapshots.
+    const before = relativePositions(network);
+    const windowSteps = 20000;
+    for (let i = 0; i < windowSteps; i++) {
       engine.physicsTick();
-      const omega = angularVelocityAboutCenterOfMass(network);
-      omegaSum += omega;
-      omegaAbsMax = Math.max(omegaAbsMax, Math.abs(omega));
     }
-    const meanOmega = Math.abs(omegaSum / window);
+    const after = relativePositions(network);
 
-    // Buggy code: meanOmega ~= 1.39e-4 and omegaAbsMax ~= 1.39e-4 (sustained).
-    // Fixed code: meanOmega ~= 1.14e-8 and omegaAbsMax ~= 1.14e-8 (settled).
-    // The threshold sits cleanly between the two by orders of magnitude.
-    expect(meanOmega).to.be.below(1e-5);
-    expect(omegaAbsMax).to.be.below(1e-5);
+    const rotationDeg = Math.abs(
+      (bestFitRotation(before, after) * 180) / Math.PI,
+    );
+
+    // Stop the render loop before the JSDOM is torn down (the canvas mock
+    // shims requestAnimationFrame onto setTimeout, which would otherwise fire
+    // after teardown and throw "window is not defined").
+    network.destroy();
+
+    // Buggy code: ~122 deg (and still climbing -- it never settles).
+    // Fixed code: < 0.5 deg. The threshold sits well clear of both.
+    expect(rotationDeg).to.be.below(5);
   });
 });
 
 /**
- * Net angular velocity of the whole configuration about its center of mass,
- * omega = L / I, using live node positions and physics velocities.
+ * Node positions relative to the configuration's centroid.
  * @param network - the vis Network to inspect
- * @returns the (signed) angular velocity about the center of mass
+ * @returns parallel arrays of x and y offsets from the centroid
  */
-function angularVelocityAboutCenterOfMass(network: any): number {
+function relativePositions(network: any): { x: number[]; y: number[] } {
   const nodes = network.body.nodes;
-  const velocities = network.physics.physicsBody.velocities;
   const ids = network.physics.physicsBody.physicsNodeIndices;
 
   let cx = 0;
@@ -139,16 +149,34 @@ function angularVelocityAboutCenterOfMass(network: any): number {
   cx /= ids.length;
   cy /= ids.length;
 
-  let angularMomentum = 0; // L = sum( rx*vy - ry*vx )
-  let momentOfInertia = 0; // I = sum( rx^2 + ry^2 )
+  const x: number[] = [];
+  const y: number[] = [];
   for (const id of ids) {
-    const rx = nodes[id].x - cx;
-    const ry = nodes[id].y - cy;
-    const v = velocities[id];
-    angularMomentum += rx * v.y - ry * v.x;
-    momentOfInertia += rx * rx + ry * ry;
+    x.push(nodes[id].x - cx);
+    y.push(nodes[id].y - cy);
   }
-  return angularMomentum / momentOfInertia;
+  return { x, y };
+}
+
+/**
+ * Best-fit rigid rotation angle taking configuration `a` onto configuration `b`
+ * (orthogonal Procrustes, 2D): angle = atan2(Σ a×b, Σ a·b). Both configurations
+ * must be centered (see relativePositions) and index-aligned.
+ * @param a - start positions relative to centroid
+ * @param b - end positions relative to centroid
+ * @returns the signed best-fit rotation angle in radians
+ */
+function bestFitRotation(
+  a: { x: number[]; y: number[] },
+  b: { x: number[]; y: number[] },
+): number {
+  let cross = 0; // Σ (ax*by - ay*bx)
+  let dot = 0; // Σ (ax*bx + ay*by)
+  for (let i = 0; i < a.x.length; i++) {
+    cross += a.x[i] * b.y[i] - a.y[i] * b.x[i];
+    dot += a.x[i] * b.x[i] + a.y[i] * b.y[i];
+  }
+  return Math.atan2(cross, dot);
 }
 
 /**
