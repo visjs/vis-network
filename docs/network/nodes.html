@@ -1114,6 +1114,22 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
           <td>The size of the icon.</td>
         </tr>
         <tr parent="icon" class="hidden">
+          <td class="indent">icon.inheritSize</td>
+          <td>Boolean</td>
+          <td><code>false</code></td>
+          <td>
+            When <code>true</code>, inherit <code>size</code> from
+            <code>node.size</code>. Takes precedence over
+            <code>icon.size</code>. <br /><i
+              >Note: This flag exists to preserve the original behavior of
+              icons. If using groups to set icons, you may want to set this to
+              <code>true</code>
+              so you can drive icon size without overwriting the group icon
+              object.
+            </i>
+          </td>
+        </tr>
+        <tr parent="icon" class="hidden">
           <td class="indent">icon.color</td>
           <td>String</td>
           <td><code>'#2B7CE9'</code></td>
