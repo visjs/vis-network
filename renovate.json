@@ -3,7 +3,7 @@
   "dependencyDashboard": false,
   "packageRules": [
     {
-      "updateTypes": ["major", "minor", "patch", "pin", "digest"],
+      "updateTypes": ["major", "minor", "patch", "pin", "digest", "pinDigest"],
       "automerge": true
     },
     {
