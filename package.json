@@ -278,7 +278,6 @@
     "mocha": "11.7.6",
     "nyc": "17.1.0",
     "postcss": "8.5.16",
-    "sazerac": "2.0.0",
     "semantic-release": "25.0.5",
     "serve": "14.2.6",
     "shx": "0.4.0",
