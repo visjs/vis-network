@@ -3,6 +3,10 @@
   "dependencyDashboard": false,
   "packageRules": [
     {
+      "matchDepTypes": ["peerDependencies"],
+      "semanticCommitType": "fix"
+    },
+    {
       "matchUpdateTypes": [
         "major",
         "minor",
