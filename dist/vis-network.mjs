@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-07-15T03:08:04.064Z
+ * @date    2026-07-15T17:07:13.428Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -82,7 +82,7 @@ function requireFunctionBindNative () {
 
 	functionBindNative = !fails(function () {
 	  // eslint-disable-next-line es/no-function-prototype-bind -- safe
-	  var test = (function () { /* empty */ }).bind();
+	  var test = function () { /* empty */ }.bind();
 	  // eslint-disable-next-line no-prototype-builtins -- safe
 	  return typeof test != 'function' || test.hasOwnProperty('prototype');
 	});
@@ -628,10 +628,10 @@ function requireSharedStore () {
 	var store = sharedStore.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
 
 	(store.versions || (store.versions = [])).push({
-	  version: '3.44.0',
+	  version: '3.49.0',
 	  mode: IS_PURE ? 'pure' : 'global',
-	  copyright: '© 2014-2025 Denis Pushkarev (zloirock.ru)',
-	  license: 'https://github.com/zloirock/core-js/blob/v3.44.0/LICENSE',
+	  copyright: '© 2013–2025 Denis Pushkarev (zloirock.ru), 2025–2026 CoreJS Company (core-js.io). All rights reserved.',
+	  license: 'https://github.com/zloirock/core-js/blob/v3.49.0/LICENSE',
 	  source: 'https://github.com/zloirock/core-js'
 	});
 	return sharedStore.exports;
@@ -9445,9 +9445,15 @@ function requireEs_array_includes () {
 	  return !Array(1).includes();
 	});
 
+	// Safari 26.4- bug
+	var BROKEN_ON_SPARSE_WITH_FROM_INDEX = fails(function () {
+	  // eslint-disable-next-line no-sparse-arrays, es/no-array-prototype-includes -- detection
+	  return [, 1].includes(undefined, 1);
+	});
+
 	// `Array.prototype.includes` method
 	// https://tc39.es/ecma262/#sec-array.prototype.includes
-	$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE }, {
+	$({ target: 'Array', proto: true, forced: BROKEN_ON_SPARSE || BROKEN_ON_SPARSE_WITH_FROM_INDEX }, {
 	  includes: function includes(el /* , fromIndex = 0 */) {
 	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
 	  }
@@ -9522,7 +9528,7 @@ function requireToStringTagSupport () {
 
 	var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 	var test = {};
-
+	// eslint-disable-next-line unicorn/no-immediate-mutation -- ES3 syntax limitation
 	test[TO_STRING_TAG] = 'z';
 
 	toStringTagSupport = String(test) === '[object z]';
@@ -9761,7 +9767,7 @@ function requireDoesNotExceedSafeInteger () {
 	var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF; // 2 ** 53 - 1 == 9007199254740991
 
 	doesNotExceedSafeInteger = function (it) {
-	  if (it > MAX_SAFE_INTEGER) throw $TypeError('Maximum allowed index exceeded');
+	  if (it > MAX_SAFE_INTEGER) throw new $TypeError('Maximum allowed index exceeded');
 	  return it;
 	};
 	return doesNotExceedSafeInteger;
@@ -10005,7 +10011,7 @@ function requireEs_array_splice () {
 	      from = actualStart + k;
 	      if (from in O) createProperty(A, k, O[from]);
 	    }
-	    A.length = actualDeleteCount;
+	    setArrayLength(A, actualDeleteCount);
 	    if (insertCount < actualDeleteCount) {
 	      for (k = actualStart; k < len - actualDeleteCount; k++) {
 	        from = k + actualDeleteCount;
@@ -10153,13 +10159,11 @@ function requireArrayIteration () {
 	if (hasRequiredArrayIteration) return arrayIteration;
 	hasRequiredArrayIteration = 1;
 	var bind = /*@__PURE__*/ requireFunctionBindContext();
-	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
 	var IndexedObject = /*@__PURE__*/ requireIndexedObject();
 	var toObject = /*@__PURE__*/ requireToObject();
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var arraySpeciesCreate = /*@__PURE__*/ requireArraySpeciesCreate();
-
-	var push = uncurryThis([].push);
+	var createProperty = /*@__PURE__*/ requireCreateProperty();
 
 	// `Array.prototype.{ forEach, map, filter, some, every, find, findIndex, filterReject }` methods implementation
 	var createMethod = function (TYPE) {
@@ -10170,28 +10174,28 @@ function requireArrayIteration () {
 	  var IS_FIND_INDEX = TYPE === 6;
 	  var IS_FILTER_REJECT = TYPE === 7;
 	  var NO_HOLES = TYPE === 5 || IS_FIND_INDEX;
-	  return function ($this, callbackfn, that, specificCreate) {
+	  return function ($this, callbackfn, that) {
 	    var O = toObject($this);
 	    var self = IndexedObject(O);
 	    var length = lengthOfArrayLike(self);
 	    var boundFunction = bind(callbackfn, that);
 	    var index = 0;
-	    var create = specificCreate || arraySpeciesCreate;
-	    var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_REJECT ? create($this, 0) : undefined;
+	    var resIndex = 0;
+	    var target = IS_MAP ? arraySpeciesCreate($this, length) : IS_FILTER || IS_FILTER_REJECT ? arraySpeciesCreate($this, 0) : undefined;
 	    var value, result;
 	    for (;length > index; index++) if (NO_HOLES || index in self) {
 	      value = self[index];
 	      result = boundFunction(value, index, O);
 	      if (TYPE) {
-	        if (IS_MAP) target[index] = result; // map
+	        if (IS_MAP) createProperty(target, index, result);    // map
 	        else if (result) switch (TYPE) {
-	          case 3: return true;              // some
-	          case 5: return value;             // find
-	          case 6: return index;             // findIndex
-	          case 2: push(target, value);      // filter
+	          case 3: return true;                                // some
+	          case 5: return value;                               // find
+	          case 6: return index;                               // findIndex
+	          case 2: createProperty(target, resIndex++, value);  // filter
 	        } else switch (TYPE) {
-	          case 4: return false;             // every
-	          case 7: push(target, value);      // filterReject
+	          case 4: return false;                               // every
+	          case 7: createProperty(target, resIndex++, value);  // filterReject
 	        }
 	      }
 	    }
@@ -12098,6 +12102,7 @@ function requireEs_array_concat () {
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var doesNotExceedSafeInteger = /*@__PURE__*/ requireDoesNotExceedSafeInteger();
 	var createProperty = /*@__PURE__*/ requireCreateProperty();
+	var setArrayLength = /*@__PURE__*/ requireArraySetLength();
 	var arraySpeciesCreate = /*@__PURE__*/ requireArraySpeciesCreate();
 	var arrayMethodHasSpeciesSupport = /*@__PURE__*/ requireArrayMethodHasSpeciesSupport();
 	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
@@ -12143,7 +12148,7 @@ function requireEs_array_concat () {
 	        createProperty(A, n++, E);
 	      }
 	    }
-	    A.length = n;
+	    setArrayLength(A, n);
 	    return A;
 	  }
 	});
@@ -12516,7 +12521,7 @@ function requireEs_symbol_constructor () {
 	  nativeDefineProperty(O, P, Attributes);
 	  if (ObjectPrototypeDescriptor && O !== ObjectPrototype) {
 	    nativeDefineProperty(ObjectPrototype, P, ObjectPrototypeDescriptor);
-	  }
+	  } return O;
 	};
 
 	var setSymbolDescriptor = DESCRIPTORS && fails(function () {
@@ -12542,7 +12547,8 @@ function requireEs_symbol_constructor () {
 	  var key = toPropertyKey(P);
 	  anObject(Attributes);
 	  if (hasOwn(AllSymbols, key)) {
-	    if (!Attributes.enumerable) {
+	    // first definition - default non-enumerable; redefinition - preserve existing state
+	    if (!('enumerable' in Attributes) ? !hasOwn(O, key) || (hasOwn(O, HIDDEN) && O[HIDDEN][key]) : !Attributes.enumerable) {
 	      if (!hasOwn(O, HIDDEN)) nativeDefineProperty(O, HIDDEN, createPropertyDescriptor(1, nativeObjectCreate(null)));
 	      O[HIDDEN][key] = true;
 	    } else {
@@ -12784,21 +12790,186 @@ function requireEs_symbol_keyFor () {
 
 var es_json_stringify = {};
 
-var getJsonReplacerFunction;
-var hasRequiredGetJsonReplacerFunction;
+var isRawJson;
+var hasRequiredIsRawJson;
 
-function requireGetJsonReplacerFunction () {
-	if (hasRequiredGetJsonReplacerFunction) return getJsonReplacerFunction;
-	hasRequiredGetJsonReplacerFunction = 1;
+function requireIsRawJson () {
+	if (hasRequiredIsRawJson) return isRawJson;
+	hasRequiredIsRawJson = 1;
+	var isObject = /*@__PURE__*/ requireIsObject();
+	var getInternalState = /*@__PURE__*/ requireInternalState().get;
+
+	isRawJson = function isRawJSON(O) {
+	  if (!isObject(O)) return false;
+	  var state = getInternalState(O);
+	  return !!state && state.type === 'RawJSON';
+	};
+	return isRawJson;
+}
+
+var parseJsonString;
+var hasRequiredParseJsonString;
+
+function requireParseJsonString () {
+	if (hasRequiredParseJsonString) return parseJsonString;
+	hasRequiredParseJsonString = 1;
 	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+	var hasOwn = /*@__PURE__*/ requireHasOwnProperty();
+
+	var $SyntaxError = SyntaxError;
+	var $parseInt = parseInt;
+	var fromCharCode = String.fromCharCode;
+	var at = uncurryThis(''.charAt);
+	var slice = uncurryThis(''.slice);
+	var exec = uncurryThis(/./.exec);
+
+	var codePoints = {
+	  '\\"': '"',
+	  '\\\\': '\\',
+	  '\\/': '/',
+	  '\\b': '\b',
+	  '\\f': '\f',
+	  '\\n': '\n',
+	  '\\r': '\r',
+	  '\\t': '\t'
+	};
+
+	var IS_4_HEX_DIGITS = /^[\da-f]{4}$/i;
+	// eslint-disable-next-line regexp/no-control-character -- safe
+	var IS_C0_CONTROL_CODE = /^[\u0000-\u001F]$/;
+
+	parseJsonString = function (source, i) {
+	  var unterminated = true;
+	  var value = '';
+	  while (i < source.length) {
+	    var chr = at(source, i);
+	    if (chr === '\\') {
+	      var twoChars = slice(source, i, i + 2);
+	      if (hasOwn(codePoints, twoChars)) {
+	        value += codePoints[twoChars];
+	        i += 2;
+	      } else if (twoChars === '\\u') {
+	        i += 2;
+	        var fourHexDigits = slice(source, i, i + 4);
+	        if (!exec(IS_4_HEX_DIGITS, fourHexDigits)) throw new $SyntaxError('Bad Unicode escape at: ' + i);
+	        value += fromCharCode($parseInt(fourHexDigits, 16));
+	        i += 4;
+	      } else throw new $SyntaxError('Unknown escape sequence: "' + twoChars + '"');
+	    } else if (chr === '"') {
+	      unterminated = false;
+	      i++;
+	      break;
+	    } else {
+	      if (exec(IS_C0_CONTROL_CODE, chr)) throw new $SyntaxError('Bad control character in string literal at: ' + i);
+	      value += chr;
+	      i++;
+	    }
+	  }
+	  if (unterminated) throw new $SyntaxError('Unterminated string at: ' + i);
+	  return { value: value, end: i };
+	};
+	return parseJsonString;
+}
+
+var nativeRawJson;
+var hasRequiredNativeRawJson;
+
+function requireNativeRawJson () {
+	if (hasRequiredNativeRawJson) return nativeRawJson;
+	hasRequiredNativeRawJson = 1;
+	/* eslint-disable es/no-json -- safe */
+	var fails = /*@__PURE__*/ requireFails();
+
+	nativeRawJson = !fails(function () {
+	  var unsafeInt = '9007199254740993';
+	  // eslint-disable-next-line es/no-json-rawjson -- feature detection
+	  var raw = JSON.rawJSON(unsafeInt);
+	  // eslint-disable-next-line es/no-json-israwjson -- feature detection
+	  return !JSON.isRawJSON(raw) || JSON.stringify(raw) !== unsafeInt;
+	});
+	return nativeRawJson;
+}
+
+var hasRequiredEs_json_stringify;
+
+function requireEs_json_stringify () {
+	if (hasRequiredEs_json_stringify) return es_json_stringify;
+	hasRequiredEs_json_stringify = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
+	var apply = /*@__PURE__*/ requireFunctionApply();
+	var call = /*@__PURE__*/ requireFunctionCall();
+	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+	var fails = /*@__PURE__*/ requireFails();
 	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var isCallable = /*@__PURE__*/ requireIsCallable();
+	var isRawJSON = /*@__PURE__*/ requireIsRawJson();
+	var isSymbol = /*@__PURE__*/ requireIsSymbol();
 	var classof = /*@__PURE__*/ requireClassofRaw();
 	var toString = /*@__PURE__*/ requireToString();
+	var arraySlice = /*@__PURE__*/ requireArraySlice();
+	var parseJSONString = /*@__PURE__*/ requireParseJsonString();
+	var uid = /*@__PURE__*/ requireUid();
+	var NATIVE_SYMBOL = /*@__PURE__*/ requireSymbolConstructorDetection();
+	var NATIVE_RAW_JSON = /*@__PURE__*/ requireNativeRawJson();
 
+	var $String = String;
+	var $stringify = getBuiltIn('JSON', 'stringify');
+	var exec = uncurryThis(/./.exec);
+	var charAt = uncurryThis(''.charAt);
+	var charCodeAt = uncurryThis(''.charCodeAt);
+	var replace = uncurryThis(''.replace);
+	var slice = uncurryThis(''.slice);
 	var push = uncurryThis([].push);
+	var numberToString = uncurryThis(1.1.toString);
 
-	getJsonReplacerFunction = function (replacer) {
+	var surrogates = /[\uD800-\uDFFF]/g;
+	var leadingSurrogates = /^[\uD800-\uDBFF]$/;
+	var trailingSurrogates = /^[\uDC00-\uDFFF]$/;
+
+	var MARK = uid();
+	var MARK_LENGTH = MARK.length;
+
+	var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
+	  var symbol = getBuiltIn('Symbol')('stringify detection');
+	  // MS Edge converts symbol values to JSON as {}
+	  return $stringify([symbol]) !== '[null]'
+	    // WebKit converts symbol values to JSON as null
+	    || $stringify({ a: symbol }) !== '{}'
+	    // V8 throws on boxed symbols
+	    || $stringify(Object(symbol)) !== '{}';
+	});
+
+	// https://github.com/tc39/proposal-well-formed-stringify
+	var ILL_FORMED_UNICODE = fails(function () {
+	  return $stringify('\uDF06\uD834') !== '"\\udf06\\ud834"'
+	    || $stringify('\uDEAD') !== '"\\udead"';
+	});
+
+	var stringifyWithProperSymbolsConversion = WRONG_SYMBOLS_CONVERSION ? function (it, replacer) {
+	  var args = arraySlice(arguments);
+	  var $replacer = getReplacerFunction(replacer);
+	  if (!isCallable($replacer) && (it === undefined || isSymbol(it))) return; // IE8 returns string on undefined
+	  args[1] = function (key, value) {
+	    // some old implementations (like WebKit) could pass numbers as keys
+	    if (isCallable($replacer)) value = call($replacer, this, $String(key), value);
+	    if (!isSymbol(value)) return value;
+	  };
+	  return apply($stringify, null, args);
+	} : $stringify;
+
+	var fixIllFormedJSON = function (match, offset, string) {
+	  var prev = charAt(string, offset - 1);
+	  var next = charAt(string, offset + 1);
+	  if (
+	    (exec(leadingSurrogates, match) && !exec(trailingSurrogates, next)) ||
+	    (exec(trailingSurrogates, match) && !exec(leadingSurrogates, prev))
+	  ) {
+	    return '\\u' + numberToString(charCodeAt(match, 0), 16);
+	  } return match;
+	};
+
+	var getReplacerFunction = function (replacer) {
 	  if (isCallable(replacer)) return replacer;
 	  if (!isArray(replacer)) return;
 	  var rawLength = replacer.length;
@@ -12819,86 +12990,45 @@ function requireGetJsonReplacerFunction () {
 	    for (var j = 0; j < keysLength; j++) if (keys[j] === key) return value;
 	  };
 	};
-	return getJsonReplacerFunction;
-}
 
-var hasRequiredEs_json_stringify;
+	// `JSON.stringify` method
+	// https://tc39.es/ecma262/#sec-json.stringify
+	// https://github.com/tc39/proposal-json-parse-with-source
+	if ($stringify) $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE || !NATIVE_RAW_JSON }, {
+	  stringify: function stringify(text, replacer, space) {
+	    var replacerFunction = getReplacerFunction(replacer);
+	    var rawStrings = [];
 
-function requireEs_json_stringify () {
-	if (hasRequiredEs_json_stringify) return es_json_stringify;
-	hasRequiredEs_json_stringify = 1;
-	var $ = /*@__PURE__*/ require_export();
-	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
-	var apply = /*@__PURE__*/ requireFunctionApply();
-	var call = /*@__PURE__*/ requireFunctionCall();
-	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-	var fails = /*@__PURE__*/ requireFails();
-	var isCallable = /*@__PURE__*/ requireIsCallable();
-	var isSymbol = /*@__PURE__*/ requireIsSymbol();
-	var arraySlice = /*@__PURE__*/ requireArraySlice();
-	var getReplacerFunction = /*@__PURE__*/ requireGetJsonReplacerFunction();
-	var NATIVE_SYMBOL = /*@__PURE__*/ requireSymbolConstructorDetection();
+	    var json = stringifyWithProperSymbolsConversion(text, function (key, value) {
+	      // some old implementations (like WebKit) could pass numbers as keys
+	      var v = isCallable(replacerFunction) ? call(replacerFunction, this, $String(key), value) : value;
+	      return !NATIVE_RAW_JSON && isRawJSON(v) ? MARK + (push(rawStrings, v.rawJSON) - 1) : v;
+	    }, space);
 
-	var $String = String;
-	var $stringify = getBuiltIn('JSON', 'stringify');
-	var exec = uncurryThis(/./.exec);
-	var charAt = uncurryThis(''.charAt);
-	var charCodeAt = uncurryThis(''.charCodeAt);
-	var replace = uncurryThis(''.replace);
-	var numberToString = uncurryThis(1.1.toString);
+	    if (typeof json != 'string') return json;
 
-	var tester = /[\uD800-\uDFFF]/g;
-	var low = /^[\uD800-\uDBFF]$/;
-	var hi = /^[\uDC00-\uDFFF]$/;
+	    if (ILL_FORMED_UNICODE) json = replace(json, surrogates, fixIllFormedJSON);
 
-	var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
-	  var symbol = getBuiltIn('Symbol')('stringify detection');
-	  // MS Edge converts symbol values to JSON as {}
-	  return $stringify([symbol]) !== '[null]'
-	    // WebKit converts symbol values to JSON as null
-	    || $stringify({ a: symbol }) !== '{}'
-	    // V8 throws on boxed symbols
-	    || $stringify(Object(symbol)) !== '{}';
-	});
+	    if (NATIVE_RAW_JSON) return json;
 
-	// https://github.com/tc39/proposal-well-formed-stringify
-	var ILL_FORMED_UNICODE = fails(function () {
-	  return $stringify('\uDF06\uD834') !== '"\\udf06\\ud834"'
-	    || $stringify('\uDEAD') !== '"\\udead"';
-	});
+	    var result = '';
+	    var length = json.length;
 
-	var stringifyWithSymbolsFix = function (it, replacer) {
-	  var args = arraySlice(arguments);
-	  var $replacer = getReplacerFunction(replacer);
-	  if (!isCallable($replacer) && (it === undefined || isSymbol(it))) return; // IE8 returns string on undefined
-	  args[1] = function (key, value) {
-	    // some old implementations (like WebKit) could pass numbers as keys
-	    if (isCallable($replacer)) value = call($replacer, this, $String(key), value);
-	    if (!isSymbol(value)) return value;
-	  };
-	  return apply($stringify, null, args);
-	};
-
-	var fixIllFormed = function (match, offset, string) {
-	  var prev = charAt(string, offset - 1);
-	  var next = charAt(string, offset + 1);
-	  if ((exec(low, match) && !exec(hi, next)) || (exec(hi, match) && !exec(low, prev))) {
-	    return '\\u' + numberToString(charCodeAt(match, 0), 16);
-	  } return match;
-	};
-
-	if ($stringify) {
-	  // `JSON.stringify` method
-	  // https://tc39.es/ecma262/#sec-json.stringify
-	  $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
-	    // eslint-disable-next-line no-unused-vars -- required for `.length`
-	    stringify: function stringify(it, replacer, space) {
-	      var args = arraySlice(arguments);
-	      var result = apply(WRONG_SYMBOLS_CONVERSION ? stringifyWithSymbolsFix : $stringify, null, args);
-	      return ILL_FORMED_UNICODE && typeof result == 'string' ? replace(result, tester, fixIllFormed) : result;
+	    for (var i = 0; i < length; i++) {
+	      var chr = charAt(json, i);
+	      if (chr === '"') {
+	        var end = parseJSONString(json, ++i).end - 1;
+	        var string = slice(json, i, end);
+	        result += slice(string, 0, MARK_LENGTH) === MARK
+	          ? rawStrings[slice(string, MARK_LENGTH)]
+	          : '"' + string + '"';
+	        i = end;
+	      } else result += chr;
 	    }
-	  });
-	}
+
+	    return result;
+	  }
+	});
 	return es_json_stringify;
 }
 
@@ -13253,7 +13383,7 @@ function requireFunctionName () {
 
 	var EXISTS = hasOwn(FunctionPrototype, 'name');
 	// additional protection from minified / mangled / dropped function names
-	var PROPER = EXISTS && (function something() { /* empty */ }).name === 'something';
+	var PROPER = EXISTS && function something() { /* empty */ }.name === 'something';
 	var CONFIGURABLE = EXISTS && (!DESCRIPTORS || (DESCRIPTORS && getDescriptor(FunctionPrototype, 'name').configurable));
 
 	functionName = {
@@ -14441,6 +14571,7 @@ function requireEs_array_slice () {
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var toIndexedObject = /*@__PURE__*/ requireToIndexedObject();
 	var createProperty = /*@__PURE__*/ requireCreateProperty();
+	var setArrayLength = /*@__PURE__*/ requireArraySetLength();
 	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
 	var arrayMethodHasSpeciesSupport = /*@__PURE__*/ requireArrayMethodHasSpeciesSupport();
 	var nativeSlice = /*@__PURE__*/ requireArraySlice();
@@ -14477,7 +14608,7 @@ function requireEs_array_slice () {
 	    }
 	    result = new (Constructor === undefined ? $Array : Constructor)(max(fin - k, 0));
 	    for (n = 0; k < fin; k++, n++) if (k in O) createProperty(result, n, O[k]);
-	    result.length = n;
+	    setArrayLength(result, n);
 	    return result;
 	  }
 	});
@@ -14673,20 +14804,22 @@ function requireArrayFrom () {
 	var isConstructor = /*@__PURE__*/ requireIsConstructor();
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var createProperty = /*@__PURE__*/ requireCreateProperty();
+	var setArrayLength = /*@__PURE__*/ requireArraySetLength();
 	var getIterator = /*@__PURE__*/ requireGetIterator();
 	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+	var iteratorClose = /*@__PURE__*/ requireIteratorClose();
 
 	var $Array = Array;
 
 	// `Array.from` method implementation
 	// https://tc39.es/ecma262/#sec-array.from
 	arrayFrom = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
-	  var O = toObject(arrayLike);
 	  var IS_CONSTRUCTOR = isConstructor(this);
 	  var argumentsLength = arguments.length;
 	  var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
 	  var mapping = mapfn !== undefined;
 	  if (mapping) mapfn = bind(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
+	  var O = toObject(arrayLike);
 	  var iteratorMethod = getIteratorMethod(O);
 	  var index = 0;
 	  var length, result, step, iterator, next, value;
@@ -14697,7 +14830,11 @@ function requireArrayFrom () {
 	    next = iterator.next;
 	    for (;!(step = call(next, iterator)).done; index++) {
 	      value = mapping ? callWithSafeIterationClosing(iterator, mapfn, [step.value, index], true) : step.value;
-	      createProperty(result, index, value);
+	      try {
+	        createProperty(result, index, value);
+	      } catch (error) {
+	        iteratorClose(iterator, 'throw', error);
+	      }
 	    }
 	  } else {
 	    length = lengthOfArrayLike(O);
@@ -14707,7 +14844,7 @@ function requireArrayFrom () {
 	      createProperty(result, index, value);
 	    }
 	  }
-	  result.length = index;
+	  setArrayLength(result, index);
 	  return result;
 	};
 	return arrayFrom;
@@ -14734,6 +14871,7 @@ function requireCheckCorrectnessOfIteration () {
 	      SAFE_CLOSING = true;
 	    }
 	  };
+	  // eslint-disable-next-line unicorn/no-immediate-mutation -- ES3 syntax limitation
 	  iteratorWithReturn[ITERATOR] = function () {
 	    return this;
 	  };
@@ -14748,6 +14886,7 @@ function requireCheckCorrectnessOfIteration () {
 	  var ITERATION_SUPPORT = false;
 	  try {
 	    var object = {};
+	    // eslint-disable-next-line unicorn/no-immediate-mutation -- ES3 syntax limitation
 	    object[ITERATOR] = function () {
 	      return {
 	        next: function () {
@@ -15338,6 +15477,7 @@ function requireInternalMetadata () {
 	  var getOwnPropertyNames = getOwnPropertyNamesModule.f;
 	  var splice = uncurryThis([].splice);
 	  var test = {};
+	  // eslint-disable-next-line unicorn/no-immediate-mutation -- ES3 syntax limitation
 	  test[METADATA] = 1;
 
 	  // prevent exposing of metadata key
@@ -15405,7 +15545,9 @@ function requireIterate () {
 	  var iterator, iterFn, index, length, result, next, step;
 
 	  var stop = function (condition) {
-	    if (iterator) iteratorClose(iterator, 'normal');
+	    var $iterator = iterator;
+	    iterator = undefined;
+	    if ($iterator) iteratorClose($iterator, 'normal');
 	    return new Result(true, condition);
 	  };
 
@@ -15435,10 +15577,13 @@ function requireIterate () {
 
 	  next = IS_RECORD ? iterable.next : iterator.next;
 	  while (!(step = call(next, iterator)).done) {
+	    // `IteratorValue` errors should propagate without closing the iterator
+	    var value = step.value;
 	    try {
-	      result = callFn(step.value);
+	      result = callFn(value);
 	    } catch (error) {
-	      iteratorClose(iterator, 'throw', error);
+	      if (iterator) iteratorClose(iterator, 'throw', error);
+	      else throw error;
 	    }
 	    if (typeof result == 'object' && result && isPrototypeOf(ResultPrototype, result)) return result;
 	  } return new Result(false);
@@ -15472,6 +15617,7 @@ function requireCollection () {
 	var $ = /*@__PURE__*/ require_export();
 	var globalThis = /*@__PURE__*/ requireGlobalThis();
 	var InternalMetadataModule = /*@__PURE__*/ requireInternalMetadata();
+	var call = /*@__PURE__*/ requireFunctionCall();
 	var fails = /*@__PURE__*/ requireFails();
 	var createNonEnumerableProperty = /*@__PURE__*/ requireCreateNonEnumerableProperty();
 	var iterate = /*@__PURE__*/ requireIterate();
@@ -15520,10 +15666,13 @@ function requireCollection () {
 	      var IS_ADDER = KEY === 'add' || KEY === 'set';
 	      if (KEY in NativePrototype && !(IS_WEAK && KEY === 'clear')) {
 	        createNonEnumerableProperty(Prototype, KEY, function (a, b) {
-	          var collection = getInternalState(this).collection;
+	          var that = this;
+	          var collection = getInternalState(that).collection;
 	          if (!IS_ADDER && IS_WEAK && !isObject(a)) return KEY === 'get' ? undefined : false;
-	          var result = collection[KEY](a === 0 ? 0 : a, b);
-	          return IS_ADDER ? this : result;
+	          var result = collection[KEY](KEY === 'forEach' ? function (value, key) {
+	            call(a, b, value, key, that);
+	          } : a === 0 ? 0 : a, b);
+	          return IS_ADDER ? that : result;
 	        });
 	      }
 	    });
@@ -15917,6 +16066,66 @@ function requireEs_map_groupBy () {
 	return es_map_groupBy;
 }
 
+var es_map_getOrInsert = {};
+
+var hasRequiredEs_map_getOrInsert;
+
+function requireEs_map_getOrInsert () {
+	if (hasRequiredEs_map_getOrInsert) return es_map_getOrInsert;
+	hasRequiredEs_map_getOrInsert = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var MapHelpers = /*@__PURE__*/ requireMapHelpers();
+	var IS_PURE = /*@__PURE__*/ requireIsPure();
+
+	var get = MapHelpers.get;
+	var has = MapHelpers.has;
+	var set = MapHelpers.set;
+
+	// `Map.prototype.getOrInsert` method
+	// https://tc39.es/ecma262/#sec-map.prototype.getorinsert
+	$({ target: 'Map', proto: true, real: true, forced: IS_PURE }, {
+	  getOrInsert: function getOrInsert(key, value) {
+	    if (has(this, key)) return get(this, key);
+	    set(this, key, value);
+	    return value;
+	  }
+	});
+	return es_map_getOrInsert;
+}
+
+var es_map_getOrInsertComputed = {};
+
+var hasRequiredEs_map_getOrInsertComputed;
+
+function requireEs_map_getOrInsertComputed () {
+	if (hasRequiredEs_map_getOrInsertComputed) return es_map_getOrInsertComputed;
+	hasRequiredEs_map_getOrInsertComputed = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var aCallable = /*@__PURE__*/ requireACallable();
+	var MapHelpers = /*@__PURE__*/ requireMapHelpers();
+	var IS_PURE = /*@__PURE__*/ requireIsPure();
+
+	var get = MapHelpers.get;
+	var has = MapHelpers.has;
+	var set = MapHelpers.set;
+
+	// `Map.prototype.getOrInsertComputed` method
+	// https://tc39.es/ecma262/#sec-map.prototype.getorinsertcomputed
+	$({ target: 'Map', proto: true, real: true, forced: IS_PURE }, {
+	  getOrInsertComputed: function getOrInsertComputed(key, callbackfn) {
+	    var hasKey = has(this, key);
+	    aCallable(callbackfn);
+	    if (hasKey) return get(this, key);
+	    // CanonicalizeKeyedCollectionKey
+	    if (key === 0 && 1 / key === -Infinity) key = 0;
+	    var value = callbackfn(key);
+	    set(this, key, value);
+	    return value;
+	  }
+	});
+	return es_map_getOrInsertComputed;
+}
+
 var map$2;
 var hasRequiredMap$2;
 
@@ -15926,6 +16135,8 @@ function requireMap$2 () {
 	requireEs_array_iterator();
 	requireEs_map();
 	requireEs_map_groupBy();
+	requireEs_map_getOrInsert();
+	requireEs_map_getOrInsertComputed();
 	requireEs_string_iterator();
 	var path = /*@__PURE__*/ requirePath();
 
@@ -18823,11 +19034,11 @@ function requireDefineProperty$5 () {
 
 	var Object = path.Object;
 
-	var defineProperty = defineProperty$5.exports = function defineProperty(it, key, desc) {
+	var $defineProperty = defineProperty$5.exports = function defineProperty(it, key, desc) {
 	  return Object.defineProperty(it, key, desc);
 	};
 
-	if (Object.defineProperty.sham) defineProperty.sham = true;
+	if (Object.defineProperty.sham) $defineProperty.sham = true;
 	return defineProperty$5.exports;
 }
 
@@ -19486,11 +19697,11 @@ function requireGetOwnPropertyDescriptor$2 () {
 
 	var Object = path.Object;
 
-	var getOwnPropertyDescriptor = getOwnPropertyDescriptor$2.exports = function getOwnPropertyDescriptor(it, key) {
+	var $getOwnPropertyDescriptor = getOwnPropertyDescriptor$2.exports = function getOwnPropertyDescriptor(it, key) {
 	  return Object.getOwnPropertyDescriptor(it, key);
 	};
 
-	if (Object.getOwnPropertyDescriptor.sham) getOwnPropertyDescriptor.sham = true;
+	if (Object.getOwnPropertyDescriptor.sham) $getOwnPropertyDescriptor.sham = true;
 	return getOwnPropertyDescriptor$2.exports;
 }
 
@@ -19646,11 +19857,11 @@ function requireDefineProperties$2 () {
 
 	var Object = path.Object;
 
-	var defineProperties = defineProperties$2.exports = function defineProperties(T, D) {
+	var $defineProperties = defineProperties$2.exports = function defineProperties(T, D) {
 	  return Object.defineProperties(T, D);
 	};
 
-	if (Object.defineProperties.sham) defineProperties.sham = true;
+	if (Object.defineProperties.sham) $defineProperties.sham = true;
 	return defineProperties$2.exports;
 }
 
@@ -24314,6 +24525,7 @@ function requireStringRepeat () {
 	var requireObjectCoercible = /*@__PURE__*/ requireRequireObjectCoercible();
 
 	var $RangeError = RangeError;
+	var floor = Math.floor;
 
 	// `String.prototype.repeat` method implementation
 	// https://tc39.es/ecma262/#sec-string.prototype.repeat
@@ -24322,7 +24534,7 @@ function requireStringRepeat () {
 	  var result = '';
 	  var n = toIntegerOrInfinity(count);
 	  if (n < 0 || n === Infinity) throw new $RangeError('Wrong number of repetitions');
-	  for (;n > 0; (n >>>= 1) && (str += str)) if (n & 1) result += str;
+	  for (;n > 0; (n = floor(n / 2)) && (str += str)) if (n % 2) result += str;
 	  return result;
 	};
 	return stringRepeat;
@@ -24350,9 +24562,10 @@ function requireStringPad () {
 	    var S = toString(requireObjectCoercible($this));
 	    var intMaxLength = toLength(maxLength);
 	    var stringLength = S.length;
+	    if (intMaxLength <= stringLength) return S;
 	    var fillStr = fillString === undefined ? ' ' : toString(fillString);
 	    var fillLen, stringFiller;
-	    if (intMaxLength <= stringLength || fillStr === '') return S;
+	    if (fillStr === '') return S;
 	    fillLen = intMaxLength - stringLength;
 	    stringFiller = repeat(fillStr, ceil(fillLen / fillStr.length));
 	    if (stringFiller.length > fillLen) stringFiller = stringSlice(stringFiller, 0, fillLen);
@@ -33628,7 +33841,7 @@ function requireSetDifference () {
 	  var O = aSet(this);
 	  var otherRec = getSetRecord(other);
 	  var result = clone(O);
-	  if (size(O) <= otherRec.size) iterateSet(O, function (e) {
+	  if (size(result) <= otherRec.size) iterateSet(result, function (e) {
 	    if (otherRec.includes(e)) remove(result, e);
 	  });
 	  else iterateSimple(otherRec.getIterator(), function (e) {
@@ -33787,7 +34000,7 @@ function requireSetIsDisjointFrom () {
 	  }, true) !== false;
 	  var iterator = otherRec.getIterator();
 	  return iterateSimple(iterator, function (e) {
-	    if (has(O, e)) return iteratorClose(iterator, 'normal', false);
+	    if (has(O, e)) return iteratorClose(iterator.iterator, 'normal', false);
 	  }) !== false;
 	};
 	return setIsDisjointFrom;
@@ -33884,7 +34097,7 @@ function requireSetIsSupersetOf () {
 	  if (size(O) < otherRec.size) return false;
 	  var iterator = otherRec.getIterator();
 	  return iterateSimple(iterator, function (e) {
-	    if (!has(O, e)) return iteratorClose(iterator, 'normal', false);
+	    if (!has(O, e)) return iteratorClose(iterator.iterator, 'normal', false);
 	  }) !== false;
 	};
 	return setIsSupersetOf;
@@ -34364,6 +34577,135 @@ function requireEs_weakMap () {
 	return es_weakMap;
 }
 
+var es_weakMap_getOrInsert = {};
+
+var weakMapHelpers;
+var hasRequiredWeakMapHelpers;
+
+function requireWeakMapHelpers () {
+	if (hasRequiredWeakMapHelpers) return weakMapHelpers;
+	hasRequiredWeakMapHelpers = 1;
+	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
+	var caller = /*@__PURE__*/ requireCaller();
+
+	weakMapHelpers = {
+	  WeakMap: getBuiltIn('WeakMap'),
+	  set: caller('set', 2),
+	  get: caller('get', 1),
+	  has: caller('has', 1),
+	  remove: caller('delete', 1)
+	};
+	return weakMapHelpers;
+}
+
+var hasRequiredEs_weakMap_getOrInsert;
+
+function requireEs_weakMap_getOrInsert () {
+	if (hasRequiredEs_weakMap_getOrInsert) return es_weakMap_getOrInsert;
+	hasRequiredEs_weakMap_getOrInsert = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var WeakMapHelpers = /*@__PURE__*/ requireWeakMapHelpers();
+	var IS_PURE = /*@__PURE__*/ requireIsPure();
+
+	var get = WeakMapHelpers.get;
+	var has = WeakMapHelpers.has;
+	var set = WeakMapHelpers.set;
+
+	// `WeakMap.prototype.getOrInsert` method
+	// https://tc39.es/ecma262/#sec-weakmap.prototype.getorinsert
+	$({ target: 'WeakMap', proto: true, real: true, forced: IS_PURE }, {
+	  getOrInsert: function getOrInsert(key, value) {
+	    if (has(this, key)) return get(this, key);
+	    set(this, key, value);
+	    return value;
+	  }
+	});
+	return es_weakMap_getOrInsert;
+}
+
+var es_weakMap_getOrInsertComputed = {};
+
+var aWeakMap;
+var hasRequiredAWeakMap;
+
+function requireAWeakMap () {
+	if (hasRequiredAWeakMap) return aWeakMap;
+	hasRequiredAWeakMap = 1;
+	var tryToString = /*@__PURE__*/ requireTryToString();
+
+	var $TypeError = TypeError;
+
+	// Perform ? RequireInternalSlot(M, [[WeakMapData]])
+	aWeakMap = function (it) {
+	  if (typeof it == 'object' && 'has' in it && 'get' in it && 'set' in it && 'delete' in it) return it;
+	  throw new $TypeError(tryToString(it) + ' is not a weakmap');
+	};
+	return aWeakMap;
+}
+
+var aWeakKey;
+var hasRequiredAWeakKey;
+
+function requireAWeakKey () {
+	if (hasRequiredAWeakKey) return aWeakKey;
+	hasRequiredAWeakKey = 1;
+	var WeakMapHelpers = /*@__PURE__*/ requireWeakMapHelpers();
+
+	var weakmap = new WeakMapHelpers.WeakMap();
+	var set = WeakMapHelpers.set;
+	var remove = WeakMapHelpers.remove;
+
+	aWeakKey = function (key) {
+	  set(weakmap, key, 1);
+	  remove(weakmap, key);
+	  return key;
+	};
+	return aWeakKey;
+}
+
+var hasRequiredEs_weakMap_getOrInsertComputed;
+
+function requireEs_weakMap_getOrInsertComputed () {
+	if (hasRequiredEs_weakMap_getOrInsertComputed) return es_weakMap_getOrInsertComputed;
+	hasRequiredEs_weakMap_getOrInsertComputed = 1;
+	var $ = /*@__PURE__*/ require_export();
+	var aCallable = /*@__PURE__*/ requireACallable();
+	var aWeakMap = /*@__PURE__*/ requireAWeakMap();
+	var aWeakKey = /*@__PURE__*/ requireAWeakKey();
+	var WeakMapHelpers = /*@__PURE__*/ requireWeakMapHelpers();
+	var IS_PURE = /*@__PURE__*/ requireIsPure();
+
+	var get = WeakMapHelpers.get;
+	var has = WeakMapHelpers.has;
+	var set = WeakMapHelpers.set;
+
+	var FORCED = IS_PURE || !function () {
+	  try {
+	    // eslint-disable-next-line es/no-weak-map, no-throw-literal -- testing
+	    if (WeakMap.prototype.getOrInsertComputed) new WeakMap().getOrInsertComputed(1, function () { throw 1; });
+	  } catch (error) {
+	    // FF144 Nightly - Beta 3 bug
+	    // https://bugzilla.mozilla.org/show_bug.cgi?id=1988369
+	    return error instanceof TypeError;
+	  }
+	}();
+
+	// `WeakMap.prototype.getOrInsertComputed` method
+	// https://tc39.es/ecma262/#sec-weakmap.prototype.getorinsertcomputed
+	$({ target: 'WeakMap', proto: true, real: true, forced: FORCED }, {
+	  getOrInsertComputed: function getOrInsertComputed(key, callbackfn) {
+	    if (!IS_PURE) aWeakMap(this);
+	    aWeakKey(key);
+	    aCallable(callbackfn);
+	    if (has(this, key)) return get(this, key);
+	    var value = callbackfn(key);
+	    set(this, key, value);
+	    return value;
+	  }
+	});
+	return es_weakMap_getOrInsertComputed;
+}
+
 var weakMap$2;
 var hasRequiredWeakMap$2;
 
@@ -34372,6 +34714,8 @@ function requireWeakMap$2 () {
 	hasRequiredWeakMap$2 = 1;
 	requireEs_array_iterator();
 	requireEs_weakMap();
+	requireEs_weakMap_getOrInsert();
+	requireEs_weakMap_getOrInsertComputed();
 	var path = /*@__PURE__*/ requirePath();
 
 	weakMap$2 = path.WeakMap;
@@ -35390,7 +35734,9 @@ function requireEs_array_sort () {
 	    if (y === undefined) return -1;
 	    if (x === undefined) return 1;
 	    if (comparefn !== undefined) return +comparefn(x, y) || 0;
-	    return toString(x) > toString(y) ? 1 : -1;
+	    var xString = toString(x);
+	    var yString = toString(y);
+	    return xString === yString ? 0 : xString > yString ? 1 : -1;
 	  };
 	};
 
