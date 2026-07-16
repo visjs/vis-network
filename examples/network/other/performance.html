@@ -90,7 +90,12 @@
   </head>
   <body>
     <p>Generate a random network with nodes and edges.</p>
-    <form onsubmit="draw(); return false;">
+    <form
+      onsubmit="
+        draw();
+        return false;
+      "
+    >
       <label for="nodeCount">Number of nodes:</label>
       <input id="nodeCount" type="text" value="25" style="width: 50px" />
       <input type="button" value="Go" onclick="draw()" />

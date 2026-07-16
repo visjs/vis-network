@@ -44,7 +44,7 @@
       src="../../common-docs-files/js/toggleTable.js"
     ></script>
   </head>
-  <body onload="prettyPrint();">
+  <body onload="prettyPrint()">
     <div class="navbar-wrapper">
       <div class="container">
         <nav class="navbar-inverse navbar-static-top" role="navigation">
@@ -79,7 +79,7 @@
                 <button
                   type="button"
                   class="btn btn-default"
-                  onclick="vis.initSiteSearch(true);"
+                  onclick="vis.initSiteSearch(true)"
                 >
                   Go!
                 </button>
@@ -138,14 +138,14 @@
         </li>
         <li
           role="presentation"
-          onclick="toggleTab(this);"
+          onclick="toggleTab(this)"
           targetNode="fullOptions"
         >
           <a href="#">full options</a>
         </li>
         <li
           role="presentation"
-          onclick="toggleTab(this);"
+          onclick="toggleTab(this)"
           targetNode="shortOptions"
         >
           <a href="#">shorthand options</a>
@@ -343,7 +343,7 @@ network.setOptions(options);
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','chosen', this);"
+          onclick="toggleTable('optionTable', 'chosen', this)"
         >
           <td><span parent="chosen" class="right-caret"></span> chosen</td>
           <td>Object or Boolean</td>
@@ -502,7 +502,7 @@ network.setOptions(options);
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','color', this);"
+          onclick="toggleTable('optionTable', 'color', this)"
         >
           <td><span parent="color" class="right-caret"></span> color</td>
           <td>Object or String</td>
@@ -658,7 +658,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','fixed', this);"
+          onclick="toggleTable('optionTable', 'fixed', this)"
         >
           <td><span parent="fixed" class="right-caret"></span> fixed</td>
           <td>Object or Boolean</td>
@@ -683,7 +683,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','font', this);"
+          onclick="toggleTable('optionTable', 'font', this)"
         >
           <td><span parent="font" class="right-caret"></span> font</td>
           <td>Object or String</td>
@@ -778,7 +778,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         <tr
           parent="font"
           class="hidden toggle collapsible"
-          onclick="toggleTable('optionTable','bold', this);"
+          onclick="toggleTable('optionTable', 'bold', this)"
         >
           <td><span parent="bold" class="right-caret"></span> font.bold</td>
           <td>Object or String</td>
@@ -839,7 +839,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         <tr
           parent="font"
           class="hidden toggle collapsible"
-          onclick="toggleTable('optionTable','ital', this);"
+          onclick="toggleTable('optionTable', 'ital', this)"
         >
           <td><span parent="ital" class="right-caret"></span> font.ital</td>
           <td>Object or String</td>
@@ -900,7 +900,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         <tr
           parent="font"
           class="hidden toggle collapsible"
-          onclick="toggleTable('optionTable','boldital', this);"
+          onclick="toggleTable('optionTable', 'boldital', this)"
         >
           <td>
             <span parent="boldital" class="right-caret"></span> font.boldital
@@ -963,7 +963,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         <tr
           parent="font"
           class="hidden toggle collapsible"
-          onclick="toggleTable('optionTable','mono', this);"
+          onclick="toggleTable('optionTable', 'mono', this)"
         >
           <td><span parent="mono" class="right-caret"></span> font.mono</td>
           <td>Object or String</td>
@@ -1032,7 +1032,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','heightConstraint', this);"
+          onclick="toggleTable('optionTable', 'heightConstraint', this)"
         >
           <td>
             <span parent="heightConstraint" class="right-caret"></span>
@@ -1078,7 +1078,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','icon', this);"
+          onclick="toggleTable('optionTable', 'icon', this)"
         >
           <td><span parent="icon" class="right-caret"></span> icon</td>
           <td>Object</td>
@@ -1142,7 +1142,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','image', this);"
+          onclick="toggleTable('optionTable', 'image', this)"
         >
           <td><span parent="image" class="right-caret"></span> image</td>
           <td>Object or String</td>
@@ -1178,7 +1178,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','imagePadding', this);"
+          onclick="toggleTable('optionTable', 'imagePadding', this)"
         >
           <td>
             <span parent="imagePadding" class="right-caret"></span> imagePadding
@@ -1253,7 +1253,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','margin', this);"
+          onclick="toggleTable('optionTable', 'margin', this)"
         >
           <td><span parent="margin" class="right-caret"></span> margin</td>
           <td>Object or Number</td>
@@ -1313,7 +1313,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','scaling', this);"
+          onclick="toggleTable('optionTable', 'scaling', this)"
         >
           <td><span parent="scaling" class="right-caret"></span> scaling</td>
           <td>Object</td>
@@ -1444,7 +1444,7 @@ mySize = minSize + diff * scale;
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','shadow', this);"
+          onclick="toggleTable('optionTable', 'shadow', this)"
         >
           <td><span parent="shadow" class="right-caret"></span> shadow</td>
           <td>Object or Boolean</td>
@@ -1522,7 +1522,7 @@ mySize = minSize + diff * scale;
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','shapeProperties', this);"
+          onclick="toggleTable('optionTable', 'shapeProperties', this)"
         >
           <td>
             <span parent="shapeProperties" class="right-caret"></span>
@@ -1635,7 +1635,7 @@ mySize = minSize + diff * scale;
         </tr>
         <tr
           class="toggle collapsible"
-          onclick="toggleTable('optionTable','widthConstraint', this);"
+          onclick="toggleTable('optionTable', 'widthConstraint', this)"
         >
           <td>
             <span parent="widthConstraint" class="right-caret"></span>
