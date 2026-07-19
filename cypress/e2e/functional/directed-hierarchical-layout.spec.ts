@@ -286,7 +286,7 @@ describe("Directed hierarchical layout", (): void => {
               new Set(
                 Object.values(network.getPositions()).map(({ y }): number => y),
               ),
-            ).sort((a, b): number => a - b);
+            ).toSorted((a, b): number => a - b);
 
             const gaps = Array.from({ length: levels.length - 1 })
               .fill(null)
@@ -314,7 +314,7 @@ describe("Directed hierarchical layout", (): void => {
           expect(network.getSelectedNodes()).to.deep.equal([]);
 
           const visibleNodeIds = new Set(
-            Object.keys(network.getPositions()).sort(),
+            Object.keys(network.getPositions()).toSorted(),
           );
           for (const id of visibleNodeIds) {
             cy.visClickNode(id);

@@ -1,5 +1,6 @@
-import { UniversalConfig, UniversalNetworkConfig } from "./types";
 import { compare } from "compare-versions";
+
+import { UniversalConfig, UniversalNetworkConfig } from "./types";
 
 declare global {
   namespace Cypress {

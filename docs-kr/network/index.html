@@ -311,8 +311,7 @@
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</pre
-        >
+</pre>
         <p>
           <a href="../../examples/network/basicUsage.html" target="_blank"
             >The result of the code above will be the basic example which is
@@ -425,8 +424,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-        >
+</pre>
         <p>
           개별 옵션은 아래에 설명되어 있습니다. 모듈을 참조하는 것은 해당 모듈에
           설명되어 있습니다.
@@ -604,8 +602,7 @@ var locales = {
     deleteClusterError: 'Clusters cannot be deleted.',
     editClusterError: 'Clusters cannot be edited.'
   }
-}</pre
-        >
+}</pre>
         <p>
           자신의 로케일을 정의하려면 키('en')를 변경하고 모든 문자열을 변경할 수
           있다. 그러면 로케일 옵션에서 새 키를 사용할 수 있다.
@@ -1185,8 +1182,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
     // containedNodesPositions = {nodeId:{x:nodeX,y:nodeY}, nodeId2....}
     newPositions[nodeId] = {x:newPosX, y:newPosY};
     return newPositions;
-}</pre
-              >
+}</pre>
               includedNodesPositions는 클러스터 된 클러스터의 Node 위치를
               포함합니다. 이 함수는 포함 된 Node 위치 (변경된) 또는 새 object 일
               수있는 newPosition을 반환합니다. 이것은 포함 된 NodesPositions에
@@ -1398,8 +1394,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
   nodeId2: {x: xValue, y:yValue},
   ...
 }
-</pre
-              >
+</pre>
               대체 입력은 NodeId를 포함하거나 아무것도 포함하지 않는
               문자열입니다. 문자열이 제공되면 ID에 해당하는 Node의 위치가
               리턴됩니다. 아무것도 제공되지 않으면 모든 Node의 위치가
@@ -1486,8 +1481,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
   right: Number,
   bottom: Number
 }
-</pre
-              >
+</pre>
               이 값들은 캔버스 공간에 있습니다.
             </td>
           </tr>
@@ -1632,8 +1626,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
 {
   nodes: [Array of selected nodeIds],
   edges: [Array of selected edgeIds]
-}</pre
-              >
+}</pre>
             </td>
           </tr>
 
@@ -1787,8 +1780,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
 {
   nodes: [Array of nodeIds],
   edges: [Array of edgeIds]
-}</pre
-              >
+}</pre>
               또한 <code>selection</code> object의 <code>nodes</code> 혹은
               <code>edges</code>만 선택할 수 있습니다. 다음과 같은 옵션들이
               있습니다:
@@ -1796,8 +1788,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
 {
   unselectAll: Boolean,
   highlightEdges: Boolean
-}</pre
-              >
+}</pre>
             </td>
           </tr>
           <tr
@@ -1891,8 +1882,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
     easingFunction?: string
   }
 }
-</pre
-              >
+</pre>
               Node를 사용하여 뷰의 특정 Node에만 맞도록 확대 / 축소 할 수
               있습니다.<br />
               최소 및 최대 확대 / 축소 수준을 사용하여 주어진 수준 내에서 맞춤을
@@ -1928,8 +1918,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
     easingFunction: String
   }
 }
-</pre
-              >
+</pre>
               잠금을 제외한 모든 옵션은 <code>moveTo()</code>에 자세히 설명되어
               있습니다. 잠김은 확대 애니메이션이 완료된 후 뷰가 Node에 잠긴
               상태로 유지되는지 여부를 나타냅니다. 기본값은 true입니다. 포커스
@@ -1964,8 +1953,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
     easingFunction: String
   }
 }
-</pre
-              >
+</pre>
               위치 (캔버스 단위!)는 카메라의 중앙 초점 위치입니다. 스케일은 대상
               줌 레벨입니다. 기본값은 1.0입니다. 오프셋 (DOM 단위)은 뷰에서
               초점이 맞춰진 중심으로부터의 픽셀 수입니다. 기본값은 {x : 0, y :
@@ -2079,8 +2067,7 @@ var options = {
 }
 
 network.clustering.cluster(options);
-</pre
-              >
+</pre>
               <code>clusterByConnection</code
               ><b
                 >의 2개의 nodeOptions object를 joinCondition 콜백에 인수로
@@ -2122,8 +2109,7 @@ var options = {
     return clusterOptions;
   },
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2145,8 +2131,7 @@ var options = {
     clusterNodeProperties: {
         allowSingleNodeCluster: true
     }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2202,8 +2187,7 @@ var options = {
     canvas: {x:canvas_x, y:canvas_y}
   }
 }
-</pre
-              >
+</pre>
 
               이것은 모든 동작에 공통적 인 구조입니다. click 동작의 경우 다음
               속성이 추가됩니다:
@@ -2212,8 +2196,7 @@ var options = {
 {
 ...
   items: [Array of click items],
-}</pre
-              >
+}</pre>
 
               클릭 항목이 있는 위치:
               <pre class="prettyprint lang-js">
@@ -2221,8 +2204,7 @@ var options = {
   {nodeId:NodeId labelId:0}  // label of node with given id clicked on
   {edgeId:EdgeId}            // edge with given id clicked on
   {edge:EdgeId, labelId:0}   // label of edge with given id clicked on
-</pre
-              >
+</pre>
 
               <code>items</code> 배열 의 순서는 z 순서로 내림차순입니다. 따라서
               최상위 항목을 얻으려면 인덱스 0에서 값을 가져옵니다.
@@ -2306,8 +2288,7 @@ var options = {
     edges: [Array of previously selected edgeIds]
   }
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2353,8 +2334,7 @@ var options = {
     },    
     controlEdge: {from:from_node_id, to:to_node_id}
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2409,8 +2389,7 @@ var options = {
   scale: Number,
   pointer: {x:pointer_x, y:pointer_y}
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2451,8 +2430,7 @@ var options = {
 {
   iterations: Number // iterations so far,
   total: Number      // total iterations in options
-}</pre
-              >
+}</pre>
             </td>
           </tr>
           <tr>
@@ -2478,8 +2456,7 @@ var options = {
               <pre class="prettyprint lang-js">
 {
   iterations: Number // iterations it took
-}</pre
-              >
+}</pre>
             </td>
           </tr>
 
@@ -2502,8 +2479,7 @@ var options = {
   oldWidth: Number  // the old width  of the canvas
   oldHeight: Number // the old height of the canvas
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr class="subHeader">
@@ -2622,8 +2598,7 @@ var data = {
 
 // create a network
 var network = new vis.Network(container, data);
-</pre
-        >
+</pre>
 
         <br />
         <h4>Gephi parser 옵션</h4>
@@ -2701,8 +2676,7 @@ options.nodes = {
 
 // create a network
 var network = new vis.Network(container, data, options);
-</pre
-        >
+</pre>
       </div>
 
       <div class="flagbar">

@@ -72,7 +72,7 @@ export class PollutionDetector {
       done.add(root);
     }
 
-    for (const key of Object.getOwnPropertyNames(root).sort()) {
+    for (const key of Object.getOwnPropertyNames(root).toSorted()) {
       const path = prefix + "." + key;
 
       if (

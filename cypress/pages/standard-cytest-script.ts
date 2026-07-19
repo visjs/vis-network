@@ -1,6 +1,7 @@
 // These imports are there only for their types. Their values can't be used as
 // this will be loaded in a web browser without bundling.
 import type * as visUtil from "vis-util";
+
 import type * as visNetworkStandalone from "../../declarations/entry-standalone.js";
 import type { Options } from "../../declarations/entry-standalone.js";
 import type { UniversalConfig, VisWindow } from "../support/commands/types.ts";
@@ -84,12 +85,12 @@ type VisUtil = typeof visUtil;
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "../../node_modules/vis-util/standalone/umd/vis-util.js";
-    script.onload = (): void => {
+    script.addEventListener("load", (): void => {
       // Don't pollute the global scope.
       const vis = (window as any).vis;
       delete (window as any).vis;
       resolve(vis);
-    };
+    });
     document.head.append(script);
   });
 
@@ -99,11 +100,11 @@ type VisUtil = typeof visUtil;
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = standaloneURL;
-      script.onload = (): void => {
+      script.addEventListener("load", (): void => {
         // Keep this loaded for the tests to use as this would also be present
         // in production.
         resolve((window as any).vis);
-      };
+      });
       document.head.append(script);
     },
   );
@@ -146,7 +147,7 @@ type VisUtil = typeof visUtil;
             },
           }
         : false,
-      physics: config.physics ? true : false,
+      physics: !!config.physics,
     },
     // Raw options to override anything set above.
     config.options ?? {},
@@ -197,8 +198,8 @@ type VisUtil = typeof visUtil;
   const updateSelectionJSON = (): void => {
     const selection = network.getSelection();
     $selectionJSON.innerText = JSON.stringify({
-      nodes: [...selection.nodes].sort(),
-      edges: [...selection.edges].sort(),
+      nodes: selection.nodes.toSorted(),
+      edges: selection.edges.toSorted(),
     });
   };
   // Make sure the selection is always filled in.

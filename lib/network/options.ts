@@ -35,7 +35,6 @@ const endPoints = [
   "vee",
 ];
 
-/* eslint-disable @typescript-eslint/naming-convention -- The __*__ format is used to prevent collisions with actual option names. */
 const nodeOptions: OptionsConfig = {
   borderWidth: { number },
   borderWidthSelected: { number, undefined: "undefined" },
@@ -547,7 +546,6 @@ const allOptions: OptionsConfig = {
   width: { string },
   __type__: { object },
 };
-/* eslint-enable @typescript-eslint/naming-convention */
 
 /**
  * This provides ranges, initial values, steps and dropdown menu choices for the

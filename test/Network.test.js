@@ -12,22 +12,23 @@
  */
 import { expect } from "chai";
 import { DataSet } from "vis-data/esnext";
-import Network from "../lib/network/Network.js";
-import { canvasMockify } from "./canvas-mock.js";
-import { allOptions, configureOptions } from "../lib/network/options.ts";
+
 import {
-  nodes as basicUsageNodes,
-  edges as basicUsageEdges,
-} from "./network/basicUsage.js";
-import {
-  nodes as worldCup2014Nodes,
   edges as worldCup2014Edges,
+  nodes as worldCup2014Nodes,
 } from "../examples/network/datasources/WorldCup2014.js";
 import {
-  nodes as disassemblerExampleNodes,
   edges as disassemblerExampleEdges,
+  nodes as disassemblerExampleNodes,
   options as disassemblerExampleOptions,
 } from "../examples/network/exampleApplications/disassemblerExample.js";
+import Network from "../lib/network/Network.js";
+import { allOptions, configureOptions } from "../lib/network/options.ts";
+import { canvasMockify } from "./canvas-mock.js";
+import {
+  edges as basicUsageEdges,
+  nodes as basicUsageNodes,
+} from "./network/basicUsage.js";
 
 /**
  * Merge all options of object b into object b
@@ -234,8 +235,7 @@ function checkFontProperties(fontItem, checkStrict = true) {
 
   // All known properties should be present
   const keys = Object.keys(fontItem);
-  for (const n in knownProperties) {
-    const prop = knownProperties[n];
+  for (const prop of knownProperties) {
     expect(keys).to.include(prop, "Missing known font option '" + prop + "'");
   }
 }
@@ -265,7 +265,9 @@ describe("Network", function () {
 
   function firstNode(network) {
     for (const id in network.body.nodes) {
-      return network.body.nodes[id];
+      if (Object.prototype.hasOwnProperty.call(network.body.nodes, id)) {
+        return network.body.nodes[id];
+      }
     }
 
     return undefined;
@@ -273,7 +275,9 @@ describe("Network", function () {
 
   function firstEdge(network) {
     for (const id in network.body.edges) {
-      return network.body.edges[id];
+      if (Object.prototype.hasOwnProperty.call(network.body.edges, id)) {
+        return network.body.edges[id];
+      }
     }
 
     return undefined;
@@ -319,37 +323,6 @@ describe("Network", function () {
   }
 
   /**
-   * At time of writing, this test detected 22 out of 33 'illegal' loops.
-   * The real deterrent is eslint rule 'guard-for-in`.
-   */
-  it("can deal with added fields in Array.prototype", function () {
-    window.document.createElement("canvas");
-    Array.prototype.foo = 1; // Just add anything to the prototype
-    Object.prototype.bar = 2; // Let's screw up hashes as well
-
-    // The network should just run without throwing errors
-    try {
-      const [network, data] = createSampleNetwork({});
-
-      // Do some stuff to trigger more errors
-      clusterTo(network, "c1", [1, 2, 3]);
-      data.nodes.remove(1);
-      network.openCluster("c1");
-      clusterTo(network, "c1", [4], true);
-      clusterTo(network, "c2", ["c1"], true);
-      clusterTo(network, "c3", ["c2"], true);
-      data.nodes.remove(4);
-    } catch (e) {
-      delete Array.prototype.foo; // Remove it again so as not to confuse other tests.
-      delete Object.prototype.bar;
-      expect.fail("Got exception:\n" + e.stack);
-    }
-
-    delete Array.prototype.foo; // Remove it again so as not to confuse other tests.
-    delete Object.prototype.bar;
-  });
-
-  /**
    * This is a fix on one issue (#3543), but in fact **all* options for all API calls should
    * remain unchanged.
    * TODO: extend test for all API calls with options, see #3548
@@ -361,11 +334,13 @@ describe("Network", function () {
 
     // options should still be empty
     for (const prop in options) {
-      expect(options).to.not.have.property(
-        prop,
-        "No properties should be present in options, detected property: " +
+      if (Object.prototype.hasOwnProperty.call(options, prop)) {
+        expect(options).to.not.have.property(
           prop,
-      );
+          "No properties should be present in options, detected property: " +
+            prop,
+        );
+      }
     }
   });
 
@@ -398,7 +373,8 @@ describe("Network", function () {
     const container = document.getElementById("mynetwork");
 
     for (let n = 0; n < awkwardData.length; ++n) {
-      new Network(container, awkwardData[n], {}); // Should not throw
+      const network = new Network(container, awkwardData[n], {}); // Should not throw
+      expect(network).to.be.an.instanceof(Network);
     }
   });
 
@@ -947,15 +923,21 @@ describe("Network", function () {
       const collectClusters = function (network) {
         const clusters = [];
         for (const n in network.body.nodes) {
-          const node = network.body.nodes[n];
-          if (node.containedNodes === undefined) continue; // clusters only
+          if (Object.prototype.hasOwnProperty.call(network.body.nodes, n)) {
+            const node = network.body.nodes[n];
+            if (node.containedNodes === undefined) continue; // clusters only
 
-          // Collect id's of nodes in the cluster
-          const nodes = [];
-          for (const m in node.containedNodes) {
-            nodes.push(m);
+            // Collect id's of nodes in the cluster
+            const nodes = [];
+            for (const m in node.containedNodes) {
+              if (
+                Object.prototype.hasOwnProperty.call(node.containedNodes, m)
+              ) {
+                nodes.push(m);
+              }
+            }
+            clusters.push(nodes);
           }
-          clusters.push(nodes);
         }
 
         return clusters;

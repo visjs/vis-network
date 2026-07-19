@@ -13,15 +13,14 @@
  *   All other combinations should either be rejected as error or handled gracefully.
  */
 import { expect } from "chai";
-import * as util from "vis-util/esnext";
 import { DataSet } from "vis-data/esnext";
+import * as util from "vis-util/esnext";
 
-import { canvasMockify } from "./canvas-mock.js";
-
+import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil.js";
 import Label from "../lib/network/modules/components/shared/Label.js";
 import NodesHandler from "../lib/network/modules/NodesHandler.js";
 import Network from "../lib/network/Network.js";
-import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil.js";
+import { canvasMockify } from "./canvas-mock.js";
 
 /**************************************************************
  * Dummy class definitions for minimal required functionality.
@@ -1769,7 +1768,7 @@ describe("Network Label", function () {
       { from: 1, to: 4, label: { a: 42 } },
       { from: 1, to: 5, label: ["an", "array"] },
       { from: 1, to: 6, label: false },
-      { from: 1, to: 7, label: 2.71828 },
+      { from: 1, to: 7, label: Math.E },
     ];
 
     // Isolate the specific call where a problem with null-label was detected
@@ -1800,7 +1799,7 @@ describe("Network Label", function () {
     };
 
     options = {};
-    new Network(container, data, options);
+    void new Network(container, data, options);
   });
 
   describe("visible function", function () {

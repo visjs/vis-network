@@ -1,22 +1,23 @@
 import { overrideOpacity } from "vis-util/esnext";
+
+import { getSelfRefCoordinates } from "../../shared/ComponentUtil.js";
 import { EndPoints } from "./end-points.ts";
+import { drawDashedLine } from "./shapes.ts";
 import type {
   ArrowData,
   ArrowDataWithCore,
   ArrowType,
   EdgeFormattingValues,
+  EdgeOptions,
   EdgeType,
   Id,
   Label,
-  EdgeOptions,
   Point,
   PointT,
   SelectiveRequired,
   VBody,
   VNode,
 } from "./types.ts";
-import { drawDashedLine } from "./shapes.ts";
-import { getSelfRefCoordinates } from "../../shared/ComponentUtil.js";
 
 export interface FindBorderPositionOptions<Via> {
   via: Via;

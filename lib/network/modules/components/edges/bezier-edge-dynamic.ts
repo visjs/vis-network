@@ -1,8 +1,8 @@
 import { BezierEdgeBase } from "./util/bezier-edge-base.ts";
 import type {
   EdgeFormattingValues,
-  Label,
   EdgeOptions,
+  Label,
   Point,
   PointT,
   SelectiveRequired,

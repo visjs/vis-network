@@ -1,8 +1,7 @@
+import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import { expect } from "chai";
-
-import { readFileSync, readdirSync } from "fs";
 
 import { DOTToGraph, parseDOT } from "../../lib/network/dotparser.js";
 

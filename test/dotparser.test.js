@@ -1,6 +1,8 @@
-import { expect } from "chai";
 import { readFile } from "node:fs/promises";
 import { URL } from "node:url";
+
+import { expect } from "chai";
+
 import { parseDOT } from "../lib/network/dotparser.js";
 
 describe("dotparser", function () {

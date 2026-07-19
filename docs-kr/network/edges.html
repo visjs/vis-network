@@ -292,8 +292,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <pre class="prettyprint lang-js options top hidden" id="shortOptions">
 // here all options that have shorthand notations are shown.
@@ -311,8 +310,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <p>이 옵션들은 각 Edge별로 적용시킬 수 있다.</p>
       <table class="options" id="optionTable">
@@ -478,8 +476,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               들어오는 인수 중 하나를 사용하여 특성의 변화를 결정할 수 있습니다.
               할당된 함수로 속성을 구체적으로 할당하지 않으면, 속성이 변경되지
@@ -596,8 +593,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               들어오는 인수 중 하나를 사용하여 특성의 변화를 결정할 수 있습니다.
               할당된 함수로 속성을 구체적으로 할당하지 않으면, 속성이 변경되지
@@ -1095,8 +1091,7 @@ var options: {
     hoverWidth: function (width) {return width+1;}
   }
 }
-</pre
-            >
+</pre>
             이 함수는 Edge의 <code>Number width</code> 를 받습니다. 이 간단한
             예제에서는 너비에 1을 더합니다. <code>Number</code> 를 반환하는 한
             함수의 논리를 테일러할 수 있습니다.
@@ -1248,8 +1243,7 @@ function (min,max,total,value) {
     return Math.max(0,(value - min)*scale);
   }
 }
-</pre
-            >
+</pre>
             이 함수는 세트의 최솟값, 최댓값, 모든 값의 총합 및 마지막으로
             작동하는 Node 또는 Edge의 값을 받습니다.
             <b>0과 1사이의 값을 반환해야 합니다.</b>
@@ -1258,8 +1252,7 @@ function (min,max,total,value) {
 var scale = customScalingFunction(min,max,total,value);
 var diff = maxWidth - minWidth;
 myWidth = minWidth + diff * scale;
-</pre
-            >
+</pre>
             참고: <code>maxWidth</code> 와 <code>minWidth</code> 는 옵션에
             제공된 <code>scaling.max</code> 와
             <code>scaling.min</code> 값입니다.
@@ -1282,8 +1275,7 @@ var options: {
     selectionWidth: function (width) {return width*2;}
   }
 }
-</pre
-            >
+</pre>
             이 함수는 Edge의 <code>Number width</code> 를 받습니다. 이 간단한
             예제에서는 너비에 2를 곱합니다. <code>Number</code> 를 반환하는 한
             함수의 논리를 테일러할 수 있습니다.

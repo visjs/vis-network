@@ -294,8 +294,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <pre class="prettyprint lang-js options top hidden" id="shortOptions">
 // here all options that have shorthand notations are shown.
@@ -313,8 +312,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <p>These options can also be set per individual edge.</p>
       <table class="options" id="optionTable">
@@ -496,8 +494,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               Any of the incoming arguments may be used to determine
               characteristic changes. If a property is not specifically assigned
@@ -620,8 +617,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               Any of the incoming arguments may be used to determine
               characteristic changes. If a property is not specifically assigned
@@ -1138,8 +1134,7 @@ var options: {
     hoverWidth: function (width) {return width+1;}
   }
 }
-</pre
-            >
+</pre>
             It receives the <code>Number width</code> of the edge. In this
             simple example we add 1 to the width. You can taylor the logic in
             the function as long as it returns a <code>Number</code>.
@@ -1297,8 +1292,7 @@ function (min,max,total,value) {
     return Math.max(0,(value - min)*scale);
   }
 }
-</pre
-            >
+</pre>
             The function receives the minimum value of the set, the maximum
             value, the total sum of all values and finally the value of the node
             or edge it works on.
@@ -1308,8 +1302,7 @@ function (min,max,total,value) {
 var scale = customScalingFunction(min,max,total,value);
 var diff = maxWidth - minWidth;
 myWidth = minWidth + diff * scale;
-</pre
-            >
+</pre>
             Please note: <code>maxWidth</code> and <code>minWidth</code> are the
             values <code>scaling.max</code> and
             <code>scaling.min</code> provided in the options.
@@ -1333,8 +1326,7 @@ var options: {
     selectionWidth: function (width) {return width*2;}
   }
 }
-</pre
-            >
+</pre>
             It receives the <code>Number width</code> of the edge. In this
             simple example multiply the width by 2. You can taylor the logic in
             the function as long as it returns a <code>Number</code>.

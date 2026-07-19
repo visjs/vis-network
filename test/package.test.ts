@@ -1,4 +1,5 @@
 import snapshot from "snap-shot-it";
+
 import { inspectNpmPack } from "vis-dev-utils";
 
 describe("Package", function (): void {

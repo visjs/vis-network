@@ -1,9 +1,7 @@
 import { expect } from "chai";
-import {
-  type ColorObject,
-  type VisData,
-  parseGephi,
-} from "../lib/network/gephiParser.ts";
+
+import { parseGephi } from "../lib/network/gephiParser.ts";
+import type { ColorObject, VisData } from "../lib/network/gephiParser.ts";
 
 describe("Gephi parser", function (): void {
   it("Empty dataset", function (): void {

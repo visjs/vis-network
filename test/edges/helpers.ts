@@ -1,4 +1,5 @@
 import { spy, stub } from "sinon";
+
 import { deepFreeze } from "../helpers/index.ts";
 
 const generateColor = function (id: number): {

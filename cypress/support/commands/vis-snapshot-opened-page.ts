@@ -1,5 +1,6 @@
-import { MoveToOptions } from "./types";
 import { deepObjectAssign } from "vis-util";
+
+import { MoveToOptions } from "./types";
 import { VisVisitPageOptions } from "./vis-visit-universal";
 
 declare global {

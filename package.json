@@ -204,7 +204,7 @@
     "test:e2e:functional": "cross-env CYPRESS_FUNCTIONAL=true npm run test:e2e:headless",
     "test:e2e:gui": "start-server-and-test test:e2e:transpile-watch-and-serve \"http://127.0.0.1:58253\" \"cypress open\"",
     "test:e2e:headless": "start-server-and-test test:e2e:transpile-and-serve \"http://127.0.0.1:58253\" \"cypress run\"",
-    "test:e2e:transpile": "tsc --skipLibCheck --module esnext --moduleResolution bundler cypress/pages/standard-cytest-script.ts cypress/pages/pollution-detector.ts",
+    "test:e2e:transpile": "tsc --skipLibCheck --module esnext --moduleResolution bundler --lib esnext,dom cypress/pages/standard-cytest-script.ts cypress/pages/pollution-detector.ts",
     "test:e2e:transpile-and-serve": "npm run test:e2e:transpile && npm run serve",
     "test:e2e:transpile-and-watch": "npm run test:e2e:transpile -- --watch",
     "test:e2e:transpile-watch-and-serve": "npm run test:e2e:transpile && start-server-and-test serve :58253 test:e2e:transpile-and-watch",
@@ -226,18 +226,18 @@
     "build:watch": "rollup --watch --config rollup.build.js",
     "prepublishOnly": "npm run build",
     "generate-examples-index": "generate-examples-index --config generate-examples-index.json",
-    "style": "prettier --check .",
-    "style-fix": "prettier --write .",
-    "lint": "eslint --ext .js,.ts .",
-    "lint-fix": "eslint --fix --ext .js,.ts .",
+    "style": "oxfmt --check .",
+    "style-fix": "oxfmt .",
+    "lint": "oxlint --report-unused-disable-directives-severity error .",
+    "lint-fix": "oxlint --report-unused-disable-directives-severity error --fix .",
     "clean": "shx rm -rf \"declarations\" \"dist\" \"esnext\" \"examples/index.html\" \"examples/static/*\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
-    "*.{js,ts}": "eslint --fix",
-    ".*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
-    ".*.{js,ts}": "eslint --fix"
+    "*.{js,ts,css,html,json,md,yml,yaml}": "oxfmt --no-error-on-unmatched-pattern",
+    "*.{js,ts}": "oxlint --no-error-on-unmatched-pattern --report-unused-disable-directives-severity error --fix",
+    ".*.{js,ts,css,html,json,md,yml,yaml}": "oxfmt --no-error-on-unmatched-pattern",
+    ".*.{js,ts}": "oxlint --no-error-on-unmatched-pattern --report-unused-disable-directives-severity error --fix"
   },
   "config": {
     "snap-shot-it": {
@@ -268,7 +268,6 @@
     "cross-env": "10.1.0",
     "cypress": "15.18.1",
     "cypress-visual-regression": "5.3.0",
-    "eslint": "8.57.1",
     "gh-pages": "6.3.0",
     "husky": "9.1.7",
     "jsdom": "29.1.1",
@@ -277,6 +276,9 @@
     "lint-staged": "17.0.8",
     "mocha": "11.7.6",
     "nyc": "18.0.0",
+    "oxfmt": "0.59.0",
+    "oxlint": "1.74.0",
+    "oxlint-tsgolint": "0.25.0",
     "postcss": "8.5.19",
     "semantic-release": "25.0.7",
     "serve": "14.2.6",
