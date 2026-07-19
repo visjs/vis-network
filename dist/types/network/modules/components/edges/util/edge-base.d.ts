@@ -1,4 +1,4 @@
-import type { ArrowData, ArrowDataWithCore, EdgeFormattingValues, EdgeType, Id, Label, EdgeOptions, Point, PointT, SelectiveRequired, VBody, VNode } from "./types.ts";
+import type { ArrowData, ArrowDataWithCore, EdgeFormattingValues, EdgeOptions, EdgeType, Id, Label, Point, PointT, SelectiveRequired, VBody, VNode } from "./types.ts";
 export interface FindBorderPositionOptions<Via> {
     via: Via;
 }

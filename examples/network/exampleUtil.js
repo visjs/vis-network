@@ -1,7 +1,6 @@
 // This is quite old and I don't want to waste too much time here. We probably
 // should stop using this altogether as the examples should be easy and
 // straightforward to understand and this only obscures it.
-/* eslint jsdoc/require-jsdoc: "off" */
 
 /* global Alea:false */
 

@@ -283,8 +283,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <pre class="prettyprint lang-js options top hidden" id="shortOptions">
 // only the options that have shorthand notations are shown.
@@ -300,8 +299,7 @@ var options = {
   }
 }
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <p>
         이러한 옵션들은 각 개별 Node에 대해 역시 설정되어 있습니다. 모든 개별
@@ -366,8 +364,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               들어오는 어떤 arguments라도 특성의 변화를 결정하기위해 사용되어질
               수 있습니다. 만약 a property가 제공된 function에 특별히 할당되지
@@ -441,8 +438,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               들어오는 어떤 arguments라도 특성의 변화를 결정하기위해 사용되어질
               수 있습니다. 만약 a property가 제공된 function에 특별히 할당되지
@@ -1318,8 +1314,7 @@ function (min,max,total,value) {
     return Math.max(0,(value - min)*scale);
   }
 }
-</pre
-            >
+</pre>
             function은 집합의 최솟값과 최댓값, 모든 값의 총합, 그리고 최종적으로
             Node와 엣지가 작동한 값을 받습니다.
             <b> 0과 1의 값이 반환 되어야만 합니다.</b> Node와 엣지는 다음 과정에
@@ -1328,8 +1323,7 @@ function (min,max,total,value) {
 var scale = customScalingFunction(min,max,total,value);
 var diff = maxSize - minSize;
 mySize = minSize + diff * scale;
-</pre
-            >
+</pre>
             참고 : <code>maxSize</code>와 <code>minSize</code>는 옵션으로
             제공받은<code>scaling.max</code>와<code>scaling.min</code>의
             값입니다.

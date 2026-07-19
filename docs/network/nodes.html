@@ -284,8 +284,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <pre class="prettyprint lang-js options top hidden" id="shortOptions">
 // only the options that have shorthand notations are shown.
@@ -301,8 +300,7 @@ var options = {
   }
 }
 network.setOptions(options);
-</pre
-      >
+</pre>
 
       <p>
         These options can also be set per individual node. All of the individual
@@ -370,8 +368,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               Any of the incoming arguments may be used to determine
               characteristic changes. If a property is not specifically assigned
@@ -450,8 +447,7 @@ network.setOptions(options);
             <pre class="code">
   function(values, id, selected, hovering) {
     values.<i>property</i> = <i>chosenValue</i>;
-  }</pre
-            >
+  }</pre>
             <p>
               Any of the incoming arguments may be used to determine
               characteristic changes. If a property is not specifically assigned
@@ -608,8 +604,7 @@ function ctxRenderer({ ctx, id, x, y, state: { selected, hover }, style, label }
     nodeDimensions: { width, height },
   };
 }
-                </pre
-            >
+                </pre>
             <p>
               This function allows to draw any canvas shapes and lines (see
               guide to how to draw shapes
@@ -640,8 +635,7 @@ function({ ctx, x, y, state: { selected, hover }, style }) {
     ctx.font = "normal 12px sans-serif";
     ctx.fillStyle = 'black';
 }
-                </pre
-            >
+                </pre>
           </td>
         </tr>
         <tr>
@@ -1424,8 +1418,7 @@ function (min,max,total,value) {
     return Math.max(0,(value - min)*scale);
   }
 }
-</pre
-            >
+</pre>
             The function receives the minimum value of the set, the maximum
             value, the total sum of all values and finally the value of the node
             or edge it works on.
@@ -1435,8 +1428,7 @@ function (min,max,total,value) {
 var scale = customScalingFunction(min,max,total,value);
 var diff = maxSize - minSize;
 mySize = minSize + diff * scale;
-</pre
-            >
+</pre>
             Please note: <code>maxSize</code> and <code>minSize</code> are the
             values <code>scaling.max</code> and
             <code>scaling.min</code> provided in the options.
