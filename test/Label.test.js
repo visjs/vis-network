@@ -1769,7 +1769,7 @@ describe("Network Label", function () {
       { from: 1, to: 4, label: { a: 42 } },
       { from: 1, to: 5, label: ["an", "array"] },
       { from: 1, to: 6, label: false },
-      { from: 1, to: 7, label: 2.71828 },
+      { from: 1, to: 7, label: Math.E },
     ];
 
     // Isolate the specific call where a problem with null-label was detected
@@ -1800,7 +1800,7 @@ describe("Network Label", function () {
     };
 
     options = {};
-    new Network(container, data, options);
+    void new Network(container, data, options);
   });
 
   describe("visible function", function () {

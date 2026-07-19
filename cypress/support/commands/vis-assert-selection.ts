@@ -20,8 +20,8 @@ function sortSelection(selection: { nodes: IdType[]; edges: IdType[] }): {
   edges: IdType[];
 } {
   return {
-    nodes: [...selection.nodes].sort(),
-    edges: [...selection.edges].sort(),
+    nodes: selection.nodes.toSorted(),
+    edges: selection.edges.toSorted(),
   };
 }
 
