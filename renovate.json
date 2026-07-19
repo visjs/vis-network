@@ -1,6 +1,7 @@
 {
   "extends": ["config:best-practices", ":pinOnlyDevDependencies"],
   "dependencyDashboard": false,
+  "gitIgnoredAuthors": ["114827586+autofix-ci[bot]@users.noreply.github.com"],
   "packageRules": [
     {
       "matchDepTypes": ["peerDependencies"],
