@@ -1,4 +1,5 @@
 import { pureDeepObjectAssign } from "vis-util";
+
 import { createGridPoints } from "../helpers/index.ts";
 
 const shapes = [

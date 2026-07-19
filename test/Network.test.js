@@ -12,22 +12,23 @@
  */
 import { expect } from "chai";
 import { DataSet } from "vis-data/esnext";
-import Network from "../lib/network/Network.js";
-import { canvasMockify } from "./canvas-mock.js";
-import { allOptions, configureOptions } from "../lib/network/options.ts";
+
 import {
-  nodes as basicUsageNodes,
-  edges as basicUsageEdges,
-} from "./network/basicUsage.js";
-import {
-  nodes as worldCup2014Nodes,
   edges as worldCup2014Edges,
+  nodes as worldCup2014Nodes,
 } from "../examples/network/datasources/WorldCup2014.js";
 import {
-  nodes as disassemblerExampleNodes,
   edges as disassemblerExampleEdges,
+  nodes as disassemblerExampleNodes,
   options as disassemblerExampleOptions,
 } from "../examples/network/exampleApplications/disassemblerExample.js";
+import Network from "../lib/network/Network.js";
+import { allOptions, configureOptions } from "../lib/network/options.ts";
+import { canvasMockify } from "./canvas-mock.js";
+import {
+  edges as basicUsageEdges,
+  nodes as basicUsageNodes,
+} from "./network/basicUsage.js";
 
 /**
  * Merge all options of object b into object b

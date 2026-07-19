@@ -13,15 +13,14 @@
  *   All other combinations should either be rejected as error or handled gracefully.
  */
 import { expect } from "chai";
-import * as util from "vis-util/esnext";
 import { DataSet } from "vis-data/esnext";
+import * as util from "vis-util/esnext";
 
-import { canvasMockify } from "./canvas-mock.js";
-
+import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil.js";
 import Label from "../lib/network/modules/components/shared/Label.js";
 import NodesHandler from "../lib/network/modules/NodesHandler.js";
 import Network from "../lib/network/Network.js";
-import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil.js";
+import { canvasMockify } from "./canvas-mock.js";
 
 /**************************************************************
  * Dummy class definitions for minimal required functionality.

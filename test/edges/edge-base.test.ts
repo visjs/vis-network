@@ -1,8 +1,8 @@
 import { expect } from "chai";
-import { deepFreeze } from "../helpers/index.ts";
-import { body } from "./helpers.ts";
 
 import { EdgeBase } from "../../lib/network/modules/components/edges/index.ts";
+import { deepFreeze } from "../helpers/index.ts";
+import { body } from "./helpers.ts";
 
 describe("EdgeBase", function (): void {
   it("constructor", function (): void {

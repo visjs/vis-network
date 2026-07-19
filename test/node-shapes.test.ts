@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { assert, spy, stub } from "sinon";
-import { deepFreeze } from "./helpers/index.ts";
 
 import Box from "../lib/network/modules/components/nodes/shapes/Box.js";
 import Circle from "../lib/network/modules/components/nodes/shapes/Circle.js";
@@ -17,6 +16,7 @@ import Star from "../lib/network/modules/components/nodes/shapes/Star.js";
 import Text from "../lib/network/modules/components/nodes/shapes/Text.js";
 import Triangle from "../lib/network/modules/components/nodes/shapes/Triangle.js";
 import TriangleDown from "../lib/network/modules/components/nodes/shapes/TriangleDown.js";
+import { deepFreeze } from "./helpers/index.ts";
 
 describe("Node Shapes", function (): void {
   const generateOptions = (): any => ({

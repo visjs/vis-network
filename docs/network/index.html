@@ -315,8 +315,7 @@
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</pre
-        >
+</pre>
         <p>
           <a href="../../examples/network/basicUsage.html" target="_blank"
             >The result of the code above will be the basic example which is
@@ -433,8 +432,7 @@ var options = {
 }
 
 network.setOptions(options);
-</pre
-        >
+</pre>
         <p>
           The individual options are explained below. The ones referring to
           modules are explained in the corresponding module.
@@ -610,8 +608,7 @@ var locales = {
     deleteClusterError: 'Clusters cannot be deleted.',
     editClusterError: 'Clusters cannot be edited.'
   }
-}</pre
-        >
+}</pre>
         <p>
           If you want to define your own locale, you can change the key ('en'
           here) and change all the strings. You can then use your new key in the
@@ -1202,8 +1199,7 @@ function releaseFunction (clusterPosition, containedNodesPositions) {
     // containedNodesPositions = {nodeId:{x:nodeX,y:nodeY}, nodeId2....}
     newPositions[nodeId] = {x:newPosX, y:newPosY};
     return newPositions;
-}</pre
-              >
+}</pre>
               The containedNodesPositions contain the positions of the nodes in
               the cluster at the moment they were clustered. This function is
               expected to return the newPositions, which can be the
@@ -1441,8 +1437,7 @@ network.getPositions('a123');
         a123: { x: 5, y: 12 }
     }
                     
-                    </pre
-              >
+                    </pre>
               Alternative inputs are a string containing a nodeId or nothing.
               When a string is supplied, the position of the node corresponding
               to the id is returned in the same format. When nothing is
@@ -1478,8 +1473,7 @@ network.getPositions('a123');
               <pre class="code">
 network.getPosition('a123');
 >   { x: 5, y: 12 }
-                    </pre
-              >
+                    </pre>
 
               If <em>no id</em> is provided, the method will throw a
               <code>TypeError</code>
@@ -1571,8 +1565,7 @@ network.getPosition('a123');
   right: Number,
   bottom: Number
 }
-</pre
-              >
+</pre>
               These values are in canvas space.
             </td>
           </tr>
@@ -1723,8 +1716,7 @@ network.getPosition('a123');
 {
   nodes: [Array of selected nodeIds],
   edges: [Array of selected edgeIds]
-}</pre
-              >
+}</pre>
             </td>
           </tr>
 
@@ -1878,16 +1870,14 @@ network.getPosition('a123');
 {
   nodes: [Array of nodeIds],
   edges: [Array of edgeIds]
-}</pre
-              >
+}</pre>
               You can also pass only <code>nodes</code> or <code>edges</code> in
               <code>selection</code> object. Available options are:
               <pre class="code">
 {
   unselectAll: Boolean,
   highlightEdges: Boolean
-}</pre
-              >
+}</pre>
             </td>
           </tr>
           <tr
@@ -1978,8 +1968,7 @@ network.getPosition('a123');
     easingFunction?: string
   }
 }
-</pre
-              >
+</pre>
               The nodes can be used to zoom to fit only specific nodes in the
               view.<br />
               The min and max zoom levels can be used to constrain the fit
@@ -2015,8 +2004,7 @@ network.getPosition('a123');
     easingFunction: String
   }
 }
-</pre
-              >
+</pre>
               All options except for locked are explained in the
               <code>moveTo()</code> description below. Locked denotes whether or
               not the view remains locked to the node once the zoom-in animation
@@ -2052,8 +2040,7 @@ network.getPosition('a123');
     easingFunction: String
   }
 }
-</pre
-              >
+</pre>
               The position (in canvas units!) is the position of the central
               focus point of the camera. The scale is the target zoomlevel.
               Default value is 1.0. The offset (in DOM units) is how many pixels
@@ -2170,8 +2157,7 @@ var options = {
 }
 
 network.clustering.cluster(options);
-</pre
-              >
+</pre>
               <code>clusterByConnection</code
               ><b>
                 will pass 2 nodeOptions objects as arguments to the
@@ -2214,8 +2200,7 @@ var options = {
     return clusterOptions;
   },
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2236,8 +2221,7 @@ var options = {
     clusterNodeProperties: {
         allowSingleNodeCluster: true
     }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2297,8 +2281,7 @@ var options = {
     canvas: {x:canvas_x, y:canvas_y}
   }
 }
-</pre
-              >
+</pre>
 
               This is the structure common to all events. Specifically for the
               click event, the following property is added:
@@ -2307,8 +2290,7 @@ var options = {
 {
 ...
   items: [Array of click items],
-}</pre
-              >
+}</pre>
 
               Where the click items can be:
               <pre class="prettyprint lang-js">
@@ -2316,8 +2298,7 @@ var options = {
   {nodeId:NodeId labelId:0}  // label of node with given id clicked on
   {edgeId:EdgeId}            // edge with given id clicked on
   {edge:EdgeId, labelId:0}   // label of edge with given id clicked on
-</pre
-              >
+</pre>
 
               The order of the <code>items</code> array is descending in
               z-order. Thus, to get the topmost item, get the value at index 0.
@@ -2404,8 +2385,7 @@ var options = {
     edges: [Array of previously selected edgeIds]
   }
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2452,8 +2432,7 @@ var options = {
     },    
     controlEdge: {from:from_node_id, to:to_node_id}
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2511,8 +2490,7 @@ var options = {
   scale: Number,
   pointer: {x:pointer_x, y:pointer_y}
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr>
@@ -2553,8 +2531,7 @@ var options = {
 {
   iterations: Number // iterations so far,
   total: Number      // total iterations in options
-}</pre
-              >
+}</pre>
             </td>
           </tr>
           <tr>
@@ -2582,8 +2559,7 @@ var options = {
               <pre class="prettyprint lang-js">
 {
   iterations: Number // iterations it took
-}</pre
-              >
+}</pre>
             </td>
           </tr>
 
@@ -2607,8 +2583,7 @@ var options = {
   oldWidth: Number  // the old width  of the canvas
   oldHeight: Number // the old height of the canvas
 }
-</pre
-              >
+</pre>
             </td>
           </tr>
           <tr class="subHeader">
@@ -2722,8 +2697,7 @@ var data = {
 
 // create a network
 var network = new vis.Network(container, data);
-</pre
-        >
+</pre>
 
         <br />
         <h4>Gephi parser options</h4>
@@ -2802,8 +2776,7 @@ options.nodes = {
 
 // create a network
 var network = new vis.Network(container, data, options);
-</pre
-        >
+</pre>
       </div>
 
       <div class="flagbar">

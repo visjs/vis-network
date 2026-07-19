@@ -1,8 +1,8 @@
-import { deepFreeze } from "./helpers/index.ts";
 import { expect } from "chai";
 import { spy, stub } from "sinon";
 
 import NodesHandler from "../lib/network/modules/NodesHandler.js";
+import { deepFreeze } from "./helpers/index.ts";
 
 type Id = number | string;
 
@@ -276,8 +276,8 @@ describe("NodesHandler", function (): void {
       ).to.deep.equal([3]);
 
       expect(
-        NodesHandler.prototype.getConnectedNodes.call(mockThis, 3).sort(),
-      ).to.deep.equal([2, 3].sort());
+        NodesHandler.prototype.getConnectedNodes.call(mockThis, 3).toSorted(),
+      ).to.deep.equal([2, 3].toSorted());
     });
 
     it("Node with no edges", function (): void {
@@ -315,8 +315,8 @@ describe("NodesHandler", function (): void {
       ).to.deep.equal(["e2-3"]);
 
       expect(
-        NodesHandler.prototype.getConnectedEdges.call(mockThis, 3).sort(),
-      ).to.deep.equal(["e2-3", "e3-3"].sort());
+        NodesHandler.prototype.getConnectedEdges.call(mockThis, 3).toSorted(),
+      ).to.deep.equal(["e2-3", "e3-3"].toSorted());
     });
 
     it("Node with no edges", function (): void {

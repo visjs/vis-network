@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { deepFreeze } from "./helpers/index.ts";
 
 import { normalizeLanguageCode } from "../lib/network/locale-utils.ts";
+import { deepFreeze } from "./helpers/index.ts";
 
 const noLocales = deepFreeze({});
 const someLocales = deepFreeze({
