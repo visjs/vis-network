@@ -228,16 +228,16 @@
     "generate-examples-index": "generate-examples-index --config generate-examples-index.json",
     "style": "prettier --check .",
     "style-fix": "prettier --write .",
-    "lint": "eslint --ext .js,.ts .",
-    "lint-fix": "eslint --fix --ext .js,.ts .",
+    "lint": "oxlint --report-unused-disable-directives-severity error .",
+    "lint-fix": "oxlint --report-unused-disable-directives-severity error --fix .",
     "clean": "shx rm -rf \"declarations\" \"dist\" \"esnext\" \"examples/index.html\" \"examples/static/*\" \"peer\" \"standalone\" \"styles\" \"vis-network*\" \"cypress/{fixtures,integration,pages,support}/**/*.js{,.map}\" \"cypress/snapshots/{actual,diff}/*\"",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
-    "*.{js,ts}": "eslint --fix",
+    "*.{js,ts}": "oxlint --no-error-on-unmatched-pattern --report-unused-disable-directives-severity error --fix",
     ".*.{js,ts,css,html,json,md,yml,yaml}": "prettier --write",
-    ".*.{js,ts}": "eslint --fix"
+    ".*.{js,ts}": "oxlint --no-error-on-unmatched-pattern --report-unused-disable-directives-severity error --fix"
   },
   "config": {
     "snap-shot-it": {
@@ -268,7 +268,6 @@
     "cross-env": "10.1.0",
     "cypress": "15.18.1",
     "cypress-visual-regression": "5.3.0",
-    "eslint": "8.57.1",
     "gh-pages": "6.3.0",
     "husky": "9.1.7",
     "jsdom": "29.1.1",
@@ -277,6 +276,8 @@
     "lint-staged": "17.0.8",
     "mocha": "11.7.6",
     "nyc": "18.0.0",
+    "oxlint": "1.74.0",
+    "oxlint-tsgolint": "0.25.0",
     "postcss": "8.5.19",
     "semantic-release": "25.0.7",
     "serve": "14.2.6",
