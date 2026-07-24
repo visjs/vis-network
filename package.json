@@ -279,7 +279,7 @@
     "oxfmt": "0.59.0",
     "oxlint": "1.74.0",
     "oxlint-tsgolint": "0.25.0",
-    "postcss": "8.5.20",
+    "postcss": "8.5.21",
     "semantic-release": "25.0.8",
     "serve": "14.2.6",
     "shx": "0.4.0",
