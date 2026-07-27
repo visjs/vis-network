@@ -123,8 +123,8 @@ div.outerBorder {
         type="hidden"
         name="html"
         value='<p>
-  With the new stabilization events you can implement your own custom loading
-  bar for all those long loading times!
+  With the new stabilization events you can implement your own custom loading bar for all those long
+  loading times!
 </p>
 
 <div id="wrapper">
@@ -523,8 +523,7 @@ div.outerBorder {
     var width = Math.max(minWidth, maxWidth * widthFactor);
 
     document.getElementById("bar").style.width = width + "px";
-    document.getElementById("text").innerText =
-      Math.round(widthFactor * 100) + "%";
+    document.getElementById("text").innerText = Math.round(widthFactor * 100) + "%";
   });
   network.once("stabilizationIterationsDone", function () {
     document.getElementById("text").innerText = "100%";
@@ -547,11 +546,7 @@ window.addEventListener("load", () => {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Example Applications | Loading Bar"
-      />
+      <input type="hidden" name="title" value="Vis Network | Example Applications | Loading Bar" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

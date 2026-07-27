@@ -22,8 +22,7 @@
         type="hidden"
         name="js"
         value='var container = document.getElementById("mynetwork");
-var dot =
-  "dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }";
+var dot = "dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }";
 var data = vis.parseDOTNetwork(dot);
 var network = new vis.Network(container, data);
 '
@@ -33,11 +32,7 @@ var network = new vis.Network(container, data);
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Data | DOT Language"
-      />
+      <input type="hidden" name="title" value="Vis Network | Data | DOT Language" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

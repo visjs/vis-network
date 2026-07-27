@@ -28,9 +28,8 @@ p {
         type="hidden"
         name="html"
         value='<p>
-  You can draw on the canvas using normal HTML5 canvas functions. The before
-  drawing will be behind the network, the after drawing will be in front of the
-  network.
+  You can draw on the canvas using normal HTML5 canvas functions. The before drawing will be behind
+  the network, the after drawing will be in front of the network.
 </p>
 
 <div id="mynetwork"></div>
@@ -76,14 +75,7 @@ network.on("beforeDrawing", function (ctx) {
   ctx.fillStyle = "#294475";
 
   ctx.beginPath();
-  ctx.arc(
-    nodePosition[nodeId].x,
-    nodePosition[nodeId].y,
-    50,
-    0,
-    2 * Math.PI,
-    false,
-  );
+  ctx.arc(nodePosition[nodeId].x, nodePosition[nodeId].y, 50, 0, 2 * Math.PI, false);
   ctx.closePath();
 
   ctx.fill();
@@ -97,14 +89,7 @@ network.on("afterDrawing", function (ctx) {
   ctx.fillStyle = "#A6D5F7";
 
   ctx.beginPath();
-  ctx.arc(
-    nodePosition[nodeId].x,
-    nodePosition[nodeId].y,
-    20,
-    0,
-    2 * Math.PI,
-    false,
-  );
+  ctx.arc(nodePosition[nodeId].x, nodePosition[nodeId].y, 20, 0, 2 * Math.PI, false);
   ctx.closePath();
 
   ctx.fill();
@@ -117,11 +102,7 @@ network.on("afterDrawing", function (ctx) {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Events | Rendering Events"
-      />
+      <input type="hidden" name="title" value="Vis Network | Events | Rendering Events" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

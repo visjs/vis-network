@@ -55,18 +55,17 @@ body,
   <p>Create a simple network with some nodes and edges.</p>
 
   <p>
-    Peer build is designed to work well with other packages from the Vis family.
-    Compared to the standalone or legacy builds it doesn&apos;t include dependencies
-    which allows the same DataSet (and other dependencies) to be used in Network
-    and other packages (e.g. Timeline). In UMD version this build doesn&apos;t suffer
-    from the bug where exported members from different packages get overwritten
-    rendering some functionality unusable.
+    Peer build is designed to work well with other packages from the Vis family. Compared to the
+    standalone or legacy builds it doesn&apos;t include dependencies which allows the same DataSet (and
+    other dependencies) to be used in Network and other packages (e.g. Timeline). In UMD version
+    this build doesn&apos;t suffer from the bug where exported members from different packages get
+    overwritten rendering some functionality unusable.
   </p>
 
   <h4>When to use</h4>
   <p>
-    When you need multiple packages from the Vis family on the same page or
-    finer control over what gets loaded.
+    When you need multiple packages from the Vis family on the same page or finer control over what
+    gets loaded.
   </p>
 
   <h4>Content</h4>
@@ -210,11 +209,7 @@ var network = new vis.Network(container, data, options);
         name="resources"
         value="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js,https://visjs.github.io/vis-network/peer/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Basic Usage | Peer Build"
-      />
+      <input type="hidden" name="title" value="Vis Network | Basic Usage | Peer Build" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

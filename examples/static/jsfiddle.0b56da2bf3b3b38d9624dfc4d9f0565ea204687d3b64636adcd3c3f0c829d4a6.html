@@ -24,8 +24,8 @@
         type="hidden"
         name="html"
         value='<p>
-  Create a simple network with some nodes and edges. Some of the events are
-  logged in the console in improve readability.
+  Create a simple network with some nodes and edges. Some of the events are logged in the console in
+  improve readability.
 </p>
 
 <div id="mynetwork"></div>
@@ -73,100 +73,55 @@ var network = new vis.Network(container, data, options);
 network.on("click", function (params) {
   params.event = "[original event]";
   document.getElementById("eventSpanHeading").innerText = "Click event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
-  console.log(
-    "click event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM),
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
+  console.log("click event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM));
 });
 network.on("doubleClick", function (params) {
   params.event = "[original event]";
   document.getElementById("eventSpanHeading").innerText = "doubleClick event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 network.on("oncontext", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpanHeading").innerText =
-    "oncontext (right click) event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanHeading").innerText = "oncontext (right click) event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 network.on("dragStart", function (params) {
   // There&apos;s no point in displaying this event on screen, it gets immediately overwritten
   params.event = "[original event]";
   console.log("dragStart Event:", params);
-  console.log(
-    "dragStart event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM),
-  );
+  console.log("dragStart event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM));
 });
 network.on("dragging", function (params) {
   params.event = "[original event]";
   document.getElementById("eventSpanHeading").innerText = "dragging event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 network.on("dragEnd", function (params) {
   params.event = "[original event]";
   document.getElementById("eventSpanHeading").innerText = "dragEnd event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
   console.log("dragEnd Event:", params);
-  console.log(
-    "dragEnd event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM),
-  );
+  console.log("dragEnd event, getNodeAt returns: " + this.getNodeAt(params.pointer.DOM));
 });
 network.on("controlNodeDragging", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpanHeading").innerText =
-    "control node dragging event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanHeading").innerText = "control node dragging event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 network.on("controlNodeDragEnd", function (params) {
   params.event = "[original event]";
-  document.getElementById("eventSpanHeading").innerText =
-    "control node drag end event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanHeading").innerText = "control node drag end event:";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
   console.log("controlNodeDragEnd Event:", params);
 });
 network.on("zoom", function (params) {
   document.getElementById("eventSpanHeading").innerText = "zoom event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 network.on("showPopup", function (params) {
   document.getElementById("eventSpanHeading").innerText = "showPopup event: ";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 network.on("hidePopup", function () {
   console.log("hidePopup Event");
@@ -205,11 +160,7 @@ network.on("blurEdge", function (params) {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Events | Interaction events"
-      />
+      <input type="hidden" name="title" value="Vis Network | Events | Interaction events" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

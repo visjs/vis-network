@@ -53,28 +53,25 @@ body,
   </div>
 
   <p>
-    This example shows the effect of the different hierarchical layouting
-    methods, node shaking and how hierarchical layouts work with clustering.
-    Also note that it&apos;s impossible to properly position a "hierarchy" with a
-    cycle (If node 1 is above node 2 and node 2 is above node 1 which one is
-    actually on top?)
+    This example shows the effect of the different hierarchical layouting methods, node shaking and
+    how hierarchical layouts work with clustering. Also note that it&apos;s impossible to properly
+    position a "hierarchy" with a cycle (If node 1 is above node 2 and node 2 is above node 1 which
+    one is actually on top?)
   </p>
 
   <h4>Hub Size</h4>
   <p>
-    The hub size layouting method is based on the amount of edges connected to a
-    node. The node with the most connections (the largest hub) is drawn at the
-    top of the tree.
+    The hub size layouting method is based on the amount of edges connected to a node. The node with
+    the most connections (the largest hub) is drawn at the top of the tree.
   </p>
 
   <h4>Direction</h4>
   <p>
-    The direction layouting method is based on the direction of the edges. The
-    from nodes are placed above the to nodes in the hierarchy. Nodes that can be
-    placed on multiple levels are by default shaken towards towards the leaves.
-    All the leaves are then in a single line at the very bottom of the
-    hierarchy. Optionally they can be shaken towards the roots which results in
-    the roots being in a single line at the very top of the hierarchy.
+    The direction layouting method is based on the direction of the edges. The from nodes are placed
+    above the to nodes in the hierarchy. Nodes that can be placed on multiple levels are by default
+    shaken towards towards the leaves. All the leaves are then in a single line at the very bottom
+    of the hierarchy. Optionally they can be shaken towards the roots which results in the roots
+    being in a single line at the very top of the hierarchy.
   </p>
 
   <h4>Interactive Configuration</h4>
@@ -93,12 +90,7 @@ body,
       <label for="layout-method-directed">Directed</label>
       <br />
 
-      <input
-        id="layout-method-hubsize"
-        name="layout-method"
-        type="radio"
-        value="hubsize"
-      />
+      <input id="layout-method-hubsize" name="layout-method" type="radio" value="hubsize" />
       <label for="layout-method-hubsize">Hub Size</label>
     </p>
 
@@ -116,12 +108,7 @@ body,
       <label for="shake-towards-leaves">Leaves</label>
       <br />
 
-      <input
-        id="shake-towards-roots"
-        name="shake-towards"
-        type="radio"
-        value="roots"
-      />
+      <input id="shake-towards-roots" name="shake-towards" type="radio" value="roots" />
       <label for="shake-towards-roots">Roots</label>
     </p>
 

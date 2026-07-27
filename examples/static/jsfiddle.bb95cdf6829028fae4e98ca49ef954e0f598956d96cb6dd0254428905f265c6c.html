@@ -61,24 +61,21 @@ pre {
         value='<h2>Dynamic Data - Importing from Gephi (JSON)</h2>
 
 <div style="width: 700px; font-size: 14px; text-align: justify">
-  This example shows how to import a JSON file exported by Gephi. The two
-  options available for the import are available through the checkboxes. You can
-  download the Gephi JSON exporter here:
+  This example shows how to import a JSON file exported by Gephi. The two options available for the
+  import are available through the checkboxes. You can download the Gephi JSON exporter here:
   <a href="https://marketplace.gephi.org/plugin/json-exporter/" target="_blank"
     >https://marketplace.gephi.org/plugin/json-exporter/</a
-  >. All of Gephi&apos;s attributes are also contained within the node elements. This
-  means you can access all of this data through the DataSet.
+  >. All of Gephi&apos;s attributes are also contained within the node elements. This means you can
+  access all of this data through the DataSet.
   <br />
 </div>
 
 <p>
-  <label
-    ><input type="checkbox" id="fixed" checked="checked" /> Fix in place after
-    import.</label
+  <label><input type="checkbox" id="fixed" checked="checked" /> Fix in place after import.</label
   ><br />
   <label
-    ><input type="checkbox" id="parseColor" /> Parse the color instead of copy
-    (adds borders, highlights etc.)</label
+    ><input type="checkbox" id="parseColor" /> Parse the color instead of copy (adds borders,
+    highlights etc.)</label
   >
 </p>
 
@@ -174,10 +171,9 @@ function redrawAll(gephiJSON) {
 }
 
 try {
-  const { default: gephiJSON } = await import(
-    "../datasources/WorldCup2014.json",
-    { with: { type: "json" } }
-  );
+  const { default: gephiJSON } = await import("../datasources/WorldCup2014.json", {
+    with: { type: "json" },
+  });
   redrawAll(gephiJSON);
 } catch (error) {
   console.error(error, "Import of Gephi JSON failed");
@@ -189,11 +185,7 @@ try {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Data | Importing from Gephi (JSON)"
-      />
+      <input type="hidden" name="title" value="Vis Network | Data | Importing from Gephi (JSON)" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -155,10 +155,7 @@ function openClusters(scale) {
     }
   }
   clusters = newClusters;
-  if (
-    declustered === true &amp;&amp;
-    document.getElementById("stabilizeCheckbox").checked === true
-  ) {
+  if (declustered === true &amp;&amp; document.getElementById("stabilizeCheckbox").checked === true) {
     // since we use the scale as a unique identifier, we do NOT want to fit after the stabilization
     network.setOptions({ physics: { stabilization: { fit: false } } });
     network.stabilize();
@@ -171,11 +168,7 @@ function openClusters(scale) {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Clustering by Zoom Level"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Clustering by Zoom Level" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

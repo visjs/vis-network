@@ -79,10 +79,9 @@ body,
   </div>
 
   <p>
-    HTML parsing in titles has been disabled due to covert XSS issues (i.e. it
-    was really easy to introduce XSS vulnerability into your project by
-    accident). If you want to parse HTML anyway, you can still do it as the
-    title accepts HTML elements.
+    HTML parsing in titles has been disabled due to covert XSS issues (i.e. it was really easy to
+    introduce XSS vulnerability into your project by accident). If you want to parse HTML anyway,
+    you can still do it as the title accepts HTML elements.
   </p>
 
   <h4>But I just want to maintain white space</h4>
@@ -185,11 +184,7 @@ var network = new vis.Network(container, data, options);
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | HTML in titles"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | HTML in titles" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -67,8 +67,8 @@ pre {
         type="hidden"
         name="html"
         value='<p>
-  This example demonstrates dynamically adding, updating and removing nodes and
-  edges using a DataSet.
+  This example demonstrates dynamically adding, updating and removing nodes and edges using a
+  DataSet.
 </p>
 
 <h1>Adjust</h1>
@@ -238,11 +238,7 @@ function draw() {
   // create an array with nodes
   nodes = new vis.DataSet();
   nodes.on("*", function () {
-    document.getElementById("nodes").innerText = JSON.stringify(
-      nodes.get(),
-      null,
-      4,
-    );
+    document.getElementById("nodes").innerText = JSON.stringify(nodes.get(), null, 4);
   });
   nodes.add([
     { id: "1", label: "Node 1" },
@@ -255,11 +251,7 @@ function draw() {
   // create an array with edges
   edges = new vis.DataSet();
   edges.on("*", function () {
-    document.getElementById("edges").innerText = JSON.stringify(
-      edges.get(),
-      null,
-      4,
-    );
+    document.getElementById("edges").innerText = JSON.stringify(edges.get(), null, 4);
   });
   edges.add([
     { id: "1", from: "1", to: "2" },

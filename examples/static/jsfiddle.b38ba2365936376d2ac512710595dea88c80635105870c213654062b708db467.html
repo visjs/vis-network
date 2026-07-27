@@ -61,34 +61,23 @@ var options = {};
 var network = new vis.Network(container, data, options);
 
 network.on("startStabilizing", function (params) {
-  document.getElementById("eventSpanHeading").innerText =
-    "Starting Stabilization";
+  document.getElementById("eventSpanHeading").innerText = "Starting Stabilization";
   document.getElementById("eventSpanContent").innerText = "";
   console.log("started");
 });
 network.on("stabilizationProgress", function (params) {
-  document.getElementById("eventSpanHeading").innerText =
-    "Stabilization progress";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanHeading").innerText = "Stabilization progress";
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
   console.log("progress:", params);
 });
 network.on("stabilizationIterationsDone", function (params) {
-  document.getElementById("eventSpanHeading").innerText =
-    "Stabilization iterations complete";
+  document.getElementById("eventSpanHeading").innerText = "Stabilization iterations complete";
   document.getElementById("eventSpanContent").innerText = "";
   console.log("finished stabilization interations");
 });
 network.on("stabilized", function (params) {
   document.getElementById("eventSpanHeading").innerText = "Stabilized!";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
   console.log("stabilized!", params);
 });
 '
@@ -98,11 +87,7 @@ network.on("stabilized", function (params) {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Events | Physics Events"
-      />
+      <input type="hidden" name="title" value="Vis Network | Events | Physics Events" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -24,9 +24,8 @@
         type="hidden"
         name="html"
         value='<p>
-  Nodes can have all sorts of shapes. Note the exception where the nodes with
-  text inside and the text type&apos;s size are determined by the font size, not the
-  node size.
+  Nodes can have all sorts of shapes. Note the exception where the nodes with text inside and the
+  text type&apos;s size are determined by the font size, not the node size.
 </p>
 <div id="mynetwork"></div>
 
@@ -174,14 +173,7 @@ function draw() {
       label: "FIELD---my value",
       shape: "custom",
       group: "a",
-      ctxRenderer: ({
-        ctx,
-        x,
-        y,
-        state: { selected, hover },
-        style,
-        label,
-      }) => {
+      ctxRenderer: ({ ctx, x, y, state: { selected, hover }, style, label }) => {
         const splittedLabel = label.split("---");
         ctx.save();
         ctx.restore();
@@ -233,12 +225,7 @@ function draw() {
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           const textHeight1 = 12;
-          ctx.fillText(
-            labelText,
-            left + w / 2,
-            top + textHeight1 + hPadding,
-            w,
-          );
+          ctx.fillText(labelText, left + w / 2, top + textHeight1 + hPadding, w);
 
           // value text
           ctx.font = "bold 14px sans-serif";
@@ -282,11 +269,7 @@ window.addEventListener("load", () => {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Node Styles | Shapes"
-      />
+      <input type="hidden" name="title" value="Vis Network | Node Styles | Shapes" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

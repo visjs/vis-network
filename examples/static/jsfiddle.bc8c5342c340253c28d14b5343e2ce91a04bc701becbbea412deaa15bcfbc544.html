@@ -39,42 +39,35 @@ p {
       <input
         type="hidden"
         name="html"
-        value="<p>
-  When a node or edge is selected or hovered its visible characteristics can be
-  changed.
-</p>
+        value="<p>When a node or edge is selected or hovered its visible characteristics can be changed.</p>
 
 <div id=&quot;mynetwork&quot;></div>
 
 <p>
-  In this network, an element (node, edge or label) will change a characteristic
-  when hovered, and it will be locked in when selected. This is managed by
-  setting up a 'chosen' function that will be called when the element containing
-  the function is chosen. These functions may be set on nodes, edges and labels,
-  at the individual or group level.
+  In this network, an element (node, edge or label) will change a characteristic when hovered, and
+  it will be locked in when selected. This is managed by setting up a 'chosen' function that will be
+  called when the element containing the function is chosen. These functions may be set on nodes,
+  edges and labels, at the individual or group level.
 </p>
 
 <p>
-  All states (unselected, hover-over-unselected, selected, and hover-over
-  selected) may be handled as needed by the application using vis, as the select
-  and hover states are passed to the chosen function when called. Additionally,
-  the id of the element is passed to allow context-specific characteristic
-  adjustment on select or hover as needed.
+  All states (unselected, hover-over-unselected, selected, and hover-over selected) may be handled
+  as needed by the application using vis, as the select and hover states are passed to the chosen
+  function when called. Additionally, the id of the element is passed to allow context-specific
+  characteristic adjustment on select or hover as needed.
 </p>
 
 <p>
   <i
-    >It should be noted that the characteristics which might affect the position
-    of elements have been left out on purpose. While it might be interesting to
-    make them changeable, this is problematic on hovering. Consider that the
-    user hovers over an object. If it changed characteristics that moved it
-    outside of the hover-distance, it would then no longer be hovering. So it
-    would be moved back to its original prosition, within the hover-distance and
-    then again be hovering over the object. This hysteresis loop is kept from
-    occurring by leaving out the characteristics that could cause it. Some
-    seemingly innocuous changes (such as resizing a node's label on hover that
-    would in turn cause the node to resize and move out of hover-distance) may
-    still cause hysteresis, but with care they should be avoidable.</i
+    >It should be noted that the characteristics which might affect the position of elements have
+    been left out on purpose. While it might be interesting to make them changeable, this is
+    problematic on hovering. Consider that the user hovers over an object. If it changed
+    characteristics that moved it outside of the hover-distance, it would then no longer be
+    hovering. So it would be moved back to its original prosition, within the hover-distance and
+    then again be hovering over the object. This hysteresis loop is kept from occurring by leaving
+    out the characteristics that could cause it. Some seemingly innocuous changes (such as resizing
+    a node's label on hover that would in turn cause the node to resize and move out of
+    hover-distance) may still cause hysteresis, but with care they should be avoidable.</i
   >
 </p>
 "
@@ -166,21 +159,11 @@ var changeChosenEdgeMiddleArrow = function (values, id, selected, hovering) {
   values.middleArrow = true;
 };
 
-var changeChosenEdgeMiddleArrowScale = function (
-  values,
-  id,
-  selected,
-  hovering,
-) {
+var changeChosenEdgeMiddleArrowScale = function (values, id, selected, hovering) {
   values.middleArrowScale = 2;
 };
 
-var changeChosenEdgeMiddleArrowType = function (
-  values,
-  id,
-  selected,
-  hovering,
-) {
+var changeChosenEdgeMiddleArrowType = function (values, id, selected, hovering) {
   values.middleArrowType = "circle";
 };
 
@@ -196,12 +179,7 @@ var changeChosenEdgeFromArrowType = function (values, id, selected, hovering) {
   values.fromArrowType = "circle";
 };
 
-var changeChosenEdgeArrowStrikethrough = function (
-  values,
-  id,
-  selected,
-  hovering,
-) {
+var changeChosenEdgeArrowStrikethrough = function (values, id, selected, hovering) {
   values.arrowStrikethrough = false;
 };
 
@@ -1119,11 +1097,7 @@ var network = new vis.Network(container, data, options);
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Chosen Elements"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Chosen Elements" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

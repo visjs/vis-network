@@ -48,16 +48,14 @@ div.bottom {
         name="html"
         value='<h2>Camera animations</h2>
 <div style="width: 700px; font-size: 14px">
-  You can move the view around programmatically using the .moveTo(options)
-  function. The options supplied to this function can also be (partially)
-  supplied to the .fit() and .focusOnNode() methods. These are explained in the
-  docs.
+  You can move the view around programmatically using the .moveTo(options) function. The options
+  supplied to this function can also be (partially) supplied to the .fit() and .focusOnNode()
+  methods. These are explained in the docs.
   <br /><br />
-  The buttons below take the fields from the table when they can. For instance,
-  the "Animate with default settings." takes the position, scale and offset
-  while using the default animation values for duration and easing function. The
-  focusOnNode takes everything except the position and the fit takes only the
-  duration and easing function.
+  The buttons below take the fields from the table when they can. For instance, the "Animate with
+  default settings." takes the position, scale and offset while using the default animation values
+  for duration and easing function. The focusOnNode takes everything except the position and the fit
+  takes only the duration and easing function.
   <br /><br />
   Here you can see a full description of the options you can supply to moveTo:
 </div>
@@ -97,15 +95,11 @@ var moveToOptions = {
       </tr>
       <tr>
         <td>offset x</td>
-        <td>
-          <input type="text" value="0" id="offsetx" style="width: 170px" /> px
-        </td>
+        <td><input type="text" value="0" id="offsetx" style="width: 170px" /> px</td>
       </tr>
       <tr>
         <td>offset y</td>
-        <td>
-          <input type="text" value="0" id="offsety" style="width: 170px" /> px
-        </td>
+        <td><input type="text" value="0" id="offsety" style="width: 170px" /> px</td>
       </tr>
       <tr>
         <td>duration</td>
@@ -121,9 +115,7 @@ var moveToOptions = {
             <option value="linear">linear</option>
             <option value="easeInQuad">easeInQuad</option>
             <option value="easeOutQuad">easeOutQuad</option>
-            <option value="easeInOutQuad" selected="selected">
-              easeInOutQuad
-            </option>
+            <option value="easeInOutQuad" selected="selected">easeInOutQuad</option>
             <option value="easeInCubic">easeInCubic</option>
             <option value="easeOutCubic">easeOutCubic</option>
             <option value="easeInOutCubic">easeInOutCubic</option>
@@ -252,8 +244,7 @@ function draw() {
 
   // add event listeners
   globalThis.network.on("select", function (params) {
-    document.getElementById("selection").innerText =
-      "Selection: " + params.nodes;
+    document.getElementById("selection").innerText = "Selection: " + params.nodes;
   });
   globalThis.network.on("stabilized", function (params) {
     document.getElementById("stabilization").innerText =
@@ -362,11 +353,7 @@ draw();
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Animations"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Animations" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

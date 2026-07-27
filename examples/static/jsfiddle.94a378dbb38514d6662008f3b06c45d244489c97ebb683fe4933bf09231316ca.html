@@ -55,21 +55,17 @@ body,
   <p>Create a simple network with some nodes and edges.</p>
 
   <p>
-    ESNext build is designed to be used in combination with bundlers and
-    transpillers. It doesn&apos;t bundle any dependencies or polyfills, you have to
-    provide them yourself. This is handy if you already have polyfills and
-    potentionally also the same dependencies in your app, you can use them for
-    Vis projects too instead of having multiple copies of the same polyfills in
-    your bundle from different packages.
+    ESNext build is designed to be used in combination with bundlers and transpillers. It doesn&apos;t
+    bundle any dependencies or polyfills, you have to provide them yourself. This is handy if you
+    already have polyfills and potentionally also the same dependencies in your app, you can use
+    them for Vis projects too instead of having multiple copies of the same polyfills in your bundle
+    from different packages.
   </p>
 
   <p>Otherwise it can be used the same way as the peer build.</p>
 
   <h4>When to use</h4>
-  <p>
-    When you need to optimize bundle size or finer control over what gets
-    loaded.
-  </p>
+  <p>When you need to optimize bundle size or finer control over what gets loaded.</p>
 
   <h4>Content</h4>
   <ul>
@@ -91,9 +87,8 @@ body,
 
   <h5>Browser UMD</h5>
   <p>
-    Even though UMD builds are a part of the package, this is very unlikely to
-    work. You generally need some polyfills and transpilation even in the most
-    modern browsers.
+    Even though UMD builds are a part of the package, this is very unlikely to work. You generally
+    need some polyfills and transpilation even in the most modern browsers.
   </p>
 
   <h5>Bundled ESM</h5>
@@ -144,11 +139,7 @@ const network = new Network(container, data, options);
       />
       <input type="hidden" name="js" value="" />
       <input type="hidden" name="resources" value="" />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Basic Usage | ESNext Build"
-      />
+      <input type="hidden" name="title" value="Vis Network | Basic Usage | ESNext Build" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -41,8 +41,8 @@ table.legend_table td {
         name="html"
         value='<h2>Navigation controls and keyboard navigation</h2>
 <div style="width: 800px; font-size: 14px; text-align: justify">
-  This example is the same as example 2, except for the navigation controls that
-  have been activated. The navigation controls are described below.
+  This example is the same as example 2, except for the navigation controls that have been
+  activated. The navigation controls are described below.
   <br /><br />
   <table class="legend_table">
     <tbody>
@@ -83,17 +83,16 @@ table.legend_table td {
     </tbody>
   </table>
   <br />
-  Apart from clicking the icons, you can also navigate using the keyboard. The
-  buttons are in table above. Zoom Extends changes the zoom and position of the
-  camera to encompass all visible nodes.
+  Apart from clicking the icons, you can also navigate using the keyboard. The buttons are in table
+  above. Zoom Extends changes the zoom and position of the camera to encompass all visible nodes.
   <u>
-    Styles have to be loaded to correctly display the icons. Standalone build
-    includes necessary styles and automatically injects them into the page but
-    for peer and legacy builds it&apos;s necessry to manually load
+    Styles have to be loaded to correctly display the icons. Standalone build includes necessary
+    styles and automatically injects them into the page but for peer and legacy builds it&apos;s necessry
+    to manually load
     <b>vis-network.css</b>.
   </u>
-  The user is free to alter or overload the CSS classes but without them the
-  navigation icons are not visible.
+  The user is free to alter or overload the CSS classes but without them the navigation icons are
+  not visible.
 </div>
 
 <div id="mynetwork"></div>
@@ -151,8 +150,7 @@ function draw() {
 
   // add event listeners
   network.on("select", function (params) {
-    document.getElementById("selection").innerText =
-      "Selection: " + params.nodes;
+    document.getElementById("selection").innerText = "Selection: " + params.nodes;
   });
 }
 
@@ -166,11 +164,7 @@ window.addEventListener("load", () => {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Navigation"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Navigation" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

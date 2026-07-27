@@ -38,21 +38,11 @@
   <input type="button" value="Go" onclick="draw()" />
 </form>
 
-<a
-  id="disable-smooth-curves"
-  style="display: none"
-  href="#"
-  onclick="disableSmoothCurves()"
->
-  You may want to disable dynamic smooth curves for better performance with a
-  large amount of nodes and edges. Click here to disable them.
+<a id="disable-smooth-curves" style="display: none" href="#" onclick="disableSmoothCurves()">
+  You may want to disable dynamic smooth curves for better performance with a large amount of nodes
+  and edges. Click here to disable them.
 </a>
-<a
-  id="enable-smooth-curves"
-  style="display: none"
-  href="#"
-  onclick="enableSmoothCurves()"
->
+<a id="enable-smooth-curves" style="display: none" href="#" onclick="enableSmoothCurves()">
   Click here to reenable the dynamic smooth curves.
 </a>
 
@@ -124,11 +114,7 @@ globalThis.enableSmoothCurves = enableSmoothCurves;
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Performance"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Performance" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -30,9 +30,9 @@
         value='<h2>Hierarchical Layout - Scale-Free-Network</h2>
 
 <div style="width: 700px; font-size: 14px; text-align: justify">
-  This example shows the randomly generated <b>scale-free-network</b> set of
-  nodes and connected edges from example 2. In this example, hierarchical layout
-  has been enabled and the vertical levels are determined automatically.
+  This example shows the randomly generated <b>scale-free-network</b> set of nodes and connected
+  edges from example 2. In this example, hierarchical layout has been enabled and the vertical
+  levels are determined automatically.
 </div>
 <br />
 
@@ -96,8 +96,7 @@ function draw() {
 
   // add event listeners
   globalThis.network.on("select", function (params) {
-    document.getElementById("selection").innerText =
-      "Selection: " + params.nodes;
+    document.getElementById("selection").innerText = "Selection: " + params.nodes;
   });
 }
 
@@ -131,11 +130,7 @@ draw();
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Layouts | Hierarchical Layout"
-      />
+      <input type="hidden" name="title" value="Vis Network | Layouts | Hierarchical Layout" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

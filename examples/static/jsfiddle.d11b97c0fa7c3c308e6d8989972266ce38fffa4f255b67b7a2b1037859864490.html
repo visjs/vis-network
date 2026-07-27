@@ -59,72 +59,65 @@ body {
   </div>
 
   <p>
-    Icons can be used for nodes as well. This example shows icons from Font
-    Awesome and Ionicons but it should work with similar packages as well. It
-    uses Unicode and CSS to define the icons. It&apos;s also possible to use multiple
-    different icon fonts within the same network (e.g. the
-    <code>icon.face</code> property can be <code>"&apos;Ionicons&apos;"</code> for one
-    node but <code>"&apos;FontAwesome&apos;"</code>).
+    Icons can be used for nodes as well. This example shows icons from Font Awesome and Ionicons but
+    it should work with similar packages as well. It uses Unicode and CSS to define the icons. It&apos;s
+    also possible to use multiple different icon fonts within the same network (e.g. the
+    <code>icon.face</code> property can be <code>"&apos;Ionicons&apos;"</code> for one node but
+    <code>"&apos;FontAwesome&apos;"</code>).
   </p>
 
   <h4>Typing icons in code</h4>
   <p>
-    It&apos;s possible to either use Unicode escapes (<code>"\uXXXX"</code>) or
-    directly input the characters into the source code. Each method has it&apos;s
-    pros and cons briefly described bellow.
+    It&apos;s possible to either use Unicode escapes (<code>"\uXXXX"</code>) or directly input the
+    characters into the source code. Each method has it&apos;s pros and cons briefly described bellow.
   </p>
 
   <h5>Escapes</h5>
   <p>
-    Unicode characters (icons in this case) can be written using escapes in pure
-    ASCII. There is no chance of encoding issues and they&apos;ll generally be easier
-    to read and write in code. However escaping may be a bit tricky at times,
-    you may need pairs of escape sequences or multiple layers of escaping
-    depending on what icons use use and how you process the text respectively.
+    Unicode characters (icons in this case) can be written using escapes in pure ASCII. There is no
+    chance of encoding issues and they&apos;ll generally be easier to read and write in code. However
+    escaping may be a bit tricky at times, you may need pairs of escape sequences or multiple layers
+    of escaping depending on what icons use use and how you process the text respectively.
   </p>
   <ul>
     <li>
-      For basic plane characters simply prefix them with <code>\u</code>:
-      Unicode <code>F274</code> ⇔ <code>"\uF274"</code>.
+      For basic plane characters simply prefix them with <code>\u</code>: Unicode
+      <code>F274</code> ⇔ <code>"\uF274"</code>.
     </li>
     <li>
-      For supplementary plane characters use two escapes (surrogate pair):
-      Unicode <code>F0785</code> ⇔ <code>"\uDB81\uDF85"</code>.
+      For supplementary plane characters use two escapes (surrogate pair): Unicode
+      <code>F0785</code> ⇔ <code>"\uDB81\uDF85"</code>.
     </li>
   </ul>
 
   <h5>UTF</h5>
   <p>
-    It&apos;s also possible to type the icon characters directly into the source code
-    (using <code>control+shift+u</code>, copy-pasting, symbol tables or other
-    Unicode character input methods available on your system). You&apos;ll avoid
-    issues with escaping. If the encoding is declared properly, then encoding
-    issues are unlikely nowadays but still possible. Though this doesn&apos;t make
-    issues any more likely if you&apos;re already using UTF for accented letters etc.
-    It&apos;s unlikely though that your editor will render these characters in a
-    readable way.
+    It&apos;s also possible to type the icon characters directly into the source code (using
+    <code>control+shift+u</code>, copy-pasting, symbol tables or other Unicode character input
+    methods available on your system). You&apos;ll avoid issues with escaping. If the encoding is
+    declared properly, then encoding issues are unlikely nowadays but still possible. Though this
+    doesn&apos;t make issues any more likely if you&apos;re already using UTF for accented letters etc. It&apos;s
+    unlikely though that your editor will render these characters in a readable way.
   </p>
 
   <h4>Troubleshooting</h4>
   <p>
-    If a node is shown as a rectangle, it means the CSS or the font is not
-    loaded (or not yet loaded). A redraw after the font and it&apos;s CSS was loaded
-    will fix that.
+    If a node is shown as a rectangle, it means the CSS or the font is not loaded (or not yet
+    loaded). A redraw after the font and it&apos;s CSS was loaded will fix that.
   </p>
 
   <p>
-    Some fonts require specific font weight to be set. You can see this being
-    set for Font Awesome 5 in this example. Check the CSS that came with your
-    icon font or just experiment with font weight.
+    Some fonts require specific font weight to be set. You can see this being set for Font Awesome 5
+    in this example. Check the CSS that came with your icon font or just experiment with font
+    weight.
   </p>
 
   <p>
-    Single icon may use multiple characters (1 or 2 in case of UTF, at least 6
-    with escapes). This makes methods such as
-    <code>.slice()</code> unreliable and quite dangerous. Carelessness can lead
-    to issues with broken icons etc. (you split the escape sequence or surrogate
-    pair). If you process the icon characters in any way, you just have to be
-    very careful.
+    Single icon may use multiple characters (1 or 2 in case of UTF, at least 6 with escapes). This
+    makes methods such as
+    <code>.slice()</code> unreliable and quite dangerous. Carelessness can lead to issues with
+    broken icons etc. (you split the escape sequence or surrogate pair). If you process the icon
+    characters in any way, you just have to be very careful.
   </p>
 </div>
 
@@ -227,12 +220,7 @@ body {
         // create a network
         const network = new vis.Network(container, data, options);
       })
-      .catch(
-        console.error.bind(
-          console,
-          "Failed to render the network with Font Awesome 4.",
-        ),
-      );
+      .catch(console.error.bind(console, "Failed to render the network with Font Awesome 4."));
   } else {
     // IE: Let&apos;s just hope the fonts are loaded (they&apos;re probably not,
     // hence the timeout).
@@ -332,12 +320,7 @@ body {
         // create a network
         const network = new vis.Network(container, data, options);
       })
-      .catch(
-        console.error.bind(
-          console,
-          "Failed to render the network with Font Awesome 5.",
-        ),
-      );
+      .catch(console.error.bind(console, "Failed to render the network with Font Awesome 5."));
   } else {
     // IE: Let&apos;s just hope the fonts are loaded (they&apos;re probably not,
     // hence the timeout).
@@ -434,12 +417,7 @@ body {
         // create a network
         const network = new vis.Network(container, data, options);
       })
-      .catch(
-        console.error.bind(
-          console,
-          "Failed to render the network with Font Awesome 4.",
-        ),
-      );
+      .catch(console.error.bind(console, "Failed to render the network with Font Awesome 4."));
   } else {
     // IE: Let&apos;s just hope the fonts are loaded (they&apos;re probably not,
     // hence the timeout).
@@ -458,11 +436,7 @@ body {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Node Styles | Icons"
-      />
+      <input type="hidden" name="title" value="Vis Network | Node Styles | Icons" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

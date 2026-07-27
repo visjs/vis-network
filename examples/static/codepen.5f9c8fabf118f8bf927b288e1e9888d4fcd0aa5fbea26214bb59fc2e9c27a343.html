@@ -4,16 +4,11 @@
     <title>Vis Network | Data | DOT Language</title>
   </head>
   <body>
-    <form
-      id="form"
-      action="https://codepen.io/pen/define"
-      method="post"
-      target="_self"
-    >
+    <form id="form" action="https://codepen.io/pen/define" method="post" target="_self">
       <input
         type="hidden"
         name="data"
-        value='{"css":"","css_external":"","html":"<p>Network supports the DOT language.</p>\n<div id=\"mynetwork\"></div>\n","js":"var container = document.getElementById(\"mynetwork\");\nvar dot =\n  \"dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }\";\nvar data = vis.parseDOTNetwork(dot);\nvar network = new vis.Network(container, data);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Data | DOT Language"}'
+        value='{"css":"","css_external":"","html":"<p>Network supports the DOT language.</p>\n<div id=\"mynetwork\"></div>\n","js":"var container = document.getElementById(\"mynetwork\");\nvar dot = \"dinetwork {node[shape=circle]; 1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1 }\";\nvar data = vis.parseDOTNetwork(dot);\nvar network = new vis.Network(container, data);\n","js_external":"https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js","title":"Vis Network | Data | DOT Language"}'
       />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open CodePen</button>
     </form>

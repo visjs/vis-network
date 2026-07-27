@@ -28,17 +28,16 @@ p {
         name="html"
         value='<p>Labels of edges can be aligned to edges in various ways.</p>
 <p>
-  Text-alignment within node labels can be &apos;left&apos; or &apos;center&apos;, other font
-  alignments not implemented.
+  Text-alignment within node labels can be &apos;left&apos; or &apos;center&apos;, other font alignments not
+  implemented.
 </p>
 <p>
-  Label alignment (placement of label "box") for nodes (top, bottom, left,
-  right, inside) is planned but not in vis yet.
+  Label alignment (placement of label "box") for nodes (top, bottom, left, right, inside) is planned
+  but not in vis yet.
 </p>
 <p>
-  The click event is captured and displayed to illustrate how the clicking on
-  labels works. You can drag the nodes over each other to see how this
-  influences the click event values.
+  The click event is captured and displayed to illustrate how the clicking on labels works. You can
+  drag the nodes over each other to see how this influences the click event values.
 </p>
 
 <div id="mynetwork"></div>
@@ -88,11 +87,7 @@ var network = new vis.Network(container, data, options);
 network.on("click", function (params) {
   params.event = "[original event]";
   document.getElementById("eventSpanHeading").innerText = "Click event:";
-  document.getElementById("eventSpanContent").innerText = JSON.stringify(
-    params,
-    null,
-    4,
-  );
+  document.getElementById("eventSpanContent").innerText = JSON.stringify(params, null, 4);
 });
 '
       />
@@ -101,11 +96,7 @@ network.on("click", function (params) {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Labels | Label Alignment"
-      />
+      <input type="hidden" name="title" value="Vis Network | Labels | Label Alignment" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

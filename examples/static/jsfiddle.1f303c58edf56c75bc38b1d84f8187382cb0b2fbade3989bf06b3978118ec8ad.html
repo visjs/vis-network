@@ -51,8 +51,8 @@ td {
 <div id="mynetwork"></div>
 
 <p>
-  The value of the <code>font.multi</code> property may be set to
-  <code>&apos;html&apos;</code>, <code>&apos;markdown&apos;</code> or a boolean.
+  The value of the <code>font.multi</code> property may be set to <code>&apos;html&apos;</code>,
+  <code>&apos;markdown&apos;</code> or a boolean.
 </p>
 <table class="indented">
   <tbody>
@@ -90,30 +90,28 @@ td {
 </table>
 
 <p>
-  The <code>html</code> and <code>markdown</code> rendering is limited: bolds
-  may be embedded in italics, italics may be embedded in bolds, and mono-spaced
-  may be embedded in bold or italic, but will not be altered by those font mods,
-  nor will embedded bolds or italics be handled. The only entities that will be
-  observed in html are <code>&amp;amp;lt;</code> and <code>&amp;amp;amp;</code> and in
-  <code>markdown</code> a backslash will escape the following character
-  (including a backslash) from special processing. Any font mod that is started
-  in a label line will be implicitly terminated at the end of that line. While
-  this interpretation may not exactly match <i>official</i> rendering standards,
-  it is a consistent compromise for drawing multifont strings in the
-  non-multifont html canvas element underlying vis.
+  The <code>html</code> and <code>markdown</code> rendering is limited: bolds may be embedded in
+  italics, italics may be embedded in bolds, and mono-spaced may be embedded in bold or italic, but
+  will not be altered by those font mods, nor will embedded bolds or italics be handled. The only
+  entities that will be observed in html are <code>&amp;amp;lt;</code> and <code>&amp;amp;amp;</code> and in
+  <code>markdown</code> a backslash will escape the following character (including a backslash) from
+  special processing. Any font mod that is started in a label line will be implicitly terminated at
+  the end of that line. While this interpretation may not exactly match <i>official</i> rendering
+  standards, it is a consistent compromise for drawing multifont strings in the non-multifont html
+  canvas element underlying vis.
 </p>
 
 <p>
-  This implies that four additional sets of font properties will be recognized
-  in label processing.
+  This implies that four additional sets of font properties will be recognized in label processing.
 </p>
 <p class="indented">
-  <code>font.bold</code> designates the font used for rendering bold font mods.
-  <br /><code>font.ital</code> designates the font used for rendering italic
-  font mods. <br /><code>font.boldital</code> designates the font used for
-  rendering bold-<b><i>and</i></b
-  >-italic font mods. <br /><code>font.mono</code> designates the font used for
-  rendering monospaced font mods.
+  <code>font.bold</code> designates the font used for rendering bold font mods. <br /><code
+    >font.ital</code
+  >
+  designates the font used for rendering italic font mods. <br /><code>font.boldital</code>
+  designates the font used for rendering bold-<b><i>and</i></b
+  >-italic font mods. <br /><code>font.mono</code> designates the font used for rendering monospaced
+  font mods.
 </p>
 <p>
   Any font mod without a matching font will be rendered using the normal
@@ -121,9 +119,9 @@ td {
 </p>
 
 <p>
-  The <code>font.multi</code> and extended font settings may be set in the
-  network&apos;s <code>nodes</code> or <code>edges</code> properties, or on
-  individual nodes and edges. Node and edge label fonts are separate.
+  The <code>font.multi</code> and extended font settings may be set in the network&apos;s
+  <code>nodes</code> or <code>edges</code> properties, or on individual nodes and edges. Node and
+  edge label fonts are separate.
 </p>
 '
       />
@@ -135,16 +133,14 @@ td {
   {
     id: 2,
     font: { multi: true },
-    label:
-      "<b>This</b> is a\n<i>default</i> <b><i>multi-</i>font</b> <code>label</code>",
+    label: "<b>This</b> is a\n<i>default</i> <b><i>multi-</i>font</b> <code>label</code>",
     x: -40,
     y: -40,
   },
   {
     id: 3,
     font: { multi: "html", size: 20 },
-    label:
-      "<b>This</b> is an\n<i>html</i> <b><i>multi-</i>font</b> <code>label</code>",
+    label: "<b>This</b> is an\n<i>html</i> <b><i>multi-</i>font</b> <code>label</code>",
     x: 40,
     y: 40,
   },
@@ -199,11 +195,7 @@ var network = new vis.Network(container, data, options);
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Labels | Multifont Labels"
-      />
+      <input type="hidden" name="title" value="Vis Network | Labels | Multifont Labels" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

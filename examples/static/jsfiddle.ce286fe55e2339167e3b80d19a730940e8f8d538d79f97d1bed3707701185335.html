@@ -31,23 +31,15 @@ h4 {
         type="hidden"
         name="html"
         value='<p>
-  Click any of the buttons below to cluster the network. On every push the
-  network will be reinitialized first. You can click on a cluster to open it.
+  Click any of the buttons below to cluster the network. On every push the network will be
+  reinitialized first. You can click on a cluster to open it.
 </p>
 
-<input
-  type="button"
-  onclick="clusterByCid()"
-  value="Cluster all nodes with CID = 1"
-/>
+<input type="button" onclick="clusterByCid()" value="Cluster all nodes with CID = 1" />
 <br />
 <input type="button" onclick="clusterByColor()" value="Cluster by color" />
 <br />
-<input
-  type="button"
-  onclick="clusterByConnection()"
-  value="Cluster &apos;node 1&apos; by connections"
-/>
+<input type="button" onclick="clusterByConnection()" value="Cluster &apos;node 1&apos; by connections" />
 <br />
 <input type="button" onclick="clusterOutliers()" value="Cluster outliers" />
 <br />
@@ -192,11 +184,7 @@ function clusterByHubsize() {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Clustering"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Clustering" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -96,44 +96,24 @@ a:hover {
   <h1>DOT language playground</h1>
 
   <p>
-    Play around with the DOT language in the textarea below, or select one of
-    the following examples:
+    Play around with the DOT language in the textarea below, or select one of the following
+    examples:
   </p>
   <p style="margin-left: 30px">
     <a href="#" class="example" data-url="data/simple.gv.txt">simple</a>,
-    <a href="#" class="example" data-url="data/computer_network.gv.txt"
-      >computer network</a
-    >,
-    <a href="#" class="example" data-url="data/cellular_automata.gv.txt"
-      >cellular automata</a
-    >,
+    <a href="#" class="example" data-url="data/computer_network.gv.txt">computer network</a>,
+    <a href="#" class="example" data-url="data/cellular_automata.gv.txt">cellular automata</a>,
     <a href="#" class="example" data-url="graphvizGallery/fsm.gv.txt">fsm *</a>,
-    <a href="#" class="example" data-url="graphvizGallery/hello.gv.txt"
-      >hello *</a
+    <a href="#" class="example" data-url="graphvizGallery/hello.gv.txt">hello *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/process.gv.txt">process *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/siblings.gv.txt">siblings *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/softmaint.gv.txt">softmaint *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/traffic_lights.gv.txt">traffic lights *</a
     >,
-    <a href="#" class="example" data-url="graphvizGallery/process.gv.txt"
-      >process *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/siblings.gv.txt"
-      >siblings *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/softmaint.gv.txt"
-      >softmaint *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/traffic_lights.gv.txt"
-      >traffic lights *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/transparency.gv.txt"
-      >transparency *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/twopi2.gv.txt"
-      >twopi2 *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/unix.gv.txt">unix *</a
-    >,
-    <a href="#" class="example" data-url="graphvizGallery/world.gv.txt"
-      >world *</a
-    >
+    <a href="#" class="example" data-url="graphvizGallery/transparency.gv.txt">transparency *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/twopi2.gv.txt">twopi2 *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/unix.gv.txt">unix *</a>,
+    <a href="#" class="example" data-url="graphvizGallery/world.gv.txt">world *</a>
   </p>
   <p>
     The examples marked with a star (*) come straight from the
@@ -252,11 +232,7 @@ function draw() {
         name="resources"
         value="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js,https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Data | DOT language playground"
-      />
+      <input type="hidden" name="title" value="Vis Network | Data | DOT language playground" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

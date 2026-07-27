@@ -55,21 +55,18 @@ body,
   <p>Create a simple network with some nodes and edges.</p>
 
   <p>
-    Standalone build doesn&apos;t work with other packages from the Vis family
-    because it bundles all dependencies. This leads to situation where DataSets
-    (and other dependencies) from one package (e.g. Timeline) don&apos;t work in
-    Network because Network expects it&apos;s own bundled DataSets to be used. It is
-    inteded as a convenience build for cases where multiple packages are not
-    necessary but ease of use is (like JSFiddle MEWs or examples). This build is
-    available in ESM and UMD versions each of them has minified and unminified
-    variant.
+    Standalone build doesn&apos;t work with other packages from the Vis family because it bundles all
+    dependencies. This leads to situation where DataSets (and other dependencies) from one package
+    (e.g. Timeline) don&apos;t work in Network because Network expects it&apos;s own bundled DataSets to be
+    used. It is inteded as a convenience build for cases where multiple packages are not necessary
+    but ease of use is (like JSFiddle MEWs or examples). This build is available in ESM and UMD
+    versions each of them has minified and unminified variant.
   </p>
 
   <h4>When to use</h4>
   <p>
-    When you don&apos;t need only Network (no Timeline, Graph3D etc.) and don&apos;t want
-    to deal with dependencies and styles (everything is bundled in this build
-    ready to use).
+    When you don&apos;t need only Network (no Timeline, Graph3D etc.) and don&apos;t want to deal with
+    dependencies and styles (everything is bundled in this build ready to use).
   </p>
 
   <h4>Content</h4>
@@ -211,11 +208,7 @@ var network = new vis.Network(container, data, options);
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Basic Usage | Standalone Build"
-      />
+      <input type="hidden" name="title" value="Vis Network | Basic Usage | Standalone Build" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

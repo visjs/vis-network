@@ -53,21 +53,14 @@ body,
   </div>
 
   <p>
-    Overlap avoidance increases the space between nodes depending on their size
-    in order to prevent big nodes from overlapping. The value can be set from 0
-    which is the default and means no overlap avoidance at all to 1 which puts
-    the most space around nodes. Any value in between is also valid.
+    Overlap avoidance increases the space between nodes depending on their size in order to prevent
+    big nodes from overlapping. The value can be set from 0 which is the default and means no
+    overlap avoidance at all to 1 which puts the most space around nodes. Any value in between is
+    also valid.
   </p>
 
   Avoid ovelap:
-  <input
-    type="number"
-    value="1"
-    min="0"
-    max="1"
-    step="0.01"
-    id="avoid-overlap"
-  />
+  <input type="number" value="1" min="0" max="1" step="0.01" id="avoid-overlap" />
 </div>
 
 <!-- Redraw the network when avoid overlap is changed. -->
@@ -218,8 +211,7 @@ function draw() {
 
   // add event listeners
   network.on("select", function (params) {
-    document.getElementById("selection").innerText =
-      "Selection: " + params.nodes;
+    document.getElementById("selection").innerText = "Selection: " + params.nodes;
   });
 }
 

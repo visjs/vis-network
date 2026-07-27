@@ -24,13 +24,10 @@
         type="hidden"
         name="html"
         value='<p>
-  Here is a simple network with nodes and edges that demonstrates how to change
-  the cursor on hover for nodes and edges.
+  Here is a simple network with nodes and edges that demonstrates how to change the cursor on hover
+  for nodes and edges.
 </p>
-<p>
-  Use the dropdowns and button below to change the cursor type bound to an
-  event.
-</p>
+<p>Use the dropdowns and button below to change the cursor type bound to an event.</p>
 <div>
   Event Type -
   <select id="eventType">
@@ -126,9 +123,7 @@ var options = { interaction: { hover: true } };
 var network = new vis.Network(container, data, options);
 
 //Get the canvas HTML element
-var networkCanvas = document
-  .getElementById("mynetwork")
-  .getElementsByTagName("canvas")[0];
+var networkCanvas = document.getElementById("mynetwork").getElementsByTagName("canvas")[0];
 function changeCursor(newCursorStyle) {
   networkCanvas.style.cursor = newCursorStyle;
 }
@@ -165,11 +160,7 @@ network.on("dragEnd", function () {
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Cursor Change"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Cursor Change" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

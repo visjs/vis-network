@@ -116,10 +116,7 @@ setInterval(() => {
   var edge = data.edges.get(edgeIds[i++ % edgeIds.length]);
   var oldParent = data.nodes.get(edge.from);
 
-  while (
-    (i % data.nodes.length) + 1 === leaf.id ||
-    (i % data.nodes.length) + 1 === oldParent.id
-  ) {
+  while ((i % data.nodes.length) + 1 === leaf.id || (i % data.nodes.length) + 1 === oldParent.id) {
     ++i;
   }
   var newParent = data.nodes.get((i++ % data.nodes.length) + 1);

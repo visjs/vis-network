@@ -23,8 +23,7 @@
       <input
         type="hidden"
         name="html"
-        value='Resizing is immediate in all decent browsers but in IE11 it may take up to a
-second to take effect.
+        value='Resizing is immediate in all decent browsers but in IE11 it may take up to a second to take effect.
 
 <div id="mynetwork"></div>
 '
@@ -34,10 +33,8 @@ second to take effect.
         name="js"
         value='// resize the canvas
 setInterval(() => {
-  document.querySelector("#mynetwork").style.width =
-    Math.ceil(300 + 200 * Math.random()) + "px";
-  document.querySelector("#mynetwork").style.height =
-    Math.ceil(300 + 200 * Math.random()) + "px";
+  document.querySelector("#mynetwork").style.width = Math.ceil(300 + 200 * Math.random()) + "px";
+  document.querySelector("#mynetwork").style.height = Math.ceil(300 + 200 * Math.random()) + "px";
 }, 1951);
 
 // create an array with nodes
@@ -73,11 +70,7 @@ var network = new vis.Network(container, data, options);
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Automatic Resizing"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Automatic Resizing" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

@@ -43,34 +43,18 @@ p {
         type="hidden"
         name="html"
         value='<p>
-  In this example, the network data can be exported to JSON and imported back
-  into the network. Try this out by exporting the network to JSON, clearing the
-  network and then importing it again. The nodes will all appear in the same
-  position as they were before the network was destroyed.
+  In this example, the network data can be exported to JSON and imported back into the network. Try
+  this out by exporting the network to JSON, clearing the network and then importing it again. The
+  nodes will all appear in the same position as they were before the network was destroyed.
 </p>
 
 <div id="mynetwork"></div>
 
 <div>
   <textarea id="input_output"></textarea>
-  <input
-    type="button"
-    id="import_button"
-    onclick="importNetwork()"
-    value="import"
-  />
-  <input
-    type="button"
-    id="export_button"
-    onclick="exportNetwork()"
-    value="export"
-  />
-  <input
-    type="button"
-    id="destroy_button"
-    onclick="destroyNetwork()"
-    value="destroy"
-  />
+  <input type="button" id="import_button" onclick="importNetwork()" value="import" />
+  <input type="button" id="export_button" onclick="exportNetwork()" value="export" />
+  <input type="button" id="destroy_button" onclick="destroyNetwork()" value="destroy" />
 </div>
 '
       />
@@ -216,11 +200,7 @@ init();
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js,https://unpkg.com/alea@1.0.0/alea.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Other | Saving and Loading Networks"
-      />
+      <input type="hidden" name="title" value="Vis Network | Other | Saving and Loading Networks" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>

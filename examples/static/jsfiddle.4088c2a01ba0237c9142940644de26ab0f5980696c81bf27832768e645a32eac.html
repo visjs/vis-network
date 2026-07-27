@@ -32,41 +32,24 @@ h4 {
         type="hidden"
         name="html"
         value='<p>
-  You can change any settings you want while the network is initialized using
-  the vis Dataset, setOptions and setData. Finally you can destroy the network
-  and completely reinitialize it.
+  You can change any settings you want while the network is initialized using the vis Dataset,
+  setOptions and setData. Finally you can destroy the network and completely reinitialize it.
 </p>
 
 <h4>DataSet (change the data while it&apos;s loaded and initialzed):</h4>
 <input type="button" onclick="addNode()" value="add node dynamically" />
 <br />
-<input
-  type="button"
-  onclick="changeNode1()"
-  value="change node 1&apos;s color dynamically"
-/>
+<input type="button" onclick="changeNode1()" value="change node 1&apos;s color dynamically" />
 <br />
-<input
-  type="button"
-  onclick="removeRandomNode()"
-  value="remove a random Node"
-/>
+<input type="button" onclick="removeRandomNode()" value="remove a random Node" />
 <br />
 <input type="button" onclick="resetAllNodes()" value="reload all nodes" />
 <br />
-<input
-  type="button"
-  onclick="resetAllNodesStabilize()"
-  value="reload all nodes and stabilize"
-/>
+<input type="button" onclick="resetAllNodesStabilize()" value="reload all nodes and stabilize" />
 <br />
 
 <h4>setOptions (change the global options):</h4>
-<input
-  type="button"
-  onclick="changeOptions()"
-  value="change the global options"
-/><br />
+<input type="button" onclick="changeOptions()" value="change the global options" /><br />
 
 <h4>setData (reinitialize the data):</h4>
 <input
@@ -76,11 +59,7 @@ h4 {
 /><br />
 
 <h4>Cleanly destroy the network and restart it:</h4>
-<input
-  type="button"
-  onclick="resetAll()"
-  value="Destroy the network and restart it."
-/><br />
+<input type="button" onclick="resetAll()" value="Destroy the network and restart it." /><br />
 <div id="mynetwork"></div>
 '
       />
@@ -184,11 +163,7 @@ startNetwork();
         name="resources"
         value="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"
       />
-      <input
-        type="hidden"
-        name="title"
-        value="Vis Network | Data | Dynamic Data"
-      />
+      <input type="hidden" name="title" value="Vis Network | Data | Dynamic Data" />
       <input type="hidden" name="wrap" value="b" />
       <button id="open" alt="JSFiddle" title="JSFiddle">Open JSFiddle</button>
     </form>
