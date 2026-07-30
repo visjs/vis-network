@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node:
     docker:
-      - image: cimg/node:24.18.0@sha256:4a638ad75f8601fec1f193e71df584639e6accb1771cea23f3d9d3857bca480c
+      - image: cimg/node:24.18.1@sha256:86722a5bb28633b65f586f9e42e6c82c3bf35ba4d5720fa88903de0da706b7c8
     resource_class: medium
     working_directory: ~/repo
     environment:
@@ -14,7 +14,7 @@ executors:
 
   node-browsers:
     docker:
-      - image: cimg/node:24.18.0-browsers@sha256:96ea0ddf7085bb74afc55d2c988c6c405b56b95ac1c51b2d405d2f9ddc07a9ad
+      - image: cimg/node:24.18.1-browsers@sha256:a3cf7273f3d6b329bc4197e8f720c71af6f745d9ef4816ef7a4402580157dfc7
     resource_class: medium
     working_directory: ~/repo
     environment:
