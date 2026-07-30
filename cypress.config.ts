@@ -2,10 +2,16 @@ import { defineConfig } from "cypress";
 import { configureVisualRegression } from "cypress-visual-regression";
 
 export default defineConfig({
-  env: {
-    SNAPSHOT_BASE_DIRECTORY: "./cypress/snapshots/base",
-    SNAPSHOT_DIFF_DIRECTORY: "./cypress/snapshots/diff",
+  expose: {
+    visNetworkTag: process.env.VIS_NETWORK_TAG ?? null,
+
+    visualRegressionBaseDirectory: "./cypress/snapshots/base",
+    visualRegressionDiffDirectory: "./cypress/snapshots/diff",
+    visualRegressionGenerateDiff: "always",
+    visualRegressionType:
+      process.env.E2E_VISUAL_REGRESSION_TYPE ?? "regression",
   },
+  allowCypressEnv: false,
   screenshotsFolder: "./cypress/snapshots/actual",
   trashAssetsBeforeRuns: true,
   viewportHeight: 1600,
@@ -14,27 +20,18 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       config.specPattern = [];
 
-      const all = !config.env.VISUAL && !config.env.FUNCTIONAL;
+      const all = !process.env.E2E_VISUAL && !process.env.E2E_FUNCTIONAL;
 
       // Visual regression screenshot tests.
-      if (all || config.env.VISUAL) {
+      if (all || process.env.E2E_VISUAL) {
         config.specPattern.push("cypress/e2e/visual/**/*.spec.ts");
-        config.env.failSilently = false;
         config.trashAssetsBeforeRuns = true;
-
-        if (config.env.UPDATE) {
-          config.env.type = "base";
-          config.screenshotsFolder = "./cypress/snapshots/base";
-        } else {
-          config.env.type = "actual";
-          config.screenshotsFolder = "./cypress/snapshots/actual";
-        }
 
         configureVisualRegression(on);
       }
 
       // Functional tests.
-      if (all || config.env.FUNCTIONAL) {
+      if (all || process.env.E2E_FUNCTIONAL) {
         config.specPattern.push("cypress/e2e/functional/**/*.spec.ts");
       }
 

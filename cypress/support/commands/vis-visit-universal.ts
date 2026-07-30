@@ -50,7 +50,7 @@ export function visVisitUniversal(
   config: UniversalNetworkConfig = {},
   { requireNewerVersionThan }: VisVisitPageOptions = {},
 ): void {
-  const tag = Cypress.env("VIS_NETWORK_TAG") ?? null;
+  const tag = Cypress.expose("visNetworkTag") ?? null;
 
   if (tag == null) {
     // Current code can always be used.
