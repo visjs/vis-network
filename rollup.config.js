@@ -1,11 +1,12 @@
+import babel from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
-import typescript from "@rollup/plugin-typescript";
 import terser from "@rollup/plugin-terser";
-import { generateHeader } from "vis-dev-utils";
+import typescript from "@rollup/plugin-typescript";
 import assets from "postcss-assets";
 import postcss from "rollup-plugin-postcss";
+
+import { generateHeader } from "vis-dev-utils";
 
 // TypeScript because Babel transpiles modules in isolation, therefore no type reexports.
 // CommonJS because Babel is not 100 % ESM.

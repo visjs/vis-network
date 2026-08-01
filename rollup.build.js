@@ -1,5 +1,6 @@
-import packageJSON from "./package.json" with { type: "json" };
 import { generateRollupConfiguration } from "vis-dev-utils";
+
+import packageJSON from "./package.json" with { type: "json" };
 
 export default generateRollupConfiguration({
   assets: "./lib/assets",

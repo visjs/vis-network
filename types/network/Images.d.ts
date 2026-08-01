@@ -1,2 +1,2 @@
-declare const whoKnowsWhat: any
-export default whoKnowsWhat
+declare const whoKnowsWhat: any;
+export default whoKnowsWhat;

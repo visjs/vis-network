@@ -1,6 +1,6 @@
 # HowTo Help
 
-The company that developed vis.js for the main part, *almende* is [not able to maintain the project at the moment](./we_need_help.md). So help from the community is very needed and welcome!
+The company that developed vis.js for the main part, _almende_ is [not able to maintain the project at the moment](./we_need_help.md). So help from the community is very needed and welcome!
 
 ## There are many ways to help:
 
@@ -16,7 +16,7 @@ A new issue is often opened fast and then forgotten. Please help go through [the
 
 ### Improve the webpage
 
-The visjs.org webpage is hosted on the [gh-pages branch](//github.com/almende/vis/tree/gh-pages). If you find a typo or anything else that should be improved feel free to create a pull-request to *gh-pages*. Please make changes in your own fork of gh-pages so the support team can view the changes in your hosted fork.
+The visjs.org webpage is hosted on the [gh-pages branch](//github.com/almende/vis/tree/gh-pages). If you find a typo or anything else that should be improved feel free to create a pull-request to _gh-pages_. Please make changes in your own fork of gh-pages so the support team can view the changes in your hosted fork.
 
 ### Create new examples
 
@@ -47,23 +47,23 @@ We use [GitHub's two-step review](//help.github.com/articles/about-pull-request-
 
 There are some rules for pull-request:
 
-* All pull-request must be to the [develop-branch](//github.com/almende/vis/tree/develop). Pull-request against the [master-branch](//github.com/almende/vis/tree/master) must be closed. (Changes to [gh-pages](//github.com/almende/vis/tree/gh-pages) are also ok.)
+- All pull-request must be to the [develop-branch](//github.com/almende/vis/tree/develop). Pull-request against the [master-branch](//github.com/almende/vis/tree/master) must be closed. (Changes to [gh-pages](//github.com/almende/vis/tree/gh-pages) are also ok.)
 
-* Only commit changes done in the source files in the folder `lib`, not to the builds
+- Only commit changes done in the source files in the folder `lib`, not to the builds
   which are located in the folder `dist`.
 
-* Keep your changes small and clear. Only work on one topic at one time and only change lines of code that you have to change to reach your goal.
+- Keep your changes small and clear. Only work on one topic at one time and only change lines of code that you have to change to reach your goal.
 
-* Test your changes before creating a pull-request. The easiest way is to open the existing examples and playing with them.
+- Test your changes before creating a pull-request. The easiest way is to open the existing examples and playing with them.
 
-* If you are fixing or implementing an existing issue, please refer to it in the description and in the commit message.
+- If you are fixing or implementing an existing issue, please refer to it in the description and in the commit message.
 
-* If you are introducing a new feature, add some documentation and a new example to make it easy to adapt.
+- If you are introducing a new feature, add some documentation and a new example to make it easy to adapt.
 
-* If you introduce breaking changes, like changing the signature of a public function, point that out in your description. Breaking changes result in a new major release.
+- If you introduce breaking changes, like changing the signature of a public function, point that out in your description. Breaking changes result in a new major release.
 
-* Always adapt to the code style of the existing source. Never adapt existing code to your personal taste. :trollface:
+- Always adapt to the code style of the existing source. Never adapt existing code to your personal taste. :trollface:
 
-* Pull-requests must be reviewed by at least two member of the support team. The First must approve the pull-request, the second can than merge after also checking it.
+- Pull-requests must be reviewed by at least two member of the support team. The First must approve the pull-request, the second can than merge after also checking it.
 
 **Happy Helping!!**
