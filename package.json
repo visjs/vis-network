@@ -276,7 +276,7 @@
     "lint-staged": "17.2.0",
     "mocha": "11.7.6",
     "nyc": "18.0.0",
-    "oxfmt": "0.60.0",
+    "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
     "postcss": "8.5.24",
