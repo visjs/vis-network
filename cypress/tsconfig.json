@@ -1,9 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "lib": ["esnext", "dom"],
-    "outDir": "."
+    "outDir": ".",
+    "rootDir": "."
   },
   "exclude": ["../node_modules"],
   "include": ["pages/**/*.ts"]

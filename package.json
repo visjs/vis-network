@@ -163,7 +163,10 @@
       "require": "./esnext/umd/vis-network.min.cjs",
       "types": "./declarations/index.d.ts"
     },
-    "./styles/*": "./styles/*",
+    "./styles/*": {
+      "default": "./styles/*",
+      "types": "./declarations/css-shim.d.ts"
+    },
     "./dist/vis-network": {
       "import": "./dist/vis-network.mjs",
       "require": "./dist/vis-network.cjs"
@@ -203,7 +206,7 @@
     "test:e2e:functional": "cross-env E2E_FUNCTIONAL=true npm run test:e2e:headless",
     "test:e2e:gui": "start-server-and-test test:e2e:transpile-watch-and-serve \"http://127.0.0.1:58253\" \"cypress open\"",
     "test:e2e:headless": "start-server-and-test test:e2e:transpile-and-serve \"http://127.0.0.1:58253\" \"cypress run\"",
-    "test:e2e:transpile": "tsc --skipLibCheck --module esnext --moduleResolution bundler --lib esnext,dom cypress/pages/standard-cytest-script.ts cypress/pages/pollution-detector.ts",
+    "test:e2e:transpile": "tsc --skipLibCheck --module esnext --moduleResolution bundler --lib esnext,dom cypress/pages/standard-cytest-script.ts cypress/pages/pollution-detector.ts || tsc --ignoreConfig --skipLibCheck --module esnext --moduleResolution bundler --lib esnext,dom cypress/pages/standard-cytest-script.ts cypress/pages/pollution-detector.ts",
     "test:e2e:transpile-and-serve": "npm run test:e2e:transpile && npm run serve",
     "test:e2e:transpile-and-watch": "npm run test:e2e:transpile -- --watch",
     "test:e2e:transpile-watch-and-serve": "npm run test:e2e:transpile && start-server-and-test serve :58253 test:e2e:transpile-and-watch",
