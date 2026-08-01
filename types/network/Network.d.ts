@@ -411,7 +411,7 @@ export class Network {
    *
    * @param nodeOrEdgeId a node or edge id
    */
-  public getConnectedNodes(nodeOrEdgeId: IdType, direction?: DirectionType): IdType[] | Array<{ fromId: IdType, toId: IdType }>;
+  public getConnectedNodes(nodeOrEdgeId: IdType, direction?: DirectionType): IdType[] | { fromId: IdType, toId: IdType }[];
 
   /**
    * Returns an array of edgeIds of the edges connected to this node.

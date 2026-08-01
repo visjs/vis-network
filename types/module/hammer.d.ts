@@ -1,2 +1,2 @@
-import hammer from '@egjs/hammerjs'
-export = hammer
+import hammer from "@egjs/hammerjs";
+export = hammer;

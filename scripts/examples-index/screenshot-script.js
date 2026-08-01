@@ -18,6 +18,6 @@
     },
     set(value) {
       Network = value;
-    }
+    },
   });
 })();
