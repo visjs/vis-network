@@ -1,31 +1,5 @@
 export const ignorePatterns: string[] = [
-  "/*",
-
-  "!/*?.?*",
-  "!/.?*.?*",
-
-  "!/docs",
-  "!/docs-kr",
-  "!/lib",
-  "!/src",
-  "!/test",
-
-  "!/cypress",
-  "/cypress/e2e/**/*.js",
-  "/cypress/e2e/**/*.js.map",
-  "/cypress/fixtures/**/*.js",
-  "/cypress/fixtures/**/*.js.map",
-  "/cypress/pages/**/*.js",
-  "/cypress/pages/**/*.js.map",
-  "/cypress/screenshots",
-  "/cypress/snapshots",
-  "/cypress/support/**/*.js",
-  "/cypress/support/**/*.js.map",
-  "/cypress/videos",
-
-  "!/examples",
-  "/examples/examples.css",
-  "/examples/index.html",
-  "/examples/static",
-  "/examples/thumbnails",
+  "/__snapshots__/",
+  "/common-docs-files/js/",
+  // Everything from gitignore is implicitly ignored.
 ];
