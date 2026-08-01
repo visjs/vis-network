@@ -82,12 +82,12 @@ export class Network {
    * @param data network data
    * @param [options] optional network options
    */
-  constructor(container: HTMLElement, data: Data, options?: Options);
+  public constructor(container: HTMLElement, data: Data, options?: Options);
 
   /**
    * 	Remove the network from the DOM and remove all Hammer bindings and references.
    */
-  destroy(): void;
+  public destroy(): void;
 
   /**
    * Override all the data in the network.
@@ -97,7 +97,7 @@ export class Network {
    *
    * @param data network data
    */
-  setData(data: Data): void;
+  public setData(data: Data): void;
 
   /**
    * Set the options.
@@ -106,7 +106,7 @@ export class Network {
    *
    * @param options network options
    */
-  setOptions(options: Options): void;
+  public setOptions(options: Options): void;
 
   /**
    * Set an event listener.
@@ -115,7 +115,7 @@ export class Network {
    * @param eventName the name of the event, f.e. 'click'
    * @param callback the callback function that will be raised
    */
-  on(eventName: NetworkEvents, callback: (params?: any) => void): void;
+  public on(eventName: NetworkEvents, callback: (params?: any) => void): void;
 
   /**
    * Remove an event listener.
@@ -125,7 +125,7 @@ export class Network {
    * @param eventName the name of the event, f.e. 'click'
    * @param [callback] the exact same callback function that was used when calling 'on'
    */
-  off(eventName: NetworkEvents, callback?: (params?: any) => void): void;
+  public off(eventName: NetworkEvents, callback?: (params?: any) => void): void;
 
   /**
    * Set an event listener only once.
@@ -135,7 +135,7 @@ export class Network {
    * @param eventName the name of the event, f.e. 'click'
    * @param callback the callback function that will be raised once
    */
-  once(eventName: NetworkEvents, callback: (params?: any) => void): void;
+  public once(eventName: NetworkEvents, callback: (params?: any) => void): void;
 
   /**
    * This function converts canvas coordinates to coordinates on the DOM.
@@ -145,7 +145,7 @@ export class Network {
    * @param position the canvas coordinates
    * @returns the DOM coordinates
    */
-  canvasToDOM(position: Position): Position;
+  public canvasToDOM(position: Position): Position;
 
   /**
    * This function converts DOM coordinates to coordinates on the canvas.
@@ -155,12 +155,12 @@ export class Network {
    * @param position the DOM coordinates
    * @returns the canvas coordinates
    */
-  DOMtoCanvas(position: Position): Position;
+  public DOMtoCanvas(position: Position): Position;
 
   /**
    * Redraw the network.
    */
-  redraw(): void;
+  public redraw(): void;
 
   /**
    * Set the size of the canvas.
@@ -169,12 +169,12 @@ export class Network {
    * @param width width in a common format, f.e. '100px'
    * @param height height in a common format, f.e. '100px'
    */
-  setSize(width: string, height: string): void;
+  public setSize(width: string, height: string): void;
 
   /**
    * The joinCondition function is presented with all nodes.
    */
-  cluster(options?: ClusterOptions): void;
+  public cluster(options?: ClusterOptions): void;
 
   /**
    * 	This method looks at the provided node and makes a cluster of it and all it's connected nodes.
@@ -185,7 +185,7 @@ export class Network {
    * @param nodeId the id of the node
    * @param [options] the cluster options
    */
-  clusterByConnection(nodeId: string, options?: ClusterOptions): void;
+  public clusterByConnection(nodeId: string, options?: ClusterOptions): void;
 
   /**
    * This method checks all nodes in the network and those with a equal or higher
@@ -198,14 +198,14 @@ export class Network {
    * @param [hubsize] optional hubsize
    * @param [options] optional cluster options
    */
-  clusterByHubsize(hubsize?: number, options?: ClusterOptions): void;
+  public clusterByHubsize(hubsize?: number, options?: ClusterOptions): void;
 
   /**
    * This method will cluster all nodes with 1 edge with their respective connected node.
    *
    * @param [options] optional cluster options
    */
-  clusterOutliers(options?: ClusterOptions): void;
+  public clusterOutliers(options?: ClusterOptions): void;
 
   /**
    * Nodes can be in clusters.
@@ -221,7 +221,7 @@ export class Network {
    * @param nodeId the node id.
    * @returns an array of nodeIds showing where the node is
    */
-  findNode(nodeId: IdType): IdType[];
+  public findNode(nodeId: IdType): IdType[];
 
   /**
    * Similar to findNode in that it returns all the edge ids that were
@@ -230,7 +230,7 @@ export class Network {
    * @param baseEdgeId the base edge id
    * @returns an array of edgeIds
    */
-  getClusteredEdges(baseEdgeId: IdType): IdType[];
+  public getClusteredEdges(baseEdgeId: IdType): IdType[];
 
   /**
    * When a clusteredEdgeId is available, this method will return the original
@@ -238,7 +238,7 @@ export class Network {
    * After clustering the 'SelectEdge' event is fired but provides only the clustered edge.
    * This method can then be used to return the baseEdgeId.
    */
-  getBaseEdge(clusteredEdgeId: IdType): IdType;
+  public getBaseEdge(clusteredEdgeId: IdType): IdType;
 
   /**
    * For the given clusteredEdgeId, this method will return all the original
@@ -248,7 +248,7 @@ export class Network {
    * All clustered edges id's under clusteredEdgeId are skipped,
    * but scanned recursively to return their base id's.
    */
-  getBaseEdges(clusteredEdgeId: IdType): IdType[];
+  public getBaseEdges(clusteredEdgeId: IdType): IdType[];
 
   /**
    * Visible edges between clustered nodes are not the same edge as the ones provided
@@ -257,20 +257,20 @@ export class Network {
    * until the cluster is opened. This method takes an edgeId (ie. a base edgeId from data.edges)
    * and applys the options to it and any edges that were created from it while clustering.
    */
-  updateEdge(startEdgeId: IdType, options?: EdgeOptions): void;
+  public updateEdge(startEdgeId: IdType, options?: EdgeOptions): void;
 
   /**
    * Clustered Nodes when created are not contained in the original data.nodes
    * passed on network creation. This method updates the cluster node.
    */
-  updateClusteredNode(clusteredNodeId: IdType, options?: NodeOptions): void;
+  public updateClusteredNode(clusteredNodeId: IdType, options?: NodeOptions): void;
 
   /**
    * Returns true if the node whose ID has been supplied is a cluster.
    *
    * @param nodeId the node id.
    */
-  isCluster(nodeId: IdType): boolean;
+  public isCluster(nodeId: IdType): boolean;
 
   /**
    * Returns an array of all nodeIds of the nodes that
@@ -278,7 +278,7 @@ export class Network {
    *
    * @param clusterNodeId the id of the cluster node
    */
-  getNodesInCluster(clusterNodeId: IdType): IdType[];
+  public getNodesInCluster(clusterNodeId: IdType): IdType[];
 
   /**
    * Opens the cluster, releases the contained nodes and edges,
@@ -290,7 +290,7 @@ export class Network {
    * @param nodeId the node id
    * @param [options] optional open cluster options
    */
-  openCluster(nodeId: IdType, options?: OpenClusterOptions): void;
+  public openCluster(nodeId: IdType, options?: OpenClusterOptions): void;
 
   /**
    * If you like the layout of your network
@@ -299,19 +299,19 @@ export class Network {
    *
    * @returns the current seed of the network.
    */
-  getSeed(): number | string;
+  public getSeed(): number | string;
 
   /**
    * 	Programatically enable the edit mode.
    * Similar effect to pressing the edit button.
    */
-  enableEditMode(): void;
+  public enableEditMode(): void;
 
   /**
    * Programatically disable the edit mode.
    * Similar effect to pressing the close icon (small cross in the corner of the toolbar).
    */
-  disableEditMode(): void;
+  public disableEditMode(): void;
 
   /**
    * 	Go into addNode mode. Having edit mode or manipulation enabled is not required.
@@ -319,31 +319,31 @@ export class Network {
    * The callback functions defined in handlerFunctions still apply.
    * To use these methods without having the manipulation GUI, make sure you set enabled to false.
    */
-  addNodeMode(): void;
+  public addNodeMode(): void;
 
   /**
    * Edit the selected node.
    * The explaination from addNodeMode applies here as well.
    */
-  editNode(): void;
+  public editNode(): void;
 
   /**
    * Go into addEdge mode.
    * The explaination from addNodeMode applies here as well.
    */
-  addEdgeMode(): void;
+  public addEdgeMode(): void;
 
   /**
    * Go into editEdge mode.
    * The explaination from addNodeMode applies here as well.
    */
-  editEdgeMode(): void;
+  public editEdgeMode(): void;
 
   /**
    * Delete selected.
    * Having edit mode or manipulation enabled is not required.
    */
-  deleteSelected(): void;
+  public deleteSelected(): void;
 
   /**
    * Returns the x y positions in canvas space of a requested node or array of nodes.
@@ -357,7 +357,7 @@ export class Network {
    * @param nodeIds - Either an array of node ids or a single node id. If not supplied, all node ids in the network will be used.
    * @returns A an object containing the x y positions in canvas space of the nodes in the network, keyed by id.
    */
-  getPositions(nodeIds?: IdType[] | IdType): { [nodeId: string]: Position };
+  public getPositions(nodeIds?: IdType[] | IdType): { [nodeId: string]: Position };
 
   /**
    * Retrieves the x y position of a specific id.
@@ -370,7 +370,7 @@ export class Network {
    * @throws {@link ReferenceError} 
    *  Thrown if the id provided as a parameter does not correspond to a node in the network.
    */
-  getPosition(nodeId: IdType): Position;
+  public getPosition(nodeId: IdType): Position;
 
   /**
    * 	When using the vis.DataSet to load your nodes into the network,
@@ -386,7 +386,7 @@ export class Network {
    * At the moment it is not possible to cache positions when using clusters since
    * they cannot be correctly initialized from just the positions.
    */
-  storePositions(): void;
+  public storePositions(): void;
 
   /**
    * You can use this to programatically move a node.
@@ -396,13 +396,13 @@ export class Network {
    * @param x new canvas space x position
    * @param y new canvas space y position
    */
-  moveNode(nodeId: IdType, x: number, y: number): void;
+  public moveNode(nodeId: IdType, x: number, y: number): void;
 
   /**
    * Returns a bounding box for the node including label.
    *
    */
-  getBoundingBox(nodeId: IdType): BoundingBox;
+  public getBoundingBox(nodeId: IdType): BoundingBox;
 
   /**
    * Returns an array of nodeIds of the all the nodes that are directly connected to this node.
@@ -411,28 +411,28 @@ export class Network {
    *
    * @param nodeOrEdgeId a node or edge id
    */
-  getConnectedNodes(nodeOrEdgeId: IdType, direction?: DirectionType): IdType[] | Array<{ fromId: IdType, toId: IdType }>;
+  public getConnectedNodes(nodeOrEdgeId: IdType, direction?: DirectionType): IdType[] | Array<{ fromId: IdType, toId: IdType }>;
 
   /**
    * Returns an array of edgeIds of the edges connected to this node.
    *
    * @param nodeId the node id
    */
-  getConnectedEdges(nodeId: IdType): IdType[];
+  public getConnectedEdges(nodeId: IdType): IdType[];
 
   /**
    * Start the physics simulation.
    * This is normally done whenever needed and is only really useful
    * if you stop the simulation yourself and wish to continue it afterwards.
    */
-  startSimulation(): void;
+  public startSimulation(): void;
 
   /**
    * This stops the physics simulation and triggers a stabilized event.
    * Tt can be restarted by dragging a node,
    * altering the dataset or calling startSimulation().
    */
-  stopSimulation(): void;
+  public stopSimulation(): void;
 
   /**
    * You can manually call stabilize at any time.
@@ -441,41 +441,41 @@ export class Network {
    *
    * @param [iterations] the number of iterations it should do
    */
-  stabilize(iterations?: number): void;
+  public stabilize(iterations?: number): void;
 
   /**
    * Returns an object with selected nodes and edges ids.
    *
    */
-  getSelection(): { nodes: IdType[], edges: IdType[] };
+  public getSelection(): { nodes: IdType[], edges: IdType[] };
 
   /**
    * Returns an array of selected node ids like so:
    * [nodeId1, nodeId2, ..].
    *
    */
-  getSelectedNodes(): IdType[];
+  public getSelectedNodes(): IdType[];
 
   /**
    * Returns an array of selected edge ids like so:
    * [edgeId1, edgeId2, ..].
    *
    */
-  getSelectedEdges(): IdType[];
+  public getSelectedEdges(): IdType[];
 
   /**
    * Returns a nodeId or undefined.
    * The DOM positions are expected to be in pixels from the top left corner of the canvas.
    *
    */
-  getNodeAt(position: Position): IdType;
+  public getNodeAt(position: Position): IdType;
 
   /**
    * Returns a edgeId or undefined.
    * The DOM positions are expected to be in pixels from the top left corner of the canvas.
    *
    */
-  getEdgeAt(position: Position): IdType;
+  public getEdgeAt(position: Position): IdType;
 
   /**
    * Selects the nodes corresponding to the id's in the input array.
@@ -483,7 +483,7 @@ export class Network {
    * This method unselects all other objects before selecting its own objects. Does not fire events.
    *
    */
-  selectNodes(nodeIds: IdType[], highlightEdges?: boolean): void;
+  public selectNodes(nodeIds: IdType[], highlightEdges?: boolean): void;
 
   /**
    * Selects the edges corresponding to the id's in the input array.
@@ -491,20 +491,20 @@ export class Network {
    * Does not fire events.
    *
    */
-  selectEdges(edgeIds: IdType[]): void;
+  public selectEdges(edgeIds: IdType[]): void;
 
   /**
    * Sets the selection.
    * You can also pass only nodes or edges in selection object.
    *
    */
-  setSelection(selection: { nodes?: IdType[], edges?: IdType[] }, options?: SelectionOptions): void;
+  public setSelection(selection: { nodes?: IdType[], edges?: IdType[] }, options?: SelectionOptions): void;
 
   /**
    * Unselect all objects.
    * Does not fire events.
    */
-  unselectAll(): void;
+  public unselectAll(): void;
 
   /**
    * Returns the current scale of the network.
@@ -512,21 +512,21 @@ export class Network {
    *
    * @returns the current scale of the network
    */
-  getScale(): number;
+  public getScale(): number;
 
   /**
    * Returns the current central focus point of the view in the form: { x: {Number}, y: {Number} }
    *
    * @returns the view position;
    */
-  getViewPosition(): Position;
+  public getViewPosition(): Position;
 
   /**
    * Zooms out so all nodes fit on the canvas.
    *
    * @param [options] All options are optional for the fit method
    */
-  fit(options?: FitOptions): void;
+  public fit(options?: FitOptions): void;
 
   /**
    * You can focus on a node with this function.
@@ -534,25 +534,25 @@ export class Network {
    * If the view is dragged by the user, the focus is broken. You can supply options to customize the effect.
    *
    */
-  focus(nodeId: IdType, options?: FocusOptions): void;
+  public focus(nodeId: IdType, options?: FocusOptions): void;
 
   /**
    * You can animate or move the camera using the moveTo method.
    *
    */
-  moveTo(options: MoveToOptions): void;
+  public moveTo(options: MoveToOptions): void;
 
   /**
    * Programatically release the focussed node.
    */
-  releaseNode(): void;
+  public releaseNode(): void;
 
   /**
    * If you use the configurator, you can call this method to get an options object that contains
    * all differences from the default options caused by users interacting with the configurator.
    *
    */
-  getOptionsFromConfigurator(): any;
+  public getOptionsFromConfigurator(): any;
 }
 
 /**
