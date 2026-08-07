@@ -3,7 +3,7 @@
  * @param {Object} JSONcontainer
  * @private
  */
-export function prepareElements(JSONcontainer: any): void
+export function prepareElements(JSONcontainer: any): void;
 
 /**
  * this cleans up all the unused SVG elements. By asking for the parentNode, we only need to supply the JSON container from
@@ -12,13 +12,13 @@ export function prepareElements(JSONcontainer: any): void
  * @param {Object} JSONcontainer
  * @private
  */
-export function cleanupElements(JSONcontainer: any): void
+export function cleanupElements(JSONcontainer: any): void;
 
 /**
  * Ensures that all elements are removed first up so they can be recreated cleanly
  * @param {Object} JSONcontainer
  */
-export function resetElements(JSONcontainer: any): void
+export function resetElements(JSONcontainer: any): void;
 
 /**
  * Allocate or generate an SVG element if needed. Store a reference to it in the JSON container and draw it in the svgContainer
@@ -33,8 +33,8 @@ export function resetElements(JSONcontainer: any): void
 export function getSVGElement(
   elementType: any,
   JSONcontainer: any,
-  svgContainer: any
-): any
+  svgContainer: any,
+): any;
 
 /**
  * Allocate or generate an SVG element if needed. Store a reference to it in the JSON container and draw it in the svgContainer
@@ -50,8 +50,8 @@ export function getDOMElement(
   elementType: any,
   JSONcontainer: any,
   DOMContainer: any,
-  insertBefore: any
-): any
+  insertBefore: any,
+): any;
 
 /**
  * Draw a point object. This is a separate function because it can also be called by the legend.
@@ -72,8 +72,8 @@ export function drawPoint(
   groupTemplate: any,
   JSONcontainer: any,
   svgContainer: any,
-  labelObj: any
-): any
+  labelObj: any,
+): any;
 
 /**
  * draw a bar SVG element centered on the X coordinate
@@ -95,5 +95,5 @@ export function drawBar(
   className: any,
   JSONcontainer: any,
   svgContainer: any,
-  style: any
-): void
+  style: any,
+): void;
