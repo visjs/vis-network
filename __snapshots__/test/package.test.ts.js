@@ -451,12 +451,6 @@ exports['Package Exported files 1'] = {
     "dist/vis-network.min.mjs": {
       empty: false
     },
-    "dist/vis-network.min.mjs": {
-      empty: false
-    },
-    "dist/vis-network.min.mjs.map": {
-      empty: false
-    },
     "dist/vis-network.min.mjs.map": {
       empty: false
     },
