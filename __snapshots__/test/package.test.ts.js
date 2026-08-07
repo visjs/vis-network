@@ -13,6 +13,12 @@ exports['Package Exported files 1'] = {
     "README.md": {
       empty: false
     },
+    "declarations/css-shim.d.ts": {
+      empty: false
+    },
+    "declarations/css-shim.d.ts.map": {
+      empty: false
+    },
     "declarations/DOMutil.d.ts": {
       empty: false
     },
@@ -238,6 +244,12 @@ exports['Package Exported files 1'] = {
     "dist/img/network/zoomExtends.png": {
       empty: false
     },
+    "dist/types/css-shim.d.ts": {
+      empty: false
+    },
+    "dist/types/css-shim.d.ts.map": {
+      empty: false
+    },
     "dist/types/DOMutil.d.ts": {
       empty: false
     },
@@ -449,12 +461,6 @@ exports['Package Exported files 1'] = {
       empty: false
     },
     "dist/vis-network.min.mjs": {
-      empty: false
-    },
-    "dist/vis-network.min.mjs": {
-      empty: false
-    },
-    "dist/vis-network.min.mjs.map": {
       empty: false
     },
     "dist/vis-network.min.mjs.map": {

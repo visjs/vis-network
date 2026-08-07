@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "baseUrl": ".",
     "declaration": false,
     "declarationMap": false,
     "esModuleInterop": true,
@@ -11,6 +10,7 @@
     "outDir": "dist",
     "paths": {},
     "resolveJsonModule": true,
+    "rootDir": ".",
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,

@@ -6,7 +6,8 @@
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "noEmit": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "rootDir": "lib"
   },
   "include": ["lib"]
 }
