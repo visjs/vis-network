@@ -255,7 +255,7 @@
     "jsdom": "30.0.0",
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
-    "lint-staged": "17.2.0",
+    "lint-staged": "17.3.0",
     "mocha": "11.7.6",
     "nyc": "18.0.0",
     "oxfmt": "0.61.0",
