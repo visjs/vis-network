@@ -151,6 +151,9 @@ exports['Package Exported files 1'] = {
     "declarations/network/modules/components/edges/util/types.d.ts.map": {
       empty: false
     },
+    "declarations/network/modules/components/NavigationHandler.css.d.ts": {
+      empty: false
+    },
     "declarations/network/modules/components/nodes/util/shapes.d.ts": {
       empty: false
     },
@@ -161,6 +164,9 @@ exports['Package Exported files 1'] = {
       empty: false
     },
     "declarations/network/modules/layout-engine/index.d.ts.map": {
+      empty: false
+    },
+    "declarations/network/modules/ManipulationSystem.css.d.ts": {
       empty: false
     },
     "declarations/network/modules/selection/index.d.ts": {
@@ -382,6 +388,9 @@ exports['Package Exported files 1'] = {
     "dist/types/network/modules/components/edges/util/types.d.ts.map": {
       empty: false
     },
+    "dist/types/network/modules/components/NavigationHandler.css.d.ts": {
+      empty: false
+    },
     "dist/types/network/modules/components/nodes/util/shapes.d.ts": {
       empty: false
     },
@@ -392,6 +401,9 @@ exports['Package Exported files 1'] = {
       empty: false
     },
     "dist/types/network/modules/layout-engine/index.d.ts.map": {
+      empty: false
+    },
+    "dist/types/network/modules/ManipulationSystem.css.d.ts": {
       empty: false
     },
     "dist/types/network/modules/selection/index.d.ts": {
