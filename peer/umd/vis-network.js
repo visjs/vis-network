@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-08-20T16:10:10.915Z
+ * @date    2026-08-20T16:36:09.641Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -6250,90 +6250,6 @@
 	var forEachExports = requireForEach();
 	var _forEachInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(forEachExports);
 
-	var es_array_reverse = {};
-
-	var hasRequiredEs_array_reverse;
-
-	function requireEs_array_reverse () {
-		if (hasRequiredEs_array_reverse) return es_array_reverse;
-		hasRequiredEs_array_reverse = 1;
-		var $ = /*@__PURE__*/ require_export();
-		var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
-		var isArray = /*@__PURE__*/ requireIsArray$6();
-
-		var nativeReverse = uncurryThis([].reverse);
-		var test = [1, 2];
-
-		// `Array.prototype.reverse` method
-		// https://tc39.es/ecma262/#sec-array.prototype.reverse
-		// fix for Safari 12.0 bug
-		// https://bugs.webkit.org/show_bug.cgi?id=188794
-		$({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
-		  reverse: function reverse() {
-		    // eslint-disable-next-line no-self-assign -- dirty hack
-		    if (isArray(this)) this.length = this.length;
-		    return nativeReverse(this);
-		  }
-		});
-		return es_array_reverse;
-	}
-
-	var reverse$3;
-	var hasRequiredReverse$3;
-
-	function requireReverse$3 () {
-		if (hasRequiredReverse$3) return reverse$3;
-		hasRequiredReverse$3 = 1;
-		requireEs_array_reverse();
-		var getBuiltInPrototypeMethod = /*@__PURE__*/ requireGetBuiltInPrototypeMethod();
-
-		reverse$3 = getBuiltInPrototypeMethod('Array', 'reverse');
-		return reverse$3;
-	}
-
-	var reverse$2;
-	var hasRequiredReverse$2;
-
-	function requireReverse$2 () {
-		if (hasRequiredReverse$2) return reverse$2;
-		hasRequiredReverse$2 = 1;
-		var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
-		var method = /*@__PURE__*/ requireReverse$3();
-
-		var ArrayPrototype = Array.prototype;
-
-		reverse$2 = function (it) {
-		  var own = it.reverse;
-		  return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.reverse) ? method : own;
-		};
-		return reverse$2;
-	}
-
-	var reverse$1;
-	var hasRequiredReverse$1;
-
-	function requireReverse$1 () {
-		if (hasRequiredReverse$1) return reverse$1;
-		hasRequiredReverse$1 = 1;
-		var parent = /*@__PURE__*/ requireReverse$2();
-
-		reverse$1 = parent;
-		return reverse$1;
-	}
-
-	var reverse;
-	var hasRequiredReverse;
-
-	function requireReverse () {
-		if (hasRequiredReverse) return reverse;
-		hasRequiredReverse = 1;
-		reverse = /*@__PURE__*/ requireReverse$1();
-		return reverse;
-	}
-
-	var reverseExports = requireReverse();
-	var _reverseInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(reverseExports);
-
 	var es_array_splice = {};
 
 	var deletePropertyOrThrow;
@@ -10939,8 +10855,8 @@
 	 */
 	Activator$1.prototype.destroy = function () {
 	  this.deactivate();
-	  for (const callback of _reverseInstanceProperty(_context2 = _spliceInstanceProperty(_context3 = this._cleanupQueue).call(_context3, 0)).call(_context2)) {
-	    var _context2, _context3;
+	  for (const callback of _spliceInstanceProperty(_context2 = this._cleanupQueue).call(_context2, 0).toReversed()) {
+	    var _context2;
 	    callback();
 	  }
 	};
@@ -11205,8 +11121,8 @@
 	          copyOrDelete(a, b, prop, allowDeletion);
 	        }
 	      } else if (_Array$isArray(b[prop])) {
-	        var _context4;
-	        a[prop] = _sliceInstanceProperty(_context4 = b[prop]).call(_context4);
+	        var _context3;
+	        a[prop] = _sliceInstanceProperty(_context3 = b[prop]).call(_context3);
 	      } else {
 	        copyOrDelete(a, b, prop, allowDeletion);
 	      }
@@ -11329,8 +11245,8 @@
 	 * @returns Hex color string (for example: '#0acdc0').
 	 */
 	function RGBToHex(red, green, blue) {
-	  var _context5;
-	  return "#" + _sliceInstanceProperty(_context5 = ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16)).call(_context5, 1);
+	  var _context4;
+	  return "#" + _sliceInstanceProperty(_context4 = ((1 << 24) + (red << 16) + (green << 8) + blue).toString(16)).call(_context4, 1);
 	}
 	/**
 	 * Parse a color property into an object with border, background, and highlight colors.
@@ -11342,8 +11258,8 @@
 	  if (isString(inputColor)) {
 	    let colorStr = inputColor;
 	    if (isValidRGB(colorStr)) {
-	      var _context6;
-	      const rgb = _mapInstanceProperty(_context6 = colorStr.substr(4).substr(0, colorStr.length - 5).split(",")).call(_context6, function (value) {
+	      var _context5;
+	      const rgb = _mapInstanceProperty(_context5 = colorStr.substr(4).substr(0, colorStr.length - 5).split(",")).call(_context5, function (value) {
 	        return _parseInt(value);
 	      });
 	      colorStr = RGBToHex(rgb[0], rgb[1], rgb[2]);
@@ -12297,7 +12213,7 @@
 	   * @private
 	   */
 	  _create() {
-	    var _context7, _context8, _context9, _context0;
+	    var _context6, _context7, _context8, _context9;
 	    this.frame = document.createElement("div");
 	    this.frame.className = "vis-color-picker";
 	    this.colorPickerDiv = document.createElement("div");
@@ -12330,7 +12246,7 @@
 	      this.opacityRange.type = "range"; // Not supported on IE9
 	      this.opacityRange.min = "0";
 	      this.opacityRange.max = "100";
-	    } catch (err) {
+	    } catch (_unused) {
 	      // TODO: Add some error handling.
 	    }
 	    this.opacityRange.value = "100";
@@ -12340,7 +12256,7 @@
 	      this.brightnessRange.type = "range"; // Not supported on IE9
 	      this.brightnessRange.min = "0";
 	      this.brightnessRange.max = "100";
-	    } catch (err) {
+	    } catch (_unused2) {
 	      // TODO: Add some error handling.
 	    }
 	    this.brightnessRange.value = "100";
@@ -12375,19 +12291,19 @@
 	    this.cancelButton = document.createElement("div");
 	    this.cancelButton.className = "vis-button vis-cancel";
 	    this.cancelButton.innerText = "cancel";
-	    this.cancelButton.onclick = _bindInstanceProperty(_context7 = this._hide).call(_context7, this, false);
+	    this.cancelButton.onclick = _bindInstanceProperty(_context6 = this._hide).call(_context6, this, false);
 	    this.applyButton = document.createElement("div");
 	    this.applyButton.className = "vis-button vis-apply";
 	    this.applyButton.innerText = "apply";
-	    this.applyButton.onclick = _bindInstanceProperty(_context8 = this._apply).call(_context8, this);
+	    this.applyButton.onclick = _bindInstanceProperty(_context7 = this._apply).call(_context7, this);
 	    this.saveButton = document.createElement("div");
 	    this.saveButton.className = "vis-button vis-save";
 	    this.saveButton.innerText = "save";
-	    this.saveButton.onclick = _bindInstanceProperty(_context9 = this._save).call(_context9, this);
+	    this.saveButton.onclick = _bindInstanceProperty(_context8 = this._save).call(_context8, this);
 	    this.loadButton = document.createElement("div");
 	    this.loadButton.className = "vis-button vis-load";
 	    this.loadButton.innerText = "load last";
-	    this.loadButton.onclick = _bindInstanceProperty(_context0 = this._loadLast).call(_context0, this);
+	    this.loadButton.onclick = _bindInstanceProperty(_context9 = this._loadLast).call(_context9, this);
 	    this.frame.appendChild(this.colorPickerDiv);
 	    this.frame.appendChild(this.arrowDiv);
 	    this.frame.appendChild(this.brightnessLabel);
@@ -12839,7 +12755,7 @@
 	      range.type = "range"; // not supported on IE9
 	      range.min = min;
 	      range.max = max;
-	    } catch (err) {
+	    } catch (_unused3) {
 	      // TODO: Add some error handling.
 	    }
 	    range.step = step;
@@ -13578,6 +13494,7 @@
 	    let closestMatchPath = [];
 	    const lowerCaseOption = option.toLowerCase();
 	    let indexMatch = undefined;
+	    // oxlint-disable-next-line guard-for-in -- Options use prototype inheritance to override defaults, parent options, etc.
 	    for (const op in options) {
 	      let distance;
 	      if (options[op].__type__ !== undefined && recursive === true) {
@@ -13589,8 +13506,8 @@
 	          indexMatch = result.indexMatch;
 	        }
 	      } else {
-	        var _context1;
-	        if (_indexOfInstanceProperty(_context1 = op.toLowerCase()).call(_context1, lowerCaseOption) !== -1) {
+	        var _context0;
+	        if (_indexOfInstanceProperty(_context0 = op.toLowerCase()).call(_context0, lowerCaseOption) !== -1) {
 	          indexMatch = op;
 	        }
 	        distance = Validator.levenshteinDistance(option, op);
@@ -16543,6 +16460,90 @@
 	    }
 	  }
 	}
+
+	var es_array_reverse = {};
+
+	var hasRequiredEs_array_reverse;
+
+	function requireEs_array_reverse () {
+		if (hasRequiredEs_array_reverse) return es_array_reverse;
+		hasRequiredEs_array_reverse = 1;
+		var $ = /*@__PURE__*/ require_export();
+		var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+		var isArray = /*@__PURE__*/ requireIsArray$6();
+
+		var nativeReverse = uncurryThis([].reverse);
+		var test = [1, 2];
+
+		// `Array.prototype.reverse` method
+		// https://tc39.es/ecma262/#sec-array.prototype.reverse
+		// fix for Safari 12.0 bug
+		// https://bugs.webkit.org/show_bug.cgi?id=188794
+		$({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()) }, {
+		  reverse: function reverse() {
+		    // eslint-disable-next-line no-self-assign -- dirty hack
+		    if (isArray(this)) this.length = this.length;
+		    return nativeReverse(this);
+		  }
+		});
+		return es_array_reverse;
+	}
+
+	var reverse$3;
+	var hasRequiredReverse$3;
+
+	function requireReverse$3 () {
+		if (hasRequiredReverse$3) return reverse$3;
+		hasRequiredReverse$3 = 1;
+		requireEs_array_reverse();
+		var getBuiltInPrototypeMethod = /*@__PURE__*/ requireGetBuiltInPrototypeMethod();
+
+		reverse$3 = getBuiltInPrototypeMethod('Array', 'reverse');
+		return reverse$3;
+	}
+
+	var reverse$2;
+	var hasRequiredReverse$2;
+
+	function requireReverse$2 () {
+		if (hasRequiredReverse$2) return reverse$2;
+		hasRequiredReverse$2 = 1;
+		var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
+		var method = /*@__PURE__*/ requireReverse$3();
+
+		var ArrayPrototype = Array.prototype;
+
+		reverse$2 = function (it) {
+		  var own = it.reverse;
+		  return it === ArrayPrototype || (isPrototypeOf(ArrayPrototype, it) && own === ArrayPrototype.reverse) ? method : own;
+		};
+		return reverse$2;
+	}
+
+	var reverse$1;
+	var hasRequiredReverse$1;
+
+	function requireReverse$1 () {
+		if (hasRequiredReverse$1) return reverse$1;
+		hasRequiredReverse$1 = 1;
+		var parent = /*@__PURE__*/ requireReverse$2();
+
+		reverse$1 = parent;
+		return reverse$1;
+	}
+
+	var reverse;
+	var hasRequiredReverse;
+
+	function requireReverse () {
+		if (hasRequiredReverse) return reverse;
+		hasRequiredReverse = 1;
+		reverse = /*@__PURE__*/ requireReverse$1();
+		return reverse;
+	}
+
+	var reverseExports = requireReverse();
+	var _reverseInstanceProperty = /*@__PURE__*/getDefaultExportFromCjs(reverseExports);
 
 	const byteToHex = [];
 	for (let i = 0; i < 256; ++i) {

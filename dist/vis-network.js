@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-08-20T16:11:26.109Z
+ * @date    2026-08-20T16:37:17.875Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5126,8 +5126,8 @@
 	 *
 	 * utilitie collection for visjs
 	 *
-	 * @version 6.0.0
-	 * @date    2025-07-12T18:02:43.836Z
+	 * @version 6.0.2
+	 * @date    2026-08-04T16:30:42.886Z
 	 *
 	 * @copyright (c) 2011-2017 Almende B.V, http://almende.com
 	 * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5450,7 +5450,7 @@
 	Activator$1.prototype.destroy = function () {
 	  this.deactivate();
 
-	  for (const callback of this._cleanupQueue.splice(0).reverse()) {
+	  for (const callback of this._cleanupQueue.splice(0).toReversed()) {
 	    callback();
 	  }
 	};
@@ -7487,7 +7487,7 @@
 	      this.opacityRange.type = "range"; // Not supported on IE9
 	      this.opacityRange.min = "0";
 	      this.opacityRange.max = "100";
-	    } catch (err) {
+	    } catch {
 	      // TODO: Add some error handling.
 	    }
 	    this.opacityRange.value = "100";
@@ -7498,7 +7498,7 @@
 	      this.brightnessRange.type = "range"; // Not supported on IE9
 	      this.brightnessRange.min = "0";
 	      this.brightnessRange.max = "100";
-	    } catch (err) {
+	    } catch {
 	      // TODO: Add some error handling.
 	    }
 	    this.brightnessRange.value = "100";
@@ -8051,7 +8051,7 @@
 	      range.type = "range"; // not supported on IE9
 	      range.min = min;
 	      range.max = max;
-	    } catch (err) {
+	    } catch {
 	      // TODO: Add some error handling.
 	    }
 	    range.step = step;
@@ -8904,6 +8904,7 @@
 	    let closestMatchPath = [];
 	    const lowerCaseOption = option.toLowerCase();
 	    let indexMatch = undefined;
+	    // oxlint-disable-next-line guard-for-in -- Options use prototype inheritance to override defaults, parent options, etc.
 	    for (const op in options) {
 	      let distance;
 	      if (options[op].__type__ !== undefined && recursive === true) {
@@ -26083,8 +26084,8 @@
 	 *
 	 * Manage unstructured data using DataSet. Add, update, and remove data, and listen for changes in the data.
 	 *
-	 * @version 8.0.4
-	 * @date    2026-05-07T14:01:00.852Z
+	 * @version 8.0.5
+	 * @date    2026-08-06T17:35:20.924Z
 	 *
 	 * @copyright (c) 2011-2017 Almende B.V, http://almende.com
 	 * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -26306,165 +26307,6 @@
 	 */
 	function isId(value) {
 	    return typeof value === "string" || typeof value === "number";
-	}
-
-	/**
-	 * A queue.
-	 * @typeParam T - The type of method names to be replaced by queued versions.
-	 */
-	class Queue {
-	    /** Delay in milliseconds. If defined the queue will be periodically flushed. */
-	    delay;
-	    /** Maximum number of entries in the queue before it will be flushed. */
-	    max;
-	    _queue = [];
-	    _timeout = null;
-	    _extended = null;
-	    /**
-	     * Construct a new Queue.
-	     * @param options - Queue configuration.
-	     */
-	    constructor(options) {
-	        // options
-	        this.delay = null;
-	        this.max = Infinity;
-	        this.setOptions(options);
-	    }
-	    /**
-	     * Update the configuration of the queue.
-	     * @param options - Queue configuration.
-	     */
-	    setOptions(options) {
-	        if (options && typeof options.delay !== "undefined") {
-	            this.delay = options.delay;
-	        }
-	        if (options && typeof options.max !== "undefined") {
-	            this.max = options.max;
-	        }
-	        this._flushIfNeeded();
-	    }
-	    /**
-	     * Extend an object with queuing functionality.
-	     * The object will be extended with a function flush, and the methods provided in options.replace will be replaced with queued ones.
-	     * @param object - The object to be extended.
-	     * @param options - Additional options.
-	     * @returns The created queue.
-	     */
-	    static extend(object, options) {
-	        const queue = new Queue(options);
-	        if (object.flush !== undefined) {
-	            throw new Error("Target object already has a property flush");
-	        }
-	        object.flush = () => {
-	            queue.flush();
-	        };
-	        const methods = [
-	            {
-	                name: "flush",
-	                original: undefined,
-	            },
-	        ];
-	        if (options && options.replace) {
-	            for (let i = 0; i < options.replace.length; i++) {
-	                const name = options.replace[i];
-	                methods.push({
-	                    name: name,
-	                    // @TODO: better solution?
-	                    original: object[name],
-	                });
-	                // @TODO: better solution?
-	                queue.replace(object, name);
-	            }
-	        }
-	        queue._extended = {
-	            object: object,
-	            methods: methods,
-	        };
-	        return queue;
-	    }
-	    /**
-	     * Destroy the queue. The queue will first flush all queued actions, and in case it has extended an object, will restore the original object.
-	     */
-	    destroy() {
-	        this.flush();
-	        if (this._extended) {
-	            const object = this._extended.object;
-	            const methods = this._extended.methods;
-	            for (let i = 0; i < methods.length; i++) {
-	                const method = methods[i];
-	                if (method.original) {
-	                    // @TODO: better solution?
-	                    object[method.name] = method.original;
-	                }
-	                else {
-	                    // @TODO: better solution?
-	                    delete object[method.name];
-	                }
-	            }
-	            this._extended = null;
-	        }
-	    }
-	    /**
-	     * Replace a method on an object with a queued version.
-	     * @param object - Object having the method.
-	     * @param method - The method name.
-	     */
-	    replace(object, method) {
-	        /* eslint-disable-next-line @typescript-eslint/no-this-alias -- Function this is necessary in the function bellow, so class this has to be saved into a variable here. */
-	        const me = this;
-	        const original = object[method];
-	        if (!original) {
-	            throw new Error("Method " + method + " undefined");
-	        }
-	        object[method] = function (...args) {
-	            // add this call to the queue
-	            me.queue({
-	                args: args,
-	                fn: original,
-	                context: this,
-	            });
-	        };
-	    }
-	    /**
-	     * Queue a call.
-	     * @param entry - The function or entry to be queued.
-	     */
-	    queue(entry) {
-	        if (typeof entry === "function") {
-	            this._queue.push({ fn: entry });
-	        }
-	        else {
-	            this._queue.push(entry);
-	        }
-	        this._flushIfNeeded();
-	    }
-	    /**
-	     * Check whether the queue needs to be flushed.
-	     */
-	    _flushIfNeeded() {
-	        // flush when the maximum is exceeded.
-	        if (this._queue.length > this.max) {
-	            this.flush();
-	        }
-	        // flush after a period of inactivity when a delay is configured
-	        if (this._timeout != null) {
-	            clearTimeout(this._timeout);
-	            this._timeout = null;
-	        }
-	        if (this.queue.length > 0 && typeof this.delay === "number") {
-	            this._timeout = setTimeout(() => {
-	                this.flush();
-	            }, this.delay);
-	        }
-	    }
-	    /**
-	     * Flush all queued calls
-	     */
-	    flush() {
-	        this._queue.splice(0).forEach((entry) => {
-	            entry.fn.apply(entry.context || entry.fn, entry.args || []);
-	        });
-	    }
 	}
 
 	/**
@@ -26780,7 +26622,166 @@
 	    sort(callback) {
 	        return new DataStream({
 	            [Symbol.iterator]: () => [...this._pairs]
-	                .sort(([idA, itemA], [idB, itemB]) => callback(itemA, itemB, idA, idB))[Symbol.iterator](),
+	                .toSorted(([idA, itemA], [idB, itemB]) => callback(itemA, itemB, idA, idB))[Symbol.iterator](),
+	        });
+	    }
+	}
+
+	/**
+	 * A queue.
+	 * @typeParam T - The type of method names to be replaced by queued versions.
+	 */
+	class Queue {
+	    /** Delay in milliseconds. If defined the queue will be periodically flushed. */
+	    delay;
+	    /** Maximum number of entries in the queue before it will be flushed. */
+	    max;
+	    _queue = [];
+	    _timeout = null;
+	    _extended = null;
+	    /**
+	     * Construct a new Queue.
+	     * @param options - Queue configuration.
+	     */
+	    constructor(options) {
+	        // options
+	        this.delay = null;
+	        this.max = Infinity;
+	        this.setOptions(options);
+	    }
+	    /**
+	     * Update the configuration of the queue.
+	     * @param options - Queue configuration.
+	     */
+	    setOptions(options) {
+	        if (options && typeof options.delay !== "undefined") {
+	            this.delay = options.delay;
+	        }
+	        if (options && typeof options.max !== "undefined") {
+	            this.max = options.max;
+	        }
+	        this._flushIfNeeded();
+	    }
+	    /**
+	     * Extend an object with queuing functionality.
+	     * The object will be extended with a function flush, and the methods provided in options.replace will be replaced with queued ones.
+	     * @param object - The object to be extended.
+	     * @param options - Additional options.
+	     * @returns The created queue.
+	     */
+	    static extend(object, options) {
+	        const queue = new Queue(options);
+	        if (object.flush !== undefined) {
+	            throw new Error("Target object already has a property flush");
+	        }
+	        object.flush = () => {
+	            queue.flush();
+	        };
+	        const methods = [
+	            {
+	                name: "flush",
+	                original: undefined,
+	            },
+	        ];
+	        if (options && options.replace) {
+	            for (let i = 0; i < options.replace.length; i++) {
+	                const name = options.replace[i];
+	                methods.push({
+	                    name: name,
+	                    // @TODO: better solution?
+	                    original: object[name],
+	                });
+	                // @TODO: better solution?
+	                queue.replace(object, name);
+	            }
+	        }
+	        queue._extended = {
+	            object: object,
+	            methods: methods,
+	        };
+	        return queue;
+	    }
+	    /**
+	     * Destroy the queue. The queue will first flush all queued actions, and in case it has extended an object, will restore the original object.
+	     */
+	    destroy() {
+	        this.flush();
+	        if (this._extended) {
+	            const object = this._extended.object;
+	            const methods = this._extended.methods;
+	            for (let i = 0; i < methods.length; i++) {
+	                const method = methods[i];
+	                if (method.original) {
+	                    // @TODO: better solution?
+	                    object[method.name] = method.original;
+	                }
+	                else {
+	                    // @TODO: better solution?
+	                    delete object[method.name];
+	                }
+	            }
+	            this._extended = null;
+	        }
+	    }
+	    /**
+	     * Replace a method on an object with a queued version.
+	     * @param object - Object having the method.
+	     * @param method - The method name.
+	     */
+	    replace(object, method) {
+	        /* eslint-disable-next-line @typescript-eslint/no-this-alias -- Function this is necessary in the function bellow, so class this has to be saved into a variable here. */
+	        const me = this;
+	        const original = object[method];
+	        if (!original) {
+	            throw new Error("Method " + method + " undefined");
+	        }
+	        object[method] = function (...args) {
+	            // add this call to the queue
+	            me.queue({
+	                args: args,
+	                fn: original,
+	                context: this,
+	            });
+	        };
+	    }
+	    /**
+	     * Queue a call.
+	     * @param entry - The function or entry to be queued.
+	     */
+	    queue(entry) {
+	        if (typeof entry === "function") {
+	            this._queue.push({ fn: entry });
+	        }
+	        else {
+	            this._queue.push(entry);
+	        }
+	        this._flushIfNeeded();
+	    }
+	    /**
+	     * Check whether the queue needs to be flushed.
+	     */
+	    _flushIfNeeded() {
+	        // flush when the maximum is exceeded.
+	        if (this._queue.length > this.max) {
+	            this.flush();
+	        }
+	        // flush after a period of inactivity when a delay is configured
+	        if (this._timeout != null) {
+	            clearTimeout(this._timeout);
+	            this._timeout = null;
+	        }
+	        if (this.queue.length > 0 && typeof this.delay === "number") {
+	            this._timeout = setTimeout(() => {
+	                this.flush();
+	            }, this.delay);
+	        }
+	    }
+	    /**
+	     * Flush all queued calls
+	     */
+	    flush() {
+	        this._queue.splice(0).forEach((entry) => {
+	            entry.fn.apply(entry.context || entry.fn, entry.args || []);
 	        });
 	    }
 	}
