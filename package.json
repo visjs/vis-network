@@ -271,7 +271,7 @@
     "uuid": "14.0.1",
     "vis-data": "8.0.5",
     "vis-dev-utils": "7.1.1",
-    "vis-util": "6.0.0"
+    "vis-util": "6.0.2"
   },
   "peerDependencies": {
     "@egjs/hammerjs": "^2.0.0",
