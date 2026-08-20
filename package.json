@@ -262,7 +262,7 @@
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
     "postcss": "8.5.24",
-    "semantic-release": "25.0.8",
+    "semantic-release": "25.0.9",
     "serve": "14.2.6",
     "shx": "0.4.0",
     "sinon": "22.1.0",
