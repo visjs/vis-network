@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-08-19T16:43:41.872Z
+ * @date    2026-08-20T16:11:26.109Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -628,10 +628,10 @@ function requireSharedStore () {
 	var store = sharedStore.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
 
 	(store.versions || (store.versions = [])).push({
-	  version: '3.49.0',
+	  version: '3.50.0',
 	  mode: IS_PURE ? 'pure' : 'global',
 	  copyright: '© 2013–2025 Denis Pushkarev (zloirock.ru), 2025–2026 CoreJS Company (core-js.io). All rights reserved.',
-	  license: 'https://github.com/zloirock/core-js/blob/v3.49.0/LICENSE',
+	  license: 'https://github.com/zloirock/core-js/blob/v3.50.0/LICENSE',
 	  source: 'https://github.com/zloirock/core-js'
 	});
 	return sharedStore.exports;
@@ -644,9 +644,11 @@ function requireShared () {
 	if (hasRequiredShared) return shared;
 	hasRequiredShared = 1;
 	var store = /*@__PURE__*/ requireSharedStore();
+	// eslint-disable-next-line es/no-object-create -- safe
+	var create = Object.create || Object;
 
 	shared = function (key, value) {
-	  return store[key] || (store[key] = value || {});
+	  return store[key] || (store[key] = value || create(null));
 	};
 	return shared;
 }
@@ -12842,6 +12844,20 @@ function requireIsRawJson () {
 	return isRawJson;
 }
 
+var thisNumberValue;
+var hasRequiredThisNumberValue;
+
+function requireThisNumberValue () {
+	if (hasRequiredThisNumberValue) return thisNumberValue;
+	hasRequiredThisNumberValue = 1;
+	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
+
+	// `thisNumberValue` abstract operation
+	// https://tc39.es/ecma262/#sec-thisnumbervalue
+	thisNumberValue = uncurryThis(1.1.valueOf);
+	return thisNumberValue;
+}
+
 var parseJsonString;
 var hasRequiredParseJsonString;
 
@@ -12932,38 +12948,54 @@ function requireEs_json_stringify () {
 	hasRequiredEs_json_stringify = 1;
 	var $ = /*@__PURE__*/ require_export();
 	var getBuiltIn = /*@__PURE__*/ requireGetBuiltIn();
-	var apply = /*@__PURE__*/ requireFunctionApply();
 	var call = /*@__PURE__*/ requireFunctionCall();
 	var uncurryThis = /*@__PURE__*/ requireFunctionUncurryThis();
 	var fails = /*@__PURE__*/ requireFails();
 	var isArray = /*@__PURE__*/ requireIsArray$6();
 	var isCallable = /*@__PURE__*/ requireIsCallable();
+	var isObject = /*@__PURE__*/ requireIsObject();
+	var create = /*@__PURE__*/ requireObjectCreate();
 	var isRawJSON = /*@__PURE__*/ requireIsRawJson();
 	var isSymbol = /*@__PURE__*/ requireIsSymbol();
 	var classof = /*@__PURE__*/ requireClassofRaw();
+	var thisNumberValue = /*@__PURE__*/ requireThisNumberValue();
+	var includes = /*@__PURE__*/ requireArrayIncludes().includes;
+	var hasOwn = /*@__PURE__*/ requireHasOwnProperty();
 	var toString = /*@__PURE__*/ requireToString();
-	var arraySlice = /*@__PURE__*/ requireArraySlice();
 	var parseJSONString = /*@__PURE__*/ requireParseJsonString();
 	var uid = /*@__PURE__*/ requireUid();
 	var NATIVE_SYMBOL = /*@__PURE__*/ requireSymbolConstructorDetection();
 	var NATIVE_RAW_JSON = /*@__PURE__*/ requireNativeRawJson();
 
 	var $String = String;
+	var $TypeError = TypeError;
 	var $stringify = getBuiltIn('JSON', 'stringify');
+	var $BigInt = getBuiltIn('BigInt');
+	var stringValueOf = uncurryThis(''.valueOf);
+	var booleanValueOf = uncurryThis(true.valueOf);
+	var bigIntValueOf = $BigInt && uncurryThis($BigInt.prototype.valueOf);
 	var exec = uncurryThis(/./.exec);
 	var charAt = uncurryThis(''.charAt);
 	var charCodeAt = uncurryThis(''.charCodeAt);
 	var replace = uncurryThis(''.replace);
 	var slice = uncurryThis(''.slice);
 	var push = uncurryThis([].push);
+	var pop = uncurryThis([].pop);
 	var numberToString = uncurryThis(1.1.toString);
 
 	var surrogates = /[\uD800-\uDFFF]/g;
 	var leadingSurrogates = /^[\uD800-\uDBFF]$/;
 	var trailingSurrogates = /^[\uDC00-\uDFFF]$/;
+	var digits = /^\d+$/;
 
-	var MARK = uid();
-	var MARK_LENGTH = MARK.length;
+	// a placeholder of a raw JSON value
+	var RAW_MARK = uid();
+	// a prefix of keys of a reordered object, see `createOrderedObject`
+	var KEY_MARK = uid();
+	// the last key of a reordered object, marks the end of its serialization
+	var END_MARK = uid();
+	var RAW_MARK_LENGTH = RAW_MARK.length;
+	var KEY_MARK_LENGTH = KEY_MARK.length;
 
 	var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
 	  var symbol = getBuiltIn('Symbol')('stringify detection');
@@ -12981,16 +13013,13 @@ function requireEs_json_stringify () {
 	    || $stringify('\uDEAD') !== '"\\udead"';
 	});
 
-	var stringifyWithProperSymbolsConversion = WRONG_SYMBOLS_CONVERSION ? function (it, replacer) {
-	  var args = arraySlice(arguments);
-	  var $replacer = getReplacerFunction(replacer);
-	  if (!isCallable($replacer) && (it === undefined || isSymbol(it))) return; // IE8 returns string on undefined
-	  args[1] = function (key, value) {
-	    // some old implementations (like WebKit) could pass numbers as keys
-	    if (isCallable($replacer)) value = call($replacer, this, $String(key), value);
-	    if (!isSymbol(value)) return value;
-	  };
-	  return apply($stringify, null, args);
+	var isRawJSONValue = NATIVE_RAW_JSON ? getBuiltIn('JSON', 'isRawJSON') : isRawJSON;
+
+	var stringifyWithProperSymbolsConversion = WRONG_SYMBOLS_CONVERSION ? function (it, replacer, space) {
+	  return $stringify(it, function (key, value) {
+	    var replaced = call(replacer, this, key, value);
+	    if (!isSymbol(replaced)) return replaced;
+	  }, space);
 	} : $stringify;
 
 	var fixIllFormedJSON = function (match, offset, string) {
@@ -13004,26 +13033,92 @@ function requireEs_json_stringify () {
 	  } return match;
 	};
 
-	var getReplacerFunction = function (replacer) {
-	  if (isCallable(replacer)) return replacer;
+	// `PropertyList` of `JSON.stringify`
+	// https://tc39.es/ecma262/#sec-json.stringify
+	var getPropertyList = function (replacer) {
 	  if (!isArray(replacer)) return;
 	  var rawLength = replacer.length;
-	  var keys = [];
+	  var propertyList = [];
+	  // a null prototype object is used as a set of already added keys to keep the deduplication linear
+	  var addedKeys = create(null);
 	  for (var i = 0; i < rawLength; i++) {
 	    var element = replacer[i];
-	    if (typeof element == 'string') push(keys, element);
-	    else if (typeof element == 'number' || classof(element) === 'Number' || classof(element) === 'String') push(keys, toString(element));
-	  }
-	  var keysLength = keys.length;
-	  var root = true;
-	  return function (key, value) {
-	    if (root) {
-	      root = false;
-	      return value;
+	    var key;
+	    if (typeof element == 'string') key = element;
+	    else if (typeof element == 'number' || classof(element) === 'Number' || classof(element) === 'String') key = toString(element);
+	    else continue;
+	    if (!hasOwn(addedKeys, key)) {
+	      addedKeys[key] = true;
+	      push(propertyList, key);
 	    }
-	    if (isArray(this)) return value;
-	    for (var j = 0; j < keysLength; j++) if (keys[j] === key) return value;
+	  }
+	  return propertyList;
+	};
+
+	// values with such an internal slot are unwrapped by `SerializeJSONProperty` instead of being serialized as objects
+	var hasInternalSlot = function (valueOf, it) {
+	  try {
+	    valueOf(it);
+	    return true;
+	  } catch (error) {
+	    return false;
+	  }
+	};
+
+	// the slot check is expensive, so it's performed only for the kind reported by the value itself -
+	// a value lying about its kind via `Symbol.toStringTag` is serialized as an ordinary object
+	var isBoxedPrimitive = function (it) {
+	  var kind = classof(it);
+	  return (kind === 'Number' && hasInternalSlot(thisNumberValue, it))
+	    || (kind === 'String' && hasInternalSlot(stringValueOf, it))
+	    || (kind === 'Boolean' && hasInternalSlot(booleanValueOf, it))
+	    || (!!bigIntValueOf && kind === 'BigInt' && hasInternalSlot(bigIntValueOf, it));
+	};
+
+	// only objects serialized by `SerializeJSONObject` are affected by the property list
+	var isSerializedAsObject = function (it) {
+	  if (!isObject(it) || isCallable(it) || isArray(it)) return false;
+	  try {
+	    return !isBoxedPrimitive(it);
+	  // `classof` reads `Symbol.toStringTag`, so a proxy could throw - it has no internal slots anyway
+	  } catch (error) {
+	    return true;
+	  }
+	};
+
+	// the engine unwraps it in the same order as it would read the original property,
+	// so the property is read lazily and `toJSON` is called once and with the original key
+	var createElementHolder = function (holder, key) {
+	  return {
+	    toJSON: function () {
+	      var element = holder[key];
+	      if (isObject(element) || typeof element == 'bigint') {
+	        var elementToJSON = element.toJSON;
+	        if (isCallable(elementToJSON)) element = call(elementToJSON, element, key);
+	      } return element;
+	    }
 	  };
+	};
+
+	// own keys of objects are sorted - integer-like keys are moved to the beginning,
+	// so such keys should be marked and restored in the serialized string
+	var getKeyPrefix = function (propertyList) {
+	  for (var i = 0, length = propertyList.length; i < length; i++) {
+	    if (exec(digits, propertyList[i])) return KEY_MARK;
+	  } return '';
+	};
+
+	// `SerializeJSONObject` iterates the property list, so the value is replaced with an object with keys in this order
+	var createOrderedObject = function (value, propertyList, keyPrefix) {
+	  // keys are not marked if the property list has no integer-like keys, so `Object.prototype`
+	  // with a setter, a non-writable property or `__proto__` should not intercept the assignment
+	  var ordered = create(null);
+	  for (var i = 0, length = propertyList.length; i < length; i++) {
+	    var key = propertyList[i];
+	    ordered[keyPrefix + key] = createElementHolder(value, key);
+	  }
+	  ordered[END_MARK] = null;
+	  return ordered;
 	};
 
 	// `JSON.stringify` method
@@ -13031,20 +13126,57 @@ function requireEs_json_stringify () {
 	// https://github.com/tc39/proposal-json-parse-with-source
 	if ($stringify) $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE || !NATIVE_RAW_JSON }, {
 	  stringify: function stringify(text, replacer, space) {
-	    var replacerFunction = getReplacerFunction(replacer);
+	    var replacerFunction = isCallable(replacer) ? replacer : undefined;
+	    var propertyList = replacerFunction ? undefined : getPropertyList(replacer);
+	    var keyPrefix = propertyList && getKeyPrefix(propertyList);
 	    var rawStrings = [];
+	    var openObjects = [];
+	    var parentOrdered = [];
+	    var currentOrdered;
+	    var marked = false;
+	    var root = true;
 
 	    var json = stringifyWithProperSymbolsConversion(text, function (key, value) {
 	      // some old implementations (like WebKit) could pass numbers as keys
-	      var v = isCallable(replacerFunction) ? call(replacerFunction, this, $String(key), value) : value;
-	      return !NATIVE_RAW_JSON && isRawJSON(v) ? MARK + (push(rawStrings, v.rawJSON) - 1) : v;
+	      key = $String(key);
+
+	      if (propertyList) {
+	        if (key === END_MARK) {
+	          pop(openObjects);
+	          currentOrdered = pop(parentOrdered);
+	          return;
+	        }
+	        if (root) root = false;
+	        // the innermost reordered object already contains only keys of the property list and arrays are not
+	        // affected by it, the rest of objects (like objects with a fake `Symbol.toStringTag`) are filtered here
+	        else if (this !== currentOrdered && !isArray(this) && !includes(propertyList, key)) return;
+	      } else if (replacerFunction) value = call(replacerFunction, this, key, value);
+
+	      if (isRawJSONValue(value)) {
+	        if (NATIVE_RAW_JSON) return value;
+	        marked = true;
+	        return RAW_MARK + (push(rawStrings, value.rawJSON) - 1);
+	      }
+
+	      if (propertyList && isSerializedAsObject(value)) {
+	        // reordered objects are new each time, so cycles should be detected before the engine does it
+	        if (includes(openObjects, value)) throw new $TypeError('Converting circular structure to JSON');
+	        var ordered = createOrderedObject(value, propertyList, keyPrefix);
+	        push(openObjects, value);
+	        push(parentOrdered, currentOrdered);
+	        currentOrdered = ordered;
+	        if (keyPrefix) marked = true;
+	        return ordered;
+	      }
+
+	      return value;
 	    }, space);
 
 	    if (typeof json != 'string') return json;
 
 	    if (ILL_FORMED_UNICODE) json = replace(json, surrogates, fixIllFormedJSON);
 
-	    if (NATIVE_RAW_JSON) return json;
+	    if (!marked) return json;
 
 	    var result = '';
 	    var length = json.length;
@@ -13054,9 +13186,9 @@ function requireEs_json_stringify () {
 	      if (chr === '"') {
 	        var end = parseJSONString(json, ++i).end - 1;
 	        var string = slice(json, i, end);
-	        result += slice(string, 0, MARK_LENGTH) === MARK
-	          ? rawStrings[slice(string, MARK_LENGTH)]
-	          : '"' + string + '"';
+	        if (slice(string, 0, RAW_MARK_LENGTH) === RAW_MARK) result += rawStrings[slice(string, RAW_MARK_LENGTH)];
+	        else if (slice(string, 0, KEY_MARK_LENGTH) === KEY_MARK) result += '"' + slice(string, KEY_MARK_LENGTH) + '"';
+	        else result += '"' + string + '"';
 	        i = end;
 	      } else result += chr;
 	    }
@@ -13399,7 +13531,7 @@ var hasRequiredIterators;
 function requireIterators () {
 	if (hasRequiredIterators) return iterators;
 	hasRequiredIterators = 1;
-	iterators = {};
+	iterators = Object.create ? Object.create(null) : {};
 	return iterators;
 }
 
@@ -14346,24 +14478,37 @@ function requireEs_string_iterator () {
 	return es_string_iterator;
 }
 
+var getInternalIterator;
+var hasRequiredGetInternalIterator;
+
+function requireGetInternalIterator () {
+	if (hasRequiredGetInternalIterator) return getInternalIterator;
+	hasRequiredGetInternalIterator = 1;
+	var classof = /*@__PURE__*/ requireClassof();
+	var hasOwn = /*@__PURE__*/ requireHasOwnProperty();
+	var Iterators = /*@__PURE__*/ requireIterators();
+
+	getInternalIterator = function (it) {
+	  var klass = classof(it);
+	  if (klass === 'Arguments') klass = 'Array';
+	  return hasOwn(Iterators, klass) ? Iterators[klass] : undefined;
+	};
+	return getInternalIterator;
+}
+
 var getIteratorMethod$4;
 var hasRequiredGetIteratorMethod$5;
 
 function requireGetIteratorMethod$5 () {
 	if (hasRequiredGetIteratorMethod$5) return getIteratorMethod$4;
 	hasRequiredGetIteratorMethod$5 = 1;
-	var classof = /*@__PURE__*/ requireClassof();
-	var getMethod = /*@__PURE__*/ requireGetMethod();
-	var isNullOrUndefined = /*@__PURE__*/ requireIsNullOrUndefined();
-	var Iterators = /*@__PURE__*/ requireIterators();
+	var getInternalIterator = /*@__PURE__*/ requireGetInternalIterator();
 	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
 
 	var ITERATOR = wellKnownSymbol('iterator');
 
 	getIteratorMethod$4 = function (it) {
-	  if (!isNullOrUndefined(it)) return getMethod(it, ITERATOR)
-	    || getMethod(it, '@@iterator')
-	    || Iterators[classof(it)];
+	  return it[ITERATOR] || it['@@iterator'] || getInternalIterator(it);
 	};
 	return getIteratorMethod$4;
 }
@@ -14803,26 +14948,47 @@ function requireIsArrayIteratorMethod () {
 	return isArrayIteratorMethod;
 }
 
-var getIterator;
-var hasRequiredGetIterator;
+var getIteratorMethodInternal;
+var hasRequiredGetIteratorMethodInternal;
 
-function requireGetIterator () {
-	if (hasRequiredGetIterator) return getIterator;
-	hasRequiredGetIterator = 1;
+function requireGetIteratorMethodInternal () {
+	if (hasRequiredGetIteratorMethodInternal) return getIteratorMethodInternal;
+	hasRequiredGetIteratorMethodInternal = 1;
+	var getMethod = /*@__PURE__*/ requireGetMethod();
+	var isNullOrUndefined = /*@__PURE__*/ requireIsNullOrUndefined();
+	var getInternalIterator = /*@__PURE__*/ requireGetInternalIterator();
+	var wellKnownSymbol = /*@__PURE__*/ requireWellKnownSymbol();
+
+	var ITERATOR = wellKnownSymbol('iterator');
+
+	getIteratorMethodInternal = function (it) {
+	  if (!isNullOrUndefined(it)) return getMethod(it, ITERATOR)
+	    || getMethod(it, '@@iterator')
+	    || getInternalIterator(it);
+	};
+	return getIteratorMethodInternal;
+}
+
+var getIteratorInternal;
+var hasRequiredGetIteratorInternal;
+
+function requireGetIteratorInternal () {
+	if (hasRequiredGetIteratorInternal) return getIteratorInternal;
+	hasRequiredGetIteratorInternal = 1;
 	var call = /*@__PURE__*/ requireFunctionCall();
-	var aCallable = /*@__PURE__*/ requireACallable();
+	var isCallable = /*@__PURE__*/ requireIsCallable();
 	var anObject = /*@__PURE__*/ requireAnObject();
 	var tryToString = /*@__PURE__*/ requireTryToString();
-	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethodInternal();
 
 	var $TypeError = TypeError;
 
-	getIterator = function (argument, usingIterator) {
+	getIteratorInternal = function (argument, usingIterator) {
 	  var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
-	  if (aCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
+	  if (isCallable(iteratorMethod)) return anObject(call(iteratorMethod, argument));
 	  throw new $TypeError(tryToString(argument) + ' is not iterable');
 	};
-	return getIterator;
+	return getIteratorInternal;
 }
 
 var arrayFrom;
@@ -14840,9 +15006,10 @@ function requireArrayFrom () {
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var createProperty = /*@__PURE__*/ requireCreateProperty();
 	var setArrayLength = /*@__PURE__*/ requireArraySetLength();
-	var getIterator = /*@__PURE__*/ requireGetIterator();
-	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+	var getIterator = /*@__PURE__*/ requireGetIteratorInternal();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethodInternal();
 	var iteratorClose = /*@__PURE__*/ requireIteratorClose();
+	var doesNotExceedSafeInteger = /*@__PURE__*/ requireDoesNotExceedSafeInteger();
 
 	var $Array = Array;
 
@@ -14864,6 +15031,11 @@ function requireArrayFrom () {
 	    iterator = getIterator(O, iteratorMethod);
 	    next = iterator.next;
 	    for (;!(step = call(next, iterator)).done; index++) {
+	      try {
+	        doesNotExceedSafeInteger(index);
+	      } catch (error) {
+	        iteratorClose(iterator, 'throw', error);
+	      }
 	      value = mapping ? callWithSafeIterationClosing(iterator, mapfn, [step.value, index], true) : step.value;
 	      try {
 	        createProperty(result, index, value);
@@ -17890,7 +18062,8 @@ function requireArrayFill () {
 
 	// `Array.prototype.fill` method implementation
 	// https://tc39.es/ecma262/#sec-array.prototype.fill
-	arrayFill = function fill(value /* , start = 0, end = @length */) {
+	// eslint-disable-next-line es/no-array-prototype-fill -- fallback included
+	arrayFill = [].fill || function fill(value /* , start = 0, end = @length */) {
 	  var O = toObject(this);
 	  var length = lengthOfArrayLike(O);
 	  var argumentsLength = arguments.length;
@@ -28563,8 +28736,8 @@ function requireIterate () {
 	var isArrayIteratorMethod = /*@__PURE__*/ requireIsArrayIteratorMethod();
 	var lengthOfArrayLike = /*@__PURE__*/ requireLengthOfArrayLike();
 	var isPrototypeOf = /*@__PURE__*/ requireObjectIsPrototypeOf();
-	var getIterator = /*@__PURE__*/ requireGetIterator();
-	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethod$5();
+	var getIterator = /*@__PURE__*/ requireGetIteratorInternal();
+	var getIteratorMethod = /*@__PURE__*/ requireGetIteratorMethodInternal();
 	var iteratorClose = /*@__PURE__*/ requireIteratorClose();
 
 	var $TypeError = TypeError;
@@ -29071,6 +29244,7 @@ function requireEs_map_groupBy () {
 	var aCallable = /*@__PURE__*/ requireACallable();
 	var requireObjectCoercible = /*@__PURE__*/ requireRequireObjectCoercible();
 	var iterate = /*@__PURE__*/ requireIterate();
+	var doesNotExceedSafeInteger = /*@__PURE__*/ requireDoesNotExceedSafeInteger();
 	var MapHelpers = /*@__PURE__*/ requireMapHelpers();
 	var IS_PURE = /*@__PURE__*/ requireIsPure();
 	var fails = /*@__PURE__*/ requireFails();
@@ -29097,6 +29271,7 @@ function requireEs_map_groupBy () {
 	    var map = new Map();
 	    var k = 0;
 	    iterate(items, function (value) {
+	      doesNotExceedSafeInteger(k);
 	      var key = callbackfn(value, k++);
 	      if (!has(map, key)) set(map, key, [value]);
 	      else push(get(map, key), value);
