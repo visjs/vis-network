@@ -703,5 +703,55 @@ describe("Node Shapes", function (): void {
       expect(circle.boundingBox.bottom).to.equal(circle.radius);
       expect(options.size).to.equal(25);
     });
+
+    it("paints labeled Circle from instance radius, not options.size", function (): void {
+      const configuredSize = 25;
+      const options = generateOptions();
+      options.size = configuredSize;
+      options.margin = { top: 0, right: 0, bottom: 0, left: 0 };
+
+      const labelModule = labelModuleWithTextSize(200, 20);
+      labelModule.draw = stub();
+
+      const circle = new Circle(options, { view: { scale: 1 } }, labelModule);
+      const ctx: any = {
+        beginPath: spy(),
+        arc: spy(),
+        closePath: spy(),
+        save: spy(),
+        restore: spy(),
+        fill: spy(),
+        stroke: spy(),
+        setLineDash: spy(),
+      };
+
+      // Node.getFormattingValues().size is options.size. After the leak
+      // fix that stays 25, while Circle.resize sets this.radius from the
+      // label (200x20 → diameter 200 → radius 100).
+      const values = {
+        size: options.size,
+        borderWidth: 1,
+        borderColor: "#2B7CE9",
+        color: "#97C2FC",
+        shadow: false,
+        borderDashes: false,
+      };
+
+      circle.draw(ctx, 0, 0, false, false, values);
+
+      expect(circle.radius).to.equal(100);
+      expect(options.size).to.equal(configuredSize);
+      expect(values.size).to.equal(configuredSize);
+      assert.calledOnce(ctx.arc);
+      assert.calledWithExactly(
+        ctx.arc,
+        0,
+        0,
+        circle.radius,
+        0,
+        2 * Math.PI,
+        false,
+      );
+    });
   });
 });
