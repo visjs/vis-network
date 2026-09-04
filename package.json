@@ -252,7 +252,7 @@
     "cypress-visual-regression": "6.0.0",
     "gh-pages": "6.3.0",
     "husky": "9.1.7",
-    "jsdom": "30.0.0",
+    "jsdom": "30.0.1",
     "jsdom-global": "3.0.2",
     "keycharm": "0.4.0",
     "lint-staged": "17.4.1",
