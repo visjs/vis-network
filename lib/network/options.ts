@@ -544,6 +544,8 @@ const allOptions: OptionsConfig = {
   },
   height: { string },
   width: { string },
+  zIndexField: { string },
+  zIndexCompare : { function: "function" },
   __type__: { object },
 };
 
