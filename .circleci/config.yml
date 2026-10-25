@@ -142,13 +142,9 @@ jobs:
           at: ..
 
       - run:
-          name: Prepare NPM
-          command: |
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-
-      - run:
           name: Release
           command: |
+            export NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
             npx semantic-release
 
 workflows:
