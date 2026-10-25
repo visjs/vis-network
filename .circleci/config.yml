@@ -144,6 +144,7 @@ jobs:
       - run:
           name: Release
           command: |
+            git config --global http.https://github.com/.extraheader "Authorization: Basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)" # Workaround for https://bugs.launchpad.net/ubuntu/+source/git/+bug/2171054
             export NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
             npx semantic-release
 
