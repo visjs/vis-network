@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Configurator } from "vis-util/esnext";
 
-import Network from "../lib/network/Network.js";
+import { Network } from "../lib/network/Network.js";
 import { configureOptions } from "../lib/network/options.ts";
 import { canvasMockify } from "./canvas-mock.js";
 
