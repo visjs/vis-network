@@ -133,44 +133,19 @@ var moveToOptions = {
   <div class="bottom">
     <span id="statusUpdate"></span><br />
     Examples:
-    <input
-      type="button"
-      onclick="doAnimation()"
-      value="Animate with above settings."
-      style="width: 300px"
-      id="btnDo"
-    />
+    <input type="button" value="Animate with above settings." style="width: 300px" id="btnDo" />
     <br />
     <input
       type="button"
-      onclick="doDefaultAnimation()"
       value="Animate with default settings."
       style="width: 300px"
       id="btnDoDefault"
     />
     <br />
-    <input
-      type="button"
-      onclick="fitAnimated()"
-      value="Animated fit()."
-      style="width: 300px"
-      id="btnZoom"
-    />
+    <input type="button" value="Animated fit()." style="width: 300px" id="btnZoom" />
     <br />
-    <input
-      type="button"
-      onclick="focusRandom()"
-      value="Focus on random node."
-      style="width: 300px"
-      id="btnFocus"
-    /><br />
-    <input
-      type="button"
-      onclick="startShow()"
-      value="Start a show!"
-      style="width: 300px"
-      id="btnShow"
-    /><br />
+    <input type="button" value="Focus on random node." style="width: 300px" id="btnFocus" /><br />
+    <input type="button" value="Start a show!" style="width: 300px" id="btnShow" /><br />
   </div>
 </div>
 <div class="right">
@@ -196,6 +171,8 @@ var offsetx,
   duration,
   easingFunction,
   doButton,
+  doDefaultButton,
+  fitButton,
   focusButton,
   showButton;
 var statusUpdateSpan;
@@ -225,6 +202,8 @@ function draw() {
   destroy();
   statusUpdateSpan = document.getElementById("statusUpdate");
   doButton = document.getElementById("btnDo");
+  doDefaultButton = document.getElementById("btnDoDefault");
+  fitButton = document.getElementById("btnZoom");
   focusButton = document.getElementById("btnFocus");
   showButton = document.getElementById("btnShow");
 
@@ -253,6 +232,13 @@ function draw() {
   globalThis.network.on("animationFinished", function () {
     statusUpdateSpan.innerText = finishMessage;
   });
+
+  // add click event listeners to buttons
+  doButton.addEventListener("click", doAnimation);
+  doDefaultButton.addEventListener("click", doDefaultAnimation);
+  fitButton.addEventListener("click", fitAnimated);
+  focusButton.addEventListener("click", focusRandom);
+  showButton.addEventListener("click", startShow);
 }
 
 function fitAnimated() {
