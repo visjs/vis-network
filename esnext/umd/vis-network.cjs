@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-10-27T13:13:33.831Z
+ * @date    2026-10-27T16:20:14.503Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -21132,6 +21132,7 @@ class View {
     this.animationSpeed = 1 / this.renderRefreshRate;
     this.animationEasingFunction = "easeInOutQuint";
     this.easingTime = 0;
+    this.isAnimating = false;
     this.sourceScale = 0;
     this.targetScale = 0;
     this.sourceTranslation = 0;
@@ -21380,8 +21381,8 @@ class View {
       this.lockedOnNodeOffset = options.offset;
     }
 
-    // forcefully complete the old animation if it was still running
-    if (this.easingTime != 0) {
+    // forcefully complete the old animation if it was still running (it may not have rendered a frame yet)
+    if (this.isAnimating) {
       this._transitionRedraw(true); // by setting easingtime to 1, we finish the animation.
     }
 
@@ -21428,6 +21429,7 @@ class View {
         1 / (60 * options.animation.duration * 0.001) || 1 / 60; // 60 for 60 seconds, 0.001 for milli's
       this.animationEasingFunction = options.animation.easingFunction;
 
+      this.isAnimating = true;
       this.viewFunction = this._transitionRedraw.bind(this);
       this.body.emitter.on("initRedraw", this.viewFunction);
       this.body.emitter.emit("_startRendering");
@@ -21505,6 +21507,7 @@ class View {
     if (this.easingTime >= 1.0) {
       this.body.emitter.off("initRedraw", this.viewFunction);
       this.easingTime = 0;
+      this.isAnimating = false;
       if (this.lockedOnNodeId != undefined) {
         this.viewFunction = this._lockedRedraw.bind(this);
         this.body.emitter.on("initRedraw", this.viewFunction);
