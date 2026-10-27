@@ -128,6 +128,7 @@ jobs:
       - run:
           name: Publish GitHub Pages
           command: |
+            git config --global http.https://github.com/.extraheader "Authorization: Basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)" # Workaround for https://bugs.launchpad.net/ubuntu/+source/git/+bug/2171054
             npx gh-pages \
               --dist . \
               --message "chore: update to $(git rev-parse HEAD) [ci skip]" \
@@ -142,13 +143,10 @@ jobs:
           at: ..
 
       - run:
-          name: Prepare NPM
-          command: |
-            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-
-      - run:
           name: Release
           command: |
+            git config --global http.https://github.com/.extraheader "Authorization: Basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)" # Workaround for https://bugs.launchpad.net/ubuntu/+source/git/+bug/2171054
+            export NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
             npx semantic-release
 
 workflows:

@@ -19,7 +19,7 @@ import * as util from "vis-util/esnext";
 import { isValidLabel } from "../lib/network/modules/components/shared/ComponentUtil.js";
 import Label from "../lib/network/modules/components/shared/Label.js";
 import NodesHandler from "../lib/network/modules/NodesHandler.js";
-import Network from "../lib/network/Network.js";
+import { Network } from "../lib/network/Network.js";
 import { canvasMockify } from "./canvas-mock.js";
 
 /**************************************************************

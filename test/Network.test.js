@@ -22,7 +22,7 @@ import {
   nodes as disassemblerExampleNodes,
   options as disassemblerExampleOptions,
 } from "../examples/network/exampleApplications/disassemblerExample.js";
-import Network from "../lib/network/Network.js";
+import { Network } from "../lib/network/Network.js";
 import { allOptions, configureOptions } from "../lib/network/options.ts";
 import { canvasMockify } from "./canvas-mock.js";
 import {

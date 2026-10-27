@@ -1,10 +1,10 @@
 import { expect } from "chai";
 
-import Network from "../../lib/network/Network.js";
+import { Network } from "../../lib/network/Network.js";
 import { canvasMockify } from "../canvas-mock.js";
 import { sortArrays } from "../helpers/index.ts";
 
-describe("Network", function () {
+describe("Network Selection", function () {
   before(function () {
     this.jsdom_global = canvasMockify("<div id='mynetwork'></div>");
     this.container = document.getElementById("mynetwork");
