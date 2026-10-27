@@ -57,6 +57,8 @@
         duration,
         easingFunction,
         doButton,
+        doDefaultButton,
+        fitButton,
         focusButton,
         showButton;
       var statusUpdateSpan;
@@ -86,6 +88,8 @@
         destroy();
         statusUpdateSpan = document.getElementById("statusUpdate");
         doButton = document.getElementById("btnDo");
+        doDefaultButton = document.getElementById("btnDoDefault");
+        fitButton = document.getElementById("btnZoom");
         focusButton = document.getElementById("btnFocus");
         showButton = document.getElementById("btnShow");
 
@@ -115,6 +119,13 @@
         globalThis.network.on("animationFinished", function () {
           statusUpdateSpan.innerText = finishMessage;
         });
+
+        // add click event listeners to buttons
+        doButton.addEventListener("click", doAnimation);
+        doDefaultButton.addEventListener("click", doDefaultAnimation);
+        fitButton.addEventListener("click", fitAnimated);
+        focusButton.addEventListener("click", focusRandom);
+        showButton.addEventListener("click", startShow);
       }
 
       function fitAnimated() {
@@ -323,7 +334,6 @@ var moveToOptions = {
         Examples:
         <input
           type="button"
-          onclick="doAnimation()"
           value="Animate with above settings."
           style="width: 300px"
           id="btnDo"
@@ -331,7 +341,6 @@ var moveToOptions = {
         <br />
         <input
           type="button"
-          onclick="doDefaultAnimation()"
           value="Animate with default settings."
           style="width: 300px"
           id="btnDoDefault"
@@ -339,7 +348,6 @@ var moveToOptions = {
         <br />
         <input
           type="button"
-          onclick="fitAnimated()"
           value="Animated fit()."
           style="width: 300px"
           id="btnZoom"
@@ -347,14 +355,12 @@ var moveToOptions = {
         <br />
         <input
           type="button"
-          onclick="focusRandom()"
           value="Focus on random node."
           style="width: 300px"
           id="btnFocus"
         /><br />
         <input
           type="button"
-          onclick="startShow()"
           value="Start a show!"
           style="width: 300px"
           id="btnShow"
