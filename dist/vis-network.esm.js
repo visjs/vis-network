@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-10-28T18:55:36.352Z
+ * @date    2026-10-28T22:57:22.163Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -5120,8 +5120,8 @@ Hammer$2.defaults;
  *
  * utilitie collection for visjs
  *
- * @version 6.0.2
- * @date    2026-08-04T16:30:42.886Z
+ * @version 6.0.3
+ * @date    2026-10-25T07:23:27.729Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
