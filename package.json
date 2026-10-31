@@ -259,7 +259,7 @@
     "mocha": "12.0.3",
     "nyc": "18.0.0",
     "oxfmt": "0.75.0",
-    "oxlint": "1.89.0",
+    "oxlint": "1.90.0",
     "oxlint-tsgolint": "7.0.2005",
     "postcss": "8.5.24",
     "semantic-release": "25.0.9",
