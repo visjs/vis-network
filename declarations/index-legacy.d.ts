@@ -6,14 +6,15 @@ import "vis-util/esnext/styles/popup.css";
 import "./network/modules/components/NavigationHandler.css";
 import "./network/modules/ManipulationSystem.css";
 export * from "./network/Network.js";
+import * as dotparser from "./network/dotparser.js";
 import * as gephiParser from "./network/gephiParser.js";
 import * as allOptions from "./network/options.js";
 export declare const network: {
     Images: any;
-    dotparser: any;
+    dotparser: typeof dotparser;
     gephiParser: typeof gephiParser;
     allOptions: typeof allOptions;
-    convertDot: any;
+    convertDot: typeof dotparser.DOTToGraph;
     convertGephi: typeof gephiParser.parseGephi;
 };
 import * as DOMutil from "./DOMutil.js";
