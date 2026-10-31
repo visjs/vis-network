@@ -112,6 +112,15 @@ jobs:
 
       - run: npm run test:e2e:visual
 
+  type_check:
+    executor: node
+
+    steps:
+      - attach_workspace:
+          at: ..
+
+      - run: npm run type-check
+
   gh_pages:
     executor: node
 
@@ -184,6 +193,10 @@ workflows:
             - prepare
             - build
 
+      - type_check:
+          requires:
+            - prepare
+
       - gh_pages:
           requires:
             - build
@@ -193,6 +206,7 @@ workflows:
             - test_e2e_functional
             - test_e2e_visual
             - test_unit
+            - type_check
           filters:
             branches:
               only:
@@ -208,6 +222,7 @@ workflows:
             - test_e2e_functional
             - test_e2e_visual
             - test_unit
+            - type_check
           filters:
             branches:
               only:
