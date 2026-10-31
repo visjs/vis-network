@@ -100,6 +100,7 @@ describe("BezierEdgeDynamic", function (): void {
       );
 
       edge.drawLine(
+        // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
         ctx,
         { dashes: false, backgroundDashes: false },
         false,
@@ -271,6 +272,7 @@ describe("BezierEdgeDynamic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes.O, null);
 
       expect(x, "x").to.be.closeTo(100, 0.5);
@@ -293,6 +295,7 @@ describe("BezierEdgeDynamic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes[1], null);
 
       expect(x, "x").to.be.closeTo(178.5, 0.5);
@@ -315,6 +318,7 @@ describe("BezierEdgeDynamic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes[3], null);
 
       expect(x, "x").to.be.closeTo(100, 0.5);
@@ -338,6 +342,7 @@ describe("BezierEdgeDynamic", function (): void {
       {} as any,
     );
 
+    // @ts-expect-error TODO: accessing a protected member from a test; drop when this legacy test is modernized
     expect(edge._getDistanceToEdge(10, -10, 20, -20, 10, 20)).to.equal(30);
   });
 });

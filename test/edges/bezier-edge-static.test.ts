@@ -46,6 +46,7 @@ describe("BezierEdgeStatic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       edge.drawLine(ctx, { dashes: false }, false, false, body.nodes[2]);
 
       assert.calledOnce(ctx.beginPath);
@@ -201,6 +202,7 @@ describe("BezierEdgeStatic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes.O, null);
 
       expect(x, "x").to.be.closeTo(100, 0.5);
@@ -223,6 +225,7 @@ describe("BezierEdgeStatic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes[1], null);
 
       expect(x, "x").to.be.closeTo(151, 0.5);
@@ -245,6 +248,7 @@ describe("BezierEdgeStatic", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes[3], null);
 
       expect(x, "x").to.be.closeTo(100, 0.5);
@@ -266,6 +270,7 @@ describe("BezierEdgeStatic", function (): void {
       {} as any,
     );
 
+    // @ts-expect-error TODO: accessing a protected member from a test; drop when this legacy test is modernized
     expect(edge._getDistanceToEdge(10, -10, 20, -20, 10, 20)).to.equal(30);
   });
 });

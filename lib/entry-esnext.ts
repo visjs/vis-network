@@ -8,7 +8,7 @@ import "./network/modules/ManipulationSystem.css";
 
 export * from "./network/Network.js";
 
-export { default as NetworkImages } from "./network/Images.js";
+export { Images as NetworkImages } from "./network/Images.js";
 
 import * as dotparser from "./network/dotparser.js";
 export { dotparser as networkDOTParser };

@@ -12,7 +12,7 @@ export * from "./network/Network.js";
 import * as dotparser from "./network/dotparser.js";
 import * as gephiParser from "./network/gephiParser.js";
 import { parseGephi } from "./network/gephiParser.js";
-import Images from "./network/Images.js";
+import { Images } from "./network/Images.js";
 import * as allOptions from "./network/options.js";
 export const network = {
   Images,

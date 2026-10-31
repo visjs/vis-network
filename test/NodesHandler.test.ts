@@ -72,6 +72,7 @@ describe("NodesHandler", function (): void {
       try {
         NodesHandler.prototype.getPosition.call(mockThis);
       } catch (e) {
+        // @ts-expect-error TODO: catch variable is 'unknown' under strict; drop when this legacy test is modernized
         expect(e.message).to.equal(
           "No id was specified for getPosition method.",
         );
@@ -82,6 +83,7 @@ describe("NodesHandler", function (): void {
       try {
         NodesHandler.prototype.getPosition.call(mockThis, "not here");
       } catch (e) {
+        // @ts-expect-error TODO: catch variable is 'unknown' under strict; drop when this legacy test is modernized
         expect(e.message).to.equal(
           "NodeId provided for getPosition does not exist. Provided: not here",
         );

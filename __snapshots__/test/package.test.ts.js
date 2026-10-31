@@ -55,6 +55,9 @@ exports['Package Exported files 1'] = {
     "declarations/index.d.ts": {
       empty: false
     },
+    "declarations/module/component-emitter.d.ts": {
+      empty: false
+    },
     "declarations/module/hammer.d.ts": {
       empty: false
     },
@@ -290,6 +293,9 @@ exports['Package Exported files 1'] = {
       empty: false
     },
     "dist/types/index.d.ts": {
+      empty: false
+    },
+    "dist/types/module/component-emitter.d.ts": {
       empty: false
     },
     "dist/types/module/hammer.d.ts": {

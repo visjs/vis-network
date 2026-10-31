@@ -4,11 +4,9 @@ import type {
   Network,
   NetworkEvents,
   Options,
-} from "../../../declarations/entry-standalone";
+} from "../../../lib/entry-standalone";
 
-// TODO: Convert this to type only export when ESLint and Prettier support the
-// syntax. This way all the code is available even though it's never used.
-export * from "../../../standalone";
+export type * from "../../../lib/entry-standalone";
 
 export interface VisGlobals {
   edges: DataSetEdges;

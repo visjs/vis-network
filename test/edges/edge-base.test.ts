@@ -12,6 +12,7 @@ describe("EdgeBase", function (): void {
       to: 3,
     });
 
+    // @ts-expect-error TODO: EdgeBase is abstract; drop when this legacy test is modernized
     const edge = new EdgeBase(options, body as any, {} as any);
 
     expect(edge).to.have.ownProperty("options").that.equals(options);
@@ -30,6 +31,7 @@ describe("EdgeBase", function (): void {
       };
 
       EdgeBase.prototype.enableShadow(
+        // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
         ctx,
         deepFreeze({
           shadow: true,
@@ -57,6 +59,7 @@ describe("EdgeBase", function (): void {
       };
 
       EdgeBase.prototype.disableShadow(
+        // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
         ctx,
         deepFreeze({
           shadow: true,
