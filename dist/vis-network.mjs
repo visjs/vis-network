@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-10-31T14:23:58.103Z
+ * @date    2026-10-31T14:34:08.065Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -628,10 +628,10 @@ function requireSharedStore () {
 	var store = sharedStore.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
 
 	(store.versions || (store.versions = [])).push({
-	  version: '3.50.0',
+	  version: '3.51.0',
 	  mode: IS_PURE ? 'pure' : 'global',
 	  copyright: '© 2013–2025 Denis Pushkarev (zloirock.ru), 2025–2026 CoreJS Company (core-js.io). All rights reserved.',
-	  license: 'https://github.com/zloirock/core-js/blob/v3.50.0/LICENSE',
+	  license: 'https://github.com/zloirock/core-js/blob/v3.51.0/LICENSE',
 	  source: 'https://github.com/zloirock/core-js'
 	});
 	return sharedStore.exports;
@@ -17567,15 +17567,15 @@ function requireToPrimitive () {
 var toPrimitiveExports = /*@__PURE__*/ requireToPrimitive();
 var _Symbol$toPrimitive = /*@__PURE__*/getDefaultExportFromCjs(toPrimitiveExports);
 
-function toPrimitive(t, r) {
+function toPrimitive(t, e) {
   if ("object" != _typeof(t) || !t) return t;
-  var e = t[_Symbol$toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r);
+  var r;
+  if ("undefined" != typeof _Symbol && void 0 !== (r = t[_Symbol$toPrimitive])) {
+    var i = r.call(t, e);
     if ("object" != _typeof(i)) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return ("string" === r ? String : Number)(t);
+  return ("string" === e ? String : Number)(t);
 }
 
 function toPropertyKey(t) {
