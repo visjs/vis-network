@@ -293,5 +293,8 @@
       "useRelativePath": true
     }
   },
+  "allowScripts": {
+    "puppeteer": true
+  },
   "jsnext": "./esnext/esm/vis-network.mjs"
 }
