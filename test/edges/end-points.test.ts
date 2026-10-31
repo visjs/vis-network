@@ -153,12 +153,14 @@ describe("EndPoints", function (): void {
         };
 
         it("draw", function (): void {
+          // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
           EndPoints.draw(ctx, arrowData);
         });
 
         Object.entries(methods).forEach(([method, expected]): void => {
           it(`${method}`, function (): void {
             expect(ctx[method].callCount, "call count").to.be.at.least(1);
+            // @ts-expect-error TODO: implicit any parameter; drop when this legacy test is modernized
             expected.forEach((args, i): void => {
               expect(ctx[method].getCall(i).args).to.deep.equal(args);
             });

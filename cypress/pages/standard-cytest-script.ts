@@ -2,8 +2,8 @@
 // this will be loaded in a web browser without bundling.
 import type * as visUtil from "vis-util";
 
-import type * as visNetworkStandalone from "../../declarations/entry-standalone.js";
-import type { Options } from "../../declarations/entry-standalone.js";
+import type * as visNetworkStandalone from "../../lib/entry-standalone";
+import type { Options } from "../../lib/entry-standalone";
 import type { UniversalConfig, VisWindow } from "../support/commands/types.ts";
 type VisNetworkStandalone = typeof visNetworkStandalone;
 type VisUtil = typeof visUtil;

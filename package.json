@@ -219,6 +219,7 @@
     "test:e2e:visual:regression:latest": "cross-env VIS_NETWORK_TAG=latest npm run test:e2e:visual:regression:no-env",
     "test:coverage": "cross-env BABEL_ENV=test-cov nyc mocha --exit",
     "test:unit": "mocha --exit",
+    "type-check": "tsc --noemit",
     "build": "npm run build:declarations && npm run build:code && npm run build:legacy:types && npm run build:legacy:code && npm run build:legacy:images",
     "build:legacy:types": "shx mkdir -p dist && shx cp -r \"types/\" dist && tsc -p tsconfig.types.json",
     "build:legacy:code": "rollup --config rollup.config.js",

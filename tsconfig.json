@@ -14,7 +14,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "types": ["node", "mocha"]
   },
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "exclude": ["**/__snapshots__/", "node_modules/"]
 }

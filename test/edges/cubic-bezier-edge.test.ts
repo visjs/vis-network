@@ -46,6 +46,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       edge.drawLine(ctx, { dashes: false }, false, false, body.nodes[2]);
 
       assert.calledOnce(ctx.beginPath);
@@ -89,6 +90,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       edge.drawLine(ctx, { dashes: [1, 2, 3] }, false, false, body.nodes[2]);
 
       assert.calledOnce(ctx.beginPath);
@@ -148,6 +150,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       edge.drawLine(ctx, { dashes: false }, false, false, body.nodes[2]);
 
       assert.calledOnce(ctx.arc);
@@ -270,6 +273,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes.O, null);
 
       expect(x, "x").to.be.closeTo(100, 0.5);
@@ -292,6 +296,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes[1], null);
 
       expect(x, "x").to.be.closeTo(109.5, 0.5);
@@ -314,6 +319,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: accessing a protected member from a test; mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
       const { x, y } = edge._findBorderPosition(body.nodes[3], null);
 
       expect(x, "x").to.be.closeTo(100, 0.5);
@@ -335,6 +341,7 @@ describe("CubicBezierEdge", function (): void {
       {} as any,
     );
 
+    // @ts-expect-error TODO: accessing a protected member from a test; drop when this legacy test is modernized
     expect(edge._getDistanceToEdge(10, -10, 20, -20, 10, 20)).to.equal(30);
   });
 
@@ -357,6 +364,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: stale extra arguments (getColor signature changed); drop when this legacy test is modernized
       expect(edge.getColor(ctx, values, false, false)).to.equal(
         "rgba(0,0,17,0.5)",
       );
@@ -380,6 +388,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: stale extra arguments (getColor signature changed); drop when this legacy test is modernized
       expect(edge.getColor(ctx, values, false, false)).to.equal(
         "rgba(0,0,17,0.5)",
       );
@@ -403,6 +412,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: stale extra arguments (getColor signature changed); drop when this legacy test is modernized
       expect(edge.getColor(ctx, values, false, false)).to.equal(
         "rgba(0,0,49,0.5)",
       );
@@ -432,6 +442,7 @@ describe("CubicBezierEdge", function (): void {
         {} as any,
       );
 
+      // @ts-expect-error TODO: stale extra arguments (getColor signature changed); drop when this legacy test is modernized
       expect(edge.getColor(ctx, values, false, false)).to.equal(adsklgh);
       assert.calledTwice(adsklgh.addColorStop);
       assert.calledWithExactly(adsklgh.addColorStop.getCall(0), 0, "#000013");
@@ -541,6 +552,7 @@ describe("CubicBezierEdge", function (): void {
           {} as any,
         );
 
+        // @ts-expect-error TODO: mock canvas context is not a full CanvasRenderingContext2D; drop when this legacy test is modernized
         expect(edge.findBorderPositions(ctx)).to.deep.equal(expected);
       });
     });
@@ -752,6 +764,7 @@ describe("CubicBezierEdge", function (): void {
           );
 
           expect(
+            // @ts-expect-error TODO: mock canvas context matches no arrow overload; drop when this legacy test is modernized
             edge.getArrowData(ctx, position, viaNode, selected, hover, values),
           ).to.deep.equal(expected);
         },
