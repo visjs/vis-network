@@ -182,6 +182,52 @@ describe("dotparser", function () {
     });
   });
 
+  it("should parse backslash-escaped quotes in strings", function () {
+    const data = String.raw`digraph { a [label="\"a\"", shape=box]; b; }`;
+
+    expect(parseDOT(data)).to.deep.equal({
+      type: "digraph",
+      nodes: [{ id: "a", attr: { label: '"a"', shape: "box" } }, { id: "b" }],
+    });
+  });
+
+  it("should preserve backslashes around escaped quotes in paths", function () {
+    const data = String.raw`digraph { 27 [IconPath="\"C:\Program Files (x86)\Microsoft Office\Root\Office16\SDXHelper.exe\" -Embedding"]; }`;
+
+    expect(parseDOT(data)).to.deep.equal({
+      type: "digraph",
+      nodes: [
+        {
+          id: 27,
+          attr: {
+            IconPath: String.raw`"C:\Program Files (x86)\Microsoft Office\Root\Office16\SDXHelper.exe" -Embedding`,
+          },
+        },
+      ],
+    });
+  });
+
+  it("should preserve backslash pairs before quotes", function () {
+    const data = String.raw`digraph { a [label="C:\\"]; b [label="a\\\"b"]; }`;
+
+    expect(parseDOT(data)).to.deep.equal({
+      type: "digraph",
+      nodes: [
+        { id: "a", attr: { label: String.raw`C:\\` } },
+        { id: "b", attr: { label: String.raw`a\\"b` } },
+      ],
+    });
+  });
+
+  it("should still parse doubled quotes in strings", function () {
+    const data = 'digraph { a [label="hello ""world"""]; }';
+
+    expect(parseDOT(data)).to.deep.equal({
+      type: "digraph",
+      nodes: [{ id: "a", attr: { label: 'hello "world"' } }],
+    });
+  });
+
   /**
    * DOT-format examples taken from #3015
    */
