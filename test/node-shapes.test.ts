@@ -592,4 +592,166 @@ describe("Node Shapes", function (): void {
       });
     },
   );
+
+  describe("Circle.resize must not write into shared options.size", function (): void {
+    const labelModuleWithTextSize = (width: number, height: number): any => {
+      const labelModule = {
+        adjustSizes: stub(),
+        differentState: stub(),
+        getTextSize: stub(),
+        size: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          width,
+          height,
+        },
+      };
+
+      labelModule.differentState.returns(true);
+      labelModule.getTextSize.returns({
+        width,
+        height,
+        lineCount: 1,
+      });
+
+      return labelModule;
+    };
+
+    it("keeps configured size after a labeled circle so a later Dot is not label-sized", function (): void {
+      const configuredSize = 25;
+      const shortOptions = generateOptions();
+      const longOptions = generateOptions();
+      shortOptions.size = configuredSize;
+      longOptions.size = configuredSize;
+
+      // Two labels of different length, as in visjs/vis-network#2516.
+      const shortCircle = new Circle(
+        shortOptions,
+        generateBody(),
+        labelModuleWithTextSize(12, 14),
+      );
+      const longCircle = new Circle(
+        longOptions,
+        generateBody(),
+        labelModuleWithTextSize(288, 14),
+      );
+
+      shortCircle.resize({});
+      longCircle.resize({});
+
+      // Circle itself still autosizes to the label (that part is intended).
+      expect(shortCircle.width).to.equal(30);
+      expect(longCircle.width).to.equal(306);
+      expect(shortCircle.radius).to.equal(15);
+      expect(longCircle.radius).to.equal(153);
+
+      // The leak: Circle.resize used to assign diameter/2 onto the shared
+      // options object, so later label-outside shapes (dot/star/square)
+      // sized themselves from leftover radii instead of nodes.size.
+      expect(shortOptions.size).to.equal(configuredSize);
+      expect(longOptions.size).to.equal(configuredSize);
+
+      const shortDot = new Dot(
+        shortOptions,
+        generateBody(),
+        labelModuleWithTextSize(12, 14),
+      );
+      const longDot = new Dot(
+        longOptions,
+        generateBody(),
+        labelModuleWithTextSize(288, 14),
+      );
+      const longStar = new Star(
+        longOptions,
+        generateBody(),
+        labelModuleWithTextSize(288, 14),
+      );
+      const longSquare = new Square(
+        longOptions,
+        generateBody(),
+        labelModuleWithTextSize(288, 14),
+      );
+
+      shortDot.resize({});
+      longDot.resize({});
+      longStar.resize({});
+      longSquare.resize({});
+
+      expect(shortDot.width).to.equal(2 * configuredSize);
+      expect(shortDot.height).to.equal(2 * configuredSize);
+      expect(longDot.width).to.equal(2 * configuredSize);
+      expect(longDot.height).to.equal(2 * configuredSize);
+      expect(longStar.width).to.equal(2 * configuredSize);
+      expect(longSquare.width).to.equal(2 * configuredSize);
+      expect(shortDot.width).to.equal(longDot.width);
+    });
+
+    it("sizes Circle bounding box from instance radius, not leftover options.size", function (): void {
+      const options = generateOptions();
+      options.size = 25;
+      const circle = new Circle(options, generateBody(), generateLabelModule());
+
+      circle.resize({});
+      circle.updateBoundingBox(0, 0);
+
+      expect(circle.radius).to.equal(circle.width / 2);
+      expect(circle.boundingBox.left).to.equal(-circle.radius);
+      expect(circle.boundingBox.right).to.equal(circle.radius);
+      expect(circle.boundingBox.top).to.equal(-circle.radius);
+      expect(circle.boundingBox.bottom).to.equal(circle.radius);
+      expect(options.size).to.equal(25);
+    });
+
+    it("paints labeled Circle from instance radius, not options.size", function (): void {
+      const configuredSize = 25;
+      const options = generateOptions();
+      options.size = configuredSize;
+      options.margin = { top: 0, right: 0, bottom: 0, left: 0 };
+
+      const labelModule = labelModuleWithTextSize(200, 20);
+      labelModule.draw = stub();
+
+      const circle = new Circle(options, { view: { scale: 1 } }, labelModule);
+      const ctx: any = {
+        beginPath: spy(),
+        arc: spy(),
+        closePath: spy(),
+        save: spy(),
+        restore: spy(),
+        fill: spy(),
+        stroke: spy(),
+        setLineDash: spy(),
+      };
+
+      // Node.getFormattingValues().size is options.size. After the leak
+      // fix that stays 25, while Circle.resize sets this.radius from the
+      // label (200x20 → diameter 200 → radius 100).
+      const values = {
+        size: options.size,
+        borderWidth: 1,
+        borderColor: "#2B7CE9",
+        color: "#97C2FC",
+        shadow: false,
+        borderDashes: false,
+      };
+
+      circle.draw(ctx, 0, 0, false, false, values);
+
+      expect(circle.radius).to.equal(100);
+      expect(options.size).to.equal(configuredSize);
+      expect(values.size).to.equal(configuredSize);
+      assert.calledOnce(ctx.arc);
+      assert.calledWithExactly(
+        ctx.arc,
+        0,
+        0,
+        circle.radius,
+        0,
+        2 * Math.PI,
+        false,
+      );
+    });
+  });
 });
