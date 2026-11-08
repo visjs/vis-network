@@ -5,7 +5,7 @@
  * A dynamic, browser-based visualization library.
  *
  * @version 0.0.0-no-version
- * @date    2026-11-08T05:29:49.636Z
+ * @date    2026-11-08T17:47:33.284Z
  *
  * @copyright (c) 2011-2017 Almende B.V, http://almende.com
  * @copyright (c) 2017-2019 visjs contributors, https://github.com/visjs
@@ -699,6 +699,13 @@ function getToken() {
       if (c === '"') {
         // skip the escape character
         token += c;
+        next();
+      } else if (c === "\\" && nextPreview() === "\\") {
+        token += c;
+        next();
+        token += c;
+      } else if (c === "\\" && nextPreview() === '"') {
+        token += '"';
         next();
       } else if (c === "\\" && nextPreview() === "n") {
         // Honor a newline escape sequence
