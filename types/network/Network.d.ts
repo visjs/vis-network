@@ -347,7 +347,7 @@ export class Network {
 
   /**
    * Returns the x y positions in canvas space of a requested node or array of nodes.
-   * 
+   *
    * @remarks
    * - If `nodeIds` is supplied as a single id that does not correspond
    * to a node in the network, this function will return an empty object.
@@ -361,13 +361,13 @@ export class Network {
 
   /**
    * Retrieves the x y position of a specific id.
-   * 
+   *
    * @param id - a node id
    * @returns the x y position in canvas space of the requested node.
-   * 
-   * @throws {@link TypeError} 
+   *
+   * @throws {@link TypeError}
    *  Thrown if an undefined or null id is provided as a parameter.
-   * @throws {@link ReferenceError} 
+   * @throws {@link ReferenceError}
    *  Thrown if the id provided as a parameter does not correspond to a node in the network.
    */
   getPosition(nodeId: IdType): Position;
@@ -951,6 +951,7 @@ export interface NodeOptions {
   shadow?: boolean | OptionsShadow;
 
   shape?: string;
+  ctxRenderer?: CtxRenderer;
 
   shapeProperties?: {
     borderDashes?: boolean | number[], // only for borders
@@ -978,6 +979,32 @@ export interface NodeOptions {
 
   y?: number;
 }
+
+export interface CtxRendererState {
+  selected: boolean;
+  hover: boolean;
+}
+
+export interface CtxRendererArgs {
+  ctx: CanvasRenderingContext2D;
+  id: string;
+  /** Node center X, in canvas/world coordinates. */
+  x: number;
+  /** Node center Y, in canvas/world coordinates. */
+  y: number;
+  state: CtxRendererState;
+  style: { color?: string; size?: number };
+  label: string;
+}
+
+export interface CtxRendererResult {
+  drawNode?(): void;
+  /** If omitted, vis-network draws no separate label. */
+  drawExternalLabel?(): void;
+  nodeDimensions?: { width: number; height: number };
+}
+
+export type CtxRenderer = (args: CtxRendererArgs) => CtxRendererResult;
 
 export interface EdgeOptions {
   arrows?: string | {
