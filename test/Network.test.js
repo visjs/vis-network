@@ -378,6 +378,58 @@ describe("Network", function () {
     }
   });
 
+  describe("hierarchical layout", function () {
+    it("can be enabled repeatedly with predefined levels and a dynamic edge", function () {
+      const network = new Network(
+        this.container,
+        {
+          nodes: [
+            { id: 1, level: 0 },
+            { id: 2, level: 1 },
+          ],
+          edges: [{ id: "edge", from: 1, to: 2 }],
+        },
+        { physics: false },
+      );
+      try {
+        for (let attempt = 0; attempt < 2; attempt++) {
+          expect(network.body.edges.edge.edgeType.via).to.exist;
+          network.setOptions({ layout: { hierarchical: { enabled: true } } });
+
+          expect(network.getPosition(2).y - network.getPosition(1).y).to.equal(
+            150,
+          );
+
+          network.setOptions({ layout: { hierarchical: { enabled: false } } });
+        }
+      } finally {
+        network.destroy();
+      }
+    });
+
+    it("still rejects mixed levels when the node with no level is hidden", function () {
+      const network = new Network(
+        this.container,
+        {
+          nodes: [
+            { id: 1, level: 0 },
+            { id: 2, level: 1 },
+            { id: 3, hidden: true },
+          ],
+          edges: [{ id: "edge", from: 1, to: 2 }],
+        },
+        { physics: false },
+      );
+      try {
+        expect(() =>
+          network.setOptions({ layout: { hierarchical: { enabled: true } } }),
+        ).to.throw("levels have to be defined for all nodes");
+      } finally {
+        network.destroy();
+      }
+    });
+  });
+
   describe("Node", function () {
     it("has known font options", function () {
       const network = createNetwork({});
