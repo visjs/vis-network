@@ -14,7 +14,7 @@ executors:
 
   node-browsers:
     docker:
-      - image: cimg/node:26.13.1-browsers@sha256:1cb003b273d776803eefce1a77a06b101beb691814e0cfe6a07b8f78b204172d
+      - image: cimg/node:26.13.1-browsers@sha256:21c2243a0ee01269d799326acd1f0dc610f9437c47534745b102ea64e328f3d3
     resource_class: medium
     working_directory: ~/repo
     environment:
