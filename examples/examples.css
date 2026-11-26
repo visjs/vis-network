@@ -1,5 +1,4 @@
 .examples-root {
-  margin: 50px auto 200px;
   min-width: calc(200px + 2em);
   width: calc(100vw - 200px);
 }
