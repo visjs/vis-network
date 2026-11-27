@@ -1233,11 +1233,13 @@ var options: {
         <tr parent="scaling" class="hidden">
           <td class="indent2">scaling.label.enabled</td>
           <td>Boolean</td>
-          <td><code>false</code></td>
+          <td><code>true</code></td>
           <td>
-            Toggle the scaling of the label on or off. If this option is not
-            defined, it is set to true if any of the properties in this object
-            are defined.
+            When an edge has a <code>value</code>, its label size is scaled
+            between <code>scaling.label.min</code> and
+            <code>scaling.label.max</code>. Set this option to
+            <code>false</code> to use <code>font.size</code> for the label while
+            continuing to scale the edge width by value.
           </td>
         </tr>
         <tr parent="scaling" class="hidden">
