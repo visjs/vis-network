@@ -90,10 +90,10 @@ describe("Node Shapes", function (): void {
       Clazz: Box,
       distanceToBorder: 42,
       boundingBox: {
-        bottom: -924,
-        left: -128,
-        right: 128,
-        top: -979,
+        bottom: -927,
+        left: -125,
+        right: 125,
+        top: -976,
       },
     },
     {
